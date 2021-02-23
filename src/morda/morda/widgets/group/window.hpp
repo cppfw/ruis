@@ -41,16 +41,7 @@ class window :
 	std::shared_ptr<widget> lbBorder;
 	std::shared_ptr<widget> rbBorder;
 
-	bool captionCaptured = false;
-	bool leftTopResizeCaptured = false;
-	bool leftBottomResizeCaptured = false;
-	bool rightTopResizeCaptured = false;
-	bool rightBottomResizeCaptured = false;
-	bool leftResizeCaptured = false;
-	bool rightResizeCaptured = false;
-	bool topResizeCaptured = false;
-	bool bottomResizeCaptured = false;
-
+	bool mouse_captured = false;
 	morda::vector2 capturePoint;
 
 	void setup_widgets();

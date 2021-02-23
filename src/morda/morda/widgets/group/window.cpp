@@ -197,22 +197,6 @@ morda::window::window(std::shared_ptr<morda::context> c, const puu::forest& desc
 	this->contentArea->push_back_inflate(desc);
 }
 
-namespace{
-decltype(morda::mouse_proxy::hover_change_handler) make_hover_change_handler(morda::mouse_cursor cursor){
-	return [cursor](mouse_proxy& mp, unsigned){
-		LOG("hover = " << mp.is_hovered() << std::endl)
-		if(mp.is_hovered()){
-			// defer setting hovered cursor to make sure that hovered cursor is set after the unhovered cursor
-			mp.context->run_from_ui_thread([context = mp.context, cursor](){
-				context->set_mouse_cursor(cursor);
-			});
-		}else{
-			mp.context->set_mouse_cursor(morda::mouse_cursor::arrow);
-		}
-	};
-}
-}
-
 void morda::window::setup_widgets(){
 	this->contentArea = this->try_get_widget_as<pile>("morda_content");
 	ASSERT(this->contentArea)
@@ -223,30 +207,51 @@ void morda::window::setup_widgets(){
 	this->titleBg = this->try_get_widget_as<color>("morda_window_title_bg");
 	ASSERT(this->titleBg);
 
-	std::function<decltype(mouse_proxy::mouse_button_handler)(bool&)> getButtonFunc = [this](bool& flag){
-		return decltype(mouse_proxy::mouse_button_handler)([this, &flag](mouse_proxy&, const mouse_button_event& e){
+	std::function<decltype(mouse_proxy::mouse_button_handler)()> make_mouse_button_handler = [this](){
+		return decltype(mouse_proxy::mouse_button_handler)([this](mouse_proxy& mp, const mouse_button_event& e){
 			if(e.button != mouse_button::left){
 				return false;
 			}
 
+			this->mouse_captured = e.is_down;
+
 			if(e.is_down){
-				flag = true;
 				this->capturePoint = e.pos;
-				return true;
+			}else{
+				if(!mp.is_hovered()){
+					mp.context->set_mouse_cursor(morda::mouse_cursor::arrow);
+				}
 			}
-			flag = false;
-			return false;
+			return true;
 		});
+	};
+
+	std::function<decltype(morda::mouse_proxy::hover_change_handler)(morda::mouse_cursor)> make_hover_change_handler = [this](morda::mouse_cursor cursor){
+		return [this, cursor](mouse_proxy& mp, unsigned pointer_id){
+			// LOG("hover = " << mp.is_hovered() << std::endl)
+			// LOG("this->mouse_captured = " << this->mouse_captured << std::endl)
+			if(this->mouse_captured){
+				return;
+			}
+			if(mp.is_hovered()){
+				// defer setting hovered cursor to make sure that hovered cursor is set after the unhovered cursor
+				mp.context->run_from_ui_thread([context = mp.context, cursor](){
+					context->set_mouse_cursor(cursor);
+				});
+			}else{
+				mp.context->set_mouse_cursor(morda::mouse_cursor::arrow);
+			}
+		};
 	};
 
 	{
 		auto caption = this->try_get_widget_as<mouse_proxy>("morda_caption_proxy");
 		ASSERT(caption)
 
-		caption->mouse_button_handler = getButtonFunc(this->captionCaptured);
+		caption->mouse_button_handler = make_mouse_button_handler();
 
 		caption->mouse_move_handler = [this](mouse_proxy&, const mouse_move_event& e){
-			if(this->captionCaptured){
+			if(this->mouse_captured){
 				this->move_by(e.pos - this->capturePoint);
 				return true;
 			}
@@ -258,9 +263,9 @@ void morda::window::setup_widgets(){
 	{
 		auto w = this->try_get_widget_as<mouse_proxy>("morda_lt_proxy");
 		ASSERT(w)
-		w->mouse_button_handler = getButtonFunc(this->leftTopResizeCaptured);
+		w->mouse_button_handler = make_mouse_button_handler();
 		w->mouse_move_handler = [this](mouse_proxy&, const mouse_move_event& e){
-			if(this->leftTopResizeCaptured){
+			if(this->mouse_captured){
 				using std::min;
 				morda::vector2 d = e.pos - this->capturePoint;
 				d = min(d, this->rect().d - this->emptyMinDim); // clamp top
@@ -276,9 +281,9 @@ void morda::window::setup_widgets(){
 	{
 		auto w = this->try_get_widget_as<mouse_proxy>("morda_lb_proxy");
 		ASSERT(w)
-		w->mouse_button_handler = getButtonFunc(this->leftBottomResizeCaptured);
+		w->mouse_button_handler = make_mouse_button_handler();
 		w->mouse_move_handler = [this](mouse_proxy&, const mouse_move_event& e){
-			if(this->leftBottomResizeCaptured){
+			if(this->mouse_captured){
 				using std::min;
 				using std::max;
 				morda::vector2 d = e.pos - this->capturePoint;
@@ -296,9 +301,9 @@ void morda::window::setup_widgets(){
 	{
 		auto w = this->try_get_widget_as<mouse_proxy>("morda_rt_proxy");
 		ASSERT(w)
-		w->mouse_button_handler = getButtonFunc(this->rightTopResizeCaptured);
+		w->mouse_button_handler = make_mouse_button_handler();
 		w->mouse_move_handler = [this](mouse_proxy&, const mouse_move_event& e){
-			if(this->rightTopResizeCaptured){
+			if(this->mouse_captured){
 				using std::min;
 				using std::max;
 				morda::vector2 d = e.pos - this->capturePoint;
@@ -316,9 +321,9 @@ void morda::window::setup_widgets(){
 	{
 		auto w = this->try_get_widget_as<mouse_proxy>("morda_rb_proxy");
 		ASSERT(w)
-		w->mouse_button_handler = getButtonFunc(this->rightBottomResizeCaptured);
+		w->mouse_button_handler = make_mouse_button_handler();
 		w->mouse_move_handler = [this](mouse_proxy&, const mouse_move_event& e){
-			if(this->rightBottomResizeCaptured){
+			if(this->mouse_captured){
 				using std::max;
 				morda::vector2 d = e.pos - this->capturePoint;
 				d = max(d, -(this->rect().d - this->emptyMinDim)); // clamp bottom
@@ -333,9 +338,9 @@ void morda::window::setup_widgets(){
 	{
 		auto w = this->try_get_widget_as<mouse_proxy>("morda_l_proxy");
 		ASSERT(w)
-		w->mouse_button_handler = getButtonFunc(this->leftResizeCaptured);
+		w->mouse_button_handler = make_mouse_button_handler();
 		w->mouse_move_handler = [this](mouse_proxy&, const mouse_move_event& e){
-			if(this->leftResizeCaptured){
+			if(this->mouse_captured){
 				using std::min;
 				morda::vector2 d = e.pos - this->capturePoint;
 				d.x() = min(d.x(), this->rect().d.x() - this->emptyMinDim.x()); // clamp top
@@ -351,9 +356,9 @@ void morda::window::setup_widgets(){
 	{
 		auto w = this->try_get_widget_as<mouse_proxy>("morda_r_proxy");
 		ASSERT(w)
-		w->mouse_button_handler = getButtonFunc(this->rightResizeCaptured);
+		w->mouse_button_handler = make_mouse_button_handler();
 		w->mouse_move_handler = [this](mouse_proxy&, const mouse_move_event& e){
-			if(this->rightResizeCaptured){
+			if(this->mouse_captured){
 				using std::max;
 				morda::vector2 d = e.pos - this->capturePoint;
 				d.x() = max(d.x(), -(this->rect().d.x() - this->emptyMinDim.x())); // clamp bottom
@@ -368,9 +373,9 @@ void morda::window::setup_widgets(){
 	{
 		auto w = this->try_get_widget_as<mouse_proxy>("morda_t_proxy");
 		ASSERT(w)
-		w->mouse_button_handler = getButtonFunc(this->topResizeCaptured);
+		w->mouse_button_handler = make_mouse_button_handler();
 		w->mouse_move_handler = [this](mouse_proxy&, const mouse_move_event& e){
-			if(this->topResizeCaptured){
+			if(this->mouse_captured){
 				using std::min;
 				morda::vector2 d = e.pos - this->capturePoint;
 				d.y() = min(d.y(), this->rect().d.y() - this->emptyMinDim.y()); // clamp top
@@ -386,9 +391,9 @@ void morda::window::setup_widgets(){
 	{
 		auto w = this->try_get_widget_as<mouse_proxy>("morda_b_proxy");
 		ASSERT(w)
-		w->mouse_button_handler = getButtonFunc(this->bottomResizeCaptured);
+		w->mouse_button_handler = make_mouse_button_handler();
 		w->mouse_move_handler = [this](mouse_proxy&, const mouse_move_event& e){
-			if(this->bottomResizeCaptured){
+			if(this->mouse_captured){
 				using std::max;
 				morda::vector2 d = e.pos - this->capturePoint;
 				d.y() = max(d.y(), -(this->rect().d.y() - this->emptyMinDim.y())); // clamp bottom

@@ -90,13 +90,13 @@ bool container::on_mouse_button(const mouse_button_event& e){
 		if(i != this->mouse_capture_map.end()){
 			if(auto w = i->second.capturing_widget.lock()){
 				if(w->is_interactive()){
-					w->set_hovered(w->rect().overlaps(e.pos), e.pointer_id);
 					w->on_mouse_button(mouse_button_event{
 							e.is_down,
 							e.pos - w->rect().p,
 							e.button,
 							e.pointer_id
 						});
+					w->set_hovered(w->rect().overlaps(e.pos), e.pointer_id);
 
 					unsigned& num_buttons_captured = i->second.num_buttons_captured;
 					if(e.is_down){
@@ -186,14 +186,11 @@ bool container::on_mouse_move(const mouse_move_event& e){
 		if(i != this->mouse_capture_map.end()){
 			if(auto w = i->second.capturing_widget.lock()){
 				if(w->is_interactive()){
-					// when mouse pointer is captured, the capturing widget is always hovered, even if mouse pointer
-					// is outside of the widget's rectangle
-					w->set_hovered(true, e.pointer_id);
-
 					w->on_mouse_move(mouse_move_event{
 							e.pos - w->rect().p,
 							e.pointer_id
 						});
+					w->set_hovered(w->rect().overlaps(e.pos), e.pointer_id);
 
 					// doesn't matter what to return because parent widget also captured
 					// the mouse and in this case the return value is ignored
