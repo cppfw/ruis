@@ -166,6 +166,14 @@
             "group": "build"
         },
         {
+            "label": "run_wire_area_dbg",
+            "type": "shell",
+            "command": "make run_wire_area config=dbg",
+            "problemMatcher": [],
+            "dependsOn": "build_dbg",
+            "group": "build"
+        },
+        {
             "label": "rebuild",
             "type": "shell",
             "command": "make clean && make autojobs=true",

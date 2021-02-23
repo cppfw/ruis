@@ -1,0 +1,63 @@
+defs{
+	@in_socket{ text outlet
+		@pile{
+			@text{
+				text{${text}}
+				color{0xff0000ff}
+			}
+			@wire_socket{
+				id{ws}
+				outlet{${outlet}}
+				layout{dx{fill} dy{fill}}
+			}
+		}
+	}
+
+	@out_socket{ text outlet
+		@pile{
+			@text{
+				text{${text}}
+				color{0xff00ff00}
+			}
+			@wire_socket{
+				id{ws}
+				outlet{${outlet}}
+				layout{dx{fill} dy{fill}}
+			}
+		}
+	}
+}
+
+@wire_area{
+	id{wire_area}
+
+	@window{
+		x{10} y{20}
+		layout{
+			dx{100} dy{50}
+		}
+
+		title{"window 1"}
+
+		@out_socket{
+			id{in11}
+			outlet{top}
+			text{in1}
+		}
+	}
+
+	@window{
+		x{150} y{20}
+		layout{
+			dx{100} dy{50}
+		}
+
+		title{"window 2"}
+
+		@in_socket{
+			id{in11}
+			outlet{right}
+			text{in1}
+		}
+	}
+}
