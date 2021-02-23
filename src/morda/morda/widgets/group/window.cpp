@@ -207,8 +207,8 @@ void morda::window::setup_widgets(){
 	this->titleBg = this->try_get_widget_as<color>("morda_window_title_bg");
 	ASSERT(this->titleBg);
 
-	std::function<decltype(mouse_proxy::mouse_button_handler)()> make_mouse_button_handler = [this](){
-		return decltype(mouse_proxy::mouse_button_handler)([this](mouse_proxy& mp, const mouse_button_event& e){
+	std::function<decltype(mouse_proxy::mouse_button_handler)(cursor_iter&)> make_mouse_button_handler = [this](cursor_iter& iter){
+		return decltype(mouse_proxy::mouse_button_handler)([this, &iter](mouse_proxy& mp, const mouse_button_event& e){
 			if(e.button != mouse_button::left){
 				return false;
 			}
@@ -219,36 +219,34 @@ void morda::window::setup_widgets(){
 				this->capturePoint = e.pos;
 			}else{
 				if(!mp.is_hovered()){
-					mp.context->set_mouse_cursor(morda::mouse_cursor::arrow);
+					this->context->cursor_manager.pop(iter);
 				}
 			}
 			return true;
 		});
 	};
 
-	std::function<decltype(morda::mouse_proxy::hover_change_handler)(morda::mouse_cursor)> make_hover_change_handler = [this](morda::mouse_cursor cursor){
-		return [this, cursor](mouse_proxy& mp, unsigned pointer_id){
-			// LOG("hover = " << mp.is_hovered() << std::endl)
-			// LOG("this->mouse_captured = " << this->mouse_captured << std::endl)
-			if(this->mouse_captured){
-				return;
-			}
-			if(mp.is_hovered()){
-				// defer setting hovered cursor to make sure that hovered cursor is set after the unhovered cursor
-				mp.context->run_from_ui_thread([context = mp.context, cursor](){
-					context->set_mouse_cursor(cursor);
-				});
-			}else{
-				mp.context->set_mouse_cursor(morda::mouse_cursor::arrow);
-			}
-		};
-	};
+	std::function<decltype(morda::mouse_proxy::hover_change_handler)(morda::mouse_cursor, cursor_iter&)> make_hover_change_handler =
+			[this](morda::mouse_cursor cursor, cursor_iter& iter){
+				return [this, cursor, &iter](mouse_proxy& mp, unsigned pointer_id){
+					// LOG("hover = " << mp.is_hovered() << std::endl)
+					// LOG("this->mouse_captured = " << this->mouse_captured << std::endl)
+					if(this->mouse_captured){
+						return;
+					}
+					if(mp.is_hovered()){
+						iter = this->context->cursor_manager.push(cursor);
+					}else{
+						this->context->cursor_manager.pop(iter);
+					}
+				};
+			};
 
 	{
 		auto caption = this->try_get_widget_as<mouse_proxy>("morda_caption_proxy");
 		ASSERT(caption)
 
-		caption->mouse_button_handler = make_mouse_button_handler();
+		caption->mouse_button_handler = make_mouse_button_handler(this->caption_cursor_iter);
 
 		caption->mouse_move_handler = [this](mouse_proxy&, const mouse_move_event& e){
 			if(this->mouse_captured){
@@ -257,13 +255,13 @@ void morda::window::setup_widgets(){
 			}
 			return false;
 		};
-		caption->hover_change_handler = make_hover_change_handler(morda::mouse_cursor::grab);
+		caption->hover_change_handler = make_hover_change_handler(morda::mouse_cursor::grab, this->caption_cursor_iter);
 	}
 
 	{
 		auto w = this->try_get_widget_as<mouse_proxy>("morda_lt_proxy");
 		ASSERT(w)
-		w->mouse_button_handler = make_mouse_button_handler();
+		w->mouse_button_handler = make_mouse_button_handler(this->lt_border_cursor_iter);
 		w->mouse_move_handler = [this](mouse_proxy&, const mouse_move_event& e){
 			if(this->mouse_captured){
 				using std::min;
@@ -274,14 +272,14 @@ void morda::window::setup_widgets(){
 			}
 			return false;
 		};
-		w->hover_change_handler = make_hover_change_handler(morda::mouse_cursor::top_left_corner);
+		w->hover_change_handler = make_hover_change_handler(morda::mouse_cursor::top_left_corner, this->lt_border_cursor_iter);
 		this->ltBorder = w;
 	}
 
 	{
 		auto w = this->try_get_widget_as<mouse_proxy>("morda_lb_proxy");
 		ASSERT(w)
-		w->mouse_button_handler = make_mouse_button_handler();
+		w->mouse_button_handler = make_mouse_button_handler(this->lb_border_cursor_iter);
 		w->mouse_move_handler = [this](mouse_proxy&, const mouse_move_event& e){
 			if(this->mouse_captured){
 				using std::min;
@@ -294,14 +292,14 @@ void morda::window::setup_widgets(){
 			}
 			return false;
 		};
-		w->hover_change_handler = make_hover_change_handler(morda::mouse_cursor::bottom_left_corner);
+		w->hover_change_handler = make_hover_change_handler(morda::mouse_cursor::bottom_left_corner, this->lb_border_cursor_iter);
 		this->lbBorder = w;
 	}
 
 	{
 		auto w = this->try_get_widget_as<mouse_proxy>("morda_rt_proxy");
 		ASSERT(w)
-		w->mouse_button_handler = make_mouse_button_handler();
+		w->mouse_button_handler = make_mouse_button_handler(this->rt_border_cursor_iter);
 		w->mouse_move_handler = [this](mouse_proxy&, const mouse_move_event& e){
 			if(this->mouse_captured){
 				using std::min;
@@ -314,14 +312,14 @@ void morda::window::setup_widgets(){
 			}
 			return false;
 		};
-		w->hover_change_handler = make_hover_change_handler(morda::mouse_cursor::top_right_corner);
+		w->hover_change_handler = make_hover_change_handler(morda::mouse_cursor::top_right_corner, this->rt_border_cursor_iter);
 		this->rtBorder = w;
 	}
 
 	{
 		auto w = this->try_get_widget_as<mouse_proxy>("morda_rb_proxy");
 		ASSERT(w)
-		w->mouse_button_handler = make_mouse_button_handler();
+		w->mouse_button_handler = make_mouse_button_handler(this->rb_border_cursor_iter);
 		w->mouse_move_handler = [this](mouse_proxy&, const mouse_move_event& e){
 			if(this->mouse_captured){
 				using std::max;
@@ -331,14 +329,14 @@ void morda::window::setup_widgets(){
 			}
 			return false;
 		};
-		w->hover_change_handler = make_hover_change_handler(morda::mouse_cursor::bottom_right_corner);
+		w->hover_change_handler = make_hover_change_handler(morda::mouse_cursor::bottom_right_corner, this->rb_border_cursor_iter);
 		this->rbBorder = w;
 	}
 
 	{
 		auto w = this->try_get_widget_as<mouse_proxy>("morda_l_proxy");
 		ASSERT(w)
-		w->mouse_button_handler = make_mouse_button_handler();
+		w->mouse_button_handler = make_mouse_button_handler(this->l_border_cursor_iter);
 		w->mouse_move_handler = [this](mouse_proxy&, const mouse_move_event& e){
 			if(this->mouse_captured){
 				using std::min;
@@ -349,14 +347,14 @@ void morda::window::setup_widgets(){
 			}
 			return false;
 		};
-		w->hover_change_handler = make_hover_change_handler(morda::mouse_cursor::left_side);
+		w->hover_change_handler = make_hover_change_handler(morda::mouse_cursor::left_side, this->l_border_cursor_iter);
 		this->lBorder = w;
 	}
 
 	{
 		auto w = this->try_get_widget_as<mouse_proxy>("morda_r_proxy");
 		ASSERT(w)
-		w->mouse_button_handler = make_mouse_button_handler();
+		w->mouse_button_handler = make_mouse_button_handler(this->r_border_cursor_iter);
 		w->mouse_move_handler = [this](mouse_proxy&, const mouse_move_event& e){
 			if(this->mouse_captured){
 				using std::max;
@@ -366,14 +364,14 @@ void morda::window::setup_widgets(){
 			}
 			return false;
 		};
-		w->hover_change_handler = make_hover_change_handler(morda::mouse_cursor::right_side);
+		w->hover_change_handler = make_hover_change_handler(morda::mouse_cursor::right_side, this->r_border_cursor_iter);
 		this->rBorder = w;
 	}
 
 	{
 		auto w = this->try_get_widget_as<mouse_proxy>("morda_t_proxy");
 		ASSERT(w)
-		w->mouse_button_handler = make_mouse_button_handler();
+		w->mouse_button_handler = make_mouse_button_handler(this->t_border_cursor_iter);
 		w->mouse_move_handler = [this](mouse_proxy&, const mouse_move_event& e){
 			if(this->mouse_captured){
 				using std::min;
@@ -384,14 +382,14 @@ void morda::window::setup_widgets(){
 			}
 			return false;
 		};
-		w->hover_change_handler = make_hover_change_handler(morda::mouse_cursor::top_side);
+		w->hover_change_handler = make_hover_change_handler(morda::mouse_cursor::top_side, this->t_border_cursor_iter);
 		this->tBorder = w;
 	}
 
 	{
 		auto w = this->try_get_widget_as<mouse_proxy>("morda_b_proxy");
 		ASSERT(w)
-		w->mouse_button_handler = make_mouse_button_handler();
+		w->mouse_button_handler = make_mouse_button_handler(this->b_border_cursor_iter);
 		w->mouse_move_handler = [this](mouse_proxy&, const mouse_move_event& e){
 			if(this->mouse_captured){
 				using std::max;
@@ -401,7 +399,7 @@ void morda::window::setup_widgets(){
 			}
 			return false;
 		};
-		w->hover_change_handler = make_hover_change_handler(morda::mouse_cursor::bottom_side);
+		w->hover_change_handler = make_hover_change_handler(morda::mouse_cursor::bottom_side, this->b_border_cursor_iter);
 		this->bBorder = w;
 	}
 }

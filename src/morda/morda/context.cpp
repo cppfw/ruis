@@ -14,7 +14,7 @@ context::context(
 		renderer(std::move(r)),
 		updater(std::move(u)),
 		run_from_ui_thread(std::move(run_from_ui_thread_function)),
-		set_mouse_cursor(std::move(set_mouse_cursor_function)),
+		cursor_manager(std::move(set_mouse_cursor_function)),
 		loader(*this),
 		inflater(*this),
 		units(dots_per_inch, dots_per_dp)

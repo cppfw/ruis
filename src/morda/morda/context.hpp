@@ -4,10 +4,10 @@
 
 #include "util/events.hpp"
 #include "util/mouse_cursor.hpp"
+#include "util/units.hpp"
+#include "util/mouse_cursor_manager.hpp"
 
 #include "updateable.hpp"
-
-#include "util/units.hpp"
 #include "inflater.hpp"
 #include "resource_loader.hpp"
 
@@ -28,7 +28,7 @@ public:
 
 	const std::function<void(std::function<void()>&&)> run_from_ui_thread;
 
-	const std::function<void(morda::mouse_cursor)> set_mouse_cursor;
+	mouse_cursor_manager cursor_manager;
 
 	/**
 	 * @brief Instantiation of the resource loader.

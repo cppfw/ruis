@@ -41,6 +41,17 @@ class window :
 	std::shared_ptr<widget> lbBorder;
 	std::shared_ptr<widget> rbBorder;
 
+	typedef decltype(std::declval<mouse_cursor_manager>().push(mouse_cursor::arrow)) cursor_iter;
+	cursor_iter caption_cursor_iter;
+	cursor_iter lt_border_cursor_iter;
+	cursor_iter rt_border_cursor_iter;
+	cursor_iter t_border_cursor_iter;
+	cursor_iter l_border_cursor_iter;
+	cursor_iter r_border_cursor_iter;
+	cursor_iter b_border_cursor_iter;
+	cursor_iter lb_border_cursor_iter;
+	cursor_iter rb_border_cursor_iter;
+
 	bool mouse_captured = false;
 	morda::vector2 capturePoint;
 
