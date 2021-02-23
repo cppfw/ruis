@@ -408,7 +408,7 @@ void morda::window::set_title(const std::string& str){
 	this->title->set_text(utki::to_utf32(str));
 }
 
-void morda::window::set_borders(sides<real> borders) {
+void morda::window::set_borders(sides<real> borders){
 	this->lBorder->get_layout_params().dims.x() = borders.left();
 	this->tBorder->get_layout_params().dims.y() = borders.top();
 	this->rBorder->get_layout_params().dims.x() = borders.right();

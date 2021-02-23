@@ -12,7 +12,7 @@ const morda::real splineControlLength_c = morda::real(100);
 
 wire_area::wire_area(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 		widget(std::move(c), desc),
-		size_container(this->context, desc)
+		pile(this->context, desc)
 {
 	for(const auto& p : desc){
 		if(!morda::is_property(p)){
@@ -29,8 +29,7 @@ wire_area::wire_area(std::shared_ptr<morda::context> c, const puu::forest& desc)
 	}
 }
 
-
-void wire_area::render(const morda::matrix4& matrix) const {
+void wire_area::render(const morda::matrix4& matrix)const{
 	this->container::render(matrix);
 	
 	for(auto& s : this->sockets){
@@ -64,15 +63,15 @@ void wire_area::render(const morda::matrix4& matrix) const {
 	}
 }
 
-bool wire_area::on_mouse_move(const morda::mouse_move_event& e) {
+bool wire_area::on_mouse_move(const morda::mouse_move_event& e){
 	if(this->grabbedSocket){
 		this->mousePos = e.pos;
 	}
 	return this->container::on_mouse_move(e);
 }
 
-void wire_area::lay_out() {
-	this->size_container::lay_out();
+void wire_area::lay_out(){
+	this->pile::lay_out();
 	
 	this->sockets = this->get_all_widgets<wire_socket>();
 	// TRACE(<< "this->sockets.size() = " << this->sockets.size() << std::endl)
