@@ -331,10 +331,8 @@ void gui::send_mouse_move(const vector2& pos, unsigned id){
 	}
 
 	if(this->root_widget->is_interactive()){
-		// TOOD: remove commented code
-		// this->root_widget->set_hovered(this->root_widget->rect().overlaps(pos), id);
+		this->root_widget->set_hovered(this->root_widget->rect().overlaps(pos), id);
 		this->root_widget->on_mouse_move(mouse_move_event{pos, id});
-		this->root_widget->update_hovering(pos, id);
 	}
 }
 
@@ -344,10 +342,8 @@ void gui::send_mouse_button(bool is_down, const vector2& pos, mouse_button butto
 	}
 
 	if(this->root_widget->is_interactive()){
-		// TODO: remove commented code
-		// this->root_widget->set_hovered(this->root_widget->rect().overlaps(pos), id);
+		this->root_widget->set_hovered(this->root_widget->rect().overlaps(pos), id);
 		this->root_widget->on_mouse_button(mouse_button_event{is_down, pos, button, id});
-		this->root_widget->update_hovering(pos, id);
 	}
 }
 

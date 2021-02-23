@@ -252,8 +252,6 @@ private:
 	void set_hovered(bool is_hovered, unsigned pointer_id);
 
 	void set_unhovered();
-
-	virtual void update_hovering(const morda::vector2& pos, unsigned pointer_id);
 public:
 
 	/**

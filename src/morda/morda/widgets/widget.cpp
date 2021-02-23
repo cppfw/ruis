@@ -417,10 +417,3 @@ void widget::set_hovered(bool is_hovered, unsigned pointer_id){
 
 	this->on_hover_change(pointer_id);
 }
-
-void widget::update_hovering(const morda::vector2& pos, unsigned pointer_id){
-	if(!this->is_interactive()){
-		return;
-	}
-	this->set_hovered(this->rect().overlaps(pos), pointer_id);
-}

@@ -70,8 +70,6 @@ private:
 			this->blocked = false;
 		}
 	};
-
-	void update_hovering(const morda::vector2& pos, unsigned pointer_id)override;
 protected:
 	/**
 	 * @brief Create layout parameters object specific for this container.

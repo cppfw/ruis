@@ -161,6 +161,13 @@ bool container::on_mouse_button(const mouse_button_event& e){
 					));
 			}
 
+			// widget has consumed the mouse button event,
+			// that means the rest of the underlying widgets are not hovered,
+			// update the hovered state of those
+			for(++i; i != this->children().rend(); ++i){
+				(*i)->set_hovered(false, e.pointer_id);
+			}
+
 			return true;
 		}
 	}
@@ -173,12 +180,27 @@ bool container::on_mouse_move(const mouse_move_event& e){
 
 	blocked_flag_guard blocked_guard(this->is_blocked);
 
-	// find widget which captures the mouse pointer currently, in case the mouse pointer is captured
-	widget* capturing_widget = nullptr;
-	auto i = this->mouse_capture_map.find(e.pointer_id);
-	if(i != this->mouse_capture_map.end()){
-		if(auto w = i->second.capturing_widget.lock()){
-			capturing_widget = w.get();
+	// check if mouse captured
+	{
+		auto i = this->mouse_capture_map.find(e.pointer_id);
+		if(i != this->mouse_capture_map.end()){
+			if(auto w = i->second.capturing_widget.lock()){
+				if(w->is_interactive()){
+					// when mouse pointer is captured, the capturing widget is always hovered, even if mouse pointer
+					// is outside of the widget's rectangle
+					w->set_hovered(true, e.pointer_id);
+
+					w->on_mouse_move(mouse_move_event{
+							e.pos - w->rect().p,
+							e.pointer_id
+						});
+
+					// doesn't matter what to return because parent widget also captured
+					// the mouse and in this case the return value is ignored
+					return true;
+				}
+			}
+			this->mouse_capture_map.erase(i);
 		}
 	}
 
@@ -191,11 +213,12 @@ bool container::on_mouse_move(const mouse_move_event& e){
 			continue;
 		}
 		
-		// in case the child widget does not capture the mouse pointer and the mouse pointer is not
-		// within the widget's rectangle, then do not send mouse move event to such child widget
-		if(!c->rect().overlaps(e.pos) && c.get() != capturing_widget){
+		if(!c->rect().overlaps(e.pos)){
+			c->set_hovered(false, e.pointer_id);
 			continue;
 		}
+
+		c->set_hovered(true, e.pointer_id);
 
 		// LOG("e.pos = " << e.pos << ", rect() = " << c->rect() << std::endl)
 		if(c->on_mouse_move(mouse_move_event{
@@ -203,6 +226,13 @@ bool container::on_mouse_move(const mouse_move_event& e){
 				e.pointer_id
 			}))
 		{
+			// widget has consumed the mouse move event,
+			// that means the rest of the underlying widgets are not hovered,
+			// update the hovered state of those
+			for(++i; i != this->children().rend(); ++i){
+				(*i)->set_hovered(false, e.pointer_id);
+			}
+
 			return true;
 		}
 	}
@@ -401,22 +431,5 @@ void container::on_enable_change(){
 	
 	for(auto& c : this->children()){
 		c->set_enabled(this->is_enabled());
-	}
-}
-
-void container::update_hovering(const morda::vector2& pos, unsigned pointer_id){
-	this->widget::update_hovering(pos, pointer_id);
-
-	if(!this->is_hovered(pointer_id)){
-		return;
-	}
-
-	// container is hovered, need to update hovering of all the children
-	blocked_flag_guard blocked_guard(this->is_blocked);
-	for(auto& c : this->children()){
-		c->update_hovering(
-				pos - this->rect().p,
-				pointer_id
-			);
 	}
 }
