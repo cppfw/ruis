@@ -15,19 +15,19 @@ wire_socket::wire_socket(std::shared_ptr<morda::context> c, const puu::forest& d
 		if(p.value == "outlet"){
 			auto v = morda::get_property_value(p);
 			if(v == "left"){
-				this->outlet_v = Outlet_e::LEFT;
+				this->outlet_orientation = orientation::left;
 			}else if(v == "right"){
-				this->outlet_v = Outlet_e::RIGHT;
+				this->outlet_orientation = orientation::right;
 			}else if(v == "top"){
-				this->outlet_v = Outlet_e::TOP;
+				this->outlet_orientation = orientation::top;
 			}else if(v == "bottom"){
-				this->outlet_v = Outlet_e::BOTTOM;
+				this->outlet_orientation = orientation::bottom;
 			}
 		}
 	}
 }
 
-void wire_socket::connect(const std::shared_ptr<wire_socket>& o) {
+void wire_socket::connect(const std::shared_ptr<wire_socket>& o){
 	// disconnect existing connection
 	this->disconnect();
 	
@@ -42,7 +42,7 @@ void wire_socket::connect(const std::shared_ptr<wire_socket>& o) {
 	this->onConnected(*this->slave);
 }
 
-void wire_socket::disconnect() {
+void wire_socket::disconnect(){
 	if(this->slave){
 		ASSERT(!this->primary.lock())
 		ASSERT(this->slave->primary.lock().get() == this)
@@ -58,27 +58,25 @@ void wire_socket::disconnect() {
 	}
 }
 
-
-
 std::array<morda::vector2, 2> wire_socket::outletPos() const noexcept{
 	morda::vector2 dir;
 	morda::vector2 pos;
-	switch(this->outlet_v){
+	switch(this->outlet_orientation){
 		default:
 			ASSERT(false)
-		case Outlet_e::BOTTOM:
+		case orientation::bottom:
 			pos = this->rect().p + this->rect().d.comp_mul(morda::vector2(0.5, 1));
 			dir = morda::vector2(0, 1);
 			break;
-		case Outlet_e::LEFT:
+		case orientation::left:
 			pos = this->rect().p + this->rect().d.comp_mul(morda::vector2(0, 0.5));
 			dir = morda::vector2(-1, 0);
 			break;
-		case Outlet_e::RIGHT:
+		case orientation::right:
 			pos = this->rect().p + this->rect().d.comp_mul(morda::vector2(1, 0.5));
 			dir = morda::vector2(1, 0);
 			break;
-		case Outlet_e::TOP:
+		case orientation::top:
 			pos = this->rect().p + this->rect().d.comp_mul(morda::vector2(0.5, 0));
 			dir = morda::vector2(0, -1);
 			break;
@@ -86,7 +84,7 @@ std::array<morda::vector2, 2> wire_socket::outletPos() const noexcept{
 	return {{pos, dir}};
 }
 
-bool wire_socket::on_mouse_button(const morda::mouse_button_event& e) {
+bool wire_socket::on_mouse_button(const morda::mouse_button_event& e){
 	if(e.button != morda::mouse_button::left){
 		return false;
 	}
@@ -112,7 +110,7 @@ bool wire_socket::on_mouse_button(const morda::mouse_button_event& e) {
 	return false;
 }
 
-void wire_socket::on_hover_change(unsigned pointerID) {
+void wire_socket::on_hover_change(unsigned pointerID){
 //	TRACE(<< "Hover changed: " << this->isHovered() << " " << this << std::endl)
 	if(auto wa = this->find_ancestor<wire_area>()){
 		if(this->is_hovered()){
@@ -125,7 +123,7 @@ void wire_socket::on_hover_change(unsigned pointerID) {
 	}
 }
 
-std::shared_ptr<wire_socket> wire_socket::getRemote() {
+std::shared_ptr<wire_socket> wire_socket::getRemote(){
 	if(this->slave){
 		return this->slave;
 	}

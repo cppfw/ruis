@@ -595,7 +595,7 @@ public:
 	}
 
 	//if timer is already armed, it will re-set the expiration time
-	void Arm(std::uint32_t dt){
+	void Arm(uint32_t dt){
 		itimerspec ts;
 		ts.it_value.tv_sec = dt / 1000;
 		ts.it_value.tv_nsec = (dt % 1000) * 1000000;
@@ -1299,7 +1299,7 @@ int OnUpdateTimerExpired(int fd, int events, void* data){
 
 	auto& app = application::inst();
 
-	std::uint32_t dt = app.gui.update();
+	uint32_t dt = app.gui.update();
 	if(dt == 0){
 		// do not arm the timer and do not clear the flag
 	}else{

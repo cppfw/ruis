@@ -7,14 +7,14 @@ class wire_socket : virtual public morda::widget{
 
 	unsigned groupId;
 public:
-	enum class Outlet_e {
-		LEFT,
-		TOP,
-		RIGHT,
-		BOTTOM
+	enum class orientation{
+		left,
+		top,
+		right,
+		bottom
 	};
 private:
-	Outlet_e outlet_v = Outlet_e::BOTTOM;
+	orientation outlet_orientation = orientation::bottom;
 
 	std::weak_ptr<wire_socket> primary;
 	std::shared_ptr<wire_socket> slave;
@@ -33,12 +33,12 @@ public:
 	/**
 	 * @brief Alignment of wire out.
 	 */
-	decltype(outlet_v) outlet()const noexcept {
-		return this->outlet_v;
+	orientation get_orientation()const noexcept{
+		return this->outlet_orientation;
 	}
 
-	void setOutlet(decltype(outlet_v) o) {
-		this->outlet_v = o;
+	void set_orientation(orientation o){
+		this->outlet_orientation = o;
 	}
 
 	/**
