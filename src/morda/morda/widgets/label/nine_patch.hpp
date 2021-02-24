@@ -39,6 +39,13 @@ class nine_patch :
 
 	const std::shared_ptr<pile> inner_content;
 
+protected:
+	bool on_mouse_move(const mouse_move_event& e)override{
+		return this->column::on_mouse_move(e);
+	}
+	bool on_mouse_button(const mouse_button_event& e)override{
+		return this->column::on_mouse_button(e);
+	}
 public:
 	nine_patch(const nine_patch&) = delete;
 	nine_patch& operator=(const nine_patch&) = delete;

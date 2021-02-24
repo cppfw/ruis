@@ -42,7 +42,7 @@ std::shared_ptr<widget> overlay::show_context_menu(std::shared_ptr<widget> w, ve
 				c->remove_from_parent();
 			});
 		}
-		return true;
+		return false;
 	};
 
 	c->push_back(w);

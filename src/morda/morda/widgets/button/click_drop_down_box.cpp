@@ -61,6 +61,12 @@ const auto drop_down_menu_layout = puu::read(R"qwertyuiop(
 			@widget{
 				id{morda_min_size_forcer}
 			}
+			@mouse_proxy{
+				layout{
+					dx{fill} dy{fill}
+				}
+				id{morda_drop_down_menu_mouse_proxy}
+			}
 			@nine_patch{
 				layout{
 					dx{max}
@@ -72,12 +78,6 @@ const auto drop_down_menu_layout = puu::read(R"qwertyuiop(
 					}
 					id{morda_contextmenu_content}
 				}
-			}
-			@mouse_proxy{
-				layout{
-					dx{fill} dy{fill}
-				}
-				id{morda_drop_down_menu_mouse_proxy}
 			}
 		}
 	)qwertyuiop");
@@ -100,11 +100,33 @@ click_drop_down_box::click_drop_down_box(std::shared_ptr<morda::context> c, cons
 }
 
 bool click_drop_down_box::on_mouse_button(const mouse_button_event& e){
+	if(e.is_down){
+		++this->num_mouse_buttons_pressed;
+	}else{
+		ASSERT(this->num_mouse_buttons_pressed != 0)
+		--this->num_mouse_buttons_pressed;
+	}
+
 	if(!e.is_down){
 		this->handle_mouse_button_up(true);
 	}
 
 	return this->nine_patch_push_button::on_mouse_button(e);
+}
+
+bool click_drop_down_box::on_mouse_move(const mouse_move_event& e){
+	if(auto cm = this->current_drop_down_menu.lock()){
+		if(this->num_mouse_buttons_pressed != 0){
+			cm->on_mouse_move(
+					mouse_move_event{
+						e.pos + this->get_absolute_pos() - cm->get_absolute_pos(),
+						e.pointer_id
+					}
+				);
+    	}
+	}
+
+    return this->nine_patch_push_button::on_mouse_move(e);
 }
 
 void click_drop_down_box::show_drop_down_menu(){
@@ -139,6 +161,7 @@ void click_drop_down_box::show_drop_down_menu(){
 
 	np->get_widget_as<mouse_proxy>("morda_drop_down_menu_mouse_proxy").mouse_button_handler =
 			[this](mouse_proxy&, const mouse_button_event& e) -> bool{
+				// LOG("button down = " << e.is_down << std::endl)
 				if(!e.is_down){
 					this->handle_mouse_button_up(false);
 				}
@@ -190,13 +213,16 @@ std::shared_ptr<widget> click_drop_down_box::wrap_item(std::shared_ptr<widget>&&
 
 	// TODO: which pointer id?
 	mp->hover_change_handler = [this, cl_weak, index](mouse_proxy& w, unsigned id){
+		// LOG("hover index = " << index << std::endl)
 		if(auto c = cl_weak.lock()){
 			c->set_visible(w.is_hovered(id));
 		}
 		if(w.is_hovered(id)){
 			this->hovered_index = int(index);
+			// LOG("this->hovered_index = " << this->hovered_index << std::endl)
 		}else{
 			if(this->hovered_index >= 0 && decltype(index)(this->hovered_index) == index){
+				// LOG("this->hovered_index = -1;" << std::endl)
 				this->hovered_index = -1;
 			}
 		}

@@ -22,7 +22,6 @@ protected:
 	void on_hover_change(unsigned pointerID)override{
 		this->push_button::on_hover_change(pointerID);
 	}
-
 };
 
 }
