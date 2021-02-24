@@ -110,8 +110,8 @@ bool wire_socket::on_mouse_button(const morda::mouse_button_event& e){
 	return false;
 }
 
-void wire_socket::on_hover_change(unsigned pointerID){
-//	TRACE(<< "Hover changed: " << this->isHovered() << " " << this << std::endl)
+void wire_socket::on_hover_change(unsigned pointer_id){
+	// LOG("Hover changed: " << this->is_hovered(pointer_id) << std::endl)
 	if(auto wa = this->find_ancestor<wire_area>()){
 		if(this->is_hovered()){
 			wa->hoveredSocket = utki::make_shared_from(*this);

@@ -64,8 +64,16 @@ void wire_area::render(const morda::matrix4& matrix)const{
 }
 
 bool wire_area::on_mouse_move(const morda::mouse_move_event& e){
+	// LOG("mm" << std::endl)
 	if(this->grabbedSocket){
 		this->mousePos = e.pos;
+		return this->container::on_mouse_move(
+				morda::mouse_move_event{
+					e.pos,
+					e.pointer_id,
+					true
+				}
+			);
 	}
 	return this->container::on_mouse_move(e);
 }

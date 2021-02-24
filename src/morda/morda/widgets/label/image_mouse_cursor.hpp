@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../widget.hpp"
+#include "../group/pile.hpp"
 
 #include "../../res/cursor.hpp"
 
@@ -13,7 +13,7 @@ namespace morda{
  *
  * @param cursor - reference to cursor resource.
  */
-class image_mouse_cursor : virtual public widget{
+class image_mouse_cursor : public pile{
 	std::shared_ptr<const res::cursor> cursor;
 
 	std::shared_ptr<const res::image::texture> quadTex;

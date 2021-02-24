@@ -70,6 +70,8 @@ private:
 			this->blocked = false;
 		}
 	};
+
+
 protected:
 	/**
 	 * @brief Create layout parameters object specific for this container.

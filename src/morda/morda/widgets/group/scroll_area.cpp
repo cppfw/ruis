@@ -25,7 +25,8 @@ bool scroll_area::on_mouse_move(const mouse_move_event& e){
 	vector2 d = -this->cur_scroll_pos;
 	return this->container::on_mouse_move(mouse_move_event{
 			e.pos - d,
-			e.pointer_id
+			e.pointer_id,
+			e.ignore_mouse_capture
 		});
 }
 

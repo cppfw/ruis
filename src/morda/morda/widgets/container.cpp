@@ -181,14 +181,15 @@ bool container::on_mouse_move(const mouse_move_event& e){
 	blocked_flag_guard blocked_guard(this->is_blocked);
 
 	// check if mouse captured
-	{
+	if(!e.ignore_mouse_capture){
 		auto i = this->mouse_capture_map.find(e.pointer_id);
 		if(i != this->mouse_capture_map.end()){
 			if(auto w = i->second.capturing_widget.lock()){
 				if(w->is_interactive()){
 					w->on_mouse_move(mouse_move_event{
 							e.pos - w->rect().p,
-							e.pointer_id
+							e.pointer_id,
+							e.ignore_mouse_capture
 						});
 					w->set_hovered(w->rect().overlaps(e.pos), e.pointer_id);
 
@@ -220,7 +221,8 @@ bool container::on_mouse_move(const mouse_move_event& e){
 		// LOG("e.pos = " << e.pos << ", rect() = " << c->rect() << std::endl)
 		if(c->on_mouse_move(mouse_move_event{
 				e.pos - c->rect().p,
-				e.pointer_id
+				e.pointer_id,
+				e.ignore_mouse_capture
 			}))
 		{
 			// widget has consumed the mouse move event,

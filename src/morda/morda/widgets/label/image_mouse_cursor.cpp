@@ -7,7 +7,8 @@
 using namespace morda;
 
 image_mouse_cursor::image_mouse_cursor(std::shared_ptr<morda::context> c, const puu::forest& desc) :
-		widget(std::move(c), desc)
+		widget(std::move(c), desc),
+		pile(this->context, desc)
 {
 	for(const auto& p : desc){
 		if(!is_property(p)){
@@ -32,10 +33,12 @@ bool image_mouse_cursor::on_mouse_move(const mouse_move_event& e){
 	if(e.pointer_id == 0){
 		this->cursorPos = e.pos;
 	}
-	return false;
+	return this->pile::on_mouse_move(e);
 }
 
 void image_mouse_cursor::render(const morda::matrix4& matrix)const{
+	this->pile::render(matrix);
+
 	if(!this->cursor){
 		return;
 	}
