@@ -2,7 +2,7 @@
 
 using namespace morda;
 
-ratio_proxy::ratio_proxy(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+ratio_proxy::ratio_proxy(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
 		morda::widget(std::move(c), desc)
 {
 	for(const auto& p : desc){

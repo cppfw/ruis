@@ -10,7 +10,7 @@ namespace morda{
  */
 class row : public linear_container{
 public:
-	row(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+	row(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
 			widget(std::move(c), desc),
 			linear_container(this->context, desc, false)
 	{}

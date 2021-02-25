@@ -17,7 +17,7 @@ void image_button::on_press_change(){
 	this->button::on_press_change();
 }
 
-image_button::image_button(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+image_button::image_button(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
 		widget(std::move(c), desc),
 		button(this->context, desc),
 		image(this->context, desc)

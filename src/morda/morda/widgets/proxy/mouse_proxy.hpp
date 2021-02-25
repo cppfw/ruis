@@ -10,7 +10,7 @@ namespace morda{
  */
 class mouse_proxy : virtual public widget{
 public:
-	mouse_proxy(std::shared_ptr<morda::context> c, const puu::forest& desc);
+	mouse_proxy(std::shared_ptr<morda::context> c, const treeml::forest& desc);
 
 	mouse_proxy(const mouse_proxy&) = delete;
 	mouse_proxy& operator=(const mouse_proxy&) = delete;

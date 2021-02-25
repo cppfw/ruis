@@ -9,7 +9,7 @@
 class path_widget : virtual public morda::widget{
 	morda::path_vao vba;
 public:
-	path_widget(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+	path_widget(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
 			morda::widget(std::move(c), desc)
 	{}
 
@@ -42,7 +42,7 @@ public:
 	{
 		this->gui.initStandardWidgets(*this->get_res_file("../../res/morda_res/"));
 	
-		this->gui.set_root(std::make_shared<path_widget>(this->gui.context, puu::forest()));
+		this->gui.set_root(std::make_shared<path_widget>(this->gui.context, treeml::forest()));
 	}
 };
 

@@ -10,9 +10,9 @@
 namespace morda{
 
 /**
- * @brief Inflater of GUI from puu description.
- * This class is used to inflate GUI widget hierarchies from puu descriptions.
- * The GUI can be described in puu with the following basic rules:
+ * @brief Inflater of GUI from treeml description.
+ * This class is used to inflate GUI widget hierarchies from treeml descriptions.
+ * The GUI can be described in treeml with the following basic rules:
  * A widget name should start with capital letter. A widget property should start
  * with small letter. Specific widgets define more detailed rules of their description.
  */
@@ -29,7 +29,7 @@ private:
 			std::function<
 					std::shared_ptr<morda::widget>(
 							std::shared_ptr<morda::context>,
-							const puu::forest&
+							const treeml::forest&
 						)
 				>
 		>
@@ -49,7 +49,7 @@ public:
 	template <class T> void register_widget(const std::string& widget_name){
 		this->add_factory(
 				std::string(widget_name),
-				[](std::shared_ptr<morda::context> c, const puu::forest& desc) -> std::shared_ptr<morda::widget> {
+				[](std::shared_ptr<morda::context> c, const treeml::forest& desc) -> std::shared_ptr<morda::widget> {
 					return std::make_shared<T>(std::move(c), desc);
 				}
 			);
@@ -69,14 +69,14 @@ public:
 	 * @param end - begin iterator into the GUI script.
 	 * @return the inflated widget.
 	 */
-	std::shared_ptr<widget> inflate(puu::forest::const_iterator begin, puu::forest::const_iterator end);
+	std::shared_ptr<widget> inflate(treeml::forest::const_iterator begin, treeml::forest::const_iterator end);
 
 	/**
 	 * @brief Create widgets hierarchy from GUI script.
 	 * @param gui_script - GUI script to use.
 	 * @return the inflated widget.
 	 */
-	std::shared_ptr<widget> inflate(const puu::forest& gui_script){
+	std::shared_ptr<widget> inflate(const treeml::forest& gui_script){
 		return this->inflate(gui_script.begin(), gui_script.end());
 	}
 
@@ -86,7 +86,7 @@ public:
 	 * @param gui_script - gui script to inflate widget from.
 	 * @return the inflated widget.
 	 */
-	template <typename T> std::shared_ptr<T> inflate_as(const puu::forest& gui_script){
+	template <typename T> std::shared_ptr<T> inflate_as(const treeml::forest& gui_script){
 		return std::dynamic_pointer_cast<T>(this->inflate(gui_script));
 	}
 
@@ -133,30 +133,30 @@ public:
 
 private:
 	struct widget_template{
-		puu::tree templ;
+		treeml::tree templ;
 		std::set<std::string> vars;
 	};
 
-	widget_template parse_template(const std::string& name, const puu::forest& chain);
+	widget_template parse_template(const std::string& name, const treeml::forest& chain);
 
 	std::vector<std::map<std::string, widget_template>> templates;
 
 	const widget_template* find_template(const std::string& name)const;
 
-	void push_templates(const puu::forest& chain);
+	void push_templates(const treeml::forest& chain);
 
 	void pop_templates();
 
 	// variable name-value mapping
-	std::vector<std::map<std::string, puu::forest>> variables;
+	std::vector<std::map<std::string, treeml::forest>> variables;
 
-	const puu::forest* find_variable(const std::string& name)const;
+	const treeml::forest* find_variable(const std::string& name)const;
 
-	void push_variables(const puu::forest& trees);
+	void push_variables(const treeml::forest& trees);
 
 	void pop_variables();
 
-	void push_defs(const puu::forest& chain);
+	void push_defs(const treeml::forest& chain);
 	void pop_defs();
 };
 

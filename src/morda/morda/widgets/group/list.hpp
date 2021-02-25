@@ -32,7 +32,7 @@ class list_widget :
 	real first_tail_item_offset = real(0);
 
 protected:
-	list_widget(std::shared_ptr<morda::context> c, const puu::forest& desc, bool vertical);
+	list_widget(std::shared_ptr<morda::context> c, const treeml::forest& desc, bool vertical);
 public:
 	list_widget(const list_widget&) = delete;
 	list_widget& operator=(const list_widget&) = delete;
@@ -160,7 +160,7 @@ private:
  */
 class pan_list : public list_widget{
 public:
-	pan_list(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+	pan_list(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
 			widget(std::move(c), desc),
 			list_widget(this->context, desc, false)
 	{}
@@ -175,7 +175,7 @@ public:
  */
 class list : public list_widget{
 public:
-	list(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+	list(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
 			widget(std::move(c), desc),
 			list_widget(this->context, desc, true)
 	{}

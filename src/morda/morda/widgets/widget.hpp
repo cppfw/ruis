@@ -6,7 +6,7 @@
 
 #include <utki/shared.hpp>
 
-#include <puu/tree.hpp>
+#include <treeml/tree.hpp>
 
 #include <r4/matrix.hpp>
 #include <r4/vector.hpp>
@@ -84,7 +84,7 @@ public:
 		vector2 dims = vector2(layout_params::min);
 
 	public:
-		layout_params(const puu::forest& desc, const morda::units& units);
+		layout_params(const treeml::forest& desc, const morda::units& units);
 
 		virtual ~layout_params()noexcept{}
 	};
@@ -154,7 +154,7 @@ public:
 private:
 	bool relayoutNeeded = true;
 
-	puu::forest layout_desc;
+	treeml::forest layout_desc;
 
 	mutable std::unique_ptr<layout_params> layoutParams;
 public:
@@ -378,7 +378,7 @@ public:
 	 * @param c - context to which this widget belongs.
 	 * @param desc - widget description.
 	 */
-	widget(std::shared_ptr<morda::context> c, const puu::forest& desc);
+	widget(std::shared_ptr<morda::context> c, const treeml::forest& desc);
 public:
 
 	virtual ~widget()noexcept{}

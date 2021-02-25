@@ -68,7 +68,7 @@ public:
 private:
 	mutable std::map<real, std::weak_ptr<image_matrix>> cache;
 	
-	static std::shared_ptr<nine_patch> load(morda::context& ctx, const ::puu::forest& desc, const papki::file& fi);
+	static std::shared_ptr<nine_patch> load(morda::context& ctx, const ::treeml::forest& desc, const papki::file& fi);
 };
 
 }}

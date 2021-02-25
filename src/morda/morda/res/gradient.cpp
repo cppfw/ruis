@@ -59,7 +59,7 @@ morda::res::gradient::gradient(std::shared_ptr<morda::context> c, std::vector<st
 
 
 
-std::shared_ptr<gradient> gradient::load(morda::context& ctx, const puu::forest& desc, const papki::file& fi) {
+std::shared_ptr<gradient> gradient::load(morda::context& ctx, const treeml::forest& desc, const papki::file& fi) {
 	bool vertical = false;
 
 	std::vector<std::tuple<real,uint32_t>> stops;

@@ -21,7 +21,7 @@ this_cxxflags += `pkg-config --cflags freetype2`
 
 this_ldlibs += -lpthread `pkg-config --libs freetype2` -lz
 
-this_ldlibs += -lpapki -lpuu -lsvgdom -lsvgren -lpng -ljpeg -lm
+this_ldlibs += -lpapki -ltreeml -lsvgdom -lsvgren -lpng -ljpeg -lm
 
 # TODO: uncomment when probe is developed
 # $(eval $(prorab-build-lib))

@@ -16,7 +16,7 @@ protected:
 	bool on_mouse_button(const mouse_button_event& event)override;
 	
 public:
-	toggle_button(std::shared_ptr<morda::context> c, const puu::forest& desc);
+	toggle_button(std::shared_ptr<morda::context> c, const treeml::forest& desc);
 	
 	/**
 	 * @brief Change checked state to opposite.

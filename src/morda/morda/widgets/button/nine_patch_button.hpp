@@ -36,7 +36,7 @@ public:
 	}
 	
 protected:
-	nine_patch_button(std::shared_ptr<morda::context> c, const puu::forest& desc);
+	nine_patch_button(std::shared_ptr<morda::context> c, const treeml::forest& desc);
 	
 	void on_press_change()override;
 };

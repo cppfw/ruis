@@ -7,7 +7,7 @@
 using namespace morda;
 
 namespace{
-const auto layout_c = puu::read(R"qwertyuiop(
+const auto layout_c = treeml::read(R"qwertyuiop(
 	@pile{
 		layout{dx{max}}
 		@color{
@@ -50,7 +50,7 @@ const auto layout_c = puu::read(R"qwertyuiop(
 )qwertyuiop");
 }
 
-collapse_area::collapse_area(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+collapse_area::collapse_area(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
 		widget(std::move(c), desc),
 		column(nullptr, layout_c)
 {

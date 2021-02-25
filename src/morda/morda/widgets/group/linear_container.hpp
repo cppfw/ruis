@@ -18,7 +18,7 @@ class linear_container :
 	linear_container& operator=(const linear_container&) = delete;
 
 public:
-	linear_container(std::shared_ptr<morda::context> c, const puu::forest& desc, bool vertical);
+	linear_container(std::shared_ptr<morda::context> c, const treeml::forest& desc, bool vertical);
 
 	void lay_out() override;
 
@@ -34,7 +34,7 @@ public:
 		 * @param desc - description of the layout parameters.
 		 * @param units - screen units information.
 		 */
-		layout_params(const puu::forest& desc, const morda::units& units);
+		layout_params(const treeml::forest& desc, const morda::units& units);
 
 		/**
 		 * @brief Weight of the widget.
@@ -45,7 +45,7 @@ public:
 	};
 
 private:
-	std::unique_ptr<widget::layout_params> create_layout_params(const puu::forest& desc)const override;
+	std::unique_ptr<widget::layout_params> create_layout_params(const treeml::forest& desc)const override;
 };
 
 

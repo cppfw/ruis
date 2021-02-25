@@ -10,7 +10,7 @@ const morda::real antialiasWidth_c = morda::real(0.55f);
 const morda::real splineControlLength_c = morda::real(100);
 }
 
-wire_area::wire_area(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+wire_area::wire_area(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
 		widget(std::move(c), desc),
 		pile(this->context, desc)
 {

@@ -42,7 +42,7 @@ atlas_image::atlas_image(std::shared_ptr<morda::context> c, std::shared_ptr<res:
 		vao(this->context->renderer->pos_tex_quad_01_vao)
 {}
 
-std::shared_ptr<atlas_image> atlas_image::load(morda::context& ctx, const puu::forest& desc, const papki::file& fi){
+std::shared_ptr<atlas_image> atlas_image::load(morda::context& ctx, const treeml::forest& desc, const papki::file& fi){
 	std::shared_ptr<res::texture> tex;
 	rectangle rect(-1, -1);
 
@@ -187,7 +187,7 @@ public:
 };
 }
 
-std::shared_ptr<image> image::load(morda::context& ctx, const puu::forest& desc, const papki::file& fi) {
+std::shared_ptr<image> image::load(morda::context& ctx, const treeml::forest& desc, const papki::file& fi) {
 	for(auto& p : desc){
 		if(p.value == "file"){
 			fi.set_path(get_property_value(p).to_string());

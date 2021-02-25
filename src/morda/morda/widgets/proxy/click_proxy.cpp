@@ -2,7 +2,7 @@
 
 using namespace morda;
 
-click_proxy::click_proxy(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+click_proxy::click_proxy(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
         widget(std::move(c), desc)
 {}
 

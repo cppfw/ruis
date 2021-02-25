@@ -11,11 +11,11 @@
 
 using namespace morda;
 
-tree_view::tree_view(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+tree_view::tree_view(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
 		widget(std::move(c), desc),
-		scroll_area(nullptr, puu::forest())
+		scroll_area(nullptr, treeml::forest())
 {
-	this->item_list = std::make_shared<morda::list>(this->context, puu::forest());
+	this->item_list = std::make_shared<morda::list>(this->context, treeml::forest());
 	this->push_back(this->item_list);
 
 	auto& lp = this->get_layout_params(*this->item_list);
@@ -52,7 +52,7 @@ size_t tree_view::provider::count()const noexcept{
 }
 
 namespace{
-const puu::forest plus_minus_layout = puu::read(R"qwertyuiop(
+const treeml::forest plus_minus_layout = treeml::read(R"qwertyuiop(
 		@pile{
 			@image{
 				id{plusminus}
@@ -66,7 +66,7 @@ const puu::forest plus_minus_layout = puu::read(R"qwertyuiop(
 		}
 	)qwertyuiop");
 
-const puu::forest vert_line_layout = puu::read(R"qwertyuiop(
+const treeml::forest vert_line_layout = treeml::read(R"qwertyuiop(
 		@pile{
 			layout{dx{${morda_tree_view_indent}} dy{fill}}
 			@color{
@@ -76,7 +76,7 @@ const puu::forest vert_line_layout = puu::read(R"qwertyuiop(
 		}
 	)qwertyuiop");
 
-const puu::forest line_end_layout = puu::read(R"qwertyuiop(
+const treeml::forest line_end_layout = treeml::read(R"qwertyuiop(
 		@pile{
 			layout{dx{${morda_tree_view_indent}} dy{max}}
 			@column{
@@ -98,7 +98,7 @@ const puu::forest line_end_layout = puu::read(R"qwertyuiop(
 		}
 	)qwertyuiop");
 
-const puu::forest line_middle_layout = puu::read(R"qwertyuiop(
+const treeml::forest line_middle_layout = treeml::read(R"qwertyuiop(
 		@pile{
 			layout{dx{${morda_tree_view_indent}} dy{max}}
 			@color{
@@ -116,7 +116,7 @@ const puu::forest line_middle_layout = puu::read(R"qwertyuiop(
 		}
 	)qwertyuiop");
 
-const puu::forest empty_layout = puu::read(R"qwertyuiop(
+const treeml::forest empty_layout = treeml::read(R"qwertyuiop(
 		@widget{layout{dx{${morda_tree_view_indent}}dy{0}}}
 	)qwertyuiop");
 }
@@ -141,7 +141,7 @@ std::shared_ptr<widget> tree_view::provider::get_widget(size_t index){
 
 	ASSERT_INFO(this->get_list(), "provider is not set to a list_widget")
 
-	auto ret = std::make_shared<morda::row>(this->get_list()->context, puu::forest());
+	auto ret = std::make_shared<morda::row>(this->get_list()->context, treeml::forest());
 
 	ASSERT(isLastItemInParent.size() == path.size())
 

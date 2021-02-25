@@ -7,7 +7,7 @@
 
 using namespace morda;
 
-linear_container::layout_params::layout_params(const puu::forest& desc, const morda::units& units) :
+linear_container::layout_params::layout_params(const treeml::forest& desc, const morda::units& units) :
 		container::layout_params(desc, units)
 {
 	for(const auto& p : desc){
@@ -21,14 +21,14 @@ linear_container::layout_params::layout_params(const puu::forest& desc, const mo
 	}
 }
 
-std::unique_ptr<widget::layout_params> linear_container::create_layout_params(const puu::forest& desc)const{
+std::unique_ptr<widget::layout_params> linear_container::create_layout_params(const treeml::forest& desc)const{
 	return utki::make_unique<layout_params>(desc, this->context->units);
 }
 
-linear_container::linear_container(std::shared_ptr<morda::context> c, const puu::forest& desc, bool vertical) :
+linear_container::linear_container(std::shared_ptr<morda::context> c, const treeml::forest& desc, bool vertical) :
 		widget(std::move(c), desc),
 		container(this->context, desc),
-		oriented_widget(this->context, puu::forest(), vertical)
+		oriented_widget(this->context, treeml::forest(), vertical)
 {}
 
 namespace{

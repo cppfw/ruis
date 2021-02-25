@@ -7,7 +7,7 @@ using namespace morda;
 
 namespace{
 
-const auto D_Layout = puu::read(R"qwertyuiop(
+const auto D_Layout = treeml::read(R"qwertyuiop(
 		@image{
 			image{morda_img_radiobutton_bg}
 		}
@@ -18,7 +18,7 @@ const auto D_Layout = puu::read(R"qwertyuiop(
 
 }
 
-radio_button::radio_button(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+radio_button::radio_button(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
 		widget(std::move(c), desc),
 		button(this->context, desc),
 		toggle_button(this->context, desc),

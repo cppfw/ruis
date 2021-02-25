@@ -6,7 +6,7 @@ using namespace morda;
 
 namespace{
 
-const auto D_Layout = puu::read(R"qwertyuiop(
+const auto D_Layout = treeml::read(R"qwertyuiop(
 		@image{
 			id{morda_checkbox_check}
 			image{morda_img_checkbox_tick}
@@ -15,7 +15,7 @@ const auto D_Layout = puu::read(R"qwertyuiop(
 
 }
 
-check_box::check_box(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+check_box::check_box(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
 		widget(std::move(c), desc),
 		button(this->context, desc),
 		toggle_button(this->context, desc),

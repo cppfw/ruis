@@ -6,7 +6,7 @@
 
 using namespace morda;
 
-gradient::gradient(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+gradient::gradient(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
 		widget(std::move(c), desc)
 {
 	for(const auto& p : desc){

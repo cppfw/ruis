@@ -6,7 +6,7 @@
 
 using namespace morda;
 
-image_mouse_cursor::image_mouse_cursor(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+image_mouse_cursor::image_mouse_cursor(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
 		widget(std::move(c), desc),
 		pile(this->context, desc)
 {

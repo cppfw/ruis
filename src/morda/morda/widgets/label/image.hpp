@@ -37,7 +37,7 @@ class image :
 	mutable std::shared_ptr<vertex_array> vao;
 
 public:
-	image(std::shared_ptr<morda::context> c, const puu::forest& desc);
+	image(std::shared_ptr<morda::context> c, const treeml::forest& desc);
 public:
 	virtual ~image()noexcept{}
 

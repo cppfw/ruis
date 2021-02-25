@@ -30,7 +30,7 @@ class scroll_bar :
 	float clickPoint;
 
 protected:
-	scroll_bar(std::shared_ptr<morda::context> c, const puu::forest& desc, bool vertical);
+	scroll_bar(std::shared_ptr<morda::context> c, const treeml::forest& desc, bool vertical);
 
 	void on_fraction_change()override;
 
@@ -46,7 +46,7 @@ private:
 
 class vertical_scroll_bar : public scroll_bar{
 public:
-	vertical_scroll_bar(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+	vertical_scroll_bar(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
 			widget(std::move(c), desc),
 			scroll_bar(this->context, desc, true)
 	{}
@@ -57,7 +57,7 @@ public:
 
 class horizontal_scroll_bar : public scroll_bar{
 public:
-	horizontal_scroll_bar(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+	horizontal_scroll_bar(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
 			widget(std::move(c), desc),
 			scroll_bar(this->context, desc, false)
 	{}

@@ -12,7 +12,7 @@ using namespace morda;
 
 namespace{
 
-const auto DDescription = puu::read(R"qwertyuiop(
+const auto DDescription = treeml::read(R"qwertyuiop(
 		@nine_patch{
 			id{morda_slider_bg}
 			layout{
@@ -44,10 +44,10 @@ const auto DDescription = puu::read(R"qwertyuiop(
 
 }
 
-scroll_bar::scroll_bar(std::shared_ptr<morda::context> c, const puu::forest& desc, bool vertical) :
+scroll_bar::scroll_bar(std::shared_ptr<morda::context> c, const treeml::forest& desc, bool vertical) :
 		widget(std::move(c), desc),
-		fraction_band_widget(this->context, puu::forest()),
-		oriented_widget(this->context, puu::forest(), vertical),
+		fraction_band_widget(this->context, treeml::forest()),
+		oriented_widget(this->context, treeml::forest(), vertical),
 		pile(this->context, DDescription),
 		handle(this->get_widget("morda_handle"))
 {

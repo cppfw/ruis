@@ -6,7 +6,7 @@ using namespace morda;
 
 namespace{
 class static_provider : public drop_down_box::provider{
-	std::vector<puu::tree> widgets;
+	std::vector<treeml::tree> widgets;
 public:
 
 	size_t count() const noexcept override{
@@ -23,13 +23,13 @@ public:
 //		TRACE(<< "static_provider::recycle(): index = " << index << std::endl)
 	}
 
-	void add(puu::tree&& w){
+	void add(treeml::tree&& w){
 		this->widgets.emplace_back(std::move(w));
 	}
 };
 }
 
-drop_down_box::drop_down_box(std::shared_ptr<morda::context> c, const puu::forest& desc, pile& selection_container) :
+drop_down_box::drop_down_box(std::shared_ptr<morda::context> c, const treeml::forest& desc, pile& selection_container) :
 		widget(std::move(c), desc),
 		selection_container(selection_container)
 {
@@ -40,7 +40,7 @@ drop_down_box::drop_down_box(std::shared_ptr<morda::context> c, const puu::fores
 			continue;
 		}
 
-		pr->add(puu::tree(p));
+		pr->add(treeml::tree(p));
 	}
 
 	this->set_provider(std::move(pr));

@@ -13,7 +13,7 @@ namespace morda{
  */
 class color : public color_widget{
 public:
-	color(std::shared_ptr<morda::context> c, const puu::forest& desc);
+	color(std::shared_ptr<morda::context> c, const treeml::forest& desc);
 
 	color(const color&) = delete;
 	color& operator=(const color&) = delete;

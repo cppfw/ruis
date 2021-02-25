@@ -7,7 +7,7 @@
 using namespace morda;
 using namespace morda::res;
 
-std::shared_ptr<texture> texture::load(morda::context& ctx, const puu::forest& desc, const papki::file& fi){
+std::shared_ptr<texture> texture::load(morda::context& ctx, const treeml::forest& desc, const papki::file& fi){
 	for(auto& p: desc){
 		if(p.value == "file"){
 			fi.set_path(get_property_value(p).to_string());

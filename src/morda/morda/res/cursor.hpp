@@ -39,7 +39,7 @@ public:
 private:
 	friend class morda::resource_loader;
 	
-	static std::shared_ptr<cursor> load(morda::context& ctx, const ::puu::forest& desc, const papki::file &fi);
+	static std::shared_ptr<cursor> load(morda::context& ctx, const ::treeml::forest& desc, const papki::file &fi);
 };
 
 }}

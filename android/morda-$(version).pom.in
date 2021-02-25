@@ -30,8 +30,8 @@
 	  </dependency>
           <dependency>
 		  <groupId>io.github.cppfw</groupId>
-		  <artifactId>puu</artifactId>
-		  <version>[0.1.25,)</version>
+		  <artifactId>treeml</artifactId>
+		  <version>[0.1.26,)</version>
 		  <type>aar</type>
 		  <scope>compile</scope>
 	  </dependency>

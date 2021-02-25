@@ -4,7 +4,7 @@
 
 using namespace morda;
 
-nine_patch_push_button::nine_patch_push_button(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+nine_patch_push_button::nine_patch_push_button(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
 		widget(std::move(c), desc),
 		button(this->context, desc),
 		push_button(this->context, desc),

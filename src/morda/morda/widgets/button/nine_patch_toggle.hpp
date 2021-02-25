@@ -10,7 +10,7 @@ class nine_patch_toggle :
 		public nine_patch_button
 {
 public:
-	nine_patch_toggle(std::shared_ptr<morda::context> c, const puu::forest& desc);
+	nine_patch_toggle(std::shared_ptr<morda::context> c, const treeml::forest& desc);
 	
 protected:
 	void on_press_change()override;

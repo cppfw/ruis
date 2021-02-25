@@ -4,7 +4,7 @@
 
 #include <utki/shared.hpp>
 #include <papki/file.hpp>
-#include <puu/tree.hpp>
+#include <treeml/tree.hpp>
 
 
 
@@ -18,10 +18,10 @@ class context;
 
 /**
  * @brief Resource loader.
- * This class manages application recources loading from puu resource description scripts.
+ * This class manages application recources loading from treeml resource description scripts.
  *
- * Format of resource description scripts is simple. It uses puu markup.
- * Each resource is a root-level puu node, the value is a name of the resource, by that name
+ * Format of resource description scripts is simple. It uses treeml markup.
+ * Each resource is a root-level treeml node, the value is a name of the resource, by that name
  * the application will load that resource.The children of resource name are the properties of the resource.
  * Each resource type defines their own properties.
  *
@@ -60,20 +60,20 @@ class resource_loader{
 		}
 
 		std::unique_ptr<const papki::file> fi;
-		puu::forest script;
+		treeml::forest script;
 	};
 
 	std::vector<ResPackEntry> resPacks;
 
 	class FindInScriptRet{
 	public:
-		FindInScriptRet(ResPackEntry& resPack, const puu::tree& element) :
+		FindInScriptRet(ResPackEntry& resPack, const treeml::tree& element) :
 				rp(resPack),
 				e(element)
 		{}
 
 		ResPackEntry& rp;
-		const puu::tree& e;
+		const treeml::tree& e;
 	};
 
 	FindInScriptRet findResourceInScript(const std::string& resName);

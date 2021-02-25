@@ -9,7 +9,7 @@
 using namespace morda;
 
 namespace{
-const auto ninePatchLayout_c = puu::read(R"qwertyuiop(
+const auto ninePatchLayout_c = treeml::read(R"qwertyuiop(
 		@row{
 			layout{dx{fill}}
 			@image{
@@ -73,7 +73,7 @@ const auto ninePatchLayout_c = puu::read(R"qwertyuiop(
 	)qwertyuiop");
 }
 
-nine_patch::nine_patch(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+nine_patch::nine_patch(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
 		widget(std::move(c), desc),
 		blending_widget(this->context, desc),
 		column(this->context, ninePatchLayout_c),

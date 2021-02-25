@@ -9,20 +9,20 @@ using namespace morda;
 namespace{
 class context_menu_wrapper : public size_container{
 public:
-	context_menu_wrapper(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+	context_menu_wrapper(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
 			widget(std::move(c), desc),
 			size_container(this->context, desc)
 	{}
 };
 }
 
-overlay::overlay(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+overlay::overlay(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
 		widget(std::move(c), desc),
 		pile(this->context, desc)
 {}
 
 std::shared_ptr<widget> overlay::show_context_menu(std::shared_ptr<widget> w, vector2 anchor){
-	auto c = std::make_shared<context_menu_wrapper>(this->context, puu::read(R"qwertyuiop(
+	auto c = std::make_shared<context_menu_wrapper>(this->context, treeml::read(R"qwertyuiop(
 		layout{
 			dx{fill} dy{fill}
 		}

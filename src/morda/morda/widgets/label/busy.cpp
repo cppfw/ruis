@@ -2,7 +2,7 @@
 
 using namespace morda;
 
-busy::busy(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+busy::busy(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
 		widget(std::move(c), desc),
 		spinner(this->context, desc)
 {

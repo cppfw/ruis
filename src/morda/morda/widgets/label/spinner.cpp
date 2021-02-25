@@ -4,7 +4,7 @@
 
 using namespace morda;
 
-spinner::spinner(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+spinner::spinner(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
 		widget(std::move(c), desc),
 		image(this->context, desc)
 {}

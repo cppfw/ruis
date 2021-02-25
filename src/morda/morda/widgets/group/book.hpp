@@ -9,7 +9,7 @@ class book;
 class page : public virtual widget{
 	friend class book;
 protected:
-	page(std::shared_ptr<morda::context> c, const puu::forest& desc);
+	page(std::shared_ptr<morda::context> c, const treeml::forest& desc);
 	
 	page(const page&) = delete;
 	page& operator=(const page&) = delete;
@@ -36,7 +36,7 @@ class book :
 
 	std::vector<std::shared_ptr<page>> pages;
 public:
-	book(std::shared_ptr<morda::context> c, const puu::forest& desc);
+	book(std::shared_ptr<morda::context> c, const treeml::forest& desc);
 	
 	book(const book&) = delete;
 	book& operator=(const book&) = delete;

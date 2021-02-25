@@ -37,7 +37,7 @@ ifeq ($(this_is_interactive),true)
     this_ldlibs += -lmorda-$(this_render)-ren
 endif
 
-this_ldlibs += -lmorda -lpapki -lpuu -lutki -lm
+this_ldlibs += -lmorda -lpapki -ltreeml -lutki -lm
 
 this_no_install := true
 

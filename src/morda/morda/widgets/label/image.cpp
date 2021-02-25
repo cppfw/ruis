@@ -6,7 +6,7 @@
 
 using namespace morda;
 
-image::image(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+image::image(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
 		widget(std::move(c), desc),
 		blending_widget(this->context, desc)
 {

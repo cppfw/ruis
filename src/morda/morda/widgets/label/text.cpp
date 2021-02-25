@@ -5,7 +5,7 @@
 
 using namespace morda;
 
-text::text(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+text::text(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
 		widget(std::move(c), desc),
 		single_line_text_widget(this->context, desc),
 		color_widget(this->context, desc)

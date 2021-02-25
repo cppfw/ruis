@@ -21,7 +21,7 @@ void resource_loader::mount_res_pack(const papki::file& fi){
 		fi.set_path(dir + "main.res");
 	}
 
-	auto script = puu::read(fi);
+	auto script = treeml::read(fi);
 	ASSERT(!fi.is_open())
 
 	// handle includes

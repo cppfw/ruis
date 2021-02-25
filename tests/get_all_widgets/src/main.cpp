@@ -14,7 +14,7 @@ int main(int argc, char** argv){
 				0,
 				0
 			));
-		auto w = m.context->inflater.inflate(puu::read(R"qwertyuiop(
+		auto w = m.context->inflater.inflate(treeml::read(R"qwertyuiop(
 			@container{
 				@column{
 					id{1}

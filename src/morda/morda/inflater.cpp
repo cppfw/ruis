@@ -28,7 +28,7 @@ bool inflater::unregister_widget(const std::string& widgetName)noexcept{
 }
 
 std::shared_ptr<morda::widget> inflater::inflate(const papki::file& fi) {
-	return this->inflate(puu::read(fi));
+	return this->inflate(treeml::read(fi));
 }
 
 namespace{
@@ -37,8 +37,8 @@ const char* wording_defs = "defs";
 
 namespace{
 void substitute_vars(
-		puu::forest& to,
-		const std::function<const puu::forest*(const std::string&)>& find_var,
+		treeml::forest& to,
+		const std::function<const treeml::forest*(const std::string&)>& find_var,
 		bool blank_not_found_vars,
 		bool go_beyond_child_widgets
 	)
@@ -82,12 +82,12 @@ void substitute_vars(
 }
 
 namespace{
-puu::forest apply_gui_template(const puu::forest& templ, const std::set<std::string>& var_names, puu::forest&& trees){
-	// TRACE(<< "applying template: " << puu::to_string(templ) << std::endl)
-	puu::forest ret = templ;
+treeml::forest apply_gui_template(const treeml::forest& templ, const std::set<std::string>& var_names, treeml::forest&& trees){
+	// TRACE(<< "applying template: " << treeml::to_string(templ) << std::endl)
+	treeml::forest ret = templ;
 
-	std::map<std::string, puu::forest> vars;
-	puu::forest children;
+	std::map<std::string, treeml::forest> vars;
+	treeml::forest children;
 	for(auto& i : trees){
 		if(!is_leaf_property(i.value)){
 			children.emplace_back(std::move(i));
@@ -114,17 +114,17 @@ puu::forest apply_gui_template(const puu::forest& templ, const std::set<std::str
 // 		TRACE(<< "v = " << v.first << std::endl)
 // 	}
 // #endif
-// 	TRACE(<< "ret = " << puu::to_string(ret) << std::endl)
+// 	TRACE(<< "ret = " << treeml::to_string(ret) << std::endl)
 	substitute_vars(
 			ret,
-			[&vars](const std::string& name) -> const puu::forest*{
+			[&vars](const std::string& name) -> const treeml::forest*{
 				// TRACE(<< "looking for var = " << name << std::endl)
 				auto i = vars.find(name);
 				if(i == vars.end()){
 					// TRACE(<< "not found" << std::endl)
 					return nullptr;
 				}
-				// TRACE(<< "found = " << puu::to_string(i->second) << std::endl)
+				// TRACE(<< "found = " << treeml::to_string(i->second) << std::endl)
 				return &i->second;
 			},
 			false,
@@ -148,14 +148,14 @@ const decltype(inflater::factories)::value_type::second_type& inflater::find_fac
 }
 
 std::shared_ptr<widget> inflater::inflate(const char* str){
-	return this->inflate(puu::read(str));
+	return this->inflate(treeml::read(str));
 }
 
 std::shared_ptr<widget> inflater::inflate(const std::string& str){
 	return this->inflate(str.c_str());
 }
 
-std::shared_ptr<widget> inflater::inflate(puu::forest::const_iterator begin, puu::forest::const_iterator end){
+std::shared_ptr<widget> inflater::inflate(treeml::forest::const_iterator begin, treeml::forest::const_iterator end){
 	auto i = begin;
 
 	for(; i != end && is_leaf_property(i->value); ++i){
@@ -176,13 +176,13 @@ std::shared_ptr<widget> inflater::inflate(puu::forest::const_iterator begin, puu
 	ASSERT(i->value.to_string()[0] == '@')
 
 	std::string widget_name;
-	puu::forest widget_desc;
+	treeml::forest widget_desc;
 
 	// TRACE(<< "inflating = " << i->value.to_string() << std::endl)
 	if(auto tmpl = this->find_template(i->value.to_string().substr(1))){
 		widget_name = tmpl->templ.value.to_string().substr(1);
-		widget_desc = apply_gui_template(tmpl->templ.children, tmpl->vars, puu::forest(i->children));
-		// TRACE(<< "After applying template: " << puu::to_string(widget_desc) << std::endl)
+		widget_desc = apply_gui_template(tmpl->templ.children, tmpl->vars, treeml::forest(i->children));
+		// TRACE(<< "After applying template: " << treeml::to_string(widget_desc) << std::endl)
 	}else{
 		widget_name = i->value.to_string().substr(1);
 		widget_desc = i->children;
@@ -201,7 +201,7 @@ std::shared_ptr<widget> inflater::inflate(puu::forest::const_iterator begin, puu
 		if(d.value != wording_defs){
 			continue;
 		}
-		// TRACE(<< "push local defs: " << puu::to_string(d.children) << std::endl)
+		// TRACE(<< "push local defs: " << treeml::to_string(d.children) << std::endl)
 		this->push_defs(d.children);
 		++num_pop_defs;
 
@@ -211,7 +211,7 @@ std::shared_ptr<widget> inflater::inflate(puu::forest::const_iterator begin, puu
 
 	substitute_vars(
 			widget_desc,
-			[this](const std::string& name) -> const puu::forest*{
+			[this](const std::string& name) -> const treeml::forest*{
 				return this->find_variable(name);
 			},
 			true,
@@ -221,14 +221,14 @@ std::shared_ptr<widget> inflater::inflate(puu::forest::const_iterator begin, puu
 	try{
 		return fac(utki::make_shared_from(this->context), widget_desc);
 	}catch(...){
-		// TRACE(<< "could not inflate widget: " << widget_name << "{" << puu::to_string(widget_desc) << "}" << std::endl)
+		// TRACE(<< "could not inflate widget: " << widget_name << "{" << treeml::to_string(widget_desc) << "}" << std::endl)
 		throw;
 	}
 }
 
 namespace{
 // name starts with @
-void check_template_recursion(const std::string& name, const puu::forest& desc){
+void check_template_recursion(const std::string& name, const treeml::forest& desc){
 	for(auto& c : desc){
 		if(is_leaf_child(c.value)){
 			if(c.value == name){
@@ -242,8 +242,8 @@ void check_template_recursion(const std::string& name, const puu::forest& desc){
 }
 }
 
-inflater::widget_template inflater::parse_template(const std::string& name, const puu::forest& templ){
-	// TRACE(<< "parse_template(): templ = " << puu::to_string(templ) << std::endl)
+inflater::widget_template inflater::parse_template(const std::string& name, const treeml::forest& templ){
+	// TRACE(<< "parse_template(): templ = " << treeml::to_string(templ) << std::endl)
 	widget_template ret;
 
 	for(auto& n : templ){
@@ -269,7 +269,7 @@ inflater::widget_template inflater::parse_template(const std::string& name, cons
 	if(ret.templ.value.empty()){
 		throw std::invalid_argument("inflater::parse_template(): template has no definition");
 	}
-	// TRACE(<< "template definition found: " << puu::to_string(ret.templ) << std::endl)
+	// TRACE(<< "template definition found: " << treeml::to_string(ret.templ) << std::endl)
 
 	// TRACE(<< "vars:" << std::endl)
 	// for each variable create a stub property if needed
@@ -278,8 +278,8 @@ inflater::widget_template inflater::parse_template(const std::string& name, cons
 		auto i = std::find(ret.templ.children.begin(), ret.templ.children.end(), v);
 		if(i == ret.templ.children.end()){
 			ret.templ.children.push_back(
-					// puu::tree(puu::leaf(v), {puu::tree()}) // TODO: is empty child needed?
-					puu::tree(puu::leaf(v))
+					// treeml::tree(treeml::leaf(v), {treeml::tree()}) // TODO: is empty child needed?
+					treeml::tree(treeml::leaf(v))
 				);
 		}
 	}
@@ -296,11 +296,11 @@ inflater::widget_template inflater::parse_template(const std::string& name, cons
 		ret.vars.insert(tmpl->vars.begin(), tmpl->vars.end()); // forward all variables
 	}
 
-	// TRACE(<< "template parsed: " << puu::to_string(ret.templ) << std::endl)
+	// TRACE(<< "template parsed: " << treeml::to_string(ret.templ) << std::endl)
 	return ret;
 }
 
-void inflater::push_defs(const puu::forest& chain) {
+void inflater::push_defs(const treeml::forest& chain) {
 	this->push_variables(chain);
 	this->push_templates(chain);
 }
@@ -310,7 +310,7 @@ void inflater::pop_defs() {
 	this->pop_templates();
 }
 
-void inflater::push_templates(const puu::forest& chain){
+void inflater::push_templates(const treeml::forest& chain){
 	decltype(this->templates)::value_type m;
 
 	for(auto& c : chain){
@@ -322,7 +322,7 @@ void inflater::push_templates(const puu::forest& chain){
 		if(c.children.empty()){
 			throw std::invalid_argument("inflater::push_templates(): template name has no children, error.");
 		}
-		// TRACE(<< "pushing template: " << puu::to_string(c.children) << std::endl)
+		// TRACE(<< "pushing template: " << treeml::to_string(c.children) << std::endl)
 
 		ASSERT(!c.value.empty())
 		ASSERT(c.value.to_string()[0] == '@')
@@ -357,7 +357,7 @@ const inflater::widget_template* inflater::find_template(const std::string& name
 	return nullptr;
 }
 
-const puu::forest* inflater::find_variable(const std::string& name)const{
+const treeml::forest* inflater::find_variable(const std::string& name)const{
 	for(auto i = this->variables.rbegin(); i != this->variables.rend(); ++i){
 		auto r = i->find(name);
 		if(r != i->end()){
@@ -373,7 +373,7 @@ void inflater::pop_variables(){
 	this->variables.pop_back();
 }
 
-void inflater::push_variables(const puu::forest& defs){
+void inflater::push_variables(const treeml::forest& defs){
 	decltype(this->variables)::value_type m;
 
 	for(auto& t : defs){
@@ -385,7 +385,7 @@ void inflater::push_variables(const puu::forest& defs){
 
 		substitute_vars(
 			value,
-			[this](const std::string& name) -> const puu::forest*{
+			[this](const std::string& name) -> const treeml::forest*{
 				return this->find_variable(name);
 			},
 			true,

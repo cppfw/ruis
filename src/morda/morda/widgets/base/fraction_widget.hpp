@@ -6,7 +6,7 @@ namespace morda{
 class fraction_widget : public virtual widget{
 	float fraction_v = 0; // current position from 0 to 1
 protected:
-	fraction_widget(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+	fraction_widget(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
 		widget(std::move(c), desc)
 	{}
 

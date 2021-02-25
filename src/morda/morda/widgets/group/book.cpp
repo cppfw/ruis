@@ -4,9 +4,9 @@
 
 using namespace morda;
 
-book::book(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+book::book(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
 		widget(std::move(c), desc),
-		pile(nullptr, puu::forest())
+		pile(nullptr, treeml::forest())
 {}
 
 void book::push(std::shared_ptr<page> pg){
@@ -102,7 +102,7 @@ book& page::get_parent_book(){
 	return *this->parent_book;
 }
 
-page::page(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+page::page(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
 		widget(std::move(c), desc)
 {}
 

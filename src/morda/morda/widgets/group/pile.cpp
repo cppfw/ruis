@@ -4,7 +4,7 @@
 
 using namespace morda;
 
-pile::pile(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+pile::pile(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
 		widget(std::move(c), desc),
 		container(this->context, desc)
 {}

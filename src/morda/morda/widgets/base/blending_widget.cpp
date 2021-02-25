@@ -35,7 +35,7 @@ renderer::blend_factor blendFactorFromString(const std::string& s){
 }
 
 
-blending_widget::blending_widget(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+blending_widget::blending_widget(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
 		widget(std::move(c), desc)
 {
 	for(const auto& p : desc){

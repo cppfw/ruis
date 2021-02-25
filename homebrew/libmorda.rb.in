@@ -11,7 +11,7 @@ class Libmorda < Formula
   depends_on "libnitki" => :build
   depends_on "libutki"
   depends_on "libpapki"
-  depends_on "libpuu"
+  depends_on "libtreeml"
   depends_on "libpng"
   depends_on "jpeg"
   depends_on "z"

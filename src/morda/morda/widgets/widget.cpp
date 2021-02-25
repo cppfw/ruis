@@ -8,7 +8,7 @@
 
 using namespace morda;
 
-widget::widget(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+widget::widget(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
 		context(std::move(c))
 {
 	for(const auto& p : desc){
@@ -40,13 +40,13 @@ widget::widget(std::shared_ptr<morda::context> c, const puu::forest& desc) :
 				this->enabled = get_property_value(p).to_bool();
 			}
 		}catch(std::invalid_argument&){
-			TRACE(<< "could not parse value of " << puu::to_string(p) << std::endl)
+			TRACE(<< "could not parse value of " << treeml::to_string(p) << std::endl)
 			throw;
 		}
 	}
 }
 
-widget::layout_params::layout_params(const puu::forest& desc, const morda::units& units){
+widget::layout_params::layout_params(const treeml::forest& desc, const morda::units& units){
 	for(const auto& p : desc){
 		if(!is_property(p)){
 			continue;
@@ -59,7 +59,7 @@ widget::layout_params::layout_params(const puu::forest& desc, const morda::units
 				this->dims.y() = parse_layout_dimension_value(get_property_value(p), units);
 			}
 		}catch(std::invalid_argument&){
-			TRACE(<< "could not parse value of " << puu::to_string(p) << std::endl)
+			TRACE(<< "could not parse value of " << treeml::to_string(p) << std::endl)
 			throw;
 		}
 	}

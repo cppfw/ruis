@@ -8,7 +8,7 @@ using namespace morda;
 
 namespace{
 
-const auto windowDesc_c = puu::read(R"qwertyuiop(
+const auto windowDesc_c = treeml::read(R"qwertyuiop(
 		@column{
 			layout{
 				dx{max} dy{max}
@@ -149,7 +149,7 @@ void morda::window::set_background(std::shared_ptr<widget> w){
 	}
 }
 
-morda::window::window(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+morda::window::window(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
 		widget(std::move(c), desc),
 		pile(nullptr, windowDesc_c)
 {

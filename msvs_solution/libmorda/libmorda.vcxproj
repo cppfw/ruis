@@ -439,7 +439,7 @@
     <Import Project="..\packages\libnitki.1.0.35\build\native\libnitki.targets" Condition="Exists('..\packages\libnitki.1.0.35\build\native\libnitki.targets')" />
     <Import Project="..\packages\zlib_static.1.2.11.7\build\native\zlib_static.targets" Condition="Exists('..\packages\zlib_static.1.2.11.7\build\native\zlib_static.targets')" />
     <Import Project="..\packages\libpapki.1.0.85\build\native\libpapki.targets" Condition="Exists('..\packages\libpapki.1.0.85\build\native\libpapki.targets')" />
-    <Import Project="..\packages\libpuu.0.1.23\build\native\libpuu.targets" Condition="Exists('..\packages\libpuu.0.1.23\build\native\libpuu.targets')" />
+    <Import Project="..\packages\libtreeml.0.1.26\build\native\libtreeml.targets" Condition="Exists('..\packages\libtreeml.0.1.26\build\native\libtreeml.targets')" />
     <Import Project="..\packages\libpng_static.1.4.1.9\build\native\libpng_static.targets" Condition="Exists('..\packages\libpng_static.1.4.1.9\build\native\libpng_static.targets')" />
     <Import Project="..\packages\freetype_static.2.10.1.7\build\native\freetype_static.targets" Condition="Exists('..\packages\freetype_static.2.10.1.7\build\native\freetype_static.targets')" />
   </ImportGroup>
@@ -459,7 +459,7 @@
     <Error Condition="!Exists('..\packages\libnitki.1.0.35\build\native\libnitki.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libnitki.1.0.35\build\native\libnitki.targets'))" />
     <Error Condition="!Exists('..\packages\zlib_static.1.2.11.7\build\native\zlib_static.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\zlib_static.1.2.11.7\build\native\zlib_static.targets'))" />
     <Error Condition="!Exists('..\packages\libpapki.1.0.85\build\native\libpapki.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libpapki.1.0.85\build\native\libpapki.targets'))" />
-    <Error Condition="!Exists('..\packages\libpuu.0.1.23\build\native\libpuu.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libpuu.0.1.23\build\native\libpuu.targets'))" />
+    <Error Condition="!Exists('..\packages\libtreeml.0.1.26\build\native\libtreeml.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libtreeml.0.1.26\build\native\libtreeml.targets'))" />
     <Error Condition="!Exists('..\packages\libpng_static.1.4.1.9\build\native\libpng_static.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libpng_static.1.4.1.9\build\native\libpng_static.targets'))" />
     <Error Condition="!Exists('..\packages\freetype_static.2.10.1.7\build\native\freetype_static.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\freetype_static.2.10.1.7\build\native\freetype_static.targets'))" />
   </Target>

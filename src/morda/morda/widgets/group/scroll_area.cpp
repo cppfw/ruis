@@ -6,7 +6,7 @@
 
 using namespace morda;
 
-scroll_area::scroll_area(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+scroll_area::scroll_area(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
 		widget(std::move(c), desc),
 		container(nullptr, desc)
 {}

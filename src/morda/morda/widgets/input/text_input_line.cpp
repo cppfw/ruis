@@ -18,7 +18,7 @@ const uint32_t cursorBlinkPeriod_c = 500; // milliseconds
 const real cursorWidth_c = real(1.0);
 }
 
-text_input_line::text_input_line(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+text_input_line::text_input_line(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
 		widget(std::move(c), desc),
 		single_line_text_widget(this->context, desc),
 		character_input_widget(this->context),

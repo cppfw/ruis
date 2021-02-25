@@ -14,7 +14,7 @@ this_cxxflags += `pkg-config --cflags freetype2`
 
 this_ldlibs += `pkg-config --libs freetype2`
 
-this_ldlibs += -lpapki -lpuu -lsvgdom -lsvgren -lutki -lpng -ljpeg -lm
+this_ldlibs += -lpapki -ltreeml -lsvgdom -lsvgren -lutki -lpng -ljpeg -lm
 
 ifeq ($(os), linux)
     this_ldlibs += -lpthread -lz

@@ -18,7 +18,7 @@ public:
 	std::shared_ptr<morda::vertex_array> cubeVAO;
 	
 	CubeWidget(std::shared_ptr<morda::context> c) :
-			widget(std::move(c), puu::forest())
+			widget(std::move(c), treeml::forest())
 	{
 		std::array<morda::vector3, 36> cubePos = {{
 			{-1, -1, 1}, {1, -1, 1}, {-1, 1, 1},
@@ -103,9 +103,9 @@ public:
 }
 
 cube_page::cube_page(std::shared_ptr<morda::context> c) :
-		widget(std::move(c), puu::forest()),
-		page(this->context, puu::forest()),
-		pile(this->context, puu::read(R"qwertyuiop(
+		widget(std::move(c), treeml::forest()),
+		page(this->context, treeml::forest()),
+		pile(this->context, treeml::read(R"qwertyuiop(
 				@column{
 					layout{
 						dx{fill}dy{fill}

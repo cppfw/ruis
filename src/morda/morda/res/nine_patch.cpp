@@ -65,7 +65,7 @@ public:
 
 }
 
-std::shared_ptr<nine_patch> nine_patch::load(morda::context& ctx, const puu::forest& desc, const papki::file& fi){
+std::shared_ptr<nine_patch> nine_patch::load(morda::context& ctx, const treeml::forest& desc, const papki::file& fi){
 	sides<real> borders(-1);
 	for(auto& p : desc){
 		if(p.value == "borders"){

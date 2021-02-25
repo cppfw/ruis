@@ -80,7 +80,7 @@ protected:
 	 * @param desc - description of the layout parameters.
 	 * @return A new instance of layout parameters object.
 	 */
-	virtual std::unique_ptr<layout_params> create_layout_params(const puu::forest& desc)const;
+	virtual std::unique_ptr<layout_params> create_layout_params(const treeml::forest& desc)const;
 
 	/**
 	 * @brief Calculate basic dimensions of widget.
@@ -160,7 +160,7 @@ public:
 	 * @param c - context to which this widget belongs.
 	 * @param desc - description of the widget.
 	 */
-	container(std::shared_ptr<morda::context> c, const puu::forest& desc);
+	container(std::shared_ptr<morda::context> c, const treeml::forest& desc);
 
 	void render(const matrix4& matrix)const override;
 
@@ -209,7 +209,7 @@ public:
 	 * This function invalidates iterators which were obtained before calling to it.
 	 * @param desc - GUI description of the widgets to add.
 	 */
-	void push_back_inflate(const puu::forest& desc);
+	void push_back_inflate(const treeml::forest& desc);
 
 	/**
 	 * @brief Remove last child.

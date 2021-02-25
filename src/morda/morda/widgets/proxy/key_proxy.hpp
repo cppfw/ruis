@@ -10,7 +10,7 @@ namespace morda{
  */
 class key_proxy : public pile{
 public:
-	key_proxy(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+	key_proxy(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
 			widget(std::move(c), desc),
 			pile(this->context, desc)
 	{}

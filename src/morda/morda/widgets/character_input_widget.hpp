@@ -14,7 +14,7 @@ class character_input_widget : virtual public widget{
 
 protected:
 	character_input_widget(std::shared_ptr<morda::context> c) :
-			widget(std::move(c), puu::forest())
+			widget(std::move(c), treeml::forest())
 	{}
 
 public:

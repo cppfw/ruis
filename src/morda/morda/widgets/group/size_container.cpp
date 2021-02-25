@@ -2,7 +2,7 @@
 
 using namespace morda;
 
-size_container::size_container(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+size_container::size_container(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
 		widget(std::move(c), desc),
 		container(nullptr, desc)
 {}

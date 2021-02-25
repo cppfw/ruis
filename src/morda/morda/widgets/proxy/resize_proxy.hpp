@@ -10,7 +10,7 @@ namespace morda{
  */
 class resize_proxy : virtual public widget{
 public:
-	resize_proxy(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+	resize_proxy(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
 			widget(std::move(c), desc)
 	{}
 

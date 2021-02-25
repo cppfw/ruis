@@ -1,6 +1,6 @@
 #include "gui.hpp"
 
-#include "res/puu.hpp"
+#include "res/treeml.hpp"
 
 #include "widgets/slider/scroll_bar.hpp"
 
@@ -273,7 +273,7 @@ void gui::initStandardWidgets(papki::file& fi) {
 	this->context->inflater.register_widget<busy>("busy");
 
 	try{
-		auto t = this->context->loader.load<res::puu>("morda_gui_defs");
+		auto t = this->context->loader.load<res::treeml>("morda_gui_defs");
 
 		this->context->inflater.inflate(t->forest());
 

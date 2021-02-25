@@ -9,7 +9,7 @@
 using namespace morda;
 
 namespace{
-const auto drop_down_box_layout = puu::read(R"qwertyuiop(
+const auto drop_down_box_layout = treeml::read(R"qwertyuiop(
 	layout{dx{max} dy{max}}
 
 	@row{
@@ -32,7 +32,7 @@ const auto drop_down_box_layout = puu::read(R"qwertyuiop(
 }
 
 namespace{
-const auto item_layout = puu::read(R"qwertyuiop(
+const auto item_layout = treeml::read(R"qwertyuiop(
 		@pile{
 			layout{
 				dx{max}
@@ -56,7 +56,7 @@ const auto item_layout = puu::read(R"qwertyuiop(
 }
 
 namespace{
-const auto drop_down_menu_layout = puu::read(R"qwertyuiop(
+const auto drop_down_menu_layout = treeml::read(R"qwertyuiop(
 		@pile{
 			@widget{
 				id{morda_min_size_forcer}
@@ -83,7 +83,7 @@ const auto drop_down_menu_layout = puu::read(R"qwertyuiop(
 	)qwertyuiop");
 }
 
-click_drop_down_box::click_drop_down_box(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+click_drop_down_box::click_drop_down_box(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
 		widget(std::move(c), desc),
 		button(this->context, drop_down_box_layout),
 		push_button(this->context, drop_down_box_layout),

@@ -12,7 +12,7 @@ namespace morda{
  */
 class overlay : public pile{
 public:
-	overlay(std::shared_ptr<morda::context> c, const puu::forest& desc);
+	overlay(std::shared_ptr<morda::context> c, const treeml::forest& desc);
 	
 	overlay(const overlay&) = delete;
 	overlay& operator=(const overlay&) = delete;

@@ -4,7 +4,7 @@
 
 #include <morda/util/util.hpp>
 
-wire_socket::wire_socket(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+wire_socket::wire_socket(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
 		morda::widget(std::move(c), desc)
 {
 	for(const auto& p : desc){

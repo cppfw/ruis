@@ -55,7 +55,7 @@ void tab::on_press_change() {
 	this->nine_patch_toggle::on_press_change();
 }
 
-tab::tab(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+tab::tab(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
 		widget(std::move(c), desc),
 		button(this->context, desc),
 		toggle_button(this->context, desc),

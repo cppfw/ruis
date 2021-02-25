@@ -4,7 +4,7 @@
 
 using namespace morda;
 
-toggle_button::toggle_button(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+toggle_button::toggle_button(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
 		widget(std::move(c), desc),
 		button(this->context, desc)
 {}

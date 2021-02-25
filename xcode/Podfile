@@ -8,7 +8,7 @@ target "morda" do
 	pod 'utki', '>= 1.1.112'
 	pod 'papki', '>= 1.0.91'
 	pod 'r4', '>= 1.0.52'
-	pod 'puu', '>= 0.1.25'
+	pod 'treeml', '>= 0.1.26'
 	pod 'svgdom', '>= 0.3.56'
 	pod 'svgren', '>= 0.5.7'
 	pod 'nitki', '>= 1.0.39'

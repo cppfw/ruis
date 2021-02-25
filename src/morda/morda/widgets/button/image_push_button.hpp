@@ -12,6 +12,6 @@ protected:
 	void on_press_change()override;
 
 public:
-	image_push_button(std::shared_ptr<morda::context> c, const puu::forest& desc);
+	image_push_button(std::shared_ptr<morda::context> c, const treeml::forest& desc);
 };
 }

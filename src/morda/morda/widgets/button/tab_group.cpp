@@ -4,7 +4,7 @@
 
 using namespace morda;
 
-tab_group::tab_group(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+tab_group::tab_group(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
 		widget(std::move(c), desc),
 		choice_group(this->context, desc)
 {

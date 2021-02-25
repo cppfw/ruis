@@ -6,7 +6,7 @@ using namespace morda;
 
 namespace{
 class static_provider : public list_widget::provider{
-	std::vector<puu::tree> widgets;
+	std::vector<treeml::tree> widgets;
 public:
 
 	size_t count() const noexcept override{
@@ -26,16 +26,16 @@ public:
 	}
 
 
-	void add(puu::tree&& w){
+	void add(treeml::tree&& w){
 		this->widgets.emplace_back(std::move(w));
 	}
 };
 }
 
-list_widget::list_widget(std::shared_ptr<morda::context> c, const puu::forest& desc, bool vertical):
+list_widget::list_widget(std::shared_ptr<morda::context> c, const treeml::forest& desc, bool vertical):
 		widget(std::move(c), desc),
-		container(this->context, puu::forest()),
-		oriented_widget(this->context, puu::forest(), vertical)
+		container(this->context, treeml::forest()),
+		oriented_widget(this->context, treeml::forest(), vertical)
 {
 	std::shared_ptr<static_provider> pr = std::make_shared<static_provider>();
 
@@ -44,7 +44,7 @@ list_widget::list_widget(std::shared_ptr<morda::context> c, const puu::forest& d
 			continue;
 		}
 
-		pr->add(puu::tree(p));
+		pr->add(treeml::tree(p));
 	}
 
 	this->set_provider(std::move(pr));

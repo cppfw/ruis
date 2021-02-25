@@ -35,7 +35,7 @@ public:
 		{
 			auto mp = std::make_shared<pile_page>(
 					this->gui.context,
-					puu::read(R"qwertyuiop(
+					treeml::read(R"qwertyuiop(
 							@column{
 								layout{dx{fill} dy{fill}}
 
@@ -69,7 +69,7 @@ public:
 				mp->get_parent_book().push(std::make_shared<cube_page>(mp->context));
 			};
 			mp->get_widget_as<morda::push_button>("stuff_button").click_handler = [mp](morda::push_button& b){
-				auto pg = std::make_shared<pile_page>(mp->context, puu::read(R"qwertyuiop(
+				auto pg = std::make_shared<pile_page>(mp->context, treeml::read(R"qwertyuiop(
 					@push_button{
 						id{back_button}
 						@text{

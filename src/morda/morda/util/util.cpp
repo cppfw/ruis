@@ -10,7 +10,7 @@
 using namespace morda;
 
 
-morda::vector2 morda::parse_vec2(puu::forest::const_iterator begin, puu::forest::const_iterator end){
+morda::vector2 morda::parse_vec2(treeml::forest::const_iterator begin, treeml::forest::const_iterator end){
 	morda::vector2 ret;
 
 	unsigned n = 0;
@@ -27,21 +27,21 @@ morda::vector2 morda::parse_vec2(puu::forest::const_iterator begin, puu::forest:
 	return ret;
 }
 
-morda::rectangle morda::parse_rect(const puu::forest& desc){
+morda::rectangle morda::parse_rect(const treeml::forest& desc){
 	using std::min;
 	vector2 p = parse_vec2(desc.begin(), desc.end());
 	vector2 d = parse_vec2(std::next(desc.begin(), min(size_t(2), desc.size())), desc.end());
 	return rectangle(p, d);
 }
 
-morda::sides<real> morda::parse_sides(const puu::forest& desc){
+morda::sides<real> morda::parse_sides(const treeml::forest& desc){
 	using std::min;
 	vector2 p = parse_vec2(desc.begin(), desc.end());
 	vector2 d = parse_vec2(std::next(desc.begin(), min(size_t(2), desc.size())), desc.end());
 	return sides<real>(p.x(), p.y(), d.x(), d.y());
 }
 
-real morda::parse_dimension_value(const puu::leaf& l, const morda::units& units){
+real morda::parse_dimension_value(const treeml::leaf& l, const morda::units& units){
 	// check if millimeters
 	if(l.length() >= 2 && l[l.length() - 1] == 'm' && l[l.length() - 2] == 'm'){
 		return units.mm_to_px(l.to_float());
@@ -57,7 +57,7 @@ real morda::parse_dimension_value(const puu::leaf& l, const morda::units& units)
 }
 
 
-real morda::parse_layout_dimension_value(const puu::leaf& l, const morda::units& units){
+real morda::parse_layout_dimension_value(const treeml::leaf& l, const morda::units& units){
 	if(l == "min"){
 		return widget::layout_params::min;
 	}else if(l == "fill"){
@@ -119,14 +119,14 @@ r4::vector4<float> morda::color_to_vec4f(uint32_t color){
 		);
 }
 
-bool morda::is_leaf_property(const puu::leaf& l){
+bool morda::is_leaf_property(const treeml::leaf& l){
 	return l.empty() || l[0] != '@';
 }
 
-bool morda::is_property(const puu::tree& t){
+bool morda::is_property(const treeml::tree& t){
 	return is_leaf_property(t.value) && t.children.size() != 0;
 }
 
-bool morda::is_leaf_child(const puu::leaf& l){
+bool morda::is_leaf_child(const treeml::leaf& l){
 	return !is_leaf_property(l);
 }

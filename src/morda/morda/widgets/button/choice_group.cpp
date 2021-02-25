@@ -2,7 +2,7 @@
 
 using namespace morda;
 
-choice_group::choice_group(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+choice_group::choice_group(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
 		widget(std::move(c), desc),
 		pile(this->context, desc)
 {}

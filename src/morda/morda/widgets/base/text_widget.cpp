@@ -18,7 +18,7 @@ void text_widget::set_font(std::shared_ptr<res::font> font){
 	this->on_font_change();
 }
 
-text_widget::text_widget(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+text_widget::text_widget(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
 		widget(std::move(c), desc)
 {
 	for(const auto& p : desc){
@@ -37,7 +37,7 @@ text_widget::text_widget(std::shared_ptr<morda::context> c, const puu::forest& d
 	}
 }
 
-single_line_text_widget::single_line_text_widget(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+single_line_text_widget::single_line_text_widget(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
 		widget(std::move(c), desc),
 		text_widget(this->context, desc)
 {

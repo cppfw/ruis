@@ -354,7 +354,7 @@ libmorda (0.5.101) unstable; urgency=medium
 
 libmorda (0.5.100) unstable; urgency=medium
 
-  * relink against latest puu
+  * relink against latest treeml
 
  -- Ivan Gagis <igagis@gmail.com>  Wed, 22 Jan 2020 18:53:09 +0200
 

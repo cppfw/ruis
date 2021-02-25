@@ -14,7 +14,7 @@ morda::res::cursor::cursor(std::shared_ptr<morda::context> c, morda::res::image&
 {}
 
 
-std::shared_ptr<cursor> cursor::load(morda::context& ctx, const puu::forest& desc, const papki::file& fi) {
+std::shared_ptr<cursor> cursor::load(morda::context& ctx, const treeml::forest& desc, const papki::file& fi) {
 	std::shared_ptr<res::image> image;
 	vector2 hotspot;
 	bool hotspot_set = false;

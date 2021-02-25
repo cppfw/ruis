@@ -16,7 +16,7 @@ class text :
 		public color_widget
 {
 public:
-	text(std::shared_ptr<morda::context> c, const puu::forest& desc);
+	text(std::shared_ptr<morda::context> c, const treeml::forest& desc);
 
 public:
 	~text()noexcept{}

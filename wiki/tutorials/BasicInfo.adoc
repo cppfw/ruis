@@ -9,5 +9,5 @@ dispatches user input to child widgets and renders them to screen.
 Each child _Widget_ have pointer to its parent _Container_ widget. _Container_, in turn, is a _Widget_ itself.
 Root widget of the hierarchy does not have parent _Container_.
 
-The hierarchy of widgets can be described in GUI description scripts using link:http://github.com/cppfw/puu[puu], a simple markup language.
+The hierarchy of widgets can be described in GUI description scripts using link:http://github.com/cppfw/treeml[treeml], a simple markup language.
 The hierarchy of widget objects can be "inflated" from those GUI scripts.

@@ -53,7 +53,7 @@ dependencies {
     implementation 'io.github.cppfw:utki:+'
     implementation 'io.github.cppfw:papki:+'
     implementation 'io.github.cppfw:r4:+'
-    implementation 'io.github.cppfw:puu:+'
+    implementation 'io.github.cppfw:treeml:+'
     implementation 'io.github.cppfw:svgren:+'
     implementation 'io.github.cppfw:png:+'
     implementation 'io.github.cppfw:jpeg:+'

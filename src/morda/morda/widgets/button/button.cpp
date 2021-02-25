@@ -7,7 +7,7 @@
 
 using namespace morda;
 
-button::button(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+button::button(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
 		widget(std::move(c), desc)
 {
 	for(const auto& p : desc){

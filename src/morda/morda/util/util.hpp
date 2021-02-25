@@ -5,7 +5,7 @@
 #include <r4/vector.hpp>
 #include <r4/rectangle.hpp>
 
-#include <puu/tree.hpp>
+#include <treeml/tree.hpp>
 
 #include "../config.hpp"
 
@@ -17,63 +17,63 @@
 
 namespace morda{
 
-morda::vector2 parse_vec2(puu::forest::const_iterator begin, puu::forest::const_iterator end);
+morda::vector2 parse_vec2(treeml::forest::const_iterator begin, treeml::forest::const_iterator end);
 
 /**
- * @brief Parse 2 values from puu as vector2.
+ * @brief Parse 2 values from treeml as vector2.
  * @param desc - forest of at least two trees holding vector2 values.
  *                If there are less than 2 trees in the forest then the rest of
  *                vector components will be filled with latest parsed value.
  * @return parsed vector2.
  */
-inline morda::vector2 parse_vec2(const puu::forest& desc){
+inline morda::vector2 parse_vec2(const treeml::forest& desc){
     return parse_vec2(desc.begin(), desc.end());
 }
 
 /**
- * @brief Parse chain of 4 puu nodes as rectangle.
+ * @brief Parse chain of 4 treeml nodes as rectangle.
  * @param desc - chain of at least four nodes holding rectangle values.
  *               If there are less than 4 nodes in the chain then the rest of
  *               rectangle components will be filled with latest parsed value.
  *               If zero pointer is passed the resulting rectangle will be filled with zeros.
  * @return parsed rectangle.
  */
-morda::rectangle parse_rect(const puu::forest& desc);
+morda::rectangle parse_rect(const treeml::forest& desc);
 
 /**
- * @brief Parse chain of 4 puu nodes as sides.
+ * @brief Parse chain of 4 treeml nodes as sides.
  * @param desc - chain of at least four nodes holding sides values.
  *               If there are less than 4 nodes in the chain then the rest of
  *               sides<real> components will be filled with latest parsed value.
  *               If zero pointer is passed the resulting sides<real> will be filled with zeros.
  * @return parsed sides<real>.
  */
-morda::sides<real> parse_sides(const puu::forest& desc);
+morda::sides<real> parse_sides(const treeml::forest& desc);
 
 /**
  * @brief Parse dimension value.
- * Parses value of dimension property from puu leaf.
+ * Parses value of dimension property from treeml leaf.
  * In case the value is given in millimeters or points it will do the conversion.
- * @param l - puu leaf holding the value.
+ * @param l - treeml leaf holding the value.
  * @param units - information about units. Can be obtained from context.
  * @return Parsed value in pixels.
  */
-real parse_dimension_value(const puu::leaf& l, const morda::units& units);
+real parse_dimension_value(const treeml::leaf& l, const morda::units& units);
 
 /**
  * @brief Parse layout dimension value.
- * Parses value of dimension value of layout parameters from puu.
- * @param l - puu leaf holding the value.
+ * Parses value of dimension value of layout parameters from treeml.
+ * @param l - treeml leaf holding the value.
  * @param units - information about units. Can be obtained from context.
  * @return Parsed value.
  */
-real parse_layout_dimension_value(const puu::leaf& l, const morda::units& units);
+real parse_layout_dimension_value(const treeml::leaf& l, const morda::units& units);
 
-bool is_property(const puu::tree& t);
+bool is_property(const treeml::tree& t);
 
-bool is_leaf_property(const puu::leaf& l);
+bool is_leaf_property(const treeml::leaf& l);
 
-bool is_leaf_child(const puu::leaf& l);
+bool is_leaf_child(const treeml::leaf& l);
 
 /**
  * @brief Load texture from file.
@@ -95,7 +95,7 @@ morda::texture_2d::type num_channels_to_texture_type(unsigned numChannels);
 
 r4::vector4<float> color_to_vec4f(uint32_t color);
 
-inline const puu::leaf& get_property_value(const puu::tree& p){
+inline const treeml::leaf& get_property_value(const treeml::tree& p){
     if(p.children.size() != 1){
         throw std::invalid_argument("get_property_value(): property has no value");
     }

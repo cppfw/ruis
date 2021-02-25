@@ -2,7 +2,7 @@
 
 #include <r4/vector.hpp>
 
-#include <puu/tree.hpp>
+#include <treeml/tree.hpp>
 
 #include "../resource_loader.hpp"
 #include "../config.hpp"
@@ -64,7 +64,7 @@ public:
 	void render(const morda::matrix4& m)const;
 	
 private:
-	static std::shared_ptr<gradient> load(morda::context& ctx, const ::puu::forest& desc, const papki::file& fi);
+	static std::shared_ptr<gradient> load(morda::context& ctx, const ::treeml::forest& desc, const papki::file& fi);
 };
 
 }}

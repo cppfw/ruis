@@ -37,7 +37,7 @@ res::font::font(
 	}
 }
 
-std::shared_ptr<res::font> res::font::load(morda::context& ctx, const puu::forest& desc, const papki::file& fi){
+std::shared_ptr<res::font> res::font::load(morda::context& ctx, const treeml::forest& desc, const papki::file& fi){
 	unsigned fontSize = 13;
 	unsigned maxCached = unsigned(-1);
 

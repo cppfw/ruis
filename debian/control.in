@@ -5,7 +5,7 @@ Section: libs
 Build-Depends: g++ (>= 4:4.8), debhelper (>= 9), prorab (>= 1.8.3), prorab-extra, myci, pkg-config,
 		libutki-dev (>= 1.1.112), libpapki-dev (>= 1.0.91),
 		libr4-dev (>= 1.0.52), libsvgdom-dev (>= 0.3.56), libsvgren-dev (>= 0.5.7),
-		libpuu-dev (>= 0.1.25),
+		libtreeml-dev (>= 0.1.26),
 		libpng-dev, libjpeg-dev, zlib1g-dev, libglew-dev, libfreetype6-dev,
 		libnitki-dev (>= 1.0.39),
 		libgles2-mesa-dev
@@ -14,7 +14,7 @@ Build-Depends-Indep: doxygen
 Package: libmorda-dev
 Architecture: any
 Depends: libmorda$(soname) (= ${binary:Version}), libmorda$(soname)-dbg (= ${binary:Version}), ${misc:Depends},
-		libutki-dev, libpapki-dev, libr4-dev, libpuu-dev
+		libutki-dev, libpapki-dev, libr4-dev, libtreeml-dev
 Suggests: libmorda-doc
 Priority: extra
 Section: libdevel

@@ -18,7 +18,7 @@ class choice_group : public pile{
 	
 	std::shared_ptr<choice_button> activeChoiceButton_v;
 public:
-	choice_group(std::shared_ptr<morda::context> c, const puu::forest& desc);
+	choice_group(std::shared_ptr<morda::context> c, const treeml::forest& desc);
 	
 	choice_group(const choice_group&) = delete;
 	choice_group& operator=(const choice_group&) = delete;

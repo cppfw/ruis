@@ -85,7 +85,7 @@ public:
 	 */
 	virtual std::shared_ptr<const texture> get(vector2 forDims = 0)const = 0;
 private:
-	static std::shared_ptr<image> load(morda::context& ctx, const ::puu::forest& desc, const papki::file& fi);
+	static std::shared_ptr<image> load(morda::context& ctx, const ::treeml::forest& desc, const papki::file& fi);
 	
 public:
 	/**
@@ -124,7 +124,7 @@ public:
 	void render(const matrix4& matrix, const vertex_array& vao) const override;
 	
 private:
-	static std::shared_ptr<atlas_image> load(morda::context& ctx, const ::puu::forest& desc, const papki::file& fi);
+	static std::shared_ptr<atlas_image> load(morda::context& ctx, const ::treeml::forest& desc, const papki::file& fi);
 };
 
 }}

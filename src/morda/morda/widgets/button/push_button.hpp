@@ -28,7 +28,7 @@ protected:
 	void on_hover_change(unsigned pointer_id)override;
 	
 public:
-	push_button(std::shared_ptr<morda::context> c, const puu::forest& desc) :
+	push_button(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
 			widget(std::move(c), desc),
 			button(nullptr, desc)
 	{}
