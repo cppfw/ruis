@@ -41,6 +41,7 @@ const std::map<morda::mouse_cursor, unsigned> x_cursor_map = {
 	{morda::mouse_cursor::arrow, XC_left_ptr},
 	{morda::mouse_cursor::left_right_arrow, XC_sb_h_double_arrow},
 	{morda::mouse_cursor::up_down_arrow, XC_sb_v_double_arrow},
+	{morda::mouse_cursor::all_directions_arrow, XC_fleur},
 	{morda::mouse_cursor::left_side, XC_left_side},
 	{morda::mouse_cursor::right_side, XC_right_side},
 	{morda::mouse_cursor::top_side, XC_top_side},
