@@ -1,3 +1,9 @@
+libmorda (0.5.161) unstable; urgency=medium
+
+  * add all directions arrow cursor
+
+ -- Ivan Gagis <igagis@gmail.com>  Mon, 01 Mar 2021 01:00:39 +0200
+
 libmorda (0.5.160) unstable; urgency=medium
 
   * mouse move event and mouse capturing
