@@ -667,7 +667,6 @@ void application::quit()noexcept{
 }
 
 namespace mordavokne{
-
 void winmain(int argc, const char** argv){
 	decltype(mordavokne::create_application)* f;
 
@@ -687,6 +686,9 @@ void winmain(int argc, const char** argv){
 
 	ASSERT_INFO(f, "no app factory function found")
 	std::unique_ptr<mordavokne::application> app = f(argc, argv);
+	if(!app){
+		return;
+	}
 
 	ASSERT(app)
 
@@ -725,7 +727,6 @@ void winmain(int argc, const char** argv){
 		//		TRACE(<< "loop" << std::endl)
 	}
 }
-
 }
 
 int WINAPI WinMain(

@@ -985,6 +985,9 @@ void application::quit()noexcept{
 
 int main(int argc, const char** argv){
 	std::unique_ptr<mordavokne::application> app = createAppUnix(argc, argv);
+	if(!app){
+		return 0;
+	}
 
 	ASSERT(app)
 

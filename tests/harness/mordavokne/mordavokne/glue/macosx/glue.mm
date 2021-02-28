@@ -701,6 +701,9 @@ void application::quit()noexcept{
 int main (int argc, const char** argv){
 	TRACE(<< "main(): enter" << std::endl)
 	auto app = createAppUnix(argc, argv);
+	if(!app){
+		return 0;
+	}
 
 	TRACE(<< "main(): app created" << std::endl)
 

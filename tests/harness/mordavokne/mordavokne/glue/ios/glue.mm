@@ -1,7 +1,7 @@
 #include "../../application.hpp"
 
-#include <papki/FSFile.hpp>
-#include <papki/RootDirFile.hpp>
+#include <papki/fs_file.hpp>
+#include <papki/root_dir_file.hpp>
 
 #include <sstream>
 
@@ -10,13 +10,10 @@
 
 #include <morda/render/opengles2/renderer.hpp>
 
-
 using namespace mordavokne;
 
 #include "../unixCommon.cxx"
 #include "../friendAccessors.cxx"
-
-
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>{
 	application* app;
@@ -64,14 +61,12 @@ using namespace mordavokne;
 
 @end
 
-
 int main(int argc, char * argv[]){
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	int retVal = UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
 	[pool release];
 	return retVal;
 }
-
 
 @interface ViewController : GLKViewController{
 
@@ -80,10 +75,6 @@ int main(int argc, char * argv[]){
 @property (strong, nonatomic) EAGLContext *context;
 
 @end
-
-
-
-
 
 namespace{
 	window_params windowParams(0);
@@ -126,13 +117,7 @@ namespace{
 	}
 }
 
-
-
-
-
-
 @implementation ViewController
-
 
 - (void)viewDidLoad{
 	[super viewDidLoad];
@@ -185,7 +170,6 @@ namespace{
 - (void)didReceiveMemoryWarning{
 	// Dispose of any resources that can be recreated.
 }
-
 
 - (void)update{
 	//TODO: adapt to nothing to update, lower frame rate
@@ -240,20 +224,16 @@ namespace{
 				false,
 				morda::Vec2r(p.x * scale, p.y * scale).rounded(),
 				morda::MouseButton_e::LEFT,
-				0//TODO: id
+				0 // TODO: id
 			);
 	}
 }
 
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
-	//TODO:
+	// TODO:
 }
 
 @end
-
-
-
-
 
 void application::set_fullscreen(bool enable){
 	auto& ww = getImpl(this->windowPimpl);
@@ -299,11 +279,9 @@ void application::set_fullscreen(bool enable){
 	}
 }
 
-
 void application::quit()noexcept{
 	//TODO:
 }
-
 
 namespace{
 morda::real getDotsPerInch(){
@@ -356,7 +334,6 @@ application::application(std::string&& name, const window_params& wp) :
 	this->set_fullscreen(false);//this will intialize the viewport
 }
 
-
 void application::swapFrameBuffers(){
 	//do nothing
 }
@@ -369,13 +346,12 @@ void application::hide_virtual_keyboard()noexcept{
 	//TODO:
 }
 
-
-std::unique_ptr<papki::File> application::get_res_file(const std::string& path)const{
+std::unique_ptr<papki::file> application::get_res_file(const std::string& path)const{
 	std::string dir([[[NSBundle mainBundle] resourcePath] fileSystemRepresentation]);
 
 //	TRACE(<< "res path = " << dir << std::endl)
 
-	auto rdf = utki::makeUnique<papki::RootDirFile>(utki::makeUnique<papki::FSFile>(), dir + "/");
+	auto rdf = std::make_unique<papki::root_dir_file>(std::make_unique<papki::fs_file>(), dir + "/");
 	rdf->setPath(path);
 
 	return std::move(rdf);
