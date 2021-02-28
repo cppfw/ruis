@@ -58,7 +58,7 @@ public:
 		provider() = default;
 	public:
 
-		virtual std::shared_ptr<widget> get_widget(const std::vector<size_t>& index, bool isCollapsed) = 0;
+		virtual std::shared_ptr<widget> get_widget(const std::vector<size_t>& index, bool is_collapsed) = 0;
 
 		virtual void recycle(const std::vector<size_t>& index, std::shared_ptr<widget> w){}
 
