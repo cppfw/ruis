@@ -93,7 +93,7 @@ public:
 public:
 	/**
 	 * @brief Invoked when view Changes.
-	 * For example on collapse/uncollapse.
+	 * For example on collapse/uncollapse or scroll position change.
 	 */
 	std::function<void(tree_view&)> view_change_handler;
 
@@ -110,6 +110,9 @@ public:
 	vector2 get_scroll_factor()const{
 		return vector2(this->scroll_area::get_scroll_factor().x(), this->item_list->get_scroll_factor());
 	}
+
+private:
+	void notify_view_change();
 };
 
 }

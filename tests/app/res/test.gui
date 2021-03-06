@@ -347,12 +347,6 @@ cursor{crs_arrow}
 							dx{fill} dy{fill}
 						}
 					}
-					@resize_proxy{
-						layout{
-							dx{fill} dy{fill}
-						}
-						id{treeview_resize_proxy}
-					}
 				}
 
 
