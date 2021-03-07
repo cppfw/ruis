@@ -92,10 +92,10 @@ public:
 
 public:
 	/**
-	 * @brief Invoked when view Changes.
-	 * For example on collapse/uncollapse or scroll position change.
+	 * @brief Scroll position changed signal.
+	 * Emitted when list's scroll position has changed.
 	 */
-	std::function<void(tree_view&)> view_change_handler;
+	std::function<void(tree_view&)> scroll_change_handler;
 
 	void set_provider(std::shared_ptr<provider> provider = nullptr);
 

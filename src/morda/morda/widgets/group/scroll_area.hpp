@@ -80,7 +80,7 @@ public:
 
 	virtual void on_scroll_pos_change();
 
-	std::function<void(scroll_area&)> scroll_pos_change_handler;
+	std::function<void(scroll_area&)> scroll_change_handler;
 
 private:
 	void update_effective_dims();

@@ -131,7 +131,7 @@ public:
 	 * @brief Scroll position changed signal.
 	 * Emitted when list's scroll position has changed.
 	 */
-	std::function<void(list_widget&)> scroll_pos_change_handler;
+	std::function<void(list_widget&)> scroll_change_handler;
 private:
 	std::shared_ptr<provider> item_provider;
 

@@ -603,7 +603,7 @@ public:
 				}
 			};
 
-			verticalList->scroll_pos_change_handler = [vs](morda::list_widget& l){
+			verticalList->scroll_change_handler = [vs](morda::list_widget& l){
 				if(auto s = vs.lock()){
 					s->set_fraction(l.get_scroll_factor(), false);
 				}
@@ -647,7 +647,7 @@ public:
 			ASSERT(horizontalSlider)
 			auto hs = utki::make_weak(horizontalSlider);
 
-			horizontalList->scroll_pos_change_handler = [hs](morda::list_widget& l){
+			horizontalList->scroll_change_handler = [hs](morda::list_widget& l){
 				if(auto h = hs.lock()){
 					h->set_fraction(l.get_scroll_factor(), false);
 				}
@@ -735,7 +735,7 @@ public:
 				}
 			};
 
-			treeview->view_change_handler = [
+			treeview->scroll_change_handler = [
 					hs = utki::make_weak(horizontalSlider),
 					vs = utki::make_weak(verticalSlider)
 				](morda::tree_view& tw)
