@@ -175,7 +175,7 @@ vector2 scroll_area::get_visible_area_fraction()const noexcept{
 }
 
 void scroll_area::on_scroll_pos_change(){
-	if(this->scroll_pos_change_handler){
-		this->scroll_pos_change_handler(*this);
+	if(this->scroll_change_handler){
+		this->scroll_change_handler(*this);
 	}
 }

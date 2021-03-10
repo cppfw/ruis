@@ -318,8 +318,8 @@ void list_widget::update_tail_items_info(){
 
 void list_widget::notify_scroll_pos_changed(size_t old_index, real old_offset){
 	if(old_index != this->pos_index || old_offset != this->pos_offset){
-		if(this->scroll_pos_change_handler){
-			this->scroll_pos_change_handler(*this);
+		if(this->scroll_change_handler){
+			this->scroll_change_handler(*this);
 		}
 	}
 }

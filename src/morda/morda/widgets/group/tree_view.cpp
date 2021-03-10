@@ -24,10 +24,22 @@ tree_view::tree_view(std::shared_ptr<morda::context> c, const treeml::forest& de
 	lp.dims.x() = widget::layout_params::min;
 
 	this->item_list->data_set_change_handler = [this](list_widget&){
-		if(this->view_change_handler){
-			this->view_change_handler(*this);
-		}
+		this->notify_view_change();
 	};
+
+	this->item_list->scroll_change_handler = [this](list_widget& lw){
+		this->notify_view_change();
+	};
+
+	this->scroll_area::scroll_change_handler = [this](scroll_area& sa){
+		this->notify_view_change();
+	};
+}
+
+void tree_view::notify_view_change(){
+	if(this->scroll_change_handler){
+		this->scroll_change_handler(*this);
+	}
 }
 
 void tree_view::set_provider(std::shared_ptr<provider> item_provider){
