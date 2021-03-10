@@ -1020,6 +1020,8 @@ int main(int argc, const char** argv){
 			ASSERT(!ww.ui_queue.flags().get(opros::ready::read))
 		}
 
+		morda::vector2 new_win_dims(-1, -1);
+
 		// NOTE: do not check 'read' flag for X event, for some reason when waiting with 0 timeout it will never be set.
 		//       Maybe some bug in XWindows, maybe something else.
 		bool x_event_arrived = false;
@@ -1038,7 +1040,10 @@ int main(int argc, const char** argv){
 					break;
 				case ConfigureNotify:
 //						TRACE(<< "ConfigureNotify X event got" << std::endl)
-					updateWindowRect(*app, morda::rectangle(0, 0, float(event.xconfigure.width), float(event.xconfigure.height)));
+					// squash all window resize events into one, for that store the new window dimensions and update the
+					// viewport later only once
+					new_win_dims.x() = morda::real(event.xconfigure.width);
+					new_win_dims.y() = morda::real(event.xconfigure.height);
 					break;
 				case KeyPress:
 //						TRACE(<< "KeyPress X event got" << std::endl)
@@ -1131,6 +1136,10 @@ int main(int argc, const char** argv){
 		//             meaningful actuall happened and call render() only if it did
 		if(num_waitables_triggered != 0 && !x_event_arrived && !ui_queue_ready_to_read){
 			continue;
+		}
+
+		if(new_win_dims.is_positive_or_zero()){
+			updateWindowRect(*app, morda::rectangle(0, new_win_dims));
 		}
 
 		render(*app);
