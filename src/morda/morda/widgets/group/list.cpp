@@ -89,6 +89,14 @@ void list_widget::set_provider(std::shared_ptr<provider> item_provider){
 	this->handle_data_set_changed();
 }
 
+real list_widget::get_scroll_band()const noexcept{
+    if(!this->item_provider || this->item_provider->count() == 0){
+        return 0;
+    }
+
+    return morda::real(this->children().size()) / morda::real(this->item_provider->count());
+}
+
 real list_widget::get_scroll_factor()const noexcept{
 	if(!this->item_provider || this->item_provider->count() == 0){
 		return 0;

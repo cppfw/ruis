@@ -845,12 +845,6 @@ cursor{crs_arrow}
 					}
 
 				}
-				@resize_proxy{
-					layout{
-						dx{max} dy{max}
-					}
-					id{vertical_list_resize_proxy}
-				}
 			}
 
 			@vertical_scroll_bar{

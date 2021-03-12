@@ -27,7 +27,7 @@ class list_widget :
 	// the value is positive, tough the item is biased towards negative coordinate values.
 	real pos_offset = real(0);
 
-	size_t num_tail_items = 0; // Zero means that number of tail items has to be recomputed
+	size_t num_tail_items = 0; // zero means that number of tail items has to be recomputed
 	size_t first_tail_item_index = 0;
 	real first_tail_item_offset = real(0);
 
@@ -97,6 +97,13 @@ public:
 	 * @return Current scroll position as factor from [0:1].
 	 */
 	real get_scroll_factor()const noexcept;
+
+    /**
+     * @brief Get scroll band.
+     * Returns scroll band as a fraction of 1. This is basically the number of visible elements divided by total number of elements in the list.
+     * @return scroll band.
+     */
+    real get_scroll_band()const noexcept;
 
 	/**
 	 * @brief Get index of the first visible item.

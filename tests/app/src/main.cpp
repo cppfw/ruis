@@ -576,7 +576,7 @@ public:
 			};
 		}
 
-		// VerticalList
+		// vertical_list
 		{
 			auto verticalList = c->try_get_widget_as<morda::list>("list");
 			auto vl = utki::make_weak(verticalList);
@@ -590,22 +590,23 @@ public:
 				}
 			};
 
-			auto resizeProxy = c->try_get_widget_as<morda::resize_proxy>("vertical_list_resize_proxy");
-			ASSERT(resizeProxy)
+			// auto resizeProxy = c->try_get_widget_as<morda::resize_proxy>("vertical_list_resize_proxy");
+			// ASSERT(resizeProxy)
 
-			resizeProxy->resize_handler = [vs, vl](morda::resize_proxy&){
-				auto l = vl.lock();
-				if(!l){
-					return;
-				}
-				if(auto s = vs.lock()){
-					s->set_fraction(l->get_scroll_factor());
-				}
-			};
+			// resizeProxy->resize_handler = [vs, vl](morda::resize_proxy&){
+			// 	auto l = vl.lock();
+			// 	if(!l){
+			// 		return;
+			// 	}
+			// 	if(auto s = vs.lock()){
+			// 		s->set_fraction(l->get_scroll_factor());
+			// 	}
+			// };
 
 			verticalList->scroll_change_handler = [vs](morda::list_widget& l){
 				if(auto s = vs.lock()){
 					s->set_fraction(l.get_scroll_factor(), false);
+                    s->set_band_fraction(l.get_scroll_band());
 				}
 			};
 
@@ -741,10 +742,13 @@ public:
 				](morda::tree_view& tw)
 			{
 				auto f = tw.get_scroll_factor();
+                auto b = tw.get_scroll_band();
 				if(auto h = hs.lock()){
+                    h->set_band_fraction(b.x());
 					h->set_fraction(f.x(), false);
 				}
 				if(auto v = vs.lock()){
+                    v->set_band_fraction(b.y());
 					v->set_fraction(f.y(), false);
 				}
 			};

@@ -111,6 +111,13 @@ public:
 		return vector2(this->scroll_area::get_scroll_factor().x(), this->item_list->get_scroll_factor());
 	}
 
+    vector2 get_scroll_band()const noexcept{
+        return vector2(
+                this->scroll_area::get_visible_area_fraction().x(),
+                this->item_list->get_scroll_band()
+            );
+    }
+
 private:
 	void notify_view_change();
 };
