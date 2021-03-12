@@ -349,7 +349,7 @@ template <class T> std::vector<std::shared_ptr<T>> widget::get_all_widgets(){
 	std::vector<std::shared_ptr<T>> ret;
 
 	if(auto p = dynamic_cast<T*>(this)){
-		ret.emplace_back(utki::make_shared_from(*p));
+		ret.push_back(utki::make_shared_from(*p));
 	}
 
 	if(auto cont = dynamic_cast<container*>(this)){
