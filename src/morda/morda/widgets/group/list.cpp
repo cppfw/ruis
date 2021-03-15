@@ -89,11 +89,7 @@ void list_widget::set_provider(std::shared_ptr<provider> item_provider){
 	this->handle_data_set_changed();
 }
 
-real list_widget::get_scroll_band()const noexcept{
-    if(!this->item_provider || this->item_provider->count() == 0){
-        return 0;
-    }
-
+real list_widget::calc_num_visible_items()const noexcept{
     // calculate number of visible items,
     // this number can have fraction part because of partially visible items
     real items_num = 0;
@@ -115,6 +111,16 @@ real list_widget::get_scroll_band()const noexcept{
 
         items_num += visible_dim / dim;
     }
+
+    return items_num;
+}
+
+real list_widget::get_scroll_band()const noexcept{
+    if(!this->item_provider || this->item_provider->count() == 0){
+        return 0;
+    }
+
+    auto items_num = this->calc_num_visible_items();
 
     return items_num / morda::real(this->item_provider->count());
 }
@@ -140,16 +146,19 @@ real list_widget::get_scroll_factor()const noexcept{
 		return 0;
 	}
 
-	real d = this->rect().d[this->get_long_index()];
+    auto index = this->get_long_index();
 
-	ASSERT(this->num_tail_items != 0)
-	d = (d + this->first_tail_item_offset) / this->num_tail_items;
+	real list_dim = this->rect().d[index];
 
-	if(d <= 0){
+    // calculate average item dimension from visible items
+    auto average_item_dim = list_dim / this->calc_num_visible_items();
+
+	if(average_item_dim <= 0){
 		return 0;
 	}
 
-	return (real(this->pos_index) * d + this->pos_offset) / (real(length) * d + this->first_tail_item_offset);
+	return (real(this->pos_index + this->pos_offset / this->children().front()->rect().d[index]) * average_item_dim)
+            / (real(length + this->first_tail_item_offset / this->first_tail_item_dim) * average_item_dim);
 }
 
 void list_widget::set_scroll_factor(real factor){
@@ -334,7 +343,9 @@ void list_widget::update_tail_items_info(){
 
 		vector2 d = this->dims_for_widget(*w, lp);
 
-		dim -= d[longIndex];
+        auto item_dim = d[longIndex];
+		dim -= item_dim;
+        this->first_tail_item_dim = item_dim;
 	}
 
 	this->first_tail_item_index = this->item_provider->count() - this->num_tail_items;
@@ -344,6 +355,10 @@ void list_widget::update_tail_items_info(){
 	}else{
 		this->first_tail_item_offset = -dim;
 	}
+
+    if(this->first_tail_item_dim <= 0){
+        this->first_tail_item_dim = 1;
+    }
 }
 
 void list_widget::notify_scroll_pos_changed(size_t old_index, real old_offset){

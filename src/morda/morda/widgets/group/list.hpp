@@ -30,6 +30,7 @@ class list_widget :
 	size_t num_tail_items = 0; // zero means that number of tail items has to be recomputed
 	size_t first_tail_item_index = 0;
 	real first_tail_item_offset = real(0);
+    real first_tail_item_dim = real(0);
 
 protected:
 	list_widget(std::shared_ptr<morda::context> c, const treeml::forest& desc, bool vertical);
@@ -158,6 +159,8 @@ private:
 	void handle_data_set_changed();
 
 	void notify_scroll_pos_changed(size_t old_index, real old_offset);
+
+    real calc_num_visible_items()const noexcept;
 };
 
 /**
