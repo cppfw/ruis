@@ -140,6 +140,12 @@ void scroll_area::lay_out(){
 			this->cur_scroll_pos.y() = 0;
 		}
 	}
+
+	this->context->run_from_ui_thread([sa = utki::make_weak_from(*this)](){
+		if(auto s = sa.lock()){
+			s->on_scroll_pos_change();
+		}
+	});
 }
 
 void scroll_area::on_children_change(){

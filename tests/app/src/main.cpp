@@ -537,27 +537,18 @@ public:
 			auto horiSlider = c->try_get_widget_as<morda::scroll_bar>("scroll_area_horizontal_slider");
 			auto hs = utki::make_weak(horiSlider);
 
-			auto resizeProxy = c->try_get_widget_as<morda::resize_proxy>("scroll_area_resize_proxy");
-			auto rp = utki::make_weak(resizeProxy);
-
-			resizeProxy->resize_handler = [vs, hs, sa](morda::resize_proxy&){
-				auto sc = sa.lock();
-				if(!sc){
-					return;
-				}
-
-				auto visibleArea = sc->get_visible_area_fraction();
-
-				if(auto v = vs.lock()){
-					v->set_fraction(sc->get_scroll_factor().y());
-					v->set_band_fraction(visibleArea.y());
-				}
+			scrollArea->scroll_change_handler = [hs = hs, vs = vs](morda::scroll_area& sa){
+				auto f = sa.get_scroll_factor();
+				auto b = sa.get_visible_area_fraction();
 				if(auto h = hs.lock()){
-					h->set_fraction(sc->get_scroll_factor().x());
-					h->set_band_fraction(visibleArea.x());
+					h->set_fraction(f.x());
+					h->set_band_fraction(b.x());
+				}
+				if(auto v = vs.lock()){
+					v->set_fraction(f.y());
+					v->set_band_fraction(b.y());
 				}
 			};
-			resizeProxy->on_resize();
 
 			vertSlider->fraction_change_handler = [sa](morda::fraction_widget& slider){
 				if(auto s = sa.lock()){

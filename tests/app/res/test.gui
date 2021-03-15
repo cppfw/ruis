@@ -627,12 +627,6 @@ cursor{crs_arrow}
 							}
 						}
 					}
-					@resize_proxy{
-						layout{
-							dx{max} dy{max}
-						}
-						id{scroll_area_resize_proxy}
-					}
 				}
 
 				@vertical_scroll_bar{
