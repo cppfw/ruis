@@ -94,7 +94,29 @@ real list_widget::get_scroll_band()const noexcept{
         return 0;
     }
 
-    return morda::real(this->children().size()) / morda::real(this->item_provider->count());
+    // calculate number of visible items,
+    // this number can have fraction part because of partially visible items
+    real items_num = 0;
+
+    unsigned index = this->get_long_index();
+
+    for(auto& c : this->children()){
+        auto dim = c->rect().d[index];
+        auto visible_dim = dim;
+        auto pos = c->rect().p[index];
+        if(pos < 0){
+            visible_dim += pos;
+        }
+        auto list_dim = this->rect().d[index];
+        auto end_pos = pos + dim;
+        if(end_pos > list_dim){
+            visible_dim -= (end_pos - list_dim);
+        }
+
+        items_num += visible_dim / dim;
+    }
+
+    return items_num / morda::real(this->item_provider->count());
 }
 
 real list_widget::get_scroll_factor()const noexcept{
