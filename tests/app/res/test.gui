@@ -292,12 +292,6 @@ cursor{crs_arrow}
 						text{item12|}
 					}
 				}
-				@resize_proxy{
-					layout{
-						dx{fill} dy{fill}
-					}
-					id{horizontal_list_resize_proxy}
-				}
 			}
 
 			@horizontal_scroll_bar{

@@ -590,19 +590,6 @@ public:
 				}
 			};
 
-			// auto resizeProxy = c->try_get_widget_as<morda::resize_proxy>("vertical_list_resize_proxy");
-			// ASSERT(resizeProxy)
-
-			// resizeProxy->resize_handler = [vs, vl](morda::resize_proxy&){
-			// 	auto l = vl.lock();
-			// 	if(!l){
-			// 		return;
-			// 	}
-			// 	if(auto s = vs.lock()){
-			// 		s->set_fraction(l->get_scroll_factor());
-			// 	}
-			// };
-
 			verticalList->scroll_change_handler = [vs](morda::list_widget& l){
 				if(auto s = vs.lock()){
 					s->set_fraction(l.get_scroll_factor(), false);
@@ -639,18 +626,19 @@ public:
 			};
 		}
 
-		// HorizontalList
+		// pan_list
 		{
-			auto horizontalList = c->try_get_widget_as<morda::list_widget>("pan_list");
-			auto hl = utki::make_weak(horizontalList);
+			auto pan_list = c->try_get_widget_as<morda::list_widget>("pan_list");
+			auto hl = utki::make_weak(pan_list);
 
-			auto horizontalSlider = c->try_get_widget_as<morda::fraction_widget>("horizontal_list_slider");
+			auto horizontalSlider = c->try_get_widget_as<morda::scroll_bar>("horizontal_list_slider");
 			ASSERT(horizontalSlider)
 			auto hs = utki::make_weak(horizontalSlider);
 
-			horizontalList->scroll_change_handler = [hs](morda::list_widget& l){
+			pan_list->scroll_change_handler = [hs](morda::list_widget& l){
 				if(auto h = hs.lock()){
 					h->set_fraction(l.get_scroll_factor(), false);
+					h->set_band_fraction(l.get_scroll_band());
 				}
 			};
 
@@ -658,19 +646,6 @@ public:
 //				TRACE(<< "horizontal slider factor = " << slider.factor() << std::endl)
 				if(auto l = hl.lock()){
 					l->set_scroll_factor(slider.fraction());
-				}
-			};
-
-			auto resizeProxy = c->try_get_widget_as<morda::resize_proxy>("horizontal_list_resize_proxy");
-			ASSERT(resizeProxy)
-
-			resizeProxy->resize_handler = [hs, hl](morda::resize_proxy&){
-				auto l = hl.lock();
-				if(!l){
-					return;
-				}
-				if(auto s = hs.lock()){
-					s->set_fraction(l->get_scroll_factor());
 				}
 			};
 
