@@ -158,6 +158,7 @@ private:
 
 	void handle_data_set_changed();
 
+    void notify_scroll_pos_changed();
 	void notify_scroll_pos_changed(size_t old_index, real old_offset);
 
     real calc_num_visible_items()const noexcept;

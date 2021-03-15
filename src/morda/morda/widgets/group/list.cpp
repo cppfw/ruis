@@ -53,22 +53,15 @@ list_widget::list_widget(std::shared_ptr<morda::context> c, const treeml::forest
 void list_widget::lay_out(){
 //	TRACE(<< "list_widget::lay_out(): invoked" << std::endl)
 
-	this->num_tail_items = 0;//means that it needs to be recomputed
-
-	size_t old_index = this->pos_index;
-	real old_offset = this->pos_offset;
+	this->num_tail_items = 0; // 0 means that it needs to be recomputed
 
 	this->update_children_list();
 
 	// defer the scroll position change notification, because layouting happens during render phase
 	this->context->run_from_ui_thread(
-			[
-				wl = utki::make_weak_from(*this),
-				old_offset,
-				old_index
-			](){
+			[wl = utki::make_weak_from(*this)](){
 				if(auto l = wl.lock()){
-					l->notify_scroll_pos_changed(old_index, old_offset);
+					l->notify_scroll_pos_changed();
 				}
 			}
 		);
@@ -90,39 +83,39 @@ void list_widget::set_provider(std::shared_ptr<provider> item_provider){
 }
 
 real list_widget::calc_num_visible_items()const noexcept{
-    // calculate number of visible items,
-    // this number can have fraction part because of partially visible items
-    real items_num = 0;
+	// calculate number of visible items,
+	// this number can have fraction part because of partially visible items
+	real items_num = 0;
 
-    unsigned index = this->get_long_index();
+	unsigned index = this->get_long_index();
 
-    for(auto& c : this->children()){
-        auto dim = c->rect().d[index];
-        auto visible_dim = dim;
-        auto pos = c->rect().p[index];
-        if(pos < 0){
-            visible_dim += pos;
-        }
-        auto list_dim = this->rect().d[index];
-        auto end_pos = pos + dim;
-        if(end_pos > list_dim){
-            visible_dim -= (end_pos - list_dim);
-        }
+	for(auto& c : this->children()){
+		auto dim = c->rect().d[index];
+		auto visible_dim = dim;
+		auto pos = c->rect().p[index];
+		if(pos < 0){
+			visible_dim += pos;
+		}
+		auto list_dim = this->rect().d[index];
+		auto end_pos = pos + dim;
+		if(end_pos > list_dim){
+			visible_dim -= (end_pos - list_dim);
+		}
 
-        items_num += visible_dim / dim;
-    }
+		items_num += visible_dim / dim;
+	}
 
-    return items_num;
+	return items_num;
 }
 
 real list_widget::get_scroll_band()const noexcept{
-    if(!this->item_provider || this->item_provider->count() == 0){
-        return 0;
-    }
+	if(!this->item_provider || this->item_provider->count() == 0){
+		return 0;
+	}
 
-    auto items_num = this->calc_num_visible_items();
+	auto items_num = this->calc_num_visible_items();
 
-    return items_num / morda::real(this->item_provider->count());
+	return items_num / morda::real(this->item_provider->count());
 }
 
 real list_widget::get_scroll_factor()const noexcept{
@@ -146,19 +139,19 @@ real list_widget::get_scroll_factor()const noexcept{
 		return 0;
 	}
 
-    auto index = this->get_long_index();
+	auto index = this->get_long_index();
 
 	real list_dim = this->rect().d[index];
 
-    // calculate average item dimension from visible items
-    auto average_item_dim = list_dim / this->calc_num_visible_items();
+	// calculate average item dimension from visible items
+	auto average_item_dim = list_dim / this->calc_num_visible_items();
 
 	if(average_item_dim <= 0){
 		return 0;
 	}
 
 	return (real(this->pos_index + this->pos_offset / this->children().front()->rect().d[index]) * average_item_dim)
-            / (real(length + this->first_tail_item_offset / this->first_tail_item_dim) * average_item_dim);
+			/ (real(length + this->first_tail_item_offset / this->first_tail_item_dim) * average_item_dim);
 }
 
 void list_widget::set_scroll_factor(real factor){
@@ -343,9 +336,9 @@ void list_widget::update_tail_items_info(){
 
 		vector2 d = this->dims_for_widget(*w, lp);
 
-        auto item_dim = d[longIndex];
+		auto item_dim = d[longIndex];
 		dim -= item_dim;
-        this->first_tail_item_dim = item_dim;
+		this->first_tail_item_dim = item_dim;
 	}
 
 	this->first_tail_item_index = this->item_provider->count() - this->num_tail_items;
@@ -356,16 +349,20 @@ void list_widget::update_tail_items_info(){
 		this->first_tail_item_offset = -dim;
 	}
 
-    if(this->first_tail_item_dim <= 0){
-        this->first_tail_item_dim = 1;
-    }
+	if(this->first_tail_item_dim <= 0){
+		this->first_tail_item_dim = 1;
+	}
+}
+
+void list_widget::notify_scroll_pos_changed(){
+	if(this->scroll_change_handler){
+		this->scroll_change_handler(*this);
+	}
 }
 
 void list_widget::notify_scroll_pos_changed(size_t old_index, real old_offset){
 	if(old_index != this->pos_index || old_offset != this->pos_offset){
-		if(this->scroll_change_handler){
-			this->scroll_change_handler(*this);
-		}
+		this->notify_scroll_pos_changed();
 	}
 }
 
