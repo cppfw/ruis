@@ -14,9 +14,11 @@ file(GLOB_RECURSE srcs
         "../../tests/app/src/*.cpp"
         "../../tests/harness/mordavokne/*.cpp"
         "../../tests/harness/opengles2/*.cpp"
-)
+    )
 
 include (${ANDROID_GRADLE_NATIVE_BUNDLE_PLUGIN_MK})
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
 
 link_directories( ../morda/build/intermediates/cmake/release/obj/${ANDROID_ABI} )
 
