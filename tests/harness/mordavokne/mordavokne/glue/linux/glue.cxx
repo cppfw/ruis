@@ -73,7 +73,7 @@ struct window_wrapper : public utki::destructable{
 		}
 	} display;
 
-	Colormap colorMap;
+	Colormap color_map;
 	::Window window;
 #ifdef MORDAVOKNE_RENDER_OPENGL2
 	GLXContext glContext;
@@ -336,7 +336,7 @@ struct window_wrapper : public utki::destructable{
 			XFree(visual_info);
 		});
 
-		this->colorMap = XCreateColormap(
+		this->color_map = XCreateColormap(
 				this->display.display,
 				RootWindow(this->display.display, visual_info->screen),
 				visual_info->visual,
@@ -344,12 +344,12 @@ struct window_wrapper : public utki::destructable{
 			);
 		//TODO: check for error?
 		utki::scope_exit scopeExitColorMap([this](){
-			XFreeColormap(this->display.display, this->colorMap);
+			XFreeColormap(this->display.display, this->color_map);
 		});
 
 		{
 			XSetWindowAttributes attr;
-			attr.colormap = colorMap;
+			attr.colormap = this->color_map;
 			attr.border_pixel = 0;
 			attr.background_pixmap = None;
 			attr.event_mask =
@@ -562,7 +562,7 @@ struct window_wrapper : public utki::destructable{
 #endif
 
 		XDestroyWindow(this->display.display, this->window);
-		XFreeColormap(this->display.display, this->colorMap);
+		XFreeColormap(this->display.display, this->color_map);
 
 #ifdef MORDAVOKNE_RENDER_OPENGLES2
 		eglTerminate(this->eglDisplay);
