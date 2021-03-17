@@ -65,7 +65,7 @@ public:
 private:
 	std::unique_ptr<utki::destructable> windowPimpl;
 
-	friend const decltype(windowPimpl)& getWindowPimpl(application& app);
+	friend const decltype(windowPimpl)& get_window_pimpl(application& app);
 
 private:
 	void swapFrameBuffers();

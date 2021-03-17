@@ -87,7 +87,7 @@ public:
 			));
 	}
 
-	float getDotsPerInch(){
+	float get_dots_per_inch(){
 		return float(this->env->CallFloatMethod(this->obj, this->get_dots_per_inch_method));
 	}
 
@@ -99,7 +99,7 @@ public:
 		this->env->CallVoidMethod(this->obj, this->show_virtual_keyboard_method);
 	}
 
-	std::vector<std::string> listDirContents(const std::string& path){
+	std::vector<std::string> list_dir_contents(const std::string& path){
 		jstring p = this->env->NewStringUTF(path.c_str());
 		jobject res = this->env->CallObjectMethod(this->obj, this->list_dir_contents_method, p);
 		this->env->DeleteLocalRef(p);
@@ -129,7 +129,7 @@ public:
 		return ret;
 	}
 
-	std::string getStorageDir(){
+	std::string get_storage_dir(){
 		jobject res = this->env->CallObjectMethod(this->obj, this->get_storage_dir_method);
 		utki::scope_exit resScopeExit([this, &res](){
 			this->env->DeleteLocalRef(res);
@@ -146,16 +146,16 @@ public:
 	}
 };
 
-std::unique_ptr<java_functions_wrapper> javaFunctionsWrapper;
+std::unique_ptr<java_functions_wrapper> java_functions;
 
-struct WindowWrapper : public utki::destructable{
+struct window_wrapper : public utki::destructable{
 	EGLDisplay display;
 	EGLSurface surface;
 	EGLContext context;
 
-	nitki::queue uiQueue;
+	nitki::queue ui_queue;
 
-	WindowWrapper(const window_params& wp){
+	window_wrapper(const window_params& wp){
 		this->display = eglGetDisplay(EGL_DEFAULT_DISPLAY);
 		if(this->display == EGL_NO_DISPLAY){
 			throw std::runtime_error("eglGetDisplay(): failed, no matching display connection found");
@@ -237,18 +237,18 @@ struct WindowWrapper : public utki::destructable{
 		eglDisplayScopeExit.reset();
 	}
 
-	r4::vector2<unsigned> getWindowSize(){
+	r4::vector2<unsigned> get_window_size(){
 		EGLint width, height;
 		eglQuerySurface(this->display, this->surface, EGL_WIDTH, &width);
 		eglQuerySurface(this->display, this->surface, EGL_HEIGHT, &height);
 		return r4::vector2<unsigned>(width, height);
 	}
 
-	void swapBuffers(){
+	void swap_buffers(){
 		eglSwapBuffers(this->display, this->surface);
 	}
 
-	~WindowWrapper()noexcept{
+	~window_wrapper()noexcept{
 		eglMakeCurrent(this->display, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
 		eglDestroyContext(this->display, this->context);
 		eglDestroySurface(this->display, this->surface);
@@ -256,13 +256,13 @@ struct WindowWrapper : public utki::destructable{
 	}
 };
 
-WindowWrapper& getImpl(const std::unique_ptr<utki::destructable>& pimpl){
-	ASSERT(dynamic_cast<WindowWrapper*>(pimpl.get()))
-	return static_cast<WindowWrapper&>(*pimpl);
+window_wrapper& get_impl(const std::unique_ptr<utki::destructable>& pimpl){
+	ASSERT(dynamic_cast<window_wrapper*>(pimpl.get()))
+	return static_cast<window_wrapper&>(*pimpl);
 }
 
-WindowWrapper& get_impl(application& app){
-	return getImpl(getWindowPimpl(app));
+window_wrapper& get_impl(application& app){
+	return get_impl(get_window_pimpl(app));
 }
 
 class asset_file : public papki::file{
@@ -369,8 +369,8 @@ public:
 		// Trim away trailing '/', as Android does not work with it.
 		auto p = this->path().substr(0, this->path().size() - 1);
 
-		ASSERT(javaFunctionsWrapper)
-		return javaFunctionsWrapper->listDirContents(p);
+		ASSERT(java_functions)
+		return java_functions->list_dir_contents(p);
 	}
 
 	std::unique_ptr<papki::file> spawn()override{
@@ -486,9 +486,9 @@ public:
 	int32_t di;//device id
 
 	std::u32string get()const{
-		ASSERT(javaFunctionsWrapper)
+		ASSERT(java_functions)
 //		TRACE(<< "KeyEventToUnicodeResolver::Resolve(): this->kc = " << this->kc << std::endl)
-		char32_t res = javaFunctionsWrapper->resolve_key_unicode(this->di, this->ms, this->kc);
+		char32_t res = java_functions->resolve_key_unicode(this->di, this->ms, this->kc);
 
 		//0 means that key did not produce any unicode character
 		if(res == 0){
@@ -968,9 +968,9 @@ jint JNI_OnLoad(JavaVM* vm, void* reserved){
 
 namespace{
 std::string initializeStorageDir(const std::string& appName){
-	ASSERT(javaFunctionsWrapper)
+	ASSERT(java_functions)
 
-	auto dir = javaFunctionsWrapper->getStorageDir();
+	auto dir = java_functions->get_storage_dir();
 
 	if(*dir.rend() != '/'){
 		dir.append(1, '/');
@@ -979,31 +979,35 @@ std::string initializeStorageDir(const std::string& appName){
 }
 }
 
+namespace{
+const float mm_per_inch = 25.4f;
+}
+
 mordavokne::application::application(std::string&& name, const window_params& requestedWindowParams) :
 		name(name),
-		windowPimpl(std::make_unique<WindowWrapper>(requestedWindowParams)),
+		windowPimpl(std::make_unique<window_wrapper>(requestedWindowParams)),
 		gui(std::make_shared<morda::context>(
 				std::make_shared<morda::render_opengles2::renderer>(),
 				std::make_shared<morda::updater>(),
 				[this](std::function<void()>&& a){
-					get_impl(*this).uiQueue.push_back(std::move(a));
+					get_impl(*this).ui_queue.push_back(std::move(a));
 				},
 				[this](morda::mouse_cursor){},
 				[]() -> float{
-					ASSERT(javaFunctionsWrapper)
+					ASSERT(java_functions)
 
-					return javaFunctionsWrapper->getDotsPerInch();
+					return java_functions->get_dots_per_inch();
 				}(),
 				[this]() -> float{
-					auto res = get_impl(*this).getWindowSize();
-					auto dim = (res.to<float>() / javaFunctionsWrapper->getDotsPerInch()) * 25.4f;
+					auto res = get_impl(*this).get_window_size();
+					auto dim = (res.to<float>() / java_functions->get_dots_per_inch()) * mm_per_inch;
 					return application::get_pixels_per_dp(res, dim.to<unsigned>());
 				}()
 			)),
 		storage_dir(initializeStorageDir(this->name))
 {
-	auto winSize = get_impl(*this).getWindowSize();
-	this->updateWindowRect(morda::rectangle(morda::vector2(0), winSize.to<morda::real>()));
+	auto win_size = get_impl(*this).get_window_size();
+	this->updateWindowRect(morda::rectangle(morda::vector2(0), win_size.to<morda::real>()));
 }
 
 std::unique_ptr<papki::file> mordavokne::application::get_res_file(const std::string& path)const{
@@ -1012,7 +1016,7 @@ std::unique_ptr<papki::file> mordavokne::application::get_res_file(const std::st
 
 void mordavokne::application::swapFrameBuffers(){
 	auto& ww = get_impl(*this);
-	ww.swapBuffers();
+	ww.swap_buffers();
 }
 
 void mordavokne::application::set_mouse_cursor_visible(bool visible){
@@ -1038,8 +1042,8 @@ void mordavokne::application::show_virtual_keyboard()noexcept{
 	// ANativeActivity_showSoftInput(native_activity, ANATIVEACTIVITY_SHOW_SOFT_INPUT_FORCED);
 	// did not work for some reason.
 
-	ASSERT(javaFunctionsWrapper)
-	javaFunctionsWrapper->show_virtual_keyboard();
+	ASSERT(java_functions)
+	java_functions->show_virtual_keyboard();
 }
 
 void mordavokne::application::hide_virtual_keyboard()noexcept{
@@ -1047,8 +1051,8 @@ void mordavokne::application::hide_virtual_keyboard()noexcept{
 	// ANativeActivity_hideSoftInput(native_activity, ANATIVEACTIVITY_HIDE_SOFT_INPUT_NOT_ALWAYS);
 	// did not work for some reason
 
-	ASSERT(javaFunctionsWrapper)
-	javaFunctionsWrapper->hide_virtual_keyboard();
+	ASSERT(java_functions)
+	java_functions->hide_virtual_keyboard();
 }
 
 namespace{
@@ -1223,7 +1227,7 @@ namespace{
 void OnDestroy(ANativeActivity* activity){
 	TRACE(<< "OnDestroy(): invoked" << std::endl)
 
-	javaFunctionsWrapper.reset();
+	java_functions.reset();
 }
 
 void OnStart(ANativeActivity* activity){
@@ -1316,9 +1320,9 @@ int OnUpdateTimerExpired(int fd, int events, void* data){
 }
 
 int OnQueueHasMessages(int fd, int events, void* data){
-	auto& ww = getImpl(getWindowPimpl(application::inst()));
+	auto& ww = get_impl(get_window_pimpl(application::inst()));
 
-	while(auto m = ww.uiQueue.pop_front()){
+	while(auto m = ww.ui_queue.pop_front()){
 		m();
 	}
 
@@ -1367,7 +1371,7 @@ void OnNativeWindowCreated(ANativeActivity* activity, ANativeWindow* window){
 		// add UI message queue descriptor to looper
 		if(ALooper_addFd(
 				looper,
-				getImpl(getWindowPimpl(*app)).uiQueue.get_handle(),
+				get_impl(get_window_pimpl(*app)).ui_queue.get_handle(),
 				ALOOPER_POLL_CALLBACK,
 				ALOOPER_EVENT_INPUT,
 				&OnQueueHasMessages,
@@ -1414,7 +1418,7 @@ void OnNativeWindowDestroyed(ANativeActivity* activity, ANativeWindow* window){
 	// remove UI message queue descriptor from looper
 	ALooper_removeFd(
 			looper,
-			getImpl(getWindowPimpl(application::inst())).uiQueue.get_handle()
+			get_impl(get_window_pimpl(application::inst())).ui_queue.get_handle()
 		);
 
 	// remove fdFlag from looper
@@ -1543,5 +1547,5 @@ void ANativeActivity_onCreate(
 	appInfo.externalDataPath = activity->externalDataPath;
 	appInfo.assetManager = activity->assetManager;
 
-	javaFunctionsWrapper = std::make_unique<java_functions_wrapper>(activity);
+	java_functions = std::make_unique<java_functions_wrapper>(activity);
 }

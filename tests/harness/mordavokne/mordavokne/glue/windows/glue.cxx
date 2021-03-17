@@ -346,7 +346,7 @@ LRESULT	CALLBACK wndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
 
 		case WM_MOUSEMOVE:
 		{
-			auto& ww = getImpl(getWindowPimpl(mordavokne::inst()));
+			auto& ww = getImpl(get_window_pimpl(mordavokne::inst()));
 			if(!ww.isHovered){
 
 				TRACKMOUSEEVENT tme = { sizeof(tme) };
@@ -380,7 +380,7 @@ LRESULT	CALLBACK wndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
 		}
 		case WM_MOUSELEAVE:
 		{
-			auto& ww = getImpl(getWindowPimpl(mordavokne::inst()));
+			auto& ww = getImpl(get_window_pimpl(mordavokne::inst()));
 
 			// Windows hides the mouse cursor even in non-client areas of the window,
 			// like caption bar and borders, so show cursor if it is hidden
@@ -413,7 +413,7 @@ LRESULT	CALLBACK wndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
 		}
 		case WM_LBUTTONDOWN:
 		{
-			auto& ww = getImpl(getWindowPimpl(mordavokne::inst()));
+			auto& ww = getImpl(get_window_pimpl(mordavokne::inst()));
 			ww.mouseButtonState.set(morda::mouse_button::left);
 			handleMouseButton(
 					mordavokne::inst(),
@@ -426,7 +426,7 @@ LRESULT	CALLBACK wndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
 		}
 		case WM_LBUTTONUP:
 		{
-			auto& ww = getImpl(getWindowPimpl(mordavokne::inst()));
+			auto& ww = getImpl(get_window_pimpl(mordavokne::inst()));
 			ww.mouseButtonState.clear(morda::mouse_button::left);
 			handleMouseButton(
 					mordavokne::inst(),
@@ -439,7 +439,7 @@ LRESULT	CALLBACK wndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
 		}
 		case WM_MBUTTONDOWN:
 		{
-			auto& ww = getImpl(getWindowPimpl(mordavokne::inst()));
+			auto& ww = getImpl(get_window_pimpl(mordavokne::inst()));
 			ww.mouseButtonState.set(morda::mouse_button::middle);
 			handleMouseButton(
 					mordavokne::inst(),
@@ -452,7 +452,7 @@ LRESULT	CALLBACK wndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
 		}
 		case WM_MBUTTONUP:
 		{
-			auto& ww = getImpl(getWindowPimpl(mordavokne::inst()));
+			auto& ww = getImpl(get_window_pimpl(mordavokne::inst()));
 			ww.mouseButtonState.clear(morda::mouse_button::middle);
 			handleMouseButton(
 					mordavokne::inst(),
@@ -465,7 +465,7 @@ LRESULT	CALLBACK wndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
 		}
 		case WM_RBUTTONDOWN:
 		{
-			auto& ww = getImpl(getWindowPimpl(mordavokne::inst()));
+			auto& ww = getImpl(get_window_pimpl(mordavokne::inst()));
 			ww.mouseButtonState.set(morda::mouse_button::right);
 			handleMouseButton(
 					mordavokne::inst(),
@@ -478,7 +478,7 @@ LRESULT	CALLBACK wndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
 		}
 		case WM_RBUTTONUP:
 		{
-			auto& ww = getImpl(getWindowPimpl(mordavokne::inst()));
+			auto& ww = getImpl(get_window_pimpl(mordavokne::inst()));
 			ww.mouseButtonState.clear(morda::mouse_button::right);
 			handleMouseButton(
 					mordavokne::inst(),
@@ -637,7 +637,7 @@ application::application(std::string&& name, const window_params& wp) :
 				std::make_shared<morda::render_opengl2::renderer>(),
 				std::make_shared<morda::updater>(),
 				[this](std::function<void()>&& a){
-					auto& ww = getImpl(getWindowPimpl(mordavokne::inst()));
+					auto& ww = getImpl(get_window_pimpl(mordavokne::inst()));
 					if (PostMessage(ww.hwnd, WM_USER, 0, reinterpret_cast<LPARAM>(new std::remove_reference<decltype(a)>::type(std::move(a)))) == 0){
 						throw std::runtime_error("PostMessage(): failed");
 					}
@@ -692,7 +692,7 @@ void winmain(int argc, const char** argv){
 
 	ASSERT(app)
 
-	auto& ww = getImpl(getWindowPimpl(*app));
+	auto& ww = getImpl(get_window_pimpl(*app));
 
 	ShowWindow(ww.hwnd, SW_SHOW);
 

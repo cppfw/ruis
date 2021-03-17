@@ -1,6 +1,6 @@
 namespace mordavokne{
 
-const decltype(application::windowPimpl)& getWindowPimpl(application& app){
+const decltype(application::windowPimpl)& get_window_pimpl(application& app){
 	return app.windowPimpl;
 }
 

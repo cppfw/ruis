@@ -576,7 +576,7 @@ window_wrapper& getImpl(const std::unique_ptr<utki::destructable>& pimpl){
 }
 
 window_wrapper& get_impl(application& app){
-	return getImpl(getWindowPimpl(app));
+	return getImpl(get_window_pimpl(app));
 }
 
 }
@@ -612,7 +612,7 @@ application::application(std::string&& name, const window_params& requestedWindo
 #endif
 				std::make_shared<morda::updater>(),
 				[this](std::function<void()>&& a){
-					getImpl(getWindowPimpl(*this)).ui_queue.push_back(std::move(a));
+					getImpl(get_window_pimpl(*this)).ui_queue.push_back(std::move(a));
 				},
 				[this](morda::mouse_cursor c){
 					auto& ww = get_impl(*this);
@@ -992,7 +992,7 @@ int main(int argc, const char** argv){
 
 	ASSERT(app)
 
-	auto& ww = getImpl(getWindowPimpl(*app));
+	auto& ww = getImpl(get_window_pimpl(*app));
 
 	XEvent_waitable xew(ww.display.display);
 

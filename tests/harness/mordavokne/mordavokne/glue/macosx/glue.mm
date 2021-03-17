@@ -107,7 +107,7 @@ void macosx_HandleMouseMove(const morda::vector2& pos, unsigned id){
 }
 
 void macosx_HandleMouseHover(bool isHovered){
-	auto& ww = getImpl(getWindowPimpl(mordavokne::application::inst()));
+	auto& ww = getImpl(get_window_pimpl(mordavokne::application::inst()));
 	if(!ww.mouseCursorIsCurrentlyVisible){
 		if(isHovered){
 			[NSCursor hide];
@@ -120,7 +120,7 @@ void macosx_HandleMouseHover(bool isHovered){
 }
 
 void macosx_HandleKeyEvent(bool isDown, morda::key keyCode){
-	auto& ww = getImpl(getWindowPimpl(mordavokne::application::inst()));
+	auto& ww = getImpl(get_window_pimpl(mordavokne::application::inst()));
 	handleKeyEvent(mordavokne::application::inst(), isDown, keyCode);
 }
 
@@ -148,12 +148,12 @@ public:
 };
 
 void macosx_HandleCharacterInput(const void* nsstring, morda::key key){
-	auto& ww = getImpl(getWindowPimpl(mordavokne::application::inst()));
+	auto& ww = getImpl(get_window_pimpl(mordavokne::application::inst()));
 	handleCharacterInput(mordavokne::application::inst(), MacosxUnicodeProvider(reinterpret_cast<const NSString*>(nsstring)), key);
 }
 
 void macosx_UpdateWindowRect(const morda::rectangle& r){
-	auto& ww = getImpl(getWindowPimpl(mordavokne::application::inst()));
+	auto& ww = getImpl(get_window_pimpl(mordavokne::application::inst()));
 	[ww.openglContextId update];//after resizing window we need to update OpenGL context
 	updateWindowRect(mordavokne::application::inst(), r);
 }
@@ -707,7 +707,7 @@ int main (int argc, const char** argv){
 
 	TRACE(<< "main(): app created" << std::endl)
 
-	auto& ww = getImpl(getWindowPimpl(*app));
+	auto& ww = getImpl(get_window_pimpl(*app));
 
 	[ww.applicationObjectId activateIgnoringOtherApps:YES];
 
@@ -806,7 +806,7 @@ application::application(std::string&& name, const window_params& wp) :
 				std::make_shared<morda::render_opengl2::renderer>(),
 				std::make_shared<morda::updater>(),
 				[this](std::function<void()>&& a){
-					auto& ww = getImpl(getWindowPimpl(*this));
+					auto& ww = getImpl(get_window_pimpl(*this));
 
 					NSEvent* e = [NSEvent
 							otherEventWithType: NSEventTypeApplicationDefined
