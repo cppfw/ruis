@@ -34,7 +34,7 @@ mordavokne::application& getApp(ANativeActivity* activity){
 
 ANativeWindow* androidWindow = 0;
 
-class JavaFunctionsWrapper : public utki::destructable{
+class java_functions_wrapper : public utki::destructable{
 	JNIEnv *env;
 	jclass clazz;
 	jobject obj;
@@ -50,7 +50,7 @@ class JavaFunctionsWrapper : public utki::destructable{
 
 	jmethodID getStorageDirMeth;
 public:
-	JavaFunctionsWrapper(ANativeActivity* a){
+	java_functions_wrapper(ANativeActivity* a){
 		this->env = a->env;
 		this->obj = a->clazz;
 		this->clazz = this->env->GetObjectClass(this->obj);
@@ -74,7 +74,7 @@ public:
 		ASSERT(this->getStorageDirMeth)
 	}
 
-	~JavaFunctionsWrapper()noexcept{
+	~java_functions_wrapper()noexcept{
 	}
 
 	char32_t resolveKeyUnicode(int32_t devId, int32_t metaState, int32_t keyCode){
@@ -146,7 +146,7 @@ public:
 	}
 };
 
-std::unique_ptr<JavaFunctionsWrapper> javaFunctionsWrapper;
+std::unique_ptr<java_functions_wrapper> javaFunctionsWrapper;
 
 struct WindowWrapper : public utki::destructable{
 	EGLDisplay display;
@@ -1543,5 +1543,5 @@ void ANativeActivity_onCreate(
 	appInfo.externalDataPath = activity->externalDataPath;
 	appInfo.assetManager = activity->assetManager;
 
-	javaFunctionsWrapper = std::make_unique<JavaFunctionsWrapper>(activity);
+	javaFunctionsWrapper = std::make_unique<java_functions_wrapper>(activity);
 }
