@@ -179,13 +179,13 @@ struct window_wrapper : public utki::destructable{
 				throw std::runtime_error("glXQueryVersion() failed");
 			}
 
-			// FBConfigs were added in GLX version 1.3.
+			// FBConfigs were added in GLX version 1.3, we need FBConfigs
 			if(glxVerMajor < 1 || (glxVerMajor == 1  && glxVerMinor < 3 )){
 				throw std::runtime_error("GLX version 1.3 or above is required");
 			}
 		}
 
-		GLXFBConfig bestFbc;
+		GLXFBConfig best_fb_config;
 		{
 			std::vector<int> visualAttribs;
 			visualAttribs.push_back(GLX_X_RENDERABLE); visualAttribs.push_back(True);
@@ -234,7 +234,7 @@ struct window_wrapper : public utki::destructable{
 				}
 				XFree( vi );
 			}
-			bestFbc = fbc[ bestFbcIdx ];
+			best_fb_config = fbc[ bestFbcIdx ];
 		}
 #elif defined(MORDAVOKNE_RENDER_OPENGLES2)
 		this->eglDisplay = eglGetDisplay(EGL_DEFAULT_DISPLAY);
@@ -287,7 +287,7 @@ struct window_wrapper : public utki::destructable{
 
 		XVisualInfo *vi;
 #ifdef MORDAVOKNE_RENDER_OPENGL2
-		vi = glXGetVisualFromFBConfig(this->display.display, bestFbc);
+		vi = glXGetVisualFromFBConfig(this->display.display, best_fb_config);
 		if (!vi) {
 			throw std::runtime_error("glXGetVisualFromFBConfig() failed");
 		}
