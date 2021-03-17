@@ -24,31 +24,31 @@
 using namespace mordavokne;
 
 namespace{
-ANativeActivity* nativeActivity = 0;
+ANativeActivity* native_activity = 0;
 
-mordavokne::application& getApp(ANativeActivity* activity){
+mordavokne::application& get_app(ANativeActivity* activity){
 	ASSERT(activity)
 	ASSERT(activity->instance)
 	return *static_cast<mordavokne::application*>(activity->instance);
 }
 
-ANativeWindow* androidWindow = 0;
+ANativeWindow* android_window = 0;
 
 class java_functions_wrapper : public utki::destructable{
 	JNIEnv *env;
 	jclass clazz;
 	jobject obj;
 
-	jmethodID resolveKeycodeUnicodeMeth;
+	jmethodID resolve_key_unicode_method;
 
-	jmethodID getDotsPerInchMeth;
+	jmethodID get_dots_per_inch_method;
 
-	jmethodID showVirtualKeyboardMeth;
-	jmethodID hideVirtualKeyboardMeth;
+	jmethodID show_virtual_keyboard_method;
+	jmethodID hide_virtual_keyboard_method;
 
-	jmethodID listDirContentsMeth;
+	jmethodID list_dir_contents_method;
 
-	jmethodID getStorageDirMeth;
+	jmethodID get_storage_dir_method;
 public:
 	java_functions_wrapper(ANativeActivity* a){
 		this->env = a->env;
@@ -56,31 +56,31 @@ public:
 		this->clazz = this->env->GetObjectClass(this->obj);
 		ASSERT(this->clazz)
 
-		this->resolveKeycodeUnicodeMeth = this->env->GetMethodID(this->clazz, "resolveKeyUnicode", "(III)I");
-		ASSERT(this->resolveKeycodeUnicodeMeth)
+		this->resolve_key_unicode_method = this->env->GetMethodID(this->clazz, "resolveKeyUnicode", "(III)I");
+		ASSERT(this->resolve_key_unicode_method)
 
-		this->getDotsPerInchMeth = this->env->GetMethodID(this->clazz, "getDotsPerInch", "()F");
+		this->get_dots_per_inch_method = this->env->GetMethodID(this->clazz, "getDotsPerInch", "()F");
 
-		this->listDirContentsMeth = this->env->GetMethodID(this->clazz, "listDirContents", "(Ljava/lang/String;)[Ljava/lang/String;");
-		ASSERT(this->listDirContentsMeth)
+		this->list_dir_contents_method = this->env->GetMethodID(this->clazz, "listDirContents", "(Ljava/lang/String;)[Ljava/lang/String;");
+		ASSERT(this->list_dir_contents_method)
 
-		this->showVirtualKeyboardMeth = this->env->GetMethodID(this->clazz, "showVirtualKeyboard", "()V");
-		ASSERT(this->showVirtualKeyboardMeth)
+		this->show_virtual_keyboard_method = this->env->GetMethodID(this->clazz, "showVirtualKeyboard", "()V");
+		ASSERT(this->show_virtual_keyboard_method)
 
-		this->hideVirtualKeyboardMeth = this->env->GetMethodID(this->clazz, "hideVirtualKeyboard", "()V");
-		ASSERT(this->hideVirtualKeyboardMeth)
+		this->hide_virtual_keyboard_method = this->env->GetMethodID(this->clazz, "hideVirtualKeyboard", "()V");
+		ASSERT(this->hide_virtual_keyboard_method)
 
-		this->getStorageDirMeth = this->env->GetMethodID(this->clazz, "getStorageDir", "()Ljava/lang/String;");
-		ASSERT(this->getStorageDirMeth)
+		this->get_storage_dir_method = this->env->GetMethodID(this->clazz, "getStorageDir", "()Ljava/lang/String;");
+		ASSERT(this->get_storage_dir_method)
 	}
 
 	~java_functions_wrapper()noexcept{
 	}
 
-	char32_t resolveKeyUnicode(int32_t devId, int32_t metaState, int32_t keyCode){
+	char32_t resolve_key_unicode(int32_t devId, int32_t metaState, int32_t keyCode){
 		return char32_t(this->env->CallIntMethod(
 				this->obj,
-				this->resolveKeycodeUnicodeMeth,
+				this->resolve_key_unicode_method,
 				jint(devId),
 				jint(metaState),
 				jint(keyCode)
@@ -88,20 +88,20 @@ public:
 	}
 
 	float getDotsPerInch(){
-		return float(this->env->CallFloatMethod(this->obj, this->getDotsPerInchMeth));
+		return float(this->env->CallFloatMethod(this->obj, this->get_dots_per_inch_method));
 	}
 
 	void hide_virtual_keyboard(){
-		this->env->CallVoidMethod(this->obj, this->hideVirtualKeyboardMeth);
+		this->env->CallVoidMethod(this->obj, this->hide_virtual_keyboard_method);
 	}
 
 	void show_virtual_keyboard(){
-		this->env->CallVoidMethod(this->obj, this->showVirtualKeyboardMeth);
+		this->env->CallVoidMethod(this->obj, this->show_virtual_keyboard_method);
 	}
 
 	std::vector<std::string> listDirContents(const std::string& path){
 		jstring p = this->env->NewStringUTF(path.c_str());
-		jobject res = this->env->CallObjectMethod(this->obj, this->listDirContentsMeth, p);
+		jobject res = this->env->CallObjectMethod(this->obj, this->list_dir_contents_method, p);
 		this->env->DeleteLocalRef(p);
 
 		utki::scope_exit scopeExit([this, res](){
@@ -130,7 +130,7 @@ public:
 	}
 
 	std::string getStorageDir(){
-		jobject res = this->env->CallObjectMethod(this->obj, this->getStorageDirMeth);
+		jobject res = this->env->CallObjectMethod(this->obj, this->get_storage_dir_method);
 		utki::scope_exit resScopeExit([this, &res](){
 			this->env->DeleteLocalRef(res);
 		});
@@ -202,10 +202,10 @@ struct WindowWrapper : public utki::destructable{
 			throw std::runtime_error("eglGetConfigAttrib() failed");
 		}
 
-		ASSERT(androidWindow)
-		ANativeWindow_setBuffersGeometry(androidWindow, 0, 0, format);
+		ASSERT(android_window)
+		ANativeWindow_setBuffersGeometry(android_window, 0, 0, format);
 
-		this->surface = eglCreateWindowSurface(this->display, config, androidWindow, NULL);
+		this->surface = eglCreateWindowSurface(this->display, config, android_window, NULL);
 		if(this->surface == EGL_NO_SURFACE){
 			throw std::runtime_error("eglCreateWindowSurface() failed");
 		}
@@ -488,7 +488,7 @@ public:
 	std::u32string get()const{
 		ASSERT(javaFunctionsWrapper)
 //		TRACE(<< "KeyEventToUnicodeResolver::Resolve(): this->kc = " << this->kc << std::endl)
-		char32_t res = javaFunctionsWrapper->resolveKeyUnicode(this->di, this->ms, this->kc);
+		char32_t res = javaFunctionsWrapper->resolve_key_unicode(this->di, this->ms, this->kc);
 
 		//0 means that key did not produce any unicode character
 		if(res == 0){
@@ -1020,22 +1020,22 @@ void mordavokne::application::set_mouse_cursor_visible(bool visible){
 }
 
 void mordavokne::application::set_fullscreen(bool enable) {
-	ASSERT(nativeActivity)
+	ASSERT(native_activity)
 	if(enable) {
-		ANativeActivity_setWindowFlags(nativeActivity, AWINDOW_FLAG_FULLSCREEN, 0);
+		ANativeActivity_setWindowFlags(native_activity, AWINDOW_FLAG_FULLSCREEN, 0);
 	}else{
-		ANativeActivity_setWindowFlags(nativeActivity, 0, AWINDOW_FLAG_FULLSCREEN);
+		ANativeActivity_setWindowFlags(native_activity, 0, AWINDOW_FLAG_FULLSCREEN);
 	}
 }
 
 void mordavokne::application::quit()noexcept{
-	ASSERT(nativeActivity)
-	ANativeActivity_finish(nativeActivity);
+	ASSERT(native_activity)
+	ANativeActivity_finish(native_activity);
 }
 
 void mordavokne::application::show_virtual_keyboard()noexcept{
 	// NOTE:
-	// ANativeActivity_showSoftInput(nativeActivity, ANATIVEACTIVITY_SHOW_SOFT_INPUT_FORCED);
+	// ANativeActivity_showSoftInput(native_activity, ANATIVEACTIVITY_SHOW_SOFT_INPUT_FORCED);
 	// did not work for some reason.
 
 	ASSERT(javaFunctionsWrapper)
@@ -1044,7 +1044,7 @@ void mordavokne::application::show_virtual_keyboard()noexcept{
 
 void mordavokne::application::hide_virtual_keyboard()noexcept{
 	// NOTE:
-	// ANativeActivity_hideSoftInput(nativeActivity, ANATIVEACTIVITY_HIDE_SOFT_INPUT_NOT_ALWAYS);
+	// ANativeActivity_hideSoftInput(native_activity, ANATIVEACTIVITY_HIDE_SOFT_INPUT_NOT_ALWAYS);
 	// did not work for some reason
 
 	ASSERT(javaFunctionsWrapper)
@@ -1329,7 +1329,7 @@ void OnNativeWindowCreated(ANativeActivity* activity, ANativeWindow* window){
 	TRACE(<< "OnNativeWindowCreated(): invoked" << std::endl)
 
 	// save window in a static var, so it is accessible for OpenGL initializers from morda::application class
-	androidWindow = window;
+	android_window = window;
 
 	curWinDim.x() = float(ANativeWindow_getWidth(window));
 	curWinDim.y() = float(ANativeWindow_getHeight(window));
@@ -1400,7 +1400,7 @@ void OnNativeWindowResized(ANativeActivity* activity, ANativeWindow* window){
 void OnNativeWindowRedrawNeeded(ANativeActivity* activity, ANativeWindow* window){
 	TRACE(<< "OnNativeWindowRedrawNeeded(): invoked" << std::endl)
 
-	render(getApp(activity));
+	render(get_app(activity));
 }
 
 // This function is called right before destroying Window object, according to documentation:
@@ -1494,7 +1494,7 @@ void OnContentRectChanged(ANativeActivity* activity, const ARect* rect){
 		return;
 	}
 
-	auto& app = getApp(activity);
+	auto& app = get_app(activity);
 
 	updateWindowRect(
 			app,
@@ -1537,7 +1537,7 @@ void ANativeActivity_onCreate(
 
 	activity->instance = 0;
 
-	nativeActivity = activity;
+	native_activity = activity;
 
 	appInfo.internalDataPath = activity->internalDataPath;
 	appInfo.externalDataPath = activity->externalDataPath;
