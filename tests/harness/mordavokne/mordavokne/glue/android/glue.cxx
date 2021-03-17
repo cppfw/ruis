@@ -19,7 +19,7 @@
 
 #include <EGL/egl.h>
 
-#include "../friendAccessors.cxx"
+#include "../friend_accessors.cxx"
 
 using namespace mordavokne;
 

@@ -13,8 +13,8 @@
 
 using namespace mordavokne;
 
-#include "../unixCommon.cxx"
-#include "../friendAccessors.cxx"
+#include "../unix_common.cxx"
+#include "../friend_accessors.cxx"
 
 @interface CocoaView : NSView{
 	NSTrackingArea* ta;

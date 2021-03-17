@@ -7,13 +7,13 @@
 #include <papki/fs_file.hpp>
 
 #include <windowsx.h>
-#include <Shlobj.h>
+#include <Shlobj.h> // TODO: what is this for? Add comment.
 
 #include <morda/render/opengl2/renderer.hpp>
 
 #include "../../application.hpp"
 
-#include "../friendAccessors.cxx"
+#include "../friend_accessors.cxx"
 
 using namespace mordavokne;
 

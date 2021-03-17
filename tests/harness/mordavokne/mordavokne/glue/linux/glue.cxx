@@ -31,8 +31,8 @@
 #	error "Unknown graphics API"
 #endif
 
-#include "../friendAccessors.cxx"
-#include "../unixCommon.cxx"
+#include "../friend_accessors.cxx"
+#include "../unix_common.cxx"
 
 using namespace mordavokne;
 
