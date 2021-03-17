@@ -297,13 +297,13 @@ struct window_wrapper : public utki::destructable{
 			int numVisuals;
 			XVisualInfo visTemplate;
 			visTemplate.screen = DefaultScreen(this->display.display); // LCD
-			vi = XGetVisualInfo(
+			visual_info = XGetVisualInfo(
 					this->display.display,
 					VisualScreenMask,
 					&visTemplate,
 					&numVisuals
 				);
-			if (!vi) {
+			if(!visual_info){
 				throw std::runtime_error("XGetVisualInfo() failed");
 			}
 		}
