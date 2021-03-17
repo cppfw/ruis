@@ -216,7 +216,7 @@ struct window_wrapper : public utki::destructable{
 				XFree(fbc);
 			});
 
-			int bestFbcIdx = -1, worstFbc = -1, bestNumSamp = -1, worstNumSamp = 999;
+			int best_fb_config_index = -1, worstFbc = -1, bestNumSamp = -1, worstNumSamp = 999;
 
 			for(int i = 0; i < fbcount; ++i){
 				XVisualInfo *vi = glXGetVisualFromFBConfig(this->display.display, fbc[i]);
@@ -225,8 +225,8 @@ struct window_wrapper : public utki::destructable{
 					glXGetFBConfigAttrib(this->display.display, fbc[i], GLX_SAMPLE_BUFFERS, &samp_buf);
 					glXGetFBConfigAttrib(this->display.display, fbc[i], GLX_SAMPLES, &samples);
 
-					if ( bestFbcIdx < 0 || (samp_buf && samples > bestNumSamp )){
-						bestFbcIdx = i, bestNumSamp = samples;
+					if ( best_fb_config_index < 0 || (samp_buf && samples > bestNumSamp )){
+						best_fb_config_index = i, bestNumSamp = samples;
 					}
 					if ( worstFbc < 0 || !samp_buf || samples < worstNumSamp ){
 						worstFbc = i, worstNumSamp = samples;
@@ -234,7 +234,7 @@ struct window_wrapper : public utki::destructable{
 				}
 				XFree( vi );
 			}
-			best_fb_config = fbc[ bestFbcIdx ];
+			best_fb_config = fbc[best_fb_config_index];
 		}
 #elif defined(MORDAVOKNE_RENDER_OPENGLES2)
 		this->eglDisplay = eglGetDisplay(EGL_DEFAULT_DISPLAY);
@@ -285,10 +285,10 @@ struct window_wrapper : public utki::destructable{
 #	error "Unknown graphics API"
 #endif
 
-		XVisualInfo *vi;
+		XVisualInfo *visual_info;
 #ifdef MORDAVOKNE_RENDER_OPENGL2
-		vi = glXGetVisualFromFBConfig(this->display.display, best_fb_config);
-		if (!vi) {
+		visual_info = glXGetVisualFromFBConfig(this->display.display, best_fb_config);
+		if(!visual_info){
 			throw std::runtime_error("glXGetVisualFromFBConfig() failed");
 		}
 #elif defined(MORDAVOKNE_RENDER_OPENGLES2)
@@ -318,13 +318,13 @@ struct window_wrapper : public utki::destructable{
 			int numVisuals;
 			XVisualInfo visTemplate;
 			visTemplate.visualid = vid;
-			vi = XGetVisualInfo(
+			visual_info = XGetVisualInfo(
 					this->display.display,
 					VisualIDMask,
 					&visTemplate,
 					&numVisuals
 				);
-			if (!vi) {
+			if(!visual_info){
 				throw std::runtime_error("XGetVisualInfo() failed");
 			}
 		}
@@ -332,14 +332,14 @@ struct window_wrapper : public utki::destructable{
 #else
 #	error "Unknown graphics API"
 #endif
-		utki::scope_exit scopeExitVisualInfo([vi](){
-			XFree(vi);
+		utki::scope_exit scope_exit_visual_info([visual_info](){
+			XFree(visual_info);
 		});
 
 		this->colorMap = XCreateColormap(
 				this->display.display,
-				RootWindow(this->display.display, vi->screen),
-				vi->visual,
+				RootWindow(this->display.display, visual_info->screen),
+				visual_info->visual,
 				AllocNone
 			);
 		//TODO: check for error?
@@ -368,15 +368,15 @@ struct window_wrapper : public utki::destructable{
 
 			this->window = XCreateWindow(
 					this->display.display,
-					RootWindow(this->display.display, vi->screen),
+					RootWindow(this->display.display, visual_info->screen),
 					0,
 					0,
 					wp.dim.x(),
 					wp.dim.y(),
 					0,
-					vi->depth,
+					visual_info->depth,
 					InputOutput,
-					vi->visual,
+					visual_info->visual,
 					fields,
 					&attr
 				);
@@ -398,7 +398,7 @@ struct window_wrapper : public utki::destructable{
 		XFlush(this->display.display);
 
 #ifdef MORDAVOKNE_RENDER_OPENGL2
-		this->glContext = glXCreateContext(this->display.display, vi, 0, GL_TRUE);
+		this->glContext = glXCreateContext(this->display.display, visual_info, 0, GL_TRUE);
 		if(this->glContext == NULL){
 			throw std::runtime_error("glXCreateContext() failed");
 		}
