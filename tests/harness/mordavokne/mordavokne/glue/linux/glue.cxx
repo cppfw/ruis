@@ -57,7 +57,7 @@ const std::map<morda::mouse_cursor, unsigned> x_cursor_map = {
 }
 
 namespace{
-struct WindowWrapper : public utki::destructable{
+struct window_wrapper : public utki::destructable{
 	struct display_wrapper{
 		Display* display;
 
@@ -91,10 +91,10 @@ struct WindowWrapper : public utki::destructable{
 #	error "Unknown graphics API"
 #endif
 	struct cursor_wrapper{
-		WindowWrapper& owner;
+		window_wrapper& owner;
 		Cursor cursor;
 	
-		cursor_wrapper(WindowWrapper& owner, morda::mouse_cursor c) :
+		cursor_wrapper(window_wrapper& owner, morda::mouse_cursor c) :
 				owner(owner)
 		{
 			if(c == morda::mouse_cursor::none){
@@ -171,7 +171,7 @@ struct WindowWrapper : public utki::destructable{
 
 	volatile bool quitFlag = false;
 
-	WindowWrapper(const window_params& wp){
+	window_wrapper(const window_params& wp){
 #ifdef MORDAVOKNE_RENDER_OPENGL2
 		{
 			int glxVerMajor, glxVerMinor;
@@ -388,7 +388,7 @@ struct WindowWrapper : public utki::destructable{
 			XDestroyWindow(this->display.display, this->window);
 		});
 
-		{//We want to handle WM_DELETE_WINDOW event to know when window is closed.
+		{ // we want to handle WM_DELETE_WINDOW event to know when window is closed
 			Atom a = XInternAtom(this->display.display, "WM_DELETE_WINDOW", True);
 			XSetWMProtocols(this->display.display, this->window, &a, 1);
 		}
@@ -544,7 +544,7 @@ struct WindowWrapper : public utki::destructable{
 #	error "Unknown graphics API"
 #endif
 	}
-	~WindowWrapper()noexcept{
+	~window_wrapper()noexcept{
 		XUnsetICFocus(this->inputContext);
 		XDestroyIC(this->inputContext);
 
@@ -570,12 +570,12 @@ struct WindowWrapper : public utki::destructable{
 	}
 };
 
-WindowWrapper& getImpl(const std::unique_ptr<utki::destructable>& pimpl){
-	ASSERT(dynamic_cast<WindowWrapper*>(pimpl.get()))
-	return static_cast<WindowWrapper&>(*pimpl);
+window_wrapper& getImpl(const std::unique_ptr<utki::destructable>& pimpl){
+	ASSERT(dynamic_cast<window_wrapper*>(pimpl.get()))
+	return static_cast<window_wrapper&>(*pimpl);
 }
 
-WindowWrapper& get_impl(application& app){
+window_wrapper& get_impl(application& app){
 	return getImpl(getWindowPimpl(app));
 }
 
@@ -601,7 +601,7 @@ morda::real getDotsPerPt(Display* display){
 
 application::application(std::string&& name, const window_params& requestedWindowParams) :
 		name(name),
-		windowPimpl(std::make_unique<WindowWrapper>(requestedWindowParams)),
+		windowPimpl(std::make_unique<window_wrapper>(requestedWindowParams)),
 		gui(std::make_shared<morda::context>(
 #ifdef MORDAVOKNE_RENDER_OPENGL2
 				std::make_shared<morda::render_opengl2::renderer>(),
