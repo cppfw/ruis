@@ -1,3 +1,9 @@
+libmorda (0.5.162) unstable; urgency=medium
+
+  * msvs: disable whole program optimization
+
+ -- Ivan Gagis <igagis@gmail.com>  Wed, 17 Mar 2021 20:09:04 +0200
+
 libmorda (0.5.161) unstable; urgency=medium
 
   * add all directions arrow cursor
