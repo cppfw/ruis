@@ -24,7 +24,7 @@
 using namespace mordavokne;
 
 namespace{
-ANativeActivity* native_activity = 0;
+ANativeActivity* native_activity = nullptr;
 
 mordavokne::application& get_app(ANativeActivity* activity){
 	ASSERT(activity)
@@ -32,7 +32,7 @@ mordavokne::application& get_app(ANativeActivity* activity){
 	return *static_cast<mordavokne::application*>(activity->instance);
 }
 
-ANativeWindow* android_window = 0;
+ANativeWindow* android_window = nullptr;
 
 class java_functions_wrapper : public utki::destructable{
 	JNIEnv *env;
@@ -170,12 +170,13 @@ struct window_wrapper : public utki::destructable{
 		}
 
 		// TODO: allow stencil configuration etc. via window_params
-		// Here specify the attributes of the desired configuration.
-		// Below, we select an EGLConfig with at least 8 bits per color
-		// component compatible with on-screen windows
+
+		// Specify the attributes of the desired configuration.
+		// We need an EGLConfig with at least 8 bits per color
+		// component compatible with on-screen windows.
 		const EGLint attribs[] = {
 				EGL_SURFACE_TYPE, EGL_WINDOW_BIT,
-				EGL_RENDERABLE_TYPE, EGL_OPENGL_ES2_BIT, //we want OpenGL ES 2.0
+				EGL_RENDERABLE_TYPE, EGL_OPENGL_ES2_BIT, // we want OpenGL ES 2.0
 				EGL_BLUE_SIZE, 8,
 				EGL_GREEN_SIZE, 8,
 				EGL_RED_SIZE, 8,
@@ -215,7 +216,7 @@ struct window_wrapper : public utki::destructable{
 		});
 
 		EGLint contextAttrs[] = {
-				EGL_CONTEXT_CLIENT_VERSION, 2, //This is needed on Android, otherwise eglCreateContext() thinks that we want OpenGL ES 1.1, but we want 2.0
+				EGL_CONTEXT_CLIENT_VERSION, 2, // this is needed on Android, otherwise eglCreateContext() thinks that we want OpenGL ES 1.1, but we want 2.0
 				EGL_NONE
 		};
 
