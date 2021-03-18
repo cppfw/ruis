@@ -187,7 +187,7 @@ namespace{
 		CGPoint p = [touch locationInView:self.view ];
 
 //		TRACE(<< "touch began = " << morda::Vec2r(p.x * scale, p.y * scale).rounded() << std::endl)
-		handleMouseButton(
+		handle_mouse_button(
 				mordavokne::inst(),
 				true,
 				morda::Vec2r(p.x * scale, p.y * scale).rounded(),
@@ -204,7 +204,7 @@ namespace{
 		CGPoint p = [touch locationInView:self.view ];
 
 //		TRACE(<< "touch moved = " << morda::Vec2r(p.x * scale, p.y * scale).rounded() << std::endl)
-		handleMouseMove(
+		handle_mouse_move(
 				mordavokne::inst(),
 				morda::Vec2r(p.x * scale, p.y * scale).rounded(),
 				0 //TODO: id
@@ -219,7 +219,7 @@ namespace{
 		CGPoint p = [touch locationInView:self.view ];
 
 //		TRACE(<< "touch ended = " << morda::Vec2r(p.x * scale, p.y * scale).rounded() << std::endl)
-		handleMouseButton(
+		handle_mouse_button(
 				mordavokne::inst(),
 				false,
 				morda::Vec2r(p.x * scale, p.y * scale).rounded(),
@@ -236,7 +236,7 @@ namespace{
 @end
 
 void application::set_fullscreen(bool enable){
-	auto& ww = getImpl(this->windowPimpl);
+	auto& ww = getImpl(this->window_pimpl);
 	UIWindow* w = ww.window;
 
 	float scale = [[UIScreen mainScreen] scale];
@@ -246,7 +246,7 @@ void application::set_fullscreen(bool enable){
 			CGRect rect = w.frame;
 			w.rootViewController.view.frame = rect;
 		}
-		updateWindowRect(
+		update_window_rect(
 						 morda::Rectr(
 									  morda::Vec2r(0),
 									  morda::Vec2r(
@@ -266,7 +266,7 @@ void application::set_fullscreen(bool enable){
 			w.rootViewController.view.frame = rect;
 		}
 
-		updateWindowRect(
+		update_window_rect(
 						 morda::Rectr(
 									  morda::Vec2r(0),
 									  morda::Vec2r(
@@ -313,7 +313,7 @@ morda::real getDotsPerDp(){
 
 application::application(std::string&& name, const window_params& wp) :
 		name(name),
-		windowPimpl(utki::makeUnique<WindowWrapper>(wp)),
+		window_pimpl(utki::makeUnique<WindowWrapper>(wp)),
 		gui(std::make_shared<morda::context>(
 				std::make_shared<morda::render_opengles2::renderer>(),
 				std::make_shared<morda::updater>(),
@@ -334,7 +334,7 @@ application::application(std::string&& name, const window_params& wp) :
 	this->set_fullscreen(false);//this will intialize the viewport
 }
 
-void application::swapFrameBuffers(){
+void application::swap_frame_buffers(){
 	//do nothing
 }
 

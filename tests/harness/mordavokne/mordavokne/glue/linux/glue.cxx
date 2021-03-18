@@ -601,7 +601,7 @@ morda::real getDotsPerPt(Display* display){
 
 application::application(std::string&& name, const window_params& requestedWindowParams) :
 		name(name),
-		windowPimpl(std::make_unique<window_wrapper>(requestedWindowParams)),
+		window_pimpl(std::make_unique<window_wrapper>(requestedWindowParams)),
 		gui(std::make_shared<morda::context>(
 #ifdef MORDAVOKNE_RENDER_OPENGL2
 				std::make_shared<morda::render_opengl2::renderer>(),
@@ -618,8 +618,8 @@ application::application(std::string&& name, const window_params& requestedWindo
 					auto& ww = get_impl(*this);
 					ww.set_cursor(c);
 				},
-				getDotsPerInch(getImpl(windowPimpl).display.display),
-				::getDotsPerPt(getImpl(windowPimpl).display.display)
+				getDotsPerInch(getImpl(window_pimpl).display.display),
+				::getDotsPerPt(getImpl(window_pimpl).display.display)
 			)),
 		storage_dir(initializeStorageDir(this->name))
 {
@@ -979,7 +979,7 @@ public:
 }
 
 void application::quit()noexcept{
-	auto& ww = getImpl(this->windowPimpl);
+	auto& ww = getImpl(this->window_pimpl);
 
 	ww.quitFlag = true;
 }
@@ -1049,8 +1049,8 @@ int main(int argc, const char** argv){
 //						TRACE(<< "KeyPress X event got" << std::endl)
 					{
 						morda::key key = keyCodeMap[std::uint8_t(event.xkey.keycode)];
-						handleKeyEvent(*app, true, key);
-						handleCharacterInput(*app, KeyEventUnicodeProvider(ww.inputContext, event), key);
+						handle_key_event(*app, true, key);
+						handle_character_input(*app, KeyEventUnicodeProvider(ww.inputContext, event), key);
 					}
 					break;
 				case KeyRelease:
@@ -1069,20 +1069,20 @@ int main(int argc, const char** argv){
 								)
 							{
 								// key wasn't actually released
-								handleCharacterInput(*app, KeyEventUnicodeProvider(ww.inputContext, nev), key);
+								handle_character_input(*app, KeyEventUnicodeProvider(ww.inputContext, nev), key);
 
 								XNextEvent(ww.display.display, &nev); // remove the key down event from queue
 								break;
 							}
 						}
 
-						handleKeyEvent(*app, false, key);
+						handle_key_event(*app, false, key);
 					}
 					break;
 				case ButtonPress:
 //						TRACE(<< "ButtonPress X event got, button mask = " << event.xbutton.button << std::endl)
 //						TRACE(<< "ButtonPress X event got, x, y = " << event.xbutton.x << ", " << event.xbutton.y << std::endl)
-					handleMouseButton(
+					handle_mouse_button(
 							*app,
 							true,
 							morda::vector2(event.xbutton.x, event.xbutton.y),
@@ -1092,7 +1092,7 @@ int main(int argc, const char** argv){
 					break;
 				case ButtonRelease:
 //						TRACE(<< "ButtonRelease X event got, button mask = " << event.xbutton.button << std::endl)
-					handleMouseButton(
+					handle_mouse_button(
 							*app,
 							false,
 							morda::vector2(event.xbutton.x, event.xbutton.y),
@@ -1102,7 +1102,7 @@ int main(int argc, const char** argv){
 					break;
 				case MotionNotify:
 //						TRACE(<< "MotionNotify X event got" << std::endl)
-					handleMouseMove(
+					handle_mouse_move(
 							*app,
 							morda::vector2(event.xmotion.x, event.xmotion.y),
 							0
@@ -1139,7 +1139,7 @@ int main(int argc, const char** argv){
 		}
 
 		if(new_win_dims.is_positive_or_zero()){
-			updateWindowRect(*app, morda::rectangle(0, new_win_dims));
+			update_window_rect(*app, morda::rectangle(0, new_win_dims));
 		}
 
 		render(*app);
@@ -1161,7 +1161,7 @@ void application::set_fullscreen(bool enable){
 		return;
 	}
 
-	auto& ww = getImpl(this->windowPimpl);
+	auto& ww = getImpl(this->window_pimpl);
 
 	XEvent event;
 	Atom stateAtom;
@@ -1197,8 +1197,8 @@ void application::set_mouse_cursor_visible(bool visible){
 	get_impl(*this).set_cursor_visible(visible);
 }
 
-void application::swapFrameBuffers(){
-	auto& ww = getImpl(this->windowPimpl);
+void application::swap_frame_buffers(){
+	auto& ww = getImpl(this->window_pimpl);
 
 #ifdef MORDAVOKNE_RENDER_OPENGL2
 	glXSwapBuffers(ww.display.display, ww.window);

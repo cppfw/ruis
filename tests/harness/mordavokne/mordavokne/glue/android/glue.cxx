@@ -271,7 +271,6 @@ class asset_file : public papki::file{
 	mutable AAsset* handle = nullptr;
 
 public:
-
 	asset_file(AAssetManager* manager, const std::string& pathName = std::string()) :
 			manager(manager),
 			papki::file(pathName)
@@ -432,129 +431,118 @@ public:
 	}
 };
 
-morda::vector2 curWinDim(0, 0);
+morda::vector2 cur_window_dims(0, 0);
 
-AInputQueue* curInputQueue = 0;
+AInputQueue* input_queue = nullptr;
 
-struct AppInfo{
-	// Path to this application's internal data directory.
-	const char* internalDataPath;
+struct{
+	// path to this application's internal data directory
+	const char* internal_data_path;
 
-	// Path to this application's external (removable/mountable) data directory.
-	const char* externalDataPath;
+	// path to this application's external (removable/mountable) data directory
+	const char* external_data_path;
 
 	// Pointer to the Asset Manager instance for the application. The application
 	// uses this to access binary assets bundled inside its own .apk file.
-	AAssetManager* assetManager;
-} appInfo;
+	AAssetManager* asset_manager;
+} app_info;
 
 // array of current pointer positions, needed to detect which pointers have actually moved.
 std::array<morda::vector2, 10> pointers;
 
-inline morda::vector2 AndroidWinCoordsToMordaWinRectCoords(const morda::vector2& winDim, const morda::vector2& p){
+inline morda::vector2 android_win_coords_to_morda_win_rect_coords(const morda::vector2& winDim, const morda::vector2& p){
 	morda::vector2 ret(
 			p.x(),
-			p.y() - (curWinDim.y() - winDim.y())
+			p.y() - (cur_window_dims.y() - winDim.y())
 		);
-//	TRACE(<< "AndroidWinCoordsToMordaWinRectCoords(): ret = " << ret << std::endl)
+//	LOG("android_win_coords_to_morda_win_rect_coords(): ret = " << ret << std::endl)
 	using std::round;
 	return round(ret);
 }
 
-struct AndroidConfiguration{
+struct android_configuration_wrapper{
 	AConfiguration* ac;
 
-	AndroidConfiguration(){
+	android_configuration_wrapper(){
 		this->ac = AConfiguration_new();
 	}
 
-	~AndroidConfiguration()noexcept{
+	~android_configuration_wrapper()noexcept{
 		AConfiguration_delete(this->ac);
-	}
-
-	static inline std::unique_ptr<AndroidConfiguration> New(){
-		return std::unique_ptr<AndroidConfiguration>(new AndroidConfiguration());
 	}
 };
 
-std::unique_ptr<AndroidConfiguration> curConfig;
+std::unique_ptr<android_configuration_wrapper> cur_config;
 
-class KeyEventToUnicodeResolver : public morda::gui::unicode_provider{
+class key_event_to_unicode_resolver : public morda::gui::unicode_provider{
 public:
-	int32_t kc;//key code
-	int32_t ms;//meta state
-	int32_t di;//device id
+	int32_t kc; // key code
+	int32_t ms; // meta state
+	int32_t di; // device id
 
 	std::u32string get()const{
 		ASSERT(java_functions)
-//		TRACE(<< "KeyEventToUnicodeResolver::Resolve(): this->kc = " << this->kc << std::endl)
+//		LOG("key_event_to_unicode_resolver::Resolve(): this->kc = " << this->kc << std::endl)
 		char32_t res = java_functions->resolve_key_unicode(this->di, this->ms, this->kc);
 
-		//0 means that key did not produce any unicode character
+		// 0 means that key did not produce any unicode character
 		if(res == 0){
-			TRACE(<< "key did not produce any unicode character, returning empty string" << std::endl)
+			LOG("key did not produce any unicode character, returning empty string" << std::endl)
 			return std::u32string();
 		}
 
 		return std::u32string(&res, 1);
 	}
-
-
 } keyUnicodeResolver;
 
-
-
 //================
-// for Updatable
+// for updatable
 //================
-
-class FDFlag{
-	int eventFD;
+class event_fd_wrapper{
+	int event_fd;
 public:
-	FDFlag(){
-		this->eventFD = eventfd(0, EFD_NONBLOCK);
-		if(this->eventFD < 0){
+	event_fd_wrapper(){
+		this->event_fd = eventfd(0, EFD_NONBLOCK);
+		if(this->event_fd < 0){
 			throw std::system_error(errno, std::generic_category(), "could not create eventFD (*nix) for implementing Waitable");
 		}
 	}
 
-	~FDFlag()noexcept{
-		close(this->eventFD);
+	~event_fd_wrapper()noexcept{
+		close(this->event_fd);
 	}
 
-	int GetFD()noexcept{
-		return this->eventFD;
+	int get_fd()noexcept{
+		return this->event_fd;
 	}
 
-	void Set(){
-		if(eventfd_write(this->eventFD, 1) < 0){
+	void set(){
+		if(eventfd_write(this->event_fd, 1) < 0){
 			ASSERT(false)
 		}
 	}
 
-	void Clear(){
+	void clear(){
 		eventfd_t value;
-		if(eventfd_read(this->eventFD, &value) < 0){
+		if(eventfd_read(this->event_fd, &value) < 0){
 			if(errno == EAGAIN){
 				return;
 			}
 			ASSERT(false)
 		}
 	}
-} fdFlag;
+} fd_flag;
 
-
-
-class LinuxTimer{
+class linux_timer{
 	timer_t timer;
 
 	//Handler for SIGALRM signal
-	static void OnSIGALRM(int){
-		fdFlag.Set();
+	static void on_SIGALRM(int){
+		fd_flag.set();
 	}
 
 public:
-	LinuxTimer(){
+	linux_timer(){
 		int res = timer_create(
 				CLOCK_MONOTONIC,
 				0,//means SIGALRM signal is emitted when timer expires
@@ -565,7 +553,7 @@ public:
 		}
 
 		struct sigaction sa;
-		sa.sa_handler = &LinuxTimer::OnSIGALRM;
+		sa.sa_handler = &linux_timer::on_SIGALRM;
 		sa.sa_flags = SA_NODEFER;
 		memset(&sa.sa_mask, 0, sizeof(sa.sa_mask));
 
@@ -573,8 +561,8 @@ public:
 		ASSERT(res == 0)
 	}
 
-	~LinuxTimer()noexcept{
-		//set default handler for SIGALRM
+	~linux_timer()noexcept{
+		// set default handler for SIGALRM
 		struct sigaction sa;
 		sa.sa_handler = SIG_DFL;
 		sa.sa_flags = 0;
@@ -586,7 +574,6 @@ public:
 		sigaction(SIGALRM, &sa, 0);
 		ASSERT_INFO(res == 0, " res = " << res << " errno = " << errno)
 
-		//delete timer
 #ifdef DEBUG
 		res =
 #endif
@@ -594,13 +581,13 @@ public:
 		ASSERT_INFO(res == 0, " res = " << res << " errno = " << errno)
 	}
 
-	//if timer is already armed, it will re-set the expiration time
-	void Arm(uint32_t dt){
+	// if timer is already armed, it will re-set the expiration time
+	void arm(uint32_t dt){
 		itimerspec ts;
 		ts.it_value.tv_sec = dt / 1000;
 		ts.it_value.tv_nsec = (dt % 1000) * 1000000;
-		ts.it_interval.tv_nsec = 0;//one shot timer
-		ts.it_interval.tv_sec = 0;//one shot timer
+		ts.it_interval.tv_nsec = 0; // one shot timer
+		ts.it_interval.tv_sec = 0; // one shot timer
 
 #ifdef DEBUG
 		int res =
@@ -609,9 +596,10 @@ public:
 		ASSERT_INFO(res == 0, " res = " << res << " errno = " << errno)
 	}
 
-	//returns true if timer was disarmed
-	//returns false if timer has fired before it was disarmed.
-	bool Disarm(){
+	// returns true if timer was disarmed
+	// returns false if timer has fired before it was disarmed.
+	// TODO: this function is not used anywhere, remove?
+	bool disarm(){
 		itimerspec oldts;
 		itimerspec newts;
 		newts.it_value.tv_nsec = 0;
@@ -629,10 +617,8 @@ public:
 	}
 } timer;
 
-
-
-//TODO: this mapping is not final
-const std::array<morda::key, std::uint8_t(-1) + 1> keyCodeMap = {
+// TODO: this mapping is not final
+const std::array<morda::key, std::uint8_t(-1) + 1> key_code_map = {
 	morda::key::unknown, // AKEYCODE_UNKNOWN
 	morda::key::left, // AKEYCODE_SOFT_LEFT
 	morda::key::right, // AKEYCODE_SOFT_RIGHT
@@ -891,13 +877,13 @@ const std::array<morda::key, std::uint8_t(-1) + 1> keyCodeMap = {
 	morda::key::unknown  //
 };
 
-morda::key getKeyFromKeyEvent(AInputEvent& event)noexcept{
+morda::key get_key_from_key_event(AInputEvent& event)noexcept{
 	size_t kc = size_t(AKeyEvent_getKeyCode(&event));
-	ASSERT(kc < keyCodeMap.size())
-	return keyCodeMap[kc];
+	ASSERT(kc < key_code_map.size())
+	return key_code_map[kc];
 }
 
-struct UnicodeProvider : public morda::gui::unicode_provider{
+struct unicode_provider : public morda::gui::unicode_provider{
 	std::u32string chars;
 
 	std::u32string get()const override{
@@ -915,7 +901,7 @@ JNIEXPORT void JNICALL Java_io_github_cppfw_mordavokne_MordaVOkneActivity_handle
 		jstring chars
 	)
 {
-	TRACE(<< "handleCharacterStringInput(): invoked" << std::endl)
+	LOG("handleCharacterStringInput(): invoked" << std::endl)
 
 	const char *utf8Chars = env->GetStringUTFChars(chars, 0);
 
@@ -924,11 +910,11 @@ JNIEXPORT void JNICALL Java_io_github_cppfw_mordavokne_MordaVOkneActivity_handle
 	});
 
 	if(utf8Chars == nullptr || *utf8Chars == 0){
-		TRACE(<< "handleCharacterStringInput(): empty string passed in" << std::endl)
+		LOG("handleCharacterStringInput(): empty string passed in" << std::endl)
 		return;
 	}
 
-	TRACE(<< "handleCharacterStringInput(): utf8Chars = " << utf8Chars << std::endl)
+	LOG("handleCharacterStringInput(): utf8Chars = " << utf8Chars << std::endl)
 
 	std::vector<char32_t> utf32;
 
@@ -936,18 +922,18 @@ JNIEXPORT void JNICALL Java_io_github_cppfw_mordavokne_MordaVOkneActivity_handle
 		utf32.push_back(i.character());
 	}
 
-	UnicodeProvider resolver;
+	unicode_provider resolver;
 	resolver.chars = std::u32string(&*utf32.begin(), utf32.size());
 
-//    TRACE(<< "handleCharacterStringInput(): resolver.chars = " << resolver.chars << std::endl)
+//    LOG("handleCharacterStringInput(): resolver.chars = " << resolver.chars << std::endl)
 
-	mordavokne::handleCharacterInput(mordavokne::inst(), resolver, morda::key::unknown);
+	mordavokne::handle_character_input(mordavokne::inst(), resolver, morda::key::unknown);
 }
 
 }
 
 jint JNI_OnLoad(JavaVM* vm, void* reserved){
-	TRACE(<< "JNI_OnLoad(): invoked" << std::endl)
+	LOG("JNI_OnLoad(): invoked" << std::endl)
 
 	JNIEnv* env;
 	if (vm->GetEnv(reinterpret_cast<void**>(&env), JNI_VERSION_1_6) != JNI_OK) {
@@ -967,7 +953,7 @@ jint JNI_OnLoad(JavaVM* vm, void* reserved){
 }
 
 namespace{
-std::string initializeStorageDir(const std::string& appName){
+std::string initialize_storage_dir(const std::string& appName){
 	ASSERT(java_functions)
 
 	auto dir = java_functions->get_storage_dir();
@@ -985,7 +971,7 @@ const float mm_per_inch = 25.4f;
 
 mordavokne::application::application(std::string&& name, const window_params& requestedWindowParams) :
 		name(name),
-		windowPimpl(std::make_unique<window_wrapper>(requestedWindowParams)),
+		window_pimpl(std::make_unique<window_wrapper>(requestedWindowParams)),
 		gui(std::make_shared<morda::context>(
 				std::make_shared<morda::render_opengles2::renderer>(),
 				std::make_shared<morda::updater>(),
@@ -1004,17 +990,17 @@ mordavokne::application::application(std::string&& name, const window_params& re
 					return application::get_pixels_per_dp(res, dim.to<unsigned>());
 				}()
 			)),
-		storage_dir(initializeStorageDir(this->name))
+		storage_dir(initialize_storage_dir(this->name))
 {
 	auto win_size = get_impl(*this).get_window_size();
-	this->updateWindowRect(morda::rectangle(morda::vector2(0), win_size.to<morda::real>()));
+	this->update_window_rect(morda::rectangle(morda::vector2(0), win_size.to<morda::real>()));
 }
 
 std::unique_ptr<papki::file> mordavokne::application::get_res_file(const std::string& path)const{
-	return utki::make_unique<asset_file>(appInfo.assetManager, path);
+	return utki::make_unique<asset_file>(app_info.asset_manager, path);
 }
 
-void mordavokne::application::swapFrameBuffers(){
+void mordavokne::application::swap_frame_buffers(){
 	auto& ww = get_impl(*this);
 	ww.swap_buffers();
 }
@@ -1056,16 +1042,16 @@ void mordavokne::application::hide_virtual_keyboard()noexcept{
 }
 
 namespace{
-void handleInputEvents(){
+void handle_input_events(){
 	auto& app = mordavokne::inst();
 
 	// read and handle input events
 	AInputEvent* event;
-	while(AInputQueue_getEvent(curInputQueue, &event) >= 0){
+	while(AInputQueue_getEvent(input_queue, &event) >= 0){
 		ASSERT(event)
 
-//		TRACE(<< "New input event: type = " << AInputEvent_getType(event) << std::endl)
-		if(AInputQueue_preDispatchEvent(curInputQueue, event)){
+//		LOG("New input event: type = " << AInputEvent_getType(event) << std::endl)
+		if(AInputQueue_preDispatchEvent(input_queue, event)){
 			continue;
 		}
 
@@ -1078,52 +1064,52 @@ void handleInputEvents(){
 			case AINPUT_EVENT_TYPE_MOTION:
 				switch(eventAction & AMOTION_EVENT_ACTION_MASK){
 					case AMOTION_EVENT_ACTION_POINTER_DOWN:
-//						TRACE(<< "Pointer down" << std::endl)
+//						LOG("Pointer down" << std::endl)
 					case AMOTION_EVENT_ACTION_DOWN:
 					{
 						unsigned pointerIndex = ((eventAction & AMOTION_EVENT_ACTION_POINTER_INDEX_MASK) >> AMOTION_EVENT_ACTION_POINTER_INDEX_SHIFT);
 						unsigned pointerId = unsigned(AMotionEvent_getPointerId(event, pointerIndex));
 
 						if(pointerId >= pointers.size()){
-							TRACE(<< "Pointer ID is too big, only " << pointers.size() << " pointers supported at maximum")
+							LOG("Pointer ID is too big, only " << pointers.size() << " pointers supported at maximum")
 							continue;
 						}
 
-//								TRACE(<< "Action down, ptr id = " << pointerId << std::endl)
+//								LOG("Action down, ptr id = " << pointerId << std::endl)
 
 						morda::vector2 p(AMotionEvent_getX(event, pointerIndex), AMotionEvent_getY(event, pointerIndex));
 						pointers[pointerId] = p;
 
-						handleMouseButton(
+						handle_mouse_button(
 								app,
 								true,
-								AndroidWinCoordsToMordaWinRectCoords(app.window_dims(), p),
+								android_win_coords_to_morda_win_rect_coords(app.window_dims(), p),
 								morda::mouse_button::left,
 								pointerId
 						);
 					}
 						break;
 					case AMOTION_EVENT_ACTION_POINTER_UP:
-//						TRACE(<< "Pointer up" << std::endl)
+//						LOG("Pointer up" << std::endl)
 					case AMOTION_EVENT_ACTION_UP:
 					{
 						unsigned pointerIndex = ((eventAction & AMOTION_EVENT_ACTION_POINTER_INDEX_MASK) >> AMOTION_EVENT_ACTION_POINTER_INDEX_SHIFT);
 						unsigned pointerId = unsigned(AMotionEvent_getPointerId(event, pointerIndex));
 
 						if(pointerId >= pointers.size()){
-							TRACE(<< "Pointer ID is too big, only " << pointers.size() << " pointers supported at maximum")
+							LOG("Pointer ID is too big, only " << pointers.size() << " pointers supported at maximum")
 							continue;
 						}
 
-//								TRACE(<< "Action up, ptr id = " << pointerId << std::endl)
+//								LOG("Action up, ptr id = " << pointerId << std::endl)
 
 						morda::vector2 p(AMotionEvent_getX(event, pointerIndex), AMotionEvent_getY(event, pointerIndex));
 						pointers[pointerId] = p;
 
-						handleMouseButton(
+						handle_mouse_button(
 								app,
 								false,
-								AndroidWinCoordsToMordaWinRectCoords(app.window_dims(), p),
+								android_win_coords_to_morda_win_rect_coords(app.window_dims(), p),
 								morda::mouse_button::left,
 								pointerId
 						);
@@ -1136,7 +1122,7 @@ void handleInputEvents(){
 						for(size_t pointerNum = 0; pointerNum < numPointers; ++pointerNum){
 							unsigned pointerId = unsigned(AMotionEvent_getPointerId(event, pointerNum));
 							if(pointerId >= pointers.size()){
-								TRACE(<< "Pointer ID is too big, only " << pointers.size() << " pointers supported at maximum")
+								LOG("Pointer ID is too big, only " << pointers.size() << " pointers supported at maximum")
 								continue;
 							}
 
@@ -1147,61 +1133,61 @@ void handleInputEvents(){
 								continue;
 							}
 
-//								TRACE(<< "Action move, ptr id = " << pointerId << std::endl)
+//								LOG("Action move, ptr id = " << pointerId << std::endl)
 
 							pointers[pointerId] = p;
 
-							handleMouseMove(
+							handle_mouse_move(
 									app,
-									AndroidWinCoordsToMordaWinRectCoords(app.window_dims(), p),
+									android_win_coords_to_morda_win_rect_coords(app.window_dims(), p),
 									pointerId
 							);
 						}
 					}
 						break;
 					default:
-						TRACE(<< "unknown eventAction = " << eventAction << std::endl)
+						LOG("unknown eventAction = " << eventAction << std::endl)
 						break;
 				}
 				consume = true;
 				break;
 			case AINPUT_EVENT_TYPE_KEY:
 				{
-//					TRACE(<< "AINPUT_EVENT_TYPE_KEY" << std::endl)
+//					LOG("AINPUT_EVENT_TYPE_KEY" << std::endl)
 
 					ASSERT(event)
-					morda::key key = getKeyFromKeyEvent(*event);
+					morda::key key = get_key_from_key_event(*event);
 
 					keyUnicodeResolver.kc = AKeyEvent_getKeyCode(event);
 					keyUnicodeResolver.ms = AKeyEvent_getMetaState(event);
 					keyUnicodeResolver.di = AInputEvent_getDeviceId(event);
 
-//    				TRACE(<< "AINPUT_EVENT_TYPE_KEY: keyUnicodeResolver.kc = " << keyUnicodeResolver.kc << std::endl)
+//    				LOG("AINPUT_EVENT_TYPE_KEY: keyUnicodeResolver.kc = " << keyUnicodeResolver.kc << std::endl)
 
 					switch(eventAction){
 						case AKEY_EVENT_ACTION_DOWN:
-//    						TRACE(<< "AKEY_EVENT_ACTION_DOWN, count = " << AKeyEvent_getRepeatCount(event) << std::endl)
+//    						LOG("AKEY_EVENT_ACTION_DOWN, count = " << AKeyEvent_getRepeatCount(event) << std::endl)
 							// detect auto-repeated key events
 							if(AKeyEvent_getRepeatCount(event) == 0){
-								handleKeyEvent(app, true, key);
+								handle_key_event(app, true, key);
 							}
-							handleCharacterInput(app, keyUnicodeResolver, key);
+							handle_character_input(app, keyUnicodeResolver, key);
 							break;
 						case AKEY_EVENT_ACTION_UP:
-//    						TRACE(<< "AKEY_EVENT_ACTION_UP" << std::endl)
-							handleKeyEvent(app, false, key);
+//    						LOG("AKEY_EVENT_ACTION_UP" << std::endl)
+							handle_key_event(app, false, key);
 							break;
 						case AKEY_EVENT_ACTION_MULTIPLE:
-//                          TRACE(<< "AKEY_EVENT_ACTION_MULTIPLE"
+//                          LOG("AKEY_EVENT_ACTION_MULTIPLE"
 //                                  << " count = " << AKeyEvent_getRepeatCount(event)
 //                                  << " keyCode = " << AKeyEvent_getKeyCode(event)
 //                                  << std::endl)
 
-							// Ignore, it is handled on Java side.
+							// ignore, it is handled on Java side
 
 							break;
 						default:
-							TRACE(<< "unknown AINPUT_EVENT_TYPE_KEY eventAction: " << eventAction << std::endl)
+							LOG("unknown AINPUT_EVENT_TYPE_KEY eventAction: " << eventAction << std::endl)
 							break;
 					}
 				}
@@ -1211,7 +1197,7 @@ void handleInputEvents(){
 		}
 
 		AInputQueue_finishEvent(
-				curInputQueue,
+				input_queue,
 				event,
 				consume
 		);
@@ -1219,62 +1205,62 @@ void handleInputEvents(){
 
 	render(app);
 
-	fdFlag.Set();
+	fd_flag.set();
 }
 }
 
 namespace{
-void OnDestroy(ANativeActivity* activity){
-	TRACE(<< "OnDestroy(): invoked" << std::endl)
+void on_destroy(ANativeActivity* activity){
+	LOG("on_destroy(): invoked" << std::endl)
 
 	java_functions.reset();
 }
 
-void OnStart(ANativeActivity* activity){
-	TRACE(<< "OnStart(): invoked" << std::endl)
+void on_start(ANativeActivity* activity){
+	LOG("on_start(): invoked" << std::endl)
 }
 
-void OnResume(ANativeActivity* activity){
-	TRACE(<< "OnResume(): invoked" << std::endl)
+void on_resume(ANativeActivity* activity){
+	LOG("on_resume(): invoked" << std::endl)
 }
 
-void* OnSaveInstanceState(ANativeActivity* activity, size_t* outSize){
-	TRACE(<< "OnSaveInstanceState(): invoked" << std::endl)
+void* on_save_instance_state(ANativeActivity* activity, size_t* outSize){
+	LOG("on_save_instance_state(): invoked" << std::endl)
 
 	// Do nothing, we don't use this mechanism of saving state.
 
 	return nullptr;
 }
 
-void OnPause(ANativeActivity* activity){
-	TRACE(<< "OnPause(): invoked" << std::endl)
+void on_pause(ANativeActivity* activity){
+	LOG("on_pause(): invoked" << std::endl)
 }
 
-void OnStop(ANativeActivity* activity){
-	TRACE(<< "OnStop(): invoked" << std::endl)
+void on_stop(ANativeActivity* activity){
+	LOG("on_stop(): invoked" << std::endl)
 }
 
-void OnConfigurationChanged(ANativeActivity* activity){
-	TRACE(<< "OnConfigurationChanged(): invoked" << std::endl)
+void on_configuration_changed(ANativeActivity* activity){
+	LOG("on_configuration_changed(): invoked" << std::endl)
 
 	int32_t diff;
 	{
-		std::unique_ptr<AndroidConfiguration> config = AndroidConfiguration::New();
-		AConfiguration_fromAssetManager(config->ac, appInfo.assetManager);
+		auto config = std::make_unique<android_configuration_wrapper>();
+		AConfiguration_fromAssetManager(config->ac, app_info.asset_manager);
 
-		diff = AConfiguration_diff(curConfig->ac, config->ac);
+		diff = AConfiguration_diff(cur_config->ac, config->ac);
 
-		curConfig = std::move(config);
+		cur_config = std::move(config);
 	}
 
 	// if orientation has changed
 	if(diff & ACONFIGURATION_ORIENTATION){
-		int32_t orientation = AConfiguration_getOrientation(curConfig->ac);
+		int32_t orientation = AConfiguration_getOrientation(cur_config->ac);
 		switch(orientation){
 			case ACONFIGURATION_ORIENTATION_LAND:
 			case ACONFIGURATION_ORIENTATION_PORT:
 				using std::swap;
-				swap(curWinDim.x(), curWinDim.y());
+				swap(cur_window_dims.x(), cur_window_dims.y());
 				break;
 			case ACONFIGURATION_ORIENTATION_SQUARE:
 				// do nothing
@@ -1288,18 +1274,18 @@ void OnConfigurationChanged(ANativeActivity* activity){
 	}
 }
 
-void OnLowMemory(ANativeActivity* activity){
-	TRACE(<< "OnLowMemory(): invoked" << std::endl)
+void on_low_memory(ANativeActivity* activity){
+	LOG("on_low_memory(): invoked" << std::endl)
 	//TODO:
-//    static_cast<morda::application*>(activity->instance)->OnLowMemory();
+//    static_cast<morda::application*>(activity->instance)->on_low_memory();
 }
 
-void OnWindowFocusChanged(ANativeActivity* activity, int hasFocus){
-	TRACE(<< "OnWindowFocusChanged(): invoked" << std::endl)
+void on_window_focus_changed(ANativeActivity* activity, int hasFocus){
+	LOG("on_window_focus_changed(): invoked" << std::endl)
 }
 
-int OnUpdateTimerExpired(int fd, int events, void* data){
-//	TRACE(<< "OnUpdateTimerExpired(): invoked" << std::endl)
+int on_update_timer_expired(int fd, int events, void* data){
+//	LOG("on_update_timer_expired(): invoked" << std::endl)
 
 	auto& app = application::inst();
 
@@ -1307,19 +1293,19 @@ int OnUpdateTimerExpired(int fd, int events, void* data){
 	if(dt == 0){
 		// do not arm the timer and do not clear the flag
 	}else{
-		fdFlag.Clear();
-		timer.Arm(dt);
+		fd_flag.clear();
+		timer.arm(dt);
 	}
 
 	// after updating need to re-render everything
 	render(app);
 
-//	TRACE(<< "OnUpdateTimerExpired(): armed timer for " << dt << std::endl)
+//	LOG("on_update_timer_expired(): armed timer for " << dt << std::endl)
 
 	return 1; // 1 means do not remove descriptor from looper
 }
 
-int OnQueueHasMessages(int fd, int events, void* data){
+int on_queue_has_messages(int fd, int events, void* data){
 	auto& ww = get_impl(get_window_pimpl(application::inst()));
 
 	while(auto m = ww.ui_queue.pop_front()){
@@ -1329,28 +1315,28 @@ int OnQueueHasMessages(int fd, int events, void* data){
 	return 1; // 1 means do not remove descriptor from looper
 }
 
-void OnNativeWindowCreated(ANativeActivity* activity, ANativeWindow* window){
-	TRACE(<< "OnNativeWindowCreated(): invoked" << std::endl)
+void on_native_window_created(ANativeActivity* activity, ANativeWindow* window){
+	LOG("on_native_window_created(): invoked" << std::endl)
 
 	// save window in a static var, so it is accessible for OpenGL initializers from morda::application class
 	android_window = window;
 
-	curWinDim.x() = float(ANativeWindow_getWidth(window));
-	curWinDim.y() = float(ANativeWindow_getHeight(window));
+	cur_window_dims.x() = float(ANativeWindow_getWidth(window));
+	cur_window_dims.y() = float(ANativeWindow_getHeight(window));
 
 	ASSERT(!activity->instance)
 	try{
 		// use local auto-pointer for now because an exception can be thrown and need to delete object then.
-		std::unique_ptr<AndroidConfiguration> cfg = AndroidConfiguration::New();
+		auto cfg = std::make_unique<android_configuration_wrapper>();
 		// retrieve current configuration
-		AConfiguration_fromAssetManager(cfg->ac, appInfo.assetManager);
+		AConfiguration_fromAssetManager(cfg->ac, app_info.asset_manager);
 
 		application* app = mordavokne::create_application(0, nullptr).release();
 
 		activity->instance = app;
 
 		// save current configuration in global variable
-		curConfig = std::move(cfg);
+		cur_config = std::move(cfg);
 
 		ALooper* looper = ALooper_prepare(0);
 		ASSERT(looper)
@@ -1358,10 +1344,10 @@ void OnNativeWindowCreated(ANativeActivity* activity, ANativeWindow* window){
 		// add timer descriptor to looper, this is needed for updatable to work
 		if(ALooper_addFd(
 				looper,
-				fdFlag.GetFD(),
+				fd_flag.get_fd(),
 				ALOOPER_POLL_CALLBACK,
 				ALOOPER_EVENT_INPUT,
-				&OnUpdateTimerExpired,
+				&on_update_timer_expired,
 				0
 			) == -1)
 		{
@@ -1374,43 +1360,43 @@ void OnNativeWindowCreated(ANativeActivity* activity, ANativeWindow* window){
 				get_impl(get_window_pimpl(*app)).ui_queue.get_handle(),
 				ALOOPER_POLL_CALLBACK,
 				ALOOPER_EVENT_INPUT,
-				&OnQueueHasMessages,
+				&on_queue_has_messages,
 				0
 			) == -1)
 		{
 			throw std::runtime_error("failed to add UI message queue descriptor to looper");
 		}
 
-		fdFlag.Set(); // this is to call the Update() for the first time if there were any updateables started during creating application object
+		fd_flag.set(); // this is to call the update() for the first time if there were any updateables started during creating application object
 	}catch(std::exception& e){
-		TRACE(<< "std::exception uncaught while creating application instance: " << e.what() << std::endl)
+		LOG("std::exception uncaught while creating application instance: " << e.what() << std::endl)
 		throw;
 	}catch(...){
-		TRACE(<< "unknown exception uncaught while creating application instance!" << std::endl)
+		LOG("unknown exception uncaught while creating application instance!" << std::endl)
 		throw;
 	}
 }
 
-void OnNativeWindowResized(ANativeActivity* activity, ANativeWindow* window){
-	TRACE(<< "OnNativeWindowResized(): invoked" << std::endl)
+void on_native_window_resized(ANativeActivity* activity, ANativeWindow* window){
+	LOG("on_native_window_resized(): invoked" << std::endl)
 
 	// save window dimensions
-	curWinDim.x() = float(ANativeWindow_getWidth(window));
-	curWinDim.y() = float(ANativeWindow_getHeight(window));
+	cur_window_dims.x() = float(ANativeWindow_getWidth(window));
+	cur_window_dims.y() = float(ANativeWindow_getHeight(window));
 
-	TRACE(<< "OnNativeWindowResized(): curWinDim = " << curWinDim << std::endl)
+	LOG("on_native_window_resized(): cur_window_dims = " << cur_window_dims << std::endl)
 }
 
-void OnNativeWindowRedrawNeeded(ANativeActivity* activity, ANativeWindow* window){
-	TRACE(<< "OnNativeWindowRedrawNeeded(): invoked" << std::endl)
+void on_native_window_redraw_needed(ANativeActivity* activity, ANativeWindow* window){
+	LOG("on_native_window_redraw_needed(): invoked" << std::endl)
 
 	render(get_app(activity));
 }
 
 // This function is called right before destroying Window object, according to documentation:
 // https://developer.android.com/ndk/reference/struct/a-native-activity-callbacks#onnativewindowdestroyed
-void OnNativeWindowDestroyed(ANativeActivity* activity, ANativeWindow* window){
-	TRACE(<< "OnNativeWindowDestroyed(): invoked" << std::endl)
+void on_native_window_destroyed(ANativeActivity* activity, ANativeWindow* window){
+	LOG("on_native_window_destroyed(): invoked" << std::endl)
 
 	ALooper* looper = ALooper_prepare(0);
 	ASSERT(looper)
@@ -1421,90 +1407,90 @@ void OnNativeWindowDestroyed(ANativeActivity* activity, ANativeWindow* window){
 			get_impl(get_window_pimpl(application::inst())).ui_queue.get_handle()
 		);
 
-	// remove fdFlag from looper
-	ALooper_removeFd(looper, fdFlag.GetFD());
+	// remove fd_flag from looper
+	ALooper_removeFd(looper, fd_flag.get_fd());
 
 	// Need to destroy app right before window is destroyed, i.e. before OGL is de-initialized
 	delete static_cast<mordavokne::application*>(activity->instance);
 	activity->instance = nullptr;
 
 	// delete configuration object
-	curConfig.reset();
+	cur_config.reset();
 }
 
-int OnInputEventsReadyForReadingFromQueue(int fd, int events, void* data){
-//	TRACE(<< "OnInputEventsReadyForReadingFromQueue(): invoked" << std::endl)
+int on_input_events_ready_for_reading_from_queue(int fd, int events, void* data){
+//	LOG("on_input_events_ready_for_reading_from_queue(): invoked" << std::endl)
 
-	ASSERT(curInputQueue) // if we get events we should have input queue
+	ASSERT(input_queue) // if we get events we should have input queue
 
 	// if window is not created yet, ignore events
 	if(!mordavokne::application::is_created()){
 		ASSERT(false)
 		AInputEvent* event;
-		while(AInputQueue_getEvent(curInputQueue, &event) >= 0){
-			if(AInputQueue_preDispatchEvent(curInputQueue, event)){
+		while(AInputQueue_getEvent(input_queue, &event) >= 0){
+			if(AInputQueue_preDispatchEvent(input_queue, event)){
 				continue;
 			}
 
-			AInputQueue_finishEvent(curInputQueue, event, false);
+			AInputQueue_finishEvent(input_queue, event, false);
 		}
 		return 1;
 	}
 
-	ASSERT(mordavokne::application::isCreated())
+	ASSERT(mordavokne::application::is_created())
 
-	handleInputEvents();
+	handle_input_events();
 
 	return 1; // we don't want to remove input queue descriptor from looper
 }
 
-void OnInputQueueCreated(ANativeActivity* activity, AInputQueue* queue){
-	TRACE(<< "OnInputQueueCreated(): invoked" << std::endl)
+void on_input_queue_created(ANativeActivity* activity, AInputQueue* queue){
+	LOG("on_input_queue_created(): invoked" << std::endl)
 	ASSERT(queue);
-	ASSERT(!curInputQueue)
-	curInputQueue = queue;
+	ASSERT(!input_queue)
+	input_queue = queue;
 
 	// attach queue to looper
 	AInputQueue_attachLooper(
-			curInputQueue,
+			input_queue,
 			ALooper_prepare(0), // get looper for current thread (main thread)
 			0, // 'ident' is ignored since we are using callback
-			&OnInputEventsReadyForReadingFromQueue,
+			&on_input_events_ready_for_reading_from_queue,
 			activity->instance
 		);
 }
 
-void OnInputQueueDestroyed(ANativeActivity* activity, AInputQueue* queue){
-	TRACE(<< "OnInputQueueDestroyed(): invoked" << std::endl)
+void on_input_queue_destroyed(ANativeActivity* activity, AInputQueue* queue){
+	LOG("on_input_queue_destroyed(): invoked" << std::endl)
 	ASSERT(queue)
-	ASSERT(curInputQueue == queue)
+	ASSERT(input_queue == queue)
 
 	// detach queue from looper
 	AInputQueue_detachLooper(queue);
 
-	curInputQueue = 0;
+	input_queue = nullptr;
 }
 
 // called when, for example, on-screen keyboard has been shown
-void OnContentRectChanged(ANativeActivity* activity, const ARect* rect){
-	TRACE(<< "OnContentRectChanged(): invoked, left = " << rect->left << " right = " << rect->right << " top = " << rect->top << " bottom = " << rect->bottom << std::endl)
-	TRACE(<< "OnContentRectChanged(): curWinDim = " << curWinDim << std::endl)
+void on_content_rect_changed(ANativeActivity* activity, const ARect* rect){
+	LOG("on_content_rect_changed(): invoked, left = " << rect->left << " right = " << rect->right << " top = " << rect->top << " bottom = " << rect->bottom << std::endl)
+	LOG("on_content_rect_changed(): cur_window_dims = " << cur_window_dims << std::endl)
 
-	// Sometimes Android calls OnContentRectChanged() even after native window was destroyed,
-	// i.e. OnNativeWindowDestroyed() was called and, thus, application object was destroyed.
+	// Sometimes Android calls on_content_rect_changed() even after native window was destroyed,
+	// i.e. on_native_window_destroyed() was called and, thus, application object was destroyed.
 	// So need to check if our application is still alive.
 	if(!activity->instance){
-		TRACE(<< "OnContentRectChanged(): application is not alive, ignoring content rect change." << std::endl)
+		LOG("on_content_rect_changed(): application is not alive, ignoring content rect change." << std::endl)
 		return;
 	}
 
 	auto& app = get_app(activity);
 
-	updateWindowRect(
+	update_window_rect(
 			app,
 			morda::rectangle(
 					float(rect->left),
-					curWinDim.y() - float(rect->bottom),
+					cur_window_dims.y() - float(rect->bottom),
 					float(rect->right - rect->left),
 					float(rect->bottom - rect->top)
 				)
@@ -1521,31 +1507,31 @@ void ANativeActivity_onCreate(
 		size_t savedStateSize
 	)
 {
-	TRACE(<< "ANativeActivity_onCreate(): invoked" << std::endl)
-	activity->callbacks->onDestroy = &OnDestroy;
-	activity->callbacks->onStart = &OnStart;
-	activity->callbacks->onResume = &OnResume;
-	activity->callbacks->onSaveInstanceState = &OnSaveInstanceState;
-	activity->callbacks->onPause = &OnPause;
-	activity->callbacks->onStop = &OnStop;
-	activity->callbacks->onConfigurationChanged = &OnConfigurationChanged;
-	activity->callbacks->onLowMemory = &OnLowMemory;
-	activity->callbacks->onWindowFocusChanged = &OnWindowFocusChanged;
-	activity->callbacks->onNativeWindowCreated = &OnNativeWindowCreated;
-	activity->callbacks->onNativeWindowResized = &OnNativeWindowResized;
-	activity->callbacks->onNativeWindowRedrawNeeded = &OnNativeWindowRedrawNeeded;
-	activity->callbacks->onNativeWindowDestroyed = &OnNativeWindowDestroyed;
-	activity->callbacks->onInputQueueCreated = &OnInputQueueCreated;
-	activity->callbacks->onInputQueueDestroyed = &OnInputQueueDestroyed;
-	activity->callbacks->onContentRectChanged = &OnContentRectChanged;
+	LOG("ANativeActivity_onCreate(): invoked" << std::endl)
+	activity->callbacks->onDestroy = &on_destroy;
+	activity->callbacks->onStart = &on_start;
+	activity->callbacks->onResume = &on_resume;
+	activity->callbacks->onSaveInstanceState = &on_save_instance_state;
+	activity->callbacks->onPause = &on_pause;
+	activity->callbacks->onStop = &on_stop;
+	activity->callbacks->onConfigurationChanged = &on_configuration_changed;
+	activity->callbacks->onLowMemory = &on_low_memory;
+	activity->callbacks->onWindowFocusChanged = &on_window_focus_changed;
+	activity->callbacks->onNativeWindowCreated = &on_native_window_created;
+	activity->callbacks->onNativeWindowResized = &on_native_window_resized;
+	activity->callbacks->onNativeWindowRedrawNeeded = &on_native_window_redraw_needed;
+	activity->callbacks->onNativeWindowDestroyed = &on_native_window_destroyed;
+	activity->callbacks->onInputQueueCreated = &on_input_queue_created;
+	activity->callbacks->onInputQueueDestroyed = &on_input_queue_destroyed;
+	activity->callbacks->onContentRectChanged = &on_content_rect_changed;
 
 	activity->instance = 0;
 
 	native_activity = activity;
 
-	appInfo.internalDataPath = activity->internalDataPath;
-	appInfo.externalDataPath = activity->externalDataPath;
-	appInfo.assetManager = activity->assetManager;
+	app_info.internal_data_path = activity->internalDataPath;
+	app_info.external_data_path = activity->externalDataPath;
+	app_info.asset_manager = activity->assetManager;
 
 	java_functions = std::make_unique<java_functions_wrapper>(activity);
 }

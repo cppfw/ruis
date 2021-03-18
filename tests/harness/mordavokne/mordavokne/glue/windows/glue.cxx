@@ -371,7 +371,7 @@ LRESULT	CALLBACK wndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
 
 				handleMouseHover(mordavokne::inst(), true, 0);
 			}
-			handleMouseMove(
+			handle_mouse_move(
 					mordavokne::inst(),
 					morda::vector2(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
 					0
@@ -400,7 +400,7 @@ LRESULT	CALLBACK wndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
 			{
 				if(ww.mouseButtonState.get(i)){
 					ww.mouseButtonState.clear(i);
-					handleMouseButton(
+					handle_mouse_button(
 							mordavokne::inst(),
 							false,
 							morda::vector2(1000000, 1000000), // outside of the window
@@ -415,7 +415,7 @@ LRESULT	CALLBACK wndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
 		{
 			auto& ww = getImpl(get_window_pimpl(mordavokne::inst()));
 			ww.mouseButtonState.set(morda::mouse_button::left);
-			handleMouseButton(
+			handle_mouse_button(
 					mordavokne::inst(),
 					true,
 					morda::vector2(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
@@ -428,7 +428,7 @@ LRESULT	CALLBACK wndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
 		{
 			auto& ww = getImpl(get_window_pimpl(mordavokne::inst()));
 			ww.mouseButtonState.clear(morda::mouse_button::left);
-			handleMouseButton(
+			handle_mouse_button(
 					mordavokne::inst(),
 					false,
 					morda::vector2(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
@@ -441,7 +441,7 @@ LRESULT	CALLBACK wndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
 		{
 			auto& ww = getImpl(get_window_pimpl(mordavokne::inst()));
 			ww.mouseButtonState.set(morda::mouse_button::middle);
-			handleMouseButton(
+			handle_mouse_button(
 					mordavokne::inst(),
 					true,
 					morda::vector2(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
@@ -454,7 +454,7 @@ LRESULT	CALLBACK wndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
 		{
 			auto& ww = getImpl(get_window_pimpl(mordavokne::inst()));
 			ww.mouseButtonState.clear(morda::mouse_button::middle);
-			handleMouseButton(
+			handle_mouse_button(
 					mordavokne::inst(),
 					false,
 					morda::vector2(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
@@ -467,7 +467,7 @@ LRESULT	CALLBACK wndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
 		{
 			auto& ww = getImpl(get_window_pimpl(mordavokne::inst()));
 			ww.mouseButtonState.set(morda::mouse_button::right);
-			handleMouseButton(
+			handle_mouse_button(
 					mordavokne::inst(),
 					true,
 					morda::vector2(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
@@ -480,7 +480,7 @@ LRESULT	CALLBACK wndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
 		{
 			auto& ww = getImpl(get_window_pimpl(mordavokne::inst()));
 			ww.mouseButtonState.clear(morda::mouse_button::right);
-			handleMouseButton(
+			handle_mouse_button(
 					mordavokne::inst(),
 					false,
 					morda::vector2(float(GET_X_LPARAM(lParam)), float(GET_Y_LPARAM(lParam))),
@@ -512,14 +512,14 @@ LRESULT	CALLBACK wndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
 				}
 
 				for(unsigned i = 0; i != times; ++i){
-					handleMouseButton(
+					handle_mouse_button(
 							mordavokne::inst(),
 							true,
 							morda::vector2(float(pos.x), float(pos.y)),
 							button,
 							0
 						);
-					handleMouseButton(
+					handle_mouse_button(
 							mordavokne::inst(),
 							false,
 							morda::vector2(float(pos.x), float(pos.y)),
@@ -534,13 +534,13 @@ LRESULT	CALLBACK wndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
 		{
 			morda::key key = keyCodeMap[std::uint8_t(wParam)];
 			if ((lParam & 0x40000000) == 0){ // ignore auto-repeated keypress event
-				handleKeyEvent(mordavokne::inst(), true, key);
+				handle_key_event(mordavokne::inst(), true, key);
 			}
-			handleCharacterInput(mordavokne::inst(), KeyEventUnicodeProvider(), key);
+			handle_character_input(mordavokne::inst(), KeyEventUnicodeProvider(), key);
 			return 0;
 		}
 		case WM_KEYUP:
-			handleKeyEvent(mordavokne::inst(), false, keyCodeMap[std::uint8_t(wParam)]);
+			handle_key_event(mordavokne::inst(), false, keyCodeMap[std::uint8_t(wParam)]);
 			return 0;
 
 		case WM_CHAR:
@@ -550,7 +550,7 @@ LRESULT	CALLBACK wndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
 				case U'\U0000000d': // Carriage return
 					break;
 				default:
-					handleCharacterInput(mordavokne::inst(), KeyEventUnicodeProvider(char32_t(wParam)), morda::key::unknown);
+					handle_character_input(mordavokne::inst(), KeyEventUnicodeProvider(char32_t(wParam)), morda::key::unknown);
 					break;
 			}
 			return 0;
@@ -562,7 +562,7 @@ LRESULT	CALLBACK wndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
 
 		case WM_SIZE:
 			// resize GL, LoWord=Width, HiWord=Height
-			updateWindowRect(mordavokne::inst(), morda::rectangle(0, 0, float(LOWORD(lParam)), float(HIWORD(lParam))));
+			update_window_rect(mordavokne::inst(), morda::rectangle(0, 0, float(LOWORD(lParam)), float(HIWORD(lParam))));
 			return 0;
 
 		case WM_USER:
@@ -632,7 +632,7 @@ std::string initializeStorageDir(const std::string& appName){
 
 application::application(std::string&& name, const window_params& wp) :
 		name(name),
-		windowPimpl(std::make_unique<WindowWrapper>(wp)),
+		window_pimpl(std::make_unique<WindowWrapper>(wp)),
 		gui(std::make_shared<morda::context>(
 				std::make_shared<morda::render_opengl2::renderer>(),
 				std::make_shared<morda::updater>(),
@@ -645,13 +645,13 @@ application::application(std::string&& name, const window_params& wp) :
 				[this](morda::mouse_cursor c){
 					// TODO:
 				},
-				getDotsPerInch(getImpl(this->windowPimpl).hdc),
-				getDotsPerPt(getImpl(this->windowPimpl).hdc)
+				getDotsPerInch(getImpl(this->window_pimpl).hdc),
+				getDotsPerPt(getImpl(this->window_pimpl).hdc)
 			)),
 		storage_dir(initializeStorageDir(this->name)),
 		curWinRect(0, 0, -1, -1)
 {
-	this->updateWindowRect(
+	this->update_window_rect(
 			morda::rectangle(
 					0,
 					0,
@@ -662,7 +662,7 @@ application::application(std::string&& name, const window_params& wp) :
 }
 
 void application::quit()noexcept{
-	auto& ww = getImpl(this->windowPimpl);
+	auto& ww = getImpl(this->window_pimpl);
 	ww.quitFlag = true;
 }
 
@@ -746,7 +746,7 @@ void application::set_fullscreen(bool enable){
 		return;
 	}
 
-	auto& ww = getImpl(this->windowPimpl);
+	auto& ww = getImpl(this->window_pimpl);
 
 	if(enable){
 		// save original window size
@@ -816,7 +816,7 @@ void application::set_fullscreen(bool enable){
 }
 
 void application::set_mouse_cursor_visible(bool visible){
-	auto& ww = getImpl(this->windowPimpl);
+	auto& ww = getImpl(this->window_pimpl);
 
 	if(visible){
 		if(!ww.mouseCursorIsCurrentlyVisible){
@@ -831,8 +831,8 @@ void application::set_mouse_cursor_visible(bool visible){
 	}
 }
 
-void application::swapFrameBuffers(){
-	auto& ww = getImpl(this->windowPimpl);
+void application::swap_frame_buffers(){
+	auto& ww = getImpl(this->window_pimpl);
 	SwapBuffers(ww.hdc);
 }
 

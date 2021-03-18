@@ -16,10 +16,10 @@ void application::render(){
 
 	this->gui.render(this->gui.context->renderer->initial_matrix);
 
-	this->swapFrameBuffers();
+	this->swap_frame_buffers();
 }
 
-void application::updateWindowRect(const morda::rectangle& rect){
+void application::update_window_rect(const morda::rectangle& rect){
 	if(this->curWinRect == rect){
 		return;
 	}

@@ -63,12 +63,12 @@ public:
 	const std::string name;
 
 private:
-	std::unique_ptr<utki::destructable> windowPimpl;
+	std::unique_ptr<utki::destructable> window_pimpl;
 
-	friend const decltype(windowPimpl)& get_window_pimpl(application& app);
+	friend const decltype(window_pimpl)& get_window_pimpl(application& app);
 
 private:
-	void swapFrameBuffers();
+	void swap_frame_buffers();
 
 public:
 	morda::gui gui;
@@ -108,23 +108,23 @@ private:
 
 	friend void render(application& app);
 
-	void updateWindowRect(const morda::rectangle& rect);
+	void update_window_rect(const morda::rectangle& rect);
 
-	friend void updateWindowRect(application& app, const morda::rectangle& rect);
+	friend void update_window_rect(application& app, const morda::rectangle& rect);
 
 	// pos is in usual window coordinates, y goes down.
-	void handleMouseMove(const r4::vector2<float>& pos, unsigned id){
+	void handle_mouse_move(const r4::vector2<float>& pos, unsigned id){
 		this->gui.send_mouse_move(pos, id);
 	}
 
-	friend void handleMouseMove(application& app, const r4::vector2<float>& pos, unsigned id);
+	friend void handle_mouse_move(application& app, const r4::vector2<float>& pos, unsigned id);
 
 	// pos is in usual window coordinates, y goes down.
-	void handleMouseButton(bool isDown, const r4::vector2<float>& pos, morda::mouse_button button, unsigned id){
+	void handle_mouse_button(bool isDown, const r4::vector2<float>& pos, morda::mouse_button button, unsigned id){
 		this->gui.send_mouse_button(isDown, pos, button, id);
 	}
 
-	friend void handleMouseButton(application& app, bool isDown, const r4::vector2<float>& pos, morda::mouse_button button, unsigned id);
+	friend void handle_mouse_button(application& app, bool isDown, const r4::vector2<float>& pos, morda::mouse_button button, unsigned id);
 
 	void handleMouseHover(bool is_hovered, unsigned id){
 		this->gui.send_mouse_hover(is_hovered, id);
@@ -162,17 +162,17 @@ private:
 
 	// The idea with unicode_resolver parameter is that we don't want to calculate the unicode unless it is really needed, thus postpone it
 	// as much as possible.
-	void handleCharacterInput(const morda::gui::unicode_provider& unicode_resolver, morda::key key_code){
+	void handle_character_input(const morda::gui::unicode_provider& unicode_resolver, morda::key key_code){
 		this->gui.send_character_input(unicode_resolver, key_code);
 	}
 
-	friend void handleCharacterInput(application& app, const morda::gui::unicode_provider& unicode_resolver, morda::key key_code);
+	friend void handle_character_input(application& app, const morda::gui::unicode_provider& unicode_resolver, morda::key key_code);
 
-	void handleKeyEvent(bool is_down, morda::key key_code){
+	void handle_key_event(bool is_down, morda::key key_code){
 		this->gui.send_key(is_down, key_code);
 	}
 
-	friend void handleKeyEvent(application& app, bool isDown, morda::key keyCode);
+	friend void handle_key_event(application& app, bool isDown, morda::key keyCode);
 
 public:
 
