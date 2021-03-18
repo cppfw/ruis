@@ -621,7 +621,7 @@ application::application(std::string&& name, const window_params& requestedWindo
 				getDotsPerInch(getImpl(window_pimpl).display.display),
 				::getDotsPerPt(getImpl(window_pimpl).display.display)
 			)),
-		storage_dir(initializeStorageDir(this->name))
+		storage_dir(initialize_storage_dir(this->name))
 {
 #ifdef MORDAVOKNE_RASPBERRYPI
 	this->set_fullscreen(true);

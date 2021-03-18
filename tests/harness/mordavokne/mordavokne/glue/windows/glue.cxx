@@ -599,7 +599,7 @@ morda::real getDotsPerPt(HDC dc){
 }
 
 namespace{
-std::string initializeStorageDir(const std::string& appName){
+std::string initialize_storage_dir(const std::string& appName){
 	CHAR path[MAX_PATH];
 	if (SHGetFolderPathA(NULL, CSIDL_PROFILE, NULL, 0, path) != S_OK) {
 		throw std::runtime_error("failed to get user's profile directory.");
@@ -648,7 +648,7 @@ application::application(std::string&& name, const window_params& wp) :
 				getDotsPerInch(getImpl(this->window_pimpl).hdc),
 				getDotsPerPt(getImpl(this->window_pimpl).hdc)
 			)),
-		storage_dir(initializeStorageDir(this->name)),
+		storage_dir(initialize_storage_dir(this->name)),
 		curWinRect(0, 0, -1, -1)
 {
 	this->update_window_rect(

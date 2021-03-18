@@ -150,8 +150,11 @@ std::unique_ptr<java_functions_wrapper> java_functions;
 
 struct window_wrapper : public utki::destructable{
 	EGLDisplay display;
-	EGLSurface surface;
-	EGLContext context;
+	EGLSurface surface = EGL_NO_SURFACE;
+	EGLContext context = EGL_NO_CONTEXT;
+
+	EGLint format;
+	EGLConfig config;
 
 	nitki::queue ui_queue;
 
@@ -183,13 +186,11 @@ struct window_wrapper : public utki::destructable{
 				EGL_NONE
 		};
 
-		EGLConfig config;
-
 		// Here, the application chooses the configuration it desires. In this
 		// sample, we have a very simplified selection process, where we pick
 		// the first EGLConfig that matches our criteria
 		EGLint numConfigs;
-		eglChooseConfig(this->display, attribs, &config, 1, &numConfigs);
+		eglChooseConfig(this->display, attribs, &this->config, 1, &numConfigs);
 		if(numConfigs <= 0){
 			throw std::runtime_error("eglChooseConfig() failed, no matching config found");
 		}
@@ -198,29 +199,16 @@ struct window_wrapper : public utki::destructable{
 		// guaranteed to be accepted by ANativeWindow_setBuffersGeometry().
 		// As soon as we picked a EGLConfig, we can safely reconfigure the
 		// ANativeWindow buffers to match, using EGL_NATIVE_VISUAL_ID.
-		EGLint format;
-		if(eglGetConfigAttrib(this->display, config, EGL_NATIVE_VISUAL_ID, &format) == EGL_FALSE){
+		if(eglGetConfigAttrib(this->display, this->config, EGL_NATIVE_VISUAL_ID, &this->format) == EGL_FALSE){
 			throw std::runtime_error("eglGetConfigAttrib() failed");
 		}
 
-		ASSERT(android_window)
-		ANativeWindow_setBuffersGeometry(android_window, 0, 0, format);
-
-		this->surface = eglCreateWindowSurface(this->display, config, android_window, NULL);
-		if(this->surface == EGL_NO_SURFACE){
-			throw std::runtime_error("eglCreateWindowSurface() failed");
-		}
-
-		utki::scope_exit eglSurfaceScopeExit([this](){
-			eglDestroySurface(this->display, this->surface);
-		});
-
-		EGLint contextAttrs[] = {
+		EGLint context_attrs[] = {
 				EGL_CONTEXT_CLIENT_VERSION, 2, // this is needed on Android, otherwise eglCreateContext() thinks that we want OpenGL ES 1.1, but we want 2.0
 				EGL_NONE
 		};
 
-		this->context = eglCreateContext(this->display, config, NULL, contextAttrs);
+		this->context = eglCreateContext(this->display, this->config, NULL, context_attrs);
 		if(this->context == EGL_NO_CONTEXT){
 			throw std::runtime_error("eglCreateContext() failed");
 		}
@@ -229,16 +217,51 @@ struct window_wrapper : public utki::destructable{
 			eglDestroyContext(this->display, this->context);
 		});
 
+		this->create_surface();
+
+		eglContextScopeExit.reset();
+		eglDisplayScopeExit.reset();
+	}
+
+	void destroy_surface()noexcept{
+		// according to https://www.khronos.org/registry/EGL/sdk/docs/man/html/eglMakeCurrent.xhtml
+		// it is ok to destroy surface while EGL context is current, so here we do not unbind the EGL context
+		if(this->surface != EGL_NO_SURFACE){
+			eglDestroySurface(this->display, this->surface);
+			this->surface = EGL_NO_SURFACE;
+		}
+	}
+
+	void create_surface(){
+		ASSERT(this->surface == EGL_NO_SURFACE)
+
+		ASSERT(android_window)
+		ANativeWindow_setBuffersGeometry(android_window, 0, 0, this->format);
+
+		this->surface = eglCreateWindowSurface(this->display, this->config, android_window, NULL);
+		if(this->surface == EGL_NO_SURFACE){
+			throw std::runtime_error("eglCreateWindowSurface() failed");
+		}
+
+		utki::scope_exit surface_scope_exit([this](){
+			this->destroy_surface();
+		});
+
+		// bind EGL context to the new surface
+		ASSERT(this->context != EGL_NO_CONTEXT)
+		eglMakeCurrent(this->display, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT); // unbind EGL context
 		if(eglMakeCurrent(this->display, this->surface, this->surface, this->context) == EGL_FALSE){
 			throw std::runtime_error("eglMakeCurrent() failed");
 		}
 
-		eglContextScopeExit.reset();
-		eglSurfaceScopeExit.reset();
-		eglDisplayScopeExit.reset();
+		surface_scope_exit.reset();
 	}
 
 	r4::vector2<unsigned> get_window_size(){
+		if(this->surface == EGL_NO_SURFACE){
+			return {0, 0};
+		}
+
 		EGLint width, height;
 		eglQuerySurface(this->display, this->surface, EGL_WIDTH, &width);
 		eglQuerySurface(this->display, this->surface, EGL_HEIGHT, &height);
@@ -246,13 +269,25 @@ struct window_wrapper : public utki::destructable{
 	}
 
 	void swap_buffers(){
+		if(this->surface == EGL_NO_SURFACE){
+			return;
+		}
+
 		eglSwapBuffers(this->display, this->surface);
 	}
 
+	void render(mordavokne::application& app){
+		if(this->surface == EGL_NO_SURFACE){
+			return;
+		}
+
+		mordavokne::render(app);
+	}
+
 	~window_wrapper()noexcept{
-		eglMakeCurrent(this->display, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
+		eglMakeCurrent(this->display, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT); // unbind EGL context
 		eglDestroyContext(this->display, this->context);
-		eglDestroySurface(this->display, this->surface);
+		this->destroy_surface();
 		eglTerminate(this->display);
 	}
 };
@@ -436,18 +471,6 @@ morda::vector2 cur_window_dims(0, 0);
 
 AInputQueue* input_queue = nullptr;
 
-struct{
-	// path to this application's internal data directory
-	const char* internal_data_path;
-
-	// path to this application's external (removable/mountable) data directory
-	const char* external_data_path;
-
-	// Pointer to the Asset Manager instance for the application. The application
-	// uses this to access binary assets bundled inside its own .apk file.
-	AAssetManager* asset_manager;
-} app_info;
-
 // array of current pointer positions, needed to detect which pointers have actually moved.
 std::array<morda::vector2, 10> pointers;
 
@@ -462,14 +485,14 @@ inline morda::vector2 android_win_coords_to_morda_win_rect_coords(const morda::v
 }
 
 struct android_configuration_wrapper{
-	AConfiguration* ac;
+	AConfiguration* android_configuration;
 
 	android_configuration_wrapper(){
-		this->ac = AConfiguration_new();
+		this->android_configuration = AConfiguration_new();
 	}
 
 	~android_configuration_wrapper()noexcept{
-		AConfiguration_delete(this->ac);
+		AConfiguration_delete(this->android_configuration);
 	}
 };
 
@@ -998,7 +1021,7 @@ mordavokne::application::application(std::string&& name, const window_params& re
 }
 
 std::unique_ptr<papki::file> mordavokne::application::get_res_file(const std::string& path)const{
-	return utki::make_unique<asset_file>(app_info.asset_manager, path);
+	return utki::make_unique<asset_file>(native_activity->assetManager, path);
 }
 
 void mordavokne::application::swap_frame_buffers(){
@@ -1010,9 +1033,9 @@ void mordavokne::application::set_mouse_cursor_visible(bool visible){
 	// do nothing
 }
 
-void mordavokne::application::set_fullscreen(bool enable) {
+void mordavokne::application::set_fullscreen(bool enable){
 	ASSERT(native_activity)
-	if(enable) {
+	if(enable){
 		ANativeActivity_setWindowFlags(native_activity, AWINDOW_FLAG_FULLSCREEN, 0);
 	}else{
 		ANativeActivity_setWindowFlags(native_activity, 0, AWINDOW_FLAG_FULLSCREEN);
@@ -1204,7 +1227,7 @@ void handle_input_events(){
 		);
 	}
 
-	render(app);
+	get_impl(app).render(app);
 
 	fd_flag.set();
 }
@@ -1213,6 +1236,22 @@ void handle_input_events(){
 namespace{
 void on_destroy(ANativeActivity* activity){
 	LOG("on_destroy(): invoked" << std::endl)
+
+	// TODO: move looper related stuff to window_wrapper?
+	ALooper* looper = ALooper_prepare(0);
+	ASSERT(looper)
+
+	// remove UI message queue descriptor from looper
+	ALooper_removeFd(
+			looper,
+			get_impl(application::inst()).ui_queue.get_handle()
+		);
+
+	// remove fd_flag from looper
+	ALooper_removeFd(looper, fd_flag.get_fd());
+
+	delete static_cast<mordavokne::application*>(activity->instance);
+	activity->instance = nullptr;
 
 	java_functions.reset();
 }
@@ -1244,19 +1283,21 @@ void on_stop(ANativeActivity* activity){
 void on_configuration_changed(ANativeActivity* activity){
 	LOG("on_configuration_changed(): invoked" << std::endl)
 
+	// find out what exactly has changed in the configuration
 	int32_t diff;
 	{
 		auto config = std::make_unique<android_configuration_wrapper>();
-		AConfiguration_fromAssetManager(config->ac, app_info.asset_manager);
+		AConfiguration_fromAssetManager(config->android_configuration, native_activity->assetManager);
 
-		diff = AConfiguration_diff(cur_config->ac, config->ac);
+		diff = AConfiguration_diff(cur_config->android_configuration, config->android_configuration);
 
+		// store new configuration
 		cur_config = std::move(config);
 	}
 
 	// if orientation has changed
 	if(diff & ACONFIGURATION_ORIENTATION){
-		int32_t orientation = AConfiguration_getOrientation(cur_config->ac);
+		int32_t orientation = AConfiguration_getOrientation(cur_config->android_configuration);
 		switch(orientation){
 			case ACONFIGURATION_ORIENTATION_LAND:
 			case ACONFIGURATION_ORIENTATION_PORT:
@@ -1277,8 +1318,6 @@ void on_configuration_changed(ANativeActivity* activity){
 
 void on_low_memory(ANativeActivity* activity){
 	LOG("on_low_memory(): invoked" << std::endl)
-	//TODO:
-//    static_cast<morda::application*>(activity->instance)->on_low_memory();
 }
 
 void on_window_focus_changed(ANativeActivity* activity, int hasFocus){
@@ -1299,7 +1338,7 @@ int on_update_timer_expired(int fd, int events, void* data){
 	}
 
 	// after updating need to re-render everything
-	render(app);
+	get_impl(app).render(app);
 
 //	LOG("on_update_timer_expired(): armed timer for " << dt << std::endl)
 
@@ -1307,7 +1346,7 @@ int on_update_timer_expired(int fd, int events, void* data){
 }
 
 int on_queue_has_messages(int fd, int events, void* data){
-	auto& ww = get_impl(get_window_pimpl(application::inst()));
+	auto& ww = get_impl(application::inst());
 
 	while(auto m = ww.ui_queue.pop_front()){
 		m();
@@ -1325,56 +1364,59 @@ void on_native_window_created(ANativeActivity* activity, ANativeWindow* window){
 	cur_window_dims.x() = float(ANativeWindow_getWidth(window));
 	cur_window_dims.y() = float(ANativeWindow_getHeight(window));
 
-	ASSERT(!activity->instance)
-	try{
-		// use local auto-pointer for now because an exception can be thrown and need to delete object then.
-		auto cfg = std::make_unique<android_configuration_wrapper>();
-		// retrieve current configuration
-		AConfiguration_fromAssetManager(cfg->ac, app_info.asset_manager);
+	if(!activity->instance){
+		try{
+			// use local auto-pointer for now because an exception can be thrown and need to delete object then.
+			auto cfg = std::make_unique<android_configuration_wrapper>();
+			// retrieve current configuration
+			AConfiguration_fromAssetManager(cfg->android_configuration, native_activity->assetManager);
 
-		application* app = mordavokne::create_application(0, nullptr).release();
+			application* app = mordavokne::create_application(0, nullptr).release();
 
-		activity->instance = app;
+			activity->instance = app;
 
-		// save current configuration in global variable
-		cur_config = std::move(cfg);
+			// save current configuration in global variable
+			cur_config = std::move(cfg);
 
-		ALooper* looper = ALooper_prepare(0);
-		ASSERT(looper)
+			ALooper* looper = ALooper_prepare(0);
+			ASSERT(looper)
 
-		// add timer descriptor to looper, this is needed for updatable to work
-		if(ALooper_addFd(
-				looper,
-				fd_flag.get_fd(),
-				ALOOPER_POLL_CALLBACK,
-				ALOOPER_EVENT_INPUT,
-				&on_update_timer_expired,
-				0
-			) == -1)
-		{
-			throw std::runtime_error("failed to add timer descriptor to looper");
+			// add timer descriptor to looper, this is needed for updatable to work
+			if(ALooper_addFd(
+					looper,
+					fd_flag.get_fd(),
+					ALOOPER_POLL_CALLBACK,
+					ALOOPER_EVENT_INPUT,
+					&on_update_timer_expired,
+					0
+				) == -1)
+			{
+				throw std::runtime_error("failed to add timer descriptor to looper");
+			}
+
+			// add UI message queue descriptor to looper
+			if(ALooper_addFd(
+					looper,
+					get_impl(*app).ui_queue.get_handle(),
+					ALOOPER_POLL_CALLBACK,
+					ALOOPER_EVENT_INPUT,
+					&on_queue_has_messages,
+					0
+				) == -1)
+			{
+				throw std::runtime_error("failed to add UI message queue descriptor to looper");
+			}
+
+			fd_flag.set(); // this is to call the update() for the first time if there were any updateables started during creating application object
+		}catch(std::exception& e){
+			LOG("std::exception uncaught while creating application instance: " << e.what() << std::endl)
+			throw;
+		}catch(...){
+			LOG("unknown exception uncaught while creating application instance!" << std::endl)
+			throw;
 		}
-
-		// add UI message queue descriptor to looper
-		if(ALooper_addFd(
-				looper,
-				get_impl(get_window_pimpl(*app)).ui_queue.get_handle(),
-				ALOOPER_POLL_CALLBACK,
-				ALOOPER_EVENT_INPUT,
-				&on_queue_has_messages,
-				0
-			) == -1)
-		{
-			throw std::runtime_error("failed to add UI message queue descriptor to looper");
-		}
-
-		fd_flag.set(); // this is to call the update() for the first time if there were any updateables started during creating application object
-	}catch(std::exception& e){
-		LOG("std::exception uncaught while creating application instance: " << e.what() << std::endl)
-		throw;
-	}catch(...){
-		LOG("unknown exception uncaught while creating application instance!" << std::endl)
-		throw;
+	}else{
+		get_impl(get_app(activity)).create_surface();
 	}
 }
 
@@ -1391,7 +1433,9 @@ void on_native_window_resized(ANativeActivity* activity, ANativeWindow* window){
 void on_native_window_redraw_needed(ANativeActivity* activity, ANativeWindow* window){
 	LOG("on_native_window_redraw_needed(): invoked" << std::endl)
 
-	render(get_app(activity));
+	auto& app = get_app(activity);
+
+	get_impl(app).render(app);
 }
 
 // This function is called right before destroying Window object, according to documentation:
@@ -1399,24 +1443,14 @@ void on_native_window_redraw_needed(ANativeActivity* activity, ANativeWindow* wi
 void on_native_window_destroyed(ANativeActivity* activity, ANativeWindow* window){
 	LOG("on_native_window_destroyed(): invoked" << std::endl)
 
-	ALooper* looper = ALooper_prepare(0);
-	ASSERT(looper)
-
-	// remove UI message queue descriptor from looper
-	ALooper_removeFd(
-			looper,
-			get_impl(get_window_pimpl(application::inst())).ui_queue.get_handle()
-		);
-
-	// remove fd_flag from looper
-	ALooper_removeFd(looper, fd_flag.get_fd());
-
-	// Need to destroy app right before window is destroyed, i.e. before OGL is de-initialized
-	delete static_cast<mordavokne::application*>(activity->instance);
-	activity->instance = nullptr;
+	// destroy EGL drawing surface associated with the window.
+	// the EGL context remains existing and should preserve all resources like textures, vertex buffers, etc.
+	get_impl(get_app(activity)).destroy_surface();
 
 	// delete configuration object
 	cur_config.reset();
+
+	android_window = nullptr;
 }
 
 int on_input_events_ready_for_reading_from_queue(int fd, int events, void* data){
@@ -1445,6 +1479,7 @@ int on_input_events_ready_for_reading_from_queue(int fd, int events, void* data)
 	return 1; // we don't want to remove input queue descriptor from looper
 }
 
+// NOTE: this callback is called before on_native_window_created()
 void on_input_queue_created(ANativeActivity* activity, AInputQueue* queue){
 	LOG("on_input_queue_created(): invoked" << std::endl)
 	ASSERT(queue);
@@ -1457,7 +1492,7 @@ void on_input_queue_created(ANativeActivity* activity, AInputQueue* queue){
 			ALooper_prepare(0), // get looper for current thread (main thread)
 			0, // 'ident' is ignored since we are using callback
 			&on_input_events_ready_for_reading_from_queue,
-			activity->instance
+			nullptr
 		);
 }
 
@@ -1498,7 +1533,7 @@ void on_content_rect_changed(ANativeActivity* activity, const ARect* rect){
 		);
 
 	// redraw, since WindowRedrawNeeded not always comes
-	render(app);
+	get_impl(app).render(app);
 }
 }
 
@@ -1529,10 +1564,6 @@ void ANativeActivity_onCreate(
 	activity->instance = 0;
 
 	native_activity = activity;
-
-	app_info.internal_data_path = activity->internalDataPath;
-	app_info.external_data_path = activity->externalDataPath;
-	app_info.asset_manager = activity->assetManager;
 
 	java_functions = std::make_unique<java_functions_wrapper>(activity);
 }

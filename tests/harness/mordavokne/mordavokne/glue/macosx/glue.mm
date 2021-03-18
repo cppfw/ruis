@@ -828,7 +828,7 @@ application::application(std::string&& name, const window_params& wp) :
 				getDotsPerInch(),
 				getDotsPerPt()
 			)),
-		storage_dir(initializeStorageDir(this->name))
+		storage_dir(initialize_storage_dir(this->name))
 {
 	TRACE(<< "application::application(): enter" << std::endl)
 	this->update_window_rect(

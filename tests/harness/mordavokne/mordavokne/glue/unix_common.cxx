@@ -25,7 +25,7 @@ std::unique_ptr<mordavokne::application> createAppUnix(int argc, const char** ar
 	return factory(argc, argv);
 }
 
-std::string initializeStorageDir(const std::string& appName){
+std::string initialize_storage_dir(const std::string& appName){
 	auto homeDir = getenv("HOME");
 	if(!homeDir){
 		throw std::runtime_error("failed to get user home directory. Is HOME environment variable set?");
