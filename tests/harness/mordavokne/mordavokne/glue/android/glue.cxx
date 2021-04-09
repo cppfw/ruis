@@ -479,7 +479,7 @@ inline morda::vector2 android_win_coords_to_morda_win_rect_coords(const morda::v
 			p.x(),
 			p.y() - (cur_window_dims.y() - winDim.y())
 		);
-//	LOG("android_win_coords_to_morda_win_rect_coords(): ret = " << ret << std::endl)
+//	LOG([&](auto&o){o << "android_win_coords_to_morda_win_rect_coords(): ret = " << ret << std::endl;})
 	using std::round;
 	return round(ret);
 }
@@ -506,12 +506,12 @@ public:
 
 	std::u32string get()const{
 		ASSERT(java_functions)
-//		LOG("key_event_to_unicode_resolver::Resolve(): this->kc = " << this->kc << std::endl)
+//		LOG([&](auto&o){o << "key_event_to_unicode_resolver::Resolve(): this->kc = " << this->kc << std::endl;})
 		char32_t res = java_functions->resolve_key_unicode(this->di, this->ms, this->kc);
 
 		// 0 means that key did not produce any unicode character
 		if(res == 0){
-			LOG("key did not produce any unicode character, returning empty string" << std::endl)
+			LOG([](auto&o){o << "key did not produce any unicode character, returning empty string" << std::endl;})
 			return std::u32string();
 		}
 
@@ -925,7 +925,7 @@ JNIEXPORT void JNICALL Java_io_github_cppfw_mordavokne_MordaVOkneActivity_handle
 		jstring chars
 	)
 {
-	LOG("handleCharacterStringInput(): invoked" << std::endl)
+	LOG([](auto&o){o << "handleCharacterStringInput(): invoked" << std::endl;})
 
 	const char *utf8Chars = env->GetStringUTFChars(chars, 0);
 
@@ -934,11 +934,11 @@ JNIEXPORT void JNICALL Java_io_github_cppfw_mordavokne_MordaVOkneActivity_handle
 	});
 
 	if(utf8Chars == nullptr || *utf8Chars == 0){
-		LOG("handleCharacterStringInput(): empty string passed in" << std::endl)
+		LOG([](auto&o){o << "handleCharacterStringInput(): empty string passed in" << std::endl;})
 		return;
 	}
 
-	LOG("handleCharacterStringInput(): utf8Chars = " << utf8Chars << std::endl)
+	LOG([&](auto&o){o << "handleCharacterStringInput(): utf8Chars = " << utf8Chars << std::endl;})
 
 	std::vector<char32_t> utf32;
 
@@ -949,7 +949,7 @@ JNIEXPORT void JNICALL Java_io_github_cppfw_mordavokne_MordaVOkneActivity_handle
 	unicode_provider resolver;
 	resolver.chars = std::u32string(&*utf32.begin(), utf32.size());
 
-//    LOG("handleCharacterStringInput(): resolver.chars = " << resolver.chars << std::endl)
+//    LOG([&](auto&o){o << "handleCharacterStringInput(): resolver.chars = " << resolver.chars << std::endl;})
 
 	mordavokne::handle_character_input(mordavokne::inst(), resolver, morda::key::unknown);
 }
@@ -957,7 +957,7 @@ JNIEXPORT void JNICALL Java_io_github_cppfw_mordavokne_MordaVOkneActivity_handle
 }
 
 jint JNI_OnLoad(JavaVM* vm, void* reserved){
-	LOG("JNI_OnLoad(): invoked" << std::endl)
+	LOG([](auto&o){o << "JNI_OnLoad(): invoked" << std::endl;})
 
 	JNIEnv* env;
 	if (vm->GetEnv(reinterpret_cast<void**>(&env), JNI_VERSION_1_6) != JNI_OK) {
@@ -1074,7 +1074,7 @@ void handle_input_events(){
 	while(AInputQueue_getEvent(input_queue, &event) >= 0){
 		ASSERT(event)
 
-//		LOG("New input event: type = " << AInputEvent_getType(event) << std::endl)
+//		LOG([&](auto&o){o << "New input event: type = " << AInputEvent_getType(event) << std::endl;})
 		if(AInputQueue_preDispatchEvent(input_queue, event)){
 			continue;
 		}
@@ -1088,18 +1088,18 @@ void handle_input_events(){
 			case AINPUT_EVENT_TYPE_MOTION:
 				switch(eventAction & AMOTION_EVENT_ACTION_MASK){
 					case AMOTION_EVENT_ACTION_POINTER_DOWN:
-//						LOG("Pointer down" << std::endl)
+//						LOG([&](auto&o){o << "Pointer down" << std::endl;})
 					case AMOTION_EVENT_ACTION_DOWN:
 					{
 						unsigned pointerIndex = ((eventAction & AMOTION_EVENT_ACTION_POINTER_INDEX_MASK) >> AMOTION_EVENT_ACTION_POINTER_INDEX_SHIFT);
 						unsigned pointerId = unsigned(AMotionEvent_getPointerId(event, pointerIndex));
 
 						if(pointerId >= pointers.size()){
-							LOG("Pointer ID is too big, only " << pointers.size() << " pointers supported at maximum")
+							LOG([&](auto&o){o << "Pointer ID is too big, only " << pointers.size() << " pointers supported at maximum";})
 							continue;
 						}
 
-//								LOG("Action down, ptr id = " << pointerId << std::endl)
+//								LOG([&](auto&o){o << "Action down, ptr id = " << pointerId << std::endl;})
 
 						morda::vector2 p(AMotionEvent_getX(event, pointerIndex), AMotionEvent_getY(event, pointerIndex));
 						pointers[pointerId] = p;
@@ -1114,18 +1114,18 @@ void handle_input_events(){
 					}
 						break;
 					case AMOTION_EVENT_ACTION_POINTER_UP:
-//						LOG("Pointer up" << std::endl)
+//						LOG([&](auto&o){o << "Pointer up" << std::endl;})
 					case AMOTION_EVENT_ACTION_UP:
 					{
 						unsigned pointerIndex = ((eventAction & AMOTION_EVENT_ACTION_POINTER_INDEX_MASK) >> AMOTION_EVENT_ACTION_POINTER_INDEX_SHIFT);
 						unsigned pointerId = unsigned(AMotionEvent_getPointerId(event, pointerIndex));
 
 						if(pointerId >= pointers.size()){
-							LOG("Pointer ID is too big, only " << pointers.size() << " pointers supported at maximum")
+							LOG([&](auto&o){o << "Pointer ID is too big, only " << pointers.size() << " pointers supported at maximum";})
 							continue;
 						}
 
-//								LOG("Action up, ptr id = " << pointerId << std::endl)
+//								LOG([&](auto&o){o << "Action up, ptr id = " << pointerId << std::endl;})
 
 						morda::vector2 p(AMotionEvent_getX(event, pointerIndex), AMotionEvent_getY(event, pointerIndex));
 						pointers[pointerId] = p;
@@ -1146,7 +1146,7 @@ void handle_input_events(){
 						for(size_t pointerNum = 0; pointerNum < numPointers; ++pointerNum){
 							unsigned pointerId = unsigned(AMotionEvent_getPointerId(event, pointerNum));
 							if(pointerId >= pointers.size()){
-								LOG("Pointer ID is too big, only " << pointers.size() << " pointers supported at maximum")
+								LOG([&](auto&o){o << "Pointer ID is too big, only " << pointers.size() << " pointers supported at maximum";})
 								continue;
 							}
 
@@ -1157,7 +1157,7 @@ void handle_input_events(){
 								continue;
 							}
 
-//								LOG("Action move, ptr id = " << pointerId << std::endl)
+//								LOG([&](auto&o){o << "Action move, ptr id = " << pointerId << std::endl;})
 
 							pointers[pointerId] = p;
 
@@ -1170,14 +1170,14 @@ void handle_input_events(){
 					}
 						break;
 					default:
-						LOG("unknown eventAction = " << eventAction << std::endl)
+						LOG([&](auto&o){o << "unknown eventAction = " << eventAction << std::endl;})
 						break;
 				}
 				consume = true;
 				break;
 			case AINPUT_EVENT_TYPE_KEY:
 				{
-//					LOG("AINPUT_EVENT_TYPE_KEY" << std::endl)
+//					LOG([&](auto&o){o << "AINPUT_EVENT_TYPE_KEY" << std::endl;})
 
 					ASSERT(event)
 					morda::key key = get_key_from_key_event(*event);
@@ -1186,11 +1186,11 @@ void handle_input_events(){
 					keyUnicodeResolver.ms = AKeyEvent_getMetaState(event);
 					keyUnicodeResolver.di = AInputEvent_getDeviceId(event);
 
-//    				LOG("AINPUT_EVENT_TYPE_KEY: keyUnicodeResolver.kc = " << keyUnicodeResolver.kc << std::endl)
+//    				LOG([&](auto&o){o << "AINPUT_EVENT_TYPE_KEY: keyUnicodeResolver.kc = " << keyUnicodeResolver.kc << std::endl;})
 
 					switch(eventAction){
 						case AKEY_EVENT_ACTION_DOWN:
-//    						LOG("AKEY_EVENT_ACTION_DOWN, count = " << AKeyEvent_getRepeatCount(event) << std::endl)
+//    						LOG([&](auto&o){o << "AKEY_EVENT_ACTION_DOWN, count = " << AKeyEvent_getRepeatCount(event) << std::endl;})
 							// detect auto-repeated key events
 							if(AKeyEvent_getRepeatCount(event) == 0){
 								handle_key_event(app, true, key);
@@ -1198,20 +1198,20 @@ void handle_input_events(){
 							handle_character_input(app, keyUnicodeResolver, key);
 							break;
 						case AKEY_EVENT_ACTION_UP:
-//    						LOG("AKEY_EVENT_ACTION_UP" << std::endl)
+//    						LOG([&](auto&o){o << "AKEY_EVENT_ACTION_UP" << std::endl;})
 							handle_key_event(app, false, key);
 							break;
 						case AKEY_EVENT_ACTION_MULTIPLE:
-//                          LOG("AKEY_EVENT_ACTION_MULTIPLE"
+//                          LOG([&](auto&o){o << "AKEY_EVENT_ACTION_MULTIPLE"
 //                                  << " count = " << AKeyEvent_getRepeatCount(event)
 //                                  << " keyCode = " << AKeyEvent_getKeyCode(event)
-//                                  << std::endl)
+//                                  << std::endl;})
 
 							// ignore, it is handled on Java side
 
 							break;
 						default:
-							LOG("unknown AINPUT_EVENT_TYPE_KEY eventAction: " << eventAction << std::endl)
+							LOG([&](auto&o){o << "unknown AINPUT_EVENT_TYPE_KEY eventAction: " << eventAction << std::endl;})
 							break;
 					}
 				}
@@ -1235,7 +1235,7 @@ void handle_input_events(){
 
 namespace{
 void on_destroy(ANativeActivity* activity){
-	LOG("on_destroy(): invoked" << std::endl)
+	LOG([](auto&o){o << "on_destroy(): invoked" << std::endl;})
 
 	// TODO: move looper related stuff to window_wrapper?
 	ALooper* looper = ALooper_prepare(0);
@@ -1257,15 +1257,15 @@ void on_destroy(ANativeActivity* activity){
 }
 
 void on_start(ANativeActivity* activity){
-	LOG("on_start(): invoked" << std::endl)
+	LOG([](auto&o){o << "on_start(): invoked" << std::endl;})
 }
 
 void on_resume(ANativeActivity* activity){
-	LOG("on_resume(): invoked" << std::endl)
+	LOG([](auto&o){o << "on_resume(): invoked" << std::endl;})
 }
 
 void* on_save_instance_state(ANativeActivity* activity, size_t* outSize){
-	LOG("on_save_instance_state(): invoked" << std::endl)
+	LOG([](auto&o){o << "on_save_instance_state(): invoked" << std::endl;})
 
 	// Do nothing, we don't use this mechanism of saving state.
 
@@ -1273,15 +1273,15 @@ void* on_save_instance_state(ANativeActivity* activity, size_t* outSize){
 }
 
 void on_pause(ANativeActivity* activity){
-	LOG("on_pause(): invoked" << std::endl)
+	LOG([](auto&o){o << "on_pause(): invoked" << std::endl;})
 }
 
 void on_stop(ANativeActivity* activity){
-	LOG("on_stop(): invoked" << std::endl)
+	LOG([](auto&o){o << "on_stop(): invoked" << std::endl;})
 }
 
 void on_configuration_changed(ANativeActivity* activity){
-	LOG("on_configuration_changed(): invoked" << std::endl)
+	LOG([](auto&o){o << "on_configuration_changed(): invoked" << std::endl;})
 
 	// find out what exactly has changed in the configuration
 	int32_t diff;
@@ -1317,15 +1317,15 @@ void on_configuration_changed(ANativeActivity* activity){
 }
 
 void on_low_memory(ANativeActivity* activity){
-	LOG("on_low_memory(): invoked" << std::endl)
+	LOG([](auto&o){o << "on_low_memory(): invoked" << std::endl;})
 }
 
 void on_window_focus_changed(ANativeActivity* activity, int hasFocus){
-	LOG("on_window_focus_changed(): invoked" << std::endl)
+	LOG([](auto&o){o << "on_window_focus_changed(): invoked" << std::endl;})
 }
 
 int on_update_timer_expired(int fd, int events, void* data){
-//	LOG("on_update_timer_expired(): invoked" << std::endl)
+//	LOG([&](auto&o){o << "on_update_timer_expired(): invoked" << std::endl;})
 
 	auto& app = application::inst();
 
@@ -1340,7 +1340,7 @@ int on_update_timer_expired(int fd, int events, void* data){
 	// after updating need to re-render everything
 	get_impl(app).render(app);
 
-//	LOG("on_update_timer_expired(): armed timer for " << dt << std::endl)
+//	LOG([&](auto&o){o << "on_update_timer_expired(): armed timer for " << dt << std::endl;})
 
 	return 1; // 1 means do not remove descriptor from looper
 }
@@ -1356,7 +1356,7 @@ int on_queue_has_messages(int fd, int events, void* data){
 }
 
 void on_native_window_created(ANativeActivity* activity, ANativeWindow* window){
-	LOG("on_native_window_created(): invoked" << std::endl)
+	LOG([](auto&o){o << "on_native_window_created(): invoked" << std::endl;})
 
 	// save window in a static var, so it is accessible for OpenGL initializers from morda::application class
 	android_window = window;
@@ -1409,10 +1409,10 @@ void on_native_window_created(ANativeActivity* activity, ANativeWindow* window){
 
 			fd_flag.set(); // this is to call the update() for the first time if there were any updateables started during creating application object
 		}catch(std::exception& e){
-			LOG("std::exception uncaught while creating application instance: " << e.what() << std::endl)
+			LOG([&](auto&o){o << "std::exception uncaught while creating application instance: " << e.what() << std::endl;})
 			throw;
 		}catch(...){
-			LOG("unknown exception uncaught while creating application instance!" << std::endl)
+			LOG([](auto&o){o << "unknown exception uncaught while creating application instance!" << std::endl;})
 			throw;
 		}
 	}else{
@@ -1421,17 +1421,17 @@ void on_native_window_created(ANativeActivity* activity, ANativeWindow* window){
 }
 
 void on_native_window_resized(ANativeActivity* activity, ANativeWindow* window){
-	LOG("on_native_window_resized(): invoked" << std::endl)
+	LOG([](auto&o){o << "on_native_window_resized(): invoked" << std::endl;})
 
 	// save window dimensions
 	cur_window_dims.x() = float(ANativeWindow_getWidth(window));
 	cur_window_dims.y() = float(ANativeWindow_getHeight(window));
 
-	LOG("on_native_window_resized(): cur_window_dims = " << cur_window_dims << std::endl)
+	LOG([&](auto&o){o << "on_native_window_resized(): cur_window_dims = " << cur_window_dims << std::endl;})
 }
 
 void on_native_window_redraw_needed(ANativeActivity* activity, ANativeWindow* window){
-	LOG("on_native_window_redraw_needed(): invoked" << std::endl)
+	LOG([](auto&o){o << "on_native_window_redraw_needed(): invoked" << std::endl;})
 
 	auto& app = get_app(activity);
 
@@ -1441,7 +1441,7 @@ void on_native_window_redraw_needed(ANativeActivity* activity, ANativeWindow* wi
 // This function is called right before destroying Window object, according to documentation:
 // https://developer.android.com/ndk/reference/struct/a-native-activity-callbacks#onnativewindowdestroyed
 void on_native_window_destroyed(ANativeActivity* activity, ANativeWindow* window){
-	LOG("on_native_window_destroyed(): invoked" << std::endl)
+	LOG([](auto&o){o << "on_native_window_destroyed(): invoked" << std::endl;})
 
 	// destroy EGL drawing surface associated with the window.
 	// the EGL context remains existing and should preserve all resources like textures, vertex buffers, etc.
@@ -1454,7 +1454,7 @@ void on_native_window_destroyed(ANativeActivity* activity, ANativeWindow* window
 }
 
 int on_input_events_ready_for_reading_from_queue(int fd, int events, void* data){
-//	LOG("on_input_events_ready_for_reading_from_queue(): invoked" << std::endl)
+//	LOG([](auto&o){o << "on_input_events_ready_for_reading_from_queue(): invoked" << std::endl;})
 
 	ASSERT(input_queue) // if we get events we should have input queue
 
@@ -1481,7 +1481,7 @@ int on_input_events_ready_for_reading_from_queue(int fd, int events, void* data)
 
 // NOTE: this callback is called before on_native_window_created()
 void on_input_queue_created(ANativeActivity* activity, AInputQueue* queue){
-	LOG("on_input_queue_created(): invoked" << std::endl)
+	LOG([](auto&o){o << "on_input_queue_created(): invoked" << std::endl;})
 	ASSERT(queue);
 	ASSERT(!input_queue)
 	input_queue = queue;
@@ -1497,7 +1497,7 @@ void on_input_queue_created(ANativeActivity* activity, AInputQueue* queue){
 }
 
 void on_input_queue_destroyed(ANativeActivity* activity, AInputQueue* queue){
-	LOG("on_input_queue_destroyed(): invoked" << std::endl)
+	LOG([](auto&o){o << "on_input_queue_destroyed(): invoked" << std::endl;})
 	ASSERT(queue)
 	ASSERT(input_queue == queue)
 
@@ -1509,14 +1509,14 @@ void on_input_queue_destroyed(ANativeActivity* activity, AInputQueue* queue){
 
 // called when, for example, on-screen keyboard has been shown
 void on_content_rect_changed(ANativeActivity* activity, const ARect* rect){
-	LOG("on_content_rect_changed(): invoked, left = " << rect->left << " right = " << rect->right << " top = " << rect->top << " bottom = " << rect->bottom << std::endl)
-	LOG("on_content_rect_changed(): cur_window_dims = " << cur_window_dims << std::endl)
+	LOG([&](auto&o){o << "on_content_rect_changed(): invoked, left = " << rect->left << " right = " << rect->right << " top = " << rect->top << " bottom = " << rect->bottom << std::endl;})
+	LOG([&](auto&o){o << "on_content_rect_changed(): cur_window_dims = " << cur_window_dims << std::endl;})
 
 	// Sometimes Android calls on_content_rect_changed() even after native window was destroyed,
 	// i.e. on_native_window_destroyed() was called and, thus, application object was destroyed.
 	// So need to check if our application is still alive.
 	if(!activity->instance){
-		LOG("on_content_rect_changed(): application is not alive, ignoring content rect change." << std::endl)
+		LOG([&](auto&o){o << "on_content_rect_changed(): application is not alive, ignoring content rect change." << std::endl;})
 		return;
 	}
 
@@ -1543,7 +1543,7 @@ void ANativeActivity_onCreate(
 		size_t savedStateSize
 	)
 {
-	LOG("ANativeActivity_onCreate(): invoked" << std::endl)
+	LOG([&](auto&o){o << "ANativeActivity_onCreate(): invoked" << std::endl;})
 	activity->callbacks->onDestroy = &on_destroy;
 	activity->callbacks->onStart = &on_start;
 	activity->callbacks->onResume = &on_resume;
