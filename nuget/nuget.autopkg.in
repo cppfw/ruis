@@ -31,16 +31,16 @@ nuget{
 	}
 	dependencies {
 		packages : {
-			libr4/1.0.52;
-			freetype_static/2.10.1.7;
-			libjpeg_static/6.1.1.9;
-			libpapki/1.0.91;
-			libpng_static/1.4.1.9;
-			libtreeml/0.1.26;
-			libutki/1.1.112;
-			zlib_static/1.2.11.7;
-			libsvgdom/0.3.56;
-			libsvgren/0.5.7;
+			libr4/1.0.53;
+			freetype_static/2.10.1.9;
+			libjpeg_static/6.1.1.11;
+			libpapki/1.0.93;
+			libpng_static/1.4.1.11;
+			libtreeml/0.1.28;
+			libutki/1.1.124;
+			zlib_static/1.2.11.9;
+			libsvgdom/0.3.61;
+			libsvgren/0.5.11;
 		};
 	}
 	files {
@@ -102,7 +102,7 @@ nuget{
 */
 		// ====== v142 ======
 
-		/*
+/*
 		[x86,v142,release,MultiThreaded] {
 			lib: ..\msvs_solution\v142_Release_MT\libmorda.lib;
 			res: ..\res\morda_res\**\*;
@@ -119,7 +119,7 @@ nuget{
 			lib: ..\msvs_solution\x64\v142_Debug_MT\libmorda.lib;
 			res: ..\res\morda_res\**\*;
 		}
-		*/
+*/
 		
 		[x86,v142,release,MultiThreadedDLL] {
 			lib: ..\msvs_solution\v142_Release_MD\libmorda.lib;

@@ -10,56 +10,56 @@
 	  <dependency>
 		  <groupId>io.github.cppfw</groupId>
 		  <artifactId>utki</artifactId>
-		  <version>[1.1.112,)</version>
+		  <version>[1.1.124,)</version>
 		  <type>aar</type>
 		  <scope>compile</scope>
 	  </dependency>
 	  <dependency>
 		  <groupId>io.github.cppfw</groupId>
 		  <artifactId>papki</artifactId>
-		  <version>[1.0.91,)</version>
+		  <version>[1.0.93,)</version>
 		  <type>aar</type>
 		  <scope>compile</scope>
 	  </dependency>
           <dependency>
 		  <groupId>io.github.cppfw</groupId>
 		  <artifactId>r4</artifactId>
-		  <version>[1.0.52,)</version>
+		  <version>[1.0.53,)</version>
 		  <type>aar</type>
 		  <scope>compile</scope>
 	  </dependency>
           <dependency>
 		  <groupId>io.github.cppfw</groupId>
 		  <artifactId>treeml</artifactId>
-		  <version>[0.1.26,)</version>
+		  <version>[0.1.28,)</version>
 		  <type>aar</type>
 		  <scope>compile</scope>
 	  </dependency>
           <dependency>
 		  <groupId>io.github.cppfw</groupId>
 		  <artifactId>svgren</artifactId>
-		  <version>[0.5.7,)</version>
+		  <version>[0.5.11,)</version>
 		  <type>aar</type>
 		  <scope>compile</scope>
 	  </dependency>
           <dependency>
 		  <groupId>io.github.cppfw</groupId>
 		  <artifactId>png</artifactId>
-		  <version>[1.4.1.9,)</version>
+		  <version>[1.4.1.11,)</version>
 		  <type>aar</type>
 		  <scope>compile</scope>
 	  </dependency>
           <dependency>
 		  <groupId>io.github.cppfw</groupId>
 		  <artifactId>jpeg</artifactId>
-		  <version>[6.1.1.9,)</version>
+		  <version>[6.1.1.11,)</version>
 		  <type>aar</type>
 		  <scope>compile</scope>
 	  </dependency>
           <dependency>
 		  <groupId>io.github.cppfw</groupId>
 		  <artifactId>freetype</artifactId>
-		  <version>[2.10.1.7,)</version>
+		  <version>[2.10.1.9,)</version>
 		  <type>aar</type>
 		  <scope>compile</scope>
 	  </dependency>

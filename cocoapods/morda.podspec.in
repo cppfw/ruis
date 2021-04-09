@@ -8,7 +8,7 @@ Pod::Spec.new do |s|
   s.platform     = :ios
   s.ios.deployment_target = '8.0'
 
-  s.source = { :http => "https://dl.bintray.com/cppfw/cocoapods/#{s.name}/#{s.version}/#{s.name}-#{s.version}.zip" }
+  s.source = { :http => "https://cppfw.jfrog.io/artifactory/cocoapods/#{s.name}-#{s.version}.zip" }
 
   s.source_files  = "include/**/*.{hpp,h}"
   s.header_mappings_dir = "include"
@@ -25,13 +25,13 @@ Pod::Spec.new do |s|
 
   s.resources = "res/morda_res"
 
-  s.dependency 'papki', '>= 1.0.91'
-  s.dependency 'r4', '>= 1.0.52'
-  s.dependency 'treeml', '>= 0.1.26'
-  s.dependency 'png', '>= 1.4.1.9'
-  s.dependency 'freetype', '>= 2.10.1.7'
-  s.dependency 'jpeg', '>= 6.1.1.9'
-  s.dependency 'svgdom', '>= 0.3.56'
-  s.dependency 'svgren', '>= 0.5.7'
-  s.dependency 'utki', '>= 1.1.112'
+  s.dependency 'papki', '>= 1.0.93'
+  s.dependency 'r4', '>= 1.0.53'
+  s.dependency 'treeml', '>= 0.1.28'
+  s.dependency 'png', '>= 1.4.1.11'
+  s.dependency 'freetype', '>= 2.10.1.9'
+  s.dependency 'jpeg', '>= 6.1.1.11'
+  s.dependency 'svgdom', '>= 0.3.61'
+  s.dependency 'svgren', '>= 0.5.11'
+  s.dependency 'utki', '>= 1.1.124'
 end
