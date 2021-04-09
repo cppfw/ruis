@@ -26,7 +26,7 @@ void application::update_window_rect(const morda::rectangle& rect){
 
 	this->curWinRect = rect;
 
-	LOG("application::update_window_rect(): this->curWinRect = " << this->curWinRect << std::endl)
+	LOG([&](auto&o){o << "application::update_window_rect(): this->curWinRect = " << this->curWinRect << std::endl;})
 	this->gui.context->renderer->set_viewport(r4::rectangle<int>(
 			int(this->curWinRect.p.x()),
 			int(this->curWinRect.p.y()),
@@ -43,12 +43,12 @@ std::unique_ptr<papki::file> application::get_res_file(const std::string& path)c
 }
 
 void application::show_virtual_keyboard()noexcept{
-	LOG("application::show_virtual_keyboard(): invoked" << std::endl)
+	LOG([](auto&o){o << "application::show_virtual_keyboard(): invoked" << std::endl;})
 	// do nothing
 }
 
 void application::hide_virtual_keyboard()noexcept{
-	LOG("application::hide_virtual_keyboard(): invoked" << std::endl)
+	LOG([](auto&o){o << "application::hide_virtual_keyboard(): invoked" << std::endl;})
 	// do nothing
 }
 #endif

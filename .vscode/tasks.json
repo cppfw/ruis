@@ -38,6 +38,13 @@
             "group": "build"
         },
         {
+            "label": "clean-all",
+            "type": "shell",
+            "command": "make clean-all",
+            "problemMatcher": [],
+            "group": "build"
+        },
+        {
             "label": "run_app",
             "type": "shell",
             "command": "make run_app",
