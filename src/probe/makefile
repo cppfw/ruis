@@ -14,7 +14,7 @@ ifeq ($(os), linux)
 else ifeq ($(os), windows)
     this_ldlibs += -lz
 else ifeq ($(os), macosx)
-    this_cxxflags += -stdlib=libc++ # this is needed to be able to use c++11 std lib
+    this_cxxflags += -stdlib=libc++ # this is needed to be able to use c++11 std lib # TODO: not needed anymore?
 endif
 
 this_cxxflags += `pkg-config --cflags freetype2`
