@@ -78,3 +78,24 @@ morda::real application::get_pixels_per_dp(r4::vector2<unsigned> resolution, r4:
 	return morda::real(1);
 #endif
 }
+
+application_factory::factory_type& application_factory::get_factory_internal(){
+	static application_factory::factory_type f;
+	return f;
+}
+
+const application_factory::factory_type& application_factory::get_factory(){
+	auto& f = get_factory_internal();
+	if(!f){
+		throw std::logic_error("no application factory registered");
+	}
+	return f;
+}
+
+application_factory::application_factory(factory_type&& factory){
+	auto& f = this->get_factory_internal();
+	if(f){
+		throw std::logic_error("application factory is already registered");
+	}
+	f = std::move(factory);
+}

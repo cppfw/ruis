@@ -88,6 +88,6 @@ public:
 	}
 };
 
-std::unique_ptr<mordavokne::application> mordavokne::create_application(int argc, const char** argv){
-	return std::make_unique<::application>();
-}
+mordavokne::application_factory app_fac([](auto args){
+		return std::make_unique<::application>();
+});

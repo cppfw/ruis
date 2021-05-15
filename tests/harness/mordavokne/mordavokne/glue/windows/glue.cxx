@@ -6,10 +6,10 @@
 
 #include <papki/fs_file.hpp>
 
-#include <windowsx.h>
-#include <Shlobj.h> // TODO: what is this for? Add comment.
-
 #include <morda/render/opengl2/renderer.hpp>
+
+#include <Shlobj.h> // needed for SHGetFolderPathA()
+#include <windowsx.h> // needed for GET_X_LPARAM macro and other similar macros
 
 #include "../../application.hpp"
 
@@ -668,24 +668,7 @@ void application::quit()noexcept{
 
 namespace mordavokne{
 void winmain(int argc, const char** argv){
-	decltype(mordavokne::create_application)* f;
-
-	// Try GCC name mangling first
-	f = reinterpret_cast<decltype(f)>(GetProcAddress(GetModuleHandle(NULL), TEXT("_ZN10mordavokne18create_applicationEiPPKc")));
-
-	if(!f){ // try MSVC function mangling style
-		f = reinterpret_cast<decltype(f)>(GetProcAddress(
-				GetModuleHandle(NULL),
-#if M_CPU == M_CPU_X86_64
-				TEXT("?create_application@mordavokne@@YA?AV?$unique_ptr@Vapplication@mordavokne@@U?$default_delete@Vapplication@mordavokne@@@std@@@std@@HPEAPEBD@Z")
-#else
-				TEXT("?create_application@mordavokne@@YA?AV?$unique_ptr@Vapplication@mordavokne@@U?$default_delete@Vapplication@mordavokne@@@std@@@std@@HPAPBD@Z")
-#endif
-			));
-	}
-
-	ASSERT_INFO(f, "no app factory function found")
-	std::unique_ptr<mordavokne::application> app = f(argc, argv);
+	auto app = mordavokne::application_factory::get_factory()(utki::make_span(argv, argc));
 	if(!app){
 		return;
 	}

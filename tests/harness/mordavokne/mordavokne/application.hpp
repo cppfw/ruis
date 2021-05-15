@@ -228,16 +228,26 @@ inline application& inst(){
 }
 
 /**
- * @brief Create application instance.
- * User needs to define this factory function to create his application instance.
- * @param argc - number of command line arguments, including the executable filename as 0th argument.
- * @param argv - array of command line arguments (0th argument is executable filename).
- * @return New application instance.
+ * @brief Application factory registerer.
+ * The object of this class registers the application factory function.
+ * The application object will be constructed using the provided factory function at program start.
  */
-#if M_OS == M_OS_WINDOWS
-__declspec(dllexport)
-#endif
+class application_factory{
+public:
+	typedef std::function<std::unique_ptr<application>(utki::span<const char*>)> factory_type;
 
-std::unique_ptr<application> create_application(int argc, const char** argv);
+	/**
+	 * @brief Constructor.
+	 * Registers the application object factory function.
+	 * Only one application factory can be registered.
+	 * @param factory - application factory function.
+	 * @throw std::logic_error - in case a factory is already registered.
+	 */
+	application_factory(factory_type&& factory);
+
+	static const factory_type& get_factory();
+private:
+	static factory_type& get_factory_internal();
+};
 
 }

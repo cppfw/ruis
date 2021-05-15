@@ -1,28 +1,9 @@
-#include <dlfcn.h>
-
 #include "../application.hpp"
 
 namespace{
 
 std::unique_ptr<mordavokne::application> createAppUnix(int argc, const char** argv){
-	void* libHandle = dlopen(nullptr, RTLD_NOW);
-	if(!libHandle){
-		throw std::runtime_error("dlopen(): failed");
-	}
-
-	utki::scope_exit scopeExit([libHandle](){
-		dlclose(libHandle);
-	});
-
-	auto factory = reinterpret_cast<decltype(mordavokne::create_application)*>(
-			dlsym(libHandle, "_ZN10mordavokne18create_applicationEiPPKc")
-		);
-
-	if(!factory){
-		throw std::runtime_error("dlsym(): mordavokne::create_application() function not found!");
-	}
-
-	return factory(argc, argv);
+	return mordavokne::application_factory::get_factory()(utki::make_span(argv, argc));
 }
 
 std::string initialize_storage_dir(const std::string& appName){
