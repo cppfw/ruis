@@ -46,7 +46,9 @@ bool tab::on_mouse_button(const mouse_button_event& e){
 			return false;
 		}
 	}
-
+	if(this->nine_patch_button::on_mouse_button(e)){
+		return true;
+	}
 	return this->choice_button::on_mouse_button(e);
 }
 

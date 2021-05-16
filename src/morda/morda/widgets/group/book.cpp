@@ -67,6 +67,23 @@ void book::tear_out(page& pg)noexcept{
 	}
 }
 
+void book::go_to(const page& p){
+	if(&p.get_parent_book() != this){
+		throw std::logic_error("book::go_to(): requested page is not in this book");
+	}
+
+	auto i = std::find_if(
+			this->pages.begin(),
+			this->pages.end(),
+			[&p](auto pg){
+				return pg.get() == &p;
+			}
+		);
+	ASSERT(i != this->pages.end())
+
+	this->go_to(std::distance(this->pages.begin(), i));
+}
+
 void book::go_to(size_t page_number){
 	if(page_number >= this->pages.size()){
 		throw std::logic_error("book::go_to(): requested page number is out of scope");
@@ -102,6 +119,13 @@ book& page::get_parent_book(){
 	return *this->parent_book;
 }
 
+const book& page::get_parent_book()const{
+	if(!this->parent_book){
+		throw std::logic_error("page::get_parent_book(): page is not in a book");
+	}
+	return *this->parent_book;
+}
+
 page::page(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
 		widget(std::move(c), desc)
 {}
@@ -110,4 +134,8 @@ void page::tear_out()noexcept{
 	this->context->run_from_ui_thread([this](){
 		this->get_parent_book().tear_out(*this);
 	});
+}
+
+void page::go_to(){
+	this->get_parent_book().go_to(*this);
 }

@@ -50,7 +50,7 @@ private:
 		unsigned num_buttons_captured;
 	};
 
-	// Map which maps pointer ID to a pair holding reference to capturing widget and number of mouse capture clicks
+	// map which maps pointer ID to a pair holding reference to capturing widget and number of mouse capture clicks
 	std::map<unsigned, mouse_capture_info> mouse_capture_map;
 
 private:
@@ -70,7 +70,6 @@ private:
 			this->blocked = false;
 		}
 	};
-
 
 protected:
 	/**

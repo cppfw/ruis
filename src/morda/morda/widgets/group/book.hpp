@@ -17,6 +17,9 @@ protected:
 	book* parent_book = nullptr;
 public:
 	book& get_parent_book();
+	const book& get_parent_book()const;
+
+	void go_to();
 
 	virtual void on_show(){}
 	virtual void on_hide()noexcept{}
@@ -52,6 +55,7 @@ public:
 	}
 
 	void go_to(size_t page_number);
+	void go_to(const page& p);
 
 	~book()noexcept;
 

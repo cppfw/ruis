@@ -24,6 +24,10 @@ morda_img_refresh{
 	file{refresh.svg}
 }
 
+morda_img_close{
+	file{close.svg}
+}
+
 morda_img_refresh_disabled{
 	file{refresh_disabled.svg}
 }

@@ -7,6 +7,9 @@
 #include "../../../src/morda/morda/widgets/button/push_button.hpp"
 #include "../../../src/morda/morda/widgets/label/busy.hpp"
 #include "../../../src/morda/morda/widgets/group/book.hpp"
+#include "../../../src/morda/morda/widgets/button/tab_group.hpp"
+#include "../../../src/morda/morda/widgets/button/tab.hpp"
+#include "../../../src/morda/morda/widgets/label/text.hpp"
 
 #include "pile_page.hpp"
 #include "cube_page.hpp"
@@ -30,7 +33,55 @@ public:
 			);
 		this->gui.set_root(c);
 
-		auto& b = c->get_widget_as<morda::book>("book");
+		auto& book = c->get_widget_as<morda::book>("book");
+
+		{
+			auto& tg = c->get_widget_as<morda::tab_group>("tab_group");
+
+			auto& add_btn = c->get_widget_as<morda::push_button>("add_button");
+			add_btn.click_handler = [
+					tg = utki::make_shared_from(tg),
+					book = utki::make_shared_from(book)
+				](morda::push_button& btn)
+			{
+				auto tab = btn.context->inflater.inflate_as<morda::tab>(R"(
+					@tab{
+						@row{
+							@text{
+								id{text}
+								text{cube}
+							}
+							@push_button{
+								id{close_button}
+								@image{
+									layout{
+										dx { 8dp }
+										dy { 8dp }
+									}
+									image{morda_img_close}
+								}
+							}
+						}
+					}
+				)");
+				auto& txt = tab->get_widget_as<morda::text>("text");
+				txt.set_text("cube #");
+
+				auto& close_btn = tab->get_widget_as<morda::push_button>("close_button");
+				close_btn.click_handler = [](morda::push_button& btn){
+
+				};
+				tg->push_back(tab);
+				auto page = std::make_shared<cube_page>(btn.context);
+				book->push(page);
+
+				tab->press_handler = [page](morda::button& btn){
+					if(btn.is_pressed()){
+						page->go_to();
+					}
+				};
+			};
+		}
 
 		{
 			auto mp = std::make_shared<pile_page>(
@@ -83,11 +134,11 @@ public:
 				};
 				mp->get_parent_book().push(pg);
 			};
-			b.push(mp);
+			book.push(mp);
 		}
 	}
 };
 
 mordavokne::application_factory app_fac([](auto args){
-		return std::make_unique<::application>();
+	return std::make_unique<::application>();
 });

@@ -8,7 +8,7 @@ namespace morda{
 
 class tab_group :
 		virtual public widget,
-		private choice_group
+		public choice_group
 {
 	std::shared_ptr<res::image> filler;
 	std::shared_ptr<const res::image::texture> fillerTexture;

@@ -16,6 +16,9 @@ protected:
 	void on_press_change()override;
 
 	bool on_mouse_button(const mouse_button_event& e)override{
+		if(this->nine_patch_button::on_mouse_button(e)){
+			return true;
+		}
 		return this->toggle_button::on_mouse_button(e);
 	}
 };
