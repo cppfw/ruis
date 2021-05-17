@@ -11,30 +11,28 @@ book::book(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
 
 void book::push(std::shared_ptr<page> pg){
 	if(!pg){
-		throw std::logic_error("book: tried to push nullptr");
+		throw std::logic_error("book::push(): tried to push nullptr");
+	}
+
+	if(pg->parent_book){
+		if(pg->parent_book == this){
+			throw std::logic_error("book::push(): the page is already in this book");
+		}
+		throw std::logic_error("book::push(): the page is already in some book");
 	}
 	
 	auto& lp = this->get_layout_params(*pg);
 	lp.dims.set(widget::layout_params::fill);
 	
-	auto b = utki::make_shared_from(*this);
-	
-	this->context->run_from_ui_thread([b, pg](){
-		if(!b->pages.empty()){
-			ASSERT(b->children().size() == 1)
-			ASSERT(b->active_page_index < b->pages.size())
-			auto p = dynamic_cast<page*>(b->pages[b->active_page_index].get());
-			if(p){
-				p->on_hide();
-			}
-			b->clear();
-		}
+	this->pages.push_back(pg);
+	pg->parent_book = this;
 
-		b->active_page_index = b->pages.size();
-		b->pages.push_back(pg);
-		pg->parent_book = b.get();
-		b->push_back(pg);
-		pg->on_show();
+	this->context->run_from_ui_thread([
+			bk = utki::make_shared_from(*this),
+			index = this->pages.size() - 1
+		]()
+	{
+		bk->go_to(index);
 	});
 }
 
@@ -100,9 +98,10 @@ void book::go_to(size_t page_number){
 		return;
 	}
 
-	ASSERT(this->active_page_index < this->pages.size())
-
-	this->pages[this->active_page_index]->on_hide();
+	// the this->active_page_index can be invalid in case the first page was just pushed (see push() method implementation)
+	if(this->active_page_index < this->pages.size()){
+		this->pages[this->active_page_index]->on_hide();
+	}
 
 	this->clear();
 

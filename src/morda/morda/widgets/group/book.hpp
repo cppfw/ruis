@@ -35,7 +35,7 @@ class book :
 {
 	friend class page;
 	
-	size_t active_page_index = 0;
+	size_t active_page_index = std::numeric_limits<size_t>::max(); // invalid index
 
 	std::vector<std::shared_ptr<page>> pages;
 public:
