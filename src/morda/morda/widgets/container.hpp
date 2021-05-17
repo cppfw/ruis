@@ -288,6 +288,87 @@ public:
 	const_widget_list::const_iterator find(const widget& w)const;
 
 	/**
+	 * @brief Get begin iterator into the children list.
+	 * @return begin iterator into the children list.
+	 */
+	widget_list::const_iterator begin(){
+		return this->children().begin();
+	}
+
+	/**
+	 * @brief Get end iterator into the children list.
+	 * @return end iterator into the children list.
+	 */
+	widget_list::const_iterator end(){
+		return this->children().end();
+	}
+
+	/**
+	 * @brief Get const begin iterator into the children list.
+	 * @return const begin iterator into the children list.
+	 */
+	const_widget_list::const_iterator begin()const{
+		return this->children().begin();
+	}
+
+	/**
+	 * @brief Get const end iterator into the children list.
+	 * @return const end iterator into the children list.
+	 */
+	const_widget_list::const_iterator end()const{
+		return this->children().end();
+	}
+
+	/**
+	 * @brief Get first child widget.
+	 * @return first child widget.
+	 */
+	const widget_list::value_type& front(){
+		return this->children().front();
+	}
+
+	/**
+	 * @brief Get const first child widget.
+	 * @return const first child widget.
+	 */
+	const const_widget_list::value_type& front()const{
+		return this->children().front();
+	}
+
+	/**
+	 * @brief Get last child widget.
+	 * @return last child widget.
+	 */
+	const widget_list::value_type& back(){
+		return this->children().back();
+	}
+
+	/**
+	 * @brief Get const last child widget.
+	 * @return const last child widget.
+	 */
+	const const_widget_list::value_type& back()const{
+		return this->children().back();
+	}
+
+	/**
+	 * @brief Get number of child widgets.
+	 * @return number of child widgets.
+	 */
+	size_t size()const noexcept{
+		return this->children().size();
+	}
+
+	/**
+	 * @brief Check if container has no children.
+	 * @return true in case the container has no any child widgets.
+	 * @return false otherwise.
+	 */
+	bool empty()const noexcept{
+		return this->size() == 0;
+	}
+
+	/**
 	 * @brief Called when children list changes.
 	 * This implementation requests re-layout.
      */

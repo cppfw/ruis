@@ -41,18 +41,20 @@ void book::push(std::shared_ptr<page> pg){
 void book::tear_out(page& pg)noexcept{
 	ASSERT(&pg.get_parent_book() == this)
 	
-	auto i = std::find_if(this->pages.begin(), this->pages.end(), [&pg](const decltype(this->pages)::value_type& v) -> bool {
+	auto i = std::find_if(this->pages.begin(), this->pages.end(), [&pg](const auto& v) -> bool {
 		return v.get() == &pg;
 	});
 
 	ASSERT(i != this->pages.end())
 
-	bool is_active_page = size_t(std::distance(this->pages.begin(), i)) == this->active_page_index;
+	auto index = size_t(std::distance(this->pages.begin(), i));
+
+	bool is_active_page = index == this->active_page_index;
 	
 	this->pages.erase(i);
 	pg.parent_book = nullptr;
 
-	if(this->active_page_index != 0){
+	if(index <= this->active_page_index && this->active_page_index != 0){
 		--this->active_page_index;
 	}
 

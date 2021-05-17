@@ -70,8 +70,38 @@ public:
 				auto page = std::make_shared<cube_page>(btn.context);
 
 				auto& close_btn = tab->get_widget_as<morda::push_button>("close_button");
-				close_btn.click_handler = [page](morda::push_button& btn){
-					page->tear_out();
+				close_btn.click_handler = [page, tab_wp = utki::make_weak(tab)](morda::push_button& btn){
+					auto tab = tab_wp.lock();
+					ASSERT(tab)
+
+					auto tab_parent = tab->parent();
+					ASSERT(tab_parent)
+
+					if(tab->is_pressed()){
+						// find previous/next tab and activate it
+						auto i = tab_parent->find(*tab);
+						ASSERT(i != tab_parent->end())
+						ASSERT(!tab_parent->empty())
+						if(i == tab_parent->begin()){
+							auto ni = std::next(i);
+							if(ni != tab_parent->end()){
+								auto next_tab = std::dynamic_pointer_cast<morda::tab>(*ni);
+								ASSERT(next_tab)
+								next_tab->set_pressed(true);
+							}
+						}else{
+							ASSERT(i != tab_parent->begin())
+							auto ni = std::prev(i);
+							ASSERT(ni >= tab_parent->begin())
+							auto next_tab = std::dynamic_pointer_cast<morda::tab>(*ni);
+							ASSERT(next_tab)
+							next_tab->set_pressed(true);
+						}
+					}
+					tab->context->run_from_ui_thread([tab, page](){
+						tab->remove_from_parent();
+						page->tear_out();
+					});
 				};
 				tg->push_back(tab);
 				
