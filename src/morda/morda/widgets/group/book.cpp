@@ -93,6 +93,11 @@ void book::go_to(size_t page_number){
 		return;
 	}
 
+	if(this->active_page_index == page_number){
+		// page is already active
+		return;
+	}
+
 	ASSERT(this->active_page_index < this->pages.size())
 
 	this->pages[this->active_page_index]->on_hide();

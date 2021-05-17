@@ -67,12 +67,14 @@ public:
 				auto& txt = tab->get_widget_as<morda::text>("text");
 				txt.set_text("cube #");
 
-				auto& close_btn = tab->get_widget_as<morda::push_button>("close_button");
-				close_btn.click_handler = [](morda::push_button& btn){
+				auto page = std::make_shared<cube_page>(btn.context);
 
+				auto& close_btn = tab->get_widget_as<morda::push_button>("close_button");
+				close_btn.click_handler = [page](morda::push_button& btn){
+					page->tear_out();
 				};
 				tg->push_back(tab);
-				auto page = std::make_shared<cube_page>(btn.context);
+				
 				book->push(page);
 
 				tab->press_handler = [page](morda::button& btn){
