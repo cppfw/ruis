@@ -1,7 +1,6 @@
 #include "tabbed_book.hpp"
 
-#include <morda/widgets/button/tab.hpp>
-#include <morda/widgets/label/text.hpp>
+#include "../button/tab.hpp"
 
 using namespace morda;
 

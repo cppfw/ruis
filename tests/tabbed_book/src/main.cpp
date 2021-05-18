@@ -5,8 +5,8 @@
 
 #include "../../../src/morda/morda/widgets/button/push_button.hpp"
 #include "../../../src/morda/morda/widgets/label/text.hpp"
+#include "../../../src/morda/morda/widgets/group/tabbed_book.hpp"
 
-#include "tabbed_book.hpp"
 #include "sample_page.hpp"
 
 std::shared_ptr<morda::tab> inflate_tab(std::shared_ptr<morda::tabbed_book> tb, const std::string& name){

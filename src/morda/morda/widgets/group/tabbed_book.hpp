@@ -2,10 +2,10 @@
 
 #include <unordered_map>
 
-#include <morda/widgets/group/book.hpp>
-#include <morda/widgets/group/column.hpp>
-#include <morda/widgets/button/tab_group.hpp>
-#include <morda/widgets/button/tab.hpp>
+#include "book.hpp"
+#include "column.hpp"
+#include "../button/tab_group.hpp"
+#include "../button/tab.hpp"
 
 namespace morda{
 
