@@ -24,8 +24,10 @@ void book::push(std::shared_ptr<page> pg){
 	auto& lp = this->get_layout_params(*pg);
 	lp.dims.set(widget::layout_params::fill);
 	
-	this->pages.push_back(pg);
 	pg->parent_book = this;
+	this->pages.push_back(pg);
+
+	this->notify_pages_change(*pg);
 
 	this->context->run_from_ui_thread([
 			bk = utki::make_shared_from(*this),
@@ -64,6 +66,14 @@ void book::tear_out(page& pg)noexcept{
 		if(p){
 			p->on_show();
 		}
+	}
+
+	this->notify_pages_change(pg);
+}
+
+void book::notify_pages_change(const page& p){
+	if(this->pages_change_handler){
+		this->pages_change_handler(*this, p);
 	}
 }
 

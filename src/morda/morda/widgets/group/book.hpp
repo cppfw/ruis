@@ -59,8 +59,12 @@ public:
 
 	~book()noexcept;
 
+	// page is either pushed or teared out
+	std::function<void(book&, const page&)> pages_change_handler;
 private:
 	void tear_out(page& page)noexcept;
+
+	void notify_pages_change(const page& p);
 };
 
 }
