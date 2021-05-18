@@ -20,7 +20,7 @@ class tabbed_book :
 public:
 	tabbed_book(std::shared_ptr<morda::context> context, const treeml::forest& desc);
 
-	void add(const std::string& name, std::shared_ptr<morda::page> page);
+	void add(std::shared_ptr<tab> tab, std::shared_ptr<morda::page> page);
 
 	std::shared_ptr<page> tear_out(tab& t);
 };

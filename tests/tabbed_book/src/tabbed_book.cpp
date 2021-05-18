@@ -31,87 +31,19 @@ tabbed_book::tabbed_book(std::shared_ptr<morda::context> context, const treeml::
 	// TODO: set book::pages_change_handler to remove the tab
 }
 
-void tabbed_book::add(const std::string& name, std::shared_ptr<morda::page> page){
-	auto t = this->context->inflater.inflate_as<morda::tab>(R"(
-		@tab{
-			@row{
-				@text{
-					id{text}
-					text{cube}
-				}
-				@push_button{
-					id{close_button}
-					@image{
-						layout{
-							dx { 8dp }
-							dy { 8dp }
-						}
-						image{morda_img_close}
-					}
-				}
-			}
-		}
-	)");
-	t->get_widget_as<morda::text>("text").set_text(name);
-
-	auto& close_btn = t->get_widget_as<morda::push_button>("close_button");
-	
-	close_btn.click_handler = [
-			tabbed_book_wp = utki::make_weak_from(*this),
-			tab_wp = utki::make_weak(t)
-		](morda::push_button& btn)
-	{
-		auto tb = tabbed_book_wp.lock();
-		ASSERT(tb)
-
-		auto t = tab_wp.lock();
-		ASSERT(t)
-
-		tb->tear_out(*t);
-
-		// auto tab_parent = tab->parent();
-		// ASSERT(tab_parent)
-
-		// if(tab->is_pressed()){
-		// 	// find previous/next tab and activate it
-		// 	auto i = tab_parent->find(*tab);
-		// 	ASSERT(i != tab_parent->end())
-		// 	ASSERT(!tab_parent->empty())
-		// 	if(i == tab_parent->begin()){
-		// 		auto ni = std::next(i);
-		// 		if(ni != tab_parent->end()){
-		// 			auto next_tab = std::dynamic_pointer_cast<morda::tab>(*ni);
-		// 			ASSERT(next_tab)
-		// 			next_tab->set_pressed(true);
-		// 		}
-		// 	}else{
-		// 		ASSERT(i != tab_parent->begin())
-		// 		auto ni = std::prev(i);
-		// 		ASSERT(ni >= tab_parent->begin())
-		// 		auto next_tab = std::dynamic_pointer_cast<morda::tab>(*ni);
-		// 		ASSERT(next_tab)
-		// 		next_tab->set_pressed(true);
-		// 	}
-		// }
-		// tab->context->run_from_ui_thread([tab, page](){
-		// 	tab->remove_from_parent();
-		// 	LOG([](auto&o){o << "tear_out";})
-		// 	page->tear_out();
-		// });
-	};
-	this->tab_group.push_back(t);
-	
+void tabbed_book::add(std::shared_ptr<tab> tab, std::shared_ptr<morda::page> page){
+	this->tab_group.push_back(tab);
 	this->book.push(page);
 
-	t->set_pressed(true);
+	tab->set_pressed(true);
 
-	t->press_handler = [page](morda::button& btn){
+	tab->press_handler = [page](morda::button& btn){
 		if(btn.is_pressed()){
 			page->go_to();
 		}
 	};
 
-	this->tab_to_page_map.insert(std::make_pair(t.get(), page.get()));
+	this->tab_to_page_map.insert(std::make_pair(tab.get(), page.get()));
 }
 
 std::shared_ptr<page> tabbed_book::tear_out(tab& t){
