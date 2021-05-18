@@ -81,13 +81,13 @@ std::shared_ptr<page> tabbed_book::tear_out(tab& t){
 		}
 	}
 
-	// TODO: assert that page is not active
-	// ASSERT(!pg->is_active())
-	pg->tear_out();
-
 	this->context->run_from_ui_thread([t = utki::make_shared_from(t)](){
 		t->remove_from_parent();
 	});
+
+	// TODO: assert that page is not active
+	// ASSERT(!pg->is_active())
+	pg->tear_out();
 
 	return pg;
 }
