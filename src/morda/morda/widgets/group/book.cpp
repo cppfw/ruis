@@ -41,9 +41,13 @@ void book::push(std::shared_ptr<page> pg){
 void book::tear_out(page& pg)noexcept{
 	ASSERT(&pg.get_parent_book() == this)
 	
-	auto i = std::find_if(this->pages.begin(), this->pages.end(), [&pg](const auto& v) -> bool {
-		return v.get() == &pg;
-	});
+	auto i = std::find_if(
+			this->pages.begin(),
+			this->pages.end(),
+			[&pg](const auto& v) -> bool {
+				return v.get() == &pg;
+			}
+		);
 
 	ASSERT(i != this->pages.end())
 
@@ -54,17 +58,25 @@ void book::tear_out(page& pg)noexcept{
 	this->pages.erase(i);
 	pg.parent_book = nullptr;
 
-	if(index <= this->active_page_index && this->active_page_index != 0){
-		--this->active_page_index;
+	if(index <= this->active_page_index){
+		if(this->active_page_index == 0){
+			this->active_page_index = std::numeric_limits<size_t>::max(); // invalid
+		}else{
+			--this->active_page_index;
+		}
 	}
 
 	if(is_active_page){
 		pg.on_hide();
 		this->clear();
-		auto p = std::dynamic_pointer_cast<page>(this->pages[this->active_page_index]);
-		this->push_back(p);
-		if(p){
-			p->on_show();
+		
+		if(!this->pages.empty()){
+			ASSERT(this->active_page_index < this->pages.size())
+			auto p = std::dynamic_pointer_cast<page>(this->pages[this->active_page_index]);
+			this->push_back(p);
+			if(p){
+				p->on_show();
+			}
 		}
 	}
 

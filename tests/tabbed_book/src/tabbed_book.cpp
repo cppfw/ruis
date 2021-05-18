@@ -29,6 +29,7 @@ tabbed_book::tabbed_book(std::shared_ptr<morda::context> context, const treeml::
 		book(this->get_widget_as<morda::book>("morda_book"))
 {
 	// TODO: set book::pages_change_handler to remove the tab
+	// TODO: need to prohibit somehow tearing out of the page without removintg the tab
 }
 
 void tabbed_book::add(std::shared_ptr<tab> tab, std::shared_ptr<morda::page> page){
