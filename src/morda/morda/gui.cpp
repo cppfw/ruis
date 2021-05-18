@@ -30,6 +30,7 @@
 #include "widgets/group/row.hpp"
 #include "widgets/group/overlay.hpp"
 #include "widgets/group/book.hpp"
+#include "widgets/group/tabbed_book.hpp"
 
 #include "widgets/proxy/click_proxy.hpp"
 #include "widgets/proxy/key_proxy.hpp"
@@ -271,6 +272,7 @@ void gui::initStandardWidgets(papki::file& fi) {
 	this->context->inflater.register_widget<tab>("tab");
 	this->context->inflater.register_widget<text_input_line>("text_input_line");
 	this->context->inflater.register_widget<busy>("busy");
+	this->context->inflater.register_widget<tabbed_book>("tabbed_book");
 
 	try{
 		auto t = this->context->loader.load<res::treeml>("morda_gui_defs");
