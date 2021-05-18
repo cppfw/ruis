@@ -11,13 +11,13 @@ tabbed_book::tabbed_book(std::shared_ptr<morda::context> context, const treeml::
 				this->context,
 				treeml::read(R"(
 					@tab_group{
-						id { tab_group }
+						id { morda_tab_group }
 						layout{
 							dx { fill }
 						}
 					}
 					@book{
-						id { book }
+						id { morda_book }
 						layout {
 							dx { fill }
 							weight { 1 }
@@ -25,8 +25,8 @@ tabbed_book::tabbed_book(std::shared_ptr<morda::context> context, const treeml::
 					}
 				)")
 			),
-		tab_group(this->get_widget_as<morda::tab_group>("tab_group")),
-		book(this->get_widget_as<morda::book>("book"))
+		tab_group(this->get_widget_as<morda::tab_group>("morda_tab_group")),
+		book(this->get_widget_as<morda::book>("morda_book"))
 {}
 
 void tabbed_book::add(const std::string& name, std::shared_ptr<morda::page> page){

@@ -1,11 +1,13 @@
-#include <utki/debug.hpp>
+#include <sstream>
 
+#include <utki/debug.hpp>
 #include <mordavokne/application.hpp>
 
 #include "../../../src/morda/morda/widgets/button/push_button.hpp"
 #include "../../../src/morda/morda/widgets/label/text.hpp"
 
 #include "tabbed_book.hpp"
+#include "sample_page.hpp"
 
 class application : public mordavokne::application{
 public:
@@ -30,7 +32,18 @@ public:
 			);
 		this->gui.set_root(c);
 
-		// auto& book = c->get_widget_as<morda::tabbed_book>("book");
+		auto& book = c->get_widget_as<morda::tabbed_book>("book");
+
+		auto& add_btn = c->get_widget_as<morda::push_button>("add_button");
+		add_btn.click_handler = [bk = utki::make_shared_from(book), cnt = 0](morda::push_button& b) mutable {
+			std::stringstream ss;
+			ss << "page #" << cnt;
+			auto txt = ss.str();
+			++cnt;
+			auto pg = std::make_shared<sample_page>(b.context, treeml::forest());
+			pg->set_text(txt);
+			bk->add(txt, pg);
+		};
 	}
 };
 

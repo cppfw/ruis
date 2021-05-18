@@ -1,18 +1,4 @@
 @column{
-
-	@row{
-		@push_button{
-			id{add_button}
-			@text{
-				text{add}
-			}
-		}
-	}
-
-	@tab_group{
-		id{tab_group}
-	}
-
 	@book{
 		layout{
 			dx { fill }

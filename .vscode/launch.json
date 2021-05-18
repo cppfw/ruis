@@ -62,7 +62,27 @@
 					"ignoreFailures": true
 				}
 			],
-			"preLaunchTask": "build_debug"
+			"preLaunchTask": "build_dbg"
+		},
+		{
+			"name": "(gdb) tabbed_book",
+			"type": "cppdbg",
+			"request": "launch",
+			"program": "${workspaceFolder}/tests/tabbed_book/out/dbg/tests",
+			"args": [],
+			"stopAtEntry": false,
+			"cwd": "${workspaceFolder}/tests/tabbed_book",
+			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/morda/out/dbg:../harness/mordavokne/out/dbg"}],
+			"externalConsole": false,
+			"MIMode": "gdb",
+			"setupCommands": [
+				{
+					"description": "Enable pretty-printing for gdb",
+					"text": "-enable-pretty-printing",
+					"ignoreFailures": true
+				}
+			],
+			"preLaunchTask": "build_dbg"
 		},
 		{
 			"name": "(gdb) paint",

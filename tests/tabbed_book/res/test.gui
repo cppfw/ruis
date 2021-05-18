@@ -2,9 +2,9 @@
 
 	@row{
 		@push_button{
-			id{add_button}
+			id { add_button }
 			@text{
-				text{add}
+				text { add }
 			}
 		}
 	}
@@ -15,6 +15,6 @@
 			weight { 1 }
 		}
 
-		id{book}
+		id { book }
 	}
 }
