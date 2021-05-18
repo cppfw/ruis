@@ -125,6 +125,14 @@
             "group": "build"
         },
         {
+            "label": "run_tabbed_book_dbg",
+            "type": "shell",
+            "command": "make run_tabbed_book config=dbg",
+            "problemMatcher": [],
+            "dependsOn": "build_dbg",
+            "group": "build"
+        },
+        {
             "label": "test",
             "type": "shell",
             "command": "make test autojobs=true",

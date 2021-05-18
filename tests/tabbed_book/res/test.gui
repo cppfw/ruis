@@ -1,0 +1,20 @@
+@column{
+
+	@row{
+		@push_button{
+			id{add_button}
+			@text{
+				text{add}
+			}
+		}
+	}
+
+	@tabbed_book{
+		layout{
+			dx { fill }
+			weight { 1 }
+		}
+
+		id{book}
+	}
+}
