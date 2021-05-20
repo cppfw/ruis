@@ -345,7 +345,7 @@ void tree_view::provider::notify_item_added(utki::span<const size_t> index){
 	}
 
 	auto old_iter_index = this->iter.index();
-	if(old_iter_index >= utki::make_vector(index)){
+	if(utki::make_span(old_iter_index) >= index){
 		++this->iter_index;
 	}
 
@@ -403,7 +403,7 @@ void tree_view::provider::notify_item_removed(utki::span<const size_t> index){
 	auto ri = this->traversal().make_iterator(index);
 
 	auto cur_iter_index = this->iter.index();
-	if(cur_iter_index >= utki::make_vector(index)){ // TODO: use span operator >=
+	if(utki::make_span(cur_iter_index) >= index){
 		auto next_index = utki::make_vector(index);
 		++next_index.back();
 
