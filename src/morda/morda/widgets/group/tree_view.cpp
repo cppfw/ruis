@@ -50,7 +50,7 @@ void tree_view::set_provider(std::shared_ptr<provider> item_provider){
 }
 
 void tree_view::provider::notify_data_set_changed(){
-	auto size = this->count(std::vector<size_t>());
+	auto size = this->count(nullptr);
 	this->visible_tree.children.clear();
 	this->visible_tree.children.resize(size);
 	this->visible_tree.value.subtree_size = size;
@@ -165,7 +165,7 @@ std::shared_ptr<widget> tree_view::provider::get_widget(size_t index){
 		auto widget = this->get_list()->context->inflater.inflate_as<morda::pile>(isLastItemInParent.back() ? line_end_layout : line_middle_layout);
 		ASSERT(widget)
 
-		if(this->count(path) != 0){
+		if(this->count(utki::make_span(path)) != 0){
 			auto w = this->get_list()->context->inflater.inflate(plus_minus_layout);
 
 			auto plusminus = w->try_get_widget_as<morda::image>("plusminus");
@@ -187,9 +187,9 @@ std::shared_ptr<widget> tree_view::provider::get_widget(size_t index){
 				}
 
 				if(is_collapsed){
-					this->uncollapse(path);
+					this->uncollapse(utki::make_span(path));
 				}else{
-					this->collapse(path);
+					this->collapse(utki::make_span(path));
 				}
 
 				TRACE_ALWAYS(<< "plusminus clicked:")
@@ -205,7 +205,7 @@ std::shared_ptr<widget> tree_view::provider::get_widget(size_t index){
 		ret->push_back(widget);
 	}
 
-	ret->push_back(this->get_widget(path, is_collapsed));
+	ret->push_back(this->get_widget(utki::make_span(path), is_collapsed));
 
 	return ret;
 }
@@ -213,7 +213,8 @@ std::shared_ptr<widget> tree_view::provider::get_widget(size_t index){
 void tree_view::provider::recycle(size_t index, std::shared_ptr<widget> w){
 	auto& i = this->iter_for(index);
 
-	this->recycle(i.index(), std::move(w));
+	auto path = i.index();
+	this->recycle(utki::make_span(path), std::move(w));
 }
 
 const decltype(tree_view::provider::iter)& tree_view::provider::iter_for(size_t index)const{
@@ -246,13 +247,13 @@ void tree_view::provider::remove_children(decltype(iter) from){
 	ASSERT(p->value.subtree_size == 0)
 }
 
-void tree_view::provider::collapse(const std::vector<size_t>& index){
+void tree_view::provider::collapse(utki::span<const size_t> index){
 	ASSERT(this->traversal().is_valid(index))
 
 	auto i = this->traversal().make_iterator(index);
 
 	if(this->iter > i){
-		auto next_index = index;
+		auto next_index = utki::make_vector(index);
 		++next_index.back();
 
 		if(this->iter.index() < next_index){
@@ -296,7 +297,7 @@ void tree_view::provider::set_children(decltype(iter) i, size_t num_children){
 	i->value.subtree_size = num_children;
 }
 
-void tree_view::provider::uncollapse(const std::vector<size_t>& index){
+void tree_view::provider::uncollapse(utki::span<const size_t> index){
 	auto num_children = this->count(index);
 //	TRACE(<< "tree_view::provider::uncollapse(): s = " << s << std::endl)
 	if(num_children == 0){
@@ -321,7 +322,7 @@ void tree_view::provider::uncollapse(const std::vector<size_t>& index){
 	this->list_widget::provider::notify_data_set_change();
 }
 
-void tree_view::provider::notify_item_added(const std::vector<size_t>& index){
+void tree_view::provider::notify_item_added(utki::span<const size_t> index){
 	if(index.empty()){
 		throw std::invalid_argument("passed in index is empty");
 	}
@@ -344,7 +345,7 @@ void tree_view::provider::notify_item_added(const std::vector<size_t>& index){
 	}
 
 	auto old_iter_index = this->iter.index();
-	if(old_iter_index >= index){
+	if(old_iter_index >= utki::make_vector(index)){
 		++this->iter_index;
 	}
 
@@ -388,7 +389,7 @@ void tree_view::provider::notify_item_added(const std::vector<size_t>& index){
 	this->list_widget::provider::notify_data_set_change();
 }
 
-void tree_view::provider::notify_item_removed(const std::vector<size_t>& index){
+void tree_view::provider::notify_item_removed(utki::span<const size_t> index){
 	if(index.empty()){
 		throw std::invalid_argument("passed in index is empty");
 	}
@@ -402,8 +403,8 @@ void tree_view::provider::notify_item_removed(const std::vector<size_t>& index){
 	auto ri = this->traversal().make_iterator(index);
 
 	auto cur_iter_index = this->iter.index();
-	if(cur_iter_index >= index){
-		auto next_index = index;
+	if(cur_iter_index >= utki::make_vector(index)){ // TODO: use span operator >=
+		auto next_index = utki::make_vector(index);
 		++next_index.back();
 
 		if(cur_iter_index < next_index){
@@ -446,7 +447,7 @@ void tree_view::provider::notify_item_removed(const std::vector<size_t>& index){
 				break;
 			}else{
 				if(j == index.end() - 1){
-					cur_iter_index = index;
+					cur_iter_index = utki::make_vector(index);
 					break;
 				}
 			}

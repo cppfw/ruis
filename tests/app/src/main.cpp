@@ -302,7 +302,7 @@ public:
 
 		parent_list->insert(std::next(parent_list->begin(), this->selectedItem.back()), treeml::leaf(this->generateNewItemvalue()));
 
-		this->notify_item_added(this->selectedItem);
+		this->notify_item_added(utki::make_span(this->selectedItem));
 		++this->selectedItem.back();
 	}
 
@@ -326,7 +326,7 @@ public:
 		parent_list->insert(std::next(parent_list->begin(), this->selectedItem.back() + 1), treeml::leaf(this->generateNewItemvalue()));
 
 		++this->selectedItem.back();
-		this->notify_item_added(this->selectedItem);
+		this->notify_item_added(utki::make_span(this->selectedItem));
 		--this->selectedItem.back();
 	}
 
@@ -344,11 +344,11 @@ public:
 		list->push_back(treeml::leaf(this->generateNewItemvalue()));
 
 		this->selectedItem.push_back(list->size() - 1);
-		this->notify_item_added(this->selectedItem);
+		this->notify_item_added(utki::make_span(this->selectedItem));
 		this->selectedItem.pop_back();
 	}
 
-	std::shared_ptr<morda::widget> get_widget(const std::vector<size_t>& path, bool isCollapsed)override{
+	std::shared_ptr<morda::widget> get_widget(utki::span<const size_t> path, bool isCollapsed)override{
 		ASSERT(path.size() >= 1)
 
 		auto list = &this->root;
@@ -396,11 +396,11 @@ public:
 			{
 				auto colorLabel = v->try_get_widget_as<morda::color>("selection");
 
-				colorLabel->set_visible(this->selectedItem == path);
+				colorLabel->set_visible(path == utki::make_span(this->selectedItem));
 
 				auto mp = v->try_get_widget_as<morda::mouse_proxy>("mouse_proxy");
 				ASSERT(mp)
-				mp->mouse_button_handler = [this, path](morda::mouse_proxy&, const morda::mouse_button_event& e) -> bool{
+				mp->mouse_button_handler = [this, path = utki::make_vector(path)](morda::mouse_proxy&, const morda::mouse_button_event& e) -> bool{
 					if(!e.is_down || e.button != morda::mouse_button::left){
 						return false;
 					}
@@ -433,10 +433,10 @@ public:
 							}
 						)qwertyuiop"
 				);
-			b->click_handler = [this, path, parent_list](morda::push_button& button){
+			b->click_handler = [this, path = utki::make_vector(path), parent_list](morda::push_button& button){
 				ASSERT(parent_list)
 				parent_list->erase(std::next(parent_list->begin(), path.back()));
-				this->notify_item_removed(path);
+				this->notify_item_removed(utki::make_span(path));
 			};
 			ret->push_back(b);
 		}
@@ -444,7 +444,7 @@ public:
 		return ret;
 	}
 
-	size_t count(const std::vector<size_t>& path) const noexcept override{
+	size_t count(utki::span<const size_t> path) const noexcept override{
 		auto children = &this->root;
 
 		for(auto& i : path){

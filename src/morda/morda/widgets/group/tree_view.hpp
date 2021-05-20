@@ -58,14 +58,14 @@ public:
 		provider() = default;
 	public:
 
-		virtual std::shared_ptr<widget> get_widget(const std::vector<size_t>& index, bool is_collapsed) = 0;
+		virtual std::shared_ptr<widget> get_widget(utki::span<const size_t> index, bool is_collapsed) = 0;
 
-		virtual void recycle(const std::vector<size_t>& index, std::shared_ptr<widget> w){}
+		virtual void recycle(utki::span<const size_t> index, std::shared_ptr<widget> w){}
 
-		virtual size_t count(const std::vector<size_t>& index)const noexcept = 0;
+		virtual size_t count(utki::span<const size_t> index)const noexcept = 0;
 
-		void uncollapse(const std::vector<size_t>& index);
-		void collapse(const std::vector<size_t>& index);
+		void uncollapse(utki::span<const size_t> index);
+		void collapse(utki::span<const size_t> index);
 
 		void notify_data_set_changed();
 
@@ -77,14 +77,14 @@ public:
 		 * @brief Notify that an item has been removed.
 		 * @param index - index path of the removed item.
 		 */
-		void notify_item_removed(const std::vector<size_t>& index);
+		void notify_item_removed(utki::span<const size_t> index);
 
 		/**
 		 * @brief Notify that a new item has been added.
 		 * @param index - index path to a newly added item. Essentially, it is a path
 		 *                to an item before which a new item has been added.
 		 */
-		void notify_item_added(const std::vector<size_t>& index);
+		void notify_item_added(utki::span<const size_t> index);
 
 	private:
 
