@@ -66,8 +66,6 @@ public:
 
 		// this->gui.context->loader.mount_res_pack(*this->get_res_file("res/"));
 
-		// this->gui.context->inflater.register_widget<morda::tabbed_book>("tabbed_book");
-
 		std::shared_ptr<morda::widget> c = this->gui.context->inflater.inflate(
 				*this->get_res_file("res/test.gui")
 			);
