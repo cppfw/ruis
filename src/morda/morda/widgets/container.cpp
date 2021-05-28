@@ -328,16 +328,8 @@ std::shared_ptr<widget> container::try_get_widget(const std::string& id, bool al
 		}
 	}
 
-	// first check direct children, because the closer to the tree root the higher is the priority
 	for(auto& w : this->children()){
-		if(auto r = w->widget::try_get_widget(id, true)){
-			return r;
-		}
-	}
-
-	// then check deeper by tree
-	for(auto& w : this->children()){
-		if(auto r = w->try_get_widget(id, false)){
+		if(auto r = w->try_get_widget(id, true)){
 			return r;
 		}
 	}
