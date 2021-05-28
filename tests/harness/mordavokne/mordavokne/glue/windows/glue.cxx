@@ -393,18 +393,19 @@ LRESULT	CALLBACK wndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
 
 			// Report mouse button up events for all pressed mouse buttons
 			for(
-					decltype(ww.mouseButtonState)::index_type i = 0;
-					i != ww.mouseButtonState.size();
+					size_t i = 0;
+					i != size_t(decltype(ww.mouseButtonState)::enum_size);
 					++i
 				)
 			{
-				if(ww.mouseButtonState.get(i)){
-					ww.mouseButtonState.clear(i);
+				auto btn = morda::mouse_button(i);
+				if(ww.mouseButtonState.get(btn)){
+					ww.mouseButtonState.clear(btn);
 					handle_mouse_button(
 							mordavokne::inst(),
 							false,
 							morda::vector2(1000000, 1000000), // outside of the window
-							morda::mouse_button(i),
+							btn,
 							0
 						);
 				}
