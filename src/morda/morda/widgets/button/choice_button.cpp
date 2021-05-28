@@ -13,7 +13,7 @@ choice_button::choice_button(std::shared_ptr<morda::context> c, const treeml::fo
 void choice_button::on_press_change(){
 	this->toggle_button::on_press_change();
 
-	auto cg = this->find_ancestor<choice_group>();
+	auto cg = this->try_get_ancestor<choice_group>();
 	if(!cg){
 		return;
 	}

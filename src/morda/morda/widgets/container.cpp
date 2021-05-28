@@ -326,7 +326,7 @@ std::shared_ptr<widget> container::try_get_widget(const std::string& id)noexcept
 		return r;
 	}
 
-	// first check direct children, because the closer to the tree root higher the priority is
+	// first check direct children, because the closer to the tree root the higher is the priority
 	for(auto& w : this->children()){
 		if(auto r = w->widget::try_get_widget(id)){
 			return r;

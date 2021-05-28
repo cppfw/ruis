@@ -135,7 +135,7 @@ void click_drop_down_box::show_drop_down_menu(){
 		return;
 	}
 
-	auto olay = this->find_ancestor<overlay>();
+	auto olay = this->try_get_ancestor<overlay>();
 	if(!olay){
 		throw std::logic_error("drop_down_box: no overlay parent found");
 	}

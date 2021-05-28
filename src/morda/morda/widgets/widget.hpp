@@ -328,7 +328,8 @@ public:
 	 * @return pointer to the widget if found.
 	 * @return nullptr if there is no widget with given id found or if the widget could not be cast to specified class.
 	 */
-	template <typename T> std::shared_ptr<T> try_get_widget_as(const std::string& id)noexcept{
+	template <typename T>
+	std::shared_ptr<T> try_get_widget_as(const std::string& id)noexcept{
 		return std::dynamic_pointer_cast<T>(this->try_get_widget(id));
 	}
 
@@ -339,7 +340,8 @@ public:
 	 * and searches for requested widget class among the container's child widgets.
 	 * @return pointer to the first found widget which can be cast to the requested class.
 	 */
-	template <typename T> std::shared_ptr<T> try_get_widget()noexcept;
+	template <typename T>
+	std::shared_ptr<T> try_get_widget()noexcept;
 
 	/**
 	 * @brief Get widget.
@@ -356,7 +358,8 @@ public:
 	 * @throw std::logic_error - if no widget with given id has been found.
 	 * @throw std::bad_cast - if requested widget is not of the specified type.
 	 */
-	template <typename T> T& get_widget_as(const std::string& id){
+	template <typename T>
+	T& get_widget_as(const std::string& id){
 		return dynamic_cast<T&>(this->get_widget(id));
 	}
 
@@ -364,13 +367,15 @@ public:
 	 * @brief Get widget of specific type.
 	 * @return reference to the requested widget.
 	 */
-	template <typename T> T& get_widget();
+	template <typename T>
+	T& get_widget();
 
 	/**
 	 * @brief Recursively find all widgets of given type.
 	 * @return list of widgets found.
 	 */
-	template <class T> std::vector<std::shared_ptr<T>> get_all_widgets();
+	template <class T>
+	std::vector<std::shared_ptr<T>> get_all_widgets();
 
 public:
 	/**
@@ -553,9 +558,25 @@ public:
 	 * @brief Find ancestor with given id and of given class.
 	 * @param id - id to look for. If nullptr, then any ancestor of the given class will match.
 	 * @return pointer to the found ancestor widget.
-	 * @return false if no ancestor which satisfies the conditions was found.
+	 * @return nullptr if no ancestor which satisfies the conditions was found.
 	 */
-	template <class T> T* find_ancestor(const char* id = nullptr); // defined in container.hpp
+	template <class T> T* try_get_ancestor(const char* id = nullptr); // defined in container.hpp
+
+	/**
+	 * @brief Get ancestor widget with given id.
+	 * @param id - id to look for.
+	 * @return pointer to the found ancestor widget.
+	 * @return nullptr in case no ancestor widget with given id was found.
+	 */
+	widget* try_get_ancestor(const char* id);
+
+	/**
+	 * @brief Get ancestor widget with given id.
+	 * @param id - id to look for.
+	 * @return reference to the found ancestor widget.
+	 * @throw std::logic_error - in case no ancestor widget with given id was found.
+	 */
+	widget& get_ancestor(const char* id);
 
 	/**
 	 * @brief Calculate position in ancestor coordinates.

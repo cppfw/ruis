@@ -72,6 +72,28 @@ std::shared_ptr<widget> widget::try_get_widget(const std::string& id)noexcept{
 	return nullptr;
 }
 
+widget* widget::try_get_ancestor(const char* id){
+	if(!this->parent()){
+		return nullptr;
+	}
+
+	if(this->parent()->id == id){
+		return this->parent();
+	}
+
+	return this->parent()->try_get_ancestor(id);
+}
+
+widget& widget::get_ancestor(const char* id){
+	auto* a = this->try_get_ancestor(id);
+	if(!a){
+		std::stringstream ss;
+		ss << "ancestor with id = '" << id << "' not found";
+		throw std::logic_error(ss.str());
+	}
+	return *a;
+}
+
 void widget::move_to(const vector2& new_pos){
 	this->rectangle.p = new_pos;
 }

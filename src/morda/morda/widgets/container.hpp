@@ -383,7 +383,8 @@ public:
 	void on_enable_change()override;
 };
 
-template <class T> T* widget::find_ancestor(const char* id){
+template <class T>
+T* widget::try_get_ancestor(const char* id){
 	if(!this->parent()){
 		return nullptr;
 	}
@@ -396,7 +397,7 @@ template <class T> T* widget::find_ancestor(const char* id){
 		}
 	}
 
-	return this->parent()->find_ancestor<T>();
+	return this->parent()->try_get_ancestor<T>();
 }
 
 template <typename T> std::shared_ptr<T> widget::try_get_widget()noexcept{
