@@ -65,8 +65,8 @@ widget::layout_params::layout_params(const treeml::forest& desc, const morda::un
 	}
 }
 
-std::shared_ptr<widget> widget::try_get_widget(const std::string& id)noexcept{
-	if(this->id == id){
+std::shared_ptr<widget> widget::try_get_widget(const std::string& id, bool allow_itself)noexcept{
+	if(allow_itself && this->id == id){
 		return utki::make_shared_from(*this);
 	}
 	return nullptr;
@@ -379,8 +379,8 @@ const widget::layout_params& widget::get_layout_params_const()const{
 	return this->parent()->get_layout_params_const(*this);
 }
 
-widget& widget::get_widget(const std::string& id){
-	auto w = this->try_get_widget(id);
+widget& widget::get_widget(const std::string& id, bool allow_itself){
+	auto w = this->try_get_widget(id, allow_itself);
 	if(!w){
 		std::stringstream ss;
 		ss << "widget '" << id << "' not found in '" << this->id << "'";

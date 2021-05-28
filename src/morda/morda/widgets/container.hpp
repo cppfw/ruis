@@ -248,10 +248,11 @@ public:
 	 * @brief Try get widget by id.
 	 * It searches through the whole widget sub-hierarchy, not just direct children of this container.
 	 * @param id - id of the child widget to look for.
+	 * @param allow_itself - whether it is allowed to return itself in case id matches.
 	 * @return pointer to widget with given id if found.
 	 * @return nullptr if there is no widget with given id found.
 	 */
-	std::shared_ptr<widget> try_get_widget(const std::string& id)noexcept override;
+	std::shared_ptr<widget> try_get_widget(const std::string& id, bool allow_itself = true)noexcept override;
 
 	/**
 	 * @brief Get list of child widgets.
@@ -400,25 +401,30 @@ T* widget::try_get_ancestor(const char* id){
 	return this->parent()->try_get_ancestor<T>();
 }
 
-template <typename T> std::shared_ptr<T> widget::try_get_widget()noexcept{
-	auto p = std::dynamic_pointer_cast<T>(utki::make_shared_from(*this));
-	if(p){
-		return p;
+template <typename T>
+std::shared_ptr<T> widget::try_get_widget(bool allow_itself)noexcept{
+	if(allow_itself){
+		auto p = std::dynamic_pointer_cast<T>(utki::make_shared_from(*this));
+		if(p){
+			return p;
+		}
 	}
 
-	auto c = dynamic_cast<container*>(this);
-	if(c){
-		auto w = c->get_all_widgets<T>();
-		if(!w.empty()){
-			return w.front();
+	auto cont = dynamic_cast<container*>(this);
+	if(cont){
+		for(const auto& c : cont->children()){
+			auto w = c->try_get_widget<T>(true);
+			if(w){
+				return w;
+			}
 		}
 	}
 
 	return nullptr;
 }
 
-template <typename T> T& widget::get_widget(){
-	auto p = this->try_get_widget<T>();
+template <typename T> T& widget::get_widget(bool allow_itself){
+	auto p = this->try_get_widget<T>(allow_itself);
 	if(p){
 		return *p;
 	}
@@ -426,16 +432,18 @@ template <typename T> T& widget::get_widget(){
 	throw std::logic_error("widget::get_widget_as(): requested widget type is not found");
 }
 
-template <class T> std::vector<std::shared_ptr<T>> widget::get_all_widgets(){
+template <class T> std::vector<std::shared_ptr<T>> widget::get_all_widgets(bool allow_itself){
 	std::vector<std::shared_ptr<T>> ret;
 
-	if(auto p = dynamic_cast<T*>(this)){
-		ret.push_back(utki::make_shared_from(*p));
+	if(allow_itself){
+		if(auto p = dynamic_cast<T*>(this)){
+			ret.push_back(utki::make_shared_from(*p));
+		}
 	}
 
 	if(auto cont = dynamic_cast<container*>(this)){
 		for(auto& c : cont->children()){
-			auto res = c->get_all_widgets<T>();
+			auto res = c->get_all_widgets<T>(true);
 			ret.insert(
 					ret.end(),
 					std::make_move_iterator(res.begin()),

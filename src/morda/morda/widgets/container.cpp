@@ -321,21 +321,23 @@ void container::clear(){
 	for(auto i = this->children().begin(); i != this->children().end(); i = this->erase(i)){}
 }
 
-std::shared_ptr<widget> container::try_get_widget(const std::string& id)noexcept{
-	if(auto r = this->widget::try_get_widget(id)){
-		return r;
+std::shared_ptr<widget> container::try_get_widget(const std::string& id, bool allow_itself)noexcept{
+	if(allow_itself){
+		if(auto r = this->widget::try_get_widget(id, true)){
+			return r;
+		}
 	}
 
 	// first check direct children, because the closer to the tree root the higher is the priority
 	for(auto& w : this->children()){
-		if(auto r = w->widget::try_get_widget(id)){
+		if(auto r = w->widget::try_get_widget(id, true)){
 			return r;
 		}
 	}
 
 	// then check deeper by tree
 	for(auto& w : this->children()){
-		if(auto r = w->try_get_widget(id)){
+		if(auto r = w->try_get_widget(id, false)){
 			return r;
 		}
 	}

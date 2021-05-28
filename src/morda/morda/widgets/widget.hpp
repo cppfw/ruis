@@ -316,21 +316,23 @@ public:
 	 * this implementation just checks if id of this widget is the looked up id and if so it returns
 	 * pointer to this widget or nullptr otherwise.
 	 * @param id - id of the widget to search for.
+	 * @param allow_itself - whether it is allowed to return itself in case id matches.
 	 * @return pointer to the widget if found.
 	 * @return nullptr if there is no widget with given id found.
 	 */
-	virtual std::shared_ptr<widget> try_get_widget(const std::string& id)noexcept;
+	virtual std::shared_ptr<widget> try_get_widget(const std::string& id, bool allow_itself = true)noexcept;
 
 	/**
 	 * @brief Try get widget by id.
 	 * Same as try_get_widget() but also tries to cast the widget object to a specified class.
 	 * @param id - id of the widget to search for.
+	 * @param allow_itself - whether it is allowed to return itself in case id matches.
 	 * @return pointer to the widget if found.
 	 * @return nullptr if there is no widget with given id found or if the widget could not be cast to specified class.
 	 */
 	template <typename T>
-	std::shared_ptr<T> try_get_widget_as(const std::string& id)noexcept{
-		return std::dynamic_pointer_cast<T>(this->try_get_widget(id));
+	std::shared_ptr<T> try_get_widget_as(const std::string& id, bool allow_itself = true)noexcept{
+		return std::dynamic_pointer_cast<T>(this->try_get_widget(id, allow_itself));
 	}
 
 	/**
@@ -338,44 +340,49 @@ public:
 	 * This function first checks if this widget can be dynamic_cast'ed to the requested class,
 	 * and if it can then it returns pointer to this widget. Then it checks if this widget is a container
 	 * and searches for requested widget class among the container's child widgets.
+	 * @param allow_itself - whether it is allowed to return itself in case type matches.
 	 * @return pointer to the first found widget which can be cast to the requested class.
 	 */
 	template <typename T>
-	std::shared_ptr<T> try_get_widget()noexcept;
+	std::shared_ptr<T> try_get_widget(bool allow_itself = true)noexcept;
 
 	/**
 	 * @brief Get widget.
 	 * @param id - id of the widget to get.
+	 * @param allow_itself - whether it is allowed to return itself in case id matches.
 	 * @return reference to the widget.
 	 * @throw std::logic_error - if no widget with given id has been found.
 	 */
-	widget& get_widget(const std::string& id);
+	widget& get_widget(const std::string& id, bool allow_itself = true);
 
 	/**
 	 * @brief Get widget of specific type by its id.
 	 * @param id - id of the widget to get.
+	 * @param allow_itself - whether it is allowed to return itself in case id and type matches.
 	 * @return reference to the requested widget.
 	 * @throw std::logic_error - if no widget with given id has been found.
 	 * @throw std::bad_cast - if requested widget is not of the specified type.
 	 */
 	template <typename T>
-	T& get_widget_as(const std::string& id){
-		return dynamic_cast<T&>(this->get_widget(id));
+	T& get_widget_as(const std::string& id, bool allow_itself = true){
+		return dynamic_cast<T&>(this->get_widget(id, allow_itself));
 	}
 
 	/**
 	 * @brief Get widget of specific type.
+	 * @param allow_itself - whether it is allowed to return itself in case type matches.
 	 * @return reference to the requested widget.
 	 */
 	template <typename T>
-	T& get_widget();
+	T& get_widget(bool allow_itself = true);
 
 	/**
 	 * @brief Recursively find all widgets of given type.
+	 * @param allow_itself - whether it is allowed to return itself in case type matches.
 	 * @return list of widgets found.
 	 */
 	template <class T>
-	std::vector<std::shared_ptr<T>> get_all_widgets();
+	std::vector<std::shared_ptr<T>> get_all_widgets(bool allow_itself = true);
 
 public:
 	/**
