@@ -394,7 +394,7 @@ LRESULT	CALLBACK wndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
 			// Report mouse button up events for all pressed mouse buttons
 			for(
 					size_t i = 0;
-					i != size_t(decltype(ww.mouseButtonState)::enum_size);
+					i != ww.mouseButtonState.size();
 					++i
 				)
 			{
