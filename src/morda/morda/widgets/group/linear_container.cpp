@@ -32,75 +32,74 @@ linear_container::linear_container(std::shared_ptr<morda::context> c, const tree
 {}
 
 namespace{
-class Info{
-public:
-	vector2 measuredDim;
+struct info{
+	vector2 measured_dims;
 };
 }
 
 void linear_container::lay_out(){
-	unsigned longIndex = this->get_long_index();
-	unsigned transIndex = this->get_trans_index();
+	unsigned long_index = this->get_long_index();
+	unsigned trans_index = this->get_trans_index();
 
-	std::vector<Info> infoArray(this->children().size());
+	std::vector<info> info_array(this->children().size());
 
 	// calculate rigid size, net weight and store weights
 	real rigid = 0;
-	real netWeight = 0;
+	real net_weight = 0;
 
 	{
-		auto info = infoArray.begin();
+		auto info = info_array.begin();
 		for(auto i = this->children().cbegin(); i != this->children().cend(); ++i, ++info){
 			auto& lp = this->get_layout_params_as_const<layout_params>(**i);
 
-			netWeight += lp.weight;
+			net_weight += lp.weight;
 
-			ASSERT(lp.dims[longIndex] != layout_params::max)
-			ASSERT(lp.dims[longIndex] != layout_params::fill)
+			ASSERT(lp.dims[long_index] != layout_params::max)
+			ASSERT(lp.dims[long_index] != layout_params::fill)
 
 			vector2 d = this->dims_for_widget(**i, lp);
-			info->measuredDim = d;
+			info->measured_dims = d;
 
-			rigid += d[longIndex];
+			rigid += d[long_index];
 		}
 	}
 
 	// arrange widgets
 	{
-		real flexible = this->rect().d[longIndex] - rigid;
+		real flexible = this->rect().d[long_index] - rigid;
 
 		real pos = 0;
 
 		real remainder = 0;
 
-		auto info = infoArray.begin();
+		auto info = info_array.begin();
 		for(auto i = this->children().begin(); i != this->children().end(); ++i, ++info){
 			auto& lp = this->get_layout_params_as_const<layout_params>(**i);
 
 			if(lp.weight != 0){
 				ASSERT(lp.weight > 0)
 				vector2 d;
-				d[longIndex] = info->measuredDim[longIndex];
+				d[long_index] = info->measured_dims[long_index];
 				if(flexible > 0){
-					ASSERT(netWeight > 0)
-					real dl = flexible * lp.weight / netWeight;
+					ASSERT(net_weight > 0)
+					real dl = flexible * lp.weight / net_weight;
 					real floored = std::floor(dl);
 					ASSERT(dl >= floored)
-					d[longIndex] += floored;
+					d[long_index] += floored;
 					remainder += (dl - floored);
 					if(remainder >= real(1)){
-						d[longIndex] += real(1);
+						d[long_index] += real(1);
 						remainder -= real(1);
 					}
 				}
 
-				if(lp.dims[transIndex] == layout_params::max || lp.dims[transIndex] == layout_params::fill){
-					d[transIndex] = this->rect().d[transIndex];
+				if(lp.dims[trans_index] == layout_params::max || lp.dims[trans_index] == layout_params::fill){
+					d[trans_index] = this->rect().d[trans_index];
 				}else{
-					if(lp.dims[transIndex] == layout_params::min){
-						d[transIndex] = -1;
+					if(lp.dims[trans_index] == layout_params::min){
+						d[trans_index] = -1;
 					}else{
-						d[transIndex] = lp.dims[transIndex];
+						d[trans_index] = lp.dims[trans_index];
 					}
 					if(d.x() < 0 || d.y() < 0){
 						vector2 md = (*i)->measure(d);
@@ -113,24 +112,24 @@ void linear_container::lay_out(){
 				}
 				(*i)->resize(d);
 			}else{
-				(*i)->resize(info->measuredDim);
+				(*i)->resize(info->measured_dims);
 			}
 
 			vector2 newPos;
 
-			newPos[longIndex] = pos;
+			newPos[long_index] = pos;
 
-			pos += (*i)->rect().d[longIndex];
+			pos += (*i)->rect().d[long_index];
 
-			newPos[transIndex] = std::round((this->rect().d[transIndex] - (*i)->rect().d[transIndex]) / 2);
+			newPos[trans_index] = std::round((this->rect().d[trans_index] - (*i)->rect().d[trans_index]) / 2);
 
 			(*i)->move_to(newPos);
 		}
 
 		if(remainder > 0){
 			vector2 d;
-			d[transIndex] = 0;
-			d[longIndex] = std::round(remainder);
+			d[trans_index] = 0;
+			d[long_index] = std::round(remainder);
 			this->children().back()->resize_by(d);
 			this->children().back()->move_by(-d);
 		}
@@ -138,63 +137,62 @@ void linear_container::lay_out(){
 }
 
 morda::vector2 linear_container::measure(const morda::vector2& quotum)const{
-	unsigned longIndex = this->get_long_index();
-	unsigned transIndex = this->get_trans_index();
+	unsigned long_index = this->get_long_index();
+	unsigned trans_index = this->get_trans_index();
 
-	std::vector<Info> infoArray(this->children().size());
+	std::vector<info> info_array(this->children().size());
 
 	// calculate rigid length
-	real rigidLength = 0;
-	real height = quotum[transIndex] >= 0 ? quotum[transIndex] : 0;
-	real netWeight = 0;
+	real rigid_length = 0;
+	real height = quotum[trans_index] >= 0 ? quotum[trans_index] : 0;
+	real net_weight = 0;
 
 	{
-		auto info = infoArray.begin();
+		auto info = info_array.begin();
 		for(auto i = this->children().begin(); i != this->children().end(); ++i, ++info){
 			auto& lp = this->get_layout_params_as_const<layout_params>(**i);
 
-			netWeight += lp.weight;
+			net_weight += lp.weight;
 
-			if(lp.dims[longIndex] == layout_params::max || lp.dims[longIndex] == layout_params::fill){
+			if(lp.dims[long_index] == layout_params::max || lp.dims[long_index] == layout_params::fill){
 				throw std::logic_error("linear_container::measure(): 'max' or 'fill' in longitudional direction specified in layout parameters");
 			}
 
-			vector2 d;
-			if(lp.dims[transIndex] == layout_params::max){
-				if(quotum[transIndex] >= 0){
-					d[transIndex] = quotum[transIndex];
+			vector2 child_quotum;
+			if(lp.dims[trans_index] == layout_params::max){
+				if(quotum[trans_index] >= 0){
+					child_quotum[trans_index] = quotum[trans_index];
 				}else{
-					d[transIndex] = -1;
+					child_quotum[trans_index] = -1;
 				}
-			}else if(lp.dims[transIndex] == layout_params::min){
-				d[transIndex] = -1;
-			}else if(lp.dims[transIndex] == layout_params::fill){
-				if(quotum[transIndex] >= 0){
-					d[transIndex] = quotum[transIndex];
+			}else if(lp.dims[trans_index] == layout_params::min){
+				child_quotum[trans_index] = -1;
+			}else if(lp.dims[trans_index] == layout_params::fill){
+				if(quotum[trans_index] >= 0){
+					child_quotum[trans_index] = quotum[trans_index];
 				}else{
-					d[transIndex] = 0;
+					child_quotum[trans_index] = 0;
 				}
 			}else{
-				d[transIndex] = lp.dims[transIndex];
+				child_quotum[trans_index] = lp.dims[trans_index];
 			}
 
-			ASSERT(lp.dims[longIndex] != layout_params::max)
-			ASSERT(lp.dims[longIndex] != layout_params::fill)
-			if(lp.dims[longIndex] == layout_params::min){
-				d[longIndex] = -1;
+			ASSERT(lp.dims[long_index] != layout_params::max)
+			ASSERT(lp.dims[long_index] != layout_params::fill)
+			if(lp.dims[long_index] == layout_params::min){
+				child_quotum[long_index] = -1;
 			}else{
-				d[longIndex] = lp.dims[longIndex];
+				child_quotum[long_index] = lp.dims[long_index];
 			}
 
-			d = (*i)->measure(d);
-			info->measuredDim = d;
+			info->measured_dims = (*i)->measure(child_quotum);
 
-			rigidLength += d[longIndex];
+			rigid_length += info->measured_dims[long_index];
 
 			if(lp.weight == 0){
-				if(quotum[transIndex] < 0){
+				if(quotum[trans_index] < 0){
 					using std::max;
-					height = max(height, d[transIndex]); // clamp bottom
+					height = max(height, info->measured_dims[trans_index]);
 				}
 			}
 		}
@@ -202,22 +200,22 @@ morda::vector2 linear_container::measure(const morda::vector2& quotum)const{
 
 	vector2 ret;
 
-	real flexLen;
+	real flex_len;
 
-	if(quotum[longIndex] < 0){
-		ret[longIndex] = rigidLength;
-		flexLen = 0;
+	if(quotum[long_index] < 0){
+		ret[long_index] = rigid_length;
+		flex_len = 0;
 	}else{
-		ret[longIndex] = quotum[longIndex];
-		flexLen = quotum[longIndex] - rigidLength;
+		ret[long_index] = quotum[long_index];
+		flex_len = quotum[long_index] - rigid_length;
 	}
 
 	{
 		real remainder = 0;
 
-		auto lastChild = this->children().size() != 0 ? this->children().back().get() : nullptr;
+		auto last_child = this->children().size() != 0 ? this->children().back().get() : nullptr;
 
-		auto info = infoArray.begin();
+		auto info = info_array.begin();
 		for(auto i = this->children().begin(); i != this->children().end(); ++i, ++info){
 			auto& lp = this->get_layout_params_as_const<layout_params>(**i);
 			ASSERT(lp.weight >= 0)
@@ -225,57 +223,56 @@ morda::vector2 linear_container::measure(const morda::vector2& quotum)const{
 				continue;
 			}
 
-			ASSERT(netWeight > 0)
+			ASSERT(net_weight > 0)
 
 			vector2 d;
-			d[longIndex] = info->measuredDim[longIndex];
+			d[long_index] = info->measured_dims[long_index];
 
-			if(flexLen > 0){
-				real dl = flexLen * lp.weight / netWeight;
+			if(flex_len > 0){
+				real dl = flex_len * lp.weight / net_weight;
 				real floored = std::floor(dl);
 				ASSERT(dl >= floored)
-				d[longIndex] += floored;
+				d[long_index] += floored;
 				remainder += (dl- floored);
 				if(remainder >= real(1)){
-					d[longIndex] += real(1);
+					d[long_index] += real(1);
 					remainder -= real(1);
 				}
-				if((*i).get() == lastChild){
+				if((*i).get() == last_child){
 					if(remainder > 0){
 						vector2 correction;
-						correction[transIndex] = 0;
-						correction[longIndex] = std::round(remainder);
+						correction[trans_index] = 0;
+						correction[long_index] = std::round(remainder);
 						d += correction;
 					}
 				}
 			}
 
-			if(lp.dims[transIndex] == layout_params::max){
-				if(quotum[transIndex] >= 0){
-					d[transIndex] = quotum[transIndex];
+			if(lp.dims[trans_index] == layout_params::max){
+				if(quotum[trans_index] >= 0){
+					d[trans_index] = quotum[trans_index];
 				}else{
-					d[transIndex] = -1;
+					d[trans_index] = -1;
 				}
-			}else if(lp.dims[transIndex] == layout_params::min){
-				d[transIndex] = -1;
-			}else if(lp.dims[transIndex] == layout_params::fill){
-				if(quotum[transIndex] >= 0){
-					d[transIndex] = quotum[transIndex];
+			}else if(lp.dims[trans_index] == layout_params::min){
+				d[trans_index] = -1;
+			}else if(lp.dims[trans_index] == layout_params::fill){
+				if(quotum[trans_index] >= 0){
+					d[trans_index] = quotum[trans_index];
 				}else{
-					d[transIndex] = 0;
+					d[trans_index] = 0;
 				}
 			}else{
-				d[transIndex] = lp.dims[transIndex];
+				d[trans_index] = lp.dims[trans_index];
 			}
 
-			d = (*i)->measure(d);
-			if(quotum[transIndex] < 0){
+			if(quotum[trans_index] < 0){
 				using std::max;
-				height = max(height, d[transIndex]); // clamp bottom
+				height = max(height, (*i)->measure(d)[trans_index]);
 			}
 		}
 	}
 
-	ret[transIndex] = height;
+	ret[trans_index] = height;
 	return ret;
 }
