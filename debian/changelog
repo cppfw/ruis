@@ -1,3 +1,9 @@
+libmorda (0.5.168) unstable; urgency=medium
+
+  * add min_proxy widget
+
+ -- Ivan Gagis <igagis@gmail.com>  Sun, 30 May 2021 00:31:00 +0300
+
 libmorda (0.5.167) unstable; urgency=medium
 
   * tabbed_book
