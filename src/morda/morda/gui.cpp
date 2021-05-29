@@ -36,6 +36,7 @@
 #include "widgets/proxy/key_proxy.hpp"
 #include "widgets/proxy/resize_proxy.hpp"
 #include "widgets/proxy/ratio_proxy.hpp"
+#include "widgets/proxy/min_proxy.hpp"
 
 using namespace morda;
 
@@ -186,6 +187,7 @@ gui::gui(std::shared_ptr<morda::context> context) :
 	this->context->inflater.register_widget<ratio_proxy>("ratio_proxy");
 	this->context->inflater.register_widget<key_proxy>("key_proxy");
 	this->context->inflater.register_widget<resize_proxy>("resize_proxy");
+	this->context->inflater.register_widget<min_proxy>("min_proxy");
 
 	this->context->inflater.register_widget<scroll_area>("scroll_area");
 	this->context->inflater.register_widget<overlay>("overlay");

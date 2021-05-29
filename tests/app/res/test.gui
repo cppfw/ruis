@@ -574,11 +574,15 @@ cursor{crs_arrow}
 				dx{max} dy{max}
 			}
 
+			id{scroll_area_root_container}
+
 			@row{
 				layout{
 					dx{max} dy{0}
 					weight{1}
 				}
+
+				id{scroll_area_subcontainer}
 
 				@pile{
 					layout{
@@ -639,11 +643,27 @@ cursor{crs_arrow}
 				}
 			}
 
-			@horizontal_scroll_bar{
-				id{scroll_area_horizontal_slider}
-
+			@row{
 				layout{
 					dx{max}
+				}
+
+				@horizontal_scroll_bar{
+					id{scroll_area_horizontal_slider}
+
+					layout{
+						dx{0}
+						weight{1}
+					}
+				}
+
+				@min_proxy{
+					layout{
+						dy{fill}
+					}
+
+					root{scroll_area_root_container}
+					target{scroll_area_subcontainer scroll_area_vertical_slider}
 				}
 			}
 		}

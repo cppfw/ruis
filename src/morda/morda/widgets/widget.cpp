@@ -72,7 +72,14 @@ std::shared_ptr<widget> widget::try_get_widget(const std::string& id, bool allow
 	return nullptr;
 }
 
-widget* widget::try_get_ancestor(const char* id){
+widget& widget::get_root_widget(){
+	if(!this->parent()){
+		return *this;
+	}
+	return this->parent()->get_root_widget();
+}
+
+widget* widget::try_get_ancestor(const std::string& id){
 	if(!this->parent()){
 		return nullptr;
 	}
@@ -84,7 +91,7 @@ widget* widget::try_get_ancestor(const char* id){
 	return this->parent()->try_get_ancestor(id);
 }
 
-widget& widget::get_ancestor(const char* id){
+widget& widget::get_ancestor(const std::string& id){
 	auto* a = this->try_get_ancestor(id);
 	if(!a){
 		std::stringstream ss;

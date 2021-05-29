@@ -385,7 +385,7 @@ public:
 };
 
 template <class T>
-T* widget::try_get_ancestor(const char* id){
+T* widget::try_get_ancestor(const std::string& id){
 	if(!this->parent()){
 		return nullptr;
 	}
@@ -393,12 +393,12 @@ T* widget::try_get_ancestor(const char* id){
 	auto p = dynamic_cast<T*>(this->parent());
 
 	if(p){
-		if(!id || p->id == id){
+		if(id.empty() || p->id == id){
 			return p;
 		}
 	}
 
-	return this->parent()->try_get_ancestor<T>();
+	return this->parent()->try_get_ancestor<T>(id);
 }
 
 template <typename T>

@@ -5,6 +5,7 @@
 #include <memory>
 
 #include <utki/shared.hpp>
+#include <utki/types.hpp>
 
 #include <treeml/tree.hpp>
 
@@ -355,6 +356,10 @@ public:
 	 */
 	widget& get_widget(const std::string& id, bool allow_itself = true);
 
+	const widget& get_widget(const std::string& id, bool allow_itself = true)const{
+		return const_cast<utki::remove_const_pointer<decltype(this)>::type*>(this)->get_widget(id, allow_itself);
+	}
+
 	/**
 	 * @brief Get widget of specific type by its id.
 	 * @param id - id of the widget to get.
@@ -383,6 +388,20 @@ public:
 	 */
 	template <class T>
 	std::vector<std::shared_ptr<T>> get_all_widgets(bool allow_itself = true);
+
+	/**
+	 * @brief Get root widget.
+	 * @return reference to the root widget.
+	 */
+	widget& get_root_widget();
+
+	/**
+	 * @brief Get const root widget.
+	 * @return reference to the const root widget.
+	 */
+	const widget& get_root_widget()const{
+		return const_cast<utki::remove_const_pointer<decltype(this)>::type*>(this)->get_root_widget();
+	}
 
 public:
 	/**
@@ -563,11 +582,11 @@ public:
 
 	/**
 	 * @brief Find ancestor with given id and of given class.
-	 * @param id - id to look for. If nullptr, then any ancestor of the given class will match.
+	 * @param id - id to look for. If empty, then any ancestor of the given class will match.
 	 * @return pointer to the found ancestor widget.
 	 * @return nullptr if no ancestor which satisfies the conditions was found.
 	 */
-	template <class T> T* try_get_ancestor(const char* id = nullptr); // defined in container.hpp
+	template <class T> T* try_get_ancestor(const std::string& id = std::string()); // defined in container.hpp
 
 	/**
 	 * @brief Get ancestor widget with given id.
@@ -575,7 +594,11 @@ public:
 	 * @return pointer to the found ancestor widget.
 	 * @return nullptr in case no ancestor widget with given id was found.
 	 */
-	widget* try_get_ancestor(const char* id);
+	widget* try_get_ancestor(const std::string& id);
+
+	const widget* try_get_ancestor(const std::string& id)const{
+		return const_cast<utki::remove_const_pointer<decltype(this)>::type*>(this)->try_get_ancestor(id);
+	}
 
 	/**
 	 * @brief Get ancestor widget with given id.
@@ -583,7 +606,11 @@ public:
 	 * @return reference to the found ancestor widget.
 	 * @throw std::logic_error - in case no ancestor widget with given id was found.
 	 */
-	widget& get_ancestor(const char* id);
+	widget& get_ancestor(const std::string& id);
+
+	const widget& get_ancestor(const std::string& id)const{
+		return const_cast<utki::remove_const_pointer<decltype(this)>::type*>(this)->get_ancestor(id);
+	}
 
 	/**
 	 * @brief Calculate position in ancestor coordinates.
