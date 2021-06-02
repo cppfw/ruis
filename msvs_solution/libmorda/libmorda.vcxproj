@@ -568,7 +568,6 @@
     <Import Project="..\packages\libr4.1.0.56\build\native\libr4.targets" Condition="Exists('..\packages\libr4.1.0.56\build\native\libr4.targets')" />
     <Import Project="..\packages\zlib_static.1.2.11.9\build\native\zlib_static.targets" Condition="Exists('..\packages\zlib_static.1.2.11.9\build\native\zlib_static.targets')" />
     <Import Project="..\packages\libpapki.1.0.99\build\native\libpapki.targets" Condition="Exists('..\packages\libpapki.1.0.99\build\native\libpapki.targets')" />
-    <Import Project="..\packages\libcssom.0.1.18\build\native\libcssom.targets" Condition="Exists('..\packages\libcssom.0.1.18\build\native\libcssom.targets')" />
     <Import Project="..\packages\libpng_static.1.4.1.11\build\native\libpng_static.targets" Condition="Exists('..\packages\libpng_static.1.4.1.11\build\native\libpng_static.targets')" />
     <Import Project="..\packages\libsvgdom.0.3.66\build\native\libsvgdom.targets" Condition="Exists('..\packages\libsvgdom.0.3.66\build\native\libsvgdom.targets')" />
     <Import Project="..\packages\libsvgren.0.5.15\build\native\libsvgren.targets" Condition="Exists('..\packages\libsvgren.0.5.15\build\native\libsvgren.targets')" />
@@ -589,7 +588,6 @@
     <Error Condition="!Exists('..\packages\libr4.1.0.56\build\native\libr4.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libr4.1.0.56\build\native\libr4.targets'))" />
     <Error Condition="!Exists('..\packages\zlib_static.1.2.11.9\build\native\zlib_static.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\zlib_static.1.2.11.9\build\native\zlib_static.targets'))" />
     <Error Condition="!Exists('..\packages\libpapki.1.0.99\build\native\libpapki.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libpapki.1.0.99\build\native\libpapki.targets'))" />
-    <Error Condition="!Exists('..\packages\libcssom.0.1.18\build\native\libcssom.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libcssom.0.1.18\build\native\libcssom.targets'))" />
     <Error Condition="!Exists('..\packages\libpng_static.1.4.1.11\build\native\libpng_static.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libpng_static.1.4.1.11\build\native\libpng_static.targets'))" />
     <Error Condition="!Exists('..\packages\libsvgdom.0.3.66\build\native\libsvgdom.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libsvgdom.0.3.66\build\native\libsvgdom.targets'))" />
     <Error Condition="!Exists('..\packages\libsvgren.0.5.15\build\native\libsvgren.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libsvgren.0.5.15\build\native\libsvgren.targets'))" />
