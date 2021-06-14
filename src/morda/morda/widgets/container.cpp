@@ -44,7 +44,7 @@ const widget::layout_params& container::get_layout_params_const(const widget& w)
 }
 
 std::unique_ptr<widget::layout_params> container::create_layout_params(const treeml::forest& desc)const{
-	return utki::make_unique<widget::layout_params>(desc, this->context->units);
+	return std::make_unique<widget::layout_params>(desc, this->context->units);
 }
 
 void container::push_back_inflate(const treeml::forest& desc){

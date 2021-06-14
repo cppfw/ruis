@@ -22,7 +22,7 @@ linear_container::layout_params::layout_params(const treeml::forest& desc, const
 }
 
 std::unique_ptr<widget::layout_params> linear_container::create_layout_params(const treeml::forest& desc)const{
-	return utki::make_unique<layout_params>(desc, this->context->units);
+	return std::make_unique<layout_params>(desc, this->context->units);
 }
 
 linear_container::linear_container(std::shared_ptr<morda::context> c, const treeml::forest& desc, bool vertical) :
