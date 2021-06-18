@@ -10,7 +10,7 @@ $(eval $(call prorab-config, ../../../config))
 
 this_srcs += $(call prorab-src-dir, .)
 
-this_cxxflags += -I$(d)../../../src/morda
+this_cxxflags += -I../../../src/morda
 
 this_ldlibs += -lmorda
 
@@ -22,7 +22,7 @@ else
     this_ldlibs += `pkg-config --libs glesv2`
 endif
 
-this_ldflags += -L$(d)../../../src/morda/out/$(c)
+this_ldflags += -L../../../src/morda/out/$(c)
 
 ifeq ($(os), linux)
 else ifeq ($(os), macosx)

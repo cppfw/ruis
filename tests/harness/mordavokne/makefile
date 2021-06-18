@@ -10,10 +10,10 @@ define mordavokne_rules
 
     this_srcs += $$(call prorab-src-dir, .)
 
-    this_cxxflags += -I$(d)../../../src/morda
+    this_cxxflags += -I../../../src/morda
 
     this_ldlibs += -lmorda -lnitki -lopros -lpapki
-    this_ldflags += -L$(d)../../../src/morda/out/$(c)
+    this_ldflags += -L../../../src/morda/out/$(c)
 
     ifeq ($(os),windows)
         this_ldlibs += -lmingw32 # these should go first, otherwise linker will complain about undefined reference to WinMain
@@ -43,8 +43,8 @@ $(.RECIPEPREFIX)$(a)$$(this_cc) -ObjC++ -std=c++11 -c -o "$$$$@" $$(this_objcfla
 
     this_cxxflags += -DMORDAVOKNE_RENDER_$(shell echo $1 | tr '[:lower:]' '[:upper:]')
     this_ldlibs += -lmorda-$1-ren
-    this_cxxflags += -I$(d)../$1
-    this_ldflags += -L$(d)../$1/out/$(c)
+    this_cxxflags += -I../$1
+    this_ldflags += -L../$1/out/$(c)
 
     ifeq ($1,opengles2)
         this_raspberrypi := $(shell test -d /opt/vc && echo true)
