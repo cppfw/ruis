@@ -1,3 +1,9 @@
+libmorda (0.5.169) unstable; urgency=medium
+
+  * relink to latest libs
+
+ -- Ivan Gagis <igagis@gmail.com>  Mon, 21 Jun 2021 23:34:31 +0300
+
 libmorda (0.5.168) unstable; urgency=medium
 
   * add min_proxy widget
