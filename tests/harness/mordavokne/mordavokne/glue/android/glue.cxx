@@ -409,7 +409,7 @@ public:
 	}
 
 	std::unique_ptr<papki::file> spawn()override{
-		return utki::make_unique<asset_file>(this->manager);
+		return std::make_unique<asset_file>(this->manager);
 	}
 
 	~asset_file()noexcept{
@@ -1021,7 +1021,7 @@ mordavokne::application::application(std::string&& name, const window_params& re
 }
 
 std::unique_ptr<papki::file> mordavokne::application::get_res_file(const std::string& path)const{
-	return utki::make_unique<asset_file>(native_activity->assetManager, path);
+	return std::make_unique<asset_file>(native_activity->assetManager, path);
 }
 
 void mordavokne::application::swap_frame_buffers(){
