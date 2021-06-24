@@ -1,8 +1,6 @@
 #include <vector>
 #include <array>
 
-#include "../../application.hpp"
-
 #include <opros/wait_set.hpp>
 #include <papki/fs_file.hpp>
 #include <nitki/queue.hpp>
@@ -31,6 +29,10 @@
 #else
 #	error "Unknown graphics API"
 #endif
+
+#include "../../application.hpp"
+
+#include "../util.hxx"
 
 #include "../friend_accessors.cxx"
 #include "../unix_common.cxx"
@@ -429,11 +431,11 @@ struct window_wrapper : public utki::destructable{
 					throw std::runtime_error("glXCreateContextAttribsARB() not found");
 				}
 
-				// TODO: create latest possible OpenGL context?
+				auto ver = get_opengl_version_duplet(wp.graphics_api_request);
 
 				static int context_attribs[] = {
-					GLX_CONTEXT_MAJOR_VERSION_ARB, 2,
-					GLX_CONTEXT_MINOR_VERSION_ARB, 0,
+					GLX_CONTEXT_MAJOR_VERSION_ARB, ver.major,
+					GLX_CONTEXT_MINOR_VERSION_ARB, ver.minor,
 					None
 				};
 

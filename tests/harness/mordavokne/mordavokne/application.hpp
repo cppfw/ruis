@@ -42,6 +42,34 @@ struct window_params{
 	 */
 	utki::flags<buffer_type> buffers = false;
 
+	enum class graphics_api{
+		gl_2_0,
+		gl_2_1,
+		gl_3_0,
+		gl_3_1,
+		gl_3_2,
+		gl_3_3,
+		gl_4_0,
+		gl_4_1,
+		gl_4_2,
+		gl_4_3,
+		gl_4_4,
+		gl_4_5,
+		gl_4_6,
+		gles_2_0,
+		gles_3_0
+	};
+
+	graphics_api graphics_api_request =
+#if M_OS_NAME == M_OS_NAME_ANDROID || M_OS_NAME == M_OS_NAME_IOS
+		graphics_api::gles_2_0
+#elif M_OS == M_OS_WINDOWS || M_OS == M_OS_LINUX || M_OS == M_OS_MACOSX
+		graphics_api::gl_2_0
+#else
+#	error "unknown OS"
+#endif
+	;
+
 	window_params(r4::vector2<unsigned> dim) :
 			dim(dim)
 	{}
