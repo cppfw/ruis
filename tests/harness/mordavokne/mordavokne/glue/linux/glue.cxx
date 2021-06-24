@@ -436,6 +436,7 @@ struct window_wrapper : public utki::destructable{
 				static int context_attribs[] = {
 					GLX_CONTEXT_MAJOR_VERSION_ARB, ver.major,
 					GLX_CONTEXT_MINOR_VERSION_ARB, ver.minor,
+					GLX_CONTEXT_PROFILE_MASK_ARB, GLX_CONTEXT_CORE_PROFILE_BIT_ARB, // we don't need compatibility context
 					None
 				};
 
