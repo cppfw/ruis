@@ -427,7 +427,10 @@ struct window_wrapper : public utki::destructable{
 						(glXCreateContextAttribsARBProc)glXGetProcAddressARB((const GLubyte*)"glXCreateContextAttribsARB");
 				
 				if(!glXCreateContextAttribsARB){
-					// this should not happen since we checked above that we have GLX version >= 1.1
+					// this should not happen since we checked extension presence, and anyway,
+					// glXGetProcAddressARB() never returns NULL according to
+					// https://dri.freedesktop.org/wiki/glXGetProcAddressNeverReturnsNULL/
+					// so, this check for null is just in case future version of GLX may return null
 					throw std::runtime_error("glXCreateContextAttribsARB() not found");
 				}
 
