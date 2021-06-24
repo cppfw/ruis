@@ -402,36 +402,43 @@ struct window_wrapper : public utki::destructable{
 		XFlush(this->display.display);
 
 #ifdef MORDAVOKNE_RENDER_OPENGL2
-		auto glx_extensions = utki::split(std::string_view(glXQueryExtensionsString(this->display.display, visual_info->screen)));
-		if(std::find(glx_extensions.begin(), glx_extensions.end(), "GLX_ARB_create_context") == glx_extensions.end()){
-			// GLX_ARB_create_context is not supported
-			this->glContext = glXCreateContext(this->display.display, visual_info, NULL, GL_TRUE);
-		}else{
-			// GLX_ARB_create_context is supported
+		// glXGetProcAddressARB() will retutn non-null pointer even if extension is not supported, so we
+		// need to explicitly check for supported extensions.
+		// SOURCE: https://dri.freedesktop.org/wiki/glXGetProcAddressNeverReturnsNULL/
 
-			typedef GLXContext (*glXCreateContextAttribsARBProc)(Display*, GLXFBConfig, GLXContext, Bool, const int*);
+		{
+			auto glx_extensions = utki::split(std::string_view(glXQueryExtensionsString(this->display.display, visual_info->screen)));
+			if(std::find(glx_extensions.begin(), glx_extensions.end(), "GLX_ARB_create_context") == glx_extensions.end()){
+				// GLX_ARB_create_context is not supported
+				this->glContext = glXCreateContext(this->display.display, visual_info, NULL, GL_TRUE);
+			}else{
+				// GLX_ARB_create_context is supported
 
-			// NOTE: glXGetProcAddressARB() is guaranteed to be present in all GLX versions.
-			//       glXGetProcAddress() is not guaranteed.
+				typedef GLXContext (*glXCreateContextAttribsARBProc)(Display*, GLXFBConfig, GLXContext, Bool, const int*);
 
-			glXCreateContextAttribsARBProc glXCreateContextAttribsARB = nullptr;
-			glXCreateContextAttribsARB =
-					(glXCreateContextAttribsARBProc)glXGetProcAddressARB((const GLubyte*)"glXCreateContextAttribsARB");
-			
-			if(!glXCreateContextAttribsARB){
-				// this should not happen since we checked above that we have GLX version >= 1.1
-				throw std::runtime_error("glXCreateContextAttribsARB() not found");
+				// NOTE: glXGetProcAddressARB() is guaranteed to be present in all GLX versions.
+				//       glXGetProcAddress() is not guaranteed.
+				// SOURCE: https://dri.freedesktop.org/wiki/glXGetProcAddressNeverReturnsNULL/
+
+				glXCreateContextAttribsARBProc glXCreateContextAttribsARB = nullptr;
+				glXCreateContextAttribsARB =
+						(glXCreateContextAttribsARBProc)glXGetProcAddressARB((const GLubyte*)"glXCreateContextAttribsARB");
+				
+				if(!glXCreateContextAttribsARB){
+					// this should not happen since we checked above that we have GLX version >= 1.1
+					throw std::runtime_error("glXCreateContextAttribsARB() not found");
+				}
+
+				// TODO: create latest possible OpenGL context?
+
+				static int context_attribs[] = {
+					GLX_CONTEXT_MAJOR_VERSION_ARB, 2,
+					GLX_CONTEXT_MINOR_VERSION_ARB, 0,
+					None
+				};
+
+				this->glContext = glXCreateContextAttribsARB(this->display.display, best_fb_config, NULL, GL_TRUE, context_attribs);
 			}
-
-			// TODO: create latest possible OpenGL context?
-
-			static int context_attribs[] = {
-				GLX_CONTEXT_MAJOR_VERSION_ARB, 2,
-				GLX_CONTEXT_MINOR_VERSION_ARB, 0,
-				None
-			};
-
-			this->glContext = glXCreateContextAttribsARB(this->display.display, best_fb_config, NULL, GL_TRUE, context_attribs);
 		}
 		
 		if(this->glContext == NULL){
