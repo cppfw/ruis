@@ -2,7 +2,6 @@
 
 using namespace morda;
 
-
 renderer::renderer(std::unique_ptr<render_factory> factory, const renderer::params& params) :
 		factory(std::move(factory)),
 		shader(this->factory->create_shaders()),
@@ -17,10 +16,7 @@ renderer::renderer(std::unique_ptr<render_factory> factory, const renderer::para
 {
 }
 
-
-
 void renderer::set_framebuffer(std::shared_ptr<frame_buffer> fb){
 	this->set_framebuffer_internal(fb.get());
 	this->curFB = std::move(fb);
 }
-

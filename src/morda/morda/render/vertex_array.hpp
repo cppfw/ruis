@@ -24,9 +24,7 @@ public:
 		triangles,
 		triangle_fan,
 		line_loop,
-		triangle_strip,
-		
-		ENUM_SIZE
+		triangle_strip
 	};
 	
 	const mode rendering_mode;

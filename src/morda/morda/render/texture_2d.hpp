@@ -3,7 +3,6 @@
 #include "../config.hpp"
 
 namespace morda{
-	
 
 class texture_2d{
 	vector2 dims_v;

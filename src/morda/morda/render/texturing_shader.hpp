@@ -5,7 +5,6 @@
 
 namespace morda{
 
-
 class texturing_shader{
 public:
 	texturing_shader(){}
