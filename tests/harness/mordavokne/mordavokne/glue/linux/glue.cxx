@@ -439,6 +439,9 @@ struct window_wrapper : public utki::destructable{
 
 				this->glContext = glXCreateContextAttribsARB(this->display.display, best_fb_config, NULL, GL_TRUE, context_attribs);
 			}
+
+			// sync to ensure any errors generated are processed
+			XSync(this->display.display, False);
 		}
 		
 		if(this->glContext == NULL){
