@@ -8,6 +8,7 @@
 #include <nitki/queue.hpp>
 
 #include <utki/unicode.hpp>
+#include <utki/string.hpp>
 
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
@@ -179,7 +180,10 @@ struct window_wrapper : public utki::destructable{
 				throw std::runtime_error("glXQueryVersion() failed");
 			}
 
-			// FBConfigs were added in GLX version 1.3, we need FBConfigs
+			// we need the following:
+			// - glXQueryExtensionsString(), availabale starting from GLX version 1.1
+			// - FBConfigs, availabale starting from GLX version 1.3
+			// minimum GLX version needed is 1.3
 			if(glxVerMajor < 1 || (glxVerMajor == 1  && glxVerMinor < 3 )){
 				throw std::runtime_error("GLX version 1.3 or above is required");
 			}
@@ -398,7 +402,38 @@ struct window_wrapper : public utki::destructable{
 		XFlush(this->display.display);
 
 #ifdef MORDAVOKNE_RENDER_OPENGL2
-		this->glContext = glXCreateContext(this->display.display, visual_info, 0, GL_TRUE);
+		auto glx_extensions = utki::split(std::string_view(glXQueryExtensionsString(this->display.display, visual_info->screen)));
+		if(std::find(glx_extensions.begin(), glx_extensions.end(), "GLX_ARB_create_context") == glx_extensions.end()){
+			// GLX_ARB_create_context is not supported
+			this->glContext = glXCreateContext(this->display.display, visual_info, NULL, GL_TRUE);
+		}else{
+			// GLX_ARB_create_context is supported
+
+			typedef GLXContext (*glXCreateContextAttribsARBProc)(Display*, GLXFBConfig, GLXContext, Bool, const int*);
+
+			// NOTE: glXGetProcAddressARB() is guaranteed to be present in all GLX versions.
+			//       glXGetProcAddress() is not guaranteed.
+
+			glXCreateContextAttribsARBProc glXCreateContextAttribsARB = nullptr;
+			glXCreateContextAttribsARB =
+					(glXCreateContextAttribsARBProc)glXGetProcAddressARB((const GLubyte*)"glXCreateContextAttribsARB");
+			
+			if(!glXCreateContextAttribsARB){
+				// this should not happen since we checked above that we have GLX version >= 1.1
+				throw std::runtime_error("glXCreateContextAttribsARB() not found");
+			}
+
+			// TODO: create latest possible OpenGL context?
+
+			static int context_attribs[] = {
+				GLX_CONTEXT_MAJOR_VERSION_ARB, 2,
+				GLX_CONTEXT_MINOR_VERSION_ARB, 0,
+				None
+			};
+
+			this->glContext = glXCreateContextAttribsARB(this->display.display, best_fb_config, NULL, GL_TRUE, context_attribs);
+		}
+		
 		if(this->glContext == NULL){
 			throw std::runtime_error("glXCreateContext() failed");
 		}
