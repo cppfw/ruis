@@ -1,0 +1,8 @@
+[submodule "tests/harness/morda-render-opengl"]
+	path = tests/harness/morda-render-opengl
+	url = ../morda-render-opengl
+	branch = latest
+[submodule "tests/harness/morda-render-opengles"]
+	path = tests/harness/morda-render-opengles
+	url = ../morda-render-opengles
+	branch = latest
