@@ -1,7 +1,5 @@
 include prorab.mk
 
-$(eval $(prorab-include-subdirs))
-
 modules_cfg := rel_no_install
 
 # load config in order to resolve 'c' and 'config' in case of default config
