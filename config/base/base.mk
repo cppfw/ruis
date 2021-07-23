@@ -7,6 +7,4 @@ this_cxxflags += -g # include debugging symbols
 this_cxxflags += -std=c++17
 this_cxxflags += -fPIC # generate position independent code
 
-this_objcflags := -std=c++17
-
 this_ldlibs += -lstdc++
