@@ -1,1 +1,1 @@
-module_cfg := dbg
+module_cfg := rel_no_install
