@@ -198,6 +198,7 @@ jobs:
     steps:
     - name: git clone
       uses: actions/checkout@v2
+      with: {submodules: true}
     - name: install CoAPP tools
       uses: myci-actions/install-coapp-tools@master
     - name: nuget update
