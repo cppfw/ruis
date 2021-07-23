@@ -226,7 +226,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\src\morda;$(ProjectDir)..\..\tests\harness\opengl2;$(ProjectDir)..\..\tests\harness\mordavokne;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)../../src/morda;$(ProjectDir)../../tests/harness/modules/mordavokne/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>OldStyle</DebugInformationFormat>
     </ClCompile>
     <Link>
@@ -242,7 +242,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\src\morda;$(ProjectDir)..\..\tests\harness\opengl2;$(ProjectDir)..\..\tests\harness\mordavokne;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)../../src/morda;$(ProjectDir)../../tests/harness/modules/mordavokne/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>OldStyle</DebugInformationFormat>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
@@ -259,7 +259,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\src\morda;$(ProjectDir)..\..\tests\harness\opengl2;$(ProjectDir)..\..\tests\harness\mordavokne;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)../../src/morda;$(ProjectDir)../../tests/harness/modules/mordavokne/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>OldStyle</DebugInformationFormat>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
@@ -276,7 +276,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\src\morda;$(ProjectDir)..\..\tests\harness\opengl2;$(ProjectDir)..\..\tests\harness\mordavokne;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)../../src/morda;$(ProjectDir)../../tests/harness/modules/mordavokne/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>OldStyle</DebugInformationFormat>
     </ClCompile>
     <Link>
@@ -292,7 +292,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\src\morda;$(ProjectDir)..\..\tests\harness\opengl2;$(ProjectDir)..\..\tests\harness\mordavokne;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)../../src/morda;$(ProjectDir)../../tests/harness/modules/mordavokne/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>OldStyle</DebugInformationFormat>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
@@ -309,7 +309,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\src\morda;$(ProjectDir)..\..\tests\harness\opengl2;$(ProjectDir)..\..\tests\harness\mordavokne;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)../../src/morda;$(ProjectDir)../../tests/harness/modules/mordavokne/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>OldStyle</DebugInformationFormat>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
@@ -328,7 +328,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\src\morda;$(ProjectDir)..\..\tests\harness\opengl2;$(ProjectDir)..\..\tests\harness\mordavokne;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)../../src/morda;$(ProjectDir)../../tests/harness/modules/mordavokne/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>OldStyle</DebugInformationFormat>
     </ClCompile>
     <Link>
@@ -348,7 +348,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\src\morda;$(ProjectDir)..\..\tests\harness\opengl2;$(ProjectDir)..\..\tests\harness\mordavokne;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)../../src/morda;$(ProjectDir)../../tests/harness/modules/mordavokne/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>OldStyle</DebugInformationFormat>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
@@ -369,7 +369,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\src\morda;$(ProjectDir)..\..\tests\harness\opengl2;$(ProjectDir)..\..\tests\harness\mordavokne;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)../../src/morda;$(ProjectDir)../../tests/harness/modules/mordavokne/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>OldStyle</DebugInformationFormat>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
@@ -390,7 +390,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\src\morda;$(ProjectDir)..\..\tests\harness\opengl2;$(ProjectDir)..\..\tests\harness\mordavokne;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)../../src/morda;$(ProjectDir)../../tests/harness/modules/mordavokne/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>OldStyle</DebugInformationFormat>
     </ClCompile>
     <Link>
@@ -410,7 +410,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\src\morda;$(ProjectDir)..\..\tests\harness\opengl2;$(ProjectDir)..\..\tests\harness\mordavokne;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)../../src/morda;$(ProjectDir)../../tests/harness/modules/mordavokne/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>OldStyle</DebugInformationFormat>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
@@ -431,7 +431,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\src\morda;$(ProjectDir)..\..\tests\harness\opengl2;$(ProjectDir)..\..\tests\harness\mordavokne;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)../../src/morda;$(ProjectDir)../../tests/harness/modules/mordavokne/src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>OldStyle</DebugInformationFormat>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
@@ -445,22 +445,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\tests\app\src\main.cpp" />
-    <ClCompile Include="..\..\tests\harness\mordavokne\mordavokne\application.cpp" />
-    <ClCompile Include="..\..\tests\harness\mordavokne\mordavokne\glue\glue.cpp" />
-    <ClCompile Include="..\..\tests\harness\opengl2\morda\render\opengl2\factory.cpp" />
-    <ClCompile Include="..\..\tests\harness\opengl2\morda\render\opengl2\frame_buffer.cpp" />
-    <ClCompile Include="..\..\tests\harness\opengl2\morda\render\opengl2\index_buffer.cpp" />
-    <ClCompile Include="..\..\tests\harness\opengl2\morda\render\opengl2\opengl_buffer.cpp" />
-    <ClCompile Include="..\..\tests\harness\opengl2\morda\render\opengl2\renderer.cpp" />
-    <ClCompile Include="..\..\tests\harness\opengl2\morda\render\opengl2\shader_base.cpp" />
-    <ClCompile Include="..\..\tests\harness\opengl2\morda\render\opengl2\shader_color.cpp" />
-    <ClCompile Include="..\..\tests\harness\opengl2\morda\render\opengl2\shader_color_pos_lum.cpp" />
-    <ClCompile Include="..\..\tests\harness\opengl2\morda\render\opengl2\shader_color_pos_tex.cpp" />
-    <ClCompile Include="..\..\tests\harness\opengl2\morda\render\opengl2\shader_pos_clr.cpp" />
-    <ClCompile Include="..\..\tests\harness\opengl2\morda\render\opengl2\shader_texture.cpp" />
-    <ClCompile Include="..\..\tests\harness\opengl2\morda\render\opengl2\texture_2d.cpp" />
-    <ClCompile Include="..\..\tests\harness\opengl2\morda\render\opengl2\vertex_array.cpp" />
-    <ClCompile Include="..\..\tests\harness\opengl2\morda\render\opengl2\vertex_buffer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -468,6 +452,12 @@
   <ItemGroup>
     <ProjectReference Include="..\libmorda\libmorda.vcxproj">
       <Project>{111d4939-c046-4338-b740-eca7f87785d6}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\morda-render-opengl\morda-render-opengl.vcxproj">
+      <Project>{452cf27f-ff7d-44de-8161-4ba4dd0e1d85}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\mordavokne\mordavokne.vcxproj">
+      <Project>{898a6810-f727-4265-ac18-0cd818a18220}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

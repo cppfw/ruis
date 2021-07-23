@@ -173,66 +173,6 @@
     <ClCompile Include="..\..\tests\app\src\opengl2\mordaren\OpenGL2Texture2D.cpp" />
     <ClCompile Include="..\..\tests\app\src\opengl2\mordaren\OpenGL2VertexArray.cpp" />
     <ClCompile Include="..\..\tests\app\src\opengl2\mordaren\OpenGL2VertexBuffer.cpp" />
-    <ClCompile Include="..\..\tests\app\src\opengl2\mordaren\OpenGL2Buffer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\tests\app\src\opengl2\mordaren\OpenGL2Factory.cpp" />
-    <ClCompile Include="..\..\tests\app\src\opengl2\mordaren\OpenGL2FrameBuffer.cpp" />
-    <ClCompile Include="..\..\tests\app\src\opengl2\mordaren\OpenGL2IndexBuffer.cpp" />
-    <ClCompile Include="..\..\tests\app\src\opengl2\mordaren\OpenGL2Renderer.cpp" />
-    <ClCompile Include="..\..\tests\app\src\opengl2\mordaren\OpenGL2ShaderColorPosTex.cpp" />
-    <ClCompile Include="..\..\tests\app\src\opengl2\mordaren\OpenGL2ShaderPosClr.cpp" />
-    <ClCompile Include="..\..\tests\app\src\opengl2\mordaren\OpenGL2Texture2D.cpp" />
-    <ClCompile Include="..\..\tests\app\src\opengl2\mordaren\OpenGL2VertexArray.cpp" />
-    <ClCompile Include="..\..\tests\app\src\opengl2\mordaren\OpenGL2VertexBuffer.cpp" />
-    <ClCompile Include="..\..\tests\harness\mordavokne\mordavokne\application.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\tests\harness\mordavokne\mordavokne\glue\glue.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\tests\harness\opengl2\morda\render\opengl2\factory.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\tests\harness\opengl2\morda\render\opengl2\frame_buffer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\tests\harness\opengl2\morda\render\opengl2\index_buffer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\tests\harness\opengl2\morda\render\opengl2\opengl_buffer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\tests\harness\opengl2\morda\render\opengl2\renderer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\tests\harness\opengl2\morda\render\opengl2\shader_base.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\tests\harness\opengl2\morda\render\opengl2\shader_color.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\tests\harness\opengl2\morda\render\opengl2\shader_color_pos_lum.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\tests\harness\opengl2\morda\render\opengl2\shader_color_pos_tex.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\tests\harness\opengl2\morda\render\opengl2\shader_pos_clr.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\tests\harness\opengl2\morda\render\opengl2\shader_texture.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\tests\harness\opengl2\morda\render\opengl2\texture_2d.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\tests\harness\opengl2\morda\render\opengl2\vertex_array.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\tests\harness\opengl2\morda\render\opengl2\vertex_buffer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
