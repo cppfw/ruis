@@ -221,7 +221,7 @@ void widget::renderInternal(const morda::matrix4& matrix)const{
 	s.Bind();
 	morda::matrix4 matr(matrix);
 	matr.scale(this->rect().d);
-	s.SetMatrix(matr);
+	s.set_matrix(matr);
 
 	if(this->is_hovered()){
 		s.SetColor(r4::vector3<float>(0, 1, 0));

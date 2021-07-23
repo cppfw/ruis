@@ -27,8 +27,8 @@ public:
 		std::vector<morda::vector2> pos;
 		std::vector<morda::real> alpha;
 		
-		std::vector<std::uint16_t> in_indices;
-		std::vector<std::uint16_t> out_indices;
+		std::vector<uint16_t> in_indices;
+		std::vector<uint16_t> out_indices;
 	};
 	
 	vertices stroke(

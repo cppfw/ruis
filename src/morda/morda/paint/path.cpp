@@ -52,7 +52,7 @@ path::vertices path::stroke(morda::real half_width, morda::real antialias_width,
 
 	const decltype(this->points)::value_type *prev = nullptr, *cur = nullptr, *next = nullptr;
 
-	std::uint16_t in_index = 0;
+	uint16_t in_index = 0;
 
 	for(auto i = this->points.begin(); i != this->points.end(); ++i){
 		prev = cur;

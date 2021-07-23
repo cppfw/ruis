@@ -15,7 +15,7 @@ public:
 		return nullptr;
 	}
 
-	std::shared_ptr<morda::index_buffer> create_index_buffer(utki::span<const std::uint16_t> indices)override{
+	std::shared_ptr<morda::index_buffer> create_index_buffer(utki::span<const uint16_t> indices)override{
 		return nullptr;
 	}
 

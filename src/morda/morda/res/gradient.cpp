@@ -41,9 +41,9 @@ morda::res::gradient::gradient(std::shared_ptr<morda::context> c, std::vector<st
 	}
 	ASSERT(vertices.size() == colors.size())
 	
-	std::vector<std::uint16_t> indices;
+	std::vector<uint16_t> indices;
 	for(size_t i = 0; i != vertices.size(); ++i){
-		indices.push_back(std::uint16_t(i));
+		indices.push_back(uint16_t(i));
 	}
 	
 	auto& r = *this->context->renderer;
