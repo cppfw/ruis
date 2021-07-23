@@ -147,20 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\tests\harness\modules\morda-render-opengl\src\morda\render\opengl\factory.cpp" />
-    <ClCompile Include="..\..\tests\harness\modules\morda-render-opengl\src\morda\render\opengl\frame_buffer.cpp" />
-    <ClCompile Include="..\..\tests\harness\modules\morda-render-opengl\src\morda\render\opengl\index_buffer.cpp" />
-    <ClCompile Include="..\..\tests\harness\modules\morda-render-opengl\src\morda\render\opengl\opengl_buffer.cpp" />
-    <ClCompile Include="..\..\tests\harness\modules\morda-render-opengl\src\morda\render\opengl\renderer.cpp" />
-    <ClCompile Include="..\..\tests\harness\modules\morda-render-opengl\src\morda\render\opengl\shader_base.cpp" />
-    <ClCompile Include="..\..\tests\harness\modules\morda-render-opengl\src\morda\render\opengl\shader_color.cpp" />
-    <ClCompile Include="..\..\tests\harness\modules\morda-render-opengl\src\morda\render\opengl\shader_color_pos_lum.cpp" />
-    <ClCompile Include="..\..\tests\harness\modules\morda-render-opengl\src\morda\render\opengl\shader_color_pos_tex.cpp" />
-    <ClCompile Include="..\..\tests\harness\modules\morda-render-opengl\src\morda\render\opengl\shader_pos_clr.cpp" />
-    <ClCompile Include="..\..\tests\harness\modules\morda-render-opengl\src\morda\render\opengl\shader_texture.cpp" />
-    <ClCompile Include="..\..\tests\harness\modules\morda-render-opengl\src\morda\render\opengl\texture_2d.cpp" />
-    <ClCompile Include="..\..\tests\harness\modules\morda-render-opengl\src\morda\render\opengl\vertex_array.cpp" />
-    <ClCompile Include="..\..\tests\harness\modules\morda-render-opengl\src\morda\render\opengl\vertex_buffer.cpp" />
+    <ClCompile Include="..\..\tests\harness\modules\morda-render-opengl\src\**\*.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\libmorda\libmorda.vcxproj">

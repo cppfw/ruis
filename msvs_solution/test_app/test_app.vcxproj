@@ -444,7 +444,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\tests\app\src\main.cpp" />
+    <ClCompile Include="..\..\tests\app\src\**\*.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
