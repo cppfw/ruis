@@ -32,11 +32,11 @@ endef
 $(eval $(call this_modules_deps, opengl))
 $(eval $(call this_modules_deps, opengles))
 
-$(eval $(call prorab-include, mordavokne/src/makefile, $(module_cfg)))
-$(eval $(call prorab-include, morda-render-opengl/src/makefile, $(module_cfg)))
+$(eval $(call prorab-try-include, mordavokne/src/makefile, $(module_cfg)))
+$(eval $(call prorab-try-include, morda-render-opengl/src/makefile, $(module_cfg)))
 
 ifeq ($(os),linux)
-    $(eval $(call prorab-include, morda-render-opengles/src/makefile, $(module_cfg)))
+    $(eval $(call prorab-try-include, morda-render-opengles/src/makefile, $(module_cfg)))
 endif
 
 # restore global flags
