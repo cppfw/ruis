@@ -1,3 +1,9 @@
+libmorda (0.5.172) unstable; urgency=medium
+
+  * fix homebrew install
+
+ -- Ivan Gagis <igagis@gmail.com>  Sat, 24 Jul 2021 15:40:21 +0300
+
 libmorda (0.5.171) unstable; urgency=medium
 
   * test release
