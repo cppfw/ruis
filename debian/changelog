@@ -1,3 +1,9 @@
+libmorda (0.5.173) unstable; urgency=medium
+
+  * make vertex_array polymorphic
+
+ -- Ivan Gagis <igagis@gmail.com>  Mon, 26 Jul 2021 01:39:52 +0300
+
 libmorda (0.5.172) unstable; urgency=medium
 
   * fix homebrew install
