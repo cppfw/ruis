@@ -12,7 +12,7 @@
 			"args": [],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}/tests/app",
-			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/morda/out/dbg:../harness/mordavokne/out/dbg"}],
+			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/morda/out/dbg:../harness/modules/mordavokne/src/out/dbg:../harness/modules/morda-render-opengl/src/out/dbg"}],
 			"externalConsole": false,
 			"MIMode": "gdb",
 			"setupCommands": [

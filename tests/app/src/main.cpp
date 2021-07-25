@@ -459,6 +459,7 @@ public:
 class application : public mordavokne::application{
 	static mordavokne::window_params GetWindowParams()noexcept{
 		mordavokne::window_params wp(r4::vector2<unsigned>(1024, 800));
+		// wp.graphics_api_request = mordavokne::window_params::graphics_api::gl_4_5;
 
 		return wp;
 	}

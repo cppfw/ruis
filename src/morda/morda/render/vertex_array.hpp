@@ -31,6 +31,7 @@ public:
 	
 	vertex_array(decltype(buffers)&& buffers, std::shared_ptr<morda::index_buffer> indices, mode rendering_mode);
 
+	virtual ~vertex_array(){}
 };
 
 }
