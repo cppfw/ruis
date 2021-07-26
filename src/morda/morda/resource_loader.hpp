@@ -1,3 +1,23 @@
+/*
+morda GUI framework
+Copyright (C) 2021  Ivan Gagis <igagis@gmail.com>
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program. If not, see <http://www.gnu.org/licenses/>.
+*/
+
+/* ================ LICENSE END ================ */
+
 #pragma once
 
 #include <map>
@@ -5,16 +25,10 @@
 #include <utki/shared.hpp>
 #include <papki/file.hpp>
 #include <treeml/tree.hpp>
-
-
-
 namespace morda{
-
-
 
 class resource;
 class context;
-
 
 /**
  * @brief Resource loader.
@@ -124,8 +138,6 @@ public:
 private:
 };
 
-
-
 /**
  * @brief Base class for all resources.
  */
@@ -146,8 +158,6 @@ public:
 	virtual ~resource()noexcept{}
 };
 
-
-
 template <class T> std::shared_ptr<T> resource_loader::findResourceInResMap(const char* resName){
 	auto i = this->resMap.find(resName);
 	if(i != this->resMap.end()){
@@ -158,8 +168,6 @@ template <class T> std::shared_ptr<T> resource_loader::findResourceInResMap(cons
 	}
 	return nullptr;//no resource found with given name, return invalid reference
 }
-
-
 
 template <class T> std::shared_ptr<T> resource_loader::load(const char* resName){
 //	TRACE(<< "ResMan::Load(): enter" << std::endl)
