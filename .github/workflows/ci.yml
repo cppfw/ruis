@@ -164,7 +164,7 @@ jobs:
         url: http://gagis.hopto.org/repo/cppfw/msys2/msys
         shell: 'msys2 {0}'
         key-server: http://gagis.hopto.org/repo/cppfw/pubkey.gpg
-        install: myci
+        install: myci vim
     - name: add cppfw pacman msys/mingw repo
       uses: myci-actions/add-pacman-repo@master
       with:
