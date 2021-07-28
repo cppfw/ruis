@@ -1,5 +1,6 @@
 /*
 morda GUI framework
+
 Copyright (C) 2021  Ivan Gagis <igagis@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
