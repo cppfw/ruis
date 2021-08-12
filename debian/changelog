@@ -1,3 +1,9 @@
+libmorda (0.5.174) unstable; urgency=medium
+
+  * use latest make in homebrew formulae
+
+ -- Ivan Gagis <igagis@gmail.com>  Thu, 12 Aug 2021 15:28:19 +0300
+
 libmorda (0.5.173) unstable; urgency=medium
 
   * make vertex_array polymorphic
