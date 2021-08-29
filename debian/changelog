@@ -1,3 +1,9 @@
+libmorda (0.5.175) unstable; urgency=medium
+
+  * build for debian bullseye
+
+ -- Ivan Gagis <igagis@gmail.com>  Mon, 30 Aug 2021 01:31:42 +0300
+
 libmorda (0.5.174) unstable; urgency=medium
 
   * use latest make in homebrew formulae
