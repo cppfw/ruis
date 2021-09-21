@@ -33,7 +33,7 @@ namespace morda{
  */
 class linear_container :
 		public container,
-		protected oriented_widget
+		public oriented_widget
 {
 	linear_container(const linear_container&) = delete;
 	linear_container& operator=(const linear_container&) = delete;
