@@ -2,13 +2,11 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.ydq.android.gradle.native-aar.import' // must go after android gradle plugin
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     defaultConfig {
         applicationId "io.github.cppfw.morda_tests"
         minSdkVersion 21
-        targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        targetSdkVersion 29
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
