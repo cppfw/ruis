@@ -1,3 +1,9 @@
+libmorda (0.5.176) unstable; urgency=medium
+
+  * add mouse_button_wheel_left and wheel_right
+
+ -- Ivan Gagis <igagis@gmail.com>  Thu, 30 Sep 2021 09:57:43 +0300
+
 libmorda (0.5.175) unstable; urgency=medium
 
   * build for debian bullseye
