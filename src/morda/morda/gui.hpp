@@ -63,7 +63,7 @@ public:
 		return this->root_widget.get();
 	}
 private:
-	vector2 viewportSize;
+	vector2 viewportSize{0, 0};
 public:
 	/**
 	 * @brief Set viewport size for GUI.

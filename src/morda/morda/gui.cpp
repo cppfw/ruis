@@ -322,6 +322,7 @@ void gui::set_root(std::shared_ptr<morda::widget> w){
 	this->root_widget = std::move(w);
 
 	this->root_widget->move_to(morda::vector2(0));
+	
 	this->root_widget->resize(this->viewportSize);
 }
 
@@ -331,14 +332,6 @@ void gui::render(const matrix4& matrix)const{
 		return;
 	}
 
-	morda::matrix4 m(matrix);
-
-	// direct y-axis down
-	m.scale(1, -1);
-
-	m.translate(-1, -1);
-	m.scale(vector2(2).comp_divide(this->viewportSize));
-
 	ASSERT(this->root_widget)
 
 	if(this->root_widget->is_layout_invalid()){
@@ -346,6 +339,14 @@ void gui::render(const matrix4& matrix)const{
 		this->root_widget->relayoutNeeded = false;
 		this->root_widget->lay_out();
 	}
+
+	morda::matrix4 m(matrix);
+
+	// direct y-axis down
+	m.scale(1, -1);
+
+	m.translate(-1, -1);
+	m.scale(vector2(2).comp_divide(this->viewportSize));
 
 	this->root_widget->renderInternal(m);
 }

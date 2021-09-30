@@ -73,7 +73,7 @@ public:
 		}else{
 			this->context->updater->start(
 					utki::make_shared_from(*this),
-					30
+					0
 				);
 		}
 		this->focus();
