@@ -596,11 +596,26 @@ public:
 			};
 			auto state = std::make_shared<State>();
 
-			mouseProxy->mouse_button_handler = [state](morda::mouse_proxy&, const morda::mouse_button_event& e){
-				if(e.button == morda::mouse_button::left){
-					state->isLeftButtonPressed = e.is_down;
-					state->oldPos = e.pos;
-					return true;
+			static const morda::real wheel_delta = 10;
+
+			mouseProxy->mouse_button_handler = [state, vl](morda::mouse_proxy&, const morda::mouse_button_event& e){
+				switch(e.button){
+					case morda::mouse_button::left:
+						state->isLeftButtonPressed = e.is_down;
+						state->oldPos = e.pos;
+						return true;
+					case morda::mouse_button::wheel_down:
+						if(auto l = vl.lock()){
+							l->scroll_by(wheel_delta);
+						}
+						break;
+					case morda::mouse_button::wheel_up:
+						if(auto l = vl.lock()){
+							l->scroll_by(-wheel_delta);
+						}
+						break;
+					default:
+						break;
 				}
 				return false;
 			};
@@ -648,11 +663,26 @@ public:
 			};
 			auto state = std::make_shared<State>();
 
-			mouseProxy->mouse_button_handler = [state](morda::mouse_proxy&, const morda::mouse_button_event& e){
-				if(e.button == morda::mouse_button::left){
-					state->isLeftButtonPressed = e.is_down;
-					state->oldPos = e.pos;
-					return true;
+			static const morda::real wheel_delta = 10;
+
+			mouseProxy->mouse_button_handler = [state, hl](morda::mouse_proxy&, const morda::mouse_button_event& e){
+				switch(e.button){
+					case morda::mouse_button::left:
+						state->isLeftButtonPressed = e.is_down;
+						state->oldPos = e.pos;
+						return true;
+					case morda::mouse_button::wheel_left:
+						if(auto l = hl.lock()){
+							l->scroll_by(wheel_delta);
+						}
+						break;
+					case morda::mouse_button::wheel_right:
+						if(auto l = hl.lock()){
+							l->scroll_by(-wheel_delta);
+						}
+						break;
+					default:
+						break;
 				}
 				return false;
 			};
