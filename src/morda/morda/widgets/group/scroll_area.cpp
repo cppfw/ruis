@@ -103,6 +103,7 @@ void scroll_area::update_scroll_factor(){
 	}
 }
 
+// TODO: why is there special dims_for_widget() and why container::dims_for_widget() is not like this? 
 vector2 scroll_area::dims_for_widget(const widget& w, const layout_params& lp)const{
 	vector2 d;
 	for(unsigned i = 0; i != 2; ++i){
@@ -114,7 +115,7 @@ vector2 scroll_area::dims_for_widget(const widget& w, const layout_params& lp)co
 			d[i] = lp.dims[i];
 		}
 	}
-	if(d.x() < 0 || d.y() < 0){
+	if(!d.is_positive_or_zero()){
 		vector2 md = w.measure(d);
 		for(unsigned i = 0; i != md.size(); ++i){
 			if(d[i] < 0){
@@ -181,7 +182,7 @@ void scroll_area::update_effective_dims(){
 	for(auto i = this->children().begin(); i != this->children().end(); ++i){
 		auto& lp = this->get_layout_params_as_const<layout_params>(**i);
 
-		morda::vector2 d = this->dims_for_widget(**i, lp) + (*i)->rect().p;
+		morda::vector2 d = (*i)->rect().p + this->dims_for_widget(**i, lp);
 
 		using std::max;
 
