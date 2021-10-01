@@ -61,11 +61,11 @@ void scroll_area::render(const morda::matrix4& matrix)const{
 }
 
 void scroll_area::clamp_scroll_pos(){
-	if(this->effective_dims.x() < 0){
+	if(this->invisible_dims.x() < 0){
 		this->cur_scroll_pos.x() = 0;
 	}
 
-	if(this->effective_dims.y() < 0){
+	if(this->invisible_dims.y() < 0){
 		this->cur_scroll_pos.y() = 0;
 	}
 }
@@ -81,24 +81,24 @@ void scroll_area::set_scroll_pos(const vector2& new_scroll_pos){
 }
 
 void scroll_area::set_scroll_factor(const vector2& factor){
-	vector2 new_scroll_pos = this->effective_dims.comp_mul(factor);
+	vector2 new_scroll_pos = this->invisible_dims.comp_mul(factor);
 
 	this->set_scroll_pos(new_scroll_pos);
 }
 
 void scroll_area::update_scroll_factor(){
 	// at this point effective dimension should be updated
-	vector2 factor = this->cur_scroll_pos.comp_div(this->effective_dims);
+	vector2 factor = this->cur_scroll_pos.comp_div(this->invisible_dims);
 
 	if(this->cur_scroll_factor == factor){
 		return;
 	}
 
 	for(unsigned i = 0; i != 2; ++i){
-		if(this->effective_dims[i] <= 0){
+		if(this->invisible_dims[i] <= 0){
 			this->cur_scroll_factor[i] = 0;
 		}else{
-			this->cur_scroll_factor[i] = this->cur_scroll_pos[i] / this->effective_dims[i];
+			this->cur_scroll_factor[i] = this->cur_scroll_pos[i] / this->invisible_dims[i];
 		}
 	}
 }
@@ -145,7 +145,7 @@ void scroll_area::lay_out(){
 	this->update_effective_dims();
 
 	// distance of content's bottom right corner from bottom right corner of the scroll_area
-	vector2 br = this->cur_scroll_pos - this->effective_dims;
+	vector2 br = this->cur_scroll_pos - this->invisible_dims;
 
 	if(br.x() > 0){
 		if(br.x() <= this->cur_scroll_pos.x()){
@@ -189,12 +189,12 @@ void scroll_area::update_effective_dims(){
 		minDim = max(minDim, d); // clamp bottom
 	}
 
-	this->effective_dims = minDim - this->rect().d;
+	this->invisible_dims = minDim - this->rect().d;
 	this->update_scroll_factor();
 }
 
 vector2 scroll_area::get_visible_area_fraction()const noexcept{
-	auto ret = this->rect().d.comp_div(this->rect().d + this->effective_dims);
+	auto ret = this->rect().d.comp_div(this->rect().d + this->invisible_dims);
 
 	using std::min;
 	ret = min(ret, real(1)); // clamp top

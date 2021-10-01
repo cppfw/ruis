@@ -6,7 +6,7 @@
         {
             "label": "build",
             "type": "shell",
-            "command": "make autojobs=true",
+            "command": "make",
             "problemMatcher": [
                 "$gcc"
             ],
@@ -15,7 +15,7 @@
         {
             "label": "build_gles2",
             "type": "shell",
-            "command": "make autojobs=true ren=gles2",
+            "command": "make ren=gles2",
             "problemMatcher": [
                 "$gcc"
             ],
@@ -24,7 +24,7 @@
         {
             "label": "build_dbg",
             "type": "shell",
-            "command": "make autojobs=true config=dbg",
+            "command": "make config=dbg",
             "problemMatcher": [
                 "$gcc"
             ],
@@ -135,7 +135,7 @@
         {
             "label": "test",
             "type": "shell",
-            "command": "make test autojobs=true",
+            "command": "make test",
             "problemMatcher": [],
             "dependsOn": "build",
             "group": "build"
@@ -143,7 +143,7 @@
 		{
             "label": "test_dbg",
             "type": "shell",
-            "command": "make test config=dbg autojobs=true",
+            "command": "make test config=dbg",
             "problemMatcher": [],
             "dependsOn": "build_dbg",
             "group": "build"
@@ -191,7 +191,7 @@
         {
             "label": "rebuild",
             "type": "shell",
-            "command": "make clean && make autojobs=true",
+            "command": "make clean && make",
             "problemMatcher": [],
             "group": "build"
         }
