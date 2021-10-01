@@ -191,7 +191,7 @@ sides<real> nine_patch::get_actual_borders()const noexcept{
 
 	sides<real> ret;
 
-	for(auto i = 0; i != ret.size(); ++i){
+	for(size_t i = 0; i != ret.size(); ++i){
 		if(this->borders[i] >= 0){
 			ret[i] = this->borders[i];
 		}else if(!np){
