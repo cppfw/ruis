@@ -672,13 +672,19 @@ public:
 						state->oldPos = e.pos;
 						return true;
 					case morda::mouse_button::wheel_left:
-						if(auto l = hl.lock()){
-							l->scroll_by(-wheel_delta);
+						std::cout << "left" << std::endl;
+						if(e.is_down){
+							if(auto l = hl.lock()){
+								l->scroll_by(-wheel_delta);
+							}
 						}
 						break;
 					case morda::mouse_button::wheel_right:
-						if(auto l = hl.lock()){
-							l->scroll_by(wheel_delta);
+						std::cout << "right" << std::endl;
+						if(e.is_down){
+							if(auto l = hl.lock()){
+								l->scroll_by(wheel_delta);
+							}
 						}
 						break;
 					default:
