@@ -666,6 +666,7 @@ public:
 			static const morda::real wheel_delta = 10;
 
 			mouseProxy->mouse_button_handler = [state, hl](morda::mouse_proxy&, const morda::mouse_button_event& e){
+				std::cout << "button = " << unsigned(e.button) << std::endl;
 				switch(e.button){
 					case morda::mouse_button::left:
 						state->isLeftButtonPressed = e.is_down;
