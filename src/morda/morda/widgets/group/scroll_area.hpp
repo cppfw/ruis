@@ -79,7 +79,7 @@ public:
 
 	/**
 	 * @brief Set scroll position.
-	 * TODO: The scroll position will be clamped to effective dimensions of scroll_area's contents?
+	 * The scroll position will be clamped to effective dimensions of scroll_area's contents.
 	 * @param new_scroll_pos - new scroll position.
 	 */
 	void set_scroll_pos(const vector2& new_scroll_pos);

@@ -61,13 +61,13 @@ void scroll_area::render(const morda::matrix4& matrix)const{
 }
 
 void scroll_area::clamp_scroll_pos(){
-	if(this->invisible_dims.x() < 0){
-		this->cur_scroll_pos.x() = 0;
-	}
+	using std::max;
+	using std::min;
 
-	if(this->invisible_dims.y() < 0){
-		this->cur_scroll_pos.y() = 0;
-	}
+	ASSERT(this->invisible_dims.is_positive_or_zero())
+	
+	this->cur_scroll_pos = max(this->cur_scroll_pos, {0, 0});
+	this->cur_scroll_pos = min(this->cur_scroll_pos, this->invisible_dims);
 }
 
 void scroll_area::set_scroll_pos(const vector2& new_scroll_pos){
@@ -95,9 +95,10 @@ void scroll_area::update_scroll_factor(){
 	}
 
 	for(unsigned i = 0; i != 2; ++i){
-		if(this->invisible_dims[i] <= 0){
+		if(this->invisible_dims[i] == 0){
 			this->cur_scroll_factor[i] = 0;
 		}else{
+			ASSERT(this->invisible_dims[i] > 0)
 			this->cur_scroll_factor[i] = this->cur_scroll_pos[i] / this->invisible_dims[i];
 		}
 	}
@@ -179,17 +180,18 @@ void scroll_area::on_children_change(){
 void scroll_area::update_invisible_dims(){
 	morda::vector2 minDim(0);
 
+	using std::max;
+
 	for(auto i = this->children().begin(); i != this->children().end(); ++i){
 		auto& lp = this->get_layout_params_as_const<layout_params>(**i);
 
 		morda::vector2 d = (*i)->rect().p + this->dims_for_widget(**i, lp);
 
-		using std::max;
-
 		minDim = max(minDim, d); // clamp bottom
 	}
 
 	this->invisible_dims = minDim - this->rect().d;
+	this->invisible_dims = max(this->invisible_dims, {0, 0});
 	this->update_scroll_factor();
 }
 
