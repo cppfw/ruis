@@ -105,7 +105,7 @@ public:
 	std::function<void(scroll_area&)> scroll_change_handler;
 
 private:
-	void update_effective_dims();
+	void update_invisible_dims();
 
 	void update_scroll_factor();
 
