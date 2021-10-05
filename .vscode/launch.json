@@ -163,6 +163,26 @@
 				}
 			],
 			"preLaunchTask": "build_debug"
+		},
+		{
+			"name": "(gdb) unit",
+			"type": "cppdbg",
+			"request": "launch",
+			"program": "${workspaceFolder}/tests/unit/out/dbg/tests",
+			"args": [],
+			"stopAtEntry": false,
+			"cwd": "${workspaceFolder}/tests/unit",
+			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/morda/out/dbg"}],
+			"externalConsole": false,
+			"MIMode": "gdb",
+			"setupCommands": [
+				{
+					"description": "Enable pretty-printing for gdb",
+					"text": "-enable-pretty-printing",
+					"ignoreFailures": true
+				}
+			],
+			"preLaunchTask": "build_dbg"
 		}
 	]
 }

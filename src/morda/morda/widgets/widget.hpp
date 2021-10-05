@@ -525,10 +525,7 @@ public:
 	 * @brief Invoked when widget's size changes.
 	 * Default implementation performs laying out of the widget by calling its layout() method.
 	 */
-	virtual void on_resize(){
-//		TRACE(<< "widget::OnResize(): invoked" << std::endl)
-		this->lay_out();
-	}
+	virtual void on_resize();
 
 	/**
 	 * @brief Called when parent of this widget changes.
