@@ -49,6 +49,7 @@ makedepends=(
 		'pkg-config'
 		"${pkgPrefix}opros"
 		"${pkgPrefix}nitki"
+		"${pkgPrefix}tst"
 	)
 checkdepends=('myci')
 optdepends=()

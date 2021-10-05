@@ -9,6 +9,7 @@ class Libmorda < Formula
   depends_on "myci" => :build
   depends_on "glew" => :build
   depends_on "libnitki" => :build
+  depends_on "libtst" => :build
   depends_on "libutki"
   depends_on "libpapki"
   depends_on "libtreeml"

@@ -10,7 +10,8 @@ Build-Depends: g++ (>= 4:4.8), debhelper (>= 9), prorab (>= 1.8.3), prorab-extra
 		libsvgdom-dev (>= 0.3.56),
 		libsvgren-dev (>= 0.5.7),
 		libtreeml-dev (>= 0.1.26),
-		libnitki-dev (>= 1.0.39)
+		libnitki-dev (>= 1.0.39),
+		libtst-dev (>= 0.3.9)
 Build-Depends-Indep: doxygen
 
 Package: libmorda-dev
