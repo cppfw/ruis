@@ -7,7 +7,7 @@ int main(int argc, char** argv){
 	// test the get_all_widgets() function
 	{
 		morda::gui m(std::make_shared<morda::context>(
-				std::make_shared<FakeRenderer>(),
+				std::make_shared<fake_renderer>(),
 				std::make_shared<morda::updater>(),
 				[](std::function<void()>&&){},
 				[](morda::mouse_cursor){},

@@ -9,7 +9,7 @@ public:
 	fake_texture_2d() : morda::texture_2d(morda::vector2(13, 666)){}
 };
 
-class FakeFactory : public morda::render_factory{
+class fake_factory : public morda::render_factory{
 public:
 	std::shared_ptr<morda::frame_buffer> create_framebuffer(std::shared_ptr<morda::texture_2d> color)override{
 		return nullptr;
@@ -53,10 +53,10 @@ public:
 
 };
 
-class FakeRenderer : public morda::renderer{
+class fake_renderer : public morda::renderer{
 public:
-	FakeRenderer() :
-			morda::renderer(std::make_unique<FakeFactory>(), params())
+	fake_renderer() :
+			morda::renderer(std::make_unique<fake_factory>(), params())
 	{}
 
 	void clear_framebuffer()override{}

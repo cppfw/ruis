@@ -10,7 +10,7 @@ int main(int argc, char** argv){
 	// test that whole definition chain is substituted
 	{
 		morda::gui m(std::make_shared<morda::context>(
-				std::make_shared<FakeRenderer>(),
+				std::make_shared<fake_renderer>(),
 				std::make_shared<morda::updater>(),
 				[](std::function<void()>&&){},
 				[](morda::mouse_cursor){},
@@ -53,7 +53,7 @@ int main(int argc, char** argv){
 	// test template properties overriding
 	{
 		morda::gui m(std::make_shared<morda::context>(
-				std::make_shared<FakeRenderer>(),
+				std::make_shared<fake_renderer>(),
 				std::make_shared<morda::updater>(),
 				[](std::function<void()>&&){},
 				[](morda::mouse_cursor){},
@@ -100,7 +100,7 @@ int main(int argc, char** argv){
 	// test template arguments
 	{
 		morda::gui m(std::make_shared<morda::context>(
-				std::make_shared<FakeRenderer>(),
+				std::make_shared<fake_renderer>(),
 				std::make_shared<morda::updater>(),
 				[](std::function<void()>&&){},
 				[](morda::mouse_cursor){},
@@ -157,7 +157,7 @@ int main(int argc, char** argv){
 	{
 		// TRACE_ALWAYS(<< "!!!!!!!!!!!!!!!" << std::endl)
 		morda::gui m(std::make_shared<morda::context>(
-				std::make_shared<FakeRenderer>(),
+				std::make_shared<fake_renderer>(),
 				std::make_shared<morda::updater>(),
 				[](std::function<void()>&&){},
 				[](morda::mouse_cursor){},
@@ -195,7 +195,7 @@ int main(int argc, char** argv){
 	// test two levels of templates
 	{
 		morda::gui m(std::make_shared<morda::context>(
-				std::make_shared<FakeRenderer>(),
+				std::make_shared<fake_renderer>(),
 				std::make_shared<morda::updater>(),
 				[](std::function<void()>&&){},
 				[](morda::mouse_cursor){},
@@ -252,7 +252,7 @@ int main(int argc, char** argv){
 	// test template which nests same named widget on 2nd level
 	{
 		morda::gui m(std::make_shared<morda::context>(
-				std::make_shared<FakeRenderer>(),
+				std::make_shared<fake_renderer>(),
 				std::make_shared<morda::updater>(),
 				[](std::function<void()>&&){},
 				[](morda::mouse_cursor){},
@@ -298,7 +298,7 @@ int main(int argc, char** argv){
 	// test template recursion detection
 	{
 		morda::gui m(std::make_shared<morda::context>(
-				std::make_shared<FakeRenderer>(),
+				std::make_shared<fake_renderer>(),
 				std::make_shared<morda::updater>(),
 				[](std::function<void()>&&){},
 				[](morda::mouse_cursor){},
@@ -342,7 +342,7 @@ int main(int argc, char** argv){
 	// test two defs blocks in widget
 	{
 		morda::gui m(std::make_shared<morda::context>(
-				std::make_shared<FakeRenderer>(),
+				std::make_shared<fake_renderer>(),
 				std::make_shared<morda::updater>(),
 				[](std::function<void()>&&){},
 				[](morda::mouse_cursor){},
@@ -374,7 +374,7 @@ int main(int argc, char** argv){
 	// test variables overriding
 	{
 		morda::gui m(std::make_shared<morda::context>(
-				std::make_shared<FakeRenderer>(),
+				std::make_shared<fake_renderer>(),
 				std::make_shared<morda::updater>(),
 				[](std::function<void()>&&){},
 				[](morda::mouse_cursor){},
