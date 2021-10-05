@@ -336,7 +336,7 @@ void gui::render(const matrix4& matrix)const{
 
 	if(this->root_widget->is_layout_invalid()){
 		TRACE(<< "root widget re-layout needed!" << std::endl)
-		this->root_widget->relayoutNeeded = false;
+		this->root_widget->layout_dirty = false;
 		this->root_widget->lay_out();
 	}
 

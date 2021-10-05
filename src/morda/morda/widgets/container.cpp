@@ -276,7 +276,7 @@ void container::lay_out(){
 //	TRACE(<< "container::lay_out(): invoked" << std::endl)
 	for(auto& w : this->children()){
 		if(w->is_layout_invalid()){
-			w->relayoutNeeded = false;
+			w->layout_dirty = false;
 			w->lay_out();
 		}
 	}

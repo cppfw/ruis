@@ -174,7 +174,7 @@ public:
 	std::shared_ptr<texture_2d> render_to_texture(std::shared_ptr<texture_2d> reuse = nullptr)const;
 
 private:
-	bool relayoutNeeded = true;
+	bool layout_dirty = true;
 
 	treeml::forest layout_desc;
 
@@ -215,7 +215,7 @@ public:
 	 * @return false otherwise.
 	 */
 	bool is_layout_invalid()const noexcept{
-		return this->relayoutNeeded;
+		return this->layout_dirty;
 	}
 
 	/**

@@ -128,9 +128,9 @@ void widget::move_to(const vector2& new_pos){
 
 void widget::resize(const morda::vector2& newDims){
 	if(this->rectangle.d == newDims){
-		if(this->relayoutNeeded){
+		if(this->layout_dirty){
 			this->clear_cache();
-			this->relayoutNeeded = false;
+			this->layout_dirty = false;
 			this->lay_out();
 		}
 		return;
@@ -140,7 +140,7 @@ void widget::resize(const morda::vector2& newDims){
 
 	this->clear_cache();
 	this->rectangle.d = max(newDims, real(0)); // clamp bottom
-	this->relayoutNeeded = false;
+	this->layout_dirty = false;
 	this->on_resize(); // call virtual method
 }
 
@@ -168,10 +168,10 @@ std::shared_ptr<widget> widget::replace_by(std::shared_ptr<widget> w) {
 }
 
 void widget::invalidate_layout()noexcept{
-	if(this->relayoutNeeded){
+	if(this->layout_dirty){
 		return;
 	}
-	this->relayoutNeeded = true;
+	this->layout_dirty = true;
 	if(this->parent()){
 		this->parent()->invalidate_layout();
 	}
