@@ -211,10 +211,10 @@ public:
 
 	/**
 	 * @brief Check if this widget's contents need to be layed out.
-	 * @return true if this widget needs re-layout.
+	 * @return true if this widget needs re-layouting.
 	 * @return false otherwise.
 	 */
-	bool is_layout_invalid()const noexcept{
+	bool is_layout_dirty()const noexcept{
 		return this->layout_dirty;
 	}
 

@@ -275,7 +275,7 @@ void container::on_hover_change(unsigned pointer_id){
 void container::lay_out(){
 //	TRACE(<< "container::lay_out(): invoked" << std::endl)
 	for(auto& w : this->children()){
-		if(w->is_layout_invalid()){
+		if(w->is_layout_dirty()){
 			w->lay_out();
 			w->layout_dirty = false;
 		}

@@ -126,8 +126,8 @@ void widget::move_to(const vector2& new_pos){
 	this->rectangle.p = new_pos;
 }
 
-void widget::resize(const morda::vector2& newDims){
-	if(this->rectangle.d == newDims){
+void widget::resize(const morda::vector2& new_dims){
+	if(this->rectangle.d == new_dims){
 		if(this->layout_dirty){
 			this->clear_cache();
 			this->lay_out();
@@ -139,7 +139,7 @@ void widget::resize(const morda::vector2& newDims){
 	using std::max;
 
 	this->clear_cache();
-	this->rectangle.d = max(newDims, real(0)); // clamp bottom
+	this->rectangle.d = max(new_dims, real(0)); // clamp bottom
 	this->on_resize(); // call virtual method
 }
 
