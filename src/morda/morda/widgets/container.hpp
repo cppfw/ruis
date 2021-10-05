@@ -64,7 +64,7 @@ private:
 		~children_union(){
 			this->variable.~widget_list();
 		}
-	} children_v;
+	} children_list;
 
 	struct mouse_capture_info{
 		std::weak_ptr<widget> capturing_widget;
@@ -280,7 +280,7 @@ public:
 	 * @return List of child widgets.
 	 */
 	const widget_list& children()noexcept{
-		return this->children_v.variable;
+		return this->children_list.variable;
 	}
 
 	/**
@@ -290,7 +290,7 @@ public:
 	const const_widget_list& children()const noexcept{
 		// TRACE(<< "sizeof(widget_list::value_type) = " << sizeof(widget_list::value_type) << std::endl)
 		// TRACE(<< "sizeof(const_widget_list::value_type) = " << sizeof(const_widget_list::value_type) << std::endl)
-		return this->children_v.constant;
+		return this->children_list.constant;
 	}
 
 	/**
