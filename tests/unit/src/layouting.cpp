@@ -7,7 +7,7 @@
 #include <morda/util/mouse_cursor.hpp>
 #include <morda/gui.hpp>
 
-#include "../../harness/fake_renderer/fake_renderer.hpp"
+#include "../../harness/util/dummy_context.hpp"
 
 namespace{
 class container_which_invalidates_its_layout_during_layouting : public morda::container{
@@ -26,21 +26,8 @@ public:
 }
 
 namespace{
-std::shared_ptr<morda::context> make_dummy_context(){
-    return std::make_shared<morda::context>(
-            std::make_shared<fake_renderer>(),
-            std::make_shared<morda::updater>(),
-            [](std::function<void()>&&){},
-            [](morda::mouse_cursor){},
-            0,
-            0
-        );
-}
-}
-
-namespace{
 tst::set set("layouting", [](tst::suite& suite){
-    suite.add("invalidate_layout_during_layouting_should_result_in_valid_layout__lay_out", []{
+    suite.add("invalidate_layout_during_layouting_should_result_in_valid_layout__lay_out_method", []{
         auto context = make_dummy_context();
 
         auto c = std::make_shared<morda::container>(context, treeml::forest());
