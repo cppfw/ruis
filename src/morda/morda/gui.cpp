@@ -319,6 +319,10 @@ void gui::set_viewport(const morda::vector2& size){
 }
 
 void gui::set_root(std::shared_ptr<morda::widget> w){
+	if(w->parent()){
+		throw std::invalid_argument("given widget is already added to some container");
+	}
+
 	this->root_widget = std::move(w);
 
 	this->root_widget->move_to(morda::vector2(0));
@@ -336,8 +340,8 @@ void gui::render(const matrix4& matrix)const{
 
 	if(this->root_widget->is_layout_dirty()){
 		TRACE(<< "root widget re-layout needed!" << std::endl)
-		this->root_widget->layout_dirty = false;
 		this->root_widget->lay_out();
+		this->root_widget->layout_dirty = false;
 	}
 
 	morda::matrix4 m(matrix);

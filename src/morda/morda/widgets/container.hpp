@@ -392,7 +392,7 @@ public:
 
 	/**
 	 * @brief Called when children list changes.
-	 * This implementation requests re-layout.
+	 * This implementation invalidates layout.
      */
 	virtual void on_children_change(){
 		this->invalidate_layout();
