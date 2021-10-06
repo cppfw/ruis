@@ -33,14 +33,6 @@ Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: OpenGL UI framework
  Cross platform OpenGL UI framework written in C++.
 
-Package: libmorda$(soname)-dbg
-Architecture: any
-Priority: extra
-Section: debug
-Depends: libmorda$(soname) (= ${binary:Version}), ${misc:Depends}
-Description: libmorda debug symbols
- Debug symbols for the libmorda library.
-
 Package: libmorda-doc
 Architecture: all
 Section: doc
