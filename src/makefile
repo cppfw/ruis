@@ -5,7 +5,7 @@ this_name := morda
 
 this_soname := $(shell cat $(d)soname.txt)
 
-this_srcs += $(call prorab-src-dir,morda)
+this_srcs += $(call prorab-src-dir, morda)
 
 $(eval $(call prorab-config, ../config))
 
@@ -29,6 +29,6 @@ $(eval $(prorab-build-lib))
 
 $(eval $(prorab-clear-this-vars))
 
-this_src_dir := 
+this_src_dir := morda
 this_license_file := ../LICENSE
 $(eval $(prorab-license))
