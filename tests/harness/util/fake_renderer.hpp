@@ -2,7 +2,7 @@
 
 #include <memory>
 
-#include "../../../src/morda/morda/render/renderer.hpp"
+#include "../../../src/morda/render/renderer.hpp"
 
 class fake_texture_2d : public morda::texture_2d{
 public:

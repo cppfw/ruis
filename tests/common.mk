@@ -6,9 +6,9 @@ this_srcs += $(call prorab-src-dir, src)
 
 $(eval $(call prorab-config, ../../config))
 
-this_cxxflags += -I../../src/morda -I../harness/modules/mordavokne/src
+this_cxxflags += -I../../src -I../harness/modules/mordavokne/src
 
-this_libmorda_dir := ../../src/morda/out/$(c)/
+this_libmorda_dir := ../../src/out/$(c)/
 this_libmorda := $(this_libmorda_dir)libmorda$(dot_so)
 
 ifeq ($(os),windows)

@@ -4,8 +4,8 @@
 
 #include <mordavokne/application.hpp>
 
-#include "../../../src/morda/morda/widgets/button/push_button.hpp"
-#include "../../../src/morda/morda/widgets/label/busy.hpp"
+#include "../../../src/morda/widgets/button/push_button.hpp"
+#include "../../../src/morda/widgets/label/busy.hpp"
 
 class application : public mordavokne::application{
 	static mordavokne::window_params GetWindowParams()noexcept{

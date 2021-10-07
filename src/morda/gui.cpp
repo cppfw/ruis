@@ -237,7 +237,7 @@ void gui::initStandardWidgets(papki::file& fi) {
 	(M_OS == M_OS_UNIX)
 
 	unsigned soname =
-#	include "../../soname.txt"
+#	include "../soname.txt"
 	;
 
 	{

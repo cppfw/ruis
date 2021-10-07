@@ -12,7 +12,7 @@
 			"args": [],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}/tests/app",
-			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/morda/out/dbg:../harness/modules/mordavokne/src/out/dbg:../harness/modules/morda-render-opengl/src/out/dbg"}],
+			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/out/dbg:../harness/modules/mordavokne/src/out/dbg:../harness/modules/morda-render-opengl/src/out/dbg"}],
 			"externalConsole": false,
 			"MIMode": "gdb",
 			"setupCommands": [
@@ -32,7 +32,7 @@
 			"args": [],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}/tests/busy",
-			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/morda/build:../harness/mordavokne/build"}],
+			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/build:../harness/mordavokne/build"}],
 			"externalConsole": false,
 			"MIMode": "gdb",
 			"setupCommands": [
@@ -52,7 +52,7 @@
 			"args": [],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}/tests/book",
-			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/morda/build:../harness/mordavokne/build"}],
+			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/build:../harness/mordavokne/build"}],
 			"externalConsole": false,
 			"MIMode": "gdb",
 			"setupCommands": [
@@ -72,7 +72,7 @@
 			"args": [],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}/tests/tabbed_book",
-			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/morda/out/dbg:../harness/mordavokne/out/dbg"}],
+			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/out/dbg:../harness/mordavokne/out/dbg"}],
 			"externalConsole": false,
 			"MIMode": "gdb",
 			"setupCommands": [
@@ -92,7 +92,7 @@
 			"args": [],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}/tests/paint",
-			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/morda/build:../harness/mordavokne/build"}],
+			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/build:../harness/mordavokne/build"}],
 			"externalConsole": false,
 			"MIMode": "gdb",
 			"setupCommands": [
@@ -112,7 +112,7 @@
 			"args": [],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}/tests/widget_set",
-			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/morda/build:../harness/mordavokne/build"}],
+			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/build:../harness/mordavokne/build"}],
 			"externalConsole": false,
 			"MIMode": "gdb",
 			"setupCommands": [
@@ -132,7 +132,7 @@
 			"args": [],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}/tests/get_all_widgets",
-			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/morda/build:../harness/mordavokne/build"}],
+			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/build:../harness/mordavokne/build"}],
 			"externalConsole": false,
 			"MIMode": "gdb",
 			"setupCommands": [
@@ -172,7 +172,7 @@
 			"args": [],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}/tests/unit",
-			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/morda/out/dbg"}],
+			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/out/dbg"}],
 			"externalConsole": false,
 			"MIMode": "gdb",
 			"setupCommands": [

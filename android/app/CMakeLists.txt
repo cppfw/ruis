@@ -34,7 +34,7 @@ add_library(
     )
 
 include_directories(
-        ../../src/morda/
+        ../../src/
         ../../tests/harness/mordavokne/
         ../../tests/harness/opengles2/
     )

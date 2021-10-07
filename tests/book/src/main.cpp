@@ -4,12 +4,12 @@
 
 #include <mordavokne/application.hpp>
 
-#include "../../../src/morda/morda/widgets/button/push_button.hpp"
-#include "../../../src/morda/morda/widgets/label/busy.hpp"
-#include "../../../src/morda/morda/widgets/group/book.hpp"
-#include "../../../src/morda/morda/widgets/button/tab_group.hpp"
-#include "../../../src/morda/morda/widgets/button/tab.hpp"
-#include "../../../src/morda/morda/widgets/label/text.hpp"
+#include "../../../src/morda/widgets/button/push_button.hpp"
+#include "../../../src/morda/widgets/label/busy.hpp"
+#include "../../../src/morda/widgets/group/book.hpp"
+#include "../../../src/morda/widgets/button/tab_group.hpp"
+#include "../../../src/morda/widgets/button/tab.hpp"
+#include "../../../src/morda/widgets/label/text.hpp"
 
 #include "pile_page.hpp"
 #include "cube_page.hpp"

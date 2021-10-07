@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../../../src/morda/morda/widgets/group/pile.hpp"
-#include "../../../src/morda/morda/widgets/group/book.hpp"
+#include "../../../src/morda/widgets/group/pile.hpp"
+#include "../../../src/morda/widgets/group/book.hpp"
 
 class pile_page :
 		public morda::page,

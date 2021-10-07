@@ -3,7 +3,7 @@
 #include <morda/widgets/group/pile.hpp>
 #include <morda/updateable.hpp>
 
-#include "../../../src/morda/morda/widgets/group/book.hpp"
+#include "../../../src/morda/widgets/group/book.hpp"
 
 class cube_page :
 		public morda::page,

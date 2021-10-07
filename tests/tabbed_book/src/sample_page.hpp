@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../../../src/morda/morda/widgets/group/book.hpp"
-#include "../../../src/morda/morda/widgets/label/text.hpp"
+#include "../../../src/morda/widgets/group/book.hpp"
+#include "../../../src/morda/widgets/label/text.hpp"
 
 class sample_page :
         public morda::page,

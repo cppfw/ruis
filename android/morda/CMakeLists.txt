@@ -10,7 +10,7 @@ cmake_minimum_required(VERSION 3.4.1)
 # and CMake builds them for you. When you build your app, Gradle
 # automatically packages shared libraries with your APK.
 
-file(GLOB_RECURSE srcs "../../src/morda/morda/*.cpp")
+file(GLOB_RECURSE srcs "../../src/*.cpp")
 
 set(name morda)
 

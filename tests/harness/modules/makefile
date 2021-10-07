@@ -5,7 +5,7 @@ include $(d)module_cfg.mk
 # load config in order to resolve 'c' and 'config' in case of default config
 $(eval $(call prorab-config, ../../../config))
 
-module_morda_dir := ../../../src/morda/
+module_morda_dir := ../../../src/
 this_libmorda_dir := $(module_morda_dir)out/$(c)/
 this_libmorda := $(this_libmorda_dir)libmorda$(dot_so)
 

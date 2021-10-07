@@ -2,9 +2,9 @@
 
 #include <mordavokne/application.hpp>
 
-#include "../../../src/morda/morda/widgets/widget.hpp"
+#include "../../../src/morda/widgets/widget.hpp"
 
-#include "../../../src/morda/morda/paint/path_vao.hpp"
+#include "../../../src/morda/paint/path_vao.hpp"
 
 class path_widget : virtual public morda::widget{
 	morda::path_vao vba;
