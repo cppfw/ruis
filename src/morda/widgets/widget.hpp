@@ -144,10 +144,10 @@ public:
 
 private:
 	bool cache = false;
-	mutable bool cacheDirty = true;
+	mutable bool cache_dirty = true;
 	mutable std::shared_ptr<texture_2d> cache_texture;
 
-	void renderFromCache(const r4::matrix4<float>& matrix)const;
+	void render_from_cache(const r4::matrix4<float>& matrix)const;
 
 protected:
 	void clear_cache();

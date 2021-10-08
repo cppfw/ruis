@@ -192,8 +192,8 @@ void widget::render_internal(const morda::matrix4& matrix)const{
 	auto& r = *this->context->renderer;
 
 	if(this->cache){
-		if(this->cacheDirty){
-			bool scissorTestWasEnabled = r.is_scissor_enabled();
+		if(this->cache_dirty){
+			bool scissor_test_was_enabled = r.is_scissor_enabled();
 			r.set_scissor_enabled(false);
 
 			// check if can re-use old texture
@@ -204,14 +204,14 @@ void widget::render_internal(const morda::matrix4& matrix)const{
 				this->cache_texture = this->render_to_texture(std::move(this->cache_texture));
 			}
 
-			r.set_scissor_enabled(scissorTestWasEnabled);
-			this->cacheDirty = false;
+			r.set_scissor_enabled(scissor_test_was_enabled);
+			this->cache_dirty = false;
 		}
 
 		// after rendering to texture it is most likely there will be transparent areas, so enable simple blending
 		set_simple_alpha_blending(*this->context->renderer);
 
-		this->renderFromCache(matrix);
+		this->render_from_cache(matrix);
 	}else{
 		if(this->clip_enabled){
 	//		TRACE(<< "widget::RenderInternal(): oldScissorBox = " << Rect2i(oldcissorBox[0], oldcissorBox[1], oldcissorBox[2], oldcissorBox[3]) << std::endl)
@@ -219,11 +219,11 @@ void widget::render_internal(const morda::matrix4& matrix)const{
 			// set scissor test
 			r4::rectangle<int> scissor = this->compute_viewport_rect(matrix);
 
-			r4::rectangle<int> oldScissor;
-			bool scissorTestWasEnabled = r.is_scissor_enabled();
-			if(scissorTestWasEnabled){
-				oldScissor = r.get_scissor();
-				scissor.intersect(oldScissor);
+			r4::rectangle<int> old_scissor;
+			bool scissor_test_was_enabled = r.is_scissor_enabled();
+			if(scissor_test_was_enabled){
+				old_scissor = r.get_scissor();
+				scissor.intersect(old_scissor);
 			}else{
 				r.set_scissor_enabled(true);
 			}
@@ -232,8 +232,8 @@ void widget::render_internal(const morda::matrix4& matrix)const{
 
 			this->render(matrix);
 
-			if(scissorTestWasEnabled){
-				r.set_scissor(oldScissor);
+			if(scissor_test_was_enabled){
+				r.set_scissor(old_scissor);
 			}else{
 				r.set_scissor_enabled(false);
 			}
@@ -280,9 +280,9 @@ std::shared_ptr<texture_2d> widget::render_to_texture(std::shared_ptr<texture_2d
 
 //	ASSERT_INFO(Render::isBoundFrameBufferComplete(), "tex.dims() = " << tex.dims())
 
-	auto oldViewport = r.get_viewport();
-	utki::scope_exit scope_exit([&oldViewport, &r](){
-		r.set_viewport(oldViewport);
+	auto old_viewport = r.get_viewport();
+	utki::scope_exit scope_exit([&old_viewport, &r](){
+		r.set_viewport(old_viewport);
 	});
 
 	r.set_viewport(r4::rectangle<int>(0, this->rect().d.to<int>()));
@@ -300,7 +300,7 @@ std::shared_ptr<texture_2d> widget::render_to_texture(std::shared_ptr<texture_2d
 	return tex;
 }
 
-void widget::renderFromCache(const r4::matrix4<float>& matrix) const {
+void widget::render_from_cache(const r4::matrix4<float>& matrix)const{
 	morda::matrix4 matr(matrix);
 	matr.scale(this->rect().d);
 
@@ -310,7 +310,7 @@ void widget::renderFromCache(const r4::matrix4<float>& matrix) const {
 }
 
 void widget::clear_cache(){
-	this->cacheDirty = true;
+	this->cache_dirty = true;
 	if(this->parent()){
 		this->parent()->clear_cache();
 	}
@@ -450,9 +450,9 @@ void widget::set_visible(bool visible){
 }
 
 void widget::set_unhovered(){
-	auto hoverSet = std::move(this->hovered);
+	auto hover_set = std::move(this->hovered);
 	ASSERT(this->hovered.size() == 0)
-	for(auto h : hoverSet){
+	for(auto h : hover_set){
 		this->on_hover_change(h);
 	}
 }
