@@ -340,8 +340,8 @@ void gui::render(const matrix4& matrix)const{
 
 	if(this->root_widget->is_layout_dirty()){
 		TRACE(<< "root widget re-layout needed!" << std::endl)
-		this->root_widget->lay_out();
 		this->root_widget->layout_dirty = false;
+		this->root_widget->lay_out();
 	}
 
 	morda::matrix4 m(matrix);

@@ -130,8 +130,8 @@ void widget::resize(const morda::vector2& new_dims){
 	if(this->rectangle.d == new_dims){
 		if(this->layout_dirty){
 			this->clear_cache();
-			this->lay_out();
 			this->layout_dirty = false;
+			this->lay_out();
 		}
 		return;
 	}
@@ -144,8 +144,8 @@ void widget::resize(const morda::vector2& new_dims){
 }
 
 void widget::on_resize(){
-	this->lay_out();
 	this->layout_dirty = false;
+	this->lay_out();
 }
 
 std::shared_ptr<widget> widget::remove_from_parent(){

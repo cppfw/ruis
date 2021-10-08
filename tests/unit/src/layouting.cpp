@@ -27,7 +27,7 @@ public:
 
 namespace{
 tst::set set("layouting", [](tst::suite& suite){
-    suite.add("invalidate_layout_during_layouting_should_result_in_valid_layout__lay_out_method", []{
+    suite.add("invalidate_layout_during_layouting_should_result_in_dirty_layout__lay_out_method", []{
         auto context = make_dummy_context();
 
         auto c = std::make_shared<morda::container>(context, treeml::forest());
@@ -37,13 +37,13 @@ tst::set set("layouting", [](tst::suite& suite){
         c->push_back(tc);
         tst::check(tc->is_layout_dirty(), SL);
 
-        // after prforming layouting on parent container the child test_container's layout should stay valid even
-        // though it changes its children during layouting
+        // after prforming layouting on parent container the child container's layout should be dirty
+        // because it invalidates its layout during layouting in its lay_out() overridden method
         c->lay_out();
-        tst::check(!tc->is_layout_dirty(), SL);
+        tst::check(tc->is_layout_dirty(), SL);
     });
 
-    suite.add("invalidate_layout_during_layouting_should_result_in_valid_layout__resize_to_same_size", []{
+    suite.add("invalidate_layout_during_layouting_should_result_in_dirty_layout__resize_to_same_size", []{
         auto context = make_dummy_context();
 
         auto c = std::make_shared<morda::container>(context, treeml::forest());
@@ -56,10 +56,10 @@ tst::set set("layouting", [](tst::suite& suite){
         // when resizing widget to the same size it should not do anything except perform re-layouting (TODO: why should it?) in case
         // layout was dirty
         tc->resize(tc->rect().d);
-        tst::check(!tc->is_layout_dirty(), SL);
+        tst::check(tc->is_layout_dirty(), SL);
     });
 
-    suite.add("invalidate_layout_during_layouting_should_result_in_valid_layout__resize_to_different_size", []{
+    suite.add("invalidate_layout_during_layouting_should_result_in_dirty_layout__resize_to_different_size", []{
         auto context = make_dummy_context();
 
         auto c = std::make_shared<morda::container>(context, treeml::forest());
@@ -72,10 +72,10 @@ tst::set set("layouting", [](tst::suite& suite){
         // when resizing widget to different size it should change it's size and call on_resize() virtual method
         // which by default does re-layouting
         tc->resize(c->rect().d + morda::vector2{1, 1});
-        tst::check(!tc->is_layout_dirty(), SL);
+        tst::check(tc->is_layout_dirty(), SL);
     });
 
-    suite.add("invalidate_layout_during_layouting_should_result_in_valid_layout__gui_render", []{
+    suite.add("invalidate_layout_during_layouting_should_result_in_dirty_layout__gui_render", []{
         auto context = make_dummy_context();
 
         auto tc = std::make_shared<container_which_invalidates_its_layout_during_layouting>(context);
@@ -87,13 +87,13 @@ tst::set set("layouting", [](tst::suite& suite){
         gui.set_root(tc);
         
         // after setting widget as gui root it will be resized to window size and hence it will be layed out
-        tst::check(!tc->is_layout_dirty(), SL);
+        tst::check(tc->is_layout_dirty(), SL);
 
         tc->invalidate_layout();
 
         // gui render method will check if layout is dirty and perform re-layouting
         gui.render();
-        tst::check(!tc->is_layout_dirty(), SL);
+        tst::check(tc->is_layout_dirty(), SL);
     });
 });
 }
