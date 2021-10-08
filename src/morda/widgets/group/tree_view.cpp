@@ -162,12 +162,12 @@ std::shared_ptr<widget> tree_view::provider::get_widget(size_t index){
 
 	auto list = &this->visible_tree.children;
 
-	std::vector<bool> isLastItemInParent;
+	std::vector<bool> is_last_item_in_parent;
 
 	decltype(this->visible_tree)* n = nullptr;
 
 	for(const auto& i : path){
-		isLastItemInParent.push_back(i + 1 == list->size());
+		is_last_item_in_parent.push_back(i + 1 == list->size());
 		n = &(*list)[i];
 		list = &n->children;
 	}
@@ -176,14 +176,14 @@ std::shared_ptr<widget> tree_view::provider::get_widget(size_t index){
 
 	auto ret = std::make_shared<morda::row>(this->get_list()->context, treeml::forest());
 
-	ASSERT(isLastItemInParent.size() == path.size())
+	ASSERT(is_last_item_in_parent.size() == path.size())
 
 	for(unsigned i = 0; i != path.size() - 1; ++i){
-		ret->push_back_inflate(isLastItemInParent[i] ? empty_layout : vert_line_layout);
+		ret->push_back_inflate(is_last_item_in_parent[i] ? empty_layout : vert_line_layout);
 	}
 
 	{
-		auto widget = this->get_list()->context->inflater.inflate_as<morda::pile>(isLastItemInParent.back() ? line_end_layout : line_middle_layout);
+		auto widget = this->get_list()->context->inflater.inflate_as<morda::pile>(is_last_item_in_parent.back() ? line_end_layout : line_middle_layout);
 		ASSERT(widget)
 
 		if(this->count(utki::make_span(path)) != 0){
@@ -197,9 +197,9 @@ std::shared_ptr<widget> tree_view::provider::get_widget(size_t index){
 							this->get_list()->context->loader.load<morda::res::image>("morda_img_treeview_minus")
 				);
 
-			auto plusminusMouseProxy = w->try_get_widget_as<morda::mouse_proxy>("plusminus_mouseproxy");
-			ASSERT(plusminusMouseProxy)
-			plusminusMouseProxy->mouse_button_handler = [this, path, is_collapsed](morda::mouse_proxy&, const morda::mouse_button_event& e) -> bool {
+			auto plusminus_mouse_proxy = w->try_get_widget_as<morda::mouse_proxy>("plusminus_mouseproxy");
+			ASSERT(plusminus_mouse_proxy)
+			plusminus_mouse_proxy->mouse_button_handler = [this, path, is_collapsed](morda::mouse_proxy&, const morda::mouse_button_event& e) -> bool {
 				if(e.button != morda::mouse_button::left){
 					return false;
 				}
