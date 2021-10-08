@@ -57,11 +57,11 @@ const widget::layout_params& container::get_layout_params_const(const widget& w)
 		throw std::invalid_argument("container::get_layout_params(): the given widget is not a child of this container");
 	}
 
-	if(!w.layoutParams){
-		w.layoutParams = this->create_layout_params(w.layout_desc);
+	if(!w.layout_params_){
+		w.layout_params_ = this->create_layout_params(w.layout_desc);
 	}
 
-	return *w.layoutParams;
+	return *w.layout_params_;
 }
 
 std::unique_ptr<widget::layout_params> container::create_layout_params(const treeml::forest& desc)const{
@@ -91,7 +91,7 @@ void container::render_child(const matrix4& matrix, const widget& c) const {
 	morda::matrix4 matr(matrix);
 	matr.translate(c.rect().p);
 
-	c.renderInternal(matr);
+	c.render_internal(matr);
 }
 
 void container::render(const morda::matrix4& matrix)const{

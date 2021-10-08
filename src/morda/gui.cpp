@@ -352,7 +352,7 @@ void gui::render(const matrix4& matrix)const{
 	m.translate(-1, -1);
 	m.scale(vector2(2).comp_divide(this->viewportSize));
 
-	this->root_widget->renderInternal(m);
+	this->root_widget->render_internal(m);
 }
 
 void gui::send_mouse_move(const vector2& pos, unsigned id){
@@ -390,11 +390,11 @@ void gui::send_key(bool is_down, key key_code){
 
 	if(auto w = this->context->focused_widget.lock()){
 //		TRACE(<< "HandleKeyEvent(): there is a focused widget" << std::endl)
-		w->onKeyInternal(is_down, key_code);
+		w->on_key_internal(is_down, key_code);
 	}else{
 //		TRACE(<< "HandleKeyEvent(): there is no focused widget, passing to rootWidget" << std::endl)
 		if(this->root_widget){
-			this->root_widget->onKeyInternal(is_down, key_code);
+			this->root_widget->on_key_internal(is_down, key_code);
 		}
 	}
 }

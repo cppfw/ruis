@@ -124,7 +124,7 @@ public:
 	template <class T> const T& get_layout_params_as_const(const widget& w)const{
 		auto p = dynamic_cast<const T*>(&this->get_layout_params_const(w));
 		if(!p){
-			w.layoutParams.reset();
+			w.layout_params_.reset();
 			p = dynamic_cast<const T*>(&this->get_layout_params_const(w));
 		}
 
@@ -143,7 +143,7 @@ public:
 	template <class T> T& get_layout_params_as(widget& w){
 		auto p = dynamic_cast<T*>(&this->get_layout_params(w));
 		if(!p){
-			w.layoutParams.reset();
+			w.layout_params_.reset();
 			p = dynamic_cast<T*>(&this->get_layout_params(w));
 		}
 

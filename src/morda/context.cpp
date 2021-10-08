@@ -50,14 +50,14 @@ context::context(
 
 void context::set_focused_widget(std::shared_ptr<widget> w){
 	if(auto prev = this->focused_widget.lock()){
-		prev->isFocused_v = false;
+		prev->focused = false;
 		prev->on_focus_change();
 	}
 
 	this->focused_widget = w;
 
 	if(w){
-		w->isFocused_v = true;
+		w->focused = true;
 		w->on_focus_change();
 	}
 }

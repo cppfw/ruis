@@ -178,7 +178,7 @@ private:
 
 	treeml::forest layout_desc;
 
-	mutable std::unique_ptr<layout_params> layoutParams;
+	mutable std::unique_ptr<layout_params> layout_params_;
 public:
 	std::string id;
 
@@ -444,13 +444,13 @@ public:
 	virtual void render(const morda::matrix4& matrix)const{}
 
 private:
-	void renderInternal(const morda::matrix4& matrix)const;
+	void render_internal(const morda::matrix4& matrix)const;
 
 private:
-	void onKeyInternal(bool isDown, key keyCode);
+	void on_key_internal(bool is_down, key key_code);
 
 private:
-	bool isFocused_v = false;
+	bool focused = false;
 public:
 
 	/**
@@ -482,7 +482,7 @@ public:
 	 * @return false otherwise.
 	 */
 	bool is_focused()const noexcept{
-		return this->isFocused_v;
+		return this->focused;
 	}
 
 	/**

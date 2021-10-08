@@ -179,10 +179,12 @@ void widget::invalidate_layout()noexcept{
 	if(this->parent()){
 		this->parent()->invalidate_layout();
 	}
+
+	// TODO: this->clear_cache()?
 	this->cache_texture.reset();
 }
 
-void widget::renderInternal(const morda::matrix4& matrix)const{
+void widget::render_internal(const morda::matrix4& matrix)const{
 	if(!this->rect().d.is_positive()){
 		return;
 	}
@@ -314,15 +316,15 @@ void widget::clear_cache(){
 	}
 }
 
-void widget::onKeyInternal(bool isDown, key keyCode){
+void widget::on_key_internal(bool is_down, key key_code){
 	if(this->is_interactive()){
-		if(this->on_key(isDown, keyCode)){
+		if(this->on_key(is_down, key_code)){
 			return;
 		}
 	}
 
 	if(this->parent()){
-		this->parent()->onKeyInternal(isDown, keyCode);
+		this->parent()->on_key_internal(is_down, key_code);
 	}
 }
 
