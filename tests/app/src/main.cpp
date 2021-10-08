@@ -254,15 +254,15 @@ public:
 						subsubroot2
 					}
 				}
-				root2{
+				root22{
 					subsubroot1
 					subsubroot2{
 						trololo
 						"hello world!"
 					}
 				}
-				root3
-				root4
+				root333
+				root4444
 			)qwertyuiop");
 	}
 
@@ -354,12 +354,9 @@ public:
 		auto list = &this->root;
 		decltype(list) parent_list = nullptr;
 
-		std::vector<bool> isLastItemInParent;
-
 		treeml::tree* n = nullptr;
 
 		for(const auto& i : path){
-			isLastItemInParent.push_back(i + 1 == list->size());
 			n = &(*list)[i];
 			parent_list = list;
 			list = &n->children;
@@ -373,7 +370,7 @@ public:
 							@pile{
 								@color{
 									id{selection}
-									layout{dx{max}dy{max}}
+									layout{dx{fill}dy{fill}}
 									color{${morda_color_highlight}}
 									visible{false}
 								}
@@ -382,7 +379,7 @@ public:
 								}
 								@mouse_proxy{
 									id{mouse_proxy}
-									layout{dx{max}dy{max}}
+									layout{dx{fill}dy{fill}}
 								}
 							}
 						)qwertyuiop"
