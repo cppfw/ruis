@@ -1,5 +1,6 @@
 include prorab.mk
 include prorab-license.mk
+include prorab-install-dbgsrc.mk
 
 this_name := morda
 
@@ -19,8 +20,8 @@ this_ldlibs += -lpapki -ltreeml -lsvgdom -lsvgren -lutki -lpng -ljpeg -lm
 
 $(eval $(prorab-build-lib))
 
-$(eval $(prorab-clear-this-vars))
-
-this_src_dir := morda
+this_src_dir := $(this_name)
 this_license_file := ../LICENSE
 $(eval $(prorab-license))
+
+$(eval $(prorab-install-dbgsrc))

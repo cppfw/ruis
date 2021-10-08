@@ -14,6 +14,14 @@ Build-Depends: g++ (>= 4:4.8), debhelper (>= 9), prorab (>= 1.8.3), prorab-extra
 		libtst-dev (>= 0.3.9)
 Build-Depends-Indep: doxygen
 
+Package: libmorda$(soname)
+Architecture: any
+Priority: extra
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: OpenGL UI framework
+ Cross platform OpenGL UI framework written in C++.
+
 Package: libmorda-dev
 Architecture: any
 Depends: libmorda$(soname) (= ${binary:Version}), ${misc:Depends},
@@ -25,13 +33,11 @@ Description: OpenGL UI framework development files
  Cross platform OpenGL UI framework written in C++.
  Development files.
 
-Package: libmorda$(soname)
+Package: libmorda$(soname)-dbgsrc
+Section: debug
 Architecture: any
-Priority: extra
-Section: libs
-Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: OpenGL UI framework
- Cross platform OpenGL UI framework written in C++.
+Depends: libmorda$(soname)-dbgsym (= ${binary:Version}), ${misc:Depends}
+Description: debugging sources for libmorda$(soname) package.
 
 Package: libmorda-doc
 Architecture: all
