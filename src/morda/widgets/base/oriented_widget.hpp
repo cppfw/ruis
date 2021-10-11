@@ -28,7 +28,7 @@ namespace morda{
 class oriented_widget : virtual public widget{
 	bool is_vertical_v;
 
-protected:
+public:
 	unsigned get_long_index()const noexcept{
 		return this->is_vertical_v ? 1 : 0;
 	}
@@ -39,7 +39,6 @@ protected:
 
 	oriented_widget(std::shared_ptr<morda::context> c, const treeml::forest& desc, bool vertical);
 
-public:
 	oriented_widget(const oriented_widget&) = delete;
 	oriented_widget& operator=(const oriented_widget&) = delete;
 
