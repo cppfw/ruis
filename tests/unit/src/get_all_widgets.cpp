@@ -56,8 +56,15 @@ tst::set set("get_all_widgets", [](tst::suite& suite){
 
 		auto aaas = w->get_all_widgets<morda::column>();
 		tst::check_ne(aaas.size(), size_t(0), SL);
+
 		for(const auto& id : expected_ids){
-            auto i = std::find_if(aaas.begin(), aaas.end(), [&id](const decltype(aaas)::value_type& w)->bool{return w->id == id;});
+            auto i = std::find_if(
+					aaas.begin(),
+					aaas.end(),
+					[&id](const decltype(aaas)::value_type& wg) -> bool {
+						return wg->id == id;
+					}
+				);
             tst::check(i != aaas.end(), SL) << "id = '" << id <<"' not found";
 		}
 	});

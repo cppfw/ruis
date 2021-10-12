@@ -276,7 +276,7 @@ tst::set set("inflaitng", [](tst::suite& suite){
 				}
 			)qwertyuiop"));
             tst::check(false, SL);
-		}catch(std::logic_error& e){
+		}catch(std::logic_error&){
             // expected to get here
 		}catch(...){
             tst::check(false, SL);

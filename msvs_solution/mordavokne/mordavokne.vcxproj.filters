@@ -15,13 +15,13 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\tests\harness\modules\mordavokne\src\mordavokne\application.cpp">
+    <ClCompile Include="..\..\tests\harness\modules\mordavokne\src\**\*.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\tests\harness\modules\mordavokne\src\mordavokne\glue\glue.cpp">
+    <ClCompile Include="..\..\tests\harness\modules\mordavokne\src\**\*.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\tests\harness\modules\mordavokne\src\mordavokne\glue\util.cpp">
+    <ClCompile Include="..\..\tests\harness\modules\mordavokne\src\**\*.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -74,9 +74,6 @@
     <ClCompile Include="..\..\tests\app\src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\tests\app\src\main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\tests\app\src\opengl2\mordaren\OpenGL2Buffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -161,18 +158,9 @@
     <ClCompile Include="..\..\tests\app\src\opengl2\mordaren\OpenGL2Texture2D.cpp" />
     <ClCompile Include="..\..\tests\app\src\opengl2\mordaren\OpenGL2VertexArray.cpp" />
     <ClCompile Include="..\..\tests\app\src\opengl2\mordaren\OpenGL2VertexBuffer.cpp" />
-    <ClCompile Include="..\..\tests\app\src\opengl2\mordaren\OpenGL2Buffer.cpp">
+    <ClCompile Include="..\..\tests\app\src\**\*.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\tests\app\src\opengl2\mordaren\OpenGL2Factory.cpp" />
-    <ClCompile Include="..\..\tests\app\src\opengl2\mordaren\OpenGL2FrameBuffer.cpp" />
-    <ClCompile Include="..\..\tests\app\src\opengl2\mordaren\OpenGL2IndexBuffer.cpp" />
-    <ClCompile Include="..\..\tests\app\src\opengl2\mordaren\OpenGL2Renderer.cpp" />
-    <ClCompile Include="..\..\tests\app\src\opengl2\mordaren\OpenGL2ShaderColorPosTex.cpp" />
-    <ClCompile Include="..\..\tests\app\src\opengl2\mordaren\OpenGL2ShaderPosClr.cpp" />
-    <ClCompile Include="..\..\tests\app\src\opengl2\mordaren\OpenGL2Texture2D.cpp" />
-    <ClCompile Include="..\..\tests\app\src\opengl2\mordaren\OpenGL2VertexArray.cpp" />
-    <ClCompile Include="..\..\tests\app\src\opengl2\mordaren\OpenGL2VertexBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
