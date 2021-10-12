@@ -8,7 +8,7 @@ std::shared_ptr<morda::context> make_dummy_context(){
             std::make_shared<morda::updater>(),
             [](std::function<void()>&&){},
             [](morda::mouse_cursor){},
-            0,
-            0
+            morda::real(0),
+            morda::real(0)
         );
 }
