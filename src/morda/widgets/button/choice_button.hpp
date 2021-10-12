@@ -45,6 +45,8 @@ public:
 	
 	choice_button(const choice_button&) = delete;
 	choice_button& operator=(const choice_button&) = delete;
+
+	void activate();
 };
 
 }

@@ -24,7 +24,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace morda;
 
-bool tab::maskOverlaps(vector2 pos) {
+bool tab::maskOverlaps(vector2 pos){
 	auto borders = this->get_actual_borders();
 
 	if(pos.x() < borders.left()){
@@ -73,7 +73,7 @@ bool tab::on_mouse_button(const mouse_button_event& e){
 	return this->choice_button::on_mouse_button(e);
 }
 
-void tab::on_press_change() {
+void tab::on_press_change(){
 	this->choice_button::on_press_change();
 	this->nine_patch_toggle::on_press_change();
 }

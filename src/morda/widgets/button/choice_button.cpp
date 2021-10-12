@@ -34,13 +34,8 @@ choice_button::choice_button(std::shared_ptr<morda::context> c, const treeml::fo
 void choice_button::on_press_change(){
 	this->toggle_button::on_press_change();
 
-	auto cg = this->try_get_ancestor<choice_group>();
-	if(!cg){
-		return;
-	}
-	
 	if(this->is_pressed()){
-		cg->setActiveChoiceButton(utki::make_shared_from(*this));
+		this->activate();
 	}
 }
 
@@ -49,4 +44,15 @@ bool choice_button::on_mouse_button(const mouse_button_event& e){
 		return true;
 	}
 	return this->toggle_button::on_mouse_button(e);
+}
+
+void choice_button::activate(){
+	this->set_pressed(true);
+
+	auto cg = this->try_get_ancestor<choice_group>();
+	if(!cg){
+		return;
+	}
+	
+	cg->set_active_choice_button(utki::make_shared_from(*this));
 }
