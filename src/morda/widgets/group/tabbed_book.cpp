@@ -60,7 +60,7 @@ void tabbed_book::add(std::shared_ptr<tab> tab, std::shared_ptr<morda::page> pag
 
 	tab->press_handler = [page](morda::button& btn){
 		if(btn.is_pressed()){
-			page->go_to();
+			page->activate();
 		}
 	};
 

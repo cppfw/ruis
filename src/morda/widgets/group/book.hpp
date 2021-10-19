@@ -40,7 +40,7 @@ public:
 	book& get_parent_book();
 	const book& get_parent_book()const;
 
-	void go_to();
+	void activate();
 
 	virtual void on_show(){}
 	virtual void on_hide()noexcept{}
@@ -75,8 +75,8 @@ public:
 		return this->active_page_index;
 	}
 
-	void go_to(size_t page_number);
-	void go_to(const page& p);
+	void activate(size_t page_number);
+	void activate(const page& p);
 
 	~book()noexcept;
 

@@ -55,7 +55,7 @@ void book::push(std::shared_ptr<page> pg){
 			index = this->pages.size() - 1
 		]()
 	{
-		bk->go_to(index);
+		bk->activate(index);
 	});
 }
 
@@ -110,7 +110,7 @@ void book::notify_pages_change(const page& p){
 	}
 }
 
-void book::go_to(const page& p){
+void book::activate(const page& p){
 	if(&p.get_parent_book() != this){
 		throw std::logic_error("book::go_to(): requested page is not in this book");
 	}
@@ -124,10 +124,10 @@ void book::go_to(const page& p){
 		);
 	ASSERT(i != this->pages.end())
 
-	this->go_to(std::distance(this->pages.begin(), i));
+	this->activate(std::distance(this->pages.begin(), i));
 }
 
-void book::go_to(size_t page_number){
+void book::activate(size_t page_number){
 	if(page_number >= this->pages.size()){
 		throw std::logic_error("book::go_to(): requested page number is out of scope");
 	}
@@ -185,6 +185,6 @@ void page::tear_out()noexcept{
 	});
 }
 
-void page::go_to(){
-	this->get_parent_book().go_to(*this);
+void page::activate(){
+	this->get_parent_book().activate(*this);
 }
