@@ -45,6 +45,9 @@ public:
 	virtual void on_show(){}
 	virtual void on_hide()noexcept{}
 	
+	/**
+	 * Deferred tear out!
+	 */
 	void tear_out()noexcept;
 private:
 
