@@ -42,6 +42,8 @@ public:
 
 	void activate();
 
+	bool is_active()const;
+
 	virtual void on_show(){}
 	virtual void on_hide()noexcept{}
 	
@@ -74,11 +76,13 @@ public:
 		return this->pages.size();
 	}
 
-	size_t get_active_page()const{
+	size_t get_active_index()const{
 		return this->active_page_index;
 	}
 
-	void activate(size_t page_number);
+	const page* get_active_page()const;
+
+	void activate(size_t page_index);
 	void activate(const page& p);
 
 	~book()noexcept;

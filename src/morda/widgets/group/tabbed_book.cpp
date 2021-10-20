@@ -106,8 +106,7 @@ std::shared_ptr<page> tabbed_book::tear_out(tab& t){
 		t->remove_from_parent();
 	});
 
-	// TODO: assert that page is not active
-	// ASSERT(!pg->is_active())
+	ASSERT(!pg->is_active() || this->book.size() == 1)
 	pg->tear_out();
 
 	return pg;

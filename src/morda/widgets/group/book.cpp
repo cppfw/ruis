@@ -161,6 +161,13 @@ book::~book()noexcept{
 	this->pages[this->active_page_index]->on_hide();
 }
 
+const page* book::get_active_page()const{
+	if(this->active_page_index < this->pages.size()){
+		return this->pages[this->active_page_index].get();
+	}
+	return nullptr;
+}
+
 book& page::get_parent_book(){
 	if(!this->parent_book){
 		throw std::logic_error("page::get_parent_book(): page is not in a book");
@@ -180,14 +187,17 @@ page::page(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
 {}
 
 void page::tear_out()noexcept{
-	this->context->run_from_ui_thread([
-			book = utki::make_shared_from(this->get_parent_book()),
-			this
-		](){
-			book->tear_out(*this);
-	});
+	this->get_parent_book().tear_out(*this);
 }
 
 void page::activate(){
 	this->get_parent_book().activate(*this);
+}
+
+bool page::is_active()const{
+	if(!this->parent_book){
+		return false;
+	}
+
+	return this == this->parent_book->get_active_page();
 }
