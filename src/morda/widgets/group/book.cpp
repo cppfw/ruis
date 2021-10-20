@@ -180,8 +180,11 @@ page::page(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
 {}
 
 void page::tear_out()noexcept{
-	this->context->run_from_ui_thread([this](){
-		this->get_parent_book().tear_out(*this);
+	this->context->run_from_ui_thread([
+			book = utki::make_shared_from(this->get_parent_book()),
+			this
+		](){
+			book->tear_out(*this);
 	});
 }
 
