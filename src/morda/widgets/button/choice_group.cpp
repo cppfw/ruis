@@ -29,16 +29,16 @@ choice_group::choice_group(std::shared_ptr<morda::context> c, const treeml::fore
 {}
 
 bool choice_group::is_active(const widget& w)const noexcept{
-	widget* aw = this->active_choice_button.get();
+	widget* aw = this->active_choice_button.lock().get();
 	return aw == &w;
 }
 
-void choice_group::set_active_choice_button(const std::shared_ptr<choice_button>& cb){
-	if(cb == this->active_choice_button){
+void choice_group::set_active_choice_button(std::weak_ptr<choice_button> cb){
+	auto oldactive = this->active_choice_button.lock();
+
+	if(cb.lock() == oldactive){
 		return;
 	}
-	
-	auto oldactive = this->active_choice_button;
 	
 	this->active_choice_button = cb;
 	

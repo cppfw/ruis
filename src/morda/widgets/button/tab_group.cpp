@@ -141,15 +141,16 @@ void tab_group::lay_out(){
 }
 
 void tab_group::render(const morda::matrix4& matrix)const{
+	auto active_tab = this->get_active().lock();
+
 	for(auto& w: this->children()){
-		if(!this->is_active(*w)){
+		if(w != active_tab){
 			this->render_child(matrix, *w);
 		}
 	}
 
-	auto& ab = this->get_active();
-	if(ab){
-		this->render_child(matrix, *ab);
+	if(active_tab){
+		this->render_child(matrix, *active_tab);
 	}
 
 	// render filler

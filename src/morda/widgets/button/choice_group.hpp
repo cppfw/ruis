@@ -37,7 +37,7 @@ namespace morda{
 class choice_group : public pile{
 	friend class choice_button;
 	
-	std::shared_ptr<choice_button> active_choice_button;
+	std::weak_ptr<choice_button> active_choice_button;
 public:
 	choice_group(std::shared_ptr<morda::context> c, const treeml::forest& desc);
 	
@@ -46,12 +46,12 @@ public:
 	
 	bool is_active(const widget& w)const noexcept;
 	
-	const decltype(active_choice_button)& get_active()const noexcept{
+	std::weak_ptr<choice_button> get_active()const noexcept{
 		return this->active_choice_button;
 	}
 	
 private:
-	void set_active_choice_button(const std::shared_ptr<choice_button>& rb);
+	void set_active_choice_button(std::weak_ptr<choice_button> rb);
 };
 
 }
