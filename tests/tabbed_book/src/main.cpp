@@ -45,7 +45,9 @@ std::shared_ptr<morda::tab> inflate_tab(std::shared_ptr<morda::tabbed_book> tb, 
 		auto t = tab_wp.lock();
 		ASSERT(t)
 
-		tb->tear_out(*t);
+		btn.context->run_from_ui_thread([tb, t]{
+			tb->tear_out(*t);
+		});
 	};
 	return t;
 }

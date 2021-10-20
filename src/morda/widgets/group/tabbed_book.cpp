@@ -102,9 +102,7 @@ std::shared_ptr<page> tabbed_book::tear_out(tab& t){
 		}
 	}
 
-	this->context->run_from_ui_thread([t = utki::make_shared_from(t)](){
-		t->remove_from_parent();
-	});
+	t.remove_from_parent();
 
 	ASSERT(!pg->is_active() || this->book.size() == 1)
 	pg->tear_out();
