@@ -161,10 +161,10 @@
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\packages\zlib_static.1.2.11.10\build\native\zlib_static.targets" Condition="Exists('..\packages\zlib_static.1.2.11.10\build\native\zlib_static.targets')" />
     <Import Project="..\packages\glew.v140.1.12.0\build\native\glew.v140.targets" Condition="Exists('..\packages\glew.v140.1.12.0\build\native\glew.v140.targets')" />
-    <Import Project="..\packages\libutki.1.1.161\build\native\libutki.targets" Condition="Exists('..\packages\libutki.1.1.161\build\native\libutki.targets')" />
     <Import Project="..\packages\libr4.1.0.60\build\native\libr4.targets" Condition="Exists('..\packages\libr4.1.0.60\build\native\libr4.targets')" />
     <Import Project="..\packages\libpapki.1.0.110\build\native\libpapki.targets" Condition="Exists('..\packages\libpapki.1.0.110\build\native\libpapki.targets')" />
     <Import Project="..\packages\libtreeml.0.2.2\build\native\libtreeml.targets" Condition="Exists('..\packages\libtreeml.0.2.2\build\native\libtreeml.targets')" />
+    <Import Project="..\packages\libutki.1.1.163\build\native\libutki.targets" Condition="Exists('..\packages\libutki.1.1.163\build\native\libutki.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -172,9 +172,9 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\zlib_static.1.2.11.10\build\native\zlib_static.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\zlib_static.1.2.11.10\build\native\zlib_static.targets'))" />
     <Error Condition="!Exists('..\packages\glew.v140.1.12.0\build\native\glew.v140.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\glew.v140.1.12.0\build\native\glew.v140.targets'))" />
-    <Error Condition="!Exists('..\packages\libutki.1.1.161\build\native\libutki.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libutki.1.1.161\build\native\libutki.targets'))" />
     <Error Condition="!Exists('..\packages\libr4.1.0.60\build\native\libr4.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libr4.1.0.60\build\native\libr4.targets'))" />
     <Error Condition="!Exists('..\packages\libpapki.1.0.110\build\native\libpapki.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libpapki.1.0.110\build\native\libpapki.targets'))" />
     <Error Condition="!Exists('..\packages\libtreeml.0.2.2\build\native\libtreeml.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libtreeml.0.2.2\build\native\libtreeml.targets'))" />
+    <Error Condition="!Exists('..\packages\libutki.1.1.163\build\native\libutki.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libutki.1.1.163\build\native\libutki.targets'))" />
   </Target>
 </Project>
