@@ -1,3 +1,9 @@
+libmorda (0.5.183) unstable; urgency=medium
+
+  * improve tabbed book
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 26 Oct 2021 00:34:39 +0300
+
 libmorda (0.5.182) unstable; urgency=medium
 
   * test release
