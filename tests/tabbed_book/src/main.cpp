@@ -81,8 +81,7 @@ public:
 			ss << "page #" << cnt;
 			auto txt = ss.str();
 			++cnt;
-			auto pg = std::make_shared<sample_page>(b.context, treeml::forest());
-			pg->set_text(txt);
+			auto pg = std::make_shared<sample_page>(b.context, txt);
 			bk->add(inflate_tab(bk, txt), pg);
 		};
 	}

@@ -8,7 +8,7 @@ class sample_page :
         public morda::text
 {
 public:
-    sample_page(std::shared_ptr<morda::context> c, const treeml::forest& desc);
+    sample_page(std::shared_ptr<morda::context> c, const std::string& text);
     ~sample_page(){
         std::cout << "page destroyed" << std::endl;
     }
