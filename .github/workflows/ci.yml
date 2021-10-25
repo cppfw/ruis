@@ -134,8 +134,8 @@ jobs:
       run: |
         cd android
         ./gradlew copy_aar --warning-mode all
-        myci-apply-version.sh -v $PACKAGE_VERSION *.pom.in
-        myci-apply-version.sh -v $PACKAGE_VERSION *.aar.in --filename-only
+        myci-apply-version.sh --version $PACKAGE_VERSION *.pom.in
+        myci-apply-version.sh --version $PACKAGE_VERSION *.aar.in --filename-only
     - name: deploy
       run: myci-deploy-maven-nexus.sh --base-url http://gagis.hopto.org/nexus --repo android android/$PACKAGE_NAME-$PACKAGE_VERSION.aar
       if: startsWith(github.ref, 'refs/tags/')
@@ -180,7 +180,7 @@ jobs:
     - name: git clone
       uses: myci-actions/checkout@master
     - name: prepare pacman package
-      run: myci-apply-version.sh -v $(myci-deb-version.sh debian/changelog) msys2/PKGBUILD.in
+      run: myci-apply-version.sh --version $(myci-deb-version.sh debian/changelog) msys2/PKGBUILD.in
     - name: build
       # to make makepkg-mingw build only one architecture we need to set the MINGW_ARCH
       env: {MINGW_ARCH: '${{ matrix.repo }}'}
