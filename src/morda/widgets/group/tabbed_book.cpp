@@ -48,8 +48,21 @@ tabbed_book::tabbed_book(std::shared_ptr<morda::context> context, const treeml::
 		tab_group(this->get_widget_as<morda::tab_group>("morda_tab_group")),
 		book(this->get_widget_as<morda::book>("morda_book"))
 {
-	// TODO: set book::pages_change_handler to remove the tab
-	// TODO: need to prohibit somehow tearing out of the page without removintg the tab
+	// on page tear out, remove corresponding tab
+	this->book.pages_change_handler = [this](morda::book& b, const page& p){
+		auto i = std::find_if(
+				this->tab_to_page_map.begin(),
+				this->tab_to_page_map.end(),
+				[&p](const auto& e){
+					return &p == e.second;
+				}
+			);
+		if(i != this->tab_to_page_map.end()){
+			this->activate_another_tab(*i->first);
+			i->first->remove_from_parent();
+			this->tab_to_page_map.erase(i);
+		}
+	};
 }
 
 void tabbed_book::add(std::shared_ptr<tab> tab, std::shared_ptr<morda::page> page){
@@ -67,6 +80,32 @@ void tabbed_book::add(std::shared_ptr<tab> tab, std::shared_ptr<morda::page> pag
 	this->tab_to_page_map.insert(std::make_pair(tab.get(), page.get()));
 }
 
+void tabbed_book::activate_another_tab(tab& t){
+	if(!t.is_pressed()){
+		return;
+	}
+
+	// find another tab and activate it
+	auto i = this->tab_group.find(t);
+	ASSERT(i != this->tab_group.end())
+	ASSERT(!this->tab_group.empty())
+	if(i == this->tab_group.begin()){
+		auto ni = std::next(i);
+		if(ni != this->tab_group.end()){
+			auto next_tab = std::dynamic_pointer_cast<morda::tab>(*ni);
+			ASSERT(next_tab)
+			next_tab->set_pressed(true);
+		}
+	}else{
+		ASSERT(i != this->tab_group.begin())
+		auto ni = std::prev(i);
+		ASSERT(ni >= this->tab_group.begin())
+		auto next_tab = std::dynamic_pointer_cast<morda::tab>(*ni);
+		ASSERT(next_tab)
+		next_tab->set_pressed(true);
+	}
+}
+
 std::shared_ptr<page> tabbed_book::tear_out(tab& t){
 	auto i = this->tab_to_page_map.find(&t);
 	if(i == this->tab_to_page_map.end()){
@@ -79,28 +118,7 @@ std::shared_ptr<page> tabbed_book::tear_out(tab& t){
 
 	ASSERT(t.parent() == &this->tab_group)
 
-	// if the tab is currently active we need to switch to another tab before removing
-	if(t.is_pressed()){
-		// find previous/next tab and activate it
-		auto i = this->tab_group.find(t);
-		ASSERT(i != this->tab_group.end())
-		ASSERT(!this->tab_group.empty())
-		if(i == this->tab_group.begin()){
-			auto ni = std::next(i);
-			if(ni != this->tab_group.end()){
-				auto next_tab = std::dynamic_pointer_cast<morda::tab>(*ni);
-				ASSERT(next_tab)
-				next_tab->set_pressed(true);
-			}
-		}else{
-			ASSERT(i != this->tab_group.begin())
-			auto ni = std::prev(i);
-			ASSERT(ni >= this->tab_group.begin())
-			auto next_tab = std::dynamic_pointer_cast<morda::tab>(*ni);
-			ASSERT(next_tab)
-			next_tab->set_pressed(true);
-		}
-	}
+	this->activate_another_tab(t);
 
 	t.remove_from_parent();
 

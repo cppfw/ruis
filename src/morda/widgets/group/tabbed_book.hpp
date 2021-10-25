@@ -37,7 +37,9 @@ class tabbed_book :
 	morda::tab_group& tab_group;
 	morda::book& book;
 
-	std::unordered_map<const tab*, page*> tab_to_page_map;
+	std::unordered_map<tab*, page*> tab_to_page_map;
+
+	void activate_another_tab(tab& t);
 public:
 	tabbed_book(std::shared_ptr<morda::context> context, const treeml::forest& desc);
 

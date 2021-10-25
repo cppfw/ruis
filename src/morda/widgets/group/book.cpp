@@ -81,7 +81,11 @@ void book::tear_out(page& pg)noexcept{
 
 	if(index <= this->active_page_index){
 		if(this->active_page_index == 0){
-			this->active_page_index = std::numeric_limits<size_t>::max(); // invalid
+			if(this->pages.empty()){
+				this->active_page_index = std::numeric_limits<size_t>::max(); // invalid
+			}else{
+				// active page index remains 0
+			}
 		}else{
 			--this->active_page_index;
 		}
@@ -92,12 +96,14 @@ void book::tear_out(page& pg)noexcept{
 		this->clear();
 		
 		if(!this->pages.empty()){
-			ASSERT(this->active_page_index < this->pages.size())
-			auto p = std::dynamic_pointer_cast<page>(this->pages[this->active_page_index]);
+			ASSERT(
+					this->active_page_index < this->pages.size(),
+					[this](auto&o){o << "this->active_page_index = " << this->active_page_index << ", this->pages.size() = " << this->pages.size();}
+				)
+			auto p = this->pages[this->active_page_index];
+			ASSERT(p)
 			this->push_back(p);
-			if(p){
-				p->on_show();
-			}
+			p->on_show();
 		}
 	}
 
