@@ -309,13 +309,13 @@ void gui::initStandardWidgets(papki::file& fi) {
 }
 
 void gui::set_viewport(const morda::vector2& size){
-	this->viewportSize = size;
+	this->viewport_size = size;
 
 	if(!this->root_widget){
 		return;
 	}
 
-	this->root_widget->resize(this->viewportSize);
+	this->root_widget->resize(this->viewport_size);
 }
 
 void gui::set_root(std::shared_ptr<morda::widget> w){
@@ -327,7 +327,7 @@ void gui::set_root(std::shared_ptr<morda::widget> w){
 
 	this->root_widget->move_to(morda::vector2(0));
 	
-	this->root_widget->resize(this->viewportSize);
+	this->root_widget->resize(this->viewport_size);
 }
 
 void gui::render(const matrix4& matrix)const{
@@ -350,7 +350,7 @@ void gui::render(const matrix4& matrix)const{
 	m.scale(1, -1);
 
 	m.translate(-1, -1);
-	m.scale(vector2(2).comp_divide(this->viewportSize));
+	m.scale(vector2(2).comp_divide(this->viewport_size));
 
 	this->root_widget->render_internal(m);
 }
