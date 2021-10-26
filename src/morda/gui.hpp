@@ -88,7 +88,6 @@ public:
 	 */
 	void initStandardWidgets(papki::file& fi);
 
-
 	/**
 	 * @brief Update GUI.
 	 * Call this function from main loop of the program.

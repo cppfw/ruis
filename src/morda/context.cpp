@@ -48,7 +48,7 @@ context::context(
 	}
 }
 
-void context::set_focused_widget(std::shared_ptr<widget> w){
+void context::set_focused_widget(const std::shared_ptr<widget>& w){
 	if(auto prev = this->focused_widget.lock()){
 		prev->focused = false;
 		prev->on_focus_change();

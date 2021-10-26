@@ -40,7 +40,7 @@ class context : public utki::shared{
 
 	std::weak_ptr<widget> focused_widget;
 
-	void set_focused_widget(std::shared_ptr<widget> w);
+	void set_focused_widget(const std::shared_ptr<widget>& w);
 
 public:
 	const std::shared_ptr<morda::renderer> renderer;
