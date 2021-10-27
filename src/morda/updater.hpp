@@ -33,7 +33,7 @@ class updater : public std::enable_shared_from_this<updater>{
 	friend class morda::updateable;
 
 	struct update_queue_item{
-		uint32_t time_point_ms;
+		uint32_t ends_at;
 		std::weak_ptr<morda::updateable> updateable;
 	};
 
@@ -50,9 +50,9 @@ class updater : public std::enable_shared_from_this<updater>{
 
 	update_queue q1, q2;
 
-	update_queue *activeQueue, *inactiveQueue;
+	update_queue *active_queue, *inactive_queue;
 
-	uint32_t lastUpdatedTimestamp = 0;
+	uint32_t last_updated_timestamp = 0;
 
 	typedef std::list<std::shared_ptr<morda::updateable> > T_ToAddList;
 	T_ToAddList to_add;
@@ -64,8 +64,8 @@ class updater : public std::enable_shared_from_this<updater>{
 	void removeFromToAdd(updateable* u);
 public:
 	updater() :
-			activeQueue(&q1),
-			inactiveQueue(&q2)
+			active_queue(&q1),
+			inactive_queue(&q2)
 	{}
 
 	// returns dt to wait before next update

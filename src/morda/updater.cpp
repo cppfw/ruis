@@ -73,14 +73,14 @@ void updater::removeFromToAdd(updateable* u){
 
 
 updater::update_queue::iterator updater::update_queue::insert(const update_queue_item& p){
-	if(this->size() == 0 || this->back().time_point_ms <= p.time_point_ms){
+	if(this->size() == 0 || this->back().ends_at <= p.ends_at){
 		this->push_back(p);
-		return --(this->end());
+		return std::prev(this->end());
 	}
 	
 	// otherwise, go from the beginning
 	for(auto i = this->begin(); i != this->end(); ++i){
-		if(i->time_point_ms >= p.time_point_ms){
+		if(i->ends_at >= p.ends_at){
 			return this->list::insert(i, p); // inserts before iterator
 		}
 	}
@@ -95,17 +95,17 @@ void updater::addPending(){
 	while(this->to_add.size() != 0){
 		update_queue_item p;
 		
-		p.time_point_ms = this->to_add.front()->ends_at();
+		p.ends_at = this->to_add.front()->ends_at();
 		p.updateable = this->to_add.front();
 		
-		if(p.time_point_ms < this->lastUpdatedTimestamp){
+		if(p.ends_at < this->last_updated_timestamp){
 //			TRACE(<< "updateable::Updater::AddPending(): inserted to inactive queue" << std::endl)
-			this->to_add.front()->queue = this->inactiveQueue;
-			this->to_add.front()->iter = this->inactiveQueue->insert(p);
+			this->to_add.front()->queue = this->inactive_queue;
+			this->to_add.front()->iter = this->inactive_queue->insert(p);
 		}else{
 //			TRACE(<< "updateable::Updater::AddPending(): inserted to active queue" << std::endl)
-			this->to_add.front()->queue = this->activeQueue;
-			this->to_add.front()->iter = this->activeQueue->insert(p);
+			this->to_add.front()->queue = this->active_queue;
+			this->to_add.front()->iter = this->active_queue->insert(p);
 		}
 		
 		this->to_add.front()->pendingAddition = false;
@@ -125,11 +125,11 @@ void updater::updateUpdateable(const std::shared_ptr<morda::updateable>& u){
 	//at this point updateable is removed from update queue, so set it to 0
 	u->queue = 0;
 	
-	u->update(this->lastUpdatedTimestamp - u->startedAt);
+	u->update(this->last_updated_timestamp - u->startedAt);
 	
 	//if not stopped during update, add it back
 	if(u->is_updating()){
-		u->startedAt = this->lastUpdatedTimestamp;
+		u->startedAt = this->last_updated_timestamp;
 		u->pendingAddition = true;
 		this->to_add.push_back(u);
 	}
@@ -142,32 +142,32 @@ uint32_t updater::update(){
 	
 //	TRACE(<< "updateable::Updater::Update(): invoked" << std::endl)
 	
-	this->addPending(); // add pending before updating this->lastUpdatedTimestamp
+	this->addPending(); // add pending before updating this->last_updated_timestamp
 	
 	// check if there is a warp around
-	if(curTime < this->lastUpdatedTimestamp){
-		this->lastUpdatedTimestamp = curTime;
+	if(curTime < this->last_updated_timestamp){
+		this->last_updated_timestamp = curTime;
 		
-//		TRACE(<< "updateable::Updater::Update(): time has warped, this->activeQueue->Size() = " << this->activeQueue->size() << std::endl)
+//		TRACE(<< "updateable::Updater::Update(): time has warped, this->active_queue->Size() = " << this->active_queue->size() << std::endl)
 		
 		//if time has warped, then all Updateables from active queue have expired.
-		while(this->activeQueue->size() != 0){
-			this->updateUpdateable(this->activeQueue->pop_front());
+		while(this->active_queue->size() != 0){
+			this->updateUpdateable(this->active_queue->pop_front());
 		}
 		
-		std::swap(this->activeQueue, this->inactiveQueue);
+		std::swap(this->active_queue, this->inactive_queue);
 	}else{
-		this->lastUpdatedTimestamp = curTime;
+		this->last_updated_timestamp = curTime;
 	}
-	ASSERT(this->lastUpdatedTimestamp == curTime)
+	ASSERT(this->last_updated_timestamp == curTime)
 	
-//	TRACE(<< "updateable::Updater::Update(): this->activeQueue->Size() = " << this->activeQueue->size() << std::endl)
+//	TRACE(<< "updateable::Updater::Update(): this->active_queue->Size() = " << this->active_queue->size() << std::endl)
 	
-	while(this->activeQueue->size() != 0){
-		if(this->activeQueue->front().time_point_ms > curTime){
+	while(this->active_queue->size() != 0){
+		if(this->active_queue->front().ends_at > curTime){
 			break;
 		}
-		this->updateUpdateable(this->activeQueue->pop_front());
+		this->updateUpdateable(this->active_queue->pop_front());
 	}
 	
 	this->addPending(); // after updating need to add recurring Updateables if any
@@ -175,12 +175,12 @@ uint32_t updater::update(){
 	//After updating all the stuff some time has passed, so might need to correct the time need to wait
 	
 	uint32_t closestTime;
-	if(this->activeQueue->size() != 0){
-		ASSERT(curTime <= this->activeQueue->front().time_point_ms)
-		closestTime = this->activeQueue->front().time_point_ms;
-	}else if(this->inactiveQueue->size() != 0){
-		ASSERT(curTime > this->inactiveQueue->front().time_point_ms)
-		closestTime = this->inactiveQueue->front().time_point_ms;
+	if(this->active_queue->size() != 0){
+		ASSERT(curTime <= this->active_queue->front().ends_at)
+		closestTime = this->active_queue->front().ends_at;
+	}else if(this->inactive_queue->size() != 0){
+		ASSERT(curTime > this->inactive_queue->front().ends_at)
+		closestTime = this->inactive_queue->front().ends_at;
 	}else{
 		return uint32_t(-1);
 	}
