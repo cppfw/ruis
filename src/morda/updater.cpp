@@ -72,7 +72,7 @@ void updater::removeFromToAdd(updateable* u){
 }
 
 
-updater::UpdateQueue::iterator updater::UpdateQueue::insertPair(const T_Pair& p){
+updater::update_queue::iterator updater::update_queue::insertPair(const T_Pair& p){
 	if(this->size() == 0 || this->back().first <= p.first){
 		this->push_back(p);
 		return --(this->end());

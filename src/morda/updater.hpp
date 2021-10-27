@@ -34,9 +34,9 @@ class updater : public std::enable_shared_from_this<updater>{
 
 	typedef std::pair<uint32_t, std::weak_ptr<morda::updateable>> T_Pair;
 
-	class UpdateQueue : public std::list<T_Pair>{
+	class update_queue : public std::list<T_Pair>{
 	public:
-		UpdateQueue::iterator insertPair(const T_Pair& p);
+		update_queue::iterator insertPair(const T_Pair& p);
 
 		std::shared_ptr<morda::updateable> popFront(){
 			auto ret = this->front().second.lock();
@@ -45,9 +45,9 @@ class updater : public std::enable_shared_from_this<updater>{
 		}
 	};
 
-	UpdateQueue q1, q2;
+	update_queue q1, q2;
 
-	UpdateQueue *activeQueue, *inactiveQueue;
+	update_queue *activeQueue, *inactiveQueue;
 
 	uint32_t lastUpdatedTimestamp = 0;
 

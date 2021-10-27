@@ -50,9 +50,9 @@ private:
 	bool is_updating_v = false;
 
 	// pointer to the queue the updateable is inserted into
-	updater::UpdateQueue* queue = nullptr;
+	updater::update_queue* queue = nullptr;
 
-	updater::UpdateQueue::iterator iter; // iterator into the queue.
+	updater::update_queue::iterator iter; // iterator into the queue.
 
 	bool pendingAddition = false;
 
