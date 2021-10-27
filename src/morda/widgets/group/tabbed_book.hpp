@@ -37,7 +37,15 @@ class tabbed_book :
 	morda::tab_group& tab_group;
 	morda::book& book;
 
-	std::unordered_map<tab*, page*> tab_to_page_map;
+	struct tab_page_pair{
+		morda::tab* tab;
+		morda::page* page;
+	};
+
+	std::vector<tab_page_pair> tab_page_pairs;
+
+	decltype(tab_page_pairs)::iterator find_pair(const morda::tab& t);
+	decltype(tab_page_pairs)::iterator find_pair(const morda::page& p);
 
 	void activate_another_tab(tab& t);
 public:

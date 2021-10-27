@@ -83,6 +83,8 @@ public:
 
 	~book()noexcept;
 
+	std::function<void(book&)> active_page_change_handler;
+
 	// page is either pushed or teared out
 	std::function<void(book&, const page&)> pages_change_handler;
 private:

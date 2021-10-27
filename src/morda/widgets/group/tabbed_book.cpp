@@ -50,22 +50,35 @@ tabbed_book::tabbed_book(std::shared_ptr<morda::context> context, const treeml::
 {
 	// on page tear out, remove corresponding tab
 	this->book.pages_change_handler = [this](morda::book& b, const page& p){
-		auto i = std::find_if(
-				this->tab_to_page_map.begin(),
-				this->tab_to_page_map.end(),
-				[&p](const auto& e){
-					return &p == e.second;
-				}
-			);
-		if(i != this->tab_to_page_map.end()){
-			this->activate_another_tab(*i->first);
-			i->first->remove_from_parent();
-			this->tab_to_page_map.erase(i);
+		auto i = this->find_pair(p);
+		if(i != this->tab_page_pairs.end()){
+			ASSERT(i->tab)
+			this->activate_another_tab(*i->tab);
+			i->tab->remove_from_parent();
+			this->tab_page_pairs.erase(i);
+		}
+	};
+
+	// on page programmatic active need to activate the corresponding tab as well
+	this->book.active_page_change_handler = [this](morda::book& b){
+		ASSERT(b.get_active_page())
+		auto i = this->find_pair(*b.get_active_page());
+		if(i != this->tab_page_pairs.end()){
+			ASSERT(i->tab)
+			i->tab->activate();
 		}
 	};
 }
 
 void tabbed_book::add(std::shared_ptr<tab> tab, std::shared_ptr<morda::page> page){
+	if(!tab){
+		throw std::logic_error("tabbed_book::add(): tab argument is nullptr");
+	}
+
+	if(!page){
+		throw std::logic_error("tabbed_book::add(): page argument is nullptr");
+	}
+
 	this->tab_group.push_back(tab);
 	this->book.push(page);
 
@@ -77,7 +90,10 @@ void tabbed_book::add(std::shared_ptr<tab> tab, std::shared_ptr<morda::page> pag
 		}
 	};
 
-	this->tab_to_page_map.insert(std::make_pair(tab.get(), page.get()));
+	this->tab_page_pairs.push_back(tab_page_pair{
+		.tab = tab.get(),
+		.page = page.get()
+	});
 }
 
 void tabbed_book::activate_another_tab(tab& t){
@@ -107,14 +123,15 @@ void tabbed_book::activate_another_tab(tab& t){
 }
 
 std::shared_ptr<page> tabbed_book::tear_out(tab& t){
-	auto i = this->tab_to_page_map.find(&t);
-	if(i == this->tab_to_page_map.end()){
+	auto i = this->find_pair(t);
+	if(i == this->tab_page_pairs.end()){
 		throw std::logic_error("tabbed_book::tear_out(): tab not found");
 	}
 
-	auto pg = utki::make_shared_from(*i->second);
+	ASSERT(i->page)
+	auto pg = utki::make_shared_from(*i->page);
 
-	this->tab_to_page_map.erase(i);
+	this->tab_page_pairs.erase(i);
 
 	ASSERT(t.parent() == &this->tab_group)
 
@@ -126,4 +143,24 @@ std::shared_ptr<page> tabbed_book::tear_out(tab& t){
 	pg->tear_out();
 
 	return pg;
+}
+
+auto tabbed_book::find_pair(const morda::tab& t) -> decltype(tab_page_pairs)::iterator {
+	return std::find_if(
+		this->tab_page_pairs.begin(),
+		this->tab_page_pairs.end(),
+		[&t](const auto& e){
+			return &t == e.tab;
+		}
+	);
+}
+
+auto tabbed_book::find_pair(const morda::page& p) -> decltype(tab_page_pairs)::iterator{
+	return std::find_if(
+		this->tab_page_pairs.begin(),
+		this->tab_page_pairs.end(),
+		[&p](const auto& e){
+			return &p == e.page;
+		}
+	);
 }

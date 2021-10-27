@@ -18,6 +18,12 @@ std::shared_ptr<morda::tab> inflate_tab(std::shared_ptr<morda::tabbed_book> tb, 
 					text{cube}
 				}
 				@push_button{
+					id{activate_button}
+					@text{
+						text{A}
+					}
+				}
+				@push_button{
 					id{close_button}
 					@image{
 						layout{
@@ -82,7 +88,15 @@ public:
 			auto txt = ss.str();
 			++cnt;
 			auto pg = std::make_shared<sample_page>(b.context, txt);
-			bk->add(inflate_tab(bk, txt), pg);
+			auto tb = inflate_tab(bk, txt);
+
+			tb->get_widget_as<morda::push_button>("activate_button").click_handler = [pgw = utki::make_weak(pg)](morda::push_button&){
+				if(auto pg = pgw.lock()){
+					pg->activate();
+				}
+			};
+
+			bk->add(tb, pg);
 		};
 	}
 };

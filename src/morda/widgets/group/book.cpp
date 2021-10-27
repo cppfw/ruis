@@ -121,7 +121,7 @@ void book::notify_pages_change(const page& p){
 
 void book::activate(const page& p){
 	if(&p.get_parent_book() != this){
-		throw std::logic_error("book::go_to(): requested page is not in this book");
+		throw std::logic_error("book::activate(): requested page is not in this book");
 	}
 
 	auto i = std::find_if(
@@ -138,7 +138,7 @@ void book::activate(const page& p){
 
 void book::activate(size_t page_number){
 	if(page_number >= this->pages.size()){
-		throw std::logic_error("book::go_to(): requested page number is out of scope");
+		throw std::logic_error("book::activate(): requested page number is out of scope");
 	}
 
 	if(this->pages.empty()){
@@ -160,6 +160,10 @@ void book::activate(size_t page_number){
 	this->active_page_index = page_number;
 	this->push_back(this->pages[this->active_page_index]);
 	this->pages[this->active_page_index]->on_show();
+
+	if(this->active_page_change_handler){
+		this->active_page_change_handler(*this);
+	}
 }
 
 book::~book()noexcept{
