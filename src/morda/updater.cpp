@@ -53,13 +53,13 @@ void updater::stop(updateable& u)noexcept{
 		u.queue->erase(u.iter);
 		u.queue = 0;
 	}else if(u.pendingAddition){
-		this->removeFromToAdd(&u);
+		this->remove_from_to_add(&u);
 	}
 
 	u.is_updating_v = false;
 }
 
-void updater::removeFromToAdd(updateable* u){
+void updater::remove_from_to_add(updateable* u){
 	ASSERT(u->pendingAddition)
 	for(auto i = this->to_add.begin(); i != this->to_add.end(); ++i){
 		if((*i).operator->() == u){
@@ -70,7 +70,6 @@ void updater::removeFromToAdd(updateable* u){
 		}
 	}
 }
-
 
 updater::update_queue::iterator updater::update_queue::insert(const update_queue_item& p){
 	if(this->size() == 0 || this->back().ends_at <= p.ends_at){
@@ -89,9 +88,7 @@ updater::update_queue::iterator updater::update_queue::insert(const update_queue
 	return this->end();
 }
 
-
-
-void updater::addPending(){
+void updater::add_pending(){
 	while(this->to_add.size() != 0){
 		update_queue_item p;
 		
@@ -114,9 +111,7 @@ void updater::addPending(){
 	}
 }
 
-
-
-void updater::updateUpdateable(const std::shared_ptr<morda::updateable>& u){
+void updater::update_updateable(const std::shared_ptr<morda::updateable>& u){
 	//if weak ref gave invalid strong ref
 	if(!u){
 		return;
@@ -135,14 +130,12 @@ void updater::updateUpdateable(const std::shared_ptr<morda::updateable>& u){
 	}
 }
 
-
-
 uint32_t updater::update(){
 	uint32_t curTime = utki::get_ticks_ms();
 	
 //	TRACE(<< "updateable::Updater::Update(): invoked" << std::endl)
 	
-	this->addPending(); // add pending before updating this->last_updated_timestamp
+	this->add_pending(); // add pending before updating this->last_updated_timestamp
 	
 	// check if there is a warp around
 	if(curTime < this->last_updated_timestamp){
@@ -152,7 +145,7 @@ uint32_t updater::update(){
 		
 		//if time has warped, then all Updateables from active queue have expired.
 		while(this->active_queue->size() != 0){
-			this->updateUpdateable(this->active_queue->pop_front());
+			this->update_updateable(this->active_queue->pop_front());
 		}
 		
 		std::swap(this->active_queue, this->inactive_queue);
@@ -167,10 +160,10 @@ uint32_t updater::update(){
 		if(this->active_queue->front().ends_at > curTime){
 			break;
 		}
-		this->updateUpdateable(this->active_queue->pop_front());
+		this->update_updateable(this->active_queue->pop_front());
 	}
 	
-	this->addPending(); // after updating need to add recurring Updateables if any
+	this->add_pending(); // after updating need to add recurring Updateables if any
 	
 	//After updating all the stuff some time has passed, so might need to correct the time need to wait
 	

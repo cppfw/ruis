@@ -54,14 +54,13 @@ class updater : public std::enable_shared_from_this<updater>{
 
 	uint32_t last_updated_timestamp = 0;
 
-	typedef std::list<std::shared_ptr<morda::updateable> > T_ToAddList;
-	T_ToAddList to_add;
+	std::list<std::shared_ptr<morda::updateable> > to_add;
 
-	void addPending();
+	void add_pending();
 
-	void updateUpdateable(const std::shared_ptr<updateable>& u);
+	void update_updateable(const std::shared_ptr<updateable>& u);
 
-	void removeFromToAdd(updateable* u);
+	void remove_from_to_add(updateable* u);
 public:
 	updater() :
 			active_queue(&q1),
