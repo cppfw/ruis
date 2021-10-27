@@ -1,3 +1,10 @@
+libmorda (0.5.185) unstable; urgency=medium
+
+  * activate corresponding tabbed_book tab on programmatic page
+    activation
+
+ -- Ivan Gagis <igagis@gmail.com>  Thu, 28 Oct 2021 00:24:11 +0300
+
 libmorda (0.5.184) unstable; urgency=medium
 
   * add page::on_tear_out()
