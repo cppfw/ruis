@@ -91,8 +91,8 @@ void tabbed_book::add(std::shared_ptr<tab> tab, std::shared_ptr<morda::page> pag
 	};
 
 	this->tab_page_pairs.push_back(tab_page_pair{
-		.tab = tab.get(),
-		.page = page.get()
+		tab.get(),
+		page.get()
 	});
 }
 
