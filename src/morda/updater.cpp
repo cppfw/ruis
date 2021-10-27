@@ -72,7 +72,7 @@ void updater::removeFromToAdd(updateable* u){
 }
 
 
-updater::update_queue::iterator updater::update_queue::insertPair(const T_Pair& p){
+updater::update_queue::iterator updater::update_queue::insert(const T_Pair& p){
 	if(this->size() == 0 || this->back().first <= p.first){
 		this->push_back(p);
 		return --(this->end());
@@ -81,7 +81,7 @@ updater::update_queue::iterator updater::update_queue::insertPair(const T_Pair& 
 	// otherwise, go from the beginning
 	for(auto i = this->begin(); i != this->end(); ++i){
 		if(i->first >= p.first){
-			return this->insert(i, p); // inserts before iterator
+			return this->list::insert(i, p); // inserts before iterator
 		}
 	}
 	
@@ -101,11 +101,11 @@ void updater::addPending(){
 		if(p.first < this->lastUpdatedTimestamp){
 //			TRACE(<< "updateable::Updater::AddPending(): inserted to inactive queue" << std::endl)
 			this->to_add.front()->queue = this->inactiveQueue;
-			this->to_add.front()->iter = this->inactiveQueue->insertPair(p);
+			this->to_add.front()->iter = this->inactiveQueue->insert(p);
 		}else{
 //			TRACE(<< "updateable::Updater::AddPending(): inserted to active queue" << std::endl)
 			this->to_add.front()->queue = this->activeQueue;
-			this->to_add.front()->iter = this->activeQueue->insertPair(p);
+			this->to_add.front()->iter = this->activeQueue->insert(p);
 		}
 		
 		this->to_add.front()->pendingAddition = false;
@@ -152,7 +152,7 @@ uint32_t updater::update(){
 		
 		//if time has warped, then all Updateables from active queue have expired.
 		while(this->activeQueue->size() != 0){
-			this->updateUpdateable(this->activeQueue->popFront());
+			this->updateUpdateable(this->activeQueue->pop_front());
 		}
 		
 		std::swap(this->activeQueue, this->inactiveQueue);
@@ -167,7 +167,7 @@ uint32_t updater::update(){
 		if(this->activeQueue->front().first > curTime){
 			break;
 		}
-		this->updateUpdateable(this->activeQueue->popFront());
+		this->updateUpdateable(this->activeQueue->pop_front());
 	}
 	
 	this->addPending(); // after updating need to add recurring Updateables if any

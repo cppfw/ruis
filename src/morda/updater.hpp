@@ -36,11 +36,11 @@ class updater : public std::enable_shared_from_this<updater>{
 
 	class update_queue : public std::list<T_Pair>{
 	public:
-		update_queue::iterator insertPair(const T_Pair& p);
+		update_queue::iterator insert(const T_Pair& p);
 
-		std::shared_ptr<morda::updateable> popFront(){
+		std::shared_ptr<morda::updateable> pop_front(){
 			auto ret = this->front().second.lock();
-			this->pop_front();
+			this->list::pop_front();
 			return ret;
 		}
 	};
