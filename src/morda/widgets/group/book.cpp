@@ -108,6 +108,10 @@ void book::tear_out(page& pg)noexcept{
 		}
 	}
 
+	if(pg.tear_out_handler){
+		pg.tear_out_handler(pg);
+	}
+
 	this->notify_pages_change(pg);
 }
 

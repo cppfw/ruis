@@ -48,8 +48,8 @@ public:
 	virtual void on_hide()noexcept{}
 	
 	void tear_out()noexcept;
-private:
 
+	std::function<void(page&)> tear_out_handler;
 };
 
 class book :
