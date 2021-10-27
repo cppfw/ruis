@@ -112,17 +112,17 @@ void updater::add_pending(){
 }
 
 void updater::update_updateable(const std::shared_ptr<morda::updateable>& u){
-	//if weak ref gave invalid strong ref
+	// if weak ref gave invalid strong ref
 	if(!u){
 		return;
 	}
 	
-	//at this point updateable is removed from update queue, so set it to 0
+	// at this point updateable is removed from update queue, so set it to 0
 	u->queue = 0;
 	
 	u->update(this->last_updated_timestamp - u->started_at);
 	
-	//if not stopped during update, add it back
+	// if not stopped during update, add it back
 	if(u->is_updating()){
 		u->started_at = this->last_updated_timestamp;
 		u->pending_addition = true;
@@ -131,33 +131,33 @@ void updater::update_updateable(const std::shared_ptr<morda::updateable>& u){
 }
 
 uint32_t updater::update(){
-	uint32_t curTime = utki::get_ticks_ms();
+	uint32_t cur_ticks = utki::get_ticks_ms();
 	
 //	TRACE(<< "updateable::Updater::Update(): invoked" << std::endl)
 	
 	this->add_pending(); // add pending before updating this->last_updated_timestamp
 	
 	// check if there is a warp around
-	if(curTime < this->last_updated_timestamp){
-		this->last_updated_timestamp = curTime;
+	if(cur_ticks < this->last_updated_timestamp){
+		this->last_updated_timestamp = cur_ticks;
 		
 //		TRACE(<< "updateable::Updater::Update(): time has warped, this->active_queue->Size() = " << this->active_queue->size() << std::endl)
 		
-		//if time has warped, then all Updateables from active queue have expired.
+		// if time has warped, then all Updateables from active queue have expired.
 		while(this->active_queue->size() != 0){
 			this->update_updateable(this->active_queue->pop_front());
 		}
 		
 		std::swap(this->active_queue, this->inactive_queue);
 	}else{
-		this->last_updated_timestamp = curTime;
+		this->last_updated_timestamp = cur_ticks;
 	}
-	ASSERT(this->last_updated_timestamp == curTime)
+	ASSERT(this->last_updated_timestamp == cur_ticks)
 	
 //	TRACE(<< "updateable::Updater::Update(): this->active_queue->Size() = " << this->active_queue->size() << std::endl)
 	
 	while(this->active_queue->size() != 0){
-		if(this->active_queue->front().ends_at > curTime){
+		if(this->active_queue->front().ends_at > cur_ticks){
 			break;
 		}
 		this->update_updateable(this->active_queue->pop_front());
@@ -165,32 +165,32 @@ uint32_t updater::update(){
 	
 	this->add_pending(); // after updating need to add recurring Updateables if any
 	
-	//After updating all the stuff some time has passed, so might need to correct the time need to wait
+	// after updating all the stuff some time has passed, so might need to correct the time need to wait
 	
-	uint32_t closestTime;
+	uint32_t closest_time_point;
 	if(this->active_queue->size() != 0){
-		ASSERT(curTime <= this->active_queue->front().ends_at)
-		closestTime = this->active_queue->front().ends_at;
+		ASSERT(cur_ticks <= this->active_queue->front().ends_at)
+		closest_time_point = this->active_queue->front().ends_at;
 	}else if(this->inactive_queue->size() != 0){
-		ASSERT(curTime > this->inactive_queue->front().ends_at)
-		closestTime = this->inactive_queue->front().ends_at;
+		ASSERT(cur_ticks > this->inactive_queue->front().ends_at)
+		closest_time_point = this->inactive_queue->front().ends_at;
 	}else{
 		return uint32_t(-1);
 	}
 	
-	uint32_t uncorrectedDt = closestTime - curTime;
+	uint32_t uncorrected_dt = closest_time_point - cur_ticks;
 	
-	uint32_t correction = utki::get_ticks_ms() - curTime;
+	uint32_t correction = utki::get_ticks_ms() - cur_ticks;
 	
-	if(correction >= uncorrectedDt){
+	if(correction >= uncorrected_dt){
 		return 0;
 	}else{
-		uncorrectedDt -= correction;
+		uncorrected_dt -= correction;
 		
-		if(0 < uncorrectedDt && uncorrectedDt < 5){
-			uncorrectedDt = 5; // wait for 5 ms at least, if not 0.
+		if(0 < uncorrected_dt && uncorrected_dt < 5){
+			uncorrected_dt = 5; // wait for 5 ms at least, if not 0.
 		}
 		
-		return uncorrectedDt;
+		return uncorrected_dt;
 	}
 }
