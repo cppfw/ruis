@@ -21,8 +21,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "updater.hpp"
 
-#include <chrono>
-
 #include <utki/time.hpp>
 
 #include "updateable.hpp"
@@ -51,7 +49,7 @@ void updater::start(std::weak_ptr<updateable> u, uint16_t dt_ms){
 void updater::stop(updateable& u)noexcept{
     if(u.queue){
 		u.queue->erase(u.iter);
-		u.queue = 0;
+		u.queue = nullptr;
 	}else if(u.pending_addition){
 		this->remove_from_to_add(&u);
 	}
