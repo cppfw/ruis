@@ -46,10 +46,9 @@ public:
 
 	virtual void on_show(){}
 	virtual void on_hide()noexcept{}
+	virtual void on_tear_out()noexcept{}
 	
 	void tear_out()noexcept;
-
-	std::function<void(page&)> tear_out_handler;
 };
 
 class book :
