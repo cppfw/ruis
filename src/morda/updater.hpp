@@ -32,14 +32,17 @@ class updateable;
 class updater : public std::enable_shared_from_this<updater>{
 	friend class morda::updateable;
 
-	typedef std::pair<uint32_t, std::weak_ptr<morda::updateable>> T_Pair;
+	struct update_queue_item{
+		uint32_t time_point_ms;
+		std::weak_ptr<morda::updateable> updateable;
+	};
 
-	class update_queue : public std::list<T_Pair>{
+	class update_queue : public std::list<update_queue_item>{
 	public:
-		update_queue::iterator insert(const T_Pair& p);
+		update_queue::iterator insert(const update_queue_item& p);
 
 		std::shared_ptr<morda::updateable> pop_front(){
-			auto ret = this->front().second.lock();
+			auto ret = this->front().updateable.lock();
 			this->list::pop_front();
 			return ret;
 		}

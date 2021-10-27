@@ -72,15 +72,15 @@ void updater::removeFromToAdd(updateable* u){
 }
 
 
-updater::update_queue::iterator updater::update_queue::insert(const T_Pair& p){
-	if(this->size() == 0 || this->back().first <= p.first){
+updater::update_queue::iterator updater::update_queue::insert(const update_queue_item& p){
+	if(this->size() == 0 || this->back().time_point_ms <= p.time_point_ms){
 		this->push_back(p);
 		return --(this->end());
 	}
 	
 	// otherwise, go from the beginning
 	for(auto i = this->begin(); i != this->end(); ++i){
-		if(i->first >= p.first){
+		if(i->time_point_ms >= p.time_point_ms){
 			return this->list::insert(i, p); // inserts before iterator
 		}
 	}
@@ -93,12 +93,12 @@ updater::update_queue::iterator updater::update_queue::insert(const T_Pair& p){
 
 void updater::addPending(){
 	while(this->to_add.size() != 0){
-		T_Pair p;
+		update_queue_item p;
 		
-		p.first = this->to_add.front()->ends_at();
-		p.second = this->to_add.front();
+		p.time_point_ms = this->to_add.front()->ends_at();
+		p.updateable = this->to_add.front();
 		
-		if(p.first < this->lastUpdatedTimestamp){
+		if(p.time_point_ms < this->lastUpdatedTimestamp){
 //			TRACE(<< "updateable::Updater::AddPending(): inserted to inactive queue" << std::endl)
 			this->to_add.front()->queue = this->inactiveQueue;
 			this->to_add.front()->iter = this->inactiveQueue->insert(p);
@@ -164,7 +164,7 @@ uint32_t updater::update(){
 //	TRACE(<< "updateable::Updater::Update(): this->activeQueue->Size() = " << this->activeQueue->size() << std::endl)
 	
 	while(this->activeQueue->size() != 0){
-		if(this->activeQueue->front().first > curTime){
+		if(this->activeQueue->front().time_point_ms > curTime){
 			break;
 		}
 		this->updateUpdateable(this->activeQueue->pop_front());
@@ -176,11 +176,11 @@ uint32_t updater::update(){
 	
 	uint32_t closestTime;
 	if(this->activeQueue->size() != 0){
-		ASSERT(curTime <= this->activeQueue->front().first)
-		closestTime = this->activeQueue->front().first;
+		ASSERT(curTime <= this->activeQueue->front().time_point_ms)
+		closestTime = this->activeQueue->front().time_point_ms;
 	}else if(this->inactiveQueue->size() != 0){
-		ASSERT(curTime > this->inactiveQueue->front().first)
-		closestTime = this->inactiveQueue->front().first;
+		ASSERT(curTime > this->inactiveQueue->front().time_point_ms)
+		closestTime = this->inactiveQueue->front().time_point_ms;
 	}else{
 		return uint32_t(-1);
 	}
