@@ -52,7 +52,7 @@ class updater : public std::enable_shared_from_this<updater>{
 	uint32_t lastUpdatedTimestamp = 0;
 
 	typedef std::list<std::shared_ptr<morda::updateable> > T_ToAddList;
-	T_ToAddList toAdd;
+	T_ToAddList to_add;
 
 	void addPending();
 

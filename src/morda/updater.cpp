@@ -45,7 +45,7 @@ void updater::start(std::weak_ptr<updateable> u, uint16_t dt_ms){
 	
 	uu->pendingAddition = true;
 	
-	this->toAdd.push_front(uu); //TODO: add weak ptr
+	this->to_add.push_front(uu); //TODO: add weak ptr
 }
 
 void updater::stop(updateable& u)noexcept{
@@ -61,11 +61,11 @@ void updater::stop(updateable& u)noexcept{
 
 void updater::removeFromToAdd(updateable* u){
 	ASSERT(u->pendingAddition)
-	for(auto i = this->toAdd.begin(); i != this->toAdd.end(); ++i){
+	for(auto i = this->to_add.begin(); i != this->to_add.end(); ++i){
 		if((*i).operator->() == u){
 			ASSERT((*i)->pendingAddition)
 			u->pendingAddition = false;
-			this->toAdd.erase(i);
+			this->to_add.erase(i);
 			return;
 		}
 	}
@@ -92,25 +92,25 @@ updater::UpdateQueue::iterator updater::UpdateQueue::insertPair(const T_Pair& p)
 
 
 void updater::addPending(){
-	while(this->toAdd.size() != 0){
+	while(this->to_add.size() != 0){
 		T_Pair p;
 		
-		p.first = this->toAdd.front()->endAt();
-		p.second = this->toAdd.front();
+		p.first = this->to_add.front()->ends_at();
+		p.second = this->to_add.front();
 		
 		if(p.first < this->lastUpdatedTimestamp){
 //			TRACE(<< "updateable::Updater::AddPending(): inserted to inactive queue" << std::endl)
-			this->toAdd.front()->queue = this->inactiveQueue;
-			this->toAdd.front()->iter = this->inactiveQueue->insertPair(p);
+			this->to_add.front()->queue = this->inactiveQueue;
+			this->to_add.front()->iter = this->inactiveQueue->insertPair(p);
 		}else{
 //			TRACE(<< "updateable::Updater::AddPending(): inserted to active queue" << std::endl)
-			this->toAdd.front()->queue = this->activeQueue;
-			this->toAdd.front()->iter = this->activeQueue->insertPair(p);
+			this->to_add.front()->queue = this->activeQueue;
+			this->to_add.front()->iter = this->activeQueue->insertPair(p);
 		}
 		
-		this->toAdd.front()->pendingAddition = false;
+		this->to_add.front()->pendingAddition = false;
 		
-		this->toAdd.pop_front();
+		this->to_add.pop_front();
 	}
 }
 
@@ -131,7 +131,7 @@ void updater::updateUpdateable(const std::shared_ptr<morda::updateable>& u){
 	if(u->is_updating()){
 		u->startedAt = this->lastUpdatedTimestamp;
 		u->pendingAddition = true;
-		this->toAdd.push_back(u);
+		this->to_add.push_back(u);
 	}
 }
 

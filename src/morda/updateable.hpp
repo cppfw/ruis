@@ -43,7 +43,7 @@ private:
 
 	uint32_t startedAt; // timestamp when update timer started.
 
-	uint32_t endAt()const noexcept{
+	uint32_t ends_at()const noexcept{
 		return this->startedAt + uint32_t(this->dt);
 	}
 
