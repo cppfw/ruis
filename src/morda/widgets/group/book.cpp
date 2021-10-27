@@ -60,6 +60,7 @@ void book::push(std::shared_ptr<page> pg){
 }
 
 void book::tear_out(page& pg)noexcept{
+	// book::tear_out() is private, hense ASSERT instead of if(){throw}
 	ASSERT(&pg.get_parent_book() == this)
 	
 	auto i = std::find_if(
