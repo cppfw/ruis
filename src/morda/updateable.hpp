@@ -41,20 +41,20 @@ class updateable : virtual public utki::shared{
 private:
 	uint16_t dt;
 
-	uint32_t startedAt; // timestamp when update timer started.
+	uint32_t started_at;
 
 	uint32_t ends_at()const noexcept{
-		return this->startedAt + uint32_t(this->dt);
+		return this->started_at + uint32_t(this->dt);
 	}
 
-	bool is_updating_v = false;
+	bool updating = false;
 
 	// pointer to the queue the updateable is inserted into
 	updater::update_queue* queue = nullptr;
 
 	updater::update_queue::iterator iter; // iterator into the queue.
 
-	bool pendingAddition = false;
+	bool pending_addition = false;
 
 public:
 	/**
@@ -63,7 +63,7 @@ public:
 	 * @return false otherwise.
 	 */
 	bool is_updating()const noexcept{
-		return this->is_updating_v;
+		return this->updating;
 	}
 
 	/**

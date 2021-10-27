@@ -40,10 +40,10 @@ void updater::start(std::weak_ptr<updateable> u, uint16_t dt_ms){
 	}
 	
 	uu->dt = dt_ms;
-	uu->startedAt = utki::get_ticks_ms();
-	uu->is_updating_v = true;
+	uu->started_at = utki::get_ticks_ms();
+	uu->updating = true;
 	
-	uu->pendingAddition = true;
+	uu->pending_addition = true;
 	
 	this->to_add.push_front(uu); //TODO: add weak ptr
 }
@@ -52,19 +52,19 @@ void updater::stop(updateable& u)noexcept{
     if(u.queue){
 		u.queue->erase(u.iter);
 		u.queue = 0;
-	}else if(u.pendingAddition){
+	}else if(u.pending_addition){
 		this->remove_from_to_add(&u);
 	}
 
-	u.is_updating_v = false;
+	u.updating = false;
 }
 
 void updater::remove_from_to_add(updateable* u){
-	ASSERT(u->pendingAddition)
+	ASSERT(u->pending_addition)
 	for(auto i = this->to_add.begin(); i != this->to_add.end(); ++i){
 		if((*i).operator->() == u){
-			ASSERT((*i)->pendingAddition)
-			u->pendingAddition = false;
+			ASSERT((*i)->pending_addition)
+			u->pending_addition = false;
 			this->to_add.erase(i);
 			return;
 		}
@@ -105,7 +105,7 @@ void updater::add_pending(){
 			this->to_add.front()->iter = this->active_queue->insert(p);
 		}
 		
-		this->to_add.front()->pendingAddition = false;
+		this->to_add.front()->pending_addition = false;
 		
 		this->to_add.pop_front();
 	}
@@ -120,12 +120,12 @@ void updater::update_updateable(const std::shared_ptr<morda::updateable>& u){
 	//at this point updateable is removed from update queue, so set it to 0
 	u->queue = 0;
 	
-	u->update(this->last_updated_timestamp - u->startedAt);
+	u->update(this->last_updated_timestamp - u->started_at);
 	
 	//if not stopped during update, add it back
 	if(u->is_updating()){
-		u->startedAt = this->last_updated_timestamp;
-		u->pendingAddition = true;
+		u->started_at = this->last_updated_timestamp;
+		u->pending_addition = true;
 		this->to_add.push_back(u);
 	}
 }
