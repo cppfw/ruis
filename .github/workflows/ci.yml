@@ -20,8 +20,11 @@ jobs:
           # - {os: debian, codename: buster, image_owner: i386/, package_type: deb, labels: [i386,docker]}
           - {os: debian, codename: buster, image_owner: arm32v7/, package_type: deb, labels: [arm,docker]}
           - {os: debian, codename: bullseye, image_owner: , package_type: deb}
+          # - {os: debian, codename: bullseye, image_owner: i386/, package_type: deb, labels: [i386,docker]}
+          - {os: debian, codename: bullseye, image_owner: arm32v7/, package_type: deb, labels: [arm,docker]}
           - {os: ubuntu, codename: focal, image_owner: , package_type: deb}
           - {os: raspbian, codename: buster, image_owner: igagis/, package_type: deb, labels: [arm,docker]}
+          - {os: raspbian, codename: bullseye, image_owner: igagis/, package_type: deb, labels: [arm,docker]}
     runs-on: ${{ (matrix.labels == '' && 'ubuntu-latest') || matrix.labels }}
     container: ${{ matrix.image_owner }}${{ matrix.os }}:${{ matrix.codename }}
     name: linux - ${{ matrix.image_owner }}${{ matrix.os }}:${{ matrix.codename }}
@@ -105,9 +108,12 @@ jobs:
         cd xcode/$PACKAGE_NAME
         ../../XcodeProjAdder -XCP $PACKAGE_NAME.xcodeproj -SCSV `echo $(find ../../src -type f -name *.cpp) | sed -E -e 's/ /,/g'`
     - name: build
-      run: xcodebuild -workspace xcode/$PACKAGE_NAME.xcworkspace -scheme $PACKAGE_NAME CONFIGURATION_BUILD_DIR=../build -configuration Release
+      run: |
+        xcodebuild CONFIGURATION_BUILD_DIR=../build_ios -sdk iphoneos -workspace xcode/$PACKAGE_NAME.xcworkspace -scheme $PACKAGE_NAME -configuration Release
+        xcodebuild CONFIGURATION_BUILD_DIR=../build_iossim -sdk iphonesimulator -workspace xcode/$PACKAGE_NAME.xcworkspace -scheme $PACKAGE_NAME -configuration Release
+        xcodebuild -create-xcframework -framework "xcode/build_ios/$PACKAGE_NAME.framework" -framework "xcode/build_iossim/$PACKAGE_NAME.framework" -output "xcode/$PACKAGE_NAME.xcframework"
     - name: create package
-      run: myci-create-zip-package.sh --headers-dir src --file res/morda_res///res --file xcode/build/lib$PACKAGE_NAME.a///lib/ios --file LICENSE $PACKAGE_NAME-$PACKAGE_VERSION.zip
+      run: myci-create-zip-package.sh --headers-dir src --file xcode/$PACKAGE_NAME.xcframework///lib/ios --file LICENSE $PACKAGE_NAME-$PACKAGE_VERSION.zip
     - name: deploy
       run: |
         echo "${{ secrets.MYCI_REPO_SSH_KEY }}" > repo_key_rsa && chmod 600 repo_key_rsa
@@ -222,3 +228,4 @@ jobs:
         filename: '.\nuget\*.nupkg'
         api-key: ${{ secrets.NUGET_DOT_ORG_API_KEY }}
       if: startsWith(github.ref, 'refs/tags/')
+
