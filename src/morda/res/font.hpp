@@ -38,12 +38,12 @@ namespace morda{ namespace res{
  * 
  * %resource description:
  * 
- * @param normal - file to load normal font from, the True-Type ttf file.
- * @param bold - file to load bold font from, True-Type ttf file. If omitted, the bold font will be the same as normal.
- * @param italic - file to load italic font from, True-Type ttf file. If omitted, the italic font will be the same as normal.
- * @param bold_italic - file to load bold italic font from, True-Type ttf file. If omitted, the bold italic font will be the same as normal.
- * @param chars - list of all chars for which the glyphs should be created.
- * @param size - size of glyphs, in length units, i.e.: no unit(pixels), dp, mm.
+ * @li @c normal - file to load normal font from, the True-Type ttf file.
+ * @li @c bold - file to load bold font from, True-Type ttf file. If omitted, the bold font will be the same as normal.
+ * @li @c italic - file to load italic font from, True-Type ttf file. If omitted, the italic font will be the same as normal.
+ * @li @c bold_italic - file to load bold italic font from, True-Type ttf file. If omitted, the bold italic font will be the same as normal.
+ * @li @c chars - list of all chars for which the glyphs should be created.
+ * @li @c size - size of glyphs, in length units, i.e.: no unit(pixels), dp, mm.
  * 
  * Example:
  * @code

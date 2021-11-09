@@ -28,8 +28,8 @@ namespace morda{
 /**
  * @brief Basic widget which has a color setting.
  *
- * @param color - color value.
- * @param disabled_color - color value for disabled state.
+ * @li @c color - color value.
+ * @li @c disabled_color - color value for disabled state.
  */
 class color_widget : public virtual widget{
 	uint32_t color = 0xffffffff;
