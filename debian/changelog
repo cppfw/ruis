@@ -1,3 +1,9 @@
+libmorda (0.5.187) unstable; urgency=medium
+
+  * xcode: static framework
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 09 Nov 2021 12:50:17 +0200
+
 libmorda (0.5.186) unstable; urgency=medium
 
   * xcode: static framework
