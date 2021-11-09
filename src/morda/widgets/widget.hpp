@@ -51,16 +51,16 @@ class container;
  * @brief Basic widget class.
  * From GUI script it can be instantiated as "widget".
  * It can have the following parameters:
- * @param layout - layout parameters description. See widget::layout_params for details.
- * @param x - horizontal position within parent widget.
- * @param y - vertical position within parent widget.
- * @param dx - width of the widget.
- * @param dy - height of the widget.
- * @param id - id assigned to widget.
- * @param clip - enable (true) or disable (false) the scissor test for this widget boundaries when rendering. Default value is false.
- * @param cache - enable (true) or disable (false) pre-rendering this widget to texture and render from texture for faster rendering.
- * @param visible - should the widget be initially visible (true) or hidden (false). Default value is true.
- * @param enabled - should the widget be initially enabled (true) or disabled (false). Default value is true. Disabled widgets do not get any input from keyboard or mouse.
+ * @li @c layout - layout parameters description. See widget::layout_params for details.
+ * @li @c x - horizontal position within parent widget.
+ * @li @c y - vertical position within parent widget.
+ * @li @c dx - width of the widget.
+ * @li @c dy - height of the widget.
+ * @li @c id - id assigned to widget.
+ * @li @c clip - enable (true) or disable (false) the scissor test for this widget boundaries when rendering. Default value is false.
+ * @li @c cache - enable (true) or disable (false) pre-rendering this widget to texture and render from texture for faster rendering.
+ * @li @c visible - should the widget be initially visible (true) or hidden (false). Default value is true.
+ * @li @c enabled - should the widget be initially enabled (true) or disabled (false). Default value is true. Disabled widgets do not get any input from keyboard or mouse.
  */
 class widget : virtual public utki::shared{
 	friend class container;
