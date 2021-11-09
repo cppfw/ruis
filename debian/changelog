@@ -1,3 +1,9 @@
+libmorda (0.5.186) unstable; urgency=medium
+
+  * xcode: static framework
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 09 Nov 2021 02:41:15 +0200
+
 libmorda (0.5.185) unstable; urgency=medium
 
   * activate corresponding tabbed_book tab on programmatic page
