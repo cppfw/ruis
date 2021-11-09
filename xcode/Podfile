@@ -2,7 +2,7 @@ source 'https://github.com/cppfw/cocoapods-repo.git'
 
 project 'morda/morda.xcodeproj'
 
-platform :ios, '9.0'
+platform :ios, '13.0'
 
 target "morda" do
 	pod 'utki', '>= 1.1.124'
