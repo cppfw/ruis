@@ -378,7 +378,7 @@ void text_input_line::on_character_input(const character_input_event& e){
 			}
 			// fall through
 		default:
-			if(not e.unicode.empty()){
+			if(!e.unicode.empty()){
 				if(this->thereIsSelection()){
 					this->cursorIndex = this->deleteSelection();
 				}
