@@ -284,8 +284,8 @@ bool text_input_line::on_key(const morda::key_event& e){
 	return false;
 }
 
-void text_input_line::on_character_input(const std::u32string& unicode, morda::key key){
-	switch(key){
+void text_input_line::on_character_input(const character_input_event& e){
+	switch(e.key){
 		case morda::key::enter:
 			break;
 		case morda::key::right:
@@ -378,17 +378,17 @@ void text_input_line::on_character_input(const std::u32string& unicode, morda::k
 			}
 			// fall through
 		default:
-			if(unicode.size() != 0){
+			if(not e.unicode.empty()){
 				if(this->thereIsSelection()){
 					this->cursorIndex = this->deleteSelection();
 				}
 				
 				auto t = this->get_text();
 				this->clear();
-				t.insert(t.begin() + this->cursorIndex, unicode.begin(), unicode.end());
+				t.insert(t.begin() + this->cursorIndex, e.unicode.begin(), e.unicode.end());
 				this->set_text(std::move(t));
 				
-				this->set_cursor_index(this->cursorIndex + unicode.size());
+				this->set_cursor_index(this->cursorIndex + e.unicode.size());
 			}
 			
 			break;

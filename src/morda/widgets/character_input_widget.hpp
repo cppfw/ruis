@@ -41,10 +41,9 @@ protected:
 public:
 	/**
 	 * @brief Handler for character input.
-     * @param unicode - unicode string of entered characters in UTF-32.
-	 * @param key - key code associated with character input, can be UNKNOWN.
-     */
-	virtual void on_character_input(const std::u32string& unicode, key key) = 0;
+	 * @param e - character input event info.
+	 */
+	virtual void on_character_input(const character_input_event& e) = 0;
 
 	virtual ~character_input_widget()noexcept{}
 };

@@ -80,7 +80,7 @@ public:
 
 	void update(uint32_t dt)override;
 
-	void on_character_input(const std::u32string& unicode, morda::key key)override;
+	void on_character_input(const character_input_event& e)override;
 
 	void set_cursor_index(size_t index, bool selection = false);
 

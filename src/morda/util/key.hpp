@@ -29,104 +29,104 @@ namespace morda{
  * @brief Keyboard keys enumeration.
  */
 enum class key{
-	unknown, // 0
 	space,
 	enter,
 	zero,
 	one,
-	two, // 5
+	two,
 	three,
 	four,
 	five,
 	six,
-	seven, // 10
+	seven,
 	eight,
 	nine,
 	a,
 	b,
-	c, // 15
+	c,
 	d,
 	e,
 	f,
 	g,
-	h, // 20
+	h,
 	i,
 	j,
 	k,
 	l,
-	m, // 25
+	m,
 	n,
 	o,
 	p,
 	q,
-	r, // 30
+	r,
 	s,
 	t,
 	u,
 	v,
-	w, // 35
+	w,
 	x,
 	y,
 	z,
 	left,
-	right, // 40
+	right,
 	up,
 	down,
 	comma,
 	semicolon,
-	apostrophe,//', 45
+	apostrophe, // '
 	period,
 	slash,
 	backslash,
 	tabulator,
-	left_shift, // 50
+	left_shift,
 	right_shift,
 	end,
 	left_square_bracket,
 	right_square_bracket,
-	grave, //`, 55
+	grave, // `
 	minus,
 	equals,
 	backspace,
 	capslock,
-	escape, // 60
+	escape,
 	left_control,
 	left_alt,
 	f1,
 	f2,
-	f3, // 65
+	f3,
 	f4,
 	f5,
 	f6,
 	f7,
-	f8, // 70
+	f8,
 	f9,
 	f10,
 	f11,
 	f12,
-	right_control, // 75
+	right_control,
 	print_screen,
 	right_alt,
 	home,
 	page_up,
-	page_down, // 80
+	page_down,
 	insert,
 	deletion,
 	pause,
 	left_command,
-	right_command, // 85
+	right_command,
 	menu,
 	function,
 	f17,
 	f18,
-	f19, // 90
+	f19,
 	f20,
 	f13,
 	f16,
 	f14,
-	f15, // 95
+	f15,
 
-	enum_size
+	enum_size,
+	unknown = enum_size
 };
 
 enum class key_modifier{
@@ -139,7 +139,10 @@ enum class key_modifier{
 	left_command,
 	right_command,
 
-	enum_size
+	enum_size,
+	unknown = enum_size
 };
+
+key_modifier to_key_modifier(morda::key key);
 
 }

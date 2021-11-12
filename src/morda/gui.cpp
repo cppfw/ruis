@@ -388,9 +388,15 @@ void gui::send_mouse_hover(bool isHovered, unsigned pointerID){
 void gui::send_key(bool is_down, key key_code){
 //		TRACE(<< "HandleKeyEvent(): is_down = " << is_down << " is_char_input_only = " << is_char_input_only << " keyCode = " << unsigned(keyCode) << std::endl)
 
+	auto modifier = morda::to_key_modifier(key_code);
+	if(modifier != morda::key_modifier::unknown){
+		this->key_modifiers.set(modifier, is_down);
+	}
+
 	morda::key_event e;
 	e.key = key_code;
 	e.is_down = is_down;
+	e.modifiers = this->key_modifiers;
 
 	if(auto w = this->context->focused_widget.lock()){
 //		TRACE(<< "HandleKeyEvent(): there is a focused widget" << std::endl)
@@ -406,8 +412,16 @@ void gui::send_key(bool is_down, key key_code){
 void gui::send_character_input(const unicode_provider& unicode, key key_code){
 	if(auto w = this->context->focused_widget.lock()){
 		//			TRACE(<< "HandleCharacterInput(): there is a focused widget" << std::endl)
+
+		auto str = unicode.get();
+
+		character_input_event e;
+		e.unicode = str;
+		e.key = key_code;
+		e.modifiers = this->key_modifiers;
+
 		if(auto c = dynamic_cast<character_input_widget*>(w.get())){
-			c->on_character_input(unicode.get(), key_code);
+			c->on_character_input(e);
 		}
 	}
 }

@@ -109,12 +109,12 @@ public:
 		return false;
 	}
 
-	void on_character_input(const std::u32string& unicode, morda::key key)override{
-		if(unicode.size() == 0){
+	void on_character_input(const morda::character_input_event& e)override{
+		if(e.unicode.empty()){
 			return;
 		}
 
-		TRACE(<< "SimpleWidget::OnCharacterInput(): unicode = " << unicode[0] << std::endl)
+		TRACE(<< "SimpleWidget::OnCharacterInput(): unicode = " << e.unicode[0] << std::endl)
 	}
 
 	void render(const morda::matrix4& matrix)const override{

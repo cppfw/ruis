@@ -63,4 +63,16 @@ struct key_event{
 	utki::flags<key_modifier> modifiers;
 };
 
+struct character_input_event{
+	std::u32string_view unicode;
+
+	/**
+	 * @brief Key code associated with the character input.
+	 * Can be unknown.
+	 */
+	morda::key key;
+
+	utki::flags<key_modifier> modifiers;
+};
+
 }

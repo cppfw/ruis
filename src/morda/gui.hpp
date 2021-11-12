@@ -121,6 +121,9 @@ public:
 	 */
 	void send_mouse_hover(bool is_hovered, unsigned id);
 
+private:
+	utki::flags<morda::key_modifier> key_modifiers;
+public:
 	/**
 	 * @brief Feed in the key event to GUI.
 	 * Note, this method is not supposed to receive repeated key events, when user holds down the key.
