@@ -155,7 +155,6 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          # mingw32 build fails on test, perhaps due to bug in compiler
           - {arch: i686, repo: mingw32}
           - {arch: x86_64, repo: mingw64}
     name: msys2 - ${{ matrix.repo }}
