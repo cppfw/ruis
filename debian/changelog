@@ -1,3 +1,9 @@
+libmorda (0.5.189) unstable; urgency=medium
+
+  * enable msys2 32bit build
+
+ -- Ivan Gagis <igagis@gmail.com>  Fri, 12 Nov 2021 18:48:03 +0200
+
 libmorda (0.5.188) unstable; urgency=medium
 
   * key_event
