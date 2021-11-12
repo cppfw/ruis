@@ -388,13 +388,17 @@ void gui::send_mouse_hover(bool isHovered, unsigned pointerID){
 void gui::send_key(bool is_down, key key_code){
 //		TRACE(<< "HandleKeyEvent(): is_down = " << is_down << " is_char_input_only = " << is_char_input_only << " keyCode = " << unsigned(keyCode) << std::endl)
 
+	morda::key_event e;
+	e.key = key_code;
+	e.is_down = is_down;
+
 	if(auto w = this->context->focused_widget.lock()){
 //		TRACE(<< "HandleKeyEvent(): there is a focused widget" << std::endl)
-		w->on_key_internal(is_down, key_code);
+		w->on_key_internal(e);
 	}else{
 //		TRACE(<< "HandleKeyEvent(): there is no focused widget, passing to rootWidget" << std::endl)
 		if(this->root_widget){
-			this->root_widget->on_key_internal(is_down, key_code);
+			this->root_widget->on_key_internal(e);
 		}
 	}
 }

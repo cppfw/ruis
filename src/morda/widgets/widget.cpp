@@ -316,15 +316,15 @@ void widget::clear_cache(){
 	}
 }
 
-void widget::on_key_internal(bool is_down, key key_code){
+void widget::on_key_internal(const morda::key_event& e){
 	if(this->is_interactive()){
-		if(this->on_key(is_down, key_code)){
+		if(this->on_key(e)){
 			return;
 		}
 	}
 
 	if(this->parent()){
-		this->parent()->on_key_internal(is_down, key_code);
+		this->parent()->on_key_internal(e);
 	}
 }
 

@@ -74,7 +74,7 @@ public:
 
 	void on_focus_change()override;
 
-	bool on_key(bool is_down, morda::key key)override;
+	bool on_key(const morda::key_event& e)override;
 
 	void on_resize()override;
 

@@ -447,7 +447,7 @@ private:
 	void render_internal(const morda::matrix4& matrix)const;
 
 private:
-	void on_key_internal(bool is_down, key key_code);
+	void on_key_internal(const morda::key_event& e);
 
 private:
 	bool focused = false;
@@ -455,13 +455,13 @@ public:
 
 	/**
 	 * @brief Handle keyboard key event.
-	 * This method is called by framework when a widget is requested to handle a key event. So, the widget is either a focused widget or root widget.
-	 * @param is_down - was the key pressed (true) or released (false).
-	 * @param key_code - keyboard key code.
+	 * This method is called by framework when a widget is requested to handle a key event.
+	 * So, the widget is either a focused widget or root widget.
+	 * @param e - key event information structure.
 	 * @return true to consume event and prevent its further propagation.
 	 * @return false to allow the event to be propagated further.
 	 */
-	virtual bool on_key(bool is_down, morda::key key_code){
+	virtual bool on_key(const morda::key_event& e){
 		return false;
 	}
 

@@ -268,15 +268,15 @@ void text_input_line::startCursorBlinking(){
 		);
 }
 
-bool text_input_line::on_key(bool is_down, morda::key key){
-	switch(key){
+bool text_input_line::on_key(const morda::key_event& e){
+	switch(e.key){
 		case morda::key::left_control:
 		case morda::key::right_control:
-			this->ctrlPressed = is_down;
+			this->ctrlPressed = e.is_down;
 			break;
 		case morda::key::left_shift:
 		case morda::key::right_shift:
-			this->shiftPressed = is_down;
+			this->shiftPressed = e.is_down;
 			break;
 		default:
 			break;

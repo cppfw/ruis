@@ -80,10 +80,10 @@ public:
 		return true;
 	}
 
-	bool on_key(bool isDown, morda::key keyCode) override{
-		if(isDown){
-			TRACE(<< "SimpleWidget::OnKey(): down, keyCode = " << unsigned(keyCode) << std::endl)
-			switch(keyCode){
+	bool on_key(const morda::key_event& e)override{
+		if(e.is_down){
+			TRACE(<< "SimpleWidget::OnKey(): down, keyCode = " << unsigned(e.key) << std::endl)
+			switch(e.key){
 				case morda::key::left:
 					TRACE(<< "SimpleWidget::OnKeyDown(): LEFT key caught" << std::endl)
 					return true;
@@ -94,8 +94,8 @@ public:
 					break;
 			}
 		}else{
-			TRACE(<< "SimpleWidget::OnKey(): up, keyCode = " << unsigned(keyCode) << std::endl)
-			switch(keyCode){
+			TRACE(<< "SimpleWidget::OnKey(): up, keyCode = " << unsigned(e.key) << std::endl)
+			switch(e.key){
 				case morda::key::left:
 					TRACE(<< "SimpleWidget::OnKeyUp(): LEFT key caught" << std::endl)
 					return true;
@@ -477,9 +477,9 @@ public:
 			);
 		this->gui.set_root(c);
 
-		std::dynamic_pointer_cast<morda::key_proxy>(c)->key_handler = [this](morda::key_proxy&, bool isDown, morda::key keyCode) -> bool {
-			if(isDown){
-				if(keyCode == morda::key::escape){
+		std::dynamic_pointer_cast<morda::key_proxy>(c)->key_handler = [this](morda::key_proxy&, const morda::key_event& e) -> bool {
+			if(e.is_down){
+				if(e.key == morda::key::escape){
 					this->quit();
 				}
 			}

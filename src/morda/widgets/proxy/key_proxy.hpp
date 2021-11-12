@@ -43,9 +43,9 @@ public:
 	 * @brief Keyboard key signal.
 	 * Emitted when a keyboard key event reaches this widget.
 	 */
-	std::function<bool(key_proxy& w, bool is_down, morda::key key_code)> key_handler;
+	std::function<bool(key_proxy& w, const morda::key_event& e)> key_handler;
 	
-	virtual bool on_key(bool is_down, morda::key key_code)override;
+	virtual bool on_key(const morda::key_event& e)override;
 };
 
 }
