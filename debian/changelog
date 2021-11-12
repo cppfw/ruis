@@ -1,3 +1,9 @@
+libmorda (0.5.188) unstable; urgency=medium
+
+  * key_event
+
+ -- Ivan Gagis <igagis@gmail.com>  Fri, 12 Nov 2021 16:49:38 +0200
+
 libmorda (0.5.187) unstable; urgency=medium
 
   * xcode: static framework
