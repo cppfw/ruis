@@ -30,47 +30,48 @@ namespace morda{
  */
 enum class key{
 	// WARNING: do not add new key codes in the middle and do not change order. Add new key codes to the end of the enumeration.
-	unknown,
+	//          This is in order to preserve binary compatibility with mordavokne.
+	unknown, // 0
 	space,
 	enter,
 	zero,
 	one,
-	two, //5
+	two, // 5
 	three,
 	four,
 	five,
 	six,
-	seven, //10
+	seven, // 10
 	eight,
 	nine,
 	a,
 	b,
-	c, //15
+	c, // 15
 	d,
 	e,
 	f,
 	g,
-	h, //20
+	h, // 20
 	i,
 	j,
 	k,
 	l,
-	m, //25
+	m, // 25
 	n,
 	o,
 	p,
 	q,
-	r, //30
+	r, // 30
 	s,
 	t,
 	u,
 	v,
-	w, //35
+	w, // 35
 	x,
 	y,
 	z,
 	left,
-	right, //40
+	right, // 40
 	up,
 	down,
 	comma,
@@ -80,7 +81,7 @@ enum class key{
 	slash,
 	backslash,
 	tabulator,
-	left_shift, //50
+	left_shift, // 50
 	right_shift,
 	end,
 	left_square_bracket,
@@ -90,43 +91,58 @@ enum class key{
 	equals,
 	backspace,
 	capslock,
-	escape, //60
+	escape, // 60
 	left_control,
 	left_alt,
 	f1,
 	f2,
-	f3, //65
+	f3, // 65
 	f4,
 	f5,
 	f6,
 	f7,
-	f8, //70
+	f8, // 70
 	f9,
 	f10,
 	f11,
 	f12,
-	right_control, //75
+	right_control, // 75
 	print_screen,
 	right_alt,
 	home,
 	page_up,
-	page_down, //80
+	page_down, // 80
 	insert,
 	deletion,
 	pause,
-	command,
-	menu, //85
+	left_command,
+	right_command, // 85
+	menu,
 	function,
 	f17,
 	f18,
-	f19,
-	f20, //90
+	f19, // 90
+	f20,
 	f13,
 	f16,
 	f14,
-	f15,
+	f15, // 95
+
+	// WARNING: do not add new key codes in the middle and do not change order. Add new key codes to the end of the enumeration.
+	//          This is in order to preserve binary compatibility with mordavokne.
 	
-	ENUM_SIZE
+	enum_size
+};
+
+enum class key_modifiers{
+	left_shift,
+	right_shift,
+	left_alt,
+	right_alt,
+	left_control,
+	right_control,
+	left_command,
+	right_command
 };
 
 }
