@@ -21,6 +21,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
+#include <utki/flags.hpp>
+
 #include "../config.hpp"
 
 #include "key.hpp"
@@ -58,6 +60,7 @@ struct mouse_move_event{
 struct key_event{
 	morda::key key;
 	bool is_down;
+	utki::flags<key_modifier> modifiers;
 };
 
 }

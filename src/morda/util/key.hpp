@@ -29,8 +29,6 @@ namespace morda{
  * @brief Keyboard keys enumeration.
  */
 enum class key{
-	// WARNING: do not add new key codes in the middle and do not change order. Add new key codes to the end of the enumeration.
-	//          This is in order to preserve binary compatibility with mordavokne.
 	unknown, // 0
 	space,
 	enter,
@@ -128,13 +126,10 @@ enum class key{
 	f14,
 	f15, // 95
 
-	// WARNING: do not add new key codes in the middle and do not change order. Add new key codes to the end of the enumeration.
-	//          This is in order to preserve binary compatibility with mordavokne.
-	
 	enum_size
 };
 
-enum class key_modifiers{
+enum class key_modifier{
 	left_shift,
 	right_shift,
 	left_alt,
@@ -142,7 +137,9 @@ enum class key_modifiers{
 	left_control,
 	right_control,
 	left_command,
-	right_command
+	right_command,
+
+	enum_size
 };
 
 }
