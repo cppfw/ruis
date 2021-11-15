@@ -38,7 +38,7 @@ public:
 	void render(const matrix4& matrix, uint32_t color)const;
 
 	bool empty()const{
-		return !this->vao;
+		return !this->vao || !this->renderer;
 	}
 };
 

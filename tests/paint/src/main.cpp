@@ -45,7 +45,7 @@ public:
 		this->vao = morda::frame_vao(
 				this->context->renderer,
 				this->rect().d,
-				morda::vector2{2, 3}
+				morda::vector2{10, 20}
 			);
 	}
 };

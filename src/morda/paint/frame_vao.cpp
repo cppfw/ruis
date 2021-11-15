@@ -41,7 +41,7 @@ frame_vao::frame_vao(std::shared_ptr<morda::renderer> r, vector2 dims, vector2 t
 	}};
 
 	std::array<uint16_t, 10> indices = {{
-		4, 0, 1, 5, 2, 6, 3, 7, 4, 0
+		0, 4, 1, 5, 2, 6, 3, 7, 0, 4
 	}};
 
 	auto vbo = this->renderer->factory->create_vertex_buffer(vertices);
