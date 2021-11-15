@@ -5,16 +5,17 @@
 #include "../../../src/morda/widgets/widget.hpp"
 
 #include "../../../src/morda/paint/path_vao.hpp"
+#include "../../../src/morda/paint/frame_vao.hpp"
 
 class path_widget : virtual public morda::widget{
-	morda::path_vao vba;
+	morda::path_vao vao;
 public:
 	path_widget(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
 			morda::widget(std::move(c), desc)
 	{}
 
 	void render(const morda::matrix4& matrix)const override{
-		this->vba.render(matrix, 0xff00ffff);
+		this->vao.render(matrix, 0xff00ffff);
 	}
 
 	void on_resize()override{
@@ -25,7 +26,27 @@ public:
 				morda::vector2(0, this->rect().d.y() / 2),
 				this->rect().d / 2
 			);
-		this->vba = morda::path_vao(this->context->renderer, path.stroke());
+		this->vao = morda::path_vao(this->context->renderer, path.stroke());
+	}
+};
+
+class frame_widget : virtual public morda::widget{
+	morda::frame_vao vao;
+public:
+	frame_widget(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
+			morda::widget(std::move(c), desc)
+	{}
+
+	void render(const morda::matrix4& matrix)const override{
+		this->vao.render(matrix, 0xffff8080);
+	}
+
+	void on_resize()override{
+		this->vao = morda::frame_vao(
+				this->context->renderer,
+				this->rect().d,
+				morda::vector2{2, 3}
+			);
 	}
 };
 
@@ -41,8 +62,27 @@ public:
 				)
 	{
 		this->gui.initStandardWidgets(*this->get_res_file("../../res/morda_res/"));
+
+		this->gui.context->inflater.register_widget<path_widget>("path_widget");
+		this->gui.context->inflater.register_widget<frame_widget>("frame_widget");
 	
-		this->gui.set_root(std::make_shared<path_widget>(this->gui.context, treeml::forest()));
+		// this->gui.set_root(std::make_shared<path_widget>(this->gui.context, treeml::forest()));
+
+		this->gui.set_root(this->gui.context->inflater.inflate(treeml::read(R"(
+			@pile{
+				@path_widget{
+					layout{
+						dx{fill} dy{fill}
+					}
+				}
+
+				@frame_widget{
+					layout{
+						dx{fill} dy{fill}
+					}
+				}
+			}
+		)")));
 	}
 };
 

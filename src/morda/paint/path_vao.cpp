@@ -26,23 +26,23 @@ using namespace morda;
 path_vao::path_vao(std::shared_ptr<morda::renderer> r, const path::vertices& path) :
 		renderer(std::move(r))
 {
-	auto coreBuf = this->renderer->factory->create_vertex_buffer(utki::make_span(path.pos));
+	auto core_buf = this->renderer->factory->create_vertex_buffer(path.pos);
 	
 	this->core = this->renderer->factory->create_vertex_array(
-			{{
-				coreBuf,
-			}},
-			this->renderer->factory->create_index_buffer(utki::make_span(path.in_indices)),
+			{
+				core_buf,
+			},
+			this->renderer->factory->create_index_buffer(path.in_indices),
 			morda::vertex_array::mode::triangle_strip
 		);
 	
 	
 	this->border = this->renderer->factory->create_vertex_array(
-			{{
-				coreBuf,
-				this->renderer->factory->create_vertex_buffer(utki::make_span(path.alpha)),
-			}},
-			this->renderer->factory->create_index_buffer(utki::make_span(path.out_indices)),
+			{
+				core_buf,
+				this->renderer->factory->create_vertex_buffer(path.alpha),
+			},
+			this->renderer->factory->create_index_buffer(path.out_indices),
 			morda::vertex_array::mode::triangle_strip
 		);
 }
