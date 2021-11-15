@@ -36,6 +36,10 @@ public:
 	frame_vao(std::shared_ptr<morda::renderer> r, vector2 dims, vector2 thickness);
 
 	void render(const matrix4& matrix, uint32_t color)const;
+
+	bool empty()const{
+		return !this->vao;
+	}
 };
 
 }
