@@ -76,9 +76,20 @@ public:
 					}
 				}
 
-				@frame_widget{
+				@margins{
+					left{5dp}
+					right{5dp}
+					top{5dp}
+					bottom{5dp}
+
 					layout{
 						dx{fill} dy{fill}
+					}
+
+					@frame_widget{
+						layout{
+							dx{fill} dy{fill}
+						}
 					}
 				}
 			}
