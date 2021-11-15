@@ -1,3 +1,9 @@
+libmorda (0.5.191) unstable; urgency=medium
+
+  * fix frame_vao
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 16 Nov 2021 01:17:16 +0200
+
 libmorda (0.5.190) unstable; urgency=medium
 
   * frame_vao
