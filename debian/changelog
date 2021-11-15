@@ -1,3 +1,9 @@
+libmorda (0.5.190) unstable; urgency=medium
+
+  * frame_vao
+
+ -- Ivan Gagis <igagis@gmail.com>  Mon, 15 Nov 2021 19:47:46 +0200
+
 libmorda (0.5.189) unstable; urgency=medium
 
   * enable msys2 32bit build
