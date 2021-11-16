@@ -75,7 +75,7 @@ public:
 			return this->img_matrix;
 		}
 		
-		image_matrix(std::array<std::array<std::shared_ptr<const res::image>, 3>, 3>&& l, std::shared_ptr<const nine_patch> parent, real mul);
+		image_matrix(std::array<std::array<std::shared_ptr<const res::image>, 3>, 3>&& l, std::weak_ptr<const nine_patch> parent, real mul);
 		
 		~image_matrix()noexcept;
 	};
