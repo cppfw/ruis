@@ -63,14 +63,13 @@ public:
 			image(std::move(image)),
 			borders_v(borders)
 	{}
-	
-	
+
 	class image_matrix{
 		const std::array<std::array<std::shared_ptr<const res::image>, 3>, 3> img_matrix;
 		
 		std::weak_ptr<const nine_patch> parent;
 	
-		real mul;//for erasing from the cache
+		real mul; // for erasing from the cache
 	public:
 		decltype(img_matrix)& images()const noexcept{
 			return this->img_matrix;

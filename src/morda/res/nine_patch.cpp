@@ -62,7 +62,7 @@ public:
 		this->vao = r.factory->create_vertex_array(
 				{
 					r.quad_01_vbo,
-					r.factory->create_vertex_buffer(utki::make_span(tex_coords))
+					r.factory->create_vertex_buffer(tex_coords)
 				},
 				r.quad_indices,
 				vertex_array::mode::triangle_fan
@@ -72,15 +72,15 @@ public:
 	res_subimage(const res_subimage& orig) = delete;
 	res_subimage& operator=(const res_subimage& orig) = delete;
 	
-	vector2 dims(real dpi) const noexcept override{
+	vector2 dims(real dpi)const noexcept override{
 		return this->res::image::texture::dims;
 	}
 	
-	virtual std::shared_ptr<const res::image::texture> get(vector2 forDim)const override{
+	virtual std::shared_ptr<const res::image::texture> get(vector2 for_dims)const override{
 		return utki::make_shared_from(*this);
 	}
 	
-	void render(const matrix4& matrix, const vertex_array& vao) const override{
+	void render(const matrix4& matrix, const vertex_array& vao)const override{
 		ASSERT(this->tex)
 		this->tex->render(matrix, *this->vao);
 	}
@@ -118,7 +118,7 @@ nine_patch::image_matrix::~image_matrix()noexcept{
 	}
 }
 
-std::shared_ptr<nine_patch::image_matrix> nine_patch::get(sides<real> borders) const {
+std::shared_ptr<nine_patch::image_matrix> nine_patch::get(sides<real> borders)const{
 	real mul = 1;
 	{
 		auto req = borders.begin();
@@ -146,81 +146,81 @@ std::shared_ptr<nine_patch::image_matrix> nine_patch::get(sides<real> borders) c
 //	TRACE(<< "mul = " << std::setprecision(10) << mul << std::endl)
 	
 	using std::round;
-	auto quadTex = this->image->get(round(this->image->dims() * mul));
-//	TRACE(<< "quadTex->dim() = " << quadTex->dim() << std::endl)
+	auto quad_tex = this->image->get(round(this->image->dims() * mul));
+//	TRACE(<< "quad_tex->dim() = " << quad_tex->dim() << std::endl)
 	
-	vector2 actMul = quadTex->dims.comp_div(this->image->dims());
+	vector2 act_mul = quad_tex->dims.comp_div(this->image->dims());
 	
-//	TRACE(<< "actMul = " << std::setprecision(10) << actMul << std::endl)
+//	TRACE(<< "act_mul = " << std::setprecision(10) << act_mul << std::endl)
 	
-	sides<real> scaledBorders(this->borders_v);
-	scaledBorders.left() *= actMul.x();
-	scaledBorders.right() *= actMul.x();
-	scaledBorders.top() *= actMul.y();
-	scaledBorders.bottom() *= actMul.y();
+	sides<real> scaled_borders(this->borders_v);
+	scaled_borders.left() *= act_mul.x();
+	scaled_borders.right() *= act_mul.x();
+	scaled_borders.top() *= act_mul.y();
+	scaled_borders.bottom() *= act_mul.y();
 	
-//	TRACE(<< "scaledBorders = " << std::setprecision(10) << scaledBorders << std::endl)
+//	TRACE(<< "scaled_borders = " << std::setprecision(10) << scaled_borders << std::endl)
 	
 	auto ret = std::make_shared<image_matrix>(
 			std::array<std::array<std::shared_ptr<const res::image>, 3>, 3>({{
 				{{
-					std::make_shared<res_subimage>(this->context, quadTex, rectangle(
+					std::make_shared<res_subimage>(this->context, quad_tex, rectangle(
 							0,
 							0,
-							scaledBorders.left(),
-							scaledBorders.top())
+							scaled_borders.left(),
+							scaled_borders.top())
 						), // left top
-					std::make_shared<res_subimage>(this->context, quadTex, rectangle(
-							scaledBorders.left(),
+					std::make_shared<res_subimage>(this->context, quad_tex, rectangle(
+							scaled_borders.left(),
 							0,
-							std::round(quadTex->dims.x() - scaledBorders.left() - scaledBorders.right()),
-							scaledBorders.top())
+							std::round(quad_tex->dims.x() - scaled_borders.left() - scaled_borders.right()),
+							scaled_borders.top())
 						), // top
-					std::make_shared<res_subimage>(this->context, quadTex, rectangle(
-							std::round(quadTex->dims.x() - scaledBorders.right()),
+					std::make_shared<res_subimage>(this->context, quad_tex, rectangle(
+							std::round(quad_tex->dims.x() - scaled_borders.right()),
 							0,
-							scaledBorders.right(),
-							scaledBorders.top())
+							scaled_borders.right(),
+							scaled_borders.top())
 						) // right top
 				}},
 				{{
-					std::make_shared<res_subimage>(this->context, quadTex, rectangle(
+					std::make_shared<res_subimage>(this->context, quad_tex, rectangle(
 							0,
-							scaledBorders.top(),
-							scaledBorders.left(),
-							std::round(quadTex->dims.y() - scaledBorders.top() - scaledBorders.bottom()))
+							scaled_borders.top(),
+							scaled_borders.left(),
+							std::round(quad_tex->dims.y() - scaled_borders.top() - scaled_borders.bottom()))
 						), // left
-					std::make_shared<res_subimage>(this->context, quadTex, rectangle(
-							scaledBorders.left(),
-							scaledBorders.top(),
-							std::round(quadTex->dims.x() - scaledBorders.left() - scaledBorders.right()),
-							std::round(quadTex->dims.y() - scaledBorders.top() - scaledBorders.bottom()))
+					std::make_shared<res_subimage>(this->context, quad_tex, rectangle(
+							scaled_borders.left(),
+							scaled_borders.top(),
+							std::round(quad_tex->dims.x() - scaled_borders.left() - scaled_borders.right()),
+							std::round(quad_tex->dims.y() - scaled_borders.top() - scaled_borders.bottom()))
 						), // middle
-					std::make_shared<res_subimage>(this->context, quadTex, rectangle(
-							std::round(quadTex->dims.x() - scaledBorders.right()),
-							scaledBorders.top(),
-							scaledBorders.right(),
-							std::round(quadTex->dims.y() - scaledBorders.top() - scaledBorders.bottom()))
+					std::make_shared<res_subimage>(this->context, quad_tex, rectangle(
+							std::round(quad_tex->dims.x() - scaled_borders.right()),
+							scaled_borders.top(),
+							scaled_borders.right(),
+							std::round(quad_tex->dims.y() - scaled_borders.top() - scaled_borders.bottom()))
 						) // right
 				}},
 				{{
-					std::make_shared<res_subimage>(this->context, quadTex, rectangle(
+					std::make_shared<res_subimage>(this->context, quad_tex, rectangle(
 							0,
-							std::round(quadTex->dims.y() - scaledBorders.bottom()),
-							scaledBorders.left(),
-							scaledBorders.bottom())
+							std::round(quad_tex->dims.y() - scaled_borders.bottom()),
+							scaled_borders.left(),
+							scaled_borders.bottom())
 						), // left bottom
-					std::make_shared<res_subimage>(this->context, quadTex, rectangle(
-							scaledBorders.left(),
-							std::round(quadTex->dims.y() - scaledBorders.bottom()),
-							std::round(quadTex->dims.x() - scaledBorders.left() - scaledBorders.right()),
-							scaledBorders.bottom())
+					std::make_shared<res_subimage>(this->context, quad_tex, rectangle(
+							scaled_borders.left(),
+							std::round(quad_tex->dims.y() - scaled_borders.bottom()),
+							std::round(quad_tex->dims.x() - scaled_borders.left() - scaled_borders.right()),
+							scaled_borders.bottom())
 						), // bottom
-					std::make_shared<res_subimage>(this->context, quadTex, rectangle(
-							std::round(quadTex->dims.x() - scaledBorders.right()),
-							std::round(quadTex->dims.y() - scaledBorders.bottom()),
-							scaledBorders.right(),
-							scaledBorders.bottom())
+					std::make_shared<res_subimage>(this->context, quad_tex, rectangle(
+							std::round(quad_tex->dims.x() - scaled_borders.right()),
+							std::round(quad_tex->dims.y() - scaled_borders.bottom()),
+							scaled_borders.right(),
+							scaled_borders.bottom())
 						) // right bottom
 				}}
 			}}),
