@@ -49,20 +49,20 @@ public:
 			res::image::texture(c->renderer, rect.d),
 			tex(std::move(tex))
 	{
-		std::array<vector2, 4> texCoords = {
+		std::array<vector2, 4> tex_coords = {
 			rect.p.comp_div(this->tex->dims),
 			rect.x1_y2().comp_div(this->tex->dims),
 			rect.x2_y2().comp_div(this->tex->dims),
 			rect.x2_y1().comp_div(this->tex->dims),
 		};
 
-//		TRACE(<< "this->texCoords = (" << texCoords[0] << ", " << texCoords[1] << ", " << texCoords[2] << ", " << texCoords[3] << ")" << std::endl)
+		TRACE(<< "this->tex_coords = (" << tex_coords[0] << ", " << tex_coords[1] << ", " << tex_coords[2] << ", " << tex_coords[3] << ")" << std::endl)
 
 		auto& r = *this->context->renderer;
 		this->vao = r.factory->create_vertex_array(
 				{
 					r.quad_01_vbo,
-					r.factory->create_vertex_buffer(utki::make_span(texCoords))
+					r.factory->create_vertex_buffer(utki::make_span(tex_coords))
 				},
 				r.quad_indices,
 				vertex_array::mode::triangle_fan
