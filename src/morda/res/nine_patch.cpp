@@ -56,7 +56,7 @@ public:
 			rect.x2_y1().comp_div(this->tex->dims),
 		};
 
-		TRACE(<< "this->tex_coords = (" << tex_coords[0] << ", " << tex_coords[1] << ", " << tex_coords[2] << ", " << tex_coords[3] << ")" << std::endl)
+		// TRACE(<< "this->tex_coords = (" << tex_coords[0] << ", " << tex_coords[1] << ", " << tex_coords[2] << ", " << tex_coords[3] << ")" << std::endl)
 
 		auto& r = *this->context->renderer;
 		this->vao = r.factory->create_vertex_array(
