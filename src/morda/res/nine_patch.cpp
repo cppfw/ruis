@@ -163,7 +163,7 @@ std::shared_ptr<nine_patch::image_matrix> nine_patch::get(sides<real> borders)co
 	scaled_borders.top() *= act_mul.y();
 	scaled_borders.bottom() *= act_mul.y();
 	
-//	TRACE(<< "scaled_borders = " << std::setprecision(10) << scaled_borders << std::endl)
+	// TRACE(<< "scaled_borders = " << std::setprecision(10) << scaled_borders << std::endl)
 	
 	auto ret = std::make_shared<image_matrix>(
 			std::array<std::array<std::shared_ptr<const res::image>, 3>, 3>({{

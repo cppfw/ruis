@@ -101,6 +101,14 @@
             "group": "build"
 		},
 		{
+            "label": "run_paint_dbg_gles2",
+            "type": "shell",
+            "command": "make run_paint config=dbg ren=gles2",
+            "problemMatcher": [],
+            "dependsOn": "build_dbg",
+            "group": "build"
+		},
+		{
             "label": "run_widget_set_dbg",
             "type": "shell",
             "command": "make run_widget_set config=dbg",

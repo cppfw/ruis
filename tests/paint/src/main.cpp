@@ -103,6 +103,11 @@ public:
 						dx{max} dy{min}
 					}
 				}
+				@push_button{
+					@text{
+						text{stuff}
+					}
+				}
 			}
 		)")));
 	}
