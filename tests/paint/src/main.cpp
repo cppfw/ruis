@@ -92,6 +92,17 @@ public:
 						}
 					}
 				}
+
+				@vertical_scroll_bar{
+					layout{
+						dx{min} dy{max}
+					}
+				}
+				@horizontal_scroll_bar{
+					layout{
+						dx{max} dy{min}
+					}
+				}
 			}
 		)")));
 	}

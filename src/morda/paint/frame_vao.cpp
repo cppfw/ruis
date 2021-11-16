@@ -40,15 +40,13 @@ frame_vao::frame_vao(std::shared_ptr<morda::renderer> r, vector2 dims, vector2 t
 		{thickness.x(), dims.y() - thickness.y()}
 	}};
 
-	std::array<uint16_t, 10> indices = {{
+	std::array<uint16_t, 10> indices = {
 		0, 4, 1, 5, 2, 6, 3, 7, 0, 4
-	}};
-
-	auto vbo = this->renderer->factory->create_vertex_buffer(vertices);
+	};
 	
 	this->vao = this->renderer->factory->create_vertex_array(
 			{
-				vbo,
+				this->renderer->factory->create_vertex_buffer(vertices),
 			},
 			this->renderer->factory->create_index_buffer(indices),
 			morda::vertex_array::mode::triangle_strip
