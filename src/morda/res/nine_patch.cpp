@@ -106,7 +106,11 @@ std::shared_ptr<nine_patch> nine_patch::load(morda::context& ctx, const treeml::
 	return std::make_shared<nine_patch>(utki::make_shared_from(ctx), image, borders);
 }
 
-nine_patch::image_matrix::image_matrix(std::array<std::array<std::shared_ptr<const res::image>, 3>, 3>&& l, std::weak_ptr<const nine_patch> parent, real mul) :
+nine_patch::image_matrix::image_matrix(
+		std::array<std::array<std::shared_ptr<const res::image>, 3>, 3>&& l,
+		std::weak_ptr<const nine_patch> parent,
+		real mul
+	) :
 		img_matrix(l),
 		parent(std::move(parent)),
 		mul(mul)
