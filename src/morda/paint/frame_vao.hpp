@@ -35,6 +35,12 @@ public:
 
 	frame_vao(std::shared_ptr<morda::renderer> r, vector2 dims, vector2 thickness);
 
+	frame_vao(const frame_vao&) = delete;
+	frame_vao& operator=(const frame_vao&) = delete;
+
+	frame_vao(frame_vao&&) = default;
+	frame_vao& operator=(frame_vao&&) = default;
+
 	void render(const matrix4& matrix, uint32_t color)const;
 
 	bool empty()const{
