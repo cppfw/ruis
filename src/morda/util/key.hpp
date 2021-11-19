@@ -21,7 +21,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include <utki/config.hpp>
+#include <string_view>
 
 namespace morda{
 
@@ -67,10 +67,10 @@ enum class key{
 	x,
 	y,
 	z,
-	left,
-	right,
-	up,
-	down,
+	arrow_left,
+	arrow_right,
+	arrow_up,
+	arrow_down,
 	comma,
 	semicolon,
 	apostrophe, // '
@@ -144,5 +144,9 @@ enum class key_modifier{
 };
 
 key_modifier to_key_modifier(morda::key key);
+
+std::string_view to_string(morda::key key);
+
+morda::key to_key(std::string_view name);
 
 }

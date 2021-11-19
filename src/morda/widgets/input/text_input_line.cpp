@@ -288,7 +288,7 @@ void text_input_line::on_character_input(const character_input_event& e){
 	switch(e.key){
 		case morda::key::enter:
 			break;
-		case morda::key::right:
+		case morda::key::arrow_right:
 			if(this->cursorIndex != this->get_text().size()){
 				size_t newIndex;
 				if(this->ctrlPressed){
@@ -310,7 +310,7 @@ void text_input_line::on_character_input(const character_input_event& e){
 				this->set_cursor_index(newIndex, this->shiftPressed);
 			}
 			break;
-		case morda::key::left:
+		case morda::key::arrow_left:
 			if(this->cursorIndex != 0){
 				size_t newIndex;
 				if(this->ctrlPressed){

@@ -84,7 +84,7 @@ public:
 		if(e.is_down){
 			TRACE(<< "SimpleWidget::OnKey(): down, keyCode = " << unsigned(e.key) << std::endl)
 			switch(e.key){
-				case morda::key::left:
+				case morda::key::arrow_left:
 					TRACE(<< "SimpleWidget::OnKeyDown(): LEFT key caught" << std::endl)
 					return true;
 				case morda::key::a:
@@ -96,7 +96,7 @@ public:
 		}else{
 			TRACE(<< "SimpleWidget::OnKey(): up, keyCode = " << unsigned(e.key) << std::endl)
 			switch(e.key){
-				case morda::key::left:
+				case morda::key::arrow_left:
 					TRACE(<< "SimpleWidget::OnKeyUp(): LEFT key caught" << std::endl)
 					return true;
 				case morda::key::a:
@@ -114,7 +114,7 @@ public:
 			return;
 		}
 
-		TRACE(<< "SimpleWidget::OnCharacterInput(): unicode = " << e.unicode[0] << std::endl)
+		TRACE(<< "SimpleWidget::OnCharacterInput(): unicode = " << uint32_t(e.unicode[0]) << std::endl)
 	}
 
 	void render(const morda::matrix4& matrix)const override{
