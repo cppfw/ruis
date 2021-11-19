@@ -153,9 +153,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\tests\harness\util\dummy_context.cpp" />
     <ClCompile Include="..\..\tests\harness\util\fake_renderer.cpp" />
-    <ClCompile Include="..\..\tests\unit\src\get_all_widgets.cpp" />
-    <ClCompile Include="..\..\tests\unit\src\inflating.cpp" />
-    <ClCompile Include="..\..\tests\unit\src\layouting.cpp" />
+    <ClCompile Include="..\..\tests\unit\src\**\*.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
