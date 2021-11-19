@@ -281,7 +281,7 @@ morda::key morda::to_key(std::string_view name){
 			name,
 			[](const auto& a, const std::string_view& b){return a.first < b;}
 		);
-	if(i != key_name_to_key_ordered_mapping.end()){
+	if(i != key_name_to_key_ordered_mapping.end() && i->first == name){
 		return i->second;
 	}
 	return morda::key::unknown;

@@ -4,6 +4,7 @@
 #include <morda/util/key.hpp>
 
 using namespace std::string_view_literals;
+using namespace std::string_literals;
 
 namespace{
 std::vector<std::pair<morda::key, std::string_view>>
@@ -128,5 +129,18 @@ tst::set set("key", [](tst::suite& suite){
 				tst::check(key == p.first, SL) << "expected " << size_t(p.first) << ", got " << size_t(key);
 			}
 	);
+
+	suite.add("invalid_key_name", []{
+		auto key = morda::to_key("arrr");
+		tst::check(key == morda::key::unknown, SL) << "key = " << morda::to_string(key);
+	});
+
+	suite.add("unknown_key_to_string", []{
+		tst::check_eq(
+				std::string(morda::to_string(morda::key::unknown)),
+				"unknown"s,
+				SL
+			);
+	});
 });
 }
