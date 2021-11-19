@@ -1,3 +1,9 @@
+libmorda (0.5.192) unstable; urgency=medium
+
+  * add to_string(key) and to_key(string)
+
+ -- Ivan Gagis <igagis@gmail.com>  Fri, 19 Nov 2021 02:48:24 +0200
+
 libmorda (0.5.191) unstable; urgency=medium
 
   * fix frame_vao
