@@ -46,9 +46,9 @@ public:
 	};
 
 private:
-	color_depth colorDepth_v;
-	r4::vector2<unsigned> dims_v = r4::vector2<unsigned>(0);
-	std::vector<std::uint8_t> buf_v;//image pixels data
+	color_depth color_depth_;
+	r4::vector2<unsigned> dims_ = r4::vector2<unsigned>(0);
+	std::vector<uint8_t> buffer; // image pixels data
 
 public:
 	/**
@@ -56,29 +56,29 @@ public:
 	 * Creates uninitialized Image object.
 	 */
 	raster_image() :
-			colorDepth_v(color_depth::unknown)
+			color_depth_(color_depth::unknown)
 	{}
 
-	raster_image(const raster_image& im) = default;
+	raster_image(const raster_image&) = default;
 
 	/**
 	 * @brief Constructor.
 	 * Creates image with given parameters, but uninitialized contents.
 	 * @param dimensions - image dimensions.
-	 * @param colorDepth - color depth.
+	 * @param pixel_color_depth - color depth.
 	 */
-	raster_image(r4::vector2<unsigned> dimensions, color_depth colorDepth){
-		this->init(dimensions, colorDepth);
+	raster_image(r4::vector2<unsigned> dimensions, color_depth pixel_color_depth){
+		this->init(dimensions, pixel_color_depth);
 	}
 
 	/**
 	 * @brief Constructor.
 	 * Creates an image with given parameters and initializes image data from given memory buffer.
 	 * @param dimensions - image dimensions.
-	 * @param colorDepth - color depth.
-	 * @param srcBuf - pointer to memory buffer to take image data from.
+	 * @param pixel_color_depth - color depth.
+	 * @param src_buf - pointer to memory buffer to take image data from.
 	 */
-	raster_image(r4::vector2<unsigned> dimensions, color_depth colorDepth, const std::uint8_t* srcBuf);
+	raster_image(r4::vector2<unsigned> dimensions, color_depth pixel_color_depth, const uint8_t* src_buf);
 
 	/**
 	 * @brief Constructor.
@@ -103,7 +103,7 @@ public:
 	 * @return Image dimensions.
 	 */
 	const r4::vector2<unsigned>& dims()const noexcept{
-		return this->dims_v;
+		return this->dims_;
 	}
 
 	/**
@@ -119,7 +119,7 @@ public:
 	 * @return Number of color channels.
 	 */
 	unsigned num_channels()const{
-		return unsigned(this->colorDepth_v);
+		return unsigned(this->color_depth_);
 	}
 
 	/**
@@ -127,23 +127,23 @@ public:
 	 * @return Color depth type.
 	 */
 	color_depth depth()const{
-		return this->colorDepth_v;
+		return this->color_depth_;
 	}
 
 	/**
 	 * @brief Get pixel data.
 	 * @return Pixel data of the image.
 	 */
-	utki::span<std::uint8_t> pixels(){
-		return utki::make_span(this->buf_v);
+	utki::span<uint8_t> pixels(){
+		return utki::make_span(this->buffer);
 	}
 
 	/**
 	 * @brief Get pixel data.
 	 * @return Pixel data of the image.
 	 */
-	utki::span<const std::uint8_t> pixels()const{
-		return utki::make_span(this->buf_v);
+	utki::span<const uint8_t> pixels()const{
+		return utki::make_span(this->buffer);
 	}
 
 public:
@@ -151,10 +151,9 @@ public:
 	 * @brief Initialize this image object with given parameters.
 	 * Pixel data remains uninitialized.
 	 * @param dimensions - image dimensions.
-	 * @param colorDepth - color depth.
+	 * @param pixel_color_depth - color depth.
 	 */
-	void init(r4::vector2<unsigned> dimensions, color_depth colorDepth);
-
+	void init(r4::vector2<unsigned> dimensions, color_depth pixel_color_depth);
 
 	/**
 	 * @brief Reset this Image object to uninitialized state.
@@ -166,14 +165,14 @@ public:
 	 * @brief Fill each image channel with specified value.
 	 * @param val - value to use when filling pixel data.
 	 */
-	void clear(std::uint8_t  val = 0);
+	void clear(uint8_t val = 0);
 
 	/**
 	 * @brief Fill specified color channel with given value.
 	 * @param chan - index of color channel to clear.
 	 * @param val - value to use for filling.
 	 */
-	void clear(unsigned chan, std::uint8_t val = 0);
+	void clear(unsigned chan, uint8_t val = 0);
 
 	/**
 	 * @brief Flip image vertically.
@@ -194,10 +193,10 @@ public:
 	 * channel and specified location on this image.
 	 * @param pos - destination position.
 	 * @param src - image to copy to this image.
-	 * @param dstChan - index of destination color channel.
-	 * @param srcChan - index of source color channel.
+	 * @param dst_chan - index of destination color channel.
+	 * @param src_chan - index of source color channel.
 	 */
-	void blit(r4::vector2<unsigned> pos, const raster_image& src, unsigned dstChan, unsigned srcChan);
+	void blit(r4::vector2<unsigned> pos, const raster_image& src, unsigned dst_chan, unsigned src_chan);
 
 	/**
 	 * @brief Get reference to specific channel for given pixel.
@@ -206,10 +205,10 @@ public:
 	 * @param chan - channel index to get reference to.
 	 * @return Reference to uint8_t representing a single color channel of given pixel.
 	 */
-	const std::uint8_t& pix_chan(unsigned x, unsigned y, unsigned chan)const{
+	const uint8_t& pix_chan(unsigned x, unsigned y, unsigned chan)const{
 		auto i = (y * this->dims().x() + x) * this->num_channels() + chan;
-		ASSERT(i < this->buf_v.size())
-		return this->buf_v[i];
+		ASSERT(i < this->buffer.size())
+		return this->buffer[i];
 	}
 
 	/**
@@ -219,10 +218,10 @@ public:
 	 * @param chan - channel number to get reference to.
 	 * @return Reference to uint8_t representing a single color channel of given pixel.
 	 */
-	std::uint8_t& pix_chan(unsigned x, unsigned y, unsigned chan){
+	uint8_t& pix_chan(unsigned x, unsigned y, unsigned chan){
 		auto i = (y * this->dims().x() + x) * this->num_channels() + chan;
-		ASSERT(i < this->buf_v.size())
-		return this->buf_v[i];
+		ASSERT(i < this->buffer.size())
+		return this->buffer[i];
 	}
 
 	/**
@@ -244,7 +243,5 @@ public:
 	 */
 	void load(const papki::file& f);
 };
-
-
 
 }
