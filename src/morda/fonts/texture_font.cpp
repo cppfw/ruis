@@ -83,7 +83,7 @@ texture_font::Glyph texture_font::loadGlyph(char32_t c)const{
 
 	raster_image im(glyphim.dims(), raster_image::color_depth::grey_alpha);
 	im.blit({0, 0}, glyphim, 1, 0);
-	im.clear(0, std::uint8_t(0xff));
+	im.clear(0, uint8_t(0xff));
 	
 	std::array<r4::vector2<float>, 4> verts;
 	verts[0] = (morda::vector2(real(m->horiBearingX), -real(m->horiBearingY)) / (64.0f));

@@ -46,8 +46,11 @@ raster_image::raster_image(r4::vector2<unsigned> dimensions, color_depth pixel_c
 	ASSERT(src_buf)
 	this->init(dimensions, pixel_color_depth);
 
-	// TODO: use std::copy
-	memcpy(this->buffer.data(), src_buf, this->buffer.size() * sizeof(this->buffer[0]));
+	std::copy(
+			src_buf,
+			src_buf + this->buffer.size(),
+			this->buffer.begin()
+		);
 }
 
 raster_image::raster_image(r4::vector2<unsigned> pos, r4::vector2<unsigned> dimensions, const raster_image& src){
@@ -72,8 +75,12 @@ void raster_image::clear(uint8_t val){
 	if (this->buffer.size() == 0) {
 		return;
 	}
-	// TODO: use some algorithm from std
-	memset(&*this->buffer.data(), val, this->buffer.size() * sizeof(this->buffer[0]));
+
+	std::fill(
+			this->buffer.begin(),
+			this->buffer.end(),
+			val
+		);
 }
 
 void raster_image::clear(unsigned chan, uint8_t val){
@@ -95,14 +102,21 @@ void raster_image::flip_vertical(){
 	}
 
 	unsigned stride = this->num_channels() * this->dims().x(); // stride
-	std::vector<std::uint8_t> line(stride);
+	std::vector<uint8_t> line(stride);
 
-	// TODO: use iterators
-	for(unsigned i = 0; i < this->dims().y() / 2; ++i){
-		// TODO: use std::copy
-		memcpy(&*line.begin(), &*this->buffer.begin() + stride * i, stride); // move line to temp
-		memcpy(&*this->buffer.begin() + stride * i, &*this->buffer.begin() + stride * (this->dims().y() - i - 1), stride); // move bottom line to top
-		memcpy(&*this->buffer.begin() + stride * (this->dims().y() - i - 1), &*line.begin(), stride);
+	for(auto t = this->buffer.begin(), b = std::prev(this->buffer.end(), stride);
+			t != std::next(this->buffer.begin(), stride * (this->dims().y() / 2));
+			t = std::next(t, stride), b = std::prev(b, stride)
+		)
+	{
+		// move line to temp
+		std::copy(t, std::next(t, stride), line.begin());	
+
+		// move bottom line to top
+		std::copy(b, std::next(b, stride), t);
+		
+		// move line from temp
+		std::copy(line.begin(), line.end(), b);
 	}
 }
 
@@ -194,8 +208,7 @@ void raster_image::load_png(const papki::file& fi){
 		std::array<png_byte, png_sig_size> sig;
 		auto span = utki::make_span(sig);
 
-		// TODO: use some algorithm from std
-		memset(span.data(), 0, span.size_bytes());
+		std::fill(span.begin(), span.end(), 0);
 		
 		auto num_bytes_read = fi.read(span);
 		if(num_bytes_read != span.size_bytes()){
@@ -511,7 +524,7 @@ void raster_image::load_jpg(const papki::file& fi){
 		// read the string into buffer
 		jpeg_read_scanlines(&cinfo, buffer, 1);
 		// copy the data to an image
-		memcpy(&*this->buffer.begin() + bytesRow * y, buffer[0], bytesRow);
+		memcpy(this->buffer.data() + bytesRow * y, buffer[0], bytesRow);
 		++y;
 	}
 
