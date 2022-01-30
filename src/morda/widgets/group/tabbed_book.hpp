@@ -54,6 +54,18 @@ public:
 	void add(std::shared_ptr<tab> tab, std::shared_ptr<morda::page> page);
 
 	std::shared_ptr<page> tear_out(tab& t);
+
+	using morda::column::render;
+	using morda::column::lay_out;
+	using morda::column::on_mouse_move;
+	using morda::column::on_mouse_button;
+	using morda::column::on_key;
+	using morda::column::on_focus_change;
+	using morda::column::on_hover_change;
+	using morda::column::on_resize;
+	using morda::column::on_parent_change;
+	using morda::column::measure;
+	using morda::column::on_enable_change;
 };
 
 }

@@ -13,7 +13,7 @@
             "group": "build"
         },
         {
-            "label": "build_gles2",
+            "label": "build-gles2",
             "type": "shell",
             "command": "make ren=gles2",
             "problemMatcher": [
@@ -22,7 +22,7 @@
             "group": "build"
         },
         {
-            "label": "build_dbg",
+            "label": "build-dbg",
             "type": "shell",
             "command": "make config=dbg",
             "problemMatcher": [
@@ -45,103 +45,103 @@
             "group": "build"
         },
         {
-            "label": "run_app",
+            "label": "run-app",
             "type": "shell",
-            "command": "make run_app",
+            "command": "make run-app",
             "problemMatcher": [],
             "dependsOn": "build",
             "group": "build"
 		},
 		{
-            "label": "run_busy",
+            "label": "run-busy",
             "type": "shell",
-            "command": "make run_busy",
+            "command": "make run-busy",
             "problemMatcher": [],
             "dependsOn": "build",
             "group": "build"
 		},
 		{
-            "label": "run_busy_dbg",
+            "label": "run-busy-dbg",
             "type": "shell",
-            "command": "make run_busy config=dbg",
+            "command": "make run-busy config=dbg",
             "problemMatcher": [],
-            "dependsOn": "build_dbg",
+            "dependsOn": "build-dbg",
             "group": "build"
 		},
 		{
-            "label": "run_ratio_proxy",
+            "label": "run-ratio_proxy",
             "type": "shell",
-            "command": "make run_ratio_proxy",
+            "command": "make run-ratio_proxy",
             "problemMatcher": [],
             "dependsOn": "build",
             "group": "build"
 		},
 		{
-            "label": "run_ratio_proxy_dbg",
+            "label": "run-ratio_proxy-dbg",
             "type": "shell",
-            "command": "make run_ratio_proxy config=dbg",
+            "command": "make run-ratio_proxy config=dbg",
             "problemMatcher": [],
-            "dependsOn": "build_dbg",
+            "dependsOn": "build-dbg",
             "group": "build"
         },
         {
-            "label": "run_paint",
+            "label": "run-paint",
             "type": "shell",
-            "command": "make run_paint",
+            "command": "make run-paint",
             "problemMatcher": [],
             "dependsOn": "build",
             "group": "build"
 		},
 		{
-            "label": "run_paint_dbg",
+            "label": "run-paint-dbg",
             "type": "shell",
-            "command": "make run_paint config=dbg",
+            "command": "make run-paint config=dbg",
             "problemMatcher": [],
-            "dependsOn": "build_dbg",
+            "dependsOn": "build-dbg",
             "group": "build"
 		},
 		{
-            "label": "run_paint_dbg_gles2",
+            "label": "run-paint-dbg-gles2",
             "type": "shell",
-            "command": "make run_paint config=dbg ren=gles2",
+            "command": "make run-paint config=dbg ren=gles2",
             "problemMatcher": [],
-            "dependsOn": "build_dbg",
+            "dependsOn": "build-dbg",
             "group": "build"
 		},
 		{
-            "label": "run_widget_set_dbg",
+            "label": "run-widget_set-dbg",
             "type": "shell",
-            "command": "make run_widget_set config=dbg",
+            "command": "make run-widget_set config=dbg",
             "problemMatcher": [],
-            "dependsOn": "build_dbg",
+            "dependsOn": "build-dbg",
             "group": "build"
 		},
 		{
-            "label": "run_book",
+            "label": "run-book",
             "type": "shell",
-            "command": "make run_book",
+            "command": "make run-book",
             "problemMatcher": [],
             "dependsOn": "build",
             "group": "build"
 		},
 		{
-            "label": "run_book_dbg",
+            "label": "run-book-dbg",
             "type": "shell",
-            "command": "make run_book config=dbg",
+            "command": "make run-book config=dbg",
             "problemMatcher": [],
-            "dependsOn": "build_dbg",
+            "dependsOn": "build-dbg",
             "group": "build"
         },
         {
-            "label": "run_tabbed_book_dbg",
+            "label": "run-tabbed_book-dbg",
             "type": "shell",
-            "command": "make run_tabbed_book config=dbg",
+            "command": "make run-tabbed_book config=dbg",
             "problemMatcher": [],
-            "dependsOn": "build_dbg",
+            "dependsOn": "build-dbg",
             "group": "build"
         },
         {
-            "label": "test",
+            "label": "test_",
             "type": "shell",
             "command": "make test",
             "problemMatcher": [],
@@ -149,51 +149,35 @@
             "group": "build"
 		},
 		{
-            "label": "test_dbg",
+            "label": "test-dbg",
             "type": "shell",
             "command": "make test config=dbg",
             "problemMatcher": [],
-            "dependsOn": "build_dbg",
+            "dependsOn": "build-dbg",
             "group": "build"
 		},
-		{
-            "label": "test_inflating",
+        {
+            "label": "run-app-gles2",
             "type": "shell",
-            "command": "make -C tests/inflating test",
+            "command": "make run-app ren=gles2",
             "problemMatcher": [],
-            "dependsOn": "build",
-            "group": "build"
-		},
-		{
-            "label": "test_inflating_dbg",
-            "type": "shell",
-            "command": "make -C tests/inflating test config=dbg",
-            "problemMatcher": [],
-            "dependsOn": "build_dbg",
+            "dependsOn": "build-gles2",
             "group": "build"
         },
         {
-            "label": "run_app_ogles2",
+            "label": "run-app-dbg",
             "type": "shell",
-            "command": "make run_app ren=gles2",
+            "command": "make run-app config=dbg",
             "problemMatcher": [],
-            "dependsOn": "build_gles2",
+            "dependsOn": "build-dbg",
             "group": "build"
         },
         {
-            "label": "run_app_dbg",
+            "label": "run-wire_area-dbg",
             "type": "shell",
-            "command": "make run_app config=dbg",
+            "command": "make run-wire_area config=dbg",
             "problemMatcher": [],
-            "dependsOn": "build_dbg",
-            "group": "build"
-        },
-        {
-            "label": "run_wire_area_dbg",
-            "type": "shell",
-            "command": "make run_wire_area config=dbg",
-            "problemMatcher": [],
-            "dependsOn": "build_dbg",
+            "dependsOn": "build-dbg",
             "group": "build"
         },
         {
