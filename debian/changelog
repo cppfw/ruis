@@ -1,3 +1,10 @@
+libmorda (0.5.194) unstable; urgency=medium
+
+  * add using directives to tabbed_book to expose methods from parent
+    class
+
+ -- Ivan Gagis <igagis@gmail.com>  Sun, 30 Jan 2022 22:34:55 +0200
+
 libmorda (0.5.193) unstable; urgency=medium
 
   * fix unknown key name to key conversion
