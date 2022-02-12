@@ -58,21 +58,18 @@ struct mouse_move_event{
 };
 
 struct key_event{
-	morda::key key;
 	bool is_down;
-	utki::flags<key_modifier> modifiers;
+	key_combo combo;
 };
 
 struct character_input_event{
-	std::u32string_view unicode;
+	std::u32string_view string;
 
 	/**
 	 * @brief Key code associated with the character input.
 	 * Can be unknown.
 	 */
-	morda::key key;
-
-	utki::flags<key_modifier> modifiers;
+	key_combo combo;
 };
 
 }

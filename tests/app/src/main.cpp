@@ -82,8 +82,8 @@ public:
 
 	bool on_key(const morda::key_event& e)override{
 		if(e.is_down){
-			TRACE(<< "SimpleWidget::OnKey(): down, keyCode = " << unsigned(e.key) << std::endl)
-			switch(e.key){
+			TRACE(<< "SimpleWidget::OnKey(): down, keyCode = " << unsigned(e.combo.key) << std::endl)
+			switch(e.combo.key){
 				case morda::key::arrow_left:
 					TRACE(<< "SimpleWidget::OnKeyDown(): LEFT key caught" << std::endl)
 					return true;
@@ -94,8 +94,8 @@ public:
 					break;
 			}
 		}else{
-			TRACE(<< "SimpleWidget::OnKey(): up, keyCode = " << unsigned(e.key) << std::endl)
-			switch(e.key){
+			TRACE(<< "SimpleWidget::OnKey(): up, keyCode = " << unsigned(e.combo.key) << std::endl)
+			switch(e.combo.key){
 				case morda::key::arrow_left:
 					TRACE(<< "SimpleWidget::OnKeyUp(): LEFT key caught" << std::endl)
 					return true;
@@ -110,11 +110,11 @@ public:
 	}
 
 	void on_character_input(const morda::character_input_event& e)override{
-		if(e.unicode.empty()){
+		if(e.string.empty()){
 			return;
 		}
 
-		TRACE(<< "SimpleWidget::OnCharacterInput(): unicode = " << uint32_t(e.unicode[0]) << std::endl)
+		TRACE(<< "SimpleWidget::on_character_input(): string = " << uint32_t(e.string[0]) << std::endl)
 	}
 
 	void render(const morda::matrix4& matrix)const override{
@@ -479,7 +479,7 @@ public:
 
 		std::dynamic_pointer_cast<morda::key_proxy>(c)->key_handler = [this](morda::key_proxy&, const morda::key_event& e) -> bool {
 			if(e.is_down){
-				if(e.key == morda::key::escape){
+				if(e.combo.key == morda::key::escape){
 					this->quit();
 				}
 			}

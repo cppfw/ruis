@@ -2,6 +2,7 @@
 #include <tst/check.hpp>
 
 #include <morda/util/key.hpp>
+#include <morda/util/events.hpp>
 
 using namespace std::string_view_literals;
 using namespace std::string_literals;
@@ -141,6 +142,110 @@ tst::set set("key", [](tst::suite& suite){
 				"unknown"s,
 				SL
 			);
+	});
+
+	suite.add("key_combo_can_be_compared_for_equality__equal_combos", []{
+		morda::key_combo c1{
+			.key = morda::key::enter,
+			.modifiers = morda::key_modifier::left_alt
+		};
+		morda::key_combo c2{
+			.key = morda::key::enter,
+			.modifiers = morda::key_modifier::left_alt
+		};
+
+		tst::check(c1 == c2, SL);
+	});
+
+	suite.add("key_combo_can_be_compared_for_equality__different_keys", []{
+		morda::key_combo c1{
+			.key = morda::key::space,
+			.modifiers = morda::key_modifier::left_alt
+		};
+		morda::key_combo c2{
+			.key = morda::key::enter,
+			.modifiers = morda::key_modifier::left_alt
+		};
+
+		tst::check(!(c1 == c2), SL);
+	});
+
+	suite.add("key_combo_can_be_compared_for_equality__different_modifiers", []{
+		morda::key_combo c1{
+			.key = morda::key::enter,
+			.modifiers = morda::key_modifier::right_alt
+		};
+		morda::key_combo c2{
+			.key = morda::key::enter,
+			.modifiers = morda::key_modifier::left_alt
+		};
+
+		tst::check(!(c1 == c2), SL);
+	});
+
+	suite.add("key_combo_can_be_compared_for_equality__different_combos", []{
+		morda::key_combo c1{
+			.key = morda::key::arrow_left,
+			.modifiers = morda::key_modifier::right_alt
+		};
+		morda::key_combo c2{
+			.key = morda::key::enter,
+			.modifiers = morda::key_modifier::left_alt
+		};
+
+		tst::check(!(c1 == c2), SL);
+	});
+
+	suite.add("key_combo_can_be_compared_for_inequality__different_modifiers", []{
+		morda::key_combo c1{
+			.key = morda::key::enter,
+			.modifiers = morda::key_modifier::right_alt
+		};
+		morda::key_combo c2{
+			.key = morda::key::enter,
+			.modifiers = morda::key_modifier::left_alt
+		};
+
+		tst::check(c1 != c2, SL);
+	});
+
+	suite.add("key_combo_can_be_compared_for_inequality__different_keys", []{
+		morda::key_combo c1{
+			.key = morda::key::arrow_left,
+			.modifiers = morda::key_modifier::left_alt
+		};
+		morda::key_combo c2{
+			.key = morda::key::enter,
+			.modifiers = morda::key_modifier::left_alt
+		};
+
+		tst::check(c1 != c2, SL);
+	});
+
+	suite.add("key_combo_can_be_compared_for_inequality__different_combos", []{
+		morda::key_combo c1{
+			.key = morda::key::arrow_left,
+			.modifiers = morda::key_modifier::right_alt | morda::key_modifier::left_command
+		};
+		morda::key_combo c2{
+			.key = morda::key::enter,
+			.modifiers = morda::key_modifier::left_alt
+		};
+
+		tst::check(c1 != c2, SL);
+	});
+
+	suite.add("key_combo_can_be_compared_for_inequality__equal_combos", []{
+		morda::key_combo c1{
+			.key = morda::key::enter,
+			.modifiers = morda::key_modifier::right_alt | morda::key_modifier::left_command
+		};
+		morda::key_combo c2{
+			.key = morda::key::enter,
+			.modifiers = morda::key_modifier::right_alt | morda::key_modifier::left_command
+		};
+
+		tst::check(!(c1 != c2), SL);
 	});
 });
 }

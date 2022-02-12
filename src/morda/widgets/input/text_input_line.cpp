@@ -269,7 +269,7 @@ void text_input_line::startCursorBlinking(){
 }
 
 bool text_input_line::on_key(const morda::key_event& e){
-	switch(e.key){
+	switch(e.combo.key){
 		case morda::key::left_control:
 		case morda::key::right_control:
 			this->ctrlPressed = e.is_down;
@@ -285,7 +285,7 @@ bool text_input_line::on_key(const morda::key_event& e){
 }
 
 void text_input_line::on_character_input(const character_input_event& e){
-	switch(e.key){
+	switch(e.combo.key){
 		case morda::key::enter:
 			break;
 		case morda::key::arrow_right:
@@ -378,17 +378,17 @@ void text_input_line::on_character_input(const character_input_event& e){
 			}
 			// fall through
 		default:
-			if(!e.unicode.empty()){
+			if(!e.string.empty()){
 				if(this->thereIsSelection()){
 					this->cursorIndex = this->deleteSelection();
 				}
 				
 				auto t = this->get_text();
 				this->clear();
-				t.insert(t.begin() + this->cursorIndex, e.unicode.begin(), e.unicode.end());
+				t.insert(t.begin() + this->cursorIndex, e.string.begin(), e.string.end());
 				this->set_text(std::move(t));
 				
-				this->set_cursor_index(this->cursorIndex + e.unicode.size());
+				this->set_cursor_index(this->cursorIndex + e.string.size());
 			}
 			
 			break;

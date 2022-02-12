@@ -23,6 +23,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <string_view>
 
+#include <utki/flags.hpp>
+
 namespace morda{
 
 /**
@@ -148,5 +150,18 @@ key_modifier to_key_modifier(morda::key key);
 std::string_view to_string(morda::key key);
 
 morda::key to_key(std::string_view name);
+
+struct key_combo{
+	morda::key key;
+	utki::flags<key_modifier> modifiers;
+
+	bool operator==(const key_combo& kc)const{
+		return this->key == kc.key && this->modifiers == kc.modifiers;
+	}
+
+	bool operator!=(const key_combo& kc)const{
+		return !this->operator==(kc);
+	}
+};
 
 }

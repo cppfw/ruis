@@ -394,9 +394,9 @@ void gui::send_key(bool is_down, key key_code){
 	}
 
 	morda::key_event e;
-	e.key = key_code;
+	e.combo.key = key_code;
+	e.combo.modifiers = this->key_modifiers;
 	e.is_down = is_down;
-	e.modifiers = this->key_modifiers;
 
 	if(auto w = this->context->focused_widget.lock()){
 //		TRACE(<< "HandleKeyEvent(): there is a focused widget" << std::endl)
@@ -409,16 +409,12 @@ void gui::send_key(bool is_down, key key_code){
 	}
 }
 
-void gui::send_character_input(const unicode_provider& unicode, key key_code){
+void gui::send_character_input(const input_string_provider& string_provider, key key_code){
 	if(auto w = this->context->focused_widget.lock()){
-		//			TRACE(<< "HandleCharacterInput(): there is a focused widget" << std::endl)
-
-		auto str = unicode.get();
-
 		character_input_event e;
-		e.unicode = str;
-		e.key = key_code;
-		e.modifiers = this->key_modifiers;
+		e.string = string_provider.get();
+		e.combo.key = key_code;
+		e.combo.modifiers = this->key_modifiers;
 
 		if(auto c = dynamic_cast<character_input_widget*>(w.get())){
 			c->on_character_input(e);

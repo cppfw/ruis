@@ -133,30 +133,30 @@ public:
 	void send_key(bool is_down, key key_code);
 
 	/**
-	 * @brief Unicode input provider.
+	 * @brief Input string provider.
 	 * Override this class to pass in the character input information when user makes character input.
 	 */
-	struct unicode_provider{
+	struct input_string_provider{
 		/**
-		 * @brief Get unicode string.
+		 * @brief Get string.
 		 * Override this function to return entered text.
 		 * @return The text that the user has entered.
 		 */
 		virtual std::u32string get()const = 0;
 
-		virtual ~unicode_provider()noexcept{}
+		virtual ~input_string_provider()noexcept{}
 	};
 
 	/**
 	 * @brief Feed in the character input event to the GUI.
-	 * The idea with unicode_provider parameter is that we don't want to calculate the unicode string
+	 * The idea with input_string_provider parameter is that we don't want to calculate the unicode string
 	 * unless it is really needed, thus provide the string only when get() method is called.
 	 * This method is supposed to receive also a repeated key events when user holds down the key, as well as initial key press.
-	 * unicode_provider may provide empty string.
-	 * @param unicode - unicode string provider.
+	 * input_string_provider may provide empty string.
+	 * @param string_provider - input string provider.
 	 * @param key_code - key code associated with character input, can be unknown.
 	 */
-	void send_character_input(const unicode_provider& unicode, morda::key key_code);
+	void send_character_input(const input_string_provider& string_provider, morda::key key_code);
 };
 
 }
