@@ -1,3 +1,9 @@
+libmorda (0.5.195) unstable; urgency=medium
+
+  * introduce key_combo
+
+ -- Ivan Gagis <igagis@gmail.com>  Sun, 13 Feb 2022 01:49:24 +0200
+
 libmorda (0.5.194) unstable; urgency=medium
 
   * add using directives to tabbed_book to expose methods from parent
