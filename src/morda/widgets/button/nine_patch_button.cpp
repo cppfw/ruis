@@ -51,7 +51,7 @@ nine_patch_button::nine_patch_button(std::shared_ptr<morda::context> c, const tr
 			}
 		}
 	}
-	this->on_press_change();
+	this->nine_patch_button::on_press_change();
 }
 
 void nine_patch_button::on_press_change(){
