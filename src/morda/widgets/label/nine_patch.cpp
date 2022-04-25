@@ -119,7 +119,7 @@ nine_patch::nine_patch(std::shared_ptr<morda::context> c, const treeml::forest& 
 		}()),
 		inner_content(this->try_get_widget_as<pile>("morda_content"))
 {
-	this->on_blending_change();
+	this->nine_patch::on_blending_change();
 
 	for(const auto& p : desc){
 		if(!is_property(p)){

@@ -79,7 +79,7 @@ void container::push_back_inflate(const treeml::forest& desc){
 	// in case this widget is initially disabled, as specified in gui script
 	// we need to update enabled state of children
 	if(!this->is_enabled()){
-		this->on_enable_change();
+		this->container::on_enable_change();
 	}
 }
 

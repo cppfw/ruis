@@ -19,41 +19,38 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 /* ================ LICENSE END ================ */
 
+#pragma once
+
 #include "text_widget.hpp"
 
-#include "../../context.hpp"
+namespace morda{
 
-#include "../../util/util.hpp"
+class single_line_text_widget : public text_widget{
+	mutable morda::rectangle bb;
 
-using namespace morda;
+	std::u32string text;
+protected:
+	vector2 measure(const morda::vector2& quotum)const noexcept override;
 
-void text_widget::set_font(std::shared_ptr<res::font> font){
-	if(!font){
-		throw std::invalid_argument("text_widget::SetFont(): passed argument is null");
+	single_line_text_widget(std::shared_ptr<morda::context> c, const treeml::forest& desc);
+
+	const morda::rectangle& get_bounding_box()const{
+		return this->bb;
 	}
 
-	this->font = std::move(font);
+	void recompute_bounding_box();
+public:
+	using text_widget::set_text;
 
-	this->invalidate_layout();
+	void set_text(std::u32string&& text)override;
 
-	this->on_font_change();
-}
+	std::u32string get_text()const override;
 
-text_widget::text_widget(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
-		widget(std::move(c), desc)
-{
-	for(const auto& p : desc){
-		if(!is_property(p)){
-			continue;
-		}
-
-		if(p.value == "font"){
-			this->font = this->context->loader.load<morda::res::font>(get_property_value(p).to_string().c_str());
-		}
+	void on_font_change()override{
+		this->recompute_bounding_box();
 	}
 
-	// load default font if needed
-	if(!this->font){
-		this->font = this->context->loader.load<res::font>("morda_fnt_text");
-	}
+	void on_text_change()override;
+};
+
 }
