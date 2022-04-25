@@ -93,5 +93,5 @@ tab::tab(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
 	}
 
 	// initialize nine-patch
-	this->on_press_change();
+	this->tab::on_press_change();
 }
