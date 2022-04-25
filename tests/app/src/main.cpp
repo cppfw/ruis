@@ -349,7 +349,7 @@ public:
 	}
 
 	std::shared_ptr<morda::widget> get_widget(utki::span<const size_t> path, bool isCollapsed)override{
-		ASSERT(path.size() >= 1)
+		ASSERT(!path.empty())
 
 		auto list = &this->root;
 		decltype(list) parent_list = nullptr;
@@ -388,7 +388,9 @@ public:
 			{
 				auto value = v->try_get_widget_as<morda::text>("value");
 				ASSERT(value)
-				value->set_text(n->value.to_string());
+				value->set_text(
+						n->value.to_string() // NOLINT(clang-analyzer-core.CallAndMessage): due to ASSERT(!path.empty()) in the beginning of the function 'n' is not nullptr
+					);
 			}
 			{
 				auto colorLabel = v->try_get_widget_as<morda::color>("selection");
