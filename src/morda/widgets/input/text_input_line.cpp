@@ -226,7 +226,6 @@ size_t text_input_line::posToIndex(real pos){
 			if(pos < p + w / 2){
 				break;
 			}
-			p += w;
 			++index;
 			break;
 		}
