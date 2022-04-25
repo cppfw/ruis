@@ -58,7 +58,7 @@ void path::cubic_to(morda::vector2 p1, morda::vector2 p2, morda::vector2 p3){
 	auto dt = 1 / numSteps;
 
 	// NOTE: start from dt because 0th point is already there in the path
-	for(morda::real t = dt; t < 1; t += dt){
+	for(morda::real t = dt; t < 1; t += dt){ // NOLINT(clang-analyzer-security.FloatLoopCounter)
 		this->line_to(bezier(t));
 	}
 	this->line_to(bezier(1));
