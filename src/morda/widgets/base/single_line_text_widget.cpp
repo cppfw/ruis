@@ -33,9 +33,14 @@ single_line_text_widget::single_line_text_widget(std::shared_ptr<morda::context>
 		}
 
 		if(p.value == "text"){
-			this->set_text(utki::to_utf32(get_property_value(p).to_string()));
+			this->text = utki::to_utf32(get_property_value(p).to_string());
+			this->recompute_bounding_box();
 		}
 	}
+}
+
+void single_line_text_widget::recompute_bounding_box(){
+	this->bb = this->get_font().get().get_bounding_box(this->single_line_text_widget::get_text());
 }
 
 vector2 single_line_text_widget::measure(const morda::vector2& quotum)const noexcept{

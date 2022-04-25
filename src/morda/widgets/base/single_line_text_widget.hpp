@@ -38,9 +38,7 @@ protected:
 		return this->bb;
 	}
 
-	void recompute_bounding_box(){
-		this->bb = this->get_font().get().get_bounding_box(this->get_text());
-	}
+	void recompute_bounding_box();
 public:
 	using text_widget::set_text;
 
