@@ -59,7 +59,7 @@ void book::push(std::shared_ptr<page> pg){
 	});
 }
 
-void book::tear_out(page& pg)noexcept{
+std::shared_ptr<page> book::tear_out(page& pg)noexcept{
 	// book::tear_out() is private, hense ASSERT instead of if(){throw}
 	ASSERT(&pg.get_parent_book() == this)
 	
@@ -77,6 +77,8 @@ void book::tear_out(page& pg)noexcept{
 
 	bool is_active_page = index == this->active_page_index;
 	
+	auto ret = std::move(*i);
+
 	this->pages.erase(i);
 	pg.parent_book = nullptr;
 
@@ -111,6 +113,8 @@ void book::tear_out(page& pg)noexcept{
 	pg.on_tear_out();
 
 	this->notify_pages_change(pg);
+
+	return ret;
 }
 
 void book::notify_pages_change(const page& p){
@@ -199,8 +203,8 @@ page::page(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
 		widget(std::move(c), desc)
 {}
 
-void page::tear_out()noexcept{
-	this->get_parent_book().tear_out(*this);
+std::shared_ptr<page> page::tear_out()noexcept{
+	return this->get_parent_book().tear_out(*this);
 }
 
 void page::activate(){

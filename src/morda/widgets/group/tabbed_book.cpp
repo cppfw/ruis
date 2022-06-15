@@ -59,7 +59,7 @@ tabbed_book::tabbed_book(std::shared_ptr<morda::context> context, const treeml::
 		}
 	};
 
-	// on page programmatic active need to activate the corresponding tab as well
+	// on page programmatic activate we need to activate the corresponding tab as well
 	this->book.active_page_change_handler = [this](morda::book& b){
 		ASSERT(b.get_active_page())
 		auto i = this->find_pair(*b.get_active_page());
