@@ -1,3 +1,9 @@
+libmorda (0.5.196) unstable; urgency=medium
+
+  * add tabbed_book::get_book()
+
+ -- Ivan Gagis <igagis@gmail.com>  Sat, 18 Jun 2022 00:45:57 +0300
+
 libmorda (0.5.195) unstable; urgency=medium
 
   * introduce key_combo
