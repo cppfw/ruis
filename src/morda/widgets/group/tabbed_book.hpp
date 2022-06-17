@@ -53,6 +53,10 @@ public:
 
 	void add(std::shared_ptr<tab> tab, std::shared_ptr<morda::page> page);
 
+	const morda::book& get_book()const noexcept{
+		return this->book;
+	}
+
 	std::shared_ptr<page> tear_out(tab& t);
 
 	using morda::column::render;
