@@ -61,7 +61,7 @@ void book::push(std::shared_ptr<page> pg){
 
 std::shared_ptr<page> book::tear_out(page& pg)noexcept{
 	// book::tear_out() is private, hense ASSERT instead of if(){throw}
-	ASSERT(&pg.get_parent_book() == this)
+	ASSERT(pg.get_parent_book() == this)
 	
 	auto i = std::find_if(
 			this->pages.begin(),
@@ -124,7 +124,7 @@ void book::notify_pages_change(const page& p){
 }
 
 void book::activate(const page& p){
-	if(&p.get_parent_book() != this){
+	if(p.get_parent_book() != this){
 		throw std::logic_error("book::activate(): requested page is not in this book");
 	}
 
@@ -185,30 +185,22 @@ const page* book::get_active_page()const{
 	return nullptr;
 }
 
-book& page::get_parent_book(){
-	if(!this->parent_book){
-		throw std::logic_error("page::get_parent_book(): page is not in a book");
-	}
-	return *this->parent_book;
-}
-
-const book& page::get_parent_book()const{
-	if(!this->parent_book){
-		throw std::logic_error("page::get_parent_book(): page is not in a book");
-	}
-	return *this->parent_book;
-}
-
 page::page(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
 		widget(std::move(c), desc)
 {}
 
 std::shared_ptr<page> page::tear_out()noexcept{
-	return this->get_parent_book().tear_out(*this);
+	if(!this->get_parent_book()){
+		return utki::make_shared_from(*this);
+	}
+	return this->get_parent_book()->tear_out(*this);
 }
 
 void page::activate(){
-	this->get_parent_book().activate(*this);
+	if(!this->get_parent_book()){
+		return;
+	}
+	this->get_parent_book()->activate(*this);
 }
 
 bool page::is_active()const{

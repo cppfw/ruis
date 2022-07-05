@@ -37,8 +37,12 @@ protected:
 
 	book* parent_book = nullptr;
 public:
-	book& get_parent_book();
-	const book& get_parent_book()const;
+	book* get_parent_book(){
+		return this->parent_book;
+	}
+	const book* get_parent_book()const{
+		return this->parent_book;
+	}
 
 	void activate();
 

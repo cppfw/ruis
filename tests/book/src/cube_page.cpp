@@ -127,7 +127,7 @@ cube_page::cube_page(std::shared_ptr<morda::context> c) :
 	auto& ph = this->get_widget("placeholder");
 	
 	this->get_widget_as<morda::push_button>("back_button").click_handler = [this](morda::push_button&){
-		this->context->run_from_ui_thread([book = utki::make_shared_from(this->get_parent_book()), this]{
+		this->context->run_from_ui_thread([book = utki::make_shared_from(*this->get_parent_book()), this]{
 			this->tear_out();
 		});
 	};

@@ -81,7 +81,7 @@ public:
 						)qwertyuiop")
 				);
 			mp->get_widget_as<morda::push_button>("cube_button").click_handler = [mp = mp.get()](morda::push_button& b){
-				mp->get_parent_book().push(std::make_shared<cube_page>(mp->context));
+				mp->get_parent_book()->push(std::make_shared<cube_page>(mp->context));
 			};
 			mp->get_widget_as<morda::push_button>("stuff_button").click_handler = [mp = mp.get()](morda::push_button& b){
 				auto pg = std::make_shared<pile_page>(mp->context, treeml::read(R"qwertyuiop(
@@ -97,7 +97,7 @@ public:
 						pg->tear_out();
 					});
 				};
-				mp->get_parent_book().push(pg);
+				mp->get_parent_book()->push(pg);
 			};
 			mp->get_widget_as<morda::push_button>("close_button").click_handler = [&mp = *mp](morda::push_button& b){
 				b.context->run_from_ui_thread([pg = utki::make_shared_from(mp)]{
