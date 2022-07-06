@@ -1,3 +1,9 @@
+libmorda (0.5.197) unstable; urgency=medium
+
+  * get_parent_book() return pointer
+
+ -- Ivan Gagis <igagis@gmail.com>  Wed, 06 Jul 2022 20:56:51 +0300
+
 libmorda (0.5.196) unstable; urgency=medium
 
   * add tabbed_book::get_book()
