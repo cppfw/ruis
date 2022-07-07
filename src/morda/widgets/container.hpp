@@ -411,7 +411,11 @@ T* widget::try_get_ancestor(const std::string& id){
 		return nullptr;
 	}
 
-	auto p = dynamic_cast<T*>(this->parent());
+	auto p = dynamic_cast<T*>(
+		// down-cast to widget* because container can be privately inherited by some widgets
+		// and in this case dynamic_cast to T* will fail
+		static_cast<widget*>(this->parent())
+	);
 
 	if(p){
 		if(id.empty() || p->id == id){
