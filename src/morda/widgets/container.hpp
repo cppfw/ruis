@@ -412,7 +412,7 @@ T* widget::try_get_ancestor(const std::string& id){
 	}
 
 	auto p = dynamic_cast<T*>(
-		// down-cast to widget* because container can be privately inherited by some widgets
+		// down-cast to widget* because container can be privately inherited by T
 		// and in this case dynamic_cast to T* will fail
 		static_cast<widget*>(this->parent())
 	);
