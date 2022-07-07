@@ -1,3 +1,9 @@
+libmorda (0.5.198) unstable; urgency=medium
+
+  * down-cast to widget* when seraching for ancestor of certain type
+
+ -- Ivan Gagis <igagis@gmail.com>  Fri, 08 Jul 2022 00:26:57 +0300
+
 libmorda (0.5.197) unstable; urgency=medium
 
   * get_parent_book() return pointer
