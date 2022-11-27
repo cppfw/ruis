@@ -61,7 +61,7 @@ texture_font::Glyph texture_font::loadGlyph(char32_t c)const{
 		if(c == unknownChar_c){
 			throw std::runtime_error("texture_font::loadGlyph(): could not load 'unknown character' glyph (UTF-32: 0xfffd)");
 		}
-		TRACE(<< "texture_font::loadGlyph(" << std::hex << uint32_t(c) << "): failed to load glyph" << std::endl)
+		LOG([&](auto&o){o << "texture_font::loadGlyph(" << std::hex << uint32_t(c) << "): failed to load glyph" << std::endl;})
 		return this->unknownGlyph;
 	}
 	

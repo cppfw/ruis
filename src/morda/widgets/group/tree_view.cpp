@@ -34,9 +34,9 @@ using namespace morda;
 
 tree_view::tree_view(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
 		widget(std::move(c), desc),
-		scroll_area(nullptr, treeml::forest())
+		scroll_area(nullptr, treeml::forest()),
+		item_list(utki::make_shared_ref<morda::list>(this->context, treeml::forest()))
 {
-	this->item_list = std::make_shared<morda::list>(this->context, treeml::forest());
 	this->push_back(this->item_list);
 
 	auto& lp = this->get_layout_params(*this->item_list);
@@ -154,7 +154,7 @@ const treeml::forest empty_layout = treeml::read(R"qwertyuiop(
 	)qwertyuiop");
 }
 
-std::shared_ptr<widget> tree_view::provider::get_widget(size_t index){
+utki::shared_ref<widget> tree_view::provider::get_widget(size_t index){
 	auto& i = this->iter_for(index);
 
 	auto path = i.index();
@@ -172,7 +172,7 @@ std::shared_ptr<widget> tree_view::provider::get_widget(size_t index){
 		list = &n->children;
 	}
 
-	ASSERT_INFO(this->get_list(), "provider is not set to a list_widget")
+	ASSERT(this->get_list(), [&](auto&o){o << "provider is not set to a list_widget";})
 
 	auto ret = std::make_shared<morda::row>(this->get_list()->context, treeml::forest());
 
@@ -184,7 +184,6 @@ std::shared_ptr<widget> tree_view::provider::get_widget(size_t index){
 
 	{
 		auto widget = this->get_list()->context->inflater.inflate_as<morda::pile>(is_last_item_in_parent.back() ? line_end_layout : line_middle_layout);
-		ASSERT(widget)
 
 		if(this->count(utki::make_span(path)) != 0){
 			auto w = this->get_list()->context->inflater.inflate(plus_minus_layout);
@@ -213,11 +212,11 @@ std::shared_ptr<widget> tree_view::provider::get_widget(size_t index){
 					this->collapse(utki::make_span(path));
 				}
 
-				TRACE_ALWAYS(<< "plusminus clicked:")
+				utki::log([](auto&o){o << "plusminus clicked:";});
 				for(auto i = path.begin(); i != path.end(); ++i){
-					TRACE_ALWAYS(<< " " << (*i))
+					utki::log([&](auto&o){o << " " << (*i);});
 				}
-				TRACE_ALWAYS(<< std::endl)
+				utki::log([](auto&o){o << std::endl;});
 
 				return true;
 			};

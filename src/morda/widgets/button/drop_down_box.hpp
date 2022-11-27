@@ -67,7 +67,7 @@ public:
 		 * @param index - index of the item to provide widget for.
 		 * @return Widget for requested item.
 		 */
-		virtual std::shared_ptr<widget> get_widget(size_t index) = 0;
+		virtual utki::shared_ref<widget> get_widget(size_t index) = 0;
 
 		/**
 		 * @brief Recycle item widget.

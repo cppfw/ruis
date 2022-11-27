@@ -234,7 +234,7 @@ morda::vector2 linear_container::measure(const morda::vector2& quotum)const{
 	{
 		real remainder = 0;
 
-		auto last_child = this->children().size() != 0 ? this->children().back().get() : nullptr;
+		auto last_child = this->children().size() != 0 ? &this->children().back().get() : nullptr;
 
 		auto info = info_array.begin();
 		for(auto i = this->children().begin(); i != this->children().end(); ++i, ++info){
@@ -259,7 +259,7 @@ morda::vector2 linear_container::measure(const morda::vector2& quotum)const{
 					d[long_index] += real(1);
 					remainder -= real(1);
 				}
-				if((*i).get() == last_child){
+				if(&(*i).get() == last_child){
 					if(remainder > 0){
 						vector2 correction;
 						correction[trans_index] = 0;

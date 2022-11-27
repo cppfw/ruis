@@ -34,7 +34,7 @@ public:
 		return this->widgets.size();
 	}
 
-	std::shared_ptr<widget> get_widget(size_t index)override{
+	utki::shared_ref<widget> get_widget(size_t index)override{
 		auto i = std::next(this->widgets.begin(), index);
 		ASSERT(this->get_drop_down_box())
 		return this->get_drop_down_box()->context->inflater.inflate(i, i + 1);

@@ -34,7 +34,7 @@ public:
 		return this->widgets.size();
 	}
 
-	std::shared_ptr<widget> get_widget(size_t index)override{
+	utki::shared_ref<widget> get_widget(size_t index)override{
 //		TRACE(<< "static_provider::getWidget(): index = " << index << std::endl)
 		auto i = std::next(this->widgets.begin(), index);
 		ASSERT(this->get_list())
@@ -42,7 +42,7 @@ public:
 	}
 
 
-	void recycle(size_t index, std::shared_ptr<widget> w)override{
+	void recycle(size_t index, const utki::shared_ref<widget>& w)override{
 //		TRACE(<< "static_provider::recycle(): index = " << index << std::endl)
 	}
 
@@ -213,7 +213,7 @@ void list_widget::set_scroll_factor(real factor){
 }
 
 // TODO: refactor
-bool list_widget::arrange_widget(std::shared_ptr<widget>& w, real& pos, bool added, size_t index, widget_list::const_iterator& insertBefore){
+bool list_widget::arrange_widget(const utki::shared_ref<widget>& w, real& pos, bool added, size_t index, widget_list::const_iterator& insertBefore){
 	auto& lp = this->get_layout_params_as_const<layout_params>(*w);
 
 	vector2 dim = this->dims_for_widget(*w, lp);
@@ -305,16 +305,18 @@ void list_widget::update_children_list(){
 	const size_t iterEndIndex = iterIndex + this->children().size();
 	size_t index = this->pos_index;
 	for(bool is_last = false; index < this->item_provider->count() && !is_last;){
-		std::shared_ptr<widget> w;
+		// std::shared_ptr<widget> w;
 		bool isAdded;
-		if(iterIndex <= index && index < iterEndIndex && iter != this->children().end()){
-			w = *iter;
-			++iterIndex;
-			isAdded = true;
-		}else{
-			w = this->item_provider->get_widget(index);
-			isAdded = false;
-		}
+		auto w = [&](){
+			if(iterIndex <= index && index < iterEndIndex && iter != this->children().end()){
+				++iterIndex;
+				isAdded = true;
+				return *iter;
+			}else{
+				isAdded = false;
+				return this->item_provider->get_widget(index);
+			}
+		}();
 
 		is_last = this->arrange_widget(w, pos, isAdded, index, iter);
 		++index;
@@ -351,7 +353,6 @@ void list_widget::update_tail_items_info(){
 		++this->num_tail_items;
 
 		auto w = this->item_provider->get_widget(i - 1);
-		ASSERT(w)
 
 		auto& lp = this->get_layout_params_as_const<layout_params>(*w);
 
@@ -414,11 +415,13 @@ void list_widget::scroll_by(real delta) {
 		}
 
 		if(delta > 0){
-			ASSERT_INFO(
+			ASSERT(
 					this->pos_index > this->added_index + this->children().size(),
-					"this->pos_index = " << this->pos_index
-					<< " this->added_index = " << this->added_index
-					<< " this->children().size() = " << this->children().size()
+					[&](auto&o){
+						o << "this->pos_index = " << this->pos_index
+						<< " this->added_index = " << this->added_index
+						<< " this->children().size() = " << this->children().size();
+					}
 				)
 			for(; this->pos_index < this->first_tail_item_index;){
 				auto w = this->item_provider->get_widget(this->pos_index);

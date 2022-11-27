@@ -63,14 +63,14 @@ class book :
 	
 	size_t active_page_index = std::numeric_limits<size_t>::max(); // invalid index
 
-	std::vector<std::shared_ptr<page>> pages;
+	std::vector<utki::shared_ref<page>> pages;
 public:
 	book(std::shared_ptr<morda::context> c, const treeml::forest& desc);
 	
 	book(const book&) = delete;
 	book& operator=(const book&) = delete;
 	
-	void push(std::shared_ptr<page> page);
+	void push(utki::shared_ref<page> page);
 	
 	size_t size()const{
 		return this->pages.size();

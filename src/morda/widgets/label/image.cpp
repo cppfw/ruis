@@ -122,7 +122,7 @@ morda::vector2 image::measure(const morda::vector2& quotum)const{
 	
 	vector2 imgDim = img->dims(this->context->units.dots_per_inch);
 	
-	ASSERT_INFO(imgDim.is_positive_or_zero(), "imgDim = " << imgDim)
+	ASSERT(imgDim.is_positive_or_zero(), [&](auto&o){o << "imgDim = " << imgDim;})
 	
 	if(!this->keep_aspect_ratio){
 		vector2 ret = imgDim;
@@ -160,7 +160,7 @@ morda::vector2 image::measure(const morda::vector2& quotum)const{
 		return quotum;
 	}else{
 		ASSERT(quotum.x() >= 0)
-		ASSERT_INFO(quotum.y() < 0, "quotum =" << quotum)
+		ASSERT(quotum.y() < 0, [&](auto&o){o << "quotum =" << quotum;})
 		
 		ASSERT(ratio > 0)
 		

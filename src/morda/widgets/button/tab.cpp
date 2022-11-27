@@ -34,12 +34,12 @@ bool tab::maskOverlaps(vector2 pos){
 			}
 		}
 
-		if(this->parent() && this->parent()->children().front().get() != this){ // if this is not the first widget in the parent
-			auto prevIter = this->parent()->find(*this);
-			ASSERT(prevIter != this->parent()->children().end())
-			--prevIter;
+		if(this->parent() && &this->parent()->children().front().get() != this){ // if this is not the first widget in the parent
+			auto prev_iter = this->parent()->find(*this);
+			ASSERT(prev_iter != this->parent()->children().end())
+			--prev_iter;
 
-			if(auto pt = dynamic_cast<tab*>(prevIter->get())){ // previous tab
+			if(auto pt = dynamic_cast<tab*>(&prev_iter->get())){ // previous tab
 				if(pt->is_pressed()){
 					if(pt->maskOverlaps(pos + this->rect().p - pt->rect().p)){
 						return false;

@@ -70,15 +70,7 @@ tabbed_book::tabbed_book(std::shared_ptr<morda::context> context, const treeml::
 	};
 }
 
-void tabbed_book::add(std::shared_ptr<tab> tab, std::shared_ptr<morda::page> page){
-	if(!tab){
-		throw std::logic_error("tabbed_book::add(): tab argument is nullptr");
-	}
-
-	if(!page){
-		throw std::logic_error("tabbed_book::add(): page argument is nullptr");
-	}
-
+void tabbed_book::add(const utki::shared_ref<tab>& tab, const utki::shared_ref<morda::page>& page){
 	this->tab_group.push_back(tab);
 	this->book.push(page);
 
@@ -108,7 +100,7 @@ void tabbed_book::activate_another_tab(tab& t){
 	if(i == this->tab_group.begin()){
 		auto ni = std::next(i);
 		if(ni != this->tab_group.end()){
-			auto next_tab = std::dynamic_pointer_cast<morda::tab>(*ni);
+			auto next_tab = std::dynamic_pointer_cast<morda::tab>(ni->to_shared_ptr());
 			ASSERT(next_tab)
 			next_tab->set_pressed(true);
 		}
@@ -116,7 +108,7 @@ void tabbed_book::activate_another_tab(tab& t){
 		ASSERT(i != this->tab_group.begin())
 		auto ni = std::prev(i);
 		ASSERT(ni >= this->tab_group.begin())
-		auto next_tab = std::dynamic_pointer_cast<morda::tab>(*ni);
+		auto next_tab = std::dynamic_pointer_cast<morda::tab>(ni->to_shared_ptr());
 		ASSERT(next_tab)
 		next_tab->set_pressed(true);
 	}

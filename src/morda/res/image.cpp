@@ -187,7 +187,10 @@ public:
 		auto svg = svgren::render(*this->dom, svg_params);
 		ASSERT(svg.dims.x() != 0)
 		ASSERT(svg.dims.y() != 0)
-		ASSERT_INFO(svg.dims.x() * svg.dims.y() == svg.pixels.size(), "svg.dims = " << svg.dims << " pixels.size() = " << svg.pixels.size())
+		ASSERT(
+			svg.dims.x() * svg.dims.y() == svg.pixels.size(),
+			[&](auto&o){o << "svg.dims = " << svg.dims << " pixels.size() = " << svg.pixels.size();}
+		)
 		
 		auto img = std::make_shared<svg_texture>(
 				this->context->renderer,

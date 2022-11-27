@@ -300,11 +300,11 @@ void gui::initStandardWidgets(papki::file& fi) {
 	try{
 		auto t = this->context->loader.load<res::treeml>("morda_gui_defs");
 
-		this->context->inflater.inflate(t->forest());
+		this->context->inflater.push_defs(t->forest());
 
 	}catch(std::exception&){
 		//TODO: do not ignore?
-		TRACE(<< "gui::initStandardWidgets(): could not load morda_gui_definitions" << std::endl)
+		LOG([](auto&o){o << "gui::initStandardWidgets(): could not load morda_gui_definitions" << std::endl;})
 	}
 }
 
@@ -332,14 +332,14 @@ void gui::set_root(std::shared_ptr<morda::widget> w){
 
 void gui::render(const matrix4& matrix)const{
 	if(!this->root_widget){
-		TRACE(<< "gui::render(): root widget is not set" << std::endl)
+		LOG([](auto&o){o << "gui::render(): root widget is not set" << std::endl;})
 		return;
 	}
 
 	ASSERT(this->root_widget)
 
 	if(this->root_widget->is_layout_dirty()){
-		TRACE(<< "root widget re-layout needed!" << std::endl)
+		LOG([](auto&o){o << "root widget re-layout needed!" << std::endl;})
 		this->root_widget->layout_dirty = false;
 		this->root_widget->lay_out();
 	}

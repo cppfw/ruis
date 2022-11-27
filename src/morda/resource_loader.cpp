@@ -79,7 +79,7 @@ resource_loader::FindInScriptRet resource_loader::findResourceInScript(const std
 			return FindInScriptRet(*i, *j);
 		}
 	}
-	TRACE(<< "resource name not found in mounted resource packs: " << resName << std::endl)
+	LOG([&](auto&o){o << "resource name not found in mounted resource packs: " << resName << std::endl;})
 	std::stringstream ss;
 	ss << "resource name not found in mounted resource packs: " << resName;
 	throw std::logic_error(ss.str());

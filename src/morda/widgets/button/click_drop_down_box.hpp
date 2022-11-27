@@ -47,7 +47,7 @@ private:
 	bool on_mouse_button(const mouse_button_event& e)override;
 	bool on_mouse_move(const mouse_move_event& e)override;
 
-	std::shared_ptr<widget> wrap_item(std::shared_ptr<widget>&& w, size_t index);
+	utki::shared_ref<widget> wrap_item(const utki::shared_ref<widget>& w, size_t index);
 
 	void show_drop_down_menu();
 

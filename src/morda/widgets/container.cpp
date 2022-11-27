@@ -176,7 +176,7 @@ bool container::on_mouse_button(const mouse_button_event& e){
 				this->mouse_capture_map.insert(std::make_pair(
 						e.pointer_id,
 						mouse_capture_info{
-							utki::make_weak(c),
+							utki::make_weak(c.to_shared_ptr()),
 							1
 						}
 					));
@@ -228,7 +228,7 @@ bool container::on_mouse_move(const mouse_move_event& e){
 		auto& c = *i;
 
 		if(!c->is_interactive()){
-			ASSERT_INFO(!c->is_hovered(), "c->name() = " << c->id)
+			ASSERT(!c->is_hovered(), [&](auto&o){o << "c->name() = " << c->id;})
 			continue;
 		}
 		
@@ -282,11 +282,7 @@ void container::lay_out(){
 	}
 }
 
-container::widget_list::const_iterator container::insert(std::shared_ptr<widget> w, widget_list::const_iterator before){
-	if(!w){
-		throw std::invalid_argument("container::insert(): pointer to widget is a null pointer");
-	}
-
+container::widget_list::const_iterator container::insert(const utki::shared_ref<widget>& w, widget_list::const_iterator before){
 	if(w->parent()){
 		throw std::invalid_argument("container::insert(): given widget is already added to some container");
 	}
@@ -301,7 +297,7 @@ container::widget_list::const_iterator container::insert(std::shared_ptr<widget>
 
 	widget& ww = *w;
 
-	auto ret = this->children_list.variable.emplace(before, std::move(w));
+	auto ret = this->children_list.variable.emplace(before, w);
 
 	ww.parent_container = this;
 	ww.on_parent_change();
@@ -425,7 +421,7 @@ container::widget_list::const_iterator container::find(const widget& w){
 			this->children().begin(),
 			this->children().end(),
 			[&w](const decltype(this->children_list.variable)::value_type& v) -> bool{
-				return v.get() == &w;
+				return &v.get() == &w;
 			}
 		);
 }
@@ -435,7 +431,7 @@ container::const_widget_list::const_iterator container::find(const widget& w)con
 			this->children().begin(),
 			this->children().end(),
 			[&w](const decltype(this->children_list.constant)::value_type& v) -> bool{
-				return v.get() == &w;
+				return &v.get() == &w;
 			}
 		);
 }

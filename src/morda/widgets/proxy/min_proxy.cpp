@@ -41,7 +41,7 @@ min_proxy::min_proxy(std::shared_ptr<morda::context> c, const treeml::forest& de
 				}
 			}
 		}catch(std::invalid_argument&){
-			TRACE(<< "could not parse value of " << treeml::to_string(p) << std::endl)
+			LOG([&](auto&o){o << "could not parse value of " << treeml::to_string(p) << std::endl;})
 			throw;
 		}
 	}

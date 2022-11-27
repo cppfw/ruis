@@ -113,7 +113,7 @@ public:
 
 	bool on_mouse_move(const mouse_move_event& event)override;
 
-	void set_background(std::shared_ptr<widget> w);
+	void set_background(const utki::shared_ref<widget>& w);
 
 	void lay_out() override;
 

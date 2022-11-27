@@ -709,7 +709,7 @@ public:
 		// text_input
 		{
 			auto& l = c->get_widget("text_input").get_widget<morda::text_input_line>();
-			ASSERT_ALWAYS(!l.get_text().empty())
+			utki::assert(!l.get_text().empty(), SL);
 		}
 
 		// tree_view

@@ -34,7 +34,7 @@ void fraction_widget::set_fraction(real fraction, bool notify_change){
 		fraction = 0;
 	}
 
-	ASSERT_INFO(0 <= fraction && fraction <= 1, fraction)
+	ASSERT(0 <= fraction && fraction <= 1, [&](auto&o){o << fraction;})
 
 	if(this->fraction_v == fraction){
 		return;

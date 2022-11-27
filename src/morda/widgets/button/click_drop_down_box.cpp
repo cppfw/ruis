@@ -21,6 +21,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "click_drop_down_box.hpp"
 
+#include <utki/debug.hpp>
+
 #include "../group/overlay.hpp"
 
 #include "../proxy/mouse_proxy.hpp"
@@ -162,7 +164,6 @@ void click_drop_down_box::show_drop_down_menu(){
 	}
 
 	auto np = this->context->inflater.inflate(drop_down_menu_layout);
-	ASSERT(np)
 
 	// force minimum horizontal size of the drop down menu to be the same as the drop down box horizontal size
 	{
@@ -220,8 +221,8 @@ void click_drop_down_box::handle_mouse_button_up(bool is_first_button_up_event){
 	});
 }
 
-std::shared_ptr<widget> click_drop_down_box::wrap_item(std::shared_ptr<widget>&& w, size_t index){
-	auto wd = std::dynamic_pointer_cast<pile>(this->context->inflater.inflate(item_layout));
+utki::shared_ref<widget> click_drop_down_box::wrap_item(const utki::shared_ref<widget>& w, size_t index){
+	auto wd = this->context->inflater.inflate_as<pile>(item_layout);
 	ASSERT(wd)
 
 	auto mp = wd->try_get_widget_as<mouse_proxy>("morda_dropdown_mouseproxy");

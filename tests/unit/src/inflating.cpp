@@ -244,7 +244,7 @@ tst::set set("inflaitng", [](tst::suite& suite){
 		auto c = std::dynamic_pointer_cast<morda::pile>(w);
 		tst::check(c != nullptr, SL);
 		tst::check_eq(c->children().size(), size_t(2), SL);
-		tst::check(std::dynamic_pointer_cast<morda::container>(c->children().front()) != nullptr, SL);
+		tst::check(std::dynamic_pointer_cast<morda::container>(c->children().front().to_shared_ptr()) != nullptr, SL);
 	});
 
     suite.add("template_recursion_detection", []{
@@ -304,7 +304,7 @@ tst::set set("inflaitng", [](tst::suite& suite){
 		auto c = std::dynamic_pointer_cast<morda::container>(w);
 		tst::check(c != nullptr, SL);
 		tst::check_eq(c->children().size(), size_t(1), SL);
-		tst::check(std::dynamic_pointer_cast<morda::pile>(c->children().front()) != nullptr, SL);
+		tst::check(std::dynamic_pointer_cast<morda::pile>(c->children().front().to_shared_ptr()) != nullptr, SL);
 	});
 
     suite.add("variables_overriding", []{

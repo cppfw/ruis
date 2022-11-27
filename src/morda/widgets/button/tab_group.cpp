@@ -66,11 +66,10 @@ morda::vector2 tab_group::measure(const morda::vector2& quotum)const{
 
 	sides<real> prevBorders = real(0);
 
-	for(auto& c : this->children()){
-		ASSERT(c)
-		auto& lp = this->get_layout_params_as_const<container::layout_params>(*c);
+	for(const auto& c : this->children()){
+		const auto& lp = this->get_layout_params_as_const<container::layout_params>(*c);
 
-		auto t = dynamic_cast<const morda::tab*>(c.get());
+		auto t = dynamic_cast<const morda::tab*>(&c.get());
 		if(!t){
 			throw std::logic_error("Non-tab widget added to tab_group, only tab widgets are allowed to be added to tab_group");
 		}
@@ -115,14 +114,13 @@ void tab_group::lay_out(){
 
 	sides<real> prevBorders = 0;
 
-	for(auto& c : this->children()){
-		ASSERT(c)
-		auto& lp = this->get_layout_params_as_const<container::layout_params>(*c);
+	for(const auto& c : this->children()){
+		const auto& lp = this->get_layout_params_as_const<container::layout_params>(*c);
 
 		auto dim = this->dims_for_widget(*c, lp);
 		c->resize(dim);
 
-		auto t = dynamic_cast<morda::tab*>(c.get());
+		auto t = dynamic_cast<morda::tab*>(&c.get());
 		if(!t){
 			throw std::logic_error("Non-tab widget added to tab_group, only tab widgets are allowed to be added to tab_group");
 		}
@@ -143,8 +141,8 @@ void tab_group::lay_out(){
 void tab_group::render(const morda::matrix4& matrix)const{
 	auto active_tab = this->get_active().lock();
 
-	for(auto& w: this->children()){
-		if(w != active_tab){
+	for(const auto& w: this->children()){
+		if(w.to_shared_ptr() != active_tab){
 			this->render_child(matrix, *w);
 		}
 	}

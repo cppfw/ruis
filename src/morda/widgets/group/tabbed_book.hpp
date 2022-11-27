@@ -51,7 +51,7 @@ class tabbed_book :
 public:
 	tabbed_book(std::shared_ptr<morda::context> context, const treeml::forest& desc);
 
-	void add(std::shared_ptr<tab> tab, std::shared_ptr<morda::page> page);
+	void add(const utki::shared_ref<tab>& tab, const utki::shared_ref<morda::page>& page);
 
 	const morda::book& get_book()const noexcept{
 		return this->book;

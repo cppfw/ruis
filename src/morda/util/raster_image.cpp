@@ -148,7 +148,7 @@ void raster_image::blit(r4::vector2<unsigned> pos, const raster_image& src){
 			}
 			break;
 		default:
-			ASSERT_INFO(false, "Image::Blit(): unknown image type")
+			ASSERT(false, [&](auto&o){o << "Image::Blit(): unknown image type";})
 			break;
 	}
 }
@@ -498,7 +498,7 @@ void raster_image::load_jpg(const papki::file& fi){
 			imageType = raster_image::color_depth::rgba;
 			break;
 		default:
-			ASSERT_INFO(false, "Image::LoadJPG(): unknown number of components")
+			ASSERT(false, [&](auto&o){o << "Image::LoadJPG(): unknown number of components";})
 			return;
 	}
 	

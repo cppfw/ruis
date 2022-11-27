@@ -24,6 +24,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <map>
 #include <vector>
 
+#include <utki/shared_ref.hpp>
+
 #include "../util/util.hpp"
 #include "widget.hpp"
 
@@ -46,8 +48,8 @@ namespace morda{
  */
 class container : virtual public widget{
 public:
-	typedef std::vector<std::shared_ptr<widget>> widget_list;
-	typedef std::vector<std::shared_ptr<const widget>> const_widget_list;
+	typedef std::vector<utki::shared_ref<widget>> widget_list;
+	typedef std::vector<utki::shared_ref<const widget>> const_widget_list;
 private:
 	static_assert(sizeof(widget_list) == sizeof(const_widget_list), "sizeof(widget_list) differs from sizeof(const_widget_list)");
 	static_assert(sizeof(widget_list::value_type) == sizeof(const_widget_list::value_type), "sizeof(widget_list::value_type) differs from sizeof(const_widget_list::value_type)");
@@ -212,7 +214,7 @@ public:
 	 * @param before - iterator within this container before which the widget will be inserted.
 	 * @return iterator pointing to the newly inserted widget.
 	 */
-	widget_list::const_iterator insert(std::shared_ptr<widget> w, widget_list::const_iterator before);
+	widget_list::const_iterator insert(const utki::shared_ref<widget>& w, widget_list::const_iterator before);
 
 	/**
 	 * @brief Insert a widget to the end of children list of the container.
@@ -220,8 +222,8 @@ public:
 	 * @param w - widget to insert.
 	 * @return iterator pointing to the newly inserted widget.
 	 */
-	widget_list::const_iterator push_back(std::shared_ptr<widget> w){
-		return this->insert(std::move(w), this->children().end());
+	widget_list::const_iterator push_back(const utki::shared_ref<widget>& w){
+		return this->insert(w, this->children().end());
 	}
 
 	/**
