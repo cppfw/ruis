@@ -174,7 +174,7 @@ utki::shared_ref<widget> tree_view::provider::get_widget(size_t index){
 
 	ASSERT(this->get_list(), [&](auto&o){o << "provider is not set to a list_widget";})
 
-	auto ret = std::make_shared<morda::row>(this->get_list()->context, treeml::forest());
+	auto ret = utki::make_shared_ref<morda::row>(this->get_list()->context, treeml::forest());
 
 	ASSERT(is_last_item_in_parent.size() == path.size())
 
@@ -230,11 +230,11 @@ utki::shared_ref<widget> tree_view::provider::get_widget(size_t index){
 	return ret;
 }
 
-void tree_view::provider::recycle(size_t index, std::shared_ptr<widget> w){
+void tree_view::provider::recycle(size_t index, utki::shared_ref<widget> w){
 	auto& i = this->iter_for(index);
 
 	auto path = i.index();
-	this->recycle(utki::make_span(path), std::move(w));
+	this->recycle(utki::make_span(path), w);
 }
 
 const decltype(tree_view::provider::iter)& tree_view::provider::iter_for(size_t index)const{

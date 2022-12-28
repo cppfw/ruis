@@ -63,7 +63,7 @@ std::shared_ptr<page> book::tear_out(page& pg)noexcept{
 			this->pages.begin(),
 			this->pages.end(),
 			[&pg](const auto& v) -> bool {
-				return v.get() == &pg;
+				return &v.get() == &pg;
 			}
 		);
 
@@ -126,8 +126,8 @@ void book::activate(const page& p){
 	auto i = std::find_if(
 			this->pages.begin(),
 			this->pages.end(),
-			[&p](auto pg){
-				return pg.get() == &p;
+			[&p](const auto& pg){
+				return &pg.get() == &p;
 			}
 		);
 	ASSERT(i != this->pages.end())

@@ -56,14 +56,14 @@ public:
 		if(this->timer > 1000){
 			this->timer -= 1000;
 
-			TRACE(<< "Update(): UPS = " << this->cnt << std::endl)
+			LOG([this](auto&o){o << "Update(): UPS = " << this->cnt << std::endl;})
 
 			this->cnt = 0;
 		}
 	}
 
 	bool on_mouse_button(const morda::mouse_button_event& e)override{
-		TRACE(<< "OnMouseButton(): isDown = " << e.is_down << ", pos = " << e.pos << ", button = " << unsigned(e.button) << ", pointer_id = " << e.pointer_id << std::endl)
+		LOG([](auto&o){o << "OnMouseButton(): isDown = " << e.is_down << ", pos = " << e.pos << ", button = " << unsigned(e.button) << ", pointer_id = " << e.pointer_id << std::endl;})
 		if(!e.is_down){
 			return false;
 		}

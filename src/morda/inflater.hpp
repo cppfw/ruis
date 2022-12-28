@@ -114,7 +114,7 @@ public:
 	 * @return the inflated widget.
 	 */
 	template <typename T> utki::shared_ref<T> inflate_as(const treeml::forest& gui_script){
-		return std::dynamic_pointer_cast<T>(this->inflate(gui_script));
+		return utki::dynamic_reference_cast<T>(this->inflate(gui_script));
 	}
 
 	/**
@@ -137,8 +137,8 @@ public:
 	 * @param str - string of the GUI script.
 	 * @return the inflated widget.
 	 */
-	template <typename T> std::shared_ptr<T> inflate_as(const char* str){
-		return std::dynamic_pointer_cast<T>(this->inflate(str));
+	template <typename T> utki::shared_ref<T> inflate_as(const char* str){
+		return utki::dynamic_reference_cast<T>(this->inflate(str));
 	}
 
 	/**
@@ -154,8 +154,8 @@ public:
 	 * @param fi - file interface to get the GUI script.
 	 * @return the inflated widget.
 	 */
-	template <typename T> std::shared_ptr<T> inflate_as(const papki::file& fi){
-		return std::dynamic_pointer_cast<T>(this->inflate(fi));
+	template <typename T> utki::shared_ref<T> inflate_as(const papki::file& fi){
+		return utki::dynamic_reference_cast<T>(this->inflate(fi));
 	}
 
 private:

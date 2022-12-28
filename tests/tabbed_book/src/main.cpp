@@ -9,8 +9,8 @@
 
 #include "sample_page.hpp"
 
-std::shared_ptr<morda::tab> inflate_tab(std::shared_ptr<morda::tabbed_book> tb, const std::string& name){
-	auto t = tb->context->inflater.inflate_as<morda::tab>(R"(
+utki::shared_ref<morda::tab> inflate_tab(morda::tabbed_book& tb, const std::string& name){
+	auto t = tb.context->inflater.inflate_as<morda::tab>(R"(
 		@tab{
 			@row{
 				@text{
@@ -41,7 +41,7 @@ std::shared_ptr<morda::tab> inflate_tab(std::shared_ptr<morda::tabbed_book> tb, 
 	auto& close_btn = t->get_widget_as<morda::push_button>("close_button");
 	
 	close_btn.click_handler = [
-			tabbed_book_wp = utki::make_weak(tb),
+			tabbed_book_wp = utki::make_weak_from(tb),
 			tab_wp = utki::make_weak(t)
 		](morda::push_button& btn)
 	{

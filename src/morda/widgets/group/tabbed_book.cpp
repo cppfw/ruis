@@ -83,8 +83,8 @@ void tabbed_book::add(const utki::shared_ref<tab>& tab, const utki::shared_ref<m
 	};
 
 	this->tab_page_pairs.push_back(tab_page_pair{
-		tab.get(),
-		page.get()
+		&tab.get(),
+		&page.get()
 	});
 }
 

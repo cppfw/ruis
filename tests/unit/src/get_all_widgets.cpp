@@ -52,8 +52,6 @@ tst::set set("get_all_widgets", [](tst::suite& suite){
 			"1", "2", "3", "6", "9"
 		}};
 
-		tst::check(w != nullptr, SL);
-
 		auto aaas = w->get_all_widgets<morda::column>();
 		tst::check_ne(aaas.size(), size_t(0), SL);
 

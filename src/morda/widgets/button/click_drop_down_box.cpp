@@ -223,7 +223,6 @@ void click_drop_down_box::handle_mouse_button_up(bool is_first_button_up_event){
 
 utki::shared_ref<widget> click_drop_down_box::wrap_item(const utki::shared_ref<widget>& w, size_t index){
 	auto wd = this->context->inflater.inflate_as<pile>(item_layout);
-	ASSERT(wd)
 
 	auto mp = wd->try_get_widget_as<mouse_proxy>("morda_dropdown_mouseproxy");
 	ASSERT(mp)
