@@ -31,13 +31,13 @@ class gui{
 	friend class widget;
 
 public:
-	const std::shared_ptr<morda::context> context;
+	const utki::shared_ref<morda::context> context;
 
 	/**
 	 * @brief Constructor.
 	 * @param context - morda context to use for this gui instance.
 	 */
-	gui(std::shared_ptr<morda::context> context);
+	gui(const utki::shared_ref<morda::context>& context);
 
 	gui(const gui&) = delete;
 	gui& operator=(const gui&) = delete;

@@ -39,12 +39,16 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace morda;
 using namespace morda::res;
 
-image::image(std::shared_ptr<morda::context> c) :
-		resource(std::move(c))
+image::image(const utki::shared_ref<morda::context>& c) :
+		resource(c)
 {}
 
-atlas_image::atlas_image(std::shared_ptr<morda::context> c, std::shared_ptr<res::texture> tex, const rectangle& rect) :
-		image(std::move(c)),
+atlas_image::atlas_image(
+	const utki::shared_ref<morda::context>& c,
+	std::shared_ptr<res::texture> tex, // TODO: make shared_ref
+	const rectangle& rect
+) :
+		image(c),
 		image::texture(this->context->renderer, abs(rect.d)),
 		tex(std::move(tex))
 {
@@ -56,8 +60,11 @@ atlas_image::atlas_image(std::shared_ptr<morda::context> c, std::shared_ptr<res:
 	ASSERT(false)
 }
 
-atlas_image::atlas_image(std::shared_ptr<morda::context> c, std::shared_ptr<res::texture> tex) :
-		image(std::move(c)),
+atlas_image::atlas_image(
+	const utki::shared_ref<morda::context>& c,
+	std::shared_ptr<res::texture> tex // TODO: make shared_ref
+) :
+		image(c),
 		image::texture(this->context->renderer, tex->tex().dims()),
 		tex(std::move(tex)),
 		vao(this->context->renderer->pos_tex_quad_01_vao)
@@ -115,8 +122,11 @@ class res_raster_image :
 		public fixed_texture
 {
 public:
-	res_raster_image(std::shared_ptr<morda::context> c, std::shared_ptr<texture_2d> tex) :
-			image(std::move(c)),
+	res_raster_image(
+		const utki::shared_ref<morda::context>& c,
+	 	std::shared_ptr<texture_2d> tex // TODO: make shared_ref
+	) :
+			image(c),
 			fixed_texture(this->context->renderer, std::move(tex))
 	{}
 	
@@ -136,8 +146,8 @@ public:
 class res_svg_image : public image{
 	std::unique_ptr<svgdom::svg_element> dom;
 public:
-	res_svg_image(std::shared_ptr<morda::context> c, decltype(dom) dom) :
-			image(std::move(c)),
+	res_svg_image(const utki::shared_ref<morda::context>& c, decltype(dom) dom) :
+			image(c),
 			dom(std::move(dom))
 	{}
 	

@@ -70,7 +70,7 @@ private:
 
 public:
 	font(
-			std::shared_ptr<morda::context> context,
+			const utki::shared_ref<morda::context>& context,
 			const papki::file& file_normal,
 			std::unique_ptr<const papki::file> file_bold,
 			std::unique_ptr<const papki::file> file_italic,

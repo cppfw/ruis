@@ -49,7 +49,7 @@ private:
 			std::string,
 			std::function<
 					utki::shared_ref<morda::widget>(
-							std::shared_ptr<morda::context>,
+							const utki::shared_ref<morda::context>&,
 							const treeml::forest&
 						)
 				>
@@ -70,8 +70,8 @@ public:
 	template <class T> void register_widget(const std::string& widget_name){
 		this->add_factory(
 				std::string(widget_name),
-				[](std::shared_ptr<morda::context> c, const treeml::forest& desc) -> utki::shared_ref<morda::widget> {
-					return utki::make_shared_ref<T>(std::move(c), desc);
+				[](const utki::shared_ref<morda::context>& c, const treeml::forest& desc) -> utki::shared_ref<morda::widget> {
+					return utki::make_shared_ref<T>(c, desc);
 				}
 			);
 	}

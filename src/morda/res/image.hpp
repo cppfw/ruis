@@ -51,7 +51,7 @@ class image : public resource{
 	friend class morda::resource_loader;
 	
 protected:
-	image(std::shared_ptr<morda::context> c);
+	image(const utki::shared_ref<morda::context>& c);
 	
 public:
 	image(const image& orig) = delete;
@@ -130,8 +130,8 @@ class atlas_image : public image, public image::texture{
 	std::shared_ptr<vertex_array> vao;
 	
 public:
-	atlas_image(std::shared_ptr<morda::context> c, std::shared_ptr<res::texture> tex, const rectangle& rect);
-	atlas_image(std::shared_ptr<morda::context> c, std::shared_ptr<res::texture> tex);
+	atlas_image(const utki::shared_ref<morda::context>& c, std::shared_ptr<res::texture> tex, const rectangle& rect);
+	atlas_image(const utki::shared_ref<morda::context>& c, std::shared_ptr<res::texture> tex);
 	
 	atlas_image(const atlas_image& orig) = delete;
 	atlas_image& operator=(const atlas_image& orig) = delete;

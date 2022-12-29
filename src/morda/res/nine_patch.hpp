@@ -58,8 +58,8 @@ public:
 	nine_patch(const nine_patch&) = delete;
 	nine_patch& operator=(const nine_patch&) = delete;
 	
-	nine_patch(std::shared_ptr<morda::context> c, std::shared_ptr<const res::image> image, sides<real> borders) :
-			resource(std::move(c)),
+	nine_patch(const utki::shared_ref<morda::context>& c, std::shared_ptr<const res::image> image, sides<real> borders) :
+			resource(c),
 			image(std::move(image)),
 			borders_v(borders)
 	{}

@@ -39,7 +39,7 @@ namespace morda{
  */
 class font{
 public:
-	const std::shared_ptr<morda::context> context;
+	const utki::shared_ref<morda::context> context;
 protected:
 	/**
 	 * @brief Distance between lines of text.
@@ -50,8 +50,8 @@ protected:
 	
 	real ascender;
 	
-	font(std::shared_ptr<morda::context> context) :
-			context(std::move(context))
+	font(const utki::shared_ref<morda::context>& context) :
+			context(context)
 	{}
 	
 	font(const font&) = delete;

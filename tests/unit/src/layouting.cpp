@@ -78,7 +78,7 @@ tst::set set("layouting", [](tst::suite& suite){
     suite.add("invalidate_layout_during_layouting_should_result_in_dirty_layout__gui_render", []{
         auto context = make_dummy_context();
 
-        auto tc = std::make_shared<container_which_invalidates_its_layout_during_layouting>(context);
+        auto tc = utki::make_shared_ref<container_which_invalidates_its_layout_during_layouting>(context);
 
         tst::check(tc->is_layout_dirty(), SL);
         

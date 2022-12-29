@@ -112,8 +112,8 @@ texture_font::Glyph texture_font::loadGlyph(char32_t c)const{
 	return g;
 }
 
-texture_font::texture_font(std::shared_ptr<morda::context> c, const papki::file& fi, unsigned fontSize, unsigned maxCached) :
-		font(std::move(c)),
+texture_font::texture_font(const utki::shared_ref<morda::context>& c, const papki::file& fi, unsigned fontSize, unsigned maxCached) :
+		font(c),
 		maxCached(maxCached),
 		face(freetype.lib, fi)
 {

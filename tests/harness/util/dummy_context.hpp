@@ -2,4 +2,4 @@
 
 #include <morda/context.hpp>
 
-std::shared_ptr<morda::context> make_dummy_context();
+utki::shared_ref<morda::context> make_dummy_context();

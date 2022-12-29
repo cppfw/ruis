@@ -26,8 +26,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace morda::res;
 
-morda::res::treeml::treeml(std::shared_ptr<morda::context> c, ::treeml::forest&& forest) :
-		resource(std::move(c)),
+morda::res::treeml::treeml(const utki::shared_ref<morda::context>& c, ::treeml::forest&& forest) :
+		resource(c),
 		s(std::move(forest))
 {}
 

@@ -191,11 +191,9 @@ defs{
 )qwertyuiop";
 }
 
-gui::gui(std::shared_ptr<morda::context> context) :
-		context(std::move(context))
+gui::gui(const utki::shared_ref<morda::context>& context) :
+		context(context)
 {
-	ASSERT(this->context)
-
 	// register basic widgets
 	this->context->inflater.register_widget<widget>("widget");
 	this->context->inflater.register_widget<container>("container");

@@ -145,16 +145,12 @@ private:
 class resource : virtual public utki::shared{
 	friend class resource_loader;
 protected:
-	const std::shared_ptr<morda::context> context;
+	const utki::shared_ref<morda::context> context;
 
 	// this can only be used as a base class
-	resource(std::shared_ptr<morda::context> c) :
-			context(std::move(c))
-	{
-		if(!this->context){
-			throw std::invalid_argument("res_image::res_image(): passed in context is null");
-		}
-	}
+	resource(const utki::shared_ref<morda::context>& c) :
+			context(c)
+	{}
 public:
 	virtual ~resource()noexcept{}
 };

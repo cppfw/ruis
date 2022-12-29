@@ -53,7 +53,7 @@ public:
 	 * @param c - context.
 	 * @param s - treeml forest to initialize the resource with.
 	 */
-	treeml(std::shared_ptr<morda::context> c, ::treeml::forest&& s);
+	treeml(const utki::shared_ref<morda::context>& c, ::treeml::forest&& s);
 	
 	treeml(const treeml&) = delete;
 	treeml& operator=(const treeml&) = delete;

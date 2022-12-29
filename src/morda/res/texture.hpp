@@ -48,15 +48,15 @@ namespace morda{ namespace res{
 class texture : public morda::resource{
 	friend class morda::resource_loader;
 
-	std::shared_ptr<texture_2d> tex_v;
+	std::shared_ptr<texture_2d> tex_v; // TODO: make shared_ref
 public:
 	/**
 	 * @brief Create texture.
 	 * @param c - context.
 	 * @param texture - texture object to initialize this resource with.
 	 */
-	texture(std::shared_ptr<morda::context> c, decltype(tex_v) texture) :
-			resource(std::move(c)),
+	texture(const utki::shared_ref<morda::context>& c, decltype(tex_v) texture) :
+			resource(c),
 			tex_v(std::move(texture))
 	{
 		ASSERT(this->tex_v)

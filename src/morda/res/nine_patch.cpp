@@ -44,7 +44,7 @@ class res_subimage :
 	
 public:
 	// rect is a rectangle on the texture, Y axis down.
-	res_subimage(std::shared_ptr<morda::context> c, decltype(tex) tex, const rectangle& rect) :
+	res_subimage(const utki::shared_ref<morda::context>& c, decltype(tex) tex, const rectangle& rect) :
 			res::image(c),
 			res::image::texture(c->renderer, rect.d),
 			tex(std::move(tex))

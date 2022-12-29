@@ -35,7 +35,7 @@ using namespace morda;
 using namespace morda::res;
 
 res::font::font(
-		std::shared_ptr<morda::context> context,
+		const utki::shared_ref<morda::context>& context,
 		const papki::file& file_normal,
 		std::unique_ptr<const papki::file> file_bold,
 		std::unique_ptr<const papki::file> file_italic,
@@ -43,7 +43,7 @@ res::font::font(
 		unsigned font_size,
 		unsigned max_cached
 	) :
-		resource(std::move(context))
+		resource(context)
 {
 	this->fonts[unsigned(style::normal)] = std::make_unique<texture_font>(this->context, file_normal, font_size, max_cached);
 

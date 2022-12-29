@@ -28,7 +28,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace morda::res;
 
-morda::res::cursor::cursor(std::shared_ptr<morda::context> c, morda::res::image& image, const vector2& hotspot) :
+morda::res::cursor::cursor(const utki::shared_ref<morda::context>& c, morda::res::image& image, const vector2& hotspot) :
 		resource(std::move(c)),
 		image_v(utki::make_shared_from(image)),
 		hotspot_v(hotspot)

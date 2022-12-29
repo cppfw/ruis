@@ -98,7 +98,7 @@ public:
 	 * @param fontSize - size of the font in pixels.
 	 * @param maxCached - maximum number of glyphs to cache.
 	 */
-	texture_font(std::shared_ptr<morda::context> c, const papki::file& fi, unsigned fontSize, unsigned maxCached);
+	texture_font(const utki::shared_ref<morda::context>& c, const papki::file& fi, unsigned fontSize, unsigned maxCached);
 
 	real get_advance(char32_t c, size_t tab_size)const override;
 	

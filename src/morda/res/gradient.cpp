@@ -29,8 +29,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace morda::res;
 
-morda::res::gradient::gradient(std::shared_ptr<morda::context> c, std::vector<std::tuple<real,uint32_t> >& stops, bool vertical) :
-		resource(std::move(c))
+morda::res::gradient::gradient(const utki::shared_ref<morda::context>& c, std::vector<std::tuple<real,uint32_t> >& stops, bool vertical) :
+		resource(c)
 {
 	std::vector<r4::vector2<float>> vertices;
 //	std::vector<uint32_t> colors;

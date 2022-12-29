@@ -44,7 +44,7 @@ class cursor : public resource{
 	vector2 hotspot_v;
 	
 public:
-	cursor(std::shared_ptr<morda::context> c, image& image, const vector2& hotspot);
+	cursor(const utki::shared_ref<morda::context>& c, image& image, const vector2& hotspot);
 	
 	cursor(const cursor&) = delete;
 	cursor& operator=(const cursor&) = delete;
