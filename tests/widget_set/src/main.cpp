@@ -36,9 +36,9 @@ public:
 		morda::weak_widget_set enable_widgets;
 
 		auto pbs = c->get_widget_as<morda::container>("enable_group").get_all_widgets<morda::push_button>();
-		TRACE(<< "pbs.size() = " << pbs.size() << std::endl)
+		LOG([&](auto&o){o << "pbs.size() = " << pbs.size() << std::endl;})
 		for(auto& w : pbs){
-			TRACE(<< "adding..." << std::endl)
+			LOG([](auto&o){o << "adding..." << std::endl;})
 			enable_widgets.add(w);
 		}
 

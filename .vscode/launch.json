@@ -12,7 +12,12 @@
 			"args": [],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}/tests/app",
-			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/out/dbg:../harness/modules/mordavokne/src/out/dbg:../harness/modules/morda-render-opengl/src/out/dbg"}],
+			"environment": [
+				{
+					"name": "LD_LIBRARY_PATH",
+					"value": "../../src/out/dbg:../harness/modules/mordavokne/src/out/rel_no_install:../harness/modules/morda-render-opengl/src/out/rel_no_install"
+				}
+			],
 			"externalConsole": false,
 			"MIMode": "gdb",
 			"setupCommands": [
@@ -22,7 +27,7 @@
 					"ignoreFailures": true
 				}
 			],
-			"preLaunchTask": "build_dbg"
+			"preLaunchTask": "build-dbg"
 		},
 		{
 			"name": "(gdb) busy",
@@ -145,14 +150,14 @@
 			"preLaunchTask": "build_debug"
 		},
 		{
-			"name": "(gdb) inflating",
+			"name": "(gdb) unit inflating",
 			"type": "cppdbg",
 			"request": "launch",
-			"program": "${workspaceFolder}/tests/inflating/build/tests",
-			"args": [],
+			"program": "${workspaceFolder}/tests/unit/out/dbg/tests",
+			"args": ["--suite=inflating", "--test=variables_overriding"],
 			"stopAtEntry": false,
-			"cwd": "${workspaceFolder}/tests/inflating",
-			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/build"}],
+			"cwd": "${workspaceFolder}/tests/unit",
+			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/out/dbg"}],
 			"externalConsole": false,
 			"MIMode": "gdb",
 			"setupCommands": [
@@ -162,7 +167,7 @@
 					"ignoreFailures": true
 				}
 			],
-			"preLaunchTask": "build_debug"
+			"preLaunchTask": "build-dbg"
 		},
 		{
 			"name": "(gdb) unit",

@@ -1,34 +1,35 @@
-defs{
-	@in_socket{ text outlet
-		@pile{
-			@text{
-				text{${text}}
-				color{0xff0000ff}
-			}
-			@wire_socket{
-				id{ws}
-				outlet{${outlet}}
-				layout{dx{fill} dy{fill}}
-			}
-		}
-	}
-
-	@out_socket{ text outlet
-		@pile{
-			@text{
-				text{${text}}
-				color{0xff00ff00}
-			}
-			@wire_socket{
-				id{ws}
-				outlet{${outlet}}
-				layout{dx{fill} dy{fill}}
-			}
-		}
-	}
-}
-
 @wire_area{
+
+	defs{
+		@in_socket{ text outlet
+			@pile{
+				@text{
+					text{${text}}
+					color{0xff0000ff}
+				}
+				@wire_socket{
+					id{ws}
+					outlet{${outlet}}
+					layout{dx{fill} dy{fill}}
+				}
+			}
+		}
+
+		@out_socket{ text outlet
+			@pile{
+				@text{
+					text{${text}}
+					color{0xff00ff00}
+				}
+				@wire_socket{
+					id{ws}
+					outlet{${outlet}}
+					layout{dx{fill} dy{fill}}
+				}
+			}
+		}
+	}
+
 	id{wire_area}
 
 	@size_container{

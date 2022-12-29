@@ -31,7 +31,7 @@ tst::set set("layouting", [](tst::suite& suite){
         auto context = make_dummy_context();
 
         auto c = std::make_shared<morda::container>(context, treeml::forest());
-        auto tc = std::make_shared<container_which_invalidates_its_layout_during_layouting>(context);
+        auto tc = utki::make_shared_ref<container_which_invalidates_its_layout_during_layouting>(context);
 
         tst::check(tc->is_layout_dirty(), SL);
         c->push_back(tc);
@@ -47,7 +47,7 @@ tst::set set("layouting", [](tst::suite& suite){
         auto context = make_dummy_context();
 
         auto c = std::make_shared<morda::container>(context, treeml::forest());
-        auto tc = std::make_shared<container_which_invalidates_its_layout_during_layouting>(context);
+        auto tc = utki::make_shared_ref<container_which_invalidates_its_layout_during_layouting>(context);
 
         tst::check(tc->is_layout_dirty(), SL);
         c->push_back(tc);
@@ -63,7 +63,7 @@ tst::set set("layouting", [](tst::suite& suite){
         auto context = make_dummy_context();
 
         auto c = std::make_shared<morda::container>(context, treeml::forest());
-        auto tc = std::make_shared<container_which_invalidates_its_layout_during_layouting>(context);
+        auto tc = utki::make_shared_ref<container_which_invalidates_its_layout_during_layouting>(context);
 
         tst::check(tc->is_layout_dirty(), SL);
         c->push_back(tc);

@@ -7,7 +7,7 @@
 #include "../../harness/util/dummy_context.hpp"
 
 namespace{
-tst::set set("inflaitng", [](tst::suite& suite){
+tst::set set("inflating", [](tst::suite& suite){
     suite.add("whole_definition_chain_is_substituted", []{
         morda::gui m(make_dummy_context());
 		auto w = m.context->inflater.inflate(treeml::read(R"qwertyuiop(
@@ -34,9 +34,7 @@ tst::set set("inflaitng", [](tst::suite& suite){
 			}
 		)qwertyuiop"));
 
-		tst::check(w != nullptr, SL);
-		auto c = std::dynamic_pointer_cast<morda::container>(w);
-		tst::check(c != nullptr, SL);
+		auto c = utki::dynamic_reference_cast<morda::container>(w);
 		tst::check_eq(c->children().size(), size_t(2), SL);
 		auto lp = c->children().front()->get_layout_params();
 		tst::check_eq(lp.dims[0], morda::widget::layout_params::max, SL);
@@ -70,9 +68,7 @@ tst::set set("inflaitng", [](tst::suite& suite){
 			}
 		)qwertyuiop"));
 
-		tst::check(w != nullptr, SL);
-		auto c = std::dynamic_pointer_cast<morda::container>(w);
-		tst::check(c != nullptr, SL);
+		auto c = utki::dynamic_reference_cast<morda::container>(w);
 		tst::check_eq(c->children().size(), size_t(2), SL);
 		tst::check_eq(c->children().front()->rect().p.x(), morda::real(23), SL);
 		tst::check_eq(c->children().front()->rect().p.y(), morda::real(12), SL);
@@ -116,9 +112,7 @@ tst::set set("inflaitng", [](tst::suite& suite){
 			}
 		)qwertyuiop"));
 
-		tst::check(w != nullptr, SL);
-		auto c = std::dynamic_pointer_cast<morda::container>(w);
-		tst::check(c != nullptr, SL);
+		auto c = utki::dynamic_reference_cast<morda::container>(w);
 		tst::check_eq(c->children().size(), size_t(2), SL);
 		tst::check_eq(c->children().front()->rect().p.x(), morda::real(23), SL);
 		tst::check_eq(c->children().front()->rect().p.y(), morda::real(23), SL);
@@ -153,16 +147,13 @@ tst::set set("inflaitng", [](tst::suite& suite){
 			}
 		)qwertyuiop"));
 
-		tst::check(w != nullptr, SL);
-		auto c = std::dynamic_pointer_cast<morda::container>(w);
-		tst::check(c != nullptr, SL);
 		auto& r = w->get_widget_as<morda::widget>("test_widget");
 		tst::check_eq(r.rect().p.x(), morda::real(2.5), SL);
 	});
 
     suite.add("two_levels_of_templates", []{
 		morda::gui m(make_dummy_context());
-		auto w = m.context->inflater.inflate(treeml::read(R"qwertyuiop(
+		m.context->inflater.push_defs(R"(
 			defs{
 				@Cont{ x y layout dx
 					@container{
@@ -175,6 +166,8 @@ tst::set set("inflaitng", [](tst::suite& suite){
 					}
 				}
 			}
+		)");
+		auto w = m.context->inflater.inflate(treeml::read(R"qwertyuiop(
 			@container{
 				defs{
 					@Cont{ x y
@@ -196,9 +189,7 @@ tst::set set("inflaitng", [](tst::suite& suite){
 			}
 		)qwertyuiop"));
 
-		tst::check(w != nullptr, SL);
-		auto c = std::dynamic_pointer_cast<morda::container>(w);
-		tst::check(c != nullptr, SL);
+		auto c = utki::dynamic_reference_cast<morda::container>(w);
 		tst::check_eq(c->children().size(), size_t(2), SL);
 		tst::check_eq(c->children().front()->rect().p.x(), morda::real(0), SL);
 		tst::check_eq(c->children().front()->rect().p.y(), morda::real(67), SL);
@@ -211,7 +202,7 @@ tst::set set("inflaitng", [](tst::suite& suite){
 
     suite.add("template_which_nests_same_named_widget_on_2nd_level", []{
 		morda::gui m(make_dummy_context());
-		auto w = m.context->inflater.inflate(treeml::read(R"qwertyuiop(
+		m.context->inflater.push_defs(R"(
 			defs{
 				@Container_{@container}
 			}
@@ -235,14 +226,15 @@ tst::set set("inflaitng", [](tst::suite& suite){
 					@container
 				}
 			}
+		)");
+
+		auto w = m.context->inflater.inflate(treeml::read(R"qwertyuiop(
 			@container{
 				@Tmpl
 			}
 		)qwertyuiop"));
 
-		tst::check(w != nullptr, SL);
-		auto c = std::dynamic_pointer_cast<morda::pile>(w);
-		tst::check(c != nullptr, SL);
+		auto c = utki::dynamic_reference_cast<morda::pile>(w);
 		tst::check_eq(c->children().size(), size_t(2), SL);
 		tst::check(std::dynamic_pointer_cast<morda::container>(c->children().front().to_shared_ptr()) != nullptr, SL);
 	});
@@ -300,22 +292,25 @@ tst::set set("inflaitng", [](tst::suite& suite){
 			}
 		)qwertyuiop"));
 
-		tst::check(w != nullptr, SL);
-		auto c = std::dynamic_pointer_cast<morda::container>(w);
-		tst::check(c != nullptr, SL);
+		auto c = utki::dynamic_reference_cast<morda::container>(w);
 		tst::check_eq(c->children().size(), size_t(1), SL);
 		tst::check(std::dynamic_pointer_cast<morda::pile>(c->children().front().to_shared_ptr()) != nullptr, SL);
 	});
 
     suite.add("variables_overriding", []{
 		morda::gui m(make_dummy_context());
+		m.context->inflater.push_defs(
+			R"(
+				defs{
+					test_var{13}
+				}
+				defs{
+					test_var{42}
+				}
+			)"
+		);
+
 		auto w = m.context->inflater.inflate(treeml::read(R"qwertyuiop(
-			defs{
-				test_var{13}
-			}
-			defs{
-				test_var{42}
-			}
 			@widget{
 				defs{
 					test_var{666}
@@ -328,7 +323,6 @@ tst::set set("inflaitng", [](tst::suite& suite){
 			}
 		)qwertyuiop"));
 
-		tst::check(w != nullptr, SL);
 		tst::check_eq(w->rect().p.x(), morda::real(2), SL);
 	});
 });

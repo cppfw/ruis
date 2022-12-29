@@ -61,7 +61,7 @@ widget::widget(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
 				this->enabled = get_property_value(p).to_bool();
 			}
 		}catch(std::invalid_argument&){
-			TRACE(<< "could not parse value of " << treeml::to_string(p) << std::endl)
+			LOG([&](auto&o){o << "could not parse value of " << treeml::to_string(p) << std::endl;})
 			throw;
 		}
 	}
@@ -80,7 +80,7 @@ widget::layout_params::layout_params(const treeml::forest& desc, const morda::un
 				this->dims.y() = parse_layout_dimension_value(get_property_value(p), units);
 			}
 		}catch(std::invalid_argument&){
-			TRACE(<< "could not parse value of " << treeml::to_string(p) << std::endl)
+			LOG([&](auto&o){o << "could not parse value of " << treeml::to_string(p) << std::endl;})
 			throw;
 		}
 	}
@@ -148,7 +148,7 @@ void widget::on_resize(){
 	this->lay_out();
 }
 
-std::shared_ptr<widget> widget::remove_from_parent(){
+utki::shared_ref<widget> widget::remove_from_parent(){
 	if(!this->parent()){
 		throw std::logic_error("widget::remove_from_parent(): widget is not added to the parent");
 	}
@@ -157,14 +157,14 @@ std::shared_ptr<widget> widget::remove_from_parent(){
 	return ret;
 }
 
-std::shared_ptr<widget> widget::replace_by(std::shared_ptr<widget> w) {
+utki::shared_ref<widget> widget::replace_by(const utki::shared_ref<widget>& w) {
 	if(!this->parent()){
 		throw std::logic_error("this widget is not added to any parent");
 	}
 
 	this->parent()->insert(w, this->parent()->find(*this));
 
-	if(w && w->layout_desc.empty()){
+	if(w->layout_desc.empty()){
 		w->layout_desc = std::move(this->layout_desc);
 	}
 

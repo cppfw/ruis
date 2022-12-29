@@ -90,6 +90,9 @@ public:
 	// TODO: doxygen
 	void push_defs(treeml::forest::const_iterator begin, treeml::forest::const_iterator end);
 
+	// TODO: doxygen
+	void push_defs(const char* str);
+
 	/**
 	 * @brief Create widgets hierarchy from GUI script.
 	 * @param begin - begin iterator into the GUI script.
@@ -122,14 +125,14 @@ public:
 	 * @param str - string containing GUI description.
 	 * @return the inflated widget.
 	 */
-	std::shared_ptr<widget> inflate(const char* str);
+	utki::shared_ref<widget> inflate(const char* str);
 
 	/**
 	 * @brief Create widgets hierarchy from GUI script.
 	 * @param str - string containing GUI description.
 	 * @return the inflated widget.
 	 */
-	std::shared_ptr<widget> inflate(const std::string& str);
+	utki::shared_ref<widget> inflate(const std::string& str);
 
 	/**
 	 * @brief Inflate widget and cast to specified type.
@@ -146,7 +149,7 @@ public:
 	 * @param fi - file interface to get the GUI script.
 	 * @return the inflated widget.
 	 */
-	std::shared_ptr<morda::widget> inflate(const papki::file& fi);
+	utki::shared_ref<morda::widget> inflate(const papki::file& fi);
 
 	/**
 	 * @brief Inflate widget and cast to specified type.

@@ -50,7 +50,7 @@ bool inflater::unregister_widget(const std::string& widgetName)noexcept{
 	return true;
 }
 
-std::shared_ptr<morda::widget> inflater::inflate(const papki::file& fi) {
+utki::shared_ref<morda::widget> inflater::inflate(const papki::file& fi) {
 	return this->inflate(treeml::read(fi));
 }
 
@@ -170,11 +170,11 @@ const decltype(inflater::factories)::value_type::second_type& inflater::find_fac
 	return i->second;
 }
 
-std::shared_ptr<widget> inflater::inflate(const char* str){
+utki::shared_ref<widget> inflater::inflate(const char* str){
 	return this->inflate(treeml::read(str));
 }
 
-std::shared_ptr<widget> inflater::inflate(const std::string& str){
+utki::shared_ref<widget> inflater::inflate(const std::string& str){
 	return this->inflate(str.c_str());
 }
 
@@ -185,12 +185,9 @@ utki::shared_ref<widget> inflater::inflate(treeml::forest::const_iterator begin,
 		throw std::invalid_argument("inflater::inflater(): widget declaration not found in supplied forest");
 	}
 
-	ASSERT(
-		!is_leaf_property(i->value),
-		[&](auto&o){o << "i->value = " << i->value.to_string();}
-	)
-	ASSERT(!i->value.empty())
-	ASSERT(i->value.to_string()[0] == '@')
+	if(is_leaf_property(i->value) || i->value.empty() || i->value.to_string()[0] != '@'){
+		throw std::invalid_argument("inflater::inflater(): widget declaration must go first, found: "s + i->value.to_string());
+	}
 
 	std::string widget_name;
 	treeml::forest widget_desc;
@@ -326,6 +323,14 @@ void inflater::push_defs(treeml::forest::const_iterator begin, treeml::forest::c
 			throw std::invalid_argument("inflater::push_defs(): unknown declaration encountered: "s + i->value.to_string());
 		}
 	}
+}
+
+void inflater::push_defs(const treeml::forest& chain){
+	this->push_defs(chain.begin(), chain.end());
+}
+
+void inflater::push_defs(const char* str){
+	this->push_defs(treeml::read(str));
 }
 
 void inflater::push_defs_block(const treeml::forest& chain) {

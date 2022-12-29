@@ -431,7 +431,7 @@ T* widget::try_get_ancestor(const std::string& id){
 template <typename T>
 std::shared_ptr<T> widget::try_get_widget(bool allow_itself)noexcept{
 	if(allow_itself){
-		auto p = std::dynamic_pointer_cast<T>(utki::make_shared_from(*this));
+		auto p = std::dynamic_pointer_cast<T>(utki::make_shared_from(*this).to_shared_ptr());
 		if(p){
 			return p;
 		}

@@ -230,7 +230,7 @@ utki::shared_ref<widget> tree_view::provider::get_widget(size_t index){
 	return ret;
 }
 
-void tree_view::provider::recycle(size_t index, utki::shared_ref<widget> w){
+void tree_view::provider::recycle(size_t index, const utki::shared_ref<widget>& w){
 	auto& i = this->iter_for(index);
 
 	auto path = i.index();

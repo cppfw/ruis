@@ -238,18 +238,21 @@ public:
 	 * @brief Remove widget from parent container.
 	 * Be careful when calling this method from within another method of the widget
 	 * as it may result in immediate destruction of the widget if there are no
-	 * pointers to this widget left.
+	 * references to this widget left.
 	 * @return pointer to this widget.
 	 */
-	std::shared_ptr<widget> remove_from_parent();
+	utki::shared_ref<widget> remove_from_parent();
 
 	/**
 	 * @brief Replace this widget by another widget.
 	 * Replaces this widget in its parent by the given widget.
+	 * Be careful when calling this method from within another method of the widget
+	 * as it may result in immediate destruction of the widget if there are no
+	 * references to this widget left.
 	 * @param w - widget to replace this one by.
-	 * @return Shared pointer to this widget.
+	 * @return Shared reference to this widget.
 	 */
-	std::shared_ptr<widget> replace_by(std::shared_ptr<widget> w);
+	utki::shared_ref<widget> replace_by(const utki::shared_ref<widget>& w);
 
 	/**
 	 * @brief Check if the widget is hovered by at least one pointer.

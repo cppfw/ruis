@@ -217,7 +217,7 @@ gui::gui(std::shared_ptr<morda::context> context) :
 	this->context->inflater.register_widget<book>("book");
 	this->context->inflater.register_widget<spinner>("spinner");
 
-	this->context->inflater.inflate(default_defs);
+	this->context->inflater.push_defs(default_defs);
 }
 
 void gui::initStandardWidgets(papki::file& fi) {

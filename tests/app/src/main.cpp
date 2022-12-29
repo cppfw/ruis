@@ -63,7 +63,7 @@ public:
 	}
 
 	bool on_mouse_button(const morda::mouse_button_event& e)override{
-		LOG([](auto&o){o << "OnMouseButton(): isDown = " << e.is_down << ", pos = " << e.pos << ", button = " << unsigned(e.button) << ", pointer_id = " << e.pointer_id << std::endl;})
+		LOG([&](auto&o){o << "OnMouseButton(): isDown = " << e.is_down << ", pos = " << e.pos << ", button = " << unsigned(e.button) << ", pointer_id = " << e.pointer_id << std::endl;})
 		if(!e.is_down){
 			return false;
 		}
@@ -82,25 +82,25 @@ public:
 
 	bool on_key(const morda::key_event& e)override{
 		if(e.is_down){
-			TRACE(<< "SimpleWidget::OnKey(): down, keyCode = " << unsigned(e.combo.key) << std::endl)
+			LOG([&](auto&o){o << "SimpleWidget::OnKey(): down, keyCode = " << unsigned(e.combo.key) << std::endl;})
 			switch(e.combo.key){
 				case morda::key::arrow_left:
-					TRACE(<< "SimpleWidget::OnKeyDown(): LEFT key caught" << std::endl)
+					LOG([](auto&o){o << "SimpleWidget::OnKeyDown(): LEFT key caught" << std::endl;})
 					return true;
 				case morda::key::a:
-					TRACE(<< "SimpleWidget::OnKeyUp(): A key caught" << std::endl)
+					LOG([](auto&o){o << "SimpleWidget::OnKeyUp(): A key caught" << std::endl;})
 					return true;
 				default:
 					break;
 			}
 		}else{
-			TRACE(<< "SimpleWidget::OnKey(): up, keyCode = " << unsigned(e.combo.key) << std::endl)
+			LOG([&](auto&o){o << "SimpleWidget::OnKey(): up, keyCode = " << unsigned(e.combo.key) << std::endl;})
 			switch(e.combo.key){
 				case morda::key::arrow_left:
-					TRACE(<< "SimpleWidget::OnKeyUp(): LEFT key caught" << std::endl)
+					LOG([](auto&o){o << "SimpleWidget::OnKeyUp(): LEFT key caught" << std::endl;})
 					return true;
 				case morda::key::a:
-					TRACE(<< "SimpleWidget::OnKeyUp(): A key caught" << std::endl)
+					LOG([](auto&o){o << "SimpleWidget::OnKeyUp(): A key caught" << std::endl;})
 					return true;
 				default:
 					break;
@@ -114,7 +114,7 @@ public:
 			return;
 		}
 
-		TRACE(<< "SimpleWidget::on_character_input(): string = " << uint32_t(e.string[0]) << std::endl)
+		LOG([&](auto&o){o << "SimpleWidget::on_character_input(): string = " << uint32_t(e.string[0]) << std::endl;})
 	}
 
 	void render(const morda::matrix4& matrix)const override{
@@ -201,7 +201,7 @@ public:
 		++this->fps;
 		this->rot %= morda::quaternion().set_rotation(r4::vector3<float>(1, 2, 1).normalize(), 1.5f * (float(dt) / 1000));
 		if(this->fpsSecCounter >= 1000){
-			TRACE_ALWAYS(<< "fps = " << std::dec << fps << std::endl)
+			std::cout << "fps = " << std::dec << fps << std::endl;
 			this->fpsSecCounter = 0;
 			this->fps = 0;
 		}
@@ -348,7 +348,7 @@ public:
 		this->selectedItem.pop_back();
 	}
 
-	std::shared_ptr<morda::widget> get_widget(utki::span<const size_t> path, bool isCollapsed)override{
+	utki::shared_ref<morda::widget> get_widget(utki::span<const size_t> path, bool isCollapsed)override{
 		ASSERT(!path.empty())
 
 		auto list = &this->root;
@@ -362,7 +362,7 @@ public:
 			list = &n->children;
 		}
 
-		auto ret = std::make_shared<morda::row>(this->context, treeml::forest());
+		auto ret = utki::make_shared_ref<morda::row>(this->context, treeml::forest());
 
 		{
 			auto v = this->context->inflater.inflate(
@@ -406,11 +406,11 @@ public:
 
 					this->selectedItem = path;
 #ifdef DEBUG
-					TRACE(<< " selected item = ")
-					for(auto& k : this->selectedItem){
-						TRACE(<< k << ", ")
+					LOG([](auto&o){o << " selected item = ";})
+					for(const auto& k : this->selectedItem){
+						LOG([&](auto&o){o << k << ", ";})
 					}
-					TRACE(<< std::endl)
+					LOG([](auto&o){o << std::endl;})
 #endif
 					this->notify_item_changed();
 
@@ -499,7 +499,7 @@ public:
 		std::dynamic_pointer_cast<morda::push_button>(c->try_get_widget("push_button_in_scroll_container"))->click_handler = [this](morda::push_button&){
 			this->gui.context->run_from_ui_thread(
 					[](){
-						TRACE_ALWAYS(<< "Print from UI thread!!!!!!!!" << std::endl)
+						std::cout << "Print from UI thread!!!!!!!!" << std::endl;
 					}
 				);
 		};

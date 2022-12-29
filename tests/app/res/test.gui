@@ -1,3 +1,5 @@
+@key_proxy{
+
 defs{
 	trololo{"saf"}
 
@@ -23,8 +25,6 @@ defs{
 
 	clr{0xff0000ff}
 }
-
-@key_proxy{
 
 @image_mouse_cursor{
 layout{

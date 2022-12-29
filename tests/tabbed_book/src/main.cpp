@@ -87,8 +87,8 @@ public:
 			ss << "page #" << cnt;
 			auto txt = ss.str();
 			++cnt;
-			auto pg = std::make_shared<sample_page>(b.context, txt);
-			auto tb = inflate_tab(bk, txt);
+			auto pg = utki::make_shared_ref<sample_page>(b.context, txt);
+			auto tb = inflate_tab(bk.get(), txt);
 
 			tb->get_widget_as<morda::push_button>("activate_button").click_handler = [pgw = utki::make_weak(pg)](morda::push_button&){
 				if(auto pg = pgw.lock()){
