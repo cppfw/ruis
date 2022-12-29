@@ -70,7 +70,7 @@ public:
 	book(const book&) = delete;
 	book& operator=(const book&) = delete;
 	
-	void push(utki::shared_ref<page> page);
+	void push(const utki::shared_ref<page>& page);
 	
 	size_t size()const{
 		return this->pages.size();

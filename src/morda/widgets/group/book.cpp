@@ -30,7 +30,7 @@ book::book(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
 		pile(nullptr, treeml::forest())
 {}
 
-void book::push(utki::shared_ref<page> pg){
+void book::push(const utki::shared_ref<page>& pg){
 	if(pg->parent_book){
 		if(pg->parent_book == this){
 			throw std::logic_error("book::push(): the page is already in this book");
