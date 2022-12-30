@@ -262,21 +262,20 @@ void widget::render_internal(const morda::matrix4& matrix)const{
 std::shared_ptr<texture_2d> widget::render_to_texture(std::shared_ptr<texture_2d> reuse)const{
 	auto& r = *this->context->renderer;
 
-	std::shared_ptr<texture_2d> tex;
+	utki::shared_ref<texture_2d> tex = [&](){
+		if(reuse && reuse->dims() == this->rect().d){
+			ASSERT(reuse)
+			return utki::shared_ref(std::move(reuse));
+		}else{
+			return r.factory->create_texture_2d(
+					morda::texture_2d::type::rgba,
+					this->rect().d.to<unsigned>(),
+					nullptr
+				);
+		}
+	}();
 
-	if(reuse && reuse->dims() == this->rect().d){
-		tex = std::move(reuse);
-	}else{
-		tex = r.factory->create_texture_2d(
-				morda::texture_2d::type::rgba,
-				this->rect().d.to<unsigned>(),
-				nullptr
-			);
-	}
-
-	ASSERT(tex)
-
-	r.set_framebuffer(r.factory->create_framebuffer(tex));
+	r.set_framebuffer(r.factory->create_framebuffer(tex).to_shared_ptr());
 
 //	ASSERT_INFO(Render::isBoundFrameBufferComplete(), "tex.dims() = " << tex.dims())
 

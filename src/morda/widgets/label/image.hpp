@@ -55,7 +55,7 @@ class image :
 
 	r4::vector2<bool> repeat_v = r4::vector2<bool>(false);
 	
-	mutable std::shared_ptr<vertex_array> vao;
+	mutable std::shared_ptr<const vertex_array> vao;
 
 public:
 	image(std::shared_ptr<morda::context> c, const treeml::forest& desc);

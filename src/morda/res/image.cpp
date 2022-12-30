@@ -43,26 +43,26 @@ image::image(const utki::shared_ref<morda::context>& c) :
 		resource(c)
 {}
 
-atlas_image::atlas_image(
-	const utki::shared_ref<morda::context>& c,
-	std::shared_ptr<res::texture> tex, // TODO: make shared_ref
-	const rectangle& rect
-) :
-		image(c),
-		image::texture(this->context->renderer, abs(rect.d)),
-		tex(std::move(tex))
-{
-//	this->texCoords[3] = vector2(rect.left(), this->tex->tex().dim().y - rect.bottom()).compDivBy(this->tex->tex().dim());
-//	this->texCoords[2] = vector2(rect.right(), this->tex->tex().dim().y - rect.bottom()).compDivBy(this->tex->tex().dim());
-//	this->texCoords[1] = vector2(rect.right(), this->tex->tex().dim().y - rect.top()).compDivBy(this->tex->tex().dim());
-//	this->texCoords[0] = vector2(rect.left(), this->tex->tex().dim().y - rect.top()).compDivBy(this->tex->tex().dim());
-	//TODO:
-	ASSERT(false)
-}
+// atlas_image::atlas_image(
+// 	const utki::shared_ref<morda::context>& c,
+// 	const utki::shared_ref<res::texture>& tex,
+// 	const rectangle& rect
+// ) :
+// 		image(c),
+// 		image::texture(this->context->renderer, abs(rect.d)),
+// 		tex(tex)
+// {
+// //	this->texCoords[3] = vector2(rect.left(), this->tex->tex().dim().y - rect.bottom()).compDivBy(this->tex->tex().dim());
+// //	this->texCoords[2] = vector2(rect.right(), this->tex->tex().dim().y - rect.bottom()).compDivBy(this->tex->tex().dim());
+// //	this->texCoords[1] = vector2(rect.right(), this->tex->tex().dim().y - rect.top()).compDivBy(this->tex->tex().dim());
+// //	this->texCoords[0] = vector2(rect.left(), this->tex->tex().dim().y - rect.top()).compDivBy(this->tex->tex().dim());
+// 	//TODO:
+// 	ASSERT(false)
+// }
 
 atlas_image::atlas_image(
 	const utki::shared_ref<morda::context>& c,
-	std::shared_ptr<res::texture> tex // TODO: make shared_ref
+	const utki::shared_ref<res::texture>& tex
 ) :
 		image(c),
 		image::texture(this->context->renderer, tex->tex().dims()),
@@ -70,7 +70,7 @@ atlas_image::atlas_image(
 		vao(this->context->renderer->pos_tex_quad_01_vao)
 {}
 
-std::shared_ptr<atlas_image> atlas_image::load(morda::context& ctx, const treeml::forest& desc, const papki::file& fi){
+utki::shared_ref<atlas_image> atlas_image::load(morda::context& ctx, const treeml::forest& desc, const papki::file& fi){
 	std::shared_ptr<res::texture> tex;
 	rectangle rect(-1, -1);
 
@@ -86,18 +86,19 @@ std::shared_ptr<atlas_image> atlas_image::load(morda::context& ctx, const treeml
 		throw std::runtime_error("atlas_image::load(): could not load texture");
 	}
 	
-	if(rect.p.x() >= 0){
-		return std::make_shared<atlas_image>(utki::make_shared_from(ctx), tex, rect);
-	}else{
-		return std::make_shared<atlas_image>(utki::make_shared_from(ctx), tex);
-	}
+	// TODO:
+	// if(rect.p.x() >= 0){
+	// 	return utki::make_shared_ref<atlas_image>(utki::make_shared_from(ctx), utki::shared_ref(std::move(tex)), rect);
+	// }else{
+		return utki::make_shared_ref<atlas_image>(utki::make_shared_from(ctx), utki::shared_ref(std::move(tex)));
+	// }
 }
 
 void atlas_image::render(const matrix4& matrix, const vertex_array& vao)const{
 	this->context->renderer->shader->pos_tex->render(matrix, *this->vao, this->tex->tex());
 }
 
-std::shared_ptr<const image::texture> atlas_image::get(vector2 forDim)const{
+utki::shared_ref<const image::texture> atlas_image::get(vector2 forDim)const{
 	return utki::make_shared_from(*this);
 }
 
@@ -130,7 +131,7 @@ public:
 			fixed_texture(this->context->renderer, std::move(tex))
 	{}
 	
-	std::shared_ptr<const image::texture> get(vector2 forDim)const override{
+	utki::shared_ref<const image::texture> get(vector2 forDim)const override{
 		return utki::make_shared_from(*this);
 	}
 	
@@ -138,8 +139,8 @@ public:
 		return this->tex_v->dims();
 	}
 	
-	static std::shared_ptr<res_raster_image> load(morda::context& ctx, const papki::file& fi){
-		return std::make_shared<res_raster_image>(utki::make_shared_from(ctx), load_texture(*ctx.renderer, fi));
+	static utki::shared_ref<res_raster_image> load(morda::context& ctx, const papki::file& fi){
+		return utki::make_shared_ref<res_raster_image>(utki::make_shared_from(ctx), load_texture(*ctx.renderer, fi));
 	}
 };
 
@@ -173,14 +174,15 @@ public:
 		}
 	};
 	
-	std::shared_ptr<const texture> get(vector2 forDim)const override{
+	utki::shared_ref<const texture> get(vector2 forDim)const override{
 //		TRACE(<< "forDim = " << forDim << std::endl)
 
 		{ // check if in cache
 			auto i = this->cache.find(forDim.to<unsigned>());
 			if(i != this->cache.end()){
 				if(auto p = i->second.lock()){
-					return p;
+					ASSERT(p)
+					return utki::shared_ref(std::move(p));
 				}
 			}
 		}
@@ -202,7 +204,7 @@ public:
 			[&](auto&o){o << "svg.dims = " << svg.dims << " pixels.size() = " << svg.pixels.size();}
 		)
 		
-		auto img = std::make_shared<svg_texture>(
+		auto img = utki::make_shared_ref<svg_texture>(
 				this->context->renderer,
 				utki::make_shared_from(*this),
 				this->context->renderer->factory->create_texture_2d(svg.dims, utki::make_span(svg.pixels))
@@ -215,13 +217,13 @@ public:
 	
 	mutable std::map<r4::vector2<unsigned>, std::weak_ptr<texture>> cache;
 	
-	static std::shared_ptr<res_svg_image> load(morda::context& ctx, const papki::file& fi){
-		return std::make_shared<res_svg_image>(utki::make_shared_from(ctx), svgdom::load(fi));
+	static utki::shared_ref<res_svg_image> load(morda::context& ctx, const papki::file& fi){
+		return utki::make_shared_ref<res_svg_image>(utki::make_shared_from(ctx), svgdom::load(fi));
 	}	
 };
 }
 
-std::shared_ptr<image> image::load(morda::context& ctx, const treeml::forest& desc, const papki::file& fi) {
+utki::shared_ref<image> image::load(morda::context& ctx, const treeml::forest& desc, const papki::file& fi) {
 	for(auto& p : desc){
 		if(p.value == "file"){
 			fi.set_path(get_property_value(p).to_string());
@@ -232,7 +234,7 @@ std::shared_ptr<image> image::load(morda::context& ctx, const treeml::forest& de
 	return atlas_image::load(ctx, desc, fi);
 }
 
-std::shared_ptr<image> image::load(morda::context& ctx, const papki::file& fi) {
+utki::shared_ref<image> image::load(morda::context& ctx, const papki::file& fi) {
 	if(fi.suffix().compare("svg") == 0){
 		return res_svg_image::load(ctx, fi);
 	}else{

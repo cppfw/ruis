@@ -32,12 +32,12 @@ public:
 	const std::unique_ptr<render_factory::shaders> shader;
 	
 public:
-	const std::shared_ptr<vertex_buffer> quad_01_vbo;
-	const std::shared_ptr<index_buffer> quad_indices;
+	const utki::shared_ref<const vertex_buffer> quad_01_vbo;
+	const utki::shared_ref<const index_buffer> quad_indices;
 
-	const std::shared_ptr<vertex_array> pos_quad_01_vao;
+	const utki::shared_ref<const vertex_array> pos_quad_01_vao;
 	
-	const std::shared_ptr<vertex_array> pos_tex_quad_01_vao;
+	const utki::shared_ref<const vertex_array> pos_tex_quad_01_vao;
 	
 protected:
 	struct params{
@@ -53,7 +53,7 @@ protected:
 	virtual ~renderer()noexcept{}
 	
 private:
-	std::shared_ptr<frame_buffer> curFB;
+	std::shared_ptr<frame_buffer> cur_fb;
 public:
 	const unsigned max_texture_size;
 	

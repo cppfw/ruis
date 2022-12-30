@@ -25,15 +25,18 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace morda;
 
-vertex_array::vertex_array(decltype(buffers)&& buffers, std::shared_ptr<morda::index_buffer> indices, mode rendering_mode) :
-		buffers(buffers),
-		indices(std::move(indices)),
+vertex_array::vertex_array(
+	decltype(buffers)&& buffers,
+	const utki::shared_ref<const morda::index_buffer>& indices,
+	mode rendering_mode
+) :
+		buffers(std::move(buffers)),
+		indices(indices),
 		rendering_mode(rendering_mode)
 {
 	if(this->buffers.empty()){
 		throw std::invalid_argument("no vertex buffers passed to vertex array");
 	}
-	ASSERT(this->buffers.front())
 	auto s = this->buffers.front()->size;
 	for(auto& b : this->buffers){
 		if(b->size != s){

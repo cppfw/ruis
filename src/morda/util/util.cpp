@@ -109,7 +109,7 @@ morda::texture_2d::type morda::num_channels_to_texture_type(unsigned numChannels
 	}
 }
 
-std::shared_ptr<texture_2d> morda::load_texture(renderer& r, const papki::file& fi){
+utki::shared_ref<texture_2d> morda::load_texture(renderer& r, const papki::file& fi){
 	raster_image image(fi);
 //	TRACE(<< "ResTexture::Load(): image loaded" << std::endl)
 

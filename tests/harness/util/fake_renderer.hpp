@@ -9,46 +9,80 @@ public:
 	fake_texture_2d() : morda::texture_2d(morda::vector2(13, 666)){}
 };
 
+class fake_frame_buffer : public morda::frame_buffer{
+public:
+	fake_frame_buffer() : morda::frame_buffer(utki::make_shared_ref<fake_texture_2d>()){}
+};
+
+class fake_index_buffer : public morda::index_buffer{
+public:
+};
+
+class fake_vertex_array : public morda::vertex_array{
+public:
+	fake_vertex_array() :
+		morda::vertex_array(
+			{},
+			utki::make_shared_ref<fake_index_buffer>(),
+			morda::vertex_array::mode::triangles
+		)
+	{}
+};
+
+class fake_vertex_buffer : public morda::vertex_buffer{
+public:
+	fake_vertex_buffer() :
+		morda::vertex_buffer(13)
+	{}
+};
+
 class fake_factory : public morda::render_factory{
 public:
-	std::shared_ptr<morda::frame_buffer> create_framebuffer(std::shared_ptr<morda::texture_2d> color)override{
-		return nullptr;
+	utki::shared_ref<morda::frame_buffer> create_framebuffer(
+		const utki::shared_ref<morda::texture_2d>& color
+	)override
+	{
+		return utki::make_shared_ref<fake_frame_buffer>();
 	}
 
-	std::shared_ptr<morda::index_buffer> create_index_buffer(utki::span<const uint16_t> indices)override{
-		return nullptr;
+	utki::shared_ref<morda::index_buffer> create_index_buffer(utki::span<const uint16_t> indices)override{
+		return utki::make_shared_ref<fake_index_buffer>();
 	}
 
 	std::unique_ptr<morda::render_factory::shaders> create_shaders() override{
 		return nullptr;
 	}
 
-	std::shared_ptr<morda::texture_2d> create_texture_2d(morda::texture_2d::type type, r4::vector2<unsigned> dims, utki::span<const uint8_t> data)override{
-		return std::make_shared<fake_texture_2d>();
+	utki::shared_ref<morda::texture_2d> create_texture_2d(
+		morda::texture_2d::type type,
+		r4::vector2<unsigned> dims,
+		utki::span<const uint8_t> data
+	)override{
+		return utki::make_shared_ref<fake_texture_2d>();
 	}
 
-	std::shared_ptr<morda::vertex_array> create_vertex_array(
-			std::vector<std::shared_ptr<morda::vertex_buffer>>&& buffers,
-			std::shared_ptr<morda::index_buffer> indices,
+	utki::shared_ref<morda::vertex_array> create_vertex_array(
+			std::vector<utki::shared_ref<const morda::vertex_buffer>>&& buffers,
+			const utki::shared_ref<const morda::index_buffer>& indices,
 			morda::vertex_array::mode rendering_mode
 		)override
 	{
-		return nullptr;
+		return utki::make_shared_ref<fake_vertex_array>();
 	}
 
-	std::shared_ptr<morda::vertex_buffer> create_vertex_buffer(utki::span<const float> vertices)override{
-		return nullptr;
+	utki::shared_ref<morda::vertex_buffer> create_vertex_buffer(utki::span<const float> vertices)override{
+		return utki::make_shared_ref<fake_vertex_buffer>();
 	}
 
-	std::shared_ptr<morda::vertex_buffer> create_vertex_buffer(utki::span<const r4::vector2<float>> vertices)override{
-		return nullptr;
+	utki::shared_ref<morda::vertex_buffer> create_vertex_buffer(utki::span<const r4::vector2<float>> vertices)override{
+		return utki::make_shared_ref<fake_vertex_buffer>();
 	}
-	std::shared_ptr<morda::vertex_buffer> create_vertex_buffer(utki::span<const r4::vector3<float>> vertices)override{
-		return nullptr;
+	utki::shared_ref<morda::vertex_buffer> create_vertex_buffer(utki::span<const r4::vector3<float>> vertices)override{
+		return utki::make_shared_ref<fake_vertex_buffer>();
 	}
 
-	std::shared_ptr<morda::vertex_buffer> create_vertex_buffer(utki::span<const r4::vector4<float>> vertices)override{
-		return nullptr;
+	utki::shared_ref<morda::vertex_buffer> create_vertex_buffer(utki::span<const r4::vector4<float>> vertices)override{
+		return utki::make_shared_ref<fake_vertex_buffer>();
 	}
 
 };

@@ -21,16 +21,18 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
+#include <utki/shared_ref.hpp>
+
 #include "texture_2d.hpp"
 
 namespace morda{
 
 class frame_buffer{
 protected:
-	const std::shared_ptr<texture_2d> color;
+	const utki::shared_ref<texture_2d> color;
 public:
-	frame_buffer(std::shared_ptr<texture_2d> color) :
-			color(std::move(color))
+	frame_buffer(const utki::shared_ref<texture_2d>& color) :
+		color(color)
 	{}
 	
 	frame_buffer(const frame_buffer&) = delete;
