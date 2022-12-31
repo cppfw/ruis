@@ -23,9 +23,18 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace morda;
 
-frame_vao::frame_vao(std::shared_ptr<morda::renderer> r, vector2 dims, vector2 thickness) :
-		renderer(std::move(r))
-{
+frame_vao::frame_vao(const utki::shared_ref<const morda::renderer>& r) :
+		renderer(r),
+		vao(this->renderer->factory->create_vertex_array(
+			{this->renderer->factory->create_vertex_buffer(
+				utki::span<const r4::vector2<float>>(nullptr)
+			)},
+			this->renderer->factory->create_index_buffer(nullptr),
+			morda::vertex_array::mode::triangle_strip
+		))
+{}
+
+void frame_vao::set(vector2 dims, vector2 thickness){
 	std::array<vector2, 8> vertices = {{
 		// outer
 		{0, 0},
@@ -54,9 +63,5 @@ frame_vao::frame_vao(std::shared_ptr<morda::renderer> r, vector2 dims, vector2 t
 }
 
 void frame_vao::render(const matrix4& matrix, uint32_t color)const{
-	if(!this->renderer || ! this->vao){
-		return;
-	}
-
 	this->renderer->shader->color_pos->render(matrix, *this->vao, color);
 }
