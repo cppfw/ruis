@@ -57,6 +57,7 @@ class texture_font : public font{
 		morda::vector2 topLeft;
 		morda::vector2 bottomRight;
 		
+		// TOOD: make utki::shared_ref?
 		std::shared_ptr<vertex_array> vao;
 		std::shared_ptr<texture_2d> tex;
 		

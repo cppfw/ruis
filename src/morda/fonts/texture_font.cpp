@@ -102,12 +102,12 @@ texture_font::Glyph texture_font::loadGlyph(char32_t c)const{
 			},
 			this->context->renderer->quad_indices,
 			vertex_array::mode::triangle_fan
-		);
+		).to_shared_ptr();
 	g.tex = this->context->renderer->factory->create_texture_2d(
 			morda::num_channels_to_texture_type(im.num_channels()),
 			im.dims(),
 			im.pixels()
-		);
+		).to_shared_ptr();
 
 	return g;
 }
