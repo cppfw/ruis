@@ -18,21 +18,21 @@ class fake_index_buffer : public morda::index_buffer{
 public:
 };
 
-class fake_vertex_array : public morda::vertex_array{
-public:
-	fake_vertex_array() :
-		morda::vertex_array(
-			{},
-			utki::make_shared_ref<fake_index_buffer>(),
-			morda::vertex_array::mode::triangles
-		)
-	{}
-};
-
 class fake_vertex_buffer : public morda::vertex_buffer{
 public:
 	fake_vertex_buffer() :
 		morda::vertex_buffer(13)
+	{}
+};
+
+class fake_vertex_array : public morda::vertex_array{
+public:
+	fake_vertex_array() :
+		morda::vertex_array(
+			{utki::make_shared_ref<fake_vertex_buffer>()},
+			utki::make_shared_ref<fake_index_buffer>(),
+			morda::vertex_array::mode::triangles
+		)
 	{}
 };
 
