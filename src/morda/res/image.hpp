@@ -64,10 +64,13 @@ public:
 	 */
 	class texture{
 	protected:
-		const std::shared_ptr<morda::renderer> renderer;
+		const utki::shared_ref<const morda::renderer> renderer;
 
-		texture(std::shared_ptr<morda::renderer> r, vector2 dims) :
-				renderer(std::move(r)),
+		texture(
+			const utki::shared_ref<const morda::renderer>& r,
+			vector2 dims
+		) :
+				renderer(r),
 				dims(dims)
 		{}
 	public:

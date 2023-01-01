@@ -105,16 +105,19 @@ utki::shared_ref<const image::texture> atlas_image::get(vector2 forDim)const{
 namespace{
 class fixed_texture : public image::texture{
 protected:
-	std::shared_ptr<texture_2d> tex_v;
+	const utki::shared_ref<const texture_2d> tex_2d;
 	
-	fixed_texture(std::shared_ptr<morda::renderer> r, std::shared_ptr<texture_2d> tex) :
-			image::texture(std::move(r), tex->dims()),
-			tex_v(std::move(tex))
+	fixed_texture(
+		const utki::shared_ref<const morda::renderer>& r,
+		const utki::shared_ref<const texture_2d>& tex
+	) :
+			image::texture(r, tex->dims()),
+			tex_2d(tex)
 	{}
 	
 public:
 	void render(const matrix4& matrix, const vertex_array& vao)const override{
-		this->renderer->shader->pos_tex->render(matrix, vao, *this->tex_v);
+		this->renderer->shader->pos_tex->render(matrix, vao, *this->tex_2d);
 	}
 };
 	
@@ -125,10 +128,10 @@ class res_raster_image :
 public:
 	res_raster_image(
 		const utki::shared_ref<morda::context>& c,
-	 	std::shared_ptr<texture_2d> tex // TODO: make shared_ref
+	 	const utki::shared_ref<const texture_2d>& tex
 	) :
 			image(c),
-			fixed_texture(this->context->renderer, std::move(tex))
+			fixed_texture(this->context->renderer, tex)
 	{}
 	
 	utki::shared_ref<const image::texture> get(vector2 forDim)const override{
@@ -136,7 +139,7 @@ public:
 	}
 	
 	vector2 dims(real dpi)const noexcept override{
-		return this->tex_v->dims();
+		return this->tex_2d->dims();
 	}
 	
 	static utki::shared_ref<res_raster_image> load(morda::context& ctx, const papki::file& fi){
@@ -161,14 +164,18 @@ public:
 	class svg_texture : public fixed_texture{
 		std::weak_ptr<const res_svg_image> parent;
 	public:
-		svg_texture(std::shared_ptr<morda::renderer> r, std::shared_ptr<const res_svg_image> parent, std::shared_ptr<texture_2d> tex) :
-				fixed_texture(std::move(r), std::move(tex)),
-				parent(parent)
+		svg_texture(
+			const utki::shared_ref<const morda::renderer>& r,
+			const utki::shared_ref<const res_svg_image>& parent,
+			const utki::shared_ref<const texture_2d>& tex
+		) :
+			fixed_texture(r, tex),
+			parent(parent)
 		{}
 
 		~svg_texture()noexcept{
 			if(auto p = this->parent.lock()){
-				r4::vector2<unsigned> d = this->tex_v->dims().to<unsigned>();
+				r4::vector2<unsigned> d = this->tex_2d->dims().to<unsigned>();
 				p->cache.erase(d);
 			}
 		}
