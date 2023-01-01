@@ -25,13 +25,7 @@ using namespace morda;
 
 frame_vao::frame_vao(const utki::shared_ref<const morda::renderer>& r) :
 		renderer(r),
-		vao(this->renderer->factory->create_vertex_array(
-			{this->renderer->factory->create_vertex_buffer(
-				utki::span<const r4::vector2<float>>(nullptr)
-			)},
-			this->renderer->factory->create_index_buffer(nullptr),
-			morda::vertex_array::mode::triangle_strip
-		))
+		vao(this->renderer->empty_vertex_array)
 {}
 
 void frame_vao::set(vector2 dims, vector2 thickness){

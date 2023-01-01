@@ -32,6 +32,8 @@ public:
 	const std::unique_ptr<render_factory::shaders> shader;
 	
 public:
+	const utki::shared_ref<const vertex_array> empty_vertex_array;
+
 	const utki::shared_ref<const vertex_buffer> quad_01_vbo;
 	const utki::shared_ref<const index_buffer> quad_indices;
 

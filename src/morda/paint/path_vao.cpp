@@ -23,11 +23,17 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace morda;
 
-path_vao::path_vao(std::shared_ptr<morda::renderer> r, const path::vertices& path) :
-		renderer(std::move(r))
-{
+path_vao::path_vao(
+	const utki::shared_ref<const morda::renderer>& r
+) :
+	renderer(r),
+	core(this->renderer->empty_vertex_array),
+	border(this->renderer->empty_vertex_array)
+{}
+
+void path_vao::set(const path::vertices& path){
 	auto core_buf = this->renderer->factory->create_vertex_buffer(path.pos);
-	
+
 	this->core = this->renderer->factory->create_vertex_array(
 			{
 				core_buf,
@@ -35,8 +41,6 @@ path_vao::path_vao(std::shared_ptr<morda::renderer> r, const path::vertices& pat
 			this->renderer->factory->create_index_buffer(path.in_indices),
 			morda::vertex_array::mode::triangle_strip
 		);
-	
-	
 	this->border = this->renderer->factory->create_vertex_array(
 			{
 				core_buf,
@@ -48,13 +52,7 @@ path_vao::path_vao(std::shared_ptr<morda::renderer> r, const path::vertices& pat
 }
 
 void path_vao::render(const morda::matrix4& matrix, uint32_t color)const{
-	if(!this->renderer || ! this->core){
-		return;
-	}
-
 	this->renderer->shader->color_pos->render(matrix, *this->core, color);
 
-	if(this->border){
-		this->renderer->shader->color_pos_lum->render(matrix, *this->border, color);
-	}
+	this->renderer->shader->color_pos_lum->render(matrix, *this->border, color);
 }
