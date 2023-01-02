@@ -72,7 +72,7 @@ void image::render(const morda::matrix4& matrix) const{
 	auto& r = *this->context->renderer;
 	
 	if(!this->texture){
-		this->texture = img->get(this->rect().d);
+		this->texture = img->get(this->rect().d).to_shared_ptr();
 
 		if(this->repeat_v.x() || this->repeat_v.y()){
 			std::array<r4::vector2<float>, 4> texCoords;
