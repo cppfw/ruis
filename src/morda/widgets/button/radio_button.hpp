@@ -36,7 +36,7 @@ class radio_button :
 		virtual public choice_button,
 		private pile
 {
-	std::shared_ptr<widget> checkWidget;
+	const utki::shared_ref<widget> check_widget;
 public:
 	radio_button(std::shared_ptr<morda::context> c, const treeml::forest& desc);
 	
