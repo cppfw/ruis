@@ -411,7 +411,7 @@ public:
 	 * @return list of widgets found.
 	 */
 	template <class T>
-	std::vector<std::shared_ptr<T>> get_all_widgets(bool allow_itself = true);
+	std::vector<utki::shared_ref<T>> get_all_widgets(bool allow_itself = true);
 
 	/**
 	 * @brief Get root widget.

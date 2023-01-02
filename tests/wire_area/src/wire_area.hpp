@@ -32,5 +32,5 @@ private:
 	std::shared_ptr<wire_socket> grabbedSocket;
 	std::shared_ptr<wire_socket> hoveredSocket;
 	
-	std::vector<std::shared_ptr<wire_socket>> sockets;
+	std::vector<utki::shared_ref<wire_socket>> sockets;
 };

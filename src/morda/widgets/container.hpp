@@ -459,8 +459,8 @@ template <typename T> T& widget::get_widget(bool allow_itself){
 	throw std::logic_error("widget::get_widget_as(): requested widget type is not found");
 }
 
-template <class T> std::vector<std::shared_ptr<T>> widget::get_all_widgets(bool allow_itself){
-	std::vector<std::shared_ptr<T>> ret;
+template <class T> std::vector<utki::shared_ref<T>> widget::get_all_widgets(bool allow_itself){
+	std::vector<utki::shared_ref<T>> ret;
 
 	if(allow_itself){
 		if(auto p = dynamic_cast<T*>(this)){
