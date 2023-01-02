@@ -54,7 +54,7 @@ tab_group::tab_group(std::shared_ptr<morda::context> c, const treeml::forest& de
 
 void tab_group::set_filler(std::shared_ptr<res::image> filler){
 	this->filler = std::move(filler);
-	this->fillerTexture = this->filler->get();
+	this->fillerTexture = this->filler->get().to_shared_ptr();
 }
 
 morda::vector2 tab_group::measure(const morda::vector2& quotum)const{
