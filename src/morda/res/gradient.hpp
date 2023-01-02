@@ -60,7 +60,7 @@ namespace morda{ namespace res{
 class gradient : public resource{
 	friend class morda::resource_loader;
 
-	std::shared_ptr<vertex_array> vao;
+	utki::shared_ref<const vertex_array> vao;
 	
 public:
 	/**
@@ -72,11 +72,18 @@ public:
 	 * @param stops - array of gradient stops.
 	 * @param vertical - if true, the gradient is vertical. If false, the gradient is horizontal.
 	 */
-	gradient(const utki::shared_ref<morda::context>& c, std::vector<std::tuple<real, uint32_t>>& stops, bool vertical);
+	gradient(
+		const utki::shared_ref<morda::context>& c
+	);
 	
 	gradient(const gradient&) = delete;
 	gradient& operator=(const gradient&) = delete;
 	
+	void set(
+		std::vector<std::tuple<real, uint32_t>>& stops,
+		bool vertical
+	);
+
 	/**
 	 * @brief render gradient.
 	 * Renders the gradient as a rectangle ((0,0),(1,1)).

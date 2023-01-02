@@ -29,8 +29,15 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace morda::res;
 
-morda::res::gradient::gradient(const utki::shared_ref<morda::context>& c, std::vector<std::tuple<real,uint32_t> >& stops, bool vertical) :
-		resource(c)
+morda::res::gradient::gradient(const utki::shared_ref<morda::context>& c) :
+		resource(c),
+		vao(this->context->renderer->empty_vertex_array)
+{}
+
+void gradient::set(
+	std::vector<std::tuple<real, uint32_t>>& stops,
+	bool vertical
+)
 {
 	std::vector<r4::vector2<float>> vertices;
 //	std::vector<uint32_t> colors;
@@ -78,8 +85,6 @@ morda::res::gradient::gradient(const utki::shared_ref<morda::context>& c, std::v
 		);
 }
 
-
-
 std::shared_ptr<gradient> gradient::load(morda::context& ctx, const treeml::forest& desc, const papki::file& fi) {
 	bool vertical = false;
 
@@ -104,7 +109,10 @@ std::shared_ptr<gradient> gradient::load(morda::context& ctx, const treeml::fore
 		}
 	}
 	
-	return std::make_shared<gradient>(utki::make_shared_from(ctx), stops, vertical);
+	auto ret = std::make_shared<gradient>(utki::make_shared_from(ctx));
+	ret->set(stops, vertical);
+
+	return ret;
 }
 
 
