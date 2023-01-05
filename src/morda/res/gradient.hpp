@@ -92,7 +92,7 @@ public:
 	void render(const morda::matrix4& m)const;
 	
 private:
-	static std::shared_ptr<gradient> load(morda::context& ctx, const ::treeml::forest& desc, const papki::file& fi);
+	static utki::shared_ref<gradient> load(morda::context& ctx, const ::treeml::forest& desc, const papki::file& fi);
 };
 
 }}

@@ -37,16 +37,15 @@ namespace morda{
  * @brief Abstract widget displaying a text.
  */
 class text_widget : virtual public widget{
-	std::shared_ptr<res::font> font;
+	utki::shared_ref<const res::font> font;
 
 public:
 	text_widget(const text_widget&) = delete;
 	text_widget& operator=(const text_widget&) = delete;
 
-	void set_font(std::shared_ptr<res::font> font);
+	void set_font(const utki::shared_ref<const res::font>& font);
 
 	const res::font& get_font()const{
-		ASSERT(this->font)
 		return *this->font;
 	}
 

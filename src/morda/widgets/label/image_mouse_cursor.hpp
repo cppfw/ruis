@@ -37,7 +37,7 @@ namespace morda{
 class image_mouse_cursor : public pile{
 	std::shared_ptr<const res::cursor> cursor;
 
-	std::shared_ptr<const res::image::texture> quadTex;
+	std::shared_ptr<const res::image::texture> quad_tex;
 
 	vector2 cursorPos;
 public:
@@ -46,7 +46,7 @@ public:
 	image_mouse_cursor(const image_mouse_cursor&) = delete;
 	image_mouse_cursor& operator=(const image_mouse_cursor&) = delete;
 
-	void setCursor(std::shared_ptr<const res::cursor> cursor);
+	void set_cursor(const utki::shared_ref<const res::cursor>& cursor);
 
 	bool on_mouse_move(const mouse_move_event& e)override;
 

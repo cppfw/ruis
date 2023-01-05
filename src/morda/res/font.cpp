@@ -58,7 +58,7 @@ res::font::font(
 	}
 }
 
-std::shared_ptr<res::font> res::font::load(morda::context& ctx, const treeml::forest& desc, const papki::file& fi){
+utki::shared_ref<res::font> res::font::load(morda::context& ctx, const treeml::forest& desc, const papki::file& fi){
 	unsigned fontSize = 13;
 	unsigned maxCached = unsigned(-1);
 
@@ -82,7 +82,7 @@ std::shared_ptr<res::font> res::font::load(morda::context& ctx, const treeml::fo
 		}
 	}
 
-	return std::make_shared<font>(
+	return utki::make_shared_ref<font>(
 			utki::make_shared_from(ctx),
 			fi,
 			std::move(file_bold),

@@ -85,7 +85,7 @@ void gradient::set(
 		);
 }
 
-std::shared_ptr<gradient> gradient::load(morda::context& ctx, const treeml::forest& desc, const papki::file& fi) {
+utki::shared_ref<gradient> gradient::load(morda::context& ctx, const treeml::forest& desc, const papki::file& fi) {
 	bool vertical = false;
 
 	std::vector<std::tuple<real,uint32_t>> stops;
@@ -109,7 +109,8 @@ std::shared_ptr<gradient> gradient::load(morda::context& ctx, const treeml::fore
 		}
 	}
 	
-	auto ret = std::make_shared<gradient>(utki::make_shared_from(ctx));
+	auto ret = utki::make_shared_ref<gradient>(utki::make_shared_from(ctx));
+	
 	ret->set(stops, vertical);
 
 	return ret;

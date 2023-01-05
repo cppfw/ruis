@@ -95,7 +95,7 @@ public:
 	}
 	
 private:
-	static std::shared_ptr<font> load(morda::context& ctx, const ::treeml::forest& desc, const papki::file &fi);
+	static utki::shared_ref<font> load(morda::context& ctx, const ::treeml::forest& desc, const papki::file &fi);
 };
 
 }}

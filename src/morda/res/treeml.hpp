@@ -63,7 +63,7 @@ public:
 	}
 	
 private:
-	static std::shared_ptr<treeml> load(morda::context& ctx, const ::treeml::forest& desc, const papki::file& fi);
+	static utki::shared_ref<treeml> load(morda::context& ctx, const ::treeml::forest& desc, const papki::file& fi);
 };
 
 }}
