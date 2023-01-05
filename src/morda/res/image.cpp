@@ -76,7 +76,7 @@ utki::shared_ref<atlas_image> atlas_image::load(morda::context& ctx, const treem
 
 	for(auto& p : desc){
 		if(p.value == "tex"){
-			tex = ctx.loader.load<res::texture>(get_property_value(p).to_string());
+			tex = ctx.loader.load<res::texture>(get_property_value(p).to_string()).to_shared_ptr(); // TODO: do not use to_shared_ptr() here
 		}else if(p.value == "rect"){
 			rect = parse_rect(p.children);
 		}
