@@ -29,7 +29,8 @@ using namespace morda;
 
 image::image(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
 		widget(std::move(c), desc),
-		blending_widget(this->context, desc)
+		blending_widget(this->context, desc),
+		vao(this->context->renderer->empty_vertex_array)
 {
 	for(const auto& p : desc){
 		if(!is_property(p)){
