@@ -180,7 +180,7 @@ template <class T> utki::shared_ref<T> resource_loader::load(const char* resName
 
 //	TRACE(<< "ResMan::Load(): resource found in script" << std::endl)
 
-	auto resource = T::load(this->ctx, ret.e.children, *ret.rp.fi);
+	auto resource = T::load(utki::make_shared_from(this->ctx), ret.e.children, *ret.rp.fi);
 
 	this->add_resource(resource, ret.e.value.to_string());
 

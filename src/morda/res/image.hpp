@@ -109,7 +109,7 @@ public:
 	 */
 	virtual utki::shared_ref<const texture> get(vector2 forDims = 0)const = 0;
 private:
-	static utki::shared_ref<image> load(morda::context& ctx, const ::treeml::forest& desc, const papki::file& fi);
+	static utki::shared_ref<image> load(const utki::shared_ref<morda::context>& ctx, const ::treeml::forest& desc, const papki::file& fi);
 	
 public:
 	/**
@@ -119,7 +119,7 @@ public:
 	 * @param fi - image file.
 	 * @return Loaded resource.
 	 */
-	static utki::shared_ref<image> load(morda::context& ctx, const papki::file& fi);
+	static utki::shared_ref<image> load(const utki::shared_ref<morda::context>& ctx, const papki::file& fi);
 };
 
 // TODO: is atlas_image needed?
@@ -157,7 +157,7 @@ public:
 	void render(const matrix4& matrix, const vertex_array& vao) const override;
 	
 private:
-	static utki::shared_ref<atlas_image> load(morda::context& ctx, const ::treeml::forest& desc, const papki::file& fi);
+	static utki::shared_ref<atlas_image> load(const utki::shared_ref<morda::context>& ctx, const ::treeml::forest& desc, const papki::file& fi);
 };
 
 }}

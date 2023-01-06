@@ -92,7 +92,7 @@ public:
 
 }
 
-utki::shared_ref<nine_patch> nine_patch::load(morda::context& ctx, const treeml::forest& desc, const papki::file& fi){
+utki::shared_ref<nine_patch> nine_patch::load(const utki::shared_ref<morda::context>& ctx, const treeml::forest& desc, const papki::file& fi){
 	sides<real> borders(-1);
 	for(auto& p : desc){
 		if(p.value == "borders"){
@@ -108,7 +108,7 @@ utki::shared_ref<nine_patch> nine_patch::load(morda::context& ctx, const treeml:
 	auto image = res::image::load(ctx, fi);
 	
 	return utki::make_shared_ref<nine_patch>(
-		utki::make_shared_from(ctx),
+		ctx,
 		image,
 		borders
 	);

@@ -75,7 +75,7 @@ public:
 
 private:
 	static utki::shared_ref<texture> load(
-		morda::context& ctx, // TODO: make shared_ref
+		const utki::shared_ref<morda::context>& ctx,
 		const ::treeml::forest& desc,
 		const papki::file& fi
 	);

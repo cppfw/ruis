@@ -70,13 +70,13 @@ atlas_image::atlas_image(
 		vao(this->context->renderer->pos_tex_quad_01_vao)
 {}
 
-utki::shared_ref<atlas_image> atlas_image::load(morda::context& ctx, const treeml::forest& desc, const papki::file& fi){
+utki::shared_ref<atlas_image> atlas_image::load(const utki::shared_ref<morda::context>& ctx, const treeml::forest& desc, const papki::file& fi){
 	std::shared_ptr<res::texture> tex;
 	rectangle rect(-1, -1);
 
 	for(auto& p : desc){
 		if(p.value == "tex"){
-			tex = ctx.loader.load<res::texture>(get_property_value(p).to_string()).to_shared_ptr(); // TODO: do not use to_shared_ptr() here
+			tex = ctx->loader.load<res::texture>(get_property_value(p).to_string()).to_shared_ptr(); // TODO: do not use to_shared_ptr() here
 		}else if(p.value == "rect"){
 			rect = parse_rect(p.children);
 		}
@@ -88,9 +88,9 @@ utki::shared_ref<atlas_image> atlas_image::load(morda::context& ctx, const treem
 	
 	// TODO:
 	// if(rect.p.x() >= 0){
-	// 	return utki::make_shared_ref<atlas_image>(utki::make_shared_from(ctx), utki::shared_ref(std::move(tex)), rect);
+	// 	return utki::make_shared_ref<atlas_image>(ctx, utki::shared_ref(std::move(tex)), rect);
 	// }else{
-		return utki::make_shared_ref<atlas_image>(utki::make_shared_from(ctx), utki::shared_ref(std::move(tex)));
+		return utki::make_shared_ref<atlas_image>(ctx, utki::shared_ref(std::move(tex)));
 	// }
 }
 
@@ -142,8 +142,8 @@ public:
 		return this->tex_2d->dims();
 	}
 	
-	static utki::shared_ref<res_raster_image> load(morda::context& ctx, const papki::file& fi){
-		return utki::make_shared_ref<res_raster_image>(utki::make_shared_from(ctx), load_texture(*ctx.renderer, fi));
+	static utki::shared_ref<res_raster_image> load(const utki::shared_ref<morda::context>& ctx, const papki::file& fi){
+		return utki::make_shared_ref<res_raster_image>(ctx, load_texture(*ctx->renderer, fi));
 	}
 };
 
@@ -224,13 +224,13 @@ public:
 	
 	mutable std::map<r4::vector2<unsigned>, std::weak_ptr<texture>> cache;
 	
-	static utki::shared_ref<res_svg_image> load(morda::context& ctx, const papki::file& fi){
-		return utki::make_shared_ref<res_svg_image>(utki::make_shared_from(ctx), svgdom::load(fi));
+	static utki::shared_ref<res_svg_image> load(const utki::shared_ref<morda::context>& ctx, const papki::file& fi){
+		return utki::make_shared_ref<res_svg_image>(ctx, svgdom::load(fi));
 	}	
 };
 }
 
-utki::shared_ref<image> image::load(morda::context& ctx, const treeml::forest& desc, const papki::file& fi) {
+utki::shared_ref<image> image::load(const utki::shared_ref<morda::context>& ctx, const treeml::forest& desc, const papki::file& fi) {
 	for(auto& p : desc){
 		if(p.value == "file"){
 			fi.set_path(get_property_value(p).to_string());
@@ -241,7 +241,7 @@ utki::shared_ref<image> image::load(morda::context& ctx, const treeml::forest& d
 	return atlas_image::load(ctx, desc, fi);
 }
 
-utki::shared_ref<image> image::load(morda::context& ctx, const papki::file& fi) {
+utki::shared_ref<image> image::load(const utki::shared_ref<morda::context>& ctx, const papki::file& fi) {
 	if(fi.suffix().compare("svg") == 0){
 		return res_svg_image::load(ctx, fi);
 	}else{

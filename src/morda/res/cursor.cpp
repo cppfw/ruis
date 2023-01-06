@@ -35,14 +35,14 @@ morda::res::cursor::cursor(const utki::shared_ref<morda::context>& c, morda::res
 {}
 
 
-utki::shared_ref<cursor> cursor::load(morda::context& ctx, const treeml::forest& desc, const papki::file& fi) {
+utki::shared_ref<cursor> cursor::load(const utki::shared_ref<morda::context>& ctx, const treeml::forest& desc, const papki::file& fi) {
 	std::shared_ptr<res::image> image;
 	vector2 hotspot;
 	bool hotspot_set = false;
 
 	for(auto& p : desc){
 		if(p.value == "image"){
-			image = ctx.loader.load<res::image>(get_property_value(p).to_string()).to_shared_ptr(); // TODO: do not use to_shared_ptr()
+			image = ctx->loader.load<res::image>(get_property_value(p).to_string()).to_shared_ptr(); // TODO: do not use to_shared_ptr()
 		}else if(p.value == "hotspot"){
 			hotspot = parse_vec2(p.children);
 			hotspot_set = true;
@@ -57,5 +57,5 @@ utki::shared_ref<cursor> cursor::load(morda::context& ctx, const treeml::forest&
 		throw std::logic_error("cursor::load(): resource description does not contain 'hotspot' property");
 	}
 	
-	return utki::make_shared_ref<cursor>(utki::make_shared_from(ctx), *image, hotspot);
+	return utki::make_shared_ref<cursor>(ctx, *image, hotspot);
 }

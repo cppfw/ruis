@@ -31,12 +31,12 @@ morda::res::treeml::treeml(const utki::shared_ref<morda::context>& c, ::treeml::
 		s(std::move(forest))
 {}
 
-utki::shared_ref<morda::res::treeml> morda::res::treeml::load(morda::context& ctx, const ::treeml::forest& desc, const papki::file& fi){
+utki::shared_ref<morda::res::treeml> morda::res::treeml::load(const utki::shared_ref<morda::context>& ctx, const ::treeml::forest& desc, const papki::file& fi){
 	for(auto& p : desc){
 		if(p.value == "file"){
 			fi.set_path(get_property_value(p).to_string());
 		}
 	}
 
-	return utki::make_shared_ref<treeml>(utki::make_shared_from(ctx), ::treeml::read(fi));
+	return utki::make_shared_ref<treeml>(ctx, ::treeml::read(fi));
 }

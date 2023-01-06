@@ -60,7 +60,7 @@ public:
 private:
 	friend class morda::resource_loader;
 	
-	static utki::shared_ref<cursor> load(morda::context& ctx, const ::treeml::forest& desc, const papki::file &fi);
+	static utki::shared_ref<cursor> load(const utki::shared_ref<morda::context>& ctx, const ::treeml::forest& desc, const papki::file &fi);
 };
 
 }}
