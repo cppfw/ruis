@@ -45,7 +45,7 @@ image_mouse_cursor::image_mouse_cursor(std::shared_ptr<morda::context> c, const 
 void image_mouse_cursor::set_cursor(const utki::shared_ref<const res::cursor>& cursor) {
 	this->cursor = cursor.to_shared_ptr();
 	ASSERT(this->cursor)
-	this->quad_tex = this->cursor->image().get();
+	this->quad_tex = this->cursor->image().get().to_shared_ptr();
 }
 
 bool image_mouse_cursor::on_mouse_move(const mouse_move_event& e){
