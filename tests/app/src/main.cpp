@@ -35,16 +35,14 @@ class SimpleWidget :
 		public morda::updateable,
 		public morda::character_input_widget
 {
-	std::shared_ptr<morda::res::texture> tex;
+	utki::shared_ref<const morda::res::texture> tex;
 
 public:
 	SimpleWidget(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
 			morda::widget(std::move(c), desc),
-			morda::character_input_widget(this->context)
-	{
-//		TRACE(<< "loading texture" << std::endl)
-		this->tex = this->context->loader.load<morda::res::texture>("tex_sample");
-	}
+			morda::character_input_widget(this->context),
+			tex(this->context->loader.load<morda::res::texture>("tex_sample"))
+	{}
 
 	uint32_t timer = 0;
 	uint32_t cnt = 0;
