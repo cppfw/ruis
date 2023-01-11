@@ -69,8 +69,6 @@ public:
 	 * from [0:1] defining the position of the gradient stop. The second value
 	 * defines the color of the stop.
 	 * @param c - context.
-	 * @param stops - array of gradient stops.
-	 * @param vertical - if true, the gradient is vertical. If false, the gradient is horizontal.
 	 */
 	gradient(
 		const utki::shared_ref<morda::context>& c
@@ -79,6 +77,11 @@ public:
 	gradient(const gradient&) = delete;
 	gradient& operator=(const gradient&) = delete;
 	
+	/**
+	 * @brief Set gradient.
+	 * @param stops - array of gradient stops.
+	 * @param vertical - if true, the gradient is vertical. If false, the gradient is horizontal.
+	 */
 	void set(
 		std::vector<std::tuple<real, uint32_t>>& stops,
 		bool vertical
