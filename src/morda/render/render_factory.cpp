@@ -1,7 +1,7 @@
 /*
 morda - GUI framework
 
-Copyright (C) 2012-2021  Ivan Gagis <igagis@gmail.com>
+Copyright (C) 2012-2023  Ivan Gagis <igagis@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace morda;
 
-std::shared_ptr<texture_2d> render_factory::create_texture_2d(r4::vector2<unsigned> dims, utki::span<const uint32_t> data){
+utki::shared_ref<texture_2d> render_factory::create_texture_2d(r4::vector2<unsigned> dims, utki::span<const uint32_t> data){
 	return this->create_texture_2d(
 			texture_2d::type::rgba,
 			dims,

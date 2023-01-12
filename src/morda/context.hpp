@@ -1,7 +1,7 @@
 /*
 morda - GUI framework
 
-Copyright (C) 2012-2021  Ivan Gagis <igagis@gmail.com>
+Copyright (C) 2012-2023  Ivan Gagis <igagis@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -43,9 +43,9 @@ class context : public utki::shared{
 	void set_focused_widget(const std::shared_ptr<widget>& w);
 
 public:
-	const std::shared_ptr<morda::renderer> renderer;
+	const utki::shared_ref<morda::renderer> renderer;
 
-	const std::shared_ptr<morda::updater> updater;
+	const utki::shared_ref<morda::updater> updater;
 
 	const std::function<void(std::function<void()>&&)> run_from_ui_thread;
 
@@ -71,8 +71,8 @@ public:
 	 * @param dots_per_dp - desired dots per density pixel.
 	 */
 	context(
-			std::shared_ptr<morda::renderer> r,
-			std::shared_ptr<morda::updater> u,
+			const utki::shared_ref<morda::renderer>& r,
+			const utki::shared_ref<morda::updater>& u,
 			std::function<void(std::function<void()>&&)>&& run_from_ui_thread_function,
 			std::function<void(morda::mouse_cursor)>&& set_mouse_cursor_function,
 			real dots_per_inch,

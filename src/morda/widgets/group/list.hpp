@@ -1,7 +1,7 @@
 /*
 morda - GUI framework
 
-Copyright (C) 2012-2021  Ivan Gagis <igagis@gmail.com>
+Copyright (C) 2012-2023  Ivan Gagis <igagis@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -90,14 +90,14 @@ public:
 		 * @param index - index of item to get widget for.
 		 * @return widget for the requested item.
 		 */
-		virtual std::shared_ptr<widget> get_widget(size_t index) = 0;
+		virtual utki::shared_ref<widget> get_widget(size_t index) = 0;
 
 		/**
 		 * @brief Recycle widget of item.
 		 * @param index - index of item to recycle widget of.
 		 * @param w - widget to recycle.
 		 */
-		virtual void recycle(size_t index, std::shared_ptr<widget> w){}
+		virtual void recycle(size_t index, const utki::shared_ref<widget>& w){}
 
 		void notify_data_set_change();
 	};
@@ -168,7 +168,7 @@ private:
 
 	// returns true if it was the last visible widget
 	bool arrange_widget(
-			std::shared_ptr<widget>& w,
+			const utki::shared_ref<widget>& w,
 			real& pos,
 			bool add,
 			size_t index,

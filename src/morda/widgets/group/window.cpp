@@ -1,7 +1,7 @@
 /*
 morda - GUI framework
 
-Copyright (C) 2012-2021  Ivan Gagis <igagis@gmail.com>
+Copyright (C) 2012-2023  Ivan Gagis <igagis@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -157,7 +157,7 @@ const auto windowDesc_c = treeml::read(R"qwertyuiop(
 	)qwertyuiop");
 }
 
-void morda::window::set_background(std::shared_ptr<widget> w){
+void morda::window::set_background(const utki::shared_ref<widget>& w){
 	ASSERT(this->children().size() == 1 || this->children().size() == 2)
 	if(this->children().size() == 2){
 		this->erase(this->children().begin());
@@ -165,9 +165,7 @@ void morda::window::set_background(std::shared_ptr<widget> w){
 
 	ASSERT(this->children().size() == 1)
 
-	if(w){
-		this->insert(std::move(w), this->children().begin());
-	}
+	this->insert(w, this->children().begin());
 }
 
 morda::window::window(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
@@ -479,10 +477,9 @@ void window::move_to_top(){
 		return;
 	}
 
-	auto prevTopmost = this->parent()->children().rbegin()->get();
-	ASSERT(prevTopmost)
-	if(prevTopmost == this){
-		return;//already topmost
+	auto& prev_topmost = this->parent()->children().rbegin()->get();
+	if(&prev_topmost == this){
+		return; // already topmost
 	}
 
 	container* p = this->parent();
@@ -491,7 +488,7 @@ void window::move_to_top(){
 
 	this->updateTopmost();
 
-	if(auto pt = dynamic_cast<window*>(prevTopmost)){
+	if(auto pt = dynamic_cast<window*>(&prev_topmost)){
 		pt->updateTopmost();
 	}
 }
@@ -503,7 +500,7 @@ bool window::is_topmost()const noexcept{
 
 	ASSERT(this->parent()->children().size() != 0)
 
-	return this->parent()->children().back().get() == this;
+	return &this->parent()->children().back().get() == this;
 }
 
 void window::updateTopmost(){

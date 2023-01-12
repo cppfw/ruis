@@ -1,7 +1,7 @@
 /*
 morda - GUI framework
 
-Copyright (C) 2012-2021  Ivan Gagis <igagis@gmail.com>
+Copyright (C) 2012-2023  Ivan Gagis <igagis@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -145,7 +145,10 @@ scroll_bar::scroll_bar(std::shared_ptr<morda::context> c, const treeml::forest& 
 		newPos = max(newPos, real(0)); // clamp bottom
 		newPos = min(newPos, maxPos); // clamp top
 
-		ASSERT_INFO(0 <= newPos && newPos <= maxPos, "newPos = " << newPos << ", maxPos = " << maxPos)
+		ASSERT(
+			0 <= newPos && newPos <= maxPos,
+			[&](auto&o){o << "newPos = " << newPos << ", maxPos = " << maxPos;}
+		)
 
 		morda::vector2 newPosition(0);
 		newPosition[longIndex] = newPos;
@@ -192,12 +195,14 @@ void scroll_bar::lay_out(){
 		morda::vector2 newPos(0);
 		if(effectiveLength > 0){
 			newPos[longIndex] = ::round(effectiveLength * this->fraction());
-			ASSERT_INFO(
-					newPos[longIndex] <= effectiveLength,
-					"newPos[longIndex] = " << newPos[longIndex]
-							<< ", effectiveLength = " << effectiveLength
-							<< ", this->factor() = " << this->fraction()
-				)
+			ASSERT(
+				newPos[longIndex] <= effectiveLength,
+				[&](auto&o){
+					o << "newPos[longIndex] = " << newPos[longIndex]
+					<< ", effectiveLength = " << effectiveLength
+					<< ", this->factor() = " << this->fraction();
+				}
+			)
 		}
 		this->handle.move_to(newPos);
 	}

@@ -1,7 +1,7 @@
 /*
 morda - GUI framework
 
-Copyright (C) 2012-2021  Ivan Gagis <igagis@gmail.com>
+Copyright (C) 2012-2023  Ivan Gagis <igagis@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -30,11 +30,7 @@ book::book(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
 		pile(nullptr, treeml::forest())
 {}
 
-void book::push(std::shared_ptr<page> pg){
-	if(!pg){
-		throw std::logic_error("book::push(): tried to push nullptr");
-	}
-
+void book::push(const utki::shared_ref<page>& pg){
 	if(pg->parent_book){
 		if(pg->parent_book == this){
 			throw std::logic_error("book::push(): the page is already in this book");
@@ -67,7 +63,7 @@ std::shared_ptr<page> book::tear_out(page& pg)noexcept{
 			this->pages.begin(),
 			this->pages.end(),
 			[&pg](const auto& v) -> bool {
-				return v.get() == &pg;
+				return &v.get() == &pg;
 			}
 		);
 
@@ -77,7 +73,7 @@ std::shared_ptr<page> book::tear_out(page& pg)noexcept{
 
 	bool is_active_page = index == this->active_page_index;
 	
-	auto ret = std::move(*i);
+	auto ret = *i;
 
 	this->pages.erase(i);
 	pg.parent_book = nullptr;
@@ -104,7 +100,6 @@ std::shared_ptr<page> book::tear_out(page& pg)noexcept{
 					[this](auto&o){o << "this->active_page_index = " << this->active_page_index << ", this->pages.size() = " << this->pages.size();}
 				)
 			auto p = this->pages[this->active_page_index];
-			ASSERT(p)
 			this->push_back(p);
 			p->on_show();
 		}
@@ -131,8 +126,8 @@ void book::activate(const page& p){
 	auto i = std::find_if(
 			this->pages.begin(),
 			this->pages.end(),
-			[&p](auto pg){
-				return pg.get() == &p;
+			[&p](const auto& pg){
+				return &pg.get() == &p;
 			}
 		);
 	ASSERT(i != this->pages.end())
@@ -180,7 +175,7 @@ book::~book()noexcept{
 
 const page* book::get_active_page()const{
 	if(this->active_page_index < this->pages.size()){
-		return this->pages[this->active_page_index].get();
+		return &this->pages[this->active_page_index].get();
 	}
 	return nullptr;
 }

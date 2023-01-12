@@ -1,7 +1,7 @@
 /*
 morda - GUI framework
 
-Copyright (C) 2012-2021  Ivan Gagis <igagis@gmail.com>
+Copyright (C) 2012-2023  Ivan Gagis <igagis@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -29,7 +29,8 @@ using namespace morda;
 
 image::image(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
 		widget(std::move(c), desc),
-		blending_widget(this->context, desc)
+		blending_widget(this->context, desc),
+		vao(this->context->renderer->empty_vertex_array)
 {
 	for(const auto& p : desc){
 		if(!is_property(p)){
@@ -72,7 +73,7 @@ void image::render(const morda::matrix4& matrix) const{
 	auto& r = *this->context->renderer;
 	
 	if(!this->texture){
-		this->texture = img->get(this->rect().d);
+		this->texture = img->get(this->rect().d).to_shared_ptr();
 
 		if(this->repeat_v.x() || this->repeat_v.y()){
 			std::array<r4::vector2<float>, 4> texCoords;
@@ -122,7 +123,7 @@ morda::vector2 image::measure(const morda::vector2& quotum)const{
 	
 	vector2 imgDim = img->dims(this->context->units.dots_per_inch);
 	
-	ASSERT_INFO(imgDim.is_positive_or_zero(), "imgDim = " << imgDim)
+	ASSERT(imgDim.is_positive_or_zero(), [&](auto&o){o << "imgDim = " << imgDim;})
 	
 	if(!this->keep_aspect_ratio){
 		vector2 ret = imgDim;
@@ -160,7 +161,7 @@ morda::vector2 image::measure(const morda::vector2& quotum)const{
 		return quotum;
 	}else{
 		ASSERT(quotum.x() >= 0)
-		ASSERT_INFO(quotum.y() < 0, "quotum =" << quotum)
+		ASSERT(quotum.y() < 0, [&](auto&o){o << "quotum =" << quotum;})
 		
 		ASSERT(ratio > 0)
 		

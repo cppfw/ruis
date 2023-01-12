@@ -1,7 +1,7 @@
 /*
 morda - GUI framework
 
-Copyright (C) 2012-2021  Ivan Gagis <igagis@gmail.com>
+Copyright (C) 2012-2023  Ivan Gagis <igagis@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -53,7 +53,7 @@ public:
 	 * @param c - context.
 	 * @param s - treeml forest to initialize the resource with.
 	 */
-	treeml(std::shared_ptr<morda::context> c, ::treeml::forest&& s);
+	treeml(const utki::shared_ref<morda::context>& c, ::treeml::forest&& s);
 	
 	treeml(const treeml&) = delete;
 	treeml& operator=(const treeml&) = delete;
@@ -63,7 +63,7 @@ public:
 	}
 	
 private:
-	static std::shared_ptr<treeml> load(morda::context& ctx, const ::treeml::forest& desc, const papki::file& fi);
+	static utki::shared_ref<treeml> load(const utki::shared_ref<morda::context>& ctx, const ::treeml::forest& desc, const papki::file& fi);
 };
 
 }}

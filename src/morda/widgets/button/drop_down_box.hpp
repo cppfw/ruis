@@ -1,7 +1,7 @@
 /*
 morda - GUI framework
 
-Copyright (C) 2012-2021  Ivan Gagis <igagis@gmail.com>
+Copyright (C) 2012-2023  Ivan Gagis <igagis@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -67,7 +67,7 @@ public:
 		 * @param index - index of the item to provide widget for.
 		 * @return Widget for requested item.
 		 */
-		virtual std::shared_ptr<widget> get_widget(size_t index) = 0;
+		virtual utki::shared_ref<widget> get_widget(size_t index) = 0;
 
 		/**
 		 * @brief Recycle item widget.

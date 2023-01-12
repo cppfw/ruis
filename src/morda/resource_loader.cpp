@@ -1,7 +1,7 @@
 /*
 morda - GUI framework
 
-Copyright (C) 2012-2021  Ivan Gagis <igagis@gmail.com>
+Copyright (C) 2012-2023  Ivan Gagis <igagis@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -63,7 +63,7 @@ void resource_loader::mount_res_pack(const papki::file& fi){
 		}
 	}
 	
-	ResPackEntry rpe;
+	res_pack_entry rpe;
 	rpe.fi = papki::root_dir::make(fi.spawn(), dir);
 	rpe.script = std::move(script);
 
@@ -72,31 +72,29 @@ void resource_loader::mount_res_pack(const papki::file& fi){
 	ASSERT(!this->resPacks.back().script.empty())
 }
 
-resource_loader::FindInScriptRet resource_loader::findResourceInScript(const std::string& resName){
+resource_loader::find_in_script_result resource_loader::find_resource_in_script(const std::string& resName){
 	for(auto i = this->resPacks.rbegin(); i != this->resPacks.rend(); ++i){
 		auto j = std::find(i->script.begin(), i->script.end(), resName);
 		if(j != i->script.end()){
-			return FindInScriptRet(*i, *j);
+			return find_in_script_result(*i, *j);
 		}
 	}
-	TRACE(<< "resource name not found in mounted resource packs: " << resName << std::endl)
+	LOG([&](auto&o){o << "resource name not found in mounted resource packs: " << resName << std::endl;})
 	std::stringstream ss;
 	ss << "resource name not found in mounted resource packs: " << resName;
 	throw std::logic_error(ss.str());
 }
 
-void resource_loader::addResource(const std::shared_ptr<resource>& res, const std::string& name){
-	ASSERT(res)
-
-	ASSERT(this->resMap.find(name) == this->resMap.end())
+void resource_loader::add_resource(const utki::shared_ref<resource>& res, const std::string& name){
+	ASSERT(this->res_map.find(name) == this->res_map.end())
 	
 	//add the resource to the resources map of ResMan
-	this->resMap.insert(
-			std::make_pair(name, std::weak_ptr<resource>(res))
+	this->res_map.insert(
+			std::make_pair(name, utki::make_weak(res))
 		);
 	
 //#ifdef DEBUG
-//	for(T_ResMap::iterator i = this->resMap->rm.begin(); i != this->resMap->rm.end(); ++i){
+//	for(T_ResMap::iterator i = this->res_map->rm.begin(); i != this->res_map->rm.end(); ++i){
 //		TRACE(<< "\t" << *(*i).first << std::endl)
 //	}
 //#endif

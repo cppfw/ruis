@@ -1,7 +1,7 @@
 /*
 morda - GUI framework
 
-Copyright (C) 2012-2021  Ivan Gagis <igagis@gmail.com>
+Copyright (C) 2012-2023  Ivan Gagis <igagis@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -37,17 +37,15 @@ image_mouse_cursor::image_mouse_cursor(std::shared_ptr<morda::context> c, const 
 		}
 
 		if(p.value == "cursor"){
-			this->setCursor(this->context->loader.load<res::cursor>(get_property_value(p).to_string()));
+			this->set_cursor(this->context->loader.load<res::cursor>(get_property_value(p).to_string()));
 		}
 	}
 }
 
-void image_mouse_cursor::setCursor(std::shared_ptr<const res::cursor> cursor) {
-	this->cursor = std::move(cursor);
-	this->quadTex.reset();
-	if(this->cursor){
-		this->quadTex = this->cursor->image().get();
-	}
+void image_mouse_cursor::set_cursor(const utki::shared_ref<const res::cursor>& cursor) {
+	this->cursor = cursor.to_shared_ptr();
+	ASSERT(this->cursor)
+	this->quad_tex = this->cursor->image().get().to_shared_ptr();
 }
 
 bool image_mouse_cursor::on_mouse_move(const mouse_move_event& e){
@@ -67,14 +65,14 @@ void image_mouse_cursor::render(const morda::matrix4& matrix)const{
 		return;
 	}
 	
-	ASSERT(this->quadTex)
+	ASSERT(this->quad_tex)
 	
 	matrix4 matr(matrix);
 	matr.translate(this->cursorPos);
 	matr.translate(-this->cursor->hotspot());
-	matr.scale(this->quadTex->dims);
+	matr.scale(this->quad_tex->dims);
 	
 //	TRACE(<< "image_mouse_cursor::render(): this->cursorPos = " << this->cursorPos << " this->quadTex->dim() = " << this->quadTex->dim() << std::endl)
 	
-	this->quadTex->render(matr, *this->context->renderer->pos_tex_quad_01_vao);
+	this->quad_tex->render(matr, *this->context->renderer->pos_tex_quad_01_vao);
 }

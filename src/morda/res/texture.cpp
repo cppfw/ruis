@@ -1,7 +1,7 @@
 /*
 morda - GUI framework
 
-Copyright (C) 2012-2021  Ivan Gagis <igagis@gmail.com>
+Copyright (C) 2012-2023  Ivan Gagis <igagis@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -28,12 +28,17 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace morda;
 using namespace morda::res;
 
-std::shared_ptr<texture> texture::load(morda::context& ctx, const treeml::forest& desc, const papki::file& fi){
+utki::shared_ref<texture> texture::load(
+	const utki::shared_ref<morda::context>& ctx,
+	const treeml::forest& desc,
+	const papki::file& fi
+)
+{
 	for(auto& p: desc){
 		if(p.value == "file"){
 			fi.set_path(get_property_value(p).to_string());
 		}
 	}
 
-	return std::make_shared<texture>(utki::make_shared_from(ctx), load_texture(*ctx.renderer, fi));
+	return utki::make_shared_ref<texture>(ctx, load_texture(*ctx->renderer, fi));
 }

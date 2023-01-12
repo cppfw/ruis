@@ -1,7 +1,7 @@
 /*
 morda - GUI framework
 
-Copyright (C) 2012-2021  Ivan Gagis <igagis@gmail.com>
+Copyright (C) 2012-2023  Ivan Gagis <igagis@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -51,7 +51,7 @@ class image : public resource{
 	friend class morda::resource_loader;
 	
 protected:
-	image(std::shared_ptr<morda::context> c);
+	image(const utki::shared_ref<morda::context>& c);
 	
 public:
 	image(const image& orig) = delete;
@@ -64,10 +64,13 @@ public:
 	 */
 	class texture{
 	protected:
-		const std::shared_ptr<morda::renderer> renderer;
+		const utki::shared_ref<const morda::renderer> renderer;
 
-		texture(std::shared_ptr<morda::renderer> r, vector2 dims) :
-				renderer(std::move(r)),
+		texture(
+			const utki::shared_ref<const morda::renderer>& r,
+			vector2 dims
+		) :
+				renderer(r),
 				dims(dims)
 		{}
 	public:
@@ -104,9 +107,9 @@ public:
 	 *        If any of the dimensions is 0 then it will be adjusted to preserve aspect ratio.
 	 *        If both dimensions are zero, then dimensions which are natural for the particular image will be used.
 	 */
-	virtual std::shared_ptr<const texture> get(vector2 forDims = 0)const = 0;
+	virtual utki::shared_ref<const texture> get(vector2 forDims = 0)const = 0;
 private:
-	static std::shared_ptr<image> load(morda::context& ctx, const ::treeml::forest& desc, const papki::file& fi);
+	static utki::shared_ref<image> load(const utki::shared_ref<morda::context>& ctx, const ::treeml::forest& desc, const papki::file& fi);
 	
 public:
 	/**
@@ -116,22 +119,31 @@ public:
 	 * @param fi - image file.
 	 * @return Loaded resource.
 	 */
-	static std::shared_ptr<image> load(morda::context& ctx, const papki::file& fi);
+	static utki::shared_ref<image> load(const utki::shared_ref<morda::context>& ctx, const papki::file& fi);
 };
 
+// TODO: is atlas_image needed?
 /**
  * @brief Undocumented.
  */
 class atlas_image : public image, public image::texture{
 	friend class image;
 	
-	std::shared_ptr<res::texture> tex;
+	const utki::shared_ref<const res::texture> tex;
 	
-	std::shared_ptr<vertex_array> vao;
+	const utki::shared_ref<const vertex_array> vao;
 	
 public:
-	atlas_image(std::shared_ptr<morda::context> c, std::shared_ptr<res::texture> tex, const rectangle& rect);
-	atlas_image(std::shared_ptr<morda::context> c, std::shared_ptr<res::texture> tex);
+	// TODO:
+	// atlas_image(
+	// 	const utki::shared_ref<morda::context>& c,
+	// 	const utki::shared_ref<res::texture>& tex,
+	// 	const rectangle& rect
+	// );
+	atlas_image(
+		const utki::shared_ref<morda::context>& c,
+		const utki::shared_ref<res::texture>& tex
+	);
 	
 	atlas_image(const atlas_image& orig) = delete;
 	atlas_image& operator=(const atlas_image& orig) = delete;
@@ -140,12 +152,12 @@ public:
 		return this->image::texture::dims;
 	}
 	
-	virtual std::shared_ptr<const image::texture> get(vector2 forDim)const override;
+	virtual utki::shared_ref<const image::texture> get(vector2 forDim)const override;
 	
 	void render(const matrix4& matrix, const vertex_array& vao) const override;
 	
 private:
-	static std::shared_ptr<atlas_image> load(morda::context& ctx, const ::treeml::forest& desc, const papki::file& fi);
+	static utki::shared_ref<atlas_image> load(const utki::shared_ref<morda::context>& ctx, const ::treeml::forest& desc, const papki::file& fi);
 };
 
 }}

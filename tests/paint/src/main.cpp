@@ -11,7 +11,8 @@ class path_widget : virtual public morda::widget{
 	morda::path_vao vao;
 public:
 	path_widget(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
-			morda::widget(std::move(c), desc)
+			morda::widget(std::move(c), desc),
+			vao(this->context->renderer)
 	{}
 
 	void render(const morda::matrix4& matrix)const override{
@@ -26,7 +27,7 @@ public:
 				morda::vector2(0, this->rect().d.y() / 2),
 				this->rect().d / 2
 			);
-		this->vao = morda::path_vao(this->context->renderer, path.stroke());
+		this->vao.set(path.stroke());
 	}
 };
 
@@ -34,7 +35,8 @@ class frame_widget : virtual public morda::widget{
 	morda::frame_vao vao;
 public:
 	frame_widget(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
-			morda::widget(std::move(c), desc)
+			morda::widget(std::move(c), desc),
+			vao(this->context->renderer)
 	{}
 
 	void render(const morda::matrix4& matrix)const override{
@@ -42,8 +44,7 @@ public:
 	}
 
 	void on_resize()override{
-		this->vao = morda::frame_vao(
-				this->context->renderer,
+		this->vao.set(
 				this->rect().d,
 				morda::vector2{10, 20}
 			);

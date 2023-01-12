@@ -1,7 +1,7 @@
 /*
 morda - GUI framework
 
-Copyright (C) 2012-2021  Ivan Gagis <igagis@gmail.com>
+Copyright (C) 2012-2023  Ivan Gagis <igagis@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -48,19 +48,20 @@ namespace morda{ namespace res{
 class texture : public morda::resource{
 	friend class morda::resource_loader;
 
-	std::shared_ptr<texture_2d> tex_v;
+	const utki::shared_ref<texture_2d> tex2d;
 public:
 	/**
 	 * @brief Create texture.
 	 * @param c - context.
-	 * @param texture - texture object to initialize this resource with.
+	 * @param tex - texture object to initialize this resource with.
 	 */
-	texture(std::shared_ptr<morda::context> c, decltype(tex_v) texture) :
-			resource(std::move(c)),
-			tex_v(std::move(texture))
-	{
-		ASSERT(this->tex_v)
-	}
+	texture(
+		const utki::shared_ref<morda::context>& c,
+		const decltype(tex2d)& tex
+	) :
+			resource(c),
+			tex2d(tex)
+	{}
 
 	~texture()noexcept{}
 
@@ -69,11 +70,15 @@ public:
 	 * @return Texture object.
 	 */
 	const texture_2d& tex()const noexcept{
-		return *this->tex_v;
+		return this->tex2d.get();
 	}
 
 private:
-	static std::shared_ptr<texture> load(morda::context& ctx, const ::treeml::forest& desc, const papki::file& fi);
+	static utki::shared_ref<texture> load(
+		const utki::shared_ref<morda::context>& ctx,
+		const ::treeml::forest& desc,
+		const papki::file& fi
+	);
 };
 
 }}

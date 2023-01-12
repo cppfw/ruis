@@ -45,7 +45,8 @@ void wire_area::render(const morda::matrix4& matrix)const{
 		morda::path path;
 		path.cubic_to(primOutletPos[1] * splineControlLength_c, p + slaveOutletPos[1] * splineControlLength_c, p);
 		
-		morda::path_vao vba(this->context->renderer, path.stroke(this->wireHalfWidth, antialiasWidth_c, 1));
+		morda::path_vao vba(this->context->renderer);
+		vba.set(path.stroke(this->wireHalfWidth, antialiasWidth_c, 1));
 		
 		vba.render(morda::matrix4(matrix).translate(p0), this->wireColor);
 	}
@@ -57,7 +58,8 @@ void wire_area::render(const morda::matrix4& matrix)const{
 		morda::path path;
 		path.line_to(mousePos - p0);
 		
-		morda::path_vao vba(this->context->renderer, path.stroke(this->wireHalfWidth, antialiasWidth_c, 1));
+		morda::path_vao vba(this->context->renderer);
+		vba.set(path.stroke(this->wireHalfWidth, antialiasWidth_c, 1));
 		
 		vba.render(morda::matrix4(matrix).translate(p0), this->grabbedColor);
 	}

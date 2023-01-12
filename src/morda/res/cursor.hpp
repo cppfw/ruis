@@ -1,7 +1,7 @@
 /*
 morda - GUI framework
 
-Copyright (C) 2012-2021  Ivan Gagis <igagis@gmail.com>
+Copyright (C) 2012-2023  Ivan Gagis <igagis@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -44,7 +44,7 @@ class cursor : public resource{
 	vector2 hotspot_v;
 	
 public:
-	cursor(std::shared_ptr<morda::context> c, image& image, const vector2& hotspot);
+	cursor(const utki::shared_ref<morda::context>& c, image& image, const vector2& hotspot);
 	
 	cursor(const cursor&) = delete;
 	cursor& operator=(const cursor&) = delete;
@@ -60,7 +60,7 @@ public:
 private:
 	friend class morda::resource_loader;
 	
-	static std::shared_ptr<cursor> load(morda::context& ctx, const ::treeml::forest& desc, const papki::file &fi);
+	static utki::shared_ref<cursor> load(const utki::shared_ref<morda::context>& ctx, const ::treeml::forest& desc, const papki::file &fi);
 };
 
 }}

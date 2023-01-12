@@ -2,10 +2,10 @@
 
 #include "fake_renderer.hpp"
 
-std::shared_ptr<morda::context> make_dummy_context(){
-    return std::make_shared<morda::context>(
-            std::make_shared<fake_renderer>(),
-            std::make_shared<morda::updater>(),
+utki::shared_ref<morda::context> make_dummy_context(){
+    return utki::make_shared_ref<morda::context>(
+            utki::make_shared_ref<fake_renderer>(),
+            utki::make_shared_ref<morda::updater>(),
             [](std::function<void()>&&){},
             [](morda::mouse_cursor){},
             morda::real(0),

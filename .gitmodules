@@ -1,12 +1,12 @@
 [submodule "tests/harness/modules/mordavokne"]
 	path = tests/harness/modules/mordavokne
 	url = ../mordavokne
-	branch = latest
+	branch = master
 [submodule "tests/harness/modules/morda-render-opengl"]
 	path = tests/harness/modules/morda-render-opengl
 	url = ../morda-render-opengl
-	branch = latest
+	branch = shared_ref
 [submodule "tests/harness/modules/morda-render-opengles"]
 	path = tests/harness/modules/morda-render-opengles
 	url = ../morda-render-opengles
-	branch = latest
+	branch = shared_ref

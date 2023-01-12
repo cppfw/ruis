@@ -1,7 +1,7 @@
 /*
 morda - GUI framework
 
-Copyright (C) 2012-2021  Ivan Gagis <igagis@gmail.com>
+Copyright (C) 2012-2023  Ivan Gagis <igagis@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@ using namespace morda;
 using namespace morda::res;
 
 res::font::font(
-		std::shared_ptr<morda::context> context,
+		const utki::shared_ref<morda::context>& context,
 		const papki::file& file_normal,
 		std::unique_ptr<const papki::file> file_bold,
 		std::unique_ptr<const papki::file> file_italic,
@@ -43,7 +43,7 @@ res::font::font(
 		unsigned font_size,
 		unsigned max_cached
 	) :
-		resource(std::move(context))
+		resource(context)
 {
 	this->fonts[unsigned(style::normal)] = std::make_unique<texture_font>(this->context, file_normal, font_size, max_cached);
 
@@ -58,7 +58,7 @@ res::font::font(
 	}
 }
 
-std::shared_ptr<res::font> res::font::load(morda::context& ctx, const treeml::forest& desc, const papki::file& fi){
+utki::shared_ref<res::font> res::font::load(const utki::shared_ref<morda::context>& ctx, const treeml::forest& desc, const papki::file& fi){
 	unsigned fontSize = 13;
 	unsigned maxCached = unsigned(-1);
 
@@ -68,7 +68,7 @@ std::shared_ptr<res::font> res::font::load(morda::context& ctx, const treeml::fo
 
 	for(auto& p : desc){
 		if(p.value == "size"){
-			fontSize = unsigned(parse_dimension_value(get_property_value(p), ctx.units));
+			fontSize = unsigned(parse_dimension_value(get_property_value(p), ctx->units));
 		}else if(p.value == "max_cached"){
 			maxCached = unsigned(get_property_value(p).to_uint32());
 		}else if(p.value == "normal"){
@@ -82,8 +82,8 @@ std::shared_ptr<res::font> res::font::load(morda::context& ctx, const treeml::fo
 		}
 	}
 
-	return std::make_shared<font>(
-			utki::make_shared_from(ctx),
+	return utki::make_shared_ref<font>(
+			ctx,
 			fi,
 			std::move(file_bold),
 			std::move(file_italic),

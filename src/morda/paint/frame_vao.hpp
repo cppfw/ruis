@@ -1,7 +1,7 @@
 /*
 morda - GUI framework
 
-Copyright (C) 2012-2021  Ivan Gagis <igagis@gmail.com>
+Copyright (C) 2012-2023  Ivan Gagis <igagis@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -26,14 +26,11 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 namespace morda{
 
 class frame_vao{
-	std::shared_ptr<morda::vertex_array> vao;
+	utki::shared_ref<const morda::renderer> renderer;
 	
-	std::shared_ptr<morda::renderer> renderer;
+	utki::shared_ref<const morda::vertex_array> vao;
 public:
-
-	frame_vao(){}
-
-	frame_vao(std::shared_ptr<morda::renderer> r, vector2 dims, vector2 thickness);
+	frame_vao(const utki::shared_ref<const morda::renderer>& r);
 
 	frame_vao(const frame_vao&) = delete;
 	frame_vao& operator=(const frame_vao&) = delete;
@@ -41,11 +38,9 @@ public:
 	frame_vao(frame_vao&&) = default;
 	frame_vao& operator=(frame_vao&&) = default;
 
-	void render(const matrix4& matrix, uint32_t color)const;
+	void set(vector2 dims, vector2 thickness);
 
-	bool empty()const{
-		return !this->vao || !this->renderer;
-	}
+	void render(const matrix4& matrix, uint32_t color)const;
 };
 
 }

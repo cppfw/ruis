@@ -1,7 +1,7 @@
 /*
 morda - GUI framework
 
-Copyright (C) 2012-2021  Ivan Gagis <igagis@gmail.com>
+Copyright (C) 2012-2023  Ivan Gagis <igagis@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -61,7 +61,7 @@ texture_font::Glyph texture_font::loadGlyph(char32_t c)const{
 		if(c == unknownChar_c){
 			throw std::runtime_error("texture_font::loadGlyph(): could not load 'unknown character' glyph (UTF-32: 0xfffd)");
 		}
-		TRACE(<< "texture_font::loadGlyph(" << std::hex << uint32_t(c) << "): failed to load glyph" << std::endl)
+		LOG([&](auto&o){o << "texture_font::loadGlyph(" << std::hex << uint32_t(c) << "): failed to load glyph" << std::endl;})
 		return this->unknownGlyph;
 	}
 	
@@ -102,18 +102,18 @@ texture_font::Glyph texture_font::loadGlyph(char32_t c)const{
 			},
 			this->context->renderer->quad_indices,
 			vertex_array::mode::triangle_fan
-		);
+		).to_shared_ptr();
 	g.tex = this->context->renderer->factory->create_texture_2d(
 			morda::num_channels_to_texture_type(im.num_channels()),
 			im.dims(),
 			im.pixels()
-		);
+		).to_shared_ptr();
 
 	return g;
 }
 
-texture_font::texture_font(std::shared_ptr<morda::context> c, const papki::file& fi, unsigned fontSize, unsigned maxCached) :
-		font(std::move(c)),
+texture_font::texture_font(const utki::shared_ref<morda::context>& c, const papki::file& fi, unsigned fontSize, unsigned maxCached) :
+		font(c),
 		maxCached(maxCached),
 		face(freetype.lib, fi)
 {

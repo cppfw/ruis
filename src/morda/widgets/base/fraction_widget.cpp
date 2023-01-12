@@ -1,7 +1,7 @@
 /*
 morda - GUI framework
 
-Copyright (C) 2012-2021  Ivan Gagis <igagis@gmail.com>
+Copyright (C) 2012-2023  Ivan Gagis <igagis@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -34,7 +34,7 @@ void fraction_widget::set_fraction(real fraction, bool notify_change){
 		fraction = 0;
 	}
 
-	ASSERT_INFO(0 <= fraction && fraction <= 1, fraction)
+	ASSERT(0 <= fraction && fraction <= 1, [&](auto&o){o << fraction;})
 
 	if(this->fraction_v == fraction){
 		return;

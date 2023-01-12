@@ -1,7 +1,7 @@
 /*
 morda - GUI framework
 
-Copyright (C) 2012-2021  Ivan Gagis <igagis@gmail.com>
+Copyright (C) 2012-2023  Ivan Gagis <igagis@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -39,7 +39,7 @@ namespace morda{
  */
 class font{
 public:
-	const std::shared_ptr<morda::context> context;
+	const utki::shared_ref<morda::context> context;
 protected:
 	/**
 	 * @brief Distance between lines of text.
@@ -50,8 +50,8 @@ protected:
 	
 	real ascender;
 	
-	font(std::shared_ptr<morda::context> context) :
-			context(std::move(context))
+	font(const utki::shared_ref<morda::context>& context) :
+			context(context)
 	{}
 	
 	font(const font&) = delete;

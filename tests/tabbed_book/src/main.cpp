@@ -9,8 +9,8 @@
 
 #include "sample_page.hpp"
 
-std::shared_ptr<morda::tab> inflate_tab(std::shared_ptr<morda::tabbed_book> tb, const std::string& name){
-	auto t = tb->context->inflater.inflate_as<morda::tab>(R"(
+utki::shared_ref<morda::tab> inflate_tab(morda::tabbed_book& tb, const std::string& name){
+	auto t = tb.context->inflater.inflate_as<morda::tab>(R"(
 		@tab{
 			@row{
 				@text{
@@ -41,7 +41,7 @@ std::shared_ptr<morda::tab> inflate_tab(std::shared_ptr<morda::tabbed_book> tb, 
 	auto& close_btn = t->get_widget_as<morda::push_button>("close_button");
 	
 	close_btn.click_handler = [
-			tabbed_book_wp = utki::make_weak(tb),
+			tabbed_book_wp = utki::make_weak_from(tb),
 			tab_wp = utki::make_weak(t)
 		](morda::push_button& btn)
 	{
@@ -87,8 +87,8 @@ public:
 			ss << "page #" << cnt;
 			auto txt = ss.str();
 			++cnt;
-			auto pg = std::make_shared<sample_page>(b.context, txt);
-			auto tb = inflate_tab(bk, txt);
+			auto pg = utki::make_shared_ref<sample_page>(b.context, txt);
+			auto tb = inflate_tab(bk.get(), txt);
 
 			tb->get_widget_as<morda::push_button>("activate_button").click_handler = [pgw = utki::make_weak(pg)](morda::push_button&){
 				if(auto pg = pgw.lock()){

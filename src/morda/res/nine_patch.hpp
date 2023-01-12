@@ -1,7 +1,7 @@
 /*
 morda - GUI framework
 
-Copyright (C) 2012-2021  Ivan Gagis <igagis@gmail.com>
+Copyright (C) 2012-2023  Ivan Gagis <igagis@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -50,22 +50,26 @@ namespace morda{ namespace res{
 class nine_patch : public resource{
 	friend class morda::resource_loader;
 	
-	const std::shared_ptr<const res::image> image;
+	const utki::shared_ref<const res::image> image;
 	
-	sides<real> borders_v;
+	sides<real> borders_v; // TODO: rename without _v suffix
 	
 public:
 	nine_patch(const nine_patch&) = delete;
 	nine_patch& operator=(const nine_patch&) = delete;
 	
-	nine_patch(std::shared_ptr<morda::context> c, std::shared_ptr<const res::image> image, sides<real> borders) :
-			resource(std::move(c)),
-			image(std::move(image)),
+	nine_patch(
+		const utki::shared_ref<morda::context>& c,
+		const utki::shared_ref<const res::image>& image,
+		sides<real> borders
+	) :
+			resource(c),
+			image(image),
 			borders_v(borders)
 	{}
 
 	class image_matrix{
-		const std::array<std::array<std::shared_ptr<const res::image>, 3>, 3> img_matrix;
+		const std::array<std::array<utki::shared_ref<const res::image>, 3>, 3> img_matrix;
 		
 		std::weak_ptr<const nine_patch> parent;
 	
@@ -76,7 +80,7 @@ public:
 		}
 		
 		image_matrix(
-				std::array<std::array<std::shared_ptr<const res::image>, 3>, 3>&& l,
+				std::array<std::array<utki::shared_ref<const res::image>, 3>, 3>&& l,
 				std::weak_ptr<const nine_patch> parent,
 				real mul
 			);
@@ -92,7 +96,7 @@ public:
 private:
 	mutable std::map<real, std::weak_ptr<image_matrix>> cache;
 	
-	static std::shared_ptr<nine_patch> load(morda::context& ctx, const ::treeml::forest& desc, const papki::file& fi);
+	static utki::shared_ref<nine_patch> load(const utki::shared_ref<morda::context>& ctx, const ::treeml::forest& desc, const papki::file& fi);
 };
 
 }}

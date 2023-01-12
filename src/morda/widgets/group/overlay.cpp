@@ -1,7 +1,7 @@
 /*
 morda - GUI framework
 
-Copyright (C) 2012-2021  Ivan Gagis <igagis@gmail.com>
+Copyright (C) 2012-2023  Ivan Gagis <igagis@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -42,8 +42,8 @@ overlay::overlay(std::shared_ptr<morda::context> c, const treeml::forest& desc) 
 		pile(this->context, desc)
 {}
 
-std::shared_ptr<widget> overlay::show_context_menu(std::shared_ptr<widget> w, vector2 anchor){
-	auto c = std::make_shared<context_menu_wrapper>(this->context, treeml::read(R"qwertyuiop(
+utki::shared_ref<widget> overlay::show_context_menu(const utki::shared_ref<widget>& w, vector2 anchor){
+	auto c = utki::make_shared_ref<context_menu_wrapper>(this->context, treeml::read(R"qwertyuiop(
 		layout{
 			dx{fill} dy{fill}
 		}
@@ -55,7 +55,7 @@ std::shared_ptr<widget> overlay::show_context_menu(std::shared_ptr<widget> w, ve
 		}
 	)qwertyuiop"));
 
-	auto& mp = *std::dynamic_pointer_cast<mouse_proxy>(c->children().back());
+	auto& mp = *std::dynamic_pointer_cast<mouse_proxy>(c->children().back().to_shared_ptr());
 
 	mp.mouse_button_handler = [cntr{utki::make_weak(c)}](mouse_proxy& w, const mouse_button_event& e) -> bool {
 		if(auto c = cntr.lock()){
@@ -85,7 +85,6 @@ std::shared_ptr<widget> overlay::show_context_menu(std::shared_ptr<widget> w, ve
 	w->move_to(anchor);
 
 	auto sp = utki::make_shared_from(*this);
-	ASSERT(sp)
 	this->context->run_from_ui_thread([c, sp](){
 		sp->push_back(c);
 	});

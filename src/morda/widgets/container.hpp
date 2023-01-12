@@ -1,7 +1,7 @@
 /*
 morda - GUI framework
 
-Copyright (C) 2012-2021  Ivan Gagis <igagis@gmail.com>
+Copyright (C) 2012-2023  Ivan Gagis <igagis@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -23,6 +23,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <map>
 #include <vector>
+
+#include <utki/shared_ref.hpp>
 
 #include "../util/util.hpp"
 #include "widget.hpp"
@@ -46,8 +48,8 @@ namespace morda{
  */
 class container : virtual public widget{
 public:
-	typedef std::vector<std::shared_ptr<widget>> widget_list;
-	typedef std::vector<std::shared_ptr<const widget>> const_widget_list;
+	typedef std::vector<utki::shared_ref<widget>> widget_list;
+	typedef std::vector<utki::shared_ref<const widget>> const_widget_list;
 private:
 	static_assert(sizeof(widget_list) == sizeof(const_widget_list), "sizeof(widget_list) differs from sizeof(const_widget_list)");
 	static_assert(sizeof(widget_list::value_type) == sizeof(const_widget_list::value_type), "sizeof(widget_list::value_type) differs from sizeof(const_widget_list::value_type)");
@@ -212,7 +214,7 @@ public:
 	 * @param before - iterator within this container before which the widget will be inserted.
 	 * @return iterator pointing to the newly inserted widget.
 	 */
-	widget_list::const_iterator insert(std::shared_ptr<widget> w, widget_list::const_iterator before);
+	widget_list::const_iterator insert(const utki::shared_ref<widget>& w, widget_list::const_iterator before);
 
 	/**
 	 * @brief Insert a widget to the end of children list of the container.
@@ -220,8 +222,8 @@ public:
 	 * @param w - widget to insert.
 	 * @return iterator pointing to the newly inserted widget.
 	 */
-	widget_list::const_iterator push_back(std::shared_ptr<widget> w){
-		return this->insert(std::move(w), this->children().end());
+	widget_list::const_iterator push_back(const utki::shared_ref<widget>& w){
+		return this->insert(w, this->children().end());
 	}
 
 	/**
@@ -429,7 +431,7 @@ T* widget::try_get_ancestor(const std::string& id){
 template <typename T>
 std::shared_ptr<T> widget::try_get_widget(bool allow_itself)noexcept{
 	if(allow_itself){
-		auto p = std::dynamic_pointer_cast<T>(utki::make_shared_from(*this));
+		auto p = std::dynamic_pointer_cast<T>(utki::make_shared_from(*this).to_shared_ptr());
 		if(p){
 			return p;
 		}
@@ -457,8 +459,8 @@ template <typename T> T& widget::get_widget(bool allow_itself){
 	throw std::logic_error("widget::get_widget_as(): requested widget type is not found");
 }
 
-template <class T> std::vector<std::shared_ptr<T>> widget::get_all_widgets(bool allow_itself){
-	std::vector<std::shared_ptr<T>> ret;
+template <class T> std::vector<utki::shared_ref<T>> widget::get_all_widgets(bool allow_itself){
+	std::vector<utki::shared_ref<T>> ret;
 
 	if(allow_itself){
 		if(auto p = dynamic_cast<T*>(this)){

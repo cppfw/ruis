@@ -1,7 +1,7 @@
 /*
 morda - GUI framework
 
-Copyright (C) 2012-2021  Ivan Gagis <igagis@gmail.com>
+Copyright (C) 2012-2023  Ivan Gagis <igagis@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -34,7 +34,7 @@ public:
 		return this->widgets.size();
 	}
 
-	std::shared_ptr<widget> get_widget(size_t index)override{
+	utki::shared_ref<widget> get_widget(size_t index)override{
 		auto i = std::next(this->widgets.begin(), index);
 		ASSERT(this->get_drop_down_box())
 		return this->get_drop_down_box()->context->inflater.inflate(i, i + 1);

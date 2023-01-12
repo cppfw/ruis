@@ -1,7 +1,7 @@
 /*
 morda - GUI framework
 
-Copyright (C) 2012-2021  Ivan Gagis <igagis@gmail.com>
+Copyright (C) 2012-2023  Ivan Gagis <igagis@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -60,7 +60,7 @@ namespace morda{ namespace res{
 class gradient : public resource{
 	friend class morda::resource_loader;
 
-	std::shared_ptr<vertex_array> vao;
+	utki::shared_ref<const vertex_array> vao;
 	
 public:
 	/**
@@ -69,14 +69,24 @@ public:
 	 * from [0:1] defining the position of the gradient stop. The second value
 	 * defines the color of the stop.
 	 * @param c - context.
-	 * @param stops - array of gradient stops.
-	 * @param vertical - if true, the gradient is vertical. If false, the gradient is horizontal.
 	 */
-	gradient(std::shared_ptr<morda::context> c, std::vector<std::tuple<real, uint32_t>>& stops, bool vertical);
+	gradient(
+		const utki::shared_ref<morda::context>& c
+	);
 	
 	gradient(const gradient&) = delete;
 	gradient& operator=(const gradient&) = delete;
 	
+	/**
+	 * @brief Set gradient.
+	 * @param stops - array of gradient stops.
+	 * @param vertical - if true, the gradient is vertical. If false, the gradient is horizontal.
+	 */
+	void set(
+		std::vector<std::tuple<real, uint32_t>>& stops,
+		bool vertical
+	);
+
 	/**
 	 * @brief render gradient.
 	 * Renders the gradient as a rectangle ((0,0),(1,1)).
@@ -85,7 +95,7 @@ public:
 	void render(const morda::matrix4& m)const;
 	
 private:
-	static std::shared_ptr<gradient> load(morda::context& ctx, const ::treeml::forest& desc, const papki::file& fi);
+	static utki::shared_ref<gradient> load(const utki::shared_ref<morda::context>& ctx, const ::treeml::forest& desc, const papki::file& fi);
 };
 
 }}

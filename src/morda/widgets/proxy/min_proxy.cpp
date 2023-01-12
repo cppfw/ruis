@@ -1,7 +1,7 @@
 /*
 morda - GUI framework
 
-Copyright (C) 2012-2021  Ivan Gagis <igagis@gmail.com>
+Copyright (C) 2012-2023  Ivan Gagis <igagis@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -41,7 +41,7 @@ min_proxy::min_proxy(std::shared_ptr<morda::context> c, const treeml::forest& de
 				}
 			}
 		}catch(std::invalid_argument&){
-			TRACE(<< "could not parse value of " << treeml::to_string(p) << std::endl)
+			LOG([&](auto&o){o << "could not parse value of " << treeml::to_string(p) << std::endl;})
 			throw;
 		}
 	}

@@ -1,7 +1,7 @@
 /*
 morda - GUI framework
 
-Copyright (C) 2012-2021  Ivan Gagis <igagis@gmail.com>
+Copyright (C) 2012-2023  Ivan Gagis <igagis@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -70,7 +70,7 @@ private:
 
 public:
 	font(
-			std::shared_ptr<morda::context> context,
+			const utki::shared_ref<morda::context>& context,
 			const papki::file& file_normal,
 			std::unique_ptr<const papki::file> file_bold,
 			std::unique_ptr<const papki::file> file_italic,
@@ -95,7 +95,7 @@ public:
 	}
 	
 private:
-	static std::shared_ptr<font> load(morda::context& ctx, const ::treeml::forest& desc, const papki::file &fi);
+	static utki::shared_ref<font> load(const utki::shared_ref<morda::context>& ctx, const ::treeml::forest& desc, const papki::file &fi);
 };
 
 }}

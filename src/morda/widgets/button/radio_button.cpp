@@ -1,7 +1,7 @@
 /*
 morda - GUI framework
 
-Copyright (C) 2012-2021  Ivan Gagis <igagis@gmail.com>
+Copyright (C) 2012-2023  Ivan Gagis <igagis@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -44,15 +44,14 @@ radio_button::radio_button(std::shared_ptr<morda::context> c, const treeml::fore
 		button(this->context, desc),
 		toggle_button(this->context, desc),
 		choice_button(this->context, desc),
-		pile(this->context, D_Layout)
+		pile(this->context, D_Layout),
+		check_widget(*this->children().rbegin())
 {
-	this->checkWidget = *this->children().rbegin();
-	ASSERT(this->checkWidget)
-	this->checkWidget->set_visible(this->is_pressed());
+	this->check_widget->set_visible(this->is_pressed());
 }
 
 void radio_button::on_press_change(){
 	this->choice_button::on_press_change();
-	this->checkWidget->set_visible(this->is_pressed());
+	this->check_widget->set_visible(this->is_pressed());
 	this->clear_cache();
 }

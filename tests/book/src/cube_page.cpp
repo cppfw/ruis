@@ -65,9 +65,10 @@ public:
 		
 		auto cubeIndices = this->context->renderer->factory->create_index_buffer(utki::make_span(indices));
 		
-		this->cubeVAO = this->context->renderer->factory->create_vertex_array({posVBO, texVBO}, cubeIndices, morda::vertex_array::mode::triangles);
+		this->cubeVAO = this->context->renderer->factory->create_vertex_array({posVBO, texVBO}, cubeIndices, morda::vertex_array::mode::triangles)
+			.to_shared_ptr();
 		
-		this->tex = this->context->loader.load<morda::res::texture>("tex_sample");
+		this->tex = this->context->loader.load<morda::res::texture>("tex_sample").to_shared_ptr();
 		this->rot.set_identity();
 	}
 	
@@ -79,7 +80,7 @@ public:
 		++this->fps;
 		this->rot %= morda::quaternion().set_rotation(r4::vector3<float>(1, 2, 1).normalize(), 1.5f * (float(dt) / 1000));
 		if(this->fpsSecCounter >= 1000){
-			TRACE_ALWAYS(<< "fps = " << std::dec << fps << std::endl)
+			std::cout << "fps = " << std::dec << fps << std::endl;
 			this->fpsSecCounter = 0;
 			this->fps = 0;
 		}
@@ -132,7 +133,7 @@ cube_page::cube_page(std::shared_ptr<morda::context> c) :
 		});
 	};
 	
-	auto cw = std::make_shared<CubeWidget>(this->context);
+	auto cw = utki::make_shared_ref<CubeWidget>(this->context);
 	this->cube = cw;
 	
 	cw->set_cache(true);

@@ -1,7 +1,7 @@
 /*
 morda - GUI framework
 
-Copyright (C) 2012-2021  Ivan Gagis <igagis@gmail.com>
+Copyright (C) 2012-2023  Ivan Gagis <igagis@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@ gradient::gradient(std::shared_ptr<morda::context> c, const treeml::forest& desc
 		}
 
 		if(p.value == "gradient"){
-			this->res = this->context->loader.load<res::gradient>(get_property_value(p).to_string());
+			this->res = this->context->loader.load<res::gradient>(get_property_value(p).to_string()).to_shared_ptr();
 		}
 	}
 }

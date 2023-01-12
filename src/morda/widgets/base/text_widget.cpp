@@ -1,7 +1,7 @@
 /*
 morda - GUI framework
 
-Copyright (C) 2012-2021  Ivan Gagis <igagis@gmail.com>
+Copyright (C) 2012-2023  Ivan Gagis <igagis@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -27,12 +27,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace morda;
 
-void text_widget::set_font(std::shared_ptr<res::font> font){
-	if(!font){
-		throw std::invalid_argument("text_widget::SetFont(): passed argument is null");
-	}
-
-	this->font = std::move(font);
+void text_widget::set_font(const utki::shared_ref<const res::font>& font){
+	this->font = font;
 
 	this->invalidate_layout();
 
@@ -40,20 +36,25 @@ void text_widget::set_font(std::shared_ptr<res::font> font){
 }
 
 text_widget::text_widget(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
-		widget(std::move(c), desc)
+		widget(std::move(c), desc),
+		font([&desc, this](){
+			for(const auto& p : desc){
+				if(!is_property(p)){
+					continue;
+				}
+
+				if(p.value == "font"){
+					return this->context->loader.load<morda::res::font>(get_property_value(p).to_string().c_str());
+				}
+			}
+
+			// load default font
+			return this->context->loader.load<res::font>("morda_fnt_text");
+		}())
 {
 	for(const auto& p : desc){
 		if(!is_property(p)){
 			continue;
 		}
-
-		if(p.value == "font"){
-			this->font = this->context->loader.load<morda::res::font>(get_property_value(p).to_string().c_str());
-		}
-	}
-
-	// load default font if needed
-	if(!this->font){
-		this->font = this->context->loader.load<res::font>("morda_fnt_text");
 	}
 }

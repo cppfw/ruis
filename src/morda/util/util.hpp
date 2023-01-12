@@ -1,7 +1,7 @@
 /*
 morda - GUI framework
 
-Copyright (C) 2012-2021  Ivan Gagis <igagis@gmail.com>
+Copyright (C) 2012-2023  Ivan Gagis <igagis@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -102,7 +102,7 @@ bool is_leaf_child(const treeml::leaf& l);
  * @param fi - file to load texture from.
  * @return Loaded texture.
  */
-std::shared_ptr<texture_2d> load_texture(renderer& r, const papki::file& fi);
+utki::shared_ref<texture_2d> load_texture(renderer& r, const papki::file& fi);
 
 /**
  * @brief Set simple alpha blending to rendering context.

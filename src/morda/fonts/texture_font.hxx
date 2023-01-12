@@ -1,7 +1,7 @@
 /*
 morda - GUI framework
 
-Copyright (C) 2012-2021  Ivan Gagis <igagis@gmail.com>
+Copyright (C) 2012-2023  Ivan Gagis <igagis@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -57,6 +57,7 @@ class texture_font : public font{
 		morda::vector2 topLeft;
 		morda::vector2 bottomRight;
 		
+		// TOOD: make utki::shared_ref?
 		std::shared_ptr<vertex_array> vao;
 		std::shared_ptr<texture_2d> tex;
 		
@@ -98,7 +99,7 @@ public:
 	 * @param fontSize - size of the font in pixels.
 	 * @param maxCached - maximum number of glyphs to cache.
 	 */
-	texture_font(std::shared_ptr<morda::context> c, const papki::file& fi, unsigned fontSize, unsigned maxCached);
+	texture_font(const utki::shared_ref<morda::context>& c, const papki::file& fi, unsigned fontSize, unsigned maxCached);
 
 	real get_advance(char32_t c, size_t tab_size)const override;
 	

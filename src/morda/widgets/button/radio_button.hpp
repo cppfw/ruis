@@ -1,7 +1,7 @@
 /*
 morda - GUI framework
 
-Copyright (C) 2012-2021  Ivan Gagis <igagis@gmail.com>
+Copyright (C) 2012-2023  Ivan Gagis <igagis@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@ class radio_button :
 		virtual public choice_button,
 		private pile
 {
-	std::shared_ptr<widget> checkWidget;
+	const utki::shared_ref<widget> check_widget;
 public:
 	radio_button(std::shared_ptr<morda::context> c, const treeml::forest& desc);
 	

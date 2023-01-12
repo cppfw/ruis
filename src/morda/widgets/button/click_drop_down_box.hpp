@@ -1,7 +1,7 @@
 /*
 morda - GUI framework
 
-Copyright (C) 2012-2021  Ivan Gagis <igagis@gmail.com>
+Copyright (C) 2012-2023  Ivan Gagis <igagis@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -47,7 +47,7 @@ private:
 	bool on_mouse_button(const mouse_button_event& e)override;
 	bool on_mouse_move(const mouse_move_event& e)override;
 
-	std::shared_ptr<widget> wrap_item(std::shared_ptr<widget>&& w, size_t index);
+	utki::shared_ref<widget> wrap_item(const utki::shared_ref<widget>& w, size_t index);
 
 	void show_drop_down_menu();
 

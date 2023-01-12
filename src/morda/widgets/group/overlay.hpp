@@ -1,7 +1,7 @@
 /*
 morda - GUI framework
 
-Copyright (C) 2012-2021  Ivan Gagis <igagis@gmail.com>
+Copyright (C) 2012-2023  Ivan Gagis <igagis@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -49,7 +49,7 @@ public:
 	 * @return the final widget added to the overlay pile. This widget can be used to later close the particular context menu
 	 *         by just removing the widget from its parent.
 	 */
-	std::shared_ptr<widget> show_context_menu(std::shared_ptr<widget> menu, vector2 pos);
+	utki::shared_ref<widget> show_context_menu(const utki::shared_ref<widget>& menu, vector2 pos);
 	
 	/**
 	 * @brief Close all context menus.

@@ -1,7 +1,7 @@
 /*
 morda - GUI framework
 
-Copyright (C) 2012-2021  Ivan Gagis <igagis@gmail.com>
+Copyright (C) 2012-2023  Ivan Gagis <igagis@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -55,7 +55,7 @@ class image :
 
 	r4::vector2<bool> repeat_v = r4::vector2<bool>(false);
 	
-	mutable std::shared_ptr<vertex_array> vao;
+	mutable utki::shared_ref<const vertex_array> vao;
 
 public:
 	image(std::shared_ptr<morda::context> c, const treeml::forest& desc);

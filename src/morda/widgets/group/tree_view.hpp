@@ -1,7 +1,7 @@
 /*
 morda - GUI framework
 
-Copyright (C) 2012-2021  Ivan Gagis <igagis@gmail.com>
+Copyright (C) 2012-2023  Ivan Gagis <igagis@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@ class tree_view :
 		virtual public widget,
 		private scroll_area
 {
-	std::shared_ptr<list_widget> item_list;
+	utki::shared_ref<list_widget> item_list;
 public:
 	tree_view(std::shared_ptr<morda::context> c, const treeml::forest& desc);
 
@@ -50,9 +50,9 @@ public:
 		friend class tree_view;
 		friend std::shared_ptr<list_widget::provider> std::static_pointer_cast<list_widget::provider>(const std::shared_ptr<provider>&)noexcept;
 
-		void recycle(size_t index, std::shared_ptr<widget> w)override;
+		void recycle(size_t index, const utki::shared_ref<widget>& w)override;
 
-		std::shared_ptr<widget> get_widget(size_t index)override;
+		utki::shared_ref<widget> get_widget(size_t index)override;
 
 		size_t count()const noexcept override;
 
@@ -79,7 +79,7 @@ public:
 		provider() = default;
 	public:
 
-		virtual std::shared_ptr<widget> get_widget(utki::span<const size_t> index, bool is_collapsed) = 0;
+		virtual utki::shared_ref<widget> get_widget(utki::span<const size_t> index, bool is_collapsed) = 0;
 
 		virtual void recycle(utki::span<const size_t> index, std::shared_ptr<widget> w){}
 

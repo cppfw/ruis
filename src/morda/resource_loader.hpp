@@ -1,7 +1,7 @@
 /*
 morda - GUI framework
 
-Copyright (C) 2012-2021  Ivan Gagis <igagis@gmail.com>
+Copyright (C) 2012-2023  Ivan Gagis <igagis@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -61,15 +61,15 @@ class resource_loader{
 	friend class context;
 	friend class resource;
 
-	std::map<const std::string, std::weak_ptr<resource>> resMap;
+	std::map<const std::string, std::weak_ptr<resource>> res_map;
 
-	class ResPackEntry{
+	class res_pack_entry{
 	public:
-		ResPackEntry() = default;
+		res_pack_entry() = default;
 
 		// For MSVC compiler, it does not generate move constructor automatically
 		// TODO: check if this is still needed.
-		ResPackEntry(ResPackEntry&& r){
+		res_pack_entry(res_pack_entry&& r){
 			this->fi = std::move(r.fi);
 			this->script = std::move(r.script);
 		}
@@ -78,25 +78,25 @@ class resource_loader{
 		treeml::forest script;
 	};
 
-	std::vector<ResPackEntry> resPacks;
+	std::vector<res_pack_entry> resPacks;
 
-	class FindInScriptRet{
+	class find_in_script_result{
 	public:
-		FindInScriptRet(ResPackEntry& resPack, const treeml::tree& element) :
+		find_in_script_result(res_pack_entry& resPack, const treeml::tree& element) :
 				rp(resPack),
 				e(element)
 		{}
 
-		ResPackEntry& rp;
+		res_pack_entry& rp;
 		const treeml::tree& e;
 	};
 
-	FindInScriptRet findResourceInScript(const std::string& resName);
+	find_in_script_result find_resource_in_script(const std::string& resName);
 
-	template <class T> std::shared_ptr<T> findResourceInResMap(const char* resName);
+	template <class T> std::shared_ptr<T> find_resource_in_res_map(const char* resName);
 
-	// Add resource to resources map
-	void addResource(const std::shared_ptr<resource>& res, const std::string& name);
+	// add resource to resources map
+	void add_resource(const utki::shared_ref<resource>& res, const std::string& name);
 
 private:
 	context& ctx;
@@ -129,10 +129,11 @@ public:
 	 *
 	 * @param name - name of the resource as it appears in resource description.
 	 * @return Loaded resource.
+	 * @throw TODO:
 	 */
-	template <class T> std::shared_ptr<T> load(const char* name);
+	template <class T> utki::shared_ref<T> load(const char* name);
 
-	template <class T> std::shared_ptr<T> load(const std::string& name){
+	template <class T> utki::shared_ref<T> load(const std::string& name){
 		return this->load<T>(name.c_str());
 	}
 
@@ -145,47 +146,43 @@ private:
 class resource : virtual public utki::shared{
 	friend class resource_loader;
 protected:
-	const std::shared_ptr<morda::context> context;
+	const utki::shared_ref<morda::context> context;
 
 	// this can only be used as a base class
-	resource(std::shared_ptr<morda::context> c) :
-			context(std::move(c))
-	{
-		if(!this->context){
-			throw std::invalid_argument("res_image::res_image(): passed in context is null");
-		}
-	}
+	resource(const utki::shared_ref<morda::context>& c) :
+			context(c)
+	{}
 public:
 	virtual ~resource()noexcept{}
 };
 
-template <class T> std::shared_ptr<T> resource_loader::findResourceInResMap(const char* resName){
-	auto i = this->resMap.find(resName);
-	if(i != this->resMap.end()){
+template <class T> std::shared_ptr<T> resource_loader::find_resource_in_res_map(const char* resName){
+	auto i = this->res_map.find(resName);
+	if(i != this->res_map.end()){
 		if(auto r = (*i).second.lock()){
 			return std::dynamic_pointer_cast<T>(std::move(r));
 		}
-		this->resMap.erase(i);
+		this->res_map.erase(i);
 	}
-	return nullptr;//no resource found with given name, return invalid reference
+	return nullptr; // no resource found with given name, return invalid reference
 }
 
-template <class T> std::shared_ptr<T> resource_loader::load(const char* resName){
+template <class T> utki::shared_ref<T> resource_loader::load(const char* resName){
 //	TRACE(<< "ResMan::Load(): enter" << std::endl)
-	if(auto r = this->findResourceInResMap<T>(resName)){
+	if(auto r = this->find_resource_in_res_map<T>(resName)){
 //		TRACE(<< "ResManHGE::Load(): resource found in map" << std::endl)
-		return r;
+		return utki::shared_ref<T>(std::move(r));
 	}
 
 //	TRACE(<< "ResMan::Load(): searching for resource in script..." << std::endl)
-	FindInScriptRet ret = this->findResourceInScript(resName);
+	find_in_script_result ret = this->find_resource_in_script(resName);
 	ASSERT(ret.rp.fi)
 
 //	TRACE(<< "ResMan::Load(): resource found in script" << std::endl)
 
-	auto resource = T::load(this->ctx, ret.e.children, *ret.rp.fi);
+	auto resource = T::load(utki::make_shared_from(this->ctx), ret.e.children, *ret.rp.fi);
 
-	this->addResource(resource, ret.e.value.to_string());
+	this->add_resource(resource, ret.e.value.to_string());
 
 //	TRACE(<< "ResMan::LoadTexture(): exit" << std::endl)
 	return resource;

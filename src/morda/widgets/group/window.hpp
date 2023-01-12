@@ -1,7 +1,7 @@
 /*
 morda - GUI framework
 
-Copyright (C) 2012-2021  Ivan Gagis <igagis@gmail.com>
+Copyright (C) 2012-2023  Ivan Gagis <igagis@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -113,7 +113,7 @@ public:
 
 	bool on_mouse_move(const mouse_move_event& event)override;
 
-	void set_background(std::shared_ptr<widget> w);
+	void set_background(const utki::shared_ref<widget>& w);
 
 	void lay_out() override;
 

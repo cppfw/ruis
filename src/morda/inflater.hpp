@@ -1,7 +1,7 @@
 /*
 morda - GUI framework
 
-Copyright (C) 2012-2021  Ivan Gagis <igagis@gmail.com>
+Copyright (C) 2012-2023  Ivan Gagis <igagis@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -48,8 +48,8 @@ private:
 	std::map<
 			std::string,
 			std::function<
-					std::shared_ptr<morda::widget>(
-							std::shared_ptr<morda::context>,
+					utki::shared_ref<morda::widget>(
+							const utki::shared_ref<morda::context>&,
 							const treeml::forest&
 						)
 				>
@@ -70,8 +70,8 @@ public:
 	template <class T> void register_widget(const std::string& widget_name){
 		this->add_factory(
 				std::string(widget_name),
-				[](std::shared_ptr<morda::context> c, const treeml::forest& desc) -> std::shared_ptr<morda::widget> {
-					return std::make_shared<T>(std::move(c), desc);
+				[](const utki::shared_ref<morda::context>& c, const treeml::forest& desc) -> utki::shared_ref<morda::widget> {
+					return utki::make_shared_ref<T>(c, desc);
 				}
 			);
 	}
@@ -84,31 +84,40 @@ public:
 	 */
 	bool unregister_widget(const std::string& widget_name)noexcept;
 
+	// TODO: doxygen
+	void push_defs(const treeml::forest& chain);
+
+	// TODO: doxygen
+	void push_defs(treeml::forest::const_iterator begin, treeml::forest::const_iterator end);
+
+	// TODO: doxygen
+	void push_defs(const char* str);
+
 	/**
 	 * @brief Create widgets hierarchy from GUI script.
 	 * @param begin - begin iterator into the GUI script.
 	 * @param end - begin iterator into the GUI script.
 	 * @return the inflated widget.
 	 */
-	std::shared_ptr<widget> inflate(treeml::forest::const_iterator begin, treeml::forest::const_iterator end);
+	utki::shared_ref<widget> inflate(treeml::forest::const_iterator begin, treeml::forest::const_iterator end);
 
 	/**
 	 * @brief Create widgets hierarchy from GUI script.
 	 * @param gui_script - GUI script to use.
 	 * @return the inflated widget.
 	 */
-	std::shared_ptr<widget> inflate(const treeml::forest& gui_script){
+	utki::shared_ref<widget> inflate(const treeml::forest& gui_script){
 		return this->inflate(gui_script.begin(), gui_script.end());
 	}
 
 	/**
 	 * @brief Inflate widget and cast to specified type.
-	 * Only the first widget from the STOB chain is returned.
+	 * Only the first widget from the treeml chain is returned.
 	 * @param gui_script - gui script to inflate widget from.
 	 * @return the inflated widget.
 	 */
-	template <typename T> std::shared_ptr<T> inflate_as(const treeml::forest& gui_script){
-		return std::dynamic_pointer_cast<T>(this->inflate(gui_script));
+	template <typename T> utki::shared_ref<T> inflate_as(const treeml::forest& gui_script){
+		return utki::dynamic_reference_cast<T>(this->inflate(gui_script));
 	}
 
 	/**
@@ -116,14 +125,14 @@ public:
 	 * @param str - string containing GUI description.
 	 * @return the inflated widget.
 	 */
-	std::shared_ptr<widget> inflate(const char* str);
+	utki::shared_ref<widget> inflate(const char* str);
 
 	/**
 	 * @brief Create widgets hierarchy from GUI script.
 	 * @param str - string containing GUI description.
 	 * @return the inflated widget.
 	 */
-	std::shared_ptr<widget> inflate(const std::string& str);
+	utki::shared_ref<widget> inflate(const std::string& str);
 
 	/**
 	 * @brief Inflate widget and cast to specified type.
@@ -131,8 +140,8 @@ public:
 	 * @param str - string of the GUI script.
 	 * @return the inflated widget.
 	 */
-	template <typename T> std::shared_ptr<T> inflate_as(const char* str){
-		return std::dynamic_pointer_cast<T>(this->inflate(str));
+	template <typename T> utki::shared_ref<T> inflate_as(const char* str){
+		return utki::dynamic_reference_cast<T>(this->inflate(str));
 	}
 
 	/**
@@ -140,7 +149,7 @@ public:
 	 * @param fi - file interface to get the GUI script.
 	 * @return the inflated widget.
 	 */
-	std::shared_ptr<morda::widget> inflate(const papki::file& fi);
+	utki::shared_ref<morda::widget> inflate(const papki::file& fi);
 
 	/**
 	 * @brief Inflate widget and cast to specified type.
@@ -148,8 +157,8 @@ public:
 	 * @param fi - file interface to get the GUI script.
 	 * @return the inflated widget.
 	 */
-	template <typename T> std::shared_ptr<T> inflate_as(const papki::file& fi){
-		return std::dynamic_pointer_cast<T>(this->inflate(fi));
+	template <typename T> utki::shared_ref<T> inflate_as(const papki::file& fi){
+		return utki::dynamic_reference_cast<T>(this->inflate(fi));
 	}
 
 private:
@@ -174,11 +183,10 @@ private:
 	const treeml::forest* find_variable(const std::string& name)const;
 
 	void push_variables(const treeml::forest& trees);
-
 	void pop_variables();
 
-	void push_defs(const treeml::forest& chain);
-	void pop_defs();
+	void push_defs_block(const treeml::forest& chain);
+	void pop_defs_block();
 };
 
 }

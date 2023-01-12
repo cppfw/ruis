@@ -1,7 +1,7 @@
 /*
 morda - GUI framework
 
-Copyright (C) 2012-2021  Ivan Gagis <igagis@gmail.com>
+Copyright (C) 2012-2023  Ivan Gagis <igagis@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -24,6 +24,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "context.hpp"
 
 #include "util/util.hpp"
+
+using namespace std::string_literals;
 
 using namespace morda;
 
@@ -48,7 +50,7 @@ bool inflater::unregister_widget(const std::string& widgetName)noexcept{
 	return true;
 }
 
-std::shared_ptr<morda::widget> inflater::inflate(const papki::file& fi) {
+utki::shared_ref<morda::widget> inflater::inflate(const papki::file& fi) {
 	return this->inflate(treeml::read(fi));
 }
 
@@ -168,33 +170,24 @@ const decltype(inflater::factories)::value_type::second_type& inflater::find_fac
 	return i->second;
 }
 
-std::shared_ptr<widget> inflater::inflate(const char* str){
+utki::shared_ref<widget> inflater::inflate(const char* str){
 	return this->inflate(treeml::read(str));
 }
 
-std::shared_ptr<widget> inflater::inflate(const std::string& str){
+utki::shared_ref<widget> inflater::inflate(const std::string& str){
 	return this->inflate(str.c_str());
 }
 
-std::shared_ptr<widget> inflater::inflate(treeml::forest::const_iterator begin, treeml::forest::const_iterator end){
+utki::shared_ref<widget> inflater::inflate(treeml::forest::const_iterator begin, treeml::forest::const_iterator end){
 	auto i = begin;
 
-	for(; i != end && is_leaf_property(i->value); ++i){
-		// TRACE(<< "inflater::inflate(): i->value = " << i->value.to_string() << std::endl)
-		if(i->value == wording_defs){
-			this->push_defs(i->children);
-		}else{
-			throw std::invalid_argument("inflater::inflate(): unknown declaration encountered before first widget");
-		}
-	}
-
 	if(i == end){
-		return nullptr;
+		throw std::invalid_argument("inflater::inflater(): widget declaration not found in supplied forest");
 	}
 
-	ASSERT_INFO(!is_leaf_property(i->value), "i->value = " << i->value.to_string())
-	ASSERT(!i->value.empty())
-	ASSERT(i->value.to_string()[0] == '@')
+	if(is_leaf_property(i->value) || i->value.empty() || i->value.to_string()[0] != '@'){
+		throw std::invalid_argument("inflater::inflater(): widget declaration must go first, found: "s + i->value.to_string());
+	}
 
 	std::string widget_name;
 	treeml::forest widget_desc;
@@ -214,7 +207,7 @@ std::shared_ptr<widget> inflater::inflate(treeml::forest::const_iterator begin, 
 	unsigned num_pop_defs = 0;
 	utki::scope_exit pop_defs_scope_exit([this, &num_pop_defs](){
 		for(unsigned i = 0; i != num_pop_defs; ++i){
-			this->pop_defs();
+			this->pop_defs_block();
 		}
 	});
 
@@ -223,7 +216,7 @@ std::shared_ptr<widget> inflater::inflate(treeml::forest::const_iterator begin, 
 			continue;
 		}
 		// TRACE(<< "push local defs: " << treeml::to_string(d.children) << std::endl)
-		this->push_defs(d.children);
+		this->push_defs_block(d.children);
 		++num_pop_defs;
 
 		// OPTIMIZATION: clear defs block to preven unnecessary variables substitution inside the defs block later
@@ -321,12 +314,31 @@ inflater::widget_template inflater::parse_template(const std::string& name, cons
 	return ret;
 }
 
-void inflater::push_defs(const treeml::forest& chain) {
+void inflater::push_defs(treeml::forest::const_iterator begin, treeml::forest::const_iterator end){
+	for(auto i = begin; i != end; ++i){
+		// TRACE(<< "inflater::inflate(): i->value = " << i->value.to_string() << std::endl)
+		if(i->value == wording_defs){
+			this->push_defs_block(i->children);
+		}else{
+			throw std::invalid_argument("inflater::push_defs(): unknown declaration encountered: "s + i->value.to_string());
+		}
+	}
+}
+
+void inflater::push_defs(const treeml::forest& chain){
+	this->push_defs(chain.begin(), chain.end());
+}
+
+void inflater::push_defs(const char* str){
+	this->push_defs(treeml::read(str));
+}
+
+void inflater::push_defs_block(const treeml::forest& chain) {
 	this->push_variables(chain);
 	this->push_templates(chain);
 }
 
-void inflater::pop_defs() {
+void inflater::pop_defs_block() {
 	this->pop_variables();
 	this->pop_templates();
 }

@@ -1,7 +1,7 @@
 /*
 morda - GUI framework
 
-Copyright (C) 2012-2021  Ivan Gagis <igagis@gmail.com>
+Copyright (C) 2012-2023  Ivan Gagis <igagis@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -28,21 +28,23 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 namespace morda{
 
 class path_vao{
-	std::shared_ptr<morda::vertex_array> core;
-	std::shared_ptr<morda::vertex_array> border;
-	
-	std::shared_ptr<morda::renderer> renderer;
-public:
-	path_vao(){}
+	utki::shared_ref<const morda::renderer> renderer;
 
-	path_vao(std::shared_ptr<morda::renderer> r, const path::vertices& path);
+	utki::shared_ref<const morda::vertex_array> core;
+	utki::shared_ref<const morda::vertex_array> border;
+public:
+	path_vao(
+		const utki::shared_ref<const morda::renderer>& r
+	);
 	
 	path_vao(const path_vao&) = delete;
 	path_vao& operator=(const path_vao&) = delete;
 
 	path_vao(path_vao&&) = default;
 	path_vao& operator=(path_vao&&) = default;
-	
+
+	void set(const path::vertices& path);
+
 	void render(const morda::matrix4& matrix, uint32_t color)const;
 };
 
