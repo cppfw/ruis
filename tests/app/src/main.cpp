@@ -30,6 +30,10 @@
 
 #include "../../../src/morda/widgets/button/drop_down_box.hpp"
 
+#ifdef assert
+#	undef assert
+#endif
+
 class SimpleWidget :
 		virtual public morda::widget,
 		public morda::updateable,
