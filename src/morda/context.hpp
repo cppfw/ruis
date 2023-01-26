@@ -34,7 +34,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace morda{
 
-class context : public utki::shared{
+class context : public std::enable_shared_from_this<context>{
 	friend class widget;
 	friend class gui;
 
