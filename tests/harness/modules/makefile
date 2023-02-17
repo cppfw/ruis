@@ -30,7 +30,10 @@ define this_modules_deps
         )
 endef
 $(eval $(call this_modules_deps, opengl))
-$(eval $(call this_modules_deps, opengles))
+
+ifeq ($(os),linux)
+    $(eval $(call this_modules_deps, opengles))
+endif
 
 $(eval $(call prorab-try-include, mordavokne/src/makefile, $(module_cfg)))
 $(eval $(call prorab-try-include, morda-render-opengl/src/makefile, $(module_cfg)))

@@ -47,6 +47,7 @@ makedepends=(
 		'prorab-extra'
 		'doxygen'
 		'pkg-config'
+		"${pkgPrefix}clang-tools-extra"
 		"${pkgPrefix}opros"
 		"${pkgPrefix}nitki"
 		"${pkgPrefix}tst"
@@ -73,15 +74,15 @@ prepare() {
 
 build() {
 	cd "$rootDir"
-	make
+	make CXX=clang++
 }
 
 check() {
 	cd "$rootDir"
-	make test
+	make CXX=clang++ test
 }
 
 package() {
 	cd "$rootDir"
-	make DESTDIR="$pkgdir" PREFIX="$dirPrefix" install
+	make CXX=clang++ DESTDIR="$pkgdir" PREFIX="$dirPrefix" install
 }
