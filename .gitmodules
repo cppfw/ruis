@@ -5,8 +5,8 @@
 [submodule "tests/harness/modules/morda-render-opengl"]
 	path = tests/harness/modules/morda-render-opengl
 	url = ../morda-render-opengl
-	branch = shared_ref
+	branch = master
 [submodule "tests/harness/modules/morda-render-opengles"]
 	path = tests/harness/modules/morda-render-opengles
 	url = ../morda-render-opengles
-	branch = shared_ref
+	branch = master
