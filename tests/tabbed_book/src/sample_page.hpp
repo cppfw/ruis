@@ -8,7 +8,7 @@ class sample_page :
         public morda::row
 {
 public:
-    sample_page(std::shared_ptr<morda::context> c, const std::string& text);
+    sample_page(const utki::shared_ref<morda::context>& c, const std::string& text);
     ~sample_page(){
         std::cout << "page destroyed" << std::endl;
     }

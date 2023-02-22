@@ -23,8 +23,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace morda;
 
-click_proxy::click_proxy(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
-        widget(std::move(c), desc)
+click_proxy::click_proxy(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+        widget(c, desc)
 {}
 
 bool click_proxy::on_mouse_button(const mouse_button_event& e){

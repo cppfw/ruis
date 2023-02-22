@@ -23,8 +23,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace morda;
 
-oriented_widget::oriented_widget(std::shared_ptr<morda::context> c, const treeml::forest& desc, bool vertical) :
-		widget(std::move(c), desc),
+oriented_widget::oriented_widget(const utki::shared_ref<morda::context>& c, const treeml::forest& desc, bool vertical) :
+		widget(c, desc),
 		is_vertical_v(vertical)
 {}
 

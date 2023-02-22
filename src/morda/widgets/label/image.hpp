@@ -58,7 +58,7 @@ class image :
 	mutable utki::shared_ref<const vertex_array> vao;
 
 public:
-	image(std::shared_ptr<morda::context> c, const treeml::forest& desc);
+	image(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
 public:
 	virtual ~image()noexcept{}
 

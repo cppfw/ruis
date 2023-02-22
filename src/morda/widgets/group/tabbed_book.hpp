@@ -49,7 +49,7 @@ class tabbed_book :
 
 	void activate_another_tab(tab& t);
 public:
-	tabbed_book(std::shared_ptr<morda::context> context, const treeml::forest& desc);
+	tabbed_book(const utki::shared_ref<morda::context>& context, const treeml::forest& desc);
 
 	void add(const utki::shared_ref<tab>& tab, const utki::shared_ref<morda::page>& page);
 

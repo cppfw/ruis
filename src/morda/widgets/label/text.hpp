@@ -37,7 +37,7 @@ class text :
 		public color_widget
 {
 public:
-	text(std::shared_ptr<morda::context> c, const treeml::forest& desc);
+	text(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
 
 public:
 	~text()noexcept{}

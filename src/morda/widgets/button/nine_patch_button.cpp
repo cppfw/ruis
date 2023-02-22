@@ -27,8 +27,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace morda;
 
-nine_patch_button::nine_patch_button(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
-		widget(std::move(c), desc),
+nine_patch_button::nine_patch_button(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+		widget(c, desc),
 		button(this->context, desc),
 		nine_patch(this->context, desc)
 {
@@ -44,9 +44,9 @@ nine_patch_button::nine_patch_button(std::shared_ptr<morda::context> c, const tr
 				}
 
 				if(pp.value == "unpressed"){
-					this->set_unpressed_nine_patch(this->context->loader.load<res::nine_patch>(get_property_value(pp).to_string()));
+					this->set_unpressed_nine_patch(this->context.get().loader.load<res::nine_patch>(get_property_value(pp).to_string()).to_shared_ptr());
 				}else if(pp.value == "pressed"){
-					this->set_pressed_nine_patch(this->context->loader.load<res::nine_patch>(get_property_value(pp).to_string()));
+					this->set_pressed_nine_patch(this->context.get().loader.load<res::nine_patch>(get_property_value(pp).to_string()).to_shared_ptr());
 				}
 			}
 		}

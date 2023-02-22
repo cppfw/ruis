@@ -94,16 +94,16 @@ texture_font::Glyph texture_font::loadGlyph(char32_t c)const{
 	g.topLeft = verts[0];
 	g.bottomRight = verts[2];
 
-	auto& r = *this->context->renderer;
+	auto& r = this->context.get().renderer.get();
 	g.vao = r.factory->create_vertex_array(
 			{
 				r.factory->create_vertex_buffer(utki::make_span(verts)),
-				this->context->renderer->quad_01_vbo
+				this->context.get().renderer.get().quad_01_vbo
 			},
-			this->context->renderer->quad_indices,
+			this->context.get().renderer.get().quad_indices,
 			vertex_array::mode::triangle_fan
 		).to_shared_ptr();
-	g.tex = this->context->renderer->factory->create_texture_2d(
+	g.tex = this->context.get().renderer.get().factory->create_texture_2d(
 			morda::num_channels_to_texture_type(im.num_channels()),
 			im.dims(),
 			im.pixels()
@@ -175,7 +175,7 @@ real texture_font::renderGlyphInternal(const morda::matrix4& matrix, r4::vector4
 	// texture can be null for glyph of empty characters, like space, tab etc...
 	if(g.tex){
 		ASSERT(g.vao)
-		this->context->renderer->shader->color_pos_tex->render(matrix, *g.vao, color, *g.tex);
+		this->context.get().renderer.get().shader->color_pos_tex->render(matrix, *g.vao, color, *g.tex);
 	}
 
 	return g.advance;
@@ -273,7 +273,7 @@ font::render_result texture_font::render_internal(
 		return ret;
 	}
 	
-	set_simple_alpha_blending(*this->context->renderer);
+	set_simple_alpha_blending(this->context.get().renderer.get());
 
 	morda::matrix4 matr(matrix);
 

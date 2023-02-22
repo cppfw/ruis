@@ -43,11 +43,11 @@ linear_container::layout_params::layout_params(const treeml::forest& desc, const
 }
 
 std::unique_ptr<widget::layout_params> linear_container::create_layout_params(const treeml::forest& desc)const{
-	return std::make_unique<layout_params>(desc, this->context->units);
+	return std::make_unique<layout_params>(desc, this->context.get().units);
 }
 
-linear_container::linear_container(std::shared_ptr<morda::context> c, const treeml::forest& desc, bool vertical) :
-		widget(std::move(c), desc),
+linear_container::linear_container(const utki::shared_ref<morda::context>& c, const treeml::forest& desc, bool vertical) :
+		widget(c, desc),
 		container(this->context, desc),
 		oriented_widget(this->context, treeml::forest(), vertical)
 {}
@@ -71,14 +71,14 @@ void linear_container::lay_out(){
 	{
 		auto info = info_array.begin();
 		for(auto i = this->children().cbegin(); i != this->children().cend(); ++i, ++info){
-			auto& lp = this->get_layout_params_as_const<layout_params>(**i);
+			auto& lp = this->get_layout_params_as_const<layout_params>(i->get());
 
 			net_weight += lp.weight;
 
 			ASSERT(lp.dims[long_index] != layout_params::max)
 			ASSERT(lp.dims[long_index] != layout_params::fill)
 
-			vector2 d = this->dims_for_widget(**i, lp);
+			vector2 d = this->dims_for_widget(i->get(), lp);
 			info->measured_dims = d;
 
 			rigid += d[long_index];
@@ -95,7 +95,7 @@ void linear_container::lay_out(){
 
 		auto info = info_array.begin();
 		for(auto i = this->children().begin(); i != this->children().end(); ++i, ++info){
-			auto& lp = this->get_layout_params_as_const<layout_params>(**i);
+			auto& lp = this->get_layout_params_as_const<layout_params>(i->get());
 
 			if(lp.weight != 0){
 				ASSERT(lp.weight > 0)
@@ -123,7 +123,7 @@ void linear_container::lay_out(){
 						d[trans_index] = lp.dims[trans_index];
 					}
 					if(d.x() < 0 || d.y() < 0){
-						vector2 md = (*i)->measure(d);
+						vector2 md = i->get().measure(d);
 						for(unsigned i = 0; i != md.size(); ++i){
 							if(d[i] < 0){
 								d[i] = md[i];
@@ -131,28 +131,28 @@ void linear_container::lay_out(){
 						}
 					}
 				}
-				(*i)->resize(d);
+				i->get().resize(d);
 			}else{
-				(*i)->resize(info->measured_dims);
+				i->get().resize(info->measured_dims);
 			}
 
 			vector2 newPos;
 
 			newPos[long_index] = pos;
 
-			pos += (*i)->rect().d[long_index];
+			pos += i->get().rect().d[long_index];
 
-			newPos[trans_index] = std::round((this->rect().d[trans_index] - (*i)->rect().d[trans_index]) / 2);
+			newPos[trans_index] = std::round((this->rect().d[trans_index] - i->get().rect().d[trans_index]) / 2);
 
-			(*i)->move_to(newPos);
+			i->get().move_to(newPos);
 		}
 
 		if(remainder > 0){
 			vector2 d;
 			d[trans_index] = 0;
 			d[long_index] = std::round(remainder);
-			this->children().back()->resize_by(d);
-			this->children().back()->move_by(-d);
+			this->children().back().get().resize_by(d);
+			this->children().back().get().move_by(-d);
 		}
 	}
 }
@@ -171,7 +171,7 @@ morda::vector2 linear_container::measure(const morda::vector2& quotum)const{
 	{
 		auto info = info_array.begin();
 		for(auto i = this->children().begin(); i != this->children().end(); ++i, ++info){
-			auto& lp = this->get_layout_params_as_const<layout_params>(**i);
+			auto& lp = this->get_layout_params_as_const<layout_params>(i->get());
 
 			net_weight += lp.weight;
 
@@ -206,7 +206,7 @@ morda::vector2 linear_container::measure(const morda::vector2& quotum)const{
 				child_quotum[long_index] = lp.dims[long_index];
 			}
 
-			info->measured_dims = (*i)->measure(child_quotum);
+			info->measured_dims = i->get().measure(child_quotum);
 
 			rigid_length += info->measured_dims[long_index];
 

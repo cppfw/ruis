@@ -106,8 +106,8 @@ const auto drop_down_menu_layout = treeml::read(R"qwertyuiop(
 	)qwertyuiop");
 }
 
-click_drop_down_box::click_drop_down_box(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
-		widget(std::move(c), desc),
+click_drop_down_box::click_drop_down_box(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+		widget(c, desc),
 		button(this->context, drop_down_box_layout),
 		push_button(this->context, drop_down_box_layout),
 		nine_patch_push_button(this->context, drop_down_box_layout),
@@ -163,17 +163,17 @@ void click_drop_down_box::show_drop_down_menu(){
 		throw std::logic_error("drop_down_box: no overlay parent found");
 	}
 
-	auto np = this->context->inflater.inflate(drop_down_menu_layout);
+	auto np = this->context.get().inflater.inflate(drop_down_menu_layout);
 
 	// force minimum horizontal size of the drop down menu to be the same as the drop down box horizontal size
 	{
-		auto min_size_forcer = np->try_get_widget("morda_min_size_forcer");
+		auto min_size_forcer = np.get().try_get_widget("morda_min_size_forcer");
 
 		auto& lp = min_size_forcer->get_layout_params();
 		lp.dims.x() = this->rect().d.x();
 	}
 
-	auto va = np->try_get_widget_as<morda::column>("morda_contextmenu_content");
+	auto va = np.get().try_get_widget_as<morda::column>("morda_contextmenu_content");
 	ASSERT(va)
 
 	for(size_t i = 0; i != this->get_provider()->count(); ++i){
@@ -182,7 +182,7 @@ void click_drop_down_box::show_drop_down_menu(){
 
 	this->hovered_index = -1;
 
-	np->get_widget_as<mouse_proxy>("morda_drop_down_menu_mouse_proxy").mouse_button_handler =
+	np.get().get_widget_as<mouse_proxy>("morda_drop_down_menu_mouse_proxy").mouse_button_handler =
 			[this](mouse_proxy&, const mouse_button_event& e) -> bool{
 				// LOG("button down = " << e.is_down << std::endl)
 				if(!e.is_down){
@@ -192,7 +192,7 @@ void click_drop_down_box::show_drop_down_menu(){
 				return true;
 			};
 
-	this->current_drop_down_menu = olay->show_context_menu(np, this->pos_in_ancestor(vector2(0), olay) + vector2(0, this->rect().d.y()));
+	this->current_drop_down_menu = olay->show_context_menu(np, this->pos_in_ancestor(vector2(0), olay) + vector2(0, this->rect().d.y())).to_shared_ptr();
 }
 
 void click_drop_down_box::handle_mouse_button_up(bool is_first_button_up_event){
@@ -203,7 +203,7 @@ void click_drop_down_box::handle_mouse_button_up(bool is_first_button_up_event){
 
 	if(this->hovered_index < 0){
 		if(!is_first_button_up_event){
-			this->context->run_from_ui_thread([ddm](){
+			this->context.get().run_from_ui_thread([ddm](){
 				ddm->remove_from_parent(); // close drop down menu
 			});
 		}
@@ -213,25 +213,25 @@ void click_drop_down_box::handle_mouse_button_up(bool is_first_button_up_event){
 
 	auto ddb = utki::make_shared_from(*this);
 
-	this->context->run_from_ui_thread([ddb, ddm](){
+	this->context.get().run_from_ui_thread([ddb, ddm](){
 		ddm->remove_from_parent(); // close drop down menu
-		if(ddb->selection_handler){
-			ddb->selection_handler(*ddb);
+		if(ddb.get().selection_handler){
+			ddb.get().selection_handler(ddb.get());
 		}
 	});
 }
 
 utki::shared_ref<widget> click_drop_down_box::wrap_item(const utki::shared_ref<widget>& w, size_t index){
-	auto wd = this->context->inflater.inflate_as<pile>(item_layout);
+	auto wd = this->context.get().inflater.inflate_as<pile>(item_layout);
 
-	auto mp = wd->try_get_widget_as<mouse_proxy>("morda_dropdown_mouseproxy");
+	auto mp = wd.get().try_get_widget_as<mouse_proxy>("morda_dropdown_mouseproxy");
 	ASSERT(mp)
 
-	auto cl = wd->try_get_widget_as<color>("morda_dropdown_color");
+	auto cl = wd.get().try_get_widget_as<color>("morda_dropdown_color");
 	ASSERT(cl)
 	auto cl_weak = utki::make_weak(cl);
 
-	wd->push_back(w);
+	wd.get().push_back(w);
 
 	// TODO: which pointer id?
 	mp->hover_change_handler = [this, cl_weak, index](mouse_proxy& w, unsigned id){

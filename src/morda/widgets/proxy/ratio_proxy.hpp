@@ -28,7 +28,7 @@ namespace morda{
 class ratio_proxy : virtual public widget{
     real x_above_y = 1;
 public:
-    ratio_proxy(std::shared_ptr<morda::context> c, const treeml::forest& desc);
+    ratio_proxy(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
 
     ratio_proxy(const ratio_proxy&) = delete;
     ratio_proxy& operator=(const ratio_proxy&) = delete;

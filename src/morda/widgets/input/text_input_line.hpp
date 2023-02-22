@@ -60,7 +60,7 @@ public:
 	text_input_line(const text_input_line&) = delete;
 	text_input_line& operator=(const text_input_line&) = delete;
 
-	text_input_line(std::shared_ptr<morda::context> c, const treeml::forest& desc);
+	text_input_line(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
 
 	virtual ~text_input_line()noexcept{}
 

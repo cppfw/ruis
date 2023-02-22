@@ -78,18 +78,18 @@ void tab::on_press_change(){
 	this->nine_patch_toggle::on_press_change();
 }
 
-tab::tab(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
-		widget(std::move(c), desc),
+tab::tab(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+		widget(c, desc),
 		button(this->context, desc),
 		toggle_button(this->context, desc),
 		choice_button(this->context, desc),
 		nine_patch_toggle(this->context, desc)
 {
 	if(!this->get_pressed_nine_patch()){
-		this->set_pressed_nine_patch(this->context->loader.load<res::nine_patch>("morda_npt_tab_active"));
+		this->set_pressed_nine_patch(this->context.get().loader.load<res::nine_patch>("morda_npt_tab_active").to_shared_ptr());
 	}
 	if(!this->get_unpressed_nine_patch()){
-		this->set_unpressed_nine_patch(this->context->loader.load<res::nine_patch>("morda_npt_tab_inactive"));
+		this->set_unpressed_nine_patch(this->context.get().loader.load<res::nine_patch>("morda_npt_tab_inactive").to_shared_ptr());
 	}
 
 	// initialize nine-patch

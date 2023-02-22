@@ -13,9 +13,9 @@ namespace{
 class container_which_invalidates_its_layout_during_layouting : public morda::container{
 public:
     container_which_invalidates_its_layout_during_layouting(
-                std::shared_ptr<morda::context> c
+                const utki::shared_ref<morda::context>& c
         ) :
-            morda::widget(std::move(c), treeml::forest()),
+            morda::widget(c, treeml::forest()),
             morda::container(this->context, treeml::forest())
     {}
 
@@ -31,7 +31,7 @@ tst::set set("layouting", [](tst::suite& suite){
         auto context = make_dummy_context();
 
         auto c = std::make_shared<morda::container>(context, treeml::forest());
-        auto tc = utki::make_shared_ref<container_which_invalidates_its_layout_during_layouting>(context);
+        auto tc = utki::make_shared<container_which_invalidates_its_layout_during_layouting>(context);
 
         tst::check(tc->is_layout_dirty(), SL);
         c->push_back(tc);
@@ -47,7 +47,7 @@ tst::set set("layouting", [](tst::suite& suite){
         auto context = make_dummy_context();
 
         auto c = std::make_shared<morda::container>(context, treeml::forest());
-        auto tc = utki::make_shared_ref<container_which_invalidates_its_layout_during_layouting>(context);
+        auto tc = utki::make_shared<container_which_invalidates_its_layout_during_layouting>(context);
 
         tst::check(tc->is_layout_dirty(), SL);
         c->push_back(tc);
@@ -63,7 +63,7 @@ tst::set set("layouting", [](tst::suite& suite){
         auto context = make_dummy_context();
 
         auto c = std::make_shared<morda::container>(context, treeml::forest());
-        auto tc = utki::make_shared_ref<container_which_invalidates_its_layout_during_layouting>(context);
+        auto tc = utki::make_shared<container_which_invalidates_its_layout_during_layouting>(context);
 
         tst::check(tc->is_layout_dirty(), SL);
         c->push_back(tc);
@@ -78,7 +78,7 @@ tst::set set("layouting", [](tst::suite& suite){
     suite.add("invalidate_layout_during_layouting_should_result_in_dirty_layout__gui_render", []{
         auto context = make_dummy_context();
 
-        auto tc = utki::make_shared_ref<container_which_invalidates_its_layout_during_layouting>(context);
+        auto tc = utki::make_shared<container_which_invalidates_its_layout_during_layouting>(context);
 
         tst::check(tc->is_layout_dirty(), SL);
         

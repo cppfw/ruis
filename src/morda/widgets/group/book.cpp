@@ -25,33 +25,33 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace morda;
 
-book::book(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
-		widget(std::move(c), desc),
-		pile(nullptr, treeml::forest())
+book::book(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+		widget(c, desc),
+		pile(this->context, treeml::forest())
 {}
 
 void book::push(const utki::shared_ref<page>& pg){
-	if(pg->parent_book){
-		if(pg->parent_book == this){
+	if(pg.get().parent_book){
+		if(pg.get().parent_book == this){
 			throw std::logic_error("book::push(): the page is already in this book");
 		}
 		throw std::logic_error("book::push(): the page is already in some book");
 	}
 	
-	auto& lp = this->get_layout_params(*pg);
+	auto& lp = this->get_layout_params(pg.get());
 	lp.dims.set(widget::layout_params::fill);
 	
-	pg->parent_book = this;
+	pg.get().parent_book = this;
 	this->pages.push_back(pg);
 
-	this->notify_pages_change(*pg);
+	this->notify_pages_change(pg.get());
 
-	this->context->run_from_ui_thread([
+	this->context.get().run_from_ui_thread([
 			bk = utki::make_shared_from(*this),
 			index = this->pages.size() - 1
 		]()
 	{
-		bk->activate(index);
+		bk.get().activate(index);
 	});
 }
 
@@ -101,7 +101,7 @@ std::shared_ptr<page> book::tear_out(page& pg)noexcept{
 				)
 			auto p = this->pages[this->active_page_index];
 			this->push_back(p);
-			p->on_show();
+			p.get().on_show();
 		}
 	}
 
@@ -151,7 +151,7 @@ void book::activate(size_t page_number){
 
 	// the this->active_page_index can be invalid in case the first page was just pushed (see push() method implementation)
 	if(this->active_page_index < this->pages.size()){
-		this->pages[this->active_page_index]->on_hide();
+		this->pages[this->active_page_index].get().on_hide();
 	}
 
 	this->clear();
@@ -180,8 +180,8 @@ const page* book::get_active_page()const{
 	return nullptr;
 }
 
-page::page(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
-		widget(std::move(c), desc)
+page::page(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+		widget(c, desc)
 {}
 
 std::shared_ptr<page> page::tear_out()noexcept{

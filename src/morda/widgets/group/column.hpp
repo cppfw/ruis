@@ -31,9 +31,9 @@ namespace morda{
  */
 class column : public linear_container{
 public:
-	column(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
-			widget(std::move(c), desc),
-			linear_container(nullptr, desc, true)
+	column(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+			widget(c, desc),
+			linear_container(this->context, desc, true)
 	{}
 
 	column(const column&) = delete;

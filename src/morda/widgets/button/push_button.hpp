@@ -49,9 +49,9 @@ protected:
 	void on_hover_change(unsigned pointer_id)override;
 	
 public:
-	push_button(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
-			widget(std::move(c), desc),
-			button(nullptr, desc)
+	push_button(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+			widget(c, desc),
+			button(this->context, desc)
 	{}
 	
 	/**

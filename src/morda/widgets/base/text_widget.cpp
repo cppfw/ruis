@@ -35,8 +35,8 @@ void text_widget::set_font(const utki::shared_ref<const res::font>& font){
 	this->on_font_change();
 }
 
-text_widget::text_widget(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
-		widget(std::move(c), desc),
+text_widget::text_widget(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+		widget(c, desc),
 		font([&desc, this](){
 			for(const auto& p : desc){
 				if(!is_property(p)){
@@ -44,12 +44,12 @@ text_widget::text_widget(std::shared_ptr<morda::context> c, const treeml::forest
 				}
 
 				if(p.value == "font"){
-					return this->context->loader.load<morda::res::font>(get_property_value(p).to_string().c_str());
+					return this->context.get().loader.load<morda::res::font>(get_property_value(p).to_string().c_str());
 				}
 			}
 
 			// load default font
-			return this->context->loader.load<res::font>("morda_fnt_text");
+			return this->context.get().loader.load<res::font>("morda_fnt_text");
 		}())
 {
 	for(const auto& p : desc){

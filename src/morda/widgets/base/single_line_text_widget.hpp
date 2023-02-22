@@ -32,7 +32,7 @@ class single_line_text_widget : public text_widget{
 protected:
 	vector2 measure(const morda::vector2& quotum)const noexcept override;
 
-	single_line_text_widget(std::shared_ptr<morda::context> c, const treeml::forest& desc);
+	single_line_text_widget(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
 
 	const morda::rectangle& get_bounding_box()const{
 		return this->bb;

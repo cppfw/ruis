@@ -37,7 +37,7 @@ public:
 	utki::shared_ref<widget> get_widget(size_t index)override{
 		auto i = std::next(this->widgets.begin(), index);
 		ASSERT(this->get_drop_down_box())
-		return this->get_drop_down_box()->context->inflater.inflate(i, i + 1);
+		return this->get_drop_down_box()->context.get().inflater.inflate(i, i + 1);
 	}
 
 	void recycle(size_t index, std::shared_ptr<widget> w)override{
@@ -50,8 +50,8 @@ public:
 };
 }
 
-drop_down_box::drop_down_box(std::shared_ptr<morda::context> c, const treeml::forest& desc, pile& selection_container) :
-		widget(std::move(c), desc),
+drop_down_box::drop_down_box(const utki::shared_ref<morda::context>& c, const treeml::forest& desc, pile& selection_container) :
+		widget(c, desc),
 		selection_container(selection_container)
 {
 	std::shared_ptr<static_provider> pr = std::make_shared<static_provider>();

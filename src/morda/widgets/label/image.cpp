@@ -27,10 +27,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace morda;
 
-image::image(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
-		widget(std::move(c), desc),
+image::image(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+		widget(c, desc),
 		blending_widget(this->context, desc),
-		vao(this->context->renderer->empty_vertex_array)
+		vao(this->context.get().renderer.get().empty_vertex_array)
 {
 	for(const auto& p : desc){
 		if(!is_property(p)){
@@ -38,9 +38,9 @@ image::image(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
 		}
 
 		if(p.value == "image"){
-			this->img = this->context->loader.load<res::image>(get_property_value(p).to_string());
+			this->img = this->context.get().loader.load<res::image>(get_property_value(p).to_string());
 		}else if(p.value == "disabled_image"){
-			this->disabled_img = this->context->loader.load<res::image>(get_property_value(p).to_string());
+			this->disabled_img = this->context.get().loader.load<res::image>(get_property_value(p).to_string());
 		}else if(p.value == "keep_aspect_ratio"){
 			this->keep_aspect_ratio = get_property_value(p).to_bool();
 		}else if(p.value == "repeat_x"){
@@ -70,7 +70,7 @@ void image::render(const morda::matrix4& matrix) const{
 
 	this->set_blending_to_renderer();
 	
-	auto& r = *this->context->renderer;
+	auto& r = *this->context.get().renderer;
 	
 	if(!this->texture){
 		this->texture = img->get(this->rect().d).to_shared_ptr();
@@ -99,7 +99,7 @@ void image::render(const morda::matrix4& matrix) const{
 					vertex_array::mode::triangle_fan
 				);
 		}else{
-			this->vao = this->context->renderer->pos_tex_quad_01_vao;
+			this->vao = this->context.get().renderer.get().pos_tex_quad_01_vao;
 		}
 	}
 	ASSERT(this->texture)
@@ -121,7 +121,7 @@ morda::vector2 image::measure(const morda::vector2& quotum)const{
 		return vector2(0);
 	}
 	
-	vector2 imgDim = img->dims(this->context->units.dots_per_inch);
+	vector2 imgDim = img->dims(this->context.get().units.dots_per_inch);
 	
 	ASSERT(imgDim.is_positive_or_zero(), [&](auto&o){o << "imgDim = " << imgDim;})
 	

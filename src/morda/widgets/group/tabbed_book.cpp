@@ -25,8 +25,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace morda;
 
-tabbed_book::tabbed_book(std::shared_ptr<morda::context> context, const treeml::forest& desc) :
-		morda::widget(std::move(context), desc),
+tabbed_book::tabbed_book(const utki::shared_ref<morda::context>& context, const treeml::forest& desc) :
+		morda::widget(context, desc),
 		morda::column(
 				this->context,
 				treeml::read(R"(
@@ -74,11 +74,11 @@ void tabbed_book::add(const utki::shared_ref<tab>& tab, const utki::shared_ref<m
 	this->tab_group.push_back(tab);
 	this->book.push(page);
 
-	tab->set_pressed(true);
+	tab.get().set_pressed(true);
 
-	tab->press_handler = [page](morda::button& btn){
+	tab.get().press_handler = [page](morda::button& btn){
 		if(btn.is_pressed()){
-			page->activate();
+			page.get().activate();
 		}
 	};
 
@@ -131,8 +131,8 @@ std::shared_ptr<page> tabbed_book::tear_out(tab& t){
 
 	t.remove_from_parent();
 
-	ASSERT(!pg->is_active() || this->book.size() == 1)
-	pg->tear_out();
+	ASSERT(!pg.get().is_active() || this->book.size() == 1)
+	pg.get().tear_out();
 
 	return pg;
 }

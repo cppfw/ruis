@@ -71,9 +71,9 @@ const auto layout_c = treeml::read(R"qwertyuiop(
 )qwertyuiop");
 }
 
-collapse_area::collapse_area(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
-		widget(std::move(c), desc),
-		column(nullptr, layout_c)
+collapse_area::collapse_area(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+		widget(c, desc),
+		column(this->context, layout_c)
 {
 	this->contentArea = this->try_get_widget_as<pile>("content");
 	ASSERT(this->contentArea)

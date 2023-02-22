@@ -23,8 +23,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace morda;
 
-min_proxy::min_proxy(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
-		morda::widget(std::move(c), desc),
+min_proxy::min_proxy(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+		morda::widget(c, desc),
 		morda::pile(this->context, desc)
 {
 	for(const auto& p : desc){

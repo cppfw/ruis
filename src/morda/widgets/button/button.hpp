@@ -42,7 +42,7 @@ protected:
 	 */
 	virtual void on_press_change();
 public:
-	button(std::shared_ptr<morda::context> c, const treeml::forest& desc);
+	button(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
 
 	/**
 	 * @brief Check if button is currently pressed.

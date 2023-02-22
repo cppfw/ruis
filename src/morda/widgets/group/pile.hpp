@@ -40,7 +40,7 @@ public:
 	 * @param c - context.
 	 * @param desc - description of the widget.
 	 */
-	pile(std::shared_ptr<morda::context> c, const treeml::forest& desc);
+	pile(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
 
 public:
 	morda::vector2 measure(const morda::vector2& quotum)const override;

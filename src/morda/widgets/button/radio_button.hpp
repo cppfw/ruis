@@ -38,7 +38,7 @@ class radio_button :
 {
 	const utki::shared_ref<widget> check_widget;
 public:
-	radio_button(std::shared_ptr<morda::context> c, const treeml::forest& desc);
+	radio_button(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
 	
 	radio_button(const radio_button&) = delete;
 	radio_button& operator=(const radio_button&) = delete;

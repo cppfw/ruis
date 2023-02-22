@@ -40,18 +40,21 @@ namespace morda{ namespace res{
  * @endcode
  */
 class cursor : public resource{
-	std::shared_ptr<const res::image> image_v;
+	utki::shared_ref<const res::image> image_v;
 	vector2 hotspot_v;
 	
 public:
-	cursor(const utki::shared_ref<morda::context>& c, image& image, const vector2& hotspot);
+	cursor(
+		const utki::shared_ref<morda::context>& c, 
+		const utki::shared_ref<morda::res::image>& image,
+		const vector2& hotspot
+	);
 	
 	cursor(const cursor&) = delete;
 	cursor& operator=(const cursor&) = delete;
 	
 	const res::image& image()const noexcept{
-		ASSERT(this->image_v)
-		return *this->image_v;
+		return this->image_v.get();
 	}
 	
 	const vector2& hotspot()const noexcept{

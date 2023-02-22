@@ -68,7 +68,7 @@ utki::shared_ref<res::font> res::font::load(const utki::shared_ref<morda::contex
 
 	for(auto& p : desc){
 		if(p.value == "size"){
-			fontSize = unsigned(parse_dimension_value(get_property_value(p), ctx->units));
+			fontSize = unsigned(parse_dimension_value(get_property_value(p), ctx.get().units));
 		}else if(p.value == "max_cached"){
 			maxCached = unsigned(get_property_value(p).to_uint32());
 		}else if(p.value == "normal"){
@@ -82,7 +82,7 @@ utki::shared_ref<res::font> res::font::load(const utki::shared_ref<morda::contex
 		}
 	}
 
-	return utki::make_shared_ref<font>(
+	return utki::make_shared<font>(
 			ctx,
 			fi,
 			std::move(file_bold),

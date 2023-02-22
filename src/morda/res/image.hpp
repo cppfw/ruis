@@ -79,7 +79,7 @@ public:
 		virtual ~texture()noexcept{}
 
 		void render(const matrix4& matrix)const{
-			this->render(matrix, *this->renderer->pos_tex_quad_01_vao);
+			this->render(matrix, this->renderer.get().pos_tex_quad_01_vao.get());
 		}
 
 		/**
@@ -98,7 +98,7 @@ public:
 	virtual vector2 dims(real dpi)const noexcept = 0;
 	
 	vector2 dims()const noexcept{
-		return this->dims(this->context->units.dots_per_inch);
+		return this->dims(this->context.get().units.dots_per_inch);
 	}
 
 	/**

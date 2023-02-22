@@ -64,7 +64,7 @@ private:
 	};
 
 protected:
-	blending_widget(std::shared_ptr<morda::context> c, const treeml::forest& desc);
+	blending_widget(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
 
 public:
 	blending_widget(const blending_widget&) = delete;

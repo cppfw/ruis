@@ -31,8 +31,8 @@ namespace morda{
  */
 class key_proxy : public pile{
 public:
-	key_proxy(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
-			widget(std::move(c), desc),
+	key_proxy(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+			widget(c, desc),
 			pile(this->context, desc)
 	{}
 	

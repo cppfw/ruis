@@ -81,7 +81,7 @@ class window :
 	void updateTopmost();
 
 public:
-	window(std::shared_ptr<morda::context> c, const treeml::forest& desc);
+	window(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
 
 	window(const window&) = delete;
 	window& operator=(const window&) = delete;

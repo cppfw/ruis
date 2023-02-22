@@ -27,8 +27,8 @@ namespace morda{
 class fraction_widget : public virtual widget{
 	float fraction_v = 0; // current position from 0 to 1
 protected:
-	fraction_widget(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
-		widget(std::move(c), desc)
+	fraction_widget(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+		widget(c, desc)
 	{}
 
 	virtual void on_fraction_change();

@@ -27,9 +27,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace morda;
 
-scroll_area::scroll_area(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
-		widget(std::move(c), desc),
-		container(nullptr, desc)
+scroll_area::scroll_area(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+		widget(c, desc),
+		container(this->context, desc)
 {}
 
 bool scroll_area::on_mouse_button(const mouse_button_event& e){
@@ -133,11 +133,11 @@ vector2 scroll_area::dims_for_widget(const widget& w, const layout_params& lp)co
 
 void scroll_area::arrange_widgets(){
 	for(auto i = this->children().begin(); i != this->children().end(); ++i){
-		auto& lp = this->get_layout_params_const(**i);
+		auto& lp = this->get_layout_params_const(i->get());
 
-		auto d = this->dims_for_widget(**i, lp);
+		auto d = this->dims_for_widget(i->get(), lp);
 
-		(*i)->resize(d);
+		i->get().resize(d);
 	}
 }
 
@@ -164,7 +164,7 @@ void scroll_area::lay_out(){
 		}
 	}
 
-	this->context->run_from_ui_thread([sa = utki::make_weak_from(*this)](){
+	this->context.get().run_from_ui_thread([sa = utki::make_weak_from(*this)](){
 		if(auto s = sa.lock()){
 			s->on_scroll_pos_change();
 		}
@@ -183,9 +183,9 @@ void scroll_area::update_invisible_dims(){
 	using std::max;
 
 	for(auto i = this->children().begin(); i != this->children().end(); ++i){
-		auto& lp = this->get_layout_params_as_const<layout_params>(**i);
+		auto& lp = this->get_layout_params_as_const<layout_params>(i->get());
 
-		morda::vector2 d = (*i)->rect().p + this->dims_for_widget(**i, lp);
+		morda::vector2 d = i->get().rect().p + this->dims_for_widget(i->get(), lp);
 
 		minDim = max(minDim, d); // clamp bottom
 	}

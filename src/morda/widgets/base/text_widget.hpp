@@ -46,7 +46,7 @@ public:
 	void set_font(const utki::shared_ref<const res::font>& font);
 
 	const res::font& get_font()const{
-		return *this->font;
+		return this->font.get();
 	}
 
 	void set_text(const std::string& text){
@@ -72,7 +72,7 @@ public:
 	std::function<void(text_widget& w)> text_change_handler;
 
 protected:
-	text_widget(std::shared_ptr<morda::context> c, const treeml::forest& desc);
+	text_widget(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
 
 private:
 

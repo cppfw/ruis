@@ -50,7 +50,7 @@ protected:
 	vector2 dims_for_widget(const widget& w, const layout_params& lp)const;
 
 public:
-	scroll_area(std::shared_ptr<morda::context> c, const treeml::forest& desc);
+	scroll_area(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
 
 	scroll_area(const scroll_area&) = delete;
 	scroll_area& operator=(const scroll_area&) = delete;

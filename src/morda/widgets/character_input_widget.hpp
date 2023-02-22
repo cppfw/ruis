@@ -34,8 +34,8 @@ namespace morda{
 class character_input_widget : virtual public widget{
 
 protected:
-	character_input_widget(std::shared_ptr<morda::context> c) :
-			widget(std::move(c), treeml::forest())
+	character_input_widget(const utki::shared_ref<morda::context>& c) :
+			widget(c, treeml::forest())
 	{}
 
 public:

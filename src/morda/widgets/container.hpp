@@ -182,7 +182,7 @@ public:
 	 * @param c - context to which this widget belongs.
 	 * @param desc - description of the widget.
 	 */
-	container(std::shared_ptr<morda::context> c, const treeml::forest& desc);
+	container(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
 
 	void render(const matrix4& matrix)const override;
 

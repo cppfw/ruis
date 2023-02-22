@@ -28,8 +28,8 @@ void nine_patch_toggle::on_press_change(){
 	this->toggle_button::on_press_change();
 }
 
-nine_patch_toggle::nine_patch_toggle(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
-		widget(std::move(c), desc),
+nine_patch_toggle::nine_patch_toggle(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+		widget(c, desc),
 		button(this->context, desc),
 		toggle_button(this->context, desc),
 		nine_patch_button(this->context, desc)

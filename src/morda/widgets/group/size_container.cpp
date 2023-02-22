@@ -23,16 +23,16 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace morda;
 
-size_container::size_container(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
-		widget(std::move(c), desc),
-		container(nullptr, desc)
+size_container::size_container(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+		widget(c, desc),
+		container(this->context, desc)
 {}
 
 void size_container::lay_out(){
 	for(auto& w : this->children()){
-		if(w->is_layout_dirty()){
-			auto d = this->dims_for_widget(*w, this->get_layout_params_const(*w));
-			w->resize(d);
+		if(w.get().is_layout_dirty()){
+			auto d = this->dims_for_widget(w.get(), this->get_layout_params_const(w.get()));
+			w.get().resize(d);
 		}
 	}
 }

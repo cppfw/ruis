@@ -39,8 +39,8 @@ const uint32_t cursorBlinkPeriod_c = 500; // milliseconds
 const real cursorWidth_c = real(1.0);
 }
 
-text_input_line::text_input_line(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
-		widget(std::move(c), desc),
+text_input_line::text_input_line(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+		widget(c, desc),
 		single_line_text_widget(this->context, desc),
 		character_input_widget(this->context),
 		color_widget(this->context, desc)
@@ -58,7 +58,7 @@ void text_input_line::render(const morda::matrix4& matrix) const{
 			);
 		matr.scale(vector2(std::abs(this->cursorPos - this->selectionStartPos), this->rect().d.y()));
 
-		auto& r = *this->context->renderer;
+		auto& r = this->context.get().renderer.get();
 		r.shader->color_pos->render(matr, *r.pos_quad_01_vao, 0xff804040);
 	}
 	
@@ -82,9 +82,9 @@ void text_input_line::render(const morda::matrix4& matrix) const{
 	if(this->is_focused() && this->cursorBlinkVisible){
 		morda::matrix4 matr(matrix);
 		matr.translate(this->cursorPos, 0);
-		matr.scale(vector2(cursorWidth_c * this->context->units.dots_per_dp, this->rect().d.y()));
+		matr.scale(vector2(cursorWidth_c * this->context.get().units.dots_per_dp, this->rect().d.y()));
 
-		auto& r = *this->context->renderer;
+		auto& r = *this->context.get().renderer;
 		r.shader->color_pos->render(matr, *r.pos_quad_01_vao, this->get_current_color());
 	}
 }
@@ -116,7 +116,7 @@ vector2 text_input_line::measure(const morda::vector2& quotum)const noexcept{
 	vector2 ret;
 	
 	if(quotum.x() < 0){
-		ret.x() = this->single_line_text_widget::measure(vector2(-1)).x() + cursorWidth_c * this->context->units.dots_per_dp;
+		ret.x() = this->single_line_text_widget::measure(vector2(-1)).x() + cursorWidth_c * this->context.get().units.dots_per_dp;
 	}else{
 		ret.x() = quotum.x();
 	}
@@ -168,8 +168,8 @@ void text_input_line::set_cursor_index(size_t index, bool selection){
 	
 	ASSERT(this->cursorPos >= 0)
 	
-	if(this->cursorPos > this->rect().d.x() - cursorWidth_c * this->context->units.dots_per_dp){
-		this->cursorPos = this->rect().d.x() - cursorWidth_c * this->context->units.dots_per_dp;
+	if(this->cursorPos > this->rect().d.x() - cursorWidth_c * this->context.get().units.dots_per_dp){
+		this->cursorPos = this->rect().d.x() - cursorWidth_c * this->context.get().units.dots_per_dp;
 		
 		this->xOffset = this->cursorPos; // start from rightmost cursor position
 		this->firstVisibleCharIndex = this->cursorIndex;
@@ -248,7 +248,7 @@ void text_input_line::on_focus_change(){
 		this->shiftPressed = false;
 		this->startCursorBlinking();
 	}else{
-		this->context->updater->stop(*this);
+		this->context.get().updater->stop(*this);
 	}
 }
 
@@ -259,9 +259,9 @@ void text_input_line::on_resize(){
 
 
 void text_input_line::startCursorBlinking(){
-	this->context->updater->stop(*this);
+	this->context.get().updater->stop(*this);
 	this->cursorBlinkVisible = true;
-	this->context->updater->start(
+	this->context.get().updater->start(
 			utki::make_shared_from(*static_cast<updateable*>(this)),
 			cursorBlinkPeriod_c
 		);

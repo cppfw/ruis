@@ -94,7 +94,7 @@ public:
 		return this->item_provider.get();
 	}
 protected:
-	drop_down_box(std::shared_ptr<morda::context> c, const treeml::forest& desc, pile& selection_container);
+	drop_down_box(const utki::shared_ref<morda::context>& c, const treeml::forest& desc, pile& selection_container);
 
 	drop_down_box(const drop_down_box&) = delete;
 	drop_down_box& operator=(const drop_down_box&) = delete;

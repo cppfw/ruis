@@ -41,7 +41,7 @@ class image_mouse_cursor : public pile{
 
 	vector2 cursorPos;
 public:
-	image_mouse_cursor(std::shared_ptr<morda::context> c, const treeml::forest& desc);
+	image_mouse_cursor(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
 
 	image_mouse_cursor(const image_mouse_cursor&) = delete;
 	image_mouse_cursor& operator=(const image_mouse_cursor&) = delete;

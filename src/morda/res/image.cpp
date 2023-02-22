@@ -49,7 +49,7 @@ image::image(const utki::shared_ref<morda::context>& c) :
 // 	const rectangle& rect
 // ) :
 // 		image(c),
-// 		image::texture(this->context->renderer, abs(rect.d)),
+// 		image::texture(this->context.get().renderer, abs(rect.d)),
 // 		tex(tex)
 // {
 // //	this->texCoords[3] = vector2(rect.left(), this->tex->tex().dim().y - rect.bottom()).compDivBy(this->tex->tex().dim());
@@ -65,9 +65,9 @@ atlas_image::atlas_image(
 	const utki::shared_ref<res::texture>& tex
 ) :
 		image(c),
-		image::texture(this->context->renderer, tex->tex().dims()),
+		image::texture(this->context.get().renderer, tex.get().tex().dims()),
 		tex(std::move(tex)),
-		vao(this->context->renderer->pos_tex_quad_01_vao)
+		vao(this->context.get().renderer.get().pos_tex_quad_01_vao)
 {}
 
 utki::shared_ref<atlas_image> atlas_image::load(const utki::shared_ref<morda::context>& ctx, const treeml::forest& desc, const papki::file& fi){
@@ -76,7 +76,7 @@ utki::shared_ref<atlas_image> atlas_image::load(const utki::shared_ref<morda::co
 
 	for(auto& p : desc){
 		if(p.value == "tex"){
-			tex = ctx->loader.load<res::texture>(get_property_value(p).to_string()).to_shared_ptr(); // TODO: do not use to_shared_ptr() here
+			tex = ctx.get().loader.load<res::texture>(get_property_value(p).to_string()).to_shared_ptr(); // TODO: do not use to_shared_ptr() here
 		}else if(p.value == "rect"){
 			rect = parse_rect(p.children);
 		}
@@ -88,14 +88,14 @@ utki::shared_ref<atlas_image> atlas_image::load(const utki::shared_ref<morda::co
 	
 	// TODO:
 	// if(rect.p.x() >= 0){
-	// 	return utki::make_shared_ref<atlas_image>(ctx, utki::shared_ref(std::move(tex)), rect);
+	// 	return utki::make_shared<atlas_image>(ctx, utki::shared_ref(std::move(tex)), rect);
 	// }else{
-		return utki::make_shared_ref<atlas_image>(ctx, utki::shared_ref(std::move(tex)));
+		return utki::make_shared<atlas_image>(ctx, utki::shared_ref(std::move(tex)));
 	// }
 }
 
 void atlas_image::render(const matrix4& matrix, const vertex_array& vao)const{
-	this->context->renderer->shader->pos_tex->render(matrix, *this->vao, this->tex->tex());
+	this->context.get().renderer.get().shader->pos_tex->render(matrix, this->vao.get(), this->tex.get().tex());
 }
 
 utki::shared_ref<const image::texture> atlas_image::get(vector2 forDim)const{
@@ -111,13 +111,13 @@ protected:
 		const utki::shared_ref<const morda::renderer>& r,
 		const utki::shared_ref<const texture_2d>& tex
 	) :
-			image::texture(r, tex->dims()),
+			image::texture(r, tex.get().dims()),
 			tex_2d(tex)
 	{}
 	
 public:
 	void render(const matrix4& matrix, const vertex_array& vao)const override{
-		this->renderer->shader->pos_tex->render(matrix, vao, *this->tex_2d);
+		this->renderer.get().shader->pos_tex->render(matrix, vao, this->tex_2d.get());
 	}
 };
 	
@@ -131,7 +131,7 @@ public:
 	 	const utki::shared_ref<const texture_2d>& tex
 	) :
 			image(c),
-			fixed_texture(this->context->renderer, tex)
+			fixed_texture(this->context.get().renderer, tex)
 	{}
 	
 	utki::shared_ref<const image::texture> get(vector2 forDim)const override{
@@ -139,11 +139,11 @@ public:
 	}
 	
 	vector2 dims(real dpi)const noexcept override{
-		return this->tex_2d->dims();
+		return this->tex_2d.get().dims();
 	}
 	
 	static utki::shared_ref<res_raster_image> load(const utki::shared_ref<morda::context>& ctx, const papki::file& fi){
-		return utki::make_shared_ref<res_raster_image>(ctx, load_texture(*ctx->renderer, fi));
+		return utki::make_shared<res_raster_image>(ctx, load_texture(ctx.get().renderer.get(), fi));
 	}
 };
 
@@ -170,12 +170,12 @@ public:
 			const utki::shared_ref<const texture_2d>& tex
 		) :
 			fixed_texture(r, tex),
-			parent(parent)
+			parent(parent.to_shared_ptr())
 		{}
 
 		~svg_texture()noexcept{
 			if(auto p = this->parent.lock()){
-				r4::vector2<unsigned> d = this->tex_2d->dims().to<unsigned>();
+				r4::vector2<unsigned> d = this->tex_2d.get().dims().to<unsigned>();
 				p->cache.erase(d);
 			}
 		}
@@ -201,7 +201,7 @@ public:
 //		TRACE(<< "dpi = " << morda::gui::inst().units.dpi() << std::endl)
 //		TRACE(<< "id = " << this->dom->id << std::endl)
 		svgren::parameters svg_params;
-		svg_params.dpi = unsigned(this->context->units.dots_per_inch);
+		svg_params.dpi = unsigned(this->context.get().units.dots_per_inch);
 		svg_params.dims_request = forDim.to<unsigned>();
 		auto svg = svgren::render(*this->dom, svg_params);
 		ASSERT(svg.dims.x() != 0)
@@ -211,13 +211,13 @@ public:
 			[&](auto&o){o << "svg.dims = " << svg.dims << " pixels.size() = " << svg.pixels.size();}
 		)
 		
-		auto img = utki::make_shared_ref<svg_texture>(
-				this->context->renderer,
+		auto img = utki::make_shared<svg_texture>(
+				this->context.get().renderer,
 				utki::make_shared_from(*this),
-				this->context->renderer->factory->create_texture_2d(svg.dims, utki::make_span(svg.pixels))
+				this->context.get().renderer.get().factory->create_texture_2d(svg.dims, utki::make_span(svg.pixels))
 			);
 
-		this->cache[svg.dims] = img;
+		this->cache[svg.dims] = img.to_shared_ptr();
 
 		return img;
 	}
@@ -225,7 +225,7 @@ public:
 	mutable std::map<r4::vector2<unsigned>, std::weak_ptr<texture>> cache;
 	
 	static utki::shared_ref<res_svg_image> load(const utki::shared_ref<morda::context>& ctx, const papki::file& fi){
-		return utki::make_shared_ref<res_svg_image>(ctx, svgdom::load(fi));
+		return utki::make_shared<res_svg_image>(ctx, svgdom::load(fi));
 	}	
 };
 }

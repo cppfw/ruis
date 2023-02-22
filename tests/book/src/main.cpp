@@ -36,7 +36,7 @@ public:
 		auto& book = c->get_widget_as<morda::book>("book");
 
 		{
-			auto mp = utki::make_shared_ref<pile_page>(
+			auto mp = utki::make_shared<pile_page>(
 					this->gui.context,
 					treeml::read(R"qwertyuiop(
 							@column{
@@ -81,10 +81,10 @@ public:
 						)qwertyuiop")
 				);
 			mp->get_widget_as<morda::push_button>("cube_button").click_handler = [&mp = mp.get()](morda::push_button& b){
-				mp.get_parent_book()->push(utki::make_shared_ref<cube_page>(mp.context));
+				mp.get_parent_book()->push(utki::make_shared<cube_page>(mp.context));
 			};
 			mp.get().get_widget_as<morda::push_button>("stuff_button").click_handler = [&mp = mp.get()](morda::push_button& b){
-				auto pg = utki::make_shared_ref<pile_page>(mp.context, treeml::read(R"qwertyuiop(
+				auto pg = utki::make_shared<pile_page>(mp.context, treeml::read(R"qwertyuiop(
 					@push_button{
 						id{back_button}
 						@text{

@@ -41,7 +41,7 @@ protected:
 	bool on_mouse_button(const mouse_button_event& event)override;
 
 public:
-	choice_button(std::shared_ptr<morda::context> c, const treeml::forest& desc);
+	choice_button(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
 	
 	choice_button(const choice_button&) = delete;
 	choice_button& operator=(const choice_button&) = delete;

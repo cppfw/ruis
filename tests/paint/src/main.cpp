@@ -10,9 +10,9 @@
 class path_widget : virtual public morda::widget{
 	morda::path_vao vao;
 public:
-	path_widget(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
-			morda::widget(std::move(c), desc),
-			vao(this->context->renderer)
+	path_widget(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+			morda::widget(c, desc),
+			vao(this->context.get().renderer)
 	{}
 
 	void render(const morda::matrix4& matrix)const override{
@@ -34,9 +34,9 @@ public:
 class frame_widget : virtual public morda::widget{
 	morda::frame_vao vao;
 public:
-	frame_widget(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
-			morda::widget(std::move(c), desc),
-			vao(this->context->renderer)
+	frame_widget(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+			morda::widget(c, desc),
+			vao(this->context.get().renderer)
 	{}
 
 	void render(const morda::matrix4& matrix)const override{

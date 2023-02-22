@@ -39,7 +39,7 @@ class linear_container :
 	linear_container& operator=(const linear_container&) = delete;
 
 public:
-	linear_container(std::shared_ptr<morda::context> c, const treeml::forest& desc, bool vertical);
+	linear_container(const utki::shared_ref<morda::context>& c, const treeml::forest& desc, bool vertical);
 
 	void lay_out() override;
 

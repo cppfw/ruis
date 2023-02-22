@@ -195,27 +195,27 @@ gui::gui(const utki::shared_ref<morda::context>& context) :
 		context(context)
 {
 	// register basic widgets
-	this->context->inflater.register_widget<widget>("widget");
-	this->context->inflater.register_widget<container>("container");
-	this->context->inflater.register_widget<size_container>("size_container");
-	this->context->inflater.register_widget<row>("row");
-	this->context->inflater.register_widget<column>("column");
-	this->context->inflater.register_widget<pile>("pile");
-	this->context->inflater.register_widget<mouse_proxy>("mouse_proxy");
-	this->context->inflater.register_widget<click_proxy>("click_proxy");
-	this->context->inflater.register_widget<ratio_proxy>("ratio_proxy");
-	this->context->inflater.register_widget<key_proxy>("key_proxy");
-	this->context->inflater.register_widget<resize_proxy>("resize_proxy");
-	this->context->inflater.register_widget<min_proxy>("min_proxy");
+	this->context.get().inflater.register_widget<widget>("widget");
+	this->context.get().inflater.register_widget<container>("container");
+	this->context.get().inflater.register_widget<size_container>("size_container");
+	this->context.get().inflater.register_widget<row>("row");
+	this->context.get().inflater.register_widget<column>("column");
+	this->context.get().inflater.register_widget<pile>("pile");
+	this->context.get().inflater.register_widget<mouse_proxy>("mouse_proxy");
+	this->context.get().inflater.register_widget<click_proxy>("click_proxy");
+	this->context.get().inflater.register_widget<ratio_proxy>("ratio_proxy");
+	this->context.get().inflater.register_widget<key_proxy>("key_proxy");
+	this->context.get().inflater.register_widget<resize_proxy>("resize_proxy");
+	this->context.get().inflater.register_widget<min_proxy>("min_proxy");
 
-	this->context->inflater.register_widget<scroll_area>("scroll_area");
-	this->context->inflater.register_widget<overlay>("overlay");
-	this->context->inflater.register_widget<pan_list>("pan_list");
-	this->context->inflater.register_widget<list>("list");
-	this->context->inflater.register_widget<book>("book");
-	this->context->inflater.register_widget<spinner>("spinner");
+	this->context.get().inflater.register_widget<scroll_area>("scroll_area");
+	this->context.get().inflater.register_widget<overlay>("overlay");
+	this->context.get().inflater.register_widget<pan_list>("pan_list");
+	this->context.get().inflater.register_widget<list>("list");
+	this->context.get().inflater.register_widget<book>("book");
+	this->context.get().inflater.register_widget<spinner>("spinner");
 
-	this->context->inflater.push_defs(default_defs);
+	this->context.get().inflater.push_defs(default_defs);
 }
 
 void gui::initStandardWidgets(papki::file& fi) {
@@ -256,7 +256,7 @@ void gui::initStandardWidgets(papki::file& fi) {
 //			TRACE(<< "s = " << s << std::endl)
 			fi.set_path(s);
 //			TRACE(<< "fi.path() = " << fi.path() << std::endl)
-			this->context->loader.mount_res_pack(fi);
+			this->context.get().loader.mount_res_pack(fi);
 		}catch(std::runtime_error&){
 //			TRACE(<< "could not mount " << s << std::endl)
 			continue;
@@ -271,34 +271,34 @@ void gui::initStandardWidgets(papki::file& fi) {
 
 	// add standard widgets to inflater
 
-	this->context->inflater.register_widget<text>("text");
-	this->context->inflater.register_widget<color>("color");
-	this->context->inflater.register_widget<gradient>("gradient");
-	this->context->inflater.register_widget<image>("image");
-	this->context->inflater.register_widget<vertical_scroll_bar>("vertical_scroll_bar");
-	this->context->inflater.register_widget<horizontal_scroll_bar>("horizontal_scroll_bar");
-	this->context->inflater.register_widget<window>("window");
-	this->context->inflater.register_widget<nine_patch>("nine_patch");
-	this->context->inflater.register_widget<nine_patch_push_button>("nine_patch_push_button");
-	this->context->inflater.register_widget<check_box>("check_box");
-	this->context->inflater.register_widget<tree_view>("tree_view");
-	this->context->inflater.register_widget<click_drop_down_box>("click_drop_down_box");
-	this->context->inflater.register_widget<radio_button>("radio_button");
-	this->context->inflater.register_widget<choice_group>("choice_group");
-	this->context->inflater.register_widget<image_mouse_cursor>("image_mouse_cursor");
-	this->context->inflater.register_widget<collapse_area>("collapse_area");
-	this->context->inflater.register_widget<image_toggle>("image_toggle");
-	this->context->inflater.register_widget<image_push_button>("image_push_button");
-	this->context->inflater.register_widget<tab_group>("tab_group");
-	this->context->inflater.register_widget<tab>("tab");
-	this->context->inflater.register_widget<text_input_line>("text_input_line");
-	this->context->inflater.register_widget<busy>("busy");
-	this->context->inflater.register_widget<tabbed_book>("tabbed_book");
+	this->context.get().inflater.register_widget<text>("text");
+	this->context.get().inflater.register_widget<color>("color");
+	this->context.get().inflater.register_widget<gradient>("gradient");
+	this->context.get().inflater.register_widget<image>("image");
+	this->context.get().inflater.register_widget<vertical_scroll_bar>("vertical_scroll_bar");
+	this->context.get().inflater.register_widget<horizontal_scroll_bar>("horizontal_scroll_bar");
+	this->context.get().inflater.register_widget<window>("window");
+	this->context.get().inflater.register_widget<nine_patch>("nine_patch");
+	this->context.get().inflater.register_widget<nine_patch_push_button>("nine_patch_push_button");
+	this->context.get().inflater.register_widget<check_box>("check_box");
+	this->context.get().inflater.register_widget<tree_view>("tree_view");
+	this->context.get().inflater.register_widget<click_drop_down_box>("click_drop_down_box");
+	this->context.get().inflater.register_widget<radio_button>("radio_button");
+	this->context.get().inflater.register_widget<choice_group>("choice_group");
+	this->context.get().inflater.register_widget<image_mouse_cursor>("image_mouse_cursor");
+	this->context.get().inflater.register_widget<collapse_area>("collapse_area");
+	this->context.get().inflater.register_widget<image_toggle>("image_toggle");
+	this->context.get().inflater.register_widget<image_push_button>("image_push_button");
+	this->context.get().inflater.register_widget<tab_group>("tab_group");
+	this->context.get().inflater.register_widget<tab>("tab");
+	this->context.get().inflater.register_widget<text_input_line>("text_input_line");
+	this->context.get().inflater.register_widget<busy>("busy");
+	this->context.get().inflater.register_widget<tabbed_book>("tabbed_book");
 
 	try{
-		auto t = this->context->loader.load<res::treeml>("morda_gui_defs");
+		auto t = this->context.get().loader.load<res::treeml>("morda_gui_defs");
 
-		this->context->inflater.push_defs(t->forest());
+		this->context.get().inflater.push_defs(t.get().forest());
 
 	}catch(std::exception&){
 		//TODO: do not ignore?
@@ -396,7 +396,7 @@ void gui::send_key(bool is_down, key key_code){
 	e.combo.modifiers = this->key_modifiers;
 	e.is_down = is_down;
 
-	if(auto w = this->context->focused_widget.lock()){
+	if(auto w = this->context.get().focused_widget.lock()){
 //		TRACE(<< "HandleKeyEvent(): there is a focused widget" << std::endl)
 		w->on_key_internal(e);
 	}else{
@@ -408,7 +408,7 @@ void gui::send_key(bool is_down, key key_code){
 }
 
 void gui::send_character_input(const input_string_provider& string_provider, key key_code){
-	if(auto w = this->context->focused_widget.lock()){
+	if(auto w = this->context.get().focused_widget.lock()){
 		character_input_event e;
 		e.string = string_provider.get();
 		e.combo.key = key_code;

@@ -29,8 +29,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace morda;
 
-widget::widget(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
-		context(std::move(c))
+widget::widget(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+		context(c)
 {
 	for(const auto& p : desc){
 		if(!is_property(p)){
@@ -41,13 +41,13 @@ widget::widget(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
 			if(p.value == "layout"){
 				this->layout_desc = p.children;
 			}else if(p.value == "x"){
-				this->rectangle.p.x() = parse_dimension_value(get_property_value(p), this->context->units);
+				this->rectangle.p.x() = parse_dimension_value(get_property_value(p), this->context.get().units);
 			}else if(p.value == "y"){
-				this->rectangle.p.y() = parse_dimension_value(get_property_value(p), this->context->units);
+				this->rectangle.p.y() = parse_dimension_value(get_property_value(p), this->context.get().units);
 			}else if(p.value == "dx"){
-				this->rectangle.d.x() = parse_dimension_value(get_property_value(p), this->context->units);
+				this->rectangle.d.x() = parse_dimension_value(get_property_value(p), this->context.get().units);
 			}else if(p.value == "dy"){
-				this->rectangle.d.y() = parse_dimension_value(get_property_value(p), this->context->units);
+				this->rectangle.d.y() = parse_dimension_value(get_property_value(p), this->context.get().units);
 			}else if(p.value == "id"){
 				this->id = get_property_value(p).to_string();
 				// TRACE(<< "inflating '" << this->id << "'" << std::endl)
@@ -189,7 +189,7 @@ void widget::render_internal(const morda::matrix4& matrix)const{
 		return;
 	}
 
-	auto& r = *this->context->renderer;
+	auto& r = *this->context.get().renderer;
 
 	if(this->cache){
 		if(this->cache_dirty){
@@ -209,7 +209,7 @@ void widget::render_internal(const morda::matrix4& matrix)const{
 		}
 
 		// after rendering to texture it is most likely there will be transparent areas, so enable simple blending
-		set_simple_alpha_blending(*this->context->renderer);
+		set_simple_alpha_blending(*this->context.get().renderer);
 
 		this->render_from_cache(matrix);
 	}else{
@@ -260,7 +260,7 @@ void widget::render_internal(const morda::matrix4& matrix)const{
 }
 
 std::shared_ptr<texture_2d> widget::render_to_texture(std::shared_ptr<texture_2d> reuse)const{
-	auto& r = *this->context->renderer;
+	auto& r = *this->context.get().renderer;
 
 	utki::shared_ref<texture_2d> tex = [&](){
 		if(reuse && reuse->dims() == this->rect().d){
@@ -303,7 +303,7 @@ void widget::render_from_cache(const r4::matrix4<float>& matrix)const{
 	morda::matrix4 matr(matrix);
 	matr.scale(this->rect().d);
 
-	auto& r = *this->context->renderer;
+	auto& r = *this->context.get().renderer;
 	ASSERT(this->cache_texture)
 	r.shader->pos_tex->render(matr, *r.pos_tex_quad_01_vao, *this->cache_texture);
 }
@@ -334,7 +334,7 @@ void widget::focus()noexcept{
 		return;
 	}
 
-	this->context->set_focused_widget(utki::make_shared_from(*this));
+	this->context.get().set_focused_widget(utki::make_shared_from(*this));
 }
 
 void widget::unfocus()noexcept{
@@ -344,15 +344,15 @@ void widget::unfocus()noexcept{
 		return;
 	}
 
-	ASSERT(this->context->focused_widget.lock() && this->context->focused_widget.lock().get() == this)
+	ASSERT(this->context.get().focused_widget.lock() && this->context.get().focused_widget.lock().get() == this)
 
-	this->context->set_focused_widget(nullptr);
+	this->context.get().set_focused_widget(nullptr);
 }
 
 r4::rectangle<int> widget::compute_viewport_rect(const matrix4& matrix)const noexcept{
 	using std::round;
 	r4::rectangle<int> ret(
-			round(((matrix * vector2(0, 0) + vector2(1, 1)) / 2).comp_multiply(this->context->renderer->get_viewport().d.to<real>())).to<int>(),
+			round(((matrix * vector2(0, 0) + vector2(1, 1)) / 2).comp_multiply(this->context.get().renderer.get().get_viewport().d.to<real>())).to<int>(),
 			this->rect().d.to<int>()
 		);
 	ret.p.y() -= ret.d.y();

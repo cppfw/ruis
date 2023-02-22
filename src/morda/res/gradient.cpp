@@ -31,7 +31,7 @@ using namespace morda::res;
 
 morda::res::gradient::gradient(const utki::shared_ref<morda::context>& c) :
 		resource(c),
-		vao(this->context->renderer->empty_vertex_array)
+		vao(this->context.get().renderer.get().empty_vertex_array)
 {}
 
 void gradient::set(
@@ -74,7 +74,7 @@ void gradient::set(
 		indices.push_back(uint16_t(i));
 	}
 	
-	auto& r = *this->context->renderer;
+	auto& r = this->context.get().renderer.get();
 	this->vao = r.factory->create_vertex_array(
 			{
 				r.factory->create_vertex_buffer(utki::make_span(vertices)),
@@ -109,15 +109,15 @@ utki::shared_ref<gradient> gradient::load(const utki::shared_ref<morda::context>
 		}
 	}
 	
-	auto ret = utki::make_shared_ref<gradient>(ctx);
+	auto ret = utki::make_shared<gradient>(ctx);
 	
-	ret->set(stops, vertical);
+	ret.get().set(stops, vertical);
 
 	return ret;
 }
 
 
 void gradient::render(const morda::matrix4& m) const {
-	this->context->renderer->shader->pos_clr->render(m, *this->vao);
+	this->context.get().renderer.get().shader->pos_clr->render(m, this->vao.get());
 }
 

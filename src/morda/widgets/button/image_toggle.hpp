@@ -31,7 +31,7 @@ class image_toggle :
 		public image_button
 {
 public:
-	image_toggle(std::shared_ptr<morda::context> c, const treeml::forest& desc);
+	image_toggle(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
 	
 	image_toggle(const image_toggle&) = delete;
 	image_toggle& operator=(const image_toggle&) = delete;

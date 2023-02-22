@@ -32,23 +32,23 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace morda;
 
-tree_view::tree_view(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
-		widget(std::move(c), desc),
-		scroll_area(nullptr, treeml::forest()),
-		item_list(utki::make_shared_ref<morda::list>(this->context, treeml::forest()))
+tree_view::tree_view(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+		widget(c, desc),
+		scroll_area(this->context, treeml::forest()),
+		item_list(utki::make_shared<morda::list>(this->context, treeml::forest()))
 {
 	this->push_back(this->item_list);
 
-	auto& lp = this->get_layout_params(*this->item_list);
+	auto& lp = this->get_layout_params(this->item_list.get());
 
 	lp.dims.y() = widget::layout_params::max;
 	lp.dims.x() = widget::layout_params::min;
 
-	this->item_list->data_set_change_handler = [this](list_widget&){
+	this->item_list.get().data_set_change_handler = [this](list_widget&){
 		this->notify_view_change();
 	};
 
-	this->item_list->scroll_change_handler = [this](list_widget& lw){
+	this->item_list.get().scroll_change_handler = [this](list_widget& lw){
 		this->notify_view_change();
 	};
 
@@ -65,7 +65,7 @@ void tree_view::notify_view_change(){
 
 void tree_view::set_provider(std::shared_ptr<provider> item_provider){
 	item_provider->notify_data_set_changed();
-	this->item_list->set_provider(
+	this->item_list.get().set_provider(
 			std::static_pointer_cast<list_widget::provider>(item_provider)
 		);
 }
@@ -174,19 +174,19 @@ utki::shared_ref<widget> tree_view::provider::get_widget(size_t index){
 
 	ASSERT(this->get_list(), [&](auto&o){o << "provider is not set to a list_widget";})
 
-	auto ret = utki::make_shared_ref<morda::row>(this->get_list()->context, treeml::forest());
+	auto ret = utki::make_shared<morda::row>(this->get_list()->context, treeml::forest());
 
 	ASSERT(is_last_item_in_parent.size() == path.size())
 
 	for(unsigned i = 0; i != path.size() - 1; ++i){
-		ret->push_back_inflate(is_last_item_in_parent[i] ? empty_layout : vert_line_layout);
+		ret.get().push_back_inflate(is_last_item_in_parent[i] ? empty_layout : vert_line_layout);
 	}
 
 	{
-		auto widget = this->get_list()->context->inflater.inflate_as<morda::pile>(is_last_item_in_parent.back() ? line_end_layout : line_middle_layout);
+		auto widget = this->get_list()->context.get().inflater.inflate_as<morda::pile>(is_last_item_in_parent.back() ? line_end_layout : line_middle_layout);
 
 		if(this->count(utki::make_span(path)) != 0){
-			auto w = this->get_list()->context->inflater.inflate(plus_minus_layout);
+			auto w = this->get_list()->context.get().inflater.inflate(plus_minus_layout);
 
 			auto plusminus = w->try_get_widget_as<morda::image>("plusminus");
 			ASSERT(plusminus)

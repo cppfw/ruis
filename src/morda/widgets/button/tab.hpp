@@ -34,7 +34,7 @@ class tab :
 	bool maskOverlaps(vector2 pos);
 	
 public:
-	tab(std::shared_ptr<morda::context> c, const treeml::forest& desc);
+	tab(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
 	
 	tab(const tab&) = delete;
 	tab& operator=(const tab&) = delete;

@@ -40,5 +40,5 @@ utki::shared_ref<texture> texture::load(
 		}
 	}
 
-	return utki::make_shared_ref<texture>(ctx, load_texture(*ctx->renderer, fi));
+	return utki::make_shared<texture>(ctx, load_texture(ctx.get().renderer.get(), fi));
 }

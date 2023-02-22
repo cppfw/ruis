@@ -67,7 +67,7 @@ class widget : virtual public utki::shared{
 	friend class context;
 	friend class gui;
 public:
-	const std::shared_ptr<morda::context> context;
+	const utki::shared_ref<morda::context> context;
 
 	/**
 	 * @brief Basic layout parameters.
@@ -433,7 +433,7 @@ public:
 	 * @param c - context to which this widget belongs.
 	 * @param desc - widget description.
 	 */
-	widget(std::shared_ptr<morda::context> c, const treeml::forest& desc);
+	widget(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
 public:
 
 	virtual ~widget()noexcept{}

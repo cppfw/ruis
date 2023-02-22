@@ -26,8 +26,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace morda;
 
-image_toggle::image_toggle(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
-		widget(std::move(c), desc),
+image_toggle::image_toggle(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+		widget(c, desc),
 		button(this->context, desc),
 		toggle_button(this->context, desc),
 		image_button(this->context, desc)

@@ -71,7 +71,7 @@ public:
 		this->add_factory(
 				std::string(widget_name),
 				[](const utki::shared_ref<morda::context>& c, const treeml::forest& desc) -> utki::shared_ref<morda::widget> {
-					return utki::make_shared_ref<T>(c, desc);
+					return utki::make_shared<T>(c, desc);
 				}
 			);
 	}

@@ -168,9 +168,9 @@ void morda::window::set_background(const utki::shared_ref<widget>& w){
 	this->insert(w, this->children().begin());
 }
 
-morda::window::window(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
-		widget(std::move(c), desc),
-		pile(nullptr, windowDesc_c)
+morda::window::window(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+		widget(c, desc),
+		pile(this->context, windowDesc_c)
 {
 	this->setup_widgets();
 
@@ -195,15 +195,15 @@ morda::window::window(std::shared_ptr<morda::context> c, const treeml::forest& d
 				}else if(pp.value == "title_color_inactive"){
 					this->titleBgColorNonTopmost = get_property_value(pp).to_uint32();
 				}else if(pp.value == "background"){
-					this->set_background(this->context->inflater.inflate(pp.children));
+					this->set_background(this->context.get().inflater.inflate(pp.children));
 				}else if(pp.value == "left"){
-					borders.left() = parse_dimension_value(get_property_value(pp), this->context->units);
+					borders.left() = parse_dimension_value(get_property_value(pp), this->context.get().units);
 				}else if(pp.value == "top"){
-					borders.top() = parse_dimension_value(get_property_value(pp), this->context->units);
+					borders.top() = parse_dimension_value(get_property_value(pp), this->context.get().units);
 				}else if(pp.value == "right"){
-					borders.right() = parse_dimension_value(get_property_value(pp), this->context->units);
+					borders.right() = parse_dimension_value(get_property_value(pp), this->context.get().units);
 				}else if(pp.value == "bottom"){
-					borders.bottom() = parse_dimension_value(get_property_value(pp), this->context->units);
+					borders.bottom() = parse_dimension_value(get_property_value(pp), this->context.get().units);
 				}
 			}
 		}
@@ -238,7 +238,7 @@ void morda::window::setup_widgets(){
 				this->capturePoint = e.pos;
 			}else{
 				if(!mp.is_hovered()){
-					this->context->cursor_manager.pop(iter);
+					this->context.get().cursor_manager.pop(iter);
 				}
 			}
 			return true;
@@ -254,9 +254,9 @@ void morda::window::setup_widgets(){
 						return;
 					}
 					if(mp.is_hovered()){
-						iter = this->context->cursor_manager.push(cursor);
+						iter = this->context.get().cursor_manager.push(cursor);
 					}else{
-						this->context->cursor_manager.pop(iter);
+						this->context.get().cursor_manager.pop(iter);
 					}
 				};
 			};
@@ -448,7 +448,7 @@ void morda::window::set_borders(sides<real> borders){
 
 bool morda::window::on_mouse_button(const mouse_button_event& e){
 	if(e.is_down && !this->is_topmost()){
-		this->context->run_from_ui_thread(
+		this->context.get().run_from_ui_thread(
 				[this](){
 					this->move_to_top();
 					this->focus();

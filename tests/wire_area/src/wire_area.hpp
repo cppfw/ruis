@@ -18,7 +18,7 @@ public:
 	wire_area(const wire_area&) = delete;
 	wire_area& operator=(const wire_area&) = delete;
 	
-	wire_area(std::shared_ptr<morda::context> c, const treeml::forest& desc);
+	wire_area(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
 	
 	void render(const morda::matrix4& matrix)const override;
 

@@ -30,7 +30,7 @@ class book;
 class page : public virtual widget{
 	friend class book;
 protected:
-	page(std::shared_ptr<morda::context> c, const treeml::forest& desc);
+	page(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
 	
 	page(const page&) = delete;
 	page& operator=(const page&) = delete;
@@ -65,7 +65,7 @@ class book :
 
 	std::vector<utki::shared_ref<page>> pages;
 public:
-	book(std::shared_ptr<morda::context> c, const treeml::forest& desc);
+	book(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
 	
 	book(const book&) = delete;
 	book& operator=(const book&) = delete;

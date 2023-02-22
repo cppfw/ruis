@@ -39,7 +39,7 @@ class spinner :
 {
 	real angle = 0;
 public:
-	spinner(std::shared_ptr<morda::context> c, const treeml::forest& desc);
+	spinner(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
 
 	void set_active(bool active);
 

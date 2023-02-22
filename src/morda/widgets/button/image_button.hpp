@@ -39,7 +39,7 @@ class image_button :
 protected:
 	void on_press_change()override;
 
-	image_button(std::shared_ptr<morda::context> c, const treeml::forest& desc);
+	image_button(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
 	
 public:
 	void set_pressed_image(std::shared_ptr<const res::image> image);

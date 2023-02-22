@@ -31,7 +31,7 @@ class min_proxy : public morda::pile{
 	mutable std::vector<std::string> target_id;
 
 public:
-	min_proxy(std::shared_ptr<morda::context> c, const treeml::forest& desc);
+	min_proxy(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
 
 	vector2 measure(const vector2& quotum)const override;
 };

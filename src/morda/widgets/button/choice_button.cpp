@@ -25,8 +25,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace morda;
 
-choice_button::choice_button(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
-		widget(std::move(c), desc),
+choice_button::choice_button(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+		widget(c, desc),
 		button(this->context, desc),
 		toggle_button(this->context, desc)
 {}
@@ -54,5 +54,5 @@ void choice_button::activate(){
 		return;
 	}
 	
-	cg->set_active_choice_button(utki::make_shared_from(*this));
+	cg->set_active_choice_button(utki::make_shared_from(*this).to_shared_ptr());
 }

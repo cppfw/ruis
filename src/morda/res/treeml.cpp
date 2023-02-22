@@ -38,5 +38,5 @@ utki::shared_ref<morda::res::treeml> morda::res::treeml::load(const utki::shared
 		}
 	}
 
-	return utki::make_shared_ref<treeml>(ctx, ::treeml::read(fi));
+	return utki::make_shared<treeml>(ctx, ::treeml::read(fi));
 }

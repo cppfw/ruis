@@ -39,7 +39,7 @@ class choice_group : public pile{
 	
 	std::weak_ptr<choice_button> active_choice_button;
 public:
-	choice_group(std::shared_ptr<morda::context> c, const treeml::forest& desc);
+	choice_group(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
 	
 	choice_group(const choice_group&) = delete;
 	choice_group& operator=(const choice_group&) = delete;

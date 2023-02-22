@@ -38,8 +38,8 @@ void image_button::on_press_change(){
 	this->button::on_press_change();
 }
 
-image_button::image_button(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
-		widget(std::move(c), desc),
+image_button::image_button(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+		widget(c, desc),
 		button(this->context, desc),
 		image(this->context, desc)
 {
@@ -55,9 +55,9 @@ image_button::image_button(std::shared_ptr<morda::context> c, const treeml::fore
 				}
 
 				if(pp.value == "pressed"){
-					this->pressedImage_v = this->context->loader.load<res::image>(get_property_value(pp).to_string());
+					this->pressedImage_v = this->context.get().loader.load<res::image>(get_property_value(pp).to_string()).to_shared_ptr();
 				}else if(pp.value == "unpressed"){
-					this->unpressedImage_v = this->context->loader.load<res::image>(get_property_value(pp).to_string());
+					this->unpressedImage_v = this->context.get().loader.load<res::image>(get_property_value(pp).to_string()).to_shared_ptr();
 				}
 				this->update_image();
 			}

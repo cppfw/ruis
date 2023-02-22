@@ -42,10 +42,10 @@ class SimpleWidget :
 	utki::shared_ref<const morda::res::texture> tex;
 
 public:
-	SimpleWidget(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
-			morda::widget(std::move(c), desc),
+	SimpleWidget(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+			morda::widget(c, desc),
 			morda::character_input_widget(this->context),
-			tex(this->context->loader.load<morda::res::texture>("tex_sample"))
+			tex(this->context.get().loader.load<morda::res::texture>("tex_sample"))
 	{}
 
 	uint32_t timer = 0;
@@ -71,9 +71,9 @@ public:
 		}
 
 		if(this->is_updating()){
-			this->context->updater->stop(*this);
+			this->context.get().updater->stop(*this);
 		}else{
-			this->context->updater->start(
+			this->context.get().updater->start(
 					utki::make_shared_from(*this),
 					0
 				);
@@ -124,7 +124,7 @@ public:
 			morda::matrix4 matr(matrix);
 			matr.scale(this->rect().d);
 
-			auto& r = *this->context->renderer;
+			auto& r = *this->context.get().renderer;
 			r.shader->pos_tex->render(matr, *r.pos_tex_quad_01_vao, this->tex->tex());
 		}
 
@@ -146,8 +146,8 @@ class CubeWidget : public morda::widget, public morda::updateable{
 public:
 	std::shared_ptr<morda::vertex_array> cubeVAO;
 
-	CubeWidget(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
-			morda::widget(std::move(c), desc)
+	CubeWidget(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+			morda::widget(c, desc)
 	{
 		std::array<morda::vector3, 36> cubePos = {{
 			morda::vector3(-1, -1,  1), morda::vector3( 1, -1,  1), morda::vector3(-1,  1,  1),
@@ -164,7 +164,7 @@ public:
 			morda::vector3(-1, -1,  1), morda::vector3( 1, -1, -1), morda::vector3( 1, -1,  1)
 		}};
 
-		auto posVBO = this->context->renderer->factory->create_vertex_buffer(utki::make_span(cubePos));
+		auto posVBO = this->context.get().renderer.get().factory->create_vertex_buffer(utki::make_span(cubePos));
 
 		std::array<morda::vector2, 36> cubeTex = {{
 			morda::vector2(0, 0), morda::vector2(1, 0), morda::vector2(0, 1),
@@ -181,21 +181,21 @@ public:
 			morda::vector2(1, 0), morda::vector2(1, 1), morda::vector2(0, 1)
 		}};
 
-		auto texVBO = this->context->renderer->factory->create_vertex_buffer(utki::make_span(cubeTex));
+		auto texVBO = this->context.get().renderer.get().factory->create_vertex_buffer(utki::make_span(cubeTex));
 
 		std::array<uint16_t, 36> indices = {{
 			0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35
 		}};
 
-		auto cubeIndices = this->context->renderer->factory->create_index_buffer(utki::make_span(indices));
+		auto cubeIndices = this->context.get().renderer.get().factory->create_index_buffer(utki::make_span(indices));
 
-		this->cubeVAO = this->context->renderer->factory->create_vertex_array(
+		this->cubeVAO = this->context.get().renderer.get().factory->create_vertex_array(
 			{posVBO, texVBO},
 			cubeIndices,
 			morda::vertex_array::mode::triangles
 		).to_shared_ptr();
 
-		this->tex = this->context->loader.load<morda::res::texture>("tex_sample").to_shared_ptr();
+		this->tex = this->context.get().loader.load<morda::res::texture>("tex_sample").to_shared_ptr();
 		this->rot.set_identity();
 	}
 
@@ -227,7 +227,7 @@ public:
 
 //		glEnable(GL_CULL_FACE);
 
-		this->context->renderer->shader->pos_tex->render(matr, *this->cubeVAO, this->tex->tex());
+		this->context.get().renderer.get().shader->pos_tex->render(matr, *this->cubeVAO, this->tex->tex());
 
 //		glDisable(GL_CULL_FACE);
 	}
@@ -236,10 +236,10 @@ public:
 class TreeViewItemsProvider : public morda::tree_view::provider{
 	treeml::forest root;
 
-	std::shared_ptr<morda::context> context;
+	utki::shared_ref<morda::context> context;
 public:
 
-	TreeViewItemsProvider(std::shared_ptr<morda::context> c) :
+	TreeViewItemsProvider(const utki::shared_ref<morda::context>& c) :
 			context(c)
 	{
 		this->root = treeml::read(R"qwertyuiop(
@@ -368,10 +368,10 @@ public:
 			list = &n->children;
 		}
 
-		auto ret = utki::make_shared_ref<morda::row>(this->context, treeml::forest());
+		auto ret = utki::make_shared<morda::row>(this->context, treeml::forest());
 
 		{
-			auto v = this->context->inflater.inflate(
+			auto v = this->context.get().inflater.inflate(
 					R"qwertyuiop(
 							@pile{
 								@color{
@@ -428,7 +428,7 @@ public:
 		}
 
 		{
-			auto b = this->context->inflater.inflate_as<morda::push_button>(
+			auto b = this->context.get().inflater.inflate_as<morda::push_button>(
 					R"qwertyuiop(
 							@push_button{
 								@color{

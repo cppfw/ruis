@@ -38,7 +38,7 @@ public:
 //		TRACE(<< "static_provider::getWidget(): index = " << index << std::endl)
 		auto i = std::next(this->widgets.begin(), index);
 		ASSERT(this->get_list())
-		return this->get_list()->context->inflater.inflate(i, i + 1);
+		return this->get_list()->context.get().inflater.inflate(i, i + 1);
 	}
 
 
@@ -53,8 +53,8 @@ public:
 };
 }
 
-list_widget::list_widget(std::shared_ptr<morda::context> c, const treeml::forest& desc, bool vertical):
-		widget(std::move(c), desc),
+list_widget::list_widget(const utki::shared_ref<morda::context>& c, const treeml::forest& desc, bool vertical):
+		widget(c, desc),
 		container(this->context, treeml::forest()),
 		oriented_widget(this->context, treeml::forest(), vertical)
 {
@@ -79,7 +79,7 @@ void list_widget::lay_out(){
 	this->update_children_list();
 
 	// defer the scroll position change notification, because layouting happens during render phase
-	this->context->run_from_ui_thread(
+	this->context.get().run_from_ui_thread(
 			[wl = utki::make_weak_from(*this)](){
 				if(auto l = wl.lock()){
 					l->notify_scroll_pos_changed();
@@ -111,9 +111,9 @@ real list_widget::calc_num_visible_items()const noexcept{
 	unsigned index = this->get_long_index();
 
 	for(auto& c : this->children()){
-		auto dim = c->rect().d[index];
+		auto dim = c.get().rect().d[index];
 		auto visible_dim = dim;
-		auto pos = c->rect().p[index];
+		auto pos = c.get().rect().p[index];
 		if(pos < 0){
 			visible_dim += pos;
 		}
@@ -171,7 +171,7 @@ real list_widget::get_scroll_factor()const noexcept{
 		return 0;
 	}
 
-	return (real(this->pos_index + this->pos_offset / this->children().front()->rect().d[index]) * average_item_dim)
+	return (real(this->pos_index + this->pos_offset / this->children().front().get().rect().d[index]) * average_item_dim)
 			/ (real(length + this->first_tail_item_offset / this->first_tail_item_dim) * average_item_dim);
 }
 
@@ -214,11 +214,11 @@ void list_widget::set_scroll_factor(real factor){
 
 // TODO: refactor
 bool list_widget::arrange_widget(const utki::shared_ref<widget>& w, real& pos, bool added, size_t index, widget_list::const_iterator& insertBefore){
-	auto& lp = this->get_layout_params_as_const<layout_params>(*w);
+	auto& lp = this->get_layout_params_as_const<layout_params>(w.get());
 
-	vector2 dim = this->dims_for_widget(*w, lp);
+	vector2 dim = this->dims_for_widget(w.get(), lp);
 
-	w->resize(dim);
+	w.get().resize(dim);
 
 	unsigned longIndex = this->get_long_index();
 	unsigned transIndex = this->get_trans_index();
@@ -227,9 +227,9 @@ bool list_widget::arrange_widget(const utki::shared_ref<widget>& w, real& pos, b
 		vector2 to;
 		to[longIndex] = pos;
 		to[transIndex] = 0;
-		w->move_to(to);
+		w.get().move_to(to);
 	}
-	pos += w->rect().d[longIndex];
+	pos += w.get().rect().d[longIndex];
 
 	if(pos > 0){
 		if(!added){
@@ -241,7 +241,7 @@ bool list_widget::arrange_widget(const utki::shared_ref<widget>& w, real& pos, b
 		}
 	}else{
 		++this->pos_index;
-		this->pos_offset -= w->rect().d[longIndex];
+		this->pos_offset -= w.get().rect().d[longIndex];
 		if(added){
 			insertBefore = this->erase(insertBefore);
 			if(this->item_provider){
@@ -255,7 +255,7 @@ bool list_widget::arrange_widget(const utki::shared_ref<widget>& w, real& pos, b
 		}
 	}
 
-	if(w->rect().p[longIndex] + w->rect().d[longIndex] >= this->rect().d[longIndex]){
+	if(w.get().rect().p[longIndex] + w.get().rect().d[longIndex] >= this->rect().d[longIndex]){
 		return true;
 	}
 
@@ -354,9 +354,9 @@ void list_widget::update_tail_items_info(){
 
 		auto w = this->item_provider->get_widget(i - 1);
 
-		auto& lp = this->get_layout_params_as_const<layout_params>(*w);
+		auto& lp = this->get_layout_params_as_const<layout_params>(w.get());
 
-		vector2 d = this->dims_for_widget(*w, lp);
+		vector2 d = this->dims_for_widget(w.get(), lp);
 
 		auto item_dim = d[longIndex];
 		dim -= item_dim;
@@ -402,7 +402,7 @@ void list_widget::scroll_by(real delta) {
 
 	if(delta >= 0){
 		for(auto& c : this->children()){
-			auto wd = c->rect().d[longIndex] - this->pos_offset;
+			auto wd = c.get().rect().d[longIndex] - this->pos_offset;
 			if(wd > delta){
 				this->pos_offset += delta;
 				delta -= wd;
@@ -425,8 +425,8 @@ void list_widget::scroll_by(real delta) {
 				)
 			for(; this->pos_index < this->first_tail_item_index;){
 				auto w = this->item_provider->get_widget(this->pos_index);
-				auto& lp = this->get_layout_params_as_const<layout_params>(*w);
-				vector2 d = this->dims_for_widget(*w, lp);
+				auto& lp = this->get_layout_params_as_const<layout_params>(w.get());
+				vector2 d = this->dims_for_widget(w.get(), lp);
 				this->push_back(w); // this is just optimization, to avoid creating same widget twice
 				if(d[longIndex] > delta){
 					this->pos_offset = delta;
@@ -449,8 +449,8 @@ void list_widget::scroll_by(real delta) {
 				ASSERT(this->added_index == this->pos_index)
 				--this->pos_index;
 				auto w = this->item_provider->get_widget(this->pos_index);
-				auto& lp = this->get_layout_params_as_const<layout_params>(*w);
-				vector2 d = this->dims_for_widget(*w, lp);
+				auto& lp = this->get_layout_params_as_const<layout_params>(w.get());
+				vector2 d = this->dims_for_widget(w.get(), lp);
 				this->insert(w, this->children().begin()); // this is just optimization, to avoid creating same widget twice
 				--this->added_index;
 				if(d[longIndex] > delta){

@@ -30,20 +30,20 @@ using namespace morda;
 namespace{
 class context_menu_wrapper : public size_container{
 public:
-	context_menu_wrapper(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
-			widget(std::move(c), desc),
+	context_menu_wrapper(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+			widget(c, desc),
 			size_container(this->context, desc)
 	{}
 };
 }
 
-overlay::overlay(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
-		widget(std::move(c), desc),
+overlay::overlay(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+		widget(c, desc),
 		pile(this->context, desc)
 {}
 
 utki::shared_ref<widget> overlay::show_context_menu(const utki::shared_ref<widget>& w, vector2 anchor){
-	auto c = utki::make_shared_ref<context_menu_wrapper>(this->context, treeml::read(R"qwertyuiop(
+	auto c = utki::make_shared<context_menu_wrapper>(this->context, treeml::read(R"qwertyuiop(
 		layout{
 			dx{fill} dy{fill}
 		}
@@ -55,38 +55,39 @@ utki::shared_ref<widget> overlay::show_context_menu(const utki::shared_ref<widge
 		}
 	)qwertyuiop"));
 
-	auto& mp = *std::dynamic_pointer_cast<mouse_proxy>(c->children().back().to_shared_ptr());
+	// TODO: rewrite using utki::dynamic_reference_cast()
+	auto& mp = *std::dynamic_pointer_cast<mouse_proxy>(c.get().children().back().to_shared_ptr());
 
 	mp.mouse_button_handler = [cntr{utki::make_weak(c)}](mouse_proxy& w, const mouse_button_event& e) -> bool {
 		if(auto c = cntr.lock()){
-			c->context->run_from_ui_thread([c](){
+			c->context.get().run_from_ui_thread([c](){
 				c->remove_from_parent();
 			});
 		}
 		return false;
 	};
 
-	c->push_back(w);
+	c.get().push_back(w);
 
-	auto& lp = c->get_layout_params_const(*w);
+	auto& lp = c.get().get_layout_params_const(w.get());
 
-	vector2 dim = this->dims_for_widget(*w, lp);
+	vector2 dim = this->dims_for_widget(w.get(), lp);
 
 	using std::min;
 	using std::max;
 
 	dim = min(dim, this->rect().d); // clamp top
 
-	w->resize(dim);
+	w.get().resize(dim);
 
 	anchor = max(anchor, 0); // clamp bottom
-	anchor = min(anchor, this->rect().d - w->rect().d); // clamp top
+	anchor = min(anchor, this->rect().d - w.get().rect().d); // clamp top
 
-	w->move_to(anchor);
+	w.get().move_to(anchor);
 
 	auto sp = utki::make_shared_from(*this);
-	this->context->run_from_ui_thread([c, sp](){
-		sp->push_back(c);
+	this->context.get().run_from_ui_thread([c, sp](){
+		sp.get().push_back(c);
 	});
 
 	return c;

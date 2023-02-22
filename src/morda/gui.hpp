@@ -94,7 +94,7 @@ public:
 	 * @return number of milliseconds to sleep before next call.
 	 */
 	uint32_t update(){
-		return this->context->updater->update();
+		return this->context.get().updater.get().update();
 	}
 
 	/**

@@ -35,7 +35,7 @@ class color_widget : public virtual widget{
 	uint32_t color = 0xffffffff;
 	uint32_t disabled_color = 0xff808080;
 protected:
-	color_widget(std::shared_ptr<morda::context> c, const treeml::forest& desc);
+	color_widget(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
 
 public:
 	color_widget(const color_widget&) = delete;

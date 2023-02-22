@@ -27,8 +27,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace morda;
 
-gradient::gradient(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
-		widget(std::move(c), desc)
+gradient::gradient(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+		widget(c, desc)
 {
 	for(const auto& p : desc){
 		if(!is_property(p)){
@@ -36,13 +36,13 @@ gradient::gradient(std::shared_ptr<morda::context> c, const treeml::forest& desc
 		}
 
 		if(p.value == "gradient"){
-			this->res = this->context->loader.load<res::gradient>(get_property_value(p).to_string()).to_shared_ptr();
+			this->res = this->context.get().loader.load<res::gradient>(get_property_value(p).to_string()).to_shared_ptr();
 		}
 	}
 }
 
 void gradient::render(const matrix4& matrix)const{
-	set_simple_alpha_blending(*this->context->renderer);
+	set_simple_alpha_blending(*this->context.get().renderer);
 	
 	morda::matrix4 matr(matrix);
 	matr.scale(this->rect().d);

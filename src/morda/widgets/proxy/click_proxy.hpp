@@ -29,7 +29,7 @@ class click_proxy : virtual public widget{
     bool is_pressed_ = false;
     bool deferred_release_ret;
 public:
-    click_proxy(std::shared_ptr<morda::context> c, const treeml::forest& desc);
+    click_proxy(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
 
 	click_proxy(const click_proxy&) = delete;
 	click_proxy& operator=(const click_proxy&) = delete;

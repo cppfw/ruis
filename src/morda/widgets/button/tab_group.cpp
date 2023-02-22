@@ -25,8 +25,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace morda;
 
-tab_group::tab_group(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
-		widget(std::move(c), desc),
+tab_group::tab_group(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+		widget(c, desc),
 		choice_group(this->context, desc)
 {
 	for(const auto& p : desc){
@@ -41,14 +41,14 @@ tab_group::tab_group(std::shared_ptr<morda::context> c, const treeml::forest& de
 				}
 
 				if(p.value == "filler"){
-					this->set_filler(this->context->loader.load<res::image>(get_property_value(pp).to_string()));
+					this->set_filler(this->context.get().loader.load<res::image>(get_property_value(pp).to_string()).to_shared_ptr());
 				}
 			}
 		}
 	}
 
 	if(!this->filler){
-		this->set_filler(this->context->loader.load<res::image>("morda_img_tabs_filler"));
+		this->set_filler(this->context.get().loader.load<res::image>("morda_img_tabs_filler").to_shared_ptr());
 	}
 }
 
@@ -67,7 +67,7 @@ morda::vector2 tab_group::measure(const morda::vector2& quotum)const{
 	sides<real> prevBorders = real(0);
 
 	for(const auto& c : this->children()){
-		const auto& lp = this->get_layout_params_as_const<container::layout_params>(*c);
+		const auto& lp = this->get_layout_params_as_const<container::layout_params>(c.get());
 
 		auto t = dynamic_cast<const morda::tab*>(&c.get());
 		if(!t){
@@ -86,7 +86,7 @@ morda::vector2 tab_group::measure(const morda::vector2& quotum)const{
 			}
 		}
 
-		d = c->measure(d);
+		d = c.get().measure(d);
 
 		length += d.x();
 
@@ -115,10 +115,10 @@ void tab_group::lay_out(){
 	sides<real> prevBorders = 0;
 
 	for(const auto& c : this->children()){
-		const auto& lp = this->get_layout_params_as_const<container::layout_params>(*c);
+		const auto& lp = this->get_layout_params_as_const<container::layout_params>(c.get());
 
-		auto dim = this->dims_for_widget(*c, lp);
-		c->resize(dim);
+		auto dim = this->dims_for_widget(c.get(), lp);
+		c.get().resize(dim);
 
 		auto t = dynamic_cast<morda::tab*>(&c.get());
 		if(!t){
@@ -131,7 +131,7 @@ void tab_group::lay_out(){
 		using std::round;
 
 		pos -= min(prevBorders.right(), borders.left());
-		c->move_to(vector2(pos, round((this->rect().d.y() - c->rect().d.y()) / 2)));
+		c.get().move_to(vector2(pos, round((this->rect().d.y() - c.get().rect().d.y()) / 2)));
 		pos += dim.x();
 
 		prevBorders = borders;
@@ -143,7 +143,7 @@ void tab_group::render(const morda::matrix4& matrix)const{
 
 	for(const auto& w: this->children()){
 		if(w.to_shared_ptr() != active_tab){
-			this->render_child(matrix, *w);
+			this->render_child(matrix, w.get());
 		}
 	}
 
@@ -153,7 +153,7 @@ void tab_group::render(const morda::matrix4& matrix)const{
 
 	// render filler
 	if(this->children().size() != 0){
-		real ce = this->children().back()->rect().x2();
+		real ce = this->children().back().get().rect().x2();
 		real l = this->rect().d.x() - ce;
 		if(l > 0){
 			matrix4 m(matrix);

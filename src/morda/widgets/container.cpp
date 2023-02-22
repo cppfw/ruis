@@ -27,8 +27,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace morda;
 
-container::container(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
-		widget(std::move(c), desc)
+container::container(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+		widget(c, desc)
 {
 	this->push_back_inflate(desc);
 }
@@ -65,7 +65,7 @@ const widget::layout_params& container::get_layout_params_const(const widget& w)
 }
 
 std::unique_ptr<widget::layout_params> container::create_layout_params(const treeml::forest& desc)const{
-	return std::make_unique<widget::layout_params>(desc, this->context->units);
+	return std::make_unique<widget::layout_params>(desc, this->context.get().units);
 }
 
 void container::push_back_inflate(const treeml::forest& desc){
@@ -73,7 +73,7 @@ void container::push_back_inflate(const treeml::forest& desc){
 		if(is_leaf_property(i->value)){
 			continue;
 		}
-		this->push_back(this->context->inflater.inflate(i, i + 1));
+		this->push_back(this->context.get().inflater.inflate(i, i + 1));
 	}
 
 	// in case this widget is initially disabled, as specified in gui script
@@ -96,7 +96,7 @@ void container::render_child(const matrix4& matrix, const widget& c) const {
 
 void container::render(const morda::matrix4& matrix)const{
 	for(auto& w: this->children()){
-		this->render_child(matrix, *w);
+		this->render_child(matrix, w.get());
 	}
 }
 
@@ -144,23 +144,23 @@ bool container::on_mouse_button(const mouse_button_event& e){
 
 	// call children in reverse order
 	for(auto i = this->children().rbegin(); i != this->children().rend(); ++i){
-		auto& c = *i;
+		auto& c = i->get();
 
-		if(!c->is_interactive()){
+		if(!c.is_interactive()){
 			continue;
 		}
 
-		if(!c->rect().overlaps(e.pos)){
+		if(!c.rect().overlaps(e.pos)){
 			continue;
 		}
 
 		// Sometimes mouse click event comes without prior mouse move,
 		// but, since we get mouse click, then the widget was hovered before the click.
-		c->set_hovered(true, e.pointer_id);
+		c.set_hovered(true, e.pointer_id);
 
-		if(c->on_mouse_button(mouse_button_event{
+		if(c.on_mouse_button(mouse_button_event{
 				e.is_down,
-				e.pos - c->rect().p,
+				e.pos - c.rect().p,
 				e.button,
 				e.pointer_id
 			}))
@@ -176,7 +176,7 @@ bool container::on_mouse_button(const mouse_button_event& e){
 				this->mouse_capture_map.insert(std::make_pair(
 						e.pointer_id,
 						mouse_capture_info{
-							utki::make_weak(c.to_shared_ptr()),
+							utki::make_weak(i->to_shared_ptr()),
 							1
 						}
 					));
@@ -186,7 +186,7 @@ bool container::on_mouse_button(const mouse_button_event& e){
 			// that means the rest of the underlying widgets are not hovered,
 			// update the hovered state of those
 			for(++i; i != this->children().rend(); ++i){
-				(*i)->set_hovered(false, e.pointer_id);
+				i->get().set_hovered(false, e.pointer_id);
 			}
 
 			return true;
@@ -225,23 +225,23 @@ bool container::on_mouse_move(const mouse_move_event& e){
 
 	// call children in reverse order
 	for(auto i = this->children().rbegin(); i != this->children().rend(); ++i){
-		auto& c = *i;
+		auto& c = i->get();
 
-		if(!c->is_interactive()){
-			ASSERT(!c->is_hovered(), [&](auto&o){o << "c->name() = " << c->id;})
+		if(!c.is_interactive()){
+			ASSERT(!c.is_hovered(), [&](auto&o){o << "c->name() = " << c.id;})
 			continue;
 		}
 		
-		if(!c->rect().overlaps(e.pos)){
-			c->set_hovered(false, e.pointer_id);
+		if(!c.rect().overlaps(e.pos)){
+			c.set_hovered(false, e.pointer_id);
 			continue;
 		}
 
-		c->set_hovered(true, e.pointer_id);
+		c.set_hovered(true, e.pointer_id);
 
 		// LOG("e.pos = " << e.pos << ", rect() = " << c->rect() << std::endl)
-		if(c->on_mouse_move(mouse_move_event{
-				e.pos - c->rect().p,
+		if(c.on_mouse_move(mouse_move_event{
+				e.pos - c.rect().p,
 				e.pointer_id,
 				e.ignore_mouse_capture
 			}))
@@ -250,7 +250,7 @@ bool container::on_mouse_move(const mouse_move_event& e){
 			// that means the rest of the underlying widgets are not hovered,
 			// update the hovered state of those
 			for(++i; i != this->children().rend(); ++i){
-				(*i)->set_hovered(false, e.pointer_id);
+				i->get().set_hovered(false, e.pointer_id);
 			}
 
 			return true;
@@ -268,22 +268,22 @@ void container::on_hover_change(unsigned pointer_id){
 	// un-hover all the children since container became un-hovered
 	blocked_flag_guard blocked_guard(this->is_blocked);
 	for(auto& w : this->children()){
-		w->set_hovered(false, pointer_id);
+		w.get().set_hovered(false, pointer_id);
 	}
 }
 
 void container::lay_out(){
 //	TRACE(<< "container::lay_out(): invoked" << std::endl)
 	for(auto& w : this->children()){
-		if(w->is_layout_dirty()){
-			w->layout_dirty = false;
-			w->lay_out();
+		if(w.get().is_layout_dirty()){
+			w.get().layout_dirty = false;
+			w.get().lay_out();
 		}
 	}
 }
 
 container::widget_list::const_iterator container::insert(const utki::shared_ref<widget>& w, widget_list::const_iterator before){
-	if(w->parent()){
+	if(w.get().parent()){
 		throw std::invalid_argument("container::insert(): given widget is already added to some container");
 	}
 
@@ -291,11 +291,11 @@ container::widget_list::const_iterator container::insert(const utki::shared_ref<
 		throw std::logic_error("container::insert(): children list is locked");
 	}
 
-	if(before != this->children().end() && (*before)->parent() != this){
+	if(before != this->children().end() && before->get().parent() != this){
 		throw std::invalid_argument("container::insert(): given 'before' iterator points to a different container");
 	}
 
-	widget& ww = *w;
+	widget& ww = w.get();
 
 	auto ret = this->children_list.variable.emplace(before, w);
 

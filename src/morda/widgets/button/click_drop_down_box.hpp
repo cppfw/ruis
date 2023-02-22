@@ -35,7 +35,7 @@ class click_drop_down_box :
 
 	unsigned num_mouse_buttons_pressed = 0;
 public:
-	click_drop_down_box(std::shared_ptr<morda::context> c, const treeml::forest& desc);
+	click_drop_down_box(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
 
 	click_drop_down_box(const click_drop_down_box&) = delete;
 	click_drop_down_box& operator=(const click_drop_down_box&) = delete;

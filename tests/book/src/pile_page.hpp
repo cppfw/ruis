@@ -8,7 +8,7 @@ class pile_page :
 		public morda::pile
 {
 public:
-	pile_page(std::shared_ptr<morda::context> c, const treeml::forest& desc);
+	pile_page(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
 	
 	pile_page(const pile_page&) = delete;
 	pile_page& operator=(const pile_page&) = delete;

@@ -31,8 +31,8 @@ namespace morda{
  */
 class row : public linear_container{
 public:
-	row(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
-			widget(std::move(c), desc),
+	row(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+			widget(c, desc),
 			linear_container(this->context, desc, false)
 	{}
 

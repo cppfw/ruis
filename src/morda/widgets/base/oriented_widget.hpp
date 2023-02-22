@@ -37,7 +37,7 @@ public:
 		return this->is_vertical_v ? 0 : 1;
 	}
 
-	oriented_widget(std::shared_ptr<morda::context> c, const treeml::forest& desc, bool vertical);
+	oriented_widget(const utki::shared_ref<morda::context>& c, const treeml::forest& desc, bool vertical);
 
 	oriented_widget(const oriented_widget&) = delete;
 	oriented_widget& operator=(const oriented_widget&) = delete;

@@ -4,8 +4,8 @@
 
 #include <morda/util/util.hpp>
 
-wire_socket::wire_socket(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
-		morda::widget(std::move(c), desc)
+wire_socket::wire_socket(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+		morda::widget(c, desc)
 {
 	for(const auto& p : desc){
 		if(!morda::is_property(p)){

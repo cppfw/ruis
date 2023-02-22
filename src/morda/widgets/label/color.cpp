@@ -27,13 +27,13 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace morda;
 
-color::color(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
-		widget(std::move(c), desc),
+color::color(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+		widget(c, desc),
 		color_widget(this->context, desc)
 {}
 
 void color::render(const morda::matrix4& matrix)const{
-	auto& r = *this->context->renderer;
+	auto& r = *this->context.get().renderer;
 	set_simple_alpha_blending(r);
 	
 	morda::matrix4 matr(matrix);

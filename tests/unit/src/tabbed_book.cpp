@@ -24,8 +24,8 @@ tst::set set("tabbed_book", [](tst::suite& suite){
 
 		class sub_tabbed_book : public morda::tabbed_book{
 		public:
-			sub_tabbed_book(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
-					morda::widget(std::move(c), desc),
+			sub_tabbed_book(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+					morda::widget(c, desc),
 					tabbed_book(this->context, desc)
 			{}
 		} stb(std::move(c), treeml::forest());

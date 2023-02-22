@@ -25,8 +25,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace morda;
 
-spinner::spinner(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
-		widget(std::move(c), desc),
+spinner::spinner(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+		widget(c, desc),
 		image(this->context, desc)
 {}
 
@@ -42,9 +42,9 @@ void spinner::render(const matrix4& matrix)const{
 
 void spinner::set_active(bool active){
 	if(active){
-		this->context->updater->start(utki::make_shared_from(*this));
+		this->context.get().updater->start(utki::make_shared_from(*this));
 	}else{
-		this->context->updater->stop(*this);
+		this->context.get().updater->stop(*this);
 	}
 }
 

@@ -11,7 +11,7 @@ class cube_page :
 {
 	std::shared_ptr<morda::updateable> cube;
 public:
-	cube_page(std::shared_ptr<morda::context> c);
+	cube_page(const utki::shared_ref<morda::context>& c);
 	
 	cube_page(const cube_page&) = delete;
 	cube_page& operator=(const cube_page&) = delete;

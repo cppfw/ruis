@@ -28,28 +28,32 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace morda::res;
 
-morda::res::cursor::cursor(const utki::shared_ref<morda::context>& c, morda::res::image& image, const vector2& hotspot) :
-		resource(std::move(c)),
-		image_v(utki::make_shared_from(image)),
+morda::res::cursor::cursor(
+	const utki::shared_ref<morda::context>& c,
+	const utki::shared_ref<morda::res::image>& image,
+	const vector2& hotspot
+) :
+		resource(c),
+		image_v(image),
 		hotspot_v(hotspot)
 {}
 
 
 utki::shared_ref<cursor> cursor::load(const utki::shared_ref<morda::context>& ctx, const treeml::forest& desc, const papki::file& fi) {
-	std::shared_ptr<res::image> image;
 	vector2 hotspot;
 	bool hotspot_set = false;
 
+	const treeml::leaf* image_res_id = nullptr;
 	for(auto& p : desc){
 		if(p.value == "image"){
-			image = ctx->loader.load<res::image>(get_property_value(p).to_string()).to_shared_ptr(); // TODO: do not use to_shared_ptr()
+			image_res_id = &get_property_value(p);
 		}else if(p.value == "hotspot"){
 			hotspot = parse_vec2(p.children);
 			hotspot_set = true;
 		}
 	}
 
-	if(!image){
+	if(!image_res_id){
 		throw std::logic_error("cursor::load(): resource description does not contain 'image' property");
 	}
 	
@@ -57,5 +61,9 @@ utki::shared_ref<cursor> cursor::load(const utki::shared_ref<morda::context>& ct
 		throw std::logic_error("cursor::load(): resource description does not contain 'hotspot' property");
 	}
 	
-	return utki::make_shared_ref<cursor>(ctx, *image, hotspot);
+	return utki::make_shared<cursor>(
+		ctx,
+		ctx.get().loader.load<res::image>(image_res_id->to_string()),
+		hotspot
+	);
 }

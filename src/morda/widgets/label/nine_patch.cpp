@@ -94,8 +94,8 @@ const auto ninePatchLayout_c = treeml::read(R"qwertyuiop(
 	)qwertyuiop");
 }
 
-nine_patch::nine_patch(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
-		widget(std::move(c), desc),
+nine_patch::nine_patch(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+		widget(c, desc),
 		blending_widget(this->context, desc),
 		column(this->context, ninePatchLayout_c),
 		img_widgets_matrix([this]() -> decltype(this->img_widgets_matrix){
@@ -129,13 +129,13 @@ nine_patch::nine_patch(std::shared_ptr<morda::context> c, const treeml::forest& 
 		if(p.value == "left"){
 			// 'min' is by default, but not allowed to specify explicitly, as well as 'max' and 'fill',
 			// so, use parse_dimension_value().
-			this->borders.left() = parse_dimension_value(get_property_value(p), this->context->units);
+			this->borders.left() = parse_dimension_value(get_property_value(p), this->context.get().units);
 		}else if(p.value == "right"){
-			this->borders.right() = parse_dimension_value(get_property_value(p), this->context->units);
+			this->borders.right() = parse_dimension_value(get_property_value(p), this->context.get().units);
 		}else if(p.value == "top"){
-			this->borders.top() = parse_dimension_value(get_property_value(p), this->context->units);
+			this->borders.top() = parse_dimension_value(get_property_value(p), this->context.get().units);
 		}else if(p.value == "bottom"){
-			this->borders.bottom() = parse_dimension_value(get_property_value(p), this->context->units);
+			this->borders.bottom() = parse_dimension_value(get_property_value(p), this->context.get().units);
 		}else if(p.value == "center_visible"){
 			this->set_center_visible(get_property_value(p).to_bool());
 		}
@@ -145,13 +145,13 @@ nine_patch::nine_patch(std::shared_ptr<morda::context> c, const treeml::forest& 
 	{
 		auto i = std::find(desc.begin(), desc.end(), "image");
 		if(i != desc.end()){
-			this->set_nine_patch(this->context->loader.load<res::nine_patch>(get_property_value(*i).to_string()));
+			this->set_nine_patch(this->context.get().loader.load<res::nine_patch>(get_property_value(*i).to_string()));
 		}
 	}
 	{
 		auto i = std::find(desc.begin(), desc.end(), "disabled_image");
 		if(i != desc.end()){
-			this->set_disabled_nine_patch(this->context->loader.load<res::nine_patch>(get_property_value(*i).to_string()));
+			this->set_disabled_nine_patch(this->context.get().loader.load<res::nine_patch>(get_property_value(*i).to_string()));
 		}
 	}
 

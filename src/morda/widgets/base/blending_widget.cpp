@@ -56,8 +56,8 @@ renderer::blend_factor blendFactorFromString(const std::string& s){
 }
 
 
-blending_widget::blending_widget(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
-		widget(std::move(c), desc)
+blending_widget::blending_widget(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+		widget(c, desc)
 {
 	for(const auto& p : desc){
 		if(!is_property(p)){
@@ -79,7 +79,7 @@ blending_widget::blending_widget(std::shared_ptr<morda::context> c, const treeml
 }
 
 void blending_widget::set_blending_to_renderer()const{
-	auto& r = *this->context->renderer;
+	auto& r = this->context.get().renderer.get();
 	r.set_blend_enabled(this->is_blending_enabled());
 	if(this->is_blending_enabled()){
 		r.set_blend_func(this->blend_v.src, this->blend_v.dst, this->blend_v.src_alpha, this->blend_v.dst_alpha);

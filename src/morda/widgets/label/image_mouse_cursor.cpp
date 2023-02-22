@@ -27,8 +27,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace morda;
 
-image_mouse_cursor::image_mouse_cursor(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
-		widget(std::move(c), desc),
+image_mouse_cursor::image_mouse_cursor(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+		widget(c, desc),
 		pile(this->context, desc)
 {
 	for(const auto& p : desc){
@@ -37,7 +37,7 @@ image_mouse_cursor::image_mouse_cursor(std::shared_ptr<morda::context> c, const 
 		}
 
 		if(p.value == "cursor"){
-			this->set_cursor(this->context->loader.load<res::cursor>(get_property_value(p).to_string()));
+			this->set_cursor(this->context.get().loader.load<res::cursor>(get_property_value(p).to_string()));
 		}
 	}
 }
@@ -74,5 +74,5 @@ void image_mouse_cursor::render(const morda::matrix4& matrix)const{
 	
 //	TRACE(<< "image_mouse_cursor::render(): this->cursorPos = " << this->cursorPos << " this->quadTex->dim() = " << this->quadTex->dim() << std::endl)
 	
-	this->quad_tex->render(matr, *this->context->renderer->pos_tex_quad_01_vao);
+	this->quad_tex->render(matr, *this->context.get().renderer.get().pos_tex_quad_01_vao);
 }

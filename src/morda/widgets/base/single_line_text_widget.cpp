@@ -23,8 +23,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace morda;
 
-single_line_text_widget::single_line_text_widget(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
-		widget(std::move(c), desc),
+single_line_text_widget::single_line_text_widget(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+		widget(c, desc),
 		text_widget(this->context, desc)
 {
 	for(const auto& p : desc){

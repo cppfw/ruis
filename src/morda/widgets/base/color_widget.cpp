@@ -25,8 +25,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace morda;
 
-color_widget::color_widget(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
-		widget(std::move(c), desc)
+color_widget::color_widget(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+		widget(c, desc)
 {
 	for(const auto& p : desc){
 		if(!is_property(p)){

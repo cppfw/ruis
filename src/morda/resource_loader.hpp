@@ -124,7 +124,7 @@ public:
 	 *
 	 * Example:
 	 * @code
-	 * auto image = this->context->loader().load<morda::res_image>("img_my_image_name");
+	 * auto image = this->context.get().loader().load<morda::res_image>("img_my_image_name");
 	 * @endcode
 	 *
 	 * @param name - name of the resource as it appears in resource description.

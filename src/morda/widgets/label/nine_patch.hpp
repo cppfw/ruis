@@ -71,7 +71,7 @@ public:
 	nine_patch(const nine_patch&) = delete;
 	nine_patch& operator=(const nine_patch&) = delete;
 
-	nine_patch(std::shared_ptr<morda::context> c, const treeml::forest& desc);
+	nine_patch(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
 
 	void set_nine_patch(std::shared_ptr<const res::nine_patch> np);
 

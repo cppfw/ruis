@@ -31,7 +31,7 @@ namespace morda{
  */
 class busy : public spinner{
 public:
-	busy(std::shared_ptr<morda::context> c, const treeml::forest& desc);
+	busy(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
 
 	void set_active(bool active);
 };

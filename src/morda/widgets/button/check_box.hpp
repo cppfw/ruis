@@ -38,7 +38,7 @@ class check_box :
 {
 	std::shared_ptr<widget> checkWidget;
 public:
-	check_box(std::shared_ptr<morda::context> c, const treeml::forest& desc);
+	check_box(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
 	
 	check_box(const check_box&) = delete;
 	check_box& operator=(const check_box&) = delete;

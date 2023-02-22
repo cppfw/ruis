@@ -38,7 +38,7 @@ class tree_view :
 {
 	utki::shared_ref<list_widget> item_list;
 public:
-	tree_view(std::shared_ptr<morda::context> c, const treeml::forest& desc);
+	tree_view(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
 
 	tree_view(const tree_view&) = delete;
 	tree_view& operator=(const tree_view&) = delete;
@@ -121,7 +121,7 @@ public:
 	void set_provider(std::shared_ptr<provider> provider = nullptr);
 
 	void set_vertical_scroll_factor(real factor){
-		this->item_list->set_scroll_factor(factor);
+		this->item_list.get().set_scroll_factor(factor);
 	}
 
 	void set_horizontal_scroll_factor(real factor){
@@ -129,13 +129,13 @@ public:
 	}
 
 	vector2 get_scroll_factor()const{
-		return vector2(this->scroll_area::get_scroll_factor().x(), this->item_list->get_scroll_factor());
+		return vector2(this->scroll_area::get_scroll_factor().x(), this->item_list.get().get_scroll_factor());
 	}
 
     vector2 get_scroll_band()const noexcept{
         return vector2(
                 this->scroll_area::get_visible_area_fraction().x(),
-                this->item_list->get_scroll_band()
+                this->item_list.get().get_scroll_band()
             );
     }
 

@@ -36,8 +36,8 @@ const auto D_Layout = treeml::read(R"qwertyuiop(
 
 }
 
-check_box::check_box(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
-		widget(std::move(c), desc),
+check_box::check_box(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+		widget(c, desc),
 		button(this->context, desc),
 		toggle_button(this->context, desc),
 		nine_patch(this->context, D_Layout)
@@ -45,7 +45,7 @@ check_box::check_box(std::shared_ptr<morda::context> c, const treeml::forest& de
 	this->checkWidget = this->content().try_get_widget("morda_checkbox_check");
 	this->checkWidget->set_visible(this->is_pressed());
 
-	this->set_nine_patch(this->context->loader.load<res::nine_patch>("morda_npt_checkbox_bg"));
+	this->set_nine_patch(this->context.get().loader.load<res::nine_patch>("morda_npt_checkbox_bg").to_shared_ptr());
 }
 
 void check_box::on_press_change(){

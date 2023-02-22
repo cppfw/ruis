@@ -31,8 +31,8 @@ namespace morda{
  */
 class resize_proxy : virtual public widget{
 public:
-	resize_proxy(std::shared_ptr<morda::context> c, const treeml::forest& desc) :
-			widget(std::move(c), desc)
+	resize_proxy(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+			widget(c, desc)
 	{}
 
 	resize_proxy(const resize_proxy&) = delete;
