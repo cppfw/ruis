@@ -57,7 +57,7 @@ public:
 		return this->book;
 	}
 
-	std::shared_ptr<page> tear_out(tab& t);
+	utki::shared_ref<page> tear_out(tab& t);
 
 	using morda::column::render;
 	using morda::column::lay_out;

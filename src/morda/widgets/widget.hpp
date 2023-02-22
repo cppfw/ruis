@@ -171,7 +171,7 @@ public:
 	 *                of the widget then new texture will be allocated.
 	 * @return Texture containing rendered widget.
 	 */
-	std::shared_ptr<texture_2d> render_to_texture(std::shared_ptr<texture_2d> reuse = nullptr)const;
+	utki::shared_ref<texture_2d> render_to_texture(std::shared_ptr<texture_2d> reuse = nullptr)const;
 
 private:
 	bool layout_dirty = true;

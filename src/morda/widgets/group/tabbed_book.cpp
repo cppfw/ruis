@@ -114,7 +114,7 @@ void tabbed_book::activate_another_tab(tab& t){
 	}
 }
 
-std::shared_ptr<page> tabbed_book::tear_out(tab& t){
+utki::shared_ref<page> tabbed_book::tear_out(tab& t){
 	auto i = this->find_pair(t);
 	if(i == this->tab_page_pairs.end()){
 		throw std::logic_error("tabbed_book::tear_out(): tab not found");

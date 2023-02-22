@@ -196,12 +196,13 @@ void widget::render_internal(const morda::matrix4& matrix)const{
 			bool scissor_test_was_enabled = r.is_scissor_enabled();
 			r.set_scissor_enabled(false);
 
+			// TODO: this is already checked inside of render_to_texture()
 			// check if can re-use old texture
 			if(!this->cache_texture || this->cache_texture->dims() != this->rect().d){
-				this->cache_texture = this->render_to_texture();
+				this->cache_texture = this->render_to_texture().to_shared_ptr();
 			}else{
 				ASSERT(this->cache_texture->dims() == this->rect().d)
-				this->cache_texture = this->render_to_texture(std::move(this->cache_texture));
+				this->cache_texture = this->render_to_texture(std::move(this->cache_texture)).to_shared_ptr();
 			}
 
 			r.set_scissor_enabled(scissor_test_was_enabled);
@@ -259,7 +260,7 @@ void widget::render_internal(const morda::matrix4& matrix)const{
 #endif
 }
 
-std::shared_ptr<texture_2d> widget::render_to_texture(std::shared_ptr<texture_2d> reuse)const{
+utki::shared_ref<texture_2d> widget::render_to_texture(std::shared_ptr<texture_2d> reuse)const{
 	auto& r = this->context.get().renderer.get();
 
 	utki::shared_ref<texture_2d> tex = [&](){
