@@ -238,7 +238,7 @@ morda::vector2 linear_container::measure(const morda::vector2& quotum)const{
 
 		auto info = info_array.begin();
 		for(auto i = this->children().begin(); i != this->children().end(); ++i, ++info){
-			auto& lp = this->get_layout_params_as_const<layout_params>(**i);
+			auto& lp = this->get_layout_params_as_const<layout_params>(i->get());
 			ASSERT(lp.weight >= 0)
 			if(lp.weight == 0){
 				continue;
@@ -289,7 +289,7 @@ morda::vector2 linear_container::measure(const morda::vector2& quotum)const{
 
 			if(quotum[trans_index] < 0){
 				using std::max;
-				height = max(height, (*i)->measure(d)[trans_index]);
+				height = max(height, i->get().measure(d)[trans_index]);
 			}
 		}
 	}

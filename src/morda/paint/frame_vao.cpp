@@ -25,7 +25,7 @@ using namespace morda;
 
 frame_vao::frame_vao(const utki::shared_ref<const morda::renderer>& r) :
 		renderer(r),
-		vao(this->renderer->empty_vertex_array)
+		vao(this->renderer.get().empty_vertex_array)
 {}
 
 void frame_vao::set(vector2 dims, vector2 thickness){
@@ -47,15 +47,15 @@ void frame_vao::set(vector2 dims, vector2 thickness){
 		0, 4, 1, 5, 2, 6, 3, 7, 0, 4
 	};
 	
-	this->vao = this->renderer->factory->create_vertex_array(
+	this->vao = this->renderer.get().factory->create_vertex_array(
 			{
-				this->renderer->factory->create_vertex_buffer(vertices),
+				this->renderer.get().factory->create_vertex_buffer(vertices),
 			},
-			this->renderer->factory->create_index_buffer(indices),
+			this->renderer.get().factory->create_index_buffer(indices),
 			morda::vertex_array::mode::triangle_strip
 		);
 }
 
 void frame_vao::render(const matrix4& matrix, uint32_t color)const{
-	this->renderer->shader->color_pos->render(matrix, *this->vao, color);
+	this->renderer.get().shader->color_pos->render(matrix, this->vao.get(), color);
 }

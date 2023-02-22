@@ -59,7 +59,7 @@ void text_input_line::render(const morda::matrix4& matrix) const{
 		matr.scale(vector2(std::abs(this->cursorPos - this->selectionStartPos), this->rect().d.y()));
 
 		auto& r = this->context.get().renderer.get();
-		r.shader->color_pos->render(matr, *r.pos_quad_01_vao, 0xff804040);
+		r.shader->color_pos->render(matr, r.pos_quad_01_vao.get(), 0xff804040);
 	}
 	
 	{
@@ -84,8 +84,8 @@ void text_input_line::render(const morda::matrix4& matrix) const{
 		matr.translate(this->cursorPos, 0);
 		matr.scale(vector2(cursorWidth_c * this->context.get().units.dots_per_dp, this->rect().d.y()));
 
-		auto& r = *this->context.get().renderer;
-		r.shader->color_pos->render(matr, *r.pos_quad_01_vao, this->get_current_color());
+		auto& r = this->context.get().renderer.get();
+		r.shader->color_pos->render(matr, r.pos_quad_01_vao.get(), this->get_current_color());
 	}
 }
 
@@ -248,7 +248,7 @@ void text_input_line::on_focus_change(){
 		this->shiftPressed = false;
 		this->startCursorBlinking();
 	}else{
-		this->context.get().updater->stop(*this);
+		this->context.get().updater.get().stop(*this);
 	}
 }
 
@@ -259,10 +259,10 @@ void text_input_line::on_resize(){
 
 
 void text_input_line::startCursorBlinking(){
-	this->context.get().updater->stop(*this);
+	this->context.get().updater.get().stop(*this);
 	this->cursorBlinkVisible = true;
-	this->context.get().updater->start(
-			utki::make_shared_from(*static_cast<updateable*>(this)),
+	this->context.get().updater.get().start(
+			utki::make_shared_from(*static_cast<updateable*>(this)).to_shared_ptr(),
 			cursorBlinkPeriod_c
 		);
 }

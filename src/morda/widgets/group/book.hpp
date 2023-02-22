@@ -52,7 +52,7 @@ public:
 	virtual void on_hide()noexcept{}
 	virtual void on_tear_out()noexcept{}
 	
-	std::shared_ptr<page> tear_out()noexcept;
+	utki::shared_ref<page> tear_out()noexcept;
 };
 
 class book :
@@ -92,7 +92,7 @@ public:
 	// page is either pushed or teared out
 	std::function<void(book&, const page&)> pages_change_handler;
 private:
-	std::shared_ptr<page> tear_out(page& page)noexcept;
+	utki::shared_ref<page> tear_out(page& page)noexcept;
 
 	void notify_pages_change(const page& p);
 };

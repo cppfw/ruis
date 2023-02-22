@@ -38,7 +38,7 @@ void wire_socket::connect(const std::shared_ptr<wire_socket>& o){
 	o->disconnect();
 	
 	this->slave = o;
-	this->slave->primary = utki::make_shared_from(*this);
+	this->slave->primary = utki::make_shared_from(*this).to_shared_ptr();
 	this->onConnected(*this->slave);
 }
 

@@ -188,15 +188,16 @@ utki::shared_ref<widget> tree_view::provider::get_widget(size_t index){
 		if(this->count(utki::make_span(path)) != 0){
 			auto w = this->get_list()->context.get().inflater.inflate(plus_minus_layout);
 
-			auto plusminus = w->try_get_widget_as<morda::image>("plusminus");
+			auto plusminus = w.get().try_get_widget_as<morda::image>("plusminus");
 			ASSERT(plusminus)
 			plusminus->set_image(
-					is_collapsed ?
-							this->get_list()->context->loader.load<morda::res::image>("morda_img_treeview_plus") :
-							this->get_list()->context->loader.load<morda::res::image>("morda_img_treeview_minus")
+					(is_collapsed ?
+							this->get_list()->context.get().loader.load<morda::res::image>("morda_img_treeview_plus") :
+							this->get_list()->context.get().loader.load<morda::res::image>("morda_img_treeview_minus")
+					).to_shared_ptr()
 				);
 
-			auto plusminus_mouse_proxy = w->try_get_widget_as<morda::mouse_proxy>("plusminus_mouseproxy");
+			auto plusminus_mouse_proxy = w.get().try_get_widget_as<morda::mouse_proxy>("plusminus_mouseproxy");
 			ASSERT(plusminus_mouse_proxy)
 			plusminus_mouse_proxy->mouse_button_handler = [this, path, is_collapsed](morda::mouse_proxy&, const morda::mouse_button_event& e) -> bool {
 				if(e.button != morda::mouse_button::left){
@@ -220,12 +221,12 @@ utki::shared_ref<widget> tree_view::provider::get_widget(size_t index){
 
 				return true;
 			};
-			widget->push_back(w);
+			widget.get().push_back(w);
 		}
-		ret->push_back(widget);
+		ret.get().push_back(widget);
 	}
 
-	ret->push_back(this->get_widget(utki::make_span(path), is_collapsed));
+	ret.get().push_back(this->get_widget(utki::make_span(path), is_collapsed));
 
 	return ret;
 }

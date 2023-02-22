@@ -64,12 +64,13 @@ public:
 	{
 		this->gui.initStandardWidgets(*this->get_res_file("../../res/morda_res/"));
 
-		this->gui.context->inflater.register_widget<path_widget>("path_widget");
-		this->gui.context->inflater.register_widget<frame_widget>("frame_widget");
+		this->gui.context.get().inflater.register_widget<path_widget>("path_widget");
+		this->gui.context.get().inflater.register_widget<frame_widget>("frame_widget");
 	
 		// this->gui.set_root(std::make_shared<path_widget>(this->gui.context, treeml::forest()));
 
-		this->gui.set_root(this->gui.context->inflater.inflate(treeml::read(R"(
+		this->gui.set_root(
+			this->gui.context.get().inflater.inflate(treeml::read(R"(
 			@pile{
 				@path_widget{
 					layout{
@@ -110,7 +111,7 @@ public:
 					}
 				}
 			}
-		)")));
+		)")).to_shared_ptr());
 	}
 };
 

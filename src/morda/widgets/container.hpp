@@ -440,7 +440,7 @@ std::shared_ptr<T> widget::try_get_widget(bool allow_itself)noexcept{
 	auto cont = dynamic_cast<container*>(this);
 	if(cont){
 		for(const auto& c : cont->children()){
-			auto w = c->try_get_widget<T>(true);
+			auto w = c.get().try_get_widget<T>(true);
 			if(w){
 				return w;
 			}
@@ -470,7 +470,7 @@ template <class T> std::vector<utki::shared_ref<T>> widget::get_all_widgets(bool
 
 	if(auto cont = dynamic_cast<container*>(this)){
 		for(auto& c : cont->children()){
-			auto res = c->get_all_widgets<T>(true);
+			auto res = c.get().get_all_widgets<T>(true);
 			ret.insert(
 					ret.end(),
 					std::make_move_iterator(res.begin()),

@@ -19,18 +19,18 @@ public:
 	{
 		this->gui.initStandardWidgets(*this->get_res_file("../../res/morda_res/"));
 
-		std::shared_ptr<morda::widget> c = this->gui.context->inflater.inflate(
+		auto c = this->gui.context.get().inflater.inflate(
 				*this->get_res_file("res/test.gui")
 			);
-		this->gui.set_root(c);
+		this->gui.set_root(c.to_shared_ptr());
 
 		{
 			auto spinner = utki::make_weak_from(
-					c->get_widget_as<morda::busy>("busy_spinner")
+					c.get().get_widget_as<morda::busy>("busy_spinner")
 				);
-			auto& button = c->get_widget_as<morda::push_button>("busy_toggle_button");
+			auto& button = c.get().get_widget_as<morda::push_button>("busy_toggle_button");
 
-			auto disable_button = utki::make_weak_from(c->get_widget("refresh_disable_button"));
+			auto disable_button = utki::make_weak_from(c.get().get_widget("refresh_disable_button"));
 
 			button.click_handler = [spinner, disable_button](morda::push_button& b){
 				if(auto s = spinner.lock()){
@@ -42,11 +42,11 @@ public:
 			};
 		}
 
-		c->get_widget_as<morda::busy>("busy_spinner2").set_active(true);
+		c.get().get_widget_as<morda::busy>("busy_spinner2").set_active(true);
 
 		{
-			auto spinner = utki::make_weak_from(c->get_widget_as<morda::spinner>("refresh_spinner"));
-			auto& button = c->get_widget_as<morda::push_button>("refresh_toggle_button");
+			auto spinner = utki::make_weak_from(c.get().get_widget_as<morda::spinner>("refresh_spinner"));
+			auto& button = c.get().get_widget_as<morda::push_button>("refresh_toggle_button");
 			button.click_handler = [spinner](morda::push_button& b){
 				if(auto s = spinner.lock()){
 					s->set_active(!s->is_updating());

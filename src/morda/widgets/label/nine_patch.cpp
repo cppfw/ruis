@@ -145,13 +145,13 @@ nine_patch::nine_patch(const utki::shared_ref<morda::context>& c, const treeml::
 	{
 		auto i = std::find(desc.begin(), desc.end(), "image");
 		if(i != desc.end()){
-			this->set_nine_patch(this->context.get().loader.load<res::nine_patch>(get_property_value(*i).to_string()));
+			this->set_nine_patch(this->context.get().loader.load<res::nine_patch>(get_property_value(*i).to_string()).to_shared_ptr());
 		}
 	}
 	{
 		auto i = std::find(desc.begin(), desc.end(), "disabled_image");
 		if(i != desc.end()){
-			this->set_disabled_nine_patch(this->context.get().loader.load<res::nine_patch>(get_property_value(*i).to_string()));
+			this->set_disabled_nine_patch(this->context.get().loader.load<res::nine_patch>(get_property_value(*i).to_string()).to_shared_ptr());
 		}
 	}
 
@@ -288,7 +288,7 @@ void nine_patch::apply_images(){
 
 	for(unsigned i = 0; i != 3; ++i){
 		for(unsigned j = 0; j != 3; ++j){
-			this->img_widgets_matrix[i][j]->set_image(this->img_res_matrix->images()[i][j]);
+			this->img_widgets_matrix[i][j]->set_image(this->img_res_matrix->images()[i][j].to_shared_ptr());
 		}
 	}
 }

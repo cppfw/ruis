@@ -88,7 +88,7 @@ widget::layout_params::layout_params(const treeml::forest& desc, const morda::un
 
 std::shared_ptr<widget> widget::try_get_widget(const std::string& id, bool allow_itself)noexcept{
 	if(allow_itself && this->id == id){
-		return utki::make_shared_from(*this);
+		return utki::make_shared_from(*this).to_shared_ptr();
 	}
 	return nullptr;
 }
@@ -164,8 +164,8 @@ utki::shared_ref<widget> widget::replace_by(const utki::shared_ref<widget>& w) {
 
 	this->parent()->insert(w, this->parent()->find(*this));
 
-	if(w->layout_desc.empty()){
-		w->layout_desc = std::move(this->layout_desc);
+	if(w.get().layout_desc.empty()){
+		w.get().layout_desc = std::move(this->layout_desc);
 	}
 
 	return this->remove_from_parent();
@@ -189,7 +189,7 @@ void widget::render_internal(const morda::matrix4& matrix)const{
 		return;
 	}
 
-	auto& r = *this->context.get().renderer;
+	auto& r = this->context.get().renderer.get();
 
 	if(this->cache){
 		if(this->cache_dirty){
@@ -209,7 +209,7 @@ void widget::render_internal(const morda::matrix4& matrix)const{
 		}
 
 		// after rendering to texture it is most likely there will be transparent areas, so enable simple blending
-		set_simple_alpha_blending(*this->context.get().renderer);
+		set_simple_alpha_blending(this->context.get().renderer.get());
 
 		this->render_from_cache(matrix);
 	}else{
@@ -260,7 +260,7 @@ void widget::render_internal(const morda::matrix4& matrix)const{
 }
 
 std::shared_ptr<texture_2d> widget::render_to_texture(std::shared_ptr<texture_2d> reuse)const{
-	auto& r = *this->context.get().renderer;
+	auto& r = this->context.get().renderer.get();
 
 	utki::shared_ref<texture_2d> tex = [&](){
 		if(reuse && reuse->dims() == this->rect().d){
@@ -303,9 +303,9 @@ void widget::render_from_cache(const r4::matrix4<float>& matrix)const{
 	morda::matrix4 matr(matrix);
 	matr.scale(this->rect().d);
 
-	auto& r = *this->context.get().renderer;
+	auto& r = this->context.get().renderer.get();
 	ASSERT(this->cache_texture)
-	r.shader->pos_tex->render(matr, *r.pos_tex_quad_01_vao, *this->cache_texture);
+	r.shader->pos_tex->render(matr, r.pos_tex_quad_01_vao.get(), *this->cache_texture);
 }
 
 void widget::clear_cache(){
@@ -334,7 +334,7 @@ void widget::focus()noexcept{
 		return;
 	}
 
-	this->context.get().set_focused_widget(utki::make_shared_from(*this));
+	this->context.get().set_focused_widget(utki::make_shared_from(*this).to_shared_ptr());
 }
 
 void widget::unfocus()noexcept{

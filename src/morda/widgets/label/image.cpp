@@ -38,9 +38,9 @@ image::image(const utki::shared_ref<morda::context>& c, const treeml::forest& de
 		}
 
 		if(p.value == "image"){
-			this->img = this->context.get().loader.load<res::image>(get_property_value(p).to_string());
+			this->img = this->context.get().loader.load<res::image>(get_property_value(p).to_string()).to_shared_ptr();
 		}else if(p.value == "disabled_image"){
-			this->disabled_img = this->context.get().loader.load<res::image>(get_property_value(p).to_string());
+			this->disabled_img = this->context.get().loader.load<res::image>(get_property_value(p).to_string()).to_shared_ptr();
 		}else if(p.value == "keep_aspect_ratio"){
 			this->keep_aspect_ratio = get_property_value(p).to_bool();
 		}else if(p.value == "repeat_x"){
@@ -70,7 +70,7 @@ void image::render(const morda::matrix4& matrix) const{
 
 	this->set_blending_to_renderer();
 	
-	auto& r = *this->context.get().renderer;
+	auto& r = this->context.get().renderer.get();
 	
 	if(!this->texture){
 		this->texture = img->get(this->rect().d).to_shared_ptr();
@@ -107,7 +107,7 @@ void image::render(const morda::matrix4& matrix) const{
 	morda::matrix4 matr(matrix);
 	matr.scale(this->rect().d);
 
-	this->texture->render(matr, *this->vao);
+	this->texture->render(matr, this->vao.get());
 }
 
 morda::vector2 image::measure(const morda::vector2& quotum)const{

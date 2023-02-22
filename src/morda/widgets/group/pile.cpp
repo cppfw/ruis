@@ -33,12 +33,12 @@ pile::pile(const utki::shared_ref<morda::context>& c, const treeml::forest& desc
 void pile::lay_out(){
 //	TRACE(<< "pile::lay_out(): invoked" << std::endl)
 	for(auto i = this->children().begin(); i != this->children().end(); ++i){
-		auto& lp = this->get_layout_params_as_const<container::layout_params>(**i);
+		auto& lp = this->get_layout_params_as_const<container::layout_params>(i->get());
 
-		(*i)->resize(this->dims_for_widget(**i, lp));
+		i->get().resize(this->dims_for_widget(i->get(), lp));
 
 		using std::round;
-		(*i)->move_to(round((this->rect().d - (*i)->rect().d) / 2));
+		i->get().move_to(round((this->rect().d - i->get().rect().d) / 2));
 	}
 }
 
@@ -48,7 +48,7 @@ morda::vector2 pile::measure(const morda::vector2& quotum)const{
 	ret = max(ret, real(0)); // clamp bottom
 
 	for(auto i = this->children().begin(); i != this->children().end(); ++i){
-		auto& lp = this->get_layout_params_as_const<container::layout_params>(**i);
+		auto& lp = this->get_layout_params_as_const<container::layout_params>(i->get());
 
 		morda::vector2 d;
 
@@ -72,7 +72,7 @@ morda::vector2 pile::measure(const morda::vector2& quotum)const{
 			}
 		}
 
-		d = (*i)->measure(d);
+		d = i->get().measure(d);
 
 		for(unsigned j = 0; j != d.size(); ++j){
 			if(quotum[j] < 0){

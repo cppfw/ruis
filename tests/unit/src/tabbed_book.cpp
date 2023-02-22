@@ -18,9 +18,9 @@ tst::set set("tabbed_book", [](tst::suite& suite){
 		auto c = make_dummy_context();
 
 		// make initializations needed by morda::tabbed_book
-		c->loader.mount_res_pack(papki::fs_file("../../res/morda_res/main.res"));
-		c->inflater.register_widget<morda::tab_group>("tab_group");
-		c->inflater.register_widget<morda::book>("book");
+		c.get().loader.mount_res_pack(papki::fs_file("../../res/morda_res/main.res"));
+		c.get().inflater.register_widget<morda::tab_group>("tab_group");
+		c.get().inflater.register_widget<morda::book>("book");
 
 		class sub_tabbed_book : public morda::tabbed_book{
 		public:

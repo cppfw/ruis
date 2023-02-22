@@ -74,5 +74,5 @@ void image_mouse_cursor::render(const morda::matrix4& matrix)const{
 	
 //	TRACE(<< "image_mouse_cursor::render(): this->cursorPos = " << this->cursorPos << " this->quadTex->dim() = " << this->quadTex->dim() << std::endl)
 	
-	this->quad_tex->render(matr, *this->context.get().renderer.get().pos_tex_quad_01_vao);
+	this->quad_tex->render(matr, this->context.get().renderer.get().pos_tex_quad_01_vao.get());
 }

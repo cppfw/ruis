@@ -21,25 +21,25 @@ public:
 	{
 		this->gui.initStandardWidgets(*this->get_res_file("../../res/morda_res/"));
 
-		auto c = this->gui.context->inflater.inflate_as<morda::container>(
+		auto c = this->gui.context.get().inflater.inflate_as<morda::container>(
 				*this->get_res_file("res/test.gui")
 			);
-		this->gui.set_root(c);
+		this->gui.set_root(c.to_shared_ptr());
 
 		auto spinner = utki::make_weak(
 				utki::make_shared_from(
-						c->get_widget_as<morda::busy>("busy_spinner")
+						c.get().get_widget_as<morda::busy>("busy_spinner")
 					)
 			);
-		auto& button = c->get_widget_as<morda::push_button>("busy_toggle_button");
+		auto& button = c.get().get_widget_as<morda::push_button>("busy_toggle_button");
 
 		morda::weak_widget_set enable_widgets;
 
-		auto pbs = c->get_widget_as<morda::container>("enable_group").get_all_widgets<morda::push_button>();
+		auto pbs = c.get().get_widget_as<morda::container>("enable_group").get_all_widgets<morda::push_button>();
 		LOG([&](auto&o){o << "pbs.size() = " << pbs.size() << std::endl;})
 		for(auto& w : pbs){
 			LOG([](auto&o){o << "adding..." << std::endl;})
-			enable_widgets.add(w);
+			enable_widgets.add(w.to_shared_ptr());
 		}
 
 		button.click_handler = [

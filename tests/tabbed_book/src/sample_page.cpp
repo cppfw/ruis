@@ -22,7 +22,7 @@ sample_page::sample_page(const utki::shared_ref<morda::context>& c, const std::s
 
         this->get_widget_as<morda::push_button>("button").click_handler = [this](morda::push_button&){
                 this->context.get().run_from_ui_thread([pg = utki::make_shared_from(*this)]{
-                        pg->tear_out();
+                        pg.get().tear_out();
                 });
         };
 }

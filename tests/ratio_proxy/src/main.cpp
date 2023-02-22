@@ -19,10 +19,10 @@ public:
 	{
 		this->gui.initStandardWidgets(*this->get_res_file("../../res/morda_res/"));
 
-		std::shared_ptr<morda::widget> c = this->gui.context->inflater.inflate(
+		auto c = this->gui.context.get().inflater.inflate(
 				*this->get_res_file("res/test.gui")
 			);
-		this->gui.set_root(c);
+		this->gui.set_root(c.to_shared_ptr());
 	}
 };
 

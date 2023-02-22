@@ -33,14 +33,14 @@ tst::set set("layouting", [](tst::suite& suite){
         auto c = std::make_shared<morda::container>(context, treeml::forest());
         auto tc = utki::make_shared<container_which_invalidates_its_layout_during_layouting>(context);
 
-        tst::check(tc->is_layout_dirty(), SL);
+        tst::check(tc.get().is_layout_dirty(), SL);
         c->push_back(tc);
-        tst::check(tc->is_layout_dirty(), SL);
+        tst::check(tc.get().is_layout_dirty(), SL);
 
         // after prforming layouting on parent container the child container's layout should be dirty
         // because it invalidates its layout during layouting in its lay_out() overridden method
         c->lay_out();
-        tst::check(tc->is_layout_dirty(), SL);
+        tst::check(tc.get().is_layout_dirty(), SL);
     });
 
     suite.add("invalidate_layout_during_layouting_should_result_in_dirty_layout__resize_to_same_size", []{
@@ -49,14 +49,14 @@ tst::set set("layouting", [](tst::suite& suite){
         auto c = std::make_shared<morda::container>(context, treeml::forest());
         auto tc = utki::make_shared<container_which_invalidates_its_layout_during_layouting>(context);
 
-        tst::check(tc->is_layout_dirty(), SL);
+        tst::check(tc.get().is_layout_dirty(), SL);
         c->push_back(tc);
-        tst::check(tc->is_layout_dirty(), SL);
+        tst::check(tc.get().is_layout_dirty(), SL);
 
         // when resizing widget to the same size it should not do anything except perform re-layouting (TODO: why should it?) in case
         // layout was dirty
-        tc->resize(tc->rect().d);
-        tst::check(tc->is_layout_dirty(), SL);
+        tc.get().resize(tc.get().rect().d);
+        tst::check(tc.get().is_layout_dirty(), SL);
     });
 
     suite.add("invalidate_layout_during_layouting_should_result_in_dirty_layout__resize_to_different_size", []{
@@ -65,14 +65,14 @@ tst::set set("layouting", [](tst::suite& suite){
         auto c = std::make_shared<morda::container>(context, treeml::forest());
         auto tc = utki::make_shared<container_which_invalidates_its_layout_during_layouting>(context);
 
-        tst::check(tc->is_layout_dirty(), SL);
+        tst::check(tc.get().is_layout_dirty(), SL);
         c->push_back(tc);
-        tst::check(tc->is_layout_dirty(), SL);
+        tst::check(tc.get().is_layout_dirty(), SL);
 
         // when resizing widget to different size it should change it's size and call on_resize() virtual method
         // which by default does re-layouting
-        tc->resize(c->rect().d + morda::vector2{1, 1});
-        tst::check(tc->is_layout_dirty(), SL);
+        tc.get().resize(c->rect().d + morda::vector2{1, 1});
+        tst::check(tc.get().is_layout_dirty(), SL);
     });
 
     suite.add("invalidate_layout_during_layouting_should_result_in_dirty_layout__gui_render", []{
@@ -80,20 +80,20 @@ tst::set set("layouting", [](tst::suite& suite){
 
         auto tc = utki::make_shared<container_which_invalidates_its_layout_during_layouting>(context);
 
-        tst::check(tc->is_layout_dirty(), SL);
+        tst::check(tc.get().is_layout_dirty(), SL);
         
         // when rendering GUI it should perform layoputing in case it was dirty
         morda::gui gui(context);
-        gui.set_root(tc);
+        gui.set_root(tc.to_shared_ptr());
         
         // after setting widget as gui root it will be resized to window size and hence it will be layed out
-        tst::check(tc->is_layout_dirty(), SL);
+        tst::check(tc.get().is_layout_dirty(), SL);
 
-        tc->invalidate_layout();
+        tc.get().invalidate_layout();
 
         // gui render method will check if layout is dirty and perform re-layouting
         gui.render();
-        tst::check(tc->is_layout_dirty(), SL);
+        tst::check(tc.get().is_layout_dirty(), SL);
     });
 });
 }

@@ -37,9 +37,9 @@ vertex_array::vertex_array(
 	if(this->buffers.empty()){
 		throw std::invalid_argument("no vertex buffers passed to vertex array");
 	}
-	auto s = this->buffers.front()->size;
+	auto s = this->buffers.front().get().size;
 	for(auto& b : this->buffers){
-		if(b->size != s){
+		if(b.get().size != s){
 			throw std::invalid_argument("vertex buffers of different size passed in to vertex array, should all be of the same size");
 		}
 	}

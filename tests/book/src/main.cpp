@@ -26,14 +26,14 @@ public:
 	{
 		this->gui.initStandardWidgets(*this->get_res_file("../../res/morda_res/"));
 
-		this->gui.context->loader.mount_res_pack(*this->get_res_file("res/"));
+		this->gui.context.get().loader.mount_res_pack(*this->get_res_file("res/"));
 
-		std::shared_ptr<morda::widget> c = this->gui.context->inflater.inflate(
+		auto c = this->gui.context.get().inflater.inflate(
 				*this->get_res_file("res/test.gui")
 			);
-		this->gui.set_root(c);
+		this->gui.set_root(c.to_shared_ptr());
 
-		auto& book = c->get_widget_as<morda::book>("book");
+		auto& book = c.get().get_widget_as<morda::book>("book");
 
 		{
 			auto mp = utki::make_shared<pile_page>(
@@ -80,7 +80,7 @@ public:
 							}
 						)qwertyuiop")
 				);
-			mp->get_widget_as<morda::push_button>("cube_button").click_handler = [&mp = mp.get()](morda::push_button& b){
+			mp.get().get_widget_as<morda::push_button>("cube_button").click_handler = [&mp = mp.get()](morda::push_button& b){
 				mp.get_parent_book()->push(utki::make_shared<cube_page>(mp.context));
 			};
 			mp.get().get_widget_as<morda::push_button>("stuff_button").click_handler = [&mp = mp.get()](morda::push_button& b){
@@ -92,16 +92,16 @@ public:
 						}
 					}
 				)qwertyuiop"));
-				pg->get_widget_as<morda::push_button>("back_button").click_handler = [&pg = *pg](morda::push_button& b){
-					b.context->run_from_ui_thread([pg = utki::make_shared_from(pg)]{
-						pg->tear_out();
+				pg.get().get_widget_as<morda::push_button>("back_button").click_handler = [&pg = pg.get()](morda::push_button& b){
+					b.context.get().run_from_ui_thread([pg = utki::make_shared_from(pg)]{
+						pg.get().tear_out();
 					});
 				};
 				mp.get_parent_book()->push(pg);
 			};
-			mp->get_widget_as<morda::push_button>("close_button").click_handler = [&mp = *mp](morda::push_button& b){
-				b.context->run_from_ui_thread([pg = utki::make_shared_from(mp)]{
-					pg->tear_out();
+			mp.get().get_widget_as<morda::push_button>("close_button").click_handler = [&mp = mp.get()](morda::push_button& b){
+				b.context.get().run_from_ui_thread([pg = utki::make_shared_from(mp)]{
+					pg.get().tear_out();
 				});
 			};
 			book.push(mp);

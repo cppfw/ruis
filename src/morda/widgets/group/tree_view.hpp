@@ -81,7 +81,7 @@ public:
 
 		virtual utki::shared_ref<widget> get_widget(utki::span<const size_t> index, bool is_collapsed) = 0;
 
-		virtual void recycle(utki::span<const size_t> index, std::shared_ptr<widget> w){}
+		virtual void recycle(utki::span<const size_t> index, const utki::shared_ref<widget>& w){}
 
 		virtual size_t count(utki::span<const size_t> index)const noexcept = 0;
 

@@ -55,7 +55,7 @@ void book::push(const utki::shared_ref<page>& pg){
 	});
 }
 
-std::shared_ptr<page> book::tear_out(page& pg)noexcept{
+utki::shared_ref<page> book::tear_out(page& pg)noexcept{
 	// book::tear_out() is private, hense ASSERT instead of if(){throw}
 	ASSERT(pg.get_parent_book() == this)
 	
@@ -158,7 +158,7 @@ void book::activate(size_t page_number){
 
 	this->active_page_index = page_number;
 	this->push_back(this->pages[this->active_page_index]);
-	this->pages[this->active_page_index]->on_show();
+	this->pages[this->active_page_index].get().on_show();
 
 	if(this->active_page_change_handler){
 		this->active_page_change_handler(*this);
@@ -170,7 +170,7 @@ book::~book()noexcept{
 		return;
 	}
 
-	this->pages[this->active_page_index]->on_hide();
+	this->pages[this->active_page_index].get().on_hide();
 }
 
 const page* book::get_active_page()const{
@@ -184,7 +184,7 @@ page::page(const utki::shared_ref<morda::context>& c, const treeml::forest& desc
 		widget(c, desc)
 {}
 
-std::shared_ptr<page> page::tear_out()noexcept{
+utki::shared_ref<page> page::tear_out()noexcept{
 	if(!this->get_parent_book()){
 		return utki::make_shared_from(*this);
 	}

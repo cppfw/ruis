@@ -134,17 +134,17 @@ cube_page::cube_page(const utki::shared_ref<morda::context>& c) :
 	};
 	
 	auto cw = utki::make_shared<CubeWidget>(this->context);
-	this->cube = cw;
+	this->cube = cw.to_shared_ptr();
 	
-	cw->set_cache(true);
+	cw.get().set_cache(true);
 	
 	ph.replace_by(cw);
 }
 
 void cube_page::on_show(){
-	this->context.get().updater->start(this->cube, 0);
+	this->context.get().updater.get().start(this->cube, 0);
 }
 
 void cube_page::on_hide()noexcept{
-	this->context.get().updater->stop(*this->cube);
+	this->context.get().updater.get().stop(*this->cube);
 }

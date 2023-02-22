@@ -483,7 +483,7 @@ morda::vector2 list_widget::measure(const morda::vector2& quotum)const{
 	ret[transIndex] = 0;
 
 	for(auto i = this->children().begin(); i != this->children().end(); ++i){
-		ret[transIndex] = max(ret[transIndex], (*i)->rect().d[transIndex]); // clamp bottom
+		ret[transIndex] = max(ret[transIndex], i->get().rect().d[transIndex]); // clamp bottom
 	}
 
 	return ret;
@@ -494,7 +494,7 @@ void list_widget::provider::notify_data_set_change(){
 		return;
 	}
 
-	this->get_list()->context->run_from_ui_thread(
+	this->get_list()->context.get().run_from_ui_thread(
 		[this](){
 			this->get_list()->handle_data_set_changed();
 		}

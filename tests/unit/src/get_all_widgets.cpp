@@ -10,7 +10,7 @@ namespace{
 tst::set set("get_all_widgets", [](tst::suite& suite){
     suite.add("get_all_widgets_function", []{
 		morda::gui m(make_dummy_context());
-		auto w = m.context->inflater.inflate(treeml::read(R"qwertyuiop(
+		auto w = m.context.get().inflater.inflate(treeml::read(R"qwertyuiop(
 			@container{
 				@column{
 					id{1}
@@ -52,7 +52,7 @@ tst::set set("get_all_widgets", [](tst::suite& suite){
 			"1", "2", "3", "6", "9"
 		}};
 
-		auto aaas = w->get_all_widgets<morda::column>();
+		auto aaas = w.get().get_all_widgets<morda::column>();
 		tst::check_ne(aaas.size(), size_t(0), SL);
 
 		for(const auto& id : expected_ids){
@@ -60,7 +60,7 @@ tst::set set("get_all_widgets", [](tst::suite& suite){
 					aaas.begin(),
 					aaas.end(),
 					[&id](const decltype(aaas)::value_type& wg) -> bool {
-						return wg->id == id;
+						return wg.get().id == id;
 					}
 				);
             tst::check(i != aaas.end(), SL) << "id = '" << id <<"' not found";

@@ -33,14 +33,14 @@ void wire_area::render(const morda::matrix4& matrix)const{
 	this->container::render(matrix);
 	
 	for(auto& s : this->sockets){
-		if(!s->slave){
+		if(!s.get().slave){
 			continue;
 		}
 		
-		auto primOutletPos = s->outletPos();
-		auto slaveOutletPos = s->slave->outletPos();
-		auto p0 = s->pos_in_ancestor(primOutletPos[0], this);
-		auto p = s->slave->pos_in_ancestor(slaveOutletPos[0], this) - p0;
+		auto primOutletPos = s.get().outletPos();
+		auto slaveOutletPos = s.get().slave->outletPos();
+		auto p0 = s.get().pos_in_ancestor(primOutletPos[0], this);
+		auto p = s.get().slave->pos_in_ancestor(slaveOutletPos[0], this) - p0;
 		
 		morda::path path;
 		path.cubic_to(primOutletPos[1] * splineControlLength_c, p + slaveOutletPos[1] * splineControlLength_c, p);

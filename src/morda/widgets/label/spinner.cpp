@@ -42,9 +42,9 @@ void spinner::render(const matrix4& matrix)const{
 
 void spinner::set_active(bool active){
 	if(active){
-		this->context.get().updater->start(utki::make_shared_from(*this));
+		this->context.get().updater.get().start(utki::make_shared_from(*this).to_shared_ptr());
 	}else{
-		this->context.get().updater->stop(*this);
+		this->context.get().updater.get().stop(*this);
 	}
 }
 

@@ -317,7 +317,7 @@ container::widget_list::const_iterator container::erase(widget_list::const_itera
 		throw std::invalid_argument("container::erase(): given 'child' iterator is invalid");
 	}
 
-	if((*child)->parent() != this){
+	if(child->get().parent() != this){
 		throw std::invalid_argument("container::erase(): given child widget belongs to a different container");
 	}
 
@@ -325,9 +325,9 @@ container::widget_list::const_iterator container::erase(widget_list::const_itera
 
 	auto ret = this->children_list.variable.erase(child);
 
-	w->parent_container = nullptr;
-	w->set_unhovered();
-	w->on_parent_change();
+	w.get().parent_container = nullptr;
+	w.get().set_unhovered();
+	w.get().on_parent_change();
 
 	this->on_children_change();
 
@@ -346,7 +346,7 @@ std::shared_ptr<widget> container::try_get_widget(const std::string& id, bool al
 	}
 
 	for(auto& w : this->children()){
-		if(auto r = w->try_get_widget(id, true)){
+		if(auto r = w.get().try_get_widget(id, true)){
 			return r;
 		}
 	}
@@ -384,11 +384,11 @@ container::widget_list::const_iterator container::change_child_z_position(widget
 		throw std::invalid_argument("container::change_child_z_position(): given 'child' iterator is invalid");
 	}
 
-	if((*child)->parent() != this){
+	if(child->get().parent() != this){
 		throw std::invalid_argument("container::change_child_z_position(): given child widget belongs to a different container");
 	}
 
-	if(before != this->children().end() && (*before)->parent() != this){
+	if(before != this->children().end() && before->get().parent() != this){
 		throw std::invalid_argument("container::change_child_z_position(): given 'before' iterator points to a different container");
 	}
 
@@ -440,6 +440,6 @@ void container::on_enable_change(){
 	blocked_flag_guard blocked_guard(this->is_blocked);
 	
 	for(auto& c : this->children()){
-		c->set_enabled(this->is_enabled());
+		c.get().set_enabled(this->is_enabled());
 	}
 }

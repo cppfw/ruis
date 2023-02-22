@@ -87,20 +87,20 @@ scroll_bar::scroll_bar(const utki::shared_ref<morda::context>& c, const treeml::
 		}
 
 		if(p.value == "background"){
-			np->set_nine_patch(this->context.get().loader.load<res::nine_patch>(get_property_value(p).to_string()));
+			np->set_nine_patch(this->context.get().loader.load<res::nine_patch>(get_property_value(p).to_string()).to_shared_ptr());
 			background_set = true;
 		}else if(p.value == "nine_patch_of_handle"){
-			hi->set_nine_patch(this->context.get().loader.load<res::nine_patch>(get_property_value(p).to_string()));
+			hi->set_nine_patch(this->context.get().loader.load<res::nine_patch>(get_property_value(p).to_string()).to_shared_ptr());
 			handle_set = true;
 		}
 	}
 
 	if(!background_set){
-		np->set_nine_patch(this->context.get().loader.load<res::nine_patch>("morda_npt_slider_bg"));
+		np->set_nine_patch(this->context.get().loader.load<res::nine_patch>("morda_npt_slider_bg").to_shared_ptr());
 	}
 
 	if(!handle_set){
-		hi->set_nine_patch(this->context.get().loader.load<res::nine_patch>("morda_npt_slider_handle"));
+		hi->set_nine_patch(this->context.get().loader.load<res::nine_patch>("morda_npt_slider_handle").to_shared_ptr());
 	}
 
 	auto hp = this->try_get_widget_as<mouse_proxy>("morda_handle_proxy");

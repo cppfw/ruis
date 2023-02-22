@@ -96,6 +96,6 @@ utki::shared_ref<widget> overlay::show_context_menu(const utki::shared_ref<widge
 void overlay::close_all_context_menus(){
 	auto menus = this->get_all_widgets<context_menu_wrapper>();
 	for(auto& w : menus){
-		w->remove_from_parent();
+		w.get().remove_from_parent();
 	}
 }
