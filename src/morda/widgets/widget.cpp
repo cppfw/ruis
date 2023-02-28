@@ -164,6 +164,7 @@ utki::shared_ref<widget> widget::replace_by(const utki::shared_ref<widget>& w) {
 		throw std::logic_error("this widget is not added to any parent");
 	}
 
+	// TODO: performace can be improved by adding dedicated container::replace_by(iter, widget) function
 	this->parent()->insert(w, this->parent()->find(*this));
 	
 	w.get().layout_parameters = std::move(this->layout_parameters);
