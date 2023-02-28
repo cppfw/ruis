@@ -45,21 +45,28 @@ public:
 	virtual ~gui()noexcept{}
 
 private:
-	std::shared_ptr<morda::widget> root_widget;
+	utki::shared_ref<morda::widget> root_widget;
 
 public:
 	/**
 	 * @brief Set the root widget of the application.
 	 * @param w - the widget to set as a root widget.
 	 */
-	void set_root(std::shared_ptr<morda::widget> w);
+	void set_root(const utki::shared_ref<morda::widget>& w);
 
 	/**
 	 * @brief Get current root widget.
-	 * @return pointer to the currently set root widget.
-	 * @return nullptr if there is no root widget set.
+	 * @return reference to the currently set root widget.
 	 */
-	morda::widget* get_root()noexcept{
+	morda::widget& get_root()noexcept{
+		return this->root_widget.get();
+	}
+
+	/**
+	 * @brief Get constant current root widget.
+	 * @return constant reference to the currently set root widget.
+	 */
+	const morda::widget& get_root()const noexcept{
 		return this->root_widget.get();
 	}
 private:

@@ -84,7 +84,7 @@ tst::set set("layouting", [](tst::suite& suite){
         
         // when rendering GUI it should perform layoputing in case it was dirty
         morda::gui gui(context);
-        gui.set_root(tc.to_shared_ptr());
+        gui.set_root(tc);
         
         // after setting widget as gui root it will be resized to window size and hence it will be layed out
         tst::check(tc.get().is_layout_dirty(), SL);

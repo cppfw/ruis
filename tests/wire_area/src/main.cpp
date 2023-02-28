@@ -27,7 +27,7 @@ public:
 		auto c = this->gui.context.get().inflater.inflate(
 				*this->get_res_file("res/main.gui")
 			);
-		this->gui.set_root(c.to_shared_ptr());
+		this->gui.set_root(c);
 	}
 };
 

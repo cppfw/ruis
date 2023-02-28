@@ -192,7 +192,8 @@ defs{
 }
 
 gui::gui(const utki::shared_ref<morda::context>& context) :
-		context(context)
+		context(context),
+		root_widget(utki::make_shared<morda::widget>(this->context, tml::forest()))
 {
 	// register basic widgets
 	this->context.get().inflater.register_widget<widget>("widget");
@@ -309,37 +310,26 @@ void gui::initStandardWidgets(papki::file& fi) {
 void gui::set_viewport(const morda::vector2& size){
 	this->viewport_size = size;
 
-	if(!this->root_widget){
-		return;
-	}
-
-	this->root_widget->resize(this->viewport_size);
+	this->root_widget.get().resize(this->viewport_size);
 }
 
-void gui::set_root(std::shared_ptr<morda::widget> w){
-	if(w->parent()){
+void gui::set_root(const utki::shared_ref<morda::widget>& w){
+	if(w.get().parent()){
 		throw std::invalid_argument("given widget is already added to some container");
 	}
 
-	this->root_widget = std::move(w);
+	this->root_widget = w;
 
-	this->root_widget->move_to(morda::vector2(0));
-	
-	this->root_widget->resize(this->viewport_size);
+	this->root_widget.get().move_to(morda::vector2(0));
+	this->root_widget.get().resize(this->viewport_size);
 }
 
 void gui::render(const matrix4& matrix)const{
-	if(!this->root_widget){
-		LOG([](auto&o){o << "gui::render(): root widget is not set" << std::endl;})
-		return;
-	}
-
-	ASSERT(this->root_widget)
-
-	if(this->root_widget->is_layout_dirty()){
+	if(this->get_root().is_layout_dirty()){
 		LOG([](auto&o){o << "root widget re-layout needed!" << std::endl;})
-		this->root_widget->layout_dirty = false;
-		this->root_widget->lay_out();
+		// TODO: render() is const, but calls non-const lay_out(), fix it somehow? Perhaps make render() non-const?
+		this->root_widget.get().layout_dirty = false;
+		this->root_widget.get().lay_out();
 	}
 
 	morda::matrix4 m(matrix);
@@ -350,37 +340,27 @@ void gui::render(const matrix4& matrix)const{
 	m.translate(-1, -1);
 	m.scale(vector2(2).comp_divide(this->viewport_size));
 
-	this->root_widget->render_internal(m);
+	this->get_root().render_internal(m);
 }
 
 void gui::send_mouse_move(const vector2& pos, unsigned id){
-	if(!this->root_widget){
-		return;
-	}
-
-	if(this->root_widget->is_interactive()){
-		this->root_widget->set_hovered(this->root_widget->rect().overlaps(pos), id);
-		this->root_widget->on_mouse_move(mouse_move_event{pos, id, false});
+	auto& rw = this->get_root();
+	if(rw.is_interactive()){
+		rw.set_hovered(rw.rect().overlaps(pos), id);
+		rw.on_mouse_move(mouse_move_event{pos, id, false});
 	}
 }
 
 void gui::send_mouse_button(bool is_down, const vector2& pos, mouse_button button, unsigned id){
-	if(!this->root_widget){
-		return;
-	}
-
-	if(this->root_widget->is_interactive()){
-		this->root_widget->set_hovered(this->root_widget->rect().overlaps(pos), id);
-		this->root_widget->on_mouse_button(mouse_button_event{is_down, pos, button, id});
+	auto& rw = this->get_root();
+	if(rw.is_interactive()){
+		rw.set_hovered(rw.rect().overlaps(pos), id);
+		rw.on_mouse_button(mouse_button_event{is_down, pos, button, id});
 	}
 }
 
 void gui::send_mouse_hover(bool isHovered, unsigned pointerID){
-	if(!this->root_widget){
-		return;
-	}
-
-	this->root_widget->set_hovered(isHovered, pointerID);
+	this->get_root().set_hovered(isHovered, pointerID);
 }
 
 void gui::send_key(bool is_down, key key_code){
@@ -401,9 +381,7 @@ void gui::send_key(bool is_down, key key_code){
 		w->on_key_internal(e);
 	}else{
 //		TRACE(<< "HandleKeyEvent(): there is no focused widget, passing to rootWidget" << std::endl)
-		if(this->root_widget){
-			this->root_widget->on_key_internal(e);
-		}
+		this->get_root().on_key_internal(e);
 	}
 }
 
