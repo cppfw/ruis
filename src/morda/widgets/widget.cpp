@@ -39,7 +39,7 @@ widget::widget(const utki::shared_ref<morda::context>& c, const treeml::forest& 
 
 		try{
 			if(p.value == "layout"){
-				this->layout_parameters = std::make_unique<layout_params>(p.children, this->context.get().units);
+				this->layout_parameters = layout_params(p.children, this->context.get().units);
 			}else if(p.value == "x"){
 				this->rectangle.p.x() = parse_dimension_value(get_property_value(p), this->context.get().units);
 			}else if(p.value == "y"){
@@ -165,10 +165,8 @@ utki::shared_ref<widget> widget::replace_by(const utki::shared_ref<widget>& w) {
 	}
 
 	this->parent()->insert(w, this->parent()->find(*this));
-
-	if(!w.get().layout_parameters){
-		w.get().layout_parameters = std::move(this->layout_parameters);
-	}
+	
+	w.get().layout_parameters = std::move(this->layout_parameters);
 
 	return this->remove_from_parent();
 }
@@ -408,10 +406,7 @@ layout_params& widget::get_layout_params(){
 }
 
 const layout_params& widget::get_layout_params_const()const{
-	if(!this->layout_parameters){
-		this->layout_parameters = std::make_unique<layout_params>();
-	}
-	return *this->layout_parameters;
+	return this->layout_parameters;
 }
 
 widget& widget::get_widget(const std::string& id, bool allow_itself){

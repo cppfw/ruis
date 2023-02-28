@@ -177,7 +177,7 @@ public:
 private:
 	bool layout_dirty = true;
 
-	mutable std::unique_ptr<layout_params> layout_parameters;
+	layout_params layout_parameters;
 public:
 	std::string id;
 
