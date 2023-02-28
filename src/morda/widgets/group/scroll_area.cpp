@@ -133,7 +133,7 @@ vector2 scroll_area::dims_for_widget(const widget& w, const layout_params& lp)co
 
 void scroll_area::arrange_widgets(){
 	for(auto i = this->children().begin(); i != this->children().end(); ++i){
-		auto& lp = this->get_layout_params_const(i->get());
+		auto& lp = i->get().get_layout_params_const();
 
 		auto d = this->dims_for_widget(i->get(), lp);
 
@@ -183,7 +183,7 @@ void scroll_area::update_invisible_dims(){
 	using std::max;
 
 	for(auto i = this->children().begin(); i != this->children().end(); ++i){
-		auto& lp = this->get_layout_params_as_const<layout_params>(i->get());
+		auto& lp = i->get().get_layout_params_const();
 
 		morda::vector2 d = i->get().rect().p + this->dims_for_widget(i->get(), lp);
 

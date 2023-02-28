@@ -39,7 +39,7 @@ tree_view::tree_view(const utki::shared_ref<morda::context>& c, const treeml::fo
 {
 	this->push_back(this->item_list);
 
-	auto& lp = this->get_layout_params(this->item_list.get());
+	auto& lp = this->item_list.get().get_layout_params();
 
 	lp.dims.y() = layout_params::max;
 	lp.dims.x() = layout_params::min;

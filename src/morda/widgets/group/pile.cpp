@@ -33,7 +33,7 @@ pile::pile(const utki::shared_ref<morda::context>& c, const treeml::forest& desc
 void pile::lay_out(){
 //	TRACE(<< "pile::lay_out(): invoked" << std::endl)
 	for(auto i = this->children().begin(); i != this->children().end(); ++i){
-		auto& lp = this->get_layout_params_as_const<layout_params>(i->get());
+		auto& lp = i->get().get_layout_params_const();
 
 		i->get().resize(this->dims_for_widget(i->get(), lp));
 
@@ -48,7 +48,7 @@ morda::vector2 pile::measure(const morda::vector2& quotum)const{
 	ret = max(ret, real(0)); // clamp bottom
 
 	for(auto i = this->children().begin(); i != this->children().end(); ++i){
-		auto& lp = this->get_layout_params_as_const<layout_params>(i->get());
+		auto& lp = i->get().get_layout_params_const();
 
 		morda::vector2 d;
 

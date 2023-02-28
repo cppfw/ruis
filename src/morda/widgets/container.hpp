@@ -96,15 +96,6 @@ private:
 
 protected:
 	/**
-	 * @brief Create layout parameters object specific for this container.
-	 * Other widgets which subclass container and need additional parameters for laying out children widgets should extend the layout_params class
-	 * and override this method to construct the correct layout_params instance.
-	 * @param desc - description of the layout parameters.
-	 * @return A new instance of layout parameters object.
-	 */
-	virtual std::unique_ptr<layout_params> create_layout_params(const treeml::forest& desc)const;
-
-	/**
 	 * @brief Calculate basic dimensions of widget.
 	 * Calculates basic dimensions of given widget if it would be placed to
 	 * this container with given layout parameters, basically this is just
@@ -114,64 +105,6 @@ protected:
 	 * @return Dimensions of widget.
 	 */
 	vector2 dims_for_widget(const widget& w, const layout_params& lp)const;
-
-public:
-
-	/**
-	 * @brief Get layout parameters of child widget.
-	 * Same as get_layout_params() but also tries to cast the layout_params object to specified class.
-	 * @param w - widget to get layout parameters for.
-	 * @return Layout parameters of given child widget.
-	 */
-	template <class T> const T& get_layout_params_as_const(const widget& w)const{
-		auto p = dynamic_cast<const T*>(&this->get_layout_params_const(w));
-		if(!p){
-			w.layout_params_.reset();
-			p = dynamic_cast<const T*>(&this->get_layout_params_const(w));
-		}
-
-		if(!p){
-			throw std::bad_cast();
-		}
-		return *p;
-	}
-
-	/**
-	 * @brief Get layout parameters of child widget.
-	 * Same as get_layout_params() but also tries to cast the layout_params object to specified class.
-	 * @param w - widget to get layout parameters for.
-	 * @return Layout parameters of given child widget.
-	 */
-	template <class T> T& get_layout_params_as(widget& w){
-		auto p = dynamic_cast<T*>(&this->get_layout_params(w));
-		if(!p){
-			w.layout_params_.reset();
-			p = dynamic_cast<T*>(&this->get_layout_params(w));
-		}
-
-		if(!p){
-			throw std::bad_cast();
-		}
-		return *p;
-	}
-
-	/**
-	 * @brief Get layout parameters of child widget.
-	 * @param w - widget to get layout parameters for.
-	 * @return Layout parameters of given child widget.
-	 * @throw std::invalid_argument - in case the given widget is not a child of this container.
-	 */
-	layout_params& get_layout_params(widget& w);
-
-	/**
-	 * @brief Get layout parameters of child widget.
-	 * @param w - widget to get layout parameters for.
-	 * @return Layout parameters of given child widget.
-	 * @throw std::invalid_argument - in case the given widget is not a child of this container.
-	 */
-	const layout_params& get_layout_params_const(const widget& w)const;
-
-	using widget::get_layout_params;
 
 protected:
 

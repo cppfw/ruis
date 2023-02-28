@@ -39,7 +39,7 @@ widget::widget(const utki::shared_ref<morda::context>& c, const treeml::forest& 
 
 		try{
 			if(p.value == "layout"){
-				this->layout_desc = p.children;
+				this->layout_parameters = std::make_unique<layout_params>(p.children, this->context.get().units);
 			}else if(p.value == "x"){
 				this->rectangle.p.x() = parse_dimension_value(get_property_value(p), this->context.get().units);
 			}else if(p.value == "y"){
@@ -166,8 +166,8 @@ utki::shared_ref<widget> widget::replace_by(const utki::shared_ref<widget>& w) {
 
 	this->parent()->insert(w, this->parent()->find(*this));
 
-	if(w.get().layout_desc.empty()){
-		w.get().layout_desc = std::move(this->layout_desc);
+	if(!w.get().layout_parameters){
+		w.get().layout_parameters = std::move(this->layout_parameters);
 	}
 
 	return this->remove_from_parent();
@@ -400,19 +400,18 @@ vector2 widget::pos_in_ancestor(vector2 pos, const widget* ancestor){
 }
 
 layout_params& widget::get_layout_params(){
-	if(!this->parent()){
-		throw std::logic_error("widget::get_layout_params(): widget is not added to any container, cannot get layout params. In order to get layout params the widget should be added to some container.");
+	if(this->parent()){
+		this->parent()->invalidate_layout();
 	}
 
-	return this->parent()->get_layout_params(*this);
+	return const_cast<layout_params&>(this->get_layout_params_const());
 }
 
 const layout_params& widget::get_layout_params_const()const{
-	if(!this->parent()){
-		throw std::logic_error("widget::get_layout_params_const(): widget is not added to any container, cannot get layout params. In order to get layout params the widget should be added to some container.");
+	if(!this->layout_parameters){
+		this->layout_parameters = std::make_unique<layout_params>();
 	}
-
-	return this->parent()->get_layout_params_const(*this);
+	return *this->layout_parameters;
 }
 
 widget& widget::get_widget(const std::string& id, bool allow_itself){

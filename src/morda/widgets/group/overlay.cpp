@@ -69,7 +69,7 @@ utki::shared_ref<widget> overlay::show_context_menu(const utki::shared_ref<widge
 
 	c.get().push_back(w);
 
-	auto& lp = c.get().get_layout_params_const(w.get());
+	const auto& lp = w.get().get_layout_params_const();
 
 	vector2 dim = this->dims_for_widget(w.get(), lp);
 

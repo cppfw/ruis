@@ -38,7 +38,7 @@ void book::push(const utki::shared_ref<page>& pg){
 		throw std::logic_error("book::push(): the page is already in some book");
 	}
 	
-	auto& lp = this->get_layout_params(pg.get());
+	auto& lp = pg.get().get_layout_params();
 	lp.dims.set(layout_params::fill);
 	
 	pg.get().parent_book = this;

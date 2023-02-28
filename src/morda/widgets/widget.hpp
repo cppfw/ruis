@@ -83,6 +83,8 @@ public:
 	 */
 	real weight = 0;
 
+	layout_params() = default;
+
 	layout_params(const treeml::forest& desc, const morda::units& units);
 
 	~layout_params()noexcept = default;
@@ -175,23 +177,20 @@ public:
 private:
 	bool layout_dirty = true;
 
-	treeml::forest layout_desc;
-
-	mutable std::unique_ptr<layout_params> layout_params_;
+	mutable std::unique_ptr<layout_params> layout_parameters;
 public:
 	std::string id;
 
 	/**
 	 * @brief Get layout parameters of the widget.
-	 * When calling this method the widget should be added to some container or exception will be thrown otherwise.
+	 * This method invalidates layout.
 	 * @return Layout parameters of the widget.
 	 */
 	layout_params& get_layout_params();
 
 	/**
-	 * @brief Get layout parameters of the widget.
-	 * When calling this method the widget should be added to some container or exception will be thrown otherwise.
-	 * @return Layout parameters of the widget.
+	 * @brief Get constant layout parameters of the widget.
+	 * @return Constant layout parameters of the widget.
 	 */
 	const layout_params& get_layout_params_const()const;
 
@@ -199,6 +198,7 @@ public:
 	 * @brief Request re-layout.
 	 * Set a flag on the widget indicating to the framework that the widget needs a re-layout.
 	 * The layout will be performed before drawing.
+	 * If the widget is added to some parent, the flag will be set on all ancestors down to the root as well.
 	 */
 	void invalidate_layout()noexcept;
 
