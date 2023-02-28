@@ -28,24 +28,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace morda;
 
-linear_container::layout_params::layout_params(const treeml::forest& desc, const morda::units& units) :
-		container::layout_params(desc, units)
-{
-	for(const auto& p : desc){
-		if(!is_property(p)){
-			continue;
-		}
-
-		if(p.value == "weight"){
-			this->weight = get_property_value(p).to_float();
-		}
-	}
-}
-
-std::unique_ptr<widget::layout_params> linear_container::create_layout_params(const treeml::forest& desc)const{
-	return std::make_unique<layout_params>(desc, this->context.get().units);
-}
-
 linear_container::linear_container(const utki::shared_ref<morda::context>& c, const treeml::forest& desc, bool vertical) :
 		widget(c, desc),
 		container(this->context, desc),

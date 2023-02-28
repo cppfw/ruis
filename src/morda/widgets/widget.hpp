@@ -93,19 +93,18 @@ public:
 		constexpr static const real fill = real(-3);
 
 		/**
-		 * @param dims - desired dimensions within the layout. Each component can be a non-negative value in pixels or [min, max, fill].
-		 */
-		layout_params(vector2 dims = vector2(layout_params::min)) :
-				dims(dims)
-		{}
-
-		/**
 		 * @brief desired dimensions.
 		 * Components should hold non-negative value in pixels or [min, max, fill].
 		 */
 		vector2 dims = vector2(layout_params::min);
 
-	public:
+		/**
+		 * @brief Weight of the widget.
+		 * Weight defines how much space widget occupies in addition to its minimal or explicitly set size.
+		 * Default value is 0, which means that the widget will not occupy extra space.
+		 */
+		real weight = 0;
+
 		layout_params(const treeml::forest& desc, const morda::units& units);
 
 		virtual ~layout_params()noexcept{}

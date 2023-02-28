@@ -78,6 +78,8 @@ widget::layout_params::layout_params(const treeml::forest& desc, const morda::un
 				this->dims.x() = parse_layout_dimension_value(get_property_value(p), units);
 			}else if(p.value == "dy"){
 				this->dims.y() = parse_layout_dimension_value(get_property_value(p), units);
+			}else if(p.value == "weight"){
+				this->weight = get_property_value(p).to_float();
 			}
 		}catch(std::invalid_argument&){
 			LOG([&](auto&o){o << "could not parse value of " << treeml::to_string(p) << std::endl;})
