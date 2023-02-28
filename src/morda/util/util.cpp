@@ -80,11 +80,11 @@ real morda::parse_dimension_value(const treeml::leaf& l, const morda::units& uni
 
 real morda::parse_layout_dimension_value(const treeml::leaf& l, const morda::units& units){
 	if(l == "min"){
-		return widget::layout_params::min;
+		return layout_params::min;
 	}else if(l == "fill"){
-		return widget::layout_params::fill;
+		return layout_params::fill;
 	}else if(l == "max"){
-		return widget::layout_params::max;
+		return layout_params::max;
 	}
 	return parse_dimension_value(l, units);
 }

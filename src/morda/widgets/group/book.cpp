@@ -39,7 +39,7 @@ void book::push(const utki::shared_ref<page>& pg){
 	}
 	
 	auto& lp = this->get_layout_params(pg.get());
-	lp.dims.set(widget::layout_params::fill);
+	lp.dims.set(layout_params::fill);
 	
 	pg.get().parent_book = this;
 	this->pages.push_back(pg);

@@ -33,7 +33,7 @@ container::container(const utki::shared_ref<morda::context>& c, const treeml::fo
 	this->push_back_inflate(desc);
 }
 
-widget::layout_params& container::get_layout_params(widget& w){
+layout_params& container::get_layout_params(widget& w){
 	this->invalidate_layout();
 
 	auto& lp = const_cast<
@@ -52,7 +52,7 @@ widget::layout_params& container::get_layout_params(widget& w){
 				>::type>(lp);
 }
 
-const widget::layout_params& container::get_layout_params_const(const widget& w)const{
+const layout_params& container::get_layout_params_const(const widget& w)const{
 	if(w.parent() && w.parent() != this){
 		throw std::invalid_argument("container::get_layout_params(): the given widget is not a child of this container");
 	}
@@ -64,8 +64,8 @@ const widget::layout_params& container::get_layout_params_const(const widget& w)
 	return *w.layout_params_;
 }
 
-std::unique_ptr<widget::layout_params> container::create_layout_params(const treeml::forest& desc)const{
-	return std::make_unique<widget::layout_params>(desc, this->context.get().units);
+std::unique_ptr<layout_params> container::create_layout_params(const treeml::forest& desc)const{
+	return std::make_unique<layout_params>(desc, this->context.get().units);
 }
 
 void container::push_back_inflate(const treeml::forest& desc){

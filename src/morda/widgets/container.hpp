@@ -97,7 +97,7 @@ private:
 protected:
 	/**
 	 * @brief Create layout parameters object specific for this container.
-	 * Other widgets which subclass container and need additional parameters for laying out children widgets should extend the widget::layout_params class
+	 * Other widgets which subclass container and need additional parameters for laying out children widgets should extend the layout_params class
 	 * and override this method to construct the correct layout_params instance.
 	 * @param desc - description of the layout parameters.
 	 * @return A new instance of layout parameters object.

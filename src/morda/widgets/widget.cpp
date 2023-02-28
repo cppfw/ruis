@@ -67,7 +67,7 @@ widget::widget(const utki::shared_ref<morda::context>& c, const treeml::forest& 
 	}
 }
 
-widget::layout_params::layout_params(const treeml::forest& desc, const morda::units& units){
+layout_params::layout_params(const treeml::forest& desc, const morda::units& units){
 	for(const auto& p : desc){
 		if(!is_property(p)){
 			continue;
@@ -399,7 +399,7 @@ vector2 widget::pos_in_ancestor(vector2 pos, const widget* ancestor){
 	return this->parent()->pos_in_ancestor(this->rect().p + pos, ancestor);
 }
 
-widget::layout_params& widget::get_layout_params(){
+layout_params& widget::get_layout_params(){
 	if(!this->parent()){
 		throw std::logic_error("widget::get_layout_params(): widget is not added to any container, cannot get layout params. In order to get layout params the widget should be added to some container.");
 	}
@@ -407,7 +407,7 @@ widget::layout_params& widget::get_layout_params(){
 	return this->parent()->get_layout_params(*this);
 }
 
-const widget::layout_params& widget::get_layout_params_const()const{
+const layout_params& widget::get_layout_params_const()const{
 	if(!this->parent()){
 		throw std::logic_error("widget::get_layout_params_const(): widget is not added to any container, cannot get layout params. In order to get layout params the widget should be added to some container.");
 	}

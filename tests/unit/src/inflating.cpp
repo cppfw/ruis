@@ -37,7 +37,7 @@ tst::set set("inflating", [](tst::suite& suite){
 		auto c = utki::dynamic_reference_cast<morda::container>(w);
 		tst::check_eq(c.get().children().size(), size_t(2), SL);
 		auto lp = c.get().children().front().get().get_layout_params();
-		tst::check_eq(lp.dims[0], morda::widget::layout_params::max, SL);
+		tst::check_eq(lp.dims[0], morda::layout_params::max, SL);
 		tst::check_eq(lp.dims[1], morda::real(123), SL);
     });
 
@@ -74,8 +74,8 @@ tst::set set("inflating", [](tst::suite& suite){
 		tst::check_eq(c.get().children().front().get().rect().p.y(), morda::real(12), SL);
 		tst::check_eq(c.get().children().front().get().rect().d.x(), morda::real(45), SL);
 		auto lp = c.get().children().front().get().get_layout_params();
-		tst::check_eq(lp.dims[0], morda::widget::layout_params::max, SL);
-		tst::check_eq(lp.dims[1], morda::widget::layout_params::min, SL);
+		tst::check_eq(lp.dims[0], morda::layout_params::max, SL);
+		tst::check_eq(lp.dims[1], morda::layout_params::min, SL);
 	});
 
     suite.add("template_arguments", []{
@@ -120,8 +120,8 @@ tst::set set("inflating", [](tst::suite& suite){
 		tst::check_eq(c.get().children().front().get().rect().d.x(), morda::real(45), SL);
 		tst::check_eq(c.get().children().front().get().get_widget("test_widget").rect().p.x(), morda::real(13), SL);
 		auto lp = c.get().children().front().get().get_layout_params();
-		tst::check_eq(lp.dims[0], morda::widget::layout_params::max, SL);
-		tst::check_eq(lp.dims[1], morda::widget::layout_params::max, SL);
+		tst::check_eq(lp.dims[0], morda::layout_params::max, SL);
+		tst::check_eq(lp.dims[1], morda::layout_params::max, SL);
 	});
 
     suite.add("template_arguments_inside_of_nested_containers", []{
@@ -196,8 +196,8 @@ tst::set set("inflating", [](tst::suite& suite){
 		tst::check_eq(c.get().children().front().get().rect().d.x(), morda::real(0), SL);
 		tst::check_eq(c.get().children().front().get().rect().d.y(), morda::real(45), SL);
 		auto lp = c.get().children().front().get().get_layout_params();
-		tst::check_eq(lp.dims[0], morda::widget::layout_params::max, SL);
-		tst::check_eq(lp.dims[1], morda::widget::layout_params::max, SL);
+		tst::check_eq(lp.dims[0], morda::layout_params::max, SL);
+		tst::check_eq(lp.dims[1], morda::layout_params::max, SL);
 	});
 
     suite.add("template_which_nests_same_named_widget_on_2nd_level", []{

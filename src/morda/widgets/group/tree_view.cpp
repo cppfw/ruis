@@ -41,8 +41,8 @@ tree_view::tree_view(const utki::shared_ref<morda::context>& c, const treeml::fo
 
 	auto& lp = this->get_layout_params(this->item_list.get());
 
-	lp.dims.y() = widget::layout_params::max;
-	lp.dims.x() = widget::layout_params::min;
+	lp.dims.y() = layout_params::max;
+	lp.dims.x() = layout_params::min;
 
 	this->item_list.get().data_set_change_handler = [this](list_widget&){
 		this->notify_view_change();

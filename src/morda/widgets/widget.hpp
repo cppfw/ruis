@@ -48,10 +48,51 @@ class context;
 class container;
 
 /**
+ * @brief Layout parameters.
+ */
+class layout_params final{
+public:
+	/**
+	 * @brief Requests minimal dimensions of the widget.
+	 * The widget will always be given minimal space it needs to properly draw.
+	 */
+	constexpr static const real min = real(-1);
+
+	/**
+	 * @brief Requests minimal or bigger dimensions of widget.
+	 * The widget will be given at least minimal space it needs to properly draw.
+	 */
+	constexpr static const real max = real(-2);
+
+	/**
+	 * @brief Requests widget to be same size as its parent.
+	 * Minimal size of the widget is assumed to be 0.
+	 */
+	constexpr static const real fill = real(-3);
+
+	/**
+	 * @brief desired dimensions.
+	 * Components should hold non-negative value in pixels or [min, max, fill].
+	 */
+	vector2 dims = vector2(layout_params::min);
+
+	/**
+	 * @brief Weight of the widget.
+	 * Weight defines how much space widget occupies in addition to its minimal or explicitly set size.
+	 * Default value is 0, which means that the widget will not occupy extra space.
+	 */
+	real weight = 0;
+
+	layout_params(const treeml::forest& desc, const morda::units& units);
+
+	~layout_params()noexcept = default;
+};
+
+/**
  * @brief Basic widget class.
  * From GUI script it can be instantiated as "widget".
  * It can have the following parameters:
- * @li @c layout - layout parameters description. See widget::layout_params for details.
+ * @li @c layout - layout parameters description. See layout_params for details.
  * @li @c x - horizontal position within parent widget.
  * @li @c y - vertical position within parent widget.
  * @li @c dx - width of the widget.
@@ -68,47 +109,6 @@ class widget : virtual public utki::shared{
 	friend class gui;
 public:
 	const utki::shared_ref<morda::context> context;
-
-	/**
-	 * @brief Basic layout parameters.
-	 */
-	class layout_params{
-	public:
-		/**
-		 * @brief Requests minimal dimensions of the widget.
-		 * The widget will always be given minimal space it needs to properly draw.
-		 */
-		constexpr static const real min = real(-1);
-
-		/**
-		 * @brief Requests minimal or bigger dimensions of widget.
-		 * The widget will be given at least minimal space it needs to properly draw.
-		 */
-		constexpr static const real max = real(-2);
-
-		/**
-		 * @brief Requests widget to be same size as its parent.
-		 * Minimal size of the widget is assumed to be 0.
-		 */
-		constexpr static const real fill = real(-3);
-
-		/**
-		 * @brief desired dimensions.
-		 * Components should hold non-negative value in pixels or [min, max, fill].
-		 */
-		vector2 dims = vector2(layout_params::min);
-
-		/**
-		 * @brief Weight of the widget.
-		 * Weight defines how much space widget occupies in addition to its minimal or explicitly set size.
-		 * Default value is 0, which means that the widget will not occupy extra space.
-		 */
-		real weight = 0;
-
-		layout_params(const treeml::forest& desc, const morda::units& units);
-
-		virtual ~layout_params()noexcept{}
-	};
 
 private:
 	container* parent_container = nullptr;
@@ -203,7 +203,7 @@ public:
 	void invalidate_layout()noexcept;
 
 	/**
-	 * @brief Perform layout of the widget.
+	 * @brief Perform layouting of the widget.
 	 * Override this method to arrange widgets contents if needed.
 	 */
 	virtual void lay_out(){}

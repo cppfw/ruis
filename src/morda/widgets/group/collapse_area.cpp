@@ -101,7 +101,7 @@ collapse_area::collapse_area(const utki::shared_ref<morda::context>& c, const tr
 			if(tb.is_pressed()){
 				lp.dims.y() = 0;
 			}else{
-				lp.dims.y() = widget::layout_params::min;
+				lp.dims.y() = layout_params::min;
 			}
 		};
 	}
