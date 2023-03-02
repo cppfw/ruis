@@ -25,7 +25,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <utki/tree.hpp>
 
-#include "../widget.hpp"
+#include "../../widget.hpp"
 #include "list.hpp"
 
 #include "scroll_area.hpp"

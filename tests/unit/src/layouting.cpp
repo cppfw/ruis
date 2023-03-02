@@ -2,7 +2,7 @@
 #include <tst/check.hpp>
 
 #include <morda/context.hpp>
-#include <morda/widgets/container.hpp>
+#include <morda/container.hpp>
 #include <morda/updater.hpp>
 #include <morda/util/mouse_cursor.hpp>
 #include <morda/gui.hpp>

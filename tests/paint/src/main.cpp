@@ -2,7 +2,7 @@
 
 #include <mordavokne/application.hpp>
 
-#include "../../../src/morda/widgets/widget.hpp"
+#include "../../../src/morda/widget.hpp"
 
 #include "../../../src/morda/paint/path_vao.hpp"
 #include "../../../src/morda/paint/frame_vao.hpp"

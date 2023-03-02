@@ -24,7 +24,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <map>
 #include <memory>
 
-#include "widgets/widget.hpp"
+#include "widget.hpp"
 
 #include "util/util.hpp"
 
