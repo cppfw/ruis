@@ -379,13 +379,7 @@ morda::rectangle widget::get_absolute_rect()const noexcept{
 }
 
 vector2 widget::measure(const morda::vector2& quotum)const{
-	vector2 ret(quotum);
-	for(unsigned i = 0; i != ret.size(); ++i){
-		if(ret[i] < 0){
-			ret[i] = 0;
-		}
-	}
-	return ret;
+	return max(quotum, 0);
 }
 
 vector2 widget::pos_in_ancestor(vector2 pos, const widget* ancestor){

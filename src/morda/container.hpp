@@ -26,11 +26,13 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <utki/shared_ref.hpp>
 
+#include "config.hpp"
 #include "util/util.hpp"
-#include "layout.hpp"
 #include "widget.hpp"
 
 namespace morda{
+
+class layout;
 
 /**
  * @brief Container widget.
@@ -49,16 +51,13 @@ namespace morda{
  */
 class container : virtual public widget{
 public:
-	typedef std::vector<utki::shared_ref<widget>> widget_list;
-	typedef std::vector<utki::shared_ref<const widget>> const_widget_list;
 private:
-	static_assert(sizeof(widget_list) == sizeof(const_widget_list), "sizeof(widget_list) differs from sizeof(const_widget_list)");
-	static_assert(sizeof(widget_list::value_type) == sizeof(const_widget_list::value_type), "sizeof(widget_list::value_type) differs from sizeof(const_widget_list::value_type)");
 
 	// NOTE: according to C++11 standard it is undefined behaviour to read the inactive union member,
 	//       but we rely on compiler implementing it the right way.
 	union children_union{
 		widget_list variable;
+		semiconst_widget_list semiconstant; // this member never becomes active one, but we will read it when we need semiconstant list of children
 		const_widget_list constant; // this member never becomes active one, but we will read it when we need constant list of children
 
 		children_union() :
@@ -68,6 +67,8 @@ private:
 			this->variable.~widget_list();
 		}
 	} children_list;
+
+	utki::shared_ref<morda::layout> layout;
 
 	struct mouse_capture_info{
 		std::weak_ptr<widget> capturing_widget;
@@ -417,3 +418,6 @@ template <class T> std::vector<utki::shared_ref<T>> widget::get_all_widgets(bool
 }
 
 }
+
+// include definitions for forward declared classes
+#include "layout.hpp"

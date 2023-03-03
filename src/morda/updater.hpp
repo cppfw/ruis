@@ -92,3 +92,6 @@ public:
 };
 
 }
+
+// include definitions for forward declared classes
+#include "updateable.hpp"

@@ -23,12 +23,14 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "context.hpp"
 
+#include "layouts/trivial_layout.hpp"
 #include "util/util.hpp"
 
 using namespace morda;
 
 container::container(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
-		widget(c, desc)
+		widget(c, desc),
+		layout(utki::make_shared<trivial_layout>())
 {
 	this->push_back_inflate(desc);
 }
@@ -247,7 +249,7 @@ void container::lay_out(){
 	}
 }
 
-container::widget_list::const_iterator container::insert(const utki::shared_ref<widget>& w, widget_list::const_iterator before){
+widget_list::const_iterator container::insert(const utki::shared_ref<widget>& w, widget_list::const_iterator before){
 	if(w.get().parent()){
 		throw std::invalid_argument("container::insert(): given widget is already added to some container");
 	}
@@ -273,7 +275,7 @@ container::widget_list::const_iterator container::insert(const utki::shared_ref<
 	return ret;
 }
 
-container::widget_list::const_iterator container::erase(widget_list::const_iterator child){
+widget_list::const_iterator container::erase(widget_list::const_iterator child){
 	if(this->is_blocked){
 		throw std::logic_error("container::erase(): children list is locked");
 	}
@@ -340,7 +342,7 @@ vector2 container::dims_for_widget(const widget& w, const layout_params& lp)cons
 	return d;
 }
 
-container::widget_list::const_iterator container::change_child_z_position(widget_list::const_iterator child, widget_list::const_iterator before){
+widget_list::const_iterator container::change_child_z_position(widget_list::const_iterator child, widget_list::const_iterator before){
 	if(this->is_blocked){
 		throw std::logic_error("container::change_child_z_position(): children list is locked");
 	}
@@ -381,7 +383,7 @@ container::widget_list::const_iterator container::change_child_z_position(widget
 	return ret;
 }
 
-container::widget_list::const_iterator container::find(const widget& w){
+widget_list::const_iterator container::find(const widget& w){
 	return std::find_if(
 			this->children().begin(),
 			this->children().end(),
@@ -391,7 +393,7 @@ container::widget_list::const_iterator container::find(const widget& w){
 		);
 }
 
-container::const_widget_list::const_iterator container::find(const widget& w)const{
+const_widget_list::const_iterator container::find(const widget& w)const{
 	return std::find_if(
 			this->children().begin(),
 			this->children().end(),
