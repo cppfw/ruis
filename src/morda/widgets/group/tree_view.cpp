@@ -91,7 +91,7 @@ const treeml::forest plus_minus_layout = treeml::read(R"qwertyuiop(
 				id{plusminus}
 			}
 			@mouse_proxy{
-				layout{
+				lp{
 					dx{fill} dy{fill}
 				}
 				id{plusminus_mouseproxy}
@@ -101,9 +101,9 @@ const treeml::forest plus_minus_layout = treeml::read(R"qwertyuiop(
 
 const treeml::forest vert_line_layout = treeml::read(R"qwertyuiop(
 		@pile{
-			layout{dx{${morda_tree_view_indent}} dy{fill}}
+			lp{dx{${morda_tree_view_indent}} dy{fill}}
 			@color{
-				layout{dx{1pt}dy{fill}}
+				lp{dx{1pt}dy{fill}}
 				color{${morda_color_highlight}}
 			}
 		}
@@ -111,20 +111,20 @@ const treeml::forest vert_line_layout = treeml::read(R"qwertyuiop(
 
 const treeml::forest line_end_layout = treeml::read(R"qwertyuiop(
 		@pile{
-			layout{dx{${morda_tree_view_indent}} dy{max}}
+			lp{dx{${morda_tree_view_indent}} dy{max}}
 			@column{
-				layout{dx{max}dy{max}}
+				lp{dx{max}dy{max}}
 				@color{
-					layout{dx{1pt}dy{0}weight{1}}
+					lp{dx{1pt}dy{0}weight{1}}
 					color{${morda_color_highlight}}
 				}
-				@widget{layout{dx{max}dy{0}weight{1}}}
+				@widget{lp{dx{max}dy{0}weight{1}}}
 			}
 			@row{
-				layout{dx{max}dy{max}}
-				@widget{layout{dx{0}dy{max}weight{1}}}
+				lp{dx{max}dy{max}}
+				@widget{lp{dx{0}dy{max}weight{1}}}
 				@color{
-					layout{dx{0}dy{1pt}weight{1}}
+					lp{dx{0}dy{1pt}weight{1}}
 					color{${morda_color_highlight}}
 				}
 			}
@@ -133,16 +133,16 @@ const treeml::forest line_end_layout = treeml::read(R"qwertyuiop(
 
 const treeml::forest line_middle_layout = treeml::read(R"qwertyuiop(
 		@pile{
-			layout{dx{${morda_tree_view_indent}} dy{max}}
+			lp{dx{${morda_tree_view_indent}} dy{max}}
 			@color{
-				layout{dx{1pt}dy{max}}
+				lp{dx{1pt}dy{max}}
 				color{${morda_color_highlight}}
 			}
 			@row{
-				layout{dx{max}dy{max}}
-				@widget{layout{dx{0}dy{max}weight{1}}}
+				lp{dx{max}dy{max}}
+				@widget{lp{dx{0}dy{max}weight{1}}}
 				@color{
-					layout{dx{0}dy{1pt}weight{1}}
+					lp{dx{0}dy{1pt}weight{1}}
 					color{${morda_color_highlight}}
 				}
 			}
@@ -150,7 +150,7 @@ const treeml::forest line_middle_layout = treeml::read(R"qwertyuiop(
 	)qwertyuiop");
 
 const treeml::forest empty_layout = treeml::read(R"qwertyuiop(
-		@widget{layout{dx{${morda_tree_view_indent}}dy{0}}}
+		@widget{lp{dx{${morda_tree_view_indent}}dy{0}}}
 	)qwertyuiop");
 }
 

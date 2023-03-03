@@ -73,7 +73,7 @@ public:
 			this->gui.context.get().inflater.inflate(treeml::read(R"(
 			@pile{
 				@path_widget{
-					layout{
+					lp{
 						dx{fill} dy{fill}
 					}
 				}
@@ -84,24 +84,24 @@ public:
 					top{5dp}
 					bottom{5dp}
 
-					layout{
+					lp{
 						dx{fill} dy{fill}
 					}
 
 					@frame_widget{
-						layout{
+						lp{
 							dx{fill} dy{fill}
 						}
 					}
 				}
 
 				@vertical_scroll_bar{
-					layout{
+					lp{
 						dx{min} dy{max}
 					}
 				}
 				@horizontal_scroll_bar{
-					layout{
+					lp{
 						dx{max} dy{min}
 					}
 				}

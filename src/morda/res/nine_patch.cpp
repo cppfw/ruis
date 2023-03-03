@@ -236,7 +236,7 @@ std::shared_ptr<nine_patch::image_matrix> nine_patch::get(sides<real> borders)co
 						) // right bottom
 				}}
 			}}),
-			utki::make_shared_from(*this),
+			utki::make_shared_from(*this).to_shared_ptr(),
 			mul
 		);
 	

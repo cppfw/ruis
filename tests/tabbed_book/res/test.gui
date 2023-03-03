@@ -10,7 +10,7 @@
 	}
 
 	@tabbed_book{
-		layout{
+		lp{
 			dx { fill }
 			weight { 1 }
 		}

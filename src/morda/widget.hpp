@@ -94,7 +94,7 @@ public:
  * @brief Basic widget class.
  * From GUI script it can be instantiated as "widget".
  * It can have the following parameters:
- * @li @c layout - layout parameters description. See layout_params for details.
+ * @li @c lp - layout parameters description. See layout_params for details.
  * @li @c x - horizontal position within parent widget.
  * @li @c y - vertical position within parent widget.
  * @li @c dx - width of the widget.
@@ -525,7 +525,7 @@ public:
 
 	/**
 	 * @brief Invoked when widget's size changes.
-	 * Default implementation performs laying out of the widget by calling its layout() method.
+	 * Default implementation performs laying out of the widget by calling its lay_out() method.
 	 */
 	virtual void on_resize();
 

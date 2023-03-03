@@ -44,11 +44,11 @@ overlay::overlay(const utki::shared_ref<morda::context>& c, const treeml::forest
 
 utki::shared_ref<widget> overlay::show_context_menu(const utki::shared_ref<widget>& w, vector2 anchor){
 	auto c = utki::make_shared<context_menu_wrapper>(this->context, treeml::read(R"qwertyuiop(
-		layout{
+		lp{
 			dx{fill} dy{fill}
 		}
 		@mouse_proxy{
-			layout{
+			lp{
 				dx{fill} dy{fill}
 			}
 			x{0} y{0}

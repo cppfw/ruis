@@ -36,12 +36,12 @@ namespace{
 const auto DDescription = treeml::read(R"qwertyuiop(
 		@nine_patch{
 			id{morda_slider_bg}
-			layout{
+			lp{
 				dx{max} dy{max}
 			}
 		}
 		@container{
-			layout{
+			lp{
 				dx{max} dy{max}
 			}
 			@pile{
@@ -49,13 +49,13 @@ const auto DDescription = treeml::read(R"qwertyuiop(
 				@nine_patch{
 					id{morda_handle_image}
 
-					layout{
+					lp{
 						dx{max} dy{max}
 					}
 				}
 				@mouse_proxy{
 					id{morda_handle_proxy}
-					layout{
+					lp{
 						dx{fill} dy{fill}
 					}
 				}

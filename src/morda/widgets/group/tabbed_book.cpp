@@ -32,13 +32,13 @@ tabbed_book::tabbed_book(const utki::shared_ref<morda::context>& context, const 
 				treeml::read(R"(
 					@tab_group{
 						id { morda_tab_group }
-						layout{
+						lp{
 							dx { fill }
 						}
 					}
 					@book{
 						id { morda_book }
-						layout {
+						lp {
 							dx { fill }
 							weight { 1 }
 						}

@@ -17,7 +17,7 @@ tst::set set("inflating", [](tst::suite& suite){
 
 					@Cont{
 						@container{
-							layout{
+							lp{
 								dx{fill} dy{456}
 							}
 						}
@@ -25,7 +25,7 @@ tst::set set("inflating", [](tst::suite& suite){
 				}
 
 				@Cont{
-					layout{
+					lp{
 						${dims}
 					}
 				}
@@ -49,7 +49,7 @@ tst::set set("inflating", [](tst::suite& suite){
 					@Cont{
 						@container{
 							x{10} y{12}
-							layout{
+							lp{
 								dx{fill} dy{456}
 							}
 						}
@@ -59,7 +59,7 @@ tst::set set("inflating", [](tst::suite& suite){
 				@Cont{
 					x{23}
 					dx{45}
-					layout{
+					lp{
 						dx{max}
 					}
 				}
@@ -87,7 +87,7 @@ tst::set set("inflating", [](tst::suite& suite){
 						x y layout t
 						@container{
 							x{${x}} y{${x}}
-							layout{
+							lp{
 								dx{fill} dy{max}
 								${layout}
 							}
@@ -103,7 +103,7 @@ tst::set set("inflating", [](tst::suite& suite){
 					x{23}
 					dx{45}
 					t{13}
-					layout{
+					lp{
 						dx{max}
 					}
 				}
@@ -159,7 +159,7 @@ tst::set set("inflating", [](tst::suite& suite){
 					@container{
 						x{${x}} y{${y}}
 						dy{${dx}}
-						layout{
+						lp{
 							dx{fill} dy{max}
 							${layout}
 						}
@@ -180,7 +180,7 @@ tst::set set("inflating", [](tst::suite& suite){
 				@Cont{
 					x{23} y{106}
 					dx{45}
-					layout{
+					lp{
 						dx{max}
 					}
 				}
@@ -212,7 +212,7 @@ tst::set set("inflating", [](tst::suite& suite){
 						@Container_{
 							x{${x}} y{${y}}
 							dy{${dx}}
-							layout{
+							lp{
 								${layout}
 								dx{fill} dy{max}
 							}
@@ -249,7 +249,7 @@ tst::set set("inflating", [](tst::suite& suite){
 							@container{
 								x{${x}} y{${y}}
 								dy{${dx}}
-								layout{
+								lp{
 									${layout}
 									dx{fill} dy{max}
 								}

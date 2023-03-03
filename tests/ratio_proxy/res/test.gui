@@ -10,17 +10,17 @@
 		defs{
 			@ratio_box{ r t
 				@pile{
-					layout{
+					lp{
 						dy {fill}
 					}
 					@ratio_proxy{
-						layout{
+						lp{
 							dy {fill}
 						}
 						ratio {${r}}
 					}
 					@color{
-						layout{
+						lp{
 							dx {fill}
 							dy {fill}
 						}

@@ -33,20 +33,20 @@ using namespace morda;
 
 namespace{
 const auto drop_down_box_layout = treeml::read(R"qwertyuiop(
-	layout{dx{max} dy{max}}
+	lp{dx{max} dy{max}}
 
 	@row{
-		layout{dx{max}}
+		lp{dx{max}}
 		@pile{
 			id{morda_dropdown_selection}
-			layout{dx{min}dy{max} weight{1}}
+			lp{dx{min}dy{max} weight{1}}
 		}
-		@widget{layout{dx{3dp}}}
+		@widget{lp{dx{3dp}}}
 		@image{
 			image{morda_img_divider_vert}
-			layout{dy{fill}}
+			lp{dy{fill}}
 		}
-		@widget{layout{dx{3dp}}}
+		@widget{lp{dx{3dp}}}
 		@image{
 			image{morda_img_dropdown_arrow}
 		}
@@ -57,12 +57,12 @@ const auto drop_down_box_layout = treeml::read(R"qwertyuiop(
 namespace{
 const auto item_layout = treeml::read(R"qwertyuiop(
 		@pile{
-			layout{
+			lp{
 				dx{max}
 			}
 			@mouse_proxy{
 				id{morda_dropdown_mouseproxy}
-				layout{
+				lp{
 					dx{fill} dy{fill}
 				}
 			}
@@ -70,7 +70,7 @@ const auto item_layout = treeml::read(R"qwertyuiop(
 				id{morda_dropdown_color}
 				color{${morda_color_highlight}}
 				visible{false}
-				layout{
+				lp{
 					dx{fill} dy{fill}
 				}
 			}
@@ -85,18 +85,18 @@ const auto drop_down_menu_layout = treeml::read(R"qwertyuiop(
 				id{morda_min_size_forcer}
 			}
 			@mouse_proxy{
-				layout{
+				lp{
 					dx{fill} dy{fill}
 				}
 				id{morda_drop_down_menu_mouse_proxy}
 			}
 			@nine_patch{
-				layout{
+				lp{
 					dx{max}
 				}
 				image{morda_npt_contextmenu_bg}
 				@column{
-					layout{
+					lp{
 						dx{max}
 					}
 					id{morda_contextmenu_content}

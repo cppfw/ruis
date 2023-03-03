@@ -33,7 +33,7 @@ defs{
 		@nine_patch{
 			image{morda_npt_textfield_background}
 			@text_input_line_{
-				layout{dx{fill}dy{max}}
+				lp{dx{fill}dy{max}}
 				text{${text}}
 			}
 		}
@@ -78,7 +78,7 @@ defs{
 
 	@window_background{
 		@nine_patch{
-			layout{dx{fill} dy{fill}}
+			lp{dx{fill} dy{fill}}
 
 			image{morda_npt_window_bg}
 
@@ -91,7 +91,7 @@ defs{
 
 	@window_empty_background{
 		@nine_patch{
-			layout{dx{fill} dy{fill}}
+			lp{dx{fill} dy{fill}}
 
 			image{morda_npt_window_bg}
 

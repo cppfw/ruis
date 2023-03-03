@@ -27,19 +27,19 @@ defs{
 }
 
 @image_mouse_cursor{
-layout{
+lp{
 	dx{fill} dy{fill}
 }
 cursor{crs_arrow}
 
 @overlay{
 	id {overlay}
-	layout{
+	lp{
 		dx{max} dy{max}
 	}
 
 @container{
-	layout{
+	lp{
 		dx{max} dy{max}
 	}
 
@@ -63,7 +63,7 @@ cursor{crs_arrow}
 		}
 
 		@column{
-			layout{
+			lp{
 //				dx{max} dy{max}
 				${lllayout}
 			}
@@ -87,7 +87,7 @@ cursor{crs_arrow}
 			}
 
 			@drop_down_box{
-				layout{
+				lp{
 					dx{max}
 				}
 
@@ -127,7 +127,7 @@ cursor{crs_arrow}
 			}
 
 			@choice_group{
-				layout{dx{max}}
+				lp{dx{max}}
 
 				defs{
 					@RadBtn{
@@ -169,7 +169,7 @@ cursor{crs_arrow}
 		}
 
 		@column{
-			layout{
+			lp{
 				dx{fill} dy{fill}
 			}
 
@@ -181,7 +181,7 @@ cursor{crs_arrow}
 
 				clip {true}
 
-				layout{
+				lp{
 					dx{max} dy{min}
 				}
 
@@ -191,7 +191,7 @@ cursor{crs_arrow}
 					padding {10 20 30 40}
 
 
-					layout{
+					lp{
 						weight {0}
 					}
 
@@ -203,7 +203,7 @@ cursor{crs_arrow}
 					padding {0}
 
 
-					layout{
+					lp{
 						weight {0}
 					}
 
@@ -217,7 +217,7 @@ cursor{crs_arrow}
 					clip{true}
 
 
-					layout{
+					lp{
 						dx{20mm} dy{min}
 						weight {1}
 					}
@@ -231,24 +231,24 @@ cursor{crs_arrow}
 			}
 
 			@pile{
-				layout{dx{fill} dy{50dp}}
+				lp{dx{fill} dy{50dp}}
 				@color{
-					layout{dx{fill}dy{fill}}
+					lp{dx{fill}dy{fill}}
 					color{0xff808080}
 				}
 				@mouse_proxy{
-					layout{dx{fill} dy{fill}}
+					lp{dx{fill} dy{fill}}
 					id{horizontal_list_mouseproxy}
 				}
 			}
 			@pile{
-				layout{
+				lp{
 					dx{fill}
 					dy{0}
 					weight{1}
 				}
 				@pan_list{
-					layout{
+					lp{
 						dx{fill}
 						dy{fill}
 					}
@@ -256,7 +256,7 @@ cursor{crs_arrow}
 
 					@text{
 						text{item1|}
-						layout{dy{max}}
+						lp{dy{max}}
 					}
 					@text{
 						text{item2|}
@@ -297,7 +297,7 @@ cursor{crs_arrow}
 			@horizontal_scroll_bar{
 				id{horizontal_list_slider}
 
-				layout{
+				lp{
 					dx{fill}
 				}
 			}
@@ -319,25 +319,25 @@ cursor{crs_arrow}
 
 
 		@column{
-			layout{
+			lp{
 				dx{max} dy{max}
 			}
 
 			@row{
-				layout{
+				lp{
 					dx{max} dy{0}
 					weight{1}
 				}
 
 				@pile{
-					layout{
+					lp{
 						dx{0} dy{max}
 						weight{1}
 					}
 					@tree_view{
 						id{treeview_widget}
 						clip{true}
-						layout{
+						lp{
 							dx{fill} dy{fill}
 						}
 					}
@@ -348,7 +348,7 @@ cursor{crs_arrow}
 
 					id{treeview_vertical_slider}
 
-					layout{
+					lp{
 						dx{min} dy{max}
 					}
 				}
@@ -357,13 +357,13 @@ cursor{crs_arrow}
 			@horizontal_scroll_bar{
 				id{treeview_horizontal_slider}
 
-				layout{
+				lp{
 					dx{max}
 				}
 			}
 
 			@row{
-				layout{dx{max}}
+				lp{dx{max}}
 
 				@text{
 					text{Insert:}
@@ -401,7 +401,7 @@ cursor{crs_arrow}
 
 			id{horizontal_container}
 
-			layout{
+			lp{
 				dx{max} dy{max}
 			}
 
@@ -411,13 +411,13 @@ cursor{crs_arrow}
 
 				keep_aspect_ratio{true}
 
-				layout{
+				lp{
 					dx{min} dy{max}
 				}
 			}
 
 			@horizontal_scroll_bar{
-				layout{
+				lp{
 					dx{50} dy{40} //TODO: min min
 					weight{1}
 				}
@@ -426,7 +426,7 @@ cursor{crs_arrow}
 			@vertical_scroll_bar{
 				id {"vertical slider"}
 
-				layout{
+				lp{
 					dx{40} dy{max} //TODO: min min
 				}
 			}
@@ -441,7 +441,7 @@ cursor{crs_arrow}
 
 /*
 		@image{
-			layout{
+			lp{
 				dx{max} dy{max}
 			}
 			image{img_lattice}
@@ -451,7 +451,7 @@ cursor{crs_arrow}
 
 		@color{
 			id {cube_bg_color}
-			layout{
+			lp{
 				dx {fill}
 				dy {fill}
 			}
@@ -459,7 +459,7 @@ cursor{crs_arrow}
 
 		@click_proxy{
 			id {cube_click_proxy}
-			layout{
+			lp{
 				dx {fill}
 				dy {fill}
 			}
@@ -467,7 +467,7 @@ cursor{crs_arrow}
 
 		@CubeWidget{
 			id{cube_widget}
-			layout{
+			lp{
 				dx{max} dy{max}
 			}
 		}
@@ -482,16 +482,16 @@ cursor{crs_arrow}
 		/*@color{
 			color{ ${morda_color_bg} }
 
-			layout{
+			lp{
 				dx{max} dy{max}
 			}
 		}*/
 
 		@column{
-			layout{dx{max}dy{max}}
+			lp{dx{max}dy{max}}
 
 			@tab_group{
-				layout{dx{max}}
+				lp{dx{max}}
 
 				@tab{
 					id{tab1}
@@ -509,12 +509,12 @@ cursor{crs_arrow}
 			}
 
 			@nine_patch{
-				layout{dx{max}}
+				lp{dx{max}}
 
 				image{morda_npt_frame}
 
 				@collapse_area{
-					layout{dx{max}}
+					lp{dx{max}}
 					title{Text{text{Hi!}}}
 					@column{
 						@text{text{Hello!}}
@@ -522,7 +522,7 @@ cursor{crs_arrow}
 							@push_button{@text{text{button!!!}}}
 							@image_push_button{
 								id{image_push_button}
-								layout{
+								lp{
 									dx{50dp} dy{50dp}
 								}
 								look{
@@ -535,7 +535,7 @@ cursor{crs_arrow}
 				}
 			}
 
-			@widget{layout{dy{5dp}}}
+			@widget{lp{dy{5dp}}}
 
 			@text_input_line{
 				id{text_input}
@@ -544,20 +544,20 @@ cursor{crs_arrow}
 
 				color{ ${morda_color_text} }
 
-				layout{
+				lp{
 					dx{max} dy{min}
 				}
 			}
-			@push_button{layout{dy{0}weight{1}}@text{text{button!!!}}}
-			@push_button{layout{dy{0}weight{1}}@text{text{button!!!}}}
-			@push_button{layout{dy{0}weight{1}}@text{text{button!!!}}}
-			@push_button{layout{dy{0}weight{1}}@text{text{button!!!}}}
-			@push_button{layout{dy{0}weight{1}}@text{text{button!!!}}}
-			@push_button{layout{dy{0}weight{1}}@text{text{button!!!}}}
-			@push_button{layout{dy{0}weight{1}}@text{text{button!!!}}}
-			@push_button{layout{dy{0}weight{1}}@text{text{button!!!}}}
-			@push_button{layout{dy{0}weight{1}}@text{text{button!!!}}}
-			@push_button{layout{dy{0}weight{1}}@text{text{button!!!}}}
+			@push_button{lp{dy{0}weight{1}}@text{text{button!!!}}}
+			@push_button{lp{dy{0}weight{1}}@text{text{button!!!}}}
+			@push_button{lp{dy{0}weight{1}}@text{text{button!!!}}}
+			@push_button{lp{dy{0}weight{1}}@text{text{button!!!}}}
+			@push_button{lp{dy{0}weight{1}}@text{text{button!!!}}}
+			@push_button{lp{dy{0}weight{1}}@text{text{button!!!}}}
+			@push_button{lp{dy{0}weight{1}}@text{text{button!!!}}}
+			@push_button{lp{dy{0}weight{1}}@text{text{button!!!}}}
+			@push_button{lp{dy{0}weight{1}}@text{text{button!!!}}}
+			@push_button{lp{dy{0}weight{1}}@text{text{button!!!}}}
 
 		}
 	}
@@ -570,14 +570,14 @@ cursor{crs_arrow}
 
 
 		@column{
-			layout{
+			lp{
 				dx{max} dy{max}
 			}
 
 			id{scroll_area_root_container}
 
 			@row{
-				layout{
+				lp{
 					dx{max} dy{0}
 					weight{1}
 				}
@@ -585,7 +585,7 @@ cursor{crs_arrow}
 				id{scroll_area_subcontainer}
 
 				@pile{
-					layout{
+					lp{
 						dx{0} dy{max}
 						weight{1}
 					}
@@ -594,7 +594,7 @@ cursor{crs_arrow}
 
 						clip{true}
 
-						layout{
+						lp{
 							dx{max} dy{max}
 						}
 
@@ -602,7 +602,7 @@ cursor{crs_arrow}
 							image{img_sample}
 //							image{img_camera}
 
-							layout{
+							lp{
 								dx{min} dy{max}
 							}
 						}
@@ -637,28 +637,28 @@ cursor{crs_arrow}
 
 					id{scroll_area_vertical_slider}
 
-					layout{
+					lp{
 						dx{min} dy{max}
 					}
 				}
 			}
 
 			@row{
-				layout{
+				lp{
 					dx{max}
 				}
 
 				@horizontal_scroll_bar{
 					id{scroll_area_horizontal_slider}
 
-					layout{
+					lp{
 						dx{0}
 						weight{1}
 					}
 				}
 
 				@min_proxy{
-					layout{
+					lp{
 						dy{fill}
 					}
 
@@ -680,12 +680,12 @@ cursor{crs_arrow}
 
 
 		@gradient{
-			layout{dx{max}dy{max}}
+			lp{dx{max}dy{max}}
 			gradient{grd_sample}
 		}
 
 		@size_container{
-			layout{dx{fill}dy{fill}}
+			lp{dx{fill}dy{fill}}
 
 			@push_button{
 				x{10} y{20}
@@ -703,24 +703,24 @@ cursor{crs_arrow}
 		title{"VerticalList"}
 
 		@row{
-			layout{
+			lp{
 				dx{max} dy{max}
 			}
 
 			@mouse_proxy{
-				layout{dx{50dp} dy{fill}}
+				lp{dx{50dp} dy{fill}}
 				id{list_mouseproxy}
 			}
 
 
 			@pile{
-				layout{
+				lp{
 					dx{0} dy{max}
 					weight{1}
 				}
 				@list{
 					id{list}
-					layout{
+					lp{
 						dx{max} dy{max}
 					}
 
@@ -857,7 +857,7 @@ cursor{crs_arrow}
 
 			@vertical_scroll_bar{
 				id{vertical_list_slider}
-				layout{
+				lp{
 					dy{max}
 				}
 			}

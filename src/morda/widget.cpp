@@ -38,7 +38,7 @@ widget::widget(const utki::shared_ref<morda::context>& c, const treeml::forest& 
 		}
 
 		try{
-			if(p.value == "layout"){
+			if(p.value == "lp"){
 				this->layout_parameters = layout_params(p.children, this->context.get().units);
 			}else if(p.value == "x"){
 				this->rectangle.p.x() = parse_dimension_value(get_property_value(p), this->context.get().units);

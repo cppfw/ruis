@@ -30,13 +30,13 @@ using namespace morda;
 namespace{
 const auto layout_c = treeml::read(R"qwertyuiop(
 	@pile{
-		layout{dx{max}}
+		lp{dx{max}}
 		@color{
-			layout{dx{fill}dy{fill}}
+			lp{dx{fill}dy{fill}}
 			color{${morda_color_mg}}
 		}
 		@margins{
-			layout{dx{max}dy{max}}
+			lp{dx{max}dy{max}}
 
 			defs{
 				marHor{4dp}
@@ -48,7 +48,7 @@ const auto layout_c = treeml::read(R"qwertyuiop(
 			bottom{${marVer}}
 
 			@row{
-				layout{dx{max}}
+				lp{dx{max}}
 				@image_toggle{
 					id{switch}
 					look{
@@ -57,7 +57,7 @@ const auto layout_c = treeml::read(R"qwertyuiop(
 					}
 				}
 				@widget{
-					layout{dx{${marHor}}}
+					lp{dx{${marHor}}}
 				}
 				@pile{
 					id{title}

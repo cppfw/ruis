@@ -32,13 +32,13 @@ using namespace morda;
 namespace{
 const auto ninePatchLayout_c = treeml::read(R"qwertyuiop(
 		@row{
-			layout{dx{fill}}
+			lp{dx{fill}}
 			@image{
 				id{morda_lt}
 			}
 
 			@image{
-				layout{dx{0}weight{1}}
+				lp{dx{0}weight{1}}
 				id{morda_t}
 			}
 
@@ -48,42 +48,42 @@ const auto ninePatchLayout_c = treeml::read(R"qwertyuiop(
 		}
 
 		@row{
-			layout{
+			lp{
 				dx{max}
 				weight{1}
 			}
 
 			@image{
 				id{morda_l}
-				layout{dy{fill}}
+				lp{dy{fill}}
 			}
 
 			@pile{
 				id{morda_content}
-				layout{
+				lp{
 					weight{1}
 					dy{max}
 				}
 
 				@image{
 					id{morda_m}
-					layout{dx{fill}dy{fill}}
+					lp{dx{fill}dy{fill}}
 				}
 			}
 			@image{
 				id{morda_r}
-				layout{dy{fill}}
+				lp{dy{fill}}
 			}
 		}
 
 		@row{
-			layout{dx{fill}}
+			lp{dx{fill}}
 			@image{
 				id{morda_lb}
 			}
 
 			@image{
-				layout{dx{0}weight{1}}
+				lp{dx{0}weight{1}}
 				id{morda_b}
 			}
 

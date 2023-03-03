@@ -26,7 +26,7 @@ utki::shared_ref<morda::tab> inflate_tab(morda::tabbed_book& tb, const std::stri
 				@push_button{
 					id{close_button}
 					@image{
-						layout{
+						lp{
 							dx { 8dp }
 							dy { 8dp }
 						}
