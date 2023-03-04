@@ -61,6 +61,8 @@ public:
 	/**
 	 * @brief Requests minimal or bigger dimensions of widget.
 	 * The widget will be given at least minimal space it needs to properly draw.
+	 * 'max' behaves the same way as 'min' during measure, but during layouting
+	 * the widget will be given same size as parent.
 	 */
 	constexpr static const real max = real(-2);
 

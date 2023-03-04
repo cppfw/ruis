@@ -104,7 +104,9 @@ void scroll_area::update_scroll_factor(){
 	}
 }
 
-// TODO: why is there special dims_for_widget() and why container::dims_for_widget() is not like this? 
+// NOTE:
+// scroll_area uses it's own dims_for_widget() beacuse it has slightly different behaviour for 'max',
+// it wants 'max' children to be bigger than scroll_area in case their minimal dimensions are bigger.
 vector2 scroll_area::dims_for_widget(const widget& w, const layout_params& lp)const{
 	vector2 d;
 	for(unsigned i = 0; i != 2; ++i){
