@@ -320,7 +320,8 @@ std::shared_ptr<widget> container::try_get_widget(const std::string& id, bool al
 	return nullptr;
 }
 
-vector2 container::dims_for_widget(const widget& w, const layout_params& lp)const{
+vector2 container::dims_for_widget(const widget& w)const{
+	const layout_params& lp = w.get_layout_params_const();
 	vector2 d;
 	for(unsigned i = 0; i != 2; ++i){
 		if(lp.dims[i] == layout_params::max || lp.dims[i] == layout_params::fill){

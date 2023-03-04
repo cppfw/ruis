@@ -31,7 +31,7 @@ size_container::size_container(const utki::shared_ref<morda::context>& c, const 
 void size_container::lay_out(){
 	for(auto& w : this->children()){
 		if(w.get().is_layout_dirty()){
-			auto d = this->dims_for_widget(w.get(), w.get().get_layout_params_const());
+			auto d = this->dims_for_widget(w.get());
 			w.get().resize(d);
 		}
 	}

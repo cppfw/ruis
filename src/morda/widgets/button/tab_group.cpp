@@ -115,9 +115,7 @@ void tab_group::lay_out(){
 	sides<real> prevBorders = 0;
 
 	for(const auto& c : this->children()){
-		const auto& lp = c.get().get_layout_params_const();
-
-		auto dim = this->dims_for_widget(c.get(), lp);
+		auto dim = this->dims_for_widget(c.get());
 		c.get().resize(dim);
 
 		auto t = dynamic_cast<morda::tab*>(&c.get());
