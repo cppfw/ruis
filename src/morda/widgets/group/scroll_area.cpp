@@ -135,10 +135,10 @@ vector2 scroll_area::dims_for_widget(const widget& w)const{
 }
 
 void scroll_area::arrange_widgets(){
-	for(auto i = this->children().begin(); i != this->children().end(); ++i){
-		auto d = this->dims_for_widget(i->get());
+	for(const auto& c : this->children()){
+		auto d = this->dims_for_widget(c.get());
 
-		i->get().resize(d);
+		c.get().resize(d);
 	}
 }
 
@@ -159,6 +159,7 @@ void scroll_area::lay_out(){
 		}
 	}
 
+	// TODO: why notification is deferred? figure out why and write a comment with explanation here
 	this->context.get().run_from_ui_thread([sa = utki::make_weak_from(*this)](){
 		if(auto s = sa.lock()){
 			s->on_scroll_pos_change();
@@ -177,8 +178,8 @@ void scroll_area::update_invisible_dims(){
 
 	using std::max;
 
-	for(auto i = this->children().begin(); i != this->children().end(); ++i){
-		morda::vector2 d = i->get().rect().p + this->dims_for_widget(i->get());
+	for(const auto& c : this->children()){
+		morda::vector2 d = c.get().rect().p + this->dims_for_widget(c.get());
 
 		minDim = max(minDim, d); // clamp bottom
 	}
