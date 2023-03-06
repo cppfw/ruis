@@ -107,7 +107,8 @@ void scroll_area::update_scroll_factor(){
 // NOTE:
 // scroll_area uses it's own dims_for_widget() beacuse it has slightly different behaviour for 'max',
 // it wants 'max' children to be bigger than scroll_area in case their minimal dimensions are bigger.
-vector2 scroll_area::dims_for_widget(const widget& w, const layout_params& lp)const{
+vector2 scroll_area::dims_for_widget(const widget& w)const{
+	const layout_params& lp = w.get_layout_params_const();
 	vector2 d;
 	for(unsigned i = 0; i != 2; ++i){
 		if(lp.dims[i] == layout_params::fill){
@@ -135,9 +136,7 @@ vector2 scroll_area::dims_for_widget(const widget& w, const layout_params& lp)co
 
 void scroll_area::arrange_widgets(){
 	for(auto i = this->children().begin(); i != this->children().end(); ++i){
-		auto& lp = i->get().get_layout_params_const();
-
-		auto d = this->dims_for_widget(i->get(), lp);
+		auto d = this->dims_for_widget(i->get());
 
 		i->get().resize(d);
 	}
@@ -185,9 +184,7 @@ void scroll_area::update_invisible_dims(){
 	using std::max;
 
 	for(auto i = this->children().begin(); i != this->children().end(); ++i){
-		auto& lp = i->get().get_layout_params_const();
-
-		morda::vector2 d = i->get().rect().p + this->dims_for_widget(i->get(), lp);
+		morda::vector2 d = i->get().rect().p + this->dims_for_widget(i->get());
 
 		minDim = max(minDim, d); // clamp bottom
 	}
