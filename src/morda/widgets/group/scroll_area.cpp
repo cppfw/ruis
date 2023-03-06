@@ -149,19 +149,13 @@ void scroll_area::lay_out(){
 	// distance of content's bottom right corner from bottom right corner of the scroll_area
 	vector2 br = this->cur_scroll_pos - this->invisible_dims;
 
-	if(br.x() > 0){
-		if(br.x() <= this->cur_scroll_pos.x()){
-			this->cur_scroll_pos.x() -= br.x();
-		}else{
-			this->cur_scroll_pos.x() = 0;
-		}
-	}
-
-	if(br.y() > 0){
-		if(br.y() <= this->cur_scroll_pos.y()){
-			this->cur_scroll_pos.y() -= br.y();
-		}else{
-			this->cur_scroll_pos.y() = 0;
+	for(size_t i = 0; i != br.size(); ++i){
+		if(br[i] > 0){
+			if(br[i] <= this->cur_scroll_pos[i]){
+				this->cur_scroll_pos[i] -= br[i];
+			}else{
+				this->cur_scroll_pos[i] = 0;
+			}
 		}
 	}
 
