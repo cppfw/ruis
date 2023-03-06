@@ -146,6 +146,8 @@ void scroll_area::lay_out(){
 	this->arrange_widgets();
 	this->update_invisible_dims();
 
+	// correct scroll position
+
 	// distance of content's bottom right corner from bottom right corner of the scroll_area
 	vector2 br = this->cur_scroll_pos - this->invisible_dims;
 
