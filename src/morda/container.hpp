@@ -50,7 +50,6 @@ class layout;
  * @endcode
  */
 class container : virtual public widget{
-public:
 private:
 
 	// NOTE: according to C++11 standard it is undefined behaviour to read the inactive union member,
@@ -108,8 +107,8 @@ protected:
 	vector2 dims_for_widget(const widget& w)const;
 
 protected:
-
 	void render_child(const matrix4& matrix, const widget& c)const;
+
 public:
 	/**
 	 * @brief Constructor.

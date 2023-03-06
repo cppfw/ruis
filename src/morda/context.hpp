@@ -31,6 +31,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "updateable.hpp"
 #include "inflater.hpp"
 #include "resource_loader.hpp"
+#include "layout_factory.hpp"
 
 namespace morda{
 
@@ -60,6 +61,11 @@ public:
 	 * @brief Instantiation of the GUI inflater.
 	 */
 	morda::inflater inflater;
+
+	/**
+	 * @brief Instance of layout factory.
+	 */
+	morda::layout_factory layout_factory;
 
 	/**
 	 * @brief Constructor.

@@ -59,6 +59,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "widgets/proxy/ratio_proxy.hpp"
 #include "widgets/proxy/min_proxy.hpp"
 
+#include "layouts/trivial_layout.hpp"
+
 using namespace morda;
 
 namespace{
@@ -202,6 +204,7 @@ gui::gui(const utki::shared_ref<morda::context>& context) :
 	this->context.get().inflater.register_widget<row>("row");
 	this->context.get().inflater.register_widget<column>("column");
 	this->context.get().inflater.register_widget<pile>("pile");
+
 	this->context.get().inflater.register_widget<mouse_proxy>("mouse_proxy");
 	this->context.get().inflater.register_widget<click_proxy>("click_proxy");
 	this->context.get().inflater.register_widget<ratio_proxy>("ratio_proxy");
@@ -217,6 +220,9 @@ gui::gui(const utki::shared_ref<morda::context>& context) :
 	this->context.get().inflater.register_widget<spinner>("spinner");
 
 	this->context.get().inflater.push_defs(default_defs);
+
+	// register basic layouts
+	this->context.get().layout_factory.add_factory("trivial", [](const auto&){return trivial_layout::instance;});
 }
 
 void gui::initStandardWidgets(papki::file& fi) {

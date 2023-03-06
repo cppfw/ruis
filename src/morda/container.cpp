@@ -30,8 +30,29 @@ using namespace morda;
 
 container::container(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
 		widget(c, desc),
-		layout(utki::make_shared<trivial_layout>())
+		layout(trivial_layout::instance)
 {
+	for(const auto& p : desc){
+		if(!is_property(p)){
+			continue;
+		}
+
+		try{
+			if(p.value == "layout"){
+				if(p.children.size() != 1){
+					throw std::invalid_argument("layout parameter has zero or more than 1 child");
+				}
+				this->layout = this->context.get().layout_factory.create(
+					p.children.front().value.to_string(),
+					p.children.front().children
+				);
+			}
+		}catch(std::invalid_argument&){
+			LOG([&](auto&o){o << "could not parse value of " << treeml::to_string(p) << std::endl;})
+			throw;
+		}
+	}
+
 	this->push_back_inflate(desc);
 }
 
