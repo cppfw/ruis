@@ -69,7 +69,7 @@ utki::shared_ref<widget> overlay::show_context_menu(const utki::shared_ref<widge
 
 	c.get().push_back(w);
 
-	vector2 dim = this->dims_for_widget(w.get());
+	vector2 dim = dims_for_widget(w.get(), this->rect().d);
 
 	using std::min;
 	using std::max;

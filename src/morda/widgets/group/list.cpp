@@ -214,7 +214,7 @@ void list_widget::set_scroll_factor(real factor){
 
 // TODO: refactor
 bool list_widget::arrange_widget(const utki::shared_ref<widget>& w, real& pos, bool added, size_t index, widget_list::const_iterator& insertBefore){
-	vector2 dim = this->dims_for_widget(w.get());
+	vector2 dim = dims_for_widget(w.get(), this->rect().d);
 
 	w.get().resize(dim);
 
@@ -352,7 +352,7 @@ void list_widget::update_tail_items_info(){
 
 		auto w = this->item_provider->get_widget(i - 1);
 
-		vector2 d = this->dims_for_widget(w.get());
+		vector2 d = dims_for_widget(w.get(), this->rect().d);
 
 		auto item_dim = d[longIndex];
 		dim -= item_dim;
@@ -421,7 +421,7 @@ void list_widget::scroll_by(real delta) {
 				)
 			for(; this->pos_index < this->first_tail_item_index;){
 				auto w = this->item_provider->get_widget(this->pos_index);
-				vector2 d = this->dims_for_widget(w.get());
+				vector2 d = dims_for_widget(w.get(), this->rect().d);
 				this->push_back(w); // this is just optimization, to avoid creating same widget twice
 				if(d[longIndex] > delta){
 					this->pos_offset = delta;
@@ -444,7 +444,7 @@ void list_widget::scroll_by(real delta) {
 				ASSERT(this->added_index == this->pos_index)
 				--this->pos_index;
 				auto w = this->item_provider->get_widget(this->pos_index);
-				vector2 d = this->dims_for_widget(w.get());
+				vector2 d = dims_for_widget(w.get(), this->rect().d);
 				this->insert(w, this->children().begin()); // this is just optimization, to avoid creating same widget twice
 				--this->added_index;
 				if(d[longIndex] > delta){

@@ -341,12 +341,12 @@ std::shared_ptr<widget> container::try_get_widget(const std::string& id, bool al
 	return nullptr;
 }
 
-vector2 container::dims_for_widget(const widget& w)const{
+vector2 container::dims_for_widget(const widget& w, const vector2& parent_dims){
 	const layout_params& lp = w.get_layout_params_const();
 	vector2 d;
 	for(unsigned i = 0; i != 2; ++i){
 		if(lp.dims[i] == layout_params::max || lp.dims[i] == layout_params::fill){
-			d[i] = this->rect().d[i];
+			d[i] = parent_dims[i];
 		}else if(lp.dims[i] == layout_params::min){
 			d[i] = -1; // will be updated below
 		}else{

@@ -99,12 +99,13 @@ protected:
 	/**
 	 * @brief Calculate basic dimensions of widget.
 	 * Calculates basic dimensions of given widget if it would be placed to
-	 * this container with given layout parameters, basically this is just
+	 * a container with given dimensions and given layout parameters, basically this is just
 	 * resolving of 'min', 'max' and 'fill' special values of dimensions.
 	 * @param w - widget to calculate dimensions for.
+	 * @param parent_size - parent widget dimensions.
 	 * @return Dimensions of widget.
 	 */
-	vector2 dims_for_widget(const widget& w)const;
+	static vector2 dims_for_widget(const widget& w, const vector2& parent_dims);
 
 protected:
 	void render_child(const matrix4& matrix, const widget& c)const;

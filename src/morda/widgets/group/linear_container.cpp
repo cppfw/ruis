@@ -60,7 +60,7 @@ void linear_container::lay_out(){
 			ASSERT(lp.dims[long_index] != layout_params::max)
 			ASSERT(lp.dims[long_index] != layout_params::fill)
 
-			vector2 d = this->dims_for_widget(i->get());
+			vector2 d = dims_for_widget(i->get(), this->rect().d);
 			info->measured_dims = d;
 
 			rigid += d[long_index];

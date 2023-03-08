@@ -33,7 +33,7 @@ pile::pile(const utki::shared_ref<morda::context>& c, const treeml::forest& desc
 void pile::lay_out(){
 //	TRACE(<< "pile::lay_out(): invoked" << std::endl)
 	for(auto i = this->children().begin(); i != this->children().end(); ++i){
-		i->get().resize(this->dims_for_widget(i->get()));
+		i->get().resize(dims_for_widget(i->get(), this->rect().d));
 
 		using std::round;
 		i->get().move_to(round((this->rect().d - i->get().rect().d) / 2));
