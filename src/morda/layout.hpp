@@ -5,6 +5,8 @@
 namespace morda{
 
 class layout{
+protected:
+    layout() = default;
 public:
 
     virtual vector2 measure(const vector2& quotum, const_widget_list& widgets)const{
