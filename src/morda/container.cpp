@@ -341,29 +341,6 @@ std::shared_ptr<widget> container::try_get_widget(const std::string& id, bool al
 	return nullptr;
 }
 
-vector2 container::dims_for_widget(const widget& w, const vector2& parent_dims){
-	const layout_params& lp = w.get_layout_params_const();
-	vector2 d;
-	for(unsigned i = 0; i != 2; ++i){
-		if(lp.dims[i] == layout_params::max || lp.dims[i] == layout_params::fill){
-			d[i] = parent_dims[i];
-		}else if(lp.dims[i] == layout_params::min){
-			d[i] = -1; // will be updated below
-		}else{
-			d[i] = lp.dims[i];
-		}
-	}
-	if(!d.is_positive_or_zero()){
-		vector2 md = w.measure(d);
-		for(unsigned i = 0; i != md.size(); ++i){
-			if(d[i] < 0){
-				d[i] = md[i];
-			}
-		}
-	}
-	return d;
-}
-
 widget_list::const_iterator container::change_child_z_position(widget_list::const_iterator child, widget_list::const_iterator before){
 	if(this->is_blocked){
 		throw std::logic_error("container::change_child_z_position(): children list is locked");

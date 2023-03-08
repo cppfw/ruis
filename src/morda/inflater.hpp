@@ -24,8 +24,11 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <map>
 #include <set>
 #include <memory>
+#include <functional>
 
-#include "util/util.hpp"
+#include <treeml/tree.hpp>
+
+#include <utki/shared_ref.hpp>
 
 namespace morda{
 

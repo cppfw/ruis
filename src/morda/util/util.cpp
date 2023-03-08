@@ -151,3 +151,26 @@ bool morda::is_property(const treeml::tree& t){
 bool morda::is_leaf_child(const treeml::leaf& l){
 	return !is_leaf_property(l);
 }
+
+vector2 morda::dims_for_widget(const widget& w, const vector2& parent_dims){
+	const layout_params& lp = w.get_layout_params_const();
+	vector2 d;
+	for(unsigned i = 0; i != 2; ++i){
+		if(lp.dims[i] == layout_params::max || lp.dims[i] == layout_params::fill){
+			d[i] = parent_dims[i];
+		}else if(lp.dims[i] == layout_params::min){
+			d[i] = -1; // will be updated below
+		}else{
+			d[i] = lp.dims[i];
+		}
+	}
+	if(!d.is_positive_or_zero()){
+		vector2 md = w.measure(d);
+		for(unsigned i = 0; i != md.size(); ++i){
+			if(d[i] < 0){
+				d[i] = md[i];
+			}
+		}
+	}
+	return d;
+}
