@@ -14,4 +14,22 @@ public:
     vector2 measure(const vector2& quotum, const_widget_list& widgets)const override;
 };
 
+class row_layout : public linear_layout{
+public:
+    row_layout() :
+        linear_layout(false)
+    {}
+
+    static const utki::shared_ref<row_layout> instance;
+};
+
+class column_layout : public linear_layout{
+public:
+    column_layout() :
+        linear_layout(true)
+    {}
+
+    static const utki::shared_ref<column_layout> instance;
+};
+
 }
