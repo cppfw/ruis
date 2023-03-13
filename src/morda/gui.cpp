@@ -47,7 +47,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "widgets/group/tree_view.hpp"
 #include "widgets/group/window.hpp"
 #include "widgets/group/collapse_area.hpp"
-#include "widgets/group/size_container.hpp"
 #include "widgets/group/row.hpp"
 #include "widgets/group/overlay.hpp"
 #include "widgets/group/book.hpp"
@@ -211,10 +210,8 @@ gui::gui(const utki::shared_ref<morda::context>& context) :
 	// register basic widgets
 	this->context.get().inflater.register_widget<widget>("widget");
 	this->context.get().inflater.register_widget<container>("container");
-	this->context.get().inflater.register_widget<size_container>("size_container");
 	this->context.get().inflater.register_widget<row>("row");
 	this->context.get().inflater.register_widget<column>("column");
-	// this->context.get().inflater.register_widget<pile>("pile");
 
 	this->context.get().inflater.register_widget<mouse_proxy>("mouse_proxy");
 	this->context.get().inflater.register_widget<click_proxy>("click_proxy");
