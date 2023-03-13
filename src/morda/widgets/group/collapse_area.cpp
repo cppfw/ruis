@@ -75,10 +75,12 @@ collapse_area::collapse_area(const utki::shared_ref<morda::context>& c, const tr
 		widget(c, desc),
 		column(this->context, layout_c)
 {
-	this->contentArea = this->try_get_widget_as<pile>("content");
+	// TODO: use get_widget_as()
+	this->contentArea = this->try_get_widget_as<container>("content");
 	ASSERT(this->contentArea)
 
-	this->title_v = this->try_get_widget_as<pile>("title");
+	// TODO: use get_widget_as()
+	this->title_v = this->try_get_widget_as<container>("title");
 	ASSERT(this->title_v)
 
 	for(const auto& p : desc){

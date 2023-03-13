@@ -22,8 +22,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #pragma once
 
 #include "../../widget.hpp"
+#include "../../container.hpp"
 #include "../group/column.hpp"
-#include "../group/pile.hpp"
 
 namespace morda{
 
@@ -31,17 +31,17 @@ class collapse_area :
 		virtual public widget,
 		private column
 {
-	std::shared_ptr<pile> contentArea;
-	std::shared_ptr<pile> title_v;
+	std::shared_ptr<container> contentArea;
+	std::shared_ptr<container> title_v;
 public:
 	collapse_area(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
 
-	pile& content()noexcept{
+	container& content()noexcept{
 		ASSERT(this->contentArea)
 		return *this->contentArea;
 	}
 
-	pile& title()noexcept{
+	container& title()noexcept{
 		ASSERT(this->title_v)
 		return *this->title_v;
 	}

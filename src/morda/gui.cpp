@@ -69,13 +69,13 @@ using namespace morda;
 namespace{
 const auto default_defs = R"qwertyuiop(
 defs{
-	// @pile{
-	// 	@container{
-	// 		layout{pile}
+	@pile{
+		@container{
+			layout{pile}
 
-	// 		${children}
-	// 	}
-	// }
+			${children}
+		}
+	}
 
 	@margins{ left top right bottom weight_left weight_right weight_top weight_bottom
 		@row{
@@ -214,7 +214,7 @@ gui::gui(const utki::shared_ref<morda::context>& context) :
 	this->context.get().inflater.register_widget<size_container>("size_container");
 	this->context.get().inflater.register_widget<row>("row");
 	this->context.get().inflater.register_widget<column>("column");
-	this->context.get().inflater.register_widget<pile>("pile");
+	// this->context.get().inflater.register_widget<pile>("pile");
 
 	this->context.get().inflater.register_widget<mouse_proxy>("mouse_proxy");
 	this->context.get().inflater.register_widget<click_proxy>("click_proxy");

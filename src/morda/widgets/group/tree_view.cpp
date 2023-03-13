@@ -183,7 +183,7 @@ utki::shared_ref<widget> tree_view::provider::get_widget(size_t index){
 	}
 
 	{
-		auto widget = this->get_list()->context.get().inflater.inflate_as<morda::pile>(is_last_item_in_parent.back() ? line_end_layout : line_middle_layout);
+		auto widget = this->get_list()->context.get().inflater.inflate_as<morda::container>(is_last_item_in_parent.back() ? line_end_layout : line_middle_layout);
 
 		if(this->count(utki::make_span(path)) != 0){
 			auto w = this->get_list()->context.get().inflater.inflate(plus_minus_layout);

@@ -22,7 +22,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #pragma once
 
 #include "../../widget.hpp"
-#include "../group/pile.hpp"
+#include "../../container.hpp"
 
 namespace morda{
 
@@ -32,7 +32,7 @@ namespace morda{
  * Drop down box widget allows selection of an item from list of items.
  */
 class drop_down_box : virtual public widget{
-	pile& selection_container;
+	container& selection_container;
 public:
 	/**
 	 * @brief Item provider class.
@@ -94,7 +94,7 @@ public:
 		return this->item_provider.get();
 	}
 protected:
-	drop_down_box(const utki::shared_ref<morda::context>& c, const treeml::forest& desc, pile& selection_container);
+	drop_down_box(const utki::shared_ref<morda::context>& c, const treeml::forest& desc, container& selection_container);
 
 	drop_down_box(const drop_down_box&) = delete;
 	drop_down_box& operator=(const drop_down_box&) = delete;

@@ -84,12 +84,12 @@ tst::set set("inflating", [](tst::suite& suite){
 			@container{
 				defs{
 					@Cont{
-						x y layout t
+						x y lp t
 						@container{
 							x{${x}} y{${x}}
 							lp{
 								dx{fill} dy{max}
-								${layout}
+								${lp}
 							}
 							@widget{
 								id {test_widget}
@@ -155,13 +155,13 @@ tst::set set("inflating", [](tst::suite& suite){
 		morda::gui m(make_dummy_context());
 		m.context.get().inflater.push_defs(R"(
 			defs{
-				@Cont{ x y layout dx
+				@Cont{ x y lp dx
 					@container{
 						x{${x}} y{${y}}
 						dy{${dx}}
 						lp{
 							dx{fill} dy{max}
-							${layout}
+							${lp}
 						}
 					}
 				}
@@ -234,7 +234,7 @@ tst::set set("inflating", [](tst::suite& suite){
 			}
 		)qwertyuiop"));
 
-		auto c = utki::dynamic_reference_cast<morda::pile>(w);
+		auto c = utki::dynamic_reference_cast<morda::container>(w);
 		tst::check_eq(c.get().children().size(), size_t(2), SL);
 		tst::check(std::dynamic_pointer_cast<morda::container>(c.get().children().front().to_shared_ptr()) != nullptr, SL);
 	});
@@ -294,7 +294,7 @@ tst::set set("inflating", [](tst::suite& suite){
 
 		auto c = utki::dynamic_reference_cast<morda::container>(w);
 		tst::check_eq(c.get().children().size(), size_t(1), SL);
-		tst::check(std::dynamic_pointer_cast<morda::pile>(c.get().children().front().to_shared_ptr()) != nullptr, SL);
+		tst::check(std::dynamic_pointer_cast<morda::container>(c.get().children().front().to_shared_ptr()) != nullptr, SL);
 	});
 
     suite.add("variables_overriding", []{
