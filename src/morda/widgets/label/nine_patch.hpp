@@ -23,7 +23,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../../res/nine_patch.hpp"
 
-#include "../group/pile.hpp"
 #include "../group/column.hpp"
 
 #include "image.hpp"

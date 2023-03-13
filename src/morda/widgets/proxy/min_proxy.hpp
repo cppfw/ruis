@@ -21,11 +21,11 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "../group/pile.hpp"
+#include "../../container.hpp"
 
 namespace morda{
 
-class min_proxy : public morda::pile{
+class min_proxy : public morda::container{
 	mutable std::weak_ptr<const morda::widget> target;
 	mutable std::string root_id;
 	mutable std::vector<std::string> target_id;

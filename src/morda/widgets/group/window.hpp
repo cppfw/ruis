@@ -24,15 +24,13 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../label/text.hpp"
 #include "../label/color.hpp"
 
-#include "pile.hpp"
-
 #include "../proxy/mouse_proxy.hpp"
 
 namespace morda{
 
 /**
  * @brief Window widget.
- * Window has borders, caption bar and can contain child widgets laid out as in pile container.
+ * Window has borders, caption bar and can contain child widgets.
  * Window can be resized by dragging one of the borders or corners of the window.
  * Window can be moved by dragging caption bar.
  * From GUI script it can be instantiated as "window".
@@ -41,7 +39,7 @@ namespace morda{
  */
 class window :
 		virtual public widget,
-		private pile
+		private container
 {
 	morda::vector2 emptyMinDim; // minimal dimension of empty window
 

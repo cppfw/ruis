@@ -2,7 +2,6 @@
 #include <tst/check.hpp>
 
 #include <morda/gui.hpp>
-#include <morda/widgets/group/pile.hpp>
 
 #include "../../harness/util/dummy_context.hpp"
 

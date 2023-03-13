@@ -21,17 +21,17 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "pile.hpp"
+#include "../../container.hpp"
 
 namespace morda{
 
 /**
  * @brief Overlay container for displaying widgets on top of anything.
  * Overlay container is used for displaying topmost widgets like context menus, hint popups etc.
- * Essentially, the overlay is a simple pile container which keeps track of open overlay widgets.
+ * Essentially, the overlay is a simple container which keeps track of open overlay widgets.
  * From GUI scripts it can be instantiated as "overlay".
  */
-class overlay : public pile{
+class overlay : public container{
 public:
 	overlay(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
 	

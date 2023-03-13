@@ -26,6 +26,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../../container.hpp"
 
 #include "../../layouts/size_layout.hpp"
+#include "../../layouts/pile_layout.hpp"
 
 using namespace morda;
 
@@ -41,7 +42,7 @@ public:
 
 overlay::overlay(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
 		widget(c, desc),
-		pile(this->context, desc)
+		container(this->context, desc, pile_layout::instance)
 {}
 
 utki::shared_ref<widget> overlay::show_context_menu(const utki::shared_ref<widget>& w, vector2 anchor){

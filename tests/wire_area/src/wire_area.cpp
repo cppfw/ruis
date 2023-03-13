@@ -5,6 +5,8 @@
 #include <morda/context.hpp>
 #include <morda/util/util.hpp>
 
+#include <morda/layouts/pile_layout.hpp>
+
 namespace{
 const morda::real antialiasWidth_c = morda::real(0.55f);
 const morda::real splineControlLength_c = morda::real(100);
@@ -12,7 +14,7 @@ const morda::real splineControlLength_c = morda::real(100);
 
 wire_area::wire_area(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
 		widget(c, desc),
-		pile(this->context, desc)
+		container(this->context, desc, morda::pile_layout::instance)
 {
 	for(const auto& p : desc){
 		if(!morda::is_property(p)){
@@ -81,7 +83,7 @@ bool wire_area::on_mouse_move(const morda::mouse_move_event& e){
 }
 
 void wire_area::lay_out(){
-	this->pile::lay_out();
+	this->container::lay_out();
 	
 	this->sockets = this->get_all_widgets<wire_socket>();
 	// TRACE(<< "this->sockets.size() = " << this->sockets.size() << std::endl)

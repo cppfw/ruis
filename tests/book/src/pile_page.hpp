@@ -1,11 +1,10 @@
 #pragma once
 
-#include "../../../src/morda/widgets/group/pile.hpp"
 #include "../../../src/morda/widgets/group/book.hpp"
 
 class pile_page :
 		public morda::page,
-		public morda::pile
+		public morda::container
 {
 public:
 	pile_page(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);

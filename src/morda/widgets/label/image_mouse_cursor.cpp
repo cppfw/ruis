@@ -25,11 +25,13 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../../util/util.hpp"
 
+#include "../../layouts/pile_layout.hpp"
+
 using namespace morda;
 
 image_mouse_cursor::image_mouse_cursor(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
 		widget(c, desc),
-		pile(this->context, desc)
+		container(this->context, desc, pile_layout::instance)
 {
 	for(const auto& p : desc){
 		if(!is_property(p)){
@@ -52,11 +54,11 @@ bool image_mouse_cursor::on_mouse_move(const mouse_move_event& e){
 	if(e.pointer_id == 0){
 		this->cursorPos = e.pos;
 	}
-	return this->pile::on_mouse_move(e);
+	return this->container::on_mouse_move(e);
 }
 
 void image_mouse_cursor::render(const morda::matrix4& matrix)const{
-	this->pile::render(matrix);
+	this->container::render(matrix);
 
 	if(!this->cursor){
 		return;
