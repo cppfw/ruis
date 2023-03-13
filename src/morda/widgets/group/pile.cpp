@@ -31,11 +31,3 @@ pile::pile(const utki::shared_ref<morda::context>& c, const treeml::forest& desc
 		widget(c, desc),
 		container(this->context, desc, pile_layout::instance)
 {}
-
-vector2 pile::measure(const vector2& quotum)const{
-	return this->get_layout().measure(quotum, this->children());
-}
-
-void pile::lay_out(){
-	this->get_layout().lay_out(this->rect().d, this->children());
-}

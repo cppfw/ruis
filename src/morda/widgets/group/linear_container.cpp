@@ -45,11 +45,3 @@ linear_container::linear_container(const utki::shared_ref<morda::context>& c, co
 		),
 		oriented_widget(this->context, treeml::forest(), vertical)
 {}
-
-vector2 linear_container::measure(const vector2& quotum)const{
-	return this->get_layout().measure(quotum, this->children());
-}
-
-void linear_container::lay_out(){
-	this->get_layout().lay_out(this->rect().d, this->children());
-}

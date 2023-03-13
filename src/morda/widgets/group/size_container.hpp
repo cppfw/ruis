@@ -32,10 +32,6 @@ public:
 
 	size_container(const size_container&) = delete;
 	size_container& operator=(const size_container&) = delete;
-
-	vector2 measure(const vector2& quotum)const override;
-
-	void lay_out()override;
 };
 
 }

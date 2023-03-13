@@ -43,9 +43,6 @@ public:
 	pile(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
 
 public:
-	morda::vector2 measure(const morda::vector2& quotum)const override;
-
-	void lay_out() override;
 };
 
 }
