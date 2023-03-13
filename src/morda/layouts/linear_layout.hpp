@@ -4,6 +4,7 @@
 
 namespace morda{
 
+// TODO: consider inheriting oriented
 class linear_layout : public layout{
     bool is_vertical;
 public:
