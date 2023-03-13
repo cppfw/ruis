@@ -23,62 +23,19 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../../util/util.hpp"
 
+#include "../../layouts/pile_layout.hpp"
+
 using namespace morda;
 
 pile::pile(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
 		widget(c, desc),
-		container(this->context, desc)
+		container(this->context, desc, pile_layout::instance)
 {}
 
-void pile::lay_out(){
-//	TRACE(<< "pile::lay_out(): invoked" << std::endl)
-	for(auto i = this->children().begin(); i != this->children().end(); ++i){
-		i->get().resize(dims_for_widget(i->get(), this->rect().d));
-
-		using std::round;
-		i->get().move_to(round((this->rect().d - i->get().rect().d) / 2));
-	}
+vector2 pile::measure(const vector2& quotum)const{
+	return this->get_layout().measure(quotum, this->children());
 }
 
-morda::vector2 pile::measure(const morda::vector2& quotum)const{
-	vector2 ret(quotum);
-	using std::max;
-	ret = max(ret, real(0)); // clamp bottom
-
-	for(auto i = this->children().begin(); i != this->children().end(); ++i){
-		auto& lp = i->get().get_layout_params_const();
-
-		morda::vector2 d;
-
-		for(unsigned j = 0; j != d.size(); ++j){
-			if(lp.dims[j] == layout_params::max){
-				if(quotum[j] >= 0){
-					d[j] = quotum[j];
-				}else{
-					d[j] = -1;
-				}
-			}else if(lp.dims[j] == layout_params::min){
-				d[j] = -1;
-			}else if(lp.dims[j] == layout_params::fill){
-				if(quotum[j] >= 0){
-					d[j] = quotum[j];
-				}else{
-					d[j] = 0;
-				}
-			}else{
-				d[j] = lp.dims[j];
-			}
-		}
-
-		d = i->get().measure(d);
-
-		for(unsigned j = 0; j != d.size(); ++j){
-			if(quotum[j] < 0){
-				using std::max;
-				ret[j] = max(ret[j], d[j]); // clamp bottom
-			}
-		}
-	}
-
-	return ret;
+void pile::lay_out(){
+	this->get_layout().lay_out(this->rect().d, this->children());
 }

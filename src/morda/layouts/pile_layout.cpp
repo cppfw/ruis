@@ -26,10 +26,53 @@ using namespace morda;
 const utki::shared_ref<pile_layout> pile_layout::instance = utki::make_shared<pile_layout>();
 
 void pile_layout::lay_out(const vector2& size, semiconst_widget_list& widgets)const{
-    // TODO:
+    for(const auto& w : widgets){
+		w.get().resize(dims_for_widget(w.get(), size));
+
+		using std::round;
+		w.get().move_to(round((size - w.get().rect().d) / 2));
+	}
 }
 
 vector2 pile_layout::measure(const vector2& quotum, const_widget_list& widgets)const{
-    // TODO:
-    return 0;
+    vector2 ret(quotum);
+	using std::max;
+	ret = max(ret, real(0)); // clamp bottom
+
+    for(const auto& w : widgets){
+		auto& lp = w.get().get_layout_params_const();
+
+		morda::vector2 d;
+
+		for(unsigned j = 0; j != d.size(); ++j){
+			if(lp.dims[j] == layout_params::max){
+				if(quotum[j] >= 0){
+					d[j] = quotum[j];
+				}else{
+					d[j] = -1;
+				}
+			}else if(lp.dims[j] == layout_params::min){
+				d[j] = -1;
+			}else if(lp.dims[j] == layout_params::fill){
+				if(quotum[j] >= 0){
+					d[j] = quotum[j];
+				}else{
+					d[j] = 0;
+				}
+			}else{
+				d[j] = lp.dims[j];
+			}
+		}
+
+		d = w.get().measure(d);
+
+		for(unsigned j = 0; j != d.size(); ++j){
+			if(quotum[j] < 0){
+				using std::max;
+				ret[j] = max(ret[j], d[j]); // clamp bottom
+			}
+		}
+	}
+
+	return ret;
 }
