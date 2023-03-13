@@ -117,7 +117,8 @@ nine_patch::nine_patch(const utki::shared_ref<morda::context>& c, const treeml::
 				}
 			}};
 		}()),
-		inner_content(this->try_get_widget_as<pile>("morda_content"))
+		// TODO: use get_widget_as()
+		inner_content(this->try_get_widget_as<container>("morda_content"))
 {
 	this->nine_patch::on_blending_change();
 

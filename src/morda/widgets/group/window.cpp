@@ -217,7 +217,8 @@ morda::window::window(const utki::shared_ref<morda::context>& c, const treeml::f
 }
 
 void morda::window::setup_widgets(){
-	this->contentArea = this->try_get_widget_as<pile>("morda_content");
+	// TODO: use get_widget_as()
+	this->contentArea = this->try_get_widget_as<container>("morda_content");
 	ASSERT(this->contentArea)
 
 	this->title = this->try_get_widget_as<text>("morda_title");

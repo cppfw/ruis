@@ -51,7 +51,7 @@ class window :
 
 	std::shared_ptr<text> title;
 
-	std::shared_ptr<pile> contentArea;
+	std::shared_ptr<container> contentArea;
 
 	std::shared_ptr<widget> ltBorder;
 	std::shared_ptr<widget> rtBorder;
@@ -93,7 +93,7 @@ public:
 	 * This is where child widgets are stored.
 	 * @return Window content area.
 	 */
-	pile& content(){
+	container& content(){
 		return *this->contentArea;
 	}
 

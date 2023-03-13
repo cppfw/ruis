@@ -58,7 +58,7 @@ class nine_patch :
 
 	const std::array<std::array<std::shared_ptr<image>, 3>, 3> img_widgets_matrix;
 
-	const std::shared_ptr<pile> inner_content;
+	const std::shared_ptr<container> inner_content;
 
 protected:
 	bool on_mouse_move(const mouse_move_event& e)override{
@@ -81,7 +81,7 @@ public:
 	 * @brief Get content container.
 	 * @return The content container. This is where the child widgets are stored.
 	 */
-	pile& content(){
+	container& content(){
 		return *this->inner_content;
 	}
 

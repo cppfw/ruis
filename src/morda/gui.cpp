@@ -69,6 +69,14 @@ using namespace morda;
 namespace{
 const auto default_defs = R"qwertyuiop(
 defs{
+	// @pile{
+	// 	@container{
+	// 		layout{pile}
+
+	// 		${children}
+	// 	}
+	// }
+
 	@margins{ left top right bottom weight_left weight_right weight_top weight_bottom
 		@row{
 			@widget{
