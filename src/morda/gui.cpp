@@ -62,6 +62,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "layouts/trivial_layout.hpp"
 #include "layouts/size_layout.hpp"
 #include "layouts/pile_layout.hpp"
+#include "layouts/linear_layout.hpp"
 
 using namespace morda;
 
@@ -227,6 +228,8 @@ gui::gui(const utki::shared_ref<morda::context>& context) :
 	this->context.get().layout_factory.add_factory("trivial", [](const auto&){return trivial_layout::instance;});
 	this->context.get().layout_factory.add_factory("size", [](const auto&){return size_layout::instance;});
 	this->context.get().layout_factory.add_factory("pile", [](const auto&){return pile_layout::instance;});
+	this->context.get().layout_factory.add_factory("row", [](const auto&){return row_layout::instance;});
+	this->context.get().layout_factory.add_factory("column", [](const auto&){return column_layout::instance;});
 }
 
 void gui::initStandardWidgets(papki::file& fi) {

@@ -23,11 +23,15 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../layout.hpp"
 
+#include "../util/oriented.hpp"
+
 namespace morda{
 
 // TODO: consider inheriting oriented
-class linear_layout : public layout{
-    bool is_vertical;
+class linear_layout :
+    public layout,
+    public oriented
+{
 public:
     linear_layout(bool is_vertical);
 

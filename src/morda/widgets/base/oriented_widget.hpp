@@ -25,7 +25,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace morda{
 
-// TODO: does it have to be widget? move to utils?
+// TODO: remove in favor of oriented
 class oriented_widget : virtual public widget{
 	bool is_vertical_v;
 
