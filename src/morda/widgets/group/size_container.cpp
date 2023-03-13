@@ -21,18 +21,19 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "size_container.hpp"
 
+#include "../../layouts/size_layout.hpp"
+
 using namespace morda;
 
 size_container::size_container(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
 		widget(c, desc),
-		container(this->context, desc)
+		container(this->context, desc, size_layout::instance)
 {}
 
+vector2 size_container::measure(const vector2& quotum)const{
+	return this->layout.get().measure(quotum, this->children());
+}
+
 void size_container::lay_out(){
-	for(auto& w : this->children()){
-		if(w.get().is_layout_dirty()){
-			auto d = dims_for_widget(w.get(), this->rect().d);
-			w.get().resize(d);
-		}
-	}
+	this->layout.get().lay_out(this->rect().d, this->children());
 }

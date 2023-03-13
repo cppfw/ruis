@@ -29,8 +29,12 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace morda;
 
 container::container(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
-		widget(c, desc),
-		layout(trivial_layout::instance)
+		container(c, desc, trivial_layout::instance)
+{}
+
+container::container(const utki::shared_ref<morda::context>& c, const treeml::forest& desc, const utki::shared_ref<morda::layout>& layout) :
+	widget(c, desc),
+	layout(layout)
 {
 	for(const auto& p : desc){
 		if(!is_property(p)){

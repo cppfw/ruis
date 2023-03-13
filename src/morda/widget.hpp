@@ -111,6 +111,7 @@ class widget : virtual public utki::shared{
 	friend class container;
 	friend class context;
 	friend class gui;
+	friend class layout;
 public:
 	const utki::shared_ref<morda::context> context;
 

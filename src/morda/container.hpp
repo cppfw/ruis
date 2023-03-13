@@ -67,8 +67,10 @@ private:
 		}
 	} children_list;
 
+protected:
 	utki::shared_ref<morda::layout> layout;
 
+private:
 	struct mouse_capture_info{
 		std::weak_ptr<widget> capturing_widget;
 		unsigned num_buttons_captured;
@@ -105,6 +107,8 @@ public:
 	 * @param desc - description of the widget.
 	 */
 	container(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
+
+	container(const utki::shared_ref<morda::context>& c, const treeml::forest& desc, const utki::shared_ref<morda::layout>& layout);
 
 	void render(const matrix4& matrix)const override;
 

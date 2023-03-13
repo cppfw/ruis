@@ -60,6 +60,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "widgets/proxy/min_proxy.hpp"
 
 #include "layouts/trivial_layout.hpp"
+#include "layouts/size_layout.hpp"
 
 using namespace morda;
 
@@ -223,6 +224,7 @@ gui::gui(const utki::shared_ref<morda::context>& context) :
 
 	// register basic layouts
 	this->context.get().layout_factory.add_factory("trivial", [](const auto&){return trivial_layout::instance;});
+	this->context.get().layout_factory.add_factory("size", [](const auto&){return size_layout::instance;});
 }
 
 void gui::initStandardWidgets(papki::file& fi) {
