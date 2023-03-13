@@ -31,9 +31,9 @@ size_container::size_container(const utki::shared_ref<morda::context>& c, const 
 {}
 
 vector2 size_container::measure(const vector2& quotum)const{
-	return this->layout.get().measure(quotum, this->children());
+	return this->get_layout().measure(quotum, this->children());
 }
 
 void size_container::lay_out(){
-	this->layout.get().lay_out(this->rect().d, this->children());
+	this->get_layout().lay_out(this->rect().d, this->children());
 }

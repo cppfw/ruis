@@ -25,6 +25,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace morda{
 
+// TODO: remove this class
 class size_container : public container{
 public:
 	size_container(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);

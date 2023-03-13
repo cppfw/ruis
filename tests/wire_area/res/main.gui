@@ -32,8 +32,10 @@
 
 	id{wire_area}
 
-	@size_container{
+	@container{
 		lp{ dx{fill} dy{fill}}
+
+		layout{size}
 
 		@window{
 			x{10} y{20}

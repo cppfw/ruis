@@ -67,7 +67,6 @@ private:
 		}
 	} children_list;
 
-protected:
 	utki::shared_ref<morda::layout> layout;
 
 private:
@@ -109,6 +108,10 @@ public:
 	container(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
 
 	container(const utki::shared_ref<morda::context>& c, const treeml::forest& desc, const utki::shared_ref<morda::layout>& layout);
+
+	const morda::layout& get_layout()const{
+		return this->layout.get();
+	}
 
 	void render(const matrix4& matrix)const override;
 
