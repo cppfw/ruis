@@ -120,6 +120,8 @@ public:
 	bool on_mouse_move(const mouse_move_event& event)override;
 
 	void on_hover_change(unsigned pointer_id)override;
+	
+	morda::vector2 measure(const morda::vector2& quotum)const override;
 
 	/**
 	 * @brief Layout child widgets.

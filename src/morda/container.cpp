@@ -264,14 +264,12 @@ void container::on_hover_change(unsigned pointer_id){
 	}
 }
 
+vector2 container::measure(const vector2& quotum)const{
+	return this->get_layout().measure(quotum, this->children());
+}
+
 void container::lay_out(){
-//	TRACE(<< "container::lay_out(): invoked" << std::endl)
-	for(auto& w : this->children()){
-		if(w.get().is_layout_dirty()){
-			w.get().layout_dirty = false;
-			w.get().lay_out();
-		}
-	}
+	this->get_layout().lay_out(this->rect().d, this->children());
 }
 
 widget_list::const_iterator container::insert(const utki::shared_ref<widget>& w, widget_list::const_iterator before){
