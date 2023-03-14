@@ -21,7 +21,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "linear_container.hpp"
+#include "../../layouts/linear_layout.hpp"
 
 namespace morda{
 
@@ -29,11 +29,11 @@ namespace morda{
  * @brief Vertical container widget.
  * column is a vertical variant of linear container. From GUI scripts it can be instantiated as "column".
  */
-class column : public linear_container{
+class column : public container{
 public:
 	column(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
 			widget(c, desc),
-			linear_container(this->context, desc, true)
+			container(this->context, desc, column_layout::instance)
 	{}
 
 	column(const column&) = delete;

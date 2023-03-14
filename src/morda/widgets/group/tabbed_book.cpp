@@ -27,9 +27,11 @@ using namespace morda;
 
 tabbed_book::tabbed_book(const utki::shared_ref<morda::context>& context, const treeml::forest& desc) :
 		morda::widget(context, desc),
-		morda::column(
+		morda::container(
 				this->context,
 				treeml::read(R"(
+					layout{column}
+					
 					@tab_group{
 						id { morda_tab_group }
 						lp{

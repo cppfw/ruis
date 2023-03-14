@@ -24,7 +24,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <unordered_map>
 
 #include "book.hpp"
-#include "column.hpp"
 #include "../button/tab_group.hpp"
 #include "../button/tab.hpp"
 
@@ -32,7 +31,7 @@ namespace morda{
 
 class tabbed_book :
 		virtual public morda::widget,
-		private morda::column
+		private morda::container
 {
 	morda::tab_group& tab_group;
 	morda::book& book;
@@ -59,17 +58,17 @@ public:
 
 	utki::shared_ref<page> tear_out(tab& t);
 
-	using morda::column::render;
-	using morda::column::lay_out;
-	using morda::column::on_mouse_move;
-	using morda::column::on_mouse_button;
-	using morda::column::on_key;
-	using morda::column::on_focus_change;
-	using morda::column::on_hover_change;
-	using morda::column::on_resize;
-	using morda::column::on_parent_change;
-	using morda::column::measure;
-	using morda::column::on_enable_change;
+	using morda::container::render;
+	using morda::container::lay_out;
+	using morda::container::on_mouse_move;
+	using morda::container::on_mouse_button;
+	using morda::container::on_key;
+	using morda::container::on_focus_change;
+	using morda::container::on_hover_change;
+	using morda::container::on_resize;
+	using morda::container::on_parent_change;
+	using morda::container::measure;
+	using morda::container::on_enable_change;
 };
 
 }

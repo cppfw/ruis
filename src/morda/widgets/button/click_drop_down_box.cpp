@@ -167,13 +167,15 @@ void click_drop_down_box::show_drop_down_menu(){
 
 	// force minimum horizontal size of the drop down menu to be the same as the drop down box horizontal size
 	{
+		// TODO: use get_widget()
 		auto min_size_forcer = np.get().try_get_widget("morda_min_size_forcer");
 
 		auto& lp = min_size_forcer->get_layout_params();
 		lp.dims.x() = this->rect().d.x();
 	}
 
-	auto va = np.get().try_get_widget_as<morda::column>("morda_contextmenu_content");
+	// TODO: use get_widget_as()
+	auto va = np.get().try_get_widget_as<morda::container>("morda_contextmenu_content");
 	ASSERT(va)
 
 	for(size_t i = 0; i != this->get_provider()->count(); ++i){

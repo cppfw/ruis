@@ -6,7 +6,9 @@
 sample_page::sample_page(const utki::shared_ref<morda::context>& c, const std::string& text) :
         morda::widget(c, treeml::forest()),
         morda::page(this->context, treeml::forest()),
-        morda::row(this->context, treeml::read(R"qwer(
+        morda::container(this->context, treeml::read(R"qwer(
+                layout{row}
+                
                 @text{
                         id{text}
                 }

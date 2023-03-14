@@ -29,6 +29,8 @@ using namespace morda;
 
 namespace{
 const auto layout_c = treeml::read(R"qwertyuiop(
+	layout{column}
+	
 	@pile{
 		lp{dx{max}}
 		@color{
@@ -73,7 +75,7 @@ const auto layout_c = treeml::read(R"qwertyuiop(
 
 collapse_area::collapse_area(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
 		widget(c, desc),
-		column(this->context, layout_c)
+		container(this->context, layout_c)
 {
 	// TODO: use get_widget_as()
 	this->contentArea = this->try_get_widget_as<container>("content");

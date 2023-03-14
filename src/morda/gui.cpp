@@ -44,10 +44,11 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "widgets/input/text_input_line.hpp"
 
+#include "widgets/group/row.hpp"
+#include "widgets/group/column.hpp"
 #include "widgets/group/tree_view.hpp"
 #include "widgets/group/window.hpp"
 #include "widgets/group/collapse_area.hpp"
-#include "widgets/group/row.hpp"
 #include "widgets/group/overlay.hpp"
 #include "widgets/group/book.hpp"
 #include "widgets/group/tabbed_book.hpp"
@@ -76,6 +77,25 @@ defs{
 		}
 	}
 
+	// TODO: these don't work in case of e.g. @left template, something wrong with ${children} template variable
+	// @row{
+	// 	@container{
+	// 		layout{row}
+
+	// 		${children}
+	// 	}
+	// }
+
+	// @column{
+	// 	@container{
+	// 		layout{column}
+
+	// 		${children}
+	// 	}
+	// }
+}
+
+defs{
 	@margins{ left top right bottom weight_left weight_right weight_top weight_bottom
 		@row{
 			@widget{

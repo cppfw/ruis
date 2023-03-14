@@ -23,13 +23,12 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../../widget.hpp"
 #include "../../container.hpp"
-#include "../group/column.hpp"
 
 namespace morda{
 
 class collapse_area :
 		virtual public widget,
-		private column
+		private container
 {
 	std::shared_ptr<container> contentArea;
 	std::shared_ptr<container> title_v;

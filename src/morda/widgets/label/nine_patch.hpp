@@ -23,8 +23,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../../res/nine_patch.hpp"
 
-#include "../group/column.hpp"
-
 #include "image.hpp"
 
 #include "../base/blending_widget.hpp"
@@ -46,7 +44,7 @@ namespace morda{
 class nine_patch :
 		public virtual widget,
 		public blending_widget,
-		private column
+		private container
 {
 	std::shared_ptr<const res::nine_patch> np_res;
 	std::shared_ptr<const res::nine_patch> disabled_np_res;
@@ -61,10 +59,10 @@ class nine_patch :
 
 protected:
 	bool on_mouse_move(const mouse_move_event& e)override{
-		return this->column::on_mouse_move(e);
+		return this->container::on_mouse_move(e);
 	}
 	bool on_mouse_button(const mouse_button_event& e)override{
-		return this->column::on_mouse_button(e);
+		return this->container::on_mouse_button(e);
 	}
 public:
 	nine_patch(const nine_patch&) = delete;

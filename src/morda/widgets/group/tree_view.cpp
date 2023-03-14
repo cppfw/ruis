@@ -27,7 +27,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../proxy/mouse_proxy.hpp"
 
-#include "row.hpp"
+#include "../../layouts/linear_layout.hpp"
 
 using namespace morda;
 
@@ -173,7 +173,7 @@ utki::shared_ref<widget> tree_view::provider::get_widget(size_t index){
 
 	ASSERT(this->get_list(), [&](auto&o){o << "provider is not set to a list_widget";})
 
-	auto ret = utki::make_shared<morda::row>(this->get_list()->context, treeml::forest());
+	auto ret = utki::make_shared<morda::container>(this->get_list()->context, treeml::forest(), row_layout::instance);
 
 	ASSERT(is_last_item_in_parent.size() == path.size())
 

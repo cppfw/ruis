@@ -31,6 +31,8 @@ using namespace morda;
 
 namespace{
 const auto ninePatchLayout_c = treeml::read(R"qwertyuiop(
+		layout{column}
+
 		@row{
 			lp{dx{fill}}
 			@image{
@@ -97,7 +99,7 @@ const auto ninePatchLayout_c = treeml::read(R"qwertyuiop(
 nine_patch::nine_patch(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
 		widget(c, desc),
 		blending_widget(this->context, desc),
-		column(this->context, ninePatchLayout_c),
+		container(this->context, ninePatchLayout_c),
 		img_widgets_matrix([this]() -> decltype(this->img_widgets_matrix){
 			return {{
 				{
@@ -160,7 +162,7 @@ nine_patch::nine_patch(const utki::shared_ref<morda::context>& c, const treeml::
 }
 
 void nine_patch::render(const morda::matrix4& matrix)const{
-	this->column::render(matrix);
+	this->container::render(matrix);
 }
 
 void nine_patch::set_nine_patch(std::shared_ptr<const res::nine_patch> np){
