@@ -19,25 +19,21 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 /* ================ LICENSE END ================ */
 
-#pragma once
+#include "layout_factory.hpp"
 
-#include "../../layouts/linear_layout.hpp"
+using namespace morda;
 
-namespace morda{
+void layout_factory::add_factory(std::string name, factory_type&& factory){
+    this->factories.emplace(std::move(name), std::move(factory));
+}
 
-/**
- * @brief Horizontal container widget.
- * Row is a horizontal variant of linear container. From GUI scripts it can be instantiated as "row".
- */
-class row : public container{
-public:
-	row(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
-			widget(c, desc),
-			container(this->context, desc, row_layout::instance)
-	{}
+utki::shared_ref<layout> layout_factory::create(std::string_view name, const tml::forest& desc){
+    auto i = this->factories.find(name);
+    if(i == this->factories.end()){
+        std::stringstream ss;
+        ss << "layout_factory::create(" << name << "): layout factory not found";
+        throw std::logic_error(ss.str());
+    }
 
-	row(const row&) = delete;
-	row& operator=(const row&) = delete;
-};
-
+    return i->second(desc);
 }

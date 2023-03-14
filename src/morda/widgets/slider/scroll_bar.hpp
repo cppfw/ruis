@@ -23,9 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <functional>
 
-#include "../widget.hpp"
-
-#include "../group/pile.hpp"
+#include "../../widget.hpp"
 
 #include "../base/oriented_widget.hpp"
 #include "../base/fraction_band_widget.hpp"
@@ -40,7 +38,7 @@ namespace morda{
 class scroll_bar :
 		public fraction_band_widget,
 		protected oriented_widget,
-		private pile // users do not need to know that it is a container
+		private container // users do not need to know that it is a container
 {
 	scroll_bar(const scroll_bar&) = delete;
 	scroll_bar& operator=(const scroll_bar&) = delete;

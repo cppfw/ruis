@@ -27,8 +27,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../proxy/mouse_proxy.hpp"
 
-#include "row.hpp"
-#include "pile.hpp"
+#include "../../layouts/linear_layout.hpp"
 
 using namespace morda;
 
@@ -91,7 +90,7 @@ const treeml::forest plus_minus_layout = treeml::read(R"qwertyuiop(
 				id{plusminus}
 			}
 			@mouse_proxy{
-				layout{
+				lp{
 					dx{fill} dy{fill}
 				}
 				id{plusminus_mouseproxy}
@@ -101,9 +100,9 @@ const treeml::forest plus_minus_layout = treeml::read(R"qwertyuiop(
 
 const treeml::forest vert_line_layout = treeml::read(R"qwertyuiop(
 		@pile{
-			layout{dx{${morda_tree_view_indent}} dy{fill}}
+			lp{dx{${morda_tree_view_indent}} dy{fill}}
 			@color{
-				layout{dx{1pt}dy{fill}}
+				lp{dx{1pt}dy{fill}}
 				color{${morda_color_highlight}}
 			}
 		}
@@ -111,20 +110,20 @@ const treeml::forest vert_line_layout = treeml::read(R"qwertyuiop(
 
 const treeml::forest line_end_layout = treeml::read(R"qwertyuiop(
 		@pile{
-			layout{dx{${morda_tree_view_indent}} dy{max}}
+			lp{dx{${morda_tree_view_indent}} dy{max}}
 			@column{
-				layout{dx{max}dy{max}}
+				lp{dx{max}dy{max}}
 				@color{
-					layout{dx{1pt}dy{0}weight{1}}
+					lp{dx{1pt}dy{0}weight{1}}
 					color{${morda_color_highlight}}
 				}
-				@widget{layout{dx{max}dy{0}weight{1}}}
+				@widget{lp{dx{max}dy{0}weight{1}}}
 			}
 			@row{
-				layout{dx{max}dy{max}}
-				@widget{layout{dx{0}dy{max}weight{1}}}
+				lp{dx{max}dy{max}}
+				@widget{lp{dx{0}dy{max}weight{1}}}
 				@color{
-					layout{dx{0}dy{1pt}weight{1}}
+					lp{dx{0}dy{1pt}weight{1}}
 					color{${morda_color_highlight}}
 				}
 			}
@@ -133,16 +132,16 @@ const treeml::forest line_end_layout = treeml::read(R"qwertyuiop(
 
 const treeml::forest line_middle_layout = treeml::read(R"qwertyuiop(
 		@pile{
-			layout{dx{${morda_tree_view_indent}} dy{max}}
+			lp{dx{${morda_tree_view_indent}} dy{max}}
 			@color{
-				layout{dx{1pt}dy{max}}
+				lp{dx{1pt}dy{max}}
 				color{${morda_color_highlight}}
 			}
 			@row{
-				layout{dx{max}dy{max}}
-				@widget{layout{dx{0}dy{max}weight{1}}}
+				lp{dx{max}dy{max}}
+				@widget{lp{dx{0}dy{max}weight{1}}}
 				@color{
-					layout{dx{0}dy{1pt}weight{1}}
+					lp{dx{0}dy{1pt}weight{1}}
 					color{${morda_color_highlight}}
 				}
 			}
@@ -150,7 +149,7 @@ const treeml::forest line_middle_layout = treeml::read(R"qwertyuiop(
 	)qwertyuiop");
 
 const treeml::forest empty_layout = treeml::read(R"qwertyuiop(
-		@widget{layout{dx{${morda_tree_view_indent}}dy{0}}}
+		@widget{lp{dx{${morda_tree_view_indent}}dy{0}}}
 	)qwertyuiop");
 }
 
@@ -174,7 +173,7 @@ utki::shared_ref<widget> tree_view::provider::get_widget(size_t index){
 
 	ASSERT(this->get_list(), [&](auto&o){o << "provider is not set to a list_widget";})
 
-	auto ret = utki::make_shared<morda::row>(this->get_list()->context, treeml::forest());
+	auto ret = utki::make_shared<morda::container>(this->get_list()->context, treeml::forest(), row_layout::instance);
 
 	ASSERT(is_last_item_in_parent.size() == path.size())
 
@@ -183,7 +182,7 @@ utki::shared_ref<widget> tree_view::provider::get_widget(size_t index){
 	}
 
 	{
-		auto widget = this->get_list()->context.get().inflater.inflate_as<morda::pile>(is_last_item_in_parent.back() ? line_end_layout : line_middle_layout);
+		auto widget = this->get_list()->context.get().inflater.inflate_as<morda::container>(is_last_item_in_parent.back() ? line_end_layout : line_middle_layout);
 
 		if(this->count(utki::make_span(path)) != 0){
 			auto w = this->get_list()->context.get().inflater.inflate(plus_minus_layout);

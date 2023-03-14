@@ -29,6 +29,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <treeml/tree.hpp>
 
 #include "../config.hpp"
+#include "../widget.hpp"
 
 #include "../render/renderer.hpp"
 #include "../render/texture_2d.hpp"
@@ -122,5 +123,16 @@ inline const treeml::leaf& get_property_value(const treeml::tree& p){
     }
     return p.children.front().value;
 }
+
+/**
+ * @brief Calculate basic dimensions of widget.
+ * Calculates basic dimensions of given widget if it would be placed to
+ * a container with given dimensions and given layout parameters, basically this is just
+ * resolving of 'min', 'max' and 'fill' special values of dimensions.
+ * @param w - widget to calculate dimensions for.
+ * @param parent_dims - parent widget dimensions.
+ * @return Dimensions of widget.
+ */
+vector2 dims_for_widget(const widget& w, const vector2& parent_dims);
 
 }

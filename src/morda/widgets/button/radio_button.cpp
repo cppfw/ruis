@@ -29,6 +29,8 @@ using namespace morda;
 namespace{
 
 const auto D_Layout = treeml::read(R"qwertyuiop(
+		layout{pile}
+
 		@image{
 			image{morda_img_radiobutton_bg}
 		}
@@ -44,7 +46,7 @@ radio_button::radio_button(const utki::shared_ref<morda::context>& c, const tree
 		button(this->context, desc),
 		toggle_button(this->context, desc),
 		choice_button(this->context, desc),
-		pile(this->context, D_Layout),
+		container(this->context, D_Layout),
 		check_widget(*this->children().rbegin())
 {
 	this->check_widget.get().set_visible(this->is_pressed());

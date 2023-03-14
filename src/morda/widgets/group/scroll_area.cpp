@@ -104,8 +104,11 @@ void scroll_area::update_scroll_factor(){
 	}
 }
 
-// TODO: why is there special dims_for_widget() and why container::dims_for_widget() is not like this? 
-vector2 scroll_area::dims_for_widget(const widget& w, const layout_params& lp)const{
+// NOTE:
+// scroll_area uses it's own dims_for_widget() beacuse it has slightly different behaviour for 'max',
+// it wants 'max' children to be bigger than scroll_area in case their minimal dimensions are bigger.
+vector2 scroll_area::dims_for_widget(const widget& w)const{
+	const layout_params& lp = w.get_layout_params_const();
 	vector2 d;
 	for(unsigned i = 0; i != 2; ++i){
 		if(lp.dims[i] == layout_params::fill){
@@ -132,12 +135,10 @@ vector2 scroll_area::dims_for_widget(const widget& w, const layout_params& lp)co
 }
 
 void scroll_area::arrange_widgets(){
-	for(auto i = this->children().begin(); i != this->children().end(); ++i){
-		auto& lp = i->get().get_layout_params_const();
+	for(const auto& c : this->children()){
+		auto d = this->dims_for_widget(c.get());
 
-		auto d = this->dims_for_widget(i->get(), lp);
-
-		i->get().resize(d);
+		c.get().resize(d);
 	}
 }
 
@@ -145,25 +146,22 @@ void scroll_area::lay_out(){
 	this->arrange_widgets();
 	this->update_invisible_dims();
 
+	// correct scroll position
+
 	// distance of content's bottom right corner from bottom right corner of the scroll_area
 	vector2 br = this->cur_scroll_pos - this->invisible_dims;
 
-	if(br.x() > 0){
-		if(br.x() <= this->cur_scroll_pos.x()){
-			this->cur_scroll_pos.x() -= br.x();
-		}else{
-			this->cur_scroll_pos.x() = 0;
+	for(size_t i = 0; i != br.size(); ++i){
+		if(br[i] > 0){
+			if(br[i] <= this->cur_scroll_pos[i]){
+				this->cur_scroll_pos[i] -= br[i];
+			}else{
+				this->cur_scroll_pos[i] = 0;
+			}
 		}
 	}
 
-	if(br.y() > 0){
-		if(br.y() <= this->cur_scroll_pos.y()){
-			this->cur_scroll_pos.y() -= br.y();
-		}else{
-			this->cur_scroll_pos.y() = 0;
-		}
-	}
-
+	// TODO: why notification is deferred? figure out why and write a comment with explanation here
 	this->context.get().run_from_ui_thread([sa = utki::make_weak_from(*this)](){
 		if(auto s = sa.lock()){
 			s->on_scroll_pos_change();
@@ -182,10 +180,8 @@ void scroll_area::update_invisible_dims(){
 
 	using std::max;
 
-	for(auto i = this->children().begin(); i != this->children().end(); ++i){
-		auto& lp = i->get().get_layout_params_const();
-
-		morda::vector2 d = i->get().rect().p + this->dims_for_widget(i->get(), lp);
+	for(const auto& c : this->children()){
+		morda::vector2 d = c.get().rect().p + this->dims_for_widget(c.get());
 
 		minDim = max(minDim, d); // clamp bottom
 	}

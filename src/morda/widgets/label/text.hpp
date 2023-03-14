@@ -21,7 +21,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "../widget.hpp"
+#include "../../widget.hpp"
 #include "../../res/font.hpp"
 #include "../base/single_line_text_widget.hpp"
 

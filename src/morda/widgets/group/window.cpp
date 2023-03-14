@@ -30,13 +30,15 @@ using namespace morda;
 namespace{
 
 const auto windowDesc_c = treeml::read(R"qwertyuiop(
+		layout{pile}
+
 		@column{
-			layout{
+			lp{
 				dx{max} dy{max}
 			}
 
 			@row{
-				layout{dx{fill}}
+				lp{dx{fill}}
 
 				@mouse_proxy{
 					id{morda_lt_proxy}
@@ -44,7 +46,7 @@ const auto windowDesc_c = treeml::read(R"qwertyuiop(
 
 				@mouse_proxy{
 					id{morda_t_proxy}
-					layout{
+					lp{
 						dx{0} dy{fill} weight{1}
 					}
 				}
@@ -55,26 +57,26 @@ const auto windowDesc_c = treeml::read(R"qwertyuiop(
 			}
 
 			@row{
-				layout{
+				lp{
 					weight{1}
 					dx{max}
 				}
 
 				@mouse_proxy{
 					id{morda_l_proxy}
-					layout{dy{fill}}
+					lp{dy{fill}}
 				}
 
 				// middle
 				@column{
-					layout{
+					lp{
 						weight{1}
 						dy{max}
 					}
 
 					// caption
 					@pile{
-						layout{
+						lp{
 							dx{max}
 						}
 
@@ -82,20 +84,20 @@ const auto windowDesc_c = treeml::read(R"qwertyuiop(
 
 						@mouse_proxy{
 							id{morda_caption_proxy}
-							layout{
+							lp{
 								dx{max} dy{max}
 							}
 						}
 
 						@color{
 							id{morda_window_title_bg}
-							layout{
+							lp{
 								dx{max} dy{max}
 							}
 						}
 
 						@row{
-							layout{
+							lp{
 								dx{max} dy{max}
 							}
 
@@ -104,7 +106,7 @@ const auto windowDesc_c = treeml::read(R"qwertyuiop(
 								top{2dp}
 								bottom{2dp}
 
-								layout{
+								lp{
 									dx{0}
 									weight{1}
 								}
@@ -119,7 +121,7 @@ const auto windowDesc_c = treeml::read(R"qwertyuiop(
 					@pile{
 						id{morda_content}
 						clip{true}
-						layout{
+						lp{
 							dx{fill} dy{0}
 							weight{1}
 						}
@@ -128,12 +130,12 @@ const auto windowDesc_c = treeml::read(R"qwertyuiop(
 
 				@mouse_proxy{
 					id{morda_r_proxy}
-					layout{dy{fill}}
+					lp{dy{fill}}
 				}
 			}
 
 			@row{
-				layout{
+				lp{
 					dx{fill}
 				}
 				@mouse_proxy{
@@ -142,7 +144,7 @@ const auto windowDesc_c = treeml::read(R"qwertyuiop(
 
 				@mouse_proxy{
 					id{morda_b_proxy}
-					layout{
+					lp{
 						dy{fill}
 						dx{0}
 						weight{1}
@@ -170,7 +172,7 @@ void morda::window::set_background(const utki::shared_ref<widget>& w){
 
 morda::window::window(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
 		widget(c, desc),
-		pile(this->context, windowDesc_c)
+		container(this->context, windowDesc_c)
 {
 	this->setup_widgets();
 
@@ -217,7 +219,8 @@ morda::window::window(const utki::shared_ref<morda::context>& c, const treeml::f
 }
 
 void morda::window::setup_widgets(){
-	this->contentArea = this->try_get_widget_as<pile>("morda_content");
+	// TODO: use get_widget_as()
+	this->contentArea = this->try_get_widget_as<container>("morda_content");
 	ASSERT(this->contentArea)
 
 	this->title = this->try_get_widget_as<text>("morda_title");
@@ -511,5 +514,5 @@ void window::updateTopmost(){
 
 void window::lay_out(){
 	this->updateTopmost();
-	this->pile::lay_out();
+	this->container::lay_out();
 }

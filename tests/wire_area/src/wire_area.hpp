@@ -1,10 +1,8 @@
 #pragma once
 
-#include <morda/widgets/group/pile.hpp>
-
 #include "wire_socket.hpp"
 
-class wire_area : public morda::pile{
+class wire_area : public morda::container{
 	friend class wire_socket;
 	
 	const morda::real deafultWireHalfWidth_c = morda::real(0.25f);

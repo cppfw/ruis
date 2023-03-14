@@ -33,20 +33,20 @@ using namespace morda;
 
 namespace{
 const auto drop_down_box_layout = treeml::read(R"qwertyuiop(
-	layout{dx{max} dy{max}}
+	lp{dx{max} dy{max}}
 
 	@row{
-		layout{dx{max}}
+		lp{dx{max}}
 		@pile{
 			id{morda_dropdown_selection}
-			layout{dx{min}dy{max} weight{1}}
+			lp{dx{min}dy{max} weight{1}}
 		}
-		@widget{layout{dx{3dp}}}
+		@widget{lp{dx{3dp}}}
 		@image{
 			image{morda_img_divider_vert}
-			layout{dy{fill}}
+			lp{dy{fill}}
 		}
-		@widget{layout{dx{3dp}}}
+		@widget{lp{dx{3dp}}}
 		@image{
 			image{morda_img_dropdown_arrow}
 		}
@@ -57,12 +57,12 @@ const auto drop_down_box_layout = treeml::read(R"qwertyuiop(
 namespace{
 const auto item_layout = treeml::read(R"qwertyuiop(
 		@pile{
-			layout{
+			lp{
 				dx{max}
 			}
 			@mouse_proxy{
 				id{morda_dropdown_mouseproxy}
-				layout{
+				lp{
 					dx{fill} dy{fill}
 				}
 			}
@@ -70,7 +70,7 @@ const auto item_layout = treeml::read(R"qwertyuiop(
 				id{morda_dropdown_color}
 				color{${morda_color_highlight}}
 				visible{false}
-				layout{
+				lp{
 					dx{fill} dy{fill}
 				}
 			}
@@ -85,18 +85,18 @@ const auto drop_down_menu_layout = treeml::read(R"qwertyuiop(
 				id{morda_min_size_forcer}
 			}
 			@mouse_proxy{
-				layout{
+				lp{
 					dx{fill} dy{fill}
 				}
 				id{morda_drop_down_menu_mouse_proxy}
 			}
 			@nine_patch{
-				layout{
+				lp{
 					dx{max}
 				}
 				image{morda_npt_contextmenu_bg}
 				@column{
-					layout{
+					lp{
 						dx{max}
 					}
 					id{morda_contextmenu_content}
@@ -111,7 +111,7 @@ click_drop_down_box::click_drop_down_box(const utki::shared_ref<morda::context>&
 		button(this->context, drop_down_box_layout),
 		push_button(this->context, drop_down_box_layout),
 		nine_patch_push_button(this->context, drop_down_box_layout),
-		drop_down_box(this->context, desc, this->get_widget_as<pile>("morda_dropdown_selection"))
+		drop_down_box(this->context, desc, this->get_widget_as<morda::container>("morda_dropdown_selection"))
 {
 	this->press_handler = [this](button& b){
 		if(!b.is_pressed()){
@@ -167,13 +167,15 @@ void click_drop_down_box::show_drop_down_menu(){
 
 	// force minimum horizontal size of the drop down menu to be the same as the drop down box horizontal size
 	{
+		// TODO: use get_widget()
 		auto min_size_forcer = np.get().try_get_widget("morda_min_size_forcer");
 
 		auto& lp = min_size_forcer->get_layout_params();
 		lp.dims.x() = this->rect().d.x();
 	}
 
-	auto va = np.get().try_get_widget_as<morda::column>("morda_contextmenu_content");
+	// TODO: use get_widget_as()
+	auto va = np.get().try_get_widget_as<morda::container>("morda_contextmenu_content");
 	ASSERT(va)
 
 	for(size_t i = 0; i != this->get_provider()->count(); ++i){
@@ -222,7 +224,7 @@ void click_drop_down_box::handle_mouse_button_up(bool is_first_button_up_event){
 }
 
 utki::shared_ref<widget> click_drop_down_box::wrap_item(const utki::shared_ref<widget>& w, size_t index){
-	auto wd = this->context.get().inflater.inflate_as<pile>(item_layout);
+	auto wd = this->context.get().inflater.inflate_as<morda::container>(item_layout);
 
 	auto mp = wd.get().try_get_widget_as<mouse_proxy>("morda_dropdown_mouseproxy");
 	ASSERT(mp)

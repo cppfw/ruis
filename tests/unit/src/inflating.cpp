@@ -2,7 +2,6 @@
 #include <tst/check.hpp>
 
 #include <morda/gui.hpp>
-#include <morda/widgets/group/pile.hpp>
 
 #include "../../harness/util/dummy_context.hpp"
 
@@ -17,7 +16,7 @@ tst::set set("inflating", [](tst::suite& suite){
 
 					@Cont{
 						@container{
-							layout{
+							lp{
 								dx{fill} dy{456}
 							}
 						}
@@ -25,7 +24,7 @@ tst::set set("inflating", [](tst::suite& suite){
 				}
 
 				@Cont{
-					layout{
+					lp{
 						${dims}
 					}
 				}
@@ -49,7 +48,7 @@ tst::set set("inflating", [](tst::suite& suite){
 					@Cont{
 						@container{
 							x{10} y{12}
-							layout{
+							lp{
 								dx{fill} dy{456}
 							}
 						}
@@ -59,7 +58,7 @@ tst::set set("inflating", [](tst::suite& suite){
 				@Cont{
 					x{23}
 					dx{45}
-					layout{
+					lp{
 						dx{max}
 					}
 				}
@@ -84,12 +83,12 @@ tst::set set("inflating", [](tst::suite& suite){
 			@container{
 				defs{
 					@Cont{
-						x y layout t
+						x y lp t
 						@container{
 							x{${x}} y{${x}}
-							layout{
+							lp{
 								dx{fill} dy{max}
-								${layout}
+								${lp}
 							}
 							@widget{
 								id {test_widget}
@@ -103,7 +102,7 @@ tst::set set("inflating", [](tst::suite& suite){
 					x{23}
 					dx{45}
 					t{13}
-					layout{
+					lp{
 						dx{max}
 					}
 				}
@@ -155,13 +154,13 @@ tst::set set("inflating", [](tst::suite& suite){
 		morda::gui m(make_dummy_context());
 		m.context.get().inflater.push_defs(R"(
 			defs{
-				@Cont{ x y layout dx
+				@Cont{ x y lp dx
 					@container{
 						x{${x}} y{${y}}
 						dy{${dx}}
-						layout{
+						lp{
 							dx{fill} dy{max}
-							${layout}
+							${lp}
 						}
 					}
 				}
@@ -180,7 +179,7 @@ tst::set set("inflating", [](tst::suite& suite){
 				@Cont{
 					x{23} y{106}
 					dx{45}
-					layout{
+					lp{
 						dx{max}
 					}
 				}
@@ -212,7 +211,7 @@ tst::set set("inflating", [](tst::suite& suite){
 						@Container_{
 							x{${x}} y{${y}}
 							dy{${dx}}
-							layout{
+							lp{
 								${layout}
 								dx{fill} dy{max}
 							}
@@ -234,7 +233,7 @@ tst::set set("inflating", [](tst::suite& suite){
 			}
 		)qwertyuiop"));
 
-		auto c = utki::dynamic_reference_cast<morda::pile>(w);
+		auto c = utki::dynamic_reference_cast<morda::container>(w);
 		tst::check_eq(c.get().children().size(), size_t(2), SL);
 		tst::check(std::dynamic_pointer_cast<morda::container>(c.get().children().front().to_shared_ptr()) != nullptr, SL);
 	});
@@ -249,7 +248,7 @@ tst::set set("inflating", [](tst::suite& suite){
 							@container{
 								x{${x}} y{${y}}
 								dy{${dx}}
-								layout{
+								lp{
 									${layout}
 									dx{fill} dy{max}
 								}
@@ -294,7 +293,7 @@ tst::set set("inflating", [](tst::suite& suite){
 
 		auto c = utki::dynamic_reference_cast<morda::container>(w);
 		tst::check_eq(c.get().children().size(), size_t(1), SL);
-		tst::check(std::dynamic_pointer_cast<morda::pile>(c.get().children().front().to_shared_ptr()) != nullptr, SL);
+		tst::check(std::dynamic_pointer_cast<morda::container>(c.get().children().front().to_shared_ptr()) != nullptr, SL);
 	});
 
     suite.add("variables_overriding", []{

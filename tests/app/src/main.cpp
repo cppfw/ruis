@@ -6,8 +6,8 @@
 
 #include "../../../src/morda/config.hpp"
 
-#include "../../../src/morda/widgets/widget.hpp"
-#include "../../../src/morda/widgets/container.hpp"
+#include "../../../src/morda/widget.hpp"
+#include "../../../src/morda/container.hpp"
 #include "../../../src/morda/widgets/proxy/key_proxy.hpp"
 
 #include "../../../src/morda/widgets/button/push_button.hpp"
@@ -17,7 +17,6 @@
 
 #include "../../../src/morda/widgets/character_input_widget.hpp"
 #include "../../../src/morda/widgets/group/scroll_area.hpp"
-#include "../../../src/morda/widgets/group/row.hpp"
 #include "../../../src/morda/widgets/proxy/mouse_proxy.hpp"
 #include "../../../src/morda/widgets/slider/scroll_bar.hpp"
 #include "../../../src/morda/widgets/group/list.hpp"
@@ -29,6 +28,8 @@
 #include "../../../src/morda/widgets/input/text_input_line.hpp"
 
 #include "../../../src/morda/widgets/button/drop_down_box.hpp"
+
+#include "../../../src/morda/layouts/linear_layout.hpp"
 
 #ifdef assert
 #	undef assert
@@ -368,7 +369,7 @@ public:
 			list = &n->children;
 		}
 
-		auto ret = utki::make_shared<morda::row>(this->context, treeml::forest());
+		auto ret = utki::make_shared<morda::container>(this->context, treeml::forest(), morda::row_layout::instance);
 
 		{
 			auto v = this->context.get().inflater.inflate(
@@ -376,7 +377,7 @@ public:
 							@pile{
 								@color{
 									id{selection}
-									layout{dx{fill}dy{fill}}
+									lp{dx{fill}dy{fill}}
 									color{${morda_color_highlight}}
 									visible{false}
 								}
@@ -385,7 +386,7 @@ public:
 								}
 								@mouse_proxy{
 									id{mouse_proxy}
-									layout{dx{fill}dy{fill}}
+									lp{dx{fill}dy{fill}}
 								}
 							}
 						)qwertyuiop"
@@ -433,7 +434,7 @@ public:
 							@push_button{
 								@color{
 									color{0xff0000ff}
-									layout{dx{2mm}dy{0.5mm}}
+									lp{dx{2mm}dy{0.5mm}}
 								}
 							}
 						)qwertyuiop"
@@ -789,6 +790,7 @@ public:
 		// fullscreen
 		{
 			auto b = c.get().try_get_widget_as<morda::push_button>("fullscreen_button");
+			ASSERT(b)
 			b->click_handler = [this](morda::push_button&) {
 				this->set_fullscreen(!this->is_fullscreen());
 			};

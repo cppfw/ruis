@@ -19,20 +19,28 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 /* ================ LICENSE END ================ */
 
-#include "size_container.hpp"
+#pragma once
 
-using namespace morda;
+#include "widget.hpp"
 
-size_container::size_container(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
-		widget(c, desc),
-		container(this->context, desc)
-{}
+namespace morda{
 
-void size_container::lay_out(){
-	for(auto& w : this->children()){
-		if(w.get().is_layout_dirty()){
-			auto d = this->dims_for_widget(w.get(), w.get().get_layout_params_const());
-			w.get().resize(d);
-		}
-	}
+// TODO: doxygen
+class layout{
+protected:
+    layout() = default;
+public:
+
+    virtual vector2 measure(const vector2& quotum, const_widget_list& widgets)const;
+
+    /**
+     * @brief Arrange widgets.
+     * @param size - size of the area available to the layout.
+     * @param widgets - widgets to arrange.
+     */
+    virtual void lay_out(const vector2& size, semiconst_widget_list& widgets)const;
+
+    virtual ~layout() = default;
+};
+
 }

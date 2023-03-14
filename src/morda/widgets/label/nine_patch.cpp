@@ -31,14 +31,16 @@ using namespace morda;
 
 namespace{
 const auto ninePatchLayout_c = treeml::read(R"qwertyuiop(
+		layout{column}
+
 		@row{
-			layout{dx{fill}}
+			lp{dx{fill}}
 			@image{
 				id{morda_lt}
 			}
 
 			@image{
-				layout{dx{0}weight{1}}
+				lp{dx{0}weight{1}}
 				id{morda_t}
 			}
 
@@ -48,42 +50,42 @@ const auto ninePatchLayout_c = treeml::read(R"qwertyuiop(
 		}
 
 		@row{
-			layout{
+			lp{
 				dx{max}
 				weight{1}
 			}
 
 			@image{
 				id{morda_l}
-				layout{dy{fill}}
+				lp{dy{fill}}
 			}
 
 			@pile{
 				id{morda_content}
-				layout{
+				lp{
 					weight{1}
 					dy{max}
 				}
 
 				@image{
 					id{morda_m}
-					layout{dx{fill}dy{fill}}
+					lp{dx{fill}dy{fill}}
 				}
 			}
 			@image{
 				id{morda_r}
-				layout{dy{fill}}
+				lp{dy{fill}}
 			}
 		}
 
 		@row{
-			layout{dx{fill}}
+			lp{dx{fill}}
 			@image{
 				id{morda_lb}
 			}
 
 			@image{
-				layout{dx{0}weight{1}}
+				lp{dx{0}weight{1}}
 				id{morda_b}
 			}
 
@@ -97,7 +99,7 @@ const auto ninePatchLayout_c = treeml::read(R"qwertyuiop(
 nine_patch::nine_patch(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
 		widget(c, desc),
 		blending_widget(this->context, desc),
-		column(this->context, ninePatchLayout_c),
+		container(this->context, ninePatchLayout_c),
 		img_widgets_matrix([this]() -> decltype(this->img_widgets_matrix){
 			return {{
 				{
@@ -117,7 +119,8 @@ nine_patch::nine_patch(const utki::shared_ref<morda::context>& c, const treeml::
 				}
 			}};
 		}()),
-		inner_content(this->try_get_widget_as<pile>("morda_content"))
+		// TODO: use get_widget_as()
+		inner_content(this->try_get_widget_as<container>("morda_content"))
 {
 	this->nine_patch::on_blending_change();
 
@@ -159,7 +162,7 @@ nine_patch::nine_patch(const utki::shared_ref<morda::context>& c, const treeml::
 }
 
 void nine_patch::render(const morda::matrix4& matrix)const{
-	this->column::render(matrix);
+	this->container::render(matrix);
 }
 
 void nine_patch::set_nine_patch(std::shared_ptr<const res::nine_patch> np){

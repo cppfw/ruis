@@ -21,8 +21,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "../group/pile.hpp"
-
 #include "choice_button.hpp"
 
 namespace morda{
@@ -34,7 +32,7 @@ namespace morda{
  * In the GUI script can be instantiated as "choice_group". Only available after
  * initializing standard morda widgets.
  */
-class choice_group : public pile{
+class choice_group : public container{
 	friend class choice_button;
 	
 	std::weak_ptr<choice_button> active_choice_button;

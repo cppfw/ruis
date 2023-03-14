@@ -21,7 +21,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "../widgets/widget.hpp"
+#include "../widget.hpp"
 
 #include <set>
 

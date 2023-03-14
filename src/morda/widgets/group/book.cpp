@@ -23,11 +23,13 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../../context.hpp"
 
+#include "../../layouts/pile_layout.hpp"
+
 using namespace morda;
 
 book::book(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
 		widget(c, desc),
-		pile(this->context, treeml::forest())
+		container(this->context, treeml::forest(), pile_layout::instance)
 {}
 
 void book::push(const utki::shared_ref<page>& pg){

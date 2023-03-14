@@ -21,8 +21,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "../group/pile.hpp"
-
 #include "../../res/cursor.hpp"
 
 namespace morda{
@@ -34,7 +32,7 @@ namespace morda{
  *
  * @param cursor - reference to cursor resource.
  */
-class image_mouse_cursor : public pile{
+class image_mouse_cursor : public container{
 	std::shared_ptr<const res::cursor> cursor;
 
 	std::shared_ptr<const res::image::texture> quad_tex;

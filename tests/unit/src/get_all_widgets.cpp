@@ -2,7 +2,7 @@
 #include <tst/check.hpp>
 
 #include <morda/gui.hpp>
-#include <morda/widgets/group/column.hpp>
+#include <morda/widgets/group/scroll_area.hpp>
 
 #include "../../harness/util/dummy_context.hpp"
 
@@ -12,14 +12,14 @@ tst::set set("get_all_widgets", [](tst::suite& suite){
 		morda::gui m(make_dummy_context());
 		auto w = m.context.get().inflater.inflate(treeml::read(R"qwertyuiop(
 			@container{
-				@column{
+				@scroll_area{
 					id{1}
 				}
 
-				@column{
+				@scroll_area{
 					id{2}
 
-					@column{
+					@scroll_area{
 						id{3}
 					}
 					@row{
@@ -28,7 +28,7 @@ tst::set set("get_all_widgets", [](tst::suite& suite){
 						@pile{
 							id{8}
 
-							@column{
+							@scroll_area{
 								id{9}
 							}
 						}
@@ -38,7 +38,7 @@ tst::set set("get_all_widgets", [](tst::suite& suite){
 				@pile{
 					id{5}
 
-					@column{
+					@scroll_area{
 						id{6}
 						@row{
 							id{7}
@@ -52,7 +52,7 @@ tst::set set("get_all_widgets", [](tst::suite& suite){
 			"1", "2", "3", "6", "9"
 		}};
 
-		auto aaas = w.get().get_all_widgets<morda::column>();
+		auto aaas = w.get().get_all_widgets<morda::scroll_area>();
 		tst::check_ne(aaas.size(), size_t(0), SL);
 
 		for(const auto& id : expected_ids){

@@ -106,14 +106,15 @@ public:
 cube_page::cube_page(const utki::shared_ref<morda::context>& c) :
 		widget(c, treeml::forest()),
 		page(this->context, treeml::forest()),
-		pile(this->context, treeml::read(R"qwertyuiop(
+		container(this->context, treeml::read(R"qwertyuiop(
+				layout{pile}
 				@column{
-					layout{
+					lp{
 						dx{fill}dy{fill}
 					}
 					@widget{
 						id{placeholder}
-						layout{dx{fill}dy{0}weight{1}}
+						lp{dx{fill}dy{0}weight{1}}
 					}
 					@text{text{"cube page"}}
 					@push_button{

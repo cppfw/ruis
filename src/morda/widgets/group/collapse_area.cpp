@@ -29,14 +29,16 @@ using namespace morda;
 
 namespace{
 const auto layout_c = treeml::read(R"qwertyuiop(
+	layout{column}
+	
 	@pile{
-		layout{dx{max}}
+		lp{dx{max}}
 		@color{
-			layout{dx{fill}dy{fill}}
+			lp{dx{fill}dy{fill}}
 			color{${morda_color_mg}}
 		}
 		@margins{
-			layout{dx{max}dy{max}}
+			lp{dx{max}dy{max}}
 
 			defs{
 				marHor{4dp}
@@ -48,7 +50,7 @@ const auto layout_c = treeml::read(R"qwertyuiop(
 			bottom{${marVer}}
 
 			@row{
-				layout{dx{max}}
+				lp{dx{max}}
 				@image_toggle{
 					id{switch}
 					look{
@@ -57,7 +59,7 @@ const auto layout_c = treeml::read(R"qwertyuiop(
 					}
 				}
 				@widget{
-					layout{dx{${marHor}}}
+					lp{dx{${marHor}}}
 				}
 				@pile{
 					id{title}
@@ -73,12 +75,14 @@ const auto layout_c = treeml::read(R"qwertyuiop(
 
 collapse_area::collapse_area(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
 		widget(c, desc),
-		column(this->context, layout_c)
+		container(this->context, layout_c)
 {
-	this->contentArea = this->try_get_widget_as<pile>("content");
+	// TODO: use get_widget_as()
+	this->contentArea = this->try_get_widget_as<container>("content");
 	ASSERT(this->contentArea)
 
-	this->title_v = this->try_get_widget_as<pile>("title");
+	// TODO: use get_widget_as()
+	this->title_v = this->try_get_widget_as<container>("title");
 	ASSERT(this->title_v)
 
 	for(const auto& p : desc){

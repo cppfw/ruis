@@ -23,32 +23,35 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../proxy/mouse_proxy.hpp"
 
 #include "../../context.hpp"
-#include "size_container.hpp"
+#include "../../container.hpp"
+
+#include "../../layouts/size_layout.hpp"
+#include "../../layouts/pile_layout.hpp"
 
 using namespace morda;
 
 namespace{
-class context_menu_wrapper : public size_container{
+class context_menu_wrapper : public container{
 public:
 	context_menu_wrapper(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
 			widget(c, desc),
-			size_container(this->context, desc)
+			container(this->context, desc, size_layout::instance)
 	{}
 };
 }
 
 overlay::overlay(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
 		widget(c, desc),
-		pile(this->context, desc)
+		container(this->context, desc, pile_layout::instance)
 {}
 
 utki::shared_ref<widget> overlay::show_context_menu(const utki::shared_ref<widget>& w, vector2 anchor){
 	auto c = utki::make_shared<context_menu_wrapper>(this->context, treeml::read(R"qwertyuiop(
-		layout{
+		lp{
 			dx{fill} dy{fill}
 		}
 		@mouse_proxy{
-			layout{
+			lp{
 				dx{fill} dy{fill}
 			}
 			x{0} y{0}
@@ -69,9 +72,7 @@ utki::shared_ref<widget> overlay::show_context_menu(const utki::shared_ref<widge
 
 	c.get().push_back(w);
 
-	const auto& lp = w.get().get_layout_params_const();
-
-	vector2 dim = this->dims_for_widget(w.get(), lp);
+	vector2 dim = dims_for_widget(w.get(), this->rect().d);
 
 	using std::min;
 	using std::max;

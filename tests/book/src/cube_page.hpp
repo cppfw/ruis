@@ -1,13 +1,12 @@
 #pragma once
 
-#include <morda/widgets/group/pile.hpp>
 #include <morda/updateable.hpp>
 
 #include "../../../src/morda/widgets/group/book.hpp"
 
 class cube_page :
 		public morda::page,
-		public morda::pile
+		public morda::container
 {
 	std::shared_ptr<morda::updateable> cube;
 public:

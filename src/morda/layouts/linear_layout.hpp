@@ -21,23 +21,41 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "../../layouts/linear_layout.hpp"
+#include "../layout.hpp"
+
+#include "../util/oriented.hpp"
 
 namespace morda{
 
-/**
- * @brief Horizontal container widget.
- * Row is a horizontal variant of linear container. From GUI scripts it can be instantiated as "row".
- */
-class row : public container{
+// TODO: consider inheriting oriented
+class linear_layout :
+    public layout,
+    public oriented
+{
 public:
-	row(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
-			widget(c, desc),
-			container(this->context, desc, row_layout::instance)
-	{}
+    linear_layout(bool is_vertical);
 
-	row(const row&) = delete;
-	row& operator=(const row&) = delete;
+    void lay_out(const vector2& size, semiconst_widget_list& widgets)const override;
+
+    vector2 measure(const vector2& quotum, const_widget_list& widgets)const override;
+};
+
+class row_layout : public linear_layout{
+public:
+    row_layout() :
+        linear_layout(false)
+    {}
+
+    static const utki::shared_ref<row_layout> instance;
+};
+
+class column_layout : public linear_layout{
+public:
+    column_layout() :
+        linear_layout(true)
+    {}
+
+    static const utki::shared_ref<column_layout> instance;
 };
 
 }

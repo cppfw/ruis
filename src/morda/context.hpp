@@ -31,6 +31,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "updateable.hpp"
 #include "inflater.hpp"
 #include "resource_loader.hpp"
+#include "layout_factory.hpp"
 
 namespace morda{
 
@@ -62,6 +63,11 @@ public:
 	morda::inflater inflater;
 
 	/**
+	 * @brief Instance of layout factory.
+	 */
+	morda::layout_factory layout_factory;
+
+	/**
 	 * @brief Constructor.
 	 * @param r - renderer implementation.
 	 * @param u - updater to use along with this context.
@@ -87,3 +93,5 @@ public:
 };
 
 }
+
+// #include "widget.hpp"

@@ -19,36 +19,28 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 /* ================ LICENSE END ================ */
 
-#include "pile.hpp"
-
-#include "../../util/util.hpp"
+#include "pile_layout.hpp"
 
 using namespace morda;
 
-pile::pile(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
-		widget(c, desc),
-		container(this->context, desc)
-{}
+const utki::shared_ref<pile_layout> pile_layout::instance = utki::make_shared<pile_layout>();
 
-void pile::lay_out(){
-//	TRACE(<< "pile::lay_out(): invoked" << std::endl)
-	for(auto i = this->children().begin(); i != this->children().end(); ++i){
-		auto& lp = i->get().get_layout_params_const();
-
-		i->get().resize(this->dims_for_widget(i->get(), lp));
+void pile_layout::lay_out(const vector2& size, semiconst_widget_list& widgets)const{
+    for(const auto& w : widgets){
+		w.get().resize(dims_for_widget(w.get(), size));
 
 		using std::round;
-		i->get().move_to(round((this->rect().d - i->get().rect().d) / 2));
+		w.get().move_to(round((size - w.get().rect().d) / 2));
 	}
 }
 
-morda::vector2 pile::measure(const morda::vector2& quotum)const{
-	vector2 ret(quotum);
+vector2 pile_layout::measure(const vector2& quotum, const_widget_list& widgets)const{
+    vector2 ret(quotum);
 	using std::max;
 	ret = max(ret, real(0)); // clamp bottom
 
-	for(auto i = this->children().begin(); i != this->children().end(); ++i){
-		auto& lp = i->get().get_layout_params_const();
+    for(const auto& w : widgets){
+		auto& lp = w.get().get_layout_params_const();
 
 		morda::vector2 d;
 
@@ -72,7 +64,7 @@ morda::vector2 pile::measure(const morda::vector2& quotum)const{
 			}
 		}
 
-		d = i->get().measure(d);
+		d = w.get().measure(d);
 
 		for(unsigned j = 0; j != d.size(); ++j){
 			if(quotum[j] < 0){

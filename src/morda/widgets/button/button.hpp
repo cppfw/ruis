@@ -23,7 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <functional>
 
-#include "../widget.hpp"
+#include "../../widget.hpp"
 
 namespace morda{
 

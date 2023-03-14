@@ -40,12 +40,12 @@ public:
 					this->gui.context,
 					treeml::read(R"qwertyuiop(
 							@column{
-								layout{dx{fill} dy{fill}}
+								lp{dx{fill} dy{fill}}
 
 								@push_button{
 									id{cube_button}
 
-									layout{
+									lp{
 										dx{fill}
 									}
 
@@ -57,7 +57,7 @@ public:
 								@push_button{
 									id{stuff_button}
 
-									layout{
+									lp{
 										dx{fill}
 									}
 
@@ -69,7 +69,7 @@ public:
 								@push_button{
 									id{close_button}
 
-									layout{
+									lp{
 										dx{fill}
 									}
 

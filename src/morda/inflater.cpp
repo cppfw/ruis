@@ -235,7 +235,7 @@ utki::shared_ref<widget> inflater::inflate(treeml::forest::const_iterator begin,
 	try{
 		return fac(utki::make_shared_from(this->context), widget_desc);
 	}catch(...){
-		// TRACE(<< "could not inflate widget: " << widget_name << "{" << treeml::to_string(widget_desc) << "}" << std::endl)
+		LOG([&](auto&o){o << "could not inflate widget: " << widget_name << "{" << treeml::to_string(widget_desc) << "}" << std::endl;})
 		throw;
 	}
 }

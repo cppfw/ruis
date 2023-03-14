@@ -1,6 +1,6 @@
 @column{
 	@book{
-		layout{
+		lp{
 			dx { fill }
 			weight { 1 }
 		}

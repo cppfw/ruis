@@ -19,9 +19,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 /* ================ LICENSE END ================ */
 
-#include "../context.hpp"
+#include "context.hpp"
 
-#include "../util/util.hpp"
+#include "util/util.hpp"
 
 #include "widget.hpp"
 
@@ -38,7 +38,7 @@ widget::widget(const utki::shared_ref<morda::context>& c, const treeml::forest& 
 		}
 
 		try{
-			if(p.value == "layout"){
+			if(p.value == "lp"){
 				this->layout_parameters = layout_params(p.children, this->context.get().units);
 			}else if(p.value == "x"){
 				this->rectangle.p.x() = parse_dimension_value(get_property_value(p), this->context.get().units);
@@ -379,13 +379,7 @@ morda::rectangle widget::get_absolute_rect()const noexcept{
 }
 
 vector2 widget::measure(const morda::vector2& quotum)const{
-	vector2 ret(quotum);
-	for(unsigned i = 0; i != ret.size(); ++i){
-		if(ret[i] < 0){
-			ret[i] = 0;
-		}
-	}
-	return ret;
+	return max(quotum, 0);
 }
 
 vector2 widget::pos_in_ancestor(vector2 pos, const widget* ancestor){

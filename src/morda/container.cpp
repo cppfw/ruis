@@ -21,15 +21,42 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "container.hpp"
 
-#include "../context.hpp"
+#include "context.hpp"
 
-#include "../util/util.hpp"
+#include "layouts/trivial_layout.hpp"
+#include "util/util.hpp"
 
 using namespace morda;
 
 container::container(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
-		widget(c, desc)
+		container(c, desc, trivial_layout::instance)
+{}
+
+container::container(const utki::shared_ref<morda::context>& c, const treeml::forest& desc, const utki::shared_ref<morda::layout>& layout) :
+	widget(c, desc),
+	layout(layout)
 {
+	for(const auto& p : desc){
+		if(!is_property(p)){
+			continue;
+		}
+
+		try{
+			if(p.value == "layout"){
+				if(p.children.size() != 1){
+					throw std::invalid_argument("layout parameter has zero or more than 1 child");
+				}
+				this->layout = this->context.get().layout_factory.create(
+					p.children.front().value.to_string(),
+					p.children.front().children
+				);
+			}
+		}catch(std::invalid_argument&){
+			LOG([&](auto&o){o << "could not parse value of " << treeml::to_string(p) << std::endl;})
+			throw;
+		}
+	}
+
 	this->push_back_inflate(desc);
 }
 
@@ -237,17 +264,15 @@ void container::on_hover_change(unsigned pointer_id){
 	}
 }
 
-void container::lay_out(){
-//	TRACE(<< "container::lay_out(): invoked" << std::endl)
-	for(auto& w : this->children()){
-		if(w.get().is_layout_dirty()){
-			w.get().layout_dirty = false;
-			w.get().lay_out();
-		}
-	}
+vector2 container::measure(const vector2& quotum)const{
+	return this->get_layout().measure(quotum, this->children());
 }
 
-container::widget_list::const_iterator container::insert(const utki::shared_ref<widget>& w, widget_list::const_iterator before){
+void container::lay_out(){
+	this->get_layout().lay_out(this->rect().d, this->children());
+}
+
+widget_list::const_iterator container::insert(const utki::shared_ref<widget>& w, widget_list::const_iterator before){
 	if(w.get().parent()){
 		throw std::invalid_argument("container::insert(): given widget is already added to some container");
 	}
@@ -273,7 +298,7 @@ container::widget_list::const_iterator container::insert(const utki::shared_ref<
 	return ret;
 }
 
-container::widget_list::const_iterator container::erase(widget_list::const_iterator child){
+widget_list::const_iterator container::erase(widget_list::const_iterator child){
 	if(this->is_blocked){
 		throw std::logic_error("container::erase(): children list is locked");
 	}
@@ -318,29 +343,7 @@ std::shared_ptr<widget> container::try_get_widget(const std::string& id, bool al
 	return nullptr;
 }
 
-vector2 container::dims_for_widget(const widget& w, const layout_params& lp)const{
-	vector2 d;
-	for(unsigned i = 0; i != 2; ++i){
-		if(lp.dims[i] == layout_params::max || lp.dims[i] == layout_params::fill){
-			d[i] = this->rect().d[i];
-		}else if(lp.dims[i] == layout_params::min){
-			d[i] = -1; // will be updated below
-		}else{
-			d[i] = lp.dims[i];
-		}
-	}
-	if(!d.is_positive_or_zero()){
-		vector2 md = w.measure(d);
-		for(unsigned i = 0; i != md.size(); ++i){
-			if(d[i] < 0){
-				d[i] = md[i];
-			}
-		}
-	}
-	return d;
-}
-
-container::widget_list::const_iterator container::change_child_z_position(widget_list::const_iterator child, widget_list::const_iterator before){
+widget_list::const_iterator container::change_child_z_position(widget_list::const_iterator child, widget_list::const_iterator before){
 	if(this->is_blocked){
 		throw std::logic_error("container::change_child_z_position(): children list is locked");
 	}
@@ -381,7 +384,7 @@ container::widget_list::const_iterator container::change_child_z_position(widget
 	return ret;
 }
 
-container::widget_list::const_iterator container::find(const widget& w){
+widget_list::const_iterator container::find(const widget& w){
 	return std::find_if(
 			this->children().begin(),
 			this->children().end(),
@@ -391,7 +394,7 @@ container::widget_list::const_iterator container::find(const widget& w){
 		);
 }
 
-container::const_widget_list::const_iterator container::find(const widget& w)const{
+const_widget_list::const_iterator container::find(const widget& w)const{
 	return std::find_if(
 			this->children().begin(),
 			this->children().end(),

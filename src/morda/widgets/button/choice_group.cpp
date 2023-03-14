@@ -21,11 +21,13 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "choice_group.hpp"
 
+#include "../../layouts/pile_layout.hpp"
+
 using namespace morda;
 
 choice_group::choice_group(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
 		widget(c, desc),
-		pile(this->context, desc)
+		container(this->context, desc, pile_layout::instance)
 {}
 
 bool choice_group::is_active(const widget& w)const noexcept{

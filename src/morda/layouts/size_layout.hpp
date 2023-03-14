@@ -21,23 +21,15 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "../../layouts/linear_layout.hpp"
+#include "../layout.hpp"
 
 namespace morda{
 
-/**
- * @brief Horizontal container widget.
- * Row is a horizontal variant of linear container. From GUI scripts it can be instantiated as "row".
- */
-class row : public container{
+class size_layout : public layout{
 public:
-	row(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
-			widget(c, desc),
-			container(this->context, desc, row_layout::instance)
-	{}
+    void lay_out(const vector2& size, semiconst_widget_list& widgets)const override;
 
-	row(const row&) = delete;
-	row& operator=(const row&) = delete;
+    static const utki::shared_ref<size_layout> instance;
 };
 
 }

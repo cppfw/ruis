@@ -21,11 +21,13 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "min_proxy.hpp"
 
+#include "../../layouts/pile_layout.hpp"
+
 using namespace morda;
 
 min_proxy::min_proxy(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
 		morda::widget(c, desc),
-		morda::pile(this->context, desc)
+		morda::container(this->context, desc, pile_layout::instance)
 {
 	for(const auto& p : desc){
 		if(!is_property(p)){

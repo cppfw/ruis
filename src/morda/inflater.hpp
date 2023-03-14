@@ -22,13 +22,18 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #pragma once
 
 #include <map>
+#include <set>
 #include <memory>
+#include <functional>
 
-#include "widgets/widget.hpp"
+#include <treeml/tree.hpp>
 
-#include "util/util.hpp"
+#include <utki/shared_ref.hpp>
 
 namespace morda{
+
+class widget;
+class context;
 
 /**
  * @brief Inflater of GUI from treeml description.
@@ -190,3 +195,7 @@ private:
 };
 
 }
+
+// include definitions for forward declared classes
+#include "context.hpp"
+#include "widget.hpp"

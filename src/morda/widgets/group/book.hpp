@@ -21,7 +21,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "pile.hpp"
+#include "../../container.hpp"
 
 namespace morda{
 
@@ -57,7 +57,7 @@ public:
 
 class book :
 		public virtual widget,
-		private pile
+		private container
 {
 	friend class page;
 	

@@ -21,10 +21,11 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "../widget.hpp"
+#include "../../widget.hpp"
 
 namespace morda{
 
+// TODO: remove in favor of oriented
 class oriented_widget : virtual public widget{
 	bool is_vertical_v;
 

@@ -34,13 +34,13 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <r4/vector.hpp>
 #include <r4/rectangle.hpp>
 
-#include "../config.hpp"
+#include "config.hpp"
 
-#include "../render/texture_2d.hpp"
+#include "render/texture_2d.hpp"
 
-#include "../util/key.hpp"
-#include "../util/events.hpp"
-#include "../util/units.hpp"
+#include "util/key.hpp"
+#include "util/events.hpp"
+#include "util/units.hpp"
 
 namespace morda{
 
@@ -61,6 +61,8 @@ public:
 	/**
 	 * @brief Requests minimal or bigger dimensions of widget.
 	 * The widget will be given at least minimal space it needs to properly draw.
+	 * 'max' behaves the same way as 'min' during measure, but during layouting
+	 * the widget will be given same size as parent.
 	 */
 	constexpr static const real max = real(-2);
 
@@ -94,7 +96,7 @@ public:
  * @brief Basic widget class.
  * From GUI script it can be instantiated as "widget".
  * It can have the following parameters:
- * @li @c layout - layout parameters description. See layout_params for details.
+ * @li @c lp - layout parameters description. See layout_params for details.
  * @li @c x - horizontal position within parent widget.
  * @li @c y - vertical position within parent widget.
  * @li @c dx - width of the widget.
@@ -109,6 +111,7 @@ class widget : virtual public utki::shared{
 	friend class container;
 	friend class context;
 	friend class gui;
+	friend class layout;
 public:
 	const utki::shared_ref<morda::context> context;
 
@@ -525,7 +528,7 @@ public:
 
 	/**
 	 * @brief Invoked when widget's size changes.
-	 * Default implementation performs laying out of the widget by calling its layout() method.
+	 * Default implementation performs laying out of the widget by calling its lay_out() method.
 	 */
 	virtual void on_resize();
 
@@ -642,7 +645,16 @@ public:
 	vector2 pos_in_ancestor(vector2 pos, const widget* ancestor = nullptr);
 };
 
+using widget_list = std::vector<utki::shared_ref<widget>>;
+using semiconst_widget_list = const std::vector<utki::shared_ref<widget>>;
+using const_widget_list = const std::vector<utki::shared_ref<const widget>>;
+static_assert(sizeof(widget_list) == sizeof(const_widget_list), "sizeof(widget_list) differs from sizeof(const_widget_list)");
+static_assert(sizeof(widget_list) == sizeof(semiconst_widget_list), "sizeof(widget_list) differs from sizeof(semiconst_widget_list)");
+static_assert(sizeof(widget_list::value_type) == sizeof(const_widget_list::value_type), "sizeof(widget_list::value_type) differs from sizeof(const_widget_list::value_type)");
+static_assert(sizeof(widget_list::value_type) == sizeof(semiconst_widget_list::value_type), "sizeof(widget_list::value_type) differs from sizeof(semiconst_widget_list::value_type)");
+
 }
 
-// widget depends on container, so need to define it also in all cases when widget is used.
+// include definitions for forward declared classes
+#include "context.hpp"
 #include "container.hpp"

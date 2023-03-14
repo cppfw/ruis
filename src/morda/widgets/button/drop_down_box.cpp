@@ -50,7 +50,7 @@ public:
 };
 }
 
-drop_down_box::drop_down_box(const utki::shared_ref<morda::context>& c, const treeml::forest& desc, pile& selection_container) :
+drop_down_box::drop_down_box(const utki::shared_ref<morda::context>& c, const treeml::forest& desc, container& selection_container) :
 		widget(c, desc),
 		selection_container(selection_container)
 {

@@ -44,11 +44,11 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "widgets/input/text_input_line.hpp"
 
+#include "widgets/group/row.hpp"
+#include "widgets/group/column.hpp"
 #include "widgets/group/tree_view.hpp"
 #include "widgets/group/window.hpp"
 #include "widgets/group/collapse_area.hpp"
-#include "widgets/group/size_container.hpp"
-#include "widgets/group/row.hpp"
 #include "widgets/group/overlay.hpp"
 #include "widgets/group/book.hpp"
 #include "widgets/group/tabbed_book.hpp"
@@ -59,44 +59,76 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "widgets/proxy/ratio_proxy.hpp"
 #include "widgets/proxy/min_proxy.hpp"
 
+#include "layouts/trivial_layout.hpp"
+#include "layouts/size_layout.hpp"
+#include "layouts/pile_layout.hpp"
+#include "layouts/linear_layout.hpp"
+
 using namespace morda;
 
 namespace{
 const auto default_defs = R"qwertyuiop(
 defs{
+	@pile{
+		@container{
+			layout{pile}
+
+			${children}
+		}
+	}
+
+	// TODO: these don't work in case of e.g. @left template, something wrong with ${children} template variable
+	// @row{
+	// 	@container{
+	// 		layout{row}
+
+	// 		${children}
+	// 	}
+	// }
+
+	// @column{
+	// 	@container{
+	// 		layout{column}
+
+	// 		${children}
+	// 	}
+	// }
+}
+
+defs{
 	@margins{ left top right bottom weight_left weight_right weight_top weight_bottom
 		@row{
 			@widget{
-				layout{
+				lp{
 					dx{${left}}
 					weight{${weight_left}}
 				}
 			}
 			@column{
-				layout{
+				lp{
 					weight{1} dy{max}
 				}
 				@widget{
-					layout{
+					lp{
 						dy{${top}}
 						weight{${weight_top}}
 					}
 				}
 				@pile{
-					layout{
+					lp{
 						weight{1} dx{max}
 					}
 					${children}
 				}
 				@widget{
-					layout{
+					lp{
 						dy{${bottom}}
 						weight{${weight_bottom}}
 					}
 				}
 			}
 			@widget{
-				layout{
+				lp{
 					dx{${right}}
 					weight{${weight_right}}
 				}
@@ -104,17 +136,17 @@ defs{
 		}
 	}
 
-	@left{ layout
+	@left{ lp
 		@row{
-			layout{
-				${layout}
+			lp{
+				${lp}
 				dx{max}
 			}
 
 			${children}
 
 			@widget{
-				layout{
+				lp{
 					dx{0}
 					weight{1}
 				}
@@ -122,15 +154,15 @@ defs{
 		}
 	}
 
-	@right{ layout
+	@right{ lp
 		@row{
-			layout{
-				${layout}
+			lp{
+				${lp}
 				dx{max}
 			}
 
 			@widget{
-				layout{
+				lp{
 					dx{0}
 					weight{1}
 				}
@@ -140,17 +172,17 @@ defs{
 		}
 	}
 
-	@top{ layout
+	@top{ lp
 		@column{
-			layout{
-				${layout}
+			lp{
+				${lp}
 				dy{max}
 			}
 
 			${children}
 
 			@widget{
-				layout{
+				lp{
 					dy{0}
 					weight{1}
 				}
@@ -158,15 +190,15 @@ defs{
 		}
 	}
 
-	@bottom{ layout
+	@bottom{ lp
 		@column{
-			layout{
-				${layout}
+			lp{
+				${lp}
 				dy{max}
 			}
 
 			@widget{
-				layout{
+				lp{
 					dy{0}
 					weight{1}
 				}
@@ -198,10 +230,9 @@ gui::gui(const utki::shared_ref<morda::context>& context) :
 	// register basic widgets
 	this->context.get().inflater.register_widget<widget>("widget");
 	this->context.get().inflater.register_widget<container>("container");
-	this->context.get().inflater.register_widget<size_container>("size_container");
 	this->context.get().inflater.register_widget<row>("row");
 	this->context.get().inflater.register_widget<column>("column");
-	this->context.get().inflater.register_widget<pile>("pile");
+
 	this->context.get().inflater.register_widget<mouse_proxy>("mouse_proxy");
 	this->context.get().inflater.register_widget<click_proxy>("click_proxy");
 	this->context.get().inflater.register_widget<ratio_proxy>("ratio_proxy");
@@ -217,6 +248,13 @@ gui::gui(const utki::shared_ref<morda::context>& context) :
 	this->context.get().inflater.register_widget<spinner>("spinner");
 
 	this->context.get().inflater.push_defs(default_defs);
+
+	// register basic layouts
+	this->context.get().layout_factory.add_factory("trivial", [](const auto&){return trivial_layout::instance;});
+	this->context.get().layout_factory.add_factory("size", [](const auto&){return size_layout::instance;});
+	this->context.get().layout_factory.add_factory("pile", [](const auto&){return pile_layout::instance;});
+	this->context.get().layout_factory.add_factory("row", [](const auto&){return row_layout::instance;});
+	this->context.get().layout_factory.add_factory("column", [](const auto&){return column_layout::instance;});
 }
 
 void gui::initStandardWidgets(papki::file& fi) {

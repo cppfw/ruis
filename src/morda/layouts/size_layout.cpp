@@ -19,20 +19,17 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 /* ================ LICENSE END ================ */
 
-#pragma once
+#include "size_layout.hpp"
 
-#include "../container.hpp"
+using namespace morda;
 
-namespace morda{
+const utki::shared_ref<size_layout> size_layout::instance = utki::make_shared<size_layout>();
 
-class size_container : public container{
-public:
-	size_container(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
-
-	size_container(const size_container&) = delete;
-	size_container& operator=(const size_container&) = delete;
-
-	void lay_out()override;
-};
-
+void size_layout::lay_out(const vector2& size, semiconst_widget_list& widgets)const{
+    for(const auto& w : widgets){
+		if(w.get().is_layout_dirty()){
+			auto d = dims_for_widget(w.get(), size);
+			w.get().resize(d);
+		}
+	}
 }

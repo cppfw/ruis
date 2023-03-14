@@ -26,10 +26,13 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <utki/shared_ref.hpp>
 
-#include "../util/util.hpp"
+#include "config.hpp"
+#include "util/util.hpp"
 #include "widget.hpp"
 
 namespace morda{
+
+class layout;
 
 /**
  * @brief Container widget.
@@ -47,17 +50,13 @@ namespace morda{
  * @endcode
  */
 class container : virtual public widget{
-public:
-	typedef std::vector<utki::shared_ref<widget>> widget_list;
-	typedef std::vector<utki::shared_ref<const widget>> const_widget_list;
 private:
-	static_assert(sizeof(widget_list) == sizeof(const_widget_list), "sizeof(widget_list) differs from sizeof(const_widget_list)");
-	static_assert(sizeof(widget_list::value_type) == sizeof(const_widget_list::value_type), "sizeof(widget_list::value_type) differs from sizeof(const_widget_list::value_type)");
 
 	// NOTE: according to C++11 standard it is undefined behaviour to read the inactive union member,
 	//       but we rely on compiler implementing it the right way.
 	union children_union{
 		widget_list variable;
+		semiconst_widget_list semiconstant; // this member never becomes active one, but we will read it when we need semiconstant list of children
 		const_widget_list constant; // this member never becomes active one, but we will read it when we need constant list of children
 
 		children_union() :
@@ -68,6 +67,9 @@ private:
 		}
 	} children_list;
 
+	utki::shared_ref<morda::layout> layout;
+
+private:
 	struct mouse_capture_info{
 		std::weak_ptr<widget> capturing_widget;
 		unsigned num_buttons_captured;
@@ -95,20 +97,8 @@ private:
 	};
 
 protected:
-	/**
-	 * @brief Calculate basic dimensions of widget.
-	 * Calculates basic dimensions of given widget if it would be placed to
-	 * this container with given layout parameters, basically this is just
-	 * resolving of 'min', 'max' and 'fill' special values of dimensions.
-	 * @param w - widget to calculate dimensions for.
-	 * @param lp - layout parameters of the widget.
-	 * @return Dimensions of widget.
-	 */
-	vector2 dims_for_widget(const widget& w, const layout_params& lp)const;
-
-protected:
-
 	void render_child(const matrix4& matrix, const widget& c)const;
+
 public:
 	/**
 	 * @brief Constructor.
@@ -117,6 +107,12 @@ public:
 	 */
 	container(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
 
+	container(const utki::shared_ref<morda::context>& c, const treeml::forest& desc, const utki::shared_ref<morda::layout>& layout);
+
+	const morda::layout& get_layout()const{
+		return this->layout.get();
+	}
+
 	void render(const matrix4& matrix)const override;
 
 	bool on_mouse_button(const mouse_button_event& event)override;
@@ -124,6 +120,8 @@ public:
 	bool on_mouse_move(const mouse_move_event& event)override;
 
 	void on_hover_change(unsigned pointer_id)override;
+	
+	morda::vector2 measure(const morda::vector2& quotum)const override;
 
 	/**
 	 * @brief Layout child widgets.
@@ -416,3 +414,6 @@ template <class T> std::vector<utki::shared_ref<T>> widget::get_all_widgets(bool
 }
 
 }
+
+// include definitions for forward declared classes
+#include "layout.hpp"

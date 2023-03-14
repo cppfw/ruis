@@ -34,14 +34,16 @@ using namespace morda;
 namespace{
 
 const auto DDescription = treeml::read(R"qwertyuiop(
+		layout{pile}
+
 		@nine_patch{
 			id{morda_slider_bg}
-			layout{
+			lp{
 				dx{max} dy{max}
 			}
 		}
 		@container{
-			layout{
+			lp{
 				dx{max} dy{max}
 			}
 			@pile{
@@ -49,13 +51,13 @@ const auto DDescription = treeml::read(R"qwertyuiop(
 				@nine_patch{
 					id{morda_handle_image}
 
-					layout{
+					lp{
 						dx{max} dy{max}
 					}
 				}
 				@mouse_proxy{
 					id{morda_handle_proxy}
-					layout{
+					lp{
 						dx{fill} dy{fill}
 					}
 				}
@@ -69,7 +71,7 @@ scroll_bar::scroll_bar(const utki::shared_ref<morda::context>& c, const treeml::
 		widget(c, desc),
 		fraction_band_widget(this->context, treeml::forest()),
 		oriented_widget(this->context, treeml::forest(), vertical),
-		pile(this->context, DDescription),
+		container(this->context, DDescription),
 		handle(this->get_widget("morda_handle"))
 {
 	auto np = this->try_get_widget_as<nine_patch>("morda_slider_bg");
@@ -173,7 +175,7 @@ void scroll_bar::on_fraction_change() {
 }
 
 void scroll_bar::lay_out(){
-	this->pile::lay_out();
+	this->container::lay_out();
 
 	unsigned longIndex = this->get_long_index();
 	unsigned transIndex = this->get_trans_index();

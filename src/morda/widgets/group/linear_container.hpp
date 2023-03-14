@@ -21,7 +21,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "../container.hpp"
+#include "../../container.hpp"
 
 #include "../base/oriented_widget.hpp"
 
@@ -40,10 +40,6 @@ class linear_container :
 
 public:
 	linear_container(const utki::shared_ref<morda::context>& c, const treeml::forest& desc, bool vertical);
-
-	void lay_out() override;
-
-	morda::vector2 measure(const morda::vector2& quotum)const override;
 };
 
 

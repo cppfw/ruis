@@ -19,33 +19,19 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 /* ================ LICENSE END ================ */
 
-#pragma once
+#include "layout.hpp"
 
-#include "../container.hpp"
+using namespace morda;
 
-namespace morda{
+vector2 layout::measure(const vector2& quotum, const_widget_list& widgets)const{
+    return max(quotum, 0);
+}
 
-/**
- * @brief Pile container widget.
- * Pile container is a container which lays out its children in a pile, each widget is centered inside of the container.
- * From GUI script it can be instantiated as 'pile'.
- */
-class pile : public container{
-public:
-	pile(const pile&) = delete;
-	pile& operator=(const pile&) = delete;
-
-	/**
-	 * @brief Constructor.
-	 * @param c - context.
-	 * @param desc - description of the widget.
-	 */
-	pile(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
-
-public:
-	morda::vector2 measure(const morda::vector2& quotum)const override;
-
-	void lay_out() override;
-};
-
+void layout::lay_out(const vector2& size, semiconst_widget_list& widgets)const{
+    for(auto& w : widgets){
+		if(w.get().is_layout_dirty()){
+			w.get().layout_dirty = false;
+			w.get().lay_out();
+		}
+	}
 }
