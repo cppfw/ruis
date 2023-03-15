@@ -78,6 +78,8 @@ class resource_loader{
 
 		// TODO: use std::map/std::unordered_map?
 		treeml::forest script;
+
+		// TODO: keep loaded resources map in res_pack_entry, so that unmounted respack removes it's loaded resources
 	};
 
 	// TODO: use std::list to be able to unmount res packs
