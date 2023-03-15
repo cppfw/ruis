@@ -75,9 +75,12 @@ class resource_loader{
 		}
 
 		std::unique_ptr<const papki::file> fi;
+
+		// TODO: use std::map/std::unordered_map?
 		treeml::forest script;
 	};
 
+	// TODO: use std::list to be able to unmount res packs
 	std::vector<res_pack_entry> resPacks;
 
 	class find_in_script_result{
