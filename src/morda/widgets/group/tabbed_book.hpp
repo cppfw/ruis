@@ -59,7 +59,7 @@ public:
 	utki::shared_ref<page> tear_out(tab& t);
 
 	using morda::container::render;
-	using morda::container::lay_out;
+	using morda::container::on_lay_out;
 	using morda::container::on_mouse_move;
 	using morda::container::on_mouse_button;
 	using morda::container::on_key;

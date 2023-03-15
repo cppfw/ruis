@@ -60,7 +60,7 @@ public:
 	virtual ~scroll_bar()noexcept{}
 
 private:
-	void lay_out()override;
+	void on_lay_out()override;
 };
 
 class vertical_scroll_bar : public scroll_bar{

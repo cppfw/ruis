@@ -65,7 +65,7 @@ public:
 		return this->widget::measure(quotum);
 	}
 
-	void lay_out()override;
+	void on_lay_out()override;
 
 	void on_children_change()override;
 

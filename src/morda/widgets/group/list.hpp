@@ -104,7 +104,7 @@ public:
 
 	void set_provider(std::shared_ptr<provider> item_provider = nullptr);
 
-	void lay_out()override;
+	void on_lay_out()override;
 
 	morda::vector2 measure(const morda::vector2& quotum) const override;
 

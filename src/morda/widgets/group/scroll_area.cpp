@@ -142,7 +142,7 @@ void scroll_area::arrange_widgets(){
 	}
 }
 
-void scroll_area::lay_out(){
+void scroll_area::on_lay_out(){
 	this->arrange_widgets();
 	this->update_invisible_dims();
 

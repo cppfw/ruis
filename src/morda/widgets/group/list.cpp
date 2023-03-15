@@ -71,8 +71,8 @@ list_widget::list_widget(const utki::shared_ref<morda::context>& c, const treeml
 	this->set_provider(std::move(pr));
 }
 
-void list_widget::lay_out(){
-//	TRACE(<< "list_widget::lay_out(): invoked" << std::endl)
+void list_widget::on_lay_out(){
+//	TRACE(<< "list_widget::on_lay_out(): invoked" << std::endl)
 
 	this->num_tail_items = 0; // 0 means that it needs to be recomputed
 

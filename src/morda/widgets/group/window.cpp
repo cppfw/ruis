@@ -512,7 +512,7 @@ void window::updateTopmost(){
 		);
 }
 
-void window::lay_out(){
+void window::on_lay_out(){
 	this->updateTopmost();
-	this->container::lay_out();
+	this->container::on_lay_out();
 }

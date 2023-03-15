@@ -127,7 +127,7 @@ public:
 	 * @brief Layout child widgets.
 	 * This implementation of layout method checks if any of child widgets needs re-layout and if so it calls layout method on them.
 	 */
-	void lay_out()override;
+	void on_lay_out()override;
 
 	/**
 	 * @brief Change Z order of a child widget.

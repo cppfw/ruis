@@ -174,8 +174,8 @@ void scroll_bar::on_fraction_change() {
 	this->fraction_widget::on_fraction_change();
 }
 
-void scroll_bar::lay_out(){
-	this->container::lay_out();
+void scroll_bar::on_lay_out(){
+	this->container::on_lay_out();
 
 	unsigned longIndex = this->get_long_index();
 	unsigned transIndex = this->get_trans_index();

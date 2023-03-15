@@ -44,7 +44,7 @@ public:
 
 	morda::vector2 measure(const morda::vector2& quotum) const override;
 
-	void lay_out() override;
+	void on_lay_out() override;
 
 	void render(const morda::matrix4& matrix) const override;
 };

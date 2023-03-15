@@ -366,7 +366,6 @@ void gui::render(const matrix4& matrix)const{
 	if(this->get_root().is_layout_dirty()){
 		LOG([](auto&o){o << "root widget re-layout needed!" << std::endl;})
 		// TODO: render() is const, but calls non-const lay_out(), fix it somehow? Perhaps make render() non-const?
-		this->root_widget.get().layout_dirty = false;
 		this->root_widget.get().lay_out();
 	}
 

@@ -130,9 +130,7 @@ void widget::move_to(const vector2& new_pos){
 
 void widget::resize(const morda::vector2& new_dims){
 	if(this->rectangle.d == new_dims){
-		if(this->layout_dirty){
-			this->clear_cache();
-			this->layout_dirty = false;
+		if(this->is_layout_dirty()){
 			this->lay_out();
 		}
 		return;
@@ -140,14 +138,18 @@ void widget::resize(const morda::vector2& new_dims){
 
 	using std::max;
 
-	this->clear_cache();
 	this->rectangle.d = max(new_dims, real(0)); // clamp bottom
-	this->on_resize(); // call virtual method
+	this->on_resize();
 }
 
 void widget::on_resize(){
-	this->layout_dirty = false;
 	this->lay_out();
+}
+
+void widget::lay_out(){
+	this->clear_cache();
+	this->layout_dirty = false;
+	this->on_lay_out();
 }
 
 utki::shared_ref<widget> widget::remove_from_parent(){

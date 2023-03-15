@@ -113,7 +113,7 @@ public:
 
 	void set_background(const utki::shared_ref<widget>& w);
 
-	void lay_out() override;
+	void on_lay_out() override;
 
 	/**
 	 * @brief Set window borders.

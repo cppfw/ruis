@@ -82,8 +82,8 @@ bool wire_area::on_mouse_move(const morda::mouse_move_event& e){
 	return this->container::on_mouse_move(e);
 }
 
-void wire_area::lay_out(){
-	this->container::lay_out();
+void wire_area::on_lay_out(){
+	this->container::on_lay_out();
 	
 	this->sockets = this->get_all_widgets<wire_socket>();
 	// TRACE(<< "this->sockets.size() = " << this->sockets.size() << std::endl)

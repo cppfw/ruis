@@ -206,10 +206,15 @@ public:
 	void invalidate_layout()noexcept;
 
 	/**
-	 * @brief Perform layouting of the widget.
+	 * @brief Called when layouting of the widget iw needed.
 	 * Override this method to arrange widgets contents if needed.
 	 */
-	virtual void lay_out(){}
+	virtual void on_lay_out(){}
+
+	/**
+	 * @brief Perform layouting of the widget's contents.
+	 */
+	void lay_out();
 
 	/**
 	 * @brief Check if this widget's contents need to be layed out.

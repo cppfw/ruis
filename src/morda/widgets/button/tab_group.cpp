@@ -109,7 +109,7 @@ morda::vector2 tab_group::measure(const morda::vector2& quotum)const{
 	return ret;
 }
 
-void tab_group::lay_out(){
+void tab_group::on_lay_out(){
 	real pos = 0;
 
 	sides<real> prevBorders = 0;

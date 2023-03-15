@@ -20,7 +20,7 @@ public:
 	
 	void render(const morda::matrix4& matrix)const override;
 
-	void lay_out() override;
+	void on_lay_out() override;
 	
 	bool on_mouse_move(const morda::mouse_move_event& e)override;
 

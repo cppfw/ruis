@@ -268,7 +268,7 @@ vector2 container::measure(const vector2& quotum)const{
 	return this->get_layout().measure(quotum, this->children());
 }
 
-void container::lay_out(){
+void container::on_lay_out(){
 	this->get_layout().lay_out(this->rect().d, this->children());
 }
 

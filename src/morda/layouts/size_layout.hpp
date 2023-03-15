@@ -21,11 +21,11 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "../layout.hpp"
+#include "trivial_layout.hpp"
 
 namespace morda{
 
-class size_layout : public layout{
+class size_layout : public trivial_layout{
 public:
     void lay_out(const vector2& size, semiconst_widget_list& widgets)const override;
 

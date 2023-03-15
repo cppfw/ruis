@@ -19,7 +19,7 @@ public:
             morda::container(this->context, treeml::forest())
     {}
 
-    void lay_out()override{
+    void on_lay_out()override{
         this->invalidate_layout();
     }
 };
@@ -38,7 +38,7 @@ tst::set set("layouting", [](tst::suite& suite){
         tst::check(tc.get().is_layout_dirty(), SL);
 
         // after prforming layouting on parent container the child container's layout should be dirty
-        // because it invalidates its layout during layouting in its lay_out() overridden method
+        // because it invalidates its layout during layouting in its on_lay_out() overridden method
         c->lay_out();
         tst::check(tc.get().is_layout_dirty(), SL);
     });

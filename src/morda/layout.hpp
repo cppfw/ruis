@@ -31,14 +31,14 @@ protected:
     layout() = default;
 public:
 
-    virtual vector2 measure(const vector2& quotum, const_widget_list& widgets)const;
+    virtual vector2 measure(const vector2& quotum, const_widget_list& widgets)const = 0;
 
     /**
      * @brief Arrange widgets.
      * @param size - size of the area available to the layout.
      * @param widgets - widgets to arrange.
      */
-    virtual void lay_out(const vector2& size, semiconst_widget_list& widgets)const;
+    virtual void lay_out(const vector2& size, semiconst_widget_list& widgets)const = 0;
 
     virtual ~layout() = default;
 };
