@@ -91,7 +91,7 @@ resource_loader::find_in_script_result resource_loader::find_resource_in_script(
 	throw std::logic_error(ss.str());
 }
 
-void resource_loader::res_pack_entry::add_resource(const utki::shared_ref<resource>& res, const std::string& id){
+void resource_loader::res_pack_entry::add_resource_to_res_map(const utki::shared_ref<resource>& res, const std::string& id){
 	ASSERT(this->res_map.find(id) == this->res_map.end())
 	
 	// add the resource to the resources map of ResMan

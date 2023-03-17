@@ -83,8 +83,7 @@ class resource_loader{
 		// TODO: use std::unordered_map?
 		std::map<const std::string, std::weak_ptr<resource>> res_map;
 
-		// add resource to resources map
-		void add_resource(const utki::shared_ref<resource>& res, const std::string& name);
+		void add_resource_to_res_map(const utki::shared_ref<resource>& res, const std::string& name);
 	};
 
 	// use std::list to be able to use iterator as resource pack id
@@ -208,7 +207,7 @@ template <class T> utki::shared_ref<T> resource_loader::load(const char* id){
 	// using the id in case mounted resource packs change
 	resource.get().id = id;
 
-	ret.rp.add_resource(resource, ret.e.value.to_string());
+	ret.rp.add_resource_to_res_map(resource, ret.e.value.to_string());
 
 //	TRACE(<< "ResMan::LoadTexture(): exit" << std::endl)
 	return resource;
