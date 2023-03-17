@@ -22,6 +22,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #pragma once
 
 #include <map>
+#include <list>
 
 #include <utki/shared.hpp>
 #include <papki/file.hpp>
@@ -82,13 +83,13 @@ class resource_loader{
 		// TODO: keep loaded resources map in res_pack_entry, so that unmounted respack removes it's loaded resources
 	};
 
-	// TODO: use std::list to be able to unmount res packs
-	std::vector<res_pack_entry> resPacks;
+	// use std::list to be able to use iterator as resource pack id
+	std::list<res_pack_entry> res_packs;
 
 	class find_in_script_result{
 	public:
-		find_in_script_result(res_pack_entry& resPack, const treeml::tree& element) :
-				rp(resPack),
+		find_in_script_result(res_pack_entry& res_pack, const treeml::tree& element) :
+				rp(res_pack),
 				e(element)
 		{}
 
@@ -96,7 +97,7 @@ class resource_loader{
 		const treeml::tree& e;
 	};
 
-	find_in_script_result find_resource_in_script(const std::string& resName);
+	find_in_script_result find_resource_in_script(const std::string& res_id);
 
 	template <class T> std::shared_ptr<T> find_resource_in_res_map(const char* resName);
 
@@ -119,7 +120,10 @@ public:
 	 *             If file interface points to a directory instead of a file then
 	 *             resource description filename is assumed to be "main.res.stob".
 	 */
-	void mount_res_pack(const papki::file& fi);
+	decltype(res_packs)::const_iterator mount_res_pack(const papki::file& fi);
+
+	// TODO: doxygen
+	void unmount_res_pack(decltype(res_packs)::const_iterator id);
 
 	/**
 	 * @brief Load a resource.

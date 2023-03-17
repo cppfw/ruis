@@ -33,7 +33,7 @@ const char* wording_include = "include";
 const char* wording_include_subdirs = "include_subdirs";
 }
 
-void resource_loader::mount_res_pack(const papki::file& fi){
+decltype(resource_loader::res_packs)::const_iterator resource_loader::mount_res_pack(const papki::file& fi){
 	ASSERT(!fi.is_open())
 	
 	std::string dir = fi.dir();
@@ -67,30 +67,36 @@ void resource_loader::mount_res_pack(const papki::file& fi){
 	rpe.fi = papki::root_dir::make(fi.spawn(), dir);
 	rpe.script = std::move(script);
 
-	this->resPacks.push_back(std::move(rpe));
-	ASSERT(this->resPacks.back().fi)
-	ASSERT(!this->resPacks.back().script.empty())
+	this->res_packs.push_back(std::move(rpe));
+	ASSERT(this->res_packs.back().fi)
+	ASSERT(!this->res_packs.back().script.empty())
+
+	return std::prev(this->res_packs.end());
 }
 
-resource_loader::find_in_script_result resource_loader::find_resource_in_script(const std::string& resName){
-	for(auto i = this->resPacks.rbegin(); i != this->resPacks.rend(); ++i){
-		auto j = std::find(i->script.begin(), i->script.end(), resName);
+void resource_loader::unmount_res_pack(decltype(res_packs)::const_iterator id){
+	this->res_packs.erase(id);
+}
+
+resource_loader::find_in_script_result resource_loader::find_resource_in_script(const std::string& res_id){
+	for(auto i = this->res_packs.rbegin(); i != this->res_packs.rend(); ++i){
+		auto j = std::find(i->script.begin(), i->script.end(), res_id);
 		if(j != i->script.end()){
 			return find_in_script_result(*i, *j);
 		}
 	}
-	LOG([&](auto&o){o << "resource name not found in mounted resource packs: " << resName << std::endl;})
+	LOG([&](auto&o){o << "resource id not found in mounted resource packs: " << res_id << std::endl;})
 	std::stringstream ss;
-	ss << "resource name not found in mounted resource packs: " << resName;
+	ss << "resource id not found in mounted resource packs: " << res_id;
 	throw std::logic_error(ss.str());
 }
 
-void resource_loader::add_resource(const utki::shared_ref<resource>& res, const std::string& name){
-	ASSERT(this->res_map.find(name) == this->res_map.end())
+void resource_loader::add_resource(const utki::shared_ref<resource>& res, const std::string& id){
+	ASSERT(this->res_map.find(id) == this->res_map.end())
 	
 	//add the resource to the resources map of ResMan
 	this->res_map.insert(
-			std::make_pair(name, utki::make_weak(res))
+			std::make_pair(id, utki::make_weak(res))
 		);
 	
 //#ifdef DEBUG
