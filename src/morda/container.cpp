@@ -411,3 +411,9 @@ void container::on_enable_change(){
 		c.get().set_enabled(this->is_enabled());
 	}
 }
+
+void container::on_reload(){
+	for(auto& c : this->children()){
+		c.get().reload();
+	}
+}

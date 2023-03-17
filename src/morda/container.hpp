@@ -336,6 +336,12 @@ public:
 	 * This implementation sets the same enabled state to all children of the container.
 	 */
 	void on_enable_change()override;
+
+	/**
+	 * @brief Handler of resources reload request.
+	 * This implementation will call reload() on each child widget.
+	 */
+	void on_reload()override;
 };
 
 template <class T>

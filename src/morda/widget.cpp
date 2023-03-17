@@ -462,3 +462,8 @@ void widget::set_hovered(bool is_hovered, unsigned pointer_id){
 
 	this->on_hover_change(pointer_id);
 }
+
+void widget::reload(){
+	this->invalidate_layout();
+	this->on_reload();
+}

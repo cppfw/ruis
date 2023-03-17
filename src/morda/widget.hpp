@@ -650,6 +650,24 @@ public:
 	 * @return translated position.
 	 */
 	vector2 pos_in_ancestor(vector2 pos, const widget* ancestor = nullptr);
+
+public:
+	/**
+	 * @brief Reload widget's resources.
+	 * Requests widget to reload it's resources due to poissible change
+	 * in mounted resource packs of the resource_loader.
+	 * This function will invalidate the layout and call virtual on_reload().
+	 */
+	void reload();
+
+	/**
+	 * @brief Called when the widget is requested to reload it's resources.
+	 * This function is called when widget is requesterd to reload it's resources.
+	 * This can be useful whenm for example there was a change to mounted resource
+	 * packs of the resource_loader.
+	 * The widget is expected to reload it's resources loaded via resource_loader.
+	 */
+	virtual void on_reload(){}
 };
 
 using widget_list = std::vector<utki::shared_ref<widget>>;
