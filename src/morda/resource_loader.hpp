@@ -116,13 +116,17 @@ public:
 	 * This function adds a resource pack to the list of known resource packs.
 	 * It loads the resource description and uses it when searching for resource
 	 * when resource loading is needed.
-	 * @param fi - file interface pointing to the resource pack's STOB description.
+	 * @param fi - file interface pointing to the resource pack's description script.
 	 *             If file interface points to a directory instead of a file then
-	 *             resource description filename is assumed to be "main.res.stob".
+	 *             resource description filename is assumed to be "main.res".
+	 * @return mounted resource pack id.
 	 */
 	decltype(res_packs)::const_iterator mount_res_pack(const papki::file& fi);
 
-	// TODO: doxygen
+	/**
+	 * @brief Unmount mountd resource pack.
+	 * @param id - id of the resource pack to unmount.
+	 */
 	void unmount_res_pack(decltype(res_packs)::const_iterator id);
 
 	/**
