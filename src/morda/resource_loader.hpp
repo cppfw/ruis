@@ -62,8 +62,6 @@ class resource_loader{
 	friend class context;
 	friend class resource;
 
-	std::map<const std::string, std::weak_ptr<resource>> res_map;
-
 	class res_pack_entry{
 	public:
 		res_pack_entry() = default;
@@ -80,7 +78,13 @@ class resource_loader{
 		// TODO: use std::map/std::unordered_map?
 		treeml::forest script;
 
-		// TODO: keep loaded resources map in res_pack_entry, so that unmounted respack removes it's loaded resources
+		// keep loaded resources map in res_pack_entry, so that unmounted
+		// resource pack removes it's loaded resources
+		// TODO: use std::unordered_map?
+		std::map<const std::string, std::weak_ptr<resource>> res_map;
+
+		// add resource to resources map
+		void add_resource(const utki::shared_ref<resource>& res, const std::string& name);
 	};
 
 	// use std::list to be able to use iterator as resource pack id
@@ -97,12 +101,9 @@ class resource_loader{
 		const treeml::tree& e;
 	};
 
-	find_in_script_result find_resource_in_script(const std::string& res_id);
+	find_in_script_result find_resource_in_script(const std::string& id);
 
-	template <class T> std::shared_ptr<T> find_resource_in_res_map(const char* resName);
-
-	// add resource to resources map
-	void add_resource(const utki::shared_ref<resource>& res, const std::string& name);
+	template <class T> std::shared_ptr<T> find_resource_in_res_map(const char* id);
 
 private:
 	context& ctx;
@@ -124,7 +125,7 @@ public:
 	decltype(res_packs)::const_iterator mount_res_pack(const papki::file& fi);
 
 	/**
-	 * @brief Unmount mountd resource pack.
+	 * @brief Unmount mounted resource pack.
 	 * @param id - id of the resource pack to unmount.
 	 */
 	void unmount_res_pack(decltype(res_packs)::const_iterator id);
@@ -140,14 +141,14 @@ public:
 	 * auto image = this->context.get().loader().load<morda::res_image>("img_my_image_name");
 	 * @endcode
 	 *
-	 * @param name - name of the resource as it appears in resource description.
+	 * @param id - id of the resource as it appears in resource description.
 	 * @return Loaded resource.
 	 * @throw TODO:
 	 */
-	template <class T> utki::shared_ref<T> load(const char* name);
+	template <class T> utki::shared_ref<T> load(const char* id);
 
-	template <class T> utki::shared_ref<T> load(const std::string& name){
-		return this->load<T>(name.c_str());
+	template <class T> utki::shared_ref<T> load(const std::string& id){
+		return this->load<T>(id.c_str());
 	}
 
 private:
@@ -169,33 +170,35 @@ public:
 	virtual ~resource()noexcept{}
 };
 
-template <class T> std::shared_ptr<T> resource_loader::find_resource_in_res_map(const char* resName){
-	auto i = this->res_map.find(resName);
-	if(i != this->res_map.end()){
-		if(auto r = (*i).second.lock()){
-			return std::dynamic_pointer_cast<T>(std::move(r));
+template <class T> std::shared_ptr<T> resource_loader::find_resource_in_res_map(const char* id){
+	for(auto& rp : this->res_packs){
+		auto i = rp.res_map.find(id);
+		if(i != rp.res_map.end()){
+			if(auto r = i->second.lock()){
+				return std::dynamic_pointer_cast<T>(std::move(r));
+			}
+			rp.res_map.erase(i);
 		}
-		this->res_map.erase(i);
 	}
-	return nullptr; // no resource found with given name, return invalid reference
+	return nullptr; // no resource found with given id, return invalid reference
 }
 
-template <class T> utki::shared_ref<T> resource_loader::load(const char* resName){
+template <class T> utki::shared_ref<T> resource_loader::load(const char* id){
 //	TRACE(<< "ResMan::Load(): enter" << std::endl)
-	if(auto r = this->find_resource_in_res_map<T>(resName)){
+	if(auto r = this->find_resource_in_res_map<T>(id)){
 //		TRACE(<< "ResManHGE::Load(): resource found in map" << std::endl)
 		return utki::shared_ref<T>(std::move(r));
 	}
 
 //	TRACE(<< "ResMan::Load(): searching for resource in script..." << std::endl)
-	find_in_script_result ret = this->find_resource_in_script(resName);
+	find_in_script_result ret = this->find_resource_in_script(id);
 	ASSERT(ret.rp.fi)
 
 //	TRACE(<< "ResMan::Load(): resource found in script" << std::endl)
 
 	auto resource = T::load(utki::make_shared_from(this->ctx), ret.e.children, *ret.rp.fi);
 
-	this->add_resource(resource, ret.e.value.to_string());
+	 ret.rp.add_resource(resource, ret.e.value.to_string());
 
 //	TRACE(<< "ResMan::LoadTexture(): exit" << std::endl)
 	return resource;

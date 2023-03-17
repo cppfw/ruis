@@ -78,23 +78,23 @@ void resource_loader::unmount_res_pack(decltype(res_packs)::const_iterator id){
 	this->res_packs.erase(id);
 }
 
-resource_loader::find_in_script_result resource_loader::find_resource_in_script(const std::string& res_id){
-	for(auto i = this->res_packs.rbegin(); i != this->res_packs.rend(); ++i){
-		auto j = std::find(i->script.begin(), i->script.end(), res_id);
-		if(j != i->script.end()){
-			return find_in_script_result(*i, *j);
+resource_loader::find_in_script_result resource_loader::find_resource_in_script(const std::string& id){
+	for(auto& rp : this->res_packs){
+		auto j = std::find(rp.script.begin(), rp.script.end(), id);
+		if(j != rp.script.end()){
+			return find_in_script_result(rp, *j);
 		}
 	}
-	LOG([&](auto&o){o << "resource id not found in mounted resource packs: " << res_id << std::endl;})
+	LOG([&](auto&o){o << "resource id not found in mounted resource packs: " << id << std::endl;})
 	std::stringstream ss;
-	ss << "resource id not found in mounted resource packs: " << res_id;
+	ss << "resource id not found in mounted resource packs: " << id;
 	throw std::logic_error(ss.str());
 }
 
-void resource_loader::add_resource(const utki::shared_ref<resource>& res, const std::string& id){
+void resource_loader::res_pack_entry::add_resource(const utki::shared_ref<resource>& res, const std::string& id){
 	ASSERT(this->res_map.find(id) == this->res_map.end())
 	
-	//add the resource to the resources map of ResMan
+	// add the resource to the resources map of ResMan
 	this->res_map.insert(
 			std::make_pair(id, utki::make_weak(res))
 		);
