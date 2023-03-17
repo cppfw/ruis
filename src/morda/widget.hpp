@@ -195,7 +195,9 @@ public:
 	 * @brief Get constant layout parameters of the widget.
 	 * @return Constant layout parameters of the widget.
 	 */
-	const layout_params& get_layout_params_const()const;
+	const layout_params& get_layout_params_const()const{
+		return this->layout_parameters;
+	}
 
 	/**
 	 * @brief Request re-layout.

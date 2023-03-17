@@ -402,10 +402,6 @@ layout_params& widget::get_layout_params(){
 	return const_cast<layout_params&>(this->get_layout_params_const());
 }
 
-const layout_params& widget::get_layout_params_const()const{
-	return this->layout_parameters;
-}
-
 widget& widget::get_widget(const std::string& id, bool allow_itself){
 	auto w = this->try_get_widget(id, allow_itself);
 	if(!w){
