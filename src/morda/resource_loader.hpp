@@ -159,6 +159,8 @@ private:
  */
 class resource : virtual public utki::shared{
 	friend class resource_loader;
+
+	std::string id;
 protected:
 	const utki::shared_ref<morda::context> context;
 
@@ -168,6 +170,10 @@ protected:
 	{}
 public:
 	virtual ~resource()noexcept{}
+
+	std::string_view get_id()const{
+		return this->id;
+	}
 };
 
 template <class T> std::shared_ptr<T> resource_loader::find_resource_in_res_map(const char* id){
@@ -198,7 +204,11 @@ template <class T> utki::shared_ref<T> resource_loader::load(const char* id){
 
 	auto resource = T::load(utki::make_shared_from(this->ctx), ret.e.children, *ret.rp.fi);
 
-	 ret.rp.add_resource(resource, ret.e.value.to_string());
+	// resource need to know its id so that it would be possible to reload the resource
+	// using the id in case mounted resource packs change
+	resource.get().id = id;
+
+	ret.rp.add_resource(resource, ret.e.value.to_string());
 
 //	TRACE(<< "ResMan::LoadTexture(): exit" << std::endl)
 	return resource;
