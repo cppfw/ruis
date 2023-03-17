@@ -91,7 +91,7 @@ resource_loader::find_in_script_result resource_loader::find_resource_in_script(
 	throw std::logic_error(ss.str());
 }
 
-void resource_loader::res_pack_entry::add_resource_to_res_map(const utki::shared_ref<resource>& res, const std::string& id){
+void resource_loader::res_pack_entry::add_resource_to_res_map(const utki::shared_ref<resource>& res, std::string_view id){
 	ASSERT(this->res_map.find(id) == this->res_map.end())
 	
 	// add the resource to the resources map of ResMan
@@ -104,4 +104,25 @@ void resource_loader::res_pack_entry::add_resource_to_res_map(const utki::shared
 //		TRACE(<< "\t" << *(*i).first << std::endl)
 //	}
 //#endif
+}
+
+std::shared_ptr<resource> resource_loader::res_pack_entry::find_resource_in_res_map(std::string_view id){
+	auto i = this->res_map.find(id);
+	if(i != this->res_map.end()){
+		if(auto r = i->second.lock()){
+			return r;
+		}
+		this->res_map.erase(i);
+	}
+	return nullptr; // no resource found with given id, return invalid reference
+}
+
+const treeml::forest* resource_loader::res_pack_entry::find_resource_in_script(std::string_view id)const{
+	auto j = std::find(this->script.begin(), this->script.end(), id);
+	if(j != this->script.end()){
+		ASSERT(j->value.to_string() == id)
+		return &j->children;
+	}
+
+	return nullptr;
 }

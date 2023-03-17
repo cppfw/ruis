@@ -81,9 +81,11 @@ class resource_loader{
 		// keep loaded resources map in res_pack_entry, so that unmounted
 		// resource pack removes it's loaded resources
 		// TODO: use std::unordered_map?
-		std::map<const std::string, std::weak_ptr<resource>> res_map;
+		std::map<const std::string, std::weak_ptr<resource>, std::less<>> res_map;
 
-		void add_resource_to_res_map(const utki::shared_ref<resource>& res, const std::string& name);
+		void add_resource_to_res_map(const utki::shared_ref<resource>& res, std::string_view id);
+		std::shared_ptr<resource> find_resource_in_res_map(std::string_view id);
+		const treeml::forest* find_resource_in_script(std::string_view id)const;
 	};
 
 	// use std::list to be able to use iterator as resource pack id
@@ -144,11 +146,7 @@ public:
 	 * @return Loaded resource.
 	 * @throw TODO:
 	 */
-	template <class T> utki::shared_ref<T> load(const char* id);
-
-	template <class T> utki::shared_ref<T> load(const std::string& id){
-		return this->load<T>(id.c_str());
-	}
+	template <class T> utki::shared_ref<T> load(std::string_view id);
 
 private:
 };
@@ -188,29 +186,34 @@ template <class T> std::shared_ptr<T> resource_loader::find_resource_in_res_map(
 	return nullptr; // no resource found with given id, return invalid reference
 }
 
-template <class T> utki::shared_ref<T> resource_loader::load(const char* id){
-//	TRACE(<< "ResMan::Load(): enter" << std::endl)
-	if(auto r = this->find_resource_in_res_map<T>(id)){
-//		TRACE(<< "ResManHGE::Load(): resource found in map" << std::endl)
-		return utki::shared_ref<T>(std::move(r));
+template <class resource_type> utki::shared_ref<resource_type> resource_loader::load(std::string_view id){
+	for(auto i = this->res_packs.rbegin(); i != this->res_packs.rend(); ++i){
+		if(auto r = i->find_resource_in_res_map(id)){
+			return utki::shared_ref<resource_type>(std::dynamic_pointer_cast<resource_type>(r));
+		}
+
+		auto desc = i->find_resource_in_script(id);
+		if(!desc){
+			continue;
+		}
+
+		ASSERT(i->fi)
+
+		auto resource = resource_type::load(utki::make_shared_from(this->ctx), *desc, *i->fi);
+
+		// resource need to know its id so that it would be possible to reload the resource
+		// using the id in case mounted resource packs change
+		resource.get().id = id;
+
+		i->add_resource_to_res_map(resource, id);
+
+		return resource;
 	}
 
-//	TRACE(<< "ResMan::Load(): searching for resource in script..." << std::endl)
-	find_in_script_result ret = this->find_resource_in_script(id);
-	ASSERT(ret.rp.fi)
-
-//	TRACE(<< "ResMan::Load(): resource found in script" << std::endl)
-
-	auto resource = T::load(utki::make_shared_from(this->ctx), ret.e.children, *ret.rp.fi);
-
-	// resource need to know its id so that it would be possible to reload the resource
-	// using the id in case mounted resource packs change
-	resource.get().id = id;
-
-	ret.rp.add_resource_to_res_map(resource, ret.e.value.to_string());
-
-//	TRACE(<< "ResMan::LoadTexture(): exit" << std::endl)
-	return resource;
+	LOG([&](auto&o){o << "resource id not found in mounted resource packs: " << id << std::endl;})
+	std::stringstream ss;
+	ss << "resource id not found in mounted resource packs: " << id;
+	throw std::logic_error(ss.str());
 }
 
 }
