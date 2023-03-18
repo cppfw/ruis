@@ -78,19 +78,6 @@ void resource_loader::unmount_res_pack(decltype(res_packs)::const_iterator id){
 	this->res_packs.erase(id);
 }
 
-resource_loader::find_in_script_result resource_loader::find_resource_in_script(const std::string& id){
-	for(auto& rp : this->res_packs){
-		auto j = std::find(rp.script.begin(), rp.script.end(), id);
-		if(j != rp.script.end()){
-			return find_in_script_result(rp, *j);
-		}
-	}
-	LOG([&](auto&o){o << "resource id not found in mounted resource packs: " << id << std::endl;})
-	std::stringstream ss;
-	ss << "resource id not found in mounted resource packs: " << id;
-	throw std::logic_error(ss.str());
-}
-
 void resource_loader::res_pack_entry::add_resource_to_res_map(const utki::shared_ref<resource>& res, std::string_view id){
 	ASSERT(this->res_map.find(id) == this->res_map.end())
 	

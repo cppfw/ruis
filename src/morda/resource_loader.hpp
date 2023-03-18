@@ -91,21 +91,6 @@ class resource_loader{
 	// use std::list to be able to use iterator as resource pack id
 	std::list<res_pack_entry> res_packs;
 
-	class find_in_script_result{
-	public:
-		find_in_script_result(res_pack_entry& res_pack, const treeml::tree& element) :
-				rp(res_pack),
-				e(element)
-		{}
-
-		res_pack_entry& rp;
-		const treeml::tree& e;
-	};
-
-	find_in_script_result find_resource_in_script(const std::string& id);
-
-	template <class T> std::shared_ptr<T> find_resource_in_res_map(const char* id);
-
 private:
 	context& ctx;
 	resource_loader(context& ctx) :
@@ -172,19 +157,6 @@ public:
 		return this->id;
 	}
 };
-
-template <class T> std::shared_ptr<T> resource_loader::find_resource_in_res_map(const char* id){
-	for(auto& rp : this->res_packs){
-		auto i = rp.res_map.find(id);
-		if(i != rp.res_map.end()){
-			if(auto r = i->second.lock()){
-				return std::dynamic_pointer_cast<T>(std::move(r));
-			}
-			rp.res_map.erase(i);
-		}
-	}
-	return nullptr; // no resource found with given id, return invalid reference
-}
 
 template <class resource_type> utki::shared_ref<resource_type> resource_loader::load(std::string_view id){
 	for(auto i = this->res_packs.rbegin(); i != this->res_packs.rend(); ++i){
