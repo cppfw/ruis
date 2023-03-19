@@ -23,6 +23,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "choice_button.hpp"
 
+#include "../../container.hpp"
+
 namespace morda{
 
 /**

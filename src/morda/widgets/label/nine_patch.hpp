@@ -21,11 +21,13 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
+#include "../../container.hpp"
+
 #include "../../res/nine_patch.hpp"
 
-#include "image.hpp"
-
 #include "../base/blending_widget.hpp"
+
+#include "image.hpp"
 
 namespace morda{
 

@@ -23,6 +23,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../widget.hpp"
 
+#include "../util/util.hpp"
+
 using namespace morda;
 
 const utki::shared_ref<pile_layout> pile_layout::instance = utki::make_shared<pile_layout>();

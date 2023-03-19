@@ -4,6 +4,7 @@
 
 #include <mordavokne/application.hpp>
 
+#include "../../../src/morda/container.hpp"
 #include "../../../src/morda/widgets/button/push_button.hpp"
 #include "../../../src/morda/widgets/label/busy.hpp"
 #include "../../../src/morda/util/weak_widget_set.hpp"
