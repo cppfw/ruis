@@ -668,18 +668,29 @@ public:
 	 * The widget is expected to reload it's resources loaded via resource_loader.
 	 */
 	virtual void on_reload(){}
-};
 
-using widget_list = std::vector<utki::shared_ref<widget>>;
-using semiconst_widget_list = const std::vector<utki::shared_ref<widget>>;
-using const_widget_list = const std::vector<utki::shared_ref<const widget>>;
-static_assert(sizeof(widget_list) == sizeof(const_widget_list), "sizeof(widget_list) differs from sizeof(const_widget_list)");
-static_assert(sizeof(widget_list) == sizeof(semiconst_widget_list), "sizeof(widget_list) differs from sizeof(semiconst_widget_list)");
-static_assert(sizeof(widget_list::value_type) == sizeof(const_widget_list::value_type), "sizeof(widget_list::value_type) differs from sizeof(const_widget_list::value_type)");
-static_assert(sizeof(widget_list::value_type) == sizeof(semiconst_widget_list::value_type), "sizeof(widget_list::value_type) differs from sizeof(semiconst_widget_list::value_type)");
+	template <typename resource_type>
+	void reload(std::shared_ptr<resource_type>& p);
+
+	template <typename resource_type>
+	void reload(utki::shared_ref<resource_type>& p);
+};
 
 }
 
 // include definitions for forward declared classes
 #include "context.hpp"
 #include "container.hpp"
+
+template <typename resource_type>
+void morda::widget::reload(std::shared_ptr<resource_type>& p){
+	if(!p){
+		return;
+	}
+	p = this->context.get().loader.load<resource_type>(p->get_id());
+}
+
+template <typename resource_type>
+void morda::widget::reload(utki::shared_ref<resource_type>& p){
+	p = this->context.get().loader.load<resource_type>(p->get_id());
+}

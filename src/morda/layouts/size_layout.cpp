@@ -21,6 +21,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "size_layout.hpp"
 
+#include "../widget.hpp"
+
 using namespace morda;
 
 const utki::shared_ref<size_layout> size_layout::instance = utki::make_shared<size_layout>();

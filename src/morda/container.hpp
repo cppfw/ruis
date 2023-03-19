@@ -27,8 +27,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <utki/shared_ref.hpp>
 
 #include "config.hpp"
-#include "util/util.hpp"
 #include "widget.hpp"
+
+#include "util/util.hpp"
+#include "util/widget_list.hpp"
 
 namespace morda{
 

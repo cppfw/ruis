@@ -21,8 +21,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "context.hpp"
 
-using namespace morda;
+#include "widget.hpp"
 
+using namespace morda;
 
 context::context(
 		const utki::shared_ref<morda::renderer>& r,

@@ -21,6 +21,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "linear_layout.hpp"
 
+#include "../widget.hpp"
+
 using namespace morda;
 
 const utki::shared_ref<row_layout> row_layout::instance = utki::make_shared<row_layout>();

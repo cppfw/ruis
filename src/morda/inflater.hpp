@@ -195,7 +195,3 @@ private:
 };
 
 }
-
-// include definitions for forward declared classes
-#include "context.hpp"
-#include "widget.hpp"
