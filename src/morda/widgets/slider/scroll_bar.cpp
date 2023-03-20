@@ -70,7 +70,7 @@ const auto DDescription = treeml::read(R"qwertyuiop(
 scroll_bar::scroll_bar(const utki::shared_ref<morda::context>& c, const treeml::forest& desc, bool vertical) :
 		widget(c, desc),
 		fraction_band_widget(this->context, treeml::forest()),
-		oriented_widget(this->context, treeml::forest(), vertical),
+		oriented(vertical),
 		container(this->context, DDescription),
 		handle(this->get_widget("morda_handle"))
 {

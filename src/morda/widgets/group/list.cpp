@@ -56,7 +56,7 @@ public:
 list_widget::list_widget(const utki::shared_ref<morda::context>& c, const treeml::forest& desc, bool vertical):
 		widget(c, desc),
 		container(this->context, treeml::forest()),
-		oriented_widget(this->context, treeml::forest(), vertical)
+		oriented(vertical)
 {
 	std::shared_ptr<static_provider> pr = std::make_shared<static_provider>();
 

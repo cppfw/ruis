@@ -25,7 +25,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../../widget.hpp"
 
-#include "../base/oriented_widget.hpp"
+#include "../../util/oriented.hpp"
+
 #include "../base/fraction_band_widget.hpp"
 
 // disable stupid warnings
@@ -37,7 +38,7 @@ namespace morda{
 
 class scroll_bar :
 		public fraction_band_widget,
-		protected oriented_widget,
+		protected oriented,
 		private container // users do not need to know that it is a container
 {
 	scroll_bar(const scroll_bar&) = delete;

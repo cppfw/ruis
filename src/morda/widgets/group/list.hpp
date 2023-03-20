@@ -24,7 +24,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../../widget.hpp"
 #include "../../container.hpp"
 
-#include "../base/oriented_widget.hpp"
+#include "../../util/oriented.hpp"
 
 namespace morda{
 
@@ -37,7 +37,7 @@ class list_widget :
 		//       see http://stackoverflow.com/questions/42427145/clang-cannot-cast-to-private-base-while-there-is-a-public-virtual-inheritance
 		virtual public widget,
 		public container,
-		protected oriented_widget
+		protected oriented
 {
 	// index of the first item added to container as child
 	size_t added_index = size_t(-1);
