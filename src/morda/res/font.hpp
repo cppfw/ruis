@@ -43,7 +43,7 @@ namespace morda{ namespace res{
  * @li @c italic - file to load italic font from, True-Type ttf file. If omitted, the italic font will be the same as normal.
  * @li @c bold_italic - file to load bold italic font from, True-Type ttf file. If omitted, the bold italic font will be the same as normal.
  * @li @c chars - list of all chars for which the glyphs should be created.
- * @li @c size - size of glyphs, in length units, i.e.: no unit(pixels), dp, mm.
+ * @li @c size - size of glyphs, in length units, i.e.: no unit(pixels), pp, fp, mm.
  * 
  * Example:
  * @code
