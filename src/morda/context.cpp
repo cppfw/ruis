@@ -31,7 +31,7 @@ context::context(
 		std::function<void(std::function<void()>&&)>&& run_from_ui_thread_function,
 		std::function<void(morda::mouse_cursor)>&& set_mouse_cursor_function,
 		real dots_per_inch,
-		real dots_per_dp
+		real dots_per_pp
 	) :
 		renderer(r),
 		updater(u),
@@ -39,7 +39,7 @@ context::context(
 		cursor_manager(std::move(set_mouse_cursor_function)),
 		loader(*this),
 		inflater(*this),
-		units(dots_per_inch, dots_per_dp)
+		units(dots_per_inch, dots_per_pp)
 {
 	if(!this->run_from_ui_thread){
 		throw std::invalid_argument("context::context(): no post to UI thread function provided");

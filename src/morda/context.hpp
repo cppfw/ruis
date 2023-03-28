@@ -74,7 +74,7 @@ public:
 	 * @param run_from_ui_thread_function - function to use when posting an action to UI thread is needed.
 	 * @param set_mouse_cursor_function - function to use for setting the mouse cursor.
 	 * @param dots_per_inch - DPI of your display.
-	 * @param dots_per_dp - desired dots per density pixel.
+	 * @param dots_per_pp - desired dots per perception pixel.
 	 */
 	context(
 			const utki::shared_ref<morda::renderer>& r,
@@ -82,7 +82,7 @@ public:
 			std::function<void(std::function<void()>&&)>&& run_from_ui_thread_function,
 			std::function<void(morda::mouse_cursor)>&& set_mouse_cursor_function,
 			real dots_per_inch,
-			real dots_per_dp
+			real dots_per_pp
 		);
 	
 	context(const context&) = delete;
