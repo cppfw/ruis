@@ -1,3 +1,9 @@
+libmorda (0.5.203) unstable; urgency=medium
+
+  * perception pixels
+
+ -- Ivan Gagis <igagis@gmail.com>  Mon, 01 May 2023 15:50:44 +0300
+
 libmorda (0.5.202) unstable; urgency=medium
 
   * container layout system
