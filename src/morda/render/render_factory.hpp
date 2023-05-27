@@ -75,6 +75,7 @@ public:
 		std::unique_ptr<coloring_shader> color_pos_lum;
 		std::unique_ptr<shader> pos_clr;
 		std::unique_ptr<coloring_texturing_shader> color_pos_tex;
+		std::unique_ptr<coloring_texturing_shader> color_pos_tex_alpha;
 	};
 	
 	virtual std::unique_ptr<shaders> create_shaders() = 0;

@@ -81,10 +81,6 @@ texture_font::Glyph texture_font::loadGlyph(char32_t c)const{
 	
 	raster_image glyphim(r4::vector2<unsigned>(slot->bitmap.width, slot->bitmap.rows), raster_image::color_depth::grey, slot->bitmap.buffer);
 
-	raster_image im(glyphim.dims(), raster_image::color_depth::grey_alpha);
-	im.blit({0, 0}, glyphim, 1, 0);
-	im.clear(0, uint8_t(0xff));
-	
 	std::array<r4::vector2<float>, 4> verts;
 	verts[0] = (morda::vector2(real(m->horiBearingX), -real(m->horiBearingY)) / (64.0f));
 	verts[1] = (morda::vector2(real(m->horiBearingX), real(m->height - m->horiBearingY)) / (64.0f));
@@ -104,9 +100,9 @@ texture_font::Glyph texture_font::loadGlyph(char32_t c)const{
 			vertex_array::mode::triangle_fan
 		).to_shared_ptr();
 	g.tex = this->context.get().renderer.get().factory->create_texture_2d(
-			morda::num_channels_to_texture_type(im.num_channels()),
-			im.dims(),
-			im.pixels()
+			morda::num_channels_to_texture_type(glyphim.num_channels()),
+			glyphim.dims(),
+			glyphim.pixels()
 		).to_shared_ptr();
 
 	return g;
@@ -175,7 +171,7 @@ real texture_font::renderGlyphInternal(const morda::matrix4& matrix, r4::vector4
 	// texture can be null for glyph of empty characters, like space, tab etc...
 	if(g.tex){
 		ASSERT(g.vao)
-		this->context.get().renderer.get().shader->color_pos_tex->render(matrix, *g.vao, color, *g.tex);
+		this->context.get().renderer.get().shader->color_pos_tex_alpha->render(matrix, *g.vao, color, *g.tex);
 	}
 
 	return g.advance;
