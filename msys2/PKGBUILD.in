@@ -47,7 +47,7 @@ makedepends=(
 		'prorab-extra'
 		'doxygen'
 		'pkg-config'
-		"${pkgPrefix}clang-tools-extra"
+		"${pkgPrefix}clang-tools-extra" # for clang-tidy
 		"${pkgPrefix}opros"
 		"${pkgPrefix}nitki"
 		"${pkgPrefix}tst"
