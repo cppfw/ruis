@@ -58,7 +58,7 @@ public:
 		mode rendering_mode
 	);
 
-	virtual ~vertex_array(){}
+	virtual ~vertex_array() = default;
 };
 
 }

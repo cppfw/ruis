@@ -52,7 +52,7 @@ protected:
 	renderer(const renderer&) = delete;
 	renderer& operator=(const renderer&) = delete;
 	
-	virtual ~renderer()noexcept{}
+	virtual ~renderer() = default;
 	
 private:
 	std::shared_ptr<frame_buffer> cur_fb;

@@ -29,12 +29,12 @@ namespace morda{
 
 class coloring_shader{
 public:
-	coloring_shader(){}
+	coloring_shader() = default;
 	
 	coloring_shader(const coloring_shader&) = delete;
 	coloring_shader& operator=(const coloring_shader&) = delete;
 	
-	virtual ~coloring_shader()noexcept{}
+	virtual ~coloring_shader() = default;
 	
 	virtual void render(const r4::matrix4<float> &m, const vertex_array& va, r4::vector4<float> color)const = 0;
 

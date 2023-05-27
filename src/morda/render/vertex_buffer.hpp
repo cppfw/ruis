@@ -33,7 +33,7 @@ public:
 			size(size)
 	{}
 
-	virtual ~vertex_buffer()noexcept{}
+	virtual ~vertex_buffer() = default;
 };
 
 }

@@ -29,9 +29,9 @@ namespace morda{
 
 class shader{
 public:
-	shader(){}
+	shader() = default;
 	
-	virtual ~shader()noexcept{}
+	virtual ~shader() = default;
 	
 	virtual void render(const r4::matrix4<float>& m, const vertex_array& va)const = 0;
 };

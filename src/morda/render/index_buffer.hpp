@@ -25,7 +25,7 @@ namespace morda{
 	
 class index_buffer{
 public:
-	virtual ~index_buffer()noexcept{}
+	virtual ~index_buffer() = default;
 };
 	
 }

@@ -44,10 +44,10 @@ namespace morda{
 
 class render_factory{
 protected:
-	render_factory(){}
+	render_factory() = default;
 	
 public:
-	virtual ~render_factory()noexcept{}	
+	virtual ~render_factory() = default;
 	
 	virtual utki::shared_ref<texture_2d> create_texture_2d(texture_2d::type type, r4::vector2<unsigned> dims, utki::span<const uint8_t> data) = 0;
 	
