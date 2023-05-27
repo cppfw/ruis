@@ -97,6 +97,12 @@ jobs:
     steps:
     - name: git clone
       uses: myci-actions/checkout@master
+    - name: install clang-tidy and clang-format
+      run: |
+        brew install llvm
+        ln -s "$(brew --prefix llvm)/bin/clang-format" "/usr/local/bin/clang-format"
+        ln -s "$(brew --prefix llvm)/bin/clang-tidy" "/usr/local/bin/clang-tidy"
+        ln -s "$(brew --prefix llvm)/bin/clang-apply-replacements" "/usr/local/bin/clang-apply-replacements"
     - name: add cppfw tap
       run: |
         brew tap cppfw/tap
