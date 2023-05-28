@@ -106,7 +106,7 @@ void atlas_image::render(const matrix4& matrix, const vertex_array& vao) const
 	this->context.get().renderer.get().shader->pos_tex->render(matrix, this->vao.get(), this->tex.get().tex());
 }
 
-utki::shared_ref<const image::texture> atlas_image::get(vector2 forDim) const
+utki::shared_ref<const image::texture> atlas_image::get(vector2 for_dims) const
 {
 	return utki::make_shared_from(*this);
 }

@@ -30,8 +30,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "texture.hpp"
 
-namespace morda {
-namespace res {
+namespace morda::res {
 
 /**
  * @brief Base image resource class.
@@ -76,7 +75,7 @@ public:
 	public:
 		const vector2 dims;
 
-		virtual ~texture() noexcept {}
+		virtual ~texture() = default;
 
 		void render(const matrix4& matrix) const
 		{
@@ -109,7 +108,7 @@ public:
 	 *        If any of the dimensions is 0 then it will be adjusted to preserve aspect ratio.
 	 *        If both dimensions are zero, then dimensions which are natural for the particular image will be used.
 	 */
-	virtual utki::shared_ref<const texture> get(vector2 forDims = 0) const = 0;
+	virtual utki::shared_ref<const texture> get(vector2 for_dims = 0) const = 0;
 
 private:
 	static utki::shared_ref<image> load(
@@ -158,7 +157,7 @@ public:
 		return this->image::texture::dims;
 	}
 
-	virtual utki::shared_ref<const image::texture> get(vector2 forDim) const override;
+	utki::shared_ref<const image::texture> get(vector2 for_dims) const override;
 
 	void render(const matrix4& matrix, const vertex_array& vao) const override;
 
@@ -170,5 +169,4 @@ private:
 	);
 };
 
-} // namespace res
-} // namespace morda
+} // namespace morda::res

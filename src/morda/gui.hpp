@@ -26,7 +26,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace morda {
 
-class gui
+class gui final
 {
 	friend class updateable;
 	friend class widget;
@@ -43,7 +43,7 @@ public:
 	gui(const gui&) = delete;
 	gui& operator=(const gui&) = delete;
 
-	virtual ~gui() noexcept {}
+	~gui() = default;
 
 private:
 	utki::shared_ref<morda::widget> root_widget;
@@ -98,7 +98,7 @@ public:
 	 * widgets to be used by application.
 	 * @param fi - file interface to use for resource loading.
 	 */
-	void initStandardWidgets(papki::file& fi);
+	void init_standard_widgets(papki::file& fi);
 
 	/**
 	 * @brief Update GUI.
@@ -158,7 +158,7 @@ public:
 		 */
 		virtual std::u32string get() const = 0;
 
-		virtual ~input_string_provider() noexcept {}
+		virtual ~input_string_provider() = default;
 	};
 
 	/**

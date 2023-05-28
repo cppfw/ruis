@@ -39,9 +39,9 @@ protected:
 		return this->push_button::on_mouse_button(e);
 	}
 
-	void on_hover_change(unsigned pointerID) override
+	void on_hover_change(unsigned pointer_id) override
 	{
-		this->push_button::on_hover_change(pointerID);
+		this->push_button::on_hover_change(pointer_id);
 	}
 };
 

@@ -26,8 +26,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "image.hpp"
 
-namespace morda {
-namespace res {
+namespace morda::res {
 
 /**
  * @brief Nine-patch resource.
@@ -109,5 +108,4 @@ private:
 	);
 };
 
-} // namespace res
-} // namespace morda
+} // namespace morda::res

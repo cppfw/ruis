@@ -260,7 +260,7 @@ gui::gui(const utki::shared_ref<morda::context>& context) :
 	});
 }
 
-void gui::initStandardWidgets(papki::file& fi)
+void gui::init_standard_widgets(papki::file& fi)
 {
 	// mount default resource pack
 
@@ -307,7 +307,7 @@ void gui::initStandardWidgets(papki::file& fi)
 	}
 
 	if (!mounted) {
-		throw std::runtime_error("gui::initStandardWidgets(): could not mount default resource pack");
+		throw std::runtime_error("gui::init_standard_widgets(): could not mount default resource pack");
 	}
 
 	// add standard widgets to inflater
@@ -344,7 +344,7 @@ void gui::initStandardWidgets(papki::file& fi)
 	} catch (std::exception&) {
 		// TODO: do not ignore?
 		LOG([](auto& o) {
-			o << "gui::initStandardWidgets(): could not load morda_gui_definitions" << std::endl;
+			o << "gui::init_standard_widgets(): could not load morda_gui_definitions" << std::endl;
 		})
 	}
 }
@@ -407,9 +407,9 @@ void gui::send_mouse_button(bool is_down, const vector2& pos, mouse_button butto
 	}
 }
 
-void gui::send_mouse_hover(bool isHovered, unsigned pointerID)
+void gui::send_mouse_hover(bool is_hovered, unsigned pointer_id)
 {
-	this->get_root().set_hovered(isHovered, pointerID);
+	this->get_root().set_hovered(is_hovered, pointer_id);
 }
 
 void gui::send_key(bool is_down, key key_code)
@@ -440,7 +440,8 @@ void gui::send_character_input(const input_string_provider& string_provider, key
 {
 	if (auto w = this->context.get().focused_widget.lock()) {
 		character_input_event e;
-		e.string = string_provider.get();
+		auto str = string_provider.get();
+		e.string = str;
 		e.combo.key = key_code;
 		e.combo.modifiers = this->key_modifiers;
 

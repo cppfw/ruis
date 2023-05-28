@@ -92,9 +92,9 @@ real morda::parse_layout_dimension_value(const treeml::leaf& l, const morda::uni
 	return parse_dimension_value(l, units);
 }
 
-morda::texture_2d::type morda::num_channels_to_texture_type(unsigned numChannels)
+morda::texture_2d::type morda::num_channels_to_texture_type(unsigned num_channels)
 {
-	switch (numChannels) {
+	switch (num_channels) {
 		default:
 			ASSERT(false)
 		case 1:

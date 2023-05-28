@@ -109,10 +109,10 @@ protected:
 		container& selection_container
 	);
 
+public:
 	drop_down_box(const drop_down_box&) = delete;
 	drop_down_box& operator=(const drop_down_box&) = delete;
 
-public:
 	/**
 	 * @brief Set currently selected item.
 	 * @param i - index of the item to set as currently selected.

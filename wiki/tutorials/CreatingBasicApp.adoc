@@ -46,7 +46,7 @@ public:
 			mordavokne::application(mordavokne::window_params(r4::vec2ui(800, 600)))
 	{
 		// mordavokne::application has the 'gui' member variable which is an instance of morda::gui
-		this->gui.initStandardWidgets(*this->get_res_file());
+		this->gui.init_standard_widgets(*this->get_res_file());
 	}
 };
 ....
@@ -79,7 +79,7 @@ public:
 	application() :
 			mordavokne::application(mordavokne::window_params(r4::Vec2ui(800, 600)))
 	{
-		this->gui.initStandardWidgets(*this->get_res_file());
+		this->gui.init_standard_widgets(*this->get_res_file());
 
 		// Inflate widgets hierarchy from GUI description script
 		auto c = this->gui.context->inflater.inflate(
@@ -107,7 +107,7 @@ public:
 	application() :
 			mordavokne::application(mordavokne::window_params(r4::vec2ui(800, 600)))
 	{
-		this->gui.initStandardWidgets(*this->get_res_file());
+		this->gui.init_standard_widgets(*this->get_res_file());
 
 		// Inflate widgets hierarchy from GUI description script
 		auto c = this->gui.context->inflater.inflate(

@@ -17,7 +17,7 @@ public:
 	application() :
 			mordavokne::application("morda-tests", GetWindowParams())
 	{
-		this->gui.initStandardWidgets(*this->get_res_file("../../res/morda_res/"));
+		this->gui.init_standard_widgets(*this->get_res_file("../../res/morda_res/"));
 
 		auto c = this->gui.context.get().inflater.inflate(
 				*this->get_res_file("res/test.gui")
