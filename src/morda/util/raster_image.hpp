@@ -45,7 +45,7 @@ public:
 	};
 
 private:
-	color_depth color_depth_;
+	color_depth color_depth_{color_depth::unknown};
 	r4::vector2<unsigned> dims_ = r4::vector2<unsigned>(0);
 	std::vector<uint8_t> buffer; // image pixels data
 
@@ -54,9 +54,7 @@ public:
 	 * @brief Default constructor.
 	 * Creates uninitialized Image object.
 	 */
-	raster_image() :
-		color_depth_(color_depth::unknown)
-	{}
+	raster_image() = default;
 
 	raster_image(const raster_image&) = default;
 

@@ -71,7 +71,7 @@ public:
 		list_widget* parent_list = nullptr;
 
 	protected:
-		provider() {}
+		provider() = default;
 
 	public:
 		/**

@@ -57,6 +57,8 @@ void fraction_widget::set_fraction(real fraction, bool notify_change)
 void fraction_widget::on_fraction_change()
 {
 	if (this->fraction_change_handler) {
+		// TODO: on macos clang-tidy gives false-positive finding here
+		// NOLINTNEXTLINE(clang-analyzer-cplusplus.Move)
 		this->fraction_change_handler(*this);
 	}
 }

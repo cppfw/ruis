@@ -47,7 +47,7 @@ public:
 		drop_down_box* dd = nullptr;
 
 	protected:
-		provider() {}
+		provider() = default;
 
 	public:
 		/**
