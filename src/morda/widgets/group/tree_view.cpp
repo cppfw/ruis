@@ -63,7 +63,13 @@ void tree_view::notify_view_change()
 void tree_view::set_provider(std::shared_ptr<provider> item_provider)
 {
 	item_provider->notify_data_set_changed();
-	this->item_list.get().set_provider(std::static_pointer_cast<list_widget::provider>(item_provider));
+	this->item_list.get().set_provider(
+		// use aliasing shared_ptr constructor becasue list_widget::provider
+		// is a private base of tree_view::provider, so not possible
+		// to use std::static_pointer_cast() because it does not see the
+		// private base class
+		std::shared_ptr<list_widget::provider>(item_provider, item_provider.get())
+	);
 }
 
 void tree_view::provider::notify_data_set_changed()
