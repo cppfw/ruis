@@ -191,7 +191,8 @@ void scroll_bar::on_lay_out()
 	auto min_handle_size = this->handle.measure(vector2(-1));
 
 	using std::max;
-	new_size[long_index] = max(new_size[long_index], std::round(real(1.5) * min_handle_size[trans_index])); // clamp bottom
+	new_size[long_index] =
+		max(new_size[long_index], std::round(real(1.5) * min_handle_size[trans_index])); // clamp bottom
 
 	this->handle.resize(new_size);
 
