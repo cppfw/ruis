@@ -14,6 +14,9 @@ $(eval $(call prorab-config, ../config))
 #    this_cxxflags += -DM_MORDA_RENDER_WIDGET_BORDERS
 
 ifeq ($(os),windows)
+    # we don't run clang-tidy on windows becasue trick with -isystem (see else branch)
+    # is not working in msys2 for some reason, i.e. compiler cannot find freetype headers then
+    this_lint_cmd :=
     this_cxxflags += $(shell pkg-config --cflags freetype2)
 else
     # use -isystem instead of -I for freetype because otherwise clang-tidy goes inside
