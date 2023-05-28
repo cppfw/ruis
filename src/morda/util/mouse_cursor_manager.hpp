@@ -35,7 +35,7 @@ class mouse_cursor_manager
 	const std::function<void(morda::mouse_cursor)> set_mouse_cursor;
 
 public:
-	typedef decltype(cursor_stack)::iterator iterator;
+	using iterator = decltype(cursor_stack)::iterator;
 
 	mouse_cursor_manager(std::function<void(morda::mouse_cursor)>&& set_mouse_cursor) :
 		set_mouse_cursor(std::move(set_mouse_cursor))

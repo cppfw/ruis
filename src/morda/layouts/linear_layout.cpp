@@ -120,15 +120,15 @@ void linear_layout::lay_out(const vector2& size, semiconst_widget_list& widgets)
 				w.get().resize(info->measured_dims);
 			}
 
-			vector2 newPos;
+			vector2 new_pos;
 
-			newPos[long_index] = pos;
+			new_pos[long_index] = pos;
 
 			pos += w.get().rect().d[long_index];
 
-			newPos[trans_index] = std::round((size[trans_index] - w.get().rect().d[trans_index]) / 2);
+			new_pos[trans_index] = std::round((size[trans_index] - w.get().rect().d[trans_index]) / 2);
 
-			w.get().move_to(newPos);
+			w.get().move_to(new_pos);
 
 			++info;
 		}

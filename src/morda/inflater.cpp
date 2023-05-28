@@ -33,17 +33,17 @@ inflater::inflater(morda::context& context) :
 	context(context)
 {}
 
-void inflater::add_factory(std::string&& widgetName, decltype(factories)::value_type::second_type&& factory)
+void inflater::add_factory(std::string&& widget_name, decltype(factories)::value_type::second_type&& factory)
 {
-	auto ret = this->factories.insert(std::make_pair(std::move(widgetName), std::move(factory)));
+	auto ret = this->factories.insert(std::make_pair(std::move(widget_name), std::move(factory)));
 	if (!ret.second) {
 		throw std::logic_error("Failed registering widget type, widget type with given name is already added");
 	}
 }
 
-bool inflater::unregister_widget(const std::string& widgetName) noexcept
+bool inflater::unregister_widget(const std::string& widget_name) noexcept
 {
-	if (this->factories.erase(widgetName) == 0) {
+	if (this->factories.erase(widget_name) == 0) {
 		return false;
 	}
 	return true;
@@ -167,13 +167,13 @@ treeml::forest apply_gui_template(
 }
 } // namespace
 
-const decltype(inflater::factories)::value_type::second_type& inflater::find_factory(const std::string& widgetName)
+const decltype(inflater::factories)::value_type::second_type& inflater::find_factory(const std::string& widget_name)
 {
-	auto i = this->factories.find(widgetName);
+	auto i = this->factories.find(widget_name);
 
 	if (i == this->factories.end()) {
 		std::stringstream ss;
-		ss << "inflater::find_factory(): widget name '" << widgetName << "' not found";
+		ss << "inflater::find_factory(): widget name '" << widget_name << "' not found";
 		throw std::logic_error(ss.str());
 	}
 
@@ -311,9 +311,9 @@ inflater::widget_template inflater::parse_template(const std::string& name, cons
 		// TRACE(<< " " << v << std::endl)
 		auto i = std::find(ret.templ.children.begin(), ret.templ.children.end(), v);
 		if (i == ret.templ.children.end()) {
-			ret.templ.children.push_back(
-				// treeml::tree(treeml::leaf(v), {treeml::tree()}) // TODO: is empty child needed?
-				treeml::tree(treeml::leaf(v))
+			ret.templ.children.emplace_back(
+				// tml::leaf(v), {tml::tree()} // TODO: is empty child needed?
+				tml::leaf(v)
 			);
 		}
 	}

@@ -31,23 +31,23 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace morda {
 
-typedef float real;
+using real = float;
 
-typedef r4::matrix4<real> matrix4;
+using matrix4 = r4::matrix4<real>;
 static_assert(sizeof(matrix4) == sizeof(real) * 4 * 4, "size mismatch");
 
-typedef r4::quaternion<real> quaternion;
+using quaternion = r4::quaternion<real>;
 static_assert(sizeof(quaternion) == sizeof(real) * 4, "size mismatch");
 
-typedef r4::rectangle<real> rectangle;
+using rectangle = r4::rectangle<real>;
 
-typedef r4::vector2<real> vector2;
+using vector2 = r4::vector2<real>;
 static_assert(sizeof(vector2) == sizeof(real) * 2, "size mismatch");
 
-typedef r4::vector3<real> vector3;
+using vector3 = r4::vector3<real>;
 static_assert(sizeof(vector3) == sizeof(real) * 3, "size mismatch");
 
-typedef r4::vector4<real> vector4;
+using vector4 = r4::vector4<real>;
 static_assert(sizeof(vector4) == sizeof(real) * 4, "size mismatch");
 
 } // namespace morda

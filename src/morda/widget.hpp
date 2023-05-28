@@ -381,10 +381,10 @@ public:
 	 * @return pointer to the widget if found.
 	 * @return nullptr if there is no widget with given id found or if the widget could not be cast to specified class.
 	 */
-	template <typename T>
-	std::shared_ptr<T> try_get_widget_as(const std::string& id, bool allow_itself = true) noexcept
+	template <typename widget_type>
+	std::shared_ptr<widget_type> try_get_widget_as(const std::string& id, bool allow_itself = true) noexcept
 	{
-		return std::dynamic_pointer_cast<T>(this->try_get_widget(id, allow_itself));
+		return std::dynamic_pointer_cast<widget_type>(this->try_get_widget(id, allow_itself));
 	}
 
 	/**
@@ -395,8 +395,8 @@ public:
 	 * @param allow_itself - whether it is allowed to return itself in case type matches.
 	 * @return pointer to the first found widget which can be cast to the requested class.
 	 */
-	template <typename T>
-	std::shared_ptr<T> try_get_widget(bool allow_itself = true) noexcept;
+	template <typename widget_type>
+	std::shared_ptr<widget_type> try_get_widget(bool allow_itself = true) noexcept;
 
 	/**
 	 * @brief Get widget.
@@ -420,10 +420,10 @@ public:
 	 * @throw std::logic_error - if no widget with given id has been found.
 	 * @throw std::bad_cast - if requested widget is not of the specified type.
 	 */
-	template <typename T>
-	T& get_widget_as(const std::string& id, bool allow_itself = true)
+	template <typename widget_type>
+	widget_type& get_widget_as(const std::string& id, bool allow_itself = true)
 	{
-		return dynamic_cast<T&>(this->get_widget(id, allow_itself));
+		return dynamic_cast<widget_type&>(this->get_widget(id, allow_itself));
 	}
 
 	/**
@@ -431,16 +431,16 @@ public:
 	 * @param allow_itself - whether it is allowed to return itself in case type matches.
 	 * @return reference to the requested widget.
 	 */
-	template <typename T>
-	T& get_widget(bool allow_itself = true);
+	template <typename widget_type>
+	widget_type& get_widget(bool allow_itself = true);
 
 	/**
 	 * @brief Recursively find all widgets of given type.
 	 * @param allow_itself - whether it is allowed to return itself in case type matches.
 	 * @return list of widgets found.
 	 */
-	template <class T>
-	std::vector<utki::shared_ref<T>> get_all_widgets(bool allow_itself = true);
+	template <class widget_type>
+	std::vector<utki::shared_ref<widget_type>> get_all_widgets(bool allow_itself = true);
 
 	/**
 	 * @brief Get root widget.
@@ -466,7 +466,7 @@ public:
 	widget(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
 
 public:
-	virtual ~widget() noexcept {}
+	~widget() override = default;
 
 	/**
 	 * @brief Render widget to screen.
@@ -647,8 +647,8 @@ public:
 	 * @return pointer to the found ancestor widget.
 	 * @return nullptr if no ancestor which satisfies the conditions was found.
 	 */
-	template <class T>
-	T* try_get_ancestor(const std::string& id = std::string()); // defined in container.hpp
+	template <typename widget_type>
+	widget_type* try_get_ancestor(const std::string& id = std::string()); // defined in container.hpp
 
 	/**
 	 * @brief Get ancestor widget with given id.

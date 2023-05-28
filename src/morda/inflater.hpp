@@ -66,14 +66,14 @@ public:
 	 * in STOB GUI description.
 	 * @param widget_name - name of the widget as it appears in GUI script.
 	 */
-	template <class T>
+	template <class widget_type>
 	void register_widget(const std::string& widget_name)
 	{
 		this->add_factory(
 			std::string(widget_name),
 			[](const utki::shared_ref<morda::context>& c,
 			   const treeml::forest& desc) -> utki::shared_ref<morda::widget> {
-				return utki::make_shared<T>(c, desc);
+				return utki::make_shared<widget_type>(c, desc);
 			}
 		);
 	}
@@ -119,10 +119,10 @@ public:
 	 * @param gui_script - gui script to inflate widget from.
 	 * @return the inflated widget.
 	 */
-	template <typename T>
-	utki::shared_ref<T> inflate_as(const treeml::forest& gui_script)
+	template <typename widget_type>
+	utki::shared_ref<widget_type> inflate_as(const treeml::forest& gui_script)
 	{
-		return utki::dynamic_reference_cast<T>(this->inflate(gui_script));
+		return utki::dynamic_reference_cast<widget_type>(this->inflate(gui_script));
 	}
 
 	/**
@@ -145,10 +145,10 @@ public:
 	 * @param str - string of the GUI script.
 	 * @return the inflated widget.
 	 */
-	template <typename T>
-	utki::shared_ref<T> inflate_as(const char* str)
+	template <typename widget_type>
+	utki::shared_ref<widget_type> inflate_as(const char* str)
 	{
-		return utki::dynamic_reference_cast<T>(this->inflate(str));
+		return utki::dynamic_reference_cast<widget_type>(this->inflate(str));
 	}
 
 	/**
@@ -164,10 +164,10 @@ public:
 	 * @param fi - file interface to get the GUI script.
 	 * @return the inflated widget.
 	 */
-	template <typename T>
-	utki::shared_ref<T> inflate_as(const papki::file& fi)
+	template <typename widget_type>
+	utki::shared_ref<widget_type> inflate_as(const papki::file& fi)
 	{
-		return utki::dynamic_reference_cast<T>(this->inflate(fi));
+		return utki::dynamic_reference_cast<widget_type>(this->inflate(fi));
 	}
 
 private:

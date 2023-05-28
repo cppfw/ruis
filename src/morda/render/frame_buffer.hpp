@@ -40,7 +40,7 @@ public:
 	frame_buffer(const frame_buffer&) = delete;
 	frame_buffer& operator=(const frame_buffer&) = delete;
 
-	virtual ~frame_buffer() noexcept {}
+	virtual ~frame_buffer() = default;
 
 private:
 };

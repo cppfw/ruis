@@ -50,15 +50,15 @@ protected:
 
 	renderer(std::unique_ptr<render_factory> factory, const params& params);
 
-	renderer(const renderer&) = delete;
-	renderer& operator=(const renderer&) = delete;
-
 	virtual ~renderer() = default;
 
 private:
 	std::shared_ptr<frame_buffer> cur_fb;
 
 public:
+	renderer(const renderer&) = delete;
+	renderer& operator=(const renderer&) = delete;
+
 	const unsigned max_texture_size;
 
 	/**

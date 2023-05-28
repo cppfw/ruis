@@ -136,8 +136,8 @@ public:
 	 * @return Loaded resource.
 	 * @throw TODO:
 	 */
-	template <class T>
-	utki::shared_ref<T> load(std::string_view id);
+	template <class resource_type>
+	utki::shared_ref<resource_type> load(std::string_view id);
 
 private:
 };
@@ -160,7 +160,7 @@ protected:
 	{}
 
 public:
-	virtual ~resource() noexcept {}
+	~resource() override = default;
 
 	std::string_view get_id() const
 	{

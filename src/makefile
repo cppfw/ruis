@@ -13,9 +13,9 @@ $(eval $(call prorab-config, ../config))
 
 #    this_cxxflags += -DM_MORDA_RENDER_WIDGET_BORDERS
 
-this_cxxflags += `pkg-config --cflags freetype2`
+this_cxxflags += $(shell pkg-config --cflags freetype2)
 
-this_ldlibs += `pkg-config --libs freetype2`
+this_ldlibs += $(shell pkg-config --libs freetype2)
 
 this_ldlibs += -lpapki -ltreeml -lsvgdom -lsvgren -lutki -lpng -ljpeg -lm
 

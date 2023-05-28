@@ -31,63 +31,63 @@ namespace morda {
  * Values can be accessed by names of rectangle sides (left, top, right, bottom)
  * or by indices, in which case sides are: 0 = left, 1 = top, 2 = right, 3 = bottom.
  */
-template <class T>
-class sides : public std::array<T, 4>
+template <class component_type>
+class sides : public std::array<component_type, 4>
 {
 public:
-	sides() {}
+	sides() = default;
 
-	sides(T b) :
+	sides(component_type b) :
 		sides(b, b, b, b)
 	{}
 
-	sides(T l, T t, T r, T b) :
-		std::array<T, 4>({
+	sides(component_type l, component_type t, component_type r, component_type b) :
+		std::array<component_type, 4>({
 			{l, t, r, b}
     })
 	{}
 
-	T& left() noexcept
+	component_type& left() noexcept
 	{
 		return this->operator[](0);
 	}
 
-	const T& left() const noexcept
+	const component_type& left() const noexcept
 	{
 		return this->operator[](0);
 	}
 
-	T& top() noexcept
+	component_type& top() noexcept
 	{
 		return this->operator[](1);
 	}
 
-	const T& top() const noexcept
+	const component_type& top() const noexcept
 	{
 		return this->operator[](1);
 	}
 
-	T& right() noexcept
+	component_type& right() noexcept
 	{
 		return this->operator[](2);
 	}
 
-	const T& right() const noexcept
+	const component_type& right() const noexcept
 	{
 		return this->operator[](2);
 	}
 
-	T& bottom() noexcept
+	component_type& bottom() noexcept
 	{
 		return this->operator[](3);
 	}
 
-	const T& bottom() const noexcept
+	const component_type& bottom() const noexcept
 	{
 		return this->operator[](3);
 	}
 
-	friend std::ostream& operator<<(std::ostream& stream, const sides<T>& s)
+	friend std::ostream& operator<<(std::ostream& stream, const sides<component_type>& s)
 	{
 		stream << "(" << s.left() << ", " << s.top() << ", " << s.right() << ", " << s.bottom() << ")";
 		return stream;

@@ -228,7 +228,7 @@ public:
 	 * @return pointer to widget with given id if found.
 	 * @return nullptr if there is no widget with given id found.
 	 */
-	std::shared_ptr<widget> try_get_widget(const std::string& id, bool allow_itself = true) noexcept override final;
+	std::shared_ptr<widget> try_get_widget(const std::string& id, bool allow_itself = true) noexcept final;
 
 	/**
 	 * @brief Get list of child widgets.
@@ -379,16 +379,16 @@ public:
 	void on_reload() override;
 };
 
-template <class T>
-T* widget::try_get_ancestor(const std::string& id)
+template <class widget_type>
+widget_type* widget::try_get_ancestor(const std::string& id)
 {
 	if (!this->parent()) {
 		return nullptr;
 	}
 
-	auto p = dynamic_cast<T*>(
-		// down-cast to widget* because container can be privately inherited by T
-		// and in this case dynamic_cast to T* will fail
+	auto p = dynamic_cast<widget_type*>(
+		// down-cast to widget* because container can be privately inherited by widget_type
+		// and in this case dynamic_cast to widget_type* will fail
 		static_cast<widget*>(this->parent())
 	);
 
@@ -398,14 +398,14 @@ T* widget::try_get_ancestor(const std::string& id)
 		}
 	}
 
-	return this->parent()->try_get_ancestor<T>(id);
+	return this->parent()->try_get_ancestor<widget_type>(id);
 }
 
-template <typename T>
-std::shared_ptr<T> widget::try_get_widget(bool allow_itself) noexcept
+template <typename widget_type>
+std::shared_ptr<widget_type> widget::try_get_widget(bool allow_itself) noexcept
 {
 	if (allow_itself) {
-		auto p = std::dynamic_pointer_cast<T>(utki::make_shared_from(*this).to_shared_ptr());
+		auto p = std::dynamic_pointer_cast<widget_type>(utki::make_shared_from(*this).to_shared_ptr());
 		if (p) {
 			return p;
 		}
@@ -414,7 +414,7 @@ std::shared_ptr<T> widget::try_get_widget(bool allow_itself) noexcept
 	auto cont = dynamic_cast<container*>(this);
 	if (cont) {
 		for (const auto& c : cont->children()) {
-			auto w = c.get().try_get_widget<T>(true);
+			auto w = c.get().try_get_widget<widget_type>(true);
 			if (w) {
 				return w;
 			}
@@ -424,10 +424,10 @@ std::shared_ptr<T> widget::try_get_widget(bool allow_itself) noexcept
 	return nullptr;
 }
 
-template <typename T>
-T& widget::get_widget(bool allow_itself)
+template <typename widget_type>
+widget_type& widget::get_widget(bool allow_itself)
 {
-	auto p = this->try_get_widget<T>(allow_itself);
+	auto p = this->try_get_widget<widget_type>(allow_itself);
 	if (p) {
 		return *p;
 	}
@@ -435,20 +435,20 @@ T& widget::get_widget(bool allow_itself)
 	throw std::logic_error("widget::get_widget_as(): requested widget type is not found");
 }
 
-template <class T>
-std::vector<utki::shared_ref<T>> widget::get_all_widgets(bool allow_itself)
+template <class widget_type>
+std::vector<utki::shared_ref<widget_type>> widget::get_all_widgets(bool allow_itself)
 {
-	std::vector<utki::shared_ref<T>> ret;
+	std::vector<utki::shared_ref<widget_type>> ret;
 
 	if (allow_itself) {
-		if (auto p = dynamic_cast<T*>(this)) {
+		if (auto p = dynamic_cast<widget_type*>(this)) {
 			ret.push_back(utki::make_shared_from(*p));
 		}
 	}
 
 	if (auto cont = dynamic_cast<container*>(this)) {
 		for (auto& c : cont->children()) {
-			auto res = c.get().get_all_widgets<T>(true);
+			auto res = c.get().get_all_widgets<widget_type>(true);
 			ret.insert(ret.end(), std::make_move_iterator(res.begin()), std::make_move_iterator(res.end()));
 		}
 	}
