@@ -220,9 +220,9 @@ utki::shared_ref<widget> tree_view::provider::get_widget(size_t index)
 				utki::log([](auto& o) {
 					o << "plusminus clicked:";
 				});
-				for (auto i = path.begin(); i != path.end(); ++i) {
+				for (const auto& p : path) {
 					utki::log([&](auto& o) {
-						o << " " << (*i);
+						o << " " << p;
 					});
 				}
 				utki::log([](auto& o) {
@@ -253,7 +253,7 @@ const decltype(tree_view::provider::iter)& tree_view::provider::iter_for(size_t 
 {
 	if (index != this->iter_index) {
 		if (index > this->iter_index) {
-			this->iter = std::next(this->iter, index - this->iter_index);
+			this->iter = utki::next(this->iter, index - this->iter_index);
 		} else {
 			ASSERT(index < this->iter_index)
 			this->iter = std::prev(this->iter, this->iter_index - index);
@@ -389,7 +389,7 @@ void tree_view::provider::notify_item_added(utki::span<const size_t> index)
 
 	// TRACE(<< "parent_list->size() = " << parent_list->size() << std::endl)
 
-	parent_list->insert(std::next(parent_list->begin(), index.back()), node());
+	parent_list->insert(utki::next(parent_list->begin(), index.back()), node());
 
 	// TRACE(<< "parent_list->size() = " << parent_list->size() << std::endl)
 

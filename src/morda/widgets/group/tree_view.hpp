@@ -45,8 +45,9 @@ public:
 	class provider : public virtual utki::shared, private list_widget::provider
 	{
 		friend class tree_view;
-		friend std::shared_ptr<list_widget::provider> std::static_pointer_cast<
-			list_widget::provider>(const std::shared_ptr<provider>&) noexcept;
+		friend std::shared_ptr<list_widget::provider> std::static_pointer_cast<list_widget::provider>(
+			const std::shared_ptr<provider>& p
+		) noexcept;
 
 		void recycle(size_t index, const utki::shared_ref<widget>& w) override;
 
