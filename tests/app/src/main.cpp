@@ -88,10 +88,10 @@ public:
 			LOG([&](auto&o){o << "SimpleWidget::OnKey(): down, keyCode = " << unsigned(e.combo.key) << std::endl;})
 			switch(e.combo.key){
 				case morda::key::arrow_left:
-					LOG([](auto&o){o << "SimpleWidget::OnKeyDown(): LEFT key caught" << std::endl;})
+					utki::log([](auto&o){o << "SimpleWidget::OnKeyDown(): LEFT key caught" << std::endl;});
 					return true;
 				case morda::key::a:
-					LOG([](auto&o){o << "SimpleWidget::OnKeyUp(): A key caught" << std::endl;})
+					utki::log([](auto&o){o << "SimpleWidget::OnKeyUp(): A key caught" << std::endl;});
 					return true;
 				default:
 					break;
@@ -100,10 +100,10 @@ public:
 			LOG([&](auto&o){o << "SimpleWidget::OnKey(): up, keyCode = " << unsigned(e.combo.key) << std::endl;})
 			switch(e.combo.key){
 				case morda::key::arrow_left:
-					LOG([](auto&o){o << "SimpleWidget::OnKeyUp(): LEFT key caught" << std::endl;})
+					utki::log([](auto&o){o << "SimpleWidget::OnKeyUp(): LEFT key caught" << std::endl;});
 					return true;
 				case morda::key::a:
-					LOG([](auto&o){o << "SimpleWidget::OnKeyUp(): A key caught" << std::endl;})
+					utki::log([](auto&o){o << "SimpleWidget::OnKeyUp(): A key caught" << std::endl;});
 					return true;
 				default:
 					break;
@@ -140,17 +140,17 @@ public:
 	}
 };
 
-class CubeWidget : public morda::widget, public morda::updateable{
+class cube_widget : public morda::widget, public morda::updateable{
 	std::shared_ptr<morda::res::texture> tex;
 
 	morda::quaternion rot = morda::quaternion().set_identity();
 public:
 	std::shared_ptr<morda::vertex_array> cubeVAO;
 
-	CubeWidget(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+	cube_widget(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
 			morda::widget(c, desc)
 	{
-		std::array<morda::vector3, 36> cubePos = {{
+		std::array<morda::vector3, 36> cube_pos = {{
 			morda::vector3(-1, -1,  1), morda::vector3( 1, -1,  1), morda::vector3(-1,  1,  1),
  			morda::vector3( 1, -1,  1), morda::vector3( 1,  1,  1), morda::vector3(-1,  1,  1),
 			morda::vector3( 1, -1,  1), morda::vector3( 1, -1, -1), morda::vector3( 1,  1,  1),
@@ -165,9 +165,9 @@ public:
 			morda::vector3(-1, -1,  1), morda::vector3( 1, -1, -1), morda::vector3( 1, -1,  1)
 		}};
 
-		auto posVBO = this->context.get().renderer.get().factory->create_vertex_buffer(utki::make_span(cubePos));
+		auto pos_vbo = this->context.get().renderer.get().factory->create_vertex_buffer(utki::make_span(cube_pos));
 
-		std::array<morda::vector2, 36> cubeTex = {{
+		std::array<morda::vector2, 36> cube_tex = {{
 			morda::vector2(0, 0), morda::vector2(1, 0), morda::vector2(0, 1),
 			morda::vector2(1, 0), morda::vector2(1, 1), morda::vector2(0, 1),
 			morda::vector2(0, 0), morda::vector2(1, 0), morda::vector2(0, 1),
@@ -182,17 +182,17 @@ public:
 			morda::vector2(1, 0), morda::vector2(1, 1), morda::vector2(0, 1)
 		}};
 
-		auto texVBO = this->context.get().renderer.get().factory->create_vertex_buffer(utki::make_span(cubeTex));
+		auto tex_vbo = this->context.get().renderer.get().factory->create_vertex_buffer(utki::make_span(cube_tex));
 
 		std::array<uint16_t, 36> indices = {{
 			0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35
 		}};
 
-		auto cubeIndices = this->context.get().renderer.get().factory->create_index_buffer(utki::make_span(indices));
+		auto cube_indices = this->context.get().renderer.get().factory->create_index_buffer(utki::make_span(indices));
 
 		this->cubeVAO = this->context.get().renderer.get().factory->create_vertex_array(
-			{posVBO, texVBO},
-			cubeIndices,
+			{pos_vbo, tex_vbo},
+			cube_indices,
 			morda::vertex_array::mode::triangles
 		).to_shared_ptr();
 
@@ -273,12 +273,10 @@ public:
 			)qwertyuiop");
 	}
 
-	~tree_view_items_provider(){
-
-	}
+	~tree_view_items_provider()override = default;
 
 private:
-	std::vector<size_t> selectedItem;
+	std::vector<size_t> selected_item;
 
 	unsigned newItemNumber = 0;
 
@@ -291,14 +289,14 @@ private:
 
 public:
 	void insert_before(){
-		if(this->selectedItem.size() == 0){
+		if(this->selected_item.size() == 0){
 			return;
 		}
 
 		treeml::forest* list = &this->root;
 		treeml::forest* parent_list = nullptr;
 
-		for(auto& i : this->selectedItem){
+		for(auto& i : this->selected_item){
 			parent_list = list;
 			list = &(*list)[i].children;
 		}
@@ -307,21 +305,21 @@ public:
 			return;
 		}
 
-		parent_list->insert(std::next(parent_list->begin(), this->selectedItem.back()), treeml::leaf(this->generate_new_item_value()));
+		parent_list->insert(utki::next(parent_list->begin(), this->selected_item.back()), treeml::leaf(this->generate_new_item_value()));
 
-		this->notify_item_added(utki::make_span(this->selectedItem));
-		++this->selectedItem.back();
+		this->notify_item_added(utki::make_span(this->selected_item));
+		++this->selected_item.back();
 	}
 
-	void insertAfter(){
-		if(this->selectedItem.size() == 0){
+	void insert_after(){
+		if(this->selected_item.size() == 0){
 			return;
 		}
 
 		treeml::forest* list = &this->root;
 		treeml::forest* parent_list = nullptr;
 
-		for(auto& i : this->selectedItem){
+		for(auto& i : this->selected_item){
 			parent_list = list;
 			list = &(*list)[i].children;
 		}
@@ -330,29 +328,29 @@ public:
 			return;
 		}
 
-		parent_list->insert(std::next(parent_list->begin(), this->selectedItem.back() + 1), treeml::leaf(this->generate_new_item_value()));
+		parent_list->insert(utki::next(parent_list->begin(), this->selected_item.back() + 1), treeml::leaf(this->generate_new_item_value()));
 
-		++this->selectedItem.back();
-		this->notify_item_added(utki::make_span(this->selectedItem));
-		--this->selectedItem.back();
+		++this->selected_item.back();
+		this->notify_item_added(utki::make_span(this->selected_item));
+		--this->selected_item.back();
 	}
 
 	void insert_child(){
-		if(this->selectedItem.size() == 0){
+		if(this->selected_item.size() == 0){
 			return;
 		}
 
 		treeml::forest* list = &this->root;
 
-		for(auto& i : this->selectedItem){
+		for(auto& i : this->selected_item){
 			list = &(*list)[i].children;
 		}
 
 		list->emplace_back(this->generate_new_item_value());
 
-		this->selectedItem.push_back(list->size() - 1);
-		this->notify_item_added(utki::make_span(this->selectedItem));
-		this->selectedItem.pop_back();
+		this->selected_item.push_back(list->size() - 1);
+		this->notify_item_added(utki::make_span(this->selected_item));
+		this->selected_item.pop_back();
 	}
 
 	utki::shared_ref<morda::widget> get_widget(utki::span<const size_t> path, bool is_collapsed)override{
@@ -402,7 +400,7 @@ public:
 			{
 				auto color_label = v.get().try_get_widget_as<morda::color>("selection");
 
-				color_label->set_visible(path == utki::make_span(this->selectedItem));
+				color_label->set_visible(path == utki::make_span(this->selected_item));
 
 				auto mp = v.get().try_get_widget_as<morda::mouse_proxy>("mouse_proxy");
 				ASSERT(mp)
@@ -411,10 +409,10 @@ public:
 						return false;
 					}
 
-					this->selectedItem = path;
+					this->selected_item = path;
 #ifdef DEBUG
 					LOG([](auto&o){o << " selected item = ";})
-					for(const auto& k : this->selectedItem){
+					for(const auto& k : this->selected_item){
 						LOG([&](auto&o){o << k << ", ";})
 					}
 					LOG([](auto&o){o << std::endl;})
@@ -478,7 +476,7 @@ public:
 //		this->ResMan().MountResPack(morda::ZipFile::New(papki::FSFile::New("res.zip")));
 
 		this->gui.context.get().inflater.register_widget<SimpleWidget>("U_SimpleWidget");
-		this->gui.context.get().inflater.register_widget<CubeWidget>("CubeWidget");
+		this->gui.context.get().inflater.register_widget<cube_widget>("cube_widget");
 
 		auto c = this->gui.context.get().inflater.inflate(
 				*this->get_res_file("res/test.gui")
@@ -512,7 +510,7 @@ public:
 
 		// cube click_proxy
 		{
-			auto cube = c.get().try_get_widget_as<CubeWidget>("cube_widget");
+			auto cube = c.get().try_get_widget_as<cube_widget>("cube_widget");
 			ASSERT(cube)
 
 			auto& cp = c.get().get_widget_as<morda::click_proxy>("cube_click_proxy");
@@ -775,7 +773,7 @@ public:
 
 			insert_after_button->click_handler = [prvdr](morda::push_button& b){
 				if(auto p = prvdr.lock()){
-					p->insertAfter();
+					p->insert_after();
 				}
 			};
 

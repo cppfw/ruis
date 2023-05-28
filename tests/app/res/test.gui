@@ -465,7 +465,7 @@ cursor{crs_arrow}
 			}
 		}
 
-		@CubeWidget{
+		@cube_widget{
 			id{cube_widget}
 			lp{
 				dx{max} dy{max}

@@ -10,14 +10,14 @@
 
 namespace{
 
-class CubeWidget : public morda::widget, public morda::updateable{
+class cube_widget : public morda::widget, public morda::updateable{
 	std::shared_ptr<morda::res::texture> tex;
 	
 	morda::quaternion rot = morda::quaternion().set_identity();
 public:
 	std::shared_ptr<morda::vertex_array> cubeVAO;
 	
-	CubeWidget(const utki::shared_ref<morda::context>& c) :
+	cube_widget(const utki::shared_ref<morda::context>& c) :
 			widget(c, treeml::forest())
 	{
 		std::array<morda::vector3, 36> cubePos = {{
@@ -134,7 +134,7 @@ cube_page::cube_page(const utki::shared_ref<morda::context>& c) :
 		});
 	};
 	
-	auto cw = utki::make_shared<CubeWidget>(this->context);
+	auto cw = utki::make_shared<cube_widget>(this->context);
 	this->cube = cw.to_shared_ptr();
 	
 	cw.get().set_cache(true);
