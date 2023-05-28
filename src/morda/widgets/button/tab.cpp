@@ -71,6 +71,8 @@ bool tab::on_mouse_button(const mouse_button_event& e)
 			return false;
 		}
 	}
+	// we want exactly nine_patch_button::on_mouse_button()
+	// NOLINTNEXTLINE(bugprone-parent-virtual-call)
 	if (this->nine_patch_button::on_mouse_button(e)) {
 		return true;
 	}

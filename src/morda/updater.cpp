@@ -121,8 +121,8 @@ void updater::update_updateable(const std::shared_ptr<morda::updateable>& u)
 		return;
 	}
 
-	// at this point updateable is removed from update queue, so set it to 0
-	u->queue = 0;
+	// at this point updateable is removed from update queue, so set it to nullptr
+	u->queue = nullptr;
 
 	u->update(this->last_updated_timestamp - u->started_at);
 

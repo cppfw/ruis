@@ -70,7 +70,7 @@ morda::vector2 tab_group::measure(const morda::vector2& quotum) const
 
 	real length = 0;
 
-	sides<real> prevBorders = real(0);
+	sides<real> prev_borders = real(0);
 
 	for (const auto& c : this->children()) {
 		const auto& lp = c.get().get_layout_params_const();
@@ -102,8 +102,8 @@ morda::vector2 tab_group::measure(const morda::vector2& quotum) const
 		using std::max;
 
 		auto borders = t->get_actual_borders();
-		length -= min(prevBorders.right(), borders.left());
-		prevBorders = borders;
+		length -= min(prev_borders.right(), borders.left());
+		prev_borders = borders;
 
 		if (quotum.y() < 0) {
 			ret.y() = max(ret.y(), d.y()); // clamp bottom
@@ -121,7 +121,7 @@ void tab_group::on_lay_out()
 {
 	real pos = 0;
 
-	sides<real> prevBorders = 0;
+	sides<real> prev_borders = 0;
 
 	for (const auto& c : this->children()) {
 		auto dim = dims_for_widget(c.get(), this->rect().d);
@@ -139,11 +139,11 @@ void tab_group::on_lay_out()
 		using std::min;
 		using std::round;
 
-		pos -= min(prevBorders.right(), borders.left());
+		pos -= min(prev_borders.right(), borders.left());
 		c.get().move_to(vector2(pos, round((this->rect().d.y() - c.get().rect().d.y()) / 2)));
 		pos += dim.x();
 
-		prevBorders = borders;
+		prev_borders = borders;
 	}
 }
 

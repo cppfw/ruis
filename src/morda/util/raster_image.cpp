@@ -193,8 +193,8 @@ void PNG_CustomReadFunction(png_structp pngPtr, png_bytep data, png_size_t lengt
 	//	TRACE(<< "PNG_CustomReadFunction: fi = " << fi << " pngPtr = " << pngPtr << " data = " << std::hex << data << "
 	// length = " << length << std::endl)
 	try {
-		auto bufWrapper = utki::make_span(data, size_t(length));
-		fi->read(bufWrapper);
+		auto buf_wrapper = utki::make_span(data, size_t(length));
+		fi->read(buf_wrapper);
 		//		TRACE(<< "PNG_CustomReadFunction: fi->Read() finished" << std::endl)
 	} catch (...) {
 		// do not let any exception get out of this function
@@ -296,26 +296,26 @@ void raster_image::load_png(const papki::file& fi)
 	ASSERT(bitDepth == 8)
 
 	// set image type
-	raster_image::color_depth imageType;
+	raster_image::color_depth image_color_depth;
 	switch (colorType) {
 		case PNG_COLOR_TYPE_GRAY:
-			imageType = raster_image::color_depth::grey;
+			image_color_depth = raster_image::color_depth::grey;
 			break;
 		case PNG_COLOR_TYPE_GRAY_ALPHA:
-			imageType = raster_image::color_depth::grey_alpha;
+			image_color_depth = raster_image::color_depth::grey_alpha;
 			break;
 		case PNG_COLOR_TYPE_RGB:
-			imageType = raster_image::color_depth::rgb;
+			image_color_depth = raster_image::color_depth::rgb;
 			break;
 		case PNG_COLOR_TYPE_RGB_ALPHA:
-			imageType = raster_image::color_depth::rgba;
+			image_color_depth = raster_image::color_depth::rgba;
 			break;
 		default:
 			throw std::runtime_error("Image::LoadPNG(): unknown colorType");
 	}
 
 	// set image dimensions and set buffer size
-	this->init(r4::vector2<unsigned>(width, height), imageType); // set buf array size (allocate memory)
+	this->init(r4::vector2<unsigned>(width, height), image_color_depth); // set buf array size (allocate memory)
 
 	//	TRACE(<< "Image::LoadPNG(): memory for image allocated" << std::endl)
 
@@ -347,37 +347,37 @@ void raster_image::load_png(const papki::file& fi)
 }
 
 namespace {
-const size_t DJpegInputBufferSize = 4096;
+const size_t jpeg_input_buffer_size = 4096;
 
-struct DataManagerJPEGSource {
+struct data_manager_jpeg_source {
 	jpeg_source_mgr pub;
 	papki::file* fi;
 	JOCTET* buffer;
 	bool sof; // true if the file was just opened
 };
 
-void JPEG_InitSource(j_decompress_ptr cinfo)
+void jpeg_callback_init_source(j_decompress_ptr cinfo)
 {
 	ASSERT(cinfo)
-	reinterpret_cast<DataManagerJPEGSource*>(cinfo->src)->sof = true;
+	reinterpret_cast<data_manager_jpeg_source*>(cinfo->src)->sof = true;
 }
 
 // This function is calld when variable "bytes_in_buffer" reaches 0 and
 // the necessarity in new portion of information appears.
 // RETURNS: TRUE if the buffer is successfuly filled.
 //          FALSE if i/o error occured
-boolean JPEG_FillInputBuffer(j_decompress_ptr cinfo)
+boolean jpeg_callback_fill_input_buffer(j_decompress_ptr cinfo)
 {
-	DataManagerJPEGSource* src = reinterpret_cast<DataManagerJPEGSource*>(cinfo->src);
+	auto src = reinterpret_cast<data_manager_jpeg_source*>(cinfo->src);
 	ASSERT(src)
 
 	// read in JPEGINPUTBUFFERSIZE JOCTET's
 	size_t nbytes;
 
 	try {
-		auto bufWrapper = utki::make_span(src->buffer, sizeof(JOCTET) * DJpegInputBufferSize);
+		auto buf_wrapper = utki::make_span(src->buffer, sizeof(JOCTET) * jpeg_input_buffer_size);
 		ASSERT(src->fi)
-		nbytes = src->fi->read(bufWrapper);
+		nbytes = src->fi->read(buf_wrapper);
 	} catch (std::runtime_error&) {
 		if (src->sof) {
 			return FALSE; // the specified file is empty
@@ -398,30 +398,30 @@ boolean JPEG_FillInputBuffer(j_decompress_ptr cinfo)
 }
 
 // skip num_bytes (seek forward)
-void JPEG_SkipInputData(j_decompress_ptr cinfo, long numBytes)
+void jpeg_callback_skip_input_data(j_decompress_ptr cinfo, long num_bytes)
 {
 	ASSERT(cinfo)
-	DataManagerJPEGSource* src = reinterpret_cast<DataManagerJPEGSource*>(cinfo->src);
+	auto src = reinterpret_cast<data_manager_jpeg_source*>(cinfo->src);
 	ASSERT(src)
-	if (numBytes <= 0) {
+	if (num_bytes <= 0) {
 		// nothing to skip
 		return;
 	}
 
-	// read "numBytes" bytes and waste them away
-	while (numBytes > long(src->pub.bytes_in_buffer)) {
-		numBytes -= long(src->pub.bytes_in_buffer);
-		JPEG_FillInputBuffer(cinfo);
+	// read "num_bytes" bytes and waste them away
+	while (num_bytes > long(src->pub.bytes_in_buffer)) {
+		num_bytes -= long(src->pub.bytes_in_buffer);
+		jpeg_callback_fill_input_buffer(cinfo);
 	}
 
 	// update current JPEG read position
-	src->pub.next_input_byte += size_t(numBytes);
-	src->pub.bytes_in_buffer -= size_t(numBytes);
+	src->pub.next_input_byte += size_t(num_bytes);
+	src->pub.bytes_in_buffer -= size_t(num_bytes);
 }
 
 // terminate source when decompress is finished
 // (nothing to do in this function in our case)
-void JPEG_TermSource(j_decompress_ptr cinfo) {}
+void jpeg_callback_term_source(j_decompress_ptr cinfo) {}
 
 } // namespace
 
@@ -445,66 +445,66 @@ void raster_image::load_jpg(const papki::file& fi)
 
 	jpeg_create_decompress(&cinfo); // creat decompress object
 
-	DataManagerJPEGSource* src = 0;
+	data_manager_jpeg_source* src = nullptr;
 
 	// check if memory for JPEG-decompressor manager is allocated,
 	// it is possible that several libraries accessing the source
-	if (cinfo.src == 0) {
+	if (cinfo.src == nullptr) {
 		// Allocate memory for our manager and set a pointer of global library
 		// structure to it. We use JPEG library memory manager, this means that
 		// the library will take care of memory freeing for us.
 		// JPOOL_PERMANENT means that the memory is allocated for a whole
 		// time  of working with the library.
 		cinfo.src = reinterpret_cast<jpeg_source_mgr*>(
-			(cinfo.mem->alloc_small)(j_common_ptr(&cinfo), JPOOL_PERMANENT, sizeof(DataManagerJPEGSource))
+			(cinfo.mem->alloc_small)(j_common_ptr(&cinfo), JPOOL_PERMANENT, sizeof(data_manager_jpeg_source))
 		);
-		src = reinterpret_cast<DataManagerJPEGSource*>(cinfo.src);
+		src = reinterpret_cast<data_manager_jpeg_source*>(cinfo.src);
 		if (!src) {
 			throw std::bad_alloc();
 		}
 		// allocate memory for read data
 		src->buffer = reinterpret_cast<JOCTET*>(
-			(cinfo.mem->alloc_small)(j_common_ptr(&cinfo), JPOOL_PERMANENT, DJpegInputBufferSize * sizeof(JOCTET))
+			(cinfo.mem->alloc_small)(j_common_ptr(&cinfo), JPOOL_PERMANENT, jpeg_input_buffer_size * sizeof(JOCTET))
 		);
 
 		if (!src->buffer) {
 			throw std::bad_alloc();
 		}
 
-		memset(src->buffer, 0, DJpegInputBufferSize * sizeof(JOCTET));
+		memset(src->buffer, 0, jpeg_input_buffer_size * sizeof(JOCTET));
 	} else {
-		src = reinterpret_cast<DataManagerJPEGSource*>(cinfo.src);
+		src = reinterpret_cast<data_manager_jpeg_source*>(cinfo.src);
 	}
 
 	// set handler functions
-	src->pub.init_source = &JPEG_InitSource;
-	src->pub.fill_input_buffer = &JPEG_FillInputBuffer;
-	src->pub.skip_input_data = &JPEG_SkipInputData;
+	src->pub.init_source = &jpeg_callback_init_source;
+	src->pub.fill_input_buffer = &jpeg_callback_fill_input_buffer;
+	src->pub.skip_input_data = &jpeg_callback_skip_input_data;
 	src->pub.resync_to_restart = &jpeg_resync_to_restart; // use default func
-	src->pub.term_source = &JPEG_TermSource;
+	src->pub.term_source = &jpeg_callback_term_source;
 	// set the fields of our structure
 	src->fi = const_cast<papki::file*>(&fi);
 	// set pointers to the buffers
 	src->pub.bytes_in_buffer = 0; // forces fill_input_buffer on first read
-	src->pub.next_input_byte = 0; // until buffer loaded
+	src->pub.next_input_byte = nullptr; // until buffer loaded
 
 	jpeg_read_header(&cinfo, TRUE); // read parametrs of a JPEG file
 
 	jpeg_start_decompress(&cinfo); // start decompression
 
-	raster_image::color_depth imageType;
+	raster_image::color_depth image_color_depth;
 	switch (cinfo.output_components) {
 		case 1:
-			imageType = raster_image::color_depth::grey;
+			image_color_depth = raster_image::color_depth::grey;
 			break;
 		case 2:
-			imageType = raster_image::color_depth::grey_alpha;
+			image_color_depth = raster_image::color_depth::grey_alpha;
 			break;
 		case 3:
-			imageType = raster_image::color_depth::rgb;
+			image_color_depth = raster_image::color_depth::rgb;
 			break;
 		case 4:
-			imageType = raster_image::color_depth::rgba;
+			image_color_depth = raster_image::color_depth::rgba;
 			break;
 		default:
 			ASSERT(false, [&](auto& o) {
@@ -514,23 +514,23 @@ void raster_image::load_jpg(const papki::file& fi)
 	}
 
 	// set buffer size (allocate memory for image)
-	this->init(r4::vector2<unsigned>(cinfo.output_width, cinfo.output_height), imageType);
+	this->init(r4::vector2<unsigned>(cinfo.output_width, cinfo.output_height), image_color_depth);
 
 	// calculate the size of a row in bytes
-	int bytesRow = this->dims().x() * this->num_channels();
+	int num_bytes_in_row(this->dims().x() * this->num_channels());
 
 	// Allocate memory for one row. It is an array of rows which
 	// contains only one row. JPOOL_IMAGE means that the memory is allocated
 	// only for time of this image reading. So, no need to free the memory explicitly.
-	JSAMPARRAY buffer = (cinfo.mem->alloc_sarray)(j_common_ptr(&cinfo), JPOOL_IMAGE, bytesRow, 1);
-	memset(*buffer, 0, sizeof(JSAMPLE) * bytesRow);
+	JSAMPARRAY buffer = (cinfo.mem->alloc_sarray)(j_common_ptr(&cinfo), JPOOL_IMAGE, num_bytes_in_row, 1);
+	memset(*buffer, 0, sizeof(JSAMPLE) * num_bytes_in_row);
 
 	int y = 0;
 	while (cinfo.output_scanline < this->dims().y()) {
 		// read the string into buffer
 		jpeg_read_scanlines(&cinfo, buffer, 1);
 		// copy the data to an image
-		memcpy(this->buffer.data() + bytesRow * y, buffer[0], bytesRow);
+		memcpy(this->buffer.data() + ptrdiff_t(num_bytes_in_row * y), buffer[0], num_bytes_in_row);
 		++y;
 	}
 

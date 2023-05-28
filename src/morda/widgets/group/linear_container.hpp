@@ -32,10 +32,10 @@ namespace morda {
  */
 class linear_container : public container, public oriented_widget
 {
+public:
 	linear_container(const linear_container&) = delete;
 	linear_container& operator=(const linear_container&) = delete;
 
-public:
 	linear_container(const utki::shared_ref<morda::context>& c, const treeml::forest& desc, bool vertical);
 };
 
