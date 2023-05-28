@@ -30,7 +30,7 @@ namespace morda {
 
 class tab : virtual public choice_button, public nine_patch_toggle
 {
-	bool maskOverlaps(vector2 pos);
+	bool mask_overlaps(vector2 pos);
 
 public:
 	tab(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);

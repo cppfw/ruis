@@ -72,4 +72,4 @@ private:
 	);
 };
 
-} // namespace morda
+} // namespace morda::res

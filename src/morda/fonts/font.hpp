@@ -54,10 +54,10 @@ protected:
 		context(context)
 	{}
 
+public:
 	font(const font&) = delete;
 	font& operator=(const font&) = delete;
 
-public:
 	/**
 	 * @brief String rendering result.
 	 */
@@ -114,7 +114,7 @@ protected:
 	virtual morda::rectangle get_bounding_box_internal(const std::u32string& str, unsigned tab_size) const = 0;
 
 public:
-	virtual ~font() noexcept {}
+	virtual ~font() = default;
 
 	/**
 	 * @brief Render string of text.

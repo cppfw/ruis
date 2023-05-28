@@ -181,7 +181,7 @@ private:
 		real& pos,
 		bool add,
 		size_t index,
-		widget_list::const_iterator& insertBefore
+		widget_list::const_iterator& insert_before
 	);
 
 	void update_tail_items_info();

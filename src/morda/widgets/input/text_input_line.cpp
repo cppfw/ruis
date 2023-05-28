@@ -34,9 +34,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace morda;
 
 namespace {
-const uint32_t cursorBlinkPeriod_c = 500; // milliseconds
+const uint32_t cursor_blink_period = 500; // milliseconds
 
-const real cursorWidth_c = real(1.0);
+const real cursor_width = real(1.0);
 } // namespace
 
 text_input_line::text_input_line(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
@@ -51,10 +51,13 @@ text_input_line::text_input_line(const utki::shared_ref<morda::context>& c, cons
 void text_input_line::render(const morda::matrix4& matrix) const
 {
 	// render selection
-	if (this->cursorIndex != this->selectionStartIndex) {
+	if (this->cursor_index != this->selection_start_index) {
 		morda::matrix4 matr(matrix);
-		matr.translate(this->selectionStartIndex < this->cursorIndex ? this->selectionStartPos : this->cursorPos, 0);
-		matr.scale(vector2(std::abs(this->cursorPos - this->selectionStartPos), this->rect().d.y()));
+		matr.translate(
+			this->selection_start_index < this->cursor_index ? this->selection_start_pos : this->cursor_pos,
+			0
+		);
+		matr.scale(vector2(std::abs(this->cursor_pos - this->selection_start_pos), this->rect().d.y()));
 
 		auto& r = this->context.get().renderer.get();
 		r.shader->color_pos->render(matr, r.pos_quad_01_vao.get(), 0xff804040);
@@ -68,22 +71,23 @@ void text_input_line::render(const morda::matrix4& matrix) const
 		const auto& font = this->get_font().get();
 
 		matr.translate(
-			-this->get_bounding_box().p.x() + this->xOffset,
+			-this->get_bounding_box().p.x() + this->x_offset,
 			round((font.get_height() + font.get_ascender() - font.get_descender()) / 2)
 		);
 
-		ASSERT(this->firstVisibleCharIndex <= this->get_text().size())
+		ASSERT(this->first_visible_char_index <= this->get_text().size())
 		font.render(
 			matr,
 			morda::color_to_vec4f(this->get_current_color()),
-			this->get_text().substr(this->firstVisibleCharIndex, this->get_text().size() - this->firstVisibleCharIndex)
+			this->get_text()
+				.substr(this->first_visible_char_index, this->get_text().size() - this->first_visible_char_index)
 		);
 	}
 
-	if (this->is_focused() && this->cursorBlinkVisible) {
+	if (this->is_focused() && this->cursor_blink_visible) {
 		morda::matrix4 matr(matrix);
-		matr.translate(this->cursorPos, 0);
-		matr.scale(vector2(cursorWidth_c * this->context.get().units.dots_per_fp, this->rect().d.y()));
+		matr.translate(this->cursor_pos, 0);
+		matr.scale(vector2(cursor_width * this->context.get().units.dots_per_fp, this->rect().d.y()));
 
 		auto& r = this->context.get().renderer.get();
 		r.shader->color_pos->render(matr, r.pos_quad_01_vao.get(), this->get_current_color());
@@ -96,10 +100,10 @@ bool text_input_line::on_mouse_button(const mouse_button_event& e)
 		return false;
 	}
 
-	this->leftMouseButtonDown = e.is_down;
+	this->left_mouse_button_down = e.is_down;
 
 	if (e.is_down) {
-		this->set_cursor_index(this->posToIndex(e.pos.x()));
+		this->set_cursor_index(this->pos_to_index(e.pos.x()));
 	}
 
 	return true;
@@ -107,11 +111,11 @@ bool text_input_line::on_mouse_button(const mouse_button_event& e)
 
 bool text_input_line::on_mouse_move(const mouse_move_event& e)
 {
-	if (!this->leftMouseButtonDown) {
+	if (!this->left_mouse_button_down) {
 		return false;
 	}
 
-	this->set_cursor_index(this->posToIndex(e.pos.x()), true);
+	this->set_cursor_index(this->pos_to_index(e.pos.x()), true);
 	return true;
 }
 
@@ -121,7 +125,7 @@ vector2 text_input_line::measure(const morda::vector2& quotum) const noexcept
 
 	if (quotum.x() < 0) {
 		ret.x() = this->single_line_text_widget::measure(vector2(-1)).x()
-			+ cursorWidth_c * this->context.get().units.dots_per_fp;
+			+ cursor_width * this->context.get().units.dots_per_fp;
 	} else {
 		ret.x() = quotum.x();
 	}
@@ -137,78 +141,79 @@ vector2 text_input_line::measure(const morda::vector2& quotum) const noexcept
 
 void text_input_line::set_cursor_index(size_t index, bool selection)
 {
-	this->cursorIndex = index;
+	this->cursor_index = index;
 
 	using std::min;
-	this->cursorIndex = min(this->cursorIndex, this->get_text().size()); // clamp top
+	this->cursor_index = min(this->cursor_index, this->get_text().size()); // clamp top
 
 	if (!selection) {
-		this->selectionStartIndex = this->cursorIndex;
+		this->selection_start_index = this->cursor_index;
 	}
 
 	utki::scope_exit scopeExit([this]() {
-		this->selectionStartPos = this->indexToPos(this->selectionStartIndex);
+		this->selection_start_pos = this->index_to_pos(this->selection_start_index);
 
 		if (!this->is_focused()) {
 			this->focus();
 		}
-		this->startCursorBlinking();
+		this->start_cursor_blinking();
 	});
 
-	//	TRACE(<< "selectionStartIndex = " << this->selectionStartIndex << std::endl)
+	//	TRACE(<< "selection_start_index = " << this->selection_start_index << std::endl)
 
-	if (this->cursorIndex <= this->firstVisibleCharIndex) {
-		this->firstVisibleCharIndex = this->cursorIndex;
-		this->xOffset = 0;
-		this->cursorPos = 0;
+	if (this->cursor_index <= this->first_visible_char_index) {
+		this->first_visible_char_index = this->cursor_index;
+		this->x_offset = 0;
+		this->cursor_pos = 0;
 		return;
 	}
 
 	const auto& font = this->get_font().get();
 
-	ASSERT(this->firstVisibleCharIndex <= this->get_text().size())
-	ASSERT(this->cursorIndex > this->firstVisibleCharIndex)
-	this->cursorPos = font.get_advance(std::u32string(
-						  this->get_text(),
-						  this->firstVisibleCharIndex,
-						  this->cursorIndex - this->firstVisibleCharIndex
-					  ))
-		+ this->xOffset;
+	ASSERT(this->first_visible_char_index <= this->get_text().size())
+	ASSERT(this->cursor_index > this->first_visible_char_index)
+	this->cursor_pos = font.get_advance(std::u32string(
+						   this->get_text(),
+						   this->first_visible_char_index,
+						   this->cursor_index - this->first_visible_char_index
+					   ))
+		+ this->x_offset;
 
-	ASSERT(this->cursorPos >= 0)
+	ASSERT(this->cursor_pos >= 0)
 
-	if (this->cursorPos > this->rect().d.x() - cursorWidth_c * this->context.get().units.dots_per_fp) {
-		this->cursorPos = this->rect().d.x() - cursorWidth_c * this->context.get().units.dots_per_fp;
+	if (this->cursor_pos > this->rect().d.x() - cursor_width * this->context.get().units.dots_per_fp) {
+		this->cursor_pos = this->rect().d.x() - cursor_width * this->context.get().units.dots_per_fp;
 
-		this->xOffset = this->cursorPos; // start from rightmost cursor position
-		this->firstVisibleCharIndex = this->cursorIndex;
+		this->x_offset = this->cursor_pos; // start from rightmost cursor position
+		this->first_visible_char_index = this->cursor_index;
 
 		// calculate advance backwards
-		for (auto i = this->get_text().rbegin() + (this->get_text().size() - this->cursorIndex); this->xOffset > 0; ++i)
+		for (auto i = this->get_text().rbegin() + (this->get_text().size() - this->cursor_index); this->x_offset > 0;
+			 ++i)
 		{
 			ASSERT(i != this->get_text().rend())
-			this->xOffset -= font.get_advance(*i);
-			ASSERT(this->firstVisibleCharIndex > 0)
-			--this->firstVisibleCharIndex;
+			this->x_offset -= font.get_advance(*i);
+			ASSERT(this->first_visible_char_index > 0)
+			--this->first_visible_char_index;
 		}
 	}
 }
 
-real text_input_line::indexToPos(size_t index)
+real text_input_line::index_to_pos(size_t index)
 {
-	ASSERT(this->firstVisibleCharIndex <= this->get_text().size())
+	ASSERT(this->first_visible_char_index <= this->get_text().size())
 
-	if (index <= this->firstVisibleCharIndex) {
+	if (index <= this->first_visible_char_index) {
 		return 0;
 	}
 
 	using std::min;
 	index = min(index, this->get_text().size()); // clamp top
 
-	real ret = this->xOffset;
+	real ret = this->x_offset;
 
-	for (auto i = this->get_text().begin() + this->firstVisibleCharIndex;
-		 i != this->get_text().end() && index != this->firstVisibleCharIndex;
+	for (auto i = this->get_text().begin() + this->first_visible_char_index;
+		 i != this->get_text().end() && index != this->first_visible_char_index;
 		 ++i, --index)
 	{
 		ret += this->get_font().get().get_advance(*i);
@@ -221,12 +226,12 @@ real text_input_line::indexToPos(size_t index)
 	return ret;
 }
 
-size_t text_input_line::posToIndex(real pos)
+size_t text_input_line::pos_to_index(real pos)
 {
-	size_t index = this->firstVisibleCharIndex;
-	real p = this->xOffset;
+	size_t index = this->first_visible_char_index;
+	real p = this->x_offset;
 
-	for (auto i = this->get_text().begin() + this->firstVisibleCharIndex; i != this->get_text().end(); ++i) {
+	for (auto i = this->get_text().begin() + this->first_visible_char_index; i != this->get_text().end(); ++i) {
 		real w = this->get_font().get().get_advance(*i);
 
 		if (pos < p + w) {
@@ -246,15 +251,15 @@ size_t text_input_line::posToIndex(real pos)
 
 void text_input_line::update(uint32_t dt)
 {
-	this->cursorBlinkVisible = !this->cursorBlinkVisible;
+	this->cursor_blink_visible = !this->cursor_blink_visible;
 }
 
 void text_input_line::on_focus_change()
 {
 	if (this->is_focused()) {
-		this->ctrlPressed = false;
-		this->shiftPressed = false;
-		this->startCursorBlinking();
+		this->ctrl_pressed = false;
+		this->shift_pressed = false;
+		this->start_cursor_blinking();
 	} else {
 		this->context.get().updater.get().stop(*this);
 	}
@@ -263,16 +268,16 @@ void text_input_line::on_focus_change()
 void text_input_line::on_resize()
 {
 	//	TRACE(<< "text_input_line::on_resize(): size = " << this->rect().d << std::endl)
-	this->selectionStartPos = this->indexToPos(this->selectionStartIndex);
+	this->selection_start_pos = this->index_to_pos(this->selection_start_index);
 }
 
-void text_input_line::startCursorBlinking()
+void text_input_line::start_cursor_blinking()
 {
 	this->context.get().updater.get().stop(*this);
-	this->cursorBlinkVisible = true;
+	this->cursor_blink_visible = true;
 	this->context.get().updater.get().start(
 		utki::make_shared_from(*static_cast<updateable*>(this)).to_shared_ptr(),
-		cursorBlinkPeriod_c
+		cursor_blink_period
 	);
 }
 
@@ -281,11 +286,11 @@ bool text_input_line::on_key(const morda::key_event& e)
 	switch (e.combo.key) {
 		case morda::key::left_control:
 		case morda::key::right_control:
-			this->ctrlPressed = e.is_down;
+			this->ctrl_pressed = e.is_down;
 			break;
 		case morda::key::left_shift:
 		case morda::key::right_shift:
-			this->shiftPressed = e.is_down;
+			this->shift_pressed = e.is_down;
 			break;
 		default:
 			break;
@@ -299,12 +304,12 @@ void text_input_line::on_character_input(const character_input_event& e)
 		case morda::key::enter:
 			break;
 		case morda::key::arrow_right:
-			if (this->cursorIndex != this->get_text().size()) {
+			if (this->cursor_index != this->get_text().size()) {
 				size_t newIndex;
-				if (this->ctrlPressed) {
+				if (this->ctrl_pressed) {
 					bool spaceSkipped = false;
-					newIndex = this->cursorIndex;
-					for (auto i = this->get_text().begin() + this->cursorIndex; i != this->get_text().end();
+					newIndex = this->cursor_index;
+					for (auto i = this->get_text().begin() + this->cursor_index; i != this->get_text().end();
 						 ++i, ++newIndex)
 					{
 						if (*i == uint32_t(' ')) {
@@ -317,18 +322,18 @@ void text_input_line::on_character_input(const character_input_event& e)
 					}
 
 				} else {
-					newIndex = this->cursorIndex + 1;
+					newIndex = this->cursor_index + 1;
 				}
-				this->set_cursor_index(newIndex, this->shiftPressed);
+				this->set_cursor_index(newIndex, this->shift_pressed);
 			}
 			break;
 		case morda::key::arrow_left:
-			if (this->cursorIndex != 0) {
+			if (this->cursor_index != 0) {
 				size_t newIndex;
-				if (this->ctrlPressed) {
+				if (this->ctrl_pressed) {
 					bool spaceSkipped = false;
-					newIndex = this->cursorIndex;
-					for (auto i = this->get_text().rbegin() + (this->get_text().size() - this->cursorIndex);
+					newIndex = this->cursor_index;
+					for (auto i = this->get_text().rbegin() + (this->get_text().size() - this->cursor_index);
 						 i != this->get_text().rend();
 						 ++i, --newIndex)
 					{
@@ -341,82 +346,82 @@ void text_input_line::on_character_input(const character_input_event& e)
 						}
 					}
 				} else {
-					newIndex = this->cursorIndex - 1;
+					newIndex = this->cursor_index - 1;
 				}
-				this->set_cursor_index(newIndex, this->shiftPressed);
+				this->set_cursor_index(newIndex, this->shift_pressed);
 			}
 			break;
 		case morda::key::end:
-			this->set_cursor_index(this->get_text().size(), this->shiftPressed);
+			this->set_cursor_index(this->get_text().size(), this->shift_pressed);
 			break;
 		case morda::key::home:
-			this->set_cursor_index(0, this->shiftPressed);
+			this->set_cursor_index(0, this->shift_pressed);
 			break;
 		case morda::key::backspace:
-			if (this->thereIsSelection()) {
-				this->set_cursor_index(this->deleteSelection());
+			if (this->there_is_selection()) {
+				this->set_cursor_index(this->delete_selection());
 			} else {
-				if (this->cursorIndex != 0) {
+				if (this->cursor_index != 0) {
 					auto t = this->get_text();
 					this->clear();
-					t.erase(t.begin() + (this->cursorIndex - 1));
+					t.erase(t.begin() + (this->cursor_index - 1));
 					this->set_text(std::move(t));
-					this->set_cursor_index(this->cursorIndex - 1);
+					this->set_cursor_index(this->cursor_index - 1);
 				}
 			}
 			break;
 		case morda::key::deletion:
-			if (this->thereIsSelection()) {
-				this->set_cursor_index(this->deleteSelection());
+			if (this->there_is_selection()) {
+				this->set_cursor_index(this->delete_selection());
 			} else {
-				if (this->cursorIndex < this->get_text().size()) {
+				if (this->cursor_index < this->get_text().size()) {
 					auto t = this->get_text();
 					this->clear();
-					t.erase(t.begin() + this->cursorIndex);
+					t.erase(t.begin() + this->cursor_index);
 					this->set_text(std::move(t));
 				}
 			}
-			this->startCursorBlinking();
+			this->start_cursor_blinking();
 			break;
 		case morda::key::escape:
 			// do nothing
 			break;
 		case morda::key::a:
-			if (this->ctrlPressed) {
-				this->selectionStartIndex = 0;
+			if (this->ctrl_pressed) {
+				this->selection_start_index = 0;
 				this->set_cursor_index(this->get_text().size(), true);
 				break;
 			}
 			// fall through
 		default:
 			if (!e.string.empty()) {
-				if (this->thereIsSelection()) {
-					this->cursorIndex = this->deleteSelection();
+				if (this->there_is_selection()) {
+					this->cursor_index = this->delete_selection();
 				}
 
 				auto t = this->get_text();
 				this->clear();
-				t.insert(t.begin() + this->cursorIndex, e.string.begin(), e.string.end());
+				t.insert(t.begin() + this->cursor_index, e.string.begin(), e.string.end());
 				this->set_text(std::move(t));
 
-				this->set_cursor_index(this->cursorIndex + e.string.size());
+				this->set_cursor_index(this->cursor_index + e.string.size());
 			}
 
 			break;
 	}
 }
 
-size_t text_input_line::deleteSelection()
+size_t text_input_line::delete_selection()
 {
-	ASSERT(this->cursorIndex != this->selectionStartIndex)
+	ASSERT(this->cursor_index != this->selection_start_index)
 
 	size_t start, end;
-	if (this->cursorIndex < this->selectionStartIndex) {
-		start = this->cursorIndex;
-		end = this->selectionStartIndex;
+	if (this->cursor_index < this->selection_start_index) {
+		start = this->cursor_index;
+		end = this->selection_start_index;
 	} else {
-		start = this->selectionStartIndex;
-		end = this->cursorIndex;
+		start = this->selection_start_index;
+		end = this->cursor_index;
 	}
 
 	auto t = this->get_text();

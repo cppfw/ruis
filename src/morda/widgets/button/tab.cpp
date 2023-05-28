@@ -25,7 +25,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace morda;
 
-bool tab::maskOverlaps(vector2 pos)
+bool tab::mask_overlaps(vector2 pos)
 {
 	auto borders = this->get_actual_borders();
 
@@ -44,7 +44,7 @@ bool tab::maskOverlaps(vector2 pos)
 
 			if (auto pt = dynamic_cast<tab*>(&prev_iter->get())) { // previous tab
 				if (pt->is_pressed()) {
-					if (pt->maskOverlaps(pos + this->rect().p - pt->rect().p)) {
+					if (pt->mask_overlaps(pos + this->rect().p - pt->rect().p)) {
 						return false;
 					}
 				}
@@ -67,7 +67,7 @@ bool tab::maskOverlaps(vector2 pos)
 bool tab::on_mouse_button(const mouse_button_event& e)
 {
 	if (e.is_down) {
-		if (!maskOverlaps(e.pos)) {
+		if (!mask_overlaps(e.pos)) {
 			return false;
 		}
 	}

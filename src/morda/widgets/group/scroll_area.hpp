@@ -64,6 +64,7 @@ public:
 
 	morda::vector2 measure(const morda::vector2& quotum) const override
 	{
+		// NOLINTNEXTLINE(bugprone-parent-virtual-call, "we want to cancel container::measure() override")
 		return this->widget::measure(quotum);
 	}
 

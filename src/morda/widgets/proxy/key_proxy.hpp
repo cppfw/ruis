@@ -47,7 +47,7 @@ public:
 	 */
 	std::function<bool(key_proxy& w, const morda::key_event& e)> key_handler;
 
-	virtual bool on_key(const morda::key_event& e) override;
+	bool on_key(const morda::key_event& e) override;
 };
 
 } // namespace morda

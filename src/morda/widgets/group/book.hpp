@@ -34,12 +34,12 @@ class page : public virtual widget
 protected:
 	page(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
 
-	page(const page&) = delete;
-	page& operator=(const page&) = delete;
-
 	book* parent_book = nullptr;
 
 public:
+	page(const page&) = delete;
+	page& operator=(const page&) = delete;
+
 	book* get_parent_book()
 	{
 		return this->parent_book;
@@ -94,7 +94,7 @@ public:
 	void activate(size_t page_index);
 	void activate(const page& p);
 
-	~book() noexcept;
+	~book() override;
 
 	std::function<void(book&)> active_page_change_handler;
 

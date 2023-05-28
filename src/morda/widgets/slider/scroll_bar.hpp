@@ -39,9 +39,6 @@ class scroll_bar :
 	protected oriented,
 	private container // users do not need to know that it is a container
 {
-	scroll_bar(const scroll_bar&) = delete;
-	scroll_bar& operator=(const scroll_bar&) = delete;
-
 	widget& handle;
 
 	bool isGrabbed = false;
@@ -55,7 +52,10 @@ protected:
 	void on_band_change() override;
 
 public:
-	virtual ~scroll_bar() noexcept {}
+	scroll_bar(const scroll_bar&) = delete;
+	scroll_bar& operator=(const scroll_bar&) = delete;
+
+	~scroll_bar() override = default;
 
 private:
 	void on_lay_out() override;

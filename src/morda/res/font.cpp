@@ -89,6 +89,13 @@ utki::shared_ref<res::font> res::font::load(
 		}
 	}
 
-	return utki::make_shared<
-		font>(ctx, fi, std::move(file_bold), std::move(file_italic), std::move(file_bold_italic), font_size, max_cached);
+	return utki::make_shared<font>(
+		ctx,
+		fi,
+		std::move(file_bold),
+		std::move(file_italic),
+		std::move(file_bold_italic),
+		font_size,
+		max_cached
+	);
 }

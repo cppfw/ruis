@@ -158,9 +158,9 @@ texture_font::texture_font(
 
 	using std::ceil;
 
-	this->height = ceil((this->face.f->size->metrics.height) / 64.0f);
-	this->descender = -ceil((this->face.f->size->metrics.descender) / 64.0f);
-	this->ascender = ceil((this->face.f->size->metrics.ascender) / 64.0f);
+	this->height = ceil(real(this->face.f->size->metrics.height) / 64.0f);
+	this->descender = -ceil(real(this->face.f->size->metrics.descender) / 64.0f);
+	this->ascender = ceil(real(this->face.f->size->metrics.ascender) / 64.0f);
 
 	//	TRACE(<< "texture_font::texture_font(): height_v = " << this->height_v << std::endl)
 }
@@ -209,12 +209,12 @@ real texture_font::get_advance_internal(const std::u32string& str, unsigned tab_
 
 	real space_advance = this->get_glyph(U' ').advance;
 
-	for (auto s = str.begin(); s != str.end(); ++s) {
+	for (auto c : str) {
 		try {
-			if (*s == U'\t') {
-				ret += space_advance * tab_size;
+			if (c == U'\t') {
+				ret += space_advance * real(tab_size);
 			} else {
-				const glyph& g = this->get_glyph(*s);
+				const glyph& g = this->get_glyph(c);
 				ret += g.advance;
 			}
 		} catch (std::out_of_range&) {
@@ -238,7 +238,7 @@ morda::rectangle texture_font::get_bounding_box_internal(const std::u32string& s
 	ASSERT(!str.empty())
 	auto s = str.begin();
 
-	real curAdvance;
+	real cur_advance;
 
 	real left, right, top, bottom;
 	// init with bounding box of the first glyph
@@ -248,7 +248,7 @@ morda::rectangle texture_font::get_bounding_box_internal(const std::u32string& s
 		right = g.bottom_right.x();
 		top = g.top_left.y();
 		bottom = g.bottom_right.y();
-		curAdvance = g.advance;
+		cur_advance = g.advance;
 		++s;
 	}
 
@@ -256,7 +256,7 @@ morda::rectangle texture_font::get_bounding_box_internal(const std::u32string& s
 
 	for (; s != str.end(); ++s) {
 		if (*s == U'\t') {
-			curAdvance += space_advance * tab_size;
+			cur_advance += space_advance * real(tab_size);
 		} else {
 			const glyph& g = this->get_glyph(*s);
 
@@ -265,10 +265,10 @@ morda::rectangle texture_font::get_bounding_box_internal(const std::u32string& s
 
 			top = min(g.top_left.y(), top);
 			bottom = max(g.bottom_right.y(), bottom);
-			left = min(curAdvance + g.top_left.x(), left);
-			right = max(curAdvance + g.bottom_right.x(), right);
+			left = min(cur_advance + g.top_left.x(), left);
+			right = max(cur_advance + g.bottom_right.x(), right);
 
-			curAdvance += g.advance;
+			cur_advance += g.advance;
 		}
 	}
 
@@ -305,22 +305,22 @@ font::render_result texture_font::render_internal(
 
 	size_t cur_offset = offset;
 
-	for (auto s = str.begin(); s != str.end(); ++s) {
+	for (auto c : str) {
 		try {
 			real advance;
 
-			if (*s == U'\t') { // if tabulation
+			if (c == U'\t') { // if tabulation
 				unsigned actual_tab_size;
 				if (offset == std::numeric_limits<size_t>::max()) {
 					actual_tab_size = tab_size;
 				} else {
 					actual_tab_size = tab_size - cur_offset % tab_size;
 				}
-				advance = space_advance * actual_tab_size;
+				advance = space_advance * real(actual_tab_size);
 				ret.length += actual_tab_size;
 				cur_offset += actual_tab_size;
 			} else { // all other characters
-				advance = this->render_glyph_internal(matr, color, *s);
+				advance = this->render_glyph_internal(matr, color, c);
 				++ret.length;
 				++cur_offset;
 			}

@@ -44,7 +44,7 @@ public:
 	 */
 	virtual void on_character_input(const character_input_event& e) = 0;
 
-	virtual ~character_input_widget() noexcept {}
+	~character_input_widget() override = default;
 };
 
 } // namespace morda

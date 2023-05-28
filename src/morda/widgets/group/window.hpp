@@ -38,26 +38,26 @@ namespace morda {
  */
 class window : virtual public widget, private container
 {
-	morda::vector2 emptyMinDim; // minimal dimension of empty window
+	morda::vector2 empty_min_dim; // minimal dimension of empty window
 
-	std::shared_ptr<color> titleBg;
-	uint32_t titleBgColorTopmost = 0xffff0000;
-	uint32_t titleBgColorNonTopmost = 0xff808080;
+	std::shared_ptr<color> title_bg;
+	uint32_t title_bg_color_topmost = 0xffff0000;
+	uint32_t title_bg_color_non_topmost = 0xff808080;
 
 	std::shared_ptr<text> title;
 
-	std::shared_ptr<container> contentArea;
+	std::shared_ptr<container> content_area;
 
-	std::shared_ptr<widget> ltBorder;
-	std::shared_ptr<widget> rtBorder;
-	std::shared_ptr<widget> tBorder;
-	std::shared_ptr<widget> lBorder;
-	std::shared_ptr<widget> rBorder;
-	std::shared_ptr<widget> bBorder;
-	std::shared_ptr<widget> lbBorder;
-	std::shared_ptr<widget> rbBorder;
+	std::shared_ptr<widget> lt_border;
+	std::shared_ptr<widget> rt_border;
+	std::shared_ptr<widget> t_border;
+	std::shared_ptr<widget> l_border;
+	std::shared_ptr<widget> r_border;
+	std::shared_ptr<widget> b_border;
+	std::shared_ptr<widget> lb_border;
+	std::shared_ptr<widget> rb_border;
 
-	typedef decltype(std::declval<mouse_cursor_manager>().push(mouse_cursor::arrow)) cursor_iter;
+	using cursor_iter = decltype(std::declval<mouse_cursor_manager>().push(mouse_cursor::arrow));
 	cursor_iter caption_cursor_iter;
 	cursor_iter lt_border_cursor_iter;
 	cursor_iter rt_border_cursor_iter;
@@ -69,11 +69,11 @@ class window : virtual public widget, private container
 	cursor_iter rb_border_cursor_iter;
 
 	bool mouse_captured = false;
-	morda::vector2 capturePoint;
+	morda::vector2 capture_point;
 
 	void setup_widgets();
 
-	void updateTopmost();
+	void update_topmost();
 
 public:
 	window(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
@@ -90,7 +90,7 @@ public:
 	 */
 	container& content()
 	{
-		return *this->contentArea;
+		return *this->content_area;
 	}
 
 	/**

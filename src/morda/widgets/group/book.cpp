@@ -160,7 +160,7 @@ void book::activate(size_t page_number)
 	}
 }
 
-book::~book() noexcept
+book::~book()
 {
 	if (this->active_page_index >= this->pages.size()) {
 		return;

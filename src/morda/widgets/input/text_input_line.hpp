@@ -37,23 +37,23 @@ class text_input_line :
 	public color_widget,
 	private updateable
 {
-	size_t firstVisibleCharIndex = 0;
-	real xOffset = 0;
+	size_t first_visible_char_index = 0;
+	real x_offset = 0;
 
-	real cursorPos;
+	real cursor_pos;
 
-	size_t cursorIndex = 0;
+	size_t cursor_index = 0;
 
-	real selectionStartPos;
+	real selection_start_pos;
 
-	size_t selectionStartIndex = 0;
+	size_t selection_start_index = 0;
 
-	bool cursorBlinkVisible;
+	bool cursor_blink_visible;
 
-	bool ctrlPressed;
-	bool shiftPressed;
+	bool ctrl_pressed;
+	bool shift_pressed;
 
-	bool leftMouseButtonDown = false;
+	bool left_mouse_button_down = false;
 
 public:
 	text_input_line(const text_input_line&) = delete;
@@ -61,7 +61,7 @@ public:
 
 	text_input_line(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
 
-	virtual ~text_input_line() noexcept {}
+	~text_input_line() override = default;
 
 	vector2 measure(const morda::vector2& quotum) const noexcept override;
 
@@ -84,21 +84,21 @@ public:
 	void set_cursor_index(size_t index, bool selection = false);
 
 private:
-	void updateCursorPosBasedOnIndex();
+	void update_cursor_pos_based_on_index();
 
-	void startCursorBlinking();
+	void start_cursor_blinking();
 
-	size_t posToIndex(real pos);
+	size_t pos_to_index(real pos);
 
-	real indexToPos(size_t index);
+	real index_to_pos(size_t index);
 
-	bool thereIsSelection() const noexcept
+	bool there_is_selection() const noexcept
 	{
-		return this->cursorIndex != this->selectionStartIndex;
+		return this->cursor_index != this->selection_start_index;
 	}
 
 	// returns new cursor index
-	size_t deleteSelection();
+	size_t delete_selection();
 };
 
 } // namespace morda

@@ -38,7 +38,7 @@ public:
 	text(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
 
 public:
-	~text() noexcept {}
+	~text() override = default;
 
 	void render(const morda::matrix4& matrix) const override;
 };

@@ -29,11 +29,11 @@ namespace morda {
 
 class weak_widget_set
 {
-	typedef std::weak_ptr<widget> pointer_type;
+	using pointer_type = std::weak_ptr<widget>;
 	std::set<pointer_type, std::owner_less<pointer_type>> set;
 
 public:
-	weak_widget_set() {}
+	weak_widget_set() = default;
 
 	weak_widget_set(decltype(set)&& set) :
 		set(std::move(set))

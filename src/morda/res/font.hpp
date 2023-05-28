@@ -29,8 +29,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../resource_loader.hpp"
 #include "../util/util.hpp"
 
-namespace morda {
-namespace res {
+namespace morda::res {
 
 /**
  * @brief %Font resource.
@@ -105,5 +104,4 @@ private:
 	);
 };
 
-} // namespace res
-} // namespace morda
+} // namespace morda::res
