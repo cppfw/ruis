@@ -50,7 +50,7 @@ void ratio_proxy::set_aspect_ratio(real x_above_y)
 morda::vector2 ratio_proxy::measure(const morda::vector2& quotum) const
 {
 	if (quotum.x() < 0 && quotum.y() < 0) {
-		return morda::vector2(0);
+		return {0};
 	}
 
 	if (quotum.x() >= 0 && quotum.y() < 0) {
