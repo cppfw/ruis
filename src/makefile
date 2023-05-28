@@ -13,9 +13,13 @@ $(eval $(call prorab-config, ../config))
 
 #    this_cxxflags += -DM_MORDA_RENDER_WIDGET_BORDERS
 
-# use -isystem instead of -I for freetype because otherwise clang-tidy goes inside
-# of freetype headers and finds a lot of findings there
-this_cxxflags += $(subst -I,-isystem,$(shell pkg-config --cflags freetype2))
+ifeq ($(os),windows)
+    this_cxxflags += $(shell pkg-config --cflags freetype2)
+else
+    # use -isystem instead of -I for freetype because otherwise clang-tidy goes inside
+    # of freetype headers and finds a lot of findings there
+    this_cxxflags += $(subst -I,-isystem,$(shell pkg-config --cflags freetype2))
+endif
 
 this_ldlibs += $(shell pkg-config --libs freetype2)
 
