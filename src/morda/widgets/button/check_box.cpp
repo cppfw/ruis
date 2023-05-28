@@ -27,7 +27,7 @@ using namespace morda;
 
 namespace {
 
-const auto D_Layout = treeml::read(R"qwertyuiop(
+const auto check_box_layout = treeml::read(R"qwertyuiop(
 		@image{
 			id{morda_checkbox_check}
 			image{morda_img_checkbox_tick}
@@ -40,7 +40,7 @@ check_box::check_box(const utki::shared_ref<morda::context>& c, const treeml::fo
 	widget(c, desc),
 	button(this->context, desc),
 	toggle_button(this->context, desc),
-	nine_patch(this->context, D_Layout)
+	nine_patch(this->context, check_box_layout)
 {
 	this->checkWidget = this->content().try_get_widget("morda_checkbox_check");
 	this->checkWidget->set_visible(this->is_pressed());

@@ -38,7 +38,7 @@ public:
 
 	utki::shared_ref<widget> get_widget(size_t index) override
 	{
-		auto i = std::next(this->widgets.begin(), index);
+		auto i = utki::next(this->widgets.begin(), index);
 		ASSERT(this->get_drop_down_box())
 		return this->get_drop_down_box()->context.get().inflater.inflate(i, i + 1);
 	}

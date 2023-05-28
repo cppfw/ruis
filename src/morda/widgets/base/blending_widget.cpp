@@ -27,7 +27,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace morda;
 
 namespace {
-const std::map<std::string, renderer::blend_factor> blendFactorNames_c = {
+const std::map<std::string, renderer::blend_factor> blend_factor_names = {
 	{					"zero",					 renderer::blend_factor::zero},
 	{					 "one",					  renderer::blend_factor::one},
 	{			   "src_color",                renderer::blend_factor::src_color},
@@ -45,10 +45,10 @@ const std::map<std::string, renderer::blend_factor> blendFactorNames_c = {
 	{	  "src_alpha_saturate",       renderer::blend_factor::src_alpha_saturate}
 };
 
-renderer::blend_factor blendFactorFromString(const std::string& s)
+renderer::blend_factor blend_factor_from_string(const std::string& s)
 {
-	auto i = blendFactorNames_c.find(s);
-	if (i == blendFactorNames_c.end()) {
+	auto i = blend_factor_names.find(s);
+	if (i == blend_factor_names.end()) {
 		return renderer::blend_factor::one;
 	}
 	return i->second;
@@ -66,13 +66,13 @@ blending_widget::blending_widget(const utki::shared_ref<morda::context>& c, cons
 		if (p.value == "blend") {
 			this->isBlendingEnabled_v = get_property_value(p).to_bool();
 		} else if (p.value == "blend_src") {
-			this->blend_v.src = blendFactorFromString(get_property_value(p).to_string());
+			this->blend_v.src = blend_factor_from_string(get_property_value(p).to_string());
 		} else if (p.value == "blend_dst") {
-			this->blend_v.dst = blendFactorFromString(get_property_value(p).to_string());
+			this->blend_v.dst = blend_factor_from_string(get_property_value(p).to_string());
 		} else if (p.value == "blend_src_alpha") {
-			this->blend_v.src_alpha = blendFactorFromString(get_property_value(p).to_string());
+			this->blend_v.src_alpha = blend_factor_from_string(get_property_value(p).to_string());
 		} else if (p.value == "blend_dst_alpha") {
-			this->blend_v.dst_alpha = blendFactorFromString(get_property_value(p).to_string());
+			this->blend_v.dst_alpha = blend_factor_from_string(get_property_value(p).to_string());
 		}
 	}
 }

@@ -52,16 +52,16 @@ morda::rectangle morda::parse_rect(const treeml::forest& desc)
 {
 	using std::min;
 	vector2 p = parse_vec2(desc.begin(), desc.end());
-	vector2 d = parse_vec2(std::next(desc.begin(), min(size_t(2), desc.size())), desc.end());
-	return rectangle(p, d);
+	vector2 d = parse_vec2(utki::next(desc.begin(), min(size_t(2), desc.size())), desc.end());
+	return {p, d};
 }
 
 morda::sides<real> morda::parse_sides(const treeml::forest& desc)
 {
 	using std::min;
 	vector2 p = parse_vec2(desc.begin(), desc.end());
-	vector2 d = parse_vec2(std::next(desc.begin(), min(size_t(2), desc.size())), desc.end());
-	return sides<real>(p.x(), p.y(), d.x(), d.y());
+	vector2 d = parse_vec2(utki::next(desc.begin(), min(size_t(2), desc.size())), desc.end());
+	return {p.x(), p.y(), d.x(), d.y()};
 }
 
 real morda::parse_dimension_value(const treeml::leaf& l, const morda::units& units)

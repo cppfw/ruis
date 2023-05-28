@@ -39,7 +39,7 @@ public:
 	utki::shared_ref<widget> get_widget(size_t index) override
 	{
 		//		TRACE(<< "static_provider::getWidget(): index = " << index << std::endl)
-		auto i = std::next(this->widgets.begin(), index);
+		auto i = utki::next(this->widgets.begin(), index);
 		ASSERT(this->get_list())
 		return this->get_list()->context.get().inflater.inflate(i, i + 1);
 	}
@@ -177,9 +177,9 @@ real list_widget::get_scroll_factor() const noexcept
 		return 0;
 	}
 
-	return (real(this->pos_index + this->pos_offset / this->children().front().get().rect().d[index]) * average_item_dim
-		   )
-		/ (real(length + this->first_tail_item_offset / this->first_tail_item_dim) * average_item_dim);
+	return (real(real(this->pos_index) + this->pos_offset / this->children().front().get().rect().d[index])
+			* average_item_dim)
+		/ (real(real(length) + this->first_tail_item_offset / this->first_tail_item_dim) * average_item_dim);
 }
 
 void list_widget::set_scroll_factor(real factor)
@@ -199,15 +199,17 @@ void list_widget::set_scroll_factor(real factor)
 
 	//	TRACE(<< "list_widget::setScrollPosAsFactor(): this->pos_index = " << this->pos_index << std::endl)
 
+	using std::round;
+
 	if (this->item_provider->count() != this->num_tail_items) {
-		real intFactor = real(this->pos_index) / real(this->item_provider->count() - this->num_tail_items);
+		real int_factor = real(this->pos_index) / real(this->item_provider->count() - this->num_tail_items);
 
 		if (this->children().size() != 0) {
 			real d = this->rect().d[this->get_long_index()];
-			d = (d + this->first_tail_item_offset) / this->num_tail_items;
+			d = (d + this->first_tail_item_offset) / real(this->num_tail_items);
 
-			this->pos_offset = ::round(
-				d * (factor - intFactor) * real(this->item_provider->count() - this->num_tail_items)
+			this->pos_offset = round(
+				d * (factor - int_factor) * real(this->item_provider->count() - this->num_tail_items)
 				+ factor * this->first_tail_item_offset
 			);
 		} else {
@@ -215,7 +217,7 @@ void list_widget::set_scroll_factor(real factor)
 		}
 	} else {
 		ASSERT(this->pos_index == 0)
-		this->pos_offset = ::round(factor * this->first_tail_item_offset);
+		this->pos_offset = round(factor * this->first_tail_item_offset);
 	}
 
 	this->update_children_list();
@@ -229,37 +231,37 @@ bool list_widget::arrange_widget(
 	real& pos,
 	bool added,
 	size_t index,
-	widget_list::const_iterator& insertBefore
+	widget_list::const_iterator& insert_before
 )
 {
 	vector2 dim = dims_for_widget(w.get(), this->rect().d);
 
 	w.get().resize(dim);
 
-	unsigned longIndex = this->get_long_index();
-	unsigned transIndex = this->get_trans_index();
+	unsigned long_index = this->get_long_index();
+	unsigned trans_index = this->get_trans_index();
 
 	{
 		vector2 to;
-		to[longIndex] = pos;
-		to[transIndex] = 0;
+		to[long_index] = pos;
+		to[trans_index] = 0;
 		w.get().move_to(to);
 	}
-	pos += w.get().rect().d[longIndex];
+	pos += w.get().rect().d[long_index];
 
 	if (pos > 0) {
 		if (!added) {
-			insertBefore = this->insert(w, insertBefore);
+			insert_before = this->insert(w, insert_before);
 		}
-		++insertBefore;
+		++insert_before;
 		if (this->added_index > index) {
 			this->added_index = index;
 		}
 	} else {
 		++this->pos_index;
-		this->pos_offset -= w.get().rect().d[longIndex];
+		this->pos_offset -= w.get().rect().d[long_index];
 		if (added) {
-			insertBefore = this->erase(insertBefore);
+			insert_before = this->erase(insert_before);
 			if (this->item_provider) {
 				this->item_provider->recycle(index, w);
 			}
@@ -271,7 +273,7 @@ bool list_widget::arrange_widget(
 		}
 	}
 
-	if (w.get().rect().p[longIndex] + w.get().rect().d[longIndex] >= this->rect().d[longIndex]) {
+	if (w.get().rect().p[long_index] + w.get().rect().d[long_index] >= this->rect().d[long_index]) {
 		return true;
 	}
 
@@ -319,35 +321,35 @@ void list_widget::update_children_list()
 	}
 
 	auto iter = this->children().begin();
-	size_t iterIndex = this->added_index;
-	const size_t iterEndIndex = iterIndex + this->children().size();
+	size_t iter_index = this->added_index;
+	const size_t iter_end_index = iter_index + this->children().size();
 	size_t index = this->pos_index;
 	for (bool is_last = false; index < this->item_provider->count() && !is_last;) {
 		// std::shared_ptr<widget> w;
-		bool isAdded;
+		bool is_added;
 		auto w = [&]() {
-			if (iterIndex <= index && index < iterEndIndex && iter != this->children().end()) {
-				++iterIndex;
-				isAdded = true;
+			if (iter_index <= index && index < iter_end_index && iter != this->children().end()) {
+				++iter_index;
+				is_added = true;
 				return *iter;
 			} else {
-				isAdded = false;
+				is_added = false;
 				return this->item_provider->get_widget(index);
 			}
 		}();
 
-		is_last = this->arrange_widget(w, pos, isAdded, index, iter);
+		is_last = this->arrange_widget(w, pos, is_added, index, iter);
 		++index;
 	}
 
 	// remove rest
-	if (iterIndex < iterEndIndex) {
+	if (iter_index < iter_end_index) {
 		ASSERT(iter != this->children().end())
-		for (; iter != this->children().end(); ++iterIndex) {
+		for (; iter != this->children().end(); ++iter_index) {
 			auto w = *iter;
 			iter = this->erase(iter);
 			if (this->item_provider) {
-				this->item_provider->recycle(iterIndex, w);
+				this->item_provider->recycle(iter_index, w);
 			}
 		}
 	}
@@ -361,9 +363,9 @@ void list_widget::update_tail_items_info()
 		return;
 	}
 
-	unsigned longIndex = this->get_long_index();
+	unsigned long_index = this->get_long_index();
 
-	real dim = this->rect().d[longIndex];
+	real dim = this->rect().d[long_index];
 
 	ASSERT(this->item_provider)
 	ASSERT(this->item_provider->count() > 0)
@@ -375,7 +377,7 @@ void list_widget::update_tail_items_info()
 
 		vector2 d = dims_for_widget(w.get(), this->rect().d);
 
-		auto item_dim = d[longIndex];
+		auto item_dim = d[long_index];
 		dim -= item_dim;
 		this->first_tail_item_dim = item_dim;
 	}
@@ -416,13 +418,13 @@ void list_widget::scroll_by(real delta)
 	size_t old_index = this->pos_index;
 	real old_offset = this->pos_offset;
 
-	unsigned longIndex = this->get_long_index();
+	unsigned long_index = this->get_long_index();
 
 	//	TRACE(<< "delta = " << delta << std::endl)
 
 	if (delta >= 0) {
 		for (auto& c : this->children()) {
-			auto wd = c.get().rect().d[longIndex] - this->pos_offset;
+			auto wd = c.get().rect().d[long_index] - this->pos_offset;
 			if (wd > delta) {
 				this->pos_offset += delta;
 				delta -= wd;
@@ -443,11 +445,11 @@ void list_widget::scroll_by(real delta)
 				auto w = this->item_provider->get_widget(this->pos_index);
 				vector2 d = dims_for_widget(w.get(), this->rect().d);
 				this->push_back(w); // this is just optimization, to avoid creating same widget twice
-				if (d[longIndex] > delta) {
+				if (d[long_index] > delta) {
 					this->pos_offset = delta;
 					break;
 				}
-				delta -= d[longIndex];
+				delta -= d[long_index];
 				ASSERT(this->pos_offset == 0)
 				++this->pos_index;
 			}
@@ -470,11 +472,11 @@ void list_widget::scroll_by(real delta)
 					this->children().begin()
 				); // this is just optimization, to avoid creating same widget twice
 				--this->added_index;
-				if (d[longIndex] > delta) {
-					this->pos_offset = d[longIndex] - delta;
+				if (d[long_index] > delta) {
+					this->pos_offset = d[long_index] - delta;
 					break;
 				}
-				delta -= d[longIndex];
+				delta -= d[long_index];
 			}
 		}
 	}
@@ -486,22 +488,22 @@ void list_widget::scroll_by(real delta)
 
 morda::vector2 list_widget::measure(const morda::vector2& quotum) const
 {
-	unsigned longIndex = this->get_long_index();
-	unsigned transIndex = this->get_trans_index();
+	unsigned long_index = this->get_long_index();
+	unsigned trans_index = this->get_trans_index();
 
 	vector2 ret(quotum);
 
 	using std::max;
-	ret[longIndex] = max(ret[longIndex], real(0)); // clamp bottom
+	ret[long_index] = max(ret[long_index], real(0)); // clamp bottom
 
-	if (ret[transIndex] > 0) {
+	if (ret[trans_index] > 0) {
 		return ret;
 	}
 
-	ret[transIndex] = 0;
+	ret[trans_index] = 0;
 
 	for (auto i = this->children().begin(); i != this->children().end(); ++i) {
-		ret[transIndex] = max(ret[transIndex], i->get().rect().d[transIndex]); // clamp bottom
+		ret[trans_index] = max(ret[trans_index], i->get().rect().d[trans_index]); // clamp bottom
 	}
 
 	return ret;
