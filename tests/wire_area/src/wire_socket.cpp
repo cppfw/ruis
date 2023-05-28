@@ -39,7 +39,7 @@ void wire_socket::connect(const std::shared_ptr<wire_socket>& o){
 	
 	this->slave = o;
 	this->slave->primary = utki::make_shared_from(*this).to_shared_ptr();
-	this->onConnected(*this->slave);
+	this->on_connected(*this->slave);
 }
 
 void wire_socket::disconnect(){
@@ -50,7 +50,7 @@ void wire_socket::disconnect(){
 		this->slave->primary.reset();
 		auto oldSlave = std::move(this->slave);
 		this->slave.reset();
-		this->onDisconnected(*oldSlave);
+		this->on_disconnected(*oldSlave);
 	}else if(auto p = this->primary.lock()){
 		ASSERT(!p->primary.lock())
 		ASSERT(p->slave.get() == this)
@@ -58,7 +58,7 @@ void wire_socket::disconnect(){
 	}
 }
 
-std::array<morda::vector2, 2> wire_socket::outletPos() const noexcept{
+std::array<morda::vector2, 2> wire_socket::outlet_pos() const noexcept{
 	morda::vector2 dir;
 	morda::vector2 pos;
 	switch(this->outlet_orientation){
@@ -92,7 +92,7 @@ bool wire_socket::on_mouse_button(const morda::mouse_button_event& e){
 	if(auto wa = this->try_get_ancestor<wire_area>()){
 		if(e.is_down){
 			std::shared_ptr<wire_socket> grabbedSocket;
-			if(auto p = this->getRemote()){
+			if(auto p = this->get_remote()){
 				p->disconnect();
 				grabbedSocket = std::move(p);
 			}else{
@@ -123,7 +123,7 @@ void wire_socket::on_hover_change(unsigned pointer_id){
 	}
 }
 
-std::shared_ptr<wire_socket> wire_socket::getRemote(){
+std::shared_ptr<wire_socket> wire_socket::get_remote(){
 	if(this->slave){
 		return this->slave;
 	}

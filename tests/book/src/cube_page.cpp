@@ -15,12 +15,12 @@ class cube_widget : public morda::widget, public morda::updateable{
 	
 	morda::quaternion rot = morda::quaternion().set_identity();
 public:
-	std::shared_ptr<morda::vertex_array> cubeVAO;
+	std::shared_ptr<morda::vertex_array> cube_vao;
 	
 	cube_widget(const utki::shared_ref<morda::context>& c) :
 			widget(c, treeml::forest())
 	{
-		std::array<morda::vector3, 36> cubePos = {{
+		std::array<morda::vector3, 36> cube_pos = {{
 			{-1, -1, 1}, {1, -1, 1}, {-1, 1, 1},
 			{ 1, -1, 1}, {1,  1, 1}, {-1, 1, 1},
 			
@@ -40,9 +40,9 @@ public:
 			{-1, -1,  1}, {1, -1, -1}, { 1, -1, 1}
 		}};
 		
-		auto posVBO = this->context.get().renderer.get().factory->create_vertex_buffer(utki::make_span(cubePos));
+		auto pos_vbo = this->context.get().renderer.get().factory->create_vertex_buffer(utki::make_span(cube_pos));
 		
-		std::array<morda::vector2, 36> cubeTex = {{
+		std::array<morda::vector2, 36> cube_tex = {{
 			{0, 0}, {1, 0}, {0, 1},
 			{1, 0}, {1, 1}, {0, 1},
 			{0, 0}, {1, 0}, {0, 1},
@@ -57,15 +57,15 @@ public:
 			{1, 0}, {1, 1}, {0, 1}
 		}};
 		
-		auto texVBO = this->context.get().renderer.get().factory->create_vertex_buffer(utki::make_span(cubeTex));
+		auto tex_vbo = this->context.get().renderer.get().factory->create_vertex_buffer(utki::make_span(cube_tex));
 		
 		std::array<uint16_t, 36> indices = {{
 			0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35
 		}};
 		
-		auto cubeIndices = this->context.get().renderer.get().factory->create_index_buffer(utki::make_span(indices));
+		auto cube_indices = this->context.get().renderer.get().factory->create_index_buffer(utki::make_span(indices));
 		
-		this->cubeVAO = this->context.get().renderer.get().factory->create_vertex_array({posVBO, texVBO}, cubeIndices, morda::vertex_array::mode::triangles)
+		this->cube_vao = this->context.get().renderer.get().factory->create_vertex_array({pos_vbo, tex_vbo}, cube_indices, morda::vertex_array::mode::triangles)
 			.to_shared_ptr();
 		
 		this->tex = this->context.get().loader.load<morda::res::texture>("tex_sample").to_shared_ptr();
@@ -98,7 +98,7 @@ public:
 		matr.translate(0, 0, -4);
 		matr.rotate(this->rot);
 		
-		this->context.get().renderer.get().shader->pos_tex->render(matr, *this->cubeVAO, this->tex->tex());
+		this->context.get().renderer.get().shader->pos_tex->render(matr, *this->cube_vao, this->tex->tex());
 	}
 };
 }

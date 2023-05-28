@@ -53,13 +53,13 @@ void path::cubic_to(morda::vector2 p1, morda::vector2 p2, morda::vector2 p3)
 		return pow3(1 - t) * p0 + 3 * t * pow2(1 - t) * p1 + 3 * pow2(t) * (1 - t) * p2 + pow3(t) * p3;
 	};
 
-	auto lengthEst = (p1 - p0).norm() + (p2 - p1).norm() + (p3 - p2).norm();
+	auto length_est = (p1 - p0).norm() + (p2 - p1).norm() + (p3 - p2).norm();
 
-	const morda::real maxStep_c = 10.0f; // 10 pixels
+	const morda::real max_step_pixels = 10.0f; // 10 pixels
 
-	auto numSteps = lengthEst / maxStep_c;
+	auto num_steps = length_est / max_step_pixels;
 
-	auto dt = 1 / numSteps;
+	auto dt = 1 / num_steps;
 
 	// NOTE: start from dt because 0th point is already there in the path
 	for (morda::real t = dt; t < 1; t += dt) { // NOLINT(clang-analyzer-security.FloatLoopCounter)

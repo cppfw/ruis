@@ -116,8 +116,8 @@ scroll_bar::scroll_bar(const utki::shared_ref<morda::context>& c, const treeml::
 			ASSERT(!this->isGrabbed)
 			this->isGrabbed = true;
 
-			unsigned longIndex = this->get_long_index();
-			this->clickPoint = e.pos[longIndex];
+			unsigned long_index = this->get_long_index();
+			this->clickPoint = e.pos[long_index];
 
 			return true;
 		} else {
@@ -138,22 +138,22 @@ scroll_bar::scroll_bar(const utki::shared_ref<morda::context>& c, const treeml::
 		using std::min;
 		using std::max;
 
-		unsigned longIndex = this->get_long_index();
+		unsigned long_index = this->get_long_index();
 
-		float maxPos = this->rect().d[longIndex] - this->handle.rect().d[longIndex];
+		float maxPos = this->rect().d[long_index] - this->handle.rect().d[long_index];
 		maxPos = max(maxPos, 0.0f); // clamp bottom
 
-		float newPos = this->handle.rect().p[longIndex];
-		newPos += e.pos[longIndex] - this->clickPoint;
-		newPos = max(newPos, real(0)); // clamp bottom
-		newPos = min(newPos, maxPos); // clamp top
+		float new_pos = this->handle.rect().p[long_index];
+		new_pos += e.pos[long_index] - this->clickPoint;
+		new_pos = max(new_pos, real(0)); // clamp bottom
+		new_pos = min(new_pos, maxPos); // clamp top
 
-		ASSERT(0 <= newPos && newPos <= maxPos, [&](auto& o) {
-			o << "newPos = " << newPos << ", maxPos = " << maxPos;
+		ASSERT(0 <= new_pos && new_pos <= maxPos, [&](auto& o) {
+			o << "new_pos = " << new_pos << ", maxPos = " << maxPos;
 		})
 
 		morda::vector2 newPosition(0);
-		newPosition[longIndex] = newPos;
+		newPosition[long_index] = new_pos;
 
 		this->handle.move_to(newPosition);
 
@@ -161,7 +161,7 @@ scroll_bar::scroll_bar(const utki::shared_ref<morda::context>& c, const treeml::
 
 		if (maxPos > 0) {
 			// update factor
-			this->set_fraction(newPos / maxPos);
+			this->set_fraction(new_pos / maxPos);
 		}
 
 		return true;
@@ -179,32 +179,34 @@ void scroll_bar::on_lay_out()
 {
 	this->container::on_lay_out();
 
-	unsigned longIndex = this->get_long_index();
-	unsigned transIndex = this->get_trans_index();
+	unsigned long_index = this->get_long_index();
+	unsigned trans_index = this->get_trans_index();
 
-	morda::vector2 newSize(this->rect().d);
+	morda::vector2 new_size(this->rect().d);
 
-	newSize[longIndex] = ::round(newSize[longIndex] * this->get_band_fraction());
+	using std::round;
+
+	new_size[long_index] = round(new_size[long_index] * this->get_band_fraction());
 
 	auto minHandleSize = this->handle.measure(vector2(-1));
 
 	using std::max;
-	newSize[longIndex] = max(newSize[longIndex], std::round(real(1.5) * minHandleSize[transIndex])); // clamp bottom
+	new_size[long_index] = max(new_size[long_index], std::round(real(1.5) * minHandleSize[trans_index])); // clamp bottom
 
-	this->handle.resize(newSize);
+	this->handle.resize(new_size);
 
 	// move scroll handle
 	{
-		float effectiveLength = this->rect().d[longIndex] - this->handle.rect().d[longIndex];
-		morda::vector2 newPos(0);
-		if (effectiveLength > 0) {
-			newPos[longIndex] = ::round(effectiveLength * this->fraction());
-			ASSERT(newPos[longIndex] <= effectiveLength, [&](auto& o) {
-				o << "newPos[longIndex] = " << newPos[longIndex] << ", effectiveLength = " << effectiveLength
+		float effective_length = this->rect().d[long_index] - this->handle.rect().d[long_index];
+		morda::vector2 new_pos(0);
+		if (effective_length > 0) {
+			new_pos[long_index] = round(effective_length * this->fraction());
+			ASSERT(new_pos[long_index] <= effective_length, [&](auto& o) {
+				o << "new_pos[long_index] = " << new_pos[long_index] << ", effective_length = " << effective_length
 				  << ", this->factor() = " << this->fraction();
 			})
 		}
-		this->handle.move_to(newPos);
+		this->handle.move_to(new_pos);
 	}
 }
 

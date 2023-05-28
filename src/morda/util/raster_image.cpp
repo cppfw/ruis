@@ -40,7 +40,7 @@ void raster_image::init(r4::vector2<unsigned> dimensions, color_depth pixel_colo
 	this->reset();
 	this->dims_ = dimensions;
 	this->color_depth_ = pixel_color_depth;
-	this->buffer.resize(this->dims().x() * this->dims().y() * this->num_channels());
+	this->buffer.resize(size_t(this->dims().x() * this->dims().y()) * this->num_channels());
 }
 
 raster_image::raster_image(r4::vector2<unsigned> dimensions, color_depth pixel_color_depth, const uint8_t* src_buf)
@@ -107,9 +107,9 @@ void raster_image::flip_vertical()
 	unsigned stride = this->num_channels() * this->dims().x(); // stride
 	std::vector<uint8_t> line(stride);
 
-	for (auto t = this->buffer.begin(), b = std::prev(this->buffer.end(), stride);
-		 t != std::next(this->buffer.begin(), stride * (this->dims().y() / 2));
-		 t = std::next(t, stride), b = std::prev(b, stride))
+	for (auto t = this->buffer.begin(), b = utki::prev(this->buffer.end(), stride);
+		 t != utki::next(this->buffer.begin(), stride * (this->dims().y() / 2));
+		 t = utki::next(t, stride), b = utki::prev(b, stride))
 	{
 		// move line to temp
 		std::copy(t, std::next(t, stride), line.begin());
@@ -186,19 +186,19 @@ void raster_image::blit(r4::vector2<unsigned> pos, const raster_image& src, unsi
 
 // custom file read function for PNG
 namespace {
-void PNG_CustomReadFunction(png_structp pngPtr, png_bytep data, png_size_t length)
+void png_callback_read(png_structp png_ptr, png_bytep data, png_size_t length)
 {
-	papki::file* fi = reinterpret_cast<papki::file*>(png_get_io_ptr(pngPtr));
+	auto fi = reinterpret_cast<papki::file*>(png_get_io_ptr(png_ptr));
 	ASSERT(fi)
-	//	TRACE(<< "PNG_CustomReadFunction: fi = " << fi << " pngPtr = " << pngPtr << " data = " << std::hex << data << "
+	//	TRACE(<< "png_callback_read: fi = " << fi << " png_ptr = " << png_ptr << " data = " << std::hex << data << "
 	// length = " << length << std::endl)
 	try {
 		auto buf_wrapper = utki::make_span(data, size_t(length));
 		fi->read(buf_wrapper);
-		//		TRACE(<< "PNG_CustomReadFunction: fi->Read() finished" << std::endl)
+		//		TRACE(<< "png_callback_read: fi->Read() finished" << std::endl)
 	} catch (...) {
 		// do not let any exception get out of this function
-		//		TRACE(<< "PNG_CustomReadFunction: fi->Read() failed" << std::endl)
+		//		TRACE(<< "png_callback_read: fi->Read() failed" << std::endl)
 	}
 }
 } // namespace
@@ -238,66 +238,66 @@ void raster_image::load_png(const papki::file& fi)
 
 	// create internal PNG-structure to work with PNG file
 	// (no warning and error callbacks)
-	png_structp pngPtr = png_create_read_struct(PNG_LIBPNG_VER_STRING, 0, 0, 0);
-	utki::scope_exit png_scope_exit([&pngPtr]() {
-		png_destroy_read_struct(&pngPtr, 0, 0);
+	png_structp png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, nullptr, nullptr, nullptr);
+	utki::scope_exit png_scope_exit([&png_ptr]() {
+		png_destroy_read_struct(&png_ptr, nullptr, nullptr);
 	});
 
 	// NOTE: the memory freed by png_destroy_read_struct()
-	png_infop infoPtr = png_create_info_struct(pngPtr);
-	utki::scope_exit info_scope_exit([&pngPtr, &infoPtr] {
-		png_destroy_info_struct(pngPtr, &infoPtr);
+	png_infop info_ptr = png_create_info_struct(png_ptr);
+	utki::scope_exit info_scope_exit([&png_ptr, &info_ptr] {
+		png_destroy_info_struct(png_ptr, &info_ptr);
 	});
 
-	png_set_sig_bytes(pngPtr, png_sig_size); // we've already read png_sig_size bytes
+	png_set_sig_bytes(png_ptr, png_sig_size); // we've already read png_sig_size bytes
 
 	// set custom "ReadFromFile" function
-	png_set_read_fn(pngPtr, const_cast<papki::file*>(&fi), PNG_CustomReadFunction);
+	png_set_read_fn(png_ptr, const_cast<papki::file*>(&fi), png_callback_read);
 
-	png_read_info(pngPtr, infoPtr); // read in all information about file
+	png_read_info(png_ptr, info_ptr); // read in all information about file
 
-	// get information from infoPtr
+	// get information from info_ptr
 	png_uint_32 width = 0;
 	png_uint_32 height = 0;
-	int bitDepth = 0;
-	int colorType = 0;
-	png_get_IHDR(pngPtr, infoPtr, &width, &height, &bitDepth, &colorType, 0, 0, 0);
+	int bit_depth = 0;
+	int color_type = 0;
+	png_get_IHDR(png_ptr, info_ptr, &width, &height, &bit_depth, &color_type, nullptr, nullptr, nullptr);
 
 	// strip 16-bit png to 8-bit
-	if (bitDepth == 16) {
-		png_set_strip_16(pngPtr);
+	if (bit_depth == 16) {
+		png_set_strip_16(png_ptr);
 	}
 	// convert paletted PNG to rgb image
-	if (colorType == PNG_COLOR_TYPE_PALETTE) {
-		png_set_palette_to_rgb(pngPtr);
+	if (color_type == PNG_COLOR_TYPE_PALETTE) {
+		png_set_palette_to_rgb(png_ptr);
 	}
 	// convert grayscale PNG to 8bit greyscale PNG
-	if (colorType == PNG_COLOR_TYPE_GRAY && bitDepth < 8) {
-		png_set_expand_gray_1_2_4_to_8(pngPtr);
+	if (color_type == PNG_COLOR_TYPE_GRAY && bit_depth < 8) {
+		png_set_expand_gray_1_2_4_to_8(png_ptr);
 	}
 
 	// TODO: is this needed? remove?
-	// if(png_get_valid(pngPtr, infoPtr,PNG_INFO_tRNS)) png_set_tRNS_to_alpha(pngPtr);
+	// if(png_get_valid(png_ptr, info_ptr,PNG_INFO_tRNS)) png_set_tRNS_to_alpha(png_ptr);
 
 	// set gamma information
 	double gamma = 0.0f;
 
 	// if there's gamma info in the file, set it to 2.2
-	if (png_get_gAMA(pngPtr, infoPtr, &gamma)) {
-		png_set_gamma(pngPtr, 2.2, gamma);
+	if (png_get_gAMA(png_ptr, info_ptr, &gamma)) {
+		png_set_gamma(png_ptr, 2.2, gamma);
 	} else {
-		png_set_gamma(pngPtr, 2.2, 0.45455); // set to 0.45455 otherwise (good guess for GIF images on PCs)
+		png_set_gamma(png_ptr, 2.2, 0.45455); // set to 0.45455 otherwise (good guess for GIF images on PCs)
 	}
 
 	// update info after all transformations
-	png_read_update_info(pngPtr, infoPtr);
+	png_read_update_info(png_ptr, info_ptr);
 	// get all dimensions and color info again
-	png_get_IHDR(pngPtr, infoPtr, &width, &height, &bitDepth, &colorType, 0, 0, 0);
-	ASSERT(bitDepth == 8)
+	png_get_IHDR(png_ptr, info_ptr, &width, &height, &bit_depth, &color_type, nullptr, nullptr, nullptr);
+	ASSERT(bit_depth == 8)
 
 	// set image type
 	raster_image::color_depth image_color_depth;
-	switch (colorType) {
+	switch (color_type) {
 		case PNG_COLOR_TYPE_GRAY:
 			image_color_depth = raster_image::color_depth::grey;
 			break;
@@ -311,7 +311,7 @@ void raster_image::load_png(const papki::file& fi)
 			image_color_depth = raster_image::color_depth::rgba;
 			break;
 		default:
-			throw std::runtime_error("Image::LoadPNG(): unknown colorType");
+			throw std::runtime_error("Image::LoadPNG(): unknown color_type");
 	}
 
 	// set image dimensions and set buffer size
@@ -320,14 +320,14 @@ void raster_image::load_png(const papki::file& fi)
 	//	TRACE(<< "Image::LoadPNG(): memory for image allocated" << std::endl)
 
 	// read image data
-	png_size_t bytesPerRow = png_get_rowbytes(pngPtr, infoPtr); // get bytes per row
+	png_size_t num_bytes_per_row = png_get_rowbytes(png_ptr, info_ptr); // get bytes per row
 
 	// check that our expectations are correct
-	if (bytesPerRow != this->dims().x() * this->num_channels()) {
+	if (num_bytes_per_row != png_size_t(this->dims().x()) * png_size_t(this->num_channels())) {
 		throw std::runtime_error("Image::LoadPNG(): number of bytes per row does not match expected value");
 	}
 
-	ASSERT((bytesPerRow * height) == this->buffer.size())
+	ASSERT((num_bytes_per_row * height) == this->buffer.size())
 
 	//	TRACE(<< "Image::LoadPNG(): going to read in the data" << std::endl)
 	{
@@ -336,12 +336,12 @@ void raster_image::load_png(const papki::file& fi)
 		// initialize row pointers
 		//		M_IMAGE_PRINT(<< "Image::LoadPNG(): this->buf.Buf() = " << std::hex << this->buf.Buf() << std::endl)
 		for (unsigned i = 0; i < this->dims().y(); ++i) {
-			rows[i] = &*this->buffer.begin() + i * bytesPerRow;
+			rows[i] = &*this->buffer.begin() + i * num_bytes_per_row;
 			//			M_IMAGE_PRINT(<< "Image::LoadPNG(): rows[i] = " << std::hex << rows[i] << std::endl)
 		}
 		//		TRACE(<< "Image::LoadPNG(): row pointers are set" << std::endl)
 		// read in image data
-		png_read_image(pngPtr, &*rows.begin());
+		png_read_image(png_ptr, &*rows.begin());
 		//		TRACE(<< "Image::LoadPNG(): image data read" << std::endl)
 	}
 }
@@ -517,7 +517,7 @@ void raster_image::load_jpg(const papki::file& fi)
 	this->init(r4::vector2<unsigned>(cinfo.output_width, cinfo.output_height), image_color_depth);
 
 	// calculate the size of a row in bytes
-	int num_bytes_in_row(this->dims().x() * this->num_channels());
+	auto num_bytes_in_row = int(this->dims().x() * this->num_channels());
 
 	// Allocate memory for one row. It is an array of rows which
 	// contains only one row. JPOOL_IMAGE means that the memory is allocated

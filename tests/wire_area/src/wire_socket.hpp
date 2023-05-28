@@ -27,7 +27,7 @@ public:
 	wire_socket(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
 	
 protected:
-	std::shared_ptr<wire_socket> getRemote();
+	std::shared_ptr<wire_socket> get_remote();
 public:
 
 	/**
@@ -46,26 +46,26 @@ public:
 	 * @return Array of two vectors. First is the position of the outlet within the widget.
 	 *         Second is the unit vector of outlet wire direction.
 	 */
-	std::array<morda::vector2, 2> outletPos()const noexcept;
+	std::array<morda::vector2, 2> outlet_pos()const noexcept;
 
 	void connect(const std::shared_ptr<wire_socket>& o = nullptr);
 	void disconnect();
 
 	bool on_mouse_button(const morda::mouse_button_event& event)override;
 
-	void on_hover_change(unsigned pointerID) override;
+	void on_hover_change(unsigned pointer_id) override;
 	
 	/**
 	 * @brief Connection event callback.
 	 * The notification method is called only on one of the wire sockets.
 	 * @param to - the wire socket it is connected to.
 	 */
-	virtual void onConnected(wire_socket& to){}
+	virtual void on_connected(wire_socket& to){}
 	
 	/**
 	 * @brief Disconnection event notification.
 	 * The notification method is called only on one of the wire sockets.
 	 * @param from - the wire socket it was disconnected from.
 	 */
-	virtual void onDisconnected(wire_socket& from){}
+	virtual void on_disconnected(wire_socket& from){}
 };

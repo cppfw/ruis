@@ -12,7 +12,7 @@ public:
 	pile_page(const pile_page&) = delete;
 	pile_page& operator=(const pile_page&) = delete;
 
-	~pile_page(){
+	~pile_page()override{
 		std::cout << "pile_page destroyed" << std::endl;
 	}
 	

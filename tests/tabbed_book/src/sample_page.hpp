@@ -8,7 +8,7 @@ class sample_page :
 {
 public:
     sample_page(const utki::shared_ref<morda::context>& c, const std::string& text);
-    ~sample_page(){
+    ~sample_page()override{
         std::cout << "page destroyed" << std::endl;
     }
 };

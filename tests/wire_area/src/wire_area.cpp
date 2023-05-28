@@ -39,8 +39,8 @@ void wire_area::render(const morda::matrix4& matrix)const{
 			continue;
 		}
 		
-		auto primOutletPos = s.get().outletPos();
-		auto slaveOutletPos = s.get().slave->outletPos();
+		auto primOutletPos = s.get().outlet_pos();
+		auto slaveOutletPos = s.get().slave->outlet_pos();
 		auto p0 = s.get().pos_in_ancestor(primOutletPos[0], this);
 		auto p = s.get().slave->pos_in_ancestor(slaveOutletPos[0], this) - p0;
 		
@@ -54,8 +54,8 @@ void wire_area::render(const morda::matrix4& matrix)const{
 	}
 	
 	if(this->grabbedSocket){
-		auto outletPos = this->grabbedSocket->outletPos();
-		auto p0 = this->grabbedSocket->pos_in_ancestor(outletPos[0], this);
+		auto outlet_pos = this->grabbedSocket->outlet_pos();
+		auto p0 = this->grabbedSocket->pos_in_ancestor(outlet_pos[0], this);
 		
 		morda::path path;
 		path.line_to(mousePos - p0);
