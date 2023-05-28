@@ -93,35 +93,35 @@ path::vertices path::stroke(morda::real half_width, morda::real antialias_width,
 			}
 		}
 
-		morda::vector2 prevNormal = 0, nextNormal;
+		morda::vector2 prev_normal = 0, next_normal;
 
 		ASSERT(prev || next)
 
 		if (prev) {
 			using std::swap;
-			prevNormal = (*cur - *prev).normalize();
-			swap(prevNormal.x(), prevNormal.y());
-			prevNormal.x() = -prevNormal.x();
+			prev_normal = (*cur - *prev).normalize();
+			swap(prev_normal.x(), prev_normal.y());
+			prev_normal.x() = -prev_normal.x();
 		}
 		if (next) {
 			using std::swap;
-			nextNormal = (*next - *cur).normalize();
-			swap(nextNormal.x(), nextNormal.y());
-			nextNormal.x() = -nextNormal.x();
+			next_normal = (*next - *cur).normalize();
+			swap(next_normal.x(), next_normal.y());
+			next_normal.x() = -next_normal.x();
 		} else {
 			ASSERT(prev)
-			nextNormal = prevNormal;
+			next_normal = prev_normal;
 		}
 		if (!prev) {
 			ASSERT(next)
-			prevNormal = nextNormal;
+			prev_normal = next_normal;
 		}
 
-		auto normal = (prevNormal + nextNormal).normalize();
+		auto normal = (prev_normal + next_normal).normalize();
 
-		auto miterCoeff = 1 / (normal * prevNormal);
-		auto miter = miterCoeff * half_width;
-		auto antialiasMiter = miterCoeff * (half_width + antialias_width);
+		auto miter_coeff = 1 / (normal * prev_normal);
+		auto miter = miter_coeff * half_width;
+		auto antialias_miter = miter_coeff * (half_width + antialias_width);
 
 		using std::sqrt;
 		using utki::pi;
@@ -137,7 +137,7 @@ path::vertices path::stroke(morda::real half_width, morda::real antialias_width,
 				(*cur) - normal * miter - normal.rot(pi<morda::real>() / 4) * antialias_width * morda::real(sqrt(2))
 			);
 		} else {
-			ret.pos.push_back((*cur) - normal * antialiasMiter);
+			ret.pos.push_back((*cur) - normal * antialias_miter);
 		}
 		ret.alpha.push_back(0);
 		++in_index;
@@ -161,7 +161,7 @@ path::vertices path::stroke(morda::real half_width, morda::real antialias_width,
 				(*cur) + normal * miter + normal.rot(-pi<morda::real>() / 4) * antialias_width * morda::real(sqrt(2))
 			);
 		} else {
-			ret.pos.push_back((*cur) + normal * antialiasMiter);
+			ret.pos.push_back((*cur) + normal * antialias_miter);
 		}
 		ret.alpha.push_back(0);
 		++in_index;
@@ -175,7 +175,7 @@ path::vertices path::stroke(morda::real half_width, morda::real antialias_width,
 		ret.out_indices.push_back(4 * i + 1);
 	}
 
-	for (unsigned i = unsigned(this->points.size() - 1); i != 0; --i) {
+	for (auto i = unsigned(this->points.size() - 1); i != 0; --i) {
 		ret.out_indices.push_back(4 * i + 3);
 		ret.out_indices.push_back(4 * i + 2);
 	}

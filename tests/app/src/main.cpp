@@ -337,7 +337,7 @@ public:
 		--this->selectedItem.back();
 	}
 
-	void insertChild(){
+	void insert_child(){
 		if(this->selectedItem.size() == 0){
 			return;
 		}
@@ -763,26 +763,26 @@ public:
 				}
 			};
 
-			auto insertBeforeButton = c.get().try_get_widget_as<morda::push_button>("insert_before");
-			auto insertAfterButton = c.get().try_get_widget_as<morda::push_button>("insert_after");
-			auto insertChild = c.get().try_get_widget_as<morda::push_button>("insert_child");
+			auto insert_before_button = c.get().try_get_widget_as<morda::push_button>("insert_before");
+			auto insert_after_button = c.get().try_get_widget_as<morda::push_button>("insert_after");
+			auto insert_child = c.get().try_get_widget_as<morda::push_button>("insert_child");
 
 			auto prvdr = utki::make_weak(provider);
-			insertBeforeButton->click_handler = [prvdr](morda::push_button& b){
+			insert_before_button->click_handler = [prvdr](morda::push_button& b){
 				if(auto p = prvdr.lock()){
 					p->insertBefore();
 				}
 			};
 
-			insertAfterButton->click_handler = [prvdr](morda::push_button& b){
+			insert_after_button->click_handler = [prvdr](morda::push_button& b){
 				if(auto p = prvdr.lock()){
 					p->insertAfter();
 				}
 			};
 
-			insertChild->click_handler = [prvdr](morda::push_button& b){
+			insert_child->click_handler = [prvdr](morda::push_button& b){
 				if(auto p = prvdr.lock()){
-					p->insertChild();
+					p->insert_child();
 				}
 			};
 		}

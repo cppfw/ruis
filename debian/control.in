@@ -9,6 +9,7 @@ Build-Depends:
 		prorab-extra,
 		myci,
 		pkg-config,
+		clang-format,
 		clang-tidy,
 		libpng-dev, libjpeg-dev, zlib1g-dev, libglew-dev, libfreetype6-dev, libgles2-mesa-dev,
 		libutki-dev (>= 1.1.112),

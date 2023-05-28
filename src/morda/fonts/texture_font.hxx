@@ -49,11 +49,11 @@ namespace morda {
  */
 class texture_font : public font
 {
-	mutable std::list<char32_t> lastUsedOrder;
+	mutable std::list<char32_t> last_used_order;
 
-	struct Glyph {
-		morda::vector2 topLeft;
-		morda::vector2 bottomRight;
+	struct glyph {
+		morda::vector2 top_left;
+		morda::vector2 bottom_right;
 
 		// TOOD: make utki::shared_ref?
 		std::shared_ptr<vertex_array> vao;
@@ -61,33 +61,33 @@ class texture_font : public font
 
 		real advance;
 
-		decltype(lastUsedOrder)::iterator lastUsedIter;
+		decltype(last_used_order)::iterator last_used_iter;
 	};
 
-	mutable std::unordered_map<char32_t, Glyph> glyphs;
+	mutable std::unordered_map<char32_t, glyph> glyphs;
 
-	unsigned maxCached;
+	unsigned max_cached;
 
-	struct FreeTypeLibWrapper {
+	struct freetype_lib_wrapper {
 		FT_Library lib;
 
-		FreeTypeLibWrapper();
-		~FreeTypeLibWrapper() noexcept;
+		freetype_lib_wrapper();
+		~freetype_lib_wrapper() noexcept;
 	} freetype;
 
 	//	TRACE(<< "texture_font::Load(): FreeType library inited" << std::endl)
 
-	struct FreeTypeFaceWrapper {
+	struct freetype_face_wrapper {
 		FT_Face f;
 		std::vector<std::uint8_t> fontFile; // the buffer should be alive as long as the Face is alive!!!
 
-		FreeTypeFaceWrapper(FT_Library& lib, const papki::file& fi);
-		~FreeTypeFaceWrapper() noexcept;
+		freetype_face_wrapper(FT_Library& lib, const papki::file& fi);
+		~freetype_face_wrapper() noexcept;
 	} face;
 
-	Glyph unknownGlyph;
+	glyph unknown_glyph;
 
-	Glyph loadGlyph(char32_t c) const;
+	glyph load_glyph(char32_t c) const;
 
 public:
 	/**
@@ -95,13 +95,13 @@ public:
 	 * @param c - context to which this font belongs.
 	 * @param fi - file interface to read Truetype font from, i.e. 'ttf' file.
 	 * @param fontSize - size of the font in pixels.
-	 * @param maxCached - maximum number of glyphs to cache.
+	 * @param max_cached - maximum number of glyphs to cache.
 	 */
 	texture_font(
 		const utki::shared_ref<morda::context>& c,
 		const papki::file& fi,
 		unsigned fontSize,
-		unsigned maxCached
+		unsigned max_cached
 	);
 
 	real get_advance(char32_t c, size_t tab_size) const override;
@@ -120,8 +120,8 @@ protected:
 	morda::rectangle get_bounding_box_internal(const std::u32string& str, size_t tab_size) const override;
 
 private:
-	real renderGlyphInternal(const morda::matrix4& matrix, r4::vector4<float> color, char32_t ch) const;
+	real render_glyph_internal(const morda::matrix4& matrix, r4::vector4<float> color, char32_t ch) const;
 
-	const Glyph& getGlyph(char32_t c) const;
+	const glyph& get_glyph(char32_t c) const;
 };
 } // namespace morda

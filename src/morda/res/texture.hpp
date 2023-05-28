@@ -61,7 +61,7 @@ public:
 		tex2d(tex)
 	{}
 
-	~texture() noexcept {}
+	~texture() override = default;
 
 	/**
 	 * @brief Get texture object held by this resource.

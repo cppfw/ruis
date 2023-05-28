@@ -35,57 +35,57 @@ namespace {
 constexpr const char32_t unknownChar_c = 0xfffd;
 } // namespace
 
-texture_font::FreeTypeLibWrapper::FreeTypeLibWrapper()
+texture_font::freetype_lib_wrapper::freetype_lib_wrapper()
 {
 	if (FT_Init_FreeType(&this->lib)) {
-		throw std::runtime_error("FreeTypeLibWrapper::FreeTypeLibWrapper(): unable to init freetype library");
+		throw std::runtime_error("freetype_lib_wrapper::freetype_lib_wrapper(): unable to init freetype library");
 	}
 }
 
-texture_font::FreeTypeLibWrapper::~FreeTypeLibWrapper() noexcept
+texture_font::freetype_lib_wrapper::~freetype_lib_wrapper() noexcept
 {
 	FT_Done_FreeType(this->lib);
 }
 
-texture_font::FreeTypeFaceWrapper::FreeTypeFaceWrapper(FT_Library& lib, const papki::file& fi)
+texture_font::freetype_face_wrapper::freetype_face_wrapper(FT_Library& lib, const papki::file& fi)
 {
 	this->fontFile = fi.load();
 	if (FT_New_Memory_Face(lib, &*this->fontFile.begin(), int(this->fontFile.size()), 0 /* face_index */, &this->f)
 		!= 0)
 	{
-		throw std::runtime_error("FreeTypeFaceWrapper::FreeTypeFaceWrapper(): unable to crate font face object");
+		throw std::runtime_error("freetype_face_wrapper::freetype_face_wrapper(): unable to crate font face object");
 	}
 }
 
-texture_font::FreeTypeFaceWrapper::~FreeTypeFaceWrapper() noexcept
+texture_font::freetype_face_wrapper::~freetype_face_wrapper() noexcept
 {
 	FT_Done_Face(this->f);
 }
 
-texture_font::Glyph texture_font::loadGlyph(char32_t c) const
+texture_font::glyph texture_font::load_glyph(char32_t c) const
 {
 	if (FT_Load_Char(this->face.f, FT_ULong(c), FT_LOAD_RENDER) != 0) {
 		if (c == unknownChar_c) {
 			throw std::runtime_error(
-				"texture_font::loadGlyph(): could not load 'unknown character' glyph (UTF-32: 0xfffd)"
+				"texture_font::load_glyph(): could not load 'unknown character' glyph (UTF-32: 0xfffd)"
 			);
 		}
 		LOG([&](auto& o) {
-			o << "texture_font::loadGlyph(" << std::hex << uint32_t(c) << "): failed to load glyph" << std::endl;
+			o << "texture_font::load_glyph(" << std::hex << uint32_t(c) << "): failed to load glyph" << std::endl;
 		})
-		return this->unknownGlyph;
+		return this->unknown_glyph;
 	}
 
 	FT_GlyphSlot slot = this->face.f->glyph;
 
 	FT_Glyph_Metrics* m = &slot->metrics;
 
-	Glyph g;
+	glyph g;
 	g.advance = real(m->horiAdvance) / (64.0f);
 
 	if (!slot->bitmap.buffer) {
-		g.topLeft.set(0);
-		g.bottomRight.set(0);
+		g.top_left.set(0);
+		g.bottom_right.set(0);
 		// empty glyph (space)
 		return g;
 	}
@@ -102,8 +102,8 @@ texture_font::Glyph texture_font::loadGlyph(char32_t c) const
 	verts[2] = (morda::vector2(real(m->horiBearingX + m->width), real(m->height - m->horiBearingY)) / (64.0f));
 	verts[3] = (morda::vector2(real(m->horiBearingX + m->width), -real(m->horiBearingY)) / (64.0f));
 
-	g.topLeft = verts[0];
-	g.bottomRight = verts[2];
+	g.top_left = verts[0];
+	g.bottom_right = verts[2];
 
 	auto& r = this->context.get().renderer.get();
 	g.vao = r.factory
@@ -131,10 +131,10 @@ texture_font::texture_font(
 	const utki::shared_ref<morda::context>& c,
 	const papki::file& fi,
 	unsigned fontSize,
-	unsigned maxCached
+	unsigned max_cached
 ) :
 	font(c),
-	maxCached(maxCached),
+	max_cached(max_cached),
 	face(freetype.lib, fi)
 {
 	//	TRACE(<< "texture_font::Load(): enter" << std::endl)
@@ -152,7 +152,7 @@ texture_font::texture_font(
 		}
 	}
 
-	this->unknownGlyph = this->loadGlyph(unknownChar_c);
+	this->unknown_glyph = this->load_glyph(unknownChar_c);
 
 	//	TRACE(<< "texture_font::Load(): entering for loop" << std::endl)
 
@@ -165,34 +165,34 @@ texture_font::texture_font(
 	//	TRACE(<< "texture_font::texture_font(): height_v = " << this->height_v << std::endl)
 }
 
-const texture_font::Glyph& texture_font::getGlyph(char32_t c) const
+const texture_font::glyph& texture_font::get_glyph(char32_t c) const
 {
 	auto i = this->glyphs.find(c);
 	if (i == this->glyphs.end()) {
-		auto r = this->glyphs.insert(std::make_pair(c, this->loadGlyph(c)));
+		auto r = this->glyphs.insert(std::make_pair(c, this->load_glyph(c)));
 		ASSERT(r.second)
 		i = r.first;
-		this->lastUsedOrder.push_front(c);
-		i->second.lastUsedIter = this->lastUsedOrder.begin();
+		this->last_used_order.push_front(c);
+		i->second.last_used_iter = this->last_used_order.begin();
 
-		if (this->lastUsedOrder.size() == this->maxCached) {
-			this->glyphs.erase(this->lastUsedOrder.back());
-			this->lastUsedOrder.pop_back();
+		if (this->last_used_order.size() == this->max_cached) {
+			this->glyphs.erase(this->last_used_order.back());
+			this->last_used_order.pop_back();
 		}
-		//		TRACE(<< "texture_font::getGlyph(): glyph loaded: " << c << std::endl)
+		//		TRACE(<< "texture_font::get_glyph(): glyph loaded: " << c << std::endl)
 	} else {
-		Glyph& g = i->second;
-		this->lastUsedOrder.splice(this->lastUsedOrder.begin(), this->lastUsedOrder, g.lastUsedIter);
+		glyph& g = i->second;
+		this->last_used_order.splice(this->last_used_order.begin(), this->last_used_order, g.last_used_iter);
 	}
 
-	ASSERT(this->lastUsedOrder.size() <= this->maxCached)
+	ASSERT(this->last_used_order.size() <= this->max_cached)
 
 	return i->second;
 }
 
-real texture_font::renderGlyphInternal(const morda::matrix4& matrix, r4::vector4<float> color, char32_t ch) const
+real texture_font::render_glyph_internal(const morda::matrix4& matrix, r4::vector4<float> color, char32_t ch) const
 {
-	const Glyph& g = this->getGlyph(ch);
+	const glyph& g = this->get_glyph(ch);
 
 	// texture can be null for glyph of empty characters, like space, tab etc...
 	if (g.tex) {
@@ -207,14 +207,14 @@ real texture_font::get_advance_internal(const std::u32string& str, size_t tab_si
 {
 	real ret = 0;
 
-	real space_advance = this->getGlyph(U' ').advance;
+	real space_advance = this->get_glyph(U' ').advance;
 
 	for (auto s = str.begin(); s != str.end(); ++s) {
 		try {
 			if (*s == U'\t') {
 				ret += space_advance * tab_size;
 			} else {
-				const Glyph& g = this->getGlyph(*s);
+				const glyph& g = this->get_glyph(*s);
 				ret += g.advance;
 			}
 		} catch (std::out_of_range&) {
@@ -243,30 +243,30 @@ morda::rectangle texture_font::get_bounding_box_internal(const std::u32string& s
 	real left, right, top, bottom;
 	// init with bounding box of the first glyph
 	{
-		const Glyph& g = this->getGlyph(*s);
-		left = g.topLeft.x();
-		right = g.bottomRight.x();
-		top = g.topLeft.y();
-		bottom = g.bottomRight.y();
+		const glyph& g = this->get_glyph(*s);
+		left = g.top_left.x();
+		right = g.bottom_right.x();
+		top = g.top_left.y();
+		bottom = g.bottom_right.y();
 		curAdvance = g.advance;
 		++s;
 	}
 
-	real space_advance = this->getGlyph(U' ').advance;
+	real space_advance = this->get_glyph(U' ').advance;
 
 	for (; s != str.end(); ++s) {
 		if (*s == U'\t') {
 			curAdvance += space_advance * tab_size;
 		} else {
-			const Glyph& g = this->getGlyph(*s);
+			const glyph& g = this->get_glyph(*s);
 
 			using std::min;
 			using std::max;
 
-			top = min(g.topLeft.y(), top);
-			bottom = max(g.bottomRight.y(), bottom);
-			left = min(curAdvance + g.topLeft.x(), left);
-			right = max(curAdvance + g.bottomRight.x(), right);
+			top = min(g.top_left.y(), top);
+			bottom = max(g.bottom_right.y(), bottom);
+			left = min(curAdvance + g.top_left.x(), left);
+			right = max(curAdvance + g.bottom_right.x(), right);
 
 			curAdvance += g.advance;
 		}
@@ -301,7 +301,7 @@ font::render_result texture_font::render_internal(
 
 	morda::matrix4 matr(matrix);
 
-	real space_advance = this->getGlyph(U' ').advance;
+	real space_advance = this->get_glyph(U' ').advance;
 
 	size_t cur_offset = offset;
 
@@ -320,7 +320,7 @@ font::render_result texture_font::render_internal(
 				ret.length += actual_tab_size;
 				cur_offset += actual_tab_size;
 			} else { // all other characters
-				advance = this->renderGlyphInternal(matr, color, *s);
+				advance = this->render_glyph_internal(matr, color, *s);
 				++ret.length;
 				++cur_offset;
 			}
@@ -338,9 +338,9 @@ font::render_result texture_font::render_internal(
 real texture_font::get_advance(char32_t c, size_t tab_size) const
 {
 	if (c == U'\t') {
-		return this->getGlyph(U' ').advance * tab_size;
+		return this->get_glyph(U' ').advance * tab_size;
 	} else {
-		auto& g = this->getGlyph(c);
+		auto& g = this->get_glyph(c);
 		return g.advance;
 	}
 }
