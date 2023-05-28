@@ -27,12 +27,12 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "key.hpp"
 
-namespace morda{
+namespace morda {
 
 /**
  * @brief Mouse buttons enumeration.
  */
-enum class mouse_button{
+enum class mouse_button {
 	left,
 	right,
 	middle,
@@ -44,25 +44,27 @@ enum class mouse_button{
 	enum_size
 };
 
-struct mouse_button_event{
+struct mouse_button_event {
 	bool is_down; /// was the button pressed (true) or released (false)
-	vector2 pos; /// position of the mouse cursor at the moment when the button event has occurred, in widget local coordinates
+	vector2 pos; /// position of the mouse cursor at the moment when the button event has occurred, in widget local
+				 /// coordinates
 	mouse_button button; /// mouse button
 	unsigned pointer_id; /// id of the mouse pointer on systems with multiple mouse pointers, like multitouch screens
 };
 
-struct mouse_move_event{
-	vector2 pos; /// position of the mouse cursor at the moment when the button event has occurred, in widget local coordinates
+struct mouse_move_event {
+	vector2 pos; /// position of the mouse cursor at the moment when the button event has occurred, in widget local
+				 /// coordinates
 	unsigned pointer_id; /// id of the mouse pointer on systems with multiple mouse pointers, like multitouch screens
 	bool ignore_mouse_capture; /// ignore mouse capturing and distribute mouse move event to all child widgets
 };
 
-struct key_event{
+struct key_event {
 	bool is_down;
 	key_combo combo;
 };
 
-struct character_input_event{
+struct character_input_event {
 	std::u32string_view string;
 
 	/**
@@ -72,4 +74,4 @@ struct character_input_event{
 	key_combo combo;
 };
 
-}
+} // namespace morda

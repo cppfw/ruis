@@ -22,18 +22,15 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #pragma once
 
 #include "../../container.hpp"
-
 #include "../base/oriented_widget.hpp"
 
-namespace morda{
+namespace morda {
 
 /**
  * @brief Linear container widget.
  * Linear container lays out its child widgets in a row from left to right or in a column from top to bottom.
  */
-class linear_container :
-		public container,
-		public oriented_widget
+class linear_container : public container, public oriented_widget
 {
 	linear_container(const linear_container&) = delete;
 	linear_container& operator=(const linear_container&) = delete;
@@ -42,5 +39,4 @@ public:
 	linear_container(const utki::shared_ref<morda::context>& c, const treeml::forest& desc, bool vertical);
 };
 
-
-}
+} // namespace morda

@@ -27,22 +27,23 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace morda;
 
 text::text(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
-		widget(c, desc),
-		single_line_text_widget(this->context, desc),
-		color_widget(this->context, desc)
+	widget(c, desc),
+	single_line_text_widget(this->context, desc),
+	color_widget(this->context, desc)
 {}
 
-void text::render(const morda::matrix4& matrix)const{
+void text::render(const morda::matrix4& matrix) const
+{
 	morda::matrix4 matr(matrix);
-	
+
 	using std::round;
-	
+
 	const auto& font = this->get_font().get();
 
 	matr.translate(
-			-this->get_bounding_box().p.x(),
-			round((font.get_height() + font.get_ascender() - font.get_descender()) / 2)
-		);
+		-this->get_bounding_box().p.x(),
+		round((font.get_height() + font.get_ascender() - font.get_descender()) / 2)
+	);
 
 	font.render(matr, morda::color_to_vec4f(this->get_current_color()), this->get_text());
 }

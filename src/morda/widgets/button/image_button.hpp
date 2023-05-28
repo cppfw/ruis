@@ -21,37 +21,37 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "button.hpp"
-
+#include "../../res/image.hpp"
 #include "../label/image.hpp"
 
-#include "../../res/image.hpp"
+#include "button.hpp"
 
-namespace morda{
-class image_button :
-		virtual public button,
-		public image
+namespace morda {
+class image_button : virtual public button, public image
 {
 	std::shared_ptr<const res::image> unpressedImage_v;
 	std::shared_ptr<const res::image> pressedImage_v;
-	
+
 	void update_image();
+
 protected:
-	void on_press_change()override;
+	void on_press_change() override;
 
 	image_button(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
-	
+
 public:
 	void set_pressed_image(std::shared_ptr<const res::image> image);
-	
-	const decltype(pressedImage_v)& get_pressed_image()const{
+
+	const decltype(pressedImage_v)& get_pressed_image() const
+	{
 		return this->pressedImage_v;
 	}
-	
+
 	void set_unpressed_image(std::shared_ptr<const res::image> image);
-	
-	const decltype(unpressedImage_v)& get_unpressed_image()const{
+
+	const decltype(unpressedImage_v)& get_unpressed_image() const
+	{
 		return this->unpressedImage_v;
 	}
-};	
-}
+};
+} // namespace morda

@@ -22,59 +22,61 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "image_mouse_cursor.hpp"
 
 #include "../../context.hpp"
-
-#include "../../util/util.hpp"
-
 #include "../../layouts/pile_layout.hpp"
+#include "../../util/util.hpp"
 
 using namespace morda;
 
 image_mouse_cursor::image_mouse_cursor(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
-		widget(c, desc),
-		container(this->context, desc, pile_layout::instance)
+	widget(c, desc),
+	container(this->context, desc, pile_layout::instance)
 {
-	for(const auto& p : desc){
-		if(!is_property(p)){
+	for (const auto& p : desc) {
+		if (!is_property(p)) {
 			continue;
 		}
 
-		if(p.value == "cursor"){
+		if (p.value == "cursor") {
 			this->set_cursor(this->context.get().loader.load<res::cursor>(get_property_value(p).to_string()));
 		}
 	}
 }
 
-void image_mouse_cursor::set_cursor(const utki::shared_ref<const res::cursor>& cursor) {
+void image_mouse_cursor::set_cursor(const utki::shared_ref<const res::cursor>& cursor)
+{
 	this->cursor = cursor.to_shared_ptr();
 	ASSERT(this->cursor)
 	this->quad_tex = this->cursor->image().get().to_shared_ptr();
 }
 
-bool image_mouse_cursor::on_mouse_move(const mouse_move_event& e){
-	if(e.pointer_id == 0){
+bool image_mouse_cursor::on_mouse_move(const mouse_move_event& e)
+{
+	if (e.pointer_id == 0) {
 		this->cursorPos = e.pos;
 	}
 	return this->container::on_mouse_move(e);
 }
 
-void image_mouse_cursor::render(const morda::matrix4& matrix)const{
+void image_mouse_cursor::render(const morda::matrix4& matrix) const
+{
 	this->container::render(matrix);
 
-	if(!this->cursor){
+	if (!this->cursor) {
 		return;
 	}
-	if(!this->is_hovered(0)){
+	if (!this->is_hovered(0)) {
 		return;
 	}
-	
+
 	ASSERT(this->quad_tex)
-	
+
 	matrix4 matr(matrix);
 	matr.translate(this->cursorPos);
 	matr.translate(-this->cursor->hotspot());
 	matr.scale(this->quad_tex->dims);
-	
-//	TRACE(<< "image_mouse_cursor::render(): this->cursorPos = " << this->cursorPos << " this->quadTex->dim() = " << this->quadTex->dim() << std::endl)
-	
+
+	//	TRACE(<< "image_mouse_cursor::render(): this->cursorPos = " << this->cursorPos << " this->quadTex->dim() = " <<
+	// this->quadTex->dim() << std::endl)
+
 	this->quad_tex->render(matr, this->context.get().renderer.get().pos_tex_quad_01_vao.get());
 }

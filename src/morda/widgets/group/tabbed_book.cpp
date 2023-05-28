@@ -26,10 +26,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace morda;
 
 tabbed_book::tabbed_book(const utki::shared_ref<morda::context>& context, const treeml::forest& desc) :
-		morda::widget(context, desc),
-		morda::container(
-				this->context,
-				treeml::read(R"(
+	morda::widget(context, desc),
+	morda::container(this->context, treeml::read(R"(
 					layout{column}
 					
 					@tab_group{
@@ -45,15 +43,14 @@ tabbed_book::tabbed_book(const utki::shared_ref<morda::context>& context, const 
 							weight { 1 }
 						}
 					}
-				)")
-			),
-		tab_group(this->get_widget_as<morda::tab_group>("morda_tab_group")),
-		book(this->get_widget_as<morda::book>("morda_book"))
+				)")),
+	tab_group(this->get_widget_as<morda::tab_group>("morda_tab_group")),
+	book(this->get_widget_as<morda::book>("morda_book"))
 {
 	// on page tear out, remove corresponding tab
-	this->book.pages_change_handler = [this](morda::book& b, const page& p){
+	this->book.pages_change_handler = [this](morda::book& b, const page& p) {
 		auto i = this->find_pair(p);
-		if(i != this->tab_page_pairs.end()){
+		if (i != this->tab_page_pairs.end()) {
 			ASSERT(i->tab)
 			this->activate_another_tab(*i->tab);
 			i->tab->remove_from_parent();
@@ -62,36 +59,35 @@ tabbed_book::tabbed_book(const utki::shared_ref<morda::context>& context, const 
 	};
 
 	// on page programmatic activate we need to activate the corresponding tab as well
-	this->book.active_page_change_handler = [this](morda::book& b){
+	this->book.active_page_change_handler = [this](morda::book& b) {
 		ASSERT(b.get_active_page())
 		auto i = this->find_pair(*b.get_active_page());
-		if(i != this->tab_page_pairs.end()){
+		if (i != this->tab_page_pairs.end()) {
 			ASSERT(i->tab)
 			i->tab->activate();
 		}
 	};
 }
 
-void tabbed_book::add(const utki::shared_ref<tab>& tab, const utki::shared_ref<morda::page>& page){
+void tabbed_book::add(const utki::shared_ref<tab>& tab, const utki::shared_ref<morda::page>& page)
+{
 	this->tab_group.push_back(tab);
 	this->book.push(page);
 
 	tab.get().set_pressed(true);
 
-	tab.get().press_handler = [page](morda::button& btn){
-		if(btn.is_pressed()){
+	tab.get().press_handler = [page](morda::button& btn) {
+		if (btn.is_pressed()) {
 			page.get().activate();
 		}
 	};
 
-	this->tab_page_pairs.push_back(tab_page_pair{
-		&tab.get(),
-		&page.get()
-	});
+	this->tab_page_pairs.push_back(tab_page_pair{&tab.get(), &page.get()});
 }
 
-void tabbed_book::activate_another_tab(tab& t){
-	if(!t.is_pressed()){
+void tabbed_book::activate_another_tab(tab& t)
+{
+	if (!t.is_pressed()) {
 		return;
 	}
 
@@ -99,14 +95,14 @@ void tabbed_book::activate_another_tab(tab& t){
 	auto i = this->tab_group.find(t);
 	ASSERT(i != this->tab_group.end())
 	ASSERT(!this->tab_group.empty())
-	if(i == this->tab_group.begin()){
+	if (i == this->tab_group.begin()) {
 		auto ni = std::next(i);
-		if(ni != this->tab_group.end()){
+		if (ni != this->tab_group.end()) {
 			auto next_tab = std::dynamic_pointer_cast<morda::tab>(ni->to_shared_ptr());
 			ASSERT(next_tab)
 			next_tab->set_pressed(true);
 		}
-	}else{
+	} else {
 		ASSERT(i != this->tab_group.begin())
 		auto ni = std::prev(i);
 		ASSERT(ni >= this->tab_group.begin())
@@ -116,9 +112,10 @@ void tabbed_book::activate_another_tab(tab& t){
 	}
 }
 
-utki::shared_ref<page> tabbed_book::tear_out(tab& t){
+utki::shared_ref<page> tabbed_book::tear_out(tab& t)
+{
 	auto i = this->find_pair(t);
-	if(i == this->tab_page_pairs.end()){
+	if (i == this->tab_page_pairs.end()) {
 		throw std::logic_error("tabbed_book::tear_out(): tab not found");
 	}
 
@@ -139,22 +136,16 @@ utki::shared_ref<page> tabbed_book::tear_out(tab& t){
 	return pg;
 }
 
-auto tabbed_book::find_pair(const morda::tab& t) -> decltype(tab_page_pairs)::iterator {
-	return std::find_if(
-		this->tab_page_pairs.begin(),
-		this->tab_page_pairs.end(),
-		[&t](const auto& e){
-			return &t == e.tab;
-		}
-	);
+auto tabbed_book::find_pair(const morda::tab& t) -> decltype(tab_page_pairs)::iterator
+{
+	return std::find_if(this->tab_page_pairs.begin(), this->tab_page_pairs.end(), [&t](const auto& e) {
+		return &t == e.tab;
+	});
 }
 
-auto tabbed_book::find_pair(const morda::page& p) -> decltype(tab_page_pairs)::iterator{
-	return std::find_if(
-		this->tab_page_pairs.begin(),
-		this->tab_page_pairs.end(),
-		[&p](const auto& e){
-			return &p == e.page;
-		}
-	);
+auto tabbed_book::find_pair(const morda::page& p) -> decltype(tab_page_pairs)::iterator
+{
+	return std::find_if(this->tab_page_pairs.begin(), this->tab_page_pairs.end(), [&p](const auto& e) {
+		return &p == e.page;
+	});
 }

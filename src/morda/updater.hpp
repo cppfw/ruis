@@ -21,27 +21,29 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
+#include <list>
 #include <memory>
 
-#include <list>
-
-namespace morda{
+namespace morda {
 
 class updateable;
 
-class updater : public std::enable_shared_from_this<updater>{
+class updater : public std::enable_shared_from_this<updater>
+{
 	friend class morda::updateable;
 
-	struct update_queue_item{
+	struct update_queue_item {
 		uint32_t ends_at;
 		std::weak_ptr<morda::updateable> updateable;
 	};
 
-	class update_queue : public std::list<update_queue_item>{
+	class update_queue : public std::list<update_queue_item>
+	{
 	public:
 		update_queue::iterator insert(const update_queue_item& p);
 
-		std::shared_ptr<morda::updateable> pop_front(){
+		std::shared_ptr<morda::updateable> pop_front()
+		{
 			auto ret = this->front().updateable.lock();
 			this->list::pop_front();
 			return ret;
@@ -54,17 +56,18 @@ class updater : public std::enable_shared_from_this<updater>{
 
 	uint32_t last_updated_timestamp = 0;
 
-	std::list<std::shared_ptr<morda::updateable> > to_add;
+	std::list<std::shared_ptr<morda::updateable>> to_add;
 
 	void add_pending();
 
 	void update_updateable(const std::shared_ptr<updateable>& u);
 
 	void remove_from_to_add(updateable* u);
+
 public:
 	updater() :
-			active_queue(&q1),
-			inactive_queue(&q2)
+		active_queue(&q1),
+		inactive_queue(&q2)
 	{}
 
 	// returns dt to wait before next update
@@ -88,10 +91,10 @@ public:
 	 * The function is not thread safe, must be called fom UI thread.
 	 * @param u - updateble to stop updating.
 	 */
-	void stop(updateable& u)noexcept;
+	void stop(updateable& u) noexcept;
 };
 
-}
+} // namespace morda
 
 // include definitions for forward declared classes
 #include "updateable.hpp"

@@ -21,15 +21,13 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "choice_group.hpp"
-
 #include "../../res/image.hpp"
 
-namespace morda{
+#include "choice_group.hpp"
 
-class tab_group :
-		virtual public widget,
-		public choice_group
+namespace morda {
+
+class tab_group : virtual public widget, public choice_group
 {
 	std::shared_ptr<res::image> filler;
 	std::shared_ptr<const res::image::texture> fillerTexture;
@@ -49,4 +47,4 @@ public:
 	void render(const morda::matrix4& matrix) const override;
 };
 
-}
+} // namespace morda

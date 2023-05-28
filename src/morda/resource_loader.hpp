@@ -21,13 +21,14 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include <map>
 #include <list>
+#include <map>
 
-#include <utki/shared.hpp>
 #include <papki/file.hpp>
 #include <treeml/tree.hpp>
-namespace morda{
+#include <utki/shared.hpp>
+
+namespace morda {
 
 class resource;
 class context;
@@ -58,17 +59,20 @@ class context;
  *
  * @endcode
  */
-class resource_loader{
+class resource_loader
+{
 	friend class context;
 	friend class resource;
 
-	class res_pack_entry{
+	class res_pack_entry
+	{
 	public:
 		res_pack_entry() = default;
 
 		// For MSVC compiler, it does not generate move constructor automatically
 		// TODO: check if this is still needed.
-		res_pack_entry(res_pack_entry&& r){
+		res_pack_entry(res_pack_entry&& r)
+		{
 			this->fi = std::move(r.fi);
 			this->script = std::move(r.script);
 		}
@@ -85,7 +89,7 @@ class resource_loader{
 
 		void add_resource_to_res_map(const utki::shared_ref<resource>& res, std::string_view id);
 		std::shared_ptr<resource> find_resource_in_res_map(std::string_view id);
-		const treeml::forest* find_resource_in_script(std::string_view id)const;
+		const treeml::forest* find_resource_in_script(std::string_view id) const;
 	};
 
 	// use std::list to be able to use iterator as resource pack id
@@ -93,8 +97,9 @@ class resource_loader{
 
 private:
 	context& ctx;
+
 	resource_loader(context& ctx) :
-			ctx(ctx)
+		ctx(ctx)
 	{}
 
 public:
@@ -131,7 +136,8 @@ public:
 	 * @return Loaded resource.
 	 * @throw TODO:
 	 */
-	template <class T> utki::shared_ref<T> load(std::string_view id);
+	template <class T>
+	utki::shared_ref<T> load(std::string_view id);
 
 private:
 };
@@ -139,33 +145,39 @@ private:
 /**
  * @brief Base class for all resources.
  */
-class resource : virtual public utki::shared{
+class resource : virtual public utki::shared
+{
 	friend class resource_loader;
 
 	std::string id;
+
 protected:
 	const utki::shared_ref<morda::context> context;
 
 	// this can only be used as a base class
 	resource(const utki::shared_ref<morda::context>& c) :
-			context(c)
+		context(c)
 	{}
-public:
-	virtual ~resource()noexcept{}
 
-	std::string_view get_id()const{
+public:
+	virtual ~resource() noexcept {}
+
+	std::string_view get_id() const
+	{
 		return this->id;
 	}
 };
 
-template <class resource_type> utki::shared_ref<resource_type> resource_loader::load(std::string_view id){
-	for(auto i = this->res_packs.rbegin(); i != this->res_packs.rend(); ++i){
-		if(auto r = i->find_resource_in_res_map(id)){
+template <class resource_type>
+utki::shared_ref<resource_type> resource_loader::load(std::string_view id)
+{
+	for (auto i = this->res_packs.rbegin(); i != this->res_packs.rend(); ++i) {
+		if (auto r = i->find_resource_in_res_map(id)) {
 			return utki::shared_ref<resource_type>(std::dynamic_pointer_cast<resource_type>(r));
 		}
 
 		auto desc = i->find_resource_in_script(id);
-		if(!desc){
+		if (!desc) {
 			continue;
 		}
 
@@ -182,10 +194,12 @@ template <class resource_type> utki::shared_ref<resource_type> resource_loader::
 		return resource;
 	}
 
-	LOG([&](auto&o){o << "resource id not found in mounted resource packs: " << id << std::endl;})
+	LOG([&](auto& o) {
+		o << "resource id not found in mounted resource packs: " << id << std::endl;
+	})
 	std::stringstream ss;
 	ss << "resource id not found in mounted resource packs: " << id;
 	throw std::logic_error(ss.str());
 }
 
-}
+} // namespace morda

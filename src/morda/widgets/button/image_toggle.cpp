@@ -19,16 +19,16 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 /* ================ LICENSE END ================ */
 
+#include "image_toggle.hpp"
+
 #include "../../context.hpp"
 #include "../../util/util.hpp"
-
-#include "image_toggle.hpp"
 
 using namespace morda;
 
 image_toggle::image_toggle(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
-		widget(c, desc),
-		button(this->context, desc),
-		toggle_button(this->context, desc),
-		image_button(this->context, desc)
+	widget(c, desc),
+	button(this->context, desc),
+	toggle_button(this->context, desc),
+	image_button(this->context, desc)
 {}

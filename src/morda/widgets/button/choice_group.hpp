@@ -21,11 +21,11 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "choice_button.hpp"
-
 #include "../../container.hpp"
 
-namespace morda{
+#include "choice_button.hpp"
+
+namespace morda {
 
 /**
  * @brief Choice group container.
@@ -34,24 +34,27 @@ namespace morda{
  * In the GUI script can be instantiated as "choice_group". Only available after
  * initializing standard morda widgets.
  */
-class choice_group : public container{
+class choice_group : public container
+{
 	friend class choice_button;
-	
+
 	std::weak_ptr<choice_button> active_choice_button;
+
 public:
 	choice_group(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
-	
+
 	choice_group(const choice_group&) = delete;
 	choice_group& operator=(const choice_group&) = delete;
-	
-	bool is_active(const widget& w)const noexcept;
-	
-	std::weak_ptr<choice_button> get_active()const noexcept{
+
+	bool is_active(const widget& w) const noexcept;
+
+	std::weak_ptr<choice_button> get_active() const noexcept
+	{
 		return this->active_choice_button;
 	}
-	
+
 private:
 	void set_active_choice_button(std::weak_ptr<choice_button> rb);
 };
 
-}
+} // namespace morda

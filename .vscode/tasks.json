@@ -186,6 +186,13 @@
             "command": "make clean && make",
             "problemMatcher": [],
             "group": "build"
+        },
+        {
+            "label": "format",
+            "type": "shell",
+            "command": "make apply-format",
+            "problemMatcher": [],
+            "group": "build"
         }
     ]
 }

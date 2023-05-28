@@ -21,28 +21,27 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
+#include <papki/file.hpp>
+#include <r4/vector.hpp>
 #include <utki/span.hpp>
 
-#include <papki/file.hpp>
-
-#include <r4/vector.hpp>
-
-namespace morda{
+namespace morda {
 
 /**
  * @brief Utility class for loading and manipulating raster images.
  */
-class raster_image final{
+class raster_image final
+{
 public:
 	/**
 	 * @brief Image color depth.
 	 */
-	enum class color_depth{
+	enum class color_depth {
 		unknown = 0,
 		grey = 1, // 1 channel. Only Grey channel
 		grey_alpha = 2, // 2 channels. Grey with Alpha channel
 		rgb = 3, // 3 channels. Red Green Blue channels
-		rgba = 4  // 4 channels. RGBA format (4 channels)
+		rgba = 4 // 4 channels. RGBA format (4 channels)
 	};
 
 private:
@@ -56,7 +55,7 @@ public:
 	 * Creates uninitialized Image object.
 	 */
 	raster_image() :
-			color_depth_(color_depth::unknown)
+		color_depth_(color_depth::unknown)
 	{}
 
 	raster_image(const raster_image&) = default;
@@ -67,7 +66,8 @@ public:
 	 * @param dimensions - image dimensions.
 	 * @param pixel_color_depth - color depth.
 	 */
-	raster_image(r4::vector2<unsigned> dimensions, color_depth pixel_color_depth){
+	raster_image(r4::vector2<unsigned> dimensions, color_depth pixel_color_depth)
+	{
 		this->init(dimensions, pixel_color_depth);
 	}
 
@@ -94,7 +94,8 @@ public:
 	 * Creates an image by loading it from file. Supported file types are PNG and JPG.
 	 * @param f - file to load image from.
 	 */
-	raster_image(const papki::file& f){
+	raster_image(const papki::file& f)
+	{
 		this->load(f);
 	}
 
@@ -102,7 +103,8 @@ public:
 	 * @brief Get image dimensions.
 	 * @return Image dimensions.
 	 */
-	const r4::vector2<unsigned>& dims()const noexcept{
+	const r4::vector2<unsigned>& dims() const noexcept
+	{
 		return this->dims_;
 	}
 
@@ -110,7 +112,8 @@ public:
 	 * @brief Get color depth.
 	 * @return Bits per pixel.
 	 */
-	unsigned bits_per_pixel()const{
+	unsigned bits_per_pixel() const
+	{
 		return this->num_channels() * 8;
 	}
 
@@ -118,7 +121,8 @@ public:
 	 * @brief Get color depth.
 	 * @return Number of color channels.
 	 */
-	unsigned num_channels()const{
+	unsigned num_channels() const
+	{
 		return unsigned(this->color_depth_);
 	}
 
@@ -126,7 +130,8 @@ public:
 	 * @brief Get color depth.
 	 * @return Color depth type.
 	 */
-	color_depth depth()const{
+	color_depth depth() const
+	{
 		return this->color_depth_;
 	}
 
@@ -134,7 +139,8 @@ public:
 	 * @brief Get pixel data.
 	 * @return Pixel data of the image.
 	 */
-	utki::span<uint8_t> pixels(){
+	utki::span<uint8_t> pixels()
+	{
 		return utki::make_span(this->buffer);
 	}
 
@@ -142,7 +148,8 @@ public:
 	 * @brief Get pixel data.
 	 * @return Pixel data of the image.
 	 */
-	utki::span<const uint8_t> pixels()const{
+	utki::span<const uint8_t> pixels() const
+	{
 		return utki::make_span(this->buffer);
 	}
 
@@ -205,7 +212,8 @@ public:
 	 * @param chan - channel index to get reference to.
 	 * @return Reference to uint8_t representing a single color channel of given pixel.
 	 */
-	const uint8_t& pix_chan(unsigned x, unsigned y, unsigned chan)const{
+	const uint8_t& pix_chan(unsigned x, unsigned y, unsigned chan) const
+	{
 		auto i = (y * this->dims().x() + x) * this->num_channels() + chan;
 		ASSERT(i < this->buffer.size())
 		return this->buffer[i];
@@ -218,7 +226,8 @@ public:
 	 * @param chan - channel number to get reference to.
 	 * @return Reference to uint8_t representing a single color channel of given pixel.
 	 */
-	uint8_t& pix_chan(unsigned x, unsigned y, unsigned chan){
+	uint8_t& pix_chan(unsigned x, unsigned y, unsigned chan)
+	{
 		auto i = (y * this->dims().x() + x) * this->num_channels() + chan;
 		ASSERT(i < this->buffer.size())
 		return this->buffer[i];
@@ -244,4 +253,4 @@ public:
 	void load(const papki::file& f);
 };
 
-}
+} // namespace morda

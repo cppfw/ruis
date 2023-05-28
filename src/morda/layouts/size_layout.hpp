@@ -23,13 +23,14 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "trivial_layout.hpp"
 
-namespace morda{
+namespace morda {
 
-class size_layout : public trivial_layout{
+class size_layout : public trivial_layout
+{
 public:
-    void lay_out(const vector2& size, semiconst_widget_list& widgets)const override;
+	void lay_out(const vector2& size, semiconst_widget_list& widgets) const override;
 
-    static const utki::shared_ref<size_layout> instance;
+	static const utki::shared_ref<size_layout> instance;
 };
 
-}
+} // namespace morda

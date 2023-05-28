@@ -21,22 +21,23 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "../../widget.hpp"
-#include "color_widget.hpp"
-
-#include "../../res/font.hpp"
-
-#include <r4/rectangle.hpp>
-
 #include <list>
 #include <vector>
 
-namespace morda{
+#include <r4/rectangle.hpp>
+
+#include "../../res/font.hpp"
+#include "../../widget.hpp"
+
+#include "color_widget.hpp"
+
+namespace morda {
 
 /**
  * @brief Abstract widget displaying a text.
  */
-class text_widget : virtual public widget{
+class text_widget : virtual public widget
+{
 	utki::shared_ref<const res::font> font;
 
 public:
@@ -45,26 +46,30 @@ public:
 
 	void set_font(const utki::shared_ref<const res::font>& font);
 
-	const res::font& get_font()const{
+	const res::font& get_font() const
+	{
 		return this->font.get();
 	}
 
-	void set_text(const std::string& text){
+	void set_text(const std::string& text)
+	{
 		this->set_text(utki::to_utf32(text));
 	}
 
 	virtual void set_text(std::u32string&& text) = 0;
 
-	virtual std::u32string get_text()const = 0;
+	virtual std::u32string get_text() const = 0;
 
-	void clear(){
+	void clear()
+	{
 		this->set_text(std::u32string());
 	}
 
-	virtual void on_font_change(){}
+	virtual void on_font_change() {}
 
-	virtual void on_text_change(){
-		if(this->text_change_handler){
+	virtual void on_text_change()
+	{
+		if (this->text_change_handler) {
 			this->text_change_handler(*this);
 		}
 	}
@@ -75,7 +80,6 @@ protected:
 	text_widget(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
 
 private:
-
 };
 
-}
+} // namespace morda

@@ -22,23 +22,23 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #pragma once
 
 #include "../config.hpp"
-
 #include "../resource_loader.hpp"
 
 #include "image.hpp"
 
-namespace morda{ namespace res{
+namespace morda {
+namespace res {
 
 /**
  * @brief Nine-patch resource.
  * Nine-patch is a stretchable image with defined unstretchable borders.
- * 
+ *
  * %resource description:
- * 
+ *
  * @param file - name of the image file, can be raster image or SVG.
- * 
+ *
  * @param borders - widths of borders in pixels in the left-top-right-bottom order.
- * 
+ *
  * Example:
  * @code
  * morda_npt_rightbutton_pressed{
@@ -47,56 +47,67 @@ namespace morda{ namespace res{
  * }
  * @endcode
  */
-class nine_patch : public resource{
+class nine_patch : public resource
+{
 	friend class morda::resource_loader;
-	
+
 	const utki::shared_ref<const res::image> image;
-	
+
 	sides<real> borders_v; // TODO: rename without _v suffix
-	
+
 public:
 	nine_patch(const nine_patch&) = delete;
 	nine_patch& operator=(const nine_patch&) = delete;
-	
+
 	nine_patch(
 		const utki::shared_ref<morda::context>& c,
 		const utki::shared_ref<const res::image>& image,
 		sides<real> borders
 	) :
-			resource(c),
-			image(image),
-			borders_v(borders)
+		resource(c),
+		image(image),
+		borders_v(borders)
 	{}
 
-	class image_matrix{
+	class image_matrix
+	{
 		const std::array<std::array<utki::shared_ref<const res::image>, 3>, 3> img_matrix;
-		
+
 		std::weak_ptr<const nine_patch> parent;
-	
+
 		real mul; // for erasing from the cache
+
 	public:
-		decltype(img_matrix)& images()const noexcept{
+		decltype(img_matrix)& images() const noexcept
+		{
 			return this->img_matrix;
 		}
-		
+
 		image_matrix(
-				std::array<std::array<utki::shared_ref<const res::image>, 3>, 3>&& l,
-				std::weak_ptr<const nine_patch> parent,
-				real mul
-			);
-		
-		~image_matrix()noexcept;
+			std::array<std::array<utki::shared_ref<const res::image>, 3>, 3>&& l,
+			std::weak_ptr<const nine_patch> parent,
+			real mul
+		);
+
+		~image_matrix() noexcept;
 	};
-	
-	std::shared_ptr<image_matrix> get(sides<real> borders)const;
-	
-	const decltype(borders_v)& borders()const noexcept{
+
+	std::shared_ptr<image_matrix> get(sides<real> borders) const;
+
+	const decltype(borders_v)& borders() const noexcept
+	{
 		return this->borders_v;
 	}
+
 private:
 	mutable std::map<real, std::weak_ptr<image_matrix>> cache;
-	
-	static utki::shared_ref<nine_patch> load(const utki::shared_ref<morda::context>& ctx, const ::treeml::forest& desc, const papki::file& fi);
+
+	static utki::shared_ref<nine_patch> load(
+		const utki::shared_ref<morda::context>& ctx,
+		const ::treeml::forest& desc,
+		const papki::file& fi
+	);
 };
 
-}}
+} // namespace res
+} // namespace morda

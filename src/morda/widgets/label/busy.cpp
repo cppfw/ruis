@@ -24,15 +24,16 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace morda;
 
 busy::busy(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
-		widget(c, desc),
-		spinner(this->context, desc)
+	widget(c, desc),
+	spinner(this->context, desc)
 {
-	if(!this->get_image()){
+	if (!this->get_image()) {
 		this->set_image(this->context.get().loader.load<res::image>("morda_img_busy").to_shared_ptr());
 	}
 }
 
-void busy::set_active(bool active){
+void busy::set_active(bool active)
+{
 	this->set_visible(active);
 	this->spinner::set_active(active);
 }

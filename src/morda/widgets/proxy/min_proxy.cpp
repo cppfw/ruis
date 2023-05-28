@@ -26,44 +26,47 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace morda;
 
 min_proxy::min_proxy(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
-		morda::widget(c, desc),
-		morda::container(this->context, desc, pile_layout::instance)
+	morda::widget(c, desc),
+	morda::container(this->context, desc, pile_layout::instance)
 {
-	for(const auto& p : desc){
-		if(!is_property(p)){
+	for (const auto& p : desc) {
+		if (!is_property(p)) {
 			continue;
 		}
 
-		try{
-			if(p.value == "root"){
+		try {
+			if (p.value == "root") {
 				this->root_id = get_property_value(p).to_string();
-			}else if(p.value == "target"){
-				for(const auto& id : p.children){
+			} else if (p.value == "target") {
+				for (const auto& id : p.children) {
 					this->target_id.push_back(id.value.to_string());
 				}
 			}
-		}catch(std::invalid_argument&){
-			LOG([&](auto&o){o << "could not parse value of " << treeml::to_string(p) << std::endl;})
+		} catch (std::invalid_argument&) {
+			LOG([&](auto& o) {
+				o << "could not parse value of " << treeml::to_string(p) << std::endl;
+			})
 			throw;
 		}
 	}
 }
 
-morda::vector2 min_proxy::measure(const vector2& quotum)const{
+morda::vector2 min_proxy::measure(const vector2& quotum) const
+{
 	auto t = this->target.lock();
-	if(!t){
-		if(this->target_id.empty()){
+	if (!t) {
+		if (this->target_id.empty()) {
 			return {0, 0};
 		}
 
 		const widget* root;
-		if(this->root_id.empty()){
+		if (this->root_id.empty()) {
 			root = &this->get_root_widget();
-		}else{
+		} else {
 			root = &this->get_ancestor(this->root_id.c_str());
 		}
 		ASSERT(root)
-		for(const auto& id : this->target_id){
+		for (const auto& id : this->target_id) {
 			root = &root->get_widget(id, false);
 		}
 		this->root_id.clear();

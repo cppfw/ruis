@@ -21,21 +21,20 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
+#include "../util/key.hpp"
 #include "../widget.hpp"
 
-#include "../util/key.hpp"
-
-namespace morda{
+namespace morda {
 
 /**
  * @brief Base class for widgets which want to get character input events.
  * When the widget has keyboard focus it will also get character input events.
  */
-class character_input_widget : virtual public widget{
-
+class character_input_widget : virtual public widget
+{
 protected:
 	character_input_widget(const utki::shared_ref<morda::context>& c) :
-			widget(c, treeml::forest())
+		widget(c, treeml::forest())
 	{}
 
 public:
@@ -45,8 +44,7 @@ public:
 	 */
 	virtual void on_character_input(const character_input_event& e) = 0;
 
-	virtual ~character_input_widget()noexcept{}
+	virtual ~character_input_widget() noexcept {}
 };
 
-
-}
+} // namespace morda

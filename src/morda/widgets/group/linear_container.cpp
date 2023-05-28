@@ -23,25 +23,28 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <cmath>
 
-#include "../../util/util.hpp"
 #include "../../context.hpp"
-
 #include "../../layouts/linear_layout.hpp"
+#include "../../util/util.hpp"
 
 using namespace morda;
 
-linear_container::linear_container(const utki::shared_ref<morda::context>& c, const treeml::forest& desc, bool vertical) :
-		widget(c, desc),
-		container(
-			this->context,
-			desc, 
-			[&]() -> utki::shared_ref<morda::layout> {
-				if(vertical){
-					return column_layout::instance;
-				}else{
-					return row_layout::instance;
-				}
-			}()
-		),
-		oriented_widget(this->context, treeml::forest(), vertical)
+linear_container::linear_container(
+	const utki::shared_ref<morda::context>& c,
+	const treeml::forest& desc,
+	bool vertical
+) :
+	widget(c, desc),
+	container(
+		this->context,
+		desc,
+		[&]() -> utki::shared_ref<morda::layout> {
+			if (vertical) {
+				return column_layout::instance;
+			} else {
+				return row_layout::instance;
+			}
+		}()
+	),
+	oriented_widget(this->context, treeml::forest(), vertical)
 {}

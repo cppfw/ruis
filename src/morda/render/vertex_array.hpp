@@ -21,37 +21,38 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include <vector>
 #include <memory>
+#include <vector>
 
 #include <utki/shared_ref.hpp>
 
-#include "vertex_buffer.hpp"
 #include "index_buffer.hpp"
+#include "vertex_buffer.hpp"
 
-namespace morda{
+namespace morda {
 
-class vertex_array{
+class vertex_array
+{
 public:
 	const std::vector<utki::shared_ref<const vertex_buffer>> buffers;
-	
+
 	const utki::shared_ref<const index_buffer> indices;
-	
+
 	/**
 	 * @brief Vertex data rendering mode.
 	 * Enumeration defining how to interpret vertex data when rendering.
 	 */
-	enum class mode{
+	enum class mode {
 		// NOTE: do not change order!!!
-		
+
 		triangles,
 		triangle_fan,
 		line_loop,
 		triangle_strip
 	};
-	
+
 	const mode rendering_mode;
-	
+
 	vertex_array(
 		decltype(buffers)&& buffers,
 		const utki::shared_ref<const morda::index_buffer>& indices,
@@ -61,4 +62,4 @@ public:
 	virtual ~vertex_array() = default;
 };
 
-}
+} // namespace morda

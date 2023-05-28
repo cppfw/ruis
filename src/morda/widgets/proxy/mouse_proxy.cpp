@@ -24,26 +24,29 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace morda;
 
 mouse_proxy::mouse_proxy(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
-		widget(c, desc)
+	widget(c, desc)
 {}
 
-bool mouse_proxy::on_mouse_button(const mouse_button_event& e){
-	if(this->mouse_button_handler){
+bool mouse_proxy::on_mouse_button(const mouse_button_event& e)
+{
+	if (this->mouse_button_handler) {
 		return this->mouse_button_handler(*this, e);
 	}
 	return false;
 }
 
-bool mouse_proxy::on_mouse_move(const mouse_move_event& e){
+bool mouse_proxy::on_mouse_move(const mouse_move_event& e)
+{
 	// LOG("e.pos = " << e.pos << ", rect() = " << this->rect() << std::endl)
-	if(this->mouse_move_handler){
+	if (this->mouse_move_handler) {
 		return this->mouse_move_handler(*this, e);
 	}
 	return false;
 }
 
-void mouse_proxy::on_hover_change(unsigned pointer_id){
-	if(this->hover_change_handler){
+void mouse_proxy::on_hover_change(unsigned pointer_id)
+{
+	if (this->hover_change_handler) {
 		this->hover_change_handler(*this, pointer_id);
 	}
 }

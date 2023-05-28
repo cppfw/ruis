@@ -24,7 +24,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "button.hpp"
 #include "toggle_button.hpp"
 
-namespace morda{
+namespace morda {
 
 /**
  * @brief Basic class of a choice button.
@@ -34,19 +34,20 @@ namespace morda{
  * from the same choice group will be unchecked automatically. Well known example
  * of such button is a radio button.
  */
-class choice_button : virtual public toggle_button{
+class choice_button : virtual public toggle_button
+{
 protected:
-	void on_press_change()override;
-	
-	bool on_mouse_button(const mouse_button_event& event)override;
+	void on_press_change() override;
+
+	bool on_mouse_button(const mouse_button_event& event) override;
 
 public:
 	choice_button(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
-	
+
 	choice_button(const choice_button&) = delete;
 	choice_button& operator=(const choice_button&) = delete;
 
 	void activate();
 };
 
-}
+} // namespace morda

@@ -24,52 +24,54 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <vector>
 
 #include <r4/vector.hpp>
-
-#include <utki/span.hpp>
 #include <utki/shared_ref.hpp>
+#include <utki/span.hpp>
 
-#include "texture_2d.hpp"
-
-#include "vertex_buffer.hpp"
-#include "vertex_array.hpp"
-#include "index_buffer.hpp"
-
-#include "texturing_shader.hpp"
 #include "coloring_shader.hpp"
-#include "shader.hpp"
 #include "coloring_texturing_shader.hpp"
 #include "frame_buffer.hpp"
+#include "index_buffer.hpp"
+#include "shader.hpp"
+#include "texture_2d.hpp"
+#include "texturing_shader.hpp"
+#include "vertex_array.hpp"
+#include "vertex_buffer.hpp"
 
-namespace morda{
+namespace morda {
 
-class render_factory{
+class render_factory
+{
 protected:
 	render_factory() = default;
-	
+
 public:
 	virtual ~render_factory() = default;
-	
-	virtual utki::shared_ref<texture_2d> create_texture_2d(texture_2d::type type, r4::vector2<unsigned> dims, utki::span<const uint8_t> data) = 0;
-	
+
+	virtual utki::shared_ref<texture_2d> create_texture_2d(
+		texture_2d::type type,
+		r4::vector2<unsigned> dims,
+		utki::span<const uint8_t> data
+	) = 0;
+
 	utki::shared_ref<texture_2d> create_texture_2d(r4::vector2<unsigned> dims, utki::span<const uint32_t> data);
-	
+
 	virtual utki::shared_ref<vertex_buffer> create_vertex_buffer(utki::span<const r4::vector4<float>> vertices) = 0;
-	
+
 	virtual utki::shared_ref<vertex_buffer> create_vertex_buffer(utki::span<const r4::vector3<float>> vertices) = 0;
-	
+
 	virtual utki::shared_ref<vertex_buffer> create_vertex_buffer(utki::span<const r4::vector2<float>> vertices) = 0;
-	
+
 	virtual utki::shared_ref<vertex_buffer> create_vertex_buffer(utki::span<const float> vertices) = 0;
-	
+
 	virtual utki::shared_ref<index_buffer> create_index_buffer(utki::span<const uint16_t> indices) = 0;
-	
+
 	virtual utki::shared_ref<vertex_array> create_vertex_array(
-			std::vector<utki::shared_ref<const morda::vertex_buffer>>&& buffers,
-			const utki::shared_ref<const morda::index_buffer>& indices,
-			vertex_array::mode rendering_mode
-		) = 0;
-	
-	struct shaders{
+		std::vector<utki::shared_ref<const morda::vertex_buffer>>&& buffers,
+		const utki::shared_ref<const morda::index_buffer>& indices,
+		vertex_array::mode rendering_mode
+	) = 0;
+
+	struct shaders {
 		std::unique_ptr<texturing_shader> pos_tex;
 		std::unique_ptr<coloring_shader> color_pos;
 		std::unique_ptr<coloring_shader> color_pos_lum;
@@ -77,10 +79,10 @@ public:
 		std::unique_ptr<coloring_texturing_shader> color_pos_tex;
 		std::unique_ptr<coloring_texturing_shader> color_pos_tex_alpha;
 	};
-	
+
 	virtual std::unique_ptr<shaders> create_shaders() = 0;
-	
+
 	virtual utki::shared_ref<frame_buffer> create_framebuffer(const utki::shared_ref<texture_2d>& color) = 0;
 };
 
-}
+} // namespace morda

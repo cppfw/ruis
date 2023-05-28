@@ -21,29 +21,33 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "container.hpp"
 
-#include "context.hpp"
-
 #include "layouts/trivial_layout.hpp"
 #include "util/util.hpp"
+
+#include "context.hpp"
 
 using namespace morda;
 
 container::container(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
-		container(c, desc, trivial_layout::instance)
+	container(c, desc, trivial_layout::instance)
 {}
 
-container::container(const utki::shared_ref<morda::context>& c, const treeml::forest& desc, const utki::shared_ref<morda::layout>& layout) :
+container::container(
+	const utki::shared_ref<morda::context>& c,
+	const treeml::forest& desc,
+	const utki::shared_ref<morda::layout>& layout
+) :
 	widget(c, desc),
 	layout(layout)
 {
-	for(const auto& p : desc){
-		if(!is_property(p)){
+	for (const auto& p : desc) {
+		if (!is_property(p)) {
 			continue;
 		}
 
-		try{
-			if(p.value == "layout"){
-				if(p.children.size() != 1){
+		try {
+			if (p.value == "layout") {
+				if (p.children.size() != 1) {
 					throw std::invalid_argument("layout parameter has zero or more than 1 child");
 				}
 				this->layout = this->context.get().layout_factory.create(
@@ -51,8 +55,10 @@ container::container(const utki::shared_ref<morda::context>& c, const treeml::fo
 					p.children.front().children
 				);
 			}
-		}catch(std::invalid_argument&){
-			LOG([&](auto&o){o << "could not parse value of " << treeml::to_string(p) << std::endl;})
+		} catch (std::invalid_argument&) {
+			LOG([&](auto& o) {
+				o << "could not parse value of " << treeml::to_string(p) << std::endl;
+			})
 			throw;
 		}
 	}
@@ -60,9 +66,10 @@ container::container(const utki::shared_ref<morda::context>& c, const treeml::fo
 	this->push_back_inflate(desc);
 }
 
-void container::push_back_inflate(const treeml::forest& desc){
-	for(auto i = desc.begin(); i != desc.end(); ++i){
-		if(is_leaf_property(i->value)){
+void container::push_back_inflate(const treeml::forest& desc)
+{
+	for (auto i = desc.begin(); i != desc.end(); ++i) {
+		if (is_leaf_property(i->value)) {
 			continue;
 		}
 		this->push_back(this->context.get().inflater.inflate(i, i + 1));
@@ -70,13 +77,14 @@ void container::push_back_inflate(const treeml::forest& desc){
 
 	// in case this widget is initially disabled, as specified in gui script
 	// we need to update enabled state of children
-	if(!this->is_enabled()){
+	if (!this->is_enabled()) {
 		this->container::on_enable_change();
 	}
 }
 
-void container::render_child(const matrix4& matrix, const widget& c) const {
-	if(!c.is_visible()){
+void container::render_child(const matrix4& matrix, const widget& c) const
+{
+	if (!c.is_visible()) {
 		return;
 	}
 
@@ -86,42 +94,40 @@ void container::render_child(const matrix4& matrix, const widget& c) const {
 	c.render_internal(matr);
 }
 
-void container::render(const morda::matrix4& matrix)const{
-	for(auto& w: this->children()){
+void container::render(const morda::matrix4& matrix) const
+{
+	for (auto& w : this->children()) {
 		this->render_child(matrix, w.get());
 	}
 }
 
-bool container::on_mouse_button(const mouse_button_event& e){
-//	TRACE(<< "container::OnMouseButton(): isDown = " << isDown << ", button = " << button << ", pos = " << pos << std::endl)
+bool container::on_mouse_button(const mouse_button_event& e)
+{
+	//	TRACE(<< "container::OnMouseButton(): isDown = " << isDown << ", button = " << button << ", pos = " << pos <<
+	// std::endl)
 
 	blocked_flag_guard blocked_guard(this->is_blocked);
 
 	// check if mouse captured
 	{
 		auto i = this->mouse_capture_map.find(e.pointer_id);
-		if(i != this->mouse_capture_map.end()){
-			if(auto w = i->second.capturing_widget.lock()){
-				if(w->is_interactive()){
-					w->on_mouse_button(mouse_button_event{
-							e.is_down,
-							e.pos - w->rect().p,
-							e.button,
-							e.pointer_id
-						});
+		if (i != this->mouse_capture_map.end()) {
+			if (auto w = i->second.capturing_widget.lock()) {
+				if (w->is_interactive()) {
+					w->on_mouse_button(mouse_button_event{e.is_down, e.pos - w->rect().p, e.button, e.pointer_id});
 					w->set_hovered(w->rect().overlaps(e.pos), e.pointer_id);
 
 					unsigned& num_buttons_captured = i->second.num_buttons_captured;
-					if(e.is_down){
+					if (e.is_down) {
 						// if we get button down event for mouse capturing widget, then it is not for the buttons
 						// which are already down, so we increase the button counter.
 						++num_buttons_captured;
-					}else{
-						//If we get button up event,
-						// then it is for one of the buttons which was down before, so we decrease the button counter.
+					} else {
+						// If we get button up event,
+						//  then it is for one of the buttons which was down before, so we decrease the button counter.
 						--num_buttons_captured;
 					}
-					if(num_buttons_captured == 0){
+					if (num_buttons_captured == 0) {
 						this->mouse_capture_map.erase(i);
 					}
 
@@ -135,14 +141,14 @@ bool container::on_mouse_button(const mouse_button_event& e){
 	}
 
 	// call children in reverse order
-	for(auto i = this->children().rbegin(); i != this->children().rend(); ++i){
+	for (auto i = this->children().rbegin(); i != this->children().rend(); ++i) {
 		auto& c = i->get();
 
-		if(!c.is_interactive()){
+		if (!c.is_interactive()) {
 			continue;
 		}
 
-		if(!c.rect().overlaps(e.pos)){
+		if (!c.rect().overlaps(e.pos)) {
 			continue;
 		}
 
@@ -150,13 +156,7 @@ bool container::on_mouse_button(const mouse_button_event& e){
 		// but, since we get mouse click, then the widget was hovered before the click.
 		c.set_hovered(true, e.pointer_id);
 
-		if(c.on_mouse_button(mouse_button_event{
-				e.is_down,
-				e.pos - c.rect().p,
-				e.button,
-				e.pointer_id
-			}))
-		{
+		if (c.on_mouse_button(mouse_button_event{e.is_down, e.pos - c.rect().p, e.button, e.pointer_id})) {
 			ASSERT(this->mouse_capture_map.find(e.pointer_id) == this->mouse_capture_map.end())
 
 			// normally, we get here only when the mouse was not captured by widget, because
@@ -164,20 +164,16 @@ bool container::on_mouse_button(const mouse_button_event& e){
 			// So, the event should be button down.
 			// But, in theory, it can be button up event here, if some widget which captured
 			// mouse was removed from its parent. So, check if we have button down event.
-			if(e.is_down){
-				this->mouse_capture_map.insert(std::make_pair(
-						e.pointer_id,
-						mouse_capture_info{
-							utki::make_weak(i->to_shared_ptr()),
-							1
-						}
-					));
+			if (e.is_down) {
+				this->mouse_capture_map.insert(
+					std::make_pair(e.pointer_id, mouse_capture_info{utki::make_weak(i->to_shared_ptr()), 1})
+				);
 			}
 
 			// widget has consumed the mouse button event,
 			// that means the rest of the underlying widgets are not hovered,
 			// update the hovered state of those
-			for(++i; i != this->children().rend(); ++i){
+			for (++i; i != this->children().rend(); ++i) {
 				i->get().set_hovered(false, e.pointer_id);
 			}
 
@@ -188,22 +184,19 @@ bool container::on_mouse_button(const mouse_button_event& e){
 	return this->widget::on_mouse_button(e);
 }
 
-bool container::on_mouse_move(const mouse_move_event& e){
-//	TRACE(<< "container::on_mouse_move(): pos = " << pos << std::endl)
+bool container::on_mouse_move(const mouse_move_event& e)
+{
+	//	TRACE(<< "container::on_mouse_move(): pos = " << pos << std::endl)
 
 	blocked_flag_guard blocked_guard(this->is_blocked);
 
 	// check if mouse captured
-	if(!e.ignore_mouse_capture){
+	if (!e.ignore_mouse_capture) {
 		auto i = this->mouse_capture_map.find(e.pointer_id);
-		if(i != this->mouse_capture_map.end()){
-			if(auto w = i->second.capturing_widget.lock()){
-				if(w->is_interactive()){
-					w->on_mouse_move(mouse_move_event{
-							e.pos - w->rect().p,
-							e.pointer_id,
-							e.ignore_mouse_capture
-						});
+		if (i != this->mouse_capture_map.end()) {
+			if (auto w = i->second.capturing_widget.lock()) {
+				if (w->is_interactive()) {
+					w->on_mouse_move(mouse_move_event{e.pos - w->rect().p, e.pointer_id, e.ignore_mouse_capture});
 					w->set_hovered(w->rect().overlaps(e.pos), e.pointer_id);
 
 					// doesn't matter what to return because parent widget also captured
@@ -216,15 +209,17 @@ bool container::on_mouse_move(const mouse_move_event& e){
 	}
 
 	// call children in reverse order
-	for(auto i = this->children().rbegin(); i != this->children().rend(); ++i){
+	for (auto i = this->children().rbegin(); i != this->children().rend(); ++i) {
 		auto& c = i->get();
 
-		if(!c.is_interactive()){
-			ASSERT(!c.is_hovered(), [&](auto&o){o << "c->name() = " << c.id;})
+		if (!c.is_interactive()) {
+			ASSERT(!c.is_hovered(), [&](auto& o) {
+				o << "c->name() = " << c.id;
+			})
 			continue;
 		}
-		
-		if(!c.rect().overlaps(e.pos)){
+
+		if (!c.rect().overlaps(e.pos)) {
 			c.set_hovered(false, e.pointer_id);
 			continue;
 		}
@@ -232,16 +227,11 @@ bool container::on_mouse_move(const mouse_move_event& e){
 		c.set_hovered(true, e.pointer_id);
 
 		// LOG("e.pos = " << e.pos << ", rect() = " << c->rect() << std::endl)
-		if(c.on_mouse_move(mouse_move_event{
-				e.pos - c.rect().p,
-				e.pointer_id,
-				e.ignore_mouse_capture
-			}))
-		{
+		if (c.on_mouse_move(mouse_move_event{e.pos - c.rect().p, e.pointer_id, e.ignore_mouse_capture})) {
 			// widget has consumed the mouse move event,
 			// that means the rest of the underlying widgets are not hovered,
 			// update the hovered state of those
-			for(++i; i != this->children().rend(); ++i){
+			for (++i; i != this->children().rend(); ++i) {
 				i->get().set_hovered(false, e.pointer_id);
 			}
 
@@ -252,36 +242,40 @@ bool container::on_mouse_move(const mouse_move_event& e){
 	return false;
 }
 
-void container::on_hover_change(unsigned pointer_id){
-	if(this->is_hovered(pointer_id)){
+void container::on_hover_change(unsigned pointer_id)
+{
+	if (this->is_hovered(pointer_id)) {
 		return;
 	}
 
 	// un-hover all the children since container became un-hovered
 	blocked_flag_guard blocked_guard(this->is_blocked);
-	for(auto& w : this->children()){
+	for (auto& w : this->children()) {
 		w.get().set_hovered(false, pointer_id);
 	}
 }
 
-vector2 container::measure(const vector2& quotum)const{
+vector2 container::measure(const vector2& quotum) const
+{
 	return this->get_layout().measure(quotum, this->children());
 }
 
-void container::on_lay_out(){
+void container::on_lay_out()
+{
 	this->get_layout().lay_out(this->rect().d, this->children());
 }
 
-widget_list::const_iterator container::insert(const utki::shared_ref<widget>& w, widget_list::const_iterator before){
-	if(w.get().parent()){
+widget_list::const_iterator container::insert(const utki::shared_ref<widget>& w, widget_list::const_iterator before)
+{
+	if (w.get().parent()) {
 		throw std::invalid_argument("container::insert(): given widget is already added to some container");
 	}
 
-	if(this->is_blocked){
+	if (this->is_blocked) {
 		throw std::logic_error("container::insert(): children list is locked");
 	}
 
-	if(before != this->children().end() && before->get().parent() != this){
+	if (before != this->children().end() && before->get().parent() != this) {
 		throw std::invalid_argument("container::insert(): given 'before' iterator points to a different container");
 	}
 
@@ -298,16 +292,17 @@ widget_list::const_iterator container::insert(const utki::shared_ref<widget>& w,
 	return ret;
 }
 
-widget_list::const_iterator container::erase(widget_list::const_iterator child){
-	if(this->is_blocked){
+widget_list::const_iterator container::erase(widget_list::const_iterator child)
+{
+	if (this->is_blocked) {
 		throw std::logic_error("container::erase(): children list is locked");
 	}
 
-	if(child == this->children().end()){
+	if (child == this->children().end()) {
 		throw std::invalid_argument("container::erase(): given 'child' iterator is invalid");
 	}
 
-	if(child->get().parent() != this){
+	if (child->get().parent() != this) {
 		throw std::invalid_argument("container::erase(): given child widget belongs to a different container");
 	}
 
@@ -324,43 +319,54 @@ widget_list::const_iterator container::erase(widget_list::const_iterator child){
 	return ret;
 }
 
-void container::clear(){
-	for(auto i = this->children().begin(); i != this->children().end(); i = this->erase(i)){}
+void container::clear()
+{
+	for (auto i = this->children().begin(); i != this->children().end(); i = this->erase(i)) {
+	}
 }
 
-std::shared_ptr<widget> container::try_get_widget(const std::string& id, bool allow_itself)noexcept{
-	if(allow_itself){
-		if(auto r = this->widget::try_get_widget(id, true)){
+std::shared_ptr<widget> container::try_get_widget(const std::string& id, bool allow_itself) noexcept
+{
+	if (allow_itself) {
+		if (auto r = this->widget::try_get_widget(id, true)) {
 			return r;
 		}
 	}
 
-	for(auto& w : this->children()){
-		if(auto r = w.get().try_get_widget(id, true)){
+	for (auto& w : this->children()) {
+		if (auto r = w.get().try_get_widget(id, true)) {
 			return r;
 		}
 	}
 	return nullptr;
 }
 
-widget_list::const_iterator container::change_child_z_position(widget_list::const_iterator child, widget_list::const_iterator before){
-	if(this->is_blocked){
+widget_list::const_iterator container::change_child_z_position(
+	widget_list::const_iterator child,
+	widget_list::const_iterator before
+)
+{
+	if (this->is_blocked) {
 		throw std::logic_error("container::change_child_z_position(): children list is locked");
 	}
 
-	if(child == this->children().end()){
+	if (child == this->children().end()) {
 		throw std::invalid_argument("container::change_child_z_position(): given 'child' iterator is invalid");
 	}
 
-	if(child->get().parent() != this){
-		throw std::invalid_argument("container::change_child_z_position(): given child widget belongs to a different container");
+	if (child->get().parent() != this) {
+		throw std::invalid_argument(
+			"container::change_child_z_position(): given child widget belongs to a different container"
+		);
 	}
 
-	if(before != this->children().end() && before->get().parent() != this){
-		throw std::invalid_argument("container::change_child_z_position(): given 'before' iterator points to a different container");
+	if (before != this->children().end() && before->get().parent() != this) {
+		throw std::invalid_argument(
+			"container::change_child_z_position(): given 'before' iterator points to a different container"
+		);
 	}
 
-	if(child == before){
+	if (child == before) {
 		// child is already at the right place
 		return child;
 	}
@@ -372,9 +378,9 @@ widget_list::const_iterator container::change_child_z_position(widget_list::cons
 
 	auto distance = std::distance(i, b);
 	ASSERT(distance != 0)
-	if(distance > 0){
+	if (distance > 0) {
 		ret = std::rotate(i, std::next(i), b);
-	}else{
+	} else {
 		ret = std::rotate(b, i, std::next(i));
 		--ret;
 	}
@@ -384,36 +390,40 @@ widget_list::const_iterator container::change_child_z_position(widget_list::cons
 	return ret;
 }
 
-widget_list::const_iterator container::find(const widget& w){
+widget_list::const_iterator container::find(const widget& w)
+{
 	return std::find_if(
-			this->children().begin(),
-			this->children().end(),
-			[&w](const decltype(this->children_list.variable)::value_type& v) -> bool{
-				return &v.get() == &w;
-			}
-		);
+		this->children().begin(),
+		this->children().end(),
+		[&w](const decltype(this->children_list.variable)::value_type& v) -> bool {
+			return &v.get() == &w;
+		}
+	);
 }
 
-const_widget_list::const_iterator container::find(const widget& w)const{
+const_widget_list::const_iterator container::find(const widget& w) const
+{
 	return std::find_if(
-			this->children().begin(),
-			this->children().end(),
-			[&w](const decltype(this->children_list.constant)::value_type& v) -> bool{
-				return &v.get() == &w;
-			}
-		);
+		this->children().begin(),
+		this->children().end(),
+		[&w](const decltype(this->children_list.constant)::value_type& v) -> bool {
+			return &v.get() == &w;
+		}
+	);
 }
 
-void container::on_enable_change(){
+void container::on_enable_change()
+{
 	blocked_flag_guard blocked_guard(this->is_blocked);
-	
-	for(auto& c : this->children()){
+
+	for (auto& c : this->children()) {
 		c.get().set_enabled(this->is_enabled());
 	}
 }
 
-void container::on_reload(){
-	for(auto& c : this->children()){
+void container::on_reload()
+{
+	for (auto& c : this->children()) {
 		c.get().reload();
 	}
 }

@@ -23,14 +23,15 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace morda;
 
-void nine_patch_toggle::on_press_change(){
+void nine_patch_toggle::on_press_change()
+{
 	this->nine_patch_button::on_press_change();
 	this->toggle_button::on_press_change();
 }
 
 nine_patch_toggle::nine_patch_toggle(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
-		widget(c, desc),
-		button(this->context, desc),
-		toggle_button(this->context, desc),
-		nine_patch_button(this->context, desc)
+	widget(c, desc),
+	button(this->context, desc),
+	toggle_button(this->context, desc),
+	nine_patch_button(this->context, desc)
 {}

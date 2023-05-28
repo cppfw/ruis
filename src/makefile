@@ -1,6 +1,7 @@
 include prorab.mk
 include prorab-license.mk
 include prorab-install-dbgsrc.mk
+include prorab-clang-format.mk
 
 this_name := morda
 
@@ -23,5 +24,7 @@ $(eval $(prorab-build-lib))
 this_src_dir := $(this_name)
 this_license_file := ../LICENSE
 $(eval $(prorab-license))
+
+$(eval $(prorab-clang-format))
 
 $(eval $(prorab-install-dbgsrc))

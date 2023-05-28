@@ -22,12 +22,12 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "text_widget.hpp"
 
 #include "../../context.hpp"
-
 #include "../../util/util.hpp"
 
 using namespace morda;
 
-void text_widget::set_font(const utki::shared_ref<const res::font>& font){
+void text_widget::set_font(const utki::shared_ref<const res::font>& font)
+{
 	this->font = font;
 
 	this->invalidate_layout();
@@ -36,24 +36,24 @@ void text_widget::set_font(const utki::shared_ref<const res::font>& font){
 }
 
 text_widget::text_widget(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
-		widget(c, desc),
-		font([&desc, this](){
-			for(const auto& p : desc){
-				if(!is_property(p)){
-					continue;
-				}
-
-				if(p.value == "font"){
-					return this->context.get().loader.load<morda::res::font>(get_property_value(p).to_string().c_str());
-				}
+	widget(c, desc),
+	font([&desc, this]() {
+		for (const auto& p : desc) {
+			if (!is_property(p)) {
+				continue;
 			}
 
-			// load default font
-			return this->context.get().loader.load<res::font>("morda_fnt_text");
-		}())
+			if (p.value == "font") {
+				return this->context.get().loader.load<morda::res::font>(get_property_value(p).to_string().c_str());
+			}
+		}
+
+		// load default font
+		return this->context.get().loader.load<res::font>("morda_fnt_text");
+	}())
 {
-	for(const auto& p : desc){
-		if(!is_property(p)){
+	for (const auto& p : desc) {
+		if (!is_property(p)) {
 			continue;
 		}
 	}

@@ -23,8 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "button.hpp"
 
-
-namespace morda{
+namespace morda {
 
 /**
  * @brief Basic class of a toggle button.
@@ -32,19 +31,21 @@ namespace morda{
  * In GUI script it has the 'checked{true/false}' attribute which can set initial
  * checked state of the widget.
  */
-class toggle_button : virtual public button{
+class toggle_button : virtual public button
+{
 protected:
-	bool on_mouse_button(const mouse_button_event& event)override;
-	
+	bool on_mouse_button(const mouse_button_event& event) override;
+
 public:
 	toggle_button(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
-	
+
 	/**
 	 * @brief Change checked state to opposite.
 	 */
-	void toggle(){
+	void toggle()
+	{
 		this->set_pressed(!this->is_pressed());
 	}
 };
 
-}
+} // namespace morda

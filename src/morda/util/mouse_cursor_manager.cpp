@@ -25,7 +25,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace morda;
 
-decltype(mouse_cursor_manager::cursor_stack)::iterator mouse_cursor_manager::push(mouse_cursor cursor){
+decltype(mouse_cursor_manager::cursor_stack)::iterator mouse_cursor_manager::push(mouse_cursor cursor)
+{
 	this->cursor_stack.push_front(cursor);
 
 	this->set_mouse_cursor(cursor);
@@ -33,13 +34,14 @@ decltype(mouse_cursor_manager::cursor_stack)::iterator mouse_cursor_manager::pus
 	return this->cursor_stack.begin();
 }
 
-void mouse_cursor_manager::pop(decltype(cursor_stack)::iterator i){
+void mouse_cursor_manager::pop(decltype(cursor_stack)::iterator i)
+{
 	ASSERT(this->cursor_stack.size() > 1)
 	bool top_cursor = i == this->cursor_stack.begin();
-	
+
 	this->cursor_stack.erase(i);
 
-	if(top_cursor){
+	if (top_cursor) {
 		// top cursor has just been removed, set the new top cursor
 		this->set_mouse_cursor(this->cursor_stack.front());
 	}

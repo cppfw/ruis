@@ -23,8 +23,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace morda;
 
-bool key_proxy::on_key(const morda::key_event& e){
-	if(this->key_handler){
+bool key_proxy::on_key(const morda::key_event& e)
+{
+	if (this->key_handler) {
 		return this->key_handler(*this, e);
 	}
 	return false;

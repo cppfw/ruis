@@ -21,24 +21,30 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "texture_2d.hpp"
-#include "vertex_array.hpp"
-
 #include <r4/matrix.hpp>
 #include <r4/vector.hpp>
 
-namespace morda{
+#include "texture_2d.hpp"
+#include "vertex_array.hpp"
 
-class coloring_texturing_shader{
+namespace morda {
+
+class coloring_texturing_shader
+{
 public:
 	coloring_texturing_shader() = default;
-	
+
 	coloring_texturing_shader(const coloring_texturing_shader&) = delete;
 	coloring_texturing_shader& operator=(const coloring_texturing_shader&) = delete;
-	
+
 	virtual ~coloring_texturing_shader() = default;
-	
-	virtual void render(const r4::matrix4<float> &m, const morda::vertex_array& va, r4::vector4<float> color, const morda::texture_2d& tex)const = 0;
+
+	virtual void render(
+		const r4::matrix4<float>& m,
+		const morda::vertex_array& va,
+		r4::vector4<float> color,
+		const morda::texture_2d& tex
+	) const = 0;
 };
 
-}
+} // namespace morda

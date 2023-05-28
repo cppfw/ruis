@@ -27,14 +27,16 @@ using namespace morda;
 
 const utki::shared_ref<trivial_layout> trivial_layout::instance = utki::make_shared<trivial_layout>();
 
-vector2 trivial_layout::measure(const vector2& quotum, const_widget_list& widgets)const{
-    return max(quotum, 0);
+vector2 trivial_layout::measure(const vector2& quotum, const_widget_list& widgets) const
+{
+	return max(quotum, 0);
 }
 
-void trivial_layout::lay_out(const vector2& size, semiconst_widget_list& widgets)const{
-    for(auto& w : widgets){
+void trivial_layout::lay_out(const vector2& size, semiconst_widget_list& widgets) const
+{
+	for (auto& w : widgets) {
 		auto& ww = w.get();
-		if(ww.is_layout_dirty()){
+		if (ww.is_layout_dirty()) {
 			ww.lay_out();
 		}
 	}

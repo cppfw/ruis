@@ -22,40 +22,39 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #pragma once
 
 #include "../layout.hpp"
-
 #include "../util/oriented.hpp"
 
-namespace morda{
+namespace morda {
 
 // TODO: consider inheriting oriented
-class linear_layout :
-    public layout,
-    public oriented
+class linear_layout : public layout, public oriented
 {
 public:
-    linear_layout(bool is_vertical);
+	linear_layout(bool is_vertical);
 
-    void lay_out(const vector2& size, semiconst_widget_list& widgets)const override;
+	void lay_out(const vector2& size, semiconst_widget_list& widgets) const override;
 
-    vector2 measure(const vector2& quotum, const_widget_list& widgets)const override;
+	vector2 measure(const vector2& quotum, const_widget_list& widgets) const override;
 };
 
-class row_layout : public linear_layout{
+class row_layout : public linear_layout
+{
 public:
-    row_layout() :
-        linear_layout(false)
-    {}
+	row_layout() :
+		linear_layout(false)
+	{}
 
-    static const utki::shared_ref<row_layout> instance;
+	static const utki::shared_ref<row_layout> instance;
 };
 
-class column_layout : public linear_layout{
+class column_layout : public linear_layout
+{
 public:
-    column_layout() :
-        linear_layout(true)
-    {}
+	column_layout() :
+		linear_layout(true)
+	{}
 
-    static const utki::shared_ref<column_layout> instance;
+	static const utki::shared_ref<column_layout> instance;
 };
 
-}
+} // namespace morda

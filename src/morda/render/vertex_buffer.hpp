@@ -23,17 +23,18 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <cstddef>
 
-namespace morda{
-	
-class vertex_buffer{
+namespace morda {
+
+class vertex_buffer
+{
 public:
 	const size_t size;
-	
+
 	vertex_buffer(size_t size) :
-			size(size)
+		size(size)
 	{}
 
 	virtual ~vertex_buffer() = default;
 };
 
-}
+} // namespace morda

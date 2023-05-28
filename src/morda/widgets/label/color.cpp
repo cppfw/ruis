@@ -22,20 +22,20 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "color.hpp"
 
 #include "../../context.hpp"
-
 #include "../../util/util.hpp"
 
 using namespace morda;
 
 color::color(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
-		widget(c, desc),
-		color_widget(this->context, desc)
+	widget(c, desc),
+	color_widget(this->context, desc)
 {}
 
-void color::render(const morda::matrix4& matrix)const{
+void color::render(const morda::matrix4& matrix) const
+{
 	auto& r = this->context.get().renderer.get();
 	set_simple_alpha_blending(r);
-	
+
 	morda::matrix4 matr(matrix);
 	matr.scale(this->rect().d);
 

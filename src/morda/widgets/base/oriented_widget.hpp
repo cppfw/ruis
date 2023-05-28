@@ -23,18 +23,21 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../../widget.hpp"
 
-namespace morda{
+namespace morda {
 
 // TODO: remove in favor of oriented
-class oriented_widget : virtual public widget{
+class oriented_widget : virtual public widget
+{
 	bool is_vertical_v;
 
 public:
-	unsigned get_long_index()const noexcept{
+	unsigned get_long_index() const noexcept
+	{
 		return this->is_vertical_v ? 1 : 0;
 	}
 
-	unsigned get_trans_index()const noexcept{
+	unsigned get_trans_index() const noexcept
+	{
 		return this->is_vertical_v ? 0 : 1;
 	}
 
@@ -43,14 +46,14 @@ public:
 	oriented_widget(const oriented_widget&) = delete;
 	oriented_widget& operator=(const oriented_widget&) = delete;
 
-	bool is_vertical()const noexcept{
+	bool is_vertical() const noexcept
+	{
 		return this->is_vertical_v;
 	}
 
 	void set_vertical(bool vertical);
 
 private:
-
 };
 
-}
+} // namespace morda

@@ -21,20 +21,18 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "toggle_button.hpp"
 #include "image_button.hpp"
+#include "toggle_button.hpp"
 
-namespace morda{
+namespace morda {
 
-class image_toggle :
-		virtual public toggle_button,
-		public image_button
+class image_toggle : virtual public toggle_button, public image_button
 {
 public:
 	image_toggle(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
-	
+
 	image_toggle(const image_toggle&) = delete;
 	image_toggle& operator=(const image_toggle&) = delete;
 };
 
-}
+} // namespace morda

@@ -24,12 +24,13 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace morda;
 
 oriented_widget::oriented_widget(const utki::shared_ref<morda::context>& c, const treeml::forest& desc, bool vertical) :
-		widget(c, desc),
-		is_vertical_v(vertical)
+	widget(c, desc),
+	is_vertical_v(vertical)
 {}
 
-void oriented_widget::set_vertical(bool vertical) {
-	if(this->is_vertical_v == vertical){
+void oriented_widget::set_vertical(bool vertical)
+{
+	if (this->is_vertical_v == vertical) {
 		return;
 	}
 	this->is_vertical_v = vertical;

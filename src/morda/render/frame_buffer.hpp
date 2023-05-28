@@ -25,22 +25,24 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "texture_2d.hpp"
 
-namespace morda{
+namespace morda {
 
-class frame_buffer{
+class frame_buffer
+{
 protected:
 	const utki::shared_ref<texture_2d> color;
+
 public:
 	frame_buffer(const utki::shared_ref<texture_2d>& color) :
 		color(color)
 	{}
-	
+
 	frame_buffer(const frame_buffer&) = delete;
 	frame_buffer& operator=(const frame_buffer&) = delete;
-	
-	virtual ~frame_buffer()noexcept{}
-private:
 
+	virtual ~frame_buffer() noexcept {}
+
+private:
 };
 
-}
+} // namespace morda

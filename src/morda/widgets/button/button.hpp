@@ -25,13 +25,14 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../../widget.hpp"
 
-namespace morda{
+namespace morda {
 
 /**
  * @brief Basic button widget class.
  * Button has two states: normal and pressed.
  */
-class button : public virtual widget{
+class button : public virtual widget
+{
 	bool isPressed_v = false;
 	bool isPressedChangedNotified = true;
 
@@ -41,6 +42,7 @@ protected:
 	 * Default implementation emits the 'pressedChanged' signal.
 	 */
 	virtual void on_press_change();
+
 public:
 	button(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
 
@@ -49,7 +51,8 @@ public:
 	 * @return true if button is pressed.
 	 * @return false otherwise.
 	 */
-	bool is_pressed()const noexcept{
+	bool is_pressed() const noexcept
+	{
 		return this->isPressed_v;
 	}
 
@@ -62,4 +65,4 @@ public:
 	std::function<void(button&)> press_handler;
 };
 
-}
+} // namespace morda

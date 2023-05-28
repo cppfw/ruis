@@ -21,28 +21,26 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "../../widget.hpp"
 #include "../../res/font.hpp"
+#include "../../widget.hpp"
 #include "../base/single_line_text_widget.hpp"
 
-namespace morda{
+namespace morda {
 
 /**
  * @brief Text label widget.
  * This widget shows text.
  * From GUI script it can be instantiated as "text".
  */
-class text :
-		public single_line_text_widget,
-		public color_widget
+class text : public single_line_text_widget, public color_widget
 {
 public:
 	text(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
 
 public:
-	~text()noexcept{}
+	~text() noexcept {}
 
-	void render(const morda::matrix4& matrix)const override;
+	void render(const morda::matrix4& matrix) const override;
 };
 
-}
+} // namespace morda

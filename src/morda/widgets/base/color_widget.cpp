@@ -26,23 +26,24 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace morda;
 
 color_widget::color_widget(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
-		widget(c, desc)
+	widget(c, desc)
 {
-	for(const auto& p : desc){
-		if(!is_property(p)){
+	for (const auto& p : desc) {
+		if (!is_property(p)) {
 			continue;
 		}
 
-		if(p.value == "color"){
+		if (p.value == "color") {
 			this->color = get_property_value(p).to_uint32();
-		}else if(p.value == "disabled_color"){
+		} else if (p.value == "disabled_color") {
 			this->disabled_color = get_property_value(p).to_uint32();
 		}
 	}
 }
 
-void color_widget::set_color(uint32_t color){
-	if(this->color == color){
+void color_widget::set_color(uint32_t color)
+{
+	if (this->color == color) {
 		return;
 	}
 
@@ -50,8 +51,9 @@ void color_widget::set_color(uint32_t color){
 	this->clear_cache();
 }
 
-void color_widget::set_disabled_color(uint32_t color){
-	if(this->disabled_color == color){
+void color_widget::set_disabled_color(uint32_t color)
+{
+	if (this->disabled_color == color) {
 		return;
 	}
 
@@ -59,10 +61,11 @@ void color_widget::set_disabled_color(uint32_t color){
 	this->clear_cache();
 }
 
-uint32_t color_widget::get_current_color()const noexcept{
-	if(this->is_enabled()){
+uint32_t color_widget::get_current_color() const noexcept
+{
+	if (this->is_enabled()) {
 		return this->get_color();
-	}else{
+	} else {
 		return this->get_disabled_color();
 	}
 }

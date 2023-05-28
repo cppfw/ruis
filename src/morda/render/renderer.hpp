@@ -23,14 +23,15 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "render_factory.hpp"
 
-namespace morda{
+namespace morda {
 
-class renderer{
+class renderer
+{
 public:
 	const std::unique_ptr<render_factory> factory;
-	
+
 	const std::unique_ptr<render_factory::shaders> shader;
-	
+
 public:
 	const utki::shared_ref<const vertex_array> empty_vertex_array;
 
@@ -38,62 +39,64 @@ public:
 	const utki::shared_ref<const index_buffer> quad_indices;
 
 	const utki::shared_ref<const vertex_array> pos_quad_01_vao;
-	
+
 	const utki::shared_ref<const vertex_array> pos_tex_quad_01_vao;
-	
+
 protected:
-	struct params{
+	struct params {
 		unsigned max_texture_size = 2048;
 		r4::matrix4<float> initial_matrix = r4::matrix4<float>().set_identity();
 	};
-	
+
 	renderer(std::unique_ptr<render_factory> factory, const params& params);
-	
+
 	renderer(const renderer&) = delete;
 	renderer& operator=(const renderer&) = delete;
-	
+
 	virtual ~renderer() = default;
-	
+
 private:
 	std::shared_ptr<frame_buffer> cur_fb;
+
 public:
 	const unsigned max_texture_size;
-	
+
 	/**
 	 * @brief Initial matrix to use for rendering.
 	 * This is the matrix which makes screen edges to be: left = -1, right = 1, top = 1, bottom = -1.
 	 */
 	const r4::matrix4<float> initial_matrix;
-	
+
 	/**
 	 * @brief Set current framebuffer.
-	 * @param fb - framebuffer to set as the current one. If 'nullptr' then screen buffer is set as current frame buffer.
+	 * @param fb - framebuffer to set as the current one. If 'nullptr' then screen buffer is set as current frame
+	 * buffer.
 	 */
 	void set_framebuffer(std::shared_ptr<frame_buffer> fb);
-	
+
 	virtual void clear_framebuffer() = 0;
-	
-	virtual bool is_scissor_enabled()const = 0;
-	
+
+	virtual bool is_scissor_enabled() const = 0;
+
 	virtual void set_scissor_enabled(bool enabled) = 0;
-	
-	virtual r4::rectangle<int> get_scissor()const = 0;
-	
+
+	virtual r4::rectangle<int> get_scissor() const = 0;
+
 	virtual void set_scissor(r4::rectangle<int> r) = 0;
-	
-	virtual r4::rectangle<int> get_viewport()const = 0;
-	
+
+	virtual r4::rectangle<int> get_viewport() const = 0;
+
 	virtual void set_viewport(r4::rectangle<int> r) = 0;
-	
+
 	virtual void set_blend_enabled(bool enable) = 0;
-	
+
 	/**
 	 * @brief Blending factor type.
 	 * Enumeration defines possible blending factor types.
 	 */
-	enum class blend_factor{
+	enum class blend_factor {
 		// WARNING: do not change order
-		
+
 		zero,
 		one,
 		src_color,
@@ -110,11 +113,16 @@ public:
 		one_minus_constant_alpha,
 		src_alpha_saturate
 	};
-	
-	virtual void set_blend_func(blend_factor src_color, blend_factor dst_color, blend_factor src_alpha, blend_factor dst_alpha) = 0;
-	
+
+	virtual void set_blend_func(
+		blend_factor src_color,
+		blend_factor dst_color,
+		blend_factor src_alpha,
+		blend_factor dst_alpha
+	) = 0;
+
 protected:
 	virtual void set_framebuffer_internal(frame_buffer* fb) = 0;
 };
 
-}
+} // namespace morda

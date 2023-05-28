@@ -26,33 +26,36 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace morda;
 
 choice_button::choice_button(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
-		widget(c, desc),
-		button(this->context, desc),
-		toggle_button(this->context, desc)
+	widget(c, desc),
+	button(this->context, desc),
+	toggle_button(this->context, desc)
 {}
 
-void choice_button::on_press_change(){
+void choice_button::on_press_change()
+{
 	this->toggle_button::on_press_change();
 
-	if(this->is_pressed()){
+	if (this->is_pressed()) {
 		this->activate();
 	}
 }
 
-bool choice_button::on_mouse_button(const mouse_button_event& e){
-	if(this->is_pressed()){
+bool choice_button::on_mouse_button(const mouse_button_event& e)
+{
+	if (this->is_pressed()) {
 		return true;
 	}
 	return this->toggle_button::on_mouse_button(e);
 }
 
-void choice_button::activate(){
+void choice_button::activate()
+{
 	this->set_pressed(true);
 
 	auto cg = this->try_get_ancestor<choice_group>();
-	if(!cg){
+	if (!cg) {
 		return;
 	}
-	
+
 	cg->set_active_choice_button(utki::make_shared_from(*this).to_shared_ptr());
 }

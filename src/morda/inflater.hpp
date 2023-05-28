@@ -21,16 +21,15 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include <map>
-#include <set>
-#include <memory>
 #include <functional>
+#include <map>
+#include <memory>
+#include <set>
 
 #include <treeml/tree.hpp>
-
 #include <utki/shared_ref.hpp>
 
-namespace morda{
+namespace morda {
 
 class widget;
 class context;
@@ -42,7 +41,8 @@ class context;
  * A widget name should start with capital letter. A widget property should start
  * with small letter. Specific widgets define more detailed rules of their description.
  */
-class inflater{
+class inflater
+{
 	friend class context;
 
 	morda::context& context;
@@ -51,15 +51,9 @@ class inflater{
 
 private:
 	std::map<
-			std::string,
-			std::function<
-					utki::shared_ref<morda::widget>(
-							const utki::shared_ref<morda::context>&,
-							const treeml::forest&
-						)
-				>
-		>
-	factories;
+		std::string,
+		std::function<utki::shared_ref<morda::widget>(const utki::shared_ref<morda::context>&, const treeml::forest&)>>
+		factories;
 
 	const decltype(factories)::value_type::second_type& find_factory(const std::string& widget_name);
 
@@ -72,13 +66,16 @@ public:
 	 * in STOB GUI description.
 	 * @param widget_name - name of the widget as it appears in GUI script.
 	 */
-	template <class T> void register_widget(const std::string& widget_name){
+	template <class T>
+	void register_widget(const std::string& widget_name)
+	{
 		this->add_factory(
-				std::string(widget_name),
-				[](const utki::shared_ref<morda::context>& c, const treeml::forest& desc) -> utki::shared_ref<morda::widget> {
-					return utki::make_shared<T>(c, desc);
-				}
-			);
+			std::string(widget_name),
+			[](const utki::shared_ref<morda::context>& c,
+			   const treeml::forest& desc) -> utki::shared_ref<morda::widget> {
+				return utki::make_shared<T>(c, desc);
+			}
+		);
 	}
 
 	/**
@@ -87,7 +84,7 @@ public:
 	 * @return true if factory was successfully removed.
 	 * @return false if the factory with given widget name was not found in the list of registered factories.
 	 */
-	bool unregister_widget(const std::string& widget_name)noexcept;
+	bool unregister_widget(const std::string& widget_name) noexcept;
 
 	// TODO: doxygen
 	void push_defs(const treeml::forest& chain);
@@ -111,7 +108,8 @@ public:
 	 * @param gui_script - GUI script to use.
 	 * @return the inflated widget.
 	 */
-	utki::shared_ref<widget> inflate(const treeml::forest& gui_script){
+	utki::shared_ref<widget> inflate(const treeml::forest& gui_script)
+	{
 		return this->inflate(gui_script.begin(), gui_script.end());
 	}
 
@@ -121,7 +119,9 @@ public:
 	 * @param gui_script - gui script to inflate widget from.
 	 * @return the inflated widget.
 	 */
-	template <typename T> utki::shared_ref<T> inflate_as(const treeml::forest& gui_script){
+	template <typename T>
+	utki::shared_ref<T> inflate_as(const treeml::forest& gui_script)
+	{
 		return utki::dynamic_reference_cast<T>(this->inflate(gui_script));
 	}
 
@@ -145,7 +145,9 @@ public:
 	 * @param str - string of the GUI script.
 	 * @return the inflated widget.
 	 */
-	template <typename T> utki::shared_ref<T> inflate_as(const char* str){
+	template <typename T>
+	utki::shared_ref<T> inflate_as(const char* str)
+	{
 		return utki::dynamic_reference_cast<T>(this->inflate(str));
 	}
 
@@ -162,12 +164,14 @@ public:
 	 * @param fi - file interface to get the GUI script.
 	 * @return the inflated widget.
 	 */
-	template <typename T> utki::shared_ref<T> inflate_as(const papki::file& fi){
+	template <typename T>
+	utki::shared_ref<T> inflate_as(const papki::file& fi)
+	{
 		return utki::dynamic_reference_cast<T>(this->inflate(fi));
 	}
 
 private:
-	struct widget_template{
+	struct widget_template {
 		treeml::tree templ;
 		std::set<std::string> vars;
 	};
@@ -176,7 +180,7 @@ private:
 
 	std::vector<std::map<std::string, widget_template>> templates;
 
-	const widget_template* find_template(const std::string& name)const;
+	const widget_template* find_template(const std::string& name) const;
 
 	void push_templates(const treeml::forest& chain);
 
@@ -185,7 +189,7 @@ private:
 	// variable name-value mapping
 	std::vector<std::map<std::string, treeml::forest>> variables;
 
-	const treeml::forest* find_variable(const std::string& name)const;
+	const treeml::forest* find_variable(const std::string& name) const;
 
 	void push_variables(const treeml::forest& trees);
 	void pop_variables();
@@ -194,4 +198,4 @@ private:
 	void pop_defs_block();
 };
 
-}
+} // namespace morda

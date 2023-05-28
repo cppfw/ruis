@@ -21,16 +21,15 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include <utki/config.hpp>
-
 #include <r4/matrix.hpp>
-#include <r4/vector.hpp>
 #include <r4/quaternion.hpp>
 #include <r4/rectangle.hpp>
+#include <r4/vector.hpp>
+#include <utki/config.hpp>
 
 #include "util/sides.hpp"
 
-namespace morda{
+namespace morda {
 
 typedef float real;
 
@@ -51,4 +50,4 @@ static_assert(sizeof(vector3) == sizeof(real) * 3, "size mismatch");
 typedef r4::vector4<real> vector4;
 static_assert(sizeof(vector4) == sizeof(real) * 4, "size mismatch");
 
-}
+} // namespace morda

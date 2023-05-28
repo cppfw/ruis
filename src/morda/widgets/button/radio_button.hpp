@@ -21,11 +21,11 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "choice_button.hpp"
-
 #include "../../container.hpp"
 
-namespace morda{
+#include "choice_button.hpp"
+
+namespace morda {
 
 /**
  * @brief Radio button widget.
@@ -33,29 +33,29 @@ namespace morda{
  * an empty round when unchecked. In GUI script it can be instantiated as
  * "radio_button". Only available after initializing standard morda widgets.
  */
-class radio_button :
-		virtual public choice_button,
-		private container
+class radio_button : virtual public choice_button, private container
 {
 	const utki::shared_ref<widget> check_widget;
+
 public:
 	radio_button(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
-	
+
 	radio_button(const radio_button&) = delete;
 	radio_button& operator=(const radio_button&) = delete;
-	
-	bool on_mouse_button(const mouse_button_event& e)override{
+
+	bool on_mouse_button(const mouse_button_event& e) override
+	{
 		return this->choice_button::on_mouse_button(e);
 	}
 
-	void on_hover_change(unsigned pointer_id)override{
+	void on_hover_change(unsigned pointer_id) override
+	{
 		this->choice_button::on_hover_change(pointer_id);
 	}
-	
-	void on_press_change()override;
+
+	void on_press_change() override;
 
 private:
-
 };
 
-}
+} // namespace morda

@@ -23,13 +23,14 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace morda;
 
-utki::shared_ref<texture_2d> render_factory::create_texture_2d(r4::vector2<unsigned> dims, utki::span<const uint32_t> data){
+utki::shared_ref<texture_2d> render_factory::create_texture_2d(
+	r4::vector2<unsigned> dims,
+	utki::span<const uint32_t> data
+)
+{
 	return this->create_texture_2d(
-			texture_2d::type::rgba,
-			dims,
-			utki::span<uint8_t>(
-					const_cast<uint8_t*>(reinterpret_cast<const uint8_t*>(&*data.begin())),
-					data.size_bytes()
-				)
-		);
+		texture_2d::type::rgba,
+		dims,
+		utki::span<uint8_t>(const_cast<uint8_t*>(reinterpret_cast<const uint8_t*>(&*data.begin())), data.size_bytes())
+	);
 }

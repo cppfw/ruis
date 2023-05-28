@@ -21,23 +21,23 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "../../widget.hpp"
 #include "../../container.hpp"
-
 #include "../../util/oriented.hpp"
+#include "../../widget.hpp"
 
-namespace morda{
+namespace morda {
 
 /**
  * @brief Scrollable list widget.
  * This is a base class for vertical and horizontal lists.
  */
 class list_widget :
-		// NOTE: order of virtual public and private declarations here matters for clang due to some bug,
-		//       see http://stackoverflow.com/questions/42427145/clang-cannot-cast-to-private-base-while-there-is-a-public-virtual-inheritance
-		virtual public widget,
-		public container,
-		protected oriented
+	// NOTE: order of virtual public and private declarations here matters for clang due to some bug,
+	//       see
+	//       http://stackoverflow.com/questions/42427145/clang-cannot-cast-to-private-base-while-there-is-a-public-virtual-inheritance
+	virtual public widget,
+	public container,
+	protected oriented
 {
 	// index of the first item added to container as child
 	size_t added_index = size_t(-1);
@@ -51,10 +51,11 @@ class list_widget :
 	size_t num_tail_items = 0; // zero means that number of tail items has to be recomputed
 	size_t first_tail_item_index = 0;
 	real first_tail_item_offset = real(0);
-    real first_tail_item_dim = real(0);
+	real first_tail_item_dim = real(0);
 
 protected:
 	list_widget(const utki::shared_ref<morda::context>& c, const treeml::forest& desc, bool vertical);
+
 public:
 	list_widget(const list_widget&) = delete;
 	list_widget& operator=(const list_widget&) = delete;
@@ -63,19 +64,23 @@ public:
 	 * @brief list items provider.
 	 * User should subclass this class to provide items to the list.
 	 */
-	class provider : virtual public utki::shared{
+	class provider : virtual public utki::shared
+	{
 		friend class list_widget;
 
 		list_widget* parent_list = nullptr;
+
 	protected:
-		provider(){}
+		provider() {}
+
 	public:
 		/**
 		 * @brief Get parent list widget.
 		 * @return list widget which owns the provider, in case the provider is set to some list widget.
 		 * @return nullptr in case the provider is not set to any list widget.
 		 */
-		list_widget* get_list()noexcept{
+		list_widget* get_list() noexcept
+		{
 			return this->parent_list;
 		}
 
@@ -83,7 +88,7 @@ public:
 		 * @brief Get total number of items in the list.
 		 * @return Number of items in the list.
 		 */
-		virtual size_t count()const noexcept = 0;
+		virtual size_t count() const noexcept = 0;
 
 		/**
 		 * @brief Get widget for item.
@@ -97,14 +102,14 @@ public:
 		 * @param index - index of item to recycle widget of.
 		 * @param w - widget to recycle.
 		 */
-		virtual void recycle(size_t index, const utki::shared_ref<widget>& w){}
+		virtual void recycle(size_t index, const utki::shared_ref<widget>& w) {}
 
 		void notify_data_set_change();
 	};
 
 	void set_provider(std::shared_ptr<provider> item_provider = nullptr);
 
-	void on_lay_out()override;
+	void on_lay_out() override;
 
 	morda::vector2 measure(const morda::vector2& quotum) const override;
 
@@ -118,20 +123,22 @@ public:
 	 * @brief Get scroll factor.
 	 * @return Current scroll position as factor from [0:1].
 	 */
-	real get_scroll_factor()const noexcept;
+	real get_scroll_factor() const noexcept;
 
-    /**
-     * @brief Get scroll band.
-     * Returns scroll band as a fraction of 1. This is basically the number of visible elements divided by total number of elements in the list.
-     * @return scroll band.
-     */
-    real get_scroll_band()const noexcept;
+	/**
+	 * @brief Get scroll band.
+	 * Returns scroll band as a fraction of 1. This is basically the number of visible elements divided by total number
+	 * of elements in the list.
+	 * @return scroll band.
+	 */
+	real get_scroll_band() const noexcept;
 
 	/**
 	 * @brief Get index of the first visible item.
 	 * @return index of the first visible item.
 	 */
-	size_t get_pos_index()const noexcept{
+	size_t get_pos_index() const noexcept
+	{
 		return this->pos_index;
 	}
 
@@ -140,7 +147,8 @@ public:
 	 * The value is positive, though the item coordinate is <= 0.
 	 * @return offset in pixels of the first visible item.
 	 */
-	real get_pos_offset()const noexcept{
+	real get_pos_offset() const noexcept
+	{
 		return this->pos_offset;
 	}
 
@@ -161,6 +169,7 @@ public:
 	 * Emitted when list's scroll position has changed.
 	 */
 	std::function<void(list_widget&)> scroll_change_handler;
+
 private:
 	std::shared_ptr<provider> item_provider;
 
@@ -168,21 +177,21 @@ private:
 
 	// returns true if it was the last visible widget
 	bool arrange_widget(
-			const utki::shared_ref<widget>& w,
-			real& pos,
-			bool add,
-			size_t index,
-			widget_list::const_iterator& insertBefore
-		);
+		const utki::shared_ref<widget>& w,
+		real& pos,
+		bool add,
+		size_t index,
+		widget_list::const_iterator& insertBefore
+	);
 
 	void update_tail_items_info();
 
 	void handle_data_set_changed();
 
-    void notify_scroll_pos_changed();
+	void notify_scroll_pos_changed();
 	void notify_scroll_pos_changed(size_t old_index, real old_offset);
 
-    real calc_num_visible_items()const noexcept;
+	real calc_num_visible_items() const noexcept;
 };
 
 /**
@@ -190,11 +199,12 @@ private:
  * Panorama list widget.
  * From GUI script it can be instantiated as "pan_list".
  */
-class pan_list : public list_widget{
+class pan_list : public list_widget
+{
 public:
 	pan_list(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
-			widget(c, desc),
-			list_widget(this->context, desc, false)
+		widget(c, desc),
+		list_widget(this->context, desc, false)
 	{}
 
 	pan_list(const pan_list&) = delete;
@@ -205,15 +215,16 @@ public:
  * @brief Vertical list widget.
  * From GUI script it can be instantiated as "list".
  */
-class list : public list_widget{
+class list : public list_widget
+{
 public:
 	list(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
-			widget(c, desc),
-			list_widget(this->context, desc, true)
+		widget(c, desc),
+		list_widget(this->context, desc, true)
 	{}
 
 	list(const list&) = delete;
 	list& operator=(const list&) = delete;
 };
 
-}
+} // namespace morda

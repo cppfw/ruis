@@ -21,27 +21,26 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "toggle_button.hpp"
 #include "nine_patch_button.hpp"
+#include "toggle_button.hpp"
 
-namespace morda{
+namespace morda {
 
-class nine_patch_toggle :
-		virtual public toggle_button,
-		public nine_patch_button
+class nine_patch_toggle : virtual public toggle_button, public nine_patch_button
 {
 public:
 	nine_patch_toggle(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
-	
-protected:
-	void on_press_change()override;
 
-	bool on_mouse_button(const mouse_button_event& e)override{
-		if(this->nine_patch_button::on_mouse_button(e)){
+protected:
+	void on_press_change() override;
+
+	bool on_mouse_button(const mouse_button_event& e) override
+	{
+		if (this->nine_patch_button::on_mouse_button(e)) {
 			return true;
 		}
 		return this->toggle_button::on_mouse_button(e);
 	}
 };
 
-}
+} // namespace morda

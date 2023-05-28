@@ -23,10 +23,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <functional>
 
-#include "../../widget.hpp"
-
 #include "../../util/oriented.hpp"
-
+#include "../../widget.hpp"
 #include "../base/fraction_band_widget.hpp"
 
 // disable stupid warnings
@@ -34,12 +32,12 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #	pragma warning(disable : 4250)
 #endif
 
-namespace morda{
+namespace morda {
 
 class scroll_bar :
-		public fraction_band_widget,
-		protected oriented,
-		private container // users do not need to know that it is a container
+	public fraction_band_widget,
+	protected oriented,
+	private container // users do not need to know that it is a container
 {
 	scroll_bar(const scroll_bar&) = delete;
 	scroll_bar& operator=(const scroll_bar&) = delete;
@@ -52,38 +50,39 @@ class scroll_bar :
 protected:
 	scroll_bar(const utki::shared_ref<morda::context>& c, const treeml::forest& desc, bool vertical);
 
-	void on_fraction_change()override;
+	void on_fraction_change() override;
 
-	void on_band_change()override;
+	void on_band_change() override;
 
 public:
-
-	virtual ~scroll_bar()noexcept{}
+	virtual ~scroll_bar() noexcept {}
 
 private:
-	void on_lay_out()override;
+	void on_lay_out() override;
 };
 
-class vertical_scroll_bar : public scroll_bar{
+class vertical_scroll_bar : public scroll_bar
+{
 public:
 	vertical_scroll_bar(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
-			widget(c, desc),
-			scroll_bar(this->context, desc, true)
+		widget(c, desc),
+		scroll_bar(this->context, desc, true)
 	{}
 
 	vertical_scroll_bar(const vertical_scroll_bar&) = delete;
 	vertical_scroll_bar& operator=(const vertical_scroll_bar&) = delete;
 };
 
-class horizontal_scroll_bar : public scroll_bar{
+class horizontal_scroll_bar : public scroll_bar
+{
 public:
 	horizontal_scroll_bar(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
-			widget(c, desc),
-			scroll_bar(this->context, desc, false)
+		widget(c, desc),
+		scroll_bar(this->context, desc, false)
 	{}
 
 	horizontal_scroll_bar(const horizontal_scroll_bar&) = delete;
 	horizontal_scroll_bar& operator=(const horizontal_scroll_bar&) = delete;
 };
 
-}
+} // namespace morda

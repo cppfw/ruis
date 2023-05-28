@@ -23,15 +23,16 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../layout.hpp"
 
-namespace morda{
+namespace morda {
 
-class trivial_layout : public layout{
+class trivial_layout : public layout
+{
 public:
-    static const utki::shared_ref<trivial_layout> instance;
+	static const utki::shared_ref<trivial_layout> instance;
 
-    vector2 measure(const vector2& quotum, const_widget_list& widgets)const override;
+	vector2 measure(const vector2& quotum, const_widget_list& widgets) const override;
 
-    void lay_out(const vector2& size, semiconst_widget_list& widgets)const override;
+	void lay_out(const vector2& size, semiconst_widget_list& widgets) const override;
 };
 
-}
+} // namespace morda

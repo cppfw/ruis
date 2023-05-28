@@ -25,26 +25,27 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <treeml/tree.hpp>
 
-#include "../resource_loader.hpp"
-
 #include "../fonts/font.hpp"
-
+#include "../resource_loader.hpp"
 #include "../util/util.hpp"
 
-namespace morda{ namespace res{
+namespace morda {
+namespace res {
 
 /**
  * @brief %Font resource.
- * 
+ *
  * %resource description:
- * 
+ *
  * @li @c normal - file to load normal font from, the True-Type ttf file.
  * @li @c bold - file to load bold font from, True-Type ttf file. If omitted, the bold font will be the same as normal.
- * @li @c italic - file to load italic font from, True-Type ttf file. If omitted, the italic font will be the same as normal.
- * @li @c bold_italic - file to load bold italic font from, True-Type ttf file. If omitted, the bold italic font will be the same as normal.
+ * @li @c italic - file to load italic font from, True-Type ttf file. If omitted, the italic font will be the same as
+ * normal.
+ * @li @c bold_italic - file to load bold italic font from, True-Type ttf file. If omitted, the bold italic font will be
+ * the same as normal.
  * @li @c chars - list of all chars for which the glyphs should be created.
  * @li @c size - size of glyphs, in length units, i.e.: no unit(pixels), pp, fp, mm.
- * 
+ *
  * Example:
  * @code
  * fnt_normal{
@@ -54,11 +55,12 @@ namespace morda{ namespace res{
  * }
  * @endcode
  */
-class font : public morda::resource{
+class font : public morda::resource
+{
 	friend class morda::resource_loader;
 
 public:
-	enum class style{
+	enum class style {
 		normal,
 		bold,
 		italic,
@@ -70,32 +72,38 @@ private:
 
 public:
 	font(
-			const utki::shared_ref<morda::context>& context,
-			const papki::file& file_normal,
-			std::unique_ptr<const papki::file> file_bold,
-			std::unique_ptr<const papki::file> file_italic,
-			std::unique_ptr<const papki::file> file_bold_italic,
-			unsigned font_size,
-			unsigned max_cached
-		);
+		const utki::shared_ref<morda::context>& context,
+		const papki::file& file_normal,
+		std::unique_ptr<const papki::file> file_bold,
+		std::unique_ptr<const papki::file> file_italic,
+		std::unique_ptr<const papki::file> file_bold_italic,
+		unsigned font_size,
+		unsigned max_cached
+	);
 
-	~font()noexcept{}
+	~font() noexcept {}
 
 	/**
 	 * @brief Get font object held by this resource.
 	 * @return Font object.
 	 */
-	const morda::font& get(style font_style = style::normal)const noexcept{
+	const morda::font& get(style font_style = style::normal) const noexcept
+	{
 		ASSERT(this->fonts[unsigned(style::normal)])
 		const auto& ret = this->fonts[unsigned(font_style)];
-		if(ret){
+		if (ret) {
 			return *ret;
 		}
 		return *this->fonts[unsigned(style::normal)];
 	}
-	
+
 private:
-	static utki::shared_ref<font> load(const utki::shared_ref<morda::context>& ctx, const ::treeml::forest& desc, const papki::file &fi);
+	static utki::shared_ref<font> load(
+		const utki::shared_ref<morda::context>& ctx,
+		const ::treeml::forest& desc,
+		const papki::file& fi
+	);
 };
 
-}}
+} // namespace res
+} // namespace morda

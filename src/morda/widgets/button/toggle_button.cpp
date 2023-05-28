@@ -26,13 +26,14 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace morda;
 
 toggle_button::toggle_button(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
-		widget(c, desc),
-		button(this->context, desc)
+	widget(c, desc),
+	button(this->context, desc)
 {}
 
-bool toggle_button::on_mouse_button(const mouse_button_event& e){
-	if(e.button == mouse_button::left){
-		if(e.is_down){
+bool toggle_button::on_mouse_button(const mouse_button_event& e)
+{
+	if (e.button == mouse_button::left) {
+		if (e.is_down) {
 			this->toggle();
 		}
 		return true;

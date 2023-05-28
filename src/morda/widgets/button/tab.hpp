@@ -22,29 +22,28 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #pragma once
 
 #include "../label/nine_patch.hpp"
+
 #include "choice_button.hpp"
 #include "nine_patch_toggle.hpp"
 
-namespace morda{
+namespace morda {
 
-class tab :
-		virtual public choice_button,
-		public nine_patch_toggle
+class tab : virtual public choice_button, public nine_patch_toggle
 {
 	bool maskOverlaps(vector2 pos);
-	
+
 public:
 	tab(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
-	
+
 	tab(const tab&) = delete;
 	tab& operator=(const tab&) = delete;
-	
-protected:	
-	bool on_mouse_button(const mouse_button_event& event)override;
 
-	void on_hover_change(unsigned pointer_id)override{}
-	
-	void on_press_change()override;
+protected:
+	bool on_mouse_button(const mouse_button_event& event) override;
+
+	void on_hover_change(unsigned pointer_id) override {}
+
+	void on_press_change() override;
 };
 
-}
+} // namespace morda

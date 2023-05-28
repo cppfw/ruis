@@ -21,21 +21,21 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "../resource_loader.hpp"
-
 #include <treeml/tree.hpp>
 
+#include "../resource_loader.hpp"
 #include "../util/util.hpp"
 
-namespace morda{ namespace res{
+namespace morda {
+namespace res {
 
 /**
  * @brief resource holding a treeml forest.
- * 
+ *
  * %resource description:
- * 
+ *
  * @param file - file to read the treeml from.
- * 
+ *
  * Example:
  * @code
  * stb_sample_treeml{
@@ -43,10 +43,12 @@ namespace morda{ namespace res{
  * }
  * @endcode
  */
-class treeml : public resource{
+class treeml : public resource
+{
 	friend class morda::resource_loader;
-	
+
 	::treeml::forest s;
+
 public:
 	/**
 	 * @brief Create treeml resource.
@@ -54,16 +56,22 @@ public:
 	 * @param s - treeml forest to initialize the resource with.
 	 */
 	treeml(const utki::shared_ref<morda::context>& c, ::treeml::forest&& s);
-	
+
 	treeml(const treeml&) = delete;
 	treeml& operator=(const treeml&) = delete;
-	
-	const ::treeml::forest& forest()const noexcept{
+
+	const ::treeml::forest& forest() const noexcept
+	{
 		return this->s;
 	}
-	
+
 private:
-	static utki::shared_ref<treeml> load(const utki::shared_ref<morda::context>& ctx, const ::treeml::forest& desc, const papki::file& fi);
+	static utki::shared_ref<treeml> load(
+		const utki::shared_ref<morda::context>& ctx,
+		const ::treeml::forest& desc,
+		const papki::file& fi
+	);
 };
 
-}}
+} // namespace res
+} // namespace morda

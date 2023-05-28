@@ -27,14 +27,15 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "updater.hpp"
 
-namespace morda{
+namespace morda {
 
 /**
  * @brief Base class for periodic updating.
  * A subclass of this class can subscribe for periodic updates to be performed from UI thread.
  * For example every 30 milliseconds it will call the update() method.
  */
-class updateable : virtual public utki::shared{
+class updateable : virtual public utki::shared
+{
 	friend class gui;
 	friend class updater;
 
@@ -43,7 +44,8 @@ private:
 
 	uint32_t started_at;
 
-	uint32_t ends_at()const noexcept{
+	uint32_t ends_at() const noexcept
+	{
 		return this->started_at + uint32_t(this->dt);
 	}
 
@@ -62,7 +64,8 @@ public:
 	 * @return true if object is subscribed for updates.
 	 * @return false otherwise.
 	 */
-	bool is_updating()const noexcept{
+	bool is_updating() const noexcept
+	{
 		return this->updating;
 	}
 
@@ -74,4 +77,4 @@ public:
 	virtual void update(uint32_t dt_ms) = 0;
 };
 
-}
+} // namespace morda

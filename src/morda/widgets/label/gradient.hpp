@@ -21,11 +21,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
+#include "../../res/gradient.hpp"
 #include "../../widget.hpp"
 
-#include "../../res/gradient.hpp"
-
-namespace morda{
+namespace morda {
 
 /**
  * @brief Gradient widget.
@@ -34,7 +33,8 @@ namespace morda{
  *
  * @param gradient - gradient resource name.
  */
-class gradient : public widget{
+class gradient : public widget
+{
 	std::shared_ptr<res::gradient> res;
 
 public:
@@ -43,7 +43,7 @@ public:
 	gradient(const gradient&) = delete;
 	gradient& operator=(const gradient&) = delete;
 
-	void render(const morda::matrix4& matrix)const override;
+	void render(const morda::matrix4& matrix) const override;
 };
 
-}
+} // namespace morda

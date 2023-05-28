@@ -22,32 +22,32 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #pragma once
 
 #include "../../container.hpp"
-
 #include "../../layouts/pile_layout.hpp"
 
-namespace morda{
+namespace morda {
 
 /**
  * @brief container to be used for intercepting keyboard key events.
  * From GUI scripts it can be instantiated as "key_proxy".
  */
-class key_proxy : public container{
+class key_proxy : public container
+{
 public:
 	key_proxy(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
-			widget(c, desc),
-			container(this->context, desc, pile_layout::instance)
+		widget(c, desc),
+		container(this->context, desc, pile_layout::instance)
 	{}
-	
+
 	key_proxy(const key_proxy&) = delete;
 	key_proxy& operator=(const key_proxy&) = delete;
-	
+
 	/**
 	 * @brief Keyboard key signal.
 	 * Emitted when a keyboard key event reaches this widget.
 	 */
 	std::function<bool(key_proxy& w, const morda::key_event& e)> key_handler;
-	
-	virtual bool on_key(const morda::key_event& e)override;
+
+	virtual bool on_key(const morda::key_event& e) override;
 };
 
-}
+} // namespace morda

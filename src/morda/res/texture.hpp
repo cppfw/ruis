@@ -23,21 +23,20 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <treeml/tree.hpp>
 
-#include "../resource_loader.hpp"
-
 #include "../render/texture_2d.hpp"
-
+#include "../resource_loader.hpp"
 #include "../util/util.hpp"
 
-namespace morda{ namespace res{
+namespace morda {
+namespace res {
 
 /**
  * @brief Texture resource.
- * 
+ *
  * %resource description:
- * 
+ *
  * @param file - name of the image file, can be raster image.
- * 
+ *
  * Example:
  * @code
  * tex_sample{
@@ -45,31 +44,31 @@ namespace morda{ namespace res{
  * }
  * @endcode
  */
-class texture : public morda::resource{
+class texture : public morda::resource
+{
 	friend class morda::resource_loader;
 
 	const utki::shared_ref<texture_2d> tex2d;
+
 public:
 	/**
 	 * @brief Create texture.
 	 * @param c - context.
 	 * @param tex - texture object to initialize this resource with.
 	 */
-	texture(
-		const utki::shared_ref<morda::context>& c,
-		const decltype(tex2d)& tex
-	) :
-			resource(c),
-			tex2d(tex)
+	texture(const utki::shared_ref<morda::context>& c, const decltype(tex2d)& tex) :
+		resource(c),
+		tex2d(tex)
 	{}
 
-	~texture()noexcept{}
+	~texture() noexcept {}
 
 	/**
 	 * @brief Get texture object held by this resource.
 	 * @return Texture object.
 	 */
-	const texture_2d& tex()const noexcept{
+	const texture_2d& tex() const noexcept
+	{
 		return this->tex2d.get();
 	}
 
@@ -81,4 +80,5 @@ private:
 	);
 };
 
-}}
+} // namespace res
+} // namespace morda

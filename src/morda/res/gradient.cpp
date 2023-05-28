@@ -19,105 +19,105 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 /* ================ LICENSE END ================ */
 
-#include <r4/vector.hpp>
-
 #include "gradient.hpp"
 
-#include "../util/util.hpp"
-#include "../context.hpp"
+#include <r4/vector.hpp>
+
 #include "../config.hpp"
+#include "../context.hpp"
+#include "../util/util.hpp"
 
 using namespace morda::res;
 
 morda::res::gradient::gradient(const utki::shared_ref<morda::context>& c) :
-		resource(c),
-		vao(this->context.get().renderer.get().empty_vertex_array)
+	resource(c),
+	vao(this->context.get().renderer.get().empty_vertex_array)
 {}
 
-void gradient::set(
-	std::vector<std::tuple<real, uint32_t>>& stops,
-	bool vertical
-)
+void gradient::set(std::vector<std::tuple<real, uint32_t>>& stops, bool vertical)
 {
 	std::vector<r4::vector2<float>> vertices;
-//	std::vector<uint32_t> colors;
+	//	std::vector<uint32_t> colors;
 	std::vector<r4::vector4<float>> colors;
-	for(auto& s : stops){
+	for (auto& s : stops) {
 		{
 			auto c = std::get<1>(s);
 			r4::vector4<float> clr(
-					float(c & 0xff) / 255,
-					float((c >> 8) & 0xff) / 255,
-					float((c >> 16) & 0xff) / 255,
-					float((c >> 24) & 0xff) / 255
-				);
+				float(c & 0xff) / 255,
+				float((c >> 8) & 0xff) / 255,
+				float((c >> 16) & 0xff) / 255,
+				float((c >> 24) & 0xff) / 255
+			);
 
 			colors.push_back(clr);
 			colors.push_back(clr);
 		}
-		
-//		TRACE(<< "put color = " << std::hex << colors.back() << std::endl)
-		
-		if(vertical){
+
+		//		TRACE(<< "put color = " << std::hex << colors.back() << std::endl)
+
+		if (vertical) {
 			vertices.push_back(r4::vector2<float>(0, std::get<0>(s)));
 			vertices.push_back(r4::vector2<float>(1, std::get<0>(s)));
-		}else{ ASSERT(!vertical)
+		} else {
+			ASSERT(!vertical)
 			vertices.push_back(r4::vector2<float>(std::get<0>(s), 1));
 			vertices.push_back(r4::vector2<float>(std::get<0>(s), 0));
 		}
-//		TRACE(<< "put pos = " << vertices.back() << std::endl)
+		//		TRACE(<< "put pos = " << vertices.back() << std::endl)
 	}
 	ASSERT(vertices.size() == colors.size())
-	
+
 	std::vector<uint16_t> indices;
-	for(size_t i = 0; i != vertices.size(); ++i){
+	for (size_t i = 0; i != vertices.size(); ++i) {
 		indices.push_back(uint16_t(i));
 	}
-	
+
 	auto& r = this->context.get().renderer.get();
 	this->vao = r.factory->create_vertex_array(
-			{
-				r.factory->create_vertex_buffer(utki::make_span(vertices)),
-				r.factory->create_vertex_buffer(utki::make_span(colors))
-			},
-			r.factory->create_index_buffer(utki::make_span(indices)),
-			vertex_array::mode::triangle_strip
-		);
+		{r.factory->create_vertex_buffer(utki::make_span(vertices)),
+		 r.factory->create_vertex_buffer(utki::make_span(colors))},
+		r.factory->create_index_buffer(utki::make_span(indices)),
+		vertex_array::mode::triangle_strip
+	);
 }
 
-utki::shared_ref<gradient> gradient::load(const utki::shared_ref<morda::context>& ctx, const treeml::forest& desc, const papki::file& fi) {
+utki::shared_ref<gradient> gradient::load(
+	const utki::shared_ref<morda::context>& ctx,
+	const treeml::forest& desc,
+	const papki::file& fi
+)
+{
 	bool vertical = false;
 
-	std::vector<std::tuple<real,uint32_t>> stops;
+	std::vector<std::tuple<real, uint32_t>> stops;
 
 	const char* stop_c = "Stop";
 
-	for(auto& p : desc){
-		if(p.value == "vertical"){
+	for (auto& p : desc) {
+		if (p.value == "vertical") {
 			vertical = get_property_value(p).to_bool();
-		}else if(p.value == stop_c){
+		} else if (p.value == stop_c) {
 			real pos = 0;
 			uint32_t color = 0xffffffff;
-			for(auto& pp : p.children){
-				if(pp.value == "pos"){
+			for (auto& pp : p.children) {
+				if (pp.value == "pos") {
 					pos = get_property_value(pp).to_float();
-				}else if(pp.value == "color"){
+				} else if (pp.value == "color") {
 					color = get_property_value(pp).to_uint32();
 				}
 			}
 			stops.push_back(std::make_tuple(pos, color));
 		}
 	}
-	
+
 	auto ret = utki::make_shared<gradient>(ctx);
-	
+
 	ret.get().set(stops, vertical);
 
 	return ret;
 }
 
-
-void gradient::render(const morda::matrix4& m) const {
+void gradient::render(const morda::matrix4& m) const
+{
 	this->context.get().renderer.get().shader->pos_clr->render(m, this->vao.get());
 }
-

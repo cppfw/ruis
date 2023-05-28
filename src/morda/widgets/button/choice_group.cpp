@@ -26,25 +26,27 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace morda;
 
 choice_group::choice_group(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
-		widget(c, desc),
-		container(this->context, desc, pile_layout::instance)
+	widget(c, desc),
+	container(this->context, desc, pile_layout::instance)
 {}
 
-bool choice_group::is_active(const widget& w)const noexcept{
+bool choice_group::is_active(const widget& w) const noexcept
+{
 	widget* aw = this->active_choice_button.lock().get();
 	return aw == &w;
 }
 
-void choice_group::set_active_choice_button(std::weak_ptr<choice_button> cb){
+void choice_group::set_active_choice_button(std::weak_ptr<choice_button> cb)
+{
 	auto oldactive = this->active_choice_button.lock();
 
-	if(cb.lock() == oldactive){
+	if (cb.lock() == oldactive) {
 		return;
 	}
-	
+
 	this->active_choice_button = cb;
-	
-	if(oldactive){
+
+	if (oldactive) {
 		oldactive->set_pressed(false);
 	}
 }

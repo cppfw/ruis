@@ -23,7 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../../widget.hpp"
 
-namespace morda{
+namespace morda {
 
 /**
  * @brief Basic widget which has a color setting.
@@ -31,9 +31,11 @@ namespace morda{
  * @li @c color - color value.
  * @li @c disabled_color - color value for disabled state.
  */
-class color_widget : public virtual widget{
+class color_widget : public virtual widget
+{
 	uint32_t color = 0xffffffff;
 	uint32_t disabled_color = 0xff808080;
+
 protected:
 	color_widget(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
 
@@ -43,13 +45,15 @@ public:
 
 	void set_color(uint32_t color);
 
-	uint32_t get_color()const noexcept{
+	uint32_t get_color() const noexcept
+	{
 		return this->color;
 	}
 
 	void set_disabled_color(uint32_t color);
 
-	uint32_t get_disabled_color()const noexcept{
+	uint32_t get_disabled_color() const noexcept
+	{
 		return this->disabled_color;
 	}
 
@@ -57,7 +61,7 @@ public:
 	 * @brief Get color for current enabled/disabled state.
 	 * @return color for the current enabled/disabled state.
 	 */
-	uint32_t get_current_color()const noexcept;
+	uint32_t get_current_color() const noexcept;
 };
 
-}
+} // namespace morda

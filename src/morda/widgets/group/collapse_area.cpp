@@ -19,15 +19,15 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 /* ================ LICENSE END ================ */
 
-#include "../../context.hpp"
-
-#include "../../util/util.hpp"
 #include "collapse_area.hpp"
+
+#include "../../context.hpp"
+#include "../../util/util.hpp"
 #include "../button/toggle_button.hpp"
 
 using namespace morda;
 
-namespace{
+namespace {
 const auto layout_c = treeml::read(R"qwertyuiop(
 	layout{column}
 	
@@ -71,11 +71,11 @@ const auto layout_c = treeml::read(R"qwertyuiop(
 		id{content}
 	}
 )qwertyuiop");
-}
+} // namespace
 
 collapse_area::collapse_area(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
-		widget(c, desc),
-		container(this->context, layout_c)
+	widget(c, desc),
+	container(this->context, layout_c)
 {
 	// TODO: use get_widget_as()
 	this->contentArea = this->try_get_widget_as<container>("content");
@@ -85,12 +85,12 @@ collapse_area::collapse_area(const utki::shared_ref<morda::context>& c, const tr
 	this->title_v = this->try_get_widget_as<container>("title");
 	ASSERT(this->title_v)
 
-	for(const auto& p : desc){
-		if(!is_property(p)){
+	for (const auto& p : desc) {
+		if (!is_property(p)) {
 			continue;
 		}
 
-		if(p.value == "title"){
+		if (p.value == "title") {
 			this->title_v->push_back_inflate(p.children);
 		}
 	}
@@ -100,11 +100,11 @@ collapse_area::collapse_area(const utki::shared_ref<morda::context>& c, const tr
 	{
 		auto sw = this->try_get_widget_as<toggle_button>("switch");
 		ASSERT(sw)
-		sw->press_handler = [this](button& tb){
+		sw->press_handler = [this](button& tb) {
 			auto& lp = this->contentArea->get_layout_params();
-			if(tb.is_pressed()){
+			if (tb.is_pressed()) {
 				lp.dims.y() = 0;
-			}else{
+			} else {
 				lp.dims.y() = layout_params::min;
 			}
 		};

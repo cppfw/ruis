@@ -20,20 +20,25 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 /* ================ LICENSE END ================ */
 
 #include "treeml.hpp"
-#include "../resource_loader.hpp"
 
 #include "../context.hpp"
+#include "../resource_loader.hpp"
 
 using namespace morda::res;
 
 morda::res::treeml::treeml(const utki::shared_ref<morda::context>& c, ::treeml::forest&& forest) :
-		resource(c),
-		s(std::move(forest))
+	resource(c),
+	s(std::move(forest))
 {}
 
-utki::shared_ref<morda::res::treeml> morda::res::treeml::load(const utki::shared_ref<morda::context>& ctx, const ::treeml::forest& desc, const papki::file& fi){
-	for(auto& p : desc){
-		if(p.value == "file"){
+utki::shared_ref<morda::res::treeml> morda::res::treeml::load(
+	const utki::shared_ref<morda::context>& ctx,
+	const ::treeml::forest& desc,
+	const papki::file& fi
+)
+{
+	for (auto& p : desc) {
+		if (p.value == "file") {
 			fi.set_path(get_property_value(p).to_string());
 		}
 	}

@@ -22,30 +22,28 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #pragma once
 
 #include <r4/vector.hpp>
-
 #include <treeml/tree.hpp>
 
-#include "../resource_loader.hpp"
 #include "../config.hpp"
-
 #include "../render/vertex_array.hpp"
-
+#include "../resource_loader.hpp"
 #include "../util/util.hpp"
 
-namespace morda{ namespace res{
+namespace morda {
+namespace res {
 
 /**
  * @brief Gradient resource.
- * 
+ *
  * %resource description:
- * 
+ *
  * %List of stops.
- * 
+ *
  * Stop parameters:
- * 
+ *
  * @param pos - stop position from range [0:1].
  * @param color - stop color.
- * 
+ *
  * Example:
  * @code
  * morda_grd_window_background{
@@ -57,11 +55,12 @@ namespace morda{ namespace res{
  * }
  * @endcode
  */
-class gradient : public resource{
+class gradient : public resource
+{
 	friend class morda::resource_loader;
 
 	utki::shared_ref<const vertex_array> vao;
-	
+
 public:
 	/**
 	 * @brief Create gradient resource form aray of gradient stops.
@@ -70,32 +69,32 @@ public:
 	 * defines the color of the stop.
 	 * @param c - context.
 	 */
-	gradient(
-		const utki::shared_ref<morda::context>& c
-	);
-	
+	gradient(const utki::shared_ref<morda::context>& c);
+
 	gradient(const gradient&) = delete;
 	gradient& operator=(const gradient&) = delete;
-	
+
 	/**
 	 * @brief Set gradient.
 	 * @param stops - array of gradient stops.
 	 * @param vertical - if true, the gradient is vertical. If false, the gradient is horizontal.
 	 */
-	void set(
-		std::vector<std::tuple<real, uint32_t>>& stops,
-		bool vertical
-	);
+	void set(std::vector<std::tuple<real, uint32_t>>& stops, bool vertical);
 
 	/**
 	 * @brief render gradient.
 	 * Renders the gradient as a rectangle ((0,0),(1,1)).
 	 * @param m - transformation matrix.
 	 */
-	void render(const morda::matrix4& m)const;
-	
+	void render(const morda::matrix4& m) const;
+
 private:
-	static utki::shared_ref<gradient> load(const utki::shared_ref<morda::context>& ctx, const ::treeml::forest& desc, const papki::file& fi);
+	static utki::shared_ref<gradient> load(
+		const utki::shared_ref<morda::context>& ctx,
+		const ::treeml::forest& desc,
+		const papki::file& fi
+	);
 };
 
-}}
+} // namespace res
+} // namespace morda

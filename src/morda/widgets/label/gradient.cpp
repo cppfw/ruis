@@ -21,34 +21,35 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "gradient.hpp"
 
-#include "../../util/util.hpp"
-
 #include "../../context.hpp"
+#include "../../util/util.hpp"
 
 using namespace morda;
 
 gradient::gradient(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
-		widget(c, desc)
+	widget(c, desc)
 {
-	for(const auto& p : desc){
-		if(!is_property(p)){
+	for (const auto& p : desc) {
+		if (!is_property(p)) {
 			continue;
 		}
 
-		if(p.value == "gradient"){
-			this->res = this->context.get().loader.load<res::gradient>(get_property_value(p).to_string()).to_shared_ptr();
+		if (p.value == "gradient") {
+			this->res =
+				this->context.get().loader.load<res::gradient>(get_property_value(p).to_string()).to_shared_ptr();
 		}
 	}
 }
 
-void gradient::render(const matrix4& matrix)const{
+void gradient::render(const matrix4& matrix) const
+{
 	set_simple_alpha_blending(this->context.get().renderer.get());
-	
+
 	morda::matrix4 matr(matrix);
 	matr.scale(this->rect().d);
 
-	if(this->res){
-//		TRACE(<< "this->rect().d = " << this->rect().d << std::endl)
+	if (this->res) {
+		//		TRACE(<< "this->rect().d = " << this->rect().d << std::endl)
 		this->res->render(matr);
 	}
 }

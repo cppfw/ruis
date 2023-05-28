@@ -22,20 +22,20 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #pragma once
 
 #include "render/renderer.hpp"
-
 #include "util/events.hpp"
 #include "util/mouse_cursor.hpp"
-#include "util/units.hpp"
 #include "util/mouse_cursor_manager.hpp"
+#include "util/units.hpp"
 
-#include "updateable.hpp"
 #include "inflater.hpp"
-#include "resource_loader.hpp"
 #include "layout_factory.hpp"
+#include "resource_loader.hpp"
+#include "updateable.hpp"
 
-namespace morda{
+namespace morda {
 
-class context : public std::enable_shared_from_this<context>{
+class context : public std::enable_shared_from_this<context>
+{
 	friend class widget;
 	friend class gui;
 
@@ -77,14 +77,14 @@ public:
 	 * @param dots_per_pp - desired dots per perception pixel.
 	 */
 	context(
-			const utki::shared_ref<morda::renderer>& r,
-			const utki::shared_ref<morda::updater>& u,
-			std::function<void(std::function<void()>&&)>&& run_from_ui_thread_function,
-			std::function<void(morda::mouse_cursor)>&& set_mouse_cursor_function,
-			real dots_per_inch,
-			real dots_per_pp
-		);
-	
+		const utki::shared_ref<morda::renderer>& r,
+		const utki::shared_ref<morda::updater>& u,
+		std::function<void(std::function<void()>&&)>&& run_from_ui_thread_function,
+		std::function<void(morda::mouse_cursor)>&& set_mouse_cursor_function,
+		real dots_per_inch,
+		real dots_per_pp
+	);
+
 	context(const context&) = delete;
 	context(context&&) = delete;
 	context& operator=(const context&) = delete;
@@ -92,7 +92,7 @@ public:
 	const morda::units units;
 };
 
-}
+} // namespace morda
 
 // TODO:?
 // #include "widget.hpp"

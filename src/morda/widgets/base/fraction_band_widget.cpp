@@ -23,14 +23,16 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace morda;
 
-void fraction_band_widget::on_band_change(){
-	if (this->band_change_handler){
+void fraction_band_widget::on_band_change()
+{
+	if (this->band_change_handler) {
 		this->band_change_handler(*this);
 	}
 }
 
-void fraction_band_widget::set_band_fraction(real fraction){
-	if (this->curBandSizeFraction == fraction){
+void fraction_band_widget::set_band_fraction(real fraction)
+{
+	if (this->curBandSizeFraction == fraction) {
 		return;
 	}
 

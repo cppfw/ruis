@@ -22,14 +22,12 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #pragma once
 
 #include "../../container.hpp"
-
 #include "../../res/nine_patch.hpp"
-
 #include "../base/blending_widget.hpp"
 
 #include "image.hpp"
 
-namespace morda{
+namespace morda {
 
 /**
  * @brief Nine patch widget.
@@ -43,10 +41,7 @@ namespace morda{
  * @param center_visible - whether the central part of nine-patch image is visible (true) or not (false).
  * @param image - reference to a nine-patch resource.
  */
-class nine_patch :
-		public virtual widget,
-		public blending_widget,
-		private container
+class nine_patch : public virtual widget, public blending_widget, private container
 {
 	std::shared_ptr<const res::nine_patch> np_res;
 	std::shared_ptr<const res::nine_patch> disabled_np_res;
@@ -60,12 +55,16 @@ class nine_patch :
 	const std::shared_ptr<container> inner_content;
 
 protected:
-	bool on_mouse_move(const mouse_move_event& e)override{
+	bool on_mouse_move(const mouse_move_event& e) override
+	{
 		return this->container::on_mouse_move(e);
 	}
-	bool on_mouse_button(const mouse_button_event& e)override{
+
+	bool on_mouse_button(const mouse_button_event& e) override
+	{
 		return this->container::on_mouse_button(e);
 	}
+
 public:
 	nine_patch(const nine_patch&) = delete;
 	nine_patch& operator=(const nine_patch&) = delete;
@@ -80,7 +79,8 @@ public:
 	 * @brief Get content container.
 	 * @return The content container. This is where the child widgets are stored.
 	 */
-	container& content(){
+	container& content()
+	{
 		return *this->inner_content;
 	}
 
@@ -97,7 +97,8 @@ public:
 	 * Border values are in pixels or min_c.
 	 * @param borders - border values to set.
 	 */
-	void set_borders(sides<real> borders){
+	void set_borders(sides<real> borders)
+	{
 		this->borders = borders;
 		this->apply_images();
 		this->invalidate_layout();
@@ -108,19 +109,20 @@ public:
 	 * Border values are in pixels or min_c.
 	 * @return Current borders.
 	 */
-	decltype(borders) get_borders()const noexcept{
+	decltype(borders) get_borders() const noexcept
+	{
 		return this->borders;
 	}
 
-	sides<real> get_actual_borders()const noexcept;
+	sides<real> get_actual_borders() const noexcept;
 
-	void on_blending_change()override;
+	void on_blending_change() override;
 
-	void on_enable_change()override;
+	void on_enable_change() override;
 
 private:
 	void apply_images();
 	void update_images();
 };
 
-}
+} // namespace morda

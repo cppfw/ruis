@@ -21,23 +21,20 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
+#include <r4/rectangle.hpp>
+#include <r4/vector.hpp>
+#include <treeml/tree.hpp>
 #include <utki/config.hpp>
 
-#include <r4/vector.hpp>
-#include <r4/rectangle.hpp>
-
-#include <treeml/tree.hpp>
-
 #include "../config.hpp"
-#include "../widget.hpp"
-
+#include "../render/render_factory.hpp"
 #include "../render/renderer.hpp"
 #include "../render/texture_2d.hpp"
-#include "../render/render_factory.hpp"
+#include "../widget.hpp"
 
 #include "units.hpp"
 
-namespace morda{
+namespace morda {
 
 morda::vector2 parse_vec2(treeml::forest::const_iterator begin, treeml::forest::const_iterator end);
 
@@ -48,8 +45,9 @@ morda::vector2 parse_vec2(treeml::forest::const_iterator begin, treeml::forest::
  *                vector components will be filled with latest parsed value.
  * @return parsed vector2.
  */
-inline morda::vector2 parse_vec2(const treeml::forest& desc){
-    return parse_vec2(desc.begin(), desc.end());
+inline morda::vector2 parse_vec2(const treeml::forest& desc)
+{
+	return parse_vec2(desc.begin(), desc.end());
 }
 
 /**
@@ -117,11 +115,12 @@ morda::texture_2d::type num_channels_to_texture_type(unsigned numChannels);
 
 r4::vector4<float> color_to_vec4f(uint32_t color);
 
-inline const treeml::leaf& get_property_value(const treeml::tree& p){
-    if(p.children.size() != 1){
-        throw std::invalid_argument("get_property_value(): property has no value");
-    }
-    return p.children.front().value;
+inline const treeml::leaf& get_property_value(const treeml::tree& p)
+{
+	if (p.children.size() != 1) {
+		throw std::invalid_argument("get_property_value(): property has no value");
+	}
+	return p.children.front().value;
 }
 
 /**
@@ -135,4 +134,4 @@ inline const treeml::leaf& get_property_value(const treeml::tree& p){
  */
 vector2 dims_for_widget(const widget& w, const vector2& parent_dims);
 
-}
+} // namespace morda

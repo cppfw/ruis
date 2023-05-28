@@ -21,28 +21,28 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "push_button.hpp"
 #include "nine_patch_button.hpp"
+#include "push_button.hpp"
 
-namespace morda{
+namespace morda {
 
-class nine_patch_push_button :
-		virtual public push_button,
-		public nine_patch_button
+class nine_patch_push_button : virtual public push_button, public nine_patch_button
 {
 public:
 	nine_patch_push_button(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
-	
+
 protected:
-	void on_press_change()override;
-	
-	bool on_mouse_button(const mouse_button_event& e)override{
+	void on_press_change() override;
+
+	bool on_mouse_button(const mouse_button_event& e) override
+	{
 		return this->push_button::on_mouse_button(e);
 	}
 
-	void on_hover_change(unsigned pointerID)override{
+	void on_hover_change(unsigned pointerID) override
+	{
 		this->push_button::on_hover_change(pointerID);
 	}
 };
 
-}
+} // namespace morda

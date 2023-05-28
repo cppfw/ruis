@@ -23,35 +23,35 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace morda;
 
-path_vao::path_vao(
-	const utki::shared_ref<const morda::renderer>& r
-) :
+path_vao::path_vao(const utki::shared_ref<const morda::renderer>& r) :
 	renderer(r),
 	core(this->renderer.get().empty_vertex_array),
 	border(this->renderer.get().empty_vertex_array)
 {}
 
-void path_vao::set(const path::vertices& path){
+void path_vao::set(const path::vertices& path)
+{
 	auto core_buf = this->renderer.get().factory->create_vertex_buffer(path.pos);
 
 	this->core = this->renderer.get().factory->create_vertex_array(
-			{
-				core_buf,
-			},
-			this->renderer.get().factory->create_index_buffer(path.in_indices),
-			morda::vertex_array::mode::triangle_strip
-		);
+		{
+			core_buf,
+		},
+		this->renderer.get().factory->create_index_buffer(path.in_indices),
+		morda::vertex_array::mode::triangle_strip
+	);
 	this->border = this->renderer.get().factory->create_vertex_array(
-			{
-				core_buf,
-				this->renderer.get().factory->create_vertex_buffer(path.alpha),
-			},
-			this->renderer.get().factory->create_index_buffer(path.out_indices),
-			morda::vertex_array::mode::triangle_strip
-		);
+		{
+			core_buf,
+			this->renderer.get().factory->create_vertex_buffer(path.alpha),
+		},
+		this->renderer.get().factory->create_index_buffer(path.out_indices),
+		morda::vertex_array::mode::triangle_strip
+	);
 }
 
-void path_vao::render(const morda::matrix4& matrix, uint32_t color)const{
+void path_vao::render(const morda::matrix4& matrix, uint32_t color) const
+{
 	this->renderer.get().shader->color_pos->render(matrix, this->core.get(), color);
 
 	this->renderer.get().shader->color_pos_lum->render(matrix, this->border.get(), color);

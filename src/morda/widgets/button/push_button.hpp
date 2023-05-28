@@ -23,37 +23,38 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "button.hpp"
 
-namespace morda{
+namespace morda {
 
 /**
  * @brief Basic class of a push button.
  * Push button is a button which can be clicked.
  * Clicked means that the button was pressed and then released.
  */
-class push_button : virtual public button{
+class push_button : virtual public button
+{
 	bool currentlyPressed = false;
 
 	unsigned pointer_id;
 
 protected:
-	void on_press_change()override;
-	
+	void on_press_change() override;
+
 	/**
 	 * @brief Invoked when the button is clicked.
 	 * Default implementation emits 'clicked' signal.
 	 */
 	virtual void on_click();
-	
-	bool on_mouse_button(const  mouse_button_event& event)override;
-	
-	void on_hover_change(unsigned pointer_id)override;
-	
+
+	bool on_mouse_button(const mouse_button_event& event) override;
+
+	void on_hover_change(unsigned pointer_id) override;
+
 public:
 	push_button(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
-			widget(c, desc),
-			button(this->context, desc)
+		widget(c, desc),
+		button(this->context, desc)
 	{}
-	
+
 	/**
 	 * @brief Clicked signal.
 	 * Emitted when the button is clicked.
@@ -61,4 +62,4 @@ public:
 	std::function<void(push_button&)> click_handler;
 };
 
-}
+} // namespace morda

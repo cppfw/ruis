@@ -23,22 +23,23 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../../widget.hpp"
 
-namespace morda{
+namespace morda {
 
 /**
  * @brief Widget for intercepting resize events.
  * From GUI script it can be instantiated as "resize_proxy".
  */
-class resize_proxy : virtual public widget{
+class resize_proxy : virtual public widget
+{
 public:
 	resize_proxy(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
-			widget(c, desc)
+		widget(c, desc)
 	{}
 
 	resize_proxy(const resize_proxy&) = delete;
 	resize_proxy& operator=(const resize_proxy&) = delete;
 
-	void on_resize()override;
+	void on_resize() override;
 
 	/**
 	 * @brief Resize event signal.
@@ -47,4 +48,4 @@ public:
 	std::function<void(resize_proxy& w)> resize_handler;
 };
 
-}
+} // namespace morda

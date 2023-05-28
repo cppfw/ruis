@@ -21,13 +21,11 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
+#include "../../res/image.hpp"
 #include "../../widget.hpp"
-
 #include "../base/blending_widget.hpp"
 
-#include "../../res/image.hpp"
-
-namespace morda{
+namespace morda {
 
 /**
  * @brief Image widget.
@@ -39,9 +37,7 @@ namespace morda{
  * @param repeat_x - replicate image horizontally if size of the widget is bigger than size of the image resource.
  * @param repeat_y - replicate image vertically if size of the widget is bigger than size of the image resource.
  */
-class image :
-		public virtual widget,
-		public blending_widget
+class image : public virtual widget, public blending_widget
 {
 	image(const image&);
 	image& operator=(const image&);
@@ -54,47 +50,53 @@ class image :
 	bool keep_aspect_ratio = false;
 
 	r4::vector2<bool> repeat_v = r4::vector2<bool>(false);
-	
+
 	mutable utki::shared_ref<const vertex_array> vao;
 
 public:
 	image(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
+
 public:
-	virtual ~image()noexcept{}
+	virtual ~image() noexcept {}
 
-	void render(const morda::matrix4& matrix)const override;
+	void render(const morda::matrix4& matrix) const override;
 
-	morda::vector2 measure(const morda::vector2& quotum)const override;
+	morda::vector2 measure(const morda::vector2& quotum) const override;
 
 	void set_image(std::shared_ptr<const res::image> image);
 
-	const std::shared_ptr<const res::image>& get_image()const{
+	const std::shared_ptr<const res::image>& get_image() const
+	{
 		return this->img;
 	}
 
 	void set_disabled_image(std::shared_ptr<const res::image> image);
 
-	const std::shared_ptr<const res::image>& get_disabled_image()const{
+	const std::shared_ptr<const res::image>& get_disabled_image() const
+	{
 		return this->disabled_img;
 	}
 
 	void on_resize() override;
 
-	const decltype(repeat_v)& repeat()const noexcept{
+	const decltype(repeat_v)& repeat() const noexcept
+	{
 		return this->repeat_v;
 	}
 
-	void set_repeat(decltype(repeat_v) r){
+	void set_repeat(decltype(repeat_v) r)
+	{
 		this->repeat_v = r;
 		this->texture.reset();
 	}
 
-	void set_keep_aspect_ratio(bool keep_aspect_ratio){
+	void set_keep_aspect_ratio(bool keep_aspect_ratio)
+	{
 		this->keep_aspect_ratio = keep_aspect_ratio;
 		this->invalidate_layout();
 	}
 
-	void on_enable_change()override;
+	void on_enable_change() override;
 };
 
-}
+} // namespace morda

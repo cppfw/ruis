@@ -25,12 +25,12 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <utki/flags.hpp>
 
-namespace morda{
+namespace morda {
 
 /**
  * @brief Keyboard keys enumeration.
  */
-enum class key{
+enum class key {
 	space,
 	enter,
 	zero,
@@ -131,7 +131,7 @@ enum class key{
 	unknown = enum_size
 };
 
-enum class key_modifier{
+enum class key_modifier {
 	left_shift,
 	right_shift,
 	left_alt,
@@ -151,17 +151,19 @@ std::string_view to_string(morda::key key);
 
 morda::key to_key(std::string_view name);
 
-struct key_combo{
+struct key_combo {
 	morda::key key;
 	utki::flags<key_modifier> modifiers;
 
-	bool operator==(const key_combo& kc)const{
+	bool operator==(const key_combo& kc) const
+	{
 		return this->key == kc.key && this->modifiers == kc.modifiers;
 	}
 
-	bool operator!=(const key_combo& kc)const{
+	bool operator!=(const key_combo& kc) const
+	{
 		return !this->operator==(kc);
 	}
 };
 
-}
+} // namespace morda

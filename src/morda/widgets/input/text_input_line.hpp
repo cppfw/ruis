@@ -21,22 +21,21 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
+#include "../../updateable.hpp"
 #include "../../widget.hpp"
 #include "../base/single_line_text_widget.hpp"
-
-#include "../../updateable.hpp"
 #include "../character_input_widget.hpp"
 
-namespace morda{
+namespace morda {
 
 /**
  * @brief TODO:.
  */
 class text_input_line :
-		public single_line_text_widget,
-		public character_input_widget,
-		public color_widget,
-		private updateable
+	public single_line_text_widget,
+	public character_input_widget,
+	public color_widget,
+	private updateable
 {
 	size_t firstVisibleCharIndex = 0;
 	real xOffset = 0;
@@ -62,25 +61,25 @@ public:
 
 	text_input_line(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
 
-	virtual ~text_input_line()noexcept{}
+	virtual ~text_input_line() noexcept {}
 
-	vector2 measure(const morda::vector2& quotum)const noexcept override;
+	vector2 measure(const morda::vector2& quotum) const noexcept override;
 
 	void render(const morda::matrix4& matrix) const override;
 
-	bool on_mouse_button(const mouse_button_event& event)override;
+	bool on_mouse_button(const mouse_button_event& event) override;
 
-	bool on_mouse_move(const mouse_move_event& event)override;
+	bool on_mouse_move(const mouse_move_event& event) override;
 
-	void on_focus_change()override;
+	void on_focus_change() override;
 
-	bool on_key(const morda::key_event& e)override;
+	bool on_key(const morda::key_event& e) override;
 
-	void on_resize()override;
+	void on_resize() override;
 
-	void update(uint32_t dt)override;
+	void update(uint32_t dt) override;
 
-	void on_character_input(const character_input_event& e)override;
+	void on_character_input(const character_input_event& e) override;
 
 	void set_cursor_index(size_t index, bool selection = false);
 
@@ -93,12 +92,13 @@ private:
 
 	real indexToPos(size_t index);
 
-	bool thereIsSelection()const noexcept{
+	bool thereIsSelection() const noexcept
+	{
 		return this->cursorIndex != this->selectionStartIndex;
 	}
 
-	//returns new cursor index
+	// returns new cursor index
 	size_t deleteSelection();
 };
 
-}
+} // namespace morda

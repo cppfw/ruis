@@ -26,35 +26,36 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace morda;
 
 context::context(
-		const utki::shared_ref<morda::renderer>& r,
-		const utki::shared_ref<morda::updater>& u,
-		std::function<void(std::function<void()>&&)>&& run_from_ui_thread_function,
-		std::function<void(morda::mouse_cursor)>&& set_mouse_cursor_function,
-		real dots_per_inch,
-		real dots_per_pp
-	) :
-		renderer(r),
-		updater(u),
-		run_from_ui_thread(std::move(run_from_ui_thread_function)),
-		cursor_manager(std::move(set_mouse_cursor_function)),
-		loader(*this),
-		inflater(*this),
-		units(dots_per_inch, dots_per_pp)
+	const utki::shared_ref<morda::renderer>& r,
+	const utki::shared_ref<morda::updater>& u,
+	std::function<void(std::function<void()>&&)>&& run_from_ui_thread_function,
+	std::function<void(morda::mouse_cursor)>&& set_mouse_cursor_function,
+	real dots_per_inch,
+	real dots_per_pp
+) :
+	renderer(r),
+	updater(u),
+	run_from_ui_thread(std::move(run_from_ui_thread_function)),
+	cursor_manager(std::move(set_mouse_cursor_function)),
+	loader(*this),
+	inflater(*this),
+	units(dots_per_inch, dots_per_pp)
 {
-	if(!this->run_from_ui_thread){
+	if (!this->run_from_ui_thread) {
 		throw std::invalid_argument("context::context(): no post to UI thread function provided");
 	}
 }
 
-void context::set_focused_widget(const std::shared_ptr<widget>& w){
-	if(auto prev = this->focused_widget.lock()){
+void context::set_focused_widget(const std::shared_ptr<widget>& w)
+{
+	if (auto prev = this->focused_widget.lock()) {
 		prev->focused = false;
 		prev->on_focus_change();
 	}
 
 	this->focused_widget = w;
 
-	if(w){
+	if (w) {
 		w->focused = true;
 		w->on_focus_change();
 	}

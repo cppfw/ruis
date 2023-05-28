@@ -21,10 +21,11 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "push_button.hpp"
 #include "../label/nine_patch.hpp"
 
-namespace morda{
+#include "push_button.hpp"
+
+namespace morda {
 
 /**
  * @brief Simple push button.
@@ -33,33 +34,33 @@ namespace morda{
  * initializing standard morda widgets.
  * Since the button is a nine_patch it can have children.
  */
-class nine_patch_button :
-		virtual public button,
-		public nine_patch
+class nine_patch_button : virtual public button, public nine_patch
 {
 	std::shared_ptr<const res::nine_patch> unpressedNinePatch_v;
 	std::shared_ptr<const res::nine_patch> pressedNinePatch_v;
-	
+
 public:
 	nine_patch_button(const nine_patch_button&) = delete;
 	nine_patch_button& operator=(const nine_patch_button&) = delete;
-	
+
 	void set_unpressed_nine_patch(std::shared_ptr<const res::nine_patch> np);
-	
-	const decltype(unpressedNinePatch_v)& get_unpressed_nine_patch()const noexcept{
+
+	const decltype(unpressedNinePatch_v)& get_unpressed_nine_patch() const noexcept
+	{
 		return this->unpressedNinePatch_v;
 	}
-	
+
 	void set_pressed_nine_patch(std::shared_ptr<const res::nine_patch> np);
-	
-	const decltype(pressedNinePatch_v)& get_pressed_nine_patch()const noexcept{
+
+	const decltype(pressedNinePatch_v)& get_pressed_nine_patch() const noexcept
+	{
 		return this->pressedNinePatch_v;
 	}
-	
+
 protected:
 	nine_patch_button(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
-	
-	void on_press_change()override;
+
+	void on_press_change() override;
 };
 
-}
+} // namespace morda

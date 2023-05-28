@@ -26,11 +26,12 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace morda;
 
 spinner::spinner(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
-		widget(c, desc),
-		image(this->context, desc)
+	widget(c, desc),
+	image(this->context, desc)
 {}
 
-void spinner::render(const matrix4& matrix)const{
+void spinner::render(const matrix4& matrix) const
+{
 	matrix4 matr(matrix);
 
 	matr.translate(this->rect().d / 2);
@@ -40,14 +41,16 @@ void spinner::render(const matrix4& matrix)const{
 	this->image::render(matr);
 }
 
-void spinner::set_active(bool active){
-	if(active){
+void spinner::set_active(bool active)
+{
+	if (active) {
 		this->context.get().updater.get().start(utki::make_shared_from(*this).to_shared_ptr());
-	}else{
+	} else {
 		this->context.get().updater.get().stop(*this);
 	}
 }
 
-void spinner::update(uint32_t dt_ms){
+void spinner::update(uint32_t dt_ms)
+{
 	angle += utki::deg_to_rad(real(180)) / real(1000) * real(dt_ms);
 }

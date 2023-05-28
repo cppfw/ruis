@@ -25,15 +25,16 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "vertex_array.hpp"
 
-namespace morda{
+namespace morda {
 
-class shader{
+class shader
+{
 public:
 	shader() = default;
-	
+
 	virtual ~shader() = default;
-	
-	virtual void render(const r4::matrix4<float>& m, const vertex_array& va)const = 0;
+
+	virtual void render(const r4::matrix4<float>& m, const vertex_array& va) const = 0;
 };
 
-}
+} // namespace morda

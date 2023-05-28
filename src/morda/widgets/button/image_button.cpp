@@ -25,39 +25,43 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace morda;
 
-void image_button::update_image(){
-	if(this->is_pressed()){
+void image_button::update_image()
+{
+	if (this->is_pressed()) {
 		this->set_image(this->pressedImage_v);
-	}else{
+	} else {
 		this->set_image(this->unpressedImage_v);
 	}
 }
 
-void image_button::on_press_change(){
+void image_button::on_press_change()
+{
 	this->update_image();
 	this->button::on_press_change();
 }
 
 image_button::image_button(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
-		widget(c, desc),
-		button(this->context, desc),
-		image(this->context, desc)
+	widget(c, desc),
+	button(this->context, desc),
+	image(this->context, desc)
 {
-	for(const auto& p : desc){
-		if(!is_property(p)){
+	for (const auto& p : desc) {
+		if (!is_property(p)) {
 			continue;
 		}
 
-		if(p.value == "look"){
-			for(const auto& pp : p.children){
-				if(!is_property(pp)){
+		if (p.value == "look") {
+			for (const auto& pp : p.children) {
+				if (!is_property(pp)) {
 					continue;
 				}
 
-				if(pp.value == "pressed"){
-					this->pressedImage_v = this->context.get().loader.load<res::image>(get_property_value(pp).to_string()).to_shared_ptr();
-				}else if(pp.value == "unpressed"){
-					this->unpressedImage_v = this->context.get().loader.load<res::image>(get_property_value(pp).to_string()).to_shared_ptr();
+				if (pp.value == "pressed") {
+					this->pressedImage_v =
+						this->context.get().loader.load<res::image>(get_property_value(pp).to_string()).to_shared_ptr();
+				} else if (pp.value == "unpressed") {
+					this->unpressedImage_v =
+						this->context.get().loader.load<res::image>(get_property_value(pp).to_string()).to_shared_ptr();
 				}
 				this->update_image();
 			}
@@ -65,12 +69,14 @@ image_button::image_button(const utki::shared_ref<morda::context>& c, const tree
 	}
 }
 
-void image_button::set_pressed_image(std::shared_ptr<const res::image> image){
+void image_button::set_pressed_image(std::shared_ptr<const res::image> image)
+{
 	this->pressedImage_v = std::move(image);
 	this->update_image();
 }
 
-void image_button::set_unpressed_image(std::shared_ptr<const res::image> image){
+void image_button::set_unpressed_image(std::shared_ptr<const res::image> image)
+{
 	this->unpressedImage_v = std::move(image);
 	this->update_image();
 }

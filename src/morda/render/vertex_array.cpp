@@ -30,17 +30,19 @@ vertex_array::vertex_array(
 	const utki::shared_ref<const morda::index_buffer>& indices,
 	mode rendering_mode
 ) :
-		buffers(std::move(buffers)),
-		indices(indices),
-		rendering_mode(rendering_mode)
+	buffers(std::move(buffers)),
+	indices(indices),
+	rendering_mode(rendering_mode)
 {
-	if(this->buffers.empty()){
+	if (this->buffers.empty()) {
 		throw std::invalid_argument("no vertex buffers passed to vertex array");
 	}
 	auto s = this->buffers.front().get().size;
-	for(auto& b : this->buffers){
-		if(b.get().size != s){
-			throw std::invalid_argument("vertex buffers of different size passed in to vertex array, should all be of the same size");
+	for (auto& b : this->buffers) {
+		if (b.get().size != s) {
+			throw std::invalid_argument(
+				"vertex buffers of different size passed in to vertex array, should all be of the same size"
+			);
 		}
 	}
 }

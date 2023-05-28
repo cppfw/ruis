@@ -25,18 +25,18 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "path.hpp"
 
-namespace morda{
+namespace morda {
 
-class path_vao{
+class path_vao
+{
 	utki::shared_ref<const morda::renderer> renderer;
 
 	utki::shared_ref<const morda::vertex_array> core;
 	utki::shared_ref<const morda::vertex_array> border;
+
 public:
-	path_vao(
-		const utki::shared_ref<const morda::renderer>& r
-	);
-	
+	path_vao(const utki::shared_ref<const morda::renderer>& r);
+
 	path_vao(const path_vao&) = delete;
 	path_vao& operator=(const path_vao&) = delete;
 
@@ -45,7 +45,7 @@ public:
 
 	void set(const path::vertices& path);
 
-	void render(const morda::matrix4& matrix, uint32_t color)const;
+	void render(const morda::matrix4& matrix, uint32_t color) const;
 };
 
-}
+} // namespace morda

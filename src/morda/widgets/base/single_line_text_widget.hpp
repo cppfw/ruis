@@ -23,34 +23,39 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "text_widget.hpp"
 
-namespace morda{
+namespace morda {
 
-class single_line_text_widget : public text_widget{
+class single_line_text_widget : public text_widget
+{
 	mutable morda::rectangle bb;
 
 	std::u32string text;
+
 protected:
-	vector2 measure(const morda::vector2& quotum)const noexcept override;
+	vector2 measure(const morda::vector2& quotum) const noexcept override;
 
 	single_line_text_widget(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
 
-	const morda::rectangle& get_bounding_box()const{
+	const morda::rectangle& get_bounding_box() const
+	{
 		return this->bb;
 	}
 
 	void recompute_bounding_box();
+
 public:
 	using text_widget::set_text;
 
-	void set_text(std::u32string&& text)override;
+	void set_text(std::u32string&& text) override;
 
-	std::u32string get_text()const override;
+	std::u32string get_text() const override;
 
-	void on_font_change()override{
+	void on_font_change() override
+	{
 		this->recompute_bounding_box();
 	}
 
-	void on_text_change()override;
+	void on_text_change() override;
 };
 
-}
+} // namespace morda

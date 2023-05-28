@@ -23,14 +23,16 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../base/fraction_widget.hpp"
 
-namespace morda{
+namespace morda {
 
-class fraction_band_widget : public fraction_widget{
+class fraction_band_widget : public fraction_widget
+{
 	float curBandSizeFraction = 0; // Current bar size factor from 0 to 1
+
 protected:
 	fraction_band_widget(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
-			widget(c, desc),
-			fraction_widget(this->context, desc)
+		widget(c, desc),
+		fraction_widget(this->context, desc)
 	{}
 
 	virtual void on_band_change();
@@ -40,9 +42,10 @@ public:
 
 	void set_band_fraction(real fraction);
 
-	real get_band_fraction()const noexcept{
+	real get_band_fraction() const noexcept
+	{
 		return this->curBandSizeFraction;
 	}
 };
 
-}
+} // namespace morda

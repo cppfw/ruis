@@ -22,36 +22,29 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "scroll_area.hpp"
 
 #include "../../context.hpp"
-
 #include "../../util/util.hpp"
 
 using namespace morda;
 
 scroll_area::scroll_area(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
-		widget(c, desc),
-		container(this->context, desc)
+	widget(c, desc),
+	container(this->context, desc)
 {}
 
-bool scroll_area::on_mouse_button(const mouse_button_event& e){
+bool scroll_area::on_mouse_button(const mouse_button_event& e)
+{
 	vector2 d = -this->cur_scroll_pos;
-	return this->container::on_mouse_button(mouse_button_event{
-			e.is_down,
-			e.pos - d,
-			e.button,
-			e.pointer_id
-		});
+	return this->container::on_mouse_button(mouse_button_event{e.is_down, e.pos - d, e.button, e.pointer_id});
 }
 
-bool scroll_area::on_mouse_move(const mouse_move_event& e){
+bool scroll_area::on_mouse_move(const mouse_move_event& e)
+{
 	vector2 d = -this->cur_scroll_pos;
-	return this->container::on_mouse_move(mouse_move_event{
-			e.pos - d,
-			e.pointer_id,
-			e.ignore_mouse_capture
-		});
+	return this->container::on_mouse_move(mouse_move_event{e.pos - d, e.pointer_id, e.ignore_mouse_capture});
 }
 
-void scroll_area::render(const morda::matrix4& matrix)const{
+void scroll_area::render(const morda::matrix4& matrix) const
+{
 	vector2 d = -this->cur_scroll_pos;
 
 	matrix4 matr(matrix);
@@ -60,44 +53,48 @@ void scroll_area::render(const morda::matrix4& matrix)const{
 	this->container::render(matr);
 }
 
-void scroll_area::clamp_scroll_pos(){
+void scroll_area::clamp_scroll_pos()
+{
 	using std::max;
 	using std::min;
 
 	ASSERT(this->invisible_dims.is_positive_or_zero())
-	
+
 	this->cur_scroll_pos = max(this->cur_scroll_pos, {0, 0});
 	this->cur_scroll_pos = min(this->cur_scroll_pos, this->invisible_dims);
 }
 
-void scroll_area::set_scroll_pos(const vector2& new_scroll_pos){
+void scroll_area::set_scroll_pos(const vector2& new_scroll_pos)
+{
 	using std::round;
 	this->cur_scroll_pos = round(new_scroll_pos);
 
 	this->clamp_scroll_pos();
 	this->update_scroll_factor();
-	
+
 	this->on_scroll_pos_change();
 }
 
-void scroll_area::set_scroll_factor(const vector2& factor){
+void scroll_area::set_scroll_factor(const vector2& factor)
+{
 	vector2 new_scroll_pos = this->invisible_dims.comp_mul(factor);
 
 	this->set_scroll_pos(new_scroll_pos);
 }
 
-void scroll_area::update_scroll_factor(){
+void scroll_area::update_scroll_factor()
+{
 	// at this point effective dimension should be updated
 	vector2 factor = this->cur_scroll_pos.comp_div(this->invisible_dims);
 
-	if(this->cur_scroll_factor == factor){
+	if (this->cur_scroll_factor == factor) {
 		return;
 	}
 
-	for(unsigned i = 0; i != 2; ++i){
-		if(this->invisible_dims[i] == 0){
+	for (unsigned i = 0; i != 2; ++i) {
+		if (this->invisible_dims[i] == 0) {
 			this->cur_scroll_factor[i] = 0;
-		}else{
+		} else {
 			ASSERT(this->invisible_dims[i] > 0)
 			this->cur_scroll_factor[i] = this->cur_scroll_pos[i] / this->invisible_dims[i];
 		}
@@ -107,25 +104,26 @@ void scroll_area::update_scroll_factor(){
 // NOTE:
 // scroll_area uses it's own dims_for_widget() beacuse it has slightly different behaviour for 'max',
 // it wants 'max' children to be bigger than scroll_area in case their minimal dimensions are bigger.
-vector2 scroll_area::dims_for_widget(const widget& w)const{
+vector2 scroll_area::dims_for_widget(const widget& w) const
+{
 	const layout_params& lp = w.get_layout_params_const();
 	vector2 d;
-	for(unsigned i = 0; i != 2; ++i){
-		if(lp.dims[i] == layout_params::fill){
+	for (unsigned i = 0; i != 2; ++i) {
+		if (lp.dims[i] == layout_params::fill) {
 			d[i] = this->rect().d[i];
-		}else if(lp.dims[i] == layout_params::min || lp.dims[i] == layout_params::max){
+		} else if (lp.dims[i] == layout_params::min || lp.dims[i] == layout_params::max) {
 			d[i] = -1; // will be updated below
-		}else{
+		} else {
 			d[i] = lp.dims[i];
 		}
 	}
-	if(!d.is_positive_or_zero()){
+	if (!d.is_positive_or_zero()) {
 		vector2 md = w.measure(d);
-		for(unsigned i = 0; i != md.size(); ++i){
-			if(d[i] < 0){
-				if(lp.dims[i] == layout_params::max && md[i] < this->rect().d[i]){
+		for (unsigned i = 0; i != md.size(); ++i) {
+			if (d[i] < 0) {
+				if (lp.dims[i] == layout_params::max && md[i] < this->rect().d[i]) {
 					d[i] = this->rect().d[i];
-				}else{
+				} else {
 					d[i] = md[i];
 				}
 			}
@@ -134,15 +132,17 @@ vector2 scroll_area::dims_for_widget(const widget& w)const{
 	return d;
 }
 
-void scroll_area::arrange_widgets(){
-	for(const auto& c : this->children()){
+void scroll_area::arrange_widgets()
+{
+	for (const auto& c : this->children()) {
 		auto d = this->dims_for_widget(c.get());
 
 		c.get().resize(d);
 	}
 }
 
-void scroll_area::on_lay_out(){
+void scroll_area::on_lay_out()
+{
 	this->arrange_widgets();
 	this->update_invisible_dims();
 
@@ -151,36 +151,38 @@ void scroll_area::on_lay_out(){
 	// distance of content's bottom right corner from bottom right corner of the scroll_area
 	vector2 br = this->cur_scroll_pos - this->invisible_dims;
 
-	for(size_t i = 0; i != br.size(); ++i){
-		if(br[i] > 0){
-			if(br[i] <= this->cur_scroll_pos[i]){
+	for (size_t i = 0; i != br.size(); ++i) {
+		if (br[i] > 0) {
+			if (br[i] <= this->cur_scroll_pos[i]) {
 				this->cur_scroll_pos[i] -= br[i];
-			}else{
+			} else {
 				this->cur_scroll_pos[i] = 0;
 			}
 		}
 	}
 
 	// TODO: why notification is deferred? figure out why and write a comment with explanation here
-	this->context.get().run_from_ui_thread([sa = utki::make_weak_from(*this)](){
-		if(auto s = sa.lock()){
+	this->context.get().run_from_ui_thread([sa = utki::make_weak_from(*this)]() {
+		if (auto s = sa.lock()) {
 			s->on_scroll_pos_change();
 		}
 	});
 }
 
-void scroll_area::on_children_change(){
+void scroll_area::on_children_change()
+{
 	this->container::on_children_change();
 	this->arrange_widgets();
 	this->update_invisible_dims();
 }
 
-void scroll_area::update_invisible_dims(){
+void scroll_area::update_invisible_dims()
+{
 	morda::vector2 minDim(0);
 
 	using std::max;
 
-	for(const auto& c : this->children()){
+	for (const auto& c : this->children()) {
 		morda::vector2 d = c.get().rect().p + this->dims_for_widget(c.get());
 
 		minDim = max(minDim, d); // clamp bottom
@@ -191,7 +193,8 @@ void scroll_area::update_invisible_dims(){
 	this->update_scroll_factor();
 }
 
-vector2 scroll_area::get_visible_area_fraction()const noexcept{
+vector2 scroll_area::get_visible_area_fraction() const noexcept
+{
 	auto ret = this->rect().d.comp_div(this->rect().d + this->invisible_dims);
 
 	using std::min;
@@ -200,8 +203,9 @@ vector2 scroll_area::get_visible_area_fraction()const noexcept{
 	return ret;
 }
 
-void scroll_area::on_scroll_pos_change(){
-	if(this->scroll_change_handler){
+void scroll_area::on_scroll_pos_change()
+{
+	if (this->scroll_change_handler) {
 		this->scroll_change_handler(*this);
 	}
 }

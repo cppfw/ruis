@@ -23,78 +23,88 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../../container.hpp"
 
-namespace morda{
+namespace morda {
 
 class book;
 
-class page : public virtual widget{
+class page : public virtual widget
+{
 	friend class book;
+
 protected:
 	page(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
-	
+
 	page(const page&) = delete;
 	page& operator=(const page&) = delete;
 
 	book* parent_book = nullptr;
+
 public:
-	book* get_parent_book(){
+	book* get_parent_book()
+	{
 		return this->parent_book;
 	}
-	const book* get_parent_book()const{
+
+	const book* get_parent_book() const
+	{
 		return this->parent_book;
 	}
 
 	void activate();
 
-	bool is_active()const;
+	bool is_active() const;
 
-	virtual void on_show(){}
-	virtual void on_hide()noexcept{}
-	virtual void on_tear_out()noexcept{}
-	
-	utki::shared_ref<page> tear_out()noexcept;
+	virtual void on_show() {}
+
+	virtual void on_hide() noexcept {}
+
+	virtual void on_tear_out() noexcept {}
+
+	utki::shared_ref<page> tear_out() noexcept;
 };
 
-class book :
-		public virtual widget,
-		private container
+class book : public virtual widget, private container
 {
 	friend class page;
-	
+
 	size_t active_page_index = std::numeric_limits<size_t>::max(); // invalid index
 
 	std::vector<utki::shared_ref<page>> pages;
+
 public:
 	book(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
-	
+
 	book(const book&) = delete;
 	book& operator=(const book&) = delete;
-	
+
 	void push(const utki::shared_ref<page>& page);
-	
-	size_t size()const{
+
+	size_t size() const
+	{
 		return this->pages.size();
 	}
 
-	size_t get_active_index()const{
+	size_t get_active_index() const
+	{
 		return this->active_page_index;
 	}
 
-	const page* get_active_page()const;
+	const page* get_active_page() const;
 
 	void activate(size_t page_index);
 	void activate(const page& p);
 
-	~book()noexcept;
+	~book() noexcept;
 
 	std::function<void(book&)> active_page_change_handler;
 
 	// page is either pushed or teared out
 	std::function<void(book&, const page&)> pages_change_handler;
+
 private:
-	utki::shared_ref<page> tear_out(page& page)noexcept;
+	utki::shared_ref<page> tear_out(page& page) noexcept;
 
 	void notify_pages_change(const page& p);
 };
 
-}
+} // namespace morda

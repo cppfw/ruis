@@ -21,12 +21,11 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "../label/text.hpp"
 #include "../label/color.hpp"
-
+#include "../label/text.hpp"
 #include "../proxy/mouse_proxy.hpp"
 
-namespace morda{
+namespace morda {
 
 /**
  * @brief Window widget.
@@ -37,9 +36,7 @@ namespace morda{
  * @param title - text of the window title.
  * @param look - style settings.
  */
-class window :
-		virtual public widget,
-		private container
+class window : virtual public widget, private container
 {
 	morda::vector2 emptyMinDim; // minimal dimension of empty window
 
@@ -91,7 +88,8 @@ public:
 	 * This is where child widgets are stored.
 	 * @return Window content area.
 	 */
-	container& content(){
+	container& content()
+	{
 		return *this->contentArea;
 	}
 
@@ -105,11 +103,11 @@ public:
 	 * @return true if the widget is topmost.
 	 * @return false otherwise.
 	 */
-	bool is_topmost()const noexcept;
+	bool is_topmost() const noexcept;
 
-	bool on_mouse_button(const mouse_button_event& event)override;
+	bool on_mouse_button(const mouse_button_event& event) override;
 
-	bool on_mouse_move(const mouse_move_event& event)override;
+	bool on_mouse_move(const mouse_move_event& event) override;
 
 	void set_background(const utki::shared_ref<widget>& w);
 
@@ -122,4 +120,4 @@ public:
 	void set_borders(sides<real> borders);
 };
 
-}
+} // namespace morda

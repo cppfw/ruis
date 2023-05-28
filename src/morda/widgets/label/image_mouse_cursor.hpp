@@ -21,11 +21,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
+#include "../../container.hpp"
 #include "../../res/cursor.hpp"
 
-#include "../../container.hpp"
-
-namespace morda{
+namespace morda {
 
 /**
  * @brief Mouse cursor widget.
@@ -34,12 +33,14 @@ namespace morda{
  *
  * @param cursor - reference to cursor resource.
  */
-class image_mouse_cursor : public container{
+class image_mouse_cursor : public container
+{
 	std::shared_ptr<const res::cursor> cursor;
 
 	std::shared_ptr<const res::image::texture> quad_tex;
 
 	vector2 cursorPos;
+
 public:
 	image_mouse_cursor(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
 
@@ -48,9 +49,9 @@ public:
 
 	void set_cursor(const utki::shared_ref<const res::cursor>& cursor);
 
-	bool on_mouse_move(const mouse_move_event& e)override;
+	bool on_mouse_move(const mouse_move_event& e) override;
 
 	void render(const morda::matrix4& matrix) const override;
 };
 
-}
+} // namespace morda

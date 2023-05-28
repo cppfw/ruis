@@ -23,9 +23,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../../container.hpp"
 
-namespace morda{
+namespace morda {
 
-class min_proxy : public morda::container{
+class min_proxy : public morda::container
+{
 	mutable std::weak_ptr<const morda::widget> target;
 	mutable std::string root_id;
 	mutable std::vector<std::string> target_id;
@@ -33,7 +34,7 @@ class min_proxy : public morda::container{
 public:
 	min_proxy(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
 
-	vector2 measure(const vector2& quotum)const override;
+	vector2 measure(const vector2& quotum) const override;
 };
 
-}
+} // namespace morda

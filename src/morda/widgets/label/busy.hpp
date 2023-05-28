@@ -23,17 +23,18 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "spinner.hpp"
 
-namespace morda{
+namespace morda {
 
 /**
  * @brief Busy spinner.
  * @param active - whether the busy indicator is initially active or not, can be true/false.
  */
-class busy : public spinner{
+class busy : public spinner
+{
 public:
 	busy(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
 
 	void set_active(bool active);
 };
 
-}
+} // namespace morda

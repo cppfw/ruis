@@ -23,14 +23,15 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "image.hpp"
 
-namespace morda{ namespace res{
+namespace morda {
+namespace res {
 
 /**
  * @brief Mouse cursor resource.
- * 
+ *
  * @param image - reference to image resource.
  * @param hotspot - X and Y of the hot spot from top left corner of the image.
- * 
+ *
  * Example:
  * @code
  * crs_arrow{
@@ -39,31 +40,40 @@ namespace morda{ namespace res{
  * }
  * @endcode
  */
-class cursor : public resource{
+class cursor : public resource
+{
 	utki::shared_ref<const res::image> image_v;
 	vector2 hotspot_v;
-	
+
 public:
 	cursor(
-		const utki::shared_ref<morda::context>& c, 
+		const utki::shared_ref<morda::context>& c,
 		const utki::shared_ref<morda::res::image>& image,
 		const vector2& hotspot
 	);
-	
+
 	cursor(const cursor&) = delete;
 	cursor& operator=(const cursor&) = delete;
-	
-	const res::image& image()const noexcept{
+
+	const res::image& image() const noexcept
+	{
 		return this->image_v.get();
 	}
-	
-	const vector2& hotspot()const noexcept{
+
+	const vector2& hotspot() const noexcept
+	{
 		return this->hotspot_v;
 	}
+
 private:
 	friend class morda::resource_loader;
-	
-	static utki::shared_ref<cursor> load(const utki::shared_ref<morda::context>& ctx, const ::treeml::forest& desc, const papki::file &fi);
+
+	static utki::shared_ref<cursor> load(
+		const utki::shared_ref<morda::context>& ctx,
+		const ::treeml::forest& desc,
+		const papki::file& fi
+	);
 };
 
-}}
+} // namespace res
+} // namespace morda

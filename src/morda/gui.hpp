@@ -24,9 +24,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "context.hpp"
 #include "updateable.hpp"
 
-namespace morda{
+namespace morda {
 
-class gui{
+class gui
+{
 	friend class updateable;
 	friend class widget;
 
@@ -42,7 +43,7 @@ public:
 	gui(const gui&) = delete;
 	gui& operator=(const gui&) = delete;
 
-	virtual ~gui()noexcept{}
+	virtual ~gui() noexcept {}
 
 private:
 	utki::shared_ref<morda::widget> root_widget;
@@ -58,7 +59,8 @@ public:
 	 * @brief Get current root widget.
 	 * @return reference to the currently set root widget.
 	 */
-	morda::widget& get_root()noexcept{
+	morda::widget& get_root() noexcept
+	{
 		return this->root_widget.get();
 	}
 
@@ -66,11 +68,14 @@ public:
 	 * @brief Get constant current root widget.
 	 * @return constant reference to the currently set root widget.
 	 */
-	const morda::widget& get_root()const noexcept{
+	const morda::widget& get_root() const noexcept
+	{
 		return this->root_widget.get();
 	}
+
 private:
 	vector2 viewport_size{0, 0};
+
 public:
 	/**
 	 * @brief Set viewport size for GUI.
@@ -84,7 +89,7 @@ public:
 	 * Y axis directed upwards. Left screen edge is at -1, right is at 1, top at 1, bottom at -1.
 	 * @param matrix - use this transformation matrix.
 	 */
-	void render(const matrix4& matrix = matrix4().set_identity())const;
+	void render(const matrix4& matrix = matrix4().set_identity()) const;
 
 	/**
 	 * @brief Initialize standard widgets library.
@@ -100,7 +105,8 @@ public:
 	 * Call this function from main loop of the program.
 	 * @return number of milliseconds to sleep before next call.
 	 */
-	uint32_t update(){
+	uint32_t update()
+	{
 		return this->context.get().updater.get().update();
 	}
 
@@ -130,6 +136,7 @@ public:
 
 private:
 	utki::flags<morda::key_modifier> key_modifiers;
+
 public:
 	/**
 	 * @brief Feed in the key event to GUI.
@@ -143,27 +150,27 @@ public:
 	 * @brief Input string provider.
 	 * Override this class to pass in the character input information when user makes character input.
 	 */
-	struct input_string_provider{
+	struct input_string_provider {
 		/**
 		 * @brief Get string.
 		 * Override this function to return entered text.
 		 * @return The text that the user has entered.
 		 */
-		virtual std::u32string get()const = 0;
+		virtual std::u32string get() const = 0;
 
-		virtual ~input_string_provider()noexcept{}
+		virtual ~input_string_provider() noexcept {}
 	};
 
 	/**
 	 * @brief Feed in the character input event to the GUI.
 	 * The idea with input_string_provider parameter is that we don't want to calculate the unicode string
 	 * unless it is really needed, thus provide the string only when get() method is called.
-	 * This method is supposed to receive also a repeated key events when user holds down the key, as well as initial key press.
-	 * input_string_provider may provide empty string.
+	 * This method is supposed to receive also a repeated key events when user holds down the key, as well as initial
+	 * key press. input_string_provider may provide empty string.
 	 * @param string_provider - input string provider.
 	 * @param key_code - key code associated with character input, can be unknown.
 	 */
 	void send_character_input(const input_string_provider& string_provider, morda::key key_code);
 };
 
-}
+} // namespace morda

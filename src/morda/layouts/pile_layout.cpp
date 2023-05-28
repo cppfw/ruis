@@ -21,16 +21,16 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "pile_layout.hpp"
 
-#include "../widget.hpp"
-
 #include "../util/util.hpp"
+#include "../widget.hpp"
 
 using namespace morda;
 
 const utki::shared_ref<pile_layout> pile_layout::instance = utki::make_shared<pile_layout>();
 
-void pile_layout::lay_out(const vector2& size, semiconst_widget_list& widgets)const{
-    for(const auto& w : widgets){
+void pile_layout::lay_out(const vector2& size, semiconst_widget_list& widgets) const
+{
+	for (const auto& w : widgets) {
 		w.get().resize(dims_for_widget(w.get(), size));
 
 		using std::round;
@@ -38,40 +38,41 @@ void pile_layout::lay_out(const vector2& size, semiconst_widget_list& widgets)co
 	}
 }
 
-vector2 pile_layout::measure(const vector2& quotum, const_widget_list& widgets)const{
-    vector2 ret(quotum);
+vector2 pile_layout::measure(const vector2& quotum, const_widget_list& widgets) const
+{
+	vector2 ret(quotum);
 	using std::max;
 	ret = max(ret, real(0)); // clamp bottom
 
-    for(const auto& w : widgets){
+	for (const auto& w : widgets) {
 		auto& lp = w.get().get_layout_params_const();
 
 		morda::vector2 d;
 
-		for(unsigned j = 0; j != d.size(); ++j){
-			if(lp.dims[j] == layout_params::max){
-				if(quotum[j] >= 0){
+		for (unsigned j = 0; j != d.size(); ++j) {
+			if (lp.dims[j] == layout_params::max) {
+				if (quotum[j] >= 0) {
 					d[j] = quotum[j];
-				}else{
+				} else {
 					d[j] = -1;
 				}
-			}else if(lp.dims[j] == layout_params::min){
+			} else if (lp.dims[j] == layout_params::min) {
 				d[j] = -1;
-			}else if(lp.dims[j] == layout_params::fill){
-				if(quotum[j] >= 0){
+			} else if (lp.dims[j] == layout_params::fill) {
+				if (quotum[j] >= 0) {
 					d[j] = quotum[j];
-				}else{
+				} else {
 					d[j] = 0;
 				}
-			}else{
+			} else {
 				d[j] = lp.dims[j];
 			}
 		}
 
 		d = w.get().measure(d);
 
-		for(unsigned j = 0; j != d.size(); ++j){
-			if(quotum[j] < 0){
+		for (unsigned j = 0; j != d.size(); ++j) {
+			if (quotum[j] < 0) {
 				using std::max;
 				ret[j] = max(ret[j], d[j]); // clamp bottom
 			}

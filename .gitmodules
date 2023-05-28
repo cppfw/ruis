@@ -10,3 +10,7 @@
 	path = tests/harness/modules/morda-render-opengles
 	url = ../morda-render-opengles
 	branch = master
+[submodule "tool-configs"]
+	path = tool-configs
+	url = ../../cppfw/tool-configs
+	branch = master

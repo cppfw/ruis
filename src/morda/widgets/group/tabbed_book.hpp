@@ -23,20 +23,19 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <unordered_map>
 
-#include "book.hpp"
-#include "../button/tab_group.hpp"
 #include "../button/tab.hpp"
+#include "../button/tab_group.hpp"
 
-namespace morda{
+#include "book.hpp"
 
-class tabbed_book :
-		virtual public morda::widget,
-		private morda::container
+namespace morda {
+
+class tabbed_book : virtual public morda::widget, private morda::container
 {
 	morda::tab_group& tab_group;
 	morda::book& book;
 
-	struct tab_page_pair{
+	struct tab_page_pair {
 		morda::tab* tab;
 		morda::page* page;
 	};
@@ -47,12 +46,14 @@ class tabbed_book :
 	decltype(tab_page_pairs)::iterator find_pair(const morda::page& p);
 
 	void activate_another_tab(tab& t);
+
 public:
 	tabbed_book(const utki::shared_ref<morda::context>& context, const treeml::forest& desc);
 
 	void add(const utki::shared_ref<tab>& tab, const utki::shared_ref<morda::page>& page);
 
-	const morda::book& get_book()const noexcept{
+	const morda::book& get_book() const noexcept
+	{
 		return this->book;
 	}
 
@@ -71,4 +72,4 @@ public:
 	using morda::container::on_enable_change;
 };
 
-}
+} // namespace morda

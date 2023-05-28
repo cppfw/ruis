@@ -21,9 +21,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "texture.hpp"
 
+#include "../context.hpp"
 #include "../util/raster_image.hpp"
 #include "../util/util.hpp"
-#include "../context.hpp"
 
 using namespace morda;
 using namespace morda::res;
@@ -34,8 +34,8 @@ utki::shared_ref<texture> texture::load(
 	const papki::file& fi
 )
 {
-	for(auto& p: desc){
-		if(p.value == "file"){
+	for (auto& p : desc) {
+		if (p.value == "file") {
 			fi.set_path(get_property_value(p).to_string());
 		}
 	}

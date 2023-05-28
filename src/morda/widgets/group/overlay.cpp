@@ -20,32 +20,33 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 /* ================ LICENSE END ================ */
 
 #include "overlay.hpp"
-#include "../proxy/mouse_proxy.hpp"
 
-#include "../../context.hpp"
 #include "../../container.hpp"
-
-#include "../../layouts/size_layout.hpp"
+#include "../../context.hpp"
 #include "../../layouts/pile_layout.hpp"
+#include "../../layouts/size_layout.hpp"
+#include "../proxy/mouse_proxy.hpp"
 
 using namespace morda;
 
-namespace{
-class context_menu_wrapper : public container{
+namespace {
+class context_menu_wrapper : public container
+{
 public:
 	context_menu_wrapper(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
-			widget(c, desc),
-			container(this->context, desc, size_layout::instance)
+		widget(c, desc),
+		container(this->context, desc, size_layout::instance)
 	{}
 };
-}
+} // namespace
 
 overlay::overlay(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
-		widget(c, desc),
-		container(this->context, desc, pile_layout::instance)
+	widget(c, desc),
+	container(this->context, desc, pile_layout::instance)
 {}
 
-utki::shared_ref<widget> overlay::show_context_menu(const utki::shared_ref<widget>& w, vector2 anchor){
+utki::shared_ref<widget> overlay::show_context_menu(const utki::shared_ref<widget>& w, vector2 anchor)
+{
 	auto c = utki::make_shared<context_menu_wrapper>(this->context, treeml::read(R"qwertyuiop(
 		lp{
 			dx{fill} dy{fill}
@@ -62,8 +63,8 @@ utki::shared_ref<widget> overlay::show_context_menu(const utki::shared_ref<widge
 	auto& mp = *std::dynamic_pointer_cast<mouse_proxy>(c.get().children().back().to_shared_ptr());
 
 	mp.mouse_button_handler = [cntr{utki::make_weak(c)}](mouse_proxy& w, const mouse_button_event& e) -> bool {
-		if(auto c = cntr.lock()){
-			c->context.get().run_from_ui_thread([c](){
+		if (auto c = cntr.lock()) {
+			c->context.get().run_from_ui_thread([c]() {
 				c->remove_from_parent();
 			});
 		}
@@ -87,16 +88,17 @@ utki::shared_ref<widget> overlay::show_context_menu(const utki::shared_ref<widge
 	w.get().move_to(anchor);
 
 	auto sp = utki::make_shared_from(*this);
-	this->context.get().run_from_ui_thread([c, sp](){
+	this->context.get().run_from_ui_thread([c, sp]() {
 		sp.get().push_back(c);
 	});
 
 	return c;
 }
 
-void overlay::close_all_context_menus(){
+void overlay::close_all_context_menus()
+{
 	auto menus = this->get_all_widgets<context_menu_wrapper>();
-	for(auto& w : menus){
+	for (auto& w : menus) {
 		w.get().remove_from_parent();
 	}
 }

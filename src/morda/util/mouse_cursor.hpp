@@ -21,9 +21,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-namespace morda{
+namespace morda {
 
-enum class mouse_cursor{
+enum class mouse_cursor {
 	none,
 	arrow,
 	left_right_arrow,
@@ -42,4 +42,4 @@ enum class mouse_cursor{
 	caret
 };
 
-}
+} // namespace morda

@@ -23,25 +23,22 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../base/color_widget.hpp"
 
-
-namespace morda{
-
+namespace morda {
 
 /**
  * @brief Color widget.
  * This is a widget which can display a rectangle of a single color.
  * From GUI script it can be instantiated as "color".
  */
-class color : public color_widget{
+class color : public color_widget
+{
 public:
 	color(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
 
 	color(const color&) = delete;
 	color& operator=(const color&) = delete;
 
-	void render(const morda::matrix4& matrix)const override;
+	void render(const morda::matrix4& matrix) const override;
 };
 
-
-
-}
+} // namespace morda

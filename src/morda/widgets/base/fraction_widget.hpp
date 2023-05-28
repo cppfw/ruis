@@ -23,19 +23,23 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../../widget.hpp"
 
-namespace morda{
-class fraction_widget : public virtual widget{
+namespace morda {
+class fraction_widget : public virtual widget
+{
 	float fraction_v = 0; // current position from 0 to 1
+
 protected:
 	fraction_widget(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
 		widget(c, desc)
 	{}
 
 	virtual void on_fraction_change();
+
 public:
 	std::function<void(fraction_widget&)> fraction_change_handler;
 
-	real fraction()const noexcept{
+	real fraction() const noexcept
+	{
 		return this->fraction_v;
 	}
 
@@ -46,4 +50,4 @@ public:
 	 */
 	void set_fraction(real fraction, bool notify_change = true);
 };
-}
+} // namespace morda

@@ -26,23 +26,28 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace morda;
 
 nine_patch_push_button::nine_patch_push_button(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
-		widget(c, desc),
-		button(this->context, desc),
-		push_button(this->context, desc),
-		nine_patch_button(this->context, desc)
+	widget(c, desc),
+	button(this->context, desc),
+	push_button(this->context, desc),
+	nine_patch_button(this->context, desc)
 {
-	if(!this->get_unpressed_nine_patch()){
-		this->set_unpressed_nine_patch(this->context.get().loader.load<res::nine_patch>("morda_npt_button_normal").to_shared_ptr());
+	if (!this->get_unpressed_nine_patch()) {
+		this->set_unpressed_nine_patch(
+			this->context.get().loader.load<res::nine_patch>("morda_npt_button_normal").to_shared_ptr()
+		);
 	}
-	
-	if(!this->get_pressed_nine_patch()){
-		this->set_pressed_nine_patch(this->context.get().loader.load<res::nine_patch>("morda_npt_button_pressed").to_shared_ptr());
+
+	if (!this->get_pressed_nine_patch()) {
+		this->set_pressed_nine_patch(
+			this->context.get().loader.load<res::nine_patch>("morda_npt_button_pressed").to_shared_ptr()
+		);
 	}
 
 	this->nine_patch_push_button::on_press_change();
 }
 
-void nine_patch_push_button::on_press_change(){
+void nine_patch_push_button::on_press_change()
+{
 	this->nine_patch_button::on_press_change();
 	this->push_button::on_press_change();
 }

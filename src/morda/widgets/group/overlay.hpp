@@ -23,7 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../../container.hpp"
 
-namespace morda{
+namespace morda {
 
 /**
  * @brief Overlay container for displaying widgets on top of anything.
@@ -31,13 +31,14 @@ namespace morda{
  * Essentially, the overlay is a simple container which keeps track of open overlay widgets.
  * From GUI scripts it can be instantiated as "overlay".
  */
-class overlay : public container{
+class overlay : public container
+{
 public:
 	overlay(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
-	
+
 	overlay(const overlay&) = delete;
 	overlay& operator=(const overlay&) = delete;
-	
+
 	/**
 	 * @brief Showing context menu.
 	 * This function adds the context menu widget to the overlay as the topmost widget.
@@ -46,15 +47,15 @@ public:
 	 * (i.e. close the context menu in case of mouse click outside).
 	 * @param menu - context menu widget.
 	 * @param pos - position of top left corner of the context menu within the overlay container.
-	 * @return the final widget added to the overlay pile. This widget can be used to later close the particular context menu
-	 *         by just removing the widget from its parent.
+	 * @return the final widget added to the overlay pile. This widget can be used to later close the particular context
+	 * menu by just removing the widget from its parent.
 	 */
 	utki::shared_ref<widget> show_context_menu(const utki::shared_ref<widget>& menu, vector2 pos);
-	
+
 	/**
 	 * @brief Close all context menus.
 	 */
 	void close_all_context_menus();
 };
 
-}
+} // namespace morda

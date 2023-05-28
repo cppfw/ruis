@@ -20,13 +20,14 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 /* ================ LICENSE END ================ */
 
 #include "radio_button.hpp"
-#include "choice_group.hpp"
 
 #include "../../context.hpp"
 
+#include "choice_group.hpp"
+
 using namespace morda;
 
-namespace{
+namespace {
 
 const auto D_Layout = treeml::read(R"qwertyuiop(
 		layout{pile}
@@ -39,20 +40,21 @@ const auto D_Layout = treeml::read(R"qwertyuiop(
 		}
 	)qwertyuiop");
 
-}
+} // namespace
 
 radio_button::radio_button(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
-		widget(c, desc),
-		button(this->context, desc),
-		toggle_button(this->context, desc),
-		choice_button(this->context, desc),
-		container(this->context, D_Layout),
-		check_widget(*this->children().rbegin())
+	widget(c, desc),
+	button(this->context, desc),
+	toggle_button(this->context, desc),
+	choice_button(this->context, desc),
+	container(this->context, D_Layout),
+	check_widget(*this->children().rbegin())
 {
 	this->check_widget.get().set_visible(this->is_pressed());
 }
 
-void radio_button::on_press_change(){
+void radio_button::on_press_change()
+{
 	this->choice_button::on_press_change();
 	this->check_widget.get().set_visible(this->is_pressed());
 	this->clear_cache();

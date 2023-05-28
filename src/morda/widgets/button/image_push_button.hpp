@@ -24,15 +24,13 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "image_button.hpp"
 #include "push_button.hpp"
 
-namespace morda{
-class image_push_button :
-		virtual public push_button,
-		public image_button
+namespace morda {
+class image_push_button : virtual public push_button, public image_button
 {
 protected:
-	void on_press_change()override;
+	void on_press_change() override;
 
 public:
 	image_push_button(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
 };
-}
+} // namespace morda
