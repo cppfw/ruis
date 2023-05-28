@@ -104,7 +104,7 @@ public:
 
 	/**
 	 * @brief Get raster texture of given dimensions.
-	 * @param forDims - dimensions request for raster texture.
+	 * @param for_dims - dimensions request for raster texture.
 	 *        If any of the dimensions is 0 then it will be adjusted to preserve aspect ratio.
 	 *        If both dimensions are zero, then dimensions which are natural for the particular image will be used.
 	 */

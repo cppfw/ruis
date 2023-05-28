@@ -171,6 +171,8 @@ public:
 	}
 
 private:
+	// TODO: why does clang-tidy complains about this line on macosx?
+	// NOLINTNEXTLINE(bugprone-exception-escape)
 	struct widget_template {
 		treeml::tree templ;
 		std::set<std::string> vars;
