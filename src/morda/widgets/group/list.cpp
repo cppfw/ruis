@@ -502,8 +502,8 @@ morda::vector2 list_widget::measure(const morda::vector2& quotum) const
 
 	ret[trans_index] = 0;
 
-	for (auto i = this->children().begin(); i != this->children().end(); ++i) {
-		ret[trans_index] = max(ret[trans_index], i->get().rect().d[trans_index]); // clamp bottom
+	for (const auto& w : this->children()) {
+		ret[trans_index] = max(ret[trans_index], w.get().rect().d[trans_index]); // clamp bottom
 	}
 
 	return ret;

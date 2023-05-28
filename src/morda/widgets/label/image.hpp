@@ -39,9 +39,6 @@ namespace morda {
  */
 class image : public virtual widget, public blending_widget
 {
-	image(const image&);
-	image& operator=(const image&);
-
 	std::shared_ptr<const morda::res::image> img;
 	std::shared_ptr<const morda::res::image> disabled_img; // image for disabled state
 
@@ -54,6 +51,9 @@ class image : public virtual widget, public blending_widget
 	mutable utki::shared_ref<const vertex_array> vao;
 
 public:
+	image(const image&) = delete;
+	image& operator=(const image&) = delete;
+
 	image(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
 
 public:

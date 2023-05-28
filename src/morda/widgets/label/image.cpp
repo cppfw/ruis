@@ -52,7 +52,7 @@ image::image(const utki::shared_ref<morda::context>& c, const treeml::forest& de
 }
 
 namespace {
-const std::array<r4::vector2<float>, 4> quadFanTexCoords = {
+const std::array<r4::vector2<float>, 4> quad_fan_tex_coords = {
 	{r4::vector2<float>(0, 0), r4::vector2<float>(1, 0), r4::vector2<float>(1, 1), r4::vector2<float>(0, 1)}
 };
 } // namespace
@@ -77,10 +77,10 @@ void image::render(const morda::matrix4& matrix) const
 		this->texture = img->get(this->rect().d).to_shared_ptr();
 
 		if (this->repeat_v.x() || this->repeat_v.y()) {
-			std::array<r4::vector2<float>, 4> texCoords;
-			ASSERT(quadFanTexCoords.size() == texCoords.size())
-			auto src = quadFanTexCoords.cbegin();
-			auto dst = texCoords.begin();
+			std::array<r4::vector2<float>, 4> tex_coords;
+			ASSERT(quad_fan_tex_coords.size() == tex_coords.size())
+			auto src = quad_fan_tex_coords.cbegin();
+			auto dst = tex_coords.begin();
 			auto scale = this->rect().d.comp_div(img->dims());
 			if (!this->repeat_v.x()) {
 				scale.x() = 1;
@@ -88,11 +88,11 @@ void image::render(const morda::matrix4& matrix) const
 			if (!this->repeat_v.y()) {
 				scale.y() = 1;
 			}
-			for (; dst != texCoords.end(); ++src, ++dst) {
+			for (; dst != tex_coords.end(); ++src, ++dst) {
 				*dst = src->comp_mul(scale);
 			}
 			this->vao = r.factory->create_vertex_array(
-				{r.quad_01_vbo, r.factory->create_vertex_buffer(utki::make_span(texCoords))},
+				{r.quad_01_vbo, r.factory->create_vertex_buffer(utki::make_span(tex_coords))},
 				r.quad_indices,
 				vertex_array::mode::triangle_fan
 			);
@@ -117,17 +117,17 @@ morda::vector2 image::measure(const morda::vector2& quotum) const
 	}
 
 	if (!img) {
-		return vector2(0);
+		return {0};
 	}
 
-	vector2 imgDim = img->dims(this->context.get().units.dots_per_inch);
+	vector2 img_dims = img->dims(this->context.get().units.dots_per_inch);
 
-	ASSERT(imgDim.is_positive_or_zero(), [&](auto& o) {
-		o << "imgDim = " << imgDim;
+	ASSERT(img_dims.is_positive_or_zero(), [&](auto& o) {
+		o << "img_dims = " << img_dims;
 	})
 
 	if (!this->keep_aspect_ratio) {
-		vector2 ret = imgDim;
+		vector2 ret = img_dims;
 
 		for (unsigned i = 0; i != ret.size(); ++i) {
 			if (quotum[i] >= 0) {
@@ -139,12 +139,12 @@ morda::vector2 image::measure(const morda::vector2& quotum) const
 	}
 
 	ASSERT(img)
-	ASSERT(imgDim.y() > 0)
+	ASSERT(img_dims.y() > 0)
 
-	real ratio = imgDim.x() / imgDim.y();
+	real ratio = img_dims.x() / img_dims.y();
 
 	if (quotum.x() < 0 && quotum.y() < 0) {
-		return imgDim;
+		return img_dims;
 	} else if (quotum.x() < 0) {
 		ASSERT(quotum.y() >= 0)
 

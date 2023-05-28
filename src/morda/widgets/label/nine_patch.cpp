@@ -30,7 +30,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace morda;
 
 namespace {
-const auto ninePatchLayout_c = treeml::read(R"qwertyuiop(
+const auto nine_patch_layout = treeml::read(R"qwertyuiop(
 		layout{column}
 
 		@row{
@@ -99,7 +99,7 @@ const auto ninePatchLayout_c = treeml::read(R"qwertyuiop(
 nine_patch::nine_patch(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
 	widget(c, desc),
 	blending_widget(this->context, desc),
-	container(this->context, ninePatchLayout_c),
+	container(this->context, nine_patch_layout),
 	img_widgets_matrix([this]() -> decltype(this->img_widgets_matrix) {
 		return {
 			{{this->try_get_widget_as<image>("morda_lt"),
@@ -227,8 +227,8 @@ void nine_patch::apply_images()
 	}
 
 	ASSERT(np)
-	auto& minBorders = np->borders();
-	//		TRACE(<< "minBorders = " << minBorders << std::endl)
+	auto& min_borders = np->borders();
+	//		TRACE(<< "min_borders = " << min_borders << std::endl)
 
 	{
 		// non-const call to get_layout_params requests re-layout which is not necessarily needed, so try to avoid it if
@@ -236,9 +236,9 @@ void nine_patch::apply_images()
 		auto& tl_lp = this->img_widgets_matrix[0][0]->get_layout_params_const();
 
 		if (this->borders.left() == layout_params::min) {
-			if (tl_lp.dims.x() != minBorders.left()) {
+			if (tl_lp.dims.x() != min_borders.left()) {
 				auto& lp = this->img_widgets_matrix[0][0]->get_layout_params();
-				lp.dims.x() = minBorders.left();
+				lp.dims.x() = min_borders.left();
 			}
 		} else {
 			if (tl_lp.dims.x() != this->borders.left()) {
@@ -248,9 +248,9 @@ void nine_patch::apply_images()
 		}
 
 		if (this->borders.top() == layout_params::min) {
-			if (tl_lp.dims.y() != minBorders.top()) {
+			if (tl_lp.dims.y() != min_borders.top()) {
 				auto& lp = this->img_widgets_matrix[0][0]->get_layout_params();
-				lp.dims.y() = minBorders.top();
+				lp.dims.y() = min_borders.top();
 			}
 		} else {
 			if (tl_lp.dims.y() != this->borders.top()) {
@@ -266,9 +266,9 @@ void nine_patch::apply_images()
 		auto& br_lp = this->img_widgets_matrix[2][2]->get_layout_params_const();
 
 		if (this->borders.right() == layout_params::min) {
-			if (br_lp.dims.x() != minBorders.right()) {
+			if (br_lp.dims.x() != min_borders.right()) {
 				auto& lp = this->img_widgets_matrix[2][2]->get_layout_params();
-				lp.dims.x() = minBorders.right();
+				lp.dims.x() = min_borders.right();
 			}
 		} else {
 			if (br_lp.dims.x() != this->borders.right()) {
@@ -278,9 +278,9 @@ void nine_patch::apply_images()
 		}
 
 		if (this->borders.bottom() == layout_params::min) {
-			if (br_lp.dims.y() != minBorders.bottom()) {
+			if (br_lp.dims.y() != min_borders.bottom()) {
 				auto& lp = this->img_widgets_matrix[2][2]->get_layout_params();
-				lp.dims.y() = minBorders.bottom();
+				lp.dims.y() = min_borders.bottom();
 			}
 		} else {
 			if (br_lp.dims.y() != this->borders.bottom()) {
