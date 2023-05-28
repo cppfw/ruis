@@ -66,8 +66,8 @@ utki::shared_ref<res::font> res::font::load(
 	const papki::file& fi
 )
 {
-	unsigned fontSize = 13;
-	unsigned maxCached = unsigned(-1);
+	unsigned font_size = 13;
+	unsigned max_cached = unsigned(-1);
 
 	std::unique_ptr<const papki::file> file_bold;
 	std::unique_ptr<const papki::file> file_italic;
@@ -75,9 +75,9 @@ utki::shared_ref<res::font> res::font::load(
 
 	for (auto& p : desc) {
 		if (p.value == "size") {
-			fontSize = unsigned(parse_dimension_value(get_property_value(p), ctx.get().units));
+			font_size = unsigned(parse_dimension_value(get_property_value(p), ctx.get().units));
 		} else if (p.value == "max_cached") {
-			maxCached = unsigned(get_property_value(p).to_uint32());
+			max_cached = unsigned(get_property_value(p).to_uint32());
 		} else if (p.value == "normal") {
 			fi.set_path(get_property_value(p).to_string());
 		} else if (p.value == "bold") {
@@ -90,5 +90,5 @@ utki::shared_ref<res::font> res::font::load(
 	}
 
 	return utki::make_shared<
-		font>(ctx, fi, std::move(file_bold), std::move(file_italic), std::move(file_bold_italic), fontSize, maxCached);
+		font>(ctx, fi, std::move(file_bold), std::move(file_italic), std::move(file_bold_italic), font_size, max_cached);
 }

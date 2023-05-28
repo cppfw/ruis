@@ -94,30 +94,30 @@ public:
 	 * @brief Constructor.
 	 * @param c - context to which this font belongs.
 	 * @param fi - file interface to read Truetype font from, i.e. 'ttf' file.
-	 * @param fontSize - size of the font in pixels.
+	 * @param font_size - size of the font in pixels.
 	 * @param max_cached - maximum number of glyphs to cache.
 	 */
 	texture_font(
 		const utki::shared_ref<morda::context>& c,
 		const papki::file& fi,
-		unsigned fontSize,
+		unsigned font_size,
 		unsigned max_cached
 	);
 
-	real get_advance(char32_t c, size_t tab_size) const override;
+	real get_advance(char32_t c, unsigned tab_size) const override;
 
 protected:
 	render_result render_internal(
 		const morda::matrix4& matrix,
 		r4::vector4<float> color,
 		const std::u32string_view str,
-		size_t tab_size,
+		unsigned tab_size,
 		size_t offset
 	) const override;
 
-	real get_advance_internal(const std::u32string& str, size_t tab_size) const override;
+	real get_advance_internal(const std::u32string& str, unsigned tab_size) const override;
 
-	morda::rectangle get_bounding_box_internal(const std::u32string& str, size_t tab_size) const override;
+	morda::rectangle get_bounding_box_internal(const std::u32string& str, unsigned tab_size) const override;
 
 private:
 	real render_glyph_internal(const morda::matrix4& matrix, r4::vector4<float> color, char32_t ch) const;

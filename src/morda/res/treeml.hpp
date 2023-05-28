@@ -26,8 +26,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../resource_loader.hpp"
 #include "../util/util.hpp"
 
-namespace morda {
-namespace res {
+namespace morda::res {
 
 /**
  * @brief resource holding a treeml forest.
@@ -73,5 +72,4 @@ private:
 	);
 };
 
-} // namespace res
 } // namespace morda

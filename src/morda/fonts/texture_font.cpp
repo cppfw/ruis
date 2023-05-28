@@ -32,7 +32,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace morda;
 
 namespace {
-constexpr const char32_t unknownChar_c = 0xfffd;
+constexpr const char32_t unknown_char = 0xfffd;
 } // namespace
 
 texture_font::freetype_lib_wrapper::freetype_lib_wrapper()
@@ -65,7 +65,7 @@ texture_font::freetype_face_wrapper::~freetype_face_wrapper() noexcept
 texture_font::glyph texture_font::load_glyph(char32_t c) const
 {
 	if (FT_Load_Char(this->face.f, FT_ULong(c), FT_LOAD_RENDER) != 0) {
-		if (c == unknownChar_c) {
+		if (c == unknown_char) {
 			throw std::runtime_error(
 				"texture_font::load_glyph(): could not load 'unknown character' glyph (UTF-32: 0xfffd)"
 			);
@@ -130,7 +130,7 @@ texture_font::glyph texture_font::load_glyph(char32_t c) const
 texture_font::texture_font(
 	const utki::shared_ref<morda::context>& c,
 	const papki::file& fi,
-	unsigned fontSize,
+	unsigned font_size,
 	unsigned max_cached
 ) :
 	font(c),
@@ -144,7 +144,7 @@ texture_font::texture_font(
 		FT_Error error = FT_Set_Pixel_Sizes(
 			this->face.f,
 			0, // pixel_width (0 means "same as height")
-			fontSize // pixel_height
+			font_size // pixel_height
 		);
 
 		if (error != 0) {
@@ -152,7 +152,7 @@ texture_font::texture_font(
 		}
 	}
 
-	this->unknown_glyph = this->load_glyph(unknownChar_c);
+	this->unknown_glyph = this->load_glyph(unknown_char);
 
 	//	TRACE(<< "texture_font::Load(): entering for loop" << std::endl)
 
@@ -203,7 +203,7 @@ real texture_font::render_glyph_internal(const morda::matrix4& matrix, r4::vecto
 	return g.advance;
 }
 
-real texture_font::get_advance_internal(const std::u32string& str, size_t tab_size) const
+real texture_font::get_advance_internal(const std::u32string& str, unsigned tab_size) const
 {
 	real ret = 0;
 
@@ -225,7 +225,7 @@ real texture_font::get_advance_internal(const std::u32string& str, size_t tab_si
 	return ret;
 }
 
-morda::rectangle texture_font::get_bounding_box_internal(const std::u32string& str, size_t tab_size) const
+morda::rectangle texture_font::get_bounding_box_internal(const std::u32string& str, unsigned tab_size) const
 {
 	morda::rectangle ret;
 
@@ -287,7 +287,7 @@ font::render_result texture_font::render_internal(
 	const morda::matrix4& matrix,
 	r4::vector4<float> color,
 	const std::u32string_view str,
-	size_t tab_size,
+	unsigned tab_size,
 	size_t offset
 ) const
 {
@@ -310,7 +310,7 @@ font::render_result texture_font::render_internal(
 			real advance;
 
 			if (*s == U'\t') { // if tabulation
-				size_t actual_tab_size;
+				unsigned actual_tab_size;
 				if (offset == std::numeric_limits<size_t>::max()) {
 					actual_tab_size = tab_size;
 				} else {
@@ -335,10 +335,10 @@ font::render_result texture_font::render_internal(
 	return ret;
 }
 
-real texture_font::get_advance(char32_t c, size_t tab_size) const
+real texture_font::get_advance(char32_t c, unsigned tab_size) const
 {
 	if (c == U'\t') {
-		return this->get_glyph(U' ').advance * tab_size;
+		return this->get_glyph(U' ').advance * real(tab_size);
 	} else {
 		auto& g = this->get_glyph(c);
 		return g.advance;

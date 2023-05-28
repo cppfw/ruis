@@ -81,7 +81,7 @@ public:
 		unsigned max_cached
 	);
 
-	~font() noexcept {}
+	~font() override = default;
 
 	/**
 	 * @brief Get font object held by this resource.
