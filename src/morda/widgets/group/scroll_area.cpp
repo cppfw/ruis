@@ -178,17 +178,17 @@ void scroll_area::on_children_change()
 
 void scroll_area::update_invisible_dims()
 {
-	morda::vector2 minDim(0);
+	morda::vector2 min_dims(0);
 
 	using std::max;
 
 	for (const auto& c : this->children()) {
 		morda::vector2 d = c.get().rect().p + this->dims_for_widget(c.get());
 
-		minDim = max(minDim, d); // clamp bottom
+		min_dims = max(min_dims, d); // clamp bottom
 	}
 
-	this->invisible_dims = minDim - this->rect().d;
+	this->invisible_dims = min_dims - this->rect().d;
 	this->invisible_dims = max(this->invisible_dims, {0, 0});
 	this->update_scroll_factor();
 }

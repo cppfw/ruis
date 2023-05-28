@@ -28,7 +28,7 @@ using namespace morda;
 
 namespace {
 
-const auto windowDesc_c = treeml::read(R"qwertyuiop(
+const auto window_layout_description = treeml::read(R"qwertyuiop(
 		layout{pile}
 
 		@column{
@@ -172,7 +172,7 @@ void morda::window::set_background(const utki::shared_ref<widget>& w)
 
 morda::window::window(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
 	widget(c, desc),
-	container(this->context, windowDesc_c)
+	container(this->context, window_layout_description)
 {
 	this->setup_widgets();
 

@@ -150,7 +150,7 @@ void text_input_line::set_cursor_index(size_t index, bool selection)
 		this->selection_start_index = this->cursor_index;
 	}
 
-	utki::scope_exit scopeExit([this]() {
+	utki::scope_exit cursor_index_scope_exit([this]() {
 		this->selection_start_pos = this->index_to_pos(this->selection_start_index);
 
 		if (!this->is_focused()) {
@@ -188,7 +188,8 @@ void text_input_line::set_cursor_index(size_t index, bool selection)
 		this->first_visible_char_index = this->cursor_index;
 
 		// calculate advance backwards
-		for (auto i = this->get_text().rbegin() + (this->get_text().size() - this->cursor_index); this->x_offset > 0;
+		for (auto i = utki::next(this->get_text().rbegin(), this->get_text().size() - this->cursor_index);
+			 this->x_offset > 0;
 			 ++i)
 		{
 			ASSERT(i != this->get_text().rend())
@@ -212,7 +213,7 @@ real text_input_line::index_to_pos(size_t index)
 
 	real ret = this->x_offset;
 
-	for (auto i = this->get_text().begin() + this->first_visible_char_index;
+	for (auto i = utki::next(this->get_text().begin(), this->first_visible_char_index);
 		 i != this->get_text().end() && index != this->first_visible_char_index;
 		 ++i, --index)
 	{
@@ -231,7 +232,9 @@ size_t text_input_line::pos_to_index(real pos)
 	size_t index = this->first_visible_char_index;
 	real p = this->x_offset;
 
-	for (auto i = this->get_text().begin() + this->first_visible_char_index; i != this->get_text().end(); ++i) {
+	for (auto i = utki::next(this->get_text().begin(), this->first_visible_char_index); i != this->get_text().end();
+		 ++i)
+	{
 		real w = this->get_font().get().get_advance(*i);
 
 		if (pos < p + w) {
@@ -305,50 +308,50 @@ void text_input_line::on_character_input(const character_input_event& e)
 			break;
 		case morda::key::arrow_right:
 			if (this->cursor_index != this->get_text().size()) {
-				size_t newIndex;
+				size_t new_index;
 				if (this->ctrl_pressed) {
-					bool spaceSkipped = false;
-					newIndex = this->cursor_index;
-					for (auto i = this->get_text().begin() + this->cursor_index; i != this->get_text().end();
-						 ++i, ++newIndex)
+					bool space_skipped = false;
+					new_index = this->cursor_index;
+					for (auto i = utki::next(this->get_text().begin(), this->cursor_index); i != this->get_text().end();
+						 ++i, ++new_index)
 					{
 						if (*i == uint32_t(' ')) {
-							if (spaceSkipped) {
+							if (space_skipped) {
 								break;
 							}
 						} else {
-							spaceSkipped = true;
+							space_skipped = true;
 						}
 					}
 
 				} else {
-					newIndex = this->cursor_index + 1;
+					new_index = this->cursor_index + 1;
 				}
-				this->set_cursor_index(newIndex, this->shift_pressed);
+				this->set_cursor_index(new_index, this->shift_pressed);
 			}
 			break;
 		case morda::key::arrow_left:
 			if (this->cursor_index != 0) {
-				size_t newIndex;
+				size_t new_index;
 				if (this->ctrl_pressed) {
-					bool spaceSkipped = false;
-					newIndex = this->cursor_index;
-					for (auto i = this->get_text().rbegin() + (this->get_text().size() - this->cursor_index);
+					bool space_skipped = false;
+					new_index = this->cursor_index;
+					for (auto i = utki::next(this->get_text().rbegin(), this->get_text().size() - this->cursor_index);
 						 i != this->get_text().rend();
-						 ++i, --newIndex)
+						 ++i, --new_index)
 					{
 						if (*i == uint32_t(' ')) {
-							if (spaceSkipped) {
+							if (space_skipped) {
 								break;
 							}
 						} else {
-							spaceSkipped = true;
+							space_skipped = true;
 						}
 					}
 				} else {
-					newIndex = this->cursor_index - 1;
+					new_index = this->cursor_index - 1;
 				}
-				this->set_cursor_index(newIndex, this->shift_pressed);
+				this->set_cursor_index(new_index, this->shift_pressed);
 			}
 			break;
 		case morda::key::end:
@@ -364,7 +367,7 @@ void text_input_line::on_character_input(const character_input_event& e)
 				if (this->cursor_index != 0) {
 					auto t = this->get_text();
 					this->clear();
-					t.erase(t.begin() + (this->cursor_index - 1));
+					t.erase(utki::next(t.begin(), this->cursor_index - 1));
 					this->set_text(std::move(t));
 					this->set_cursor_index(this->cursor_index - 1);
 				}
@@ -377,7 +380,7 @@ void text_input_line::on_character_input(const character_input_event& e)
 				if (this->cursor_index < this->get_text().size()) {
 					auto t = this->get_text();
 					this->clear();
-					t.erase(t.begin() + this->cursor_index);
+					t.erase(utki::next(t.begin(), this->cursor_index));
 					this->set_text(std::move(t));
 				}
 			}
@@ -401,7 +404,7 @@ void text_input_line::on_character_input(const character_input_event& e)
 
 				auto t = this->get_text();
 				this->clear();
-				t.insert(t.begin() + this->cursor_index, e.string.begin(), e.string.end());
+				t.insert(utki::next(t.begin(), this->cursor_index), e.string.begin(), e.string.end());
 				this->set_text(std::move(t));
 
 				this->set_cursor_index(this->cursor_index + e.string.size());
@@ -426,7 +429,7 @@ size_t text_input_line::delete_selection()
 
 	auto t = this->get_text();
 	this->clear();
-	t.erase(t.begin() + start, t.begin() + end);
+	t.erase(std::next(t.begin(), start), utki::next(t.begin(), end));
 	this->set_text(std::move(t));
 
 	return start;
