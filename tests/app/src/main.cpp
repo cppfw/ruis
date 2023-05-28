@@ -35,7 +35,7 @@
 #	undef assert
 #endif
 
-class SimpleWidget :
+class simple_widget :
 		virtual public morda::widget,
 		public morda::updateable,
 		public morda::character_input_widget
@@ -43,7 +43,7 @@ class SimpleWidget :
 	utki::shared_ref<const morda::res::texture> tex;
 
 public:
-	SimpleWidget(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+	simple_widget(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
 			morda::widget(c, desc),
 			morda::character_input_widget(this->context),
 			tex(this->context.get().loader.load<morda::res::texture>("tex_sample"))
@@ -85,25 +85,25 @@ public:
 
 	bool on_key(const morda::key_event& e)override{
 		if(e.is_down){
-			LOG([&](auto&o){o << "SimpleWidget::OnKey(): down, keyCode = " << unsigned(e.combo.key) << std::endl;})
+			LOG([&](auto&o){o << "simple_widget::OnKey(): down, keyCode = " << unsigned(e.combo.key) << std::endl;})
 			switch(e.combo.key){
 				case morda::key::arrow_left:
-					utki::log([](auto&o){o << "SimpleWidget::OnKeyDown(): LEFT key caught" << std::endl;});
+					utki::log([](auto&o){o << "simple_widget::OnKeyDown(): LEFT key caught" << std::endl;});
 					return true;
 				case morda::key::a:
-					utki::log([](auto&o){o << "SimpleWidget::OnKeyUp(): A key caught" << std::endl;});
+					utki::log([](auto&o){o << "simple_widget::OnKeyUp(): A key caught" << std::endl;});
 					return true;
 				default:
 					break;
 			}
 		}else{
-			LOG([&](auto&o){o << "SimpleWidget::OnKey(): up, keyCode = " << unsigned(e.combo.key) << std::endl;})
+			LOG([&](auto&o){o << "simple_widget::OnKey(): up, keyCode = " << unsigned(e.combo.key) << std::endl;})
 			switch(e.combo.key){
 				case morda::key::arrow_left:
-					utki::log([](auto&o){o << "SimpleWidget::OnKeyUp(): LEFT key caught" << std::endl;});
+					utki::log([](auto&o){o << "simple_widget::OnKeyUp(): LEFT key caught" << std::endl;});
 					return true;
 				case morda::key::a:
-					utki::log([](auto&o){o << "SimpleWidget::OnKeyUp(): A key caught" << std::endl;});
+					utki::log([](auto&o){o << "simple_widget::OnKeyUp(): A key caught" << std::endl;});
 					return true;
 				default:
 					break;
@@ -117,7 +117,7 @@ public:
 			return;
 		}
 
-		LOG([&](auto&o){o << "SimpleWidget::on_character_input(): string = " << uint32_t(e.string[0]) << std::endl;})
+		LOG([&](auto&o){o << "simple_widget::on_character_input(): string = " << uint32_t(e.string[0]) << std::endl;})
 	}
 
 	void render(const morda::matrix4& matrix)const override{
@@ -475,7 +475,7 @@ public:
 		this->gui.context.get().loader.mount_res_pack(*this->get_res_file("res/"));
 //		this->ResMan().MountResPack(morda::ZipFile::New(papki::FSFile::New("res.zip")));
 
-		this->gui.context.get().inflater.register_widget<SimpleWidget>("U_SimpleWidget");
+		this->gui.context.get().inflater.register_widget<simple_widget>("U_SimpleWidget");
 		this->gui.context.get().inflater.register_widget<cube_widget>("cube_widget");
 
 		auto c = this->gui.context.get().inflater.inflate(

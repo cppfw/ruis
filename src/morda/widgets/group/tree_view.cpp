@@ -262,7 +262,7 @@ const decltype(tree_view::provider::iter)& tree_view::provider::iter_for(size_t 
 			this->iter = utki::next(this->iter, index - this->iter_index);
 		} else {
 			ASSERT(index < this->iter_index)
-			this->iter = std::prev(this->iter, this->iter_index - index);
+			this->iter = utki::prev(this->iter, this->iter_index - index);
 		}
 		this->iter_index = index;
 	}
@@ -499,7 +499,10 @@ void tree_view::provider::notify_item_removed(utki::span<const size_t> index)
 		}
 	}
 
+	// TODO: this assert failed once when removing an item from test/app tree_view
+	// to reproduce, try to unfold all items and them remove some item
 	ASSERT(this->traversal().is_valid(cur_iter_index))
+
 	ASSERT(cur_iter_index.size() != 0)
 	while (cur_iter_index.size() != 1) {
 		auto parent_iter_span = utki::make_span(cur_iter_index.data(), cur_iter_index.size() - 1);
