@@ -137,7 +137,7 @@ public:
 		fixed_texture(this->context.get().renderer, tex)
 	{}
 
-	utki::shared_ref<const image::texture> get(vector2 forDim) const override
+	utki::shared_ref<const image::texture> get(vector2 for_dims) const override
 	{
 		return utki::make_shared_from(*this);
 	}
@@ -184,7 +184,7 @@ public:
 			parent(parent.to_shared_ptr())
 		{}
 
-		~svg_texture() noexcept
+		~svg_texture() override
 		{
 			if (auto p = this->parent.lock()) {
 				r4::vector2<unsigned> d = this->tex_2d.get().dims().to<unsigned>();
@@ -193,12 +193,12 @@ public:
 		}
 	};
 
-	utki::shared_ref<const texture> get(vector2 forDim) const override
+	utki::shared_ref<const texture> get(vector2 for_dims) const override
 	{
 		//		TRACE(<< "forDim = " << forDim << std::endl)
 
 		{ // check if in cache
-			auto i = this->cache.find(forDim.to<unsigned>());
+			auto i = this->cache.find(for_dims.to<unsigned>());
 			if (i != this->cache.end()) {
 				if (auto p = i->second.lock()) {
 					ASSERT(p)
@@ -215,7 +215,7 @@ public:
 		//		TRACE(<< "id = " << this->dom->id << std::endl)
 		svgren::parameters svg_params;
 		svg_params.dpi = unsigned(this->context.get().units.dots_per_inch);
-		svg_params.dims_request = forDim.to<unsigned>();
+		svg_params.dims_request = for_dims.to<unsigned>();
 		auto svg = svgren::render(*this->dom, svg_params);
 		ASSERT(svg.dims.x() != 0)
 		ASSERT(svg.dims.y() != 0)

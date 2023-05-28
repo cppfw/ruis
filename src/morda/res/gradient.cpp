@@ -56,12 +56,12 @@ void gradient::set(std::vector<std::tuple<real, uint32_t>>& stops, bool vertical
 		//		TRACE(<< "put color = " << std::hex << colors.back() << std::endl)
 
 		if (vertical) {
-			vertices.push_back(r4::vector2<float>(0, std::get<0>(s)));
-			vertices.push_back(r4::vector2<float>(1, std::get<0>(s)));
+			vertices.emplace_back(0, std::get<0>(s));
+			vertices.emplace_back(1, std::get<0>(s));
 		} else {
 			ASSERT(!vertical)
-			vertices.push_back(r4::vector2<float>(std::get<0>(s), 1));
-			vertices.push_back(r4::vector2<float>(std::get<0>(s), 0));
+			vertices.emplace_back(std::get<0>(s), 1);
+			vertices.emplace_back(std::get<0>(s), 0);
 		}
 		//		TRACE(<< "put pos = " << vertices.back() << std::endl)
 	}
@@ -106,7 +106,7 @@ utki::shared_ref<gradient> gradient::load(
 					color = get_property_value(pp).to_uint32();
 				}
 			}
-			stops.push_back(std::make_tuple(pos, color));
+			stops.emplace_back(pos, color);
 		}
 	}
 

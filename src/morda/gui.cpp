@@ -270,7 +270,7 @@ void gui::init_standard_widgets(papki::file& fi)
 		paths.push_back(fi.path());
 	}
 
-	paths.push_back("morda_res/");
+	paths.emplace_back("morda_res/");
 
 #if (M_OS == M_OS_LINUX && M_OS_NAME != M_OS_NAME_ANDROID) || (M_OS == M_OS_MACOSX && M_OS_NAME != M_OS_NAME_IOS) \
 	|| (M_OS == M_OS_UNIX)

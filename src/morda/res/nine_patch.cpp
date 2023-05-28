@@ -74,7 +74,7 @@ public:
 		return this->res::image::texture::dims;
 	}
 
-	virtual utki::shared_ref<const res::image::texture> get(vector2 for_dims) const override
+	utki::shared_ref<const res::image::texture> get(vector2 for_dims) const override
 	{
 		return utki::make_shared_from(*this);
 	}
