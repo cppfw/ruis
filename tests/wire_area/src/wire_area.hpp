@@ -5,13 +5,13 @@
 class wire_area : public morda::container{
 	friend class wire_socket;
 	
-	const morda::real deafultWireHalfWidth_c = morda::real(0.25f);
-	const uint32_t defaultWireColor_c = 0xff0000ff;
-	const uint32_t defaultGrabbedColor_c = 0xff808080;
+	const morda::real deafult_wire_half_width = morda::real(0.25f);
+	const uint32_t default_wire_color = 0xff0000ff;
+	const uint32_t default_grabbed_color = 0xff808080;
 
-	morda::real wireHalfWidth = deafultWireHalfWidth_c;
-	uint32_t wireColor = defaultWireColor_c;
-	uint32_t grabbedColor = defaultGrabbedColor_c;
+	morda::real wire_half_width = deafult_wire_half_width;
+	uint32_t wire_color = default_wire_color;
+	uint32_t grabbed_color = default_grabbed_color;
 public:
 	wire_area(const wire_area&) = delete;
 	wire_area& operator=(const wire_area&) = delete;
@@ -25,10 +25,10 @@ public:
 	bool on_mouse_move(const morda::mouse_move_event& e)override;
 
 private:
-	morda::vector2 mousePos;
+	morda::vector2 mouse_pos;
 	
-	std::shared_ptr<wire_socket> grabbedSocket;
-	std::shared_ptr<wire_socket> hoveredSocket;
+	std::shared_ptr<wire_socket> grabbed_socket;
+	std::shared_ptr<wire_socket> hovered_socket;
 	
 	std::vector<utki::shared_ref<wire_socket>> sockets;
 };

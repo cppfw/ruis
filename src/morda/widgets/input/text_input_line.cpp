@@ -429,7 +429,7 @@ size_t text_input_line::delete_selection()
 
 	auto t = this->get_text();
 	this->clear();
-	t.erase(std::next(t.begin(), start), utki::next(t.begin(), end));
+	t.erase(utki::next(t.begin(), start), utki::next(t.begin(), end));
 	this->set_text(std::move(t));
 
 	return start;

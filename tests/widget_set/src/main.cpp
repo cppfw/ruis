@@ -10,15 +10,14 @@
 #include "../../../src/morda/util/weak_widget_set.hpp"
 
 class application : public mordavokne::application{
-	static mordavokne::window_params GetWindowParams()noexcept{
-		mordavokne::window_params wp(r4::vector2<unsigned>(1024, 800));
-
-		return wp;
-	}
 public:
 
 	application() :
-			mordavokne::application("morda-tests", GetWindowParams())
+			mordavokne::application("morda-tests", [](){
+				mordavokne::window_params wp(r4::vector2<unsigned>(1024, 800));
+
+				return wp;
+			}())
 	{
 		this->gui.init_standard_widgets(*this->get_res_file("../../res/morda_res/"));
 

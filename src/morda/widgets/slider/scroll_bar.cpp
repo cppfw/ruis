@@ -30,7 +30,7 @@ using namespace morda;
 
 namespace {
 
-const auto DDescription = treeml::read(R"qwertyuiop(
+const auto layout_description = treeml::read(R"qwertyuiop(
 		layout{pile}
 
 		@nine_patch{
@@ -68,7 +68,7 @@ scroll_bar::scroll_bar(const utki::shared_ref<morda::context>& c, const treeml::
 	widget(c, desc),
 	fraction_band_widget(this->context, treeml::forest()),
 	oriented(vertical),
-	container(this->context, DDescription),
+	container(this->context, layout_description),
 	handle(this->get_widget("morda_handle"))
 {
 	auto np = this->try_get_widget_as<nine_patch>("morda_slider_bg");
@@ -140,28 +140,28 @@ scroll_bar::scroll_bar(const utki::shared_ref<morda::context>& c, const treeml::
 
 		unsigned long_index = this->get_long_index();
 
-		float maxPos = this->rect().d[long_index] - this->handle.rect().d[long_index];
-		maxPos = max(maxPos, 0.0f); // clamp bottom
+		float max_pos = this->rect().d[long_index] - this->handle.rect().d[long_index];
+		max_pos = max(max_pos, 0.0f); // clamp bottom
 
 		float new_pos = this->handle.rect().p[long_index];
 		new_pos += e.pos[long_index] - this->clickPoint;
 		new_pos = max(new_pos, real(0)); // clamp bottom
-		new_pos = min(new_pos, maxPos); // clamp top
+		new_pos = min(new_pos, max_pos); // clamp top
 
-		ASSERT(0 <= new_pos && new_pos <= maxPos, [&](auto& o) {
-			o << "new_pos = " << new_pos << ", maxPos = " << maxPos;
+		ASSERT(0 <= new_pos && new_pos <= max_pos, [&](auto& o) {
+			o << "new_pos = " << new_pos << ", max_pos = " << max_pos;
 		})
 
-		morda::vector2 newPosition(0);
-		newPosition[long_index] = new_pos;
+		morda::vector2 new_position(0);
+		new_position[long_index] = new_pos;
 
-		this->handle.move_to(newPosition);
+		this->handle.move_to(new_position);
 
-		ASSERT(maxPos >= 0)
+		ASSERT(max_pos >= 0)
 
-		if (maxPos > 0) {
+		if (max_pos > 0) {
 			// update factor
-			this->set_fraction(new_pos / maxPos);
+			this->set_fraction(new_pos / max_pos);
 		}
 
 		return true;
@@ -188,10 +188,10 @@ void scroll_bar::on_lay_out()
 
 	new_size[long_index] = round(new_size[long_index] * this->get_band_fraction());
 
-	auto minHandleSize = this->handle.measure(vector2(-1));
+	auto min_handle_size = this->handle.measure(vector2(-1));
 
 	using std::max;
-	new_size[long_index] = max(new_size[long_index], std::round(real(1.5) * minHandleSize[trans_index])); // clamp bottom
+	new_size[long_index] = max(new_size[long_index], std::round(real(1.5) * min_handle_size[trans_index])); // clamp bottom
 
 	this->handle.resize(new_size);
 

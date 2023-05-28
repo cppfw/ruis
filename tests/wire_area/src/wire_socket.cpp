@@ -48,9 +48,9 @@ void wire_socket::disconnect(){
 		ASSERT(this->slave->primary.lock().get() == this)
 		ASSERT(!this->slave->slave)
 		this->slave->primary.reset();
-		auto oldSlave = std::move(this->slave);
+		auto old_slave = std::move(this->slave);
 		this->slave.reset();
-		this->on_disconnected(*oldSlave);
+		this->on_disconnected(*old_slave);
 	}else if(auto p = this->primary.lock()){
 		ASSERT(!p->primary.lock())
 		ASSERT(p->slave.get() == this)
@@ -91,19 +91,19 @@ bool wire_socket::on_mouse_button(const morda::mouse_button_event& e){
 	
 	if(auto wa = this->try_get_ancestor<wire_area>()){
 		if(e.is_down){
-			std::shared_ptr<wire_socket> grabbedSocket;
+			std::shared_ptr<wire_socket> grabbed_socket;
 			if(auto p = this->get_remote()){
 				p->disconnect();
-				grabbedSocket = std::move(p);
+				grabbed_socket = std::move(p);
 			}else{
-				grabbedSocket = utki::make_shared_from(*this).to_shared_ptr();
+				grabbed_socket = utki::make_shared_from(*this).to_shared_ptr();
 			}
 			
-			wa->grabbedSocket = std::move(grabbedSocket);
-			wa->mousePos = this->pos_in_ancestor(e.pos, wa);
+			wa->grabbed_socket = std::move(grabbed_socket);
+			wa->mouse_pos = this->pos_in_ancestor(e.pos, wa);
 		}else{
-			wa->grabbedSocket->connect(wa->hoveredSocket);
-			wa->grabbedSocket.reset();
+			wa->grabbed_socket->connect(wa->hovered_socket);
+			wa->grabbed_socket.reset();
 		}
 		return true;
 	}
@@ -114,10 +114,10 @@ void wire_socket::on_hover_change(unsigned pointer_id){
 	// LOG("Hover changed: " << this->is_hovered(pointer_id) << std::endl)
 	if(auto wa = this->try_get_ancestor<wire_area>()){
 		if(this->is_hovered()){
-			wa->hoveredSocket = utki::make_shared_from(*this).to_shared_ptr();
+			wa->hovered_socket = utki::make_shared_from(*this).to_shared_ptr();
 		}else{
-			if(wa->hoveredSocket.get() == this){
-				wa->hoveredSocket.reset();
+			if(wa->hovered_socket.get() == this){
+				wa->hovered_socket.reset();
 			}
 		}
 	}

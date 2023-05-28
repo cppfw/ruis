@@ -108,7 +108,7 @@ void raster_image::flip_vertical()
 	std::vector<uint8_t> line(stride);
 
 	for (auto t = this->buffer.begin(), b = utki::prev(this->buffer.end(), stride);
-		 t != utki::next(this->buffer.begin(), stride * (this->dims().y() / 2));
+		 t != utki::next(this->buffer.begin(), size_t(stride) * (this->dims().y() / 2));
 		 t = utki::next(t, stride), b = utki::prev(b, stride))
 	{
 		// move line to temp

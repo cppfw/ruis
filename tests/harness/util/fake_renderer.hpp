@@ -95,10 +95,10 @@ public:
 
 	void clear_framebuffer()override{}
 	r4::rectangle<int> get_scissor()const override{
-		return r4::rectangle<int>(0, 0);
+		return {0, 0};
 	}
 	r4::rectangle<int> get_viewport()const override{
-		return r4::rectangle<int>(0, 0);
+		return {0, 0};
 	}
 	bool is_scissor_enabled()const override{
 		return false;
