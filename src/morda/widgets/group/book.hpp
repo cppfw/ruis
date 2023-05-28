@@ -60,7 +60,7 @@ public:
 
 	virtual void on_tear_out() noexcept {}
 
-	utki::shared_ref<page> tear_out() noexcept;
+	utki::shared_ref<page> tear_out();
 };
 
 class book : public virtual widget, private container
@@ -102,7 +102,7 @@ public:
 	std::function<void(book&, const page&)> pages_change_handler;
 
 private:
-	utki::shared_ref<page> tear_out(page& page) noexcept;
+	utki::shared_ref<page> tear_out(page& page);
 
 	void notify_pages_change(const page& p);
 };

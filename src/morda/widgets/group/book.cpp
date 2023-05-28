@@ -53,9 +53,8 @@ void book::push(const utki::shared_ref<page>& pg)
 	});
 }
 
-utki::shared_ref<page> book::tear_out(page& pg) noexcept
+utki::shared_ref<page> book::tear_out(page& pg)
 {
-	// book::tear_out() is private, hense ASSERT instead of if(){throw}
 	ASSERT(pg.get_parent_book() == this)
 
 	auto i = std::find_if(this->pages.begin(), this->pages.end(), [&pg](const auto& v) -> bool {
@@ -181,7 +180,7 @@ page::page(const utki::shared_ref<morda::context>& c, const treeml::forest& desc
 	widget(c, desc)
 {}
 
-utki::shared_ref<page> page::tear_out() noexcept
+utki::shared_ref<page> page::tear_out()
 {
 	if (!this->get_parent_book()) {
 		return utki::make_shared_from(*this);
