@@ -439,22 +439,16 @@ cursor{crs_arrow}
 
 		title{"Spinning cube"}
 
-/*
-		@image{
-			lp{
-				dx{max} dy{max}
-			}
-			image{img_lattice}
-			repeat_x{true} repeat_y{true}
-		}
-*/
-
 		@color{
 			id {cube_bg_color}
 			lp{
 				dx {fill}
 				dy {fill}
 			}
+		}
+
+		@image{
+			image{img_lattice}
 		}
 
 		@click_proxy{
