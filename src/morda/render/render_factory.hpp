@@ -27,6 +27,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <utki/shared_ref.hpp>
 #include <utki/span.hpp>
 
+#include <rasterimage/image_variant.hpp>
+
 #include "coloring_shader.hpp"
 #include "coloring_texturing_shader.hpp"
 #include "frame_buffer.hpp"
@@ -46,6 +48,9 @@ protected:
 
 public:
 	virtual ~render_factory() = default;
+
+	virtual utki::shared_ref<texture_2d> create_texture_2d(rasterimage::image_variant&& imvar) = 0;
+	virtual utki::shared_ref<texture_2d> create_texture_2d(const rasterimage::image_variant& imvar) = 0;
 
 	virtual utki::shared_ref<texture_2d> create_texture_2d(
 		texture_2d::type type,

@@ -115,6 +115,10 @@ public:
 	{
 		return std::get<image<depth_type_t<depth_enum>, to_num_channels(components_enum)>>(this->variant);
 	}
+
+	const variant_type& get_variant()const noexcept{
+		return this->variant;
+	}
 };
 
 } // namespace rasterimage

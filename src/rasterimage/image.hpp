@@ -259,12 +259,12 @@ public:
 		}
 	}
 
-	utki::span<pixel_type> pixels() noexcept
+	utki::span<pixel_type> get_pixels() noexcept
 	{
 		return this->buffer;
 	}
 
-	utki::span<const pixel_type> pixels() const noexcept
+	utki::span<const pixel_type> get_pixels() const noexcept
 	{
 		return this->buffer;
 	}

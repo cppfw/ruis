@@ -24,6 +24,9 @@ else
     this_cxxflags += $(subst -I,-isystem,$(shell pkg-config --cflags freetype2))
 endif
 
+# TODO: remove when rasterimage is separated to lib
+this_cxxflags += -I .
+
 this_ldlibs += $(shell pkg-config --libs freetype2)
 
 this_ldlibs += -lpapki -ltreeml -lsvgdom -lsvgren -lutki -lpng -ljpeg -lm
