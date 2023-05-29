@@ -51,6 +51,7 @@ public:
 		rgba
 	};
 
+	// TODO: the method is not needed
 	static unsigned bytes_per_pixel(texture_2d::type t);
 };
 

@@ -7,7 +7,7 @@ this_name := morda
 
 this_soname := $(shell cat $(d)soname.txt)
 
-this_srcs += $(call prorab-src-dir, morda)
+this_srcs += $(call prorab-src-dir, .)
 
 $(eval $(call prorab-config, ../config))
 
