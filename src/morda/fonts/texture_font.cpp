@@ -49,8 +49,8 @@ texture_font::freetype_lib_wrapper::~freetype_lib_wrapper() noexcept
 
 texture_font::freetype_face_wrapper::freetype_face_wrapper(FT_Library& lib, const papki::file& fi)
 {
-	this->fontFile = fi.load();
-	if (FT_New_Memory_Face(lib, &*this->fontFile.begin(), int(this->fontFile.size()), 0 /* face_index */, &this->f)
+	this->font_file = fi.load();
+	if (FT_New_Memory_Face(lib, this->font_file.data(), int(this->font_file.size()), 0 /* face_index */, &this->f)
 		!= 0)
 	{
 		throw std::runtime_error("freetype_face_wrapper::freetype_face_wrapper(): unable to crate font face object");
@@ -90,11 +90,19 @@ texture_font::glyph texture_font::load_glyph(char32_t c) const
 		return g;
 	}
 
-	raster_image glyphim(
-		r4::vector2<unsigned>(slot->bitmap.width, slot->bitmap.rows),
-		raster_image::color_depth::grey,
-		slot->bitmap.buffer
-	);
+	ASSERT(slot->format == FT_GLYPH_FORMAT_BITMAP)
+	ASSERT(slot->bitmap.pixel_mode == FT_PIXEL_MODE_GRAY)
+	ASSERT(slot->bitmap.pitch >= 0)
+	ASSERT(unsigned(slot->bitmap.pitch) == slot->bitmap.width)
+
+	rasterimage::image<uint8_t, 1> im({slot->bitmap.width, slot->bitmap.rows});
+	{
+		auto begin = slot->bitmap.buffer;
+		auto end = begin + im.pixels().size();
+
+		// TODO: rewrite assuming slot->bitmap.pitch >= slot->bitmap.width
+		std::copy(begin, end, im.pixels().data());
+	}
 
 	std::array<r4::vector2<float>, 4> verts;
 	verts[0] = (morda::vector2(real(m->horiBearingX), -real(m->horiBearingY)) / (64.0f));
@@ -117,11 +125,7 @@ texture_font::glyph texture_font::load_glyph(char32_t c) const
 	g.tex = this->context.get()
 				.renderer.get()
 				.factory
-				->create_texture_2d(
-					morda::num_channels_to_texture_type(glyphim.num_channels()),
-					glyphim.dims(),
-					glyphim.pixels()
-				)
+				->create_texture_2d(std::move(im))
 				.to_shared_ptr();
 
 	return g;

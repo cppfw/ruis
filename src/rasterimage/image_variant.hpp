@@ -67,6 +67,11 @@ public:
 		depth channel_depth = depth::uint_8_bit
 	);
 
+	template <typename channel_type, size_t num_channels>
+	image_variant(image<channel_type, num_channels>&& im) :
+		variant(std::move(im))
+	{}
+
 	size_t num_channels() const noexcept
 	{
 		auto ret = size_t(this->get_format()) + 1;

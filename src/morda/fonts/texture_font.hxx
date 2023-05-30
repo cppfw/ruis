@@ -79,7 +79,7 @@ class texture_font : public font
 
 	struct freetype_face_wrapper {
 		FT_Face f;
-		std::vector<std::uint8_t> fontFile; // the buffer should be alive as long as the Face is alive!!!
+		std::vector<std::uint8_t> font_file; // the buffer should be alive as long as the Face is alive!!!
 
 		freetype_face_wrapper(FT_Library& lib, const papki::file& fi);
 		~freetype_face_wrapper() noexcept;

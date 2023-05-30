@@ -49,8 +49,10 @@ protected:
 public:
 	virtual ~render_factory() = default;
 
-	virtual utki::shared_ref<texture_2d> create_texture_2d(rasterimage::image_variant&& imvar) = 0;
 	virtual utki::shared_ref<texture_2d> create_texture_2d(const rasterimage::image_variant& imvar) = 0;
+	virtual utki::shared_ref<texture_2d> create_texture_2d(rasterimage::image_variant&& imvar){
+		return this->create_texture_2d(imvar);
+	}
 
 	virtual utki::shared_ref<texture_2d> create_texture_2d(
 		texture_2d::type type,
