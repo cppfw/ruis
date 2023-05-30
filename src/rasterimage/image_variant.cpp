@@ -23,7 +23,7 @@ size_t image_variant::to_variant_index(format pixel_format, depth channel_depth)
 
 image_variant::image_variant(const r4::vector2<uint32_t>& dimensions, format pixel_format, depth channel_depth) :
 	variant([&]() {
-		const auto factories_array =
+		const static auto factories_array =
 			make_factories_array(std::make_index_sequence<std::variant_size_v<image_variant::variant_type>>());
 
 		auto i = to_variant_index(pixel_format, channel_depth);
