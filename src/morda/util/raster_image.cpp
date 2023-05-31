@@ -193,7 +193,7 @@ void png_callback_read(png_structp png_ptr, png_bytep data, png_size_t length)
 	//	TRACE(<< "png_callback_read: fi = " << fi << " png_ptr = " << png_ptr << " data = " << std::hex << data << "
 	// length = " << length << std::endl)
 	try {
-		auto buf_wrapper = utki::make_span(data, size_t(length));
+		auto buf_wrapper = utki::make_span(data, length);
 		fi->read(buf_wrapper);
 		//		TRACE(<< "png_callback_read: fi->Read() finished" << std::endl)
 	} catch (...) {
