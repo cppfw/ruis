@@ -50,8 +50,7 @@ texture_font::freetype_lib_wrapper::~freetype_lib_wrapper() noexcept
 texture_font::freetype_face_wrapper::freetype_face_wrapper(FT_Library& lib, const papki::file& fi)
 {
 	this->font_file = fi.load();
-	if (FT_New_Memory_Face(lib, this->font_file.data(), int(this->font_file.size()), 0 /* face_index */, &this->f)
-		!= 0)
+	if (FT_New_Memory_Face(lib, this->font_file.data(), int(this->font_file.size()), 0 /* face_index */, &this->f) != 0)
 	{
 		throw std::runtime_error("freetype_face_wrapper::freetype_face_wrapper(): unable to crate font face object");
 	}
@@ -61,6 +60,24 @@ texture_font::freetype_face_wrapper::~freetype_face_wrapper() noexcept
 {
 	FT_Done_Face(this->f);
 }
+
+namespace rasterimage {
+rasterimage::image<uint8_t, 1> make_uint8_alpha(r4::vector2<uint32_t> dims, size_t stride, const uint8_t* data)
+{
+	rasterimage::image<uint8_t, 1> im(dims);
+
+	auto src_row = data;
+
+	for (auto row : im) {
+		std::copy(src_row, src_row + im.dims().x(), row.data());
+		src_row += stride;
+	}
+
+	ASSERT(src_row == data + stride * dims.y())
+
+	return im;
+}
+} // namespace rasterimage
 
 texture_font::glyph texture_font::load_glyph(char32_t c) const
 {
@@ -95,14 +112,8 @@ texture_font::glyph texture_font::load_glyph(char32_t c) const
 	ASSERT(slot->bitmap.pitch >= 0)
 	ASSERT(unsigned(slot->bitmap.pitch) == slot->bitmap.width)
 
-	rasterimage::image<uint8_t, 1> im({slot->bitmap.width, slot->bitmap.rows});
-	{
-		auto begin = slot->bitmap.buffer;
-		auto end = begin + im.pixels().size();
-
-		// TODO: rewrite assuming slot->bitmap.pitch >= slot->bitmap.width
-		std::copy(begin, end, im.pixels().data());
-	}
+	auto im =
+		rasterimage::make_uint8_alpha({slot->bitmap.width, slot->bitmap.rows}, slot->bitmap.pitch, slot->bitmap.buffer);
 
 	std::array<r4::vector2<float>, 4> verts;
 	verts[0] = (morda::vector2(real(m->horiBearingX), -real(m->horiBearingY)) / (64.0f));
@@ -122,11 +133,7 @@ texture_font::glyph texture_font::load_glyph(char32_t c) const
 					vertex_array::mode::triangle_fan
 				)
 				.to_shared_ptr();
-	g.tex = this->context.get()
-				.renderer.get()
-				.factory
-				->create_texture_2d(std::move(im))
-				.to_shared_ptr();
+	g.tex = this->context.get().renderer.get().factory->create_texture_2d(std::move(im)).to_shared_ptr();
 
 	return g;
 }
