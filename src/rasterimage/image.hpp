@@ -278,6 +278,31 @@ public:
 	{
 		return *utki::next(this->begin(), line_index);
 	}
+
+	template <typename enable_type = image>
+	static std::enable_if_t<std::is_same_v<typename pixel_type::value_type, uint8_t>, enable_type> make(
+		dimensions_type dims,
+		const uint8_t* data,
+		size_t stride = 0
+	)
+	{
+		if (stride == 0) {
+			stride = dims.x();
+		}
+
+		rasterimage::image<uint8_t, 1> im(dims);
+
+		auto src_row = data;
+
+		for (auto row : im) {
+			std::copy(src_row, src_row + im.dims().x() * sizeof(pixel_type), row.data());
+			src_row += stride;
+		}
+
+		ASSERT(src_row == data + stride * im.dims().y())
+
+		return im;
+	}
 };
 
 } // namespace rasterimage

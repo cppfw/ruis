@@ -61,24 +61,6 @@ texture_font::freetype_face_wrapper::~freetype_face_wrapper() noexcept
 	FT_Done_Face(this->f);
 }
 
-namespace rasterimage {
-rasterimage::image<uint8_t, 1> make_uint8_alpha(r4::vector2<uint32_t> dims, size_t stride, const uint8_t* data)
-{
-	rasterimage::image<uint8_t, 1> im(dims);
-
-	auto src_row = data;
-
-	for (auto row : im) {
-		std::copy(src_row, src_row + im.dims().x(), row.data());
-		src_row += stride;
-	}
-
-	ASSERT(src_row == data + stride * dims.y())
-
-	return im;
-}
-} // namespace rasterimage
-
 texture_font::glyph texture_font::load_glyph(char32_t c) const
 {
 	if (FT_Load_Char(this->face.f, FT_ULong(c), FT_LOAD_RENDER) != 0) {
@@ -110,10 +92,12 @@ texture_font::glyph texture_font::load_glyph(char32_t c) const
 	ASSERT(slot->format == FT_GLYPH_FORMAT_BITMAP)
 	ASSERT(slot->bitmap.pixel_mode == FT_PIXEL_MODE_GRAY)
 	ASSERT(slot->bitmap.pitch >= 0)
-	ASSERT(unsigned(slot->bitmap.pitch) == slot->bitmap.width)
 
-	auto im =
-		rasterimage::make_uint8_alpha({slot->bitmap.width, slot->bitmap.rows}, slot->bitmap.pitch, slot->bitmap.buffer);
+	auto im = rasterimage::image<uint8_t, 1>::make(
+		{slot->bitmap.width, slot->bitmap.rows},
+		slot->bitmap.buffer,
+		slot->bitmap.pitch
+	);
 
 	std::array<r4::vector2<float>, 4> verts;
 	verts[0] = (morda::vector2(real(m->horiBearingX), -real(m->horiBearingY)) / (64.0f));
