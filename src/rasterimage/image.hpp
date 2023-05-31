@@ -215,6 +215,10 @@ public:
 		return iterator(utki::make_span(this->buffer.data(), this->dimensions.x()));
 	}
 
+	bool empty()const noexcept{
+		return this->buffer.empty();
+	}
+
 	iterator end() noexcept
 	{
 		return iterator(utki::make_span(this->buffer.data() + this->dimensions.x() * this->dimensions.y(), 0));

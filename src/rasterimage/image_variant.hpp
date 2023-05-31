@@ -55,9 +55,8 @@ public:
 		image<float, 3>,
 		image<float, 4>>;
 
-private:
 	variant_type variant;
-
+private:
 	static size_t to_variant_index(format pixel_format, depth channel_depth);
 
 public:
@@ -120,11 +119,8 @@ public:
 	{
 		return std::get<image<depth_type_t<depth_enum>, to_num_channels(components_enum)>>(this->variant);
 	}
-
-	const variant_type& get_variant() const noexcept
-	{
-		return this->variant;
-	}
 };
+
+
 
 } // namespace rasterimage
