@@ -28,6 +28,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "raster_image.hpp"
 
+using namespace std::string_literals;
+
 using namespace morda;
 
 morda::vector2 morda::parse_vec2(treeml::forest::const_iterator begin, treeml::forest::const_iterator end)
@@ -114,20 +116,19 @@ morda::texture_2d::type morda::num_channels_to_texture_type(unsigned num_channel
 
 utki::shared_ref<texture_2d> morda::load_texture(renderer& r, const papki::file& fi)
 {
-	std::string ext = fi.suffix();
+	std::string suff = fi.suffix();
 
-	// TODO: remove if
-	if (ext == "png") {
-		//		TRACE(<< "Image::Load(): loading PNG image" << std::endl)
-		auto im = rasterimage::read_png(fi);
-		return r.factory->create_texture_2d(std::move(im));
+	rasterimage::image_variant im;
+
+	if (suff == "png") {
+		im = rasterimage::read_png(fi);
+	}else if(suff == "jpg"){
+		im=rasterimage::read_jpeg(fi);
 	}else{
-		raster_image image(fi);
-		//	TRACE(<< "ResTexture::Load(): image loaded" << std::endl)
-
-		return r.factory
-			->create_texture_2d(num_channels_to_texture_type(image.num_channels()), image.dims(), image.pixels());
+		throw std::invalid_argument("morda::load_texture(): unknown image file format, suffix = "s + suff);
 	}
+
+	return r.factory->create_texture_2d(std::move(im));
 }
 
 void morda::set_simple_alpha_blending(renderer& r)

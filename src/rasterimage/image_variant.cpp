@@ -1,5 +1,12 @@
 #include "image_variant.hpp"
 
+// JPEG lib does not have 'extern "C"{}' :-(, so we put it outside of their .h
+// or will have linking problems otherwise because
+// of "_" symbol in front of C-function names
+extern "C" {
+#include <jpeglib.h>
+}
+
 #include <png.h>
 #include <utki/config.hpp>
 
@@ -225,6 +232,201 @@ image_variant rasterimage::read_png(const papki::file& fi)
 
 				// read in image data
 				png_read_image(png_ptr, rows.data());
+			}
+		},
+		im.variant
+	);
+
+	return im;
+}
+
+namespace {
+const size_t jpeg_input_buffer_size = 4096;
+
+struct data_manager_jpeg_source {
+	jpeg_source_mgr pub;
+	papki::file* fi;
+	JOCTET* buffer;
+	bool sof; // true if the file was just opened
+};
+
+void jpeg_init_source_callback(j_decompress_ptr cinfo)
+{
+	ASSERT(cinfo)
+	auto src = reinterpret_cast<data_manager_jpeg_source*>(cinfo->src);
+	ASSERT(src)
+	src->sof = true;
+}
+
+// This function is calld when variable "bytes_in_buffer" reaches 0 and
+// the necessarity in new portion of information appears.
+// RETURNS: TRUE if the buffer is successfuly filled.
+//          FALSE if i/o error occured
+boolean jpeg_callback_fill_input_buffer(j_decompress_ptr cinfo)
+{
+	ASSERT(cinfo)
+	auto src = reinterpret_cast<data_manager_jpeg_source*>(cinfo->src);
+	ASSERT(src)
+
+	// read in JPEGINPUTBUFFERSIZE JOCTET's
+	size_t nbytes;
+
+	try {
+		auto buf_wrapper = utki::make_span(src->buffer, sizeof(JOCTET) * jpeg_input_buffer_size);
+		ASSERT(src->fi)
+		nbytes = src->fi->read(buf_wrapper);
+	} catch (std::runtime_error&) {
+		if (src->sof) {
+			return FALSE; // the specified file is empty
+		}
+		// we read the data before. Insert End Of File info into the buffer
+		src->buffer[0] = (JOCTET)(0xFF);
+		src->buffer[1] = (JOCTET)(JPEG_EOI);
+		nbytes = 2;
+	} catch (...) {
+		return FALSE; // error
+	}
+
+	// Set next input byte for JPEG and number of bytes read
+	src->pub.next_input_byte = src->buffer;
+	src->pub.bytes_in_buffer = nbytes;
+	src->sof = false; // the file is not empty since we read some data
+	return TRUE; // operation successful
+}
+
+// skip num_bytes (seek forward)
+void jpeg_callback_skip_input_data(j_decompress_ptr cinfo, long num_bytes)
+{
+	ASSERT(cinfo)
+	auto src = reinterpret_cast<data_manager_jpeg_source*>(cinfo->src);
+	ASSERT(src)
+	if (num_bytes <= 0) {
+		// nothing to skip
+		return;
+	}
+
+	// read "num_bytes" bytes and waste them away
+	while (num_bytes > long(src->pub.bytes_in_buffer)) {
+		num_bytes -= long(src->pub.bytes_in_buffer);
+		jpeg_callback_fill_input_buffer(cinfo);
+	}
+
+	// update current JPEG read position
+	src->pub.next_input_byte += size_t(num_bytes);
+	src->pub.bytes_in_buffer -= size_t(num_bytes);
+}
+
+// terminate source when decompress is finished
+// (nothing to do in this function in our case)
+void jpeg_callback_term_source(j_decompress_ptr cinfo) {}
+
+} // namespace
+
+image_variant rasterimage::read_jpeg(const papki::file& fi){
+	ASSERT(!fi.is_open())
+
+	papki::file::guard file_guard(fi);
+
+	jpeg_decompress_struct cinfo; // decompression object
+	jpeg_error_mgr jerr;
+
+	cinfo.err = jpeg_std_error(&jerr);
+
+	jpeg_create_decompress(&cinfo); // creat decompress object
+
+	utki::scope_exit cinfo_scope_exit([&cinfo](){
+		jpeg_destroy_decompress(&cinfo); // clean decompression object
+	});
+
+	data_manager_jpeg_source* src = nullptr;
+
+	// check if memory for JPEG-decompressor manager is allocated,
+	// it is possible that several libraries accessing the source
+	if (cinfo.src == nullptr) {
+		// Allocate memory for our manager and set a pointer of global library
+		// structure to it. We use JPEG library memory manager, this means that
+		// the library will take care of memory freeing for us.
+		// JPOOL_PERMANENT means that the memory is allocated for a whole
+		// time  of working with the library.
+		cinfo.src = reinterpret_cast<jpeg_source_mgr*>(
+			(cinfo.mem->alloc_small)(j_common_ptr(&cinfo), JPOOL_PERMANENT, sizeof(data_manager_jpeg_source))
+		);
+		src = reinterpret_cast<data_manager_jpeg_source*>(cinfo.src);
+		if (!src) {
+			throw std::bad_alloc();
+		}
+
+		// allocate memory for read data
+		src->buffer = reinterpret_cast<JOCTET*>(
+			(cinfo.mem->alloc_small)(j_common_ptr(&cinfo), JPOOL_PERMANENT, jpeg_input_buffer_size * sizeof(JOCTET))
+		);
+
+		if (!src->buffer) {
+			throw std::bad_alloc();
+		}
+
+		memset(src->buffer, 0, jpeg_input_buffer_size * sizeof(JOCTET)); // TODO: is needed?
+	} else {
+		src = reinterpret_cast<data_manager_jpeg_source*>(cinfo.src);
+	}
+
+	// set handler functions
+	src->pub.init_source = &jpeg_init_source_callback;
+	src->pub.fill_input_buffer = &jpeg_callback_fill_input_buffer;
+	src->pub.skip_input_data = &jpeg_callback_skip_input_data;
+	src->pub.resync_to_restart = &jpeg_resync_to_restart; // use default func
+	src->pub.term_source = &jpeg_callback_term_source;
+	// set the fields of our structure
+	src->fi = const_cast<papki::file*>(&fi);
+	// set pointers to the buffers
+	src->pub.bytes_in_buffer = 0; // forces fill_input_buffer on first read
+	src->pub.next_input_byte = nullptr; // until buffer loaded
+
+	jpeg_read_header(&cinfo, TRUE); // read parametrs of a JPEG file
+
+	jpeg_start_decompress(&cinfo); // start decompression
+
+	utki::scope_exit decompress_scope_exit([&cinfo](){
+		jpeg_finish_decompress(&cinfo); // finish file decompression
+	});
+
+	format image_format = to_format(cinfo.output_components);
+
+	image_variant im(
+		{cinfo.output_width, cinfo.output_height},
+		image_format,
+		depth::uint_8_bit
+	);
+
+	// calculate the size of a row in bytes
+	auto num_bytes_in_row = size_t(im.dims().x() * im.num_channels());
+
+	// Allocate memory for one row. It is an array of rows which
+	// contains only one row. JPOOL_IMAGE means that the memory is allocated
+	// only for time of this image reading. So, no need to free the memory explicitly.
+	JSAMPARRAY buffer = (cinfo.mem->alloc_sarray)(j_common_ptr(&cinfo), JPOOL_IMAGE, num_bytes_in_row, 1);
+
+	memset(*buffer, 0, sizeof(JSAMPLE) * num_bytes_in_row); // TODO: is needed?
+
+	std::visit(
+		[&cinfo, &buffer, num_bytes_in_row](auto&& image){
+			using image_type = std::remove_reference_t<decltype(image)>;
+			using depth_type = typename image_type::pixel_type::value_type;
+			ASSERT(std::is_same_v<depth_type, uint8_t>)
+			
+			auto i = image.begin();
+			for (int y = 0; cinfo.output_scanline < image.dims().y(); ++y, ++i) {
+				// read the string into buffer
+				jpeg_read_scanlines(&cinfo, buffer, 1);
+
+				ASSERT(num_bytes_in_row == i->size_bytes())
+
+				std::copy(*buffer, *buffer + num_bytes_in_row, 
+				reinterpret_cast<uint8_t*>(i->data())
+				);
+
+				// copy the data to an image
+				// memcpy(this->buffer.data() + ptrdiff_t(num_bytes_in_row * y), buffer[0], num_bytes_in_row);
 			}
 		},
 		im.variant
