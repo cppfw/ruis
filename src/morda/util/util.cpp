@@ -94,25 +94,26 @@ real morda::parse_layout_dimension_value(const treeml::leaf& l, const morda::uni
 	return parse_dimension_value(l, units);
 }
 
-morda::texture_2d::type morda::num_channels_to_texture_type(unsigned num_channels)
-{
-	switch (num_channels) {
-		default:
-			ASSERT(false)
-		case 1:
-			return morda::texture_2d::type::grey;
-			break;
-		case 2:
-			return morda::texture_2d::type::grey_alpha;
-			break;
-		case 3:
-			return morda::texture_2d::type::rgb;
-			break;
-		case 4:
-			return morda::texture_2d::type::rgba;
-			break;
-	}
-}
+// TODO: remove
+// morda::texture_2d::type morda::num_channels_to_texture_type(unsigned num_channels)
+// {
+// 	switch (num_channels) {
+// 		default:
+// 			ASSERT(false)
+// 		case 1:
+// 			return morda::texture_2d::type::grey;
+// 			break;
+// 		case 2:
+// 			return morda::texture_2d::type::grey_alpha;
+// 			break;
+// 		case 3:
+// 			return morda::texture_2d::type::rgb;
+// 			break;
+// 		case 4:
+// 			return morda::texture_2d::type::rgba;
+// 			break;
+// 	}
+// }
 
 utki::shared_ref<texture_2d> morda::load_texture(renderer& r, const papki::file& fi)
 {
@@ -122,9 +123,9 @@ utki::shared_ref<texture_2d> morda::load_texture(renderer& r, const papki::file&
 
 	if (suff == "png") {
 		im = rasterimage::read_png(fi);
-	}else if(suff == "jpg"){
-		im=rasterimage::read_jpeg(fi);
-	}else{
+	} else if (suff == "jpg") {
+		im = rasterimage::read_jpeg(fi);
+	} else {
 		throw std::invalid_argument("morda::load_texture(): unknown image file format, suffix = "s + suff);
 	}
 

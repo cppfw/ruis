@@ -43,16 +43,6 @@ public:
 	{
 		return this->dims_v;
 	}
-
-	enum class type {
-		grey,
-		grey_alpha,
-		rgb,
-		rgba
-	};
-
-	// TODO: the method is not needed
-	static unsigned bytes_per_pixel(texture_2d::type t);
 };
 
 } // namespace morda

@@ -223,10 +223,13 @@ public:
 			o << "svg.dims = " << svg.dims << " pixels.size() = " << svg.pixels.size();
 		})
 
+		// TODO: remove when svgren returns image<uint8_t, 4>
+		auto im = rasterimage::image<uint8_t, 4>::make(svg.dims, reinterpret_cast<const uint8_t*>(svg.pixels.data()));
+
 		auto img = utki::make_shared<svg_texture>(
 			this->context.get().renderer,
 			utki::make_shared_from(*this),
-			this->context.get().renderer.get().factory->create_texture_2d(svg.dims, utki::make_span(svg.pixels))
+			this->context.get().renderer.get().factory->create_texture_2d(std::move(im))
 		);
 
 		this->cache[svg.dims] = img.to_shared_ptr();

@@ -55,13 +55,11 @@ public:
 		return this->create_texture_2d(imvar);
 	}
 
-	virtual utki::shared_ref<texture_2d> create_texture_2d(
-		texture_2d::type type,
-		r4::vector2<unsigned> dims,
-		utki::span<const uint8_t> data
-	) = 0;
-
-	utki::shared_ref<texture_2d> create_texture_2d(r4::vector2<unsigned> dims, utki::span<const uint32_t> data);
+	// virtual utki::shared_ref<texture_2d> create_texture_2d(
+	// 	texture_2d::type type,
+	// 	r4::vector2<unsigned> dims,
+	// 	utki::span<const uint8_t> data
+	// ) = 0;
 
 	virtual utki::shared_ref<vertex_buffer> create_vertex_buffer(utki::span<const r4::vector4<float>> vertices) = 0;
 

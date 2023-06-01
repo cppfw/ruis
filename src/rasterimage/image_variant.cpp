@@ -322,7 +322,8 @@ void jpeg_callback_term_source(j_decompress_ptr cinfo) {}
 
 } // namespace
 
-image_variant rasterimage::read_jpeg(const papki::file& fi){
+image_variant rasterimage::read_jpeg(const papki::file& fi)
+{
 	ASSERT(!fi.is_open())
 
 	papki::file::guard file_guard(fi);
@@ -334,7 +335,7 @@ image_variant rasterimage::read_jpeg(const papki::file& fi){
 
 	jpeg_create_decompress(&cinfo); // creat decompress object
 
-	utki::scope_exit cinfo_scope_exit([&cinfo](){
+	utki::scope_exit cinfo_scope_exit([&cinfo]() {
 		jpeg_destroy_decompress(&cinfo); // clean decompression object
 	});
 
@@ -386,17 +387,13 @@ image_variant rasterimage::read_jpeg(const papki::file& fi){
 
 	jpeg_start_decompress(&cinfo); // start decompression
 
-	utki::scope_exit decompress_scope_exit([&cinfo](){
+	utki::scope_exit decompress_scope_exit([&cinfo]() {
 		jpeg_finish_decompress(&cinfo); // finish file decompression
 	});
 
 	format image_format = to_format(cinfo.output_components);
 
-	image_variant im(
-		{cinfo.output_width, cinfo.output_height},
-		image_format,
-		depth::uint_8_bit
-	);
+	image_variant im({cinfo.output_width, cinfo.output_height}, image_format, depth::uint_8_bit);
 
 	// calculate the size of a row in bytes
 	auto num_bytes_in_row = size_t(im.dims().x() * im.num_channels());
@@ -409,11 +406,11 @@ image_variant rasterimage::read_jpeg(const papki::file& fi){
 	memset(*buffer, 0, sizeof(JSAMPLE) * num_bytes_in_row); // TODO: is needed?
 
 	std::visit(
-		[&cinfo, &buffer, num_bytes_in_row](auto&& image){
+		[&cinfo, &buffer, num_bytes_in_row](auto&& image) {
 			using image_type = std::remove_reference_t<decltype(image)>;
 			using depth_type = typename image_type::pixel_type::value_type;
 			ASSERT(std::is_same_v<depth_type, uint8_t>)
-			
+
 			auto i = image.begin();
 			for (int y = 0; cinfo.output_scanline < image.dims().y(); ++y, ++i) {
 				// read the string into buffer
@@ -421,9 +418,7 @@ image_variant rasterimage::read_jpeg(const papki::file& fi){
 
 				ASSERT(num_bytes_in_row == i->size_bytes())
 
-				std::copy(*buffer, *buffer + num_bytes_in_row, 
-				reinterpret_cast<uint8_t*>(i->data())
-				);
+				std::copy(*buffer, *buffer + num_bytes_in_row, reinterpret_cast<uint8_t*>(i->data()));
 
 				// copy the data to an image
 				// memcpy(this->buffer.data() + ptrdiff_t(num_bytes_in_row * y), buffer[0], num_bytes_in_row);

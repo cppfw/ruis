@@ -53,18 +53,7 @@ public:
 		return nullptr;
 	}
 
-	utki::shared_ref<morda::texture_2d> create_texture_2d(rasterimage::image_variant&& imvar)override{
-		throw std::logic_error("unimplemented");
-	}
 	utki::shared_ref<morda::texture_2d> create_texture_2d(const rasterimage::image_variant& imvar)override{
-		throw std::logic_error("unimplemented");
-	}
-
-	utki::shared_ref<morda::texture_2d> create_texture_2d(
-		morda::texture_2d::type type,
-		r4::vector2<unsigned> dims,
-		utki::span<const uint8_t> data
-	)override{
 		return utki::make_shared<fake_texture_2d>();
 	}
 

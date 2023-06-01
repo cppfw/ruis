@@ -39,7 +39,8 @@ inline constexpr size_t to_num_channels(format f)
 	return size_t(f) + 1;
 }
 
-inline constexpr format to_format(unsigned num_channels){
+inline constexpr format to_format(unsigned num_channels)
+{
 	// ASSERT(1 <= num_channels && num_channels <= 4) // TODO: make utki::assert constexpr and uncomment this line
 	return format(num_channels - 1);
 }

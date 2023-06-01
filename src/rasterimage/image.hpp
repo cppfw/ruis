@@ -284,10 +284,10 @@ public:
 		return *utki::next(this->begin(), line_index);
 	}
 
-	static image make(dimensions_type dims, const typename pixel_type::value_type* data, size_t stride = 0)
+	static image make(dimensions_type dims, const typename pixel_type::value_type* data, size_t stride_in_values = 0)
 	{
-		if (stride == 0) {
-			stride = dims.x();
+		if (stride_in_values == 0) {
+			stride_in_values = dims.x() * num_channels;
 		}
 
 		image im(dims);
@@ -295,16 +295,17 @@ public:
 		auto src_row = data;
 
 		for (auto row : im) {
-			ASSERT(row.size_bytes() == sizeof(*data) * im.dims().x())
+			auto num_values_per_row = im.dims().x() * num_channels;
+			ASSERT(row.size() * num_channels == num_values_per_row)
 			std::copy( //
 				src_row,
-				src_row + im.dims().x() * std::tuple_size_v<typename pixel_type::base_type>,
-				row.data()
+				src_row + num_values_per_row,
+				reinterpret_cast<typename pixel_type::value_type*>(row.data())
 			);
-			src_row += stride;
+			src_row += stride_in_values;
 		}
 
-		ASSERT(src_row == data + stride * im.dims().y())
+		ASSERT(src_row == data + stride_in_values * im.dims().y())
 
 		return im;
 	}
