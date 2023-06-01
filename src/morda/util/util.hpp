@@ -111,9 +111,6 @@ utki::shared_ref<texture_2d> load_texture(renderer& r, const papki::file& fi);
  */
 void set_simple_alpha_blending(renderer& r);
 
-// TODO: remove
-// morda::texture_2d::type num_channels_to_texture_type(unsigned num_channels);
-
 r4::vector4<float> color_to_vec4f(uint32_t color);
 
 inline const treeml::leaf& get_property_value(const treeml::tree& p)

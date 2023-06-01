@@ -26,7 +26,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <utki/debug.hpp>
 
 #include "../context.hpp"
-#include "../util/raster_image.hpp"
 #include "../util/util.hpp"
 
 using namespace morda;
