@@ -222,7 +222,11 @@ image_variant rasterimage::read_png(const papki::file& fi)
 				std::generate( //
 					rows.begin(),
 					rows.end(),
-					[&image, i = image.begin()]() mutable {
+					[
+#ifdef DEBUG
+						&image,
+#endif
+						 i = image.begin()]() mutable {
 						ASSERT(i != image.end())
 						auto ret = i->data();
 						++i;
@@ -365,8 +369,6 @@ image_variant rasterimage::read_jpeg(const papki::file& fi)
 		if (!src->buffer) {
 			throw std::bad_alloc();
 		}
-
-		memset(src->buffer, 0, jpeg_input_buffer_size * sizeof(JOCTET)); // TODO: is needed?
 	} else {
 		src = reinterpret_cast<data_manager_jpeg_source*>(cinfo.src);
 	}
@@ -403,14 +405,13 @@ image_variant rasterimage::read_jpeg(const papki::file& fi)
 	// only for time of this image reading. So, no need to free the memory explicitly.
 	JSAMPARRAY buffer = (cinfo.mem->alloc_sarray)(j_common_ptr(&cinfo), JPOOL_IMAGE, num_bytes_in_row, 1);
 
-	memset(*buffer, 0, sizeof(JSAMPLE) * num_bytes_in_row); // TODO: is needed?
-
 	std::visit(
 		[&cinfo, &buffer, num_bytes_in_row](auto&& image) {
+#ifdef DEBUG
 			using image_type = std::remove_reference_t<decltype(image)>;
 			using depth_type = typename image_type::pixel_type::value_type;
 			ASSERT(std::is_same_v<depth_type, uint8_t>)
-
+#endif
 			auto i = image.begin();
 			for (int y = 0; cinfo.output_scanline < image.dims().y(); ++y, ++i) {
 				// read the string into buffer
@@ -419,9 +420,6 @@ image_variant rasterimage::read_jpeg(const papki::file& fi)
 				ASSERT(num_bytes_in_row == i->size_bytes())
 
 				std::copy(*buffer, *buffer + num_bytes_in_row, reinterpret_cast<uint8_t*>(i->data()));
-
-				// copy the data to an image
-				// memcpy(this->buffer.data() + ptrdiff_t(num_bytes_in_row * y), buffer[0], num_bytes_in_row);
 			}
 		},
 		im.variant
