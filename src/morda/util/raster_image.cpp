@@ -336,12 +336,12 @@ void raster_image::load_png(const papki::file& fi)
 		// initialize row pointers
 		//		M_IMAGE_PRINT(<< "Image::LoadPNG(): this->buf.Buf() = " << std::hex << this->buf.Buf() << std::endl)
 		for (unsigned i = 0; i < this->dims().y(); ++i) {
-			rows[i] = &*this->buffer.begin() + i * num_bytes_per_row;
+			rows[i] = this->buffer.data() + i * num_bytes_per_row;
 			//			M_IMAGE_PRINT(<< "Image::LoadPNG(): rows[i] = " << std::hex << rows[i] << std::endl)
 		}
 		//		TRACE(<< "Image::LoadPNG(): row pointers are set" << std::endl)
 		// read in image data
-		png_read_image(png_ptr, &*rows.begin());
+		png_read_image(png_ptr, rows.data());
 		//		TRACE(<< "Image::LoadPNG(): image data read" << std::endl)
 	}
 }

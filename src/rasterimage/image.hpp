@@ -215,7 +215,8 @@ public:
 		return iterator(utki::make_span(this->buffer.data(), this->dimensions.x()));
 	}
 
-	bool empty()const noexcept{
+	bool empty() const noexcept
+	{
 		return this->buffer.empty();
 	}
 

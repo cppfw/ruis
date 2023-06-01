@@ -2,6 +2,8 @@
 
 #include <variant>
 
+#include <papki/file.hpp>
+
 #include "image.hpp"
 
 namespace rasterimage {
@@ -56,6 +58,7 @@ public:
 		image<float, 4>>;
 
 	variant_type variant;
+
 private:
 	static size_t to_variant_index(format pixel_format, depth channel_depth);
 
@@ -121,6 +124,18 @@ public:
 	}
 };
 
+/**
+ * @brief Read PNG image from file.
+ * @param fi - file to read the image from. File must not be opened.
+ * @return Image read from the file.
+ */
+image_variant read_png(papki::file& fi);
 
+/**
+ * @brief Read JPEG image from file.
+ * @param fi - file to read the image from. File must not be opened.
+ * @return Image read from the file.
+ */
+image_variant read_jpeg(papki::file& fi);
 
 } // namespace rasterimage
