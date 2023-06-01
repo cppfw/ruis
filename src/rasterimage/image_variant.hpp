@@ -129,13 +129,13 @@ public:
  * @param fi - file to read the image from. File must not be opened.
  * @return Image read from the file.
  */
-image_variant read_png(papki::file& fi);
+image_variant read_png(const papki::file& fi);
 
 /**
  * @brief Read JPEG image from file.
  * @param fi - file to read the image from. File must not be opened.
  * @return Image read from the file.
  */
-image_variant read_jpeg(papki::file& fi);
+image_variant read_jpeg(const papki::file& fi);
 
 } // namespace rasterimage

@@ -114,11 +114,20 @@ morda::texture_2d::type morda::num_channels_to_texture_type(unsigned num_channel
 
 utki::shared_ref<texture_2d> morda::load_texture(renderer& r, const papki::file& fi)
 {
-	raster_image image(fi);
-	//	TRACE(<< "ResTexture::Load(): image loaded" << std::endl)
+	std::string ext = fi.suffix();
 
-	return r.factory
-		->create_texture_2d(num_channels_to_texture_type(image.num_channels()), image.dims(), image.pixels());
+	// TODO: remove if
+	if (ext == "png") {
+		//		TRACE(<< "Image::Load(): loading PNG image" << std::endl)
+		auto im = rasterimage::read_png(fi);
+		return r.factory->create_texture_2d(std::move(im));
+	}else{
+		raster_image image(fi);
+		//	TRACE(<< "ResTexture::Load(): image loaded" << std::endl)
+
+		return r.factory
+			->create_texture_2d(num_channels_to_texture_type(image.num_channels()), image.dims(), image.pixels());
+	}
 }
 
 void morda::set_simple_alpha_blending(renderer& r)

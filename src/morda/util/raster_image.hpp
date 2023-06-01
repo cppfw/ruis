@@ -232,12 +232,6 @@ public:
 	}
 
 	/**
-	 * @brief Load image from PNG file.
-	 * @param f - PNG file.
-	 */
-	void load_png(const papki::file& f);
-
-	/**
 	 * @brief Load image from JPG file.
 	 * @param f - JPG file.
 	 */

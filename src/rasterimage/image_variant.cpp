@@ -64,7 +64,7 @@ void png_read_callback(png_structp png_ptr, png_bytep data, png_size_t length)
 }
 } // namespace
 
-image_variant rasterimage::read_png(papki::file& fi)
+image_variant rasterimage::read_png(const papki::file& fi)
 {
 	ASSERT(!fi.is_open())
 
