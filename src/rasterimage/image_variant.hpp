@@ -144,4 +144,12 @@ image_variant read_png(const papki::file& fi);
  */
 image_variant read_jpeg(const papki::file& fi);
 
+/**
+ * @brief Read image from file.
+ * Automatically detects the image file format by filename suffix.
+ * @param fi - file to read the image from. File must not be opened.
+ * @return Image read from file.
+ */
+image_variant read(const papki::file& fi);
+
 } // namespace rasterimage

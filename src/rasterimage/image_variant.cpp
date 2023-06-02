@@ -1,5 +1,7 @@
 #include "image_variant.hpp"
 
+#include <string>
+
 // JPEG lib does not have 'extern "C"{}' :-(, so we put it outside of their .h
 // or will have linking problems otherwise because
 // of "_" symbol in front of C-function names
@@ -9,6 +11,8 @@ extern "C" {
 
 #include <png.h>
 #include <utki/config.hpp>
+
+using namespace std::string_literals;
 
 using namespace rasterimage;
 
@@ -57,6 +61,18 @@ const dimensioned::dimensions_type& image_variant::dims() const noexcept
 		// so should never reach here
 		ASSERT(false)
 		abort();
+	}
+}
+
+image_variant rasterimage::read(const papki::file& fi){
+	auto suffix = fi.suffix();
+
+	if (suffix == "png") {
+		return rasterimage::read_png(fi);
+	} else if (suffix == "jpg") {
+		return rasterimage::read_jpeg(fi);
+	} else {
+		throw std::invalid_argument("rasterimage::read(): unknown image file format, suffix = "s + suffix);
 	}
 }
 

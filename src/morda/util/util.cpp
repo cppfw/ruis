@@ -94,19 +94,7 @@ real morda::parse_layout_dimension_value(const treeml::leaf& l, const morda::uni
 
 utki::shared_ref<texture_2d> morda::load_texture(renderer& r, const papki::file& fi)
 {
-	std::string suff = fi.suffix();
-
-	rasterimage::image_variant im;
-
-	if (suff == "png") {
-		im = rasterimage::read_png(fi);
-	} else if (suff == "jpg") {
-		im = rasterimage::read_jpeg(fi);
-	} else {
-		throw std::invalid_argument("morda::load_texture(): unknown image file format, suffix = "s + suff);
-	}
-
-	return r.factory->create_texture_2d(std::move(im));
+	return r.factory->create_texture_2d(rasterimage::read(fi));
 }
 
 void morda::set_simple_alpha_blending(renderer& r)
