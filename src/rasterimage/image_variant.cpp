@@ -226,7 +226,7 @@ image_variant rasterimage::read_png(const papki::file& fi)
 #ifdef DEBUG
 						&image,
 #endif
-						 i = image.begin()]() mutable {
+						i = image.begin()]() mutable {
 						ASSERT(i != image.end())
 						auto ret = i->data();
 						++i;

@@ -53,6 +53,14 @@ public:
 		return nullptr;
 	}
 
+	utki::shared_ref<morda::texture_2d> create_texture_2d(
+		rasterimage::format format,
+		rasterimage::dimensioned::dimensions_type dims
+	)override
+	{
+		return utki::make_shared<fake_texture_2d>();
+	}
+
 	utki::shared_ref<morda::texture_2d> create_texture_2d(const rasterimage::image_variant& imvar)override{
 		return utki::make_shared<fake_texture_2d>();
 	}
