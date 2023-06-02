@@ -290,8 +290,7 @@ utki::shared_ref<texture_2d> widget::render_to_texture(std::shared_ptr<texture_2
 			return utki::shared_ref(std::move(reuse));
 		} else {
 			return r.factory->create_texture_2d(
-				rasterimage::image<uint8_t, 4>(this->rect().d.to<uint32_t>())
-				// morda::texture_2d::type::rgba, this->rect().d.to<unsigned>(), nullptr
+				rasterimage::image<uint8_t, 4>(this->rect().d.to<uint32_t>()) // TODO: how to avoid unneeded memory allocation?
 				);
 		}
 	}();
