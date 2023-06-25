@@ -216,15 +216,13 @@ public:
 		svgren::parameters svg_params;
 		svg_params.dpi = unsigned(this->context.get().units.dots_per_inch);
 		svg_params.dims_request = for_dims.to<unsigned>();
-		auto svg = svgren::render(*this->dom, svg_params);
-		ASSERT(svg.dims.x() != 0)
-		ASSERT(svg.dims.y() != 0)
-		ASSERT(svg.dims.x() * svg.dims.y() == svg.pixels.size(), [&](auto& o) {
-			o << "svg.dims = " << svg.dims << " pixels.size() = " << svg.pixels.size();
-		})
 
-		// TODO: remove when svgren returns image<uint8_t, 4>
-		auto im = rasterimage::image<uint8_t, 4>::make(svg.dims, reinterpret_cast<const uint8_t*>(svg.pixels.data()));
+		auto im = svgren::rasterize(*this->dom, svg_params);
+		ASSERT(im.dims().x() != 0)
+		ASSERT(im.dims().y() != 0)
+		ASSERT(im.dims().x() * im.dims().y() == im.pixels().size(), [&](auto& o) {
+			o << "im.dims = " << im.dims() << " pixels.size() = " << im.pixels().size();
+		})
 
 		auto img = utki::make_shared<svg_texture>(
 			this->context.get().renderer,
@@ -232,7 +230,7 @@ public:
 			this->context.get().renderer.get().factory->create_texture_2d(std::move(im))
 		);
 
-		this->cache[svg.dims] = img.to_shared_ptr();
+		this->cache[im.dims()] = img.to_shared_ptr();
 
 		return img;
 	}

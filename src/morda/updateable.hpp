@@ -75,6 +75,14 @@ public:
 	 * @param dt_ms - actual time elapsed since the previous update.
 	 */
 	virtual void update(uint32_t dt_ms) = 0;
+
+	updateable() = default;
+
+	updateable(const updateable&) = delete;
+	updateable& operator=(const updateable&) = delete;
+
+	updateable(updateable&&) = delete;
+	updateable& operator=(updateable&&) = delete;
 };
 
 } // namespace morda

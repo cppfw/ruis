@@ -129,12 +129,12 @@ path::vertices path::stroke(morda::real half_width, morda::real antialias_width,
 		if (!prev) {
 			ASSERT(next)
 			ret.pos.push_back(
-				(*cur) - normal * miter - normal.rot(-pi<morda::real>() / 4) * antialias_width * morda::real(sqrt(2))
+				(*cur) - normal * miter - normal.rot(-morda::real(pi) / 4) * antialias_width * morda::real(sqrt(2))
 			);
 		} else if (!next) {
 			ASSERT(prev)
 			ret.pos.push_back(
-				(*cur) - normal * miter - normal.rot(pi<morda::real>() / 4) * antialias_width * morda::real(sqrt(2))
+				(*cur) - normal * miter - normal.rot(morda::real(pi) / 4) * antialias_width * morda::real(sqrt(2))
 			);
 		} else {
 			ret.pos.push_back((*cur) - normal * antialias_miter);
@@ -154,11 +154,11 @@ path::vertices path::stroke(morda::real half_width, morda::real antialias_width,
 
 		if (!prev) {
 			ret.pos.push_back(
-				(*cur) + normal * miter + normal.rot(pi<morda::real>() / 4) * antialias_width * morda::real(sqrt(2))
+				(*cur) + normal * miter + normal.rot(morda::real(pi) / 4) * antialias_width * morda::real(sqrt(2))
 			);
 		} else if (!next) {
 			ret.pos.push_back(
-				(*cur) + normal * miter + normal.rot(-pi<morda::real>() / 4) * antialias_width * morda::real(sqrt(2))
+				(*cur) + normal * miter + normal.rot(-morda::real(pi) / 4) * antialias_width * morda::real(sqrt(2))
 			);
 		} else {
 			ret.pos.push_back((*cur) + normal * antialias_miter);
