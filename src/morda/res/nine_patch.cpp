@@ -42,10 +42,10 @@ class res_subimage : public res::image, public res::image::texture
 
 public:
 	// rect is a rectangle on the texture, Y axis down.
-	res_subimage(const utki::shared_ref<morda::context>& c, const decltype(tex)& tex, const rectangle& rect) :
+	res_subimage(const utki::shared_ref<morda::context>& c, decltype(tex) tex, const rectangle& rect) :
 		res::image(c),
 		res::image::texture(c.get().renderer, rect.d),
-		tex(tex),
+		tex(std::move(tex)),
 		vao([&]() {
 			std::array<vector2, 4> tex_coords = {
 				rect.p.comp_div(this->tex.get().dims),

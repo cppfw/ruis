@@ -218,11 +218,14 @@ public:
 		svg_params.dims_request = for_dims.to<unsigned>();
 
 		auto im = svgren::rasterize(*this->dom, svg_params);
+
 		ASSERT(im.dims().x() != 0)
 		ASSERT(im.dims().y() != 0)
 		ASSERT(im.dims().x() * im.dims().y() == im.pixels().size(), [&](auto& o) {
 			o << "im.dims = " << im.dims() << " pixels.size() = " << im.pixels().size();
 		})
+
+		auto dims = im.dims();
 
 		auto img = utki::make_shared<svg_texture>(
 			this->context.get().renderer,
@@ -230,7 +233,7 @@ public:
 			this->context.get().renderer.get().factory->create_texture_2d(std::move(im))
 		);
 
-		this->cache[im.dims()] = img.to_shared_ptr();
+		this->cache[dims] = img.to_shared_ptr();
 
 		return img;
 	}
@@ -239,7 +242,9 @@ public:
 
 	static utki::shared_ref<res_svg_image> load(const utki::shared_ref<morda::context>& ctx, const papki::file& fi)
 	{
-		return utki::make_shared<res_svg_image>(ctx, svgdom::load(fi));
+		auto dom = svgdom::load(fi);
+		ASSERT(dom)
+		return utki::make_shared<res_svg_image>(ctx, std::move(dom));
 	}
 };
 } // namespace

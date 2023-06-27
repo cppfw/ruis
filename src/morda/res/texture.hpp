@@ -47,7 +47,7 @@ class texture : public morda::resource
 {
 	friend class morda::resource_loader;
 
-	const utki::shared_ref<texture_2d> tex2d;
+	const utki::shared_ref<const texture_2d> tex2d;
 
 public:
 	/**
@@ -55,9 +55,9 @@ public:
 	 * @param c - context.
 	 * @param tex - texture object to initialize this resource with.
 	 */
-	texture(const utki::shared_ref<morda::context>& c, const decltype(tex2d)& tex) :
+	texture(const utki::shared_ref<morda::context>& c, decltype(tex2d) tex) :
 		resource(c),
-		tex2d(tex)
+		tex2d(std::move(tex))
 	{}
 
 	~texture() override = default;
