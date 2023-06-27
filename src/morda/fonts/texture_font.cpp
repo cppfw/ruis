@@ -304,12 +304,13 @@ font::render_result texture_font::render_internal(
 			real advance;
 
 			if (c == U'\t') { // if tabulation
-				unsigned actual_tab_size;
-				if (offset == std::numeric_limits<size_t>::max()) {
-					actual_tab_size = tab_size;
-				} else {
-					actual_tab_size = tab_size - cur_offset % tab_size;
-				}
+				unsigned actual_tab_size = [&]() -> unsigned {
+					if (offset == std::numeric_limits<size_t>::max()) {
+						return tab_size;
+					} else {
+						return tab_size - cur_offset % tab_size;
+					}
+				}();
 				advance = space_advance * real(actual_tab_size);
 				ret.length += actual_tab_size;
 				cur_offset += actual_tab_size;
