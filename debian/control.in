@@ -11,7 +11,9 @@ Build-Depends:
 		pkg-config,
 		clang-format,
 		clang-tidy,
-		libpng-dev, libjpeg-dev, zlib1g-dev, libglew-dev, libfreetype6-dev, libgles2-mesa-dev,
+		libglew-dev,
+		libfreetype6-dev,
+		libgles2-mesa-dev,
 		libutki-dev (>= 1.1.112),
 		libpapki-dev (>= 1.0.91),
 		libr4-dev (>= 1.0.52),
@@ -19,6 +21,7 @@ Build-Depends:
 		libsvgren-dev (>= 0.5.7),
 		libtreeml-dev (>= 0.1.26),
 		libnitki-dev (>= 1.0.39),
+		librasterimage-dev (>= 0.1.4),
 		libtst-dev (>= 0.3.9)
 Build-Depends-Indep: doxygen
 
