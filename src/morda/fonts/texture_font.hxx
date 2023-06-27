@@ -69,7 +69,7 @@ class texture_font : public font
 	unsigned max_cached;
 
 	struct freetype_lib_wrapper {
-		FT_Library lib;
+		FT_Library lib = nullptr;
 
 		freetype_lib_wrapper();
 
@@ -85,7 +85,7 @@ class texture_font : public font
 	//	TRACE(<< "texture_font::Load(): FreeType library inited" << std::endl)
 
 	struct freetype_face_wrapper {
-		FT_Face f;
+		FT_Face f = nullptr;
 		std::vector<std::uint8_t> font_file; // the buffer should be alive as long as the Face is alive!!!
 
 		freetype_face_wrapper(FT_Library& lib, const papki::file& fi);
