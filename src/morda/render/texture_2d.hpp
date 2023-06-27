@@ -37,6 +37,9 @@ public:
 	texture_2d(const texture_2d&) = delete;
 	texture_2d& operator=(const texture_2d&) = delete;
 
+	texture_2d(texture_2d&&) = delete;
+	texture_2d& operator=(texture_2d&&) = delete;
+
 	virtual ~texture_2d() = default;
 
 	const decltype(dims_v)& dims() const noexcept

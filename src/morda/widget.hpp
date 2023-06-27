@@ -85,6 +85,12 @@ public:
 
 	layout_params() = default;
 
+	layout_params(const layout_params&) = default;
+	layout_params& operator=(const layout_params&) = default;
+
+	layout_params(layout_params&&) = default;
+	layout_params& operator=(layout_params&&) = default;
+
 	layout_params(const treeml::forest& desc, const morda::units& units);
 
 	~layout_params() noexcept = default;
@@ -409,6 +415,7 @@ public:
 
 	const widget& get_widget(const std::string& id, bool allow_itself = true) const
 	{
+		// NOLINTNEXTLINE(cppcoreguidelines-pro-type-const-cast)
 		return const_cast<utki::remove_const_pointer<decltype(this)>::type*>(this)->get_widget(id, allow_itself);
 	}
 
@@ -454,6 +461,7 @@ public:
 	 */
 	const widget& get_root_widget() const
 	{
+		// NOLINTNEXTLINE(cppcoreguidelines-pro-type-const-cast)
 		return const_cast<utki::remove_const_pointer<decltype(this)>::type*>(this)->get_root_widget();
 	}
 
@@ -464,6 +472,12 @@ public:
 	 * @param desc - widget description.
 	 */
 	widget(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
+
+	widget(const widget&) = delete;
+	widget& operator=(const widget&) = delete;
+
+	widget(widget&&) = delete;
+	widget& operator=(widget&&) = delete;
 
 public:
 	~widget() override = default;
@@ -660,6 +674,7 @@ public:
 
 	const widget* try_get_ancestor(const std::string& id) const
 	{
+		// NOLINTNEXTLINE(cppcoreguidelines-pro-type-const-cast)
 		return const_cast<utki::remove_const_pointer<decltype(this)>::type*>(this)->try_get_ancestor(id);
 	}
 
@@ -673,6 +688,7 @@ public:
 
 	const widget& get_ancestor(const std::string& id) const
 	{
+		// NOLINTNEXTLINE(cppcoreguidelines-pro-type-const-cast)
 		return const_cast<utki::remove_const_pointer<decltype(this)>::type*>(this)->get_ancestor(id);
 	}
 

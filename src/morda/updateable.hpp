@@ -83,6 +83,8 @@ public:
 
 	updateable(updateable&&) = delete;
 	updateable& operator=(updateable&&) = delete;
+
+	~updateable() override = default;
 };
 
 } // namespace morda
