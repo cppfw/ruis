@@ -32,6 +32,8 @@ using namespace morda;
 
 namespace {
 constexpr const char32_t unknown_char = 0xfffd;
+
+constexpr const auto freetype_granularity = 64;
 } // namespace
 
 texture_font::freetype_lib_wrapper::freetype_lib_wrapper()
@@ -79,7 +81,7 @@ texture_font::glyph texture_font::load_glyph(char32_t c) const
 	FT_Glyph_Metrics* m = &slot->metrics;
 
 	glyph g;
-	g.advance = real(m->horiAdvance) / (64.0f);
+	g.advance = real(m->horiAdvance) / real(freetype_granularity);
 
 	if (!slot->bitmap.buffer) {
 		g.top_left.set(0);
@@ -98,11 +100,13 @@ texture_font::glyph texture_font::load_glyph(char32_t c) const
 		slot->bitmap.pitch
 	);
 
-	std::array<r4::vector2<float>, 4> verts;
-	verts[0] = (morda::vector2(real(m->horiBearingX), -real(m->horiBearingY)) / (64.0f));
-	verts[1] = (morda::vector2(real(m->horiBearingX), real(m->height - m->horiBearingY)) / (64.0f));
-	verts[2] = (morda::vector2(real(m->horiBearingX + m->width), real(m->height - m->horiBearingY)) / (64.0f));
-	verts[3] = (morda::vector2(real(m->horiBearingX + m->width), -real(m->horiBearingY)) / (64.0f));
+	std::array<r4::vector2<float>, 4> verts = {
+		(morda::vector2(real(m->horiBearingX), -real(m->horiBearingY)) / real(freetype_granularity)),
+		(morda::vector2(real(m->horiBearingX), real(m->height - m->horiBearingY)) / real(freetype_granularity)),
+		(morda::vector2(real(m->horiBearingX + m->width), real(m->height - m->horiBearingY))
+		 / real(freetype_granularity)),
+		(morda::vector2(real(m->horiBearingX + m->width), -real(m->horiBearingY)) / real(freetype_granularity)) //
+	};
 
 	g.top_left = verts[0];
 	g.bottom_right = verts[2];
@@ -152,9 +156,9 @@ texture_font::texture_font(
 
 	using std::ceil;
 
-	this->height = ceil(real(this->face.f->size->metrics.height) / 64.0f);
-	this->descender = -ceil(real(this->face.f->size->metrics.descender) / 64.0f);
-	this->ascender = ceil(real(this->face.f->size->metrics.ascender) / 64.0f);
+	this->height = ceil(real(this->face.f->size->metrics.height) / real(freetype_granularity));
+	this->descender = -ceil(real(this->face.f->size->metrics.descender) / real(freetype_granularity));
+	this->ascender = ceil(real(this->face.f->size->metrics.ascender) / real(freetype_granularity));
 
 	//	TRACE(<< "texture_font::texture_font(): height_v = " << this->height_v << std::endl)
 }
@@ -232,19 +236,13 @@ morda::rectangle texture_font::get_bounding_box_internal(const std::u32string& s
 	ASSERT(!str.empty())
 	auto s = str.begin();
 
-	real cur_advance;
-
-	real left, right, top, bottom;
 	// init with bounding box of the first glyph
-	{
+	auto [cur_advance, left, right, top, bottom] = [&]() {
 		const glyph& g = this->get_glyph(*s);
-		left = g.top_left.x();
-		right = g.bottom_right.x();
-		top = g.top_left.y();
-		bottom = g.bottom_right.y();
-		cur_advance = g.advance;
 		++s;
-	}
+
+		return std::make_tuple(g.advance, g.top_left.x(), g.bottom_right.x(), g.top_left.y(), g.bottom_right.y());
+	}();
 
 	real space_advance = this->get_glyph(U' ').advance;
 
@@ -301,24 +299,26 @@ font::render_result texture_font::render_internal(
 
 	for (auto c : str) {
 		try {
-			real advance;
-
-			if (c == U'\t') { // if tabulation
-				unsigned actual_tab_size = [&]() -> unsigned {
-					if (offset == std::numeric_limits<size_t>::max()) {
-						return tab_size;
-					} else {
-						return tab_size - cur_offset % tab_size;
-					}
-				}();
-				advance = space_advance * real(actual_tab_size);
-				ret.length += actual_tab_size;
-				cur_offset += actual_tab_size;
-			} else { // all other characters
-				advance = this->render_glyph_internal(matr, color, c);
-				++ret.length;
-				++cur_offset;
-			}
+			real advance = [&]() {
+				if (c == U'\t') { // if tabulation
+					unsigned actual_tab_size = [&]() -> unsigned {
+						if (offset == std::numeric_limits<size_t>::max()) {
+							return tab_size;
+						} else {
+							return tab_size - cur_offset % tab_size;
+						}
+					}();
+					auto advance = space_advance * real(actual_tab_size);
+					ret.length += actual_tab_size;
+					cur_offset += actual_tab_size;
+					return advance;
+				} else { // all other characters
+					auto advance = this->render_glyph_internal(matr, color, c);
+					++ret.length;
+					++cur_offset;
+					return advance;
+				}
+			}();
 
 			ret.advance += advance;
 			matr.translate(advance, 0);
