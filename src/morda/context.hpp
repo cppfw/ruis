@@ -86,8 +86,12 @@ public:
 	);
 
 	context(const context&) = delete;
-	context(context&&) = delete;
 	context& operator=(const context&) = delete;
+
+	context(context&&) = delete;
+	context& operator=(context&&) = delete;
+
+	~context() = default;
 
 	const morda::units units;
 };

@@ -46,6 +46,12 @@ protected:
 	render_factory() = default;
 
 public:
+	render_factory(const render_factory&) = delete;
+	render_factory& operator=(const render_factory&) = delete;
+
+	render_factory(render_factory&&) = delete;
+	render_factory& operator=(render_factory&&) = delete;
+
 	virtual ~render_factory() = default;
 
 	virtual utki::shared_ref<texture_2d> create_texture_2d(
@@ -55,6 +61,7 @@ public:
 
 	virtual utki::shared_ref<texture_2d> create_texture_2d(const rasterimage::image_variant& imvar) = 0;
 
+	// NOLINTNEXTLINE(cppcoreguidelines-rvalue-reference-param-not-moved)
 	virtual utki::shared_ref<texture_2d> create_texture_2d(rasterimage::image_variant&& imvar)
 	{
 		return this->create_texture_2d(imvar);

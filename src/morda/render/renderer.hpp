@@ -44,20 +44,24 @@ public:
 
 protected:
 	struct params {
-		unsigned max_texture_size = 2048;
+		constexpr static auto default_max_texture_size = 2048;
+		unsigned max_texture_size = default_max_texture_size;
 		r4::matrix4<float> initial_matrix = r4::matrix4<float>().set_identity();
 	};
 
 	renderer(std::unique_ptr<render_factory> factory, const params& params);
 
-	virtual ~renderer() = default;
-
 private:
 	std::shared_ptr<frame_buffer> cur_fb;
 
 public:
+	virtual ~renderer() = default;
+
 	renderer(const renderer&) = delete;
 	renderer& operator=(const renderer&) = delete;
+
+	renderer(renderer&&) = delete;
+	renderer& operator=(renderer&&) = delete;
 
 	const unsigned max_texture_size;
 

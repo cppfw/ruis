@@ -67,23 +67,26 @@ class resource_loader
 	class res_pack_entry
 	{
 	public:
-		res_pack_entry() = default;
+		res_pack_entry(res_pack_entry&& r) = delete;
+		res_pack_entry& operator=(res_pack_entry&&) = delete;
 
-		// For MSVC compiler, it does not generate move constructor automatically
-		// TODO: check if this is still needed.
-		res_pack_entry(res_pack_entry&& r)
-		{
-			this->fi = std::move(r.fi);
-			this->script = std::move(r.script);
-		}
+		res_pack_entry(const res_pack_entry&) = delete;
+		res_pack_entry& operator=(const res_pack_entry&) = delete;
 
 		std::unique_ptr<const papki::file> fi;
 
 		// TODO: use std::map/std::unordered_map?
 		treeml::forest script;
 
+		res_pack_entry(decltype(fi) fi, decltype(script) script) :
+			fi(std::move(fi)),
+			script(std::move(script))
+		{}
+
+		~res_pack_entry() = default;
+
 		// keep loaded resources map in res_pack_entry, so that unmounted
-		// resource pack removes it's loaded resources
+		// resource pack removes it's loaded resources map
 		// TODO: use std::unordered_map?
 		std::map<const std::string, std::weak_ptr<resource>, std::less<>> res_map;
 
@@ -160,6 +163,12 @@ protected:
 	{}
 
 public:
+	resource(const resource&) = delete;
+	resource& operator=(const resource&) = delete;
+
+	resource(resource&&) = delete;
+	resource& operator=(resource&&) = delete;
+
 	~resource() override = default;
 
 	std::string_view get_id() const

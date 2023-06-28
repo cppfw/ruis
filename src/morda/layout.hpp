@@ -34,6 +34,12 @@ protected:
 	layout() = default;
 
 public:
+	layout(const layout&) = delete;
+	layout& operator=(const layout&) = delete;
+
+	layout(layout&&) = delete;
+	layout& operator=(layout&&) = delete;
+
 	virtual vector2 measure(const vector2& quotum, const_widget_list& widgets) const = 0;
 
 	/**

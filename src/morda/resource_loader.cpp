@@ -64,11 +64,8 @@ decltype(resource_loader::res_packs)::const_iterator resource_loader::mount_res_
 		}
 	}
 
-	res_pack_entry rpe;
-	rpe.fi = papki::root_dir::make(fi.spawn(), dir);
-	rpe.script = std::move(script);
+	this->res_packs.emplace_back(papki::root_dir::make(fi.spawn(), dir), std::move(script));
 
-	this->res_packs.push_back(std::move(rpe));
 	ASSERT(this->res_packs.back().fi)
 	ASSERT(!this->res_packs.back().script.empty())
 
