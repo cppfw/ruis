@@ -33,8 +33,11 @@ namespace morda {
  */
 class color_widget : public virtual widget
 {
-	uint32_t color = 0xffffffff;
-	uint32_t disabled_color = 0xff808080;
+	constexpr static auto default_color = 0xffffffff;
+	uint32_t color = default_color;
+
+	constexpr static auto default_disabled_color = 0xff808080;
+	uint32_t disabled_color = default_disabled_color;
 
 protected:
 	color_widget(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
@@ -42,6 +45,11 @@ protected:
 public:
 	color_widget(const color_widget&) = delete;
 	color_widget& operator=(const color_widget&) = delete;
+
+	color_widget(color_widget&&) = delete;
+	color_widget& operator=(color_widget&&) = delete;
+
+	~color_widget() override = default;
 
 	void set_color(uint32_t color);
 

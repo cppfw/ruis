@@ -40,6 +40,11 @@ public:
 
 	column(const column&) = delete;
 	column& operator=(const column&) = delete;
+
+	column(column&&) = delete;
+	column& operator=(column&&) = delete;
+
+	~column() override = default;
 };
 
 } // namespace morda

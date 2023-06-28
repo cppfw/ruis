@@ -56,6 +56,11 @@ public:
 	scroll_area(const scroll_area&) = delete;
 	scroll_area& operator=(const scroll_area&) = delete;
 
+	scroll_area(scroll_area&&) = delete;
+	scroll_area& operator=(scroll_area&&) = delete;
+
+	~scroll_area() override = default;
+
 	bool on_mouse_button(const mouse_button_event& event) override;
 
 	bool on_mouse_move(const mouse_move_event& event) override;

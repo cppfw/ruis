@@ -63,11 +63,13 @@ public:
 		normal,
 		bold,
 		italic,
-		bold_italic
+		bold_italic,
+
+		enum_size
 	};
 
 private:
-	std::array<std::unique_ptr<const morda::font>, 4> fonts;
+	std::array<std::unique_ptr<const morda::font>, size_t(style::enum_size)> fonts;
 
 public:
 	font(
@@ -80,6 +82,12 @@ public:
 		unsigned max_cached
 	);
 
+	font(const font&) = delete;
+	font& operator=(const font&) = delete;
+
+	font(font&&) = delete;
+	font& operator=(font&&) = delete;
+
 	~font() override = default;
 
 	/**
@@ -89,6 +97,7 @@ public:
 	const morda::font& get(style font_style = style::normal) const noexcept
 	{
 		ASSERT(this->fonts[unsigned(style::normal)])
+		// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-constant-array-index)
 		const auto& ret = this->fonts[unsigned(font_style)];
 		if (ret) {
 			return *ret;

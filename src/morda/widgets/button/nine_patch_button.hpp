@@ -43,6 +43,11 @@ public:
 	nine_patch_button(const nine_patch_button&) = delete;
 	nine_patch_button& operator=(const nine_patch_button&) = delete;
 
+	nine_patch_button(nine_patch_button&&) = delete;
+	nine_patch_button& operator=(nine_patch_button&&) = delete;
+
+	~nine_patch_button() override = default;
+
 	void set_unpressed_nine_patch(std::shared_ptr<const res::nine_patch> np);
 
 	const decltype(unpressedNinePatch_v)& get_unpressed_nine_patch() const noexcept

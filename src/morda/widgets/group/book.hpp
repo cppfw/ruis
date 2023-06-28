@@ -40,6 +40,11 @@ public:
 	page(const page&) = delete;
 	page& operator=(const page&) = delete;
 
+	page(page&&) = delete;
+	page& operator=(page&&) = delete;
+
+	~page() override = default;
+
 	book* get_parent_book()
 	{
 		return this->parent_book;
@@ -76,6 +81,9 @@ public:
 
 	book(const book&) = delete;
 	book& operator=(const book&) = delete;
+
+	book(book&&) = delete;
+	book& operator=(book&&) = delete;
 
 	void push(const utki::shared_ref<page>& page);
 

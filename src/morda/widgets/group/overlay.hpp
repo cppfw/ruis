@@ -39,6 +39,11 @@ public:
 	overlay(const overlay&) = delete;
 	overlay& operator=(const overlay&) = delete;
 
+	overlay(overlay&&) = delete;
+	overlay& operator=(overlay&&) = delete;
+
+	~overlay() override = default;
+
 	/**
 	 * @brief Showing context menu.
 	 * This function adds the context menu widget to the overlay as the topmost widget.

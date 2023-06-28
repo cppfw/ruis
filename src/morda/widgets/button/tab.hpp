@@ -38,6 +38,11 @@ public:
 	tab(const tab&) = delete;
 	tab& operator=(const tab&) = delete;
 
+	tab(tab&&) = delete;
+	tab& operator=(tab&&) = delete;
+
+	~tab() override = default;
+
 protected:
 	bool on_mouse_button(const mouse_button_event& event) override;
 

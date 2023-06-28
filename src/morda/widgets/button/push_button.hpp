@@ -55,6 +55,14 @@ public:
 		button(this->context, desc)
 	{}
 
+	push_button(const push_button&) = delete;
+	push_button& operator=(const push_button&) = delete;
+
+	push_button(push_button&&) = delete;
+	push_button& operator=(push_button&&) = delete;
+
+	~push_button() override = default;
+
 	/**
 	 * @brief Clicked signal.
 	 * Emitted when the button is clicked.

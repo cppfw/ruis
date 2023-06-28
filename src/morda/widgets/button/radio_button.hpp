@@ -43,6 +43,11 @@ public:
 	radio_button(const radio_button&) = delete;
 	radio_button& operator=(const radio_button&) = delete;
 
+	radio_button(radio_button&&) = delete;
+	radio_button& operator=(radio_button&&) = delete;
+
+	~radio_button() override = default;
+
 	bool on_mouse_button(const mouse_button_event& e) override
 	{
 		return this->choice_button::on_mouse_button(e);

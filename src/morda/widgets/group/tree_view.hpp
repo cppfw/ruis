@@ -42,6 +42,11 @@ public:
 	tree_view(const tree_view&) = delete;
 	tree_view& operator=(const tree_view&) = delete;
 
+	tree_view(tree_view&&) = delete;
+	tree_view& operator=(tree_view&&) = delete;
+
+	~tree_view() override = default;
+
 	class provider : public virtual utki::shared, private list_widget::provider
 	{
 		friend class tree_view;

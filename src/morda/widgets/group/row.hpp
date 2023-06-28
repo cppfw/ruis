@@ -40,6 +40,11 @@ public:
 
 	row(const row&) = delete;
 	row& operator=(const row&) = delete;
+
+	row(row&&) = delete;
+	row& operator=(row&&) = delete;
+
+	~row() override = default;
 };
 
 } // namespace morda
