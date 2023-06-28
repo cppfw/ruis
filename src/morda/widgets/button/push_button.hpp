@@ -34,7 +34,7 @@ class push_button : virtual public button
 {
 	bool currentlyPressed = false;
 
-	unsigned pointer_id;
+	unsigned pointer_id = 0;
 
 protected:
 	void on_press_change() override;

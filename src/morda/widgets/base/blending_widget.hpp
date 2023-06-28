@@ -73,6 +73,11 @@ public:
 	blending_widget(const blending_widget&) = delete;
 	blending_widget& operator=(const blending_widget&) = delete;
 
+	blending_widget(blending_widget&&) = delete;
+	blending_widget& operator=(blending_widget&&) = delete;
+
+	~blending_widget() override = default;
+
 	/**
 	 * @brief Set blending to rendering context.
 	 */

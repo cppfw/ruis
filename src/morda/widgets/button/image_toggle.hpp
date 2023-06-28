@@ -33,6 +33,11 @@ public:
 
 	image_toggle(const image_toggle&) = delete;
 	image_toggle& operator=(const image_toggle&) = delete;
+
+	image_toggle(image_toggle&&) = delete;
+	image_toggle& operator=(image_toggle&&) = delete;
+
+	~image_toggle() override = default;
 };
 
 } // namespace morda

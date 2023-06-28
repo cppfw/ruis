@@ -158,6 +158,14 @@ public:
 		 */
 		virtual std::u32string get() const = 0;
 
+		input_string_provider() = default;
+
+		input_string_provider(const input_string_provider&) = default;
+		input_string_provider& operator=(const input_string_provider&) = default;
+
+		input_string_provider(input_string_provider&&) = default;
+		input_string_provider& operator=(input_string_provider&&) = default;
+
 		virtual ~input_string_provider() = default;
 	};
 

@@ -38,6 +38,11 @@ public:
 	click_drop_down_box(const click_drop_down_box&) = delete;
 	click_drop_down_box& operator=(const click_drop_down_box&) = delete;
 
+	click_drop_down_box(click_drop_down_box&&) = delete;
+	click_drop_down_box& operator=(click_drop_down_box&&) = delete;
+
+	~click_drop_down_box() override = default;
+
 private:
 	// index of the hovered item in the drop down menu
 	int hovered_index = -1;
