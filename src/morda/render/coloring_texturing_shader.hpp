@@ -37,6 +37,9 @@ public:
 	coloring_texturing_shader(const coloring_texturing_shader&) = delete;
 	coloring_texturing_shader& operator=(const coloring_texturing_shader&) = delete;
 
+	coloring_texturing_shader(coloring_texturing_shader&&) = delete;
+	coloring_texturing_shader& operator=(coloring_texturing_shader&&) = delete;
+
 	virtual ~coloring_texturing_shader() = default;
 
 	virtual void render(

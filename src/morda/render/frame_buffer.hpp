@@ -40,6 +40,9 @@ public:
 	frame_buffer(const frame_buffer&) = delete;
 	frame_buffer& operator=(const frame_buffer&) = delete;
 
+	frame_buffer(frame_buffer&&) = delete;
+	frame_buffer& operator=(frame_buffer&&) = delete;
+
 	virtual ~frame_buffer() = default;
 
 private:

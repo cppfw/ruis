@@ -34,6 +34,12 @@ public:
 		size(size)
 	{}
 
+	vertex_buffer(const vertex_buffer&) = delete;
+	vertex_buffer& operator=(const vertex_buffer&) = delete;
+
+	vertex_buffer(vertex_buffer&&) = delete;
+	vertex_buffer& operator=(vertex_buffer&&) = delete;
+
 	virtual ~vertex_buffer() = default;
 };
 

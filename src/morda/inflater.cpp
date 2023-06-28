@@ -112,7 +112,7 @@ namespace {
 treeml::forest apply_gui_template(
 	const treeml::forest& templ,
 	const std::set<std::string>& var_names,
-	treeml::forest&& trees
+	treeml::forest trees
 )
 {
 	// TRACE(<< "applying template: " << treeml::to_string(templ) << std::endl)
