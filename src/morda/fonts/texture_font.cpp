@@ -289,7 +289,7 @@ font::render_result texture_font::render_internal(
 		return ret;
 	}
 
-	set_simple_alpha_blending(this->context.get().renderer.get());
+	this->context.get().renderer.get().set_simple_alpha_blending();
 
 	morda::matrix4 matr(matrix);
 

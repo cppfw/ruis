@@ -88,7 +88,7 @@ public:
 		}
 
 		image_matrix(
-			std::array<std::array<utki::shared_ref<const res::image>, 3>, 3>&& l,
+			std::array<std::array<utki::shared_ref<const res::image>, 3>, 3> l,
 			std::weak_ptr<const nine_patch> parent,
 			real mul
 		);

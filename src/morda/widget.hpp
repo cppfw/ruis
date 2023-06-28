@@ -726,6 +726,17 @@ public:
 	void reload(utki::shared_ref<resource_type>& p);
 };
 
+/**
+ * @brief Calculate basic dimensions of widget.
+ * Calculates basic dimensions of given widget if it would be placed to
+ * a container with given dimensions and given layout parameters, basically this is just
+ * resolving of 'min', 'max' and 'fill' special values of dimensions.
+ * @param w - widget to calculate dimensions for.
+ * @param parent_dims - parent widget dimensions.
+ * @return Dimensions of widget.
+ */
+vector2 dims_for_widget(const widget& w, const vector2& parent_dims);
+
 } // namespace morda
 
 // include definitions for forward declared classes

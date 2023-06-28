@@ -125,6 +125,14 @@ public:
 		blend_factor dst_alpha
 	) = 0;
 
+	/**
+	 * @brief Set simple alpha blending.
+	 * Enables and set simple alpha blending on the rendering context.
+	 * Blend factors are SRC_ALPHA and ONE_MINUS_SRC_ALPHA for source and destination RGB color components respectively.
+	 * And, ONE and ONE_MINUS_SRC_ALPHA for source and destination alpha components respectively.
+	 */
+	void set_simple_alpha_blending();
+
 protected:
 	virtual void set_framebuffer_internal(frame_buffer* fb) = 0;
 };

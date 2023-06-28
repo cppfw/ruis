@@ -23,6 +23,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <r4/matrix.hpp>
 
+#include "../util/util.hpp"
+
 #include "vertex_array.hpp"
 
 namespace morda {
@@ -44,16 +46,7 @@ public:
 
 	void render(const r4::matrix4<float>& m, const vertex_array& va, uint32_t color) const
 	{
-		this->render(
-			m,
-			va,
-			r4::vector4<float>(
-				float(color & utki::byte_mask) / float(utki::byte_mask),
-				float((color >> utki::num_bits_in_byte) & utki::byte_mask) / float(utki::byte_mask),
-				float((color >> (utki::num_bits_in_byte * 2)) & utki::byte_mask) / float(utki::byte_mask),
-				float((color >> (utki::num_bits_in_byte * 3)) & utki::byte_mask) / float(utki::byte_mask)
-			)
-		);
+		this->render(m, va, color_to_vec4f(color));
 	}
 };
 

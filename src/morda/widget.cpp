@@ -229,7 +229,7 @@ void widget::render_internal(const morda::matrix4& matrix) const
 		}
 
 		// after rendering to texture it is most likely there will be transparent areas, so enable simple blending
-		set_simple_alpha_blending(this->context.get().renderer.get());
+		this->context.get().renderer.get().set_simple_alpha_blending();
 
 		this->render_from_cache(matrix);
 	} else {
@@ -240,7 +240,7 @@ void widget::render_internal(const morda::matrix4& matrix) const
 			// set scissor test
 			r4::rectangle<int> scissor = this->compute_viewport_rect(matrix);
 
-			r4::rectangle<int> old_scissor;
+			r4::rectangle<int> old_scissor{};
 			bool scissor_test_was_enabled = r.is_scissor_enabled();
 			if (scissor_test_was_enabled) {
 				old_scissor = r.get_scissor();
@@ -308,7 +308,8 @@ utki::shared_ref<texture_2d> widget::render_to_texture(std::shared_ptr<texture_2
 
 	matrix4 matrix = r.initial_matrix;
 	matrix.translate(-1, 1);
-	matrix.scale(vector2(2.0f, -2.0f).comp_divide(this->rect().d));
+	constexpr auto viewport_initial_dimension = 2.0;
+	matrix.scale(vector2(viewport_initial_dimension, -viewport_initial_dimension).comp_divide(this->rect().d));
 
 	this->render(matrix);
 
@@ -423,6 +424,7 @@ layout_params& widget::get_layout_params()
 		this->parent()->invalidate_layout();
 	}
 
+	// NOLINTNEXTLINE(cppcoreguidelines-pro-type-const-cast)
 	return const_cast<layout_params&>(this->get_layout_params_const());
 }
 
@@ -496,4 +498,28 @@ void widget::reload()
 {
 	this->invalidate_layout();
 	this->on_reload();
+}
+
+vector2 morda::dims_for_widget(const widget& w, const vector2& parent_dims)
+{
+	const layout_params& lp = w.get_layout_params_const();
+	vector2 d;
+	for (unsigned i = 0; i != 2; ++i) {
+		if (lp.dims[i] == layout_params::max || lp.dims[i] == layout_params::fill) {
+			d[i] = parent_dims[i];
+		} else if (lp.dims[i] == layout_params::min) {
+			d[i] = -1; // will be updated below
+		} else {
+			d[i] = lp.dims[i];
+		}
+	}
+	if (!d.is_positive_or_zero()) {
+		vector2 md = w.measure(d);
+		for (unsigned i = 0; i != md.size(); ++i) {
+			if (d[i] < 0) {
+				d[i] = md[i];
+			}
+		}
+	}
+	return d;
 }

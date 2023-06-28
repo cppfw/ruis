@@ -66,8 +66,9 @@ utki::shared_ref<res::font> res::font::load(
 	const papki::file& fi
 )
 {
-	unsigned font_size(13);
-	unsigned max_cached(-1);
+	constexpr auto default_font_size = 13;
+	unsigned font_size = default_font_size;
+	unsigned max_cached = std::numeric_limits<unsigned>::max();
 
 	std::unique_ptr<const papki::file> file_bold;
 	std::unique_ptr<const papki::file> file_italic;

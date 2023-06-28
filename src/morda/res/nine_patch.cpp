@@ -66,8 +66,13 @@ public:
 		}())
 	{}
 
-	res_subimage(const res_subimage& orig) = delete;
-	res_subimage& operator=(const res_subimage& orig) = delete;
+	res_subimage(const res_subimage&) = delete;
+	res_subimage& operator=(const res_subimage&) = delete;
+
+	res_subimage(res_subimage&&) = delete;
+	res_subimage& operator=(res_subimage&&) = delete;
+
+	~res_subimage() override = default;
 
 	vector2 dims(real dpi) const noexcept override
 	{
@@ -111,11 +116,11 @@ utki::shared_ref<nine_patch> nine_patch::load(
 }
 
 nine_patch::image_matrix::image_matrix(
-	std::array<std::array<utki::shared_ref<const res::image>, 3>, 3>&& l,
+	std::array<std::array<utki::shared_ref<const res::image>, 3>, 3> l,
 	std::weak_ptr<const nine_patch> parent,
 	real mul
 ) :
-	img_matrix(l),
+	img_matrix(std::move(l)),
 	parent(std::move(parent)),
 	mul(mul)
 {}

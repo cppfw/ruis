@@ -29,8 +29,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace morda;
 
 namespace {
-const char* wording_include = "include";
-const char* wording_include_subdirs = "include_subdirs";
+constexpr const char* wording_include = "include";
+constexpr const char* wording_include_subdirs = "include_subdirs";
 } // namespace
 
 decltype(resource_loader::res_packs)::const_iterator resource_loader::mount_res_pack(const papki::file& fi)

@@ -53,3 +53,14 @@ void renderer::set_framebuffer(std::shared_ptr<frame_buffer> fb)
 	this->set_framebuffer_internal(fb.get());
 	this->cur_fb = std::move(fb);
 }
+
+void renderer::set_simple_alpha_blending()
+{
+	this->set_blend_enabled(true);
+	this->set_blend_func(
+		renderer::blend_factor::src_alpha,
+		renderer::blend_factor::one_minus_src_alpha,
+		renderer::blend_factor::one,
+		renderer::blend_factor::one_minus_src_alpha
+	);
+}

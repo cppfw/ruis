@@ -43,6 +43,8 @@ public:
 	path_vao(path_vao&&) = default;
 	path_vao& operator=(path_vao&&) = default;
 
+	~path_vao() = default;
+
 	void set(const path::vertices& path);
 
 	void render(const morda::matrix4& matrix, uint32_t color) const;

@@ -43,7 +43,7 @@ gradient::gradient(const utki::shared_ref<morda::context>& c, const treeml::fore
 
 void gradient::render(const matrix4& matrix) const
 {
-	set_simple_alpha_blending(this->context.get().renderer.get());
+	this->context.get().renderer.get().set_simple_alpha_blending();
 
 	morda::matrix4 matr(matrix);
 	matr.scale(this->rect().d);

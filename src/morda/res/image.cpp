@@ -149,7 +149,10 @@ public:
 
 	static utki::shared_ref<res_raster_image> load(const utki::shared_ref<morda::context>& ctx, const papki::file& fi)
 	{
-		return utki::make_shared<res_raster_image>(ctx, load_texture(ctx.get().renderer.get(), fi));
+		return utki::make_shared<res_raster_image>(
+			ctx,
+			ctx.get().renderer.get().factory->create_texture_2d(rasterimage::read(fi))
+		);
 	}
 };
 
@@ -183,6 +186,12 @@ public:
 			fixed_texture(r, tex),
 			parent(parent.to_shared_ptr())
 		{}
+
+		svg_texture(const svg_texture&) = delete;
+		svg_texture& operator=(const svg_texture&) = delete;
+
+		svg_texture(svg_texture&&) = delete;
+		svg_texture& operator=(svg_texture&&) = delete;
 
 		~svg_texture() override
 		{

@@ -159,6 +159,7 @@ std::string_view morda::to_string(morda::key key)
 	if (key >= morda::key::enum_size) {
 		return "unknown"sv;
 	}
+	// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-constant-array-index)
 	return key_names[size_t(key)];
 }
 

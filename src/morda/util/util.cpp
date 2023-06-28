@@ -25,6 +25,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <utki/debug.hpp>
 
 #include "../context.hpp"
+#include "../widget.hpp"
 
 using namespace std::string_literals;
 
@@ -92,29 +93,13 @@ real morda::parse_layout_dimension_value(const treeml::leaf& l, const morda::uni
 	return parse_dimension_value(l, units);
 }
 
-utki::shared_ref<texture_2d> morda::load_texture(renderer& r, const papki::file& fi)
-{
-	return r.factory->create_texture_2d(rasterimage::read(fi));
-}
-
-void morda::set_simple_alpha_blending(renderer& r)
-{
-	r.set_blend_enabled(true);
-	r.set_blend_func(
-		renderer::blend_factor::src_alpha,
-		renderer::blend_factor::one_minus_src_alpha,
-		renderer::blend_factor::one,
-		renderer::blend_factor::one_minus_src_alpha
-	);
-}
-
 r4::vector4<float> morda::color_to_vec4f(uint32_t color)
 {
 	return r4::vector4<float>(
-		float(color & 0xff) / float(0xff),
-		float((color >> 8) & 0xff) / float(0xff),
-		float((color >> 16) & 0xff) / float(0xff),
-		float((color >> 24) & 0xff) / float(0xff)
+		float(color & utki::byte_mask) / float(utki::byte_mask),
+		float((color >> utki::num_bits_in_byte) & utki::byte_mask) / float(utki::byte_mask),
+		float((color >> (utki::num_bits_in_byte * 2)) & utki::byte_mask) / float(utki::byte_mask),
+		float((color >> (utki::num_bits_in_byte * 3)) & utki::byte_mask) / float(utki::byte_mask)
 	);
 }
 
@@ -131,28 +116,4 @@ bool morda::is_property(const treeml::tree& t)
 bool morda::is_leaf_child(const treeml::leaf& l)
 {
 	return !is_leaf_property(l);
-}
-
-vector2 morda::dims_for_widget(const widget& w, const vector2& parent_dims)
-{
-	const layout_params& lp = w.get_layout_params_const();
-	vector2 d;
-	for (unsigned i = 0; i != 2; ++i) {
-		if (lp.dims[i] == layout_params::max || lp.dims[i] == layout_params::fill) {
-			d[i] = parent_dims[i];
-		} else if (lp.dims[i] == layout_params::min) {
-			d[i] = -1; // will be updated below
-		} else {
-			d[i] = lp.dims[i];
-		}
-	}
-	if (!d.is_positive_or_zero()) {
-		vector2 md = w.measure(d);
-		for (unsigned i = 0; i != md.size(); ++i) {
-			if (d[i] < 0) {
-				d[i] = md[i];
-			}
-		}
-	}
-	return d;
 }

@@ -43,6 +43,9 @@ public:
 	gui(const gui&) = delete;
 	gui& operator=(const gui&) = delete;
 
+	gui(gui&&) = delete;
+	gui& operator=(gui&&) = delete;
+
 	~gui() = default;
 
 private:
