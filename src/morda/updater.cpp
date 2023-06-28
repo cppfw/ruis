@@ -174,7 +174,7 @@ uint32_t updater::update()
 
 	// after updating all the stuff some time has passed, so might need to correct the time need to wait
 
-	uint32_t closest_time_point;
+	uint32_t closest_time_point = 0;
 	if (this->active_queue->size() != 0) {
 		ASSERT(cur_ticks <= this->active_queue->front().ends_at)
 		closest_time_point = this->active_queue->front().ends_at;
@@ -194,8 +194,9 @@ uint32_t updater::update()
 	} else {
 		uncorrected_dt -= correction;
 
-		if (0 < uncorrected_dt && uncorrected_dt < 5) {
-			uncorrected_dt = 5; // wait for 5 ms at least, if not 0.
+		constexpr auto minimum_wait_time_ms = 5;
+		if (0 < uncorrected_dt && uncorrected_dt < minimum_wait_time_ms) {
+			uncorrected_dt = minimum_wait_time_ms; // wait for 5 ms at least, if not 0.
 		}
 
 		return uncorrected_dt;

@@ -59,12 +59,13 @@ morda::vector2 min_proxy::measure(const vector2& quotum) const
 			return {0, 0};
 		}
 
-		const widget* root;
-		if (this->root_id.empty()) {
-			root = &this->get_root_widget();
-		} else {
-			root = &this->get_ancestor(this->root_id.c_str());
-		}
+		const widget* root = [&]() {
+			if (this->root_id.empty()) {
+				return &this->get_root_widget();
+			} else {
+				return &this->get_ancestor(this->root_id.c_str());
+			}
+		}();
 		ASSERT(root)
 		for (const auto& id : this->target_id) {
 			root = &root->get_widget(id, false);

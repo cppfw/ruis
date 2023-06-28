@@ -33,7 +33,7 @@ class updater : public std::enable_shared_from_this<updater>
 	friend class morda::updateable;
 
 	struct update_queue_item {
-		uint32_t ends_at;
+		uint32_t ends_at = 0;
 		std::weak_ptr<morda::updateable> updateable;
 	};
 

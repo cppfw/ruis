@@ -36,6 +36,11 @@ public:
 	linear_container(const linear_container&) = delete;
 	linear_container& operator=(const linear_container&) = delete;
 
+	linear_container(linear_container&&) = delete;
+	linear_container& operator=(linear_container&&) = delete;
+
+	~linear_container() override = default;
+
 	linear_container(const utki::shared_ref<morda::context>& c, const treeml::forest& desc, bool vertical);
 };
 
