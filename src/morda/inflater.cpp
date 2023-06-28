@@ -55,7 +55,7 @@ utki::shared_ref<morda::widget> inflater::inflate(const papki::file& fi)
 }
 
 namespace {
-const char* wording_defs = "defs";
+constexpr const char* wording_defs = "defs";
 } // namespace
 
 namespace {

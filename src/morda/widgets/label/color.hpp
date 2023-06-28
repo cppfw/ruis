@@ -38,6 +38,11 @@ public:
 	color(const color&) = delete;
 	color& operator=(const color&) = delete;
 
+	color(color&&) = delete;
+	color& operator=(color&&) = delete;
+
+	~color() override = default;
+
 	void render(const morda::matrix4& matrix) const override;
 };
 

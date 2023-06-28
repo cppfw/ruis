@@ -44,6 +44,12 @@ public:
 	 */
 	virtual void on_character_input(const character_input_event& e) = 0;
 
+	character_input_widget(const character_input_widget&) = delete;
+	character_input_widget& operator=(const character_input_widget&) = delete;
+
+	character_input_widget(character_input_widget&&) = delete;
+	character_input_widget& operator=(character_input_widget&&) = delete;
+
 	~character_input_widget() override = default;
 };
 

@@ -152,7 +152,7 @@ std::string_view to_string(morda::key key);
 morda::key to_key(std::string_view name);
 
 struct key_combo {
-	morda::key key;
+	morda::key key = morda::key::unknown;
 	utki::flags<key_modifier> modifiers;
 
 	bool operator==(const key_combo& kc) const

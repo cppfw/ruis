@@ -38,6 +38,12 @@ public:
 	text(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
 
 public:
+	text(const text&) = delete;
+	text& operator=(const text&) = delete;
+
+	text(text&&) = delete;
+	text& operator=(text&&) = delete;
+
 	~text() override = default;
 
 	void render(const morda::matrix4& matrix) const override;

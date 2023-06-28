@@ -36,6 +36,11 @@ public:
 	click_proxy(const click_proxy&) = delete;
 	click_proxy& operator=(const click_proxy&) = delete;
 
+	click_proxy(click_proxy&&) = delete;
+	click_proxy& operator=(click_proxy&&) = delete;
+
+	~click_proxy() override = default;
+
 	bool on_mouse_button(const mouse_button_event& event) override;
 	void on_hover_change(unsigned pointer_id) override;
 

@@ -35,6 +35,11 @@ public:
 	ratio_proxy(const ratio_proxy&) = delete;
 	ratio_proxy& operator=(const ratio_proxy&) = delete;
 
+	ratio_proxy(ratio_proxy&&) = delete;
+	ratio_proxy& operator=(ratio_proxy&&) = delete;
+
+	~ratio_proxy() override = default;
+
 	void set_aspect_ratio(real x_above_y);
 
 	real get_aspect_ratio() const noexcept

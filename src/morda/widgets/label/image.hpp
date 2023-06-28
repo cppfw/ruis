@@ -54,9 +54,11 @@ public:
 	image(const image&) = delete;
 	image& operator=(const image&) = delete;
 
+	image(image&&) = delete;
+	image& operator=(image&&) = delete;
+
 	image(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
 
-public:
 	~image() override = default;
 
 	void render(const morda::matrix4& matrix) const override;

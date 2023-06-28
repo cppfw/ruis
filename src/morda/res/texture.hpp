@@ -60,6 +60,12 @@ public:
 		tex2d(std::move(tex))
 	{}
 
+	texture(const texture&) = delete;
+	texture& operator=(const texture&) = delete;
+
+	texture(texture&&) = delete;
+	texture& operator=(texture&&) = delete;
+
 	~texture() override = default;
 
 	/**
