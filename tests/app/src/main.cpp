@@ -56,8 +56,8 @@ public:
 		this->timer += dt;
 		++this->cnt;
 
-		if(this->timer > 1000){
-			this->timer -= 1000;
+		if(this->timer > utki::reciprocal_milli){
+			this->timer -= utki::reciprocal_milli;
 
 			LOG([this](auto&o){o << "Update(): UPS = " << this->cnt << std::endl;})
 
@@ -150,6 +150,7 @@ public:
 	cube_widget(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
 			morda::widget(c, desc)
 	{
+		// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers)
 		std::array<morda::vector3, 36> cube_pos = {{
 			morda::vector3(-1, -1,  1), morda::vector3( 1, -1,  1), morda::vector3(-1,  1,  1),
  			morda::vector3( 1, -1,  1), morda::vector3( 1,  1,  1), morda::vector3(-1,  1,  1),
@@ -167,6 +168,7 @@ public:
 
 		auto pos_vbo = this->context.get().renderer.get().factory->create_vertex_buffer(utki::make_span(cube_pos));
 
+		// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers)
 		std::array<morda::vector2, 36> cube_tex = {{
 			morda::vector2(0, 0), morda::vector2(1, 0), morda::vector2(0, 1),
 			morda::vector2(1, 0), morda::vector2(1, 1), morda::vector2(0, 1),
@@ -184,7 +186,9 @@ public:
 
 		auto tex_vbo = this->context.get().renderer.get().factory->create_vertex_buffer(utki::make_span(cube_tex));
 
+		// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers)
 		std::array<uint16_t, 36> indices = {{
+			// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers)
 			0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35
 		}};
 
@@ -206,8 +210,9 @@ public:
 	void update(uint32_t dt) override{
 		this->fpsSecCounter += dt;
 		++this->fps;
-		this->rot *= morda::quaternion().set_rotation(r4::vector3<float>(1, 2, 1).normalize(), 1.5f * (float(dt) / 1000));
-		if(this->fpsSecCounter >= 1000){
+		// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers)
+		this->rot *= morda::quaternion().set_rotation(r4::vector3<float>(1, 2, 1).normalize(), 1.5f * (float(dt) / utki::reciprocal_milli));
+		if(this->fpsSecCounter >= utki::reciprocal_milli){
 			std::cout << "fps = " << std::dec << fps << std::endl;
 			this->fpsSecCounter = 0;
 			this->fps = 0;
@@ -222,6 +227,7 @@ public:
 		matr.scale(this->rect().d / 2);
 		matr.translate(1, 1);
 		matr.scale(1, -1);
+		// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers)
 		matr.frustum(-2, 2, -1.5, 1.5, 2, 100);
 		matr.translate(0, 0, -4);
 		matr.rotate(this->rot);
@@ -272,6 +278,12 @@ public:
 				root4444
 			)qwertyuiop");
 	}
+
+	tree_view_items_provider(const tree_view_items_provider&) = delete;
+	tree_view_items_provider& operator=(const tree_view_items_provider&) = delete;
+
+	tree_view_items_provider(tree_view_items_provider&&) = delete;
+	tree_view_items_provider& operator=(tree_view_items_provider&&) = delete;
 
 	~tree_view_items_provider()override = default;
 
@@ -464,6 +476,7 @@ class application : public mordavokne::application{
 public:
 	application() :
 			mordavokne::application("morda-tests", [](){
+				// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers)
 				mordavokne::window_params wp(r4::vector2<unsigned>(1024, 800));
 		// wp.graphics_api_request = mordavokne::window_params::graphics_api::gl_4_5;
 
@@ -516,6 +529,7 @@ public:
 			auto& cp = c.get().get_widget_as<morda::click_proxy>("cube_click_proxy");
 			auto& bg = c.get().get_widget_as<morda::color>("cube_bg_color");
 			cp.press_change_handler = [bg{utki::make_shared_from(bg)}](morda::click_proxy& w) -> bool {
+				// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers)
 				bg.get().set_color(w.is_pressed() ? 0xff808080 : 0x80808080);
 				return true;
 			};
@@ -595,7 +609,7 @@ public:
 			auto mouse_proxy = c.get().try_get_widget_as<morda::mouse_proxy>("list_mouseproxy");
 			struct button_state : public utki::shared{
 				morda::vector2 old_pos = 0;
-				bool is_left_button_pressed;
+				bool is_left_button_pressed = false;
 			};
 			auto state = std::make_shared<button_state>();
 
@@ -662,7 +676,7 @@ public:
 			auto mouse_proxy = c.get().try_get_widget_as<morda::mouse_proxy>("horizontal_list_mouseproxy");
 			struct button_state : public utki::shared{
 				morda::vector2 old_pos = 0;
-				bool is_left_button_pressed;
+				bool is_left_button_pressed = false;
 			};
 			auto state = std::make_shared<button_state>();
 
@@ -829,6 +843,6 @@ public:
 	}
 };
 
-mordavokne::application_factory app_fac([](auto args){
+const mordavokne::application_factory app_fac([](auto args){
 	return std::make_unique<::application>();
 });

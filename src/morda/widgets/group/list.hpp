@@ -79,6 +79,14 @@ public:
 		provider() = default;
 
 	public:
+		provider(const provider&) = delete;
+		provider& operator=(const provider&) = delete;
+
+		provider(provider&&) = delete;
+		provider& operator=(provider&&) = delete;
+
+		~provider() override = default;
+
 		/**
 		 * @brief Get parent list widget.
 		 * @return list widget which owns the provider, in case the provider is set to some list widget.
