@@ -66,7 +66,7 @@ public:
 	}
 
 	utki::shared_ref<morda::vertex_array> create_vertex_array(
-			std::vector<utki::shared_ref<const morda::vertex_buffer>>&& buffers,
+			std::vector<utki::shared_ref<const morda::vertex_buffer>> buffers,
 			const utki::shared_ref<const morda::index_buffer>& indices,
 			morda::vertex_array::mode rendering_mode
 		)override

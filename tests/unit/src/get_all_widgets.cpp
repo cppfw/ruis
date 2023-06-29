@@ -7,7 +7,7 @@
 #include "../../harness/util/dummy_context.hpp"
 
 namespace{
-tst::set set("get_all_widgets", [](tst::suite& suite){
+const tst::set set("get_all_widgets", [](tst::suite& suite){
     suite.add("get_all_widgets_function", []{
 		morda::gui m(make_dummy_context());
 		auto w = m.context.get().inflater.inflate(treeml::read(R"qwertyuiop(

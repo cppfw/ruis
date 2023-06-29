@@ -28,7 +28,7 @@ namespace morda {
 class click_proxy : virtual public widget
 {
 	bool is_pressed_ = false;
-	bool deferred_release_ret;
+	bool deferred_release_ret = false;
 
 public:
 	click_proxy(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);

@@ -326,7 +326,7 @@ void list_widget::update_children_list()
 	size_t index = this->pos_index;
 	for (bool is_last = false; index < this->item_provider->count() && !is_last;) {
 		// std::shared_ptr<widget> w;
-		bool is_added;
+		bool is_added = false;
 		auto w = [&]() {
 			if (iter_index <= index && index < iter_end_index && iter != this->children().end()) {
 				++iter_index;

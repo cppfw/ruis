@@ -5,7 +5,7 @@
 class wire_socket : virtual public morda::widget{
 	friend class wire_area;
 
-	unsigned groupId;
+	unsigned groupId = 0;
 public:
 	enum class orientation{
 		left,
@@ -22,6 +22,11 @@ private:
 public:
 	wire_socket(const wire_socket&) = delete;
 	wire_socket& operator=(const wire_socket&) = delete;
+
+	wire_socket(wire_socket&&) = delete;
+	wire_socket& operator=(wire_socket&&) = delete;
+
+	~wire_socket() override = default;
 
 public:
 	wire_socket(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);

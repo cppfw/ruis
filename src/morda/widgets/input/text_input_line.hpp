@@ -40,18 +40,18 @@ class text_input_line :
 	size_t first_visible_char_index = 0;
 	real x_offset = 0;
 
-	real cursor_pos;
+	real cursor_pos = 0;
 
 	size_t cursor_index = 0;
 
-	real selection_start_pos;
+	real selection_start_pos = 0;
 
 	size_t selection_start_index = 0;
 
-	bool cursor_blink_visible;
+	bool cursor_blink_visible = true;
 
-	bool ctrl_pressed;
-	bool shift_pressed;
+	bool ctrl_pressed = false;
+	bool shift_pressed = false;
 
 	bool left_mouse_button_down = false;
 

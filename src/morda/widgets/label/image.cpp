@@ -77,7 +77,7 @@ void image::render(const morda::matrix4& matrix) const
 		this->texture = img->get(this->rect().d).to_shared_ptr();
 
 		if (this->repeat_v.x() || this->repeat_v.y()) {
-			std::array<r4::vector2<float>, 4> tex_coords;
+			std::array<r4::vector2<float>, 4> tex_coords{};
 			ASSERT(quad_fan_tex_coords.size() == tex_coords.size())
 			auto src = quad_fan_tex_coords.cbegin();
 			auto dst = tex_coords.begin();

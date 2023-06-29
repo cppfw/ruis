@@ -26,7 +26,7 @@ public:
 }
 
 namespace{
-tst::set set("layouting", [](tst::suite& suite){
+const tst::set set("layouting", [](tst::suite& suite){
     suite.add("invalidate_layout_during_layouting_should_result_in_dirty_layout__lay_out_method", []{
         auto context = make_dummy_context();
 

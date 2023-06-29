@@ -78,7 +78,7 @@ public:
 	virtual utki::shared_ref<index_buffer> create_index_buffer(utki::span<const uint16_t> indices) = 0;
 
 	virtual utki::shared_ref<vertex_array> create_vertex_array(
-		std::vector<utki::shared_ref<const morda::vertex_buffer>>&& buffers,
+		std::vector<utki::shared_ref<const morda::vertex_buffer>> buffers,
 		const utki::shared_ref<const morda::index_buffer>& indices,
 		vertex_array::mode rendering_mode
 	) = 0;

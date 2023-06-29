@@ -15,6 +15,9 @@ public:
 	cube_page(const cube_page&) = delete;
 	cube_page& operator=(const cube_page&) = delete;
 
+	cube_page(cube_page&&) = delete;
+	cube_page& operator=(cube_page&&) = delete;
+
 	~cube_page()override{
 		std::cout << "cube_page destroyed" << std::endl;
 	}

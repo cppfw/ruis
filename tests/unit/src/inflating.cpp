@@ -7,7 +7,7 @@
 #include "../../harness/util/dummy_context.hpp"
 
 namespace{
-tst::set set("inflating", [](tst::suite& suite){
+const tst::set set("inflating", [](tst::suite& suite){
     suite.add("whole_definition_chain_is_substituted", []{
         morda::gui m(make_dummy_context());
 		auto w = m.context.get().inflater.inflate(treeml::read(R"qwertyuiop(

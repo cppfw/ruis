@@ -11,7 +11,7 @@
 #include "../../harness/util/dummy_context.hpp"
 
 namespace{
-tst::set set("tabbed_book", [](tst::suite& suite){
+const tst::set set("tabbed_book", [](tst::suite& suite){
 
 	// This test checks that tabbed_book class convey's virtual methods
 	// from it's parent class, even though it is inherited via private inheritance.

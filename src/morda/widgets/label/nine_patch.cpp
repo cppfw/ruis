@@ -296,6 +296,7 @@ void nine_patch::apply_images()
 
 	for (unsigned i = 0; i != 3; ++i) {
 		for (unsigned j = 0; j != 3; ++j) {
+			// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-constant-array-index)
 			this->img_widgets_matrix[i][j]->set_image(this->img_res_matrix->images()[i][j].to_shared_ptr());
 		}
 	}
@@ -311,6 +312,7 @@ void nine_patch::on_blending_change()
 {
 	for (unsigned i = 0; i != 3; ++i) {
 		for (unsigned j = 0; j != 3; ++j) {
+			// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-constant-array-index)
 			this->img_widgets_matrix[i][j]->set_blending_params(this->get_blending_params());
 		}
 	}
