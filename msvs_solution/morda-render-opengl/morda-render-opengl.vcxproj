@@ -167,6 +167,7 @@
     <Import Project="..\packages\zlib_static.1.2.11.12\build\native\zlib_static.targets" Condition="Exists('..\packages\zlib_static.1.2.11.12\build\native\zlib_static.targets')" />
     <Import Project="..\packages\libpapki.1.0.132\build\native\libpapki.targets" Condition="Exists('..\packages\libpapki.1.0.132\build\native\libpapki.targets')" />
     <Import Project="..\packages\libpng_static.1.6.39.1\build\native\libpng_static.targets" Condition="Exists('..\packages\libpng_static.1.6.39.1\build\native\libpng_static.targets')" />
+    <Import Project="..\packages\libtreeml.0.2.12\build\native\libtreeml.targets" Condition="Exists('..\packages\libtreeml.0.2.12\build\native\libtreeml.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -180,5 +181,6 @@
     <Error Condition="!Exists('..\packages\zlib_static.1.2.11.12\build\native\zlib_static.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\zlib_static.1.2.11.12\build\native\zlib_static.targets'))" />
     <Error Condition="!Exists('..\packages\libpapki.1.0.132\build\native\libpapki.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libpapki.1.0.132\build\native\libpapki.targets'))" />
     <Error Condition="!Exists('..\packages\libpng_static.1.6.39.1\build\native\libpng_static.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libpng_static.1.6.39.1\build\native\libpng_static.targets'))" />
+    <Error Condition="!Exists('..\packages\libtreeml.0.2.12\build\native\libtreeml.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libtreeml.0.2.12\build\native\libtreeml.targets'))" />
   </Target>
 </Project>
