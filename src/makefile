@@ -26,7 +26,7 @@ endif
 
 this_ldlibs += $(shell pkg-config --libs freetype2)
 
-this_ldlibs += -lpapki -ltreeml -lsvgdom -lsvgren -lutki -lpng -ljpeg -lm -lrasterimage
+this_ldlibs += -lpapki -ltreeml -lsvgdom -lsvgren -lutki -lm -lrasterimage
 
 $(eval $(prorab-build-lib))
 
