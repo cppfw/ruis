@@ -28,6 +28,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace morda;
 
+// NOLINTNEXTLINE(modernize-pass-by-value)
 widget::widget(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
 	context(c)
 {
