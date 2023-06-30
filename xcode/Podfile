@@ -12,7 +12,6 @@ target "morda" do
 	pod 'svgdom', '>= 0.3.61'
 	pod 'svgren', '>= 0.5.11'
 	pod 'nitki', '>= 1.0.41'
-	pod 'png', '>= 1.4.1.11'
 	pod 'freetype', '>= 2.10.1.9'
-	pod 'jpeg', '>= 6.1.1.11'
+	pod 'rasterimage', '>= 0.1.4'
 end

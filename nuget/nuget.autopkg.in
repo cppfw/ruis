@@ -33,9 +33,8 @@ nuget{
 		packages : {
 			libr4/1.0.53;
 			freetype_static/2.10.1.9;
-			libjpeg_static/6.1.1.11;
 			libpapki/1.0.93;
-			libpng_static/1.4.1.11;
+			librasterimage/0.1.4;
 			libtreeml/0.1.28;
 			libutki/1.1.124;
 			zlib_static/1.2.11.9;
