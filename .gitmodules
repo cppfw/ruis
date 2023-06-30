@@ -5,11 +5,11 @@
 [submodule "tests/harness/modules/morda-render-opengl"]
 	path = tests/harness/modules/morda-render-opengl
 	url = ../morda-render-opengl
-	branch = master
+	branch = rasterimage
 [submodule "tests/harness/modules/morda-render-opengles"]
 	path = tests/harness/modules/morda-render-opengles
 	url = ../morda-render-opengles
-	branch = master
+	branch = rasterimage
 [submodule "tool-configs"]
 	path = tool-configs
 	url = ../../cppfw/tool-configs
