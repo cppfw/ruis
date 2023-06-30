@@ -1,0 +1,3 @@
+Checks: |
+  -cppcoreguidelines-avoid-magic-numbers
+InheritParentConfig: true
