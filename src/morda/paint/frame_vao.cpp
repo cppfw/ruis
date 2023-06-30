@@ -23,6 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace morda;
 
+// NOLINTNEXTLINE(modernize-pass-by-value)
 frame_vao::frame_vao(const utki::shared_ref<const morda::renderer>& r) :
 	renderer(r),
 	vao(this->renderer.get().empty_vertex_array)
