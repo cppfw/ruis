@@ -27,6 +27,7 @@ using namespace morda;
 
 vertex_array::vertex_array(
 	decltype(buffers)&& buffers,
+	// NOLINTNEXTLINE(modernize-pass-by-value)
 	const utki::shared_ref<const morda::index_buffer>& indices,
 	mode rendering_mode
 ) :
