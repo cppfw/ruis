@@ -246,6 +246,7 @@ class tree_view_items_provider : public morda::tree_view::provider{
 	utki::shared_ref<morda::context> context;
 public:
 
+	// NOLINTNEXTLINE(modernize-pass-by-value)
 	tree_view_items_provider(const utki::shared_ref<morda::context>& c) :
 			context(c)
 	{
