@@ -35,7 +35,7 @@ depends=(
 		"${pkgPrefix}r4"
 		"${pkgPrefix}svgren"
 		"${pkgPrefix}treeml"
-		"${pkgPrefix}librasterimage"
+		"${pkgPrefix}rasterimage"
 		"${pkgPrefix}freetype"
 		"${pkgPrefix}glew"
 	)
