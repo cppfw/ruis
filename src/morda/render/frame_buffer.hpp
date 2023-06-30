@@ -33,6 +33,7 @@ protected:
 	const utki::shared_ref<texture_2d> color;
 
 public:
+	// NOLINTNEXTLINE(modernize-pass-by-value)
 	frame_buffer(const utki::shared_ref<texture_2d>& color) :
 		color(color)
 	{}

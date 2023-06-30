@@ -72,6 +72,7 @@ public:
 	protected:
 		const utki::shared_ref<const morda::renderer> renderer;
 
+		// NOLINTNEXTLINE(modernize-pass-by-value)
 		texture(const utki::shared_ref<const morda::renderer>& r, vector2 dims) :
 			renderer(r),
 			dims(dims)

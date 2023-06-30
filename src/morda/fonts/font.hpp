@@ -50,6 +50,7 @@ protected:
 
 	real ascender = 0;
 
+	// NOLINTNEXTLINE(modernize-pass-by-value)
 	font(const utki::shared_ref<morda::context>& context) :
 		context(context)
 	{}

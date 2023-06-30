@@ -157,7 +157,7 @@ class resource : virtual public utki::shared
 protected:
 	const utki::shared_ref<morda::context> context;
 
-	// this can only be used as a base class
+	// NOLINTNEXTLINE(modernize-pass-by-value)
 	resource(const utki::shared_ref<morda::context>& c) :
 		context(c)
 	{}

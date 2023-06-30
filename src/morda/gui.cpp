@@ -216,6 +216,7 @@ defs{
 )qwertyuiop";
 } // namespace
 
+// NOLINTNEXTLINE(modernize-pass-by-value)
 gui::gui(const utki::shared_ref<morda::context>& context) :
 	context(context),
 	root_widget(utki::make_shared<morda::widget>(this->context, tml::forest()))

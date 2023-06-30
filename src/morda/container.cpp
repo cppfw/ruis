@@ -35,6 +35,7 @@ container::container(const utki::shared_ref<morda::context>& c, const treeml::fo
 container::container(
 	const utki::shared_ref<morda::context>& c,
 	const treeml::forest& desc,
+	// NOLINTNEXTLINE(modernize-pass-by-value)
 	const utki::shared_ref<morda::layout>& layout
 ) :
 	widget(c, desc),

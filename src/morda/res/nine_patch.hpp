@@ -65,6 +65,7 @@ public:
 
 	nine_patch(
 		const utki::shared_ref<morda::context>& c,
+		// NOLINTNEXTLINE(modernize-pass-by-value)
 		const utki::shared_ref<const res::image>& image,
 		sides<real> borders
 	) :
