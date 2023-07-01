@@ -1,3 +1,9 @@
+libmorda (0.5.204) unstable; urgency=medium
+
+  * rasterimage
+
+ -- Ivan Gagis <igagis@gmail.com>  Sat, 01 Jul 2023 21:30:46 +0300
+
 libmorda (0.5.203) unstable; urgency=medium
 
   * perception pixels
