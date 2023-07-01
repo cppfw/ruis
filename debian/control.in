@@ -36,7 +36,11 @@ Description: OpenGL UI framework
 Package: libmorda-dev
 Architecture: any
 Depends: libmorda$(soname) (= ${binary:Version}), ${misc:Depends},
-		libutki-dev, libpapki-dev, libr4-dev, libtreeml-dev
+	libutki-dev,
+	libpapki-dev,
+	libr4-dev,
+	libtreeml-dev,
+	librasterimage-dev
 Suggests: libmorda-doc
 Priority: extra
 Section: libdevel
