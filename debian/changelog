@@ -1,3 +1,9 @@
+libmorda (0.5.205) unstable; urgency=medium
+
+  * correct deb package descriptions
+
+ -- Ivan Gagis <igagis@gmail.com>  Sat, 01 Jul 2023 23:31:17 +0300
+
 libmorda (0.5.204) unstable; urgency=medium
 
   * rasterimage
