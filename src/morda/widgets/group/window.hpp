@@ -41,8 +41,10 @@ class window : virtual public widget, private container
 	morda::vector2 empty_min_dim; // minimal dimension of empty window
 
 	std::shared_ptr<color> title_bg;
-	uint32_t title_bg_color_topmost = 0xffff0000;
-	uint32_t title_bg_color_non_topmost = 0xff808080;
+	constexpr static auto default_title_bg_color_topmost = 0xffff0000;
+	uint32_t title_bg_color_topmost = default_title_bg_color_topmost;
+	constexpr static auto default_title_bg_color_non_topmost = 0xff808080;
+	uint32_t title_bg_color_non_topmost = default_title_bg_color_non_topmost;
 
 	std::shared_ptr<text> title;
 
@@ -80,6 +82,11 @@ public:
 
 	window(const window&) = delete;
 	window& operator=(const window&) = delete;
+
+	window(window&&) = delete;
+	window& operator=(window&&) = delete;
+
+	~window() override = default;
 
 	void set_title(const std::string& str);
 

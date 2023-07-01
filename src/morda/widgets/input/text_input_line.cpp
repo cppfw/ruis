@@ -60,6 +60,7 @@ void text_input_line::render(const morda::matrix4& matrix) const
 		matr.scale(vector2(std::abs(this->cursor_pos - this->selection_start_pos), this->rect().d.y()));
 
 		auto& r = this->context.get().renderer.get();
+		// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers)
 		r.shader->color_pos->render(matr, r.pos_quad_01_vao.get(), 0xff804040);
 	}
 
@@ -308,7 +309,7 @@ void text_input_line::on_character_input(const character_input_event& e)
 			break;
 		case morda::key::arrow_right:
 			if (this->cursor_index != this->get_text().size()) {
-				size_t new_index;
+				size_t new_index = 0;
 				if (this->ctrl_pressed) {
 					bool space_skipped = false;
 					new_index = this->cursor_index;
@@ -332,7 +333,7 @@ void text_input_line::on_character_input(const character_input_event& e)
 			break;
 		case morda::key::arrow_left:
 			if (this->cursor_index != 0) {
-				size_t new_index;
+				size_t new_index = 0;
 				if (this->ctrl_pressed) {
 					bool space_skipped = false;
 					new_index = this->cursor_index;
@@ -418,7 +419,8 @@ size_t text_input_line::delete_selection()
 {
 	ASSERT(this->cursor_index != this->selection_start_index)
 
-	size_t start, end;
+	size_t start = 0;
+	size_t end = 0;
 	if (this->cursor_index < this->selection_start_index) {
 		start = this->cursor_index;
 		end = this->selection_start_index;

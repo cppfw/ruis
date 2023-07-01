@@ -58,8 +58,14 @@ public:
 	nine_patch(const nine_patch&) = delete;
 	nine_patch& operator=(const nine_patch&) = delete;
 
+	nine_patch(nine_patch&&) = delete;
+	nine_patch& operator=(nine_patch&&) = delete;
+
+	~nine_patch() override = default;
+
 	nine_patch(
 		const utki::shared_ref<morda::context>& c,
+		// NOLINTNEXTLINE(modernize-pass-by-value)
 		const utki::shared_ref<const res::image>& image,
 		sides<real> borders
 	) :
@@ -83,10 +89,16 @@ public:
 		}
 
 		image_matrix(
-			std::array<std::array<utki::shared_ref<const res::image>, 3>, 3>&& l,
+			std::array<std::array<utki::shared_ref<const res::image>, 3>, 3> l,
 			std::weak_ptr<const nine_patch> parent,
 			real mul
 		);
+
+		image_matrix(const image_matrix&) = delete;
+		image_matrix& operator=(const image_matrix&) = delete;
+
+		image_matrix(image_matrix&&) = delete;
+		image_matrix& operator=(image_matrix&&) = delete;
 
 		~image_matrix() noexcept;
 	};

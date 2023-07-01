@@ -26,7 +26,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace morda;
 
 context::context(
+	// NOLINTNEXTLINE(modernize-pass-by-value)
 	const utki::shared_ref<morda::renderer>& r,
+	// NOLINTNEXTLINE(modernize-pass-by-value)
 	const utki::shared_ref<morda::updater>& u,
 	std::function<void(std::function<void()>)> run_from_ui_thread_function,
 	std::function<void(morda::mouse_cursor)> set_mouse_cursor_function,

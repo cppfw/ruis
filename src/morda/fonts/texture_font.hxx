@@ -59,7 +59,7 @@ class texture_font : public font
 		std::shared_ptr<vertex_array> vao;
 		std::shared_ptr<texture_2d> tex;
 
-		real advance;
+		real advance = 0;
 
 		decltype(last_used_order)::iterator last_used_iter;
 	};
@@ -69,19 +69,33 @@ class texture_font : public font
 	unsigned max_cached;
 
 	struct freetype_lib_wrapper {
-		FT_Library lib;
+		FT_Library lib = nullptr;
 
 		freetype_lib_wrapper();
+
+		freetype_lib_wrapper(const freetype_lib_wrapper&) = delete;
+		freetype_lib_wrapper& operator=(const freetype_lib_wrapper&) = delete;
+
+		freetype_lib_wrapper(freetype_lib_wrapper&&) = delete;
+		freetype_lib_wrapper& operator=(freetype_lib_wrapper&&) = delete;
+
 		~freetype_lib_wrapper() noexcept;
 	} freetype;
 
 	//	TRACE(<< "texture_font::Load(): FreeType library inited" << std::endl)
 
 	struct freetype_face_wrapper {
-		FT_Face f;
-		std::vector<std::uint8_t> fontFile; // the buffer should be alive as long as the Face is alive!!!
+		FT_Face f = nullptr;
+		std::vector<std::uint8_t> font_file; // the buffer should be alive as long as the Face is alive!!!
 
 		freetype_face_wrapper(FT_Library& lib, const papki::file& fi);
+
+		freetype_face_wrapper(const freetype_face_wrapper&) = delete;
+		freetype_face_wrapper& operator=(const freetype_face_wrapper&) = delete;
+
+		freetype_face_wrapper(freetype_face_wrapper&&) = delete;
+		freetype_face_wrapper& operator=(freetype_face_wrapper&&) = delete;
+
 		~freetype_face_wrapper() noexcept;
 	} face;
 

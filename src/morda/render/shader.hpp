@@ -32,6 +32,12 @@ class shader
 public:
 	shader() = default;
 
+	shader(const shader&) = delete;
+	shader& operator=(const shader&) = delete;
+
+	shader(shader&&) = delete;
+	shader& operator=(shader&&) = delete;
+
 	virtual ~shader() = default;
 
 	virtual void render(const r4::matrix4<float>& m, const vertex_array& va) const = 0;

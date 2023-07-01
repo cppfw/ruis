@@ -48,7 +48,7 @@ public:
 
 	const utki::shared_ref<morda::updater> updater;
 
-	const std::function<void(std::function<void()>&&)> run_from_ui_thread;
+	const std::function<void(std::function<void()>)> run_from_ui_thread;
 
 	mouse_cursor_manager cursor_manager;
 
@@ -86,8 +86,12 @@ public:
 	);
 
 	context(const context&) = delete;
-	context(context&&) = delete;
 	context& operator=(const context&) = delete;
+
+	context(context&&) = delete;
+	context& operator=(context&&) = delete;
+
+	~context() = default;
 
 	const morda::units units;
 };

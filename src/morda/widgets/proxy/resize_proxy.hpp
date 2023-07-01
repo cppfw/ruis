@@ -39,6 +39,11 @@ public:
 	resize_proxy(const resize_proxy&) = delete;
 	resize_proxy& operator=(const resize_proxy&) = delete;
 
+	resize_proxy(resize_proxy&&) = delete;
+	resize_proxy& operator=(resize_proxy&&) = delete;
+
+	~resize_proxy() override = default;
+
 	void on_resize() override;
 
 	/**

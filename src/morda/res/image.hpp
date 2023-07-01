@@ -54,8 +54,13 @@ protected:
 	image(const utki::shared_ref<morda::context>& c);
 
 public:
-	image(const image& orig) = delete;
-	image& operator=(const image& orig) = delete;
+	image(const image&) = delete;
+	image& operator=(const image&) = delete;
+
+	image(image&&) = delete;
+	image& operator=(image&&) = delete;
+
+	~image() override = default;
 
 	/**
 	 * @brief Texture created from the image resource.
@@ -67,6 +72,7 @@ public:
 	protected:
 		const utki::shared_ref<const morda::renderer> renderer;
 
+		// NOLINTNEXTLINE(modernize-pass-by-value)
 		texture(const utki::shared_ref<const morda::renderer>& r, vector2 dims) :
 			renderer(r),
 			dims(dims)
@@ -74,6 +80,12 @@ public:
 
 	public:
 		const vector2 dims;
+
+		texture(const texture&) = delete;
+		texture& operator=(const texture&) = delete;
+
+		texture(texture&&) = delete;
+		texture& operator=(texture&&) = delete;
 
 		virtual ~texture() = default;
 
@@ -149,8 +161,13 @@ public:
 	// );
 	atlas_image(const utki::shared_ref<morda::context>& c, const utki::shared_ref<res::texture>& tex);
 
-	atlas_image(const atlas_image& orig) = delete;
-	atlas_image& operator=(const atlas_image& orig) = delete;
+	atlas_image(const atlas_image&) = delete;
+	atlas_image& operator=(const atlas_image&) = delete;
+
+	atlas_image(atlas_image&&) = delete;
+	atlas_image& operator=(atlas_image&&) = delete;
+
+	~atlas_image() override = default;
 
 	vector2 dims(real dpi) const noexcept override
 	{

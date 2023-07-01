@@ -54,15 +54,19 @@ public:
 	}
 
 	utki::shared_ref<morda::texture_2d> create_texture_2d(
-		morda::texture_2d::type type,
-		r4::vector2<unsigned> dims,
-		utki::span<const uint8_t> data
-	)override{
+		rasterimage::format format,
+		rasterimage::dimensioned::dimensions_type dims
+	)override
+	{
+		return utki::make_shared<fake_texture_2d>();
+	}
+
+	utki::shared_ref<morda::texture_2d> create_texture_2d(const rasterimage::image_variant& imvar)override{
 		return utki::make_shared<fake_texture_2d>();
 	}
 
 	utki::shared_ref<morda::vertex_array> create_vertex_array(
-			std::vector<utki::shared_ref<const morda::vertex_buffer>>&& buffers,
+			std::vector<utki::shared_ref<const morda::vertex_buffer>> buffers,
 			const utki::shared_ref<const morda::index_buffer>& indices,
 			morda::vertex_array::mode rendering_mode
 		)override

@@ -40,9 +40,9 @@ class updateable : virtual public utki::shared
 	friend class updater;
 
 private:
-	uint16_t dt;
+	uint16_t dt = 0;
 
-	uint32_t started_at;
+	uint32_t started_at = 0;
 
 	uint32_t ends_at() const noexcept
 	{
@@ -75,6 +75,16 @@ public:
 	 * @param dt_ms - actual time elapsed since the previous update.
 	 */
 	virtual void update(uint32_t dt_ms) = 0;
+
+	updateable() = default;
+
+	updateable(const updateable&) = delete;
+	updateable& operator=(const updateable&) = delete;
+
+	updateable(updateable&&) = delete;
+	updateable& operator=(updateable&&) = delete;
+
+	~updateable() override = default;
 };
 
 } // namespace morda

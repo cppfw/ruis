@@ -47,6 +47,11 @@ public:
 	image_mouse_cursor(const image_mouse_cursor&) = delete;
 	image_mouse_cursor& operator=(const image_mouse_cursor&) = delete;
 
+	image_mouse_cursor(image_mouse_cursor&&) = delete;
+	image_mouse_cursor& operator=(image_mouse_cursor&&) = delete;
+
+	~image_mouse_cursor() override = default;
+
 	void set_cursor(const utki::shared_ref<const res::cursor>& cursor);
 
 	bool on_mouse_move(const mouse_move_event& e) override;

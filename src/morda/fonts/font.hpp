@@ -44,12 +44,13 @@ protected:
 	/**
 	 * @brief Distance between lines of text.
 	 */
-	real height;
+	real height = 0;
 
-	real descender;
+	real descender = 0;
 
-	real ascender;
+	real ascender = 0;
 
+	// NOLINTNEXTLINE(modernize-pass-by-value)
 	font(const utki::shared_ref<morda::context>& context) :
 		context(context)
 	{}
@@ -57,6 +58,9 @@ protected:
 public:
 	font(const font&) = delete;
 	font& operator=(const font&) = delete;
+
+	font(font&&) = delete;
+	font& operator=(font&&) = delete;
 
 	/**
 	 * @brief String rendering result.

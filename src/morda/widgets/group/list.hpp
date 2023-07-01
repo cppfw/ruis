@@ -60,6 +60,11 @@ public:
 	list_widget(const list_widget&) = delete;
 	list_widget& operator=(const list_widget&) = delete;
 
+	list_widget(list_widget&&) = delete;
+	list_widget& operator=(list_widget&&) = delete;
+
+	~list_widget() override = default;
+
 	/**
 	 * @brief list items provider.
 	 * User should subclass this class to provide items to the list.
@@ -74,6 +79,14 @@ public:
 		provider() = default;
 
 	public:
+		provider(const provider&) = delete;
+		provider& operator=(const provider&) = delete;
+
+		provider(provider&&) = delete;
+		provider& operator=(provider&&) = delete;
+
+		~provider() override = default;
+
 		/**
 		 * @brief Get parent list widget.
 		 * @return list widget which owns the provider, in case the provider is set to some list widget.
@@ -209,6 +222,11 @@ public:
 
 	pan_list(const pan_list&) = delete;
 	pan_list& operator=(const pan_list&) = delete;
+
+	pan_list(pan_list&&) = delete;
+	pan_list& operator=(pan_list&&) = delete;
+
+	~pan_list() override = default;
 };
 
 /**
@@ -225,6 +243,11 @@ public:
 
 	list(const list&) = delete;
 	list& operator=(const list&) = delete;
+
+	list(list&&) = delete;
+	list& operator=(list&&) = delete;
+
+	~list() override = default;
 };
 
 } // namespace morda

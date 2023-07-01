@@ -67,6 +67,12 @@ private:
 			variable() // this sets the 'variable' member of the union as an active one
 		{}
 
+		children_union(const children_union&) = delete;
+		children_union& operator=(const children_union&) = delete;
+
+		children_union(children_union&&) = delete;
+		children_union& operator=(children_union&&) = delete;
+
 		~children_union()
 		{
 			this->variable.~widget_list();
@@ -96,8 +102,15 @@ private:
 		blocked_flag_guard(bool& blocked) :
 			blocked(blocked)
 		{
+			// NOLINTNEXTLINE(cppcoreguidelines-prefer-member-initializer)
 			this->blocked = true;
 		}
+
+		blocked_flag_guard(const blocked_flag_guard&) = delete;
+		blocked_flag_guard& operator=(const blocked_flag_guard&) = delete;
+
+		blocked_flag_guard(blocked_flag_guard&&) = delete;
+		blocked_flag_guard& operator=(blocked_flag_guard&&) = delete;
 
 		~blocked_flag_guard() noexcept
 		{
@@ -236,6 +249,7 @@ public:
 	 */
 	const widget_list& children() noexcept
 	{
+		// NOLINTNEXTLINE(cppcoreguidelines-pro-type-union-access)
 		return this->children_list.variable;
 	}
 
@@ -247,6 +261,7 @@ public:
 	{
 		// TRACE(<< "sizeof(widget_list::value_type) = " << sizeof(widget_list::value_type) << std::endl)
 		// TRACE(<< "sizeof(const_widget_list::value_type) = " << sizeof(const_widget_list::value_type) << std::endl)
+		// NOLINTNEXTLINE(cppcoreguidelines-pro-type-union-access)
 		return this->children_list.constant;
 	}
 

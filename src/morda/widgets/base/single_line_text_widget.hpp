@@ -27,7 +27,7 @@ namespace morda {
 
 class single_line_text_widget : public text_widget
 {
-	mutable morda::rectangle bb;
+	mutable morda::rectangle bb{};
 
 	std::u32string text;
 

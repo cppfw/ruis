@@ -44,6 +44,11 @@ public:
 	text_widget(const text_widget&) = delete;
 	text_widget& operator=(const text_widget&) = delete;
 
+	text_widget(text_widget&&) = delete;
+	text_widget& operator=(text_widget&&) = delete;
+
+	~text_widget() override = default;
+
 	void set_font(const utki::shared_ref<const res::font>& font);
 
 	const res::font& get_font() const

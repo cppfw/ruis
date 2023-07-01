@@ -23,6 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace morda;
 
+// NOLINTNEXTLINE(modernize-pass-by-value)
 frame_vao::frame_vao(const utki::shared_ref<const morda::renderer>& r) :
 	renderer(r),
 	vao(this->renderer.get().empty_vertex_array)
@@ -30,7 +31,8 @@ frame_vao::frame_vao(const utki::shared_ref<const morda::renderer>& r) :
 
 void frame_vao::set(vector2 dims, vector2 thickness)
 {
-	std::array<vector2, 8> vertices = {
+	constexpr auto num_frame_vertices = 8;
+	std::array<vector2, num_frame_vertices> vertices = {
 		{// outer
 {0, 0},
 		 {dims.x(), 0},
@@ -42,6 +44,7 @@ void frame_vao::set(vector2 dims, vector2 thickness)
 		 {thickness.x(), dims.y() - thickness.y()}}
     };
 
+	// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers)
 	std::array<uint16_t, 10> indices = {0, 4, 1, 5, 2, 6, 3, 7, 0, 4};
 
 	this->vao = this->renderer.get().factory->create_vertex_array(

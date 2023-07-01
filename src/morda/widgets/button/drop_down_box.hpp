@@ -113,6 +113,11 @@ public:
 	drop_down_box(const drop_down_box&) = delete;
 	drop_down_box& operator=(const drop_down_box&) = delete;
 
+	drop_down_box(drop_down_box&&) = delete;
+	drop_down_box& operator=(drop_down_box&&) = delete;
+
+	~drop_down_box() override = default;
+
 	/**
 	 * @brief Set currently selected item.
 	 * @param i - index of the item to set as currently selected.

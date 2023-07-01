@@ -24,6 +24,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <vector>
 
 #include <r4/vector.hpp>
+#include <rasterimage/image_variant.hpp>
 #include <utki/shared_ref.hpp>
 #include <utki/span.hpp>
 
@@ -45,15 +46,26 @@ protected:
 	render_factory() = default;
 
 public:
+	render_factory(const render_factory&) = delete;
+	render_factory& operator=(const render_factory&) = delete;
+
+	render_factory(render_factory&&) = delete;
+	render_factory& operator=(render_factory&&) = delete;
+
 	virtual ~render_factory() = default;
 
 	virtual utki::shared_ref<texture_2d> create_texture_2d(
-		texture_2d::type type,
-		r4::vector2<unsigned> dims,
-		utki::span<const uint8_t> data
+		rasterimage::format format,
+		rasterimage::dimensioned::dimensions_type dims
 	) = 0;
 
-	utki::shared_ref<texture_2d> create_texture_2d(r4::vector2<unsigned> dims, utki::span<const uint32_t> data);
+	virtual utki::shared_ref<texture_2d> create_texture_2d(const rasterimage::image_variant& imvar) = 0;
+
+	// NOLINTNEXTLINE(cppcoreguidelines-rvalue-reference-param-not-moved)
+	virtual utki::shared_ref<texture_2d> create_texture_2d(rasterimage::image_variant&& imvar)
+	{
+		return this->create_texture_2d(imvar);
+	}
 
 	virtual utki::shared_ref<vertex_buffer> create_vertex_buffer(utki::span<const r4::vector4<float>> vertices) = 0;
 
@@ -66,7 +78,7 @@ public:
 	virtual utki::shared_ref<index_buffer> create_index_buffer(utki::span<const uint16_t> indices) = 0;
 
 	virtual utki::shared_ref<vertex_array> create_vertex_array(
-		std::vector<utki::shared_ref<const morda::vertex_buffer>>&& buffers,
+		std::vector<utki::shared_ref<const morda::vertex_buffer>> buffers,
 		const utki::shared_ref<const morda::index_buffer>& indices,
 		vertex_array::mode rendering_mode
 	) = 0;

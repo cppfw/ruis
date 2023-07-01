@@ -35,6 +35,7 @@ container::container(const utki::shared_ref<morda::context>& c, const treeml::fo
 container::container(
 	const utki::shared_ref<morda::context>& c,
 	const treeml::forest& desc,
+	// NOLINTNEXTLINE(modernize-pass-by-value)
 	const utki::shared_ref<morda::layout>& layout
 ) :
 	widget(c, desc),
@@ -281,6 +282,7 @@ widget_list::const_iterator container::insert(const utki::shared_ref<widget>& w,
 
 	widget& ww = w.get();
 
+	// NOLINTNEXTLINE(cppcoreguidelines-pro-type-union-access)
 	auto ret = this->children_list.variable.emplace(before, w);
 
 	ww.parent_container = this;
@@ -308,6 +310,7 @@ widget_list::const_iterator container::erase(widget_list::const_iterator child)
 
 	auto w = *child;
 
+	// NOLINTNEXTLINE(cppcoreguidelines-pro-type-union-access)
 	auto ret = this->children_list.variable.erase(child);
 
 	w.get().parent_container = nullptr;
@@ -371,7 +374,9 @@ widget_list::const_iterator container::change_child_z_position(
 		return child;
 	}
 
+	// NOLINTNEXTLINE(cppcoreguidelines-pro-type-union-access)
 	auto b = this->children_list.variable.erase(before, before); // remove constness
+	// NOLINTNEXTLINE(cppcoreguidelines-pro-type-union-access)
 	auto i = this->children_list.variable.erase(child, child); // remove constness
 
 	decltype(child) ret;
@@ -395,6 +400,7 @@ widget_list::const_iterator container::find(const widget& w)
 	return std::find_if(
 		this->children().begin(),
 		this->children().end(),
+		// NOLINTNEXTLINE(cppcoreguidelines-pro-type-union-access)
 		[&w](const decltype(this->children_list.variable)::value_type& v) -> bool {
 			return &v.get() == &w;
 		}
@@ -406,6 +412,7 @@ const_widget_list::const_iterator container::find(const widget& w) const
 	return std::find_if(
 		this->children().begin(),
 		this->children().end(),
+		// NOLINTNEXTLINE(cppcoreguidelines-pro-type-union-access)
 		[&w](const decltype(this->children_list.constant)::value_type& v) -> bool {
 			return &v.get() == &w;
 		}

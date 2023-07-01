@@ -37,6 +37,11 @@ public:
 	mouse_proxy(const mouse_proxy&) = delete;
 	mouse_proxy& operator=(const mouse_proxy&) = delete;
 
+	mouse_proxy(mouse_proxy&&) = delete;
+	mouse_proxy& operator=(mouse_proxy&&) = delete;
+
+	~mouse_proxy() override = default;
+
 	/**
 	 * @brief Mouse button event signal.
 	 * Emitted when mouse button event reaches this widget.

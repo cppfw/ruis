@@ -42,12 +42,8 @@ void gradient::set(std::vector<std::tuple<real, uint32_t>>& stops, bool vertical
 	for (auto& s : stops) {
 		{
 			auto c = std::get<1>(s);
-			r4::vector4<float> clr(
-				float(c & 0xff) / 255,
-				float((c >> 8) & 0xff) / 255,
-				float((c >> 16) & 0xff) / 255,
-				float((c >> 24) & 0xff) / 255
-			);
+			// TODO: implement some utility function for converting color from uint32_t
+			auto clr = color_to_vec4f(c);
 
 			colors.push_back(clr);
 			colors.push_back(clr);
@@ -98,7 +94,7 @@ utki::shared_ref<gradient> gradient::load(
 			vertical = get_property_value(p).to_bool();
 		} else if (p.value == stop_c) {
 			real pos = 0;
-			uint32_t color = 0xffffffff;
+			uint32_t color = std::numeric_limits<uint32_t>::max(); // white by default
 			for (auto& pp : p.children) {
 				if (pp.value == "pos") {
 					pos = get_property_value(pp).to_float();

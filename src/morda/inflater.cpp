@@ -55,7 +55,7 @@ utki::shared_ref<morda::widget> inflater::inflate(const papki::file& fi)
 }
 
 namespace {
-const char* wording_defs = "defs";
+constexpr const char* wording_defs = "defs";
 } // namespace
 
 namespace {
@@ -112,7 +112,7 @@ namespace {
 treeml::forest apply_gui_template(
 	const treeml::forest& templ,
 	const std::set<std::string>& var_names,
-	treeml::forest&& trees
+	treeml::forest trees
 )
 {
 	// TRACE(<< "applying template: " << treeml::to_string(templ) << std::endl)

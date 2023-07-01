@@ -38,6 +38,11 @@ public:
 	tab_group(const tab_group&) = delete;
 	tab_group& operator=(const tab_group&) = delete;
 
+	tab_group(tab_group&&) = delete;
+	tab_group& operator=(tab_group&&) = delete;
+
+	~tab_group() override = default;
+
 	void set_filler(std::shared_ptr<res::image> filler);
 
 	morda::vector2 measure(const morda::vector2& quotum) const override;

@@ -73,6 +73,11 @@ public:
 	gradient(const gradient&) = delete;
 	gradient& operator=(const gradient&) = delete;
 
+	gradient(gradient&&) = delete;
+	gradient& operator=(gradient&&) = delete;
+
+	~gradient() override = default;
+
 	/**
 	 * @brief Set gradient.
 	 * @param stops - array of gradient stops.

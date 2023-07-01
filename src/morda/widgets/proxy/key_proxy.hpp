@@ -41,6 +41,11 @@ public:
 	key_proxy(const key_proxy&) = delete;
 	key_proxy& operator=(const key_proxy&) = delete;
 
+	key_proxy(key_proxy&&) = delete;
+	key_proxy& operator=(key_proxy&&) = delete;
+
+	~key_proxy() override = default;
+
 	/**
 	 * @brief Keyboard key signal.
 	 * Emitted when a keyboard key event reaches this widget.

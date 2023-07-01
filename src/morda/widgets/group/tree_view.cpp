@@ -373,14 +373,15 @@ void tree_view::provider::notify_item_added(utki::span<const size_t> index)
 
 	// find parent tree node list to which the new node was added
 	auto parent_index = utki::make_span(index.data(), index.size() - 1);
-	decltype(this->visible_tree.children)* parent_list;
-	if (parent_index.empty()) { // if added to root node
-		parent_list = &this->visible_tree.children;
-	} else {
-		ASSERT(this->traversal().is_valid(parent_index))
-		auto parent_iter = this->traversal().make_iterator(parent_index);
-		parent_list = &parent_iter->children;
-	}
+	decltype(this->visible_tree.children)* parent_list = [&]() {
+		if (parent_index.empty()) { // if added to root node
+			return &this->visible_tree.children;
+		} else {
+			ASSERT(this->traversal().is_valid(parent_index))
+			auto parent_iter = this->traversal().make_iterator(parent_index);
+			return &parent_iter->children;
+		}
+	}();
 
 	if (parent_list->empty()) {
 		// item was added to a collapsed subtree

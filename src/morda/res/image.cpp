@@ -149,7 +149,10 @@ public:
 
 	static utki::shared_ref<res_raster_image> load(const utki::shared_ref<morda::context>& ctx, const papki::file& fi)
 	{
-		return utki::make_shared<res_raster_image>(ctx, load_texture(ctx.get().renderer.get(), fi));
+		return utki::make_shared<res_raster_image>(
+			ctx,
+			ctx.get().renderer.get().factory->create_texture_2d(rasterimage::read(fi))
+		);
 	}
 };
 
@@ -184,6 +187,12 @@ public:
 			parent(parent.to_shared_ptr())
 		{}
 
+		svg_texture(const svg_texture&) = delete;
+		svg_texture& operator=(const svg_texture&) = delete;
+
+		svg_texture(svg_texture&&) = delete;
+		svg_texture& operator=(svg_texture&&) = delete;
+
 		~svg_texture() override
 		{
 			if (auto p = this->parent.lock()) {
@@ -216,20 +225,24 @@ public:
 		svgren::parameters svg_params;
 		svg_params.dpi = unsigned(this->context.get().units.dots_per_inch);
 		svg_params.dims_request = for_dims.to<unsigned>();
-		auto svg = svgren::render(*this->dom, svg_params);
-		ASSERT(svg.dims.x() != 0)
-		ASSERT(svg.dims.y() != 0)
-		ASSERT(svg.dims.x() * svg.dims.y() == svg.pixels.size(), [&](auto& o) {
-			o << "svg.dims = " << svg.dims << " pixels.size() = " << svg.pixels.size();
+
+		auto im = svgren::rasterize(*this->dom, svg_params);
+
+		ASSERT(im.dims().x() != 0)
+		ASSERT(im.dims().y() != 0)
+		ASSERT(im.dims().x() * im.dims().y() == im.pixels().size(), [&](auto& o) {
+			o << "im.dims = " << im.dims() << " pixels.size() = " << im.pixels().size();
 		})
+
+		auto dims = im.dims();
 
 		auto img = utki::make_shared<svg_texture>(
 			this->context.get().renderer,
 			utki::make_shared_from(*this),
-			this->context.get().renderer.get().factory->create_texture_2d(svg.dims, utki::make_span(svg.pixels))
+			this->context.get().renderer.get().factory->create_texture_2d(std::move(im))
 		);
 
-		this->cache[svg.dims] = img.to_shared_ptr();
+		this->cache[dims] = img.to_shared_ptr();
 
 		return img;
 	}
@@ -238,7 +251,9 @@ public:
 
 	static utki::shared_ref<res_svg_image> load(const utki::shared_ref<morda::context>& ctx, const papki::file& fi)
 	{
-		return utki::make_shared<res_svg_image>(ctx, svgdom::load(fi));
+		auto dom = svgdom::load(fi);
+		ASSERT(dom)
+		return utki::make_shared<res_svg_image>(ctx, std::move(dom));
 	}
 };
 } // namespace

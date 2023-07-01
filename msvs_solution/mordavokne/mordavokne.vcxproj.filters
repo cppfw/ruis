@@ -36,6 +36,12 @@
     <ClCompile Include="..\..\tests\harness\modules\mordavokne\src\**\*.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\tests\harness\modules\mordavokne\src\**\*.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\tests\harness\modules\mordavokne\src\**\*.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

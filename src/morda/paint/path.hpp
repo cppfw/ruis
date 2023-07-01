@@ -37,6 +37,11 @@ public:
 	path(const path&) = delete;
 	path& operator=(const path&) = delete;
 
+	path(path&&) = delete;
+	path& operator=(path&&) = delete;
+
+	~path() = default;
+
 	void line_to(morda::vector2 abs_pos);
 
 	void line_to(morda::real x, morda::real y)
@@ -57,10 +62,14 @@ public:
 		std::vector<uint16_t> out_indices;
 	};
 
+	constexpr static auto default_half_width = 0.5;
+	constexpr static auto default_antialias_width = 1;
+	constexpr static auto default_antialias_alpha = 0.35;
+
 	vertices stroke(
-		morda::real half_width = morda::real(0.5f),
-		morda::real antialias_width = morda::real(1.0f),
-		morda::real antialias_alpha = morda::real(0.35f)
+		morda::real half_width = morda::real(default_half_width),
+		morda::real antialias_width = morda::real(default_antialias_width),
+		morda::real antialias_alpha = morda::real(default_antialias_alpha)
 	) const;
 };
 

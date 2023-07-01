@@ -43,6 +43,9 @@ public:
 	gui(const gui&) = delete;
 	gui& operator=(const gui&) = delete;
 
+	gui(gui&&) = delete;
+	gui& operator=(gui&&) = delete;
+
 	~gui() = default;
 
 private:
@@ -157,6 +160,14 @@ public:
 		 * @return The text that the user has entered.
 		 */
 		virtual std::u32string get() const = 0;
+
+		input_string_provider() = default;
+
+		input_string_provider(const input_string_provider&) = default;
+		input_string_provider& operator=(const input_string_provider&) = default;
+
+		input_string_provider(input_string_provider&&) = default;
+		input_string_provider& operator=(input_string_provider&&) = default;
 
 		virtual ~input_string_provider() = default;
 	};

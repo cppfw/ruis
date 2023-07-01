@@ -27,10 +27,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <utki/config.hpp>
 
 #include "../config.hpp"
-#include "../render/render_factory.hpp"
-#include "../render/renderer.hpp"
-#include "../render/texture_2d.hpp"
-#include "../widget.hpp"
 
 #include "units.hpp"
 
@@ -95,24 +91,6 @@ bool is_leaf_property(const treeml::leaf& l);
 
 bool is_leaf_child(const treeml::leaf& l);
 
-/**
- * @brief Load texture from file.
- * @param r - renderer.
- * @param fi - file to load texture from.
- * @return Loaded texture.
- */
-utki::shared_ref<texture_2d> load_texture(renderer& r, const papki::file& fi);
-
-/**
- * @brief Set simple alpha blending to rendering context.
- * Enables and set simple alpha blending on the rendering context.
- * Blend factors are SRC_ALPHA and ONE_MINUS_SRC_ALPHA for source and destination RGB color components respectively.
- * And, ONE and ONE_MINUS_SRC_ALPHA for source and destination alpha components respectively.
- */
-void set_simple_alpha_blending(renderer& r);
-
-morda::texture_2d::type num_channels_to_texture_type(unsigned num_channels);
-
 r4::vector4<float> color_to_vec4f(uint32_t color);
 
 inline const treeml::leaf& get_property_value(const treeml::tree& p)
@@ -122,16 +100,5 @@ inline const treeml::leaf& get_property_value(const treeml::tree& p)
 	}
 	return p.children.front().value;
 }
-
-/**
- * @brief Calculate basic dimensions of widget.
- * Calculates basic dimensions of given widget if it would be placed to
- * a container with given dimensions and given layout parameters, basically this is just
- * resolving of 'min', 'max' and 'fill' special values of dimensions.
- * @param w - widget to calculate dimensions for.
- * @param parent_dims - parent widget dimensions.
- * @return Dimensions of widget.
- */
-vector2 dims_for_widget(const widget& w, const vector2& parent_dims);
 
 } // namespace morda

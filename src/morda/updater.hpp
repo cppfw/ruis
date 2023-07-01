@@ -33,7 +33,7 @@ class updater : public std::enable_shared_from_this<updater>
 	friend class morda::updateable;
 
 	struct update_queue_item {
-		uint32_t ends_at;
+		uint32_t ends_at = 0;
 		std::weak_ptr<morda::updateable> updateable;
 	};
 
@@ -73,6 +73,8 @@ public:
 	// returns dt to wait before next update
 	uint32_t update();
 
+	constexpr static auto default_update_interval_ms = 30;
+
 	/**
 	 * @brief Subscribe updateable for updates.
 	 * Normally, updates will start from the next UI cycle.
@@ -83,7 +85,7 @@ public:
 	 * @param u - updateable to start updating.
 	 * @param dt_ms - time period between updates, in milliseconds.
 	 */
-	void start(std::weak_ptr<updateable> u, uint16_t dt_ms = 30);
+	void start(std::weak_ptr<updateable> u, uint16_t dt_ms = default_update_interval_ms);
 
 	/**
 	 * @brief Unsubscribe from updating.

@@ -26,14 +26,14 @@ endif
 
 this_ldlibs += $(shell pkg-config --libs freetype2)
 
-this_ldlibs += -lpapki -ltreeml -lsvgdom -lsvgren -lutki -lpng -ljpeg -lm
+this_ldlibs += -lpapki -ltreeml -lsvgdom -lsvgren -lutki -lm -lrasterimage
 
 $(eval $(prorab-build-lib))
+
+$(eval $(prorab-clang-format))
 
 this_src_dir := $(this_name)
 this_license_file := ../LICENSE
 $(eval $(prorab-license))
-
-$(eval $(prorab-clang-format))
 
 $(eval $(prorab-install-dbgsrc))

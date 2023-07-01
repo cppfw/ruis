@@ -54,6 +54,11 @@ public:
 	cursor(const cursor&) = delete;
 	cursor& operator=(const cursor&) = delete;
 
+	cursor(cursor&&) = delete;
+	cursor& operator=(cursor&&) = delete;
+
+	~cursor() override = default;
+
 	const res::image& image() const noexcept
 	{
 		return this->image_v.get();

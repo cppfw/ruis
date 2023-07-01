@@ -46,6 +46,11 @@ public:
 	oriented_widget(const oriented_widget&) = delete;
 	oriented_widget& operator=(const oriented_widget&) = delete;
 
+	oriented_widget(oriented_widget&&) = delete;
+	oriented_widget& operator=(oriented_widget&&) = delete;
+
+	~oriented_widget() override = default;
+
 	bool is_vertical() const noexcept
 	{
 		return this->is_vertical_v;

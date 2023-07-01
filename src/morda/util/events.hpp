@@ -60,7 +60,7 @@ struct mouse_move_event {
 };
 
 struct key_event {
-	bool is_down;
+	bool is_down = true;
 	key_combo combo;
 };
 

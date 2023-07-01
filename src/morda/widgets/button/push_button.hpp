@@ -34,7 +34,7 @@ class push_button : virtual public button
 {
 	bool currentlyPressed = false;
 
-	unsigned pointer_id;
+	unsigned pointer_id = 0;
 
 protected:
 	void on_press_change() override;
@@ -54,6 +54,14 @@ public:
 		widget(c, desc),
 		button(this->context, desc)
 	{}
+
+	push_button(const push_button&) = delete;
+	push_button& operator=(const push_button&) = delete;
+
+	push_button(push_button&&) = delete;
+	push_button& operator=(push_button&&) = delete;
+
+	~push_button() override = default;
 
 	/**
 	 * @brief Clicked signal.

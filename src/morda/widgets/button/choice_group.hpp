@@ -46,6 +46,11 @@ public:
 	choice_group(const choice_group&) = delete;
 	choice_group& operator=(const choice_group&) = delete;
 
+	choice_group(choice_group&&) = delete;
+	choice_group& operator=(choice_group&&) = delete;
+
+	~choice_group() override = default;
+
 	bool is_active(const widget& w) const noexcept;
 
 	std::weak_ptr<choice_button> get_active() const noexcept

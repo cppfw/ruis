@@ -34,7 +34,7 @@ color::color(const utki::shared_ref<morda::context>& c, const treeml::forest& de
 void color::render(const morda::matrix4& matrix) const
 {
 	auto& r = this->context.get().renderer.get();
-	set_simple_alpha_blending(r);
+	r.set_simple_alpha_blending();
 
 	morda::matrix4 matr(matrix);
 	matr.scale(this->rect().d);

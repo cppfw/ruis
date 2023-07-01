@@ -192,6 +192,7 @@ void scroll_bar::on_lay_out()
 
 	using std::max;
 	new_size[long_index] =
+		// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers)
 		max(new_size[long_index], std::round(real(1.5) * min_handle_size[trans_index])); // clamp bottom
 
 	this->handle.resize(new_size);

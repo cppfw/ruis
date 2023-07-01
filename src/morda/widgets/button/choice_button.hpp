@@ -47,6 +47,11 @@ public:
 	choice_button(const choice_button&) = delete;
 	choice_button& operator=(const choice_button&) = delete;
 
+	choice_button(choice_button&&) = delete;
+	choice_button& operator=(choice_button&&) = delete;
+
+	~choice_button() override = default;
+
 	void activate();
 };
 

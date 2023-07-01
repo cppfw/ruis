@@ -43,6 +43,11 @@ public:
 	gradient(const gradient&) = delete;
 	gradient& operator=(const gradient&) = delete;
 
+	gradient(gradient&&) = delete;
+	gradient& operator=(gradient&&) = delete;
+
+	~gradient() override = default;
+
 	void render(const morda::matrix4& matrix) const override;
 };
 

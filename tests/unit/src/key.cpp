@@ -8,7 +8,7 @@ using namespace std::string_view_literals;
 using namespace std::string_literals;
 
 namespace{
-std::vector<std::pair<morda::key, std::string_view>>
+const std::vector<std::pair<morda::key, std::string_view>>
 expected_key_to_name_map = {
 	{morda::key::space, "space"sv},
 	{morda::key::enter, "enter"sv},
@@ -109,7 +109,7 @@ expected_key_to_name_map = {
 }
 
 namespace{
-tst::set set("key", [](tst::suite& suite){
+const tst::set set("key", [](tst::suite& suite){
 	suite.add("morda_key_enum_size_is_as_expected", []{
 		tst::check_eq(expected_key_to_name_map.size(), size_t(morda::key::enum_size), SL);
 	});

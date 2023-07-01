@@ -33,12 +33,16 @@ protected:
 	const utki::shared_ref<texture_2d> color;
 
 public:
+	// NOLINTNEXTLINE(modernize-pass-by-value)
 	frame_buffer(const utki::shared_ref<texture_2d>& color) :
 		color(color)
 	{}
 
 	frame_buffer(const frame_buffer&) = delete;
 	frame_buffer& operator=(const frame_buffer&) = delete;
+
+	frame_buffer(frame_buffer&&) = delete;
+	frame_buffer& operator=(frame_buffer&&) = delete;
 
 	virtual ~frame_buffer() = default;
 

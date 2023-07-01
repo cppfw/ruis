@@ -43,6 +43,11 @@ public:
 	check_box(const check_box&) = delete;
 	check_box& operator=(const check_box&) = delete;
 
+	check_box(check_box&&) = delete;
+	check_box& operator=(check_box&&) = delete;
+
+	~check_box() override = default;
+
 	bool on_mouse_button(const mouse_button_event& e) override
 	{
 		return this->toggle_button::on_mouse_button(e);

@@ -22,7 +22,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "texture.hpp"
 
 #include "../context.hpp"
-#include "../util/raster_image.hpp"
 #include "../util/util.hpp"
 
 using namespace morda;
@@ -40,5 +39,5 @@ utki::shared_ref<texture> texture::load(
 		}
 	}
 
-	return utki::make_shared<texture>(ctx, load_texture(ctx.get().renderer.get(), fi));
+	return utki::make_shared<texture>(ctx, ctx.get().renderer.get().factory->create_texture_2d(rasterimage::read(fi)));
 }

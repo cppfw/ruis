@@ -59,6 +59,11 @@ public:
 	treeml(const treeml&) = delete;
 	treeml& operator=(const treeml&) = delete;
 
+	treeml(treeml&&) = delete;
+	treeml& operator=(treeml&&) = delete;
+
+	~treeml() override = default;
+
 	const ::treeml::forest& forest() const noexcept
 	{
 		return this->s;

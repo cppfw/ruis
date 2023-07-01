@@ -23,6 +23,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <r4/matrix.hpp>
 
+#include "../util/util.hpp"
+
 #include "vertex_array.hpp"
 
 namespace morda {
@@ -35,22 +37,16 @@ public:
 	coloring_shader(const coloring_shader&) = delete;
 	coloring_shader& operator=(const coloring_shader&) = delete;
 
+	coloring_shader(coloring_shader&&) = delete;
+	coloring_shader& operator=(coloring_shader&&) = delete;
+
 	virtual ~coloring_shader() = default;
 
 	virtual void render(const r4::matrix4<float>& m, const vertex_array& va, r4::vector4<float> color) const = 0;
 
 	void render(const r4::matrix4<float>& m, const vertex_array& va, uint32_t color) const
 	{
-		this->render(
-			m,
-			va,
-			r4::vector4<float>(
-				float(color & 0xff) / float(0xff),
-				float((color >> 8) & 0xff) / float(0xff),
-				float((color >> 16) & 0xff) / float(0xff),
-				float((color >> 24) & 0xff) / float(0xff)
-			)
-		);
+		this->render(m, va, color_to_vec4f(color));
 	}
 };
 

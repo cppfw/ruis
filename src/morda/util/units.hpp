@@ -68,7 +68,8 @@ public:
 	 */
 	real dots_per_cm() const noexcept
 	{
-		return this->dots_per_inch / real(2.54f);
+		constexpr auto num_cm_in_inch = 2.54;
+		return this->dots_per_inch / real(num_cm_in_inch);
 	}
 
 	/**
@@ -78,7 +79,8 @@ public:
 	 */
 	real mm_to_px(real mm) const noexcept
 	{
-		return std::round(mm * this->dots_per_cm() / real(10.0f));
+		constexpr auto num_mm_in_cm = 10;
+		return std::round(mm * this->dots_per_cm() / real(num_mm_in_cm));
 	}
 
 	/**

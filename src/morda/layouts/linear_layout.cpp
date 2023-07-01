@@ -212,15 +212,15 @@ vector2 linear_layout::measure(const vector2& quotum, const_widget_list& widgets
 
 	vector2 ret;
 
-	real flex_len;
-
-	if (quotum[long_index] < 0) {
-		ret[long_index] = rigid_length;
-		flex_len = 0;
-	} else {
-		ret[long_index] = quotum[long_index];
-		flex_len = quotum[long_index] - rigid_length;
-	}
+	auto flex_len = [&]() -> real {
+		if (quotum[long_index] < 0) {
+			ret[long_index] = rigid_length;
+			return 0;
+		} else {
+			ret[long_index] = quotum[long_index];
+			return quotum[long_index] - rigid_length;
+		}
+	}();
 
 	{
 		real remainder = 0;

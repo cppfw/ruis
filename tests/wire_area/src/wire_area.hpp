@@ -15,6 +15,11 @@ class wire_area : public morda::container{
 public:
 	wire_area(const wire_area&) = delete;
 	wire_area& operator=(const wire_area&) = delete;
+
+	wire_area(wire_area&&) = delete;
+	wire_area& operator=(wire_area&&) = delete;
+
+	~wire_area() override = default;
 	
 	wire_area(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
 	

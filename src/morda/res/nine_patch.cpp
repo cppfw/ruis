@@ -42,10 +42,10 @@ class res_subimage : public res::image, public res::image::texture
 
 public:
 	// rect is a rectangle on the texture, Y axis down.
-	res_subimage(const utki::shared_ref<morda::context>& c, const decltype(tex)& tex, const rectangle& rect) :
+	res_subimage(const utki::shared_ref<morda::context>& c, decltype(tex) tex, const rectangle& rect) :
 		res::image(c),
 		res::image::texture(c.get().renderer, rect.d),
-		tex(tex),
+		tex(std::move(tex)),
 		vao([&]() {
 			std::array<vector2, 4> tex_coords = {
 				rect.p.comp_div(this->tex.get().dims),
@@ -66,8 +66,13 @@ public:
 		}())
 	{}
 
-	res_subimage(const res_subimage& orig) = delete;
-	res_subimage& operator=(const res_subimage& orig) = delete;
+	res_subimage(const res_subimage&) = delete;
+	res_subimage& operator=(const res_subimage&) = delete;
+
+	res_subimage(res_subimage&&) = delete;
+	res_subimage& operator=(res_subimage&&) = delete;
+
+	~res_subimage() override = default;
 
 	vector2 dims(real dpi) const noexcept override
 	{
@@ -111,11 +116,11 @@ utki::shared_ref<nine_patch> nine_patch::load(
 }
 
 nine_patch::image_matrix::image_matrix(
-	std::array<std::array<utki::shared_ref<const res::image>, 3>, 3>&& l,
+	std::array<std::array<utki::shared_ref<const res::image>, 3>, 3> l,
 	std::weak_ptr<const nine_patch> parent,
 	real mul
 ) :
-	img_matrix(l),
+	img_matrix(std::move(l)),
 	parent(std::move(parent)),
 	mul(mul)
 {}

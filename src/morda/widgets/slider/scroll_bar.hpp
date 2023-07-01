@@ -55,6 +55,9 @@ public:
 	scroll_bar(const scroll_bar&) = delete;
 	scroll_bar& operator=(const scroll_bar&) = delete;
 
+	scroll_bar(scroll_bar&&) = delete;
+	scroll_bar& operator=(scroll_bar&&) = delete;
+
 	~scroll_bar() override = default;
 
 private:
@@ -71,6 +74,11 @@ public:
 
 	vertical_scroll_bar(const vertical_scroll_bar&) = delete;
 	vertical_scroll_bar& operator=(const vertical_scroll_bar&) = delete;
+
+	vertical_scroll_bar(vertical_scroll_bar&&) = delete;
+	vertical_scroll_bar& operator=(vertical_scroll_bar&&) = delete;
+
+	~vertical_scroll_bar() override = default;
 };
 
 class horizontal_scroll_bar : public scroll_bar
@@ -83,6 +91,11 @@ public:
 
 	horizontal_scroll_bar(const horizontal_scroll_bar&) = delete;
 	horizontal_scroll_bar& operator=(const horizontal_scroll_bar&) = delete;
+
+	horizontal_scroll_bar(horizontal_scroll_bar&&) = delete;
+	horizontal_scroll_bar& operator=(horizontal_scroll_bar&&) = delete;
+
+	~horizontal_scroll_bar() override = default;
 };
 
 } // namespace morda

@@ -26,6 +26,14 @@ namespace morda {
 class index_buffer
 {
 public:
+	index_buffer() = default;
+
+	index_buffer(const index_buffer&) = delete;
+	index_buffer& operator=(const index_buffer&) = delete;
+
+	index_buffer(index_buffer&&) = delete;
+	index_buffer& operator=(index_buffer&&) = delete;
+
 	virtual ~index_buffer() = default;
 };
 
