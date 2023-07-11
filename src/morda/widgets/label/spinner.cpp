@@ -21,6 +21,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "spinner.hpp"
 
+#include <ratio>
+
 #include <utki/math.hpp>
 
 using namespace morda;
@@ -52,5 +54,5 @@ void spinner::set_active(bool active)
 
 void spinner::update(uint32_t dt_ms)
 {
-	angle += utki::deg_to_rad(real(utki::pi_degrees)) / real(utki::reciprocal_milli) * real(dt_ms);
+	angle += utki::deg_to_rad(real(utki::pi_degrees)) / real(std::milli::den) * real(dt_ms);
 }

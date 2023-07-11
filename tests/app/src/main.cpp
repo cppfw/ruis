@@ -1,3 +1,5 @@
+#include <ratio>
+
 #include <r4/quaternion.hpp>
 #include <utki/debug.hpp>
 #include <papki/fs_file.hpp>
@@ -56,8 +58,8 @@ public:
 		this->timer += dt;
 		++this->cnt;
 
-		if(this->timer > utki::reciprocal_milli){
-			this->timer -= utki::reciprocal_milli;
+		if(this->timer > std::milli::den){
+			this->timer -= std::milli::den;
 
 			LOG([this](auto&o){o << "Update(): UPS = " << this->cnt << std::endl;})
 
@@ -211,8 +213,8 @@ public:
 		this->fpsSecCounter += dt;
 		++this->fps;
 		// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers)
-		this->rot *= morda::quaternion().set_rotation(r4::vector3<float>(1, 2, 1).normalize(), 1.5f * (float(dt) / utki::reciprocal_milli));
-		if(this->fpsSecCounter >= utki::reciprocal_milli){
+		this->rot *= morda::quaternion().set_rotation(r4::vector3<float>(1, 2, 1).normalize(), 1.5f * (float(dt) / std::milli::den));
+		if(this->fpsSecCounter >= std::milli::den){
 			std::cout << "fps = " << std::dec << fps << std::endl;
 			this->fpsSecCounter = 0;
 			this->fps = 0;
