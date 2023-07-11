@@ -42,7 +42,7 @@ void frame_vao::set(vector2 dims, vector2 thickness)
 		 thickness, {dims.x() - thickness.x(), thickness.y()},
 		 {dims.x() - thickness.x(), dims.y() - thickness.y()},
 		 {thickness.x(), dims.y() - thickness.y()}}
-    };
+	};
 
 	// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers)
 	std::array<uint16_t, 10> indices = {0, 4, 1, 5, 2, 6, 3, 7, 0, 4};

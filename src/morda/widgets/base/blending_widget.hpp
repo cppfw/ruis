@@ -64,7 +64,8 @@ private:
 		morda::renderer::blend_factor::src_alpha,
 		morda::renderer::blend_factor::one_minus_src_alpha,
 		morda::renderer::blend_factor::one,
-		morda::renderer::blend_factor::one_minus_src_alpha};
+		morda::renderer::blend_factor::one_minus_src_alpha
+	};
 
 protected:
 	blending_widget(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);

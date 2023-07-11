@@ -143,7 +143,8 @@ bool click_drop_down_box::on_mouse_move(const mouse_move_event& e)
 			cm->on_mouse_move(mouse_move_event{
 				e.pos + this->get_absolute_pos() - cm->get_absolute_pos(),
 				e.pointer_id,
-				e.ignore_mouse_capture});
+				e.ignore_mouse_capture
+			});
 		}
 	}
 

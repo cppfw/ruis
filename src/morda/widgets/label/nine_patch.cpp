@@ -111,7 +111,7 @@ this->try_get_widget_as<image>("morda_rt")},
 			 {this->try_get_widget_as<image>("morda_lb"),
              this->try_get_widget_as<image>("morda_b"),
              this->try_get_widget_as<image>("morda_rb")}}
-        };
+		};
 	}()),
 	// TODO: use get_widget_as()
 	inner_content(this->try_get_widget_as<container>("morda_content"))

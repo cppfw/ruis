@@ -151,7 +151,8 @@ constexpr std::array<std::string_view, size_t(morda::key::enum_size)> key_names 
 	"f13"sv,
 	"f16"sv,
 	"f14"sv,
-	"f15"sv};
+	"f15"sv
+};
 } // namespace
 
 std::string_view morda::to_string(morda::key key)
@@ -268,7 +269,7 @@ constexpr auto key_name_to_key_ordered_mapping = []() constexpr {
          {"f14"sv, morda::key::f14},
          {"f15"sv, morda::key::f15},
 		 }
-    };
+	};
 
 	utki::sort(arr.begin(), arr.end(), [](const auto& a, const auto& b) {
 		return a.first < b.first;
