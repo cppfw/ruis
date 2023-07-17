@@ -95,12 +95,7 @@ real morda::parse_layout_dimension_value(const treeml::leaf& l, const morda::uni
 
 r4::vector4<float> morda::color_to_vec4f(uint32_t color)
 {
-	return r4::vector4<float>(
-		float(color & utki::byte_mask) / float(utki::byte_mask),
-		float((color >> utki::byte_bits) & utki::byte_mask) / float(utki::byte_mask),
-		float((color >> (utki::byte_bits * 2)) & utki::byte_mask) / float(utki::byte_mask),
-		float((color >> (utki::byte_bits * 3)) & utki::byte_mask) / float(utki::byte_mask)
-	);
+	return rasterimage::to<float>(rasterimage::from_32bit_pixel(color));
 }
 
 bool morda::is_leaf_property(const treeml::leaf& l)
