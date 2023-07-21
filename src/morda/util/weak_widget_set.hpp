@@ -35,7 +35,7 @@ class weak_widget_set
 public:
 	weak_widget_set() = default;
 
-	weak_widget_set(decltype(set)&& set) :
+	weak_widget_set(decltype(set) set) :
 		set(std::move(set))
 	{}
 

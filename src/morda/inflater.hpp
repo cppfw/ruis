@@ -57,20 +57,20 @@ private:
 
 	const decltype(factories)::value_type::second_type& find_factory(const std::string& widget_name);
 
-	void add_factory(std::string&& widget_name, decltype(factories)::value_type::second_type&& factory);
+	void add_factory(std::string widget_name, decltype(factories)::value_type::second_type factory);
 
 public:
 	/**
 	 * @brief Registers a new widget type.
 	 * Use this function to associate some widget class with a name which can be used
-	 * in STOB GUI description.
+	 * in treeml GUI description.
 	 * @param widget_name - name of the widget as it appears in GUI script.
 	 */
 	template <class widget_type>
 	void register_widget(const std::string& widget_name)
 	{
 		this->add_factory(
-			std::string(widget_name),
+			widget_name,
 			[](const utki::shared_ref<morda::context>& c,
 			   const treeml::forest& desc) -> utki::shared_ref<morda::widget> {
 				return utki::make_shared<widget_type>(c, desc);

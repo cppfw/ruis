@@ -48,7 +48,7 @@ public:
 		//		TRACE(<< "static_provider::recycle(): index = " << index << std::endl)
 	}
 
-	void add(treeml::tree&& w)
+	void add(treeml::tree w)
 	{
 		this->widgets.emplace_back(std::move(w));
 	}

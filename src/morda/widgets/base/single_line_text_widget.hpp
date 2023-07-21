@@ -46,7 +46,7 @@ protected:
 public:
 	using text_widget::set_text;
 
-	void set_text(std::u32string&& text) override;
+	void set_text(std::u32string text) override;
 
 	std::u32string get_text() const override;
 

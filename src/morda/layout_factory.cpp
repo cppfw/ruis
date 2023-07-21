@@ -23,7 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace morda;
 
-void layout_factory::add_factory(std::string name, factory_type&& factory)
+void layout_factory::add_factory(std::string name, factory_type factory)
 {
 	this->factories.emplace(std::move(name), std::move(factory));
 }

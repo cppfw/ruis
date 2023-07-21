@@ -56,12 +56,12 @@ public:
 		return this->font.get();
 	}
 
-	void set_text(const std::string& text)
+	void set_text(std::string_view text)
 	{
 		this->set_text(utki::to_utf32(text));
 	}
 
-	virtual void set_text(std::u32string&& text) = 0;
+	virtual void set_text(std::u32string text) = 0;
 
 	virtual std::u32string get_text() const = 0;
 

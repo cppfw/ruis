@@ -26,7 +26,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace morda;
 
 vertex_array::vertex_array(
-	decltype(buffers)&& buffers,
+	decltype(buffers)&& buffers, // TODO: pass by value?
 	// NOLINTNEXTLINE(modernize-pass-by-value)
 	const utki::shared_ref<const morda::index_buffer>& indices,
 	mode rendering_mode

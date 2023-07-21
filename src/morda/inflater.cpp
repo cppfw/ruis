@@ -33,7 +33,7 @@ inflater::inflater(morda::context& context) :
 	context(context)
 {}
 
-void inflater::add_factory(std::string&& widget_name, decltype(factories)::value_type::second_type&& factory)
+void inflater::add_factory(std::string widget_name, decltype(factories)::value_type::second_type factory)
 {
 	auto ret = this->factories.insert(std::make_pair(std::move(widget_name), std::move(factory)));
 	if (!ret.second) {

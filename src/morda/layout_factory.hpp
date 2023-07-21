@@ -40,7 +40,7 @@ private:
 	std::map<std::string, factory_type, std::less<>> factories;
 
 public:
-	void add_factory(std::string name, factory_type&& factory);
+	void add_factory(std::string name, factory_type factory);
 
 	utki::shared_ref<layout> create(std::string_view name, const tml::forest& desc);
 };

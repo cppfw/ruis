@@ -66,7 +66,7 @@ void single_line_text_widget::on_text_change()
 	this->text_widget::on_text_change();
 }
 
-void single_line_text_widget::set_text(std::u32string&& text)
+void single_line_text_widget::set_text(std::u32string text)
 {
 	this->text = std::move(text);
 	this->invalidate_layout();
