@@ -55,11 +55,7 @@ public:
 
 	const mode rendering_mode;
 
-	vertex_array(
-		buffers_type buffers,
-		const utki::shared_ref<const morda::index_buffer>& indices,
-		mode rendering_mode
-	);
+	vertex_array(buffers_type buffers, const utki::shared_ref<const morda::index_buffer>& indices, mode rendering_mode);
 
 	vertex_array(const vertex_array&) = delete;
 	vertex_array& operator=(const vertex_array&) = delete;
