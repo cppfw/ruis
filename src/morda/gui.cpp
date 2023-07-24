@@ -337,17 +337,9 @@ void gui::init_standard_widgets(papki::file& fi)
 	this->context.get().inflater.register_widget<busy>("busy");
 	this->context.get().inflater.register_widget<tabbed_book>("tabbed_book");
 
-	try {
-		auto t = this->context.get().loader.load<res::treeml>("morda_gui_defs");
+	auto t = this->context.get().loader.load<res::treeml>("morda_gui_defs");
 
-		this->context.get().inflater.push_defs(t.get().forest());
-
-	} catch (std::exception&) {
-		// TODO: do not ignore?
-		LOG([](auto& o) {
-			o << "gui::init_standard_widgets(): could not load morda_gui_definitions" << std::endl;
-		})
-	}
+	this->context.get().inflater.push_defs(t.get().forest());
 }
 
 void gui::set_viewport(const morda::vector2& size)

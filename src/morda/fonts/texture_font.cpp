@@ -216,7 +216,7 @@ real texture_font::get_advance_internal(const std::u32string& str, unsigned tab_
 				ret += g.advance;
 			}
 		} catch (std::out_of_range&) {
-			// ignore
+			return ret;
 		}
 	}
 
@@ -323,7 +323,7 @@ font::render_result texture_font::render_internal(
 			ret.advance += advance;
 			matr.translate(advance, 0);
 		} catch (std::out_of_range&) {
-			// ignore
+			return ret;
 		}
 	}
 
