@@ -34,7 +34,9 @@ namespace morda {
 class vertex_array
 {
 public:
-	const std::vector<utki::shared_ref<const vertex_buffer>> buffers;
+	using buffers_type = std::vector<utki::shared_ref<const vertex_buffer>>;
+
+	const buffers_type buffers;
 
 	const utki::shared_ref<const index_buffer> indices;
 
@@ -54,7 +56,7 @@ public:
 	const mode rendering_mode;
 
 	vertex_array(
-		decltype(buffers)&& buffers, // TODO: pass by value?
+		buffers_type buffers,
 		const utki::shared_ref<const morda::index_buffer>& indices,
 		mode rendering_mode
 	);
