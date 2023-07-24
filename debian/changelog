@@ -1,3 +1,9 @@
+libmorda (0.5.206) unstable; urgency=medium
+
+  * pass by value
+
+ -- Ivan Gagis <igagis@gmail.com>  Mon, 24 Jul 2023 18:19:39 +0300
+
 libmorda (0.5.205) unstable; urgency=medium
 
   * correct deb package descriptions
