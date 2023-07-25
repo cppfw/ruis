@@ -241,6 +241,7 @@ const tst::set set("inflating", [](tst::suite& suite){
 
     suite.add("template_recursion_detection", []{
 		morda::gui m(make_dummy_context());
+		bool logic_error_occurred = false;
 		try{
 			auto w = m.context.get().inflater.inflate(treeml::read(R"qwertyuiop(
 				defs{
@@ -269,10 +270,12 @@ const tst::set set("inflating", [](tst::suite& suite){
 			)qwertyuiop"));
             tst::check(false, SL);
 		}catch(std::logic_error&){
-            // expected to get here
+            logic_error_occurred = true;
 		}catch(...){
             tst::check(false, SL);
         }
+
+		tst::check(logic_error_occurred, SL);
 	});
 
     suite.add("two_defs_blocks_in_widget", []{
