@@ -50,7 +50,9 @@ public:
 		triangles,
 		triangle_fan,
 		line_loop,
-		triangle_strip
+		triangle_strip,
+
+		enum_size
 	};
 
 	const mode rendering_mode;

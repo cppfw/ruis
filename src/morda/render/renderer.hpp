@@ -115,7 +115,9 @@ public:
 		one_minus_constant_color,
 		constant_alpha,
 		one_minus_constant_alpha,
-		src_alpha_saturate
+		src_alpha_saturate,
+
+		enum_size
 	};
 
 	virtual void set_blend_func(

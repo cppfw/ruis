@@ -11,7 +11,9 @@ public:
 		left,
 		top,
 		right,
-		bottom
+		bottom,
+
+		enum_size
 	};
 private:
 	orientation outlet_orientation = orientation::bottom;

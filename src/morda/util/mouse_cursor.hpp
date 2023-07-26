@@ -39,7 +39,9 @@ enum class mouse_cursor {
 	bottom_right_corner,
 	index_finger,
 	grab,
-	caret
+	caret,
+
+	enum_size
 };
 
 } // namespace morda
