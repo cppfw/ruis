@@ -88,7 +88,7 @@ public:
 	 * @param pp - value in perception pixels.
 	 * @return  Value in pixels.
 	 */
-	real dp_to_px(real pp) const noexcept
+	real pp_to_px(real pp) const noexcept
 	{
 		return std::round(pp * this->dots_per_pp);
 	}

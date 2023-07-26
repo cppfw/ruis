@@ -71,7 +71,7 @@ real morda::parse_dimension_value(const treeml::leaf& l, const morda::units& uni
 	if (l.length() >= 2 && l[l.length() - 1] == 'm' && l[l.length() - 2] == 'm') {
 		return units.mm_to_px(l.to_float());
 	} else if (l.length() >= 2 && l[l.length() - 1] == 'p' && l[l.length() - 2] == 'p') { // if in perception pixels
-		return units.dp_to_px(l.to_float());
+		return units.pp_to_px(l.to_float());
 	}
 
 	if (l.empty()) {
