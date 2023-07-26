@@ -314,6 +314,7 @@ utki::shared_ref<texture_2d> widget::render_to_texture(std::shared_ptr<texture_2
 
 	this->render(matrix);
 
+	// TODO: get rid of default framebuffer, get previous framebuffer and set it here
 	r.set_framebuffer(nullptr);
 
 	return tex;
