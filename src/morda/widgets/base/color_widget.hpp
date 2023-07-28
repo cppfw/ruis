@@ -26,7 +26,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 namespace morda {
 
 /**
- * @brief Basic widget which has a color setting.
+ * @brief Basic widget which has a color attribute.
  *
  * @li @c color - color value.
  * @li @c disabled_color - color value for disabled state.

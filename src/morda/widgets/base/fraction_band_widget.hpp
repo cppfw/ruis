@@ -27,7 +27,7 @@ namespace morda {
 
 class fraction_band_widget : public fraction_widget
 {
-	float curBandSizeFraction = 0; // Current bar size factor from 0 to 1
+	float curBandSizeFraction = 0; // current bar size factor from 0 to 1
 
 protected:
 	fraction_band_widget(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :

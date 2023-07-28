@@ -164,7 +164,7 @@ vector2 linear_layout::measure(const vector2& quotum, const_widget_list& widgets
 
 			if (lp.dims[long_index] == layout_params::max || lp.dims[long_index] == layout_params::fill) {
 				throw std::logic_error(
-					"linear_container::measure(): 'max' or 'fill' in longitudional direction specified in layout parameters"
+					"linear_layout::measure(): 'max' or 'fill' in longitudional direction specified in layout parameters"
 				);
 			}
 
