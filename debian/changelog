@@ -1,3 +1,9 @@
+libmorda (0.5.208) unstable; urgency=medium
+
+  * add enum_size to enums
+
+ -- Ivan Gagis <igagis@gmail.com>  Mon, 07 Aug 2023 10:35:44 +0300
+
 libmorda (0.5.207) unstable; urgency=medium
 
   * fix lint
