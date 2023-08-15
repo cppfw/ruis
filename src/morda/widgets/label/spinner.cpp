@@ -54,5 +54,5 @@ void spinner::set_active(bool active)
 
 void spinner::update(uint32_t dt_ms)
 {
-	angle += utki::deg_to_rad(real(utki::pi_degrees)) / real(std::milli::den) * real(dt_ms);
+	angle += real(utki::pi) / real(std::milli::den) * real(dt_ms);
 }
