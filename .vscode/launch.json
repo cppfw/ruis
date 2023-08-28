@@ -33,11 +33,11 @@
 			"name": "(gdb) busy",
 			"type": "cppdbg",
 			"request": "launch",
-			"program": "${workspaceFolder}/tests/busy/build/tests",
+			"program": "${workspaceFolder}/tests/busy/out/dbg/tests",
 			"args": [],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}/tests/busy",
-			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/build:../harness/mordavokne/build"}],
+			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/out/dbg:../harness/mordavokne/out/dbg"}],
 			"externalConsole": false,
 			"MIMode": "gdb",
 			"setupCommands": [
@@ -47,7 +47,7 @@
 					"ignoreFailures": true
 				}
 			],
-			"preLaunchTask": "build_debug"
+			"preLaunchTask": "build-dbg"
 		},
 		{
 			"name": "(gdb) book",
@@ -107,7 +107,7 @@
 					"ignoreFailures": true
 				}
 			],
-			"preLaunchTask": "build_debug"
+			"preLaunchTask": "build-dbg"
 		},
 		{
 			"name": "(gdb) widget_set",
@@ -127,7 +127,7 @@
 					"ignoreFailures": true
 				}
 			],
-			"preLaunchTask": "build_debug"
+			"preLaunchTask": "build-dbg"
 		},
 		{
 			"name": "(gdb) get_all_widgets",
@@ -147,7 +147,7 @@
 					"ignoreFailures": true
 				}
 			],
-			"preLaunchTask": "build_debug"
+			"preLaunchTask": "build-dbg"
 		},
 		{
 			"name": "(gdb) unit inflating",

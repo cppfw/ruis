@@ -117,7 +117,7 @@ morda::vector2 image::measure(const morda::vector2& quotum) const
 	}
 
 	if (!img) {
-		return {0};
+		return {0, 0};
 	}
 
 	vector2 img_dims = img->dims(this->context.get().units.dots_per_inch);

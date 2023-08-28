@@ -39,6 +39,12 @@ defs{
 		}
 	}
 
+	@busy{
+		@busy{
+			image {morda_img_busy}
+		}
+	}
+
 	@refresh{
 		@spinner{
 			image {morda_img_refresh}
