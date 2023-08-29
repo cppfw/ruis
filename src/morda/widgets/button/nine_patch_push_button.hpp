@@ -26,7 +26,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace morda {
 
-class nine_patch_push_button : virtual public push_button, public nine_patch_button
+class nine_patch_push_button : public push_button, public nine_patch_button
 {
 public:
 	nine_patch_push_button(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);

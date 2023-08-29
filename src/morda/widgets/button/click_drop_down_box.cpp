@@ -107,7 +107,6 @@ const auto drop_down_menu_layout = treeml::read(R"qwertyuiop(
 click_drop_down_box::click_drop_down_box(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
 	widget(c, desc),
 	button(this->context, drop_down_box_layout),
-	push_button(this->context, drop_down_box_layout),
 	nine_patch_push_button(this->context, drop_down_box_layout),
 	drop_down_box(this->context, desc, this->get_widget_as<morda::container>("morda_dropdown_selection"))
 {
