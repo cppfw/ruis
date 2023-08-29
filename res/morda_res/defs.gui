@@ -72,6 +72,10 @@ defs{
 
 	@push_button{
 		@nine_patch_push_button{
+			look{
+				pressed {morda_npt_button_pressed}
+				unpressed {morda_npt_button_normal}
+			}
 			${children}
 		}
 	}
