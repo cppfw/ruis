@@ -33,6 +33,11 @@ namespace {
 const auto drop_down_box_layout = treeml::read(R"qwertyuiop(
 	lp{dx{max} dy{max}}
 
+	look{
+		pressed {morda_npt_button_pressed}
+		unpressed {morda_npt_button_normal}
+	}
+
 	@row{
 		lp{dx{max}}
 		@pile{
