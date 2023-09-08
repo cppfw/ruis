@@ -52,12 +52,12 @@ void gradient::set(std::vector<std::tuple<real, uint32_t>>& stops, bool vertical
 		//		TRACE(<< "put color = " << std::hex << colors.back() << std::endl)
 
 		if (vertical) {
-			vertices.emplace_back(0, std::get<0>(s));
 			vertices.emplace_back(1, std::get<0>(s));
+			vertices.emplace_back(0, std::get<0>(s));
 		} else {
 			ASSERT(!vertical)
-			vertices.emplace_back(std::get<0>(s), 1);
 			vertices.emplace_back(std::get<0>(s), 0);
+			vertices.emplace_back(std::get<0>(s), 1);
 		}
 		//		TRACE(<< "put pos = " << vertices.back() << std::endl)
 	}

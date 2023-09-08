@@ -52,7 +52,7 @@ npt_sample2{
 }
 
 grd_sample{
-	vertical{true}
+	vertical{false}
 
 	Stop{ pos{0.3} color{0x0} }
 	Stop{ pos{0.7} color{0xff00ffff} }
