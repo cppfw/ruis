@@ -177,9 +177,9 @@ real list_widget::get_scroll_factor() const noexcept
 		return 0;
 	}
 
-	return (real(real(this->pos_index) + this->pos_offset / this->children().front().get().rect().d[index])
-			* average_item_dim)
-		/ (real(real(length) + this->first_tail_item_offset / this->first_tail_item_dim) * average_item_dim);
+	return (real(real(this->pos_index) + this->pos_offset / this->children().front().get().rect().d[index]) *
+			average_item_dim) /
+		(real(real(length) + this->first_tail_item_offset / this->first_tail_item_dim) * average_item_dim);
 }
 
 void list_widget::set_scroll_factor(real factor)
@@ -209,8 +209,8 @@ void list_widget::set_scroll_factor(real factor)
 			d = (d + this->first_tail_item_offset) / real(this->num_tail_items);
 
 			this->pos_offset = round(
-				d * (factor - int_factor) * real(this->item_provider->count() - this->num_tail_items)
-				+ factor * this->first_tail_item_offset
+				d * (factor - int_factor) * real(this->item_provider->count() - this->num_tail_items) +
+				factor * this->first_tail_item_offset
 			);
 		} else {
 			this->pos_offset = 0;

@@ -125,8 +125,8 @@ vector2 text_input_line::measure(const morda::vector2& quotum) const noexcept
 	vector2 ret;
 
 	if (quotum.x() < 0) {
-		ret.x() = this->single_line_text_widget::measure(vector2(-1)).x()
-			+ cursor_width * this->context.get().units.dots_per_fp;
+		ret.x() = this->single_line_text_widget::measure(vector2(-1)).x() +
+			cursor_width * this->context.get().units.dots_per_fp;
 	} else {
 		ret.x() = quotum.x();
 	}
@@ -177,8 +177,8 @@ void text_input_line::set_cursor_index(size_t index, bool selection)
 						   this->get_text(),
 						   this->first_visible_char_index,
 						   this->cursor_index - this->first_visible_char_index
-					   ))
-		+ this->x_offset;
+					   )) +
+		this->x_offset;
 
 	ASSERT(this->cursor_pos >= 0)
 

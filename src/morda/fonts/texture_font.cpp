@@ -103,8 +103,8 @@ texture_font::glyph texture_font::load_glyph(char32_t c) const
 	std::array<r4::vector2<float>, 4> verts = {
 		(morda::vector2(real(m->horiBearingX), -real(m->horiBearingY)) / real(freetype_granularity)),
 		(morda::vector2(real(m->horiBearingX), real(m->height - m->horiBearingY)) / real(freetype_granularity)),
-		(morda::vector2(real(m->horiBearingX + m->width), real(m->height - m->horiBearingY))
-		 / real(freetype_granularity)),
+		(morda::vector2(real(m->horiBearingX + m->width), real(m->height - m->horiBearingY)) /
+		 real(freetype_granularity)),
 		(morda::vector2(real(m->horiBearingX + m->width), -real(m->horiBearingY)) / real(freetype_granularity)) //
 	};
 

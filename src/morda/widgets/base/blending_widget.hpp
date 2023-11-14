@@ -54,8 +54,8 @@ public:
 
 		bool operator==(const blending_params& b)
 		{
-			return this->src == b.src && this->dst == b.dst && this->src_alpha == b.src_alpha
-				&& this->dst_alpha == b.dst_alpha;
+			return this->src == b.src && this->dst == b.dst && this->src_alpha == b.src_alpha &&
+				this->dst_alpha == b.dst_alpha;
 		}
 	};
 
