@@ -24,7 +24,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../../updateable.hpp"
 #include "../../widget.hpp"
 #include "../base/single_line_text_widget.hpp"
-#include "../character_input_widget.hpp"
+
+#include "character_input_widget.hpp"
 
 namespace morda {
 

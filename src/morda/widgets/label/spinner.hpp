@@ -32,7 +32,9 @@ namespace morda {
  * @brief Spinning image label.
  * @param active - whether the spinner is initially active or not, can be true/false.
  */
-class spinner : public image, public updateable
+class spinner :
+	public image, //
+	public updateable
 {
 	real angle = 0;
 
