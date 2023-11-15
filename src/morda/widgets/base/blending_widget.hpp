@@ -40,7 +40,7 @@ namespace morda {
  */
 class blending_widget : public virtual widget
 {
-	bool isBlendingEnabled_v = true;
+	bool is_blending_enabled_v = true;
 
 public:
 	/**
@@ -94,7 +94,7 @@ public:
 	 */
 	bool is_blending_enabled() const noexcept
 	{
-		return this->isBlendingEnabled_v;
+		return this->is_blending_enabled_v;
 	}
 
 	/**

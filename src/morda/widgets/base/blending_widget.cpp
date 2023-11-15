@@ -64,7 +64,7 @@ blending_widget::blending_widget(const utki::shared_ref<morda::context>& c, cons
 		}
 
 		if (p.value == "blend") {
-			this->isBlendingEnabled_v = get_property_value(p).to_bool();
+			this->is_blending_enabled_v = get_property_value(p).to_bool();
 		} else if (p.value == "blend_src") {
 			this->blend_v.src = blend_factor_from_string(get_property_value(p).to_string());
 		} else if (p.value == "blend_dst") {
@@ -88,10 +88,10 @@ void blending_widget::set_blending_to_renderer() const
 
 void blending_widget::set_blending_enabled(bool enable)
 {
-	if (this->isBlendingEnabled_v == enable) {
+	if (this->is_blending_enabled_v == enable) {
 		return;
 	}
-	this->isBlendingEnabled_v = enable;
+	this->is_blending_enabled_v = enable;
 	this->on_blending_change();
 }
 
