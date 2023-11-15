@@ -33,8 +33,8 @@ namespace morda {
  */
 class button : public virtual widget
 {
-	bool isPressed_v = false;
-	bool isPressedChangedNotified = true;
+	bool is_pressed_v = false;
+	bool is_pressed_changed_notified = true;
 
 protected:
 	/**
@@ -53,7 +53,7 @@ public:
 	 */
 	bool is_pressed() const noexcept
 	{
-		return this->isPressed_v;
+		return this->is_pressed_v;
 	}
 
 	void set_pressed(bool pressed);

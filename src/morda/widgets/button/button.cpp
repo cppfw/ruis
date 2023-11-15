@@ -35,27 +35,27 @@ button::button(const utki::shared_ref<morda::context>& c, const treeml::forest& 
 		}
 
 		if (p.value == "pressed") {
-			this->isPressed_v = get_property_value(p).to_bool();
+			this->is_pressed_v = get_property_value(p).to_bool();
 		}
 	}
 }
 
 void button::set_pressed(bool pressed)
 {
-	if (this->isPressed_v == pressed) {
+	if (this->is_pressed_v == pressed) {
 		return;
 	}
-	this->isPressed_v = pressed;
-	this->isPressedChangedNotified = false;
+	this->is_pressed_v = pressed;
+	this->is_pressed_changed_notified = false;
 	this->on_press_change();
 }
 
 void button::on_press_change()
 {
-	if (this->isPressedChangedNotified) {
+	if (this->is_pressed_changed_notified) {
 		return;
 	}
-	this->isPressedChangedNotified = true;
+	this->is_pressed_changed_notified = true;
 
 	if (this->press_handler) {
 		this->press_handler(*this);
