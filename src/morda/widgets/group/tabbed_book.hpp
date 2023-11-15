@@ -30,7 +30,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace morda {
 
-class tabbed_book : virtual public morda::widget, private morda::container
+class tabbed_book :
+	virtual public morda::widget, //
+	private morda::container
 {
 	morda::tab_group& tab_group;
 	morda::book& book;
