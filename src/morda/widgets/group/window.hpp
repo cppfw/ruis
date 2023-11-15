@@ -36,7 +36,9 @@ namespace morda {
  * @param title - text of the window title.
  * @param look - style settings.
  */
-class window : virtual public widget, private container
+class window :
+	virtual public widget, //
+	private container
 {
 	morda::vector2 empty_min_dim; // minimal dimension of empty window
 

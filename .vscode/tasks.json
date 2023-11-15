@@ -190,7 +190,7 @@
         {
             "label": "format",
             "type": "shell",
-            "command": "make apply-format",
+            "command": "make format",
             "problemMatcher": [],
             "group": "build"
         }
