@@ -32,7 +32,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace morda {
 
-class tree_view : virtual public widget, private scroll_area
+class tree_view :
+	virtual public widget, //
+	private scroll_area
 {
 	utki::shared_ref<list_widget> item_list;
 
