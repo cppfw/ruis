@@ -154,7 +154,7 @@
 			"type": "cppdbg",
 			"request": "launch",
 			"program": "${workspaceFolder}/tests/unit/out/dbg/tests",
-			"args": ["--suite=inflating", "--test=variables_overriding"],
+			"args": ["--suite=inflating", "--test=inflating_left_alignment"],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}/tests/unit",
 			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/out/dbg"}],

@@ -115,7 +115,8 @@ treeml::forest apply_gui_template(
 	treeml::forest trees
 )
 {
-	// TRACE(<< "applying template: " << treeml::to_string(templ) << std::endl)
+	std::cout << "applying template: " << treeml::to_string(templ) << std::endl;
+	std::cout << "trees: " << tml::to_string(trees) << std::endl;
 	treeml::forest ret = templ;
 
 	std::map<std::string, treeml::forest> vars;
@@ -141,12 +142,13 @@ treeml::forest apply_gui_template(
 	}
 	vars["children"] = std::move(children);
 
-	// #ifdef DEBUG
-	// 	for(auto& v : vars){
-	// 		TRACE(<< "v = " << v.first << std::endl)
-	// 	}
-	// #endif
-	// 	TRACE(<< "ret = " << treeml::to_string(ret) << std::endl)
+	#ifdef DEBUG
+		for(auto& v : vars){
+			std::cout << "v = " << v.first << std::endl;
+		}
+		std::cout << "ret = " << treeml::to_string(ret) << std::endl;
+	#endif
+
 	substitute_vars(
 		ret,
 		[&vars](const std::string& name) -> const treeml::forest* {
@@ -162,6 +164,8 @@ treeml::forest apply_gui_template(
 		false,
 		true
 	);
+
+	std::cout << "ret substed = " << treeml::to_string(ret) << std::endl;
 
 	return ret;
 }
@@ -210,7 +214,12 @@ utki::shared_ref<widget> inflater::inflate(treeml::forest::const_iterator begin,
 	// TRACE(<< "inflating = " << i->value.to_string() << std::endl)
 	if (auto tmpl = this->find_template(i->value.to_string().substr(1))) {
 		widget_name = tmpl->templ.value.to_string().substr(1);
-		widget_desc = apply_gui_template(tmpl->templ.children, tmpl->vars, treeml::forest(i->children));
+		std::cout << "i->children = " << tml::to_string(i->children) << std::endl;
+		widget_desc = apply_gui_template(
+			tmpl->templ.children,
+			tmpl->vars,
+			treeml::forest(i->children) // copy children
+		);
 		// TRACE(<< "After applying template: " << treeml::to_string(widget_desc) << std::endl)
 	} else {
 		widget_name = i->value.to_string().substr(1);
