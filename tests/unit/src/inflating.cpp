@@ -6,6 +6,8 @@
 
 #include "../../harness/util/dummy_context.hpp"
 
+using namespace std::string_literals;
+
 namespace{
 const tst::set set("inflating", [](tst::suite& suite){
     suite.add("whole_definition_chain_is_substituted", []{
@@ -327,6 +329,59 @@ const tst::set set("inflating", [](tst::suite& suite){
 		)qwertyuiop"));
 
 		tst::check_eq(w.get().rect().p.x(), morda::real(2), SL);
+	});
+
+	suite.add("inflating_row_layout", [](){
+		morda::gui m(make_dummy_context());
+
+		auto w = m.context.get().inflater.inflate(treeml::read(R"qwertyuiop(
+			@row{
+				@widget{
+					id{ widget1 }
+				}
+			}
+		)qwertyuiop"));
+
+		auto c = utki::dynamic_reference_cast<morda::container>(w);
+
+		tst::check_eq(c.get().children().size(), size_t(1), SL);
+		tst::check_eq(c.get().children().front().get().id, "widget1"s, SL);
+	});
+
+	suite.add("inflating_left_alignment", [](){
+		morda::gui m(make_dummy_context());
+
+		auto t = m.context.get().inflater.inflate(treeml::read(R"qwertyuiop(
+			@left{
+				@widget{
+					id{ widget1 }
+				}
+			}
+		)qwertyuiop"));
+
+		auto c = utki::dynamic_reference_cast<morda::container>(t);
+
+		auto w = c.get().try_get_widget("widget1");
+
+		tst::check(w, SL);
+	});
+
+	suite.add("inflating_top_alignment", [](){
+		morda::gui m(make_dummy_context());
+
+		auto t = m.context.get().inflater.inflate(treeml::read(R"qwertyuiop(
+			@top{
+				@widget{
+					id{ widget1 }
+				}
+			}
+		)qwertyuiop"));
+
+		auto c = utki::dynamic_reference_cast<morda::container>(t);
+
+		auto w = c.get().try_get_widget("widget1");
+
+		tst::check(w, SL);
 	});
 });
 }

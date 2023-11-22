@@ -37,7 +37,7 @@ const tst::set set("layouting", [](tst::suite& suite){
         c->push_back(tc);
         tst::check(tc.get().is_layout_dirty(), SL);
 
-        // after prforming layouting on parent container the child container's layout should be dirty
+        // after performing layouting on parent container the child container's layout should be dirty
         // because it invalidates its layout during layouting in its on_lay_out() overridden method
         c->lay_out();
         tst::check(tc.get().is_layout_dirty(), SL);

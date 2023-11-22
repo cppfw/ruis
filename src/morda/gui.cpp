@@ -70,22 +70,21 @@ defs{
 		}
 	}
 
-	// TODO: these don't work in case of e.g. @left template, something wrong with ${children} template variable
-	// @row{
-	// 	@container{
-	// 		layout{row}
+	@row{
+		@container{
+			layout{row}
 
-	// 		${children}
-	// 	}
-	// }
+			${children}
+		}
+	}
 
-	// @column{
-	// 	@container{
-	// 		layout{column}
+	@column{
+		@container{
+			layout{column}
 
-	// 		${children}
-	// 	}
-	// }
+			${children}
+		}
+	}
 }
 
 defs{
@@ -224,8 +223,6 @@ gui::gui(const utki::shared_ref<morda::context>& context) :
 	// register basic widgets
 	this->context.get().inflater.register_widget<widget>("widget");
 	this->context.get().inflater.register_widget<container>("container");
-	this->context.get().inflater.register_widget<row>("row");
-	this->context.get().inflater.register_widget<column>("column");
 
 	this->context.get().inflater.register_widget<mouse_proxy>("mouse_proxy");
 	this->context.get().inflater.register_widget<click_proxy>("click_proxy");
