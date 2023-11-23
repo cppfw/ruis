@@ -99,7 +99,7 @@ void substitute_vars(
 				continue;
 			}
 		} else {
-			if (i->value.empty() || go_beyond_child_widgets || i->value[0] != '@') {
+			if (i->value.empty() || i->value[0] != '@' || go_beyond_child_widgets) {
 				substitute_vars(i->children, find_var, blank_not_found_vars, true);
 			}
 		}
@@ -115,14 +115,14 @@ treeml::forest apply_gui_template(
 	treeml::forest trees
 )
 {
-	std::cout << "applying template: " << treeml::to_string(templ) << std::endl;
-	std::cout << "trees: " << tml::to_string(trees) << std::endl;
-	treeml::forest ret = templ;
+	// std::cout << "applying template: " << treeml::to_string(templ) << std::endl;
+	// std::cout << "trees: " << tml::to_string(trees) << std::endl;
+	treeml::forest ret = templ; // copy template
 
 	std::map<std::string, treeml::forest> vars;
 	treeml::forest children;
 	for (auto& i : trees) {
-		if (!is_leaf_property(i.value)) {
+		if (!is_leaf_property(i.value) || (is_variable(i) && i.children.front() == "children")) {
 			children.emplace_back(std::move(i));
 			continue;
 		}
@@ -142,12 +142,12 @@ treeml::forest apply_gui_template(
 	}
 	vars["children"] = std::move(children);
 
-	#ifdef DEBUG
-		for(auto& v : vars){
-			std::cout << "v = " << v.first << std::endl;
-		}
-		std::cout << "ret = " << treeml::to_string(ret) << std::endl;
-	#endif
+#ifdef DEBUG
+	// for (auto& v : vars) {
+	// 	std::cout << "v = " << v.first << std::endl;
+	// }
+	// std::cout << "ret = " << treeml::to_string(ret) << std::endl;
+#endif
 
 	substitute_vars(
 		ret,
@@ -165,7 +165,7 @@ treeml::forest apply_gui_template(
 		true
 	);
 
-	std::cout << "ret substed = " << treeml::to_string(ret) << std::endl;
+	// std::cout << "ret substed = " << treeml::to_string(ret) << std::endl;
 
 	return ret;
 }
@@ -214,7 +214,7 @@ utki::shared_ref<widget> inflater::inflate(treeml::forest::const_iterator begin,
 	// TRACE(<< "inflating = " << i->value.to_string() << std::endl)
 	if (auto tmpl = this->find_template(i->value.to_string().substr(1))) {
 		widget_name = tmpl->templ.value.to_string().substr(1);
-		std::cout << "i->children = " << tml::to_string(i->children) << std::endl;
+		// std::cout << "i->children = " << tml::to_string(i->children) << std::endl;
 		widget_desc = apply_gui_template(
 			tmpl->templ.children,
 			tmpl->vars,
@@ -292,11 +292,11 @@ inflater::widget_template inflater::parse_template(const std::string& name, cons
 	for (auto& n : templ) {
 		// template definition
 		if (!ret.templ.value.empty()) {
-			break;
+			throw std::invalid_argument("inflater::parse_temaple(): template has more than one definition");
 		}
 
 		if (is_leaf_property(n.value)) {
-			// possibly variable name
+			// possibly argument name
 			if (!n.children.empty()) {
 				throw std::invalid_argument("inflater::parse_template(): template argument name has children");
 			}
@@ -315,6 +315,7 @@ inflater::widget_template inflater::parse_template(const std::string& name, cons
 	// TRACE(<< "template definition found: " << treeml::to_string(ret.templ) << std::endl)
 
 	// TRACE(<< "vars:" << std::endl)
+
 	// for each variable create a stub property if needed
 	for (auto& v : ret.vars) {
 		// TRACE(<< " " << v << std::endl)
@@ -330,11 +331,16 @@ inflater::widget_template inflater::parse_template(const std::string& name, cons
 	ASSERT(!ret.templ.value.empty())
 	ASSERT(ret.templ.value.to_string()[0] == '@')
 
+	// TODO: why is recursion not allowed?
 	check_template_recursion(name, ret.templ.children);
 
 	if (auto tmpl = this->find_template(ret.templ.value.to_string().substr(1))) {
 		ret.templ.value = tmpl->templ.value;
-		ret.templ.children = apply_gui_template(tmpl->templ.children, tmpl->vars, std::move(ret.templ.children));
+		ret.templ.children = apply_gui_template( //
+			tmpl->templ.children,
+			tmpl->vars,
+			std::move(ret.templ.children)
+		);
 
 		ret.vars.insert(tmpl->vars.begin(), tmpl->vars.end()); // forward all variables
 	}

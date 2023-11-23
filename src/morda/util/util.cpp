@@ -108,7 +108,13 @@ bool morda::is_property(const treeml::tree& t)
 	return is_leaf_property(t.value) && t.children.size() != 0;
 }
 
+// TODO: rename to is_leaf_widget
 bool morda::is_leaf_child(const treeml::leaf& l)
 {
 	return !is_leaf_property(l);
+}
+
+bool morda::is_variable(const tml::tree& t)
+{
+	return t.value == "$" && t.children.size() == 1 && t.children.front().children.empty();
 }

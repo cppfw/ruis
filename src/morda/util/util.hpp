@@ -91,6 +91,8 @@ bool is_leaf_property(const treeml::leaf& l);
 
 bool is_leaf_child(const treeml::leaf& l);
 
+bool is_variable(const tml::tree& t);
+
 r4::vector4<float> color_to_vec4f(uint32_t color);
 
 inline const treeml::leaf& get_property_value(const treeml::tree& p)
