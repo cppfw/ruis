@@ -222,6 +222,7 @@ gui::gui(const utki::shared_ref<morda::context>& context) :
 	this->context.get().inflater.register_widget<widget>("widget");
 	this->context.get().inflater.register_widget<container>("container");
 
+	// proxy
 	this->context.get().inflater.register_widget<mouse_proxy>("mouse_proxy");
 	this->context.get().inflater.register_widget<click_proxy>("click_proxy");
 	this->context.get().inflater.register_widget<ratio_proxy>("ratio_proxy");
@@ -235,6 +236,12 @@ gui::gui(const utki::shared_ref<morda::context>& context) :
 	this->context.get().inflater.register_widget<list>("list");
 	this->context.get().inflater.register_widget<book>("book");
 	this->context.get().inflater.register_widget<spinner>("spinner");
+
+	// label
+	this->context.get().inflater.register_widget<text>("text");
+	this->context.get().inflater.register_widget<color>("color");
+	this->context.get().inflater.register_widget<gradient>("gradient");
+	this->context.get().inflater.register_widget<image>("image");
 
 	this->context.get().inflater.push_defs(default_defs);
 
@@ -307,11 +314,6 @@ void gui::init_standard_widgets(papki::file& fi)
 	}
 
 	// add standard widgets to inflater
-
-	this->context.get().inflater.register_widget<text>("text");
-	this->context.get().inflater.register_widget<color>("color");
-	this->context.get().inflater.register_widget<gradient>("gradient");
-	this->context.get().inflater.register_widget<image>("image");
 	this->context.get().inflater.register_widget<vertical_scroll_bar>("vertical_scroll_bar");
 	this->context.get().inflater.register_widget<horizontal_scroll_bar>("horizontal_scroll_bar");
 	this->context.get().inflater.register_widget<window>("window");
