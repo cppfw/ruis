@@ -34,7 +34,9 @@ namespace morda {
  * initializing standard morda widgets.
  * Since the button is a nine_patch it can have children.
  */
-class nine_patch_button : virtual public button, public nine_patch
+class nine_patch_button :
+	virtual public button, //
+	public nine_patch
 {
 	std::shared_ptr<const res::nine_patch> unpressedNinePatch_v;
 	std::shared_ptr<const res::nine_patch> pressedNinePatch_v;

@@ -103,14 +103,14 @@ nine_patch::nine_patch(const utki::shared_ref<morda::context>& c, const treeml::
 	img_widgets_matrix([this]() -> decltype(this->img_widgets_matrix) {
 		return {
 			{{this->try_get_widget_as<image>("morda_lt"),
-			  this->try_get_widget_as<image>("morda_t"),
-			  this->try_get_widget_as<image>("morda_rt")},
+this->try_get_widget_as<image>("morda_t"),
+this->try_get_widget_as<image>("morda_rt")},
 			 {this->try_get_widget_as<image>("morda_l"),
-			  this->try_get_widget_as<image>("morda_m"),
-			  this->try_get_widget_as<image>("morda_r")},
+             this->try_get_widget_as<image>("morda_m"),
+             this->try_get_widget_as<image>("morda_r")},
 			 {this->try_get_widget_as<image>("morda_lb"),
-			  this->try_get_widget_as<image>("morda_b"),
-			  this->try_get_widget_as<image>("morda_rb")}}
+             this->try_get_widget_as<image>("morda_b"),
+             this->try_get_widget_as<image>("morda_rb")}}
 		};
 	}()),
 	// TODO: use get_widget_as()
@@ -125,7 +125,7 @@ nine_patch::nine_patch(const utki::shared_ref<morda::context>& c, const treeml::
 
 		if (p.value == "left") {
 			// 'min' is by default, but not allowed to specify explicitly, as well as 'max' and 'fill',
-			// so, use parse_dimension_value().
+			// thus we can use parse_dimension_value().
 			this->borders.left() = parse_dimension_value(get_property_value(p), this->context.get().units);
 		} else if (p.value == "right") {
 			this->borders.right() = parse_dimension_value(get_property_value(p), this->context.get().units);

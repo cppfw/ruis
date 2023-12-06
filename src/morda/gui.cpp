@@ -242,6 +242,10 @@ gui::gui(const utki::shared_ref<morda::context>& context) :
 	this->context.get().inflater.register_widget<color>("color");
 	this->context.get().inflater.register_widget<gradient>("gradient");
 	this->context.get().inflater.register_widget<image>("image");
+	this->context.get().inflater.register_widget<nine_patch>("nine_patch");
+
+	// button
+	this->context.get().inflater.register_widget<nine_patch_push_button>("nine_patch_push_button");
 
 	this->context.get().inflater.push_defs(default_defs);
 
@@ -317,8 +321,8 @@ void gui::init_standard_widgets(papki::file& fi)
 	this->context.get().inflater.register_widget<vertical_scroll_bar>("vertical_scroll_bar");
 	this->context.get().inflater.register_widget<horizontal_scroll_bar>("horizontal_scroll_bar");
 	this->context.get().inflater.register_widget<window>("window");
-	this->context.get().inflater.register_widget<nine_patch>("nine_patch");
-	this->context.get().inflater.register_widget<nine_patch_push_button>("nine_patch_push_button");
+
+	
 	this->context.get().inflater.register_widget<check_box>("check_box");
 	this->context.get().inflater.register_widget<tree_view>("tree_view");
 	this->context.get().inflater.register_widget<click_drop_down_box>("click_drop_down_box");

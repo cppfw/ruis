@@ -41,7 +41,10 @@ namespace morda {
  * @param center_visible - whether the central part of nine-patch image is visible (true) or not (false).
  * @param image - reference to a nine-patch resource.
  */
-class nine_patch : public virtual widget, public blending_widget, private container
+class nine_patch :
+	public virtual widget, //
+	public blending_widget,
+	private container
 {
 	std::shared_ptr<const res::nine_patch> np_res;
 	std::shared_ptr<const res::nine_patch> disabled_np_res;

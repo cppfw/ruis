@@ -179,100 +179,100 @@ std::shared_ptr<nine_patch::image_matrix> nine_patch::get(sides<real> borders) c
 	auto ret = std::make_shared<image_matrix>( // TODO: make shared_ref
 		std::array<std::array<utki::shared_ref<const res::image>, 3>, 3>({
 			{{{
-				 utki::make_shared<res_subimage>(
-					 this->context,
-					 quad_tex,
-					 rectangle(
-						 0,
-						 0,
-						 scaled_borders.left(),
-						 scaled_borders.top()
-					 )
-				 ), // left top
-				 utki::make_shared<res_subimage>(
-					 this->context,
-					 quad_tex,
-					 rectangle(
-						 scaled_borders.left(),
-						 0,
-						 std::round(quad_tex.get().dims.x() - scaled_borders.left() - scaled_borders.right()),
-						 scaled_borders.top()
-					 )
-				 ), // top
-				 utki::make_shared<res_subimage>(
-					 this->context,
-					 quad_tex,
-					 rectangle(
-						 std::round(quad_tex.get().dims.x() - scaled_borders.right()),
-						 0,
-						 scaled_borders.right(),
-						 scaled_borders.top()
-					 )
-				 ) // right top
+utki::make_shared<res_subimage>(
+this->context,
+quad_tex,
+rectangle(
+0,
+0,
+scaled_borders.left(),
+scaled_borders.top()
+)
+), // left top
+utki::make_shared<res_subimage>(
+this->context,
+quad_tex,
+rectangle(
+scaled_borders.left(),
+0,
+std::round(quad_tex.get().dims.x() - scaled_borders.left() - scaled_borders.right()),
+scaled_borders.top()
+)
+), // top
+utki::make_shared<res_subimage>(
+this->context,
+quad_tex,
+rectangle(
+std::round(quad_tex.get().dims.x() - scaled_borders.right()),
+0,
+scaled_borders.right(),
+scaled_borders.top()
+)
+) // right top
+}},
+			 {{
+             utki::make_shared<res_subimage>(
+             this->context,
+             quad_tex,
+             rectangle(
+             0,
+             scaled_borders.top(),
+             scaled_borders.left(),
+             std::round(quad_tex.get().dims.y() - scaled_borders.top() - scaled_borders.bottom())
+             )
+             ), // left
+             utki::make_shared<res_subimage>(
+             this->context,
+             quad_tex,
+             rectangle(
+             scaled_borders.left(),
+             scaled_borders.top(),
+             std::round(quad_tex.get().dims.x() - scaled_borders.left() - scaled_borders.right()),
+             std::round(quad_tex.get().dims.y() - scaled_borders.top() - scaled_borders.bottom())
+             )
+             ), // middle
+             utki::make_shared<res_subimage>(
+             this->context,
+             quad_tex,
+             rectangle(
+             std::round(quad_tex.get().dims.x() - scaled_borders.right()),
+             scaled_borders.top(),
+             scaled_borders.right(),
+             std::round(quad_tex.get().dims.y() - scaled_borders.top() - scaled_borders.bottom())
+             )
+             ) // right
 			 }},
 			 {{
-				 utki::make_shared<res_subimage>(
-					 this->context,
-					 quad_tex,
-					 rectangle(
-						 0,
-						 scaled_borders.top(),
-						 scaled_borders.left(),
-						 std::round(quad_tex.get().dims.y() - scaled_borders.top() - scaled_borders.bottom())
-					 )
-				 ), // left
-				 utki::make_shared<res_subimage>(
-					 this->context,
-					 quad_tex,
-					 rectangle(
-						 scaled_borders.left(),
-						 scaled_borders.top(),
-						 std::round(quad_tex.get().dims.x() - scaled_borders.left() - scaled_borders.right()),
-						 std::round(quad_tex.get().dims.y() - scaled_borders.top() - scaled_borders.bottom())
-					 )
-				 ), // middle
-				 utki::make_shared<res_subimage>(
-					 this->context,
-					 quad_tex,
-					 rectangle(
-						 std::round(quad_tex.get().dims.x() - scaled_borders.right()),
-						 scaled_borders.top(),
-						 scaled_borders.right(),
-						 std::round(quad_tex.get().dims.y() - scaled_borders.top() - scaled_borders.bottom())
-					 )
-				 ) // right
-			 }},
-			 {{
-				 utki::make_shared<res_subimage>(
-					 this->context,
-					 quad_tex,
-					 rectangle(
-						 0,
-						 std::round(quad_tex.get().dims.y() - scaled_borders.bottom()),
-						 scaled_borders.left(),
-						 scaled_borders.bottom()
-					 )
-				 ), // left bottom
-				 utki::make_shared<res_subimage>(
-					 this->context,
-					 quad_tex,
-					 rectangle(
-						 scaled_borders.left(),
-						 std::round(quad_tex.get().dims.y() - scaled_borders.bottom()),
-						 std::round(quad_tex.get().dims.x() - scaled_borders.left() - scaled_borders.right()),
-						 scaled_borders.bottom()
-					 )
-				 ), // bottom
-				 utki::make_shared<res_subimage>(
-					 this->context,
-					 quad_tex,
-					 rectangle(
-						 std::round(quad_tex.get().dims.x() - scaled_borders.right()),
-						 std::round(quad_tex.get().dims.y() - scaled_borders.bottom()),
-						 scaled_borders.right(),
-						 scaled_borders.bottom()
-					 )
-				 ) // right bottom
+             utki::make_shared<res_subimage>(
+             this->context,
+             quad_tex,
+             rectangle(
+             0,
+             std::round(quad_tex.get().dims.y() - scaled_borders.bottom()),
+             scaled_borders.left(),
+             scaled_borders.bottom()
+             )
+             ), // left bottom
+             utki::make_shared<res_subimage>(
+             this->context,
+             quad_tex,
+             rectangle(
+             scaled_borders.left(),
+             std::round(quad_tex.get().dims.y() - scaled_borders.bottom()),
+             std::round(quad_tex.get().dims.x() - scaled_borders.left() - scaled_borders.right()),
+             scaled_borders.bottom()
+             )
+             ), // bottom
+             utki::make_shared<res_subimage>(
+             this->context,
+             quad_tex,
+             rectangle(
+             std::round(quad_tex.get().dims.x() - scaled_borders.right()),
+             std::round(quad_tex.get().dims.y() - scaled_borders.bottom()),
+             scaled_borders.right(),
+             scaled_borders.bottom()
+             )
+             ) // right bottom
 			 }}}
     }),
 		utki::make_shared_from(*this).to_shared_ptr(),
