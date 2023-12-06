@@ -33,9 +33,12 @@ namespace morda {
  * In GUI script can be instantiated as 'Checkbox'. Only available after initializing
  * standard morda widgets.
  */
-class check_box : virtual public toggle_button, private nine_patch
+class check_box :
+	virtual public toggle_button, //
+	private nine_patch
 {
-	std::shared_ptr<widget> checkWidget;
+	// TODO: refactor to use utki::shared_ref
+	std::shared_ptr<widget> check_widget;
 
 public:
 	check_box(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);

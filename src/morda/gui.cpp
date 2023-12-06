@@ -322,7 +322,6 @@ void gui::init_standard_widgets(papki::file& fi)
 	this->context.get().inflater.register_widget<horizontal_scroll_bar>("horizontal_scroll_bar");
 	this->context.get().inflater.register_widget<window>("window");
 
-	
 	this->context.get().inflater.register_widget<check_box>("check_box");
 	this->context.get().inflater.register_widget<tree_view>("tree_view");
 	this->context.get().inflater.register_widget<click_drop_down_box>("click_drop_down_box");

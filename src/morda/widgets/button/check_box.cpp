@@ -42,15 +42,15 @@ check_box::check_box(const utki::shared_ref<morda::context>& c, const treeml::fo
 	toggle_button(this->context, desc),
 	nine_patch(this->context, check_box_layout)
 {
-	this->checkWidget = this->content().try_get_widget("morda_checkbox_check");
-	this->checkWidget->set_visible(this->is_pressed());
+	this->check_widget = this->content().try_get_widget("morda_checkbox_check");
+	this->check_widget->set_visible(this->is_pressed());
 
 	this->set_nine_patch(this->context.get().loader.load<res::nine_patch>("morda_npt_checkbox_bg").to_shared_ptr());
 }
 
 void check_box::on_press_change()
 {
-	this->checkWidget->set_visible(this->is_pressed());
+	this->check_widget->set_visible(this->is_pressed());
 	this->clear_cache();
 	this->toggle_button::on_press_change();
 }
