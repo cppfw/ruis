@@ -34,14 +34,15 @@ void frame_vao::set(vector2 dims, vector2 thickness)
 	constexpr auto num_frame_vertices = 8;
 	std::array<vector2, num_frame_vertices> vertices = {
 		{// outer
-{0, 0},
+		 {0, 0},
 		 {dims.x(), 0},
 		 dims, {0, dims.y()},
 
 		 // inner
 		 thickness, {dims.x() - thickness.x(), thickness.y()},
 		 {dims.x() - thickness.x(), dims.y() - thickness.y()},
-		 {thickness.x(), dims.y() - thickness.y()}}
+		 {thickness.x(), dims.y() - thickness.y()}
+		}
 	};
 
 	// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers)
