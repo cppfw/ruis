@@ -107,7 +107,7 @@ protected:
 	 * @param tab_size - tabulation size in widths of space character.
 	 * @return Advance of the text string.
 	 */
-	virtual real get_advance_internal(const std::u32string& str, unsigned tab_size) const = 0;
+	virtual real get_advance_internal(std::u32string_view str, unsigned tab_size) const = 0;
 
 	/**
 	 * @brief Get bounding box of the string.
@@ -115,7 +115,7 @@ protected:
 	 * @param tab_size - tabulation size in widths of space character.
 	 * @return Bounding box of the text string.
 	 */
-	virtual morda::rectangle get_bounding_box_internal(const std::u32string& str, unsigned tab_size) const = 0;
+	virtual morda::rectangle get_bounding_box_internal(std::u32string_view str, unsigned tab_size) const = 0;
 
 public:
 	virtual ~font() = default;

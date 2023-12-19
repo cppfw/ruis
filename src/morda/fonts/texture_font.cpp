@@ -201,7 +201,7 @@ real texture_font::render_glyph_internal(const morda::matrix4& matrix, r4::vecto
 	return g.advance;
 }
 
-real texture_font::get_advance_internal(const std::u32string& str, unsigned tab_size) const
+real texture_font::get_advance_internal(std::u32string_view str, unsigned tab_size) const
 {
 	real ret = 0;
 
@@ -223,7 +223,7 @@ real texture_font::get_advance_internal(const std::u32string& str, unsigned tab_
 	return ret;
 }
 
-morda::rectangle texture_font::get_bounding_box_internal(const std::u32string& str, unsigned tab_size) const
+morda::rectangle texture_font::get_bounding_box_internal(std::u32string_view str, unsigned tab_size) const
 {
 	morda::rectangle ret;
 

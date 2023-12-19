@@ -129,9 +129,9 @@ protected:
 		size_t offset
 	) const override;
 
-	real get_advance_internal(const std::u32string& str, unsigned tab_size) const override;
+	real get_advance_internal(std::u32string_view str, unsigned tab_size) const override;
 
-	morda::rectangle get_bounding_box_internal(const std::u32string& str, unsigned tab_size) const override;
+	morda::rectangle get_bounding_box_internal(std::u32string_view str, unsigned tab_size) const override;
 
 private:
 	real render_glyph_internal(const morda::matrix4& matrix, r4::vector4<float> color, char32_t ch) const;
