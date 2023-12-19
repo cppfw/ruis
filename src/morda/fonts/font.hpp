@@ -42,7 +42,7 @@ public:
 
 protected:
 	/**
-	 * @brief Distance between lines of text.
+	 * @brief Distance between baselines.
 	 */
 	real height = 0;
 

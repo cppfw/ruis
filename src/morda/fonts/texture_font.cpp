@@ -43,7 +43,7 @@ texture_font::freetype_lib_wrapper::freetype_lib_wrapper()
 	}
 }
 
-texture_font::freetype_lib_wrapper::~freetype_lib_wrapper() noexcept
+texture_font::freetype_lib_wrapper::~freetype_lib_wrapper()
 {
 	FT_Done_FreeType(this->lib);
 }

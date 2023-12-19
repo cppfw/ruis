@@ -79,7 +79,7 @@ class texture_font : public font
 		freetype_lib_wrapper(freetype_lib_wrapper&&) = delete;
 		freetype_lib_wrapper& operator=(freetype_lib_wrapper&&) = delete;
 
-		~freetype_lib_wrapper() noexcept;
+		~freetype_lib_wrapper();
 	} freetype;
 
 	//	TRACE(<< "texture_font::Load(): FreeType library inited" << std::endl)
