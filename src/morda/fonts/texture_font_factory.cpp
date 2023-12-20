@@ -19,18 +19,12 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 /* ================ LICENSE END ================ */
 
-#pragma once
+#include "texture_font_factory.hxx"
 
-#include "font.hpp"
+using namespace morda;
 
-namespace morda {
-
-class font_factory
+std::unique_ptr<font> texture_font_factory::create(size_t size)
 {
-public:
-	virtual std::unique_ptr<font> create(size_t size) = 0;
-
-	virtual ~font_factory() = default;
-};
-
-} // namespace morda
+	// TODO:
+	return nullptr;
+}

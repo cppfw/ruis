@@ -21,16 +21,14 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "font.hpp"
+#include "font_factory.hpp"
 
 namespace morda {
 
-class font_factory
+class texture_font_factory : public font_factory
 {
 public:
-	virtual std::unique_ptr<font> create(size_t size) = 0;
-
-	virtual ~font_factory() = default;
+	std::unique_ptr<font> create(size_t size) override;
 };
 
 } // namespace morda
