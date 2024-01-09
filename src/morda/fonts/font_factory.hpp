@@ -21,6 +21,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
+#include <utki/shared_ref.hpp>
+
 #include "font.hpp"
 
 namespace morda {
@@ -28,7 +30,7 @@ namespace morda {
 class font_factory
 {
 public:
-	virtual std::unique_ptr<font> create(size_t size) = 0;
+	virtual utki::shared_ref<font> create(size_t size) = 0;
 
 	virtual ~font_factory() = default;
 };

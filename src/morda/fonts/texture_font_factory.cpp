@@ -23,8 +23,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace morda;
 
-std::unique_ptr<font> texture_font_factory::create(size_t size)
+utki::shared_ref<font> texture_font_factory::create(size_t size)
 {
 	// TODO:
-	return nullptr;
+	return utki::shared_ref<font>(std::shared_ptr<font>());
 }

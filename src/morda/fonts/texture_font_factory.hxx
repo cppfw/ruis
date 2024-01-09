@@ -28,7 +28,7 @@ namespace morda {
 class texture_font_factory : public font_factory
 {
 public:
-	std::unique_ptr<font> create(size_t size) override;
+	utki::shared_ref<font> create(size_t size) override;
 };
 
 } // namespace morda

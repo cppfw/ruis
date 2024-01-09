@@ -46,7 +46,7 @@ cursor{crs_arrow}
 
 	@window{
 		x{0} y{0}
-		dx{300} dy{200}
+		dx{300pp} dy{200pp}
 
 		title{"Window title"}
 
@@ -71,10 +71,10 @@ cursor{crs_arrow}
 
 			@right{
 				@margins{
-					left{5dp}
-					right{5dp}
-					top{5dp}
-					bottom{5dp}
+					left{5pp}
+					right{5pp}
+					top{5pp}
+					bottom{5pp}
 
 					@check_box{
 						pressed{true}
@@ -133,10 +133,10 @@ cursor{crs_arrow}
 					@RadBtn{
 						@row{
 							@margins{
-								left{5dp}
-								right{5dp}
-								top{5dp}
-								bottom{5dp}
+								left{5pp}
+								right{5pp}
+								top{5pp}
+								bottom{5pp}
 								@radio_button
 							}
 
@@ -159,8 +159,8 @@ cursor{crs_arrow}
 
 
 	@window{
-		dx{300} dy{200}
-		x{300} y{10}
+		dx{300pp} dy{200pp}
+		x{300pp} y{10pp}
 
 		title{"HorizontalLayout"}
 
@@ -174,8 +174,8 @@ cursor{crs_arrow}
 			}
 
 			@row{
-				x{50} y{100}
-				dx{220} dy{100}
+				x{50pp} y{100pp}
+				dx{220pp} dy{100pp}
 
 				id { someContainer }
 
@@ -188,7 +188,7 @@ cursor{crs_arrow}
 				@text{
 					id {label1}
 					text {trololo}
-					padding {10 20 30 40}
+					padding {10pp 20pp 30pp 40pp}
 
 
 					lp{
@@ -211,8 +211,8 @@ cursor{crs_arrow}
 
 				@push_button{
 					id {show_VK_button}
-					x{50} y{80}
-					dx{10} dy{30}
+					x{50pp} y{80pp}
+					dx{10pp} dy{30pp}
 
 					clip{true}
 
@@ -231,7 +231,7 @@ cursor{crs_arrow}
 			}
 
 			@pile{
-				lp{dx{fill} dy{50dp}}
+				lp{dx{fill} dy{50pp}}
 				@color{
 					lp{dx{fill}dy{fill}}
 					color{0xff808080}
@@ -306,8 +306,8 @@ cursor{crs_arrow}
 	}//~Window
 
 	@window{
-		dx{300} dy{200}
-		x{300} y{250}
+		dx{300pp} dy{200pp}
+		x{300pp} y{250pp}
 
 		//cache{true}
 
@@ -391,8 +391,8 @@ cursor{crs_arrow}
 	}//~Window
 
 	@window{
-		dx{300} dy{200}
-		x{0} y{250}
+		dx{300pp} dy{200pp}
+		x{0pp} y{250pp}
 
 		title{"Sliders"}
 
@@ -418,7 +418,7 @@ cursor{crs_arrow}
 
 			@horizontal_scroll_bar{
 				lp{
-					dx{50} dy{40} //TODO: min min
+					dx{50pp} dy{40pp} //TODO: min min
 					weight{1}
 				}
 			}
@@ -427,15 +427,15 @@ cursor{crs_arrow}
 				id {"vertical slider"}
 
 				lp{
-					dx{40} dy{max} //TODO: min min
+					dx{40pp} dy{max} //TODO: min min
 				}
 			}
 		}
 	}
 
 	@window{
-		dx{300} dy{200}
-		x{10} y{500}
+		dx{300pp} dy{200pp}
+		x{10pp} y{500pp}
 
 		title{"Spinning cube"}
 
@@ -468,8 +468,8 @@ cursor{crs_arrow}
 	}
 
 	@window{
-		dx{300} dy{200}
-		x{310} y{500}
+		dx{300pp} dy{200pp}
+		x{310pp} y{500pp}
 
 		title{"TextInput"}
 
@@ -517,7 +517,7 @@ cursor{crs_arrow}
 							@image_push_button{
 								id{image_push_button}
 								lp{
-									dx{50dp} dy{50dp}
+									dx{50pp} dy{50pp}
 								}
 								look{
 									pressed{img_button_pressed}
@@ -529,7 +529,7 @@ cursor{crs_arrow}
 				}
 			}
 
-			@widget{lp{dy{5dp}}}
+			@widget{lp{dy{5pp}}}
 
 			@text_input_line{
 				id{text_input}
@@ -557,8 +557,8 @@ cursor{crs_arrow}
 	}
 
 	@window{
-		dx{300} dy{200}
-		x{620} y{500}
+		dx{300pp} dy{200pp}
+		x{620pp} y{500pp}
 
 		title{"ScrollArea"}
 
@@ -602,7 +602,7 @@ cursor{crs_arrow}
 						}
 
 						@collapse_area{
-							x{20} y{450}
+							x{20pp} y{450pp}
 							title{
 								@text{
 									text{"Collapsable stuff"}
@@ -665,8 +665,8 @@ cursor{crs_arrow}
 
 
 	@window{
-		dx{300} dy{200}
-		x{620} y{250}
+		dx{300pp} dy{200pp}
+		x{620pp} y{250pp}
 
 		clip{true}
 
@@ -684,7 +684,7 @@ cursor{crs_arrow}
 			lp{dx{fill}dy{fill}}
 
 			@push_button{
-				x{10} y{20}
+				x{10pp} y{20pp}
 				@text{text{"Hello world!"}}
 				enabled{false}
 			}
@@ -693,8 +693,8 @@ cursor{crs_arrow}
 	}
 
 	@window{
-		dx{300} dy{200}
-		x{620} y{0}
+		dx{300pp} dy{200pp}
+		x{620pp} y{0}
 
 		title{"VerticalList"}
 
@@ -704,7 +704,7 @@ cursor{crs_arrow}
 			}
 
 			@mouse_proxy{
-				lp{dx{50dp} dy{fill}}
+				lp{dx{50pp} dy{fill}}
 				id{list_mouseproxy}
 			}
 

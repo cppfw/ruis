@@ -3,6 +3,6 @@ morda_fnt_text{
 	bold {VeraBd.ttf}
 	italic {VeraIt.ttf}
 	bold_italic {VeraBI.ttf}
-	size {12dp}
+	size {12pp}
 	max_cached{100}
 }

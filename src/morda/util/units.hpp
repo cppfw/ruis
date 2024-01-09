@@ -49,7 +49,7 @@ public:
 	/**
 	 * @brief Dots per font pixel.
 	 */
-	const real dots_per_fp;
+	const real dots_per_fp; // TODO: is needed?
 
 	/**
 	 * @brief Constructor.
