@@ -170,7 +170,7 @@ public:
 	{
 		auto wh = this->dom->get_dimensions(dpi);
 		using std::ceil;
-		return vector2(ceil(wh[0]), ceil(wh[1]));
+		return ceil(wh);
 	}
 
 	class svg_texture : public fixed_texture
