@@ -202,7 +202,7 @@ sides<real> nine_patch::get_actual_borders() const noexcept
 		} else if (!np) {
 			ret[i] = 0;
 		} else {
-			ret[i] = np->borders()[i];
+			ret[i] = np->get_borders()[i];
 		}
 	}
 
@@ -227,7 +227,7 @@ void nine_patch::apply_images()
 	}
 
 	ASSERT(np)
-	auto& min_borders = np->borders();
+	auto& min_borders = np->get_borders();
 	//		TRACE(<< "min_borders = " << min_borders << std::endl)
 
 	{

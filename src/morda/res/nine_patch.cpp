@@ -74,7 +74,7 @@ public:
 
 	~res_subimage() override = default;
 
-	vector2 dims(real dpi) const noexcept override
+	vector2 dims() const noexcept override
 	{
 		return this->res::image::texture::dims;
 	}
@@ -137,7 +137,7 @@ std::shared_ptr<nine_patch::image_matrix> nine_patch::get(sides<real> borders) c
 	real mul = 1;
 	{
 		auto req = borders.begin();
-		for (auto orig = this->borders_v.begin(); orig != this->borders_v.end(); ++orig, ++req) {
+		for (auto orig = this->borders.begin(); orig != this->borders.end(); ++orig, ++req) {
 			if (*orig <= 0 || *req <= 0) {
 				continue;
 			}
@@ -157,24 +157,16 @@ std::shared_ptr<nine_patch::image_matrix> nine_patch::get(sides<real> borders) c
 		}
 	}
 
-	//	TRACE(<< "this->image->dim() = " << std::setprecision(10) << this->image->dim() << std::endl)
-	//	TRACE(<< "mul = " << std::setprecision(10) << mul << std::endl)
-
 	using std::round;
 	auto quad_tex = this->image.get().get(round(this->image.get().dims() * mul));
-	//	TRACE(<< "quad_tex->dim() = " << quad_tex->dim() << std::endl)
 
 	vector2 act_mul = quad_tex.get().dims.comp_div(this->image.get().dims());
 
-	//	TRACE(<< "act_mul = " << std::setprecision(10) << act_mul << std::endl)
-
-	sides<real> scaled_borders(this->borders_v);
+	sides<real> scaled_borders(this->borders);
 	scaled_borders.left() *= act_mul.x();
 	scaled_borders.right() *= act_mul.x();
 	scaled_borders.top() *= act_mul.y();
 	scaled_borders.bottom() *= act_mul.y();
-
-	// TRACE(<< "scaled_borders = " << std::setprecision(10) << scaled_borders << std::endl)
 
 	auto ret = std::make_shared<image_matrix>( // TODO: make shared_ref
 		std::array<std::array<utki::shared_ref<const res::image>, 3>, 3>({

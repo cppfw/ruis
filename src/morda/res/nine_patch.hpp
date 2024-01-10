@@ -52,7 +52,7 @@ class nine_patch : public resource
 
 	const utki::shared_ref<const res::image> image;
 
-	sides<real> borders_v; // TODO: rename without _v suffix
+	sides<real> borders;
 
 public:
 	nine_patch(const nine_patch&) = delete;
@@ -71,7 +71,7 @@ public:
 	) :
 		resource(c),
 		image(image),
-		borders_v(borders)
+		borders(borders)
 	{}
 
 	class image_matrix
@@ -105,9 +105,9 @@ public:
 
 	std::shared_ptr<image_matrix> get(sides<real> borders) const;
 
-	const decltype(borders_v)& borders() const noexcept
+	const decltype(borders)& get_borders() const noexcept
 	{
-		return this->borders_v;
+		return this->borders;
 	}
 
 private:

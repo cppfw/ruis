@@ -142,7 +142,7 @@ public:
 		return utki::make_shared_from(*this);
 	}
 
-	vector2 dims(real dpi) const noexcept override
+	vector2 dims() const noexcept override
 	{
 		return this->tex_2d.get().dims();
 	}
@@ -166,9 +166,12 @@ public:
 		dom(std::move(dom))
 	{}
 
-	vector2 dims(real dpi) const noexcept override
+	vector2 dims() const noexcept override
 	{
-		auto wh = this->dom->get_dimensions(dpi);
+		auto& ctx = this->context.get();
+		ASSERT(ctx.units.dots_per_pp > 0)
+		auto wh = this->dom->get_dimensions(ctx.units.dots_per_inch / ctx.units.dots_per_pp);
+		wh *= ctx.units.dots_per_pp;
 		using std::ceil;
 		return ceil(wh);
 	}

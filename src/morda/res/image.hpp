@@ -103,16 +103,10 @@ public:
 	};
 
 	/**
-	 * @brief Get dimensions of this image in pixels for given Dots Per Inch resolution.
-	 * @param dpi - dots per inch.
+	 * @brief Get dimensions of this image in pixels.
 	 * @return Dimensions of the image in pixels.
 	 */
-	virtual vector2 dims(real dpi) const noexcept = 0;
-
-	vector2 dims() const noexcept
-	{
-		return this->dims(this->context.get().units.dots_per_inch);
-	}
+	virtual vector2 dims() const noexcept = 0;
 
 	/**
 	 * @brief Get raster texture of given dimensions.
@@ -169,7 +163,7 @@ public:
 
 	~atlas_image() override = default;
 
-	vector2 dims(real dpi) const noexcept override
+	vector2 dims() const noexcept override
 	{
 		return this->image::texture::dims;
 	}

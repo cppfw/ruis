@@ -56,7 +56,6 @@ class nine_patch :
 	// TODO: refactoring: use utki::shared_ref
 	const std::array<std::array<std::shared_ptr<image>, 3>, 3> img_widgets_matrix;
 
-	// TODO: refactoring: use utki::shared_ref
 	const std::shared_ptr<container> inner_content;
 
 protected:
