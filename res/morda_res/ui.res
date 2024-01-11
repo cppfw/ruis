@@ -1,6 +1,8 @@
 morda_npt_tab_active{
 	file{tab_active.svg}
 	// 33x34
+
+	// borders are specified as fraction of dimensions because, e.g. SVG's dimension can be in mm or pp
 	borders{0.4848 0.0882 0.4848 0.1765}
 }
 
