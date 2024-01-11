@@ -107,10 +107,27 @@ utki::shared_ref<nine_patch> nine_patch::load(
 		}
 	}
 	if (borders.left() < 0) {
-		throw std::runtime_error("nine_patch::load(): could not read borders");
+		throw std::invalid_argument("nine_patch::load(): could not read borders");
+	}
+
+	for(const auto& b : borders){
+		if(b < 0 || 1 < b){
+			throw std::invalid_argument("nine_patch::load(): one of the borders is out of [0:1] range");
+		}
 	}
 
 	auto image = res::image::load(ctx, fi);
+
+	auto dims = image.get().dims();
+
+	using std::round;
+
+	borders.left() = round(borders.left() * dims.x());
+	borders.right() = round(borders.right() * dims.x());
+	borders.top() = round(borders.top() * dims.y());
+	borders.bottom() = round(borders.bottom() * dims.y());
+
+	// std::cout << "borders = " << borders << std::endl;
 
 	return utki::make_shared<nine_patch>(ctx, image, borders);
 }

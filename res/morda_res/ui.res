@@ -1,11 +1,12 @@
 morda_npt_tab_active{
 	file{tab_active.svg}
-	borders{16 3 16 6}
+	// 33x34
+	borders{0.4848 0.0882 0.4848 0.1765}
 }
 
 morda_npt_tab_inactive{
 	file{tab_inactive.svg}
-	borders{16 3 16 6}
+	borders{0.4848 0.0882 0.4848 0.1765}
 }
 
 morda_img_tabs_filler{
@@ -34,32 +35,35 @@ morda_img_refresh_disabled{
 
 morda_npt_slider_bg{
 	file{slider_bg.svg}
-	borders{8 8 8 9}
+	// 16x17
+	borders{0.5 0.4706 0.5 0.5294}
 }
 
 morda_npt_slider_handle{
 	file{slider_handle.svg}
-	borders{8 8 8 9}
+	// 16x17
+	borders{0.5 0.4706 0.5 0.5294}
 }
 
 morda_npt_button_normal{
 	file{button.svg}
-	borders{5 5 5 6}
+	// 12x31
+	borders{0.4167 0.1613 0.4167 0.1935}
 }
 
 morda_npt_button_pressed{
 	file{button_pressed.svg}
-	borders{5 5 5 6}
+	borders{0.4167 0.1613 0.4167 0.1935}
 }
 
 morda_npt_rightbutton_normal{
 	file{rightbutton.svg}
-	borders{5 5 5 6}
+	borders{0.4167 0.1613 0.4167 0.1935}
 }
 
 morda_npt_rightbutton_pressed{
 	file{rightbutton_pressed.svg}
-	borders{5 5 5 6}
+	borders{0.4167 0.1613 0.4167 0.1935}
 }
 
 morda_img_dropdown_arrow{
@@ -72,12 +76,14 @@ morda_img_dropright_arrow{
 
 morda_npt_contextmenu_bg{
 	file{contextmenu_bg.svg}
-	borders{4 5 4 5}
+	// 9x32
+	borders{0.4444 0.15625 0.4444 0.15625}
 }
 
 morda_npt_checkbox_bg{
 	file{checkbox_bg.svg}
-	borders{2 3 2 3}
+	// 5x7
+	borders{0.4 0.4286 0.4 0.4286}
 }
 
 morda_img_checkbox_tick{
@@ -86,17 +92,19 @@ morda_img_checkbox_tick{
 
 morda_npt_textfield_background{
 	file{textfield_bg.svg}
-	borders{4 5 4 5}
+	// 9x32
+	borders{0.4444 0.15625 0.4444 0.15625}
 }
 
 morda_npt_window_bg{
 	file{window_bg.svg}
-	borders{5 5 5 5}
+	borders{0.5 0.5 0.5 0.5}
 }
 
 morda_npt_frame{
 	file{frame.svg}
-	borders{3 4 3 4}
+	// 7x9
+	borders{0.4286 0.4444 0.4286 0.4444}
 }
 
 morda_img_radiobutton_bg{
