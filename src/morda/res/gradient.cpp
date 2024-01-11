@@ -87,7 +87,7 @@ utki::shared_ref<gradient> gradient::load(
 
 	std::vector<std::tuple<real, uint32_t>> stops;
 
-	const char* stop_c = "Stop";
+	const char* stop_c = "stop";
 
 	for (auto& p : desc) {
 		if (p.value == "vertical") {
