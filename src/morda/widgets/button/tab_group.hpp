@@ -30,7 +30,7 @@ namespace morda {
 class tab_group : virtual public widget, public choice_group
 {
 	std::shared_ptr<res::image> filler;
-	std::shared_ptr<const res::image::texture> fillerTexture;
+	std::shared_ptr<const res::image::texture> filler_texture;
 
 public:
 	tab_group(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);

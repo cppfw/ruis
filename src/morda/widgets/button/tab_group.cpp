@@ -59,7 +59,7 @@ tab_group::tab_group(const utki::shared_ref<morda::context>& c, const treeml::fo
 void tab_group::set_filler(std::shared_ptr<res::image> filler)
 {
 	this->filler = std::move(filler);
-	this->fillerTexture = this->filler->get().to_shared_ptr();
+	this->filler_texture = this->filler->get().to_shared_ptr();
 }
 
 morda::vector2 tab_group::measure(const morda::vector2& quotum) const
@@ -167,9 +167,9 @@ void tab_group::render(const morda::matrix4& matrix) const
 		real l = this->rect().d.x() - ce;
 		if (l > 0) {
 			matrix4 m(matrix);
-			m.translate(ce, this->rect().d.y() - this->fillerTexture->dims.y());
-			m.scale(l, this->fillerTexture->dims.y());
-			this->fillerTexture->render(m);
+			m.translate(ce, this->rect().d.y() - this->filler_texture->dims.y());
+			m.scale(l, this->filler_texture->dims.y());
+			this->filler_texture->render(m);
 		}
 	}
 }

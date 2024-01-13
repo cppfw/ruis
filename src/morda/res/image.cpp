@@ -220,13 +220,20 @@ public:
 		}
 		//		TRACE(<< "not in cache" << std::endl)
 
+		auto& ctx = this->context.get();
+
 		ASSERT(this->dom)
-		//		TRACE(<< "width = " << this->dom->width << std::endl)
-		//		TRACE(<< "height = " << this->dom->height << std::endl)
-		//		TRACE(<< "dpi = " << morda::gui::inst().units.dpi() << std::endl)
-		//		TRACE(<< "id = " << this->dom->id << std::endl)
+		
+		// in morda, SVG dimensions are in pp, this is why we cannot use 0 to use native dimension of SVG.
+		auto svg_dims = this->dims();
+		for(unsigned i = 0; i != 2; ++i){
+			if(for_dims[i] == 0){
+				for_dims[i] = svg_dims[i];
+			}
+		}
+
 		svgren::parameters svg_params;
-		svg_params.dpi = unsigned(this->context.get().units.dots_per_inch);
+		svg_params.dpi = unsigned(ctx.units.dots_per_inch);
 		svg_params.dims_request = for_dims.to<unsigned>();
 
 		auto im = svgren::rasterize(*this->dom, svg_params);
