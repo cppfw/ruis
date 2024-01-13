@@ -110,8 +110,8 @@ utki::shared_ref<nine_patch> nine_patch::load(
 		throw std::invalid_argument("nine_patch::load(): could not read borders");
 	}
 
-	for(const auto& b : borders){
-		if(b < 0 || 1 < b){
+	for (const auto& b : borders) {
+		if (b < 0 || 1 < b) {
 			throw std::invalid_argument("nine_patch::load(): one of the borders is out of [0:1] range");
 		}
 	}
