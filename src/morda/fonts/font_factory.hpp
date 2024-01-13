@@ -32,6 +32,14 @@ class font_factory
 public:
 	virtual utki::shared_ref<font> create(size_t size) = 0;
 
+	font_factory() = default;
+
+	font_factory(const font_factory&) = delete;
+	font_factory& operator=(const font_factory&) = delete;
+
+	font_factory(font_factory&&) = delete;
+	font_factory& operator=(font_factory&&) = delete;
+
 	virtual ~font_factory() = default;
 };
 
