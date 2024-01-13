@@ -66,7 +66,8 @@ freetype_face::freetype_face(const papki::file& fi) :
 	face(freetype.lib, fi)
 {}
 
-void freetype_face::set_size(unsigned font_size)const{
+void freetype_face::set_size(unsigned font_size) const
+{
 	FT_Error error = FT_Set_Pixel_Sizes(
 		this->face.f,
 		0, // pixel_width (0 means "same as height")
@@ -78,7 +79,8 @@ void freetype_face::set_size(unsigned font_size)const{
 	}
 }
 
-freetype_face::metrics freetype_face::get_metrics(unsigned font_size)const{
+freetype_face::metrics freetype_face::get_metrics(unsigned font_size) const
+{
 	this->set_size(font_size);
 	using std::ceil;
 	return {
@@ -88,7 +90,8 @@ freetype_face::metrics freetype_face::get_metrics(unsigned font_size)const{
 	};
 }
 
-freetype_face::glyph freetype_face::load_glyph(char32_t c, unsigned font_size)const{
+freetype_face::glyph freetype_face::load_glyph(char32_t c, unsigned font_size) const
+{
 	// set character size in pixels
 	this->set_size(font_size);
 
@@ -101,9 +104,7 @@ freetype_face::glyph freetype_face::load_glyph(char32_t c, unsigned font_size)co
 		LOG([&](auto& o) {
 			o << "texture_font::load_glyph(" << std::hex << uint32_t(c) << "): failed to load glyph" << std::endl;
 		})
-		return {
-			.advance = -1
-		};
+		return {.advance = -1};
 	}
 
 	FT_GlyphSlot slot = this->face.f->glyph;
@@ -116,9 +117,7 @@ freetype_face::glyph freetype_face::load_glyph(char32_t c, unsigned font_size)co
 
 	if (!slot->bitmap.buffer) {
 		// empty glyph (space)
-		return glyph{
-			.advance = advance
-		};
+		return glyph{.advance = advance};
 	}
 
 	ASSERT(slot->format == FT_GLYPH_FORMAT_BITMAP)
@@ -126,13 +125,15 @@ freetype_face::glyph freetype_face::load_glyph(char32_t c, unsigned font_size)co
 	ASSERT(slot->bitmap.pitch >= 0)
 
 	return glyph{
-		.vertices = {
-			(morda::vector2(real(m->horiBearingX), -real(m->horiBearingY)) / real(freetype_granularity)),
-			(morda::vector2(real(m->horiBearingX), real(m->height - m->horiBearingY)) / real(freetype_granularity)),
-			(morda::vector2(real(m->horiBearingX + m->width), real(m->height - m->horiBearingY)) /
-				real(freetype_granularity)),
-			(morda::vector2(real(m->horiBearingX + m->width), -real(m->horiBearingY)) / real(freetype_granularity)) //
-		},
+		.vertices =
+			{
+					   (morda::vector2(real(m->horiBearingX), -real(m->horiBearingY)) / real(freetype_granularity)),
+					   (morda::vector2(real(m->horiBearingX), real(m->height - m->horiBearingY)) / real(freetype_granularity)),
+					   (morda::vector2(real(m->horiBearingX + m->width), real(m->height - m->horiBearingY)) /
+				 real(freetype_granularity)),
+					   (morda::vector2(real(m->horiBearingX + m->width), -real(m->horiBearingY)) / real(freetype_granularity)
+				) //
+			},
 		.image = rasterimage::image<uint8_t, 1>::make(
 			{slot->bitmap.width, slot->bitmap.rows},
 			slot->bitmap.buffer,
@@ -146,14 +147,14 @@ texture_font::glyph texture_font::load_glyph(char32_t c) const
 {
 	auto ftg = this->face.load_glyph(c, this->font_size);
 
-	if(ftg.advance < 0){
+	if (ftg.advance < 0) {
 		return this->unknown_glyph;
 	}
 
 	glyph g;
 	g.advance = ftg.advance;
 
-	if(ftg.image.empty()){
+	if (ftg.image.empty()) {
 		g.top_left.set(0);
 		g.bottom_right.set(0);
 		// empty glyph (space)

@@ -41,7 +41,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace morda {
 
-class freetype_face{
+class freetype_face
+{
 	struct freetype_lib_wrapper {
 		FT_Library lib = nullptr;
 
@@ -71,27 +72,27 @@ class freetype_face{
 		~freetype_face_wrapper() noexcept;
 	} face;
 
-	void set_size(unsigned font_size)const;
+	void set_size(unsigned font_size) const;
+
 public:
 	freetype_face(const papki::file& fi);
 
-	struct glyph{
+	struct glyph {
 		std::array<r4::vector2<real>, 4> vertices;
 		rasterimage::image<uint8_t, 1> image;
 		real advance;
 	};
 
-	glyph load_glyph(char32_t c, unsigned font_size)const;
+	glyph load_glyph(char32_t c, unsigned font_size) const;
 
-	struct metrics{
+	struct metrics {
 		real height;
 		real descender;
 		real ascender;
 	};
 
-	metrics get_metrics(unsigned font_size)const;
+	metrics get_metrics(unsigned font_size) const;
 };
-
 
 /**
  * @brief A texture font.
