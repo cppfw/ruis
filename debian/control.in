@@ -22,7 +22,8 @@ Build-Depends:
 		libtreeml-dev (>= 0.1.26),
 		libnitki-dev (>= 1.0.39),
 		librasterimage-dev (>= 0.1.4),
-		libtst-dev (>= 0.3.9)
+		libtst-dev (>= 0.3.9),
+		libgtk-3-dev
 Build-Depends-Indep: doxygen
 
 Package: libmorda$(soname)
