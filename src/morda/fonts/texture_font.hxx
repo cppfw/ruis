@@ -40,6 +40,59 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "font.hpp"
 
 namespace morda {
+
+class freetype_face{
+	struct freetype_lib_wrapper {
+		FT_Library lib = nullptr;
+
+		freetype_lib_wrapper();
+
+		freetype_lib_wrapper(const freetype_lib_wrapper&) = delete;
+		freetype_lib_wrapper& operator=(const freetype_lib_wrapper&) = delete;
+
+		freetype_lib_wrapper(freetype_lib_wrapper&&) = delete;
+		freetype_lib_wrapper& operator=(freetype_lib_wrapper&&) = delete;
+
+		~freetype_lib_wrapper();
+	} freetype;
+
+	struct freetype_face_wrapper {
+		FT_Face f = nullptr;
+		std::vector<std::uint8_t> font_file; // the buffer should be alive as long as the Face is alive!!!
+
+		freetype_face_wrapper(FT_Library& lib, const papki::file& fi);
+
+		freetype_face_wrapper(const freetype_face_wrapper&) = delete;
+		freetype_face_wrapper& operator=(const freetype_face_wrapper&) = delete;
+
+		freetype_face_wrapper(freetype_face_wrapper&&) = delete;
+		freetype_face_wrapper& operator=(freetype_face_wrapper&&) = delete;
+
+		~freetype_face_wrapper() noexcept;
+	} face;
+
+	void set_size(unsigned font_size)const;
+public:
+	freetype_face(const papki::file& fi);
+
+	struct glyph{
+		std::array<r4::vector2<real>, 4> vertices;
+		rasterimage::image<uint8_t, 1> image;
+		real advance;
+	};
+
+	glyph load_glyph(char32_t c, unsigned font_size)const;
+
+	struct metrics{
+		real height;
+		real descender;
+		real ascender;
+	};
+
+	metrics get_metrics(unsigned font_size)const;
+};
+
+
 /**
  * @brief A texture font.
  * This font implementation reads a Truetype font from 'ttf' file and renders given
@@ -50,6 +103,8 @@ namespace morda {
 class texture_font : public font
 {
 	const unsigned font_size;
+
+	freetype_face face;
 
 	mutable std::list<char32_t> last_used_order;
 
@@ -69,37 +124,6 @@ class texture_font : public font
 	mutable std::unordered_map<char32_t, glyph> glyphs;
 
 	unsigned max_cached;
-
-	struct freetype_lib_wrapper {
-		FT_Library lib = nullptr;
-
-		freetype_lib_wrapper();
-
-		freetype_lib_wrapper(const freetype_lib_wrapper&) = delete;
-		freetype_lib_wrapper& operator=(const freetype_lib_wrapper&) = delete;
-
-		freetype_lib_wrapper(freetype_lib_wrapper&&) = delete;
-		freetype_lib_wrapper& operator=(freetype_lib_wrapper&&) = delete;
-
-		~freetype_lib_wrapper();
-	} freetype;
-
-	//	TRACE(<< "texture_font::Load(): FreeType library inited" << std::endl)
-
-	struct freetype_face_wrapper {
-		FT_Face f = nullptr;
-		std::vector<std::uint8_t> font_file; // the buffer should be alive as long as the Face is alive!!!
-
-		freetype_face_wrapper(FT_Library& lib, const papki::file& fi);
-
-		freetype_face_wrapper(const freetype_face_wrapper&) = delete;
-		freetype_face_wrapper& operator=(const freetype_face_wrapper&) = delete;
-
-		freetype_face_wrapper(freetype_face_wrapper&&) = delete;
-		freetype_face_wrapper& operator=(freetype_face_wrapper&&) = delete;
-
-		~freetype_face_wrapper() noexcept;
-	} face;
 
 	glyph unknown_glyph;
 

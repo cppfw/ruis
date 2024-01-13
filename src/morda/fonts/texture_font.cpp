@@ -36,19 +36,19 @@ constexpr const char32_t unknown_char = 0xfffd;
 constexpr const auto freetype_granularity = 64;
 } // namespace
 
-texture_font::freetype_lib_wrapper::freetype_lib_wrapper()
+freetype_face::freetype_lib_wrapper::freetype_lib_wrapper()
 {
 	if (FT_Init_FreeType(&this->lib)) {
 		throw std::runtime_error("freetype_lib_wrapper::freetype_lib_wrapper(): unable to init freetype library");
 	}
 }
 
-texture_font::freetype_lib_wrapper::~freetype_lib_wrapper()
+freetype_face::freetype_lib_wrapper::~freetype_lib_wrapper()
 {
 	FT_Done_FreeType(this->lib);
 }
 
-texture_font::freetype_face_wrapper::freetype_face_wrapper(FT_Library& lib, const papki::file& fi)
+freetype_face::freetype_face_wrapper::freetype_face_wrapper(FT_Library& lib, const papki::file& fi)
 {
 	this->font_file = fi.load();
 	if (FT_New_Memory_Face(lib, this->font_file.data(), int(this->font_file.size()), 0 /* face_index */, &this->f) != 0)
@@ -57,25 +57,40 @@ texture_font::freetype_face_wrapper::freetype_face_wrapper(FT_Library& lib, cons
 	}
 }
 
-texture_font::freetype_face_wrapper::~freetype_face_wrapper() noexcept
+freetype_face::freetype_face_wrapper::~freetype_face_wrapper() noexcept
 {
 	FT_Done_Face(this->f);
 }
 
-texture_font::glyph texture_font::load_glyph(char32_t c) const
-{
-	// set character size in pixels
-	{
-		FT_Error error = FT_Set_Pixel_Sizes(
-			this->face.f,
-			0, // pixel_width (0 means "same as height")
-			this->font_size // pixel_height
-		);
+freetype_face::freetype_face(const papki::file& fi) :
+	face(freetype.lib, fi)
+{}
 
-		if (error != 0) {
-			throw std::runtime_error("texture_font::texture_font(): unable to set char size");
-		}
+void freetype_face::set_size(unsigned font_size)const{
+	FT_Error error = FT_Set_Pixel_Sizes(
+		this->face.f,
+		0, // pixel_width (0 means "same as height")
+		font_size // pixel_height
+	);
+
+	if (error != 0) {
+		throw std::runtime_error("texture_font::texture_font(): unable to set char size");
 	}
+}
+
+freetype_face::metrics freetype_face::get_metrics(unsigned font_size)const{
+	this->set_size(font_size);
+	using std::ceil;
+	return {
+		.height = ceil(real(this->face.f->size->metrics.height) / real(freetype_granularity)),
+		.descender = -ceil(real(this->face.f->size->metrics.descender) / real(freetype_granularity)),
+		.ascender = ceil(real(this->face.f->size->metrics.ascender) / real(freetype_granularity))
+	};
+}
+
+freetype_face::glyph freetype_face::load_glyph(char32_t c, unsigned font_size)const{
+	// set character size in pixels
+	this->set_size(font_size);
 
 	if (FT_Load_Char(this->face.f, FT_ULong(c), FT_LOAD_RENDER) != 0) {
 		if (c == unknown_char) {
@@ -86,54 +101,78 @@ texture_font::glyph texture_font::load_glyph(char32_t c) const
 		LOG([&](auto& o) {
 			o << "texture_font::load_glyph(" << std::hex << uint32_t(c) << "): failed to load glyph" << std::endl;
 		})
-		return this->unknown_glyph;
+		return {
+			.advance = -1
+		};
 	}
 
 	FT_GlyphSlot slot = this->face.f->glyph;
 
 	FT_Glyph_Metrics* m = &slot->metrics;
 
-	glyph g;
-	g.advance = real(m->horiAdvance) / real(freetype_granularity);
+	auto advance = real(m->horiAdvance) / real(freetype_granularity);
+
+	// std::cout << "image advance for char " << c << " = " << advance << std::endl;
 
 	if (!slot->bitmap.buffer) {
-		g.top_left.set(0);
-		g.bottom_right.set(0);
 		// empty glyph (space)
-		return g;
+		return glyph{
+			.advance = advance
+		};
 	}
 
 	ASSERT(slot->format == FT_GLYPH_FORMAT_BITMAP)
 	ASSERT(slot->bitmap.pixel_mode == FT_PIXEL_MODE_GRAY)
 	ASSERT(slot->bitmap.pitch >= 0)
 
-	auto im = rasterimage::image<uint8_t, 1>::make(
-		{slot->bitmap.width, slot->bitmap.rows},
-		slot->bitmap.buffer,
-		slot->bitmap.pitch
-	);
-
-	std::array<r4::vector2<float>, 4> verts = {
-		(morda::vector2(real(m->horiBearingX), -real(m->horiBearingY)) / real(freetype_granularity)),
-		(morda::vector2(real(m->horiBearingX), real(m->height - m->horiBearingY)) / real(freetype_granularity)),
-		(morda::vector2(real(m->horiBearingX + m->width), real(m->height - m->horiBearingY)) /
-		 real(freetype_granularity)),
-		(morda::vector2(real(m->horiBearingX + m->width), -real(m->horiBearingY)) / real(freetype_granularity)) //
+	return glyph{
+		.vertices = {
+			(morda::vector2(real(m->horiBearingX), -real(m->horiBearingY)) / real(freetype_granularity)),
+			(morda::vector2(real(m->horiBearingX), real(m->height - m->horiBearingY)) / real(freetype_granularity)),
+			(morda::vector2(real(m->horiBearingX + m->width), real(m->height - m->horiBearingY)) /
+				real(freetype_granularity)),
+			(morda::vector2(real(m->horiBearingX + m->width), -real(m->horiBearingY)) / real(freetype_granularity)) //
+		},
+		.image = rasterimage::image<uint8_t, 1>::make(
+			{slot->bitmap.width, slot->bitmap.rows},
+			slot->bitmap.buffer,
+			slot->bitmap.pitch
+		),
+		.advance = advance
 	};
+}
 
-	g.top_left = verts[0];
-	g.bottom_right = verts[2];
+texture_font::glyph texture_font::load_glyph(char32_t c) const
+{
+	auto ftg = this->face.load_glyph(c, this->font_size);
+
+	if(ftg.advance < 0){
+		return this->unknown_glyph;
+	}
+
+	glyph g;
+	g.advance = ftg.advance;
+
+	if(ftg.image.empty()){
+		g.top_left.set(0);
+		g.bottom_right.set(0);
+		// empty glyph (space)
+		return g;
+	}
+
+	g.top_left = ftg.vertices[0];
+	g.bottom_right = ftg.vertices[2];
 
 	auto& r = this->context.get().renderer.get();
 	g.vao = r.factory
 				->create_vertex_array(
-					{r.factory->create_vertex_buffer(utki::make_span(verts)),
+					{r.factory->create_vertex_buffer(utki::make_span(ftg.vertices)),
 					 this->context.get().renderer.get().quad_01_vbo},
 					this->context.get().renderer.get().quad_indices,
 					vertex_array::mode::triangle_fan
 				)
 				.to_shared_ptr();
-	g.tex = this->context.get().renderer.get().factory->create_texture_2d(std::move(im)).to_shared_ptr();
+	g.tex = this->context.get().renderer.get().factory->create_texture_2d(std::move(ftg.image)).to_shared_ptr();
 
 	return g;
 }
@@ -146,8 +185,8 @@ texture_font::texture_font(
 ) :
 	font(c),
 	font_size(font_size),
-	max_cached(max_cached),
-	face(freetype.lib, fi)
+	face(fi),
+	max_cached(max_cached)
 {
 	//	TRACE(<< "texture_font::Load(): enter" << std::endl)
 
@@ -157,9 +196,11 @@ texture_font::texture_font(
 
 	using std::ceil;
 
-	this->height = ceil(real(this->face.f->size->metrics.height) / real(freetype_granularity));
-	this->descender = -ceil(real(this->face.f->size->metrics.descender) / real(freetype_granularity));
-	this->ascender = ceil(real(this->face.f->size->metrics.ascender) / real(freetype_granularity));
+	auto m = this->face.get_metrics(this->font_size);
+
+	this->height = m.height;
+	this->descender = m.descender;
+	this->ascender = m.ascender;
 
 	//	TRACE(<< "texture_font::texture_font(): height_v = " << this->height_v << std::endl)
 }
