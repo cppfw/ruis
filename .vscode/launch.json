@@ -37,7 +37,7 @@
 			"args": [],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}/tests/busy",
-			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/out/dbg:../harness/mordavokne/out/dbg"}],
+			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/out/dbg:../../tests/harness/modules/mordavokne/src/out/rel_no_install"}],
 			"externalConsole": false,
 			"MIMode": "gdb",
 			"setupCommands": [
