@@ -49,6 +49,8 @@ namespace morda {
  */
 class texture_font : public font
 {
+	const unsigned font_size;
+
 	mutable std::list<char32_t> last_used_order;
 
 	struct glyph {

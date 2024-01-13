@@ -64,6 +64,19 @@ texture_font::freetype_face_wrapper::~freetype_face_wrapper() noexcept
 
 texture_font::glyph texture_font::load_glyph(char32_t c) const
 {
+	// set character size in pixels
+	{
+		FT_Error error = FT_Set_Pixel_Sizes(
+			this->face.f,
+			0, // pixel_width (0 means "same as height")
+			this->font_size // pixel_height
+		);
+
+		if (error != 0) {
+			throw std::runtime_error("texture_font::texture_font(): unable to set char size");
+		}
+	}
+
 	if (FT_Load_Char(this->face.f, FT_ULong(c), FT_LOAD_RENDER) != 0) {
 		if (c == unknown_char) {
 			throw std::runtime_error(
@@ -132,23 +145,11 @@ texture_font::texture_font(
 	unsigned max_cached
 ) :
 	font(c),
+	font_size(font_size),
 	max_cached(max_cached),
 	face(freetype.lib, fi)
 {
 	//	TRACE(<< "texture_font::Load(): enter" << std::endl)
-
-	// set character size in pixels
-	{
-		FT_Error error = FT_Set_Pixel_Sizes(
-			this->face.f,
-			0, // pixel_width (0 means "same as height")
-			font_size // pixel_height
-		);
-
-		if (error != 0) {
-			throw std::runtime_error("texture_font::texture_font(): unable to set char size");
-		}
-	}
 
 	this->unknown_glyph = this->load_glyph(unknown_char);
 
