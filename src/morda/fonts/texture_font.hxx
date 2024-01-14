@@ -78,9 +78,9 @@ public:
 	freetype_face(const papki::file& fi);
 
 	struct glyph {
-		std::array<r4::vector2<real>, 4> vertices;
+		std::array<r4::vector2<real>, 4> vertices{};
 		rasterimage::image<uint8_t, 1> image;
-		real advance;
+		real advance = 0;
 	};
 
 	glyph load_glyph(char32_t c, unsigned font_size) const;
