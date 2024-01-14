@@ -8,7 +8,7 @@ utki::shared_ref<morda::context> make_dummy_context(){
             utki::make_shared<morda::updater>(),
             [](std::function<void()>){},
             [](morda::mouse_cursor){},
-            morda::real(0),
-            morda::real(0)
+            morda::real(96),
+            morda::real(1)
         );
 }
