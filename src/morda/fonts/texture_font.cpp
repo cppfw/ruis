@@ -84,9 +84,9 @@ freetype_face::metrics freetype_face::get_metrics(unsigned font_size) const
 	this->set_size(font_size);
 	using std::ceil;
 	return {
-		.height = ceil(real(this->face.f->size->metrics.height) / real(freetype_granularity)),
-		.descender = -ceil(real(this->face.f->size->metrics.descender) / real(freetype_granularity)),
-		.ascender = ceil(real(this->face.f->size->metrics.ascender) / real(freetype_granularity))
+		ceil(real(this->face.f->size->metrics.height) / real(freetype_granularity)), // height
+		-ceil(real(this->face.f->size->metrics.descender) / real(freetype_granularity)), // descender
+		ceil(real(this->face.f->size->metrics.ascender) / real(freetype_granularity)) // ascender
 	};
 }
 
@@ -104,7 +104,11 @@ freetype_face::glyph freetype_face::load_glyph(char32_t c, unsigned font_size) c
 		LOG([&](auto& o) {
 			o << "texture_font::load_glyph(" << std::hex << uint32_t(c) << "): failed to load glyph" << std::endl;
 		})
-		return {.advance = -1};
+		return {
+			{}, // vertices
+			{}, // image
+			-1 // advance
+		};
 	}
 
 	FT_GlyphSlot slot = this->face.f->glyph;
@@ -117,7 +121,11 @@ freetype_face::glyph freetype_face::load_glyph(char32_t c, unsigned font_size) c
 
 	if (!slot->bitmap.buffer) {
 		// empty glyph (space)
-		return glyph{.advance = advance};
+		return glyph{
+			{}, // vertices
+			{}, // image
+			advance
+		};
 	}
 
 	ASSERT(slot->format == FT_GLYPH_FORMAT_BITMAP)
@@ -125,21 +133,21 @@ freetype_face::glyph freetype_face::load_glyph(char32_t c, unsigned font_size) c
 	ASSERT(slot->bitmap.pitch >= 0)
 
 	return glyph{
-		.vertices =
-			{
-					   (morda::vector2(real(m->horiBearingX), -real(m->horiBearingY)) / real(freetype_granularity)),
-					   (morda::vector2(real(m->horiBearingX), real(m->height - m->horiBearingY)) / real(freetype_granularity)),
-					   (morda::vector2(real(m->horiBearingX + m->width), real(m->height - m->horiBearingY)) /
-				 real(freetype_granularity)),
-					   (morda::vector2(real(m->horiBearingX + m->width), -real(m->horiBearingY)) / real(freetype_granularity)
-				) //
-			},
-		.image = rasterimage::image<uint8_t, 1>::make(
+		// vertices
+		{
+         (morda::vector2(real(m->horiBearingX), -real(m->horiBearingY)) / real(freetype_granularity)),
+         (morda::vector2(real(m->horiBearingX), real(m->height - m->horiBearingY)) / real(freetype_granularity)),
+         (morda::vector2(real(m->horiBearingX + m->width), real(m->height - m->horiBearingY)) /
+			 real(freetype_granularity)),
+         (morda::vector2(real(m->horiBearingX + m->width), -real(m->horiBearingY)) / real(freetype_granularity)) //
+		},
+		// image
+		rasterimage::image<uint8_t, 1>::make(
 			{slot->bitmap.width, slot->bitmap.rows},
 			slot->bitmap.buffer,
 			slot->bitmap.pitch
 		),
-		.advance = advance
+		advance
 	};
 }
 
