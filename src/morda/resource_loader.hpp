@@ -202,7 +202,9 @@ utki::shared_ref<resource_type> resource_loader::load(std::string_view id)
 
 			return resource;
 		} catch (...) {
-			std::cout << "could not load resource, id = " << id << std::endl;
+			utki::log([&](auto& o) {
+				o << "could not load resource, id = " << id << std::endl;
+			});
 			throw;
 		}
 	}
