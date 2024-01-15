@@ -190,17 +190,21 @@ utki::shared_ref<resource_type> resource_loader::load(std::string_view id)
 			continue;
 		}
 
-		ASSERT(i->fi)
+		try {
+			ASSERT(i->fi)
+			auto resource = resource_type::load(utki::make_shared_from(this->ctx), *desc, *i->fi);
 
-		auto resource = resource_type::load(utki::make_shared_from(this->ctx), *desc, *i->fi);
+			// resource need to know its id so that it would be possible to reload the resource
+			// using the id in case mounted resource packs change
+			resource.get().id = id;
 
-		// resource need to know its id so that it would be possible to reload the resource
-		// using the id in case mounted resource packs change
-		resource.get().id = id;
+			i->add_resource_to_res_map(resource, id);
 
-		i->add_resource_to_res_map(resource, id);
-
-		return resource;
+			return resource;
+		} catch (...) {
+			std::cout << "could not load resource, id = " << id << std::endl;
+			throw;
+		}
 	}
 
 	LOG([&](auto& o) {

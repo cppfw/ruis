@@ -37,14 +37,14 @@ morda_img_refresh_disabled{
 
 morda_npt_slider_bg{
 	file{slider_bg.svg}
-	// 16x17
-	borders{0.5 0.4706 0.5 0.5294}
+	// 11x12
+	borders{0.49 0.4706 0.5 0.5294}
 }
 
 morda_npt_slider_handle{
 	file{slider_handle.svg}
-	// 16x17
-	borders{0.5 0.4706 0.5 0.5294}
+	// 11x12
+	borders{0.49 0.4706 0.5 0.5294}
 }
 
 morda_npt_button_normal{

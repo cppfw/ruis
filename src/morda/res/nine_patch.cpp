@@ -44,7 +44,15 @@ public:
 	// rect is a rectangle on the texture, Y axis down.
 	res_subimage(const utki::shared_ref<morda::context>& c, decltype(tex) tex, const rectangle& rect) :
 		res::image(c),
-		res::image::texture(c.get().renderer, rect.d),
+		res::image::texture(
+			c.get().renderer,
+			[&]() {
+				ASSERT(rect.d.is_positive_or_zero(), [&](auto& o) {
+					o << "rect.d = " << rect.d;
+				})
+				return rect.d;
+			}()
+		),
 		tex(std::move(tex)),
 		vao([&]() {
 			std::array<vector2, 4> tex_coords = {
@@ -127,7 +135,9 @@ utki::shared_ref<nine_patch> nine_patch::load(
 	borders.top() = round(borders.top() * dims.y());
 	borders.bottom() = round(borders.bottom() * dims.y());
 
-	// std::cout << "borders = " << borders << std::endl;
+	if (borders.left() + borders.right() > dims.x() || borders.top() + borders.bottom() > dims.y()) {
+		throw std::invalid_argument("nine_patch::load(): borders are bigger than image dimensions");
+	}
 
 	return utki::make_shared<nine_patch>(ctx, image, borders);
 }
@@ -177,6 +187,8 @@ std::shared_ptr<nine_patch::image_matrix> nine_patch::get(sides<real> borders) c
 	using std::round;
 	auto quad_tex = this->image.get().get(round(this->image.get().dims() * mul));
 
+	// std::cout << "quad_tex dims = " << quad_tex.get().dims << std::endl;
+
 	vector2 act_mul = quad_tex.get().dims.comp_div(this->image.get().dims());
 
 	sides<real> scaled_borders(this->borders);
@@ -184,6 +196,9 @@ std::shared_ptr<nine_patch::image_matrix> nine_patch::get(sides<real> borders) c
 	scaled_borders.right() *= act_mul.x();
 	scaled_borders.top() *= act_mul.y();
 	scaled_borders.bottom() *= act_mul.y();
+
+	std::cout << "this->borders = " << this->borders << std::endl;
+	std::cout << "scaled_borders = " << scaled_borders << std::endl;
 
 	auto ret = std::make_shared<image_matrix>( // TODO: make shared_ref
 		std::array<std::array<utki::shared_ref<const res::image>, 3>, 3>({
@@ -204,7 +219,7 @@ std::shared_ptr<nine_patch::image_matrix> nine_patch::get(sides<real> borders) c
 					 rectangle(
 						 scaled_borders.left(),
 						 0,
-						 std::round(quad_tex.get().dims.x() - scaled_borders.left() - scaled_borders.right()),
+						 round(quad_tex.get().dims.x() - scaled_borders.left() - scaled_borders.right()),
 						 scaled_borders.top()
 					 )
 				 ), // top
@@ -212,7 +227,7 @@ std::shared_ptr<nine_patch::image_matrix> nine_patch::get(sides<real> borders) c
 					 this->context,
 					 quad_tex,
 					 rectangle(
-						 std::round(quad_tex.get().dims.x() - scaled_borders.right()),
+						 round(quad_tex.get().dims.x() - scaled_borders.right()),
 						 0,
 						 scaled_borders.right(),
 						 scaled_borders.top()
@@ -227,7 +242,7 @@ std::shared_ptr<nine_patch::image_matrix> nine_patch::get(sides<real> borders) c
 						 0,
 						 scaled_borders.top(),
 						 scaled_borders.left(),
-						 std::round(quad_tex.get().dims.y() - scaled_borders.top() - scaled_borders.bottom())
+						 round(quad_tex.get().dims.y() - scaled_borders.top() - scaled_borders.bottom())
 					 )
 				 ), // left
 				 utki::make_shared<res_subimage>(
@@ -236,18 +251,18 @@ std::shared_ptr<nine_patch::image_matrix> nine_patch::get(sides<real> borders) c
 					 rectangle(
 						 scaled_borders.left(),
 						 scaled_borders.top(),
-						 std::round(quad_tex.get().dims.x() - scaled_borders.left() - scaled_borders.right()),
-						 std::round(quad_tex.get().dims.y() - scaled_borders.top() - scaled_borders.bottom())
+						 round(quad_tex.get().dims.x() - scaled_borders.left() - scaled_borders.right()),
+						 round(quad_tex.get().dims.y() - scaled_borders.top() - scaled_borders.bottom())
 					 )
 				 ), // middle
 				 utki::make_shared<res_subimage>(
 					 this->context,
 					 quad_tex,
 					 rectangle(
-						 std::round(quad_tex.get().dims.x() - scaled_borders.right()),
+						 round(quad_tex.get().dims.x() - scaled_borders.right()),
 						 scaled_borders.top(),
 						 scaled_borders.right(),
-						 std::round(quad_tex.get().dims.y() - scaled_borders.top() - scaled_borders.bottom())
+						 round(quad_tex.get().dims.y() - scaled_borders.top() - scaled_borders.bottom())
 					 )
 				 ) // right
 			 }},
@@ -257,7 +272,7 @@ std::shared_ptr<nine_patch::image_matrix> nine_patch::get(sides<real> borders) c
 					 quad_tex,
 					 rectangle(
 						 0,
-						 std::round(quad_tex.get().dims.y() - scaled_borders.bottom()),
+						 round(quad_tex.get().dims.y() - scaled_borders.bottom()),
 						 scaled_borders.left(),
 						 scaled_borders.bottom()
 					 )
@@ -267,8 +282,8 @@ std::shared_ptr<nine_patch::image_matrix> nine_patch::get(sides<real> borders) c
 					 quad_tex,
 					 rectangle(
 						 scaled_borders.left(),
-						 std::round(quad_tex.get().dims.y() - scaled_borders.bottom()),
-						 std::round(quad_tex.get().dims.x() - scaled_borders.left() - scaled_borders.right()),
+						 round(quad_tex.get().dims.y() - scaled_borders.bottom()),
+						 round(quad_tex.get().dims.x() - scaled_borders.left() - scaled_borders.right()),
 						 scaled_borders.bottom()
 					 )
 				 ), // bottom
@@ -276,8 +291,8 @@ std::shared_ptr<nine_patch::image_matrix> nine_patch::get(sides<real> borders) c
 					 this->context,
 					 quad_tex,
 					 rectangle(
-						 std::round(quad_tex.get().dims.x() - scaled_borders.right()),
-						 std::round(quad_tex.get().dims.y() - scaled_borders.bottom()),
+						 round(quad_tex.get().dims.x() - scaled_borders.right()),
+						 round(quad_tex.get().dims.y() - scaled_borders.bottom()),
 						 scaled_borders.right(),
 						 scaled_borders.bottom()
 					 )

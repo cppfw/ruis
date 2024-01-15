@@ -123,7 +123,7 @@ morda::vector2 image::measure(const morda::vector2& quotum) const
 	vector2 img_dims = img->dims();
 
 	ASSERT(img_dims.is_positive_or_zero(), [&](auto& o) {
-		o << "img_dims = " << img_dims;
+		o << "img_dims = " << img_dims << " widget id = " << this->id;
 	})
 
 	if (!this->keep_aspect_ratio) {
