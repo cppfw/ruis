@@ -27,7 +27,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace morda {
 
-class font_factory
+class font_provider
 {
 protected:
 	const utki::shared_ref<morda::context> context;
@@ -35,17 +35,17 @@ protected:
 public:
 	virtual utki::shared_ref<font> create(size_t size) = 0;
 
-	font_factory(const utki::shared_ref<morda::context>& context) :
+	font_provider(const utki::shared_ref<morda::context>& context) :
 		context(context)
 	{}
 
-	font_factory(const font_factory&) = delete;
-	font_factory& operator=(const font_factory&) = delete;
+	font_provider(const font_provider&) = delete;
+	font_provider& operator=(const font_provider&) = delete;
 
-	font_factory(font_factory&&) = delete;
-	font_factory& operator=(font_factory&&) = delete;
+	font_provider(font_provider&&) = delete;
+	font_provider& operator=(font_provider&&) = delete;
 
-	virtual ~font_factory() = default;
+	virtual ~font_provider() = default;
 };
 
 } // namespace morda

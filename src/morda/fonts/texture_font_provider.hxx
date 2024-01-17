@@ -21,18 +21,18 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "font_factory.hpp"
+#include "font_provider.hpp"
 #include "texture_font.hxx"
 
 namespace morda {
 
-class texture_font_factory : public font_factory
+class texture_font_provider : public font_provider
 {
 	const utki::shared_ref<const freetype_face> face;
 	const unsigned max_cached;
 
 public:
-	texture_font_factory(
+	texture_font_provider(
 		const utki::shared_ref<morda::context>& context,
 		const utki::shared_ref<const freetype_face>& face,
 		unsigned max_cached
