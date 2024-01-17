@@ -31,15 +31,15 @@ namespace morda {
 
 class font_provider
 {
-	std::map<size_t, std::weak_ptr<const font>> cache;
+	std::map<real, std::weak_ptr<const font>> cache;
 
 protected:
 	const utki::shared_ref<morda::context> context;
 
-	virtual utki::shared_ref<const font> create(size_t size) = 0;
+	virtual utki::shared_ref<const font> create(real size) = 0;
 
 public:
-	utki::shared_ref<const font> get(size_t size);
+	utki::shared_ref<const font> get(real size);
 
 	font_provider(const utki::shared_ref<morda::context>& context) :
 		context(context)

@@ -107,7 +107,7 @@ const treeml::forest vert_line_layout = treeml::read(R"qwertyuiop(
 		@pile{
 			lp{dx{${morda_tree_view_indent}} dy{fill}}
 			@color{
-				lp{dx{1pt}dy{fill}}
+				lp{dx{1pp}dy{fill}}
 				color{${morda_color_highlight}}
 			}
 		}
@@ -119,7 +119,7 @@ const treeml::forest line_end_layout = treeml::read(R"qwertyuiop(
 			@column{
 				lp{dx{max}dy{max}}
 				@color{
-					lp{dx{1pt}dy{0}weight{1}}
+					lp{dx{1pp}dy{0}weight{1}}
 					color{${morda_color_highlight}}
 				}
 				@widget{lp{dx{max}dy{0}weight{1}}}
@@ -128,7 +128,7 @@ const treeml::forest line_end_layout = treeml::read(R"qwertyuiop(
 				lp{dx{max}dy{max}}
 				@widget{lp{dx{0}dy{max}weight{1}}}
 				@color{
-					lp{dx{0}dy{1pt}weight{1}}
+					lp{dx{0}dy{1pp}weight{1}}
 					color{${morda_color_highlight}}
 				}
 			}
@@ -139,14 +139,14 @@ const treeml::forest line_middle_layout = treeml::read(R"qwertyuiop(
 		@pile{
 			lp{dx{${morda_tree_view_indent}} dy{max}}
 			@color{
-				lp{dx{1pt}dy{max}}
+				lp{dx{1pp}dy{max}}
 				color{${morda_color_highlight}}
 			}
 			@row{
 				lp{dx{max}dy{max}}
 				@widget{lp{dx{0}dy{max}weight{1}}}
 				@color{
-					lp{dx{0}dy{1pt}weight{1}}
+					lp{dx{0}dy{1pp}weight{1}}
 					color{${morda_color_highlight}}
 				}
 			}
