@@ -23,8 +23,17 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace morda;
 
+texture_font_factory::texture_font_factory(
+	const utki::shared_ref<morda::context>& context,
+	const utki::shared_ref<const freetype_face>& face,
+	unsigned max_cached
+) :
+	font_factory(context),
+	face(face),
+	max_cached(max_cached)
+{}
+
 utki::shared_ref<font> texture_font_factory::create(size_t size)
 {
-	// TODO:
-	return utki::shared_ref<font>(std::shared_ptr<font>());
+	return utki::make_shared<texture_font>(this->context, this->face, size, max_cached);
 }

@@ -29,10 +29,15 @@ namespace morda {
 
 class font_factory
 {
+protected:
+	const utki::shared_ref<morda::context> context;
+
 public:
 	virtual utki::shared_ref<font> create(size_t size) = 0;
 
-	font_factory() = default;
+	font_factory(const utki::shared_ref<morda::context>& context) :
+		context(context)
+	{}
 
 	font_factory(const font_factory&) = delete;
 	font_factory& operator=(const font_factory&) = delete;

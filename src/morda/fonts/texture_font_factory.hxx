@@ -22,12 +22,22 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #pragma once
 
 #include "font_factory.hpp"
+#include "texture_font.hxx"
 
 namespace morda {
 
 class texture_font_factory : public font_factory
 {
+	const utki::shared_ref<const freetype_face> face;
+	const unsigned max_cached;
+
 public:
+	texture_font_factory(
+		const utki::shared_ref<morda::context>& context,
+		const utki::shared_ref<const freetype_face>& face,
+		unsigned max_cached
+	);
+
 	utki::shared_ref<font> create(size_t size) override;
 };
 

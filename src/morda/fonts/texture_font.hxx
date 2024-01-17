@@ -105,7 +105,7 @@ class texture_font : public font
 {
 	const unsigned font_size;
 
-	utki::shared_ref<freetype_face> face;
+	const utki::shared_ref<const freetype_face> face;
 
 	mutable std::list<char32_t> last_used_order;
 
@@ -140,7 +140,7 @@ public:
 	 */
 	texture_font(
 		const utki::shared_ref<morda::context>& c,
-		const utki::shared_ref<freetype_face>& face,
+		const utki::shared_ref<const freetype_face>& face,
 		unsigned font_size,
 		unsigned max_cached
 	);
