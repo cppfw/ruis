@@ -21,6 +21,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
+#include <map>
+
 #include <utki/shared_ref.hpp>
 
 #include "font.hpp"
@@ -29,11 +31,15 @@ namespace morda {
 
 class font_provider
 {
+	std::map<size_t, std::weak_ptr<const font>> cache;
+
 protected:
 	const utki::shared_ref<morda::context> context;
 
+	virtual utki::shared_ref<const font> create(size_t size) = 0;
+
 public:
-	virtual utki::shared_ref<font> create(size_t size) = 0;
+	utki::shared_ref<const font> get(size_t size);
 
 	font_provider(const utki::shared_ref<morda::context>& context) :
 		context(context)

@@ -19,26 +19,23 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 /* ================ LICENSE END ================ */
 
-#pragma once
-
 #include "font_provider.hpp"
-#include "texture_font.hxx"
 
-namespace morda {
+using namespace morda;
 
-class texture_font_provider : public font_provider
-{
-	const utki::shared_ref<const freetype_face> face;
-	const unsigned max_cached;
+utki::shared_ref<const font> font_provider::get(size_t size){
+    auto i = this->cache.find(size);
+    if(i != this->cache.end()){
+        if(auto f = i->second.lock()){
+            return utki::shared_ref<const font>(std::move(f));
+        }else{
+            this->cache.erase(i);
+        }
+    }
 
-public:
-	texture_font_provider(
-		const utki::shared_ref<morda::context>& context,
-		const utki::shared_ref<const freetype_face>& face,
-		unsigned max_cached
-	);
+    auto f = this->create(size);
 
-	utki::shared_ref<const font> create(size_t size) override;
-};
+    this->cache.insert(std::make_pair(size, utki::make_weak(f)));
 
-} // namespace morda
+    return f;
+}
