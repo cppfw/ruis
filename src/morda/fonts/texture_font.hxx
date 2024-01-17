@@ -105,7 +105,7 @@ class texture_font : public font
 {
 	const unsigned font_size;
 
-	freetype_face face;
+	utki::shared_ref<freetype_face> face;
 
 	mutable std::list<char32_t> last_used_order;
 
@@ -134,13 +134,13 @@ public:
 	/**
 	 * @brief Constructor.
 	 * @param c - context to which this font belongs.
-	 * @param fi - file interface to read Truetype font from, i.e. 'ttf' file.
+	 * @param face - freetype font.
 	 * @param font_size - size of the font in pixels.
 	 * @param max_cached - maximum number of glyphs to cache.
 	 */
 	texture_font(
 		const utki::shared_ref<morda::context>& c,
-		const papki::file& fi,
+		const utki::shared_ref<freetype_face>& face,
 		unsigned font_size,
 		unsigned max_cached
 	);

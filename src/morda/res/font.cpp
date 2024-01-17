@@ -43,20 +43,36 @@ res::font::font(
 ) :
 	resource(context)
 {
-	this->fonts[unsigned(style::normal)] =
-		std::make_unique<texture_font>(this->context, file_normal, font_size, max_cached);
+	this->fonts[unsigned(style::normal)] = std::make_unique<texture_font>(
+		this->context,
+		utki::make_shared<freetype_face>(file_normal),
+		font_size,
+		max_cached
+	);
 
 	if (file_bold) {
-		this->fonts[unsigned(style::bold)] =
-			std::make_unique<texture_font>(this->context, *file_bold, font_size, max_cached);
+		this->fonts[unsigned(style::bold)] = std::make_unique<texture_font>(
+			this->context,
+			utki::make_shared<freetype_face>(*file_bold),
+			font_size,
+			max_cached
+		);
 	}
 	if (file_italic) {
-		this->fonts[unsigned(style::italic)] =
-			std::make_unique<texture_font>(this->context, *file_italic, font_size, max_cached);
+		this->fonts[unsigned(style::italic)] = std::make_unique<texture_font>(
+			this->context,
+			utki::make_shared<freetype_face>(*file_italic),
+			font_size,
+			max_cached
+		);
 	}
 	if (file_bold_italic) {
-		this->fonts[unsigned(style::bold_italic)] =
-			std::make_unique<texture_font>(this->context, *file_bold_italic, font_size, max_cached);
+		this->fonts[unsigned(style::bold_italic)] = std::make_unique<texture_font>(
+			this->context,
+			utki::make_shared<freetype_face>(*file_bold_italic),
+			font_size,
+			max_cached
+		);
 	}
 }
 

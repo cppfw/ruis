@@ -153,7 +153,7 @@ freetype_face::glyph freetype_face::load_glyph(char32_t c, unsigned font_size) c
 
 texture_font::glyph texture_font::load_glyph(char32_t c) const
 {
-	auto ftg = this->face.load_glyph(c, this->font_size);
+	auto ftg = this->face.get().load_glyph(c, this->font_size);
 
 	if (ftg.advance < 0) {
 		return this->unknown_glyph;
@@ -188,13 +188,13 @@ texture_font::glyph texture_font::load_glyph(char32_t c) const
 
 texture_font::texture_font(
 	const utki::shared_ref<morda::context>& c,
-	const papki::file& fi,
+	const utki::shared_ref<freetype_face>& face,
 	unsigned font_size,
 	unsigned max_cached
 ) :
 	font(c),
 	font_size(font_size),
-	face(fi),
+	face(face),
 	max_cached(max_cached)
 {
 	//	TRACE(<< "texture_font::Load(): enter" << std::endl)
@@ -205,7 +205,7 @@ texture_font::texture_font(
 
 	using std::ceil;
 
-	auto m = this->face.get_metrics(this->font_size);
+	auto m = this->face.get().get_metrics(this->font_size);
 
 	this->height = m.height;
 	this->descender = m.descender;
