@@ -43,6 +43,7 @@ class text_widget : virtual public widget
 	utki::shared_ref<const res::font> font_face;
 
 	utki::shared_ref<const morda::font> font;
+
 public:
 	text_widget(const text_widget&) = delete;
 	text_widget& operator=(const text_widget&) = delete;

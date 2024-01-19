@@ -36,10 +36,10 @@ class font_provider
 protected:
 	const utki::shared_ref<morda::context> context;
 
-	virtual utki::shared_ref<const font> create(real size)const = 0;
+	virtual utki::shared_ref<const font> create(real size) const = 0;
 
 public:
-	utki::shared_ref<const font> get(real size)const;
+	utki::shared_ref<const font> get(real size) const;
 
 	font_provider(const utki::shared_ref<morda::context>& context) :
 		context(context)

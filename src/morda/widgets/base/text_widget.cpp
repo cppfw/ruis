@@ -26,11 +26,11 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace morda;
 
-namespace{
+namespace {
 
-real default_font_size_pp = 12;
+constexpr auto default_font_size_pp = 12;
 
-}
+} // namespace
 
 void text_widget::set_font_face(const utki::shared_ref<const res::font>& font_res)
 {
@@ -39,8 +39,9 @@ void text_widget::set_font_face(const utki::shared_ref<const res::font>& font_re
 	this->set_font_size(this->font_size);
 }
 
-void text_widget::set_font_size(real size){
-	if(this->font_size == size){
+void text_widget::set_font_size(real size)
+{
+	if (this->font_size == size) {
 		return;
 	}
 
@@ -55,21 +56,19 @@ void text_widget::set_font_size(real size){
 
 text_widget::text_widget(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
 	widget(c, desc),
-	font_size(
-		[&desc, this](){
-			for (const auto& p : desc) {
-				if (!is_property(p)) {
-					continue;
-				}
-
-				if (p.value == "font_size") {
-					return parse_dimension_value(get_property_value(p), this->context.get().units);
-				}
+	font_size([&desc, this]() {
+		for (const auto& p : desc) {
+			if (!is_property(p)) {
+				continue;
 			}
 
-			return this->context.get().units.pp_to_px(default_font_size_pp);
-		}()
-	),
+			if (p.value == "font_size") {
+				return parse_dimension_value(get_property_value(p), this->context.get().units);
+			}
+		}
+
+		return this->context.get().units.pp_to_px(default_font_size_pp);
+	}()),
 	font_face([&desc, this]() {
 		for (const auto& p : desc) {
 			if (!is_property(p)) {

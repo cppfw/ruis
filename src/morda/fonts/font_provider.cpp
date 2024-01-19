@@ -23,19 +23,20 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace morda;
 
-utki::shared_ref<const font> font_provider::get(real size)const{
-    auto i = this->cache.find(size);
-    if(i != this->cache.end()){
-        if(auto f = i->second.lock()){
-            return utki::shared_ref<const font>(std::move(f));
-        }else{
-            this->cache.erase(i);
-        }
-    }
+utki::shared_ref<const font> font_provider::get(real size) const
+{
+	auto i = this->cache.find(size);
+	if (i != this->cache.end()) {
+		if (auto f = i->second.lock()) {
+			return utki::shared_ref<const font>(std::move(f));
+		} else {
+			this->cache.erase(i);
+		}
+	}
 
-    auto f = this->create(size);
+	auto f = this->create(size);
 
-    this->cache.insert(std::make_pair(size, utki::make_weak(f)));
+	this->cache.insert(std::make_pair(size, utki::make_weak(f)));
 
-    return f;
+	return f;
 }
