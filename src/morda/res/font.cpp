@@ -26,7 +26,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <utki/unicode.hpp>
 
 #include "../context.hpp"
-#include "../fonts/texture_font.hxx"
+#include "../fonts/texture_font_provider.hxx"
 #include "../util/util.hpp"
 
 using namespace morda;
@@ -43,34 +43,30 @@ res::font::font(
 ) :
 	resource(context)
 {
-	this->fonts[unsigned(style::normal)] = std::make_unique<texture_font>(
+	this->fonts[unsigned(style::normal)] = std::make_unique<texture_font_provider>(
 		this->context,
 		utki::make_shared<freetype_face>(file_normal),
-		font_size,
 		max_cached
 	);
 
 	if (file_bold) {
-		this->fonts[unsigned(style::bold)] = std::make_unique<texture_font>(
+		this->fonts[unsigned(style::bold)] = std::make_unique<texture_font_provider>(
 			this->context,
 			utki::make_shared<freetype_face>(*file_bold),
-			font_size,
 			max_cached
 		);
 	}
 	if (file_italic) {
-		this->fonts[unsigned(style::italic)] = std::make_unique<texture_font>(
+		this->fonts[unsigned(style::italic)] = std::make_unique<texture_font_provider>(
 			this->context,
 			utki::make_shared<freetype_face>(*file_italic),
-			font_size,
 			max_cached
 		);
 	}
 	if (file_bold_italic) {
-		this->fonts[unsigned(style::bold_italic)] = std::make_unique<texture_font>(
+		this->fonts[unsigned(style::bold_italic)] = std::make_unique<texture_font_provider>(
 			this->context,
 			utki::make_shared<freetype_face>(*file_bold_italic),
-			font_size,
 			max_cached
 		);
 	}

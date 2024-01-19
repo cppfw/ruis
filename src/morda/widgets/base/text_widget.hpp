@@ -38,8 +38,11 @@ namespace morda {
  */
 class text_widget : virtual public widget
 {
-	utki::shared_ref<const res::font> font;
+	real font_size;
 
+	utki::shared_ref<const res::font> font_face;
+
+	utki::shared_ref<const morda::font> font;
 public:
 	text_widget(const text_widget&) = delete;
 	text_widget& operator=(const text_widget&) = delete;
@@ -49,12 +52,14 @@ public:
 
 	~text_widget() override = default;
 
-	void set_font(const utki::shared_ref<const res::font>& font);
+	void set_font_face(const utki::shared_ref<const res::font>& font_res);
 
-	const res::font& get_font() const
+	const morda::font& get_font() const
 	{
 		return this->font.get();
 	}
+
+	void set_font_size(real size);
 
 	void set_text(std::string_view text)
 	{

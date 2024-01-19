@@ -23,7 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace morda;
 
-utki::shared_ref<const font> font_provider::get(real size){
+utki::shared_ref<const font> font_provider::get(real size)const{
     auto i = this->cache.find(size);
     if(i != this->cache.end()){
         if(auto f = i->second.lock()){

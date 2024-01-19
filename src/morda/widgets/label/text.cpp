@@ -38,7 +38,7 @@ void text::render(const morda::matrix4& matrix) const
 
 	using std::round;
 
-	const auto& font = this->get_font().get();
+	const auto& font = this->get_font();
 
 	matr.translate(
 		-this->get_bounding_box().p.x(),

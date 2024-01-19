@@ -38,7 +38,7 @@ public:
 		unsigned max_cached
 	);
 
-	utki::shared_ref<const font> create(real size) override;
+	utki::shared_ref<const font> create(real size) const override;
 };
 
 } // namespace morda

@@ -25,7 +25,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <treeml/tree.hpp>
 
-#include "../fonts/font.hpp"
+#include "../fonts/font_provider.hpp"
 #include "../resource_loader.hpp"
 #include "../util/util.hpp"
 
@@ -66,7 +66,7 @@ public:
 	};
 
 private:
-	std::array<std::unique_ptr<const morda::font>, size_t(style::enum_size)> fonts;
+	std::array<std::unique_ptr<const morda::font_provider>, size_t(style::enum_size)> fonts;
 
 public:
 	font(
@@ -91,15 +91,15 @@ public:
 	 * @brief Get font object held by this resource.
 	 * @return Font object.
 	 */
-	const morda::font& get(style font_style = style::normal) const noexcept
+	utki::shared_ref<const morda::font> get(real size, style font_style = style::normal) const noexcept
 	{
 		ASSERT(this->fonts[unsigned(style::normal)])
 		// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-constant-array-index)
 		const auto& ret = this->fonts[unsigned(font_style)];
 		if (ret) {
-			return *ret;
+			return ret->get(size);
 		}
-		return *this->fonts[unsigned(style::normal)];
+		return this->fonts[unsigned(style::normal)]->get(size);
 	}
 
 private:

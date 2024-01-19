@@ -44,12 +44,12 @@ single_line_text_widget::single_line_text_widget(
 
 void single_line_text_widget::recompute_bounding_box()
 {
-	this->bb = this->get_font().get().get_bounding_box(this->single_line_text_widget::get_text());
+	this->bb = this->get_font().get_bounding_box(this->single_line_text_widget::get_text());
 }
 
 vector2 single_line_text_widget::measure(const morda::vector2& quotum) const noexcept
 {
-	vector2 ret(this->bb.d.x(), this->get_font().get().get_height());
+	vector2 ret(this->bb.d.x(), this->get_font().get_height());
 
 	for (unsigned i = 0; i != ret.size(); ++i) {
 		if (quotum[i] >= 0) {

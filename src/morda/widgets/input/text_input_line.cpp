@@ -69,7 +69,7 @@ void text_input_line::render(const morda::matrix4& matrix) const
 
 		using std::round;
 
-		const auto& font = this->get_font().get();
+		const auto& font = this->get_font();
 
 		matr.translate(
 			-this->get_bounding_box().p.x() + this->x_offset,
@@ -132,7 +132,7 @@ vector2 text_input_line::measure(const morda::vector2& quotum) const noexcept
 	}
 
 	if (quotum.y() < 0) {
-		ret.y() = this->get_font().get().get_height();
+		ret.y() = this->get_font().get_height();
 	} else {
 		ret.y() = quotum.y();
 	}
@@ -169,7 +169,7 @@ void text_input_line::set_cursor_index(size_t index, bool selection)
 		return;
 	}
 
-	const auto& font = this->get_font().get();
+	const auto& font = this->get_font();
 
 	ASSERT(this->first_visible_char_index <= this->get_text().size())
 	ASSERT(this->cursor_index > this->first_visible_char_index)
@@ -218,7 +218,7 @@ real text_input_line::index_to_pos(size_t index)
 		 i != this->get_text().end() && index != this->first_visible_char_index;
 		 ++i, --index)
 	{
-		ret += this->get_font().get().get_advance(*i);
+		ret += this->get_font().get_advance(*i);
 		if (ret >= this->rect().d.x()) {
 			ret = this->rect().d.x();
 			break;
@@ -236,7 +236,7 @@ size_t text_input_line::pos_to_index(real pos)
 	for (auto i = utki::next(this->get_text().begin(), this->first_visible_char_index); i != this->get_text().end();
 		 ++i)
 	{
-		real w = this->get_font().get().get_advance(*i);
+		real w = this->get_font().get_advance(*i);
 
 		if (pos < p + w) {
 			if (pos < p + w / 2) {
