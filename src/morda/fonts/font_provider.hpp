@@ -41,6 +41,7 @@ protected:
 public:
 	utki::shared_ref<const font> get(real size) const;
 
+	// NOLINTNEXTLINE(modernize-pass-by-value)
 	font_provider(const utki::shared_ref<morda::context>& context) :
 		context(context)
 	{}

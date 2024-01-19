@@ -188,6 +188,7 @@ texture_font::glyph texture_font::load_glyph(char32_t c) const
 
 texture_font::texture_font(
 	const utki::shared_ref<morda::context>& c,
+	// NOLINTNEXTLINE(modernize-pass-by-value)
 	const utki::shared_ref<const freetype_face>& face,
 	unsigned font_size,
 	unsigned max_cached
