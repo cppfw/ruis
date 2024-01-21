@@ -3,10 +3,10 @@
 
 #include <papki/fs_file.hpp>
 
-#include <morda/widgets/button/tab_group.hpp>
-#include <morda/widgets/group/book.hpp>
-#include <morda/widgets/group/tabbed_book.hpp>
-#include <morda/gui.hpp>
+#include <ruis/widgets/button/tab_group.hpp>
+#include <ruis/widgets/group/book.hpp>
+#include <ruis/widgets/group/tabbed_book.hpp>
+#include <ruis/gui.hpp>
 
 #include "../../harness/util/dummy_context.hpp"
 

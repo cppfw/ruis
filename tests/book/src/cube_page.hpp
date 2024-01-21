@@ -1,8 +1,7 @@
 #pragma once
 
-#include <morda/updateable.hpp>
-
-#include "../../../src/morda/widgets/group/book.hpp"
+#include <ruis/updateable.hpp>
+#include <ruis/widgets/group/book.hpp>
 
 class cube_page :
 		public morda::page,

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <morda/widget.hpp>
+#include <ruis/widget.hpp>
 
 class wire_socket : virtual public morda::widget{
 	friend class wire_area;

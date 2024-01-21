@@ -2,12 +2,12 @@
 #include <utki/debug.hpp>
 #include <papki/fs_file.hpp>
 
-#include <mordavokne/application.hpp>
+#include <ruisapp/application.hpp>
 
-#include "../../../src/morda/container.hpp"
-#include "../../../src/morda/widgets/button/push_button.hpp"
-#include "../../../src/morda/widgets/label/busy.hpp"
-#include "../../../src/morda/util/weak_widget_set.hpp"
+#include <ruis/container.hpp>
+#include <ruis/widgets/button/push_button.hpp>
+#include <ruis/widgets/label/busy.hpp>
+#include <ruis/util/weak_widget_set.hpp>
 
 class application : public mordavokne::application{
 public:

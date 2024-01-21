@@ -1,11 +1,9 @@
 #include "wire_area.hpp"
 
-#include <morda/paint/path_vao.hpp>
-
-#include <morda/context.hpp>
-#include <morda/util/util.hpp>
-
-#include <morda/layouts/pile_layout.hpp>
+#include <ruis/paint/path_vao.hpp>
+#include <ruis/context.hpp>
+#include <ruis/util/util.hpp>
+#include <ruis/layouts/pile_layout.hpp>
 
 namespace{
 const morda::real antialias_width = morda::real(0.55f);

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../../src/morda/widgets/group/book.hpp"
+#include <ruis/widgets/group/book.hpp>
 
 class sample_page :
         public morda::page,

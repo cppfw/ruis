@@ -1,8 +1,8 @@
 #include <tst/set.hpp>
 #include <tst/check.hpp>
 
-#include <morda/gui.hpp>
-#include <morda/container.hpp>
+#include <ruis/gui.hpp>
+#include <ruis/container.hpp>
 
 #include "../../harness/util/dummy_context.hpp"
 

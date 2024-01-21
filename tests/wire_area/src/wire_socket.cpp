@@ -2,7 +2,7 @@
 
 #include "wire_area.hpp"
 
-#include <morda/util/util.hpp>
+#include <ruis/util/util.hpp>
 
 wire_socket::wire_socket(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
 		morda::widget(c, desc)

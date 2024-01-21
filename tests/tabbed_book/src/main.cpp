@@ -1,11 +1,11 @@
 #include <sstream>
 
 #include <utki/debug.hpp>
-#include <mordavokne/application.hpp>
+#include <ruisapp/application.hpp>
 
-#include "../../../src/morda/widgets/button/push_button.hpp"
-#include "../../../src/morda/widgets/label/text.hpp"
-#include "../../../src/morda/widgets/group/tabbed_book.hpp"
+#include <ruis/widgets/button/push_button.hpp>
+#include <ruis/widgets/label/text.hpp>
+#include <ruis/widgets/group/tabbed_book.hpp>
 
 #include "sample_page.hpp"
 

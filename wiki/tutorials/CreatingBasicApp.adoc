@@ -2,35 +2,35 @@
 
 Install *morda* on your system.
 
-This sample uses link:https://github.com/cppfw/mordavokne[*mordavokne*] complementary library as OS adaptation layer, so install it on your system too.
+This sample uses link:https://github.com/cppfw/ruisapp[*ruisapp*] complementary library as OS adaptation layer, so install it on your system too.
 
-Entry point of the *mordavokne* application is a method called `mordavokne::create_application()`, and not a traditional `main()`.
-*mordavokne* defines `main()` internally, so the user should not define `main()`.
+Entry point of the *ruisapp* application is a method called `ruisapp::create_application()`, and not a traditional `main()`.
+*ruisapp* defines `main()` internally, so the user should not define `main()`.
 
-User should derive their `application` class from `mordavokne::application`, which will be a singleton class. Then, return an instance of that class from `mordavokne::create_application()`. To do that, in `main.cpp` include necessary morda files:
+User should derive their `application` class from `ruisapp::application`, which will be a singleton class. Then, return an instance of that class from `ruisapp::create_application()`. To do that, in `main.cpp` include necessary morda files:
 
 [source,c++]
 ....
-#include <mordavokne/application.hpp>
+#include <ruisapp/application.hpp>
 ....
 
 Then we define our application class as forllows
 [source,c++]
 ....
-class application : public mordavokne::application{
+class application : public ruisapp::application{
 public:
 	application() :
-			mordavokne::application(mordavokne::window_params(r4::vec2ui(800, 600)))
+			ruisapp::application(ruisapp::window_params(r4::vec2ui(800, 600)))
 	{
 		// Here we will do all the initializations of our app, like loading the UI etc.
 	}
 };
 ....
 
-And then we define the `mordavokne::create_application()` function
+And then we define the `ruisapp::create_application()` function
 [source,c++]
 ....
-std::unique_ptr<mordavokne::application> mordavokne::create_application(int argc, const char** argv){
+std::unique_ptr<ruisapp::application> ruisapp::create_application(int argc, const char** argv){
 	return std::make_unique<::application>(); // note, that we use global namespace
 }
 ....
@@ -40,12 +40,12 @@ So, now we can build and run the project, but it will display just an empty wind
 Now, lets add some UI. We want to use standard *morda* widgets, so, let's initialize them in the Application constructor
 [source,c++]
 ....
-class application : public mordavokne::application{
+class application : public ruisapp::application{
 public:
 	application() :
-			mordavokne::application(mordavokne::window_params(r4::vec2ui(800, 600)))
+			ruisapp::application(ruisapp::window_params(r4::vec2ui(800, 600)))
 	{
-		// mordavokne::application has the 'gui' member variable which is an instance of morda::gui
+		// ruisapp::application has the 'gui' member variable which is an instance of morda::gui
 		this->gui.init_standard_widgets(*this->get_res_file());
 	}
 };
@@ -74,10 +74,10 @@ Let's describe our GUI using the GUI script. Create a file named `main.gui` in t
 Now we need to "inflate" the GUI from script in the code and set it to application:
 [source,c++]
 ....
-class application : public mordavokne::application{
+class application : public ruisapp::application{
 public:
 	application() :
-			mordavokne::application(mordavokne::window_params(r4::Vec2ui(800, 600)))
+			ruisapp::application(ruisapp::window_params(r4::Vec2ui(800, 600)))
 	{
 		this->gui.init_standard_widgets(*this->get_res_file());
 
@@ -96,16 +96,16 @@ After running the app we will see a button and a text label below it. But pressi
 Let's add some action on the button press
 [source,c++]
 ....
-#include <mordavokne/application.hpp>
+#include <ruisapp/application.hpp>
 
-#include <morda/widgets/label/text.hpp>
-#include <morda/widgets/button/button.hpp>
+#include <ruis/widgets/label/text.hpp>
+#include <ruis/widgets/button/button.hpp>
 
 
-class application : public mordavokne::application{
+class application : public ruisapp::application{
 public:
 	application() :
-			mordavokne::application(mordavokne::window_params(r4::vec2ui(800, 600)))
+			ruisapp::application(ruisapp::window_params(r4::vec2ui(800, 600)))
 	{
 		this->gui.init_standard_widgets(*this->get_res_file());
 
@@ -142,7 +142,7 @@ public:
 
 
 
-std::unique_ptr<mordavokne::application> mordavokne::create_application(int argc, const char** argv){
+std::unique_ptr<ruisapp::application> ruisapp::create_application(int argc, const char** argv){
 	return std::make_unique<::application>();
 }
 ....

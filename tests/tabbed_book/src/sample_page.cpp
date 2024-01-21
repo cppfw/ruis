@@ -1,7 +1,7 @@
 #include "sample_page.hpp"
 
-#include <morda/widgets/label/text.hpp>
-#include <morda/widgets/button/push_button.hpp>
+#include <ruis/widgets/label/text.hpp>
+#include <ruis/widgets/button/push_button.hpp>
 
 sample_page::sample_page(const utki::shared_ref<morda::context>& c, const std::string& text) :
         morda::widget(c, treeml::forest()),

@@ -1,8 +1,8 @@
 #include <tst/set.hpp>
 #include <tst/check.hpp>
 
-#include <morda/util/key.hpp>
-#include <morda/util/events.hpp>
+#include <ruis/util/key.hpp>
+#include <ruis/util/events.hpp>
 
 using namespace std::string_view_literals;
 using namespace std::string_literals;

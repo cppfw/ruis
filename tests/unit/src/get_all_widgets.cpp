@@ -1,8 +1,8 @@
 #include <tst/set.hpp>
 #include <tst/check.hpp>
 
-#include <morda/gui.hpp>
-#include <morda/widgets/group/scroll_area.hpp>
+#include <ruis/gui.hpp>
+#include <ruis/widgets/group/scroll_area.hpp>
 
 #include "../../harness/util/dummy_context.hpp"
 

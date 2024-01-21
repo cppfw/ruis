@@ -1,11 +1,10 @@
 #include <utki/debug.hpp>
 
-#include <mordavokne/application.hpp>
+#include <ruisapp/application.hpp>
 
-#include "../../../src/morda/widget.hpp"
-
-#include "../../../src/morda/paint/path_vao.hpp"
-#include "../../../src/morda/paint/frame_vao.hpp"
+#include <ruis/widget.hpp>
+#include <ruis/paint/path_vao.hpp>
+#include <ruis/paint/frame_vao.hpp>
 
 class path_widget : virtual public morda::widget{
 	morda::path_vao vao;

@@ -2,10 +2,10 @@
 #include <utki/debug.hpp>
 #include <papki/fs_file.hpp>
 
-#include <mordavokne/application.hpp>
+#include <ruisapp/application.hpp>
 
-#include "../../../src/morda/widgets/button/push_button.hpp"
-#include "../../../src/morda/widgets/label/busy.hpp"
+#include <ruis/widgets/button/push_button.hpp>
+#include <ruis/widgets/label/busy.hpp>
 
 class application : public mordavokne::application{
 public:

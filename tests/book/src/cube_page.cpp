@@ -1,10 +1,9 @@
-#include "../../../src/morda/widgets/group/book.hpp"
-
-#include "../../../src/morda/context.hpp"
-#include "../../../src/morda/updateable.hpp"
-#include "../../../src/morda/res/texture.hpp"
-#include "../../../src/morda/render/renderer.hpp"
-#include "../../../src/morda/widgets/button/push_button.hpp"
+#include <ruis/context.hpp>
+#include <ruis/updateable.hpp>
+#include <ruis/res/texture.hpp>
+#include <ruis/render/renderer.hpp>
+#include <ruis/widgets/button/push_button.hpp>
+#include <ruis/widgets/group/book.hpp>
 
 #include "cube_page.hpp"
 

@@ -1,11 +1,11 @@
 #include <tst/set.hpp>
 #include <tst/check.hpp>
 
-#include <morda/context.hpp>
-#include <morda/container.hpp>
-#include <morda/updater.hpp>
-#include <morda/util/mouse_cursor.hpp>
-#include <morda/gui.hpp>
+#include <ruis/context.hpp>
+#include <ruis/container.hpp>
+#include <ruis/updater.hpp>
+#include <ruis/util/mouse_cursor.hpp>
+#include <ruis/gui.hpp>
 
 #include "../../harness/util/dummy_context.hpp"
 

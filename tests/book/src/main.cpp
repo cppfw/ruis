@@ -2,14 +2,14 @@
 #include <utki/debug.hpp>
 #include <papki/fs_file.hpp>
 
-#include <mordavokne/application.hpp>
+#include <ruisapp/application.hpp>
 
-#include "../../../src/morda/widgets/button/push_button.hpp"
-#include "../../../src/morda/widgets/label/busy.hpp"
-#include "../../../src/morda/widgets/group/book.hpp"
-#include "../../../src/morda/widgets/button/tab_group.hpp"
-#include "../../../src/morda/widgets/button/tab.hpp"
-#include "../../../src/morda/widgets/label/text.hpp"
+#include <ruis/widgets/button/push_button.hpp>
+#include <ruis/widgets/label/busy.hpp>
+#include <ruis/widgets/group/book.hpp>
+#include <ruis/widgets/button/tab_group.hpp>
+#include <ruis/widgets/button/tab.hpp>
+#include <ruis/widgets/label/text.hpp>
 
 #include "pile_page.hpp"
 #include "cube_page.hpp"
