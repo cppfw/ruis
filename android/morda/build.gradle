@@ -70,8 +70,8 @@ task copy_aar(type: Zip) {
     from zipTree("build/outputs/aar/" + aarName + "-static-release.aar")
 
     // pack morda resource files to AAR
-    from("../../res/morda_res"){
-        into('assets/morda_res')
+    from("../../res/ruis_res"){
+        into('assets/ruis_res')
     }
 }
 

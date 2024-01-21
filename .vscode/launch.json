@@ -15,7 +15,7 @@
 			"environment": [
 				{
 					"name": "LD_LIBRARY_PATH",
-					"value": "../../src/out/dbg:../harness/modules/mordavokne/src/out/rel_no_install:../harness/modules/morda-render-opengl/src/out/rel_no_install"
+					"value": "../../src/out/dbg:../harness/modules/mordavokne/src/out/rel_no_install:../harness/modules/ruis-render-opengl/src/out/rel_no_install"
 				}
 			],
 			"externalConsole": false,

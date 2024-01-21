@@ -480,7 +480,7 @@ public:
 		return wp;
 			}())
 	{
-		this->gui.init_standard_widgets(*this->get_res_file("../../res/morda_res/"));
+		this->gui.init_standard_widgets(*this->get_res_file("../../res/ruis_res/"));
 
 		this->gui.context.get().loader.mount_res_pack(*this->get_res_file("res/"));
 //		this->ResMan().MountResPack(ruis::ZipFile::New(papki::FSFile::New("res.zip")));

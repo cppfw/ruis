@@ -16,7 +16,7 @@ public:
 				return wp;
 			}())
 	{
-		this->gui.init_standard_widgets(*this->get_res_file("../../res/morda_res/"));
+		this->gui.init_standard_widgets(*this->get_res_file("../../res/ruis_res/"));
 
 		// this->gui.context->loader.mount_res_pack(*this->get_res_file("res/"));
 

@@ -5,28 +5,28 @@ include $(d)module_cfg.mk
 # load config in order to resolve 'c' and 'config' in case of default config
 $(eval $(call prorab-config, ../../../config))
 
-module_morda_dir := ../../../src/
-this_libmorda_dir := $(module_morda_dir)out/$(c)/
-this_libmorda := $(this_libmorda_dir)libmorda$(dot_so)
+module_ruis_dir := ../../../src/
+this_libruis_dir := $(module_ruis_dir)out/$(c)/
+this_libruis := $(this_libruis_dir)libruis$(dot_so)
 
 # save global flags
 harness_old_cxxflags := $(CXXFLAGS)
 harness_old_ldflags := $(LDLFAGS)
 
-CXXFLAGS += -I$(abspath $(d)$(module_morda_dir))
-LDFLAGS += -L$(abspath $(d)$(this_libmorda_dir))
+CXXFLAGS += -I$(abspath $(d)$(module_ruis_dir))
+LDFLAGS += -L$(abspath $(d)$(this_libruis_dir))
 
 define this_modules_deps
     CXXFLAGS += -I$(d)ruis-render-$(strip $1)/src
     LDFLAGS += -L$(d)ruis-render-$(strip $1)/src/out/$(module_cfg)
     $(call prorab-depend, \
-            ruis-render-$(strip $1)/src/out/$(module_cfg)/libmorda-render-$(strip $1)$(dot_so), \
-            $(this_libmorda) \
+            ruis-render-$(strip $1)/src/out/$(module_cfg)/libruis-render-$(strip $1)$(dot_so), \
+            $(this_libruis) \
         )
     $(call prorab-depend, \
-            ruisapp/src/out/$(module_cfg)/libmordavokne-$(strip $1)$(dot_so), \
-            ruis-render-$(strip $1)/src/out/$(module_cfg)/libmorda-render-$(strip $1)$(dot_so) \
-            $(this_libmorda) \
+            ruisapp/src/out/$(module_cfg)/libruisvokne-$(strip $1)$(dot_so), \
+            ruis-render-$(strip $1)/src/out/$(module_cfg)/libruis-render-$(strip $1)$(dot_so) \
+            $(this_libruis) \
         )
 endef
 $(eval $(call this_modules_deps, opengl))
@@ -46,7 +46,7 @@ endif
 CXXFLAGS := $(harness_old_cxxflags)
 LDFLAGS := $(harness_old_ldflags)
 
-$(eval $(call prorab-include, $(module_morda_dir)makefile))
+$(eval $(call prorab-include, $(module_ruis_dir)makefile))
 
 # clear global variable
-module_morda_dir :=
+module_ruis_dir :=

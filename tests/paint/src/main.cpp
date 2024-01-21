@@ -61,7 +61,7 @@ public:
 					}()
 				)
 	{
-		this->gui.init_standard_widgets(*this->get_res_file("../../res/morda_res/"));
+		this->gui.init_standard_widgets(*this->get_res_file("../../res/ruis_res/"));
 
 		this->gui.context.get().inflater.register_widget<path_widget>("path_widget");
 		this->gui.context.get().inflater.register_widget<frame_widget>("frame_widget");

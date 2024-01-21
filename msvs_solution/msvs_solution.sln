@@ -9,7 +9,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_app", "test_app\test_a
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mordavokne", "mordavokne\mordavokne.vcxproj", "{898A6810-F727-4265-AC18-0CD818A18220}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "morda-render-opengl", "morda-render-opengl\morda-render-opengl.vcxproj", "{452CF27F-FF7D-44DE-8161-4BA4DD0E1D85}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ruis-render-opengl", "ruis-render-opengl\ruis-render-opengl.vcxproj", "{452CF27F-FF7D-44DE-8161-4BA4DD0E1D85}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "unit_tests", "unit_tests\unit_tests.vcxproj", "{7590F213-6B89-4FA1-ACD4-4E1BE5029982}"
 EndProject

@@ -3,7 +3,7 @@ include prorab-license.mk
 include prorab-install-dbgsrc.mk
 include prorab-clang-format.mk
 
-this_name := morda
+this_name := ruis
 
 this_soname := $(shell cat $(d)soname.txt)
 

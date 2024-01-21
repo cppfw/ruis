@@ -65,8 +65,8 @@ task copyResToAssets {
             include "**/*"
         }
         copy{
-            from "../../res/morda_res"
-            into "src/main/assets/morda_res"
+            from "../../res/ruis_res"
+            into "src/main/assets/ruis_res"
             include "**/*"
         }
     }

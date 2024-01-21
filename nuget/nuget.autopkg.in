@@ -51,29 +51,29 @@ nuget{
 
 		res += {
  			#add-each-file : ::nuget.targets.[${condition}].CopyToOutput;
- 			#destination : ${d_bin}\morda_res;
+ 			#destination : ${d_bin}\ruis_res;
 		};
 
 		// ====== v140 ======
 /*
 		[x86,v140,release] {
 			lib: ..\msvs_solution\v140_Release\libmorda.lib;
-			res: ..\res\morda_res\**\*;
+			res: ..\res\ruis_res\**\*;
 		}
 
 		[x86,v140,debug] {
 			lib: ..\msvs_solution\v140_Debug\libmorda.lib;
-			res: ..\res\morda_res\**\*;
+			res: ..\res\ruis_res\**\*;
 		}
 
 		[x64,v140,release] {
 			lib: ..\msvs_solution\x64\v140_Release\libmorda.lib;
-			res: ..\res\morda_res\**\*;
+			res: ..\res\ruis_res\**\*;
 		}
 
 		[x64,v140,debug] {
 			lib: ..\msvs_solution\x64\v140_Debug\libmorda.lib;
-			res: ..\res\morda_res\**\*;
+			res: ..\res\ruis_res\**\*;
 		}
 */
 
@@ -81,22 +81,22 @@ nuget{
 /*
 		[x86,v141,release] {
 			lib: ..\msvs_solution\v141_Release\libmorda.lib;
-			res: ..\res\morda_res\**\*;
+			res: ..\res\ruis_res\**\*;
 		}
 
 		[x86,v141,debug] {
 			lib: ..\msvs_solution\v141_Debug\libmorda.lib;
-			res: ..\res\morda_res\**\*;
+			res: ..\res\ruis_res\**\*;
 		}
 
 		[x64,v141,release] {
 			lib: ..\msvs_solution\x64\v141_Release\libmorda.lib;
-			res: ..\res\morda_res\**\*;
+			res: ..\res\ruis_res\**\*;
 		}
 
 		[x64,v141,debug] {
 			lib: ..\msvs_solution\x64\v141_Debug\libmorda.lib;
-			res: ..\res\morda_res\**\*;
+			res: ..\res\ruis_res\**\*;
 		}
 */
 		// ====== v142 ======
@@ -104,37 +104,37 @@ nuget{
 /*
 		[x86,v142,release,MultiThreaded] {
 			lib: ..\msvs_solution\v142_Release_MT\libmorda.lib;
-			res: ..\res\morda_res\**\*;
+			res: ..\res\ruis_res\**\*;
 		}
 		[x86,v142,debug,MultiThreadedDebug] {
 			lib: ..\msvs_solution\v142_Debug_MT\libmorda.lib;
-			res: ..\res\morda_res\**\*;
+			res: ..\res\ruis_res\**\*;
 		}
 		[x64,v142,release,MultiThreaded] {
 			lib: ..\msvs_solution\x64\v142_Release_MT\libmorda.lib;
-			res: ..\res\morda_res\**\*;
+			res: ..\res\ruis_res\**\*;
 		}
 		[x64,v142,debug,MultiThreadedDebug] {
 			lib: ..\msvs_solution\x64\v142_Debug_MT\libmorda.lib;
-			res: ..\res\morda_res\**\*;
+			res: ..\res\ruis_res\**\*;
 		}
 */
 		
 		[x86,v142,release,MultiThreadedDLL] {
 			lib: ..\msvs_solution\v142_Release_MD\libmorda.lib;
-			res: ..\res\morda_res\**\*;
+			res: ..\res\ruis_res\**\*;
 		}
 		[x86,v142,debug,MultiThreadedDebugDLL] {
 			lib: ..\msvs_solution\v142_Debug_MD\libmorda.lib;
-			res: ..\res\morda_res\**\*;
+			res: ..\res\ruis_res\**\*;
 		}
 		[x64,v142,release,MultiThreadedDLL] {
 			lib: ..\msvs_solution\x64\v142_Release_MD\libmorda.lib;
-			res: ..\res\morda_res\**\*;
+			res: ..\res\ruis_res\**\*;
 		}
 		[x64,v142,debug,MultiThreadedDebugDLL] {
 			lib: ..\msvs_solution\x64\v142_Debug_MD\libmorda.lib;
-			res: ..\res\morda_res\**\*;
+			res: ..\res\ruis_res\**\*;
 		}
 	}
 }

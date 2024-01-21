@@ -23,7 +23,7 @@ Pod::Spec.new do |s|
   #this tells that we are linking against c++ libraries
   #s.libraries = 'c++'
 
-  s.resources = "res/morda_res"
+  s.resources = "res/ruis_res"
 
   s.dependency 'papki', '>= 1.0.93'
   s.dependency 'r4', '>= 1.0.53'
