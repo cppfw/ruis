@@ -40,18 +40,18 @@ const auto window_layout_description = treeml::read(R"qwertyuiop(
 				lp{dx{fill}}
 
 				@mouse_proxy{
-					id{morda_lt_proxy}
+					id{ruis_lt_proxy}
 				}
 
 				@mouse_proxy{
-					id{morda_t_proxy}
+					id{ruis_t_proxy}
 					lp{
 						dx{0} dy{fill} weight{1}
 					}
 				}
 
 				@mouse_proxy{
-					id{morda_rt_proxy}
+					id{ruis_rt_proxy}
 				}
 			}
 
@@ -62,7 +62,7 @@ const auto window_layout_description = treeml::read(R"qwertyuiop(
 				}
 
 				@mouse_proxy{
-					id{morda_l_proxy}
+					id{ruis_l_proxy}
 					lp{dy{fill}}
 				}
 
@@ -82,14 +82,14 @@ const auto window_layout_description = treeml::read(R"qwertyuiop(
 						clip{true}
 
 						@mouse_proxy{
-							id{morda_caption_proxy}
+							id{ruis_caption_proxy}
 							lp{
 								dx{max} dy{max}
 							}
 						}
 
 						@color{
-							id{morda_window_title_bg}
+							id{ruis_window_title_bg}
 							lp{
 								dx{max} dy{max}
 							}
@@ -111,14 +111,14 @@ const auto window_layout_description = treeml::read(R"qwertyuiop(
 								}
 
 								@text{
-									id{morda_title}
+									id{ruis_title}
 								}
 							}
 						}
 					}
 
 					@pile{
-						id{morda_content}
+						id{ruis_content}
 						clip{true}
 						lp{
 							dx{fill} dy{0}
@@ -128,7 +128,7 @@ const auto window_layout_description = treeml::read(R"qwertyuiop(
 				}
 
 				@mouse_proxy{
-					id{morda_r_proxy}
+					id{ruis_r_proxy}
 					lp{dy{fill}}
 				}
 			}
@@ -138,11 +138,11 @@ const auto window_layout_description = treeml::read(R"qwertyuiop(
 					dx{fill}
 				}
 				@mouse_proxy{
-					id{morda_lb_proxy}
+					id{ruis_lb_proxy}
 				}
 
 				@mouse_proxy{
-					id{morda_b_proxy}
+					id{ruis_b_proxy}
 					lp{
 						dy{fill}
 						dx{0}
@@ -151,7 +151,7 @@ const auto window_layout_description = treeml::read(R"qwertyuiop(
 				}
 
 				@mouse_proxy{
-					id{morda_rb_proxy}
+					id{ruis_rb_proxy}
 				}
 			}
 		}
@@ -221,13 +221,13 @@ ruis::window::window(const utki::shared_ref<ruis::context>& c, const treeml::for
 void ruis::window::setup_widgets()
 {
 	// TODO: use get_widget_as()
-	this->content_area = this->try_get_widget_as<container>("morda_content");
+	this->content_area = this->try_get_widget_as<container>("ruis_content");
 	ASSERT(this->content_area)
 
-	this->title = this->try_get_widget_as<text>("morda_title");
+	this->title = this->try_get_widget_as<text>("ruis_title");
 	ASSERT(this->title)
 
-	this->title_bg = this->try_get_widget_as<color>("morda_window_title_bg");
+	this->title_bg = this->try_get_widget_as<color>("ruis_window_title_bg");
 	ASSERT(this->title_bg);
 
 	std::function<decltype(mouse_proxy::mouse_button_handler)(cursor_iter&)> make_mouse_button_handler =
@@ -268,7 +268,7 @@ void ruis::window::setup_widgets()
 		};
 
 	{
-		auto caption = this->try_get_widget_as<mouse_proxy>("morda_caption_proxy");
+		auto caption = this->try_get_widget_as<mouse_proxy>("ruis_caption_proxy");
 		ASSERT(caption)
 
 		caption->mouse_button_handler = make_mouse_button_handler(this->caption_cursor_iter);
@@ -284,7 +284,7 @@ void ruis::window::setup_widgets()
 	}
 
 	{
-		auto w = this->try_get_widget_as<mouse_proxy>("morda_lt_proxy");
+		auto w = this->try_get_widget_as<mouse_proxy>("ruis_lt_proxy");
 		ASSERT(w)
 		w->mouse_button_handler = make_mouse_button_handler(this->lt_border_cursor_iter);
 		w->mouse_move_handler = [this](mouse_proxy&, const mouse_move_event& e) {
@@ -303,7 +303,7 @@ void ruis::window::setup_widgets()
 	}
 
 	{
-		auto w = this->try_get_widget_as<mouse_proxy>("morda_lb_proxy");
+		auto w = this->try_get_widget_as<mouse_proxy>("ruis_lb_proxy");
 		ASSERT(w)
 		w->mouse_button_handler = make_mouse_button_handler(this->lb_border_cursor_iter);
 		w->mouse_move_handler = [this](mouse_proxy&, const mouse_move_event& e) {
@@ -324,7 +324,7 @@ void ruis::window::setup_widgets()
 	}
 
 	{
-		auto w = this->try_get_widget_as<mouse_proxy>("morda_rt_proxy");
+		auto w = this->try_get_widget_as<mouse_proxy>("ruis_rt_proxy");
 		ASSERT(w)
 		w->mouse_button_handler = make_mouse_button_handler(this->rt_border_cursor_iter);
 		w->mouse_move_handler = [this](mouse_proxy&, const mouse_move_event& e) {
@@ -345,7 +345,7 @@ void ruis::window::setup_widgets()
 	}
 
 	{
-		auto w = this->try_get_widget_as<mouse_proxy>("morda_rb_proxy");
+		auto w = this->try_get_widget_as<mouse_proxy>("ruis_rb_proxy");
 		ASSERT(w)
 		w->mouse_button_handler = make_mouse_button_handler(this->rb_border_cursor_iter);
 		w->mouse_move_handler = [this](mouse_proxy&, const mouse_move_event& e) {
@@ -363,7 +363,7 @@ void ruis::window::setup_widgets()
 	}
 
 	{
-		auto w = this->try_get_widget_as<mouse_proxy>("morda_l_proxy");
+		auto w = this->try_get_widget_as<mouse_proxy>("ruis_l_proxy");
 		ASSERT(w)
 		w->mouse_button_handler = make_mouse_button_handler(this->l_border_cursor_iter);
 		w->mouse_move_handler = [this](mouse_proxy&, const mouse_move_event& e) {
@@ -381,7 +381,7 @@ void ruis::window::setup_widgets()
 	}
 
 	{
-		auto w = this->try_get_widget_as<mouse_proxy>("morda_r_proxy");
+		auto w = this->try_get_widget_as<mouse_proxy>("ruis_r_proxy");
 		ASSERT(w)
 		w->mouse_button_handler = make_mouse_button_handler(this->r_border_cursor_iter);
 		w->mouse_move_handler = [this](mouse_proxy&, const mouse_move_event& e) {
@@ -398,7 +398,7 @@ void ruis::window::setup_widgets()
 	}
 
 	{
-		auto w = this->try_get_widget_as<mouse_proxy>("morda_t_proxy");
+		auto w = this->try_get_widget_as<mouse_proxy>("ruis_t_proxy");
 		ASSERT(w)
 		w->mouse_button_handler = make_mouse_button_handler(this->t_border_cursor_iter);
 		w->mouse_move_handler = [this](mouse_proxy&, const mouse_move_event& e) {
@@ -416,7 +416,7 @@ void ruis::window::setup_widgets()
 	}
 
 	{
-		auto w = this->try_get_widget_as<mouse_proxy>("morda_b_proxy");
+		auto w = this->try_get_widget_as<mouse_proxy>("ruis_b_proxy");
 		ASSERT(w)
 		w->mouse_button_handler = make_mouse_button_handler(this->b_border_cursor_iter);
 		w->mouse_move_handler = [this](mouse_proxy&, const mouse_move_event& e) {

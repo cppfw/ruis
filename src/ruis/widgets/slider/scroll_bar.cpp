@@ -34,7 +34,7 @@ const auto layout_description = treeml::read(R"qwertyuiop(
 		layout{pile}
 
 		@nine_patch{
-			id{morda_slider_bg}
+			id{ruis_slider_bg}
 			lp{
 				dx{max} dy{max}
 			}
@@ -44,16 +44,16 @@ const auto layout_description = treeml::read(R"qwertyuiop(
 				dx{max} dy{max}
 			}
 			@pile{
-				id{morda_handle}
+				id{ruis_handle}
 				@nine_patch{
-					id{morda_handle_image}
+					id{ruis_handle_image}
 
 					lp{
 						dx{max} dy{max}
 					}
 				}
 				@mouse_proxy{
-					id{morda_handle_proxy}
+					id{ruis_handle_proxy}
 					lp{
 						dx{fill} dy{fill}
 					}
@@ -69,12 +69,12 @@ scroll_bar::scroll_bar(const utki::shared_ref<ruis::context>& c, const treeml::f
 	fraction_band_widget(this->context, treeml::forest()),
 	oriented(vertical),
 	container(this->context, layout_description),
-	handle(this->get_widget("morda_handle"))
+	handle(this->get_widget("ruis_handle"))
 {
-	auto np = this->try_get_widget_as<nine_patch>("morda_slider_bg");
+	auto np = this->try_get_widget_as<nine_patch>("ruis_slider_bg");
 	ASSERT(np)
 
-	auto hi = this->try_get_widget_as<nine_patch>("morda_handle_image");
+	auto hi = this->try_get_widget_as<nine_patch>("ruis_handle_image");
 	ASSERT(hi)
 
 	bool background_set = false;
@@ -99,14 +99,14 @@ scroll_bar::scroll_bar(const utki::shared_ref<ruis::context>& c, const treeml::f
 	}
 
 	if (!background_set) {
-		np->set_nine_patch(this->context.get().loader.load<res::nine_patch>("morda_npt_slider_bg").to_shared_ptr());
+		np->set_nine_patch(this->context.get().loader.load<res::nine_patch>("ruis_npt_slider_bg").to_shared_ptr());
 	}
 
 	if (!handle_set) {
-		hi->set_nine_patch(this->context.get().loader.load<res::nine_patch>("morda_npt_slider_handle").to_shared_ptr());
+		hi->set_nine_patch(this->context.get().loader.load<res::nine_patch>("ruis_npt_slider_handle").to_shared_ptr());
 	}
 
-	auto hp = this->try_get_widget_as<mouse_proxy>("morda_handle_proxy");
+	auto hp = this->try_get_widget_as<mouse_proxy>("ruis_handle_proxy");
 	hp->mouse_button_handler = [this](mouse_proxy&, const mouse_button_event& e) -> bool {
 		if (e.button != mouse_button::left) {
 			return false;

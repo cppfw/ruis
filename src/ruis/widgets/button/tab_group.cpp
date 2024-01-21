@@ -52,7 +52,7 @@ tab_group::tab_group(const utki::shared_ref<ruis::context>& c, const treeml::for
 	}
 
 	if (!this->filler) {
-		this->set_filler(this->context.get().loader.load<res::image>("morda_img_tabs_filler").to_shared_ptr());
+		this->set_filler(this->context.get().loader.load<res::image>("ruis_img_tabs_filler").to_shared_ptr());
 	}
 }
 

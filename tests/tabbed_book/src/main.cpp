@@ -30,7 +30,7 @@ utki::shared_ref<ruis::tab> inflate_tab(ruis::tabbed_book& tb, const std::string
 							dx { 8dp }
 							dy { 8dp }
 						}
-						image{morda_img_close}
+						image{ruis_img_close}
 					}
 				}
 			}

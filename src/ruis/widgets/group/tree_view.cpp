@@ -105,22 +105,22 @@ const treeml::forest plus_minus_layout = treeml::read(R"qwertyuiop(
 
 const treeml::forest vert_line_layout = treeml::read(R"qwertyuiop(
 		@pile{
-			lp{dx{${morda_tree_view_indent}} dy{fill}}
+			lp{dx{${ruis_tree_view_indent}} dy{fill}}
 			@color{
 				lp{dx{1pp}dy{fill}}
-				color{${morda_color_highlight}}
+				color{${ruis_color_highlight}}
 			}
 		}
 	)qwertyuiop");
 
 const treeml::forest line_end_layout = treeml::read(R"qwertyuiop(
 		@pile{
-			lp{dx{${morda_tree_view_indent}} dy{max}}
+			lp{dx{${ruis_tree_view_indent}} dy{max}}
 			@column{
 				lp{dx{max}dy{max}}
 				@color{
 					lp{dx{1pp}dy{0}weight{1}}
-					color{${morda_color_highlight}}
+					color{${ruis_color_highlight}}
 				}
 				@widget{lp{dx{max}dy{0}weight{1}}}
 			}
@@ -129,7 +129,7 @@ const treeml::forest line_end_layout = treeml::read(R"qwertyuiop(
 				@widget{lp{dx{0}dy{max}weight{1}}}
 				@color{
 					lp{dx{0}dy{1pp}weight{1}}
-					color{${morda_color_highlight}}
+					color{${ruis_color_highlight}}
 				}
 			}
 		}
@@ -137,24 +137,24 @@ const treeml::forest line_end_layout = treeml::read(R"qwertyuiop(
 
 const treeml::forest line_middle_layout = treeml::read(R"qwertyuiop(
 		@pile{
-			lp{dx{${morda_tree_view_indent}} dy{max}}
+			lp{dx{${ruis_tree_view_indent}} dy{max}}
 			@color{
 				lp{dx{1pp}dy{max}}
-				color{${morda_color_highlight}}
+				color{${ruis_color_highlight}}
 			}
 			@row{
 				lp{dx{max}dy{max}}
 				@widget{lp{dx{0}dy{max}weight{1}}}
 				@color{
 					lp{dx{0}dy{1pp}weight{1}}
-					color{${morda_color_highlight}}
+					color{${ruis_color_highlight}}
 				}
 			}
 		}
 	)qwertyuiop");
 
 const treeml::forest empty_layout = treeml::read(R"qwertyuiop(
-		@widget{lp{dx{${morda_tree_view_indent}}dy{0}}}
+		@widget{lp{dx{${ruis_tree_view_indent}}dy{0}}}
 	)qwertyuiop");
 } // namespace
 
@@ -201,8 +201,8 @@ utki::shared_ref<widget> tree_view::provider::get_widget(size_t index)
 			ASSERT(plusminus)
 			plusminus->set_image(
 				(is_collapsed
-					 ? this->get_list()->context.get().loader.load<ruis::res::image>("morda_img_treeview_plus")
-					 : this->get_list()->context.get().loader.load<ruis::res::image>("morda_img_treeview_minus"))
+					 ? this->get_list()->context.get().loader.load<ruis::res::image>("ruis_img_treeview_plus")
+					 : this->get_list()->context.get().loader.load<ruis::res::image>("ruis_img_treeview_minus"))
 					.to_shared_ptr()
 			);
 

@@ -1,4 +1,4 @@
-morda_fnt_text{
+ruis_fnt_text{
 	normal {Vera.ttf}
 	bold {VeraBd.ttf}
 	italic {VeraIt.ttf}

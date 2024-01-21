@@ -29,8 +29,8 @@ namespace {
 
 const auto check_box_layout = treeml::read(R"qwertyuiop(
 		@image{
-			id{morda_checkbox_check}
-			image{morda_img_checkbox_tick}
+			id{ruis_checkbox_check}
+			image{ruis_img_checkbox_tick}
 		}
 	)qwertyuiop");
 
@@ -42,10 +42,10 @@ check_box::check_box(const utki::shared_ref<ruis::context>& c, const treeml::for
 	toggle_button(this->context, desc),
 	nine_patch(this->context, check_box_layout)
 {
-	this->check_widget = this->content().try_get_widget("morda_checkbox_check");
+	this->check_widget = this->content().try_get_widget("ruis_checkbox_check");
 	this->check_widget->set_visible(this->is_pressed());
 
-	this->set_nine_patch(this->context.get().loader.load<res::nine_patch>("morda_npt_checkbox_bg").to_shared_ptr());
+	this->set_nine_patch(this->context.get().loader.load<res::nine_patch>("ruis_npt_checkbox_bg").to_shared_ptr());
 }
 
 void check_box::on_press_change()

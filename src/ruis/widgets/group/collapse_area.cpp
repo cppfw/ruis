@@ -35,7 +35,7 @@ const auto layout_c = treeml::read(R"qwertyuiop(
 		lp{dx{max}}
 		@color{
 			lp{dx{fill}dy{fill}}
-			color{${morda_color_mg}}
+			color{${ruis_color_mg}}
 		}
 		@margins{
 			lp{dx{max}dy{max}}
@@ -54,8 +54,8 @@ const auto layout_c = treeml::read(R"qwertyuiop(
 				@image_toggle{
 					id{switch}
 					look{
-						unpressed{morda_img_dropdown_arrow}
-						pressed{morda_img_dropright_arrow}
+						unpressed{ruis_img_dropdown_arrow}
+						pressed{ruis_img_dropright_arrow}
 					}
 				}
 				@widget{

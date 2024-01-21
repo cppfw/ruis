@@ -474,7 +474,7 @@ cursor{crs_arrow}
 		title{"TextInput"}
 
 		/*@color{
-			color{ ${morda_color_bg} }
+			color{ ${ruis_color_bg} }
 
 			lp{
 				dx{max} dy{max}
@@ -505,7 +505,7 @@ cursor{crs_arrow}
 			@nine_patch{
 				lp{dx{max}}
 
-				image{morda_npt_frame}
+				image{ruis_npt_frame}
 
 				@collapse_area{
 					lp{dx{max}}
@@ -536,7 +536,7 @@ cursor{crs_arrow}
 
 				text{"Hello Wrodl!!!"}
 
-				color{ ${morda_color_text} }
+				color{ ${ruis_color_text} }
 
 				lp{
 					dx{max} dy{min}

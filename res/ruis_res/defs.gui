@@ -1,11 +1,11 @@
 defs{
-	morda_color_text{0xffffffff}
+	ruis_color_text{0xffffffff}
 
-	morda_color_bg{0xff353535}
-	morda_color_mg{0xff424242}
-	morda_color_fg{0xff505050}
+	ruis_color_bg{0xff353535}
+	ruis_color_mg{0xff424242}
+	ruis_color_fg{0xff505050}
 
-	morda_tree_view_indent{17pp}
+	ruis_tree_view_indent{17pp}
 
 	@text_input_line_{
 		@text_input_line{
@@ -15,23 +15,23 @@ defs{
 }
 
 defs{
-	morda_color_bg_window_title{0xffad9869}
-	morda_color_bg_window_title_nontopmost{${morda_color_fg}}
+	ruis_color_bg_window_title{0xffad9869}
+	ruis_color_bg_window_title_nontopmost{${ruis_color_fg}}
 
-	morda_window_border_size{5pp}
+	ruis_window_border_size{5pp}
 
-	morda_color_highlight{0xffad9869}
-//	morda_color_highlight{0xff329ce1}
+	ruis_color_highlight{0xffad9869}
+//	ruis_color_highlight{0xff329ce1}
 
 	@text{
 		@text{
-			color{ ${morda_color_text} }
+			color{ ${ruis_color_text} }
 		}
 	}
 
 	@text_input_line{ text
 		@nine_patch{
-			image{morda_npt_textfield_background}
+			image{ruis_npt_textfield_background}
 			@text_input_line_{
 				lp{dx{fill}dy{max}}
 				text{${text}}
@@ -41,14 +41,14 @@ defs{
 
 	@busy{
 		@busy{
-			image {morda_img_busy}
+			image {ruis_img_busy}
 		}
 	}
 
 	@refresh{
 		@spinner{
-			image {morda_img_refresh}
-			disabled_image {morda_img_refresh_disabled}
+			image {ruis_img_refresh}
+			disabled_image {ruis_img_refresh_disabled}
 		}
 	}
 
@@ -56,13 +56,13 @@ defs{
 		look
 		@window{
 			look{
-				title_color_active{ ${morda_color_bg_window_title} }
-				title_color_inactive{ ${morda_color_bg_window_title_nontopmost} }
+				title_color_active{ ${ruis_color_bg_window_title} }
+				title_color_inactive{ ${ruis_color_bg_window_title_nontopmost} }
 				background{@window_background}
-				left{${morda_window_border_size}}
-				top{${morda_window_border_size}}
-				right{${morda_window_border_size}}
-				bottom{${morda_window_border_size}}
+				left{${ruis_window_border_size}}
+				top{${ruis_window_border_size}}
+				right{${ruis_window_border_size}}
+				bottom{${ruis_window_border_size}}
 				${look}
 			}
 
@@ -73,8 +73,8 @@ defs{
 	@push_button{
 		@nine_patch_push_button{
 			look{
-				pressed {morda_npt_button_pressed}
-				unpressed {morda_npt_button_normal}
+				pressed {ruis_npt_button_pressed}
+				unpressed {ruis_npt_button_normal}
 			}
 			${children}
 		}
@@ -90,12 +90,12 @@ defs{
 		@nine_patch{
 			lp{dx{fill} dy{fill}}
 
-			image{morda_npt_window_bg}
+			image{ruis_npt_window_bg}
 
-			left{${morda_window_border_size}}
-			top{${morda_window_border_size}}
-			right{${morda_window_border_size}}
-			bottom{${morda_window_border_size}}
+			left{${ruis_window_border_size}}
+			top{${ruis_window_border_size}}
+			right{${ruis_window_border_size}}
+			bottom{${ruis_window_border_size}}
 		}
 	}
 
@@ -103,12 +103,12 @@ defs{
 		@nine_patch{
 			lp{dx{fill} dy{fill}}
 
-			image{morda_npt_window_bg}
+			image{ruis_npt_window_bg}
 
-			left{${morda_window_border_size}}
-			top{${morda_window_border_size}}
-			right{${morda_window_border_size}}
-			bottom{${morda_window_border_size}}
+			left{${ruis_window_border_size}}
+			top{${ruis_window_border_size}}
+			right{${ruis_window_border_size}}
+			bottom{${ruis_window_border_size}}
 			center_visible{false}
 		}
 	}

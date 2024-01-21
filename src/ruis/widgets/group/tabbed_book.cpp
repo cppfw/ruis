@@ -31,21 +31,21 @@ tabbed_book::tabbed_book(const utki::shared_ref<ruis::context>& context, const t
 					layout{column}
 					
 					@tab_group{
-						id { morda_tab_group }
+						id { ruis_tab_group }
 						lp{
 							dx { fill }
 						}
 					}
 					@book{
-						id { morda_book }
+						id { ruis_book }
 						lp {
 							dx { fill }
 							weight { 1 }
 						}
 					}
 				)")),
-	tab_group(this->get_widget_as<ruis::tab_group>("morda_tab_group")),
-	book(this->get_widget_as<ruis::book>("morda_book"))
+	tab_group(this->get_widget_as<ruis::tab_group>("ruis_tab_group")),
+	book(this->get_widget_as<ruis::book>("ruis_book"))
 {
 	// on page tear out, remove corresponding tab
 	this->book.pages_change_handler = [this](ruis::book& b, const page& p) {

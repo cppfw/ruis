@@ -40,7 +40,7 @@ namespace ruis::res {
  *
  * Example:
  * @code
- * morda_npt_rightbutton_pressed{
+ * ruis_npt_rightbutton_pressed{
  *     file{rightbutton_pressed.svg}
  *     borders{5 5 5 6}
  * }

@@ -36,16 +36,16 @@ const auto nine_patch_layout = treeml::read(R"qwertyuiop(
 		@row{
 			lp{dx{fill}}
 			@image{
-				id{morda_lt}
+				id{ruis_lt}
 			}
 
 			@image{
 				lp{dx{0}weight{1}}
-				id{morda_t}
+				id{ruis_t}
 			}
 
 			@image{
-				id{morda_rt}
+				id{ruis_rt}
 			}
 		}
 
@@ -56,24 +56,24 @@ const auto nine_patch_layout = treeml::read(R"qwertyuiop(
 			}
 
 			@image{
-				id{morda_l}
+				id{ruis_l}
 				lp{dy{fill}}
 			}
 
 			@pile{
-				id{morda_content}
+				id{ruis_content}
 				lp{
 					weight{1}
 					dy{max}
 				}
 
 				@image{
-					id{morda_m}
+					id{ruis_m}
 					lp{dx{fill}dy{fill}}
 				}
 			}
 			@image{
-				id{morda_r}
+				id{ruis_r}
 				lp{dy{fill}}
 			}
 		}
@@ -81,16 +81,16 @@ const auto nine_patch_layout = treeml::read(R"qwertyuiop(
 		@row{
 			lp{dx{fill}}
 			@image{
-				id{morda_lb}
+				id{ruis_lb}
 			}
 
 			@image{
 				lp{dx{0}weight{1}}
-				id{morda_b}
+				id{ruis_b}
 			}
 
 			@image{
-				id{morda_rb}
+				id{ruis_rb}
 			}
 		}
 	)qwertyuiop");
@@ -102,19 +102,19 @@ nine_patch::nine_patch(const utki::shared_ref<ruis::context>& c, const treeml::f
 	container(this->context, nine_patch_layout),
 	img_widgets_matrix([this]() -> decltype(this->img_widgets_matrix) {
 		return {
-			{{this->try_get_widget_as<image>("morda_lt"),
-			  this->try_get_widget_as<image>("morda_t"),
-			  this->try_get_widget_as<image>("morda_rt")},
-			 {this->try_get_widget_as<image>("morda_l"),
-			  this->try_get_widget_as<image>("morda_m"),
-			  this->try_get_widget_as<image>("morda_r")},
-			 {this->try_get_widget_as<image>("morda_lb"),
-			  this->try_get_widget_as<image>("morda_b"),
-			  this->try_get_widget_as<image>("morda_rb")}}
+			{{this->try_get_widget_as<image>("ruis_lt"),
+			  this->try_get_widget_as<image>("ruis_t"),
+			  this->try_get_widget_as<image>("ruis_rt")},
+			 {this->try_get_widget_as<image>("ruis_l"),
+			  this->try_get_widget_as<image>("ruis_m"),
+			  this->try_get_widget_as<image>("ruis_r")},
+			 {this->try_get_widget_as<image>("ruis_lb"),
+			  this->try_get_widget_as<image>("ruis_b"),
+			  this->try_get_widget_as<image>("ruis_rb")}}
 		};
 	}()),
 	// TODO: use get_widget_as()
-	inner_content(this->try_get_widget_as<container>("morda_content"))
+	inner_content(this->try_get_widget_as<container>("ruis_content"))
 {
 	this->nine_patch::on_blending_change();
 

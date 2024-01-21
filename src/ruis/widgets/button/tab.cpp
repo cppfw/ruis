@@ -94,12 +94,12 @@ tab::tab(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
 {
 	if (!this->get_pressed_nine_patch()) {
 		this->set_pressed_nine_patch(
-			this->context.get().loader.load<res::nine_patch>("morda_npt_tab_active").to_shared_ptr()
+			this->context.get().loader.load<res::nine_patch>("ruis_npt_tab_active").to_shared_ptr()
 		);
 	}
 	if (!this->get_unpressed_nine_patch()) {
 		this->set_unpressed_nine_patch(
-			this->context.get().loader.load<res::nine_patch>("morda_npt_tab_inactive").to_shared_ptr()
+			this->context.get().loader.load<res::nine_patch>("ruis_npt_tab_inactive").to_shared_ptr()
 		);
 	}
 

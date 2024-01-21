@@ -34,24 +34,24 @@ const auto drop_down_box_layout = treeml::read(R"qwertyuiop(
 	lp{dx{max} dy{max}}
 
 	look{
-		pressed {morda_npt_button_pressed}
-		unpressed {morda_npt_button_normal}
+		pressed {ruis_npt_button_pressed}
+		unpressed {ruis_npt_button_normal}
 	}
 
 	@row{
 		lp{dx{max}}
 		@pile{
-			id{morda_dropdown_selection}
+			id{ruis_dropdown_selection}
 			lp{dx{min}dy{max} weight{1}}
 		}
 		@widget{lp{dx{3dp}}}
 		@image{
-			image{morda_img_divider_vert}
+			image{ruis_img_divider_vert}
 			lp{dy{fill}}
 		}
 		@widget{lp{dx{3dp}}}
 		@image{
-			image{morda_img_dropdown_arrow}
+			image{ruis_img_dropdown_arrow}
 		}
 	}
 )qwertyuiop");
@@ -64,14 +64,14 @@ const auto item_layout = treeml::read(R"qwertyuiop(
 				dx{max}
 			}
 			@mouse_proxy{
-				id{morda_dropdown_mouseproxy}
+				id{ruis_dropdown_mouseproxy}
 				lp{
 					dx{fill} dy{fill}
 				}
 			}
 			@color{
-				id{morda_dropdown_color}
-				color{${morda_color_highlight}}
+				id{ruis_dropdown_color}
+				color{${ruis_color_highlight}}
 				visible{false}
 				lp{
 					dx{fill} dy{fill}
@@ -85,24 +85,24 @@ namespace {
 const auto drop_down_menu_layout = treeml::read(R"qwertyuiop(
 		@pile{
 			@widget{
-				id{morda_min_size_forcer}
+				id{ruis_min_size_forcer}
 			}
 			@mouse_proxy{
 				lp{
 					dx{fill} dy{fill}
 				}
-				id{morda_drop_down_menu_mouse_proxy}
+				id{ruis_drop_down_menu_mouse_proxy}
 			}
 			@nine_patch{
 				lp{
 					dx{max}
 				}
-				image{morda_npt_contextmenu_bg}
+				image{ruis_npt_contextmenu_bg}
 				@column{
 					lp{
 						dx{max}
 					}
-					id{morda_contextmenu_content}
+					id{ruis_contextmenu_content}
 				}
 			}
 		}
@@ -113,7 +113,7 @@ click_drop_down_box::click_drop_down_box(const utki::shared_ref<ruis::context>& 
 	widget(c, desc),
 	button(this->context, drop_down_box_layout),
 	nine_patch_push_button(this->context, drop_down_box_layout),
-	drop_down_box(this->context, desc, this->get_widget_as<ruis::container>("morda_dropdown_selection"))
+	drop_down_box(this->context, desc, this->get_widget_as<ruis::container>("ruis_dropdown_selection"))
 {
 	this->press_handler = [this](button& b) {
 		if (!b.is_pressed()) {
@@ -171,14 +171,14 @@ void click_drop_down_box::show_drop_down_menu()
 	// force minimum horizontal size of the drop down menu to be the same as the drop down box horizontal size
 	{
 		// TODO: use get_widget()
-		auto min_size_forcer = np.get().try_get_widget("morda_min_size_forcer");
+		auto min_size_forcer = np.get().try_get_widget("ruis_min_size_forcer");
 
 		auto& lp = min_size_forcer->get_layout_params();
 		lp.dims.x() = this->rect().d.x();
 	}
 
 	// TODO: use get_widget_as()
-	auto va = np.get().try_get_widget_as<ruis::container>("morda_contextmenu_content");
+	auto va = np.get().try_get_widget_as<ruis::container>("ruis_contextmenu_content");
 	ASSERT(va)
 
 	for (size_t i = 0; i != this->get_provider()->count(); ++i) {
@@ -187,7 +187,7 @@ void click_drop_down_box::show_drop_down_menu()
 
 	this->hovered_index = -1;
 
-	np.get().get_widget_as<mouse_proxy>("morda_drop_down_menu_mouse_proxy").mouse_button_handler =
+	np.get().get_widget_as<mouse_proxy>("ruis_drop_down_menu_mouse_proxy").mouse_button_handler =
 		[this](mouse_proxy&, const mouse_button_event& e) -> bool {
 		// LOG("button down = " << e.is_down << std::endl)
 		if (!e.is_down) {
@@ -233,10 +233,10 @@ utki::shared_ref<widget> click_drop_down_box::wrap_item(const utki::shared_ref<w
 {
 	auto wd = this->context.get().inflater.inflate_as<ruis::container>(item_layout);
 
-	auto mp = wd.get().try_get_widget_as<mouse_proxy>("morda_dropdown_mouseproxy");
+	auto mp = wd.get().try_get_widget_as<mouse_proxy>("ruis_dropdown_mouseproxy");
 	ASSERT(mp)
 
-	auto cl = wd.get().try_get_widget_as<color>("morda_dropdown_color");
+	auto cl = wd.get().try_get_widget_as<color>("ruis_dropdown_color");
 	ASSERT(cl)
 	auto cl_weak = utki::make_weak(cl);
 

@@ -4,7 +4,7 @@ apply plugin: 'com.ydq.android.gradle.native-aar.import' // must go after androi
 android {
     compileSdkVersion 29
     defaultConfig {
-        applicationId "io.github.cppfw.morda_tests"
+        applicationId "io.github.cppfw.ruis_tests"
         minSdkVersion 21
         targetSdkVersion 29
 

@@ -33,10 +33,10 @@ const auto radio_button_layout = treeml::read(R"qwertyuiop(
 		layout{pile}
 
 		@image{
-			image{morda_img_radiobutton_bg}
+			image{ruis_img_radiobutton_bg}
 		}
 		@image{
-			image{morda_img_radiobutton_tick}
+			image{ruis_img_radiobutton_tick}
 		}
 	)qwertyuiop");
 

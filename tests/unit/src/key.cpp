@@ -110,7 +110,7 @@ expected_key_to_name_map = {
 
 namespace{
 const tst::set set("key", [](tst::suite& suite){
-	suite.add("morda_key_enum_size_is_as_expected", []{
+	suite.add("ruis_key_enum_size_is_as_expected", []{
 		tst::check_eq(expected_key_to_name_map.size(), size_t(ruis::key::enum_size), SL);
 	});
 

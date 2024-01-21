@@ -337,7 +337,7 @@ void gui::init_standard_widgets(papki::file& fi)
 	this->context.get().inflater.register_widget<busy>("busy");
 	this->context.get().inflater.register_widget<tabbed_book>("tabbed_book");
 
-	auto t = this->context.get().loader.load<res::treeml>("morda_gui_defs");
+	auto t = this->context.get().loader.load<res::treeml>("ruis_gui_defs");
 
 	this->context.get().inflater.push_defs(t.get().forest());
 }

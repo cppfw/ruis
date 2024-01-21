@@ -385,7 +385,7 @@ public:
 								@color{
 									id{selection}
 									lp{dx{fill}dy{fill}}
-									color{${morda_color_highlight}}
+									color{${ruis_color_highlight}}
 									visible{false}
 								}
 								@text{

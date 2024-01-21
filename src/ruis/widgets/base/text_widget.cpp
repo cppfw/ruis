@@ -81,7 +81,7 @@ text_widget::text_widget(const utki::shared_ref<ruis::context>& c, const treeml:
 		}
 
 		// load default font
-		return this->context.get().loader.load<res::font>("morda_fnt_text");
+		return this->context.get().loader.load<res::font>("ruis_fnt_text");
 	}()),
 	font(this->font_face.get().get(this->font_size))
 {

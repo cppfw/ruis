@@ -45,7 +45,7 @@ namespace ruis::res {
  *
  * Example:
  * @code
- * morda_grd_window_background{
+ * ruis_grd_window_background{
  *     Stop{ pos{0} color{0} }
  *     Stop{ pos{0.43} color{0x10ffffff} }
  *     Stop{ pos{0.5} color{0x12ffffff} }
