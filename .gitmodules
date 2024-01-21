@@ -1,14 +1,14 @@
-[submodule "tests/harness/modules/mordavokne"]
-	path = tests/harness/modules/mordavokne
-	url = ../mordavokne
+[submodule "tests/harness/modules/ruisapp"]
+	path = tests/harness/modules/ruisapp
+	url = ../ruisapp
 	branch = master
-[submodule "tests/harness/modules/morda-render-opengl"]
-	path = tests/harness/modules/morda-render-opengl
-	url = ../morda-render-opengl
+[submodule "tests/harness/modules/ruis-render-opengl"]
+	path = tests/harness/modules/ruis-render-opengl
+	url = ../ruis-render-opengl
 	branch = master
-[submodule "tests/harness/modules/morda-render-opengles"]
-	path = tests/harness/modules/morda-render-opengles
-	url = ../morda-render-opengles
+[submodule "tests/harness/modules/ruis-render-opengles"]
+	path = tests/harness/modules/ruis-render-opengles
+	url = ../ruis-render-opengles
 	branch = master
 [submodule "tool-configs"]
 	path = tool-configs
