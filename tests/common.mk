@@ -6,7 +6,7 @@ this_srcs += $(call prorab-src-dir, src)
 
 $(eval $(call prorab-config, ../../config))
 
-this_cxxflags += -I../../src -I../harness/modules/mordavokne/src
+this_cxxflags += -I../../src -I../harness/modules/ruisapp/src
 
 this_libmorda_dir := ../../src/out/$(c)/
 this_libmorda := $(this_libmorda_dir)libmorda$(dot_so)
@@ -31,15 +31,15 @@ else
     $(error unknown value of 'ren': $(ren))
 endif
 
-this_libmordavokne := mordavokne-$(this_render)
-this_libmorda_render := morda-render-$(this_render)
+this_libruisapp := ruisapp-$(this_render)
+this_libruis_render := ruis-render-$(this_render)
 
-this_libmordavokne := ../harness/modules/mordavokne/src/out/$(module_cfg)/lib$(this_libmordavokne)$(dot_so)
-this_libmorda_render := ../harness/modules/$(this_libmorda_render)/src/out/$(module_cfg)/lib$(this_libmorda_render)$(dot_so)
+this_libruisapp := ../harness/modules/ruisapp/src/out/$(module_cfg)/lib$(this_libruisapp)$(dot_so)
+this_libruis_render := ../harness/modules/$(this_libruis_render)/src/out/$(module_cfg)/lib$(this_libruis_render)$(dot_so)
 
 ifeq ($(this_is_interactive),true)
-    this_ldlibs += $(this_libmordavokne)
-    this_ldlibs += $(this_libmorda_render)
+    this_ldlibs += $(this_libruisapp)
+    this_ldlibs += $(this_libruis_render)
 endif
 
 this_ldlibs += $(this_libmorda) -lpapki -ltreeml -lutki -lm
@@ -48,7 +48,7 @@ this_no_install := true
 
 $(eval $(prorab-build-app))
 
-$(eval $(call prorab-depend, $(prorab_this_name), $(this_libmordavokne) $(this_libmorda)))
+$(eval $(call prorab-depend, $(prorab_this_name), $(this_libruisapp) $(this_libmorda)))
 
 this_test_cmd := $(prorab_this_name)
 this_test_deps := $(prorab_this_name)
@@ -56,7 +56,7 @@ this_test_ld_path := $(this_libmorda_dir)
 
 ifeq ($(this_is_interactive),true)
     this_run_name := $(notdir $(abspath $(d)))
-    this_test_ld_path += $(dir $(this_libmordavokne)) $(dir $(this_libmorda_render))
+    this_test_ld_path += $(dir $(this_libruisapp)) $(dir $(this_libruis_render))
     $(eval $(prorab-run))
 else
     $(eval $(prorab-test))
