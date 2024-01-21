@@ -24,7 +24,7 @@ define this_modules_deps
             $(this_libruis) \
         )
     $(call prorab-depend, \
-            ruisapp/src/out/$(module_cfg)/libruisvokne-$(strip $1)$(dot_so), \
+            ruisapp/src/out/$(module_cfg)/libruisapp-$(strip $1)$(dot_so), \
             ruis-render-$(strip $1)/src/out/$(module_cfg)/libruis-render-$(strip $1)$(dot_so) \
             $(this_libruis) \
         )
