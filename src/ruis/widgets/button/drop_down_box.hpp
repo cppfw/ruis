@@ -1,5 +1,5 @@
 /*
-morda - GUI framework
+ruis - GUI framework
 
 Copyright (C) 2012-2023  Ivan Gagis <igagis@gmail.com>
 
@@ -103,11 +103,7 @@ public:
 	}
 
 protected:
-	drop_down_box(
-		const utki::shared_ref<ruis::context>& c,
-		const treeml::forest& desc,
-		container& selection_container
-	);
+	drop_down_box(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc, container& selection_container);
 
 public:
 	drop_down_box(const drop_down_box&) = delete;

@@ -1,5 +1,5 @@
 /*
-morda - GUI framework
+ruis - GUI framework
 
 Copyright (C) 2012-2023  Ivan Gagis <igagis@gmail.com>
 
@@ -23,10 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
-single_line_text_widget::single_line_text_widget(
-	const utki::shared_ref<ruis::context>& c,
-	const treeml::forest& desc
-) :
+single_line_text_widget::single_line_text_widget(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
 	widget(c, desc),
 	text_widget(this->context, desc)
 {

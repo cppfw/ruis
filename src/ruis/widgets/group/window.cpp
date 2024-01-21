@@ -1,5 +1,5 @@
 /*
-morda - GUI framework
+ruis - GUI framework
 
 Copyright (C) 2012-2023  Ivan Gagis <igagis@gmail.com>
 
@@ -393,8 +393,7 @@ void ruis::window::setup_widgets()
 			}
 			return false;
 		};
-		w->hover_change_handler =
-			make_hover_change_handler(ruis::mouse_cursor::right_side, this->r_border_cursor_iter);
+		w->hover_change_handler = make_hover_change_handler(ruis::mouse_cursor::right_side, this->r_border_cursor_iter);
 		this->r_border = w;
 	}
 

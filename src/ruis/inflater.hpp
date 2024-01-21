@@ -1,5 +1,5 @@
 /*
-morda - GUI framework
+ruis - GUI framework
 
 Copyright (C) 2012-2023  Ivan Gagis <igagis@gmail.com>
 
@@ -71,8 +71,7 @@ public:
 	{
 		this->add_factory(
 			widget_name,
-			[](const utki::shared_ref<ruis::context>& c,
-			   const treeml::forest& desc) -> utki::shared_ref<ruis::widget> {
+			[](const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) -> utki::shared_ref<ruis::widget> {
 				return utki::make_shared<widget_type>(c, desc);
 			}
 		);

@@ -1,5 +1,5 @@
 /*
-morda - GUI framework
+ruis - GUI framework
 
 Copyright (C) 2012-2023  Ivan Gagis <igagis@gmail.com>
 
