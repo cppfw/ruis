@@ -4,16 +4,16 @@
 
 #include <ruis/util/util.hpp>
 
-wire_socket::wire_socket(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
-		morda::widget(c, desc)
+wire_socket::wire_socket(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
+		ruis::widget(c, desc)
 {
 	for(const auto& p : desc){
-		if(!morda::is_property(p)){
+		if(!ruis::is_property(p)){
 			continue;
 		}
 
 		if(p.value == "outlet"){
-			auto v = morda::get_property_value(p);
+			auto v = ruis::get_property_value(p);
 			if(v == "left"){
 				this->outlet_orientation = orientation::left;
 			}else if(v == "right"){
@@ -58,34 +58,34 @@ void wire_socket::disconnect(){
 	}
 }
 
-std::array<morda::vector2, 2> wire_socket::outlet_pos() const noexcept{
-	morda::vector2 dir;
-	morda::vector2 pos;
+std::array<ruis::vector2, 2> wire_socket::outlet_pos() const noexcept{
+	ruis::vector2 dir;
+	ruis::vector2 pos;
 	switch(this->outlet_orientation){
 		default:
 			ASSERT(false)
 		case orientation::bottom:
-			pos = this->rect().p + this->rect().d.comp_mul(morda::vector2(0.5, 1));
-			dir = morda::vector2(0, 1);
+			pos = this->rect().p + this->rect().d.comp_mul(ruis::vector2(0.5, 1));
+			dir = ruis::vector2(0, 1);
 			break;
 		case orientation::left:
-			pos = this->rect().p + this->rect().d.comp_mul(morda::vector2(0, 0.5));
-			dir = morda::vector2(-1, 0);
+			pos = this->rect().p + this->rect().d.comp_mul(ruis::vector2(0, 0.5));
+			dir = ruis::vector2(-1, 0);
 			break;
 		case orientation::right:
-			pos = this->rect().p + this->rect().d.comp_mul(morda::vector2(1, 0.5));
-			dir = morda::vector2(1, 0);
+			pos = this->rect().p + this->rect().d.comp_mul(ruis::vector2(1, 0.5));
+			dir = ruis::vector2(1, 0);
 			break;
 		case orientation::top:
-			pos = this->rect().p + this->rect().d.comp_mul(morda::vector2(0.5, 0));
-			dir = morda::vector2(0, -1);
+			pos = this->rect().p + this->rect().d.comp_mul(ruis::vector2(0.5, 0));
+			dir = ruis::vector2(0, -1);
 			break;
 	}
 	return {{pos, dir}};
 }
 
-bool wire_socket::on_mouse_button(const morda::mouse_button_event& e){
-	if(e.button != morda::mouse_button::left){
+bool wire_socket::on_mouse_button(const ruis::mouse_button_event& e){
+	if(e.button != ruis::mouse_button::left){
 		return false;
 	}
 	

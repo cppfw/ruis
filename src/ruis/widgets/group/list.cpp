@@ -23,7 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../../context.hpp"
 
-using namespace morda;
+using namespace ruis;
 
 namespace {
 class static_provider : public list_widget::provider
@@ -56,7 +56,7 @@ public:
 };
 } // namespace
 
-list_widget::list_widget(const utki::shared_ref<morda::context>& c, const treeml::forest& desc, bool vertical) :
+list_widget::list_widget(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc, bool vertical) :
 	widget(c, desc),
 	container(this->context, treeml::forest()),
 	oriented(vertical)
@@ -141,7 +141,7 @@ real list_widget::get_scroll_band() const noexcept
 
 	auto items_num = this->calc_num_visible_items();
 
-	return items_num / morda::real(this->item_provider->count());
+	return items_num / ruis::real(this->item_provider->count());
 }
 
 real list_widget::get_scroll_factor() const noexcept
@@ -486,7 +486,7 @@ void list_widget::scroll_by(real delta)
 	this->notify_scroll_pos_changed(old_index, old_offset);
 }
 
-morda::vector2 list_widget::measure(const morda::vector2& quotum) const
+ruis::vector2 list_widget::measure(const ruis::vector2& quotum) const
 {
 	unsigned long_index = this->get_long_index();
 	unsigned trans_index = this->get_trans_index();

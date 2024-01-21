@@ -25,7 +25,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "choice_button.hpp"
 
-namespace morda {
+namespace ruis {
 
 /**
  * @brief Choice group container.
@@ -41,7 +41,7 @@ class choice_group : public container
 	std::weak_ptr<choice_button> active_choice_button;
 
 public:
-	choice_group(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
+	choice_group(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
 
 	choice_group(const choice_group&) = delete;
 	choice_group& operator=(const choice_group&) = delete;
@@ -62,4 +62,4 @@ private:
 	void set_active_choice_button(std::weak_ptr<choice_button> rb);
 };
 
-} // namespace morda
+} // namespace ruis

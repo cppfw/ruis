@@ -35,15 +35,15 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "image.hpp"
 
-using namespace morda;
-using namespace morda::res;
+using namespace ruis;
+using namespace ruis::res;
 
-image::image(const utki::shared_ref<morda::context>& c) :
+image::image(const utki::shared_ref<ruis::context>& c) :
 	resource(c)
 {}
 
 // atlas_image::atlas_image(
-// 	const utki::shared_ref<morda::context>& c,
+// 	const utki::shared_ref<ruis::context>& c,
 // 	const utki::shared_ref<res::texture>& tex,
 // 	const rectangle& rect
 // ) :
@@ -63,7 +63,7 @@ image::image(const utki::shared_ref<morda::context>& c) :
 // 	ASSERT(false)
 // }
 
-atlas_image::atlas_image(const utki::shared_ref<morda::context>& c, const utki::shared_ref<res::texture>& tex) :
+atlas_image::atlas_image(const utki::shared_ref<ruis::context>& c, const utki::shared_ref<res::texture>& tex) :
 	image(c),
 	image::texture(this->context.get().renderer, tex.get().tex().dims()),
 	tex(std::move(tex)),
@@ -71,7 +71,7 @@ atlas_image::atlas_image(const utki::shared_ref<morda::context>& c, const utki::
 {}
 
 utki::shared_ref<atlas_image> atlas_image::load(
-	const utki::shared_ref<morda::context>& ctx,
+	const utki::shared_ref<ruis::context>& ctx,
 	const treeml::forest& desc,
 	const papki::file& fi
 )
@@ -117,7 +117,7 @@ class fixed_texture : public image::texture
 protected:
 	const utki::shared_ref<const texture_2d> tex_2d;
 
-	fixed_texture(const utki::shared_ref<const morda::renderer>& r, const utki::shared_ref<const texture_2d>& tex) :
+	fixed_texture(const utki::shared_ref<const ruis::renderer>& r, const utki::shared_ref<const texture_2d>& tex) :
 		image::texture(r, tex.get().dims()),
 		tex_2d(tex)
 	{}
@@ -132,7 +132,7 @@ public:
 class res_raster_image : public image, public fixed_texture
 {
 public:
-	res_raster_image(const utki::shared_ref<morda::context>& c, const utki::shared_ref<const texture_2d>& tex) :
+	res_raster_image(const utki::shared_ref<ruis::context>& c, const utki::shared_ref<const texture_2d>& tex) :
 		image(c),
 		fixed_texture(this->context.get().renderer, tex)
 	{}
@@ -147,7 +147,7 @@ public:
 		return this->tex_2d.get().dims();
 	}
 
-	static utki::shared_ref<res_raster_image> load(const utki::shared_ref<morda::context>& ctx, const papki::file& fi)
+	static utki::shared_ref<res_raster_image> load(const utki::shared_ref<ruis::context>& ctx, const papki::file& fi)
 	{
 		return utki::make_shared<res_raster_image>(
 			ctx,
@@ -161,7 +161,7 @@ class res_svg_image : public image
 	std::unique_ptr<svgdom::svg_element> dom;
 
 public:
-	res_svg_image(const utki::shared_ref<morda::context>& c, decltype(dom) dom) :
+	res_svg_image(const utki::shared_ref<ruis::context>& c, decltype(dom) dom) :
 		image(c),
 		dom(std::move(dom))
 	{}
@@ -182,7 +182,7 @@ public:
 
 	public:
 		svg_texture(
-			const utki::shared_ref<const morda::renderer>& r,
+			const utki::shared_ref<const ruis::renderer>& r,
 			const utki::shared_ref<const res_svg_image>& parent,
 			const utki::shared_ref<const texture_2d>& tex
 		) :
@@ -259,7 +259,7 @@ public:
 
 	mutable std::map<r4::vector2<unsigned>, std::weak_ptr<texture>> cache;
 
-	static utki::shared_ref<res_svg_image> load(const utki::shared_ref<morda::context>& ctx, const papki::file& fi)
+	static utki::shared_ref<res_svg_image> load(const utki::shared_ref<ruis::context>& ctx, const papki::file& fi)
 	{
 		auto dom = svgdom::load(fi);
 		ASSERT(dom)
@@ -269,7 +269,7 @@ public:
 } // namespace
 
 utki::shared_ref<image> image::load(
-	const utki::shared_ref<morda::context>& ctx,
+	const utki::shared_ref<ruis::context>& ctx,
 	const treeml::forest& desc,
 	const papki::file& fi
 )
@@ -284,7 +284,7 @@ utki::shared_ref<image> image::load(
 	return atlas_image::load(ctx, desc, fi);
 }
 
-utki::shared_ref<image> image::load(const utki::shared_ref<morda::context>& ctx, const papki::file& fi)
+utki::shared_ref<image> image::load(const utki::shared_ref<ruis::context>& ctx, const papki::file& fi)
 {
 	if (fi.suffix().compare("svg") == 0) {
 		return res_svg_image::load(ctx, fi);

@@ -18,21 +18,21 @@ const tst::set set("tabbed_book", [](tst::suite& suite){
 	suite.add("tabbed_book_has_access_to_base_class_render_method", []{
 		auto c = make_dummy_context();
 
-		morda::gui gui(c);
+		ruis::gui gui(c);
 
-		// make initializations needed by morda::tabbed_book
+		// make initializations needed by ruis::tabbed_book
 		c.get().loader.mount_res_pack(papki::fs_file("../../res/morda_res/main.res"));
-		c.get().inflater.register_widget<morda::tab_group>("tab_group");
+		c.get().inflater.register_widget<ruis::tab_group>("tab_group");
 
-		class sub_tabbed_book : public morda::tabbed_book{
+		class sub_tabbed_book : public ruis::tabbed_book{
 		public:
-			sub_tabbed_book(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
-					morda::widget(c, desc),
+			sub_tabbed_book(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
+					ruis::widget(c, desc),
 					tabbed_book(this->context, desc)
 			{}
 		} stb(c, treeml::forest());
 
-		morda::matrix4 m;
+		ruis::matrix4 m;
 		stb.render(m);
 		// TODO: call other methods like on_key(), on_mouse_move(), etc.
 	});

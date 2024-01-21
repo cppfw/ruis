@@ -32,7 +32,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "resource_loader.hpp"
 #include "updateable.hpp"
 
-namespace morda {
+namespace ruis {
 
 class context : public std::enable_shared_from_this<context>
 {
@@ -44,9 +44,9 @@ class context : public std::enable_shared_from_this<context>
 	void set_focused_widget(const std::shared_ptr<widget>& w);
 
 public:
-	const utki::shared_ref<morda::renderer> renderer;
+	const utki::shared_ref<ruis::renderer> renderer;
 
-	const utki::shared_ref<morda::updater> updater;
+	const utki::shared_ref<ruis::updater> updater;
 
 	const std::function<void(std::function<void()>)> run_from_ui_thread;
 
@@ -60,12 +60,12 @@ public:
 	/**
 	 * @brief Instantiation of the GUI inflater.
 	 */
-	morda::inflater inflater;
+	ruis::inflater inflater;
 
 	/**
 	 * @brief Instance of layout factory.
 	 */
-	morda::layout_factory layout_factory;
+	ruis::layout_factory layout_factory;
 
 	/**
 	 * @brief Constructor.
@@ -77,10 +77,10 @@ public:
 	 * @param dots_per_pp - desired dots per perception pixel.
 	 */
 	context(
-		const utki::shared_ref<morda::renderer>& r,
-		const utki::shared_ref<morda::updater>& u,
+		const utki::shared_ref<ruis::renderer>& r,
+		const utki::shared_ref<ruis::updater>& u,
 		std::function<void(std::function<void()>)> run_from_ui_thread_function,
-		std::function<void(morda::mouse_cursor)> set_mouse_cursor_function,
+		std::function<void(ruis::mouse_cursor)> set_mouse_cursor_function,
 		real dots_per_inch,
 		real dots_per_pp
 	);
@@ -93,10 +93,10 @@ public:
 
 	~context() = default;
 
-	const morda::units units;
+	const ruis::units units;
 };
 
-} // namespace morda
+} // namespace ruis
 
 // TODO:?
 // #include "widget.hpp"

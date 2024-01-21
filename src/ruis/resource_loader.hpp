@@ -28,7 +28,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <treeml/tree.hpp>
 #include <utki/shared.hpp>
 
-namespace morda {
+namespace ruis {
 
 class resource;
 class context;
@@ -132,7 +132,7 @@ public:
 	 *
 	 * Example:
 	 * @code
-	 * auto image = this->context.get().loader().load<morda::res_image>("img_my_image_name");
+	 * auto image = this->context.get().loader().load<ruis::res_image>("img_my_image_name");
 	 * @endcode
 	 *
 	 * @param id - id of the resource as it appears in resource description.
@@ -155,10 +155,10 @@ class resource : virtual public utki::shared
 	std::string id;
 
 protected:
-	const utki::shared_ref<morda::context> context;
+	const utki::shared_ref<ruis::context> context;
 
 	// NOLINTNEXTLINE(modernize-pass-by-value)
-	resource(const utki::shared_ref<morda::context>& c) :
+	resource(const utki::shared_ref<ruis::context>& c) :
 		context(c)
 	{}
 
@@ -217,4 +217,4 @@ utki::shared_ref<resource_type> resource_loader::load(std::string_view id)
 	throw std::logic_error(ss.str());
 }
 
-} // namespace morda
+} // namespace ruis

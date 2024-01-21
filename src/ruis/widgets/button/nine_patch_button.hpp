@@ -25,7 +25,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "push_button.hpp"
 
-namespace morda {
+namespace ruis {
 
 /**
  * @brief Simple push button.
@@ -65,9 +65,9 @@ public:
 	}
 
 protected:
-	nine_patch_button(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
+	nine_patch_button(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
 
 	void on_press_change() override;
 };
 
-} // namespace morda
+} // namespace ruis

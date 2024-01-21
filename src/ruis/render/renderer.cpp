@@ -21,7 +21,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "renderer.hpp"
 
-using namespace morda;
+using namespace ruis;
 
 renderer::renderer(std::unique_ptr<render_factory> factory, const renderer::params& params) :
 	factory(std::move(factory)),
@@ -31,7 +31,7 @@ renderer::renderer(std::unique_ptr<render_factory> factory, const renderer::para
 			this->factory->create_vertex_buffer(utki::span<const r4::vector2<float>>(nullptr))
 },
 		this->factory->create_index_buffer(nullptr),
-		morda::vertex_array::mode::triangle_strip
+		ruis::vertex_array::mode::triangle_strip
 	)),
 	quad_01_vbo(this->factory->create_vertex_buffer(utki::make_span(std::array<r4::vector2<float>, 4>(
 		{{r4::vector2<float>(0, 0), r4::vector2<float>(0, 1), r4::vector2<float>(1, 1), r4::vector2<float>(1, 0)}}

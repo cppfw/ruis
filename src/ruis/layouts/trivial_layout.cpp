@@ -23,7 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../widget.hpp"
 
-using namespace morda;
+using namespace ruis;
 
 const utki::shared_ref<trivial_layout> trivial_layout::instance = utki::make_shared<trivial_layout>();
 

@@ -25,7 +25,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "choice_button.hpp"
 
-namespace morda {
+namespace ruis {
 
 /**
  * @brief Radio button widget.
@@ -38,7 +38,7 @@ class radio_button : virtual public choice_button, private container
 	const utki::shared_ref<widget> check_widget;
 
 public:
-	radio_button(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
+	radio_button(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
 
 	radio_button(const radio_button&) = delete;
 	radio_button& operator=(const radio_button&) = delete;
@@ -63,4 +63,4 @@ public:
 private:
 };
 
-} // namespace morda
+} // namespace ruis

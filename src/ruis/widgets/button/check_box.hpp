@@ -25,7 +25,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "toggle_button.hpp"
 
-namespace morda {
+namespace ruis {
 
 /**
  * @brief Checkbox widget.
@@ -41,7 +41,7 @@ class check_box :
 	std::shared_ptr<widget> check_widget;
 
 public:
-	check_box(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
+	check_box(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
 
 	check_box(const check_box&) = delete;
 	check_box& operator=(const check_box&) = delete;
@@ -66,4 +66,4 @@ public:
 private:
 };
 
-} // namespace morda
+} // namespace ruis

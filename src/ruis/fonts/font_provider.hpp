@@ -27,14 +27,14 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "font.hpp"
 
-namespace morda {
+namespace ruis {
 
 class font_provider
 {
 	mutable std::map<real, std::weak_ptr<const font>> cache;
 
 protected:
-	const utki::shared_ref<morda::context> context;
+	const utki::shared_ref<ruis::context> context;
 
 	virtual utki::shared_ref<const font> create(real size) const = 0;
 
@@ -42,7 +42,7 @@ public:
 	utki::shared_ref<const font> get(real size) const;
 
 	// NOLINTNEXTLINE(modernize-pass-by-value)
-	font_provider(const utki::shared_ref<morda::context>& context) :
+	font_provider(const utki::shared_ref<ruis::context>& context) :
 		context(context)
 	{}
 
@@ -55,4 +55,4 @@ public:
 	virtual ~font_provider() = default;
 };
 
-} // namespace morda
+} // namespace ruis

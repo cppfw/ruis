@@ -23,7 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../config.hpp"
 
-namespace morda {
+namespace ruis {
 /**
  * @brief Information about screen units.
  * This class holds information about screen units and performs conversion
@@ -94,4 +94,4 @@ public:
 	}
 };
 
-} // namespace morda
+} // namespace ruis

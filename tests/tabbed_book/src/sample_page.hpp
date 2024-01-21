@@ -3,11 +3,11 @@
 #include <ruis/widgets/group/book.hpp>
 
 class sample_page :
-        public morda::page,
-        public morda::container
+        public ruis::page,
+        public ruis::container
 {
 public:
-    sample_page(const utki::shared_ref<morda::context>& c, const std::string& text);
+    sample_page(const utki::shared_ref<ruis::context>& c, const std::string& text);
 
     sample_page(const sample_page&) = delete;
     sample_page& operator=(const sample_page&) = delete;

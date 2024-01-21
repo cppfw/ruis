@@ -24,7 +24,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <array>
 #include <ostream>
 
-namespace morda {
+namespace ruis {
 
 /**
  * @brief Template class holding some values associated with sides of a rectangle.
@@ -94,4 +94,4 @@ public:
 	}
 };
 
-} // namespace morda
+} // namespace ruis

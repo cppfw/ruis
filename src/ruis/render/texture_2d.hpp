@@ -23,7 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../config.hpp"
 
-namespace morda {
+namespace ruis {
 
 class texture_2d
 {
@@ -48,4 +48,4 @@ public:
 	}
 };
 
-} // namespace morda
+} // namespace ruis

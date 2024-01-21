@@ -23,7 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../../util/util.hpp"
 
-using namespace morda;
+using namespace ruis;
 
 void image_button::update_image()
 {
@@ -40,7 +40,7 @@ void image_button::on_press_change()
 	this->button::on_press_change();
 }
 
-image_button::image_button(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+image_button::image_button(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
 	widget(c, desc),
 	button(this->context, desc),
 	image(this->context, desc)

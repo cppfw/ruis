@@ -26,18 +26,18 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "mouse_cursor.hpp"
 
-namespace morda {
+namespace ruis {
 
 class mouse_cursor_manager
 {
 	std::list<mouse_cursor> cursor_stack = {mouse_cursor::arrow};
 
-	const std::function<void(morda::mouse_cursor)> set_mouse_cursor;
+	const std::function<void(ruis::mouse_cursor)> set_mouse_cursor;
 
 public:
 	using iterator = decltype(cursor_stack)::iterator;
 
-	mouse_cursor_manager(std::function<void(morda::mouse_cursor)>&& set_mouse_cursor) :
+	mouse_cursor_manager(std::function<void(ruis::mouse_cursor)>&& set_mouse_cursor) :
 		set_mouse_cursor(std::move(set_mouse_cursor))
 	{}
 
@@ -46,4 +46,4 @@ public:
 	void pop(iterator i);
 };
 
-} // namespace morda
+} // namespace ruis

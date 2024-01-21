@@ -24,7 +24,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../layout.hpp"
 #include "../util/oriented.hpp"
 
-namespace morda {
+namespace ruis {
 
 // TODO: consider inheriting oriented
 class linear_layout : public layout, public oriented
@@ -57,4 +57,4 @@ public:
 	static const utki::shared_ref<column_layout> instance;
 };
 
-} // namespace morda
+} // namespace ruis

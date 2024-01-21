@@ -23,7 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../../widget.hpp"
 
-namespace morda {
+namespace ruis {
 
 class click_proxy : virtual public widget
 {
@@ -31,7 +31,7 @@ class click_proxy : virtual public widget
 	bool deferred_release_ret = false;
 
 public:
-	click_proxy(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
+	click_proxy(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
 
 	click_proxy(const click_proxy&) = delete;
 	click_proxy& operator=(const click_proxy&) = delete;
@@ -60,4 +60,4 @@ public:
 	std::function<void(click_proxy& w)> click_handler;
 };
 
-} // namespace morda
+} // namespace ruis

@@ -45,7 +45,7 @@ public:
 	application() :
 			ruisapp::application(ruisapp::window_params(r4::vec2ui(800, 600)))
 	{
-		// ruisapp::application has the 'gui' member variable which is an instance of morda::gui
+		// ruisapp::application has the 'gui' member variable which is an instance of ruis::gui
 		this->gui.init_standard_widgets(*this->get_res_file());
 	}
 };
@@ -117,17 +117,17 @@ public:
 		// set the widgets hierarchy to the application
 		this->gui.set_root(c);
 
-		auto textLabel = c->try_get_widget_as<morda::text>("info_text");
+		auto textLabel = c->try_get_widget_as<ruis::text>("info_text");
 		ASSERT(textLabel)
 
-		auto button = c->try_get_widget_as<morda::push_button>("hw_button");
+		auto button = c->try_get_widget_as<ruis::push_button>("hw_button");
 
 		auto textLabelWeak = utki::make_weak(textLabel); // make a weak pointer to the TextLabel widget.
 
 		bool even = true;
 
 		// connect some action on button click
-		button->click_handler = [textLabelWeak, even](morda::push_button&) mutable {
+		button->click_handler = [textLabelWeak, even](ruis::push_button&) mutable {
 			if(auto tl = textLabelWeak.lock()){
 				even = !even;
 				if(even){

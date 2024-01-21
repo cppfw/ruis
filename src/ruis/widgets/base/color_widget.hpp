@@ -23,7 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../../widget.hpp"
 
-namespace morda {
+namespace ruis {
 
 /**
  * @brief Basic widget which has a color attribute.
@@ -40,7 +40,7 @@ class color_widget : public virtual widget
 	uint32_t disabled_color = default_disabled_color;
 
 protected:
-	color_widget(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
+	color_widget(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
 
 public:
 	color_widget(const color_widget&) = delete;
@@ -72,4 +72,4 @@ public:
 	uint32_t get_current_color() const noexcept;
 };
 
-} // namespace morda
+} // namespace ruis

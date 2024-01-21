@@ -28,7 +28,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../context.hpp"
 #include "../util/util.hpp"
 
-using namespace morda;
+using namespace ruis;
 
 namespace {
 constexpr const char32_t unknown_char = 0xfffd;
@@ -135,11 +135,11 @@ freetype_face::glyph freetype_face::load_glyph(char32_t c, unsigned font_size) c
 	return glyph{
 		// vertices
 		{
-         (morda::vector2(real(m->horiBearingX), -real(m->horiBearingY)) / real(freetype_granularity)),
-         (morda::vector2(real(m->horiBearingX), real(m->height - m->horiBearingY)) / real(freetype_granularity)),
-         (morda::vector2(real(m->horiBearingX + m->width), real(m->height - m->horiBearingY)) /
+         (ruis::vector2(real(m->horiBearingX), -real(m->horiBearingY)) / real(freetype_granularity)),
+         (ruis::vector2(real(m->horiBearingX), real(m->height - m->horiBearingY)) / real(freetype_granularity)),
+         (ruis::vector2(real(m->horiBearingX + m->width), real(m->height - m->horiBearingY)) /
 			 real(freetype_granularity)),
-         (morda::vector2(real(m->horiBearingX + m->width), -real(m->horiBearingY)) / real(freetype_granularity)) //
+         (ruis::vector2(real(m->horiBearingX + m->width), -real(m->horiBearingY)) / real(freetype_granularity)) //
 		},
 		// image
 		rasterimage::image<uint8_t, 1>::make(
@@ -187,7 +187,7 @@ texture_font::glyph texture_font::load_glyph(char32_t c) const
 }
 
 texture_font::texture_font(
-	const utki::shared_ref<morda::context>& c,
+	const utki::shared_ref<ruis::context>& c,
 	// NOLINTNEXTLINE(modernize-pass-by-value)
 	const utki::shared_ref<const freetype_face>& face,
 	unsigned font_size,
@@ -240,7 +240,7 @@ const texture_font::glyph& texture_font::get_glyph(char32_t c) const
 	return i->second;
 }
 
-real texture_font::render_glyph_internal(const morda::matrix4& matrix, r4::vector4<float> color, char32_t ch) const
+real texture_font::render_glyph_internal(const ruis::matrix4& matrix, r4::vector4<float> color, char32_t ch) const
 {
 	const glyph& g = this->get_glyph(ch);
 
@@ -275,9 +275,9 @@ real texture_font::get_advance_internal(std::u32string_view str, unsigned tab_si
 	return ret;
 }
 
-morda::rectangle texture_font::get_bounding_box_internal(std::u32string_view str, unsigned tab_size) const
+ruis::rectangle texture_font::get_bounding_box_internal(std::u32string_view str, unsigned tab_size) const
 {
-	morda::rectangle ret;
+	ruis::rectangle ret;
 
 	if (str.empty()) {
 		ret.p.set(0);
@@ -328,7 +328,7 @@ morda::rectangle texture_font::get_bounding_box_internal(std::u32string_view str
 }
 
 font::render_result texture_font::render_internal(
-	const morda::matrix4& matrix,
+	const ruis::matrix4& matrix,
 	r4::vector4<float> color,
 	const std::u32string_view str,
 	unsigned tab_size,
@@ -343,7 +343,7 @@ font::render_result texture_font::render_internal(
 
 	this->context.get().renderer.get().set_simple_alpha_blending();
 
-	morda::matrix4 matr(matrix);
+	ruis::matrix4 matr(matrix);
 
 	real space_advance = this->get_glyph(U' ').advance;
 

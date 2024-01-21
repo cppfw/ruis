@@ -23,7 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "button.hpp"
 
-namespace morda {
+namespace ruis {
 
 /**
  * @brief Basic class of a push button.
@@ -50,7 +50,7 @@ protected:
 	void on_hover_change(unsigned pointer_id) override;
 
 public:
-	push_button(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+	push_button(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
 		widget(c, desc),
 		button(this->context, desc)
 	{}
@@ -70,4 +70,4 @@ public:
 	std::function<void(push_button&)> click_handler;
 };
 
-} // namespace morda
+} // namespace ruis

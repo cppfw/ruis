@@ -25,7 +25,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "choice_group.hpp"
 
-using namespace morda;
+using namespace ruis;
 
 namespace {
 
@@ -42,7 +42,7 @@ const auto radio_button_layout = treeml::read(R"qwertyuiop(
 
 } // namespace
 
-radio_button::radio_button(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+radio_button::radio_button(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
 	widget(c, desc),
 	button(this->context, desc),
 	toggle_button(this->context, desc),

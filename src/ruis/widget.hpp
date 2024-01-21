@@ -39,7 +39,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "config.hpp"
 
-namespace morda {
+namespace ruis {
 
 class context;
 class container;
@@ -91,7 +91,7 @@ public:
 	layout_params(layout_params&&) = default;
 	layout_params& operator=(layout_params&&) = default;
 
-	layout_params(const treeml::forest& desc, const morda::units& units);
+	layout_params(const treeml::forest& desc, const ruis::units& units);
 
 	~layout_params() noexcept = default;
 };
@@ -122,7 +122,7 @@ class widget : virtual public utki::shared
 	friend class layout;
 
 public:
-	const utki::shared_ref<morda::context> context;
+	const utki::shared_ref<ruis::context> context;
 
 private:
 	container* parent_container = nullptr;
@@ -133,7 +133,7 @@ private:
 
 	bool enabled = true;
 
-	morda::rectangle rectangle = {0, 0};
+	ruis::rectangle rectangle = {0, 0};
 
 	// clip widgets contents by widget's border if set to true
 	bool clip_enabled = false;
@@ -313,7 +313,7 @@ public:
 	 * The rectangle is in parent's coordinates.
 	 * @return Widget's rectangle.
 	 */
-	const morda::rectangle& rect() const noexcept
+	const ruis::rectangle& rect() const noexcept
 	{
 		return this->rectangle;
 	}
@@ -322,13 +322,13 @@ public:
 	 * @brief Get widget's position in absolute coordinates.
 	 * @return widget's position in absolute coordinates.
 	 */
-	morda::vector2 get_absolute_pos() const noexcept;
+	ruis::vector2 get_absolute_pos() const noexcept;
 
 	/**
 	 * @brief Get widget's rectangle in absolute coordinates.
 	 * @return widget's absolute coordinates rectangle.
 	 */
-	morda::rectangle get_absolute_rect() const noexcept;
+	ruis::rectangle get_absolute_rect() const noexcept;
 
 	/**
 	 * @brief Get rectangle occupied by the widget in viewport coordinates.
@@ -471,7 +471,7 @@ public:
 	 * @param c - context to which this widget belongs.
 	 * @param desc - widget description.
 	 */
-	widget(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
+	widget(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
 
 	widget(const widget&) = delete;
 	widget& operator=(const widget&) = delete;
@@ -488,13 +488,13 @@ public:
 	 * implementation does nothing.
 	 * @param matrix - transformation matrix to use when rendering.
 	 */
-	virtual void render(const morda::matrix4& matrix) const {}
+	virtual void render(const ruis::matrix4& matrix) const {}
 
 private:
-	void render_internal(const morda::matrix4& matrix) const;
+	void render_internal(const ruis::matrix4& matrix) const;
 
 private:
-	void on_key_internal(const morda::key_event& e);
+	void on_key_internal(const ruis::key_event& e);
 
 private:
 	bool focused = false;
@@ -508,7 +508,7 @@ public:
 	 * @return true to consume event and prevent its further propagation.
 	 * @return false to allow the event to be propagated further.
 	 */
-	virtual bool on_key(const morda::key_event& e)
+	virtual bool on_key(const ruis::key_event& e)
 	{
 		return false;
 	}
@@ -650,9 +650,9 @@ public:
 	 * @return true if point is inside of the widget boundaries.
 	 * @return false otherwise.
 	 */
-	bool overlaps(const morda::vector2& pos) const noexcept
+	bool overlaps(const ruis::vector2& pos) const noexcept
 	{
-		return morda::rectangle(morda::vector2(0, 0), this->rect().d).overlaps(pos);
+		return ruis::rectangle(ruis::vector2(0, 0), this->rect().d).overlaps(pos);
 	}
 
 	/**
@@ -737,14 +737,14 @@ public:
  */
 vector2 dims_for_widget(const widget& w, const vector2& parent_dims);
 
-} // namespace morda
+} // namespace ruis
 
 // include definitions for forward declared classes
 #include "container.hpp"
 #include "context.hpp"
 
 template <typename resource_type>
-void morda::widget::reload(std::shared_ptr<resource_type>& p)
+void ruis::widget::reload(std::shared_ptr<resource_type>& p)
 {
 	if (!p) {
 		return;
@@ -753,7 +753,7 @@ void morda::widget::reload(std::shared_ptr<resource_type>& p)
 }
 
 template <typename resource_type>
-void morda::widget::reload(utki::shared_ref<resource_type>& p)
+void ruis::widget::reload(utki::shared_ref<resource_type>& p)
 {
 	p = this->context.get().loader.load<resource_type>(p->get_id());
 }

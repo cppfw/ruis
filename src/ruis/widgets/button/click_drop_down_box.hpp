@@ -24,7 +24,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "drop_down_box.hpp"
 #include "nine_patch_push_button.hpp"
 
-namespace morda {
+namespace ruis {
 
 class click_drop_down_box : virtual public widget, private nine_patch_push_button, public drop_down_box
 {
@@ -33,7 +33,7 @@ class click_drop_down_box : virtual public widget, private nine_patch_push_butto
 	unsigned num_mouse_buttons_pressed = 0;
 
 public:
-	click_drop_down_box(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
+	click_drop_down_box(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
 
 	click_drop_down_box(const click_drop_down_box&) = delete;
 	click_drop_down_box& operator=(const click_drop_down_box&) = delete;
@@ -57,4 +57,4 @@ private:
 	void handle_mouse_button_up(bool is_first_button_up_event);
 };
 
-} // namespace morda
+} // namespace ruis

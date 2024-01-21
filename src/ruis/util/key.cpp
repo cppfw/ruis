@@ -26,11 +26,11 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <utki/sort.hpp>
 
-using namespace morda;
+using namespace ruis;
 
 using namespace std::string_view_literals;
 
-key_modifier morda::to_key_modifier(morda::key key)
+key_modifier ruis::to_key_modifier(ruis::key key)
 {
 	switch (key) {
 		case key::left_shift:
@@ -55,8 +55,8 @@ key_modifier morda::to_key_modifier(morda::key key)
 }
 
 namespace {
-// the order of strings must correspond to the order of morda::key enum items
-constexpr std::array<std::string_view, size_t(morda::key::enum_size)> key_names = {
+// the order of strings must correspond to the order of ruis::key enum items
+constexpr std::array<std::string_view, size_t(ruis::key::enum_size)> key_names = {
 	"space"sv,
 	"enter"sv,
 	"0"sv,
@@ -155,9 +155,9 @@ constexpr std::array<std::string_view, size_t(morda::key::enum_size)> key_names 
 };
 } // namespace
 
-std::string_view morda::to_string(morda::key key)
+std::string_view ruis::to_string(ruis::key key)
 {
-	if (key >= morda::key::enum_size) {
+	if (key >= ruis::key::enum_size) {
 		return "unknown"sv;
 	}
 	// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-constant-array-index)
@@ -167,107 +167,107 @@ std::string_view morda::to_string(morda::key key)
 namespace {
 struct key_name_key_pair {
 	std::string_view first;
-	morda::key second;
+	ruis::key second;
 };
 
 constexpr auto key_name_to_key_ordered_mapping = []() constexpr {
-	std::array<key_name_key_pair, size_t(morda::key::enum_size)> arr = {
+	std::array<key_name_key_pair, size_t(ruis::key::enum_size)> arr = {
 		{
-         {"space"sv, morda::key::space},
-         {"enter"sv, morda::key::enter},
-         {"0"sv, morda::key::zero},
-         {"1"sv, morda::key::one},
-         {"2"sv, morda::key::two},
-         {"3"sv, morda::key::three},
-         {"4"sv, morda::key::four},
-         {"5"sv, morda::key::five},
-         {"6"sv, morda::key::six},
-         {"7"sv, morda::key::seven},
-         {"8"sv, morda::key::eight},
-         {"9"sv, morda::key::nine},
-         {"a"sv, morda::key::a},
-         {"b"sv, morda::key::b},
-         {"c"sv, morda::key::c},
-         {"d"sv, morda::key::d},
-         {"e"sv, morda::key::e},
-         {"f"sv, morda::key::f},
-         {"g"sv, morda::key::g},
-         {"h"sv, morda::key::h},
-         {"i"sv, morda::key::i},
-         {"j"sv, morda::key::j},
-         {"k"sv, morda::key::k},
-         {"l"sv, morda::key::l},
-         {"m"sv, morda::key::m},
-         {"n"sv, morda::key::n},
-         {"o"sv, morda::key::o},
-         {"p"sv, morda::key::p},
-         {"q"sv, morda::key::q},
-         {"r"sv, morda::key::r},
-         {"s"sv, morda::key::s},
-         {"t"sv, morda::key::t},
-         {"u"sv, morda::key::u},
-         {"v"sv, morda::key::v},
-         {"w"sv, morda::key::w},
-         {"x"sv, morda::key::x},
-         {"y"sv, morda::key::y},
-         {"z"sv, morda::key::z},
-         {"arrow_left"sv, morda::key::arrow_left},
-         {"arrow_right"sv, morda::key::arrow_right},
-         {"arrow_up"sv, morda::key::arrow_up},
-         {"arrow_down"sv, morda::key::arrow_down},
-         {"comma"sv, morda::key::comma},
-         {"semicolon"sv, morda::key::semicolon},
-         {"apostrophe"sv, morda::key::apostrophe},
-         {"period"sv, morda::key::period},
-         {"slash"sv, morda::key::slash},
-         {"backslash"sv, morda::key::backslash},
-         {"tabulator"sv, morda::key::tabulator},
-         {"left_shift"sv, morda::key::left_shift},
-         {"right_shift"sv, morda::key::right_shift},
-         {"end"sv, morda::key::end},
-         {"left_square_bracket"sv, morda::key::left_square_bracket},
-         {"right_square_bracket"sv, morda::key::right_square_bracket},
-         {"grave"sv, morda::key::grave},
-         {"minus"sv, morda::key::minus},
-         {"equals"sv, morda::key::equals},
-         {"backspace"sv, morda::key::backspace},
-         {"capslock"sv, morda::key::capslock},
-         {"escape"sv, morda::key::escape},
-         {"left_control"sv, morda::key::left_control},
-         {"left_alt"sv, morda::key::left_alt},
-         {"f1"sv, morda::key::f1},
-         {"f2"sv, morda::key::f2},
-         {"f3"sv, morda::key::f3},
-         {"f4"sv, morda::key::f4},
-         {"f5"sv, morda::key::f5},
-         {"f6"sv, morda::key::f6},
-         {"f7"sv, morda::key::f7},
-         {"f8"sv, morda::key::f8},
-         {"f9"sv, morda::key::f9},
-         {"f10"sv, morda::key::f10},
-         {"f11"sv, morda::key::f11},
-         {"f12"sv, morda::key::f12},
-         {"right_control"sv, morda::key::right_control},
-         {"print_screen"sv, morda::key::print_screen},
-         {"right_alt"sv, morda::key::right_alt},
-         {"home"sv, morda::key::home},
-         {"page_up"sv, morda::key::page_up},
-         {"page_down"sv, morda::key::page_down},
-         {"insert"sv, morda::key::insert},
-         {"deletion"sv, morda::key::deletion},
-         {"pause"sv, morda::key::pause},
-         {"left_command"sv, morda::key::left_command},
-         {"right_command"sv, morda::key::right_command},
-         {"menu"sv, morda::key::menu},
-         {"function"sv, morda::key::function},
-         {"f17"sv, morda::key::f17},
-         {"f18"sv, morda::key::f18},
-         {"f19"sv, morda::key::f19},
-         {"f20"sv, morda::key::f20},
-         {"f13"sv, morda::key::f13},
-         {"f16"sv, morda::key::f16},
-         {"f14"sv, morda::key::f14},
-         {"f15"sv, morda::key::f15},
+         {"space"sv, ruis::key::space},
+         {"enter"sv, ruis::key::enter},
+         {"0"sv, ruis::key::zero},
+         {"1"sv, ruis::key::one},
+         {"2"sv, ruis::key::two},
+         {"3"sv, ruis::key::three},
+         {"4"sv, ruis::key::four},
+         {"5"sv, ruis::key::five},
+         {"6"sv, ruis::key::six},
+         {"7"sv, ruis::key::seven},
+         {"8"sv, ruis::key::eight},
+         {"9"sv, ruis::key::nine},
+         {"a"sv, ruis::key::a},
+         {"b"sv, ruis::key::b},
+         {"c"sv, ruis::key::c},
+         {"d"sv, ruis::key::d},
+         {"e"sv, ruis::key::e},
+         {"f"sv, ruis::key::f},
+         {"g"sv, ruis::key::g},
+         {"h"sv, ruis::key::h},
+         {"i"sv, ruis::key::i},
+         {"j"sv, ruis::key::j},
+         {"k"sv, ruis::key::k},
+         {"l"sv, ruis::key::l},
+         {"m"sv, ruis::key::m},
+         {"n"sv, ruis::key::n},
+         {"o"sv, ruis::key::o},
+         {"p"sv, ruis::key::p},
+         {"q"sv, ruis::key::q},
+         {"r"sv, ruis::key::r},
+         {"s"sv, ruis::key::s},
+         {"t"sv, ruis::key::t},
+         {"u"sv, ruis::key::u},
+         {"v"sv, ruis::key::v},
+         {"w"sv, ruis::key::w},
+         {"x"sv, ruis::key::x},
+         {"y"sv, ruis::key::y},
+         {"z"sv, ruis::key::z},
+         {"arrow_left"sv, ruis::key::arrow_left},
+         {"arrow_right"sv, ruis::key::arrow_right},
+         {"arrow_up"sv, ruis::key::arrow_up},
+         {"arrow_down"sv, ruis::key::arrow_down},
+         {"comma"sv, ruis::key::comma},
+         {"semicolon"sv, ruis::key::semicolon},
+         {"apostrophe"sv, ruis::key::apostrophe},
+         {"period"sv, ruis::key::period},
+         {"slash"sv, ruis::key::slash},
+         {"backslash"sv, ruis::key::backslash},
+         {"tabulator"sv, ruis::key::tabulator},
+         {"left_shift"sv, ruis::key::left_shift},
+         {"right_shift"sv, ruis::key::right_shift},
+         {"end"sv, ruis::key::end},
+         {"left_square_bracket"sv, ruis::key::left_square_bracket},
+         {"right_square_bracket"sv, ruis::key::right_square_bracket},
+         {"grave"sv, ruis::key::grave},
+         {"minus"sv, ruis::key::minus},
+         {"equals"sv, ruis::key::equals},
+         {"backspace"sv, ruis::key::backspace},
+         {"capslock"sv, ruis::key::capslock},
+         {"escape"sv, ruis::key::escape},
+         {"left_control"sv, ruis::key::left_control},
+         {"left_alt"sv, ruis::key::left_alt},
+         {"f1"sv, ruis::key::f1},
+         {"f2"sv, ruis::key::f2},
+         {"f3"sv, ruis::key::f3},
+         {"f4"sv, ruis::key::f4},
+         {"f5"sv, ruis::key::f5},
+         {"f6"sv, ruis::key::f6},
+         {"f7"sv, ruis::key::f7},
+         {"f8"sv, ruis::key::f8},
+         {"f9"sv, ruis::key::f9},
+         {"f10"sv, ruis::key::f10},
+         {"f11"sv, ruis::key::f11},
+         {"f12"sv, ruis::key::f12},
+         {"right_control"sv, ruis::key::right_control},
+         {"print_screen"sv, ruis::key::print_screen},
+         {"right_alt"sv, ruis::key::right_alt},
+         {"home"sv, ruis::key::home},
+         {"page_up"sv, ruis::key::page_up},
+         {"page_down"sv, ruis::key::page_down},
+         {"insert"sv, ruis::key::insert},
+         {"deletion"sv, ruis::key::deletion},
+         {"pause"sv, ruis::key::pause},
+         {"left_command"sv, ruis::key::left_command},
+         {"right_command"sv, ruis::key::right_command},
+         {"menu"sv, ruis::key::menu},
+         {"function"sv, ruis::key::function},
+         {"f17"sv, ruis::key::f17},
+         {"f18"sv, ruis::key::f18},
+         {"f19"sv, ruis::key::f19},
+         {"f20"sv, ruis::key::f20},
+         {"f13"sv, ruis::key::f13},
+         {"f16"sv, ruis::key::f16},
+         {"f14"sv, ruis::key::f14},
+         {"f15"sv, ruis::key::f15},
 		 }
 	};
 
@@ -278,7 +278,7 @@ constexpr auto key_name_to_key_ordered_mapping = []() constexpr {
 }();
 } // namespace
 
-morda::key morda::to_key(std::string_view name)
+ruis::key ruis::to_key(std::string_view name)
 {
 	auto i = std::lower_bound(
 		key_name_to_key_ordered_mapping.begin(),
@@ -291,5 +291,5 @@ morda::key morda::to_key(std::string_view name)
 	if (i != key_name_to_key_ordered_mapping.end() && i->first == name) {
 		return i->second;
 	}
-	return morda::key::unknown;
+	return ruis::key::unknown;
 }

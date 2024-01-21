@@ -23,7 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../layout.hpp"
 
-namespace morda {
+namespace ruis {
 
 class trivial_layout : public layout
 {
@@ -35,4 +35,4 @@ public:
 	void lay_out(const vector2& size, semiconst_widget_list& widgets) const override;
 };
 
-} // namespace morda
+} // namespace ruis

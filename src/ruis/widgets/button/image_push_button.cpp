@@ -21,7 +21,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "image_push_button.hpp"
 
-using namespace morda;
+using namespace ruis;
 
 void image_push_button::on_press_change()
 {
@@ -29,7 +29,7 @@ void image_push_button::on_press_change()
 	this->push_button::on_press_change();
 }
 
-image_push_button::image_push_button(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+image_push_button::image_push_button(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
 	widget(c, desc),
 	button(this->context, desc),
 	push_button(this->context, desc),

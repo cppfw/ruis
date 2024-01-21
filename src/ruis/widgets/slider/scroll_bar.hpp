@@ -32,7 +32,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #	pragma warning(disable : 4250)
 #endif
 
-namespace morda {
+namespace ruis {
 
 class scroll_bar :
 	public fraction_band_widget,
@@ -45,7 +45,7 @@ class scroll_bar :
 	float clickPoint;
 
 protected:
-	scroll_bar(const utki::shared_ref<morda::context>& c, const treeml::forest& desc, bool vertical);
+	scroll_bar(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc, bool vertical);
 
 	void on_fraction_change() override;
 
@@ -67,7 +67,7 @@ private:
 class vertical_scroll_bar : public scroll_bar
 {
 public:
-	vertical_scroll_bar(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+	vertical_scroll_bar(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
 		widget(c, desc),
 		scroll_bar(this->context, desc, true)
 	{}
@@ -84,7 +84,7 @@ public:
 class horizontal_scroll_bar : public scroll_bar
 {
 public:
-	horizontal_scroll_bar(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+	horizontal_scroll_bar(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
 		widget(c, desc),
 		scroll_bar(this->context, desc, false)
 	{}
@@ -98,4 +98,4 @@ public:
 	~horizontal_scroll_bar() override = default;
 };
 
-} // namespace morda
+} // namespace ruis

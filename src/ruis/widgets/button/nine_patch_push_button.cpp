@@ -23,9 +23,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../../util/util.hpp"
 
-using namespace morda;
+using namespace ruis;
 
-nine_patch_push_button::nine_patch_push_button(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+nine_patch_push_button::nine_patch_push_button(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
 	widget(c, desc),
 	button(this->context, desc),
 	push_button(this->context, desc),

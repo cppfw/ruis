@@ -24,15 +24,15 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../context.hpp"
 #include "../resource_loader.hpp"
 
-using namespace morda::res;
+using namespace ruis::res;
 
-morda::res::treeml::treeml(const utki::shared_ref<morda::context>& c, ::treeml::forest forest) :
+ruis::res::treeml::treeml(const utki::shared_ref<ruis::context>& c, ::treeml::forest forest) :
 	resource(c),
 	s(std::move(forest))
 {}
 
-utki::shared_ref<morda::res::treeml> morda::res::treeml::load(
-	const utki::shared_ref<morda::context>& ctx,
+utki::shared_ref<ruis::res::treeml> ruis::res::treeml::load(
+	const utki::shared_ref<ruis::context>& ctx,
 	const ::treeml::forest& desc,
 	const papki::file& fi
 )

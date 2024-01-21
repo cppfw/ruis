@@ -25,7 +25,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../widget.hpp"
 
-namespace morda {
+namespace ruis {
 
 class weak_widget_set
 {
@@ -41,9 +41,9 @@ public:
 
 	void add(decltype(set)::value_type w);
 
-	void foreach (const std::function<void(morda::widget&)>& do_this);
+	void foreach (const std::function<void(ruis::widget&)>& do_this);
 
 	void set_enabled(bool enabled);
 };
 
-} // namespace morda
+} // namespace ruis

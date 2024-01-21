@@ -26,7 +26,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "image.hpp"
 
-namespace morda::res {
+namespace ruis::res {
 
 /**
  * @brief Nine-patch resource.
@@ -48,7 +48,7 @@ namespace morda::res {
  */
 class nine_patch : public resource
 {
-	friend class morda::resource_loader;
+	friend class ruis::resource_loader;
 
 	const utki::shared_ref<const res::image> image;
 
@@ -64,7 +64,7 @@ public:
 	~nine_patch() override = default;
 
 	nine_patch(
-		const utki::shared_ref<morda::context>& c,
+		const utki::shared_ref<ruis::context>& c,
 		// NOLINTNEXTLINE(modernize-pass-by-value)
 		const utki::shared_ref<const res::image>& image,
 		sides<real> borders
@@ -114,10 +114,10 @@ private:
 	mutable std::map<real, std::weak_ptr<image_matrix>> cache;
 
 	static utki::shared_ref<nine_patch> load(
-		const utki::shared_ref<morda::context>& ctx,
+		const utki::shared_ref<ruis::context>& ctx,
 		const ::treeml::forest& desc,
 		const papki::file& fi
 	);
 };
 
-} // namespace morda::res
+} // namespace ruis::res

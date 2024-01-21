@@ -25,7 +25,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../label/text.hpp"
 #include "../proxy/mouse_proxy.hpp"
 
-namespace morda {
+namespace ruis {
 
 /**
  * @brief Window widget.
@@ -40,7 +40,7 @@ class window :
 	virtual public widget, //
 	private container
 {
-	morda::vector2 empty_min_dim; // minimal dimension of empty window
+	ruis::vector2 empty_min_dim; // minimal dimension of empty window
 
 	std::shared_ptr<color> title_bg;
 	constexpr static auto default_title_bg_color_topmost = 0xffff0000;
@@ -73,14 +73,14 @@ class window :
 	cursor_iter rb_border_cursor_iter;
 
 	bool mouse_captured = false;
-	morda::vector2 capture_point;
+	ruis::vector2 capture_point;
 
 	void setup_widgets();
 
 	void update_topmost();
 
 public:
-	window(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
+	window(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
 
 	window(const window&) = delete;
 	window& operator=(const window&) = delete;
@@ -129,4 +129,4 @@ public:
 	void set_borders(sides<real> borders);
 };
 
-} // namespace morda
+} // namespace ruis

@@ -24,7 +24,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../util/util.hpp"
 #include "../widget.hpp"
 
-using namespace morda;
+using namespace ruis;
 
 const utki::shared_ref<row_layout> row_layout::instance = utki::make_shared<row_layout>();
 const utki::shared_ref<column_layout> column_layout::instance = utki::make_shared<column_layout>();

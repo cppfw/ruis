@@ -24,7 +24,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../../container.hpp"
 #include "../../widget.hpp"
 
-namespace morda {
+namespace ruis {
 
 /**
  * @brief Drop down box base class.
@@ -104,7 +104,7 @@ public:
 
 protected:
 	drop_down_box(
-		const utki::shared_ref<morda::context>& c,
+		const utki::shared_ref<ruis::context>& c,
 		const treeml::forest& desc,
 		container& selection_container
 	);
@@ -139,4 +139,4 @@ private:
 	void handle_data_set_changed();
 };
 
-} // namespace morda
+} // namespace ruis

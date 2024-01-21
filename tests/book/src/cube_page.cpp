@@ -9,17 +9,17 @@
 
 namespace{
 
-class cube_widget : public morda::widget, public morda::updateable{
-	std::shared_ptr<morda::res::texture> tex;
+class cube_widget : public ruis::widget, public ruis::updateable{
+	std::shared_ptr<ruis::res::texture> tex;
 	
-	morda::quaternion rot = morda::quaternion().set_identity();
+	ruis::quaternion rot = ruis::quaternion().set_identity();
 public:
-	std::shared_ptr<morda::vertex_array> cube_vao;
+	std::shared_ptr<ruis::vertex_array> cube_vao;
 	
-	cube_widget(const utki::shared_ref<morda::context>& c) :
+	cube_widget(const utki::shared_ref<ruis::context>& c) :
 			widget(c, treeml::forest())
 	{
-		std::array<morda::vector3, 36> cube_pos = {{
+		std::array<ruis::vector3, 36> cube_pos = {{
 			{-1, -1, 1}, {1, -1, 1}, {-1, 1, 1},
 			{ 1, -1, 1}, {1,  1, 1}, {-1, 1, 1},
 			
@@ -41,7 +41,7 @@ public:
 		
 		auto pos_vbo = this->context.get().renderer.get().factory->create_vertex_buffer(utki::make_span(cube_pos));
 		
-		std::array<morda::vector2, 36> cube_tex = {{
+		std::array<ruis::vector2, 36> cube_tex = {{
 			{0, 0}, {1, 0}, {0, 1},
 			{1, 0}, {1, 1}, {0, 1},
 			{0, 0}, {1, 0}, {0, 1},
@@ -64,10 +64,10 @@ public:
 		
 		auto cube_indices = this->context.get().renderer.get().factory->create_index_buffer(utki::make_span(indices));
 		
-		this->cube_vao = this->context.get().renderer.get().factory->create_vertex_array({pos_vbo, tex_vbo}, cube_indices, morda::vertex_array::mode::triangles)
+		this->cube_vao = this->context.get().renderer.get().factory->create_vertex_array({pos_vbo, tex_vbo}, cube_indices, ruis::vertex_array::mode::triangles)
 			.to_shared_ptr();
 		
-		this->tex = this->context.get().loader.load<morda::res::texture>("tex_sample").to_shared_ptr();
+		this->tex = this->context.get().loader.load<ruis::res::texture>("tex_sample").to_shared_ptr();
 		this->rot.set_identity();
 	}
 	
@@ -77,7 +77,7 @@ public:
 	void update(uint32_t dt) override{
 		this->fpsSecCounter += dt;
 		++this->fps;
-		this->rot *= morda::quaternion().set_rotation(r4::vector3<float>(1, 2, 1).normalize(), 1.5f * (float(dt) / 1000));
+		this->rot *= ruis::quaternion().set_rotation(r4::vector3<float>(1, 2, 1).normalize(), 1.5f * (float(dt) / 1000));
 		if(this->fpsSecCounter >= 1000){
 			std::cout << "fps = " << std::dec << fps << std::endl;
 			this->fpsSecCounter = 0;
@@ -86,10 +86,10 @@ public:
 		this->clear_cache();
 	}
 	
-	void render(const morda::matrix4& matrix)const override{
+	void render(const ruis::matrix4& matrix)const override{
 		this->widget::render(matrix);
 		
-		morda::matrix4 matr(matrix);
+		ruis::matrix4 matr(matrix);
 		matr.scale(this->rect().d / 2);
 		matr.translate(1, 1);
 		matr.scale(1, -1);
@@ -102,7 +102,7 @@ public:
 };
 }
 
-cube_page::cube_page(const utki::shared_ref<morda::context>& c) :
+cube_page::cube_page(const utki::shared_ref<ruis::context>& c) :
 		widget(c, treeml::forest()),
 		page(this->context, treeml::forest()),
 		container(this->context, treeml::read(R"qwertyuiop(
@@ -127,7 +127,7 @@ cube_page::cube_page(const utki::shared_ref<morda::context>& c) :
 {
 	auto& ph = this->get_widget("placeholder");
 	
-	this->get_widget_as<morda::push_button>("back_button").click_handler = [this](morda::push_button&){
+	this->get_widget_as<ruis::push_button>("back_button").click_handler = [this](ruis::push_button&){
 		this->context.get().run_from_ui_thread([book = utki::make_shared_from(*this->get_parent_book()), this]{
 			this->tear_out();
 		});

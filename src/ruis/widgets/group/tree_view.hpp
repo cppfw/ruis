@@ -30,7 +30,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "list.hpp"
 #include "scroll_area.hpp"
 
-namespace morda {
+namespace ruis {
 
 class tree_view :
 	virtual public widget, //
@@ -39,7 +39,7 @@ class tree_view :
 	utki::shared_ref<list_widget> item_list;
 
 public:
-	tree_view(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
+	tree_view(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
 
 	tree_view(const tree_view&) = delete;
 	tree_view& operator=(const tree_view&) = delete;
@@ -148,4 +148,4 @@ private:
 	void notify_view_change();
 };
 
-} // namespace morda
+} // namespace ruis

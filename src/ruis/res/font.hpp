@@ -29,7 +29,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../resource_loader.hpp"
 #include "../util/util.hpp"
 
-namespace morda::res {
+namespace ruis::res {
 
 /**
  * @brief %Font resource.
@@ -51,9 +51,9 @@ namespace morda::res {
  * }
  * @endcode
  */
-class font : public morda::resource
+class font : public ruis::resource
 {
-	friend class morda::resource_loader;
+	friend class ruis::resource_loader;
 
 public:
 	enum class style {
@@ -66,11 +66,11 @@ public:
 	};
 
 private:
-	std::array<std::unique_ptr<const morda::font_provider>, size_t(style::enum_size)> fonts;
+	std::array<std::unique_ptr<const ruis::font_provider>, size_t(style::enum_size)> fonts;
 
 public:
 	font(
-		const utki::shared_ref<morda::context>& context,
+		const utki::shared_ref<ruis::context>& context,
 		const papki::file& file_normal,
 		std::unique_ptr<const papki::file> file_bold,
 		std::unique_ptr<const papki::file> file_italic,
@@ -91,7 +91,7 @@ public:
 	 * @brief Get font object held by this resource.
 	 * @return Font object.
 	 */
-	utki::shared_ref<const morda::font> get(real size, style font_style = style::normal) const noexcept
+	utki::shared_ref<const ruis::font> get(real size, style font_style = style::normal) const noexcept
 	{
 		ASSERT(this->fonts[unsigned(style::normal)])
 		// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-constant-array-index)
@@ -104,10 +104,10 @@ public:
 
 private:
 	static utki::shared_ref<font> load(
-		const utki::shared_ref<morda::context>& ctx,
+		const utki::shared_ref<ruis::context>& ctx,
 		const ::treeml::forest& desc,
 		const papki::file& fi
 	);
 };
 
-} // namespace morda::res
+} // namespace ruis::res

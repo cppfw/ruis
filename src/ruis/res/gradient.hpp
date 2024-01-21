@@ -29,7 +29,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../resource_loader.hpp"
 #include "../util/util.hpp"
 
-namespace morda::res {
+namespace ruis::res {
 
 /**
  * @brief Gradient resource.
@@ -56,7 +56,7 @@ namespace morda::res {
  */
 class gradient : public resource
 {
-	friend class morda::resource_loader;
+	friend class ruis::resource_loader;
 
 	utki::shared_ref<const vertex_array> vao;
 
@@ -68,7 +68,7 @@ public:
 	 * defines the color of the stop.
 	 * @param c - context.
 	 */
-	gradient(const utki::shared_ref<morda::context>& c);
+	gradient(const utki::shared_ref<ruis::context>& c);
 
 	gradient(const gradient&) = delete;
 	gradient& operator=(const gradient&) = delete;
@@ -90,14 +90,14 @@ public:
 	 * Renders the gradient as a rectangle ((0,0),(1,1)).
 	 * @param m - transformation matrix.
 	 */
-	void render(const morda::matrix4& m) const;
+	void render(const ruis::matrix4& m) const;
 
 private:
 	static utki::shared_ref<gradient> load(
-		const utki::shared_ref<morda::context>& ctx,
+		const utki::shared_ref<ruis::context>& ctx,
 		const ::treeml::forest& desc,
 		const papki::file& fi
 	);
 };
 
-} // namespace morda::res
+} // namespace ruis::res

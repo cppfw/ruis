@@ -23,7 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../layout.hpp"
 
-namespace morda {
+namespace ruis {
 
 class pile_layout : public layout
 {
@@ -35,4 +35,4 @@ public:
 	static const utki::shared_ref<pile_layout> instance;
 };
 
-} // namespace morda
+} // namespace ruis

@@ -24,17 +24,17 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <list>
 #include <memory>
 
-namespace morda {
+namespace ruis {
 
 class updateable;
 
 class updater : public std::enable_shared_from_this<updater>
 {
-	friend class morda::updateable;
+	friend class ruis::updateable;
 
 	struct update_queue_item {
 		uint32_t ends_at = 0;
-		std::weak_ptr<morda::updateable> updateable;
+		std::weak_ptr<ruis::updateable> updateable;
 	};
 
 	class update_queue : public std::list<update_queue_item>
@@ -42,7 +42,7 @@ class updater : public std::enable_shared_from_this<updater>
 	public:
 		update_queue::iterator insert(const update_queue_item& p);
 
-		std::shared_ptr<morda::updateable> pop_front()
+		std::shared_ptr<ruis::updateable> pop_front()
 		{
 			auto ret = this->front().updateable.lock();
 			this->list::pop_front();
@@ -56,7 +56,7 @@ class updater : public std::enable_shared_from_this<updater>
 
 	uint32_t last_updated_timestamp = 0;
 
-	std::list<std::shared_ptr<morda::updateable>> to_add;
+	std::list<std::shared_ptr<ruis::updateable>> to_add;
 
 	void add_pending();
 
@@ -96,7 +96,7 @@ public:
 	void stop(updateable& u) noexcept;
 };
 
-} // namespace morda
+} // namespace ruis
 
 // include definitions for forward declared classes
 #include "updateable.hpp"

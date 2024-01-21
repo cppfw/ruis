@@ -14,11 +14,11 @@
 #include "pile_page.hpp"
 #include "cube_page.hpp"
 
-class application : public mordavokne::application{
+class application : public ruisapp::application{
 public:
 	application() :
-			mordavokne::application("morda-tests", [](){
-				mordavokne::window_params wp(r4::vector2<unsigned>(640, 480));
+			ruisapp::application("morda-tests", [](){
+				ruisapp::window_params wp(r4::vector2<unsigned>(640, 480));
 
 				return wp;
 			}())
@@ -32,7 +32,7 @@ public:
 			);
 		this->gui.set_root(c);
 
-		auto& book = c.get().get_widget_as<morda::book>("book");
+		auto& book = c.get().get_widget_as<ruis::book>("book");
 
 		{
 			auto mp = utki::make_shared<pile_page>(
@@ -79,10 +79,10 @@ public:
 							}
 						)qwertyuiop")
 				);
-			mp.get().get_widget_as<morda::push_button>("cube_button").click_handler = [&mp = mp.get()](morda::push_button& b){
+			mp.get().get_widget_as<ruis::push_button>("cube_button").click_handler = [&mp = mp.get()](ruis::push_button& b){
 				mp.get_parent_book()->push(utki::make_shared<cube_page>(mp.context));
 			};
-			mp.get().get_widget_as<morda::push_button>("stuff_button").click_handler = [&mp = mp.get()](morda::push_button& b){
+			mp.get().get_widget_as<ruis::push_button>("stuff_button").click_handler = [&mp = mp.get()](ruis::push_button& b){
 				auto pg = utki::make_shared<pile_page>(mp.context, treeml::read(R"qwertyuiop(
 					@push_button{
 						id{back_button}
@@ -91,14 +91,14 @@ public:
 						}
 					}
 				)qwertyuiop"));
-				pg.get().get_widget_as<morda::push_button>("back_button").click_handler = [&pg = pg.get()](morda::push_button& b){
+				pg.get().get_widget_as<ruis::push_button>("back_button").click_handler = [&pg = pg.get()](ruis::push_button& b){
 					b.context.get().run_from_ui_thread([pg = utki::make_shared_from(pg)]{
 						pg.get().tear_out();
 					});
 				};
 				mp.get_parent_book()->push(pg);
 			};
-			mp.get().get_widget_as<morda::push_button>("close_button").click_handler = [&mp = mp.get()](morda::push_button& b){
+			mp.get().get_widget_as<ruis::push_button>("close_button").click_handler = [&mp = mp.get()](ruis::push_button& b){
 				b.context.get().run_from_ui_thread([pg = utki::make_shared_from(mp)]{
 					pg.get().tear_out();
 				});
@@ -108,6 +108,6 @@ public:
 	}
 };
 
-const mordavokne::application_factory app_fac([](auto args){
+const ruisapp::application_factory app_fac([](auto args){
 	return std::make_unique<::application>();
 });

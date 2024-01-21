@@ -23,7 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "spinner.hpp"
 
-namespace morda {
+namespace ruis {
 
 /**
  * @brief Busy spinner.
@@ -32,9 +32,9 @@ namespace morda {
 class busy : public spinner
 {
 public:
-	busy(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
+	busy(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
 
 	void set_active(bool active);
 };
 
-} // namespace morda
+} // namespace ruis

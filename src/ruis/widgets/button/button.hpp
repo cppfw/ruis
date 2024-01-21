@@ -25,7 +25,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../../widget.hpp"
 
-namespace morda {
+namespace ruis {
 
 /**
  * @brief Basic button widget class.
@@ -44,7 +44,7 @@ protected:
 	virtual void on_press_change();
 
 public:
-	button(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
+	button(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
 
 	/**
 	 * @brief Check if button is currently pressed.
@@ -65,4 +65,4 @@ public:
 	std::function<void(button&)> press_handler;
 };
 
-} // namespace morda
+} // namespace ruis

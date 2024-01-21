@@ -24,9 +24,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../../context.hpp"
 #include "../../util/util.hpp"
 
-using namespace morda;
+using namespace ruis;
 
-image::image(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+image::image(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
 	widget(c, desc),
 	blending_widget(this->context, desc),
 	vao(this->context.get().renderer.get().empty_vertex_array)
@@ -57,7 +57,7 @@ const std::array<r4::vector2<float>, 4> quad_fan_tex_coords = {
 };
 } // namespace
 
-void image::render(const morda::matrix4& matrix) const
+void image::render(const ruis::matrix4& matrix) const
 {
 	auto img = this->img.get();
 
@@ -102,13 +102,13 @@ void image::render(const morda::matrix4& matrix) const
 	}
 	ASSERT(this->texture)
 
-	morda::matrix4 matr(matrix);
+	ruis::matrix4 matr(matrix);
 	matr.scale(this->rect().d);
 
 	this->texture->render(matr, this->vao.get());
 }
 
-morda::vector2 image::measure(const morda::vector2& quotum) const
+ruis::vector2 image::measure(const ruis::vector2& quotum) const
 {
 	auto img = this->img.get();
 

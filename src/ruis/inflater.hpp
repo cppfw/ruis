@@ -29,7 +29,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <treeml/tree.hpp>
 #include <utki/shared_ref.hpp>
 
-namespace morda {
+namespace ruis {
 
 class widget;
 class context;
@@ -45,14 +45,14 @@ class inflater
 {
 	friend class context;
 
-	morda::context& context;
+	ruis::context& context;
 
-	inflater(morda::context& context);
+	inflater(ruis::context& context);
 
 private:
 	std::map<
 		std::string,
-		std::function<utki::shared_ref<morda::widget>(const utki::shared_ref<morda::context>&, const treeml::forest&)>>
+		std::function<utki::shared_ref<ruis::widget>(const utki::shared_ref<ruis::context>&, const treeml::forest&)>>
 		factories;
 
 	const decltype(factories)::value_type::second_type& find_factory(const std::string& widget_name);
@@ -71,8 +71,8 @@ public:
 	{
 		this->add_factory(
 			widget_name,
-			[](const utki::shared_ref<morda::context>& c,
-			   const treeml::forest& desc) -> utki::shared_ref<morda::widget> {
+			[](const utki::shared_ref<ruis::context>& c,
+			   const treeml::forest& desc) -> utki::shared_ref<ruis::widget> {
 				return utki::make_shared<widget_type>(c, desc);
 			}
 		);
@@ -156,7 +156,7 @@ public:
 	 * @param fi - file interface to get the GUI script.
 	 * @return the inflated widget.
 	 */
-	utki::shared_ref<morda::widget> inflate(const papki::file& fi);
+	utki::shared_ref<ruis::widget> inflate(const papki::file& fi);
 
 	/**
 	 * @brief Inflate widget and cast to specified type.
@@ -200,4 +200,4 @@ private:
 	void pop_defs_block();
 };
 
-} // namespace morda
+} // namespace ruis

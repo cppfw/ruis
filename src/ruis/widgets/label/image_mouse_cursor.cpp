@@ -25,9 +25,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../../layouts/pile_layout.hpp"
 #include "../../util/util.hpp"
 
-using namespace morda;
+using namespace ruis;
 
-image_mouse_cursor::image_mouse_cursor(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+image_mouse_cursor::image_mouse_cursor(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
 	widget(c, desc),
 	container(this->context, desc, pile_layout::instance)
 {
@@ -57,7 +57,7 @@ bool image_mouse_cursor::on_mouse_move(const mouse_move_event& e)
 	return this->container::on_mouse_move(e);
 }
 
-void image_mouse_cursor::render(const morda::matrix4& matrix) const
+void image_mouse_cursor::render(const ruis::matrix4& matrix) const
 {
 	this->container::render(matrix);
 

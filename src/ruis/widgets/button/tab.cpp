@@ -23,7 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../../util/util.hpp"
 
-using namespace morda;
+using namespace ruis;
 
 bool tab::mask_overlaps(vector2 pos)
 {
@@ -85,7 +85,7 @@ void tab::on_press_change()
 	this->nine_patch_toggle::on_press_change();
 }
 
-tab::tab(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+tab::tab(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
 	widget(c, desc),
 	button(this->context, desc),
 	toggle_button(this->context, desc),

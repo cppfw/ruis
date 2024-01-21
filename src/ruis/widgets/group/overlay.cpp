@@ -27,20 +27,20 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../../layouts/size_layout.hpp"
 #include "../proxy/mouse_proxy.hpp"
 
-using namespace morda;
+using namespace ruis;
 
 namespace {
 class context_menu_wrapper : public container
 {
 public:
-	context_menu_wrapper(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+	context_menu_wrapper(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
 		widget(c, desc),
 		container(this->context, desc, size_layout::instance)
 	{}
 };
 } // namespace
 
-overlay::overlay(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+overlay::overlay(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
 	widget(c, desc),
 	container(this->context, desc, pile_layout::instance)
 {}

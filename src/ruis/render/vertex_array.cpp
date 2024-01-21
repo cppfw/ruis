@@ -23,12 +23,12 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <utki/debug.hpp>
 
-using namespace morda;
+using namespace ruis;
 
 vertex_array::vertex_array(
 	buffers_type buffers,
 	// NOLINTNEXTLINE(modernize-pass-by-value)
-	const utki::shared_ref<const morda::index_buffer>& indices,
+	const utki::shared_ref<const ruis::index_buffer>& indices,
 	mode rendering_mode
 ) :
 	buffers(std::move(buffers)),

@@ -26,7 +26,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../resource_loader.hpp"
 #include "../util/util.hpp"
 
-namespace morda::res {
+namespace ruis::res {
 
 /**
  * @brief resource holding a treeml forest.
@@ -44,7 +44,7 @@ namespace morda::res {
  */
 class treeml : public resource
 {
-	friend class morda::resource_loader;
+	friend class ruis::resource_loader;
 
 	::treeml::forest s;
 
@@ -54,7 +54,7 @@ public:
 	 * @param c - context.
 	 * @param s - treeml forest to initialize the resource with.
 	 */
-	treeml(const utki::shared_ref<morda::context>& c, ::treeml::forest s);
+	treeml(const utki::shared_ref<ruis::context>& c, ::treeml::forest s);
 
 	treeml(const treeml&) = delete;
 	treeml& operator=(const treeml&) = delete;
@@ -71,10 +71,10 @@ public:
 
 private:
 	static utki::shared_ref<treeml> load(
-		const utki::shared_ref<morda::context>& ctx,
+		const utki::shared_ref<ruis::context>& ctx,
 		const ::treeml::forest& desc,
 		const papki::file& fi
 	);
 };
 
-} // namespace morda::res
+} // namespace ruis::res

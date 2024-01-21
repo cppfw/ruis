@@ -23,16 +23,16 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../render/renderer.hpp"
 
-namespace morda {
+namespace ruis {
 
 class frame_vao
 {
-	utki::shared_ref<const morda::renderer> renderer;
+	utki::shared_ref<const ruis::renderer> renderer;
 
-	utki::shared_ref<const morda::vertex_array> vao;
+	utki::shared_ref<const ruis::vertex_array> vao;
 
 public:
-	frame_vao(const utki::shared_ref<const morda::renderer>& r);
+	frame_vao(const utki::shared_ref<const ruis::renderer>& r);
 
 	frame_vao(const frame_vao&) = delete;
 	frame_vao& operator=(const frame_vao&) = delete;
@@ -47,4 +47,4 @@ public:
 	void render(const matrix4& matrix, uint32_t color) const;
 };
 
-} // namespace morda
+} // namespace ruis

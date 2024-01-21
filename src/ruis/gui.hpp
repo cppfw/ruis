@@ -24,7 +24,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "context.hpp"
 #include "updateable.hpp"
 
-namespace morda {
+namespace ruis {
 
 class gui final
 {
@@ -32,13 +32,13 @@ class gui final
 	friend class widget;
 
 public:
-	const utki::shared_ref<morda::context> context;
+	const utki::shared_ref<ruis::context> context;
 
 	/**
 	 * @brief Constructor.
 	 * @param context - morda context to use for this gui instance.
 	 */
-	gui(const utki::shared_ref<morda::context>& context);
+	gui(const utki::shared_ref<ruis::context>& context);
 
 	gui(const gui&) = delete;
 	gui& operator=(const gui&) = delete;
@@ -49,20 +49,20 @@ public:
 	~gui() = default;
 
 private:
-	utki::shared_ref<morda::widget> root_widget;
+	utki::shared_ref<ruis::widget> root_widget;
 
 public:
 	/**
 	 * @brief Set the root widget of the application.
 	 * @param w - the widget to set as a root widget.
 	 */
-	void set_root(const utki::shared_ref<morda::widget>& w);
+	void set_root(const utki::shared_ref<ruis::widget>& w);
 
 	/**
 	 * @brief Get current root widget.
 	 * @return reference to the currently set root widget.
 	 */
-	morda::widget& get_root() noexcept
+	ruis::widget& get_root() noexcept
 	{
 		return this->root_widget.get();
 	}
@@ -71,7 +71,7 @@ public:
 	 * @brief Get constant current root widget.
 	 * @return constant reference to the currently set root widget.
 	 */
-	const morda::widget& get_root() const noexcept
+	const ruis::widget& get_root() const noexcept
 	{
 		return this->root_widget.get();
 	}
@@ -85,7 +85,7 @@ public:
 	 * Set the dimensions of the rectangular area where GUI will be rendered.
 	 * @param size - dimensions of the viewport, in pixels.
 	 */
-	void set_viewport(const morda::vector2& size);
+	void set_viewport(const ruis::vector2& size);
 
 	/**
 	 * @brief Render GUI.
@@ -138,7 +138,7 @@ public:
 	void send_mouse_hover(bool is_hovered, unsigned id);
 
 private:
-	utki::flags<morda::key_modifier> key_modifiers;
+	utki::flags<ruis::key_modifier> key_modifiers;
 
 public:
 	/**
@@ -181,7 +181,7 @@ public:
 	 * @param string_provider - input string provider.
 	 * @param key_code - key code associated with character input, can be unknown.
 	 */
-	void send_character_input(const input_string_provider& string_provider, morda::key key_code);
+	void send_character_input(const input_string_provider& string_provider, ruis::key key_code);
 };
 
-} // namespace morda
+} // namespace ruis

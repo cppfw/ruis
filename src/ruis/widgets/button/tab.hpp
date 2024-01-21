@@ -26,14 +26,14 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "choice_button.hpp"
 #include "nine_patch_toggle.hpp"
 
-namespace morda {
+namespace ruis {
 
 class tab : virtual public choice_button, public nine_patch_toggle
 {
 	bool mask_overlaps(vector2 pos);
 
 public:
-	tab(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
+	tab(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
 
 	tab(const tab&) = delete;
 	tab& operator=(const tab&) = delete;
@@ -51,4 +51,4 @@ protected:
 	void on_press_change() override;
 };
 
-} // namespace morda
+} // namespace ruis

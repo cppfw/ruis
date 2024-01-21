@@ -26,7 +26,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "util/util.hpp"
 
-using namespace morda;
+using namespace ruis;
 
 namespace {
 constexpr const char* wording_include = "include";

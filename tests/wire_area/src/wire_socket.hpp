@@ -2,7 +2,7 @@
 
 #include <ruis/widget.hpp>
 
-class wire_socket : virtual public morda::widget{
+class wire_socket : virtual public ruis::widget{
 	friend class wire_area;
 
 	unsigned groupId = 0;
@@ -31,7 +31,7 @@ public:
 	~wire_socket() override = default;
 
 public:
-	wire_socket(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
+	wire_socket(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
 	
 protected:
 	std::shared_ptr<wire_socket> get_remote();
@@ -53,12 +53,12 @@ public:
 	 * @return Array of two vectors. First is the position of the outlet within the widget.
 	 *         Second is the unit vector of outlet wire direction.
 	 */
-	std::array<morda::vector2, 2> outlet_pos()const noexcept;
+	std::array<ruis::vector2, 2> outlet_pos()const noexcept;
 
 	void connect(const std::shared_ptr<wire_socket>& o = nullptr);
 	void disconnect();
 
-	bool on_mouse_button(const morda::mouse_button_event& event)override;
+	bool on_mouse_button(const ruis::mouse_button_event& event)override;
 
 	void on_hover_change(unsigned pointer_id) override;
 	

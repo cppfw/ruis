@@ -23,7 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "image.hpp"
 
-namespace morda::res {
+namespace ruis::res {
 
 /**
  * @brief Mouse cursor resource.
@@ -46,8 +46,8 @@ class cursor : public resource
 
 public:
 	cursor(
-		const utki::shared_ref<morda::context>& c,
-		const utki::shared_ref<morda::res::image>& image,
+		const utki::shared_ref<ruis::context>& c,
+		const utki::shared_ref<ruis::res::image>& image,
 		const vector2& hotspot
 	);
 
@@ -70,13 +70,13 @@ public:
 	}
 
 private:
-	friend class morda::resource_loader;
+	friend class ruis::resource_loader;
 
 	static utki::shared_ref<cursor> load(
-		const utki::shared_ref<morda::context>& ctx,
+		const utki::shared_ref<ruis::context>& ctx,
 		const ::treeml::forest& desc,
 		const papki::file& fi
 	);
 };
 
-} // namespace morda::res
+} // namespace ruis::res

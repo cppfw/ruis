@@ -27,8 +27,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../render/vertex_array.hpp"
 #include "../util/util.hpp"
 
-using namespace morda;
-using namespace morda::res;
+using namespace ruis;
+using namespace ruis::res;
 
 namespace {
 
@@ -42,7 +42,7 @@ class res_subimage : public res::image, public res::image::texture
 
 public:
 	// rect is a rectangle on the texture, Y axis down.
-	res_subimage(const utki::shared_ref<morda::context>& c, decltype(tex) tex, const rectangle& rect) :
+	res_subimage(const utki::shared_ref<ruis::context>& c, decltype(tex) tex, const rectangle& rect) :
 		res::image(c),
 		res::image::texture(
 			c.get().renderer,
@@ -101,7 +101,7 @@ public:
 } // namespace
 
 utki::shared_ref<nine_patch> nine_patch::load(
-	const utki::shared_ref<morda::context>& ctx,
+	const utki::shared_ref<ruis::context>& ctx,
 	const treeml::forest& desc,
 	const papki::file& fi
 )

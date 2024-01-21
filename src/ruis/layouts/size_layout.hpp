@@ -23,7 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "trivial_layout.hpp"
 
-namespace morda {
+namespace ruis {
 
 class size_layout : public trivial_layout
 {
@@ -33,4 +33,4 @@ public:
 	static const utki::shared_ref<size_layout> instance;
 };
 
-} // namespace morda
+} // namespace ruis

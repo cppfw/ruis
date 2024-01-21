@@ -23,15 +23,15 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "widget.hpp"
 
-using namespace morda;
+using namespace ruis;
 
 context::context(
 	// NOLINTNEXTLINE(modernize-pass-by-value)
-	const utki::shared_ref<morda::renderer>& r,
+	const utki::shared_ref<ruis::renderer>& r,
 	// NOLINTNEXTLINE(modernize-pass-by-value)
-	const utki::shared_ref<morda::updater>& u,
+	const utki::shared_ref<ruis::updater>& u,
 	std::function<void(std::function<void()>)> run_from_ui_thread_function,
-	std::function<void(morda::mouse_cursor)> set_mouse_cursor_function,
+	std::function<void(ruis::mouse_cursor)> set_mouse_cursor_function,
 	real dots_per_inch,
 	real dots_per_pp
 ) :

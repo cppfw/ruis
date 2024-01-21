@@ -25,7 +25,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../../container.hpp"
 
-namespace morda {
+namespace ruis {
 
 /**
  * @brief Scroll area container widget.
@@ -51,7 +51,7 @@ protected:
 	vector2 dims_for_widget(const widget& w) const;
 
 public:
-	scroll_area(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
+	scroll_area(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
 
 	scroll_area(const scroll_area&) = delete;
 	scroll_area& operator=(const scroll_area&) = delete;
@@ -65,9 +65,9 @@ public:
 
 	bool on_mouse_move(const mouse_move_event& event) override;
 
-	void render(const morda::matrix4& matrix) const override;
+	void render(const ruis::matrix4& matrix) const override;
 
-	morda::vector2 measure(const morda::vector2& quotum) const override
+	ruis::vector2 measure(const ruis::vector2& quotum) const override
 	{
 		// NOLINTNEXTLINE(bugprone-parent-virtual-call, "we want to cancel container::measure() override")
 		return this->widget::measure(quotum);
@@ -124,4 +124,4 @@ private:
 	void arrange_widgets();
 };
 
-} // namespace morda
+} // namespace ruis

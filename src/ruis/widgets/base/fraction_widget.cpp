@@ -21,7 +21,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "fraction_widget.hpp"
 
-using namespace morda;
+using namespace ruis;
 
 void fraction_widget::set_fraction(real fraction, bool notify_change)
 {

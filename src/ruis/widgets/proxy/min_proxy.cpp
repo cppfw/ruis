@@ -23,11 +23,11 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../../layouts/pile_layout.hpp"
 
-using namespace morda;
+using namespace ruis;
 
-min_proxy::min_proxy(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
-	morda::widget(c, desc),
-	morda::container(this->context, desc, pile_layout::instance)
+min_proxy::min_proxy(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
+	ruis::widget(c, desc),
+	ruis::container(this->context, desc, pile_layout::instance)
 {
 	for (const auto& p : desc) {
 		if (!is_property(p)) {
@@ -51,7 +51,7 @@ min_proxy::min_proxy(const utki::shared_ref<morda::context>& c, const treeml::fo
 	}
 }
 
-morda::vector2 min_proxy::measure(const vector2& quotum) const
+ruis::vector2 min_proxy::measure(const vector2& quotum) const
 {
 	auto t = this->target.lock();
 	if (!t) {

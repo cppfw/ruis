@@ -21,10 +21,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "single_line_text_widget.hpp"
 
-using namespace morda;
+using namespace ruis;
 
 single_line_text_widget::single_line_text_widget(
-	const utki::shared_ref<morda::context>& c,
+	const utki::shared_ref<ruis::context>& c,
 	const treeml::forest& desc
 ) :
 	widget(c, desc),
@@ -47,7 +47,7 @@ void single_line_text_widget::recompute_bounding_box()
 	this->bb = this->get_font().get_bounding_box(this->single_line_text_widget::get_text());
 }
 
-vector2 single_line_text_widget::measure(const morda::vector2& quotum) const noexcept
+vector2 single_line_text_widget::measure(const ruis::vector2& quotum) const noexcept
 {
 	vector2 ret(this->bb.d.x(), this->get_font().get_height());
 

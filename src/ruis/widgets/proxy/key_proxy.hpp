@@ -24,7 +24,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../../container.hpp"
 #include "../../layouts/pile_layout.hpp"
 
-namespace morda {
+namespace ruis {
 
 /**
  * @brief container to be used for intercepting keyboard key events.
@@ -33,7 +33,7 @@ namespace morda {
 class key_proxy : public container
 {
 public:
-	key_proxy(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+	key_proxy(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
 		widget(c, desc),
 		container(this->context, desc, pile_layout::instance)
 	{}
@@ -50,9 +50,9 @@ public:
 	 * @brief Keyboard key signal.
 	 * Emitted when a keyboard key event reaches this widget.
 	 */
-	std::function<bool(key_proxy& w, const morda::key_event& e)> key_handler;
+	std::function<bool(key_proxy& w, const ruis::key_event& e)> key_handler;
 
-	bool on_key(const morda::key_event& e) override;
+	bool on_key(const ruis::key_event& e) override;
 };
 
-} // namespace morda
+} // namespace ruis

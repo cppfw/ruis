@@ -24,7 +24,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../../util/key.hpp"
 #include "../../widget.hpp"
 
-namespace morda {
+namespace ruis {
 
 /**
  * @brief Base class for widgets which want to get character input events.
@@ -33,7 +33,7 @@ namespace morda {
 class character_input_widget : virtual public widget
 {
 protected:
-	character_input_widget(const utki::shared_ref<morda::context>& c) :
+	character_input_widget(const utki::shared_ref<ruis::context>& c) :
 		widget(c, treeml::forest())
 	{}
 
@@ -53,4 +53,4 @@ public:
 	~character_input_widget() override = default;
 };
 
-} // namespace morda
+} // namespace ruis

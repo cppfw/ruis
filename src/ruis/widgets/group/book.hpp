@@ -23,7 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../../container.hpp"
 
-namespace morda {
+namespace ruis {
 
 class book;
 
@@ -32,7 +32,7 @@ class page : public virtual widget
 	friend class book;
 
 protected:
-	page(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
+	page(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
 
 	book* parent_book = nullptr;
 
@@ -77,7 +77,7 @@ class book : public virtual widget, private container
 	std::vector<utki::shared_ref<page>> pages;
 
 public:
-	book(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
+	book(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
 
 	book(const book&) = delete;
 	book& operator=(const book&) = delete;
@@ -115,4 +115,4 @@ private:
 	void notify_pages_change(const page& p);
 };
 
-} // namespace morda
+} // namespace ruis

@@ -26,7 +26,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "image.hpp"
 
-namespace morda {
+namespace ruis {
 
 /**
  * @brief Spinning image label.
@@ -39,7 +39,7 @@ class spinner :
 	real angle = 0;
 
 public:
-	spinner(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
+	spinner(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
 
 	void set_active(bool active);
 
@@ -49,4 +49,4 @@ private:
 	void update(uint32_t dt_ms) override;
 };
 
-} // namespace morda
+} // namespace ruis

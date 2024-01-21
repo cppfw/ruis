@@ -26,7 +26,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../label/nine_patch.hpp"
 #include "../proxy/mouse_proxy.hpp"
 
-using namespace morda;
+using namespace ruis;
 
 namespace {
 
@@ -64,7 +64,7 @@ const auto layout_description = treeml::read(R"qwertyuiop(
 
 } // namespace
 
-scroll_bar::scroll_bar(const utki::shared_ref<morda::context>& c, const treeml::forest& desc, bool vertical) :
+scroll_bar::scroll_bar(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc, bool vertical) :
 	widget(c, desc),
 	fraction_band_widget(this->context, treeml::forest()),
 	oriented(vertical),
@@ -152,7 +152,7 @@ scroll_bar::scroll_bar(const utki::shared_ref<morda::context>& c, const treeml::
 			o << "new_pos = " << new_pos << ", max_pos = " << max_pos;
 		})
 
-		morda::vector2 new_position(0);
+		ruis::vector2 new_position(0);
 		new_position[long_index] = new_pos;
 
 		this->handle.move_to(new_position);
@@ -182,7 +182,7 @@ void scroll_bar::on_lay_out()
 	unsigned long_index = this->get_long_index();
 	unsigned trans_index = this->get_trans_index();
 
-	morda::vector2 new_size(this->rect().d);
+	ruis::vector2 new_size(this->rect().d);
 
 	using std::round;
 
@@ -200,7 +200,7 @@ void scroll_bar::on_lay_out()
 	// move scroll handle
 	{
 		float effective_length = this->rect().d[long_index] - this->handle.rect().d[long_index];
-		morda::vector2 new_pos(0);
+		ruis::vector2 new_pos(0);
 		if (effective_length > 0) {
 			new_pos[long_index] = round(effective_length * this->fraction());
 			ASSERT(new_pos[long_index] <= effective_length, [&](auto& o) {

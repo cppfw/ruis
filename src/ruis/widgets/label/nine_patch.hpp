@@ -27,7 +27,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "image.hpp"
 
-namespace morda {
+namespace ruis {
 
 /**
  * @brief Nine patch widget.
@@ -78,7 +78,7 @@ public:
 
 	~nine_patch() override = default;
 
-	nine_patch(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
+	nine_patch(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
 
 	void set_nine_patch(std::shared_ptr<const res::nine_patch> np);
 
@@ -93,7 +93,7 @@ public:
 		return *this->inner_content;
 	}
 
-	void render(const morda::matrix4& matrix) const override;
+	void render(const ruis::matrix4& matrix) const override;
 
 	/**
 	 * @brief Show/hide central part of nine-patch.
@@ -134,4 +134,4 @@ private:
 	void update_images();
 };
 
-} // namespace morda
+} // namespace ruis

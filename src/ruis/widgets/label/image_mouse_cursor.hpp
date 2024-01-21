@@ -24,7 +24,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../../container.hpp"
 #include "../../res/cursor.hpp"
 
-namespace morda {
+namespace ruis {
 
 /**
  * @brief Mouse cursor widget.
@@ -42,7 +42,7 @@ class image_mouse_cursor : public container
 	vector2 cursorPos;
 
 public:
-	image_mouse_cursor(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
+	image_mouse_cursor(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
 
 	image_mouse_cursor(const image_mouse_cursor&) = delete;
 	image_mouse_cursor& operator=(const image_mouse_cursor&) = delete;
@@ -56,7 +56,7 @@ public:
 
 	bool on_mouse_move(const mouse_move_event& e) override;
 
-	void render(const morda::matrix4& matrix) const override;
+	void render(const ruis::matrix4& matrix) const override;
 };
 
-} // namespace morda
+} // namespace ruis

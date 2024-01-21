@@ -21,10 +21,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "ratio_proxy.hpp"
 
-using namespace morda;
+using namespace ruis;
 
-ratio_proxy::ratio_proxy(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
-	morda::widget(c, desc)
+ratio_proxy::ratio_proxy(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
+	ruis::widget(c, desc)
 {
 	for (const auto& p : desc) {
 		if (!is_property(p)) {
@@ -47,15 +47,15 @@ void ratio_proxy::set_aspect_ratio(real x_above_y)
 	this->invalidate_layout();
 }
 
-morda::vector2 ratio_proxy::measure(const morda::vector2& quotum) const
+ruis::vector2 ratio_proxy::measure(const ruis::vector2& quotum) const
 {
 	if (quotum.x() < 0 && quotum.y() < 0) {
 		return {0};
 	}
 
 	if (quotum.x() >= 0 && quotum.y() < 0) {
-		return morda::vector2(quotum.x(), quotum.x() / this->x_above_y);
+		return ruis::vector2(quotum.x(), quotum.x() / this->x_above_y);
 	}
 
-	return morda::vector2(quotum.y() * this->x_above_y, quotum.y());
+	return ruis::vector2(quotum.y() * this->x_above_y, quotum.y());
 }

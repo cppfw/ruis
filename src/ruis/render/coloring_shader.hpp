@@ -27,7 +27,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "vertex_array.hpp"
 
-namespace morda {
+namespace ruis {
 
 class coloring_shader
 {
@@ -50,4 +50,4 @@ public:
 	}
 };
 
-} // namespace morda
+} // namespace ruis

@@ -55,7 +55,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "widgets/proxy/resize_proxy.hpp"
 #include "widgets/slider/scroll_bar.hpp"
 
-using namespace morda;
+using namespace ruis;
 
 namespace {
 const auto default_defs = R"qwertyuiop(
@@ -214,9 +214,9 @@ defs{
 } // namespace
 
 // NOLINTNEXTLINE(modernize-pass-by-value)
-gui::gui(const utki::shared_ref<morda::context>& context) :
+gui::gui(const utki::shared_ref<ruis::context>& context) :
 	context(context),
-	root_widget(utki::make_shared<morda::widget>(this->context, tml::forest()))
+	root_widget(utki::make_shared<ruis::widget>(this->context, tml::forest()))
 {
 	// register basic widgets
 	this->context.get().inflater.register_widget<widget>("widget");
@@ -342,14 +342,14 @@ void gui::init_standard_widgets(papki::file& fi)
 	this->context.get().inflater.push_defs(t.get().forest());
 }
 
-void gui::set_viewport(const morda::vector2& size)
+void gui::set_viewport(const ruis::vector2& size)
 {
 	this->viewport_size = size;
 
 	this->root_widget.get().resize(this->viewport_size);
 }
 
-void gui::set_root(const utki::shared_ref<morda::widget>& w)
+void gui::set_root(const utki::shared_ref<ruis::widget>& w)
 {
 	if (w.get().parent()) {
 		throw std::invalid_argument("given widget is already added to some container");
@@ -357,7 +357,7 @@ void gui::set_root(const utki::shared_ref<morda::widget>& w)
 
 	this->root_widget = w;
 
-	this->root_widget.get().move_to(morda::vector2(0));
+	this->root_widget.get().move_to(ruis::vector2(0));
 	this->root_widget.get().resize(this->viewport_size);
 }
 
@@ -371,7 +371,7 @@ void gui::render(const matrix4& matrix) const
 		this->root_widget.get().lay_out();
 	}
 
-	morda::matrix4 m(matrix);
+	ruis::matrix4 m(matrix);
 
 	// direct y-axis down
 	m.scale(1, -1);
@@ -410,12 +410,12 @@ void gui::send_key(bool is_down, key key_code)
 	//		TRACE(<< "HandleKeyEvent(): is_down = " << is_down << " is_char_input_only = " << is_char_input_only << "
 	// keyCode = " << unsigned(keyCode) << std::endl)
 
-	auto modifier = morda::to_key_modifier(key_code);
-	if (modifier != morda::key_modifier::unknown) {
+	auto modifier = ruis::to_key_modifier(key_code);
+	if (modifier != ruis::key_modifier::unknown) {
 		this->key_modifiers.set(modifier, is_down);
 	}
 
-	morda::key_event e;
+	ruis::key_event e;
 	e.combo.key = key_code;
 	e.combo.modifiers = this->key_modifiers;
 	e.is_down = is_down;

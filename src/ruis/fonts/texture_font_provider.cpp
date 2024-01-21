@@ -21,10 +21,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "texture_font_provider.hxx"
 
-using namespace morda;
+using namespace ruis;
 
 texture_font_provider::texture_font_provider(
-	const utki::shared_ref<morda::context>& context,
+	const utki::shared_ref<ruis::context>& context,
 	// NOLINTNEXTLINE(modernize-pass-by-value)
 	const utki::shared_ref<const freetype_face>& face,
 	unsigned max_cached

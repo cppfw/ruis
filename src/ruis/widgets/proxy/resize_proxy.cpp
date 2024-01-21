@@ -21,7 +21,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "resize_proxy.hpp"
 
-using namespace morda;
+using namespace ruis;
 
 void resize_proxy::on_resize()
 {

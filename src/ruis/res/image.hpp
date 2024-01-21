@@ -30,7 +30,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "texture.hpp"
 
-namespace morda::res {
+namespace ruis::res {
 
 /**
  * @brief Base image resource class.
@@ -48,10 +48,10 @@ namespace morda::res {
  */
 class image : public resource
 {
-	friend class morda::resource_loader;
+	friend class ruis::resource_loader;
 
 protected:
-	image(const utki::shared_ref<morda::context>& c);
+	image(const utki::shared_ref<ruis::context>& c);
 
 public:
 	image(const image&) = delete;
@@ -70,10 +70,10 @@ public:
 	class texture
 	{
 	protected:
-		const utki::shared_ref<const morda::renderer> renderer;
+		const utki::shared_ref<const ruis::renderer> renderer;
 
 		// NOLINTNEXTLINE(modernize-pass-by-value)
-		texture(const utki::shared_ref<const morda::renderer>& r, vector2 dims) :
+		texture(const utki::shared_ref<const ruis::renderer>& r, vector2 dims) :
 			renderer(r),
 			dims(dims)
 		{}
@@ -118,7 +118,7 @@ public:
 
 private:
 	static utki::shared_ref<image> load(
-		const utki::shared_ref<morda::context>& ctx,
+		const utki::shared_ref<ruis::context>& ctx,
 		const ::treeml::forest& desc,
 		const papki::file& fi
 	);
@@ -131,7 +131,7 @@ public:
 	 * @param fi - image file.
 	 * @return Loaded resource.
 	 */
-	static utki::shared_ref<image> load(const utki::shared_ref<morda::context>& ctx, const papki::file& fi);
+	static utki::shared_ref<image> load(const utki::shared_ref<ruis::context>& ctx, const papki::file& fi);
 };
 
 // TODO: is atlas_image needed?
@@ -149,11 +149,11 @@ class atlas_image : public image, public image::texture
 public:
 	// TODO:
 	// atlas_image(
-	// 	const utki::shared_ref<morda::context>& c,
+	// 	const utki::shared_ref<ruis::context>& c,
 	// 	const utki::shared_ref<res::texture>& tex,
 	// 	const rectangle& rect
 	// );
-	atlas_image(const utki::shared_ref<morda::context>& c, const utki::shared_ref<res::texture>& tex);
+	atlas_image(const utki::shared_ref<ruis::context>& c, const utki::shared_ref<res::texture>& tex);
 
 	atlas_image(const atlas_image&) = delete;
 	atlas_image& operator=(const atlas_image&) = delete;
@@ -174,10 +174,10 @@ public:
 
 private:
 	static utki::shared_ref<atlas_image> load(
-		const utki::shared_ref<morda::context>& ctx,
+		const utki::shared_ref<ruis::context>& ctx,
 		const ::treeml::forest& desc,
 		const papki::file& fi
 	);
 };
 
-} // namespace morda::res
+} // namespace ruis::res

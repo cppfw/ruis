@@ -25,7 +25,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../../widget.hpp"
 #include "../base/single_line_text_widget.hpp"
 
-namespace morda {
+namespace ruis {
 
 /**
  * @brief Text label widget.
@@ -35,7 +35,7 @@ namespace morda {
 class text : public single_line_text_widget, public color_widget
 {
 public:
-	text(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
+	text(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
 
 public:
 	text(const text&) = delete;
@@ -46,7 +46,7 @@ public:
 
 	~text() override = default;
 
-	void render(const morda::matrix4& matrix) const override;
+	void render(const ruis::matrix4& matrix) const override;
 };
 
-} // namespace morda
+} // namespace ruis

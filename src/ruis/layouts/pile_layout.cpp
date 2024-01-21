@@ -24,7 +24,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../util/util.hpp"
 #include "../widget.hpp"
 
-using namespace morda;
+using namespace ruis;
 
 const utki::shared_ref<pile_layout> pile_layout::instance = utki::make_shared<pile_layout>();
 
@@ -47,7 +47,7 @@ vector2 pile_layout::measure(const vector2& quotum, const_widget_list& widgets) 
 	for (const auto& w : widgets) {
 		auto& lp = w.get().get_layout_params_const();
 
-		morda::vector2 d;
+		ruis::vector2 d;
 
 		for (unsigned j = 0; j != d.size(); ++j) {
 			if (lp.dims[j] == layout_params::max) {

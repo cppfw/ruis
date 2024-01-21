@@ -21,9 +21,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "key_proxy.hpp"
 
-using namespace morda;
+using namespace ruis;
 
-bool key_proxy::on_key(const morda::key_event& e)
+bool key_proxy::on_key(const ruis::key_event& e)
 {
 	if (this->key_handler) {
 		return this->key_handler(*this, e);

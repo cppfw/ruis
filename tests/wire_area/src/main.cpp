@@ -7,11 +7,11 @@
 #include "wire_area.hpp"
 #include "wire_socket.hpp"
 
-class application : public mordavokne::application{
+class application : public ruisapp::application{
 public:
 	application() :
-			mordavokne::application("morda-tests", [](){
-				mordavokne::window_params wp(r4::vector2<unsigned>(640, 480));
+			ruisapp::application("morda-tests", [](){
+				ruisapp::window_params wp(r4::vector2<unsigned>(640, 480));
 
 				return wp;
 			}())
@@ -30,6 +30,6 @@ public:
 	}
 };
 
-const mordavokne::application_factory app_fac([](auto args){
+const ruisapp::application_factory app_fac([](auto args){
 	return std::make_unique<::application>();
 });

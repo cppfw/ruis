@@ -6,57 +6,57 @@
 #include <ruis/paint/path_vao.hpp>
 #include <ruis/paint/frame_vao.hpp>
 
-class path_widget : virtual public morda::widget{
-	morda::path_vao vao;
+class path_widget : virtual public ruis::widget{
+	ruis::path_vao vao;
 public:
-	path_widget(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
-			morda::widget(c, desc),
+	path_widget(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
+			ruis::widget(c, desc),
 			vao(this->context.get().renderer)
 	{}
 
-	void render(const morda::matrix4& matrix)const override{
+	void render(const ruis::matrix4& matrix)const override{
 		this->vao.render(matrix, 0xff00ffff);
 	}
 
 	void on_resize()override{
-		morda::path path;
+		ruis::path path;
 		path.line_to(this->rect().d / 2);
 		path.cubic_by(
-				morda::vector2(this->rect().d.x() / 2, 0),
-				morda::vector2(0, this->rect().d.y() / 2),
+				ruis::vector2(this->rect().d.x() / 2, 0),
+				ruis::vector2(0, this->rect().d.y() / 2),
 				this->rect().d / 2
 			);
 		this->vao.set(path.stroke());
 	}
 };
 
-class frame_widget : virtual public morda::widget{
-	morda::frame_vao vao;
+class frame_widget : virtual public ruis::widget{
+	ruis::frame_vao vao;
 public:
-	frame_widget(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
-			morda::widget(c, desc),
+	frame_widget(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
+			ruis::widget(c, desc),
 			vao(this->context.get().renderer)
 	{}
 
-	void render(const morda::matrix4& matrix)const override{
+	void render(const ruis::matrix4& matrix)const override{
 		this->vao.render(matrix, 0xffff8080);
 	}
 
 	void on_resize()override{
 		this->vao.set(
 				this->rect().d,
-				morda::vector2{10, 20}
+				ruis::vector2{10, 20}
 			);
 	}
 };
 
-class application : public mordavokne::application{
+class application : public ruisapp::application{
 public:
 	application() :
-			mordavokne::application(
+			ruisapp::application(
 					"morda-tests",
 					[](){
-						mordavokne::window_params wp(r4::vector2<unsigned>(1024, 800));
+						ruisapp::window_params wp(r4::vector2<unsigned>(1024, 800));
 						return wp;
 					}()
 				)
@@ -114,6 +114,6 @@ public:
 	}
 };
 
-const mordavokne::application_factory app_fac([](auto args){
+const ruisapp::application_factory app_fac([](auto args){
 	return std::make_unique<::application>();
 });

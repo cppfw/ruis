@@ -25,7 +25,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../../util/oriented.hpp"
 #include "../../widget.hpp"
 
-namespace morda {
+namespace ruis {
 
 /**
  * @brief Scrollable list widget.
@@ -54,7 +54,7 @@ class list_widget :
 	real first_tail_item_dim = real(0);
 
 protected:
-	list_widget(const utki::shared_ref<morda::context>& c, const treeml::forest& desc, bool vertical);
+	list_widget(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc, bool vertical);
 
 public:
 	list_widget(const list_widget&) = delete;
@@ -124,7 +124,7 @@ public:
 
 	void on_lay_out() override;
 
-	morda::vector2 measure(const morda::vector2& quotum) const override;
+	ruis::vector2 measure(const ruis::vector2& quotum) const override;
 
 	/**
 	 * @brief Set scroll position as factor from [0:1].
@@ -215,7 +215,7 @@ private:
 class pan_list : public list_widget
 {
 public:
-	pan_list(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+	pan_list(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
 		widget(c, desc),
 		list_widget(this->context, desc, false)
 	{}
@@ -236,7 +236,7 @@ public:
 class list : public list_widget
 {
 public:
-	list(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+	list(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
 		widget(c, desc),
 		list_widget(this->context, desc, true)
 	{}
@@ -250,4 +250,4 @@ public:
 	~list() override = default;
 };
 
-} // namespace morda
+} // namespace ruis

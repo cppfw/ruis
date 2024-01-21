@@ -25,7 +25,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "config.hpp"
 
-namespace morda {
+namespace ruis {
 
 // TODO: doxygen
 class layout
@@ -52,4 +52,4 @@ public:
 	virtual ~layout() = default;
 };
 
-} // namespace morda
+} // namespace ruis

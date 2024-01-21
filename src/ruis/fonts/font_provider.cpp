@@ -21,7 +21,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "font_provider.hpp"
 
-using namespace morda;
+using namespace ruis;
 
 utki::shared_ref<const font> font_provider::get(real size) const
 {

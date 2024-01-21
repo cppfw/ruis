@@ -28,50 +28,50 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "book.hpp"
 
-namespace morda {
+namespace ruis {
 
 class tabbed_book :
-	virtual public morda::widget, //
-	private morda::container
+	virtual public ruis::widget, //
+	private ruis::container
 {
-	morda::tab_group& tab_group;
-	morda::book& book;
+	ruis::tab_group& tab_group;
+	ruis::book& book;
 
 	struct tab_page_pair {
-		morda::tab* tab;
-		morda::page* page;
+		ruis::tab* tab;
+		ruis::page* page;
 	};
 
 	std::vector<tab_page_pair> tab_page_pairs;
 
-	decltype(tab_page_pairs)::iterator find_pair(const morda::tab& t);
-	decltype(tab_page_pairs)::iterator find_pair(const morda::page& p);
+	decltype(tab_page_pairs)::iterator find_pair(const ruis::tab& t);
+	decltype(tab_page_pairs)::iterator find_pair(const ruis::page& p);
 
 	void activate_another_tab(tab& t);
 
 public:
-	tabbed_book(const utki::shared_ref<morda::context>& context, const treeml::forest& desc);
+	tabbed_book(const utki::shared_ref<ruis::context>& context, const treeml::forest& desc);
 
-	void add(const utki::shared_ref<tab>& tab, const utki::shared_ref<morda::page>& page);
+	void add(const utki::shared_ref<tab>& tab, const utki::shared_ref<ruis::page>& page);
 
-	const morda::book& get_book() const noexcept
+	const ruis::book& get_book() const noexcept
 	{
 		return this->book;
 	}
 
 	utki::shared_ref<page> tear_out(tab& t);
 
-	using morda::container::render;
-	using morda::container::on_lay_out;
-	using morda::container::on_mouse_move;
-	using morda::container::on_mouse_button;
-	using morda::container::on_key;
-	using morda::container::on_focus_change;
-	using morda::container::on_hover_change;
-	using morda::container::on_resize;
-	using morda::container::on_parent_change;
-	using morda::container::measure;
-	using morda::container::on_enable_change;
+	using ruis::container::render;
+	using ruis::container::on_lay_out;
+	using ruis::container::on_mouse_move;
+	using ruis::container::on_mouse_button;
+	using ruis::container::on_key;
+	using ruis::container::on_focus_change;
+	using ruis::container::on_hover_change;
+	using ruis::container::on_resize;
+	using ruis::container::on_parent_change;
+	using ruis::container::measure;
+	using ruis::container::on_enable_change;
 };
 
-} // namespace morda
+} // namespace ruis

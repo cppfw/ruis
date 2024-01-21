@@ -26,12 +26,12 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../label/image.hpp"
 #include "../proxy/mouse_proxy.hpp"
 
-using namespace morda;
+using namespace ruis;
 
-tree_view::tree_view(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+tree_view::tree_view(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
 	widget(c, desc),
 	scroll_area(this->context, treeml::forest()),
-	item_list(utki::make_shared<morda::list>(this->context, treeml::forest()))
+	item_list(utki::make_shared<ruis::list>(this->context, treeml::forest()))
 {
 	this->push_back(this->item_list);
 
@@ -181,7 +181,7 @@ utki::shared_ref<widget> tree_view::provider::get_widget(size_t index)
 		o << "provider is not set to a list_widget";
 	})
 
-	auto ret = utki::make_shared<morda::container>(this->get_list()->context, treeml::forest(), row_layout::instance);
+	auto ret = utki::make_shared<ruis::container>(this->get_list()->context, treeml::forest(), row_layout::instance);
 
 	ASSERT(is_last_item_in_parent.size() == path.size())
 
@@ -190,27 +190,27 @@ utki::shared_ref<widget> tree_view::provider::get_widget(size_t index)
 	}
 
 	{
-		auto widget = this->get_list()->context.get().inflater.inflate_as<morda::container>(
+		auto widget = this->get_list()->context.get().inflater.inflate_as<ruis::container>(
 			is_last_item_in_parent.back() ? line_end_layout : line_middle_layout
 		);
 
 		if (this->count(utki::make_span(path)) != 0) {
 			auto w = this->get_list()->context.get().inflater.inflate(plus_minus_layout);
 
-			auto plusminus = w.get().try_get_widget_as<morda::image>("plusminus");
+			auto plusminus = w.get().try_get_widget_as<ruis::image>("plusminus");
 			ASSERT(plusminus)
 			plusminus->set_image(
 				(is_collapsed
-					 ? this->get_list()->context.get().loader.load<morda::res::image>("morda_img_treeview_plus")
-					 : this->get_list()->context.get().loader.load<morda::res::image>("morda_img_treeview_minus"))
+					 ? this->get_list()->context.get().loader.load<ruis::res::image>("morda_img_treeview_plus")
+					 : this->get_list()->context.get().loader.load<ruis::res::image>("morda_img_treeview_minus"))
 					.to_shared_ptr()
 			);
 
-			auto plusminus_mouse_proxy = w.get().try_get_widget_as<morda::mouse_proxy>("plusminus_mouseproxy");
+			auto plusminus_mouse_proxy = w.get().try_get_widget_as<ruis::mouse_proxy>("plusminus_mouseproxy");
 			ASSERT(plusminus_mouse_proxy)
 			plusminus_mouse_proxy->mouse_button_handler =
-				[this, path, is_collapsed](morda::mouse_proxy&, const morda::mouse_button_event& e) -> bool {
-				if (e.button != morda::mouse_button::left) {
+				[this, path, is_collapsed](ruis::mouse_proxy&, const ruis::mouse_button_event& e) -> bool {
+				if (e.button != ruis::mouse_button::left) {
 					return false;
 				}
 				if (!e.is_down) {

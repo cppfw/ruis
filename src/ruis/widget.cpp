@@ -26,10 +26,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "container.hpp"
 #include "context.hpp"
 
-using namespace morda;
+using namespace ruis;
 
 // NOLINTNEXTLINE(modernize-pass-by-value)
-widget::widget(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+widget::widget(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
 	context(c)
 {
 	for (const auto& p : desc) {
@@ -69,7 +69,7 @@ widget::widget(const utki::shared_ref<morda::context>& c, const treeml::forest& 
 	}
 }
 
-layout_params::layout_params(const treeml::forest& desc, const morda::units& units)
+layout_params::layout_params(const treeml::forest& desc, const ruis::units& units)
 {
 	for (const auto& p : desc) {
 		if (!is_property(p)) {
@@ -138,7 +138,7 @@ void widget::move_to(const vector2& new_pos)
 	this->rectangle.p = new_pos;
 }
 
-void widget::resize(const morda::vector2& new_dims)
+void widget::resize(const ruis::vector2& new_dims)
 {
 	if (this->rectangle.d == new_dims) {
 		if (this->is_layout_dirty()) {
@@ -203,7 +203,7 @@ void widget::invalidate_layout() noexcept
 	this->cache_texture.reset();
 }
 
-void widget::render_internal(const morda::matrix4& matrix) const
+void widget::render_internal(const ruis::matrix4& matrix) const
 {
 	if (!this->rect().d.is_positive()) {
 		return;
@@ -266,9 +266,9 @@ void widget::render_internal(const morda::matrix4& matrix) const
 
 	// render border
 #ifdef M_MORDA_RENDER_WIDGET_BORDERS
-	morda::ColorPosShader& s = App::inst().shaders.colorPosShader;
+	ruis::ColorPosShader& s = App::inst().shaders.colorPosShader;
 	s.Bind();
-	morda::matrix4 matr(matrix);
+	ruis::matrix4 matr(matrix);
 	matr.scale(this->rect().d);
 	s.set_matrix(matr);
 
@@ -322,7 +322,7 @@ utki::shared_ref<texture_2d> widget::render_to_texture(std::shared_ptr<texture_2
 
 void widget::render_from_cache(const r4::matrix4<float>& matrix) const
 {
-	morda::matrix4 matr(matrix);
+	ruis::matrix4 matr(matrix);
 	matr.scale(this->rect().d);
 
 	auto& r = this->context.get().renderer.get();
@@ -338,7 +338,7 @@ void widget::clear_cache()
 	}
 }
 
-void widget::on_key_internal(const morda::key_event& e)
+void widget::on_key_internal(const ruis::key_event& e)
 {
 	if (this->is_interactive()) {
 		if (this->on_key(e)) {
@@ -388,7 +388,7 @@ r4::rectangle<int> widget::compute_viewport_rect(const matrix4& matrix) const no
 	return ret;
 }
 
-morda::vector2 widget::get_absolute_pos() const noexcept
+ruis::vector2 widget::get_absolute_pos() const noexcept
 {
 	if (!this->parent()) {
 		return this->rect().p;
@@ -396,7 +396,7 @@ morda::vector2 widget::get_absolute_pos() const noexcept
 	return this->parent()->get_absolute_pos() + this->rect().p;
 }
 
-morda::rectangle widget::get_absolute_rect() const noexcept
+ruis::rectangle widget::get_absolute_rect() const noexcept
 {
 	if (this->parent()) {
 		return {this->get_absolute_pos(), this->rect().d};
@@ -404,7 +404,7 @@ morda::rectangle widget::get_absolute_rect() const noexcept
 	return this->rect();
 }
 
-vector2 widget::measure(const morda::vector2& quotum) const
+vector2 widget::measure(const ruis::vector2& quotum) const
 {
 	return max(quotum, 0);
 }
@@ -502,7 +502,7 @@ void widget::reload()
 	this->on_reload();
 }
 
-vector2 morda::dims_for_widget(const widget& w, const vector2& parent_dims)
+vector2 ruis::dims_for_widget(const widget& w, const vector2& parent_dims)
 {
 	const layout_params& lp = w.get_layout_params_const();
 	vector2 d;

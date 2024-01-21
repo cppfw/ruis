@@ -27,7 +27,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../label/color.hpp"
 #include "../proxy/mouse_proxy.hpp"
 
-using namespace morda;
+using namespace ruis;
 
 namespace {
 const auto drop_down_box_layout = treeml::read(R"qwertyuiop(
@@ -109,11 +109,11 @@ const auto drop_down_menu_layout = treeml::read(R"qwertyuiop(
 	)qwertyuiop");
 } // namespace
 
-click_drop_down_box::click_drop_down_box(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+click_drop_down_box::click_drop_down_box(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
 	widget(c, desc),
 	button(this->context, drop_down_box_layout),
 	nine_patch_push_button(this->context, drop_down_box_layout),
-	drop_down_box(this->context, desc, this->get_widget_as<morda::container>("morda_dropdown_selection"))
+	drop_down_box(this->context, desc, this->get_widget_as<ruis::container>("morda_dropdown_selection"))
 {
 	this->press_handler = [this](button& b) {
 		if (!b.is_pressed()) {
@@ -178,7 +178,7 @@ void click_drop_down_box::show_drop_down_menu()
 	}
 
 	// TODO: use get_widget_as()
-	auto va = np.get().try_get_widget_as<morda::container>("morda_contextmenu_content");
+	auto va = np.get().try_get_widget_as<ruis::container>("morda_contextmenu_content");
 	ASSERT(va)
 
 	for (size_t i = 0; i != this->get_provider()->count(); ++i) {
@@ -231,7 +231,7 @@ void click_drop_down_box::handle_mouse_button_up(bool is_first_button_up_event)
 
 utki::shared_ref<widget> click_drop_down_box::wrap_item(const utki::shared_ref<widget>& w, size_t index)
 {
-	auto wd = this->context.get().inflater.inflate_as<morda::container>(item_layout);
+	auto wd = this->context.get().inflater.inflate_as<ruis::container>(item_layout);
 
 	auto mp = wd.get().try_get_widget_as<mouse_proxy>("morda_dropdown_mouseproxy");
 	ASSERT(mp)

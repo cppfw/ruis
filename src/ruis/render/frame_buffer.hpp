@@ -25,7 +25,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "texture_2d.hpp"
 
-namespace morda {
+namespace ruis {
 
 class frame_buffer
 {
@@ -49,4 +49,4 @@ public:
 private:
 };
 
-} // namespace morda
+} // namespace ruis

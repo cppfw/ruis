@@ -24,11 +24,11 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../context.hpp"
 #include "../util/util.hpp"
 
-using namespace morda::res;
+using namespace ruis::res;
 
-morda::res::cursor::cursor(
-	const utki::shared_ref<morda::context>& c,
-	const utki::shared_ref<morda::res::image>& image,
+ruis::res::cursor::cursor(
+	const utki::shared_ref<ruis::context>& c,
+	const utki::shared_ref<ruis::res::image>& image,
 	const vector2& hotspot
 ) :
 	resource(c),
@@ -37,7 +37,7 @@ morda::res::cursor::cursor(
 {}
 
 utki::shared_ref<cursor> cursor::load(
-	const utki::shared_ref<morda::context>& ctx,
+	const utki::shared_ref<ruis::context>& ctx,
 	const treeml::forest& desc,
 	const papki::file& fi
 )

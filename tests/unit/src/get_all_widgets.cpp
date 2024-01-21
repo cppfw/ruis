@@ -9,7 +9,7 @@
 namespace{
 const tst::set set("get_all_widgets", [](tst::suite& suite){
     suite.add("get_all_widgets_function", []{
-		morda::gui m(make_dummy_context());
+		ruis::gui m(make_dummy_context());
 		auto w = m.context.get().inflater.inflate(treeml::read(R"qwertyuiop(
 			@container{
 				@scroll_area{
@@ -52,7 +52,7 @@ const tst::set set("get_all_widgets", [](tst::suite& suite){
 			"1", "2", "3", "6", "9"
 		}};
 
-		auto aaas = w.get().get_all_widgets<morda::scroll_area>();
+		auto aaas = w.get().get_all_widgets<ruis::scroll_area>();
 		tst::check_ne(aaas.size(), size_t(0), SL);
 
 		for(const auto& id : expected_ids){

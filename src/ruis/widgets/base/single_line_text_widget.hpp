@@ -23,20 +23,20 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "text_widget.hpp"
 
-namespace morda {
+namespace ruis {
 
 class single_line_text_widget : public text_widget
 {
-	mutable morda::rectangle bb{};
+	mutable ruis::rectangle bb{};
 
 	std::u32string text;
 
 protected:
-	vector2 measure(const morda::vector2& quotum) const noexcept override;
+	vector2 measure(const ruis::vector2& quotum) const noexcept override;
 
-	single_line_text_widget(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
+	single_line_text_widget(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
 
-	const morda::rectangle& get_bounding_box() const
+	const ruis::rectangle& get_bounding_box() const
 	{
 		return this->bb;
 	}
@@ -58,4 +58,4 @@ public:
 	void on_text_change() override;
 };
 
-} // namespace morda
+} // namespace ruis

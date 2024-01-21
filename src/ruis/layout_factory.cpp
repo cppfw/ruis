@@ -21,7 +21,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "layout_factory.hpp"
 
-using namespace morda;
+using namespace ruis;
 
 void layout_factory::add_factory(std::string name, factory_type factory)
 {

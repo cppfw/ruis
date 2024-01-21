@@ -24,7 +24,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../../context.hpp"
 #include "../../util/util.hpp"
 
-using namespace morda;
+using namespace ruis;
 
 namespace {
 const std::map<std::string, renderer::blend_factor> blend_factor_names = {
@@ -55,7 +55,7 @@ renderer::blend_factor blend_factor_from_string(const std::string& s)
 }
 } // namespace
 
-blending_widget::blending_widget(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+blending_widget::blending_widget(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
 	widget(c, desc)
 {
 	for (const auto& p : desc) {

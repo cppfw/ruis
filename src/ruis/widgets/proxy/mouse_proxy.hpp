@@ -23,7 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../../widget.hpp"
 
-namespace morda {
+namespace ruis {
 
 /**
  * @brief Widget for intercepting mouse events.
@@ -32,7 +32,7 @@ namespace morda {
 class mouse_proxy : virtual public widget
 {
 public:
-	mouse_proxy(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
+	mouse_proxy(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
 
 	mouse_proxy(const mouse_proxy&) = delete;
 	mouse_proxy& operator=(const mouse_proxy&) = delete;
@@ -67,4 +67,4 @@ public:
 	void on_hover_change(unsigned pointer_id) override;
 };
 
-} // namespace morda
+} // namespace ruis

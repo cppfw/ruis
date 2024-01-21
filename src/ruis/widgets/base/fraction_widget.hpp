@@ -23,13 +23,13 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../../widget.hpp"
 
-namespace morda {
+namespace ruis {
 class fraction_widget : public virtual widget
 {
 	float fraction_v = 0; // current position from 0 to 1
 
 protected:
-	fraction_widget(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+	fraction_widget(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
 		widget(c, desc)
 	{}
 
@@ -50,4 +50,4 @@ public:
 	 */
 	void set_fraction(real fraction, bool notify_change = true);
 };
-} // namespace morda
+} // namespace ruis

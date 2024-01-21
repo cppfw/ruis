@@ -23,14 +23,14 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../../widget.hpp"
 
-namespace morda {
+namespace ruis {
 
 class ratio_proxy : virtual public widget
 {
 	real x_above_y = 1;
 
 public:
-	ratio_proxy(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
+	ratio_proxy(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
 
 	ratio_proxy(const ratio_proxy&) = delete;
 	ratio_proxy& operator=(const ratio_proxy&) = delete;
@@ -47,7 +47,7 @@ public:
 		return this->x_above_y;
 	}
 
-	morda::vector2 measure(const morda::vector2& quotum) const override;
+	ruis::vector2 measure(const ruis::vector2& quotum) const override;
 };
 
-} // namespace morda
+} // namespace ruis

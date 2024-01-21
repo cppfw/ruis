@@ -25,7 +25,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "choice_group.hpp"
 
-namespace morda {
+namespace ruis {
 
 class tab_group : virtual public widget, public choice_group
 {
@@ -33,7 +33,7 @@ class tab_group : virtual public widget, public choice_group
 	std::shared_ptr<const res::image::texture> filler_texture;
 
 public:
-	tab_group(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
+	tab_group(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
 
 	tab_group(const tab_group&) = delete;
 	tab_group& operator=(const tab_group&) = delete;
@@ -45,11 +45,11 @@ public:
 
 	void set_filler(std::shared_ptr<res::image> filler);
 
-	morda::vector2 measure(const morda::vector2& quotum) const override;
+	ruis::vector2 measure(const ruis::vector2& quotum) const override;
 
 	void on_lay_out() override;
 
-	void render(const morda::matrix4& matrix) const override;
+	void render(const ruis::matrix4& matrix) const override;
 };
 
-} // namespace morda
+} // namespace ruis

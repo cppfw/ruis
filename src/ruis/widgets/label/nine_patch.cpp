@@ -27,7 +27,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../../context.hpp"
 #include "../../util/util.hpp"
 
-using namespace morda;
+using namespace ruis;
 
 namespace {
 const auto nine_patch_layout = treeml::read(R"qwertyuiop(
@@ -96,7 +96,7 @@ const auto nine_patch_layout = treeml::read(R"qwertyuiop(
 	)qwertyuiop");
 } // namespace
 
-nine_patch::nine_patch(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+nine_patch::nine_patch(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
 	widget(c, desc),
 	blending_widget(this->context, desc),
 	container(this->context, nine_patch_layout),
@@ -159,7 +159,7 @@ nine_patch::nine_patch(const utki::shared_ref<morda::context>& c, const treeml::
 	this->inner_content->push_back_inflate(desc);
 }
 
-void nine_patch::render(const morda::matrix4& matrix) const
+void nine_patch::render(const ruis::matrix4& matrix) const
 {
 	this->container::render(matrix);
 }

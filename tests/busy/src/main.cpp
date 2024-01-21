@@ -7,11 +7,11 @@
 #include <ruis/widgets/button/push_button.hpp>
 #include <ruis/widgets/label/busy.hpp>
 
-class application : public mordavokne::application{
+class application : public ruisapp::application{
 public:
 	application() :
-			mordavokne::application("morda-tests", [](){
-				mordavokne::window_params wp(r4::vector2<unsigned>(1024, 800));
+			ruisapp::application("morda-tests", [](){
+				ruisapp::window_params wp(r4::vector2<unsigned>(1024, 800));
 
 				return wp;
 			}())
@@ -25,13 +25,13 @@ public:
 
 		{
 			auto spinner = utki::make_weak_from(
-					c.get().get_widget_as<morda::busy>("busy_spinner")
+					c.get().get_widget_as<ruis::busy>("busy_spinner")
 				);
-			auto& button = c.get().get_widget_as<morda::push_button>("busy_toggle_button");
+			auto& button = c.get().get_widget_as<ruis::push_button>("busy_toggle_button");
 
 			auto disable_button = utki::make_weak_from(c.get().get_widget("refresh_disable_button"));
 
-			button.click_handler = [spinner, disable_button](morda::push_button& b){
+			button.click_handler = [spinner, disable_button](ruis::push_button& b){
 				if(auto s = spinner.lock()){
 					s->set_active(!s->is_visible());
 				}
@@ -41,12 +41,12 @@ public:
 			};
 		}
 
-		c.get().get_widget_as<morda::busy>("busy_spinner2").set_active(true);
+		c.get().get_widget_as<ruis::busy>("busy_spinner2").set_active(true);
 
 		{
-			auto spinner = utki::make_weak_from(c.get().get_widget_as<morda::spinner>("refresh_spinner"));
-			auto& button = c.get().get_widget_as<morda::push_button>("refresh_toggle_button");
-			button.click_handler = [spinner](morda::push_button& b){
+			auto spinner = utki::make_weak_from(c.get().get_widget_as<ruis::spinner>("refresh_spinner"));
+			auto& button = c.get().get_widget_as<ruis::push_button>("refresh_toggle_button");
+			button.click_handler = [spinner](ruis::push_button& b){
 				if(auto s = spinner.lock()){
 					s->set_active(!s->is_updating());
 				}
@@ -55,6 +55,6 @@ public:
 	}
 };
 
-const mordavokne::application_factory app_fac([](auto args){
+const ruisapp::application_factory app_fac([](auto args){
 	return std::make_unique<::application>();
 });

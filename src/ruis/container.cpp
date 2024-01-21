@@ -26,17 +26,17 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "context.hpp"
 
-using namespace morda;
+using namespace ruis;
 
-container::container(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+container::container(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
 	container(c, desc, trivial_layout::instance)
 {}
 
 container::container(
-	const utki::shared_ref<morda::context>& c,
+	const utki::shared_ref<ruis::context>& c,
 	const treeml::forest& desc,
 	// NOLINTNEXTLINE(modernize-pass-by-value)
-	const utki::shared_ref<morda::layout>& layout
+	const utki::shared_ref<ruis::layout>& layout
 ) :
 	widget(c, desc),
 	layout(layout)
@@ -89,13 +89,13 @@ void container::render_child(const matrix4& matrix, const widget& c) const
 		return;
 	}
 
-	morda::matrix4 matr(matrix);
+	ruis::matrix4 matr(matrix);
 	matr.translate(c.rect().p);
 
 	c.render_internal(matr);
 }
 
-void container::render(const morda::matrix4& matrix) const
+void container::render(const ruis::matrix4& matrix) const
 {
 	for (auto& w : this->children()) {
 		this->render_child(matrix, w.get());

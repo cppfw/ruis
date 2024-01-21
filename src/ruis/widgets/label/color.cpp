@@ -24,19 +24,19 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../../context.hpp"
 #include "../../util/util.hpp"
 
-using namespace morda;
+using namespace ruis;
 
-color::color(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+color::color(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
 	widget(c, desc),
 	color_widget(this->context, desc)
 {}
 
-void color::render(const morda::matrix4& matrix) const
+void color::render(const ruis::matrix4& matrix) const
 {
 	auto& r = this->context.get().renderer.get();
 	r.set_simple_alpha_blending();
 
-	morda::matrix4 matr(matrix);
+	ruis::matrix4 matr(matrix);
 	matr.scale(this->rect().d);
 
 	r.shader->color_pos->render(matr, r.pos_quad_01_vao.get(), this->get_current_color());

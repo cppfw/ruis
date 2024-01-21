@@ -29,11 +29,11 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace std::string_literals;
 
-using namespace morda;
+using namespace ruis;
 
-morda::vector2 morda::parse_vec2(treeml::forest::const_iterator begin, treeml::forest::const_iterator end)
+ruis::vector2 ruis::parse_vec2(treeml::forest::const_iterator begin, treeml::forest::const_iterator end)
 {
-	morda::vector2 ret;
+	ruis::vector2 ret;
 
 	unsigned n = 0;
 	real v = 0;
@@ -49,7 +49,7 @@ morda::vector2 morda::parse_vec2(treeml::forest::const_iterator begin, treeml::f
 	return ret;
 }
 
-morda::rectangle morda::parse_rect(const treeml::forest& desc)
+ruis::rectangle ruis::parse_rect(const treeml::forest& desc)
 {
 	using std::min;
 	vector2 p = parse_vec2(desc.begin(), desc.end());
@@ -57,7 +57,7 @@ morda::rectangle morda::parse_rect(const treeml::forest& desc)
 	return {p, d};
 }
 
-morda::sides<real> morda::parse_sides(const treeml::forest& desc)
+ruis::sides<real> ruis::parse_sides(const treeml::forest& desc)
 {
 	using std::min;
 	vector2 p = parse_vec2(desc.begin(), desc.end());
@@ -65,7 +65,7 @@ morda::sides<real> morda::parse_sides(const treeml::forest& desc)
 	return {p.x(), p.y(), d.x(), d.y()};
 }
 
-real morda::parse_dimension_value(const treeml::leaf& l, const morda::units& units)
+real ruis::parse_dimension_value(const treeml::leaf& l, const ruis::units& units)
 {
 	// check if millimeters
 	if (l.length() >= 2 && l[l.length() - 1] == 'm' && l[l.length() - 2] == 'm') {
@@ -81,7 +81,7 @@ real morda::parse_dimension_value(const treeml::leaf& l, const morda::units& uni
 	return real(l.to_float());
 }
 
-real morda::parse_layout_dimension_value(const treeml::leaf& l, const morda::units& units)
+real ruis::parse_layout_dimension_value(const treeml::leaf& l, const ruis::units& units)
 {
 	if (l == "min") {
 		return layout_params::min;
@@ -93,28 +93,28 @@ real morda::parse_layout_dimension_value(const treeml::leaf& l, const morda::uni
 	return parse_dimension_value(l, units);
 }
 
-r4::vector4<float> morda::color_to_vec4f(uint32_t color)
+r4::vector4<float> ruis::color_to_vec4f(uint32_t color)
 {
 	return rasterimage::to<float>(rasterimage::from_32bit_pixel(color));
 }
 
-bool morda::is_leaf_property(const treeml::leaf& l)
+bool ruis::is_leaf_property(const treeml::leaf& l)
 {
 	return l.empty() || l[0] != '@';
 }
 
-bool morda::is_property(const treeml::tree& t)
+bool ruis::is_property(const treeml::tree& t)
 {
 	return is_leaf_property(t.value) && t.children.size() != 0;
 }
 
 // TODO: rename to is_leaf_widget
-bool morda::is_leaf_child(const treeml::leaf& l)
+bool ruis::is_leaf_child(const treeml::leaf& l)
 {
 	return !is_leaf_property(l);
 }
 
-bool morda::is_variable(const tml::tree& t)
+bool ruis::is_variable(const tml::tree& t)
 {
 	return t.value == "$" && t.children.size() == 1 && t.children.front().children.empty();
 }

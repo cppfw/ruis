@@ -21,7 +21,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "fraction_band_widget.hpp"
 
-using namespace morda;
+using namespace ruis;
 
 void fraction_band_widget::on_band_change()
 {

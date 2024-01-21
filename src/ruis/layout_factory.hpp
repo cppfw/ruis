@@ -27,7 +27,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <treeml/tree.hpp>
 #include <utki/shared_ref.hpp>
 
-namespace morda {
+namespace ruis {
 
 class layout;
 
@@ -45,7 +45,7 @@ public:
 	utki::shared_ref<layout> create(std::string_view name, const tml::forest& desc);
 };
 
-} // namespace morda
+} // namespace ruis
 
 // include definitions for forward declared classes
 #include "layout.hpp"

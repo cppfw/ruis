@@ -7,11 +7,11 @@
 #include <ruis/widgets/button/push_button.hpp>
 #include <ruis/widgets/label/busy.hpp>
 
-class application : public mordavokne::application{
+class application : public ruisapp::application{
 public:
 	application() :
-			mordavokne::application("morda-tests", [](){
-				mordavokne::window_params wp(r4::vector2<unsigned>(1024, 800));
+			ruisapp::application("morda-tests", [](){
+				ruisapp::window_params wp(r4::vector2<unsigned>(1024, 800));
 
 				return wp;
 			}())
@@ -25,6 +25,6 @@ public:
 	}
 };
 
-const mordavokne::application_factory app_fac([](auto args){
+const ruisapp::application_factory app_fac([](auto args){
 	return std::make_unique<::application>();
 });

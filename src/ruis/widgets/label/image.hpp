@@ -25,7 +25,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../../widget.hpp"
 #include "../base/blending_widget.hpp"
 
-namespace morda {
+namespace ruis {
 
 /**
  * @brief Image widget.
@@ -39,10 +39,10 @@ namespace morda {
  */
 class image : public virtual widget, public blending_widget
 {
-	std::shared_ptr<const morda::res::image> img;
-	std::shared_ptr<const morda::res::image> disabled_img; // image for disabled state
+	std::shared_ptr<const ruis::res::image> img;
+	std::shared_ptr<const ruis::res::image> disabled_img; // image for disabled state
 
-	mutable std::shared_ptr<const morda::res::image::texture> texture;
+	mutable std::shared_ptr<const ruis::res::image::texture> texture;
 
 	bool keep_aspect_ratio = false;
 
@@ -57,13 +57,13 @@ public:
 	image(image&&) = delete;
 	image& operator=(image&&) = delete;
 
-	image(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
+	image(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
 
 	~image() override = default;
 
-	void render(const morda::matrix4& matrix) const override;
+	void render(const ruis::matrix4& matrix) const override;
 
-	morda::vector2 measure(const morda::vector2& quotum) const override;
+	ruis::vector2 measure(const ruis::vector2& quotum) const override;
 
 	void set_image(std::shared_ptr<const res::image> image);
 
@@ -101,4 +101,4 @@ public:
 	void on_enable_change() override;
 };
 
-} // namespace morda
+} // namespace ruis

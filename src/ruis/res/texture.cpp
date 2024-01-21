@@ -24,11 +24,11 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../context.hpp"
 #include "../util/util.hpp"
 
-using namespace morda;
-using namespace morda::res;
+using namespace ruis;
+using namespace ruis::res;
 
 utki::shared_ref<texture> texture::load(
-	const utki::shared_ref<morda::context>& ctx,
+	const utki::shared_ref<ruis::context>& ctx,
 	const treeml::forest& desc,
 	const papki::file& fi
 )

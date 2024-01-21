@@ -31,7 +31,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #	endif
 #endif
 
-using namespace morda;
+using namespace ruis;
 
 namespace {
 const uint32_t cursor_blink_period = 500; // milliseconds
@@ -39,7 +39,7 @@ const uint32_t cursor_blink_period = 500; // milliseconds
 const real cursor_width = real(1.0);
 } // namespace
 
-text_input_line::text_input_line(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+text_input_line::text_input_line(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
 	widget(c, desc),
 	single_line_text_widget(this->context, desc),
 	character_input_widget(this->context),
@@ -48,11 +48,11 @@ text_input_line::text_input_line(const utki::shared_ref<morda::context>& c, cons
 	this->set_clip_enabled(true);
 }
 
-void text_input_line::render(const morda::matrix4& matrix) const
+void text_input_line::render(const ruis::matrix4& matrix) const
 {
 	// render selection
 	if (this->cursor_index != this->selection_start_index) {
-		morda::matrix4 matr(matrix);
+		ruis::matrix4 matr(matrix);
 		matr.translate(
 			this->selection_start_index < this->cursor_index ? this->selection_start_pos : this->cursor_pos,
 			0
@@ -65,7 +65,7 @@ void text_input_line::render(const morda::matrix4& matrix) const
 	}
 
 	{
-		morda::matrix4 matr(matrix);
+		ruis::matrix4 matr(matrix);
 
 		using std::round;
 
@@ -79,14 +79,14 @@ void text_input_line::render(const morda::matrix4& matrix) const
 		ASSERT(this->first_visible_char_index <= this->get_text().size())
 		font.render(
 			matr,
-			morda::color_to_vec4f(this->get_current_color()),
+			ruis::color_to_vec4f(this->get_current_color()),
 			this->get_text()
 				.substr(this->first_visible_char_index, this->get_text().size() - this->first_visible_char_index)
 		);
 	}
 
 	if (this->is_focused() && this->cursor_blink_visible) {
-		morda::matrix4 matr(matrix);
+		ruis::matrix4 matr(matrix);
 		matr.translate(this->cursor_pos, 0);
 		matr.scale(vector2(cursor_width * this->context.get().units.dots_per_fp, this->rect().d.y()));
 
@@ -120,7 +120,7 @@ bool text_input_line::on_mouse_move(const mouse_move_event& e)
 	return true;
 }
 
-vector2 text_input_line::measure(const morda::vector2& quotum) const noexcept
+vector2 text_input_line::measure(const ruis::vector2& quotum) const noexcept
 {
 	vector2 ret;
 
@@ -285,15 +285,15 @@ void text_input_line::start_cursor_blinking()
 	);
 }
 
-bool text_input_line::on_key(const morda::key_event& e)
+bool text_input_line::on_key(const ruis::key_event& e)
 {
 	switch (e.combo.key) {
-		case morda::key::left_control:
-		case morda::key::right_control:
+		case ruis::key::left_control:
+		case ruis::key::right_control:
 			this->ctrl_pressed = e.is_down;
 			break;
-		case morda::key::left_shift:
-		case morda::key::right_shift:
+		case ruis::key::left_shift:
+		case ruis::key::right_shift:
 			this->shift_pressed = e.is_down;
 			break;
 		default:
@@ -305,9 +305,9 @@ bool text_input_line::on_key(const morda::key_event& e)
 void text_input_line::on_character_input(const character_input_event& e)
 {
 	switch (e.combo.key) {
-		case morda::key::enter:
+		case ruis::key::enter:
 			break;
-		case morda::key::arrow_right:
+		case ruis::key::arrow_right:
 			if (this->cursor_index != this->get_text().size()) {
 				size_t new_index = 0;
 				if (this->ctrl_pressed) {
@@ -331,7 +331,7 @@ void text_input_line::on_character_input(const character_input_event& e)
 				this->set_cursor_index(new_index, this->shift_pressed);
 			}
 			break;
-		case morda::key::arrow_left:
+		case ruis::key::arrow_left:
 			if (this->cursor_index != 0) {
 				size_t new_index = 0;
 				if (this->ctrl_pressed) {
@@ -355,13 +355,13 @@ void text_input_line::on_character_input(const character_input_event& e)
 				this->set_cursor_index(new_index, this->shift_pressed);
 			}
 			break;
-		case morda::key::end:
+		case ruis::key::end:
 			this->set_cursor_index(this->get_text().size(), this->shift_pressed);
 			break;
-		case morda::key::home:
+		case ruis::key::home:
 			this->set_cursor_index(0, this->shift_pressed);
 			break;
-		case morda::key::backspace:
+		case ruis::key::backspace:
 			if (this->there_is_selection()) {
 				this->set_cursor_index(this->delete_selection());
 			} else {
@@ -374,7 +374,7 @@ void text_input_line::on_character_input(const character_input_event& e)
 				}
 			}
 			break;
-		case morda::key::deletion:
+		case ruis::key::deletion:
 			if (this->there_is_selection()) {
 				this->set_cursor_index(this->delete_selection());
 			} else {
@@ -387,10 +387,10 @@ void text_input_line::on_character_input(const character_input_event& e)
 			}
 			this->start_cursor_blinking();
 			break;
-		case morda::key::escape:
+		case ruis::key::escape:
 			// do nothing
 			break;
-		case morda::key::a:
+		case ruis::key::a:
 			if (this->ctrl_pressed) {
 				this->selection_start_index = 0;
 				this->set_cursor_index(this->get_text().size(), true);

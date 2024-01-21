@@ -23,9 +23,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../../util/util.hpp"
 
-using namespace morda;
+using namespace ruis;
 
-color_widget::color_widget(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+color_widget::color_widget(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
 	widget(c, desc)
 {
 	for (const auto& p : desc) {

@@ -24,9 +24,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../../context.hpp"
 #include "../../util/util.hpp"
 
-using namespace morda;
+using namespace ruis;
 
-scroll_area::scroll_area(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+scroll_area::scroll_area(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
 	widget(c, desc),
 	container(this->context, desc)
 {}
@@ -43,7 +43,7 @@ bool scroll_area::on_mouse_move(const mouse_move_event& e)
 	return this->container::on_mouse_move(mouse_move_event{e.pos - d, e.pointer_id, e.ignore_mouse_capture});
 }
 
-void scroll_area::render(const morda::matrix4& matrix) const
+void scroll_area::render(const ruis::matrix4& matrix) const
 {
 	vector2 d = -this->cur_scroll_pos;
 
@@ -178,12 +178,12 @@ void scroll_area::on_children_change()
 
 void scroll_area::update_invisible_dims()
 {
-	morda::vector2 min_dims(0);
+	ruis::vector2 min_dims(0);
 
 	using std::max;
 
 	for (const auto& c : this->children()) {
-		morda::vector2 d = c.get().rect().p + this->dims_for_widget(c.get());
+		ruis::vector2 d = c.get().rect().p + this->dims_for_widget(c.get());
 
 		min_dims = max(min_dims, d); // clamp bottom
 	}

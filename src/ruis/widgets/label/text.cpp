@@ -24,17 +24,17 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../../context.hpp"
 #include "../../util/util.hpp"
 
-using namespace morda;
+using namespace ruis;
 
-text::text(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+text::text(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
 	widget(c, desc),
 	single_line_text_widget(this->context, desc),
 	color_widget(this->context, desc)
 {}
 
-void text::render(const morda::matrix4& matrix) const
+void text::render(const ruis::matrix4& matrix) const
 {
-	morda::matrix4 matr(matrix);
+	ruis::matrix4 matr(matrix);
 
 	using std::round;
 
@@ -45,5 +45,5 @@ void text::render(const morda::matrix4& matrix) const
 		round((font.get_height() + font.get_ascender() - font.get_descender()) / 2)
 	);
 
-	font.render(matr, morda::color_to_vec4f(this->get_current_color()), this->get_text());
+	font.render(matr, ruis::color_to_vec4f(this->get_current_color()), this->get_text());
 }

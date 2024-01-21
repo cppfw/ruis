@@ -26,7 +26,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "button.hpp"
 
-namespace morda {
+namespace ruis {
 class image_button : virtual public button, public image
 {
 	std::shared_ptr<const res::image> unpressedImage_v;
@@ -37,7 +37,7 @@ class image_button : virtual public button, public image
 protected:
 	void on_press_change() override;
 
-	image_button(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
+	image_button(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
 
 public:
 	void set_pressed_image(std::shared_ptr<const res::image> image);
@@ -54,4 +54,4 @@ public:
 		return this->unpressedImage_v;
 	}
 };
-} // namespace morda
+} // namespace ruis

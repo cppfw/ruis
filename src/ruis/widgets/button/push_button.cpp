@@ -21,7 +21,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "push_button.hpp"
 
-using namespace morda;
+using namespace ruis;
 
 bool push_button::on_mouse_button(const mouse_button_event& e)
 {

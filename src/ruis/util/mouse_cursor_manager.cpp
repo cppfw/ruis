@@ -23,7 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <utki/debug.hpp>
 
-using namespace morda;
+using namespace ruis;
 
 decltype(mouse_cursor_manager::cursor_stack)::iterator mouse_cursor_manager::push(mouse_cursor cursor)
 {

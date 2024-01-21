@@ -10,13 +10,13 @@
 #include "../../harness/util/dummy_context.hpp"
 
 namespace{
-class container_which_invalidates_its_layout_during_layouting : public morda::container{
+class container_which_invalidates_its_layout_during_layouting : public ruis::container{
 public:
     container_which_invalidates_its_layout_during_layouting(
-                const utki::shared_ref<morda::context>& c
+                const utki::shared_ref<ruis::context>& c
         ) :
-            morda::widget(c, treeml::forest()),
-            morda::container(this->context, treeml::forest())
+            ruis::widget(c, treeml::forest()),
+            ruis::container(this->context, treeml::forest())
     {}
 
     void on_lay_out()override{
@@ -30,7 +30,7 @@ const tst::set set("layouting", [](tst::suite& suite){
     suite.add("invalidate_layout_during_layouting_should_result_in_dirty_layout__lay_out_method", []{
         auto context = make_dummy_context();
 
-        auto c = std::make_shared<morda::container>(context, treeml::forest());
+        auto c = std::make_shared<ruis::container>(context, treeml::forest());
         auto tc = utki::make_shared<container_which_invalidates_its_layout_during_layouting>(context);
 
         tst::check(tc.get().is_layout_dirty(), SL);
@@ -46,7 +46,7 @@ const tst::set set("layouting", [](tst::suite& suite){
     suite.add("invalidate_layout_during_layouting_should_result_in_dirty_layout__resize_to_same_size", []{
         auto context = make_dummy_context();
 
-        auto c = std::make_shared<morda::container>(context, treeml::forest());
+        auto c = std::make_shared<ruis::container>(context, treeml::forest());
         auto tc = utki::make_shared<container_which_invalidates_its_layout_during_layouting>(context);
 
         tst::check(tc.get().is_layout_dirty(), SL);
@@ -62,7 +62,7 @@ const tst::set set("layouting", [](tst::suite& suite){
     suite.add("invalidate_layout_during_layouting_should_result_in_dirty_layout__resize_to_different_size", []{
         auto context = make_dummy_context();
 
-        auto c = std::make_shared<morda::container>(context, treeml::forest());
+        auto c = std::make_shared<ruis::container>(context, treeml::forest());
         auto tc = utki::make_shared<container_which_invalidates_its_layout_during_layouting>(context);
 
         tst::check(tc.get().is_layout_dirty(), SL);
@@ -71,7 +71,7 @@ const tst::set set("layouting", [](tst::suite& suite){
 
         // when resizing widget to different size it should change it's size and call on_resize() virtual method
         // which by default does re-layouting
-        tc.get().resize(c->rect().d + morda::vector2{1, 1});
+        tc.get().resize(c->rect().d + ruis::vector2{1, 1});
         tst::check(tc.get().is_layout_dirty(), SL);
     });
 
@@ -83,7 +83,7 @@ const tst::set set("layouting", [](tst::suite& suite){
         tst::check(tc.get().is_layout_dirty(), SL);
         
         // when rendering GUI it should perform layoputing in case it was dirty
-        morda::gui gui(context);
+        ruis::gui gui(context);
         gui.set_root(tc);
         
         // after setting widget as gui root it will be resized to window size and hence it will be layed out

@@ -24,7 +24,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../../container.hpp"
 #include "../../widget.hpp"
 
-namespace morda {
+namespace ruis {
 
 class collapse_area : virtual public widget, private container
 {
@@ -32,7 +32,7 @@ class collapse_area : virtual public widget, private container
 	std::shared_ptr<container> title_v;
 
 public:
-	collapse_area(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
+	collapse_area(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
 
 	container& content() noexcept
 	{
@@ -47,4 +47,4 @@ public:
 	}
 };
 
-} // namespace morda
+} // namespace ruis

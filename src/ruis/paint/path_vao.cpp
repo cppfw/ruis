@@ -21,10 +21,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "path_vao.hpp"
 
-using namespace morda;
+using namespace ruis;
 
 // NOLINTNEXTLINE(modernize-pass-by-value)
-path_vao::path_vao(const utki::shared_ref<const morda::renderer>& r) :
+path_vao::path_vao(const utki::shared_ref<const ruis::renderer>& r) :
 	renderer(r),
 	core(this->renderer.get().empty_vertex_array),
 	border(this->renderer.get().empty_vertex_array)
@@ -39,7 +39,7 @@ void path_vao::set(const path::vertices& path)
 			core_buf,
 		},
 		this->renderer.get().factory->create_index_buffer(path.in_indices),
-		morda::vertex_array::mode::triangle_strip
+		ruis::vertex_array::mode::triangle_strip
 	);
 	this->border = this->renderer.get().factory->create_vertex_array(
 		{
@@ -47,11 +47,11 @@ void path_vao::set(const path::vertices& path)
 			this->renderer.get().factory->create_vertex_buffer(path.alpha),
 		},
 		this->renderer.get().factory->create_index_buffer(path.out_indices),
-		morda::vertex_array::mode::triangle_strip
+		ruis::vertex_array::mode::triangle_strip
 	);
 }
 
-void path_vao::render(const morda::matrix4& matrix, uint32_t color) const
+void path_vao::render(const ruis::matrix4& matrix, uint32_t color) const
 {
 	this->renderer.get().shader->color_pos->render(matrix, this->core.get(), color);
 

@@ -25,7 +25,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <utki/flags.hpp>
 
-namespace morda {
+namespace ruis {
 
 /**
  * @brief Keyboard keys enumeration.
@@ -145,14 +145,14 @@ enum class key_modifier {
 	unknown = enum_size
 };
 
-key_modifier to_key_modifier(morda::key key);
+key_modifier to_key_modifier(ruis::key key);
 
-std::string_view to_string(morda::key key);
+std::string_view to_string(ruis::key key);
 
-morda::key to_key(std::string_view name);
+ruis::key to_key(std::string_view name);
 
 struct key_combo {
-	morda::key key = morda::key::unknown;
+	ruis::key key = ruis::key::unknown;
 	utki::flags<key_modifier> modifiers;
 
 	bool operator==(const key_combo& kc) const
@@ -166,4 +166,4 @@ struct key_combo {
 	}
 };
 
-} // namespace morda
+} // namespace ruis

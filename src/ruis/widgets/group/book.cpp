@@ -24,9 +24,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../../context.hpp"
 #include "../../layouts/pile_layout.hpp"
 
-using namespace morda;
+using namespace ruis;
 
-book::book(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+book::book(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
 	widget(c, desc),
 	container(this->context, treeml::forest(), pile_layout::instance)
 {}
@@ -176,7 +176,7 @@ const page* book::get_active_page() const
 	return nullptr;
 }
 
-page::page(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+page::page(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
 	widget(c, desc)
 {}
 

@@ -25,7 +25,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../../util/util.hpp"
 #include "../button/toggle_button.hpp"
 
-using namespace morda;
+using namespace ruis;
 
 namespace {
 const auto layout_c = treeml::read(R"qwertyuiop(
@@ -73,7 +73,7 @@ const auto layout_c = treeml::read(R"qwertyuiop(
 )qwertyuiop");
 } // namespace
 
-collapse_area::collapse_area(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+collapse_area::collapse_area(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
 	widget(c, desc),
 	container(this->context, layout_c)
 {

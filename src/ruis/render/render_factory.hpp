@@ -38,7 +38,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "vertex_array.hpp"
 #include "vertex_buffer.hpp"
 
-namespace morda {
+namespace ruis {
 
 class render_factory
 {
@@ -78,8 +78,8 @@ public:
 	virtual utki::shared_ref<index_buffer> create_index_buffer(utki::span<const uint16_t> indices) = 0;
 
 	virtual utki::shared_ref<vertex_array> create_vertex_array(
-		std::vector<utki::shared_ref<const morda::vertex_buffer>> buffers,
-		const utki::shared_ref<const morda::index_buffer>& indices,
+		std::vector<utki::shared_ref<const ruis::vertex_buffer>> buffers,
+		const utki::shared_ref<const ruis::index_buffer>& indices,
 		vertex_array::mode rendering_mode
 	) = 0;
 
@@ -97,4 +97,4 @@ public:
 	virtual utki::shared_ref<frame_buffer> create_framebuffer(const utki::shared_ref<texture_2d>& color) = 0;
 };
 
-} // namespace morda
+} // namespace ruis

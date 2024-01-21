@@ -24,7 +24,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "font_provider.hpp"
 #include "texture_font.hxx"
 
-namespace morda {
+namespace ruis {
 
 class texture_font_provider : public font_provider
 {
@@ -33,7 +33,7 @@ class texture_font_provider : public font_provider
 
 public:
 	texture_font_provider(
-		const utki::shared_ref<morda::context>& context,
+		const utki::shared_ref<ruis::context>& context,
 		const utki::shared_ref<const freetype_face>& face,
 		unsigned max_cached
 	);
@@ -41,4 +41,4 @@ public:
 	utki::shared_ref<const font> create(real size) const override;
 };
 
-} // namespace morda
+} // namespace ruis

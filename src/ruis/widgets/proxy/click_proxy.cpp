@@ -21,9 +21,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "click_proxy.hpp"
 
-using namespace morda;
+using namespace ruis;
 
-click_proxy::click_proxy(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+click_proxy::click_proxy(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
 	widget(c, desc)
 {}
 

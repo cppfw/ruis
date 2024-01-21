@@ -9,33 +9,33 @@
 #include <ruis/widgets/label/busy.hpp>
 #include <ruis/util/weak_widget_set.hpp>
 
-class application : public mordavokne::application{
+class application : public ruisapp::application{
 public:
 
 	application() :
-			mordavokne::application("morda-tests", [](){
-				mordavokne::window_params wp(r4::vector2<unsigned>(1024, 800));
+			ruisapp::application("morda-tests", [](){
+				ruisapp::window_params wp(r4::vector2<unsigned>(1024, 800));
 
 				return wp;
 			}())
 	{
 		this->gui.init_standard_widgets(*this->get_res_file("../../res/morda_res/"));
 
-		auto c = this->gui.context.get().inflater.inflate_as<morda::container>(
+		auto c = this->gui.context.get().inflater.inflate_as<ruis::container>(
 				*this->get_res_file("res/test.gui")
 			);
 		this->gui.set_root(c);
 
 		auto spinner = utki::make_weak(
 				utki::make_shared_from(
-						c.get().get_widget_as<morda::busy>("busy_spinner")
+						c.get().get_widget_as<ruis::busy>("busy_spinner")
 					)
 			);
-		auto& button = c.get().get_widget_as<morda::push_button>("busy_toggle_button");
+		auto& button = c.get().get_widget_as<ruis::push_button>("busy_toggle_button");
 
-		morda::weak_widget_set enable_widgets;
+		ruis::weak_widget_set enable_widgets;
 
-		auto pbs = c.get().get_widget_as<morda::container>("enable_group").get_all_widgets<morda::push_button>();
+		auto pbs = c.get().get_widget_as<ruis::container>("enable_group").get_all_widgets<ruis::push_button>();
 		LOG([&](auto&o){o << "pbs.size() = " << pbs.size() << std::endl;})
 		for(auto& w : pbs){
 			LOG([](auto&o){o << "adding..." << std::endl;})
@@ -45,7 +45,7 @@ public:
 		button.click_handler = [
 				spinner,
 				enable_widgets{std::move(enable_widgets)}
-			](morda::push_button& b) mutable
+			](ruis::push_button& b) mutable
 		{
 			if(auto s = spinner.lock()){
 				s->set_active(!s->is_visible());
@@ -55,6 +55,6 @@ public:
 	}
 };
 
-const mordavokne::application_factory app_fac([](auto args){
+const ruisapp::application_factory app_fac([](auto args){
 	return std::make_unique<::application>();
 });

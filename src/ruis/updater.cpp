@@ -25,7 +25,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "updateable.hpp"
 
-using namespace morda;
+using namespace ruis;
 
 void updater::start(std::weak_ptr<updateable> u, uint16_t dt_ms)
 {
@@ -114,7 +114,7 @@ void updater::add_pending()
 	}
 }
 
-void updater::update_updateable(const std::shared_ptr<morda::updateable>& u)
+void updater::update_updateable(const std::shared_ptr<ruis::updateable>& u)
 {
 	// if weak ref gave invalid strong ref
 	if (!u) {

@@ -23,31 +23,31 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <cmath>
 
-using namespace morda;
+using namespace ruis;
 
-void path::line_to(morda::vector2 abs_pos)
+void path::line_to(ruis::vector2 abs_pos)
 {
 	this->points.emplace_back(abs_pos);
 }
 
-void path::line_by(morda::vector2 rel_pos)
+void path::line_by(ruis::vector2 rel_pos)
 {
 	ASSERT(this->points.size() != 0)
 	this->line_to(this->points.back() + rel_pos);
 }
 
-void path::cubic_by(morda::vector2 rel_p1, morda::vector2 rel_p2, morda::vector2 rel_p3)
+void path::cubic_by(ruis::vector2 rel_p1, ruis::vector2 rel_p2, ruis::vector2 rel_p3)
 {
 	ASSERT(this->points.size() != 0)
 	auto& d = this->points.back();
 	this->cubic_to(d + rel_p1, d + rel_p2, d + rel_p3);
 }
 
-void path::cubic_to(morda::vector2 p1, morda::vector2 p2, morda::vector2 p3)
+void path::cubic_to(ruis::vector2 p1, ruis::vector2 p2, ruis::vector2 p3)
 {
 	auto p0 = this->points.back();
 
-	auto bezier = [p0, p1, p2, p3](morda::real t) {
+	auto bezier = [p0, p1, p2, p3](ruis::real t) {
 		using utki::pow3;
 		using utki::pow2;
 		return pow3(1 - t) * p0 + 3 * t * pow2(1 - t) * p1 + 3 * pow2(t) * (1 - t) * p2 + pow3(t) * p3;
@@ -55,20 +55,20 @@ void path::cubic_to(morda::vector2 p1, morda::vector2 p2, morda::vector2 p3)
 
 	auto length_est = (p1 - p0).norm() + (p2 - p1).norm() + (p3 - p2).norm();
 
-	const morda::real max_step_pixels = 10.0f; // 10 pixels
+	const ruis::real max_step_pixels = 10.0f; // 10 pixels
 
 	auto num_steps = length_est / max_step_pixels;
 
 	auto dt = 1 / num_steps;
 
 	// NOTE: start from dt because 0th point is already there in the path
-	for (morda::real t = dt; t < 1; t += dt) { // NOLINT(clang-analyzer-security.FloatLoopCounter)
+	for (ruis::real t = dt; t < 1; t += dt) { // NOLINT(clang-analyzer-security.FloatLoopCounter)
 		this->line_to(bezier(t));
 	}
 	this->line_to(bezier(1));
 }
 
-path::vertices path::stroke(morda::real half_width, morda::real antialias_width, morda::real antialias_alpha) const
+path::vertices path::stroke(ruis::real half_width, ruis::real antialias_width, ruis::real antialias_alpha) const
 {
 	vertices ret;
 
@@ -93,7 +93,7 @@ path::vertices path::stroke(morda::real half_width, morda::real antialias_width,
 			}
 		}
 
-		morda::vector2 prev_normal = 0, next_normal;
+		ruis::vector2 prev_normal = 0, next_normal;
 
 		ASSERT(prev || next)
 
@@ -129,12 +129,12 @@ path::vertices path::stroke(morda::real half_width, morda::real antialias_width,
 		if (!prev) {
 			ASSERT(next)
 			ret.pos.push_back(
-				(*cur) - normal * miter - normal.rot(-morda::real(pi) / 4) * antialias_width * morda::real(sqrt(2))
+				(*cur) - normal * miter - normal.rot(-ruis::real(pi) / 4) * antialias_width * ruis::real(sqrt(2))
 			);
 		} else if (!next) {
 			ASSERT(prev)
 			ret.pos.push_back(
-				(*cur) - normal * miter - normal.rot(morda::real(pi) / 4) * antialias_width * morda::real(sqrt(2))
+				(*cur) - normal * miter - normal.rot(ruis::real(pi) / 4) * antialias_width * ruis::real(sqrt(2))
 			);
 		} else {
 			ret.pos.push_back((*cur) - normal * antialias_miter);
@@ -154,11 +154,11 @@ path::vertices path::stroke(morda::real half_width, morda::real antialias_width,
 
 		if (!prev) {
 			ret.pos.push_back(
-				(*cur) + normal * miter + normal.rot(morda::real(pi) / 4) * antialias_width * morda::real(sqrt(2))
+				(*cur) + normal * miter + normal.rot(ruis::real(pi) / 4) * antialias_width * ruis::real(sqrt(2))
 			);
 		} else if (!next) {
 			ret.pos.push_back(
-				(*cur) + normal * miter + normal.rot(-morda::real(pi) / 4) * antialias_width * morda::real(sqrt(2))
+				(*cur) + normal * miter + normal.rot(-ruis::real(pi) / 4) * antialias_width * ruis::real(sqrt(2))
 			);
 		} else {
 			ret.pos.push_back((*cur) + normal * antialias_miter);

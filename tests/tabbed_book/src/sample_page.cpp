@@ -3,10 +3,10 @@
 #include <ruis/widgets/label/text.hpp>
 #include <ruis/widgets/button/push_button.hpp>
 
-sample_page::sample_page(const utki::shared_ref<morda::context>& c, const std::string& text) :
-        morda::widget(c, treeml::forest()),
-        morda::page(this->context, treeml::forest()),
-        morda::container(this->context, treeml::read(R"qwer(
+sample_page::sample_page(const utki::shared_ref<ruis::context>& c, const std::string& text) :
+        ruis::widget(c, treeml::forest()),
+        ruis::page(this->context, treeml::forest()),
+        ruis::container(this->context, treeml::read(R"qwer(
                 layout{row}
                 
                 @text{
@@ -20,9 +20,9 @@ sample_page::sample_page(const utki::shared_ref<morda::context>& c, const std::s
                 }
         )qwer"))
 {
-        this->get_widget_as<morda::text>("text").set_text(text);
+        this->get_widget_as<ruis::text>("text").set_text(text);
 
-        this->get_widget_as<morda::push_button>("button").click_handler = [this](morda::push_button&){
+        this->get_widget_as<ruis::push_button>("button").click_handler = [this](ruis::push_button&){
                 this->context.get().run_from_ui_thread([pg = utki::make_shared_from(*this)]{
                         pg.get().tear_out();
                 });

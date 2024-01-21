@@ -27,9 +27,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace std::string_literals;
 
-using namespace morda;
+using namespace ruis;
 
-inflater::inflater(morda::context& context) :
+inflater::inflater(ruis::context& context) :
 	context(context)
 {}
 
@@ -49,7 +49,7 @@ bool inflater::unregister_widget(const std::string& widget_name) noexcept
 	return true;
 }
 
-utki::shared_ref<morda::widget> inflater::inflate(const papki::file& fi)
+utki::shared_ref<ruis::widget> inflater::inflate(const papki::file& fi)
 {
 	return this->inflate(treeml::read(fi));
 }

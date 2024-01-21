@@ -23,11 +23,11 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../button/tab.hpp"
 
-using namespace morda;
+using namespace ruis;
 
-tabbed_book::tabbed_book(const utki::shared_ref<morda::context>& context, const treeml::forest& desc) :
-	morda::widget(context, desc),
-	morda::container(this->context, treeml::read(R"(
+tabbed_book::tabbed_book(const utki::shared_ref<ruis::context>& context, const treeml::forest& desc) :
+	ruis::widget(context, desc),
+	ruis::container(this->context, treeml::read(R"(
 					layout{column}
 					
 					@tab_group{
@@ -44,11 +44,11 @@ tabbed_book::tabbed_book(const utki::shared_ref<morda::context>& context, const 
 						}
 					}
 				)")),
-	tab_group(this->get_widget_as<morda::tab_group>("morda_tab_group")),
-	book(this->get_widget_as<morda::book>("morda_book"))
+	tab_group(this->get_widget_as<ruis::tab_group>("morda_tab_group")),
+	book(this->get_widget_as<ruis::book>("morda_book"))
 {
 	// on page tear out, remove corresponding tab
-	this->book.pages_change_handler = [this](morda::book& b, const page& p) {
+	this->book.pages_change_handler = [this](ruis::book& b, const page& p) {
 		auto i = this->find_pair(p);
 		if (i != this->tab_page_pairs.end()) {
 			ASSERT(i->tab)
@@ -59,7 +59,7 @@ tabbed_book::tabbed_book(const utki::shared_ref<morda::context>& context, const 
 	};
 
 	// on page programmatic activate we need to activate the corresponding tab as well
-	this->book.active_page_change_handler = [this](morda::book& b) {
+	this->book.active_page_change_handler = [this](ruis::book& b) {
 		ASSERT(b.get_active_page())
 		auto i = this->find_pair(*b.get_active_page());
 		if (i != this->tab_page_pairs.end()) {
@@ -69,14 +69,14 @@ tabbed_book::tabbed_book(const utki::shared_ref<morda::context>& context, const 
 	};
 }
 
-void tabbed_book::add(const utki::shared_ref<tab>& tab, const utki::shared_ref<morda::page>& page)
+void tabbed_book::add(const utki::shared_ref<tab>& tab, const utki::shared_ref<ruis::page>& page)
 {
 	this->tab_group.push_back(tab);
 	this->book.push(page);
 
 	tab.get().set_pressed(true);
 
-	tab.get().press_handler = [page](morda::button& btn) {
+	tab.get().press_handler = [page](ruis::button& btn) {
 		if (btn.is_pressed()) {
 			page.get().activate();
 		}
@@ -98,7 +98,7 @@ void tabbed_book::activate_another_tab(tab& t)
 	if (i == this->tab_group.begin()) {
 		auto ni = std::next(i);
 		if (ni != this->tab_group.end()) {
-			auto next_tab = std::dynamic_pointer_cast<morda::tab>(ni->to_shared_ptr());
+			auto next_tab = std::dynamic_pointer_cast<ruis::tab>(ni->to_shared_ptr());
 			ASSERT(next_tab)
 			next_tab->set_pressed(true);
 		}
@@ -106,7 +106,7 @@ void tabbed_book::activate_another_tab(tab& t)
 		ASSERT(i != this->tab_group.begin())
 		auto ni = std::prev(i);
 		ASSERT(ni >= this->tab_group.begin())
-		auto next_tab = std::dynamic_pointer_cast<morda::tab>(ni->to_shared_ptr());
+		auto next_tab = std::dynamic_pointer_cast<ruis::tab>(ni->to_shared_ptr());
 		ASSERT(next_tab)
 		next_tab->set_pressed(true);
 	}
@@ -136,14 +136,14 @@ utki::shared_ref<page> tabbed_book::tear_out(tab& t)
 	return pg;
 }
 
-auto tabbed_book::find_pair(const morda::tab& t) -> decltype(tab_page_pairs)::iterator
+auto tabbed_book::find_pair(const ruis::tab& t) -> decltype(tab_page_pairs)::iterator
 {
 	return std::find_if(this->tab_page_pairs.begin(), this->tab_page_pairs.end(), [&t](const auto& e) {
 		return &t == e.tab;
 	});
 }
 
-auto tabbed_book::find_pair(const morda::page& p) -> decltype(tab_page_pairs)::iterator
+auto tabbed_book::find_pair(const ruis::page& p) -> decltype(tab_page_pairs)::iterator
 {
 	return std::find_if(this->tab_page_pairs.begin(), this->tab_page_pairs.end(), [&p](const auto& e) {
 		return &p == e.page;

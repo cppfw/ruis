@@ -31,7 +31,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "color_widget.hpp"
 
-namespace morda {
+namespace ruis {
 
 /**
  * @brief Abstract widget displaying a text.
@@ -42,7 +42,7 @@ class text_widget : virtual public widget
 
 	utki::shared_ref<const res::font> font_face;
 
-	utki::shared_ref<const morda::font> font;
+	utki::shared_ref<const ruis::font> font;
 
 public:
 	text_widget(const text_widget&) = delete;
@@ -55,7 +55,7 @@ public:
 
 	void set_font_face(const utki::shared_ref<const res::font>& font_res);
 
-	const morda::font& get_font() const
+	const ruis::font& get_font() const
 	{
 		return this->font.get();
 	}
@@ -88,9 +88,9 @@ public:
 	std::function<void(text_widget& w)> text_change_handler;
 
 protected:
-	text_widget(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
+	text_widget(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
 
 private:
 };
 
-} // namespace morda
+} // namespace ruis

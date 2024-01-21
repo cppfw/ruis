@@ -24,12 +24,12 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "nine_patch_button.hpp"
 #include "toggle_button.hpp"
 
-namespace morda {
+namespace ruis {
 
 class nine_patch_toggle : virtual public toggle_button, public nine_patch_button
 {
 public:
-	nine_patch_toggle(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
+	nine_patch_toggle(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
 
 protected:
 	void on_press_change() override;
@@ -43,4 +43,4 @@ protected:
 	}
 };
 
-} // namespace morda
+} // namespace ruis

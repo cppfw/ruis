@@ -3,11 +3,11 @@
 #include <ruis/widgets/group/book.hpp>
 
 class pile_page :
-		public morda::page,
-		public morda::container
+		public ruis::page,
+		public ruis::container
 {
 public:
-	pile_page(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
+	pile_page(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
 	
 	pile_page(const pile_page&) = delete;
 	pile_page& operator=(const pile_page&) = delete;

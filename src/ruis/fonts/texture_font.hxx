@@ -39,7 +39,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "font.hpp"
 
-namespace morda {
+namespace ruis {
 
 class freetype_face
 {
@@ -110,8 +110,8 @@ class texture_font : public font
 	mutable std::list<char32_t> last_used_order;
 
 	struct glyph {
-		morda::vector2 top_left;
-		morda::vector2 bottom_right;
+		ruis::vector2 top_left;
+		ruis::vector2 bottom_right;
 
 		// TOOD: make utki::shared_ref?
 		std::shared_ptr<vertex_array> vao;
@@ -139,7 +139,7 @@ public:
 	 * @param max_cached - maximum number of glyphs to cache.
 	 */
 	texture_font(
-		const utki::shared_ref<morda::context>& c,
+		const utki::shared_ref<ruis::context>& c,
 		const utki::shared_ref<const freetype_face>& face,
 		unsigned font_size,
 		unsigned max_cached
@@ -149,7 +149,7 @@ public:
 
 protected:
 	render_result render_internal(
-		const morda::matrix4& matrix,
+		const ruis::matrix4& matrix,
 		r4::vector4<float> color,
 		const std::u32string_view str,
 		unsigned tab_size,
@@ -158,11 +158,11 @@ protected:
 
 	real get_advance_internal(std::u32string_view str, unsigned tab_size) const override;
 
-	morda::rectangle get_bounding_box_internal(std::u32string_view str, unsigned tab_size) const override;
+	ruis::rectangle get_bounding_box_internal(std::u32string_view str, unsigned tab_size) const override;
 
 private:
-	real render_glyph_internal(const morda::matrix4& matrix, r4::vector4<float> color, char32_t ch) const;
+	real render_glyph_internal(const ruis::matrix4& matrix, r4::vector4<float> color, char32_t ch) const;
 
 	const glyph& get_glyph(char32_t c) const;
 };
-} // namespace morda
+} // namespace ruis

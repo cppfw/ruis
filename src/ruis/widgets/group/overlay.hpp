@@ -23,7 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../../container.hpp"
 
-namespace morda {
+namespace ruis {
 
 /**
  * @brief Overlay container for displaying widgets on top of anything.
@@ -34,7 +34,7 @@ namespace morda {
 class overlay : public container
 {
 public:
-	overlay(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
+	overlay(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
 
 	overlay(const overlay&) = delete;
 	overlay& operator=(const overlay&) = delete;
@@ -63,4 +63,4 @@ public:
 	void close_all_context_menus();
 };
 
-} // namespace morda
+} // namespace ruis

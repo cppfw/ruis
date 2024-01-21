@@ -27,7 +27,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "key.hpp"
 
-namespace morda {
+namespace ruis {
 
 /**
  * @brief Mouse buttons enumeration.
@@ -74,4 +74,4 @@ struct character_input_event {
 	key_combo combo;
 };
 
-} // namespace morda
+} // namespace ruis

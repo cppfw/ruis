@@ -21,14 +21,14 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "weak_widget_set.hpp"
 
-using namespace morda;
+using namespace ruis;
 
 void weak_widget_set::add(std::weak_ptr<widget> w)
 {
 	this->set.insert(std::move(w));
 }
 
-void weak_widget_set::foreach (const std::function<void(morda::widget&)>& do_this)
+void weak_widget_set::foreach (const std::function<void(ruis::widget&)>& do_this)
 {
 	if (!do_this) {
 		return;

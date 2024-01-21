@@ -27,7 +27,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "updater.hpp"
 
-namespace morda {
+namespace ruis {
 
 /**
  * @brief Base class for periodic updating.
@@ -87,4 +87,4 @@ public:
 	~updateable() override = default;
 };
 
-} // namespace morda
+} // namespace ruis

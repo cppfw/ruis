@@ -27,7 +27,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../resource_loader.hpp"
 #include "../util/util.hpp"
 
-namespace morda::res {
+namespace ruis::res {
 
 /**
  * @brief Texture resource.
@@ -43,9 +43,9 @@ namespace morda::res {
  * }
  * @endcode
  */
-class texture : public morda::resource
+class texture : public ruis::resource
 {
-	friend class morda::resource_loader;
+	friend class ruis::resource_loader;
 
 	const utki::shared_ref<const texture_2d> tex2d;
 
@@ -55,7 +55,7 @@ public:
 	 * @param c - context.
 	 * @param tex - texture object to initialize this resource with.
 	 */
-	texture(const utki::shared_ref<morda::context>& c, decltype(tex2d) tex) :
+	texture(const utki::shared_ref<ruis::context>& c, decltype(tex2d) tex) :
 		resource(c),
 		tex2d(std::move(tex))
 	{}
@@ -79,10 +79,10 @@ public:
 
 private:
 	static utki::shared_ref<texture> load(
-		const utki::shared_ref<morda::context>& ctx,
+		const utki::shared_ref<ruis::context>& ctx,
 		const ::treeml::forest& desc,
 		const papki::file& fi
 	);
 };
 
-} // namespace morda::res
+} // namespace ruis::res

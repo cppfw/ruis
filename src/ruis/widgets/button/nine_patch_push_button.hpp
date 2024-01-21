@@ -24,14 +24,14 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "nine_patch_button.hpp"
 #include "push_button.hpp"
 
-namespace morda {
+namespace ruis {
 
 class nine_patch_push_button :
 	public push_button, //
 	public nine_patch_button
 {
 public:
-	nine_patch_push_button(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
+	nine_patch_push_button(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
 
 protected:
 	void on_press_change() override;
@@ -47,4 +47,4 @@ protected:
 	}
 };
 
-} // namespace morda
+} // namespace ruis

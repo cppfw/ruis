@@ -23,7 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../../context.hpp"
 
-using namespace morda;
+using namespace ruis;
 
 namespace {
 class static_provider : public drop_down_box::provider
@@ -56,7 +56,7 @@ public:
 } // namespace
 
 drop_down_box::drop_down_box(
-	const utki::shared_ref<morda::context>& c,
+	const utki::shared_ref<ruis::context>& c,
 	const treeml::forest& desc,
 	container& selection_container
 ) :

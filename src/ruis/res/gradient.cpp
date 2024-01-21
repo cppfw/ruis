@@ -27,9 +27,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../context.hpp"
 #include "../util/util.hpp"
 
-using namespace morda::res;
+using namespace ruis::res;
 
-morda::res::gradient::gradient(const utki::shared_ref<morda::context>& c) :
+ruis::res::gradient::gradient(const utki::shared_ref<ruis::context>& c) :
 	resource(c),
 	vao(this->context.get().renderer.get().empty_vertex_array)
 {}
@@ -78,7 +78,7 @@ void gradient::set(std::vector<std::tuple<real, uint32_t>>& stops, bool vertical
 }
 
 utki::shared_ref<gradient> gradient::load(
-	const utki::shared_ref<morda::context>& ctx,
+	const utki::shared_ref<ruis::context>& ctx,
 	const treeml::forest& desc,
 	const papki::file& fi
 )
@@ -113,7 +113,7 @@ utki::shared_ref<gradient> gradient::load(
 	return ret;
 }
 
-void gradient::render(const morda::matrix4& m) const
+void gradient::render(const ruis::matrix4& m) const
 {
 	this->context.get().renderer.get().shader->pos_clr->render(m, this->vao.get());
 }

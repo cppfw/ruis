@@ -25,7 +25,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <utki/shared_ref.hpp>
 
-namespace morda {
+namespace ruis {
 
 class widget;
 
@@ -49,4 +49,4 @@ static_assert(
 	"sizeof(widget_list::value_type) differs from sizeof(semiconst_widget_list::value_type)"
 );
 
-} // namespace morda
+} // namespace ruis

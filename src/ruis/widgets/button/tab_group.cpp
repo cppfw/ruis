@@ -25,9 +25,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "tab.hpp"
 
-using namespace morda;
+using namespace ruis;
 
-tab_group::tab_group(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+tab_group::tab_group(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
 	widget(c, desc),
 	choice_group(this->context, desc)
 {
@@ -62,7 +62,7 @@ void tab_group::set_filler(std::shared_ptr<res::image> filler)
 	this->filler_texture = this->filler->get().to_shared_ptr();
 }
 
-morda::vector2 tab_group::measure(const morda::vector2& quotum) const
+ruis::vector2 tab_group::measure(const ruis::vector2& quotum) const
 {
 	vector2 ret(quotum);
 	using std::max;
@@ -75,14 +75,14 @@ morda::vector2 tab_group::measure(const morda::vector2& quotum) const
 	for (const auto& c : this->children()) {
 		const auto& lp = c.get().get_layout_params_const();
 
-		auto t = dynamic_cast<const morda::tab*>(&c.get());
+		auto t = dynamic_cast<const ruis::tab*>(&c.get());
 		if (!t) {
 			throw std::logic_error(
 				"Non-tab widget added to tab_group, only tab widgets are allowed to be added to tab_group"
 			);
 		}
 
-		morda::vector2 d;
+		ruis::vector2 d;
 
 		for (unsigned j = 0; j != d.size(); ++j) {
 			if (lp.dims[j] == layout_params::max || lp.dims[j] == layout_params::fill) {
@@ -127,7 +127,7 @@ void tab_group::on_lay_out()
 		auto dim = dims_for_widget(c.get(), this->rect().d);
 		c.get().resize(dim);
 
-		auto t = dynamic_cast<morda::tab*>(&c.get());
+		auto t = dynamic_cast<ruis::tab*>(&c.get());
 		if (!t) {
 			throw std::logic_error(
 				"Non-tab widget added to tab_group, only tab widgets are allowed to be added to tab_group"
@@ -147,7 +147,7 @@ void tab_group::on_lay_out()
 	}
 }
 
-void tab_group::render(const morda::matrix4& matrix) const
+void tab_group::render(const ruis::matrix4& matrix) const
 {
 	auto active_tab = this->get_active().lock();
 

@@ -24,7 +24,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../../context.hpp"
 #include "../../util/util.hpp"
 
-using namespace morda;
+using namespace ruis;
 
 namespace {
 
@@ -158,7 +158,7 @@ const auto window_layout_description = treeml::read(R"qwertyuiop(
 	)qwertyuiop");
 } // namespace
 
-void morda::window::set_background(const utki::shared_ref<widget>& w)
+void ruis::window::set_background(const utki::shared_ref<widget>& w)
 {
 	ASSERT(this->children().size() == 1 || this->children().size() == 2)
 	if (this->children().size() == 2) {
@@ -170,7 +170,7 @@ void morda::window::set_background(const utki::shared_ref<widget>& w)
 	this->insert(w, this->children().begin());
 }
 
-morda::window::window(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+ruis::window::window(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
 	widget(c, desc),
 	container(this->context, window_layout_description)
 {
@@ -218,7 +218,7 @@ morda::window::window(const utki::shared_ref<morda::context>& c, const treeml::f
 	this->content_area->push_back_inflate(desc);
 }
 
-void morda::window::setup_widgets()
+void ruis::window::setup_widgets()
 {
 	// TODO: use get_widget_as()
 	this->content_area = this->try_get_widget_as<container>("morda_content");
@@ -251,8 +251,8 @@ void morda::window::setup_widgets()
 			});
 		};
 
-	std::function<decltype(morda::mouse_proxy::hover_change_handler)(morda::mouse_cursor, cursor_iter&)>
-		make_hover_change_handler = [this](morda::mouse_cursor cursor, cursor_iter& iter) {
+	std::function<decltype(ruis::mouse_proxy::hover_change_handler)(ruis::mouse_cursor, cursor_iter&)>
+		make_hover_change_handler = [this](ruis::mouse_cursor cursor, cursor_iter& iter) {
 			return [this, cursor, &iter](mouse_proxy& mp, unsigned pointer_id) {
 				// LOG("hover = " << mp.is_hovered() << std::endl)
 				// LOG("this->mouse_captured = " << this->mouse_captured << std::endl)
@@ -280,7 +280,7 @@ void morda::window::setup_widgets()
 			}
 			return false;
 		};
-		caption->hover_change_handler = make_hover_change_handler(morda::mouse_cursor::grab, this->caption_cursor_iter);
+		caption->hover_change_handler = make_hover_change_handler(ruis::mouse_cursor::grab, this->caption_cursor_iter);
 	}
 
 	{
@@ -290,7 +290,7 @@ void morda::window::setup_widgets()
 		w->mouse_move_handler = [this](mouse_proxy&, const mouse_move_event& e) {
 			if (this->mouse_captured) {
 				using std::min;
-				morda::vector2 d = e.pos - this->capture_point;
+				ruis::vector2 d = e.pos - this->capture_point;
 				d = min(d, this->rect().d - this->empty_min_dim); // clamp top
 				this->move_by(d);
 				this->resize_by(-d);
@@ -298,7 +298,7 @@ void morda::window::setup_widgets()
 			return false;
 		};
 		w->hover_change_handler =
-			make_hover_change_handler(morda::mouse_cursor::top_left_corner, this->lt_border_cursor_iter);
+			make_hover_change_handler(ruis::mouse_cursor::top_left_corner, this->lt_border_cursor_iter);
 		this->lt_border = w;
 	}
 
@@ -310,16 +310,16 @@ void morda::window::setup_widgets()
 			if (this->mouse_captured) {
 				using std::min;
 				using std::max;
-				morda::vector2 d = e.pos - this->capture_point;
+				ruis::vector2 d = e.pos - this->capture_point;
 				d.x() = min(d.x(), this->rect().d.x() - this->empty_min_dim.x()); // clamp top
 				d.y() = max(d.y(), -(this->rect().d.y() - this->empty_min_dim.y())); // clamp bottom
-				this->move_by(morda::vector2(d.x(), 0));
-				this->resize_by(morda::vector2(-d.x(), d.y()));
+				this->move_by(ruis::vector2(d.x(), 0));
+				this->resize_by(ruis::vector2(-d.x(), d.y()));
 			}
 			return false;
 		};
 		w->hover_change_handler =
-			make_hover_change_handler(morda::mouse_cursor::bottom_left_corner, this->lb_border_cursor_iter);
+			make_hover_change_handler(ruis::mouse_cursor::bottom_left_corner, this->lb_border_cursor_iter);
 		this->lb_border = w;
 	}
 
@@ -331,16 +331,16 @@ void morda::window::setup_widgets()
 			if (this->mouse_captured) {
 				using std::min;
 				using std::max;
-				morda::vector2 d = e.pos - this->capture_point;
+				ruis::vector2 d = e.pos - this->capture_point;
 				d.x() = max(d.x(), -(this->rect().d.x() - this->empty_min_dim.x())); // clamp bottom
 				d.y() = min(d.y(), this->rect().d.y() - this->empty_min_dim.y()); // clamp top
-				this->move_by(morda::vector2(0, d.y()));
-				this->resize_by(morda::vector2(d.x(), -d.y()));
+				this->move_by(ruis::vector2(0, d.y()));
+				this->resize_by(ruis::vector2(d.x(), -d.y()));
 			}
 			return false;
 		};
 		w->hover_change_handler =
-			make_hover_change_handler(morda::mouse_cursor::top_right_corner, this->rt_border_cursor_iter);
+			make_hover_change_handler(ruis::mouse_cursor::top_right_corner, this->rt_border_cursor_iter);
 		this->rt_border = w;
 	}
 
@@ -351,14 +351,14 @@ void morda::window::setup_widgets()
 		w->mouse_move_handler = [this](mouse_proxy&, const mouse_move_event& e) {
 			if (this->mouse_captured) {
 				using std::max;
-				morda::vector2 d = e.pos - this->capture_point;
+				ruis::vector2 d = e.pos - this->capture_point;
 				d = max(d, -(this->rect().d - this->empty_min_dim)); // clamp bottom
 				this->resize_by(d);
 			}
 			return false;
 		};
 		w->hover_change_handler =
-			make_hover_change_handler(morda::mouse_cursor::bottom_right_corner, this->rb_border_cursor_iter);
+			make_hover_change_handler(ruis::mouse_cursor::bottom_right_corner, this->rb_border_cursor_iter);
 		this->rb_border = w;
 	}
 
@@ -369,14 +369,14 @@ void morda::window::setup_widgets()
 		w->mouse_move_handler = [this](mouse_proxy&, const mouse_move_event& e) {
 			if (this->mouse_captured) {
 				using std::min;
-				morda::vector2 d = e.pos - this->capture_point;
+				ruis::vector2 d = e.pos - this->capture_point;
 				d.x() = min(d.x(), this->rect().d.x() - this->empty_min_dim.x()); // clamp top
-				this->move_by(morda::vector2(d.x(), 0));
-				this->resize_by(morda::vector2(-d.x(), 0));
+				this->move_by(ruis::vector2(d.x(), 0));
+				this->resize_by(ruis::vector2(-d.x(), 0));
 			}
 			return false;
 		};
-		w->hover_change_handler = make_hover_change_handler(morda::mouse_cursor::left_side, this->l_border_cursor_iter);
+		w->hover_change_handler = make_hover_change_handler(ruis::mouse_cursor::left_side, this->l_border_cursor_iter);
 		this->l_border = w;
 	}
 
@@ -387,14 +387,14 @@ void morda::window::setup_widgets()
 		w->mouse_move_handler = [this](mouse_proxy&, const mouse_move_event& e) {
 			if (this->mouse_captured) {
 				using std::max;
-				morda::vector2 d = e.pos - this->capture_point;
+				ruis::vector2 d = e.pos - this->capture_point;
 				d.x() = max(d.x(), -(this->rect().d.x() - this->empty_min_dim.x())); // clamp bottom
-				this->resize_by(morda::vector2(d.x(), 0));
+				this->resize_by(ruis::vector2(d.x(), 0));
 			}
 			return false;
 		};
 		w->hover_change_handler =
-			make_hover_change_handler(morda::mouse_cursor::right_side, this->r_border_cursor_iter);
+			make_hover_change_handler(ruis::mouse_cursor::right_side, this->r_border_cursor_iter);
 		this->r_border = w;
 	}
 
@@ -405,14 +405,14 @@ void morda::window::setup_widgets()
 		w->mouse_move_handler = [this](mouse_proxy&, const mouse_move_event& e) {
 			if (this->mouse_captured) {
 				using std::min;
-				morda::vector2 d = e.pos - this->capture_point;
+				ruis::vector2 d = e.pos - this->capture_point;
 				d.y() = min(d.y(), this->rect().d.y() - this->empty_min_dim.y()); // clamp top
-				this->move_by(morda::vector2(0, d.y()));
-				this->resize_by(morda::vector2(0, -d.y()));
+				this->move_by(ruis::vector2(0, d.y()));
+				this->resize_by(ruis::vector2(0, -d.y()));
 			}
 			return false;
 		};
-		w->hover_change_handler = make_hover_change_handler(morda::mouse_cursor::top_side, this->t_border_cursor_iter);
+		w->hover_change_handler = make_hover_change_handler(ruis::mouse_cursor::top_side, this->t_border_cursor_iter);
 		this->t_border = w;
 	}
 
@@ -423,24 +423,24 @@ void morda::window::setup_widgets()
 		w->mouse_move_handler = [this](mouse_proxy&, const mouse_move_event& e) {
 			if (this->mouse_captured) {
 				using std::max;
-				morda::vector2 d = e.pos - this->capture_point;
+				ruis::vector2 d = e.pos - this->capture_point;
 				d.y() = max(d.y(), -(this->rect().d.y() - this->empty_min_dim.y())); // clamp bottom
-				this->resize_by(morda::vector2(0, d.y()));
+				this->resize_by(ruis::vector2(0, d.y()));
 			}
 			return false;
 		};
 		w->hover_change_handler =
-			make_hover_change_handler(morda::mouse_cursor::bottom_side, this->b_border_cursor_iter);
+			make_hover_change_handler(ruis::mouse_cursor::bottom_side, this->b_border_cursor_iter);
 		this->b_border = w;
 	}
 }
 
-void morda::window::set_title(const std::string& str)
+void ruis::window::set_title(const std::string& str)
 {
 	this->title->set_text(utki::to_utf32(str));
 }
 
-void morda::window::set_borders(sides<real> borders)
+void ruis::window::set_borders(sides<real> borders)
 {
 	this->l_border->get_layout_params().dims.x() = borders.left();
 	this->t_border->get_layout_params().dims.y() = borders.top();
@@ -460,7 +460,7 @@ void morda::window::set_borders(sides<real> borders)
 	this->rt_border->get_layout_params().dims.y() = borders.top();
 }
 
-bool morda::window::on_mouse_button(const mouse_button_event& e)
+bool ruis::window::on_mouse_button(const mouse_button_event& e)
 {
 	if (e.is_down && !this->is_topmost()) {
 		this->context.get().run_from_ui_thread([this]() {
@@ -474,7 +474,7 @@ bool morda::window::on_mouse_button(const mouse_button_event& e)
 	return true;
 }
 
-bool morda::window::on_mouse_move(const mouse_move_event& e)
+bool ruis::window::on_mouse_move(const mouse_move_event& e)
 {
 	this->container::on_mouse_move(e);
 	return true;

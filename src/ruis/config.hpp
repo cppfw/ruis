@@ -29,7 +29,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "util/sides.hpp"
 
-namespace morda {
+namespace ruis {
 
 using real = float;
 
@@ -50,4 +50,4 @@ static_assert(sizeof(vector3) == sizeof(real) * 3, "size mismatch");
 using vector4 = r4::vector4<real>;
 static_assert(sizeof(vector4) == sizeof(real) * 4, "size mismatch");
 
-} // namespace morda
+} // namespace ruis

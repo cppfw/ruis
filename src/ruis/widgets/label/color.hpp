@@ -23,7 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../base/color_widget.hpp"
 
-namespace morda {
+namespace ruis {
 
 /**
  * @brief Color widget.
@@ -33,7 +33,7 @@ namespace morda {
 class color : public color_widget
 {
 public:
-	color(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
+	color(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
 
 	color(const color&) = delete;
 	color& operator=(const color&) = delete;
@@ -43,7 +43,7 @@ public:
 
 	~color() override = default;
 
-	void render(const morda::matrix4& matrix) const override;
+	void render(const ruis::matrix4& matrix) const override;
 };
 
-} // namespace morda
+} // namespace ruis

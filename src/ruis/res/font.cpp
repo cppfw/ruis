@@ -29,11 +29,11 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../fonts/texture_font_provider.hxx"
 #include "../util/util.hpp"
 
-using namespace morda;
-using namespace morda::res;
+using namespace ruis;
+using namespace ruis::res;
 
 res::font::font(
-	const utki::shared_ref<morda::context>& context,
+	const utki::shared_ref<ruis::context>& context,
 	const papki::file& file_normal,
 	std::unique_ptr<const papki::file> file_bold,
 	std::unique_ptr<const papki::file> file_italic,
@@ -73,7 +73,7 @@ res::font::font(
 }
 
 utki::shared_ref<res::font> res::font::load(
-	const utki::shared_ref<morda::context>& ctx,
+	const utki::shared_ref<ruis::context>& ctx,
 	const treeml::forest& desc,
 	const papki::file& fi
 )

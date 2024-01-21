@@ -21,7 +21,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-namespace morda {
+namespace ruis {
 
 enum class mouse_cursor {
 	none,
@@ -44,4 +44,4 @@ enum class mouse_cursor {
 	enum_size
 };
 
-} // namespace morda
+} // namespace ruis

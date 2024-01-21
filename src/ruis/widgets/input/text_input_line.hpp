@@ -27,7 +27,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "character_input_widget.hpp"
 
-namespace morda {
+namespace ruis {
 
 /**
  * @brief TODO:.
@@ -63,13 +63,13 @@ public:
 	text_input_line(text_input_line&&) = delete;
 	text_input_line& operator=(text_input_line&&) = delete;
 
-	text_input_line(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
+	text_input_line(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
 
 	~text_input_line() override = default;
 
-	vector2 measure(const morda::vector2& quotum) const noexcept override;
+	vector2 measure(const ruis::vector2& quotum) const noexcept override;
 
-	void render(const morda::matrix4& matrix) const override;
+	void render(const ruis::matrix4& matrix) const override;
 
 	bool on_mouse_button(const mouse_button_event& event) override;
 
@@ -77,7 +77,7 @@ public:
 
 	void on_focus_change() override;
 
-	bool on_key(const morda::key_event& e) override;
+	bool on_key(const ruis::key_event& e) override;
 
 	void on_resize() override;
 
@@ -105,4 +105,4 @@ private:
 	size_t delete_selection();
 };
 
-} // namespace morda
+} // namespace ruis

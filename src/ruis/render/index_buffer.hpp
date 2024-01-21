@@ -21,7 +21,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-namespace morda {
+namespace ruis {
 
 class index_buffer
 {
@@ -37,4 +37,4 @@ public:
 	virtual ~index_buffer() = default;
 };
 
-} // namespace morda
+} // namespace ruis

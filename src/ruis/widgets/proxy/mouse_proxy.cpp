@@ -21,9 +21,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "mouse_proxy.hpp"
 
-using namespace morda;
+using namespace ruis;
 
-mouse_proxy::mouse_proxy(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+mouse_proxy::mouse_proxy(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
 	widget(c, desc)
 {}
 

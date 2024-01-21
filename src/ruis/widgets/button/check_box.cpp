@@ -23,7 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../../context.hpp"
 
-using namespace morda;
+using namespace ruis;
 
 namespace {
 
@@ -36,7 +36,7 @@ const auto check_box_layout = treeml::read(R"qwertyuiop(
 
 } // namespace
 
-check_box::check_box(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+check_box::check_box(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
 	widget(c, desc),
 	button(this->context, desc),
 	toggle_button(this->context, desc),

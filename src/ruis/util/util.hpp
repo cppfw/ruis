@@ -30,9 +30,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "units.hpp"
 
-namespace morda {
+namespace ruis {
 
-morda::vector2 parse_vec2(treeml::forest::const_iterator begin, treeml::forest::const_iterator end);
+ruis::vector2 parse_vec2(treeml::forest::const_iterator begin, treeml::forest::const_iterator end);
 
 /**
  * @brief Parse 2 values from treeml as vector2.
@@ -41,7 +41,7 @@ morda::vector2 parse_vec2(treeml::forest::const_iterator begin, treeml::forest::
  *                vector components will be filled with latest parsed value.
  * @return parsed vector2.
  */
-inline morda::vector2 parse_vec2(const treeml::forest& desc)
+inline ruis::vector2 parse_vec2(const treeml::forest& desc)
 {
 	return parse_vec2(desc.begin(), desc.end());
 }
@@ -54,7 +54,7 @@ inline morda::vector2 parse_vec2(const treeml::forest& desc)
  *               If zero pointer is passed the resulting rectangle will be filled with zeros.
  * @return parsed rectangle.
  */
-morda::rectangle parse_rect(const treeml::forest& desc);
+ruis::rectangle parse_rect(const treeml::forest& desc);
 
 /**
  * @brief Parse chain of 4 treeml nodes as sides.
@@ -64,7 +64,7 @@ morda::rectangle parse_rect(const treeml::forest& desc);
  *               If zero pointer is passed the resulting sides<real> will be filled with zeros.
  * @return parsed sides<real>.
  */
-morda::sides<real> parse_sides(const treeml::forest& desc);
+ruis::sides<real> parse_sides(const treeml::forest& desc);
 
 /**
  * @brief Parse dimension value.
@@ -74,7 +74,7 @@ morda::sides<real> parse_sides(const treeml::forest& desc);
  * @param units - information about units. Can be obtained from context.
  * @return Parsed value in pixels.
  */
-real parse_dimension_value(const treeml::leaf& l, const morda::units& units);
+real parse_dimension_value(const treeml::leaf& l, const ruis::units& units);
 
 /**
  * @brief Parse layout dimension value.
@@ -83,7 +83,7 @@ real parse_dimension_value(const treeml::leaf& l, const morda::units& units);
  * @param units - information about units. Can be obtained from context.
  * @return Parsed value.
  */
-real parse_layout_dimension_value(const treeml::leaf& l, const morda::units& units);
+real parse_layout_dimension_value(const treeml::leaf& l, const ruis::units& units);
 
 bool is_property(const treeml::tree& t);
 
@@ -103,4 +103,4 @@ inline const treeml::leaf& get_property_value(const treeml::tree& p)
 	return p.children.front().value;
 }
 
-} // namespace morda
+} // namespace ruis

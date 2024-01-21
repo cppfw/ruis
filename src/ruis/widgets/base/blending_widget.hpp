@@ -24,7 +24,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../../render/renderer.hpp"
 #include "../../widget.hpp"
 
-namespace morda {
+namespace ruis {
 
 /**
  * @brief Basic widget which allows configuring alpha blending when rendering.
@@ -47,10 +47,10 @@ public:
 	 * @brief Structure holding blending parameters.
 	 */
 	struct blending_params {
-		morda::renderer::blend_factor src;
-		morda::renderer::blend_factor dst;
-		morda::renderer::blend_factor src_alpha;
-		morda::renderer::blend_factor dst_alpha;
+		ruis::renderer::blend_factor src;
+		ruis::renderer::blend_factor dst;
+		ruis::renderer::blend_factor src_alpha;
+		ruis::renderer::blend_factor dst_alpha;
 
 		bool operator==(const blending_params& b)
 		{
@@ -61,14 +61,14 @@ public:
 
 private:
 	blending_params blend_v = {
-		morda::renderer::blend_factor::src_alpha,
-		morda::renderer::blend_factor::one_minus_src_alpha,
-		morda::renderer::blend_factor::one,
-		morda::renderer::blend_factor::one_minus_src_alpha
+		ruis::renderer::blend_factor::src_alpha,
+		ruis::renderer::blend_factor::one_minus_src_alpha,
+		ruis::renderer::blend_factor::one,
+		ruis::renderer::blend_factor::one_minus_src_alpha
 	};
 
 protected:
-	blending_widget(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
+	blending_widget(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
 
 public:
 	blending_widget(const blending_widget&) = delete;
@@ -119,4 +119,4 @@ public:
 	virtual void on_blending_change() {}
 };
 
-} // namespace morda
+} // namespace ruis

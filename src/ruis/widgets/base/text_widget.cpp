@@ -24,7 +24,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../../context.hpp"
 #include "../../util/util.hpp"
 
-using namespace morda;
+using namespace ruis;
 
 namespace {
 
@@ -54,7 +54,7 @@ void text_widget::set_font_size(real size)
 	this->on_font_change();
 }
 
-text_widget::text_widget(const utki::shared_ref<morda::context>& c, const treeml::forest& desc) :
+text_widget::text_widget(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
 	widget(c, desc),
 	font_size([&desc, this]() {
 		for (const auto& p : desc) {
@@ -76,7 +76,7 @@ text_widget::text_widget(const utki::shared_ref<morda::context>& c, const treeml
 			}
 
 			if (p.value == "font") {
-				return this->context.get().loader.load<morda::res::font>(get_property_value(p).to_string().c_str());
+				return this->context.get().loader.load<ruis::res::font>(get_property_value(p).to_string().c_str());
 			}
 		}
 

@@ -32,7 +32,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "config.hpp"
 #include "widget.hpp"
 
-namespace morda {
+namespace ruis {
 
 class layout;
 
@@ -79,7 +79,7 @@ private:
 		}
 	} children_list;
 
-	utki::shared_ref<morda::layout> layout;
+	utki::shared_ref<ruis::layout> layout;
 
 private:
 	struct mouse_capture_info {
@@ -127,15 +127,15 @@ public:
 	 * @param c - context to which this widget belongs.
 	 * @param desc - description of the widget.
 	 */
-	container(const utki::shared_ref<morda::context>& c, const treeml::forest& desc);
+	container(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
 
 	container(
-		const utki::shared_ref<morda::context>& c,
+		const utki::shared_ref<ruis::context>& c,
 		const treeml::forest& desc,
-		const utki::shared_ref<morda::layout>& layout
+		const utki::shared_ref<ruis::layout>& layout
 	);
 
-	const morda::layout& get_layout() const
+	const ruis::layout& get_layout() const
 	{
 		return this->layout.get();
 	}
@@ -148,7 +148,7 @@ public:
 
 	void on_hover_change(unsigned pointer_id) override;
 
-	morda::vector2 measure(const morda::vector2& quotum) const override;
+	ruis::vector2 measure(const ruis::vector2& quotum) const override;
 
 	/**
 	 * @brief Layout child widgets.
@@ -471,7 +471,7 @@ std::vector<utki::shared_ref<widget_type>> widget::get_all_widgets(bool allow_it
 	return ret;
 }
 
-} // namespace morda
+} // namespace ruis
 
 // include definitions for forward declared classes
 #include "layout.hpp"
