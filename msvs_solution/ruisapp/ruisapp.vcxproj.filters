@@ -15,31 +15,31 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\tests\harness\modules\mordavokne\src\**\*.cpp">
+    <ClCompile Include="..\..\tests\harness\modules\ruisapp\src\**\*.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\tests\harness\modules\mordavokne\src\**\*.cpp">
+    <ClCompile Include="..\..\tests\harness\modules\ruisapp\src\**\*.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\tests\harness\modules\mordavokne\src\**\*.cpp">
+    <ClCompile Include="..\..\tests\harness\modules\ruisapp\src\**\*.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\tests\harness\modules\mordavokne\src\**\*.cpp">
+    <ClCompile Include="..\..\tests\harness\modules\ruisapp\src\**\*.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\tests\harness\modules\mordavokne\src\**\*.cpp">
+    <ClCompile Include="..\..\tests\harness\modules\ruisapp\src\**\*.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\tests\harness\modules\mordavokne\src\**\*.cpp">
+    <ClCompile Include="..\..\tests\harness\modules\ruisapp\src\**\*.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\tests\harness\modules\mordavokne\src\**\*.cpp">
+    <ClCompile Include="..\..\tests\harness\modules\ruisapp\src\**\*.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\tests\harness\modules\mordavokne\src\**\*.cpp">
+    <ClCompile Include="..\..\tests\harness\modules\ruisapp\src\**\*.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\tests\harness\modules\mordavokne\src\**\*.cpp">
+    <ClCompile Include="..\..\tests\harness\modules\ruisapp\src\**\*.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
