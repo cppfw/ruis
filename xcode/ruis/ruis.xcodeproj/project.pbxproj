@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		2C74864327397776003AA9A1 /* morda.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = morda.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2C74864327397776003AA9A1 /* ruis.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ruis.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -24,7 +24,7 @@
 		2C74863927397776003AA9A1 = {
 			isa = PBXGroup;
 			children = (
-				2C74864527397776003AA9A1 /* morda */,
+				2C74864527397776003AA9A1 /* ruis */,
 				2C74864427397776003AA9A1 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -32,16 +32,16 @@
 		2C74864427397776003AA9A1 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				2C74864327397776003AA9A1 /* morda.framework */,
+				2C74864327397776003AA9A1 /* ruis.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		2C74864527397776003AA9A1 /* morda */ = {
+		2C74864527397776003AA9A1 /* ruis */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			path = morda;
+			path = ruis;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -57,9 +57,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		2C74864227397776003AA9A1 /* morda */ = {
+		2C74864227397776003AA9A1 /* ruis */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2C74864A27397776003AA9A1 /* Build configuration list for PBXNativeTarget "morda" */;
+			buildConfigurationList = 2C74864A27397776003AA9A1 /* Build configuration list for PBXNativeTarget "ruis" */;
 			buildPhases = (
 				2C74863E27397776003AA9A1 /* Headers */,
 				2C74863F27397776003AA9A1 /* Sources */,
@@ -70,9 +70,9 @@
 			);
 			dependencies = (
 			);
-			name = morda;
-			productName = morda;
-			productReference = 2C74864327397776003AA9A1 /* morda.framework */;
+			name = ruis;
+			productName = ruis;
+			productReference = 2C74864327397776003AA9A1 /* ruis.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -89,7 +89,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 2C74863D27397776003AA9A1 /* Build configuration list for PBXProject "morda" */;
+			buildConfigurationList = 2C74863D27397776003AA9A1 /* Build configuration list for PBXProject "ruis" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -102,7 +102,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				2C74864227397776003AA9A1 /* morda */,
+				2C74864227397776003AA9A1 /* ruis */,
 			);
 		};
 /* End PBXProject section */
@@ -268,7 +268,7 @@
 				MARKETING_VERSION = 1.0;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = io.github.cppfw.morda;
+				PRODUCT_BUNDLE_IDENTIFIER = io.github.cppfw.ruis;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -298,7 +298,7 @@
 				MARKETING_VERSION = 1.0;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = io.github.cppfw.morda;
+				PRODUCT_BUNDLE_IDENTIFIER = io.github.cppfw.ruis;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -309,7 +309,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		2C74863D27397776003AA9A1 /* Build configuration list for PBXProject "morda" */ = {
+		2C74863D27397776003AA9A1 /* Build configuration list for PBXProject "ruis" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2C74864827397776003AA9A1 /* Debug */,
@@ -318,7 +318,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2C74864A27397776003AA9A1 /* Build configuration list for PBXNativeTarget "morda" */ = {
+		2C74864A27397776003AA9A1 /* Build configuration list for PBXNativeTarget "ruis" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2C74864B27397776003AA9A1 /* Debug */,
