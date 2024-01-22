@@ -288,12 +288,12 @@ void gui::init_standard_widgets(papki::file& fi)
 
 	{
 		std::stringstream ss;
-		ss << "/usr/local/share/morda/res" << soname << "/";
+		ss << "/usr/local/share/ruis/res" << soname << "/";
 		paths.push_back(ss.str());
 	}
 	{
 		std::stringstream ss;
-		ss << "/usr/share/morda/res" << soname << "/";
+		ss << "/usr/share/ruis/res" << soname << "/";
 		paths.push_back(ss.str());
 	}
 #endif

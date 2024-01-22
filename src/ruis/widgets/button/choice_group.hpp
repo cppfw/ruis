@@ -32,7 +32,7 @@ namespace ruis {
  * This is a container which is used to group several choice buttons to the same
  * choice group.
  * In the GUI script can be instantiated as "choice_group". Only available after
- * initializing standard morda widgets.
+ * initializing standard ruis widgets.
  */
 class choice_group : public container
 {

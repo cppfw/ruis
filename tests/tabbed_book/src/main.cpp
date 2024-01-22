@@ -62,7 +62,7 @@ class application : public ruisapp::application{
 public:
 	application() :
 			ruisapp::application(
-					"morda-tests",
+					"ruis-tests",
 					[]() -> ruisapp::window_params {
 						ruisapp::window_params wp(r4::vector2<unsigned>(640, 480));
 

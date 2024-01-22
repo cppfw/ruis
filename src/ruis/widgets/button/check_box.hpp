@@ -31,7 +31,7 @@ namespace ruis {
  * @brief Checkbox widget.
  * Checkbox is a toggle button which shows tick sign when checked and empty box when unchecked.
  * In GUI script can be instantiated as 'Checkbox'. Only available after initializing
- * standard morda widgets.
+ * standard ruis widgets.
  */
 class check_box :
 	virtual public toggle_button, //

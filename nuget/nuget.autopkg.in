@@ -13,14 +13,14 @@ configurations {
 
 nuget{
 	nuspec{
-		id = libmorda;
+		id = libruis;
 		version : $(version);
 		title: C++ GUI library;
 		authors: {Ivan Gagis};
 		owners: {Ivan Gagis};
-		licenseUrl: "https://raw.githubusercontent.com/cppfw/morda/master/LICENSE";
-		projectUrl: "https://github.com/cppfw/morda";
-		iconUrl: "https://github.com/cppfw/morda/blob/master/logo.svg";
+		licenseUrl: "https://raw.githubusercontent.com/cppfw/ruis/master/LICENSE";
+		projectUrl: "https://github.com/cppfw/ruis";
+		iconUrl: "https://github.com/cppfw/ruis/blob/master/logo.svg";
 		requireLicenseAcceptance:false;
 		summary: C++ GUI library;
 
@@ -45,8 +45,8 @@ nuget{
 	files {
 		//this is needed to put headers in the base folder
 		nestedInclude: {
-			#destination = ${d_include}morda;
-			"..\src\morda\**\*.hpp"
+			#destination = ${d_include}ruis;
+			"..\src\ruis\**\*.hpp"
 		};
 
 		res += {
@@ -57,22 +57,22 @@ nuget{
 		// ====== v140 ======
 /*
 		[x86,v140,release] {
-			lib: ..\msvs_solution\v140_Release\libmorda.lib;
+			lib: ..\msvs_solution\v140_Release\libruis.lib;
 			res: ..\res\ruis_res\**\*;
 		}
 
 		[x86,v140,debug] {
-			lib: ..\msvs_solution\v140_Debug\libmorda.lib;
+			lib: ..\msvs_solution\v140_Debug\libruis.lib;
 			res: ..\res\ruis_res\**\*;
 		}
 
 		[x64,v140,release] {
-			lib: ..\msvs_solution\x64\v140_Release\libmorda.lib;
+			lib: ..\msvs_solution\x64\v140_Release\libruis.lib;
 			res: ..\res\ruis_res\**\*;
 		}
 
 		[x64,v140,debug] {
-			lib: ..\msvs_solution\x64\v140_Debug\libmorda.lib;
+			lib: ..\msvs_solution\x64\v140_Debug\libruis.lib;
 			res: ..\res\ruis_res\**\*;
 		}
 */
@@ -80,22 +80,22 @@ nuget{
 		// ====== v141 ======
 /*
 		[x86,v141,release] {
-			lib: ..\msvs_solution\v141_Release\libmorda.lib;
+			lib: ..\msvs_solution\v141_Release\libruis.lib;
 			res: ..\res\ruis_res\**\*;
 		}
 
 		[x86,v141,debug] {
-			lib: ..\msvs_solution\v141_Debug\libmorda.lib;
+			lib: ..\msvs_solution\v141_Debug\libruis.lib;
 			res: ..\res\ruis_res\**\*;
 		}
 
 		[x64,v141,release] {
-			lib: ..\msvs_solution\x64\v141_Release\libmorda.lib;
+			lib: ..\msvs_solution\x64\v141_Release\libruis.lib;
 			res: ..\res\ruis_res\**\*;
 		}
 
 		[x64,v141,debug] {
-			lib: ..\msvs_solution\x64\v141_Debug\libmorda.lib;
+			lib: ..\msvs_solution\x64\v141_Debug\libruis.lib;
 			res: ..\res\ruis_res\**\*;
 		}
 */
@@ -103,37 +103,37 @@ nuget{
 
 /*
 		[x86,v142,release,MultiThreaded] {
-			lib: ..\msvs_solution\v142_Release_MT\libmorda.lib;
+			lib: ..\msvs_solution\v142_Release_MT\libruis.lib;
 			res: ..\res\ruis_res\**\*;
 		}
 		[x86,v142,debug,MultiThreadedDebug] {
-			lib: ..\msvs_solution\v142_Debug_MT\libmorda.lib;
+			lib: ..\msvs_solution\v142_Debug_MT\libruis.lib;
 			res: ..\res\ruis_res\**\*;
 		}
 		[x64,v142,release,MultiThreaded] {
-			lib: ..\msvs_solution\x64\v142_Release_MT\libmorda.lib;
+			lib: ..\msvs_solution\x64\v142_Release_MT\libruis.lib;
 			res: ..\res\ruis_res\**\*;
 		}
 		[x64,v142,debug,MultiThreadedDebug] {
-			lib: ..\msvs_solution\x64\v142_Debug_MT\libmorda.lib;
+			lib: ..\msvs_solution\x64\v142_Debug_MT\libruis.lib;
 			res: ..\res\ruis_res\**\*;
 		}
 */
 		
 		[x86,v142,release,MultiThreadedDLL] {
-			lib: ..\msvs_solution\v142_Release_MD\libmorda.lib;
+			lib: ..\msvs_solution\v142_Release_MD\libruis.lib;
 			res: ..\res\ruis_res\**\*;
 		}
 		[x86,v142,debug,MultiThreadedDebugDLL] {
-			lib: ..\msvs_solution\v142_Debug_MD\libmorda.lib;
+			lib: ..\msvs_solution\v142_Debug_MD\libruis.lib;
 			res: ..\res\ruis_res\**\*;
 		}
 		[x64,v142,release,MultiThreadedDLL] {
-			lib: ..\msvs_solution\x64\v142_Release_MD\libmorda.lib;
+			lib: ..\msvs_solution\x64\v142_Release_MD\libruis.lib;
 			res: ..\res\ruis_res\**\*;
 		}
 		[x64,v142,debug,MultiThreadedDebugDLL] {
-			lib: ..\msvs_solution\x64\v142_Debug_MD\libmorda.lib;
+			lib: ..\msvs_solution\x64\v142_Debug_MD\libruis.lib;
 			res: ..\res\ruis_res\**\*;
 		}
 	}

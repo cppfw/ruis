@@ -11,7 +11,7 @@ this_srcs += $(call prorab-src-dir, .)
 
 $(eval $(call prorab-config, ../config))
 
-#    this_cxxflags += -DM_MORDA_RENDER_WIDGET_BORDERS
+#    this_cxxflags += -DM_RUIS_RENDER_WIDGET_BORDERS
 
 ifeq ($(os),windows)
     # we don't run clang-tidy on windows becasue trick with -isystem (see else branch)

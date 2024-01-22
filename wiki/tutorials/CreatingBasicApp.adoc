@@ -1,13 +1,13 @@
 = Creating basic application
 
-Install *morda* on your system.
+Install *ruis* on your system.
 
 This sample uses link:https://github.com/cppfw/ruisapp[*ruisapp*] complementary library as OS adaptation layer, so install it on your system too.
 
 Entry point of the *ruisapp* application is a method called `ruisapp::create_application()`, and not a traditional `main()`.
 *ruisapp* defines `main()` internally, so the user should not define `main()`.
 
-User should derive their `application` class from `ruisapp::application`, which will be a singleton class. Then, return an instance of that class from `ruisapp::create_application()`. To do that, in `main.cpp` include necessary morda files:
+User should derive their `application` class from `ruisapp::application`, which will be a singleton class. Then, return an instance of that class from `ruisapp::create_application()`. To do that, in `main.cpp` include necessary ruis files:
 
 [source,c++]
 ....
@@ -37,7 +37,7 @@ std::unique_ptr<ruisapp::application> ruisapp::create_application(int argc, cons
 
 So, now we can build and run the project, but it will display just an empty window.
 
-Now, lets add some UI. We want to use standard *morda* widgets, so, let's initialize them in the Application constructor
+Now, lets add some UI. We want to use standard *ruis* widgets, so, let's initialize them in the Application constructor
 [source,c++]
 ....
 class application : public ruisapp::application{

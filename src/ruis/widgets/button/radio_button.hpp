@@ -31,7 +31,7 @@ namespace ruis {
  * @brief Radio button widget.
  * Radio button is a choice button which displays a thick dot when checked and
  * an empty round when unchecked. In GUI script it can be instantiated as
- * "radio_button". Only available after initializing standard morda widgets.
+ * "radio_button". Only available after initializing standard ruis widgets.
  */
 class radio_button : virtual public choice_button, private container
 {

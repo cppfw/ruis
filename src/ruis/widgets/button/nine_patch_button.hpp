@@ -31,7 +31,7 @@ namespace ruis {
  * @brief Simple push button.
  * Implementation of a push button as a nine patch which can have children.
  * In GUI scripts can be instantiated as "SimpleButton". Only available after
- * initializing standard morda widgets.
+ * initializing standard ruis widgets.
  * Since the button is a nine_patch it can have children.
  */
 class nine_patch_button :

@@ -36,7 +36,7 @@ public:
 
 	/**
 	 * @brief Constructor.
-	 * @param context - morda context to use for this gui instance.
+	 * @param context - ruis context to use for this gui instance.
 	 */
 	gui(const utki::shared_ref<ruis::context>& context);
 

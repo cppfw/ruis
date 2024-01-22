@@ -224,7 +224,7 @@ public:
 
 		ASSERT(this->dom)
 
-		// in morda, SVG dimensions are in pp, this is why we cannot use 0 to use native dimension of SVG.
+		// in ruis, SVG dimensions are in pp, this is why we cannot use 0 to use native dimension of SVG.
 		auto svg_dims = this->dims();
 		for (unsigned i = 0; i != 2; ++i) {
 			if (for_dims[i] == 0) {

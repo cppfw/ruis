@@ -1,5 +1,5 @@
 == Istallation
-:package_name: morda
+:package_name: ruis
 
 . Setup your OS-preferred package system repo following link:https://github.com/cppfw/wiki/blob/master/EnableRepo.adoc[this manual]
 . Install package

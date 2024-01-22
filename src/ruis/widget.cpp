@@ -265,7 +265,7 @@ void widget::render_internal(const ruis::matrix4& matrix) const
 	}
 
 	// render border
-#ifdef M_MORDA_RENDER_WIDGET_BORDERS
+#ifdef M_RUIS_RENDER_WIDGET_BORDERS
 	ruis::ColorPosShader& s = App::inst().shaders.colorPosShader;
 	s.Bind();
 	ruis::matrix4 matr(matrix);
