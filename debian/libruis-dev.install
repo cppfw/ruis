@@ -1,0 +1,4 @@
+usr/include/ruis
+usr/lib/pkgconfig/ruis.pc
+usr/lib/libruis.so
+usr/lib/libruis.a

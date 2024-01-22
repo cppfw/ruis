@@ -1,1428 +1,1428 @@
-libmorda (0.5.209) unstable; urgency=medium
+libruis (0.5.209) unstable; urgency=medium
 
   * test release
 
  -- Ivan Gagis <igagis@gmail.com>  Mon, 11 Dec 2023 13:14:38 +0200
 
-libmorda (0.5.208) unstable; urgency=medium
+libruis (0.5.208) unstable; urgency=medium
 
   * add enum_size to enums
 
  -- Ivan Gagis <igagis@gmail.com>  Mon, 07 Aug 2023 10:35:44 +0300
 
-libmorda (0.5.207) unstable; urgency=medium
+libruis (0.5.207) unstable; urgency=medium
 
   * fix lint
 
  -- Ivan Gagis <igagis@gmail.com>  Tue, 25 Jul 2023 10:29:12 +0300
 
-libmorda (0.5.206) unstable; urgency=medium
+libruis (0.5.206) unstable; urgency=medium
 
   * pass by value
 
  -- Ivan Gagis <igagis@gmail.com>  Mon, 24 Jul 2023 18:19:39 +0300
 
-libmorda (0.5.205) unstable; urgency=medium
+libruis (0.5.205) unstable; urgency=medium
 
   * correct deb package descriptions
 
  -- Ivan Gagis <igagis@gmail.com>  Sat, 01 Jul 2023 23:31:17 +0300
 
-libmorda (0.5.204) unstable; urgency=medium
+libruis (0.5.204) unstable; urgency=medium
 
   * rasterimage
 
  -- Ivan Gagis <igagis@gmail.com>  Sat, 01 Jul 2023 21:30:46 +0300
 
-libmorda (0.5.203) unstable; urgency=medium
+libruis (0.5.203) unstable; urgency=medium
 
   * perception pixels
 
  -- Ivan Gagis <igagis@gmail.com>  Mon, 01 May 2023 15:50:44 +0300
 
-libmorda (0.5.202) unstable; urgency=medium
+libruis (0.5.202) unstable; urgency=medium
 
   * container layout system
 
  -- Ivan Gagis <igagis@gmail.com>  Wed, 15 Mar 2023 22:13:32 +0200
 
-libmorda (0.5.201) unstable; urgency=medium
+libruis (0.5.201) unstable; urgency=medium
 
   * layout_params and set_root redesign
 
  -- Ivan Gagis <igagis@gmail.com>  Tue, 28 Feb 2023 17:31:52 +0200
 
-libmorda (0.5.200) unstable; urgency=medium
+libruis (0.5.200) unstable; urgency=medium
 
   * do not use deprecated stuff
 
  -- Ivan Gagis <igagis@gmail.com>  Wed, 22 Feb 2023 16:39:06 +0200
 
-libmorda (0.5.199) unstable; urgency=medium
+libruis (0.5.199) unstable; urgency=medium
 
   * build for ubuntu jammy
 
  -- Ivan Gagis <igagis@gmail.com>  Sun, 19 Feb 2023 13:31:59 +0200
 
-libmorda (0.5.198) unstable; urgency=medium
+libruis (0.5.198) unstable; urgency=medium
 
   * down-cast to widget* when seraching for ancestor of certain type
 
  -- Ivan Gagis <igagis@gmail.com>  Fri, 08 Jul 2022 00:26:57 +0300
 
-libmorda (0.5.197) unstable; urgency=medium
+libruis (0.5.197) unstable; urgency=medium
 
   * get_parent_book() return pointer
 
  -- Ivan Gagis <igagis@gmail.com>  Wed, 06 Jul 2022 20:56:51 +0300
 
-libmorda (0.5.196) unstable; urgency=medium
+libruis (0.5.196) unstable; urgency=medium
 
   * add tabbed_book::get_book()
 
  -- Ivan Gagis <igagis@gmail.com>  Sat, 18 Jun 2022 00:45:57 +0300
 
-libmorda (0.5.195) unstable; urgency=medium
+libruis (0.5.195) unstable; urgency=medium
 
   * introduce key_combo
 
  -- Ivan Gagis <igagis@gmail.com>  Sun, 13 Feb 2022 01:49:24 +0200
 
-libmorda (0.5.194) unstable; urgency=medium
+libruis (0.5.194) unstable; urgency=medium
 
   * add using directives to tabbed_book to expose methods from parent
     class
 
  -- Ivan Gagis <igagis@gmail.com>  Sun, 30 Jan 2022 22:34:55 +0200
 
-libmorda (0.5.193) unstable; urgency=medium
+libruis (0.5.193) unstable; urgency=medium
 
   * fix unknown key name to key conversion
 
  -- Ivan Gagis <igagis@gmail.com>  Fri, 19 Nov 2021 17:25:28 +0200
 
-libmorda (0.5.192) unstable; urgency=medium
+libruis (0.5.192) unstable; urgency=medium
 
   * add to_string(key) and to_key(string)
 
  -- Ivan Gagis <igagis@gmail.com>  Fri, 19 Nov 2021 02:48:24 +0200
 
-libmorda (0.5.191) unstable; urgency=medium
+libruis (0.5.191) unstable; urgency=medium
 
   * fix frame_vao
 
  -- Ivan Gagis <igagis@gmail.com>  Tue, 16 Nov 2021 01:17:16 +0200
 
-libmorda (0.5.190) unstable; urgency=medium
+libruis (0.5.190) unstable; urgency=medium
 
   * frame_vao
 
  -- Ivan Gagis <igagis@gmail.com>  Mon, 15 Nov 2021 19:47:46 +0200
 
-libmorda (0.5.189) unstable; urgency=medium
+libruis (0.5.189) unstable; urgency=medium
 
   * enable msys2 32bit build
 
  -- Ivan Gagis <igagis@gmail.com>  Fri, 12 Nov 2021 18:48:03 +0200
 
-libmorda (0.5.188) unstable; urgency=medium
+libruis (0.5.188) unstable; urgency=medium
 
   * key_event
 
  -- Ivan Gagis <igagis@gmail.com>  Fri, 12 Nov 2021 16:49:38 +0200
 
-libmorda (0.5.187) unstable; urgency=medium
+libruis (0.5.187) unstable; urgency=medium
 
   * xcode: static framework
 
  -- Ivan Gagis <igagis@gmail.com>  Tue, 09 Nov 2021 12:50:17 +0200
 
-libmorda (0.5.186) unstable; urgency=medium
+libruis (0.5.186) unstable; urgency=medium
 
   * xcode: static framework
 
  -- Ivan Gagis <igagis@gmail.com>  Tue, 09 Nov 2021 02:41:15 +0200
 
-libmorda (0.5.185) unstable; urgency=medium
+libruis (0.5.185) unstable; urgency=medium
 
   * activate corresponding tabbed_book tab on programmatic page
     activation
 
  -- Ivan Gagis <igagis@gmail.com>  Thu, 28 Oct 2021 00:24:11 +0300
 
-libmorda (0.5.184) unstable; urgency=medium
+libruis (0.5.184) unstable; urgency=medium
 
   * add page::on_tear_out()
 
  -- Ivan Gagis <igagis@gmail.com>  Wed, 27 Oct 2021 19:50:09 +0300
 
-libmorda (0.5.183) unstable; urgency=medium
+libruis (0.5.183) unstable; urgency=medium
 
   * improve tabbed book
 
  -- Ivan Gagis <igagis@gmail.com>  Tue, 26 Oct 2021 00:34:39 +0300
 
-libmorda (0.5.182) unstable; urgency=medium
+libruis (0.5.182) unstable; urgency=medium
 
   * test release
 
  -- Ivan Gagis <igagis@gmail.com>  Thu, 21 Oct 2021 02:29:20 +0300
 
-libmorda (0.5.181) unstable; urgency=medium
+libruis (0.5.181) unstable; urgency=medium
 
   * add choice_button::activate()
 
  -- Ivan Gagis <igagis@gmail.com>  Tue, 12 Oct 2021 17:08:29 +0300
 
-libmorda (0.5.180) unstable; urgency=medium
+libruis (0.5.180) unstable; urgency=medium
 
   * revert layout dirty flag clearing after layouting
 
  -- Ivan Gagis <igagis@gmail.com>  Sat, 09 Oct 2021 00:48:42 +0300
 
-libmorda (0.5.179) unstable; urgency=medium
+libruis (0.5.179) unstable; urgency=medium
 
   * add dbgsrc debian package
 
  -- Ivan Gagis <igagis@gmail.com>  Fri, 08 Oct 2021 16:20:13 +0300
 
-libmorda (0.5.178) unstable; urgency=medium
+libruis (0.5.178) unstable; urgency=medium
 
   * test_release
 
  -- Ivan Gagis <igagis@gmail.com>  Wed, 06 Oct 2021 01:57:04 +0300
 
-libmorda (0.5.177) unstable; urgency=medium
+libruis (0.5.177) unstable; urgency=medium
 
   * clamp scroll_area position
 
  -- Ivan Gagis <igagis@gmail.com>  Fri, 01 Oct 2021 19:05:59 +0300
 
-libmorda (0.5.176) unstable; urgency=medium
+libruis (0.5.176) unstable; urgency=medium
 
   * add mouse_button_wheel_left and wheel_right
 
  -- Ivan Gagis <igagis@gmail.com>  Thu, 30 Sep 2021 09:57:43 +0300
 
-libmorda (0.5.175) unstable; urgency=medium
+libruis (0.5.175) unstable; urgency=medium
 
   * build for debian bullseye
 
  -- Ivan Gagis <igagis@gmail.com>  Mon, 30 Aug 2021 01:31:42 +0300
 
-libmorda (0.5.174) unstable; urgency=medium
+libruis (0.5.174) unstable; urgency=medium
 
   * use latest make in homebrew formulae
 
  -- Ivan Gagis <igagis@gmail.com>  Thu, 12 Aug 2021 15:28:19 +0300
 
-libmorda (0.5.173) unstable; urgency=medium
+libruis (0.5.173) unstable; urgency=medium
 
   * make vertex_array polymorphic
 
  -- Ivan Gagis <igagis@gmail.com>  Mon, 26 Jul 2021 01:39:52 +0300
 
-libmorda (0.5.172) unstable; urgency=medium
+libruis (0.5.172) unstable; urgency=medium
 
   * fix homebrew install
 
  -- Ivan Gagis <igagis@gmail.com>  Sat, 24 Jul 2021 15:40:21 +0300
 
-libmorda (0.5.171) unstable; urgency=medium
+libruis (0.5.171) unstable; urgency=medium
 
   * test release
 
  -- Ivan Gagis <igagis@gmail.com>  Sat, 24 Jul 2021 01:55:05 +0300
 
-libmorda (0.5.170) unstable; urgency=medium
+libruis (0.5.170) unstable; urgency=medium
 
   * deploy to own repo
 
  -- Ivan Gagis <igagis@gmail.com>  Wed, 21 Jul 2021 23:29:37 +0300
 
-libmorda (0.5.169) unstable; urgency=medium
+libruis (0.5.169) unstable; urgency=medium
 
   * relink to latest libs
 
  -- Ivan Gagis <igagis@gmail.com>  Mon, 21 Jun 2021 23:34:31 +0300
 
-libmorda (0.5.168) unstable; urgency=medium
+libruis (0.5.168) unstable; urgency=medium
 
   * add min_proxy widget
 
  -- Ivan Gagis <igagis@gmail.com>  Sun, 30 May 2021 00:31:00 +0300
 
-libmorda (0.5.167) unstable; urgency=medium
+libruis (0.5.167) unstable; urgency=medium
 
   * tabbed_book
 
  -- Ivan Gagis <igagis@gmail.com>  Thu, 20 May 2021 19:23:00 +0300
 
-libmorda (0.5.166) unstable; urgency=medium
+libruis (0.5.166) unstable; urgency=medium
 
   * tabbed_book
 
  -- Ivan Gagis <igagis@gmail.com>  Tue, 18 May 2021 18:50:34 +0300
 
-libmorda (0.5.165) unstable; urgency=medium
+libruis (0.5.165) unstable; urgency=medium
 
   * debug book
 
  -- Ivan Gagis <igagis@gmail.com>  Mon, 17 May 2021 16:40:10 +0300
 
-libmorda (0.5.164) unstable; urgency=medium
+libruis (0.5.164) unstable; urgency=medium
 
   * relink to latest treeml
 
  -- Ivan Gagis <igagis@gmail.com>  Tue, 11 May 2021 15:15:55 +0300
 
-libmorda (0.5.163) unstable; urgency=medium
+libruis (0.5.163) unstable; urgency=medium
 
   * deploy to jfrog
 
  -- Ivan Gagis <igagis@gmail.com>  Fri, 09 Apr 2021 15:24:12 +0300
 
-libmorda (0.5.162) unstable; urgency=medium
+libruis (0.5.162) unstable; urgency=medium
 
   * msvs: disable whole program optimization
 
  -- Ivan Gagis <igagis@gmail.com>  Wed, 17 Mar 2021 20:09:04 +0200
 
-libmorda (0.5.161) unstable; urgency=medium
+libruis (0.5.161) unstable; urgency=medium
 
   * add all directions arrow cursor
 
  -- Ivan Gagis <igagis@gmail.com>  Mon, 01 Mar 2021 01:00:39 +0200
 
-libmorda (0.5.160) unstable; urgency=medium
+libruis (0.5.160) unstable; urgency=medium
 
   * mouse move event and mouse capturing
 
  -- Ivan Gagis <igagis@gmail.com>  Fri, 26 Feb 2021 00:48:35 +0200
 
-libmorda (0.5.159) unstable; urgency=medium
+libruis (0.5.159) unstable; urgency=medium
 
   * nuget dependency versions fix
 
  -- Ivan Gagis <igagis@gmail.com>  Sat, 13 Feb 2021 23:50:22 +0200
 
-libmorda (0.5.158) unstable; urgency=medium
+libruis (0.5.158) unstable; urgency=medium
 
   * dependency versions update
 
  -- Ivan Gagis <igagis@gmail.com>  Sat, 13 Feb 2021 22:39:32 +0200
 
-libmorda (0.5.157) unstable; urgency=medium
+libruis (0.5.157) unstable; urgency=medium
 
   * scroll_area::on_scroll_pos_change()
 
  -- Ivan Gagis <igagis@gmail.com>  Sat, 13 Feb 2021 00:53:44 +0200
 
-libmorda (0.5.156) unstable; urgency=medium
+libruis (0.5.156) unstable; urgency=medium
 
   * list_widget::scroll_pos_change_handler
 
  -- Ivan Gagis <igagis@gmail.com>  Fri, 12 Feb 2021 17:59:23 +0200
 
-libmorda (0.5.155) unstable; urgency=medium
+libruis (0.5.155) unstable; urgency=medium
 
   * add list::get_pos_index()/get_pos_offset()
 
  -- Ivan Gagis <igagis@gmail.com>  Wed, 10 Feb 2021 19:57:13 +0200
 
-libmorda (0.5.154) unstable; urgency=medium
+libruis (0.5.154) unstable; urgency=medium
 
   * tab
 
  -- Ivan Gagis <igagis@gmail.com>  Tue, 09 Feb 2021 02:08:00 +0200
 
-libmorda (0.5.153) unstable; urgency=medium
+libruis (0.5.153) unstable; urgency=medium
 
   * msvs keep dir structure fix
 
  -- Ivan Gagis <igagis@gmail.com>  Mon, 01 Feb 2021 22:10:16 +0200
 
-libmorda (0.5.152) unstable; urgency=medium
+libruis (0.5.152) unstable; urgency=medium
 
   * nuget: do not correct resources dir structure
 
  -- Ivan Gagis <igagis@gmail.com>  Mon, 01 Feb 2021 01:44:43 +0200
 
-libmorda (0.5.151) unstable; urgency=medium
+libruis (0.5.151) unstable; urgency=medium
 
   * nuget pack resources
 
  -- Ivan Gagis <igagis@gmail.com>  Mon, 01 Feb 2021 00:49:39 +0200
 
-libmorda (0.5.150) unstable; urgency=medium
+libruis (0.5.150) unstable; urgency=medium
 
   * update to latest r4
 
  -- Ivan Gagis <igagis@gmail.com>  Sun, 31 Jan 2021 21:04:34 +0200
 
-libmorda (0.5.149) unstable; urgency=medium
+libruis (0.5.149) unstable; urgency=medium
 
   * text_widget::get_font() returns resource
 
  -- Ivan Gagis <igagis@gmail.com>  Thu, 28 Jan 2021 01:36:38 +0200
 
-libmorda (0.5.148) unstable; urgency=medium
+libruis (0.5.148) unstable; urgency=medium
 
   * res::font::style
 
  -- Ivan Gagis <igagis@gmail.com>  Thu, 28 Jan 2021 01:01:51 +0200
 
-libmorda (0.5.147) unstable; urgency=medium
+libruis (0.5.147) unstable; urgency=medium
 
   * string_view
 
  -- Ivan Gagis <igagis@gmail.com>  Wed, 27 Jan 2021 23:35:27 +0200
 
-libmorda (0.5.146) unstable; urgency=medium
+libruis (0.5.146) unstable; urgency=medium
 
   * text_widget refactoring
 
  -- Ivan Gagis <igagis@gmail.com>  Mon, 18 Jan 2021 17:23:19 +0200
 
-libmorda (0.5.145) unstable; urgency=medium
+libruis (0.5.145) unstable; urgency=medium
 
   * github actions
 
  -- Ivan Gagis <igagis@gmail.com>  Tue, 01 Dec 2020 17:27:03 +0200
 
-libmorda (0.5.144) unstable; urgency=medium
+libruis (0.5.144) unstable; urgency=medium
 
   * msvs: v142 tools
 
  -- Ivan Gagis <igagis@gmail.com>  Sat, 28 Nov 2020 14:08:10 +0200
 
-libmorda (0.5.143) unstable; urgency=medium
+libruis (0.5.143) unstable; urgency=medium
 
   * link against latest libs
 
  -- Ivan Gagis <igagis@gmail.com>  Fri, 23 Oct 2020 13:01:38 +0300
 
-libmorda (0.5.142) unstable; urgency=medium
+libruis (0.5.142) unstable; urgency=medium
 
   * link against latest libs
 
  -- Ivan Gagis <igagis@gmail.com>  Wed, 30 Sep 2020 16:26:36 +0300
 
-libmorda (0.5.141) unstable; urgency=medium
+libruis (0.5.141) unstable; urgency=medium
 
   * fix
 
  -- Ivan Gagis <igagis@gmail.com>  Sat, 19 Sep 2020 22:40:59 +0300
 
-libmorda (0.5.140) unstable; urgency=medium
+libruis (0.5.140) unstable; urgency=medium
 
   * update to latest r4
 
  -- Ivan Gagis <igagis@gmail.com>  Mon, 14 Sep 2020 01:32:55 +0300
 
-libmorda (0.5.139) unstable; urgency=medium
+libruis (0.5.139) unstable; urgency=medium
 
   * add ratio_proxy widget
 
  -- Ivan Gagis <igagis@gmail.com>  Thu, 03 Sep 2020 14:20:23 +0300
 
-libmorda (0.5.138) unstable; urgency=medium
+libruis (0.5.138) unstable; urgency=medium
 
   * deploy to raspbian buster
 
  -- Ivan Gagis <igagis@gmail.com>  Mon, 17 Aug 2020 15:37:00 +0300
 
-libmorda (0.5.137) unstable; urgency=medium
+libruis (0.5.137) unstable; urgency=medium
 
   * path_vba default constructor
 
  -- Ivan Gagis <igagis@gmail.com>  Thu, 06 Aug 2020 17:20:02 +0300
 
-libmorda (0.5.136) unstable; urgency=medium
+libruis (0.5.136) unstable; urgency=medium
 
   * path
 
  -- Ivan Gagis <igagis@gmail.com>  Thu, 06 Aug 2020 14:05:02 +0300
 
-libmorda (0.5.135) unstable; urgency=medium
+libruis (0.5.135) unstable; urgency=medium
 
   * image::on_enable_change() fix
 
  -- Ivan Gagis <igagis@gmail.com>  Wed, 05 Aug 2020 00:19:38 +0300
 
-libmorda (0.5.134) unstable; urgency=medium
+libruis (0.5.134) unstable; urgency=medium
 
   * disable state rendering
 
  -- Ivan Gagis <igagis@gmail.com>  Tue, 04 Aug 2020 19:00:36 +0300
 
-libmorda (0.5.133) unstable; urgency=medium
+libruis (0.5.133) unstable; urgency=medium
 
   * make button interfaces inheritance virtual
 
  -- Ivan Gagis <igagis@gmail.com>  Mon, 13 Jul 2020 16:17:35 +0300
 
-libmorda (0.5.132) unstable; urgency=medium
+libruis (0.5.132) unstable; urgency=medium
 
   * update to latest libs
 
  -- Ivan Gagis <igagis@gmail.com>  Thu, 09 Jul 2020 17:15:40 +0300
 
-libmorda (0.5.131) unstable; urgency=medium
+libruis (0.5.131) unstable; urgency=medium
 
   * widget_set -> weak_widget_set
 
  -- Ivan Gagis <igagis@gmail.com>  Thu, 09 Jul 2020 15:06:03 +0300
 
-libmorda (0.5.130) unstable; urgency=medium
+libruis (0.5.130) unstable; urgency=medium
 
   * handlers naming unified
 
  -- Ivan Gagis <igagis@gmail.com>  Thu, 09 Jul 2020 00:11:03 +0300
 
-libmorda (0.5.129) unstable; urgency=medium
+libruis (0.5.129) unstable; urgency=medium
 
   * mouse events refactored
 
  -- Ivan Gagis <igagis@gmail.com>  Wed, 08 Jul 2020 17:34:21 +0300
 
-libmorda (0.5.128) unstable; urgency=medium
+libruis (0.5.128) unstable; urgency=medium
 
   * add click_proxy
 
  -- Ivan Gagis <igagis@gmail.com>  Tue, 07 Jul 2020 16:03:28 +0300
 
-libmorda (0.5.127) unstable; urgency=medium
+libruis (0.5.127) unstable; urgency=medium
 
   * update to latests libs
 
  -- Ivan Gagis <igagis@gmail.com>  Mon, 06 Jul 2020 19:25:09 +0300
 
-libmorda (0.5.126) unstable; urgency=medium
+libruis (0.5.126) unstable; urgency=medium
 
   * update to latests libs
 
  -- Ivan Gagis <igagis@gmail.com>  Mon, 06 Jul 2020 19:20:27 +0300
 
-libmorda (0.5.125) unstable; urgency=medium
+libruis (0.5.125) unstable; urgency=medium
 
   * do not build for stretch
 
  -- Ivan Gagis <igagis@gmail.com>  Sun, 05 Jul 2020 04:59:18 +0300
 
-libmorda (0.5.124) unstable; urgency=medium
+libruis (0.5.124) unstable; urgency=medium
 
   * update to latest libs
 
  -- Ivan Gagis <igagis@gmail.com>  Sun, 05 Jul 2020 02:51:29 +0300
 
-libmorda (0.5.123) unstable; urgency=medium
+libruis (0.5.123) unstable; urgency=medium
 
   * update to latest libs
 
  -- Ivan Gagis <igagis@gmail.com>  Sat, 04 Jul 2020 23:43:38 +0300
 
-libmorda (0.5.122) unstable; urgency=medium
+libruis (0.5.122) unstable; urgency=medium
 
   * test release
 
  -- Ivan Gagis <igagis@gmail.com>  Thu, 02 Jul 2020 20:18:32 +0300
 
-libmorda (0.5.121) unstable; urgency=medium
+libruis (0.5.121) unstable; urgency=medium
 
   * test release
 
  -- Ivan Gagis <igagis@gmail.com>  Thu, 02 Jul 2020 16:52:59 +0300
 
-libmorda (0.5.120) unstable; urgency=medium
+libruis (0.5.120) unstable; urgency=medium
 
   * busy indicator drawing correction
 
  -- Ivan Gagis <igagis@gmail.com>  Sun, 28 Jun 2020 01:47:44 +0300
 
-libmorda (0.5.119) unstable; urgency=medium
+libruis (0.5.119) unstable; urgency=medium
 
   * widget_set class added
 
  -- Ivan Gagis <igagis@gmail.com>  Fri, 26 Jun 2020 02:21:36 +0300
 
-libmorda (0.5.118) unstable; urgency=medium
+libruis (0.5.118) unstable; urgency=medium
 
   * add widget::get_widget<T>() template function
 
  -- Ivan Gagis <igagis@gmail.com>  Thu, 25 Jun 2020 13:18:07 +0300
 
-libmorda (0.5.117) unstable; urgency=medium
+libruis (0.5.117) unstable; urgency=medium
 
   * msvs build fix
 
  -- Ivan Gagis <igagis@gmail.com>  Wed, 24 Jun 2020 12:35:05 +0300
 
-libmorda (0.5.116) unstable; urgency=medium
+libruis (0.5.116) unstable; urgency=medium
 
   * book and page widgets added
 
  -- Ivan Gagis <igagis@gmail.com>  Wed, 24 Jun 2020 03:03:16 +0300
 
-libmorda (0.5.115) unstable; urgency=medium
+libruis (0.5.115) unstable; urgency=medium
 
   * resources refactored
 
  -- Ivan Gagis <igagis@gmail.com>  Sat, 20 Jun 2020 21:48:19 +0300
 
-libmorda (0.5.114) unstable; urgency=medium
+libruis (0.5.114) unstable; urgency=medium
 
   * android package headers dir corrected
 
  -- Ivan Gagis <igagis@gmail.com>  Sat, 20 Jun 2020 09:30:57 +0300
 
-libmorda (0.5.113) unstable; urgency=medium
+libruis (0.5.113) unstable; urgency=medium
 
   * macosx and msvs build fix
 
  -- Ivan Gagis <igagis@gmail.com>  Sat, 20 Jun 2020 09:14:12 +0300
 
-libmorda (0.5.112) unstable; urgency=medium
+libruis (0.5.112) unstable; urgency=medium
 
   * use android native bundle plugin
 
  -- Ivan Gagis <igagis@gmail.com>  Sat, 20 Jun 2020 04:47:37 +0300
 
-libmorda (0.5.111) unstable; urgency=medium
+libruis (0.5.111) unstable; urgency=medium
 
   * fixing android and cocoapods headers packing
 
  -- Ivan Gagis <igagis@gmail.com>  Sun, 14 Jun 2020 02:41:26 +0300
 
-libmorda (0.5.110) unstable; urgency=medium
+libruis (0.5.110) unstable; urgency=medium
 
   * test release
 
  -- Ivan Gagis <igagis@gmail.com>  Sun, 14 Jun 2020 01:09:33 +0300
 
-libmorda (0.5.109) unstable; urgency=medium
+libruis (0.5.109) unstable; urgency=medium
 
   * test release
 
  -- Ivan Gagis <igagis@gmail.com>  Sun, 14 Jun 2020 00:52:48 +0300
 
-libmorda (0.5.108) unstable; urgency=medium
+libruis (0.5.108) unstable; urgency=medium
 
   * test release
 
  -- Ivan Gagis <igagis@gmail.com>  Sat, 13 Jun 2020 23:49:35 +0300
 
-libmorda (0.5.107) unstable; urgency=medium
+libruis (0.5.107) unstable; urgency=medium
 
   * nuget token fix
 
  -- Ivan Gagis <igagis@gmail.com>  Fri, 12 Jun 2020 21:31:27 +0300
 
-libmorda (0.5.106) unstable; urgency=medium
+libruis (0.5.106) unstable; urgency=medium
 
   * test release
 
  -- Ivan Gagis <igagis@gmail.com>  Fri, 12 Jun 2020 21:30:00 +0300
 
-libmorda (0.5.105) unstable; urgency=medium
+libruis (0.5.105) unstable; urgency=medium
 
   * renamings
 
  -- Ivan Gagis <igagis@gmail.com>  Fri, 28 Feb 2020 16:58:03 +0200
 
-libmorda (0.5.104) unstable; urgency=medium
+libruis (0.5.104) unstable; urgency=medium
 
   * some renamings
 
  -- Ivan Gagis <igagis@gmail.com>  Fri, 14 Feb 2020 23:37:42 +0200
 
-libmorda (0.5.103) unstable; urgency=medium
+libruis (0.5.103) unstable; urgency=medium
 
   * @ and context
 
  -- Ivan Gagis <igagis@gmail.com>  Fri, 14 Feb 2020 16:29:33 +0200
 
-libmorda (0.5.102) unstable; urgency=medium
+libruis (0.5.102) unstable; urgency=medium
 
   * relink to latest svgren
 
  -- Ivan Gagis <igagis@gmail.com>  Fri, 31 Jan 2020 01:20:33 +0200
 
-libmorda (0.5.101) unstable; urgency=medium
+libruis (0.5.101) unstable; urgency=medium
 
   * fix
 
  -- Ivan Gagis <igagis@gmail.com>  Thu, 23 Jan 2020 16:02:57 +0200
 
-libmorda (0.5.100) unstable; urgency=medium
+libruis (0.5.100) unstable; urgency=medium
 
   * relink against latest treeml
 
  -- Ivan Gagis <igagis@gmail.com>  Wed, 22 Jan 2020 18:53:09 +0200
 
-libmorda (0.5.99) unstable; urgency=medium
+libruis (0.5.99) unstable; urgency=medium
 
   * debian/buster i386 packages
 
  -- Ivan Gagis <igagis@gmail.com>  Wed, 22 Jan 2020 13:10:59 +0200
 
-libmorda (0.5.98) unstable; urgency=medium
+libruis (0.5.98) unstable; urgency=medium
 
   * test_release
 
  -- Ivan Gagis <igagis@gmail.com>  Fri, 17 Jan 2020 14:31:25 +0200
 
-libmorda (0.5.97) unstable; urgency=medium
+libruis (0.5.97) unstable; urgency=medium
 
   * test release
 
  -- Ivan Gagis <igagis@gmail.com>  Wed, 08 Jan 2020 18:50:39 +0200
 
-libmorda (0.5.96) unstable; urgency=medium
+libruis (0.5.96) unstable; urgency=medium
 
   * debian buster
 
  -- Ivan Gagis <igagis@gmail.com>  Fri, 29 Nov 2019 23:11:56 +0200
 
-libmorda (0.5.95) unstable; urgency=medium
+libruis (0.5.95) unstable; urgency=medium
 
   * travis access tokens updated
 
  -- Ivan Gagis <igagis@gmail.com>  Fri, 29 Nov 2019 17:07:49 +0200
 
-libmorda (0.5.94) unstable; urgency=medium
+libruis (0.5.94) unstable; urgency=medium
 
   * debian buster
 
  -- Ivan Gagis <igagis@gmail.com>  Fri, 29 Nov 2019 16:13:28 +0200
 
-libmorda (0.5.93) unstable; urgency=medium
+libruis (0.5.93) unstable; urgency=medium
 
   * binary cocoapod: pack resources to zip
 
  -- Ivan Gagis <igagis@gmail.com>  Sat, 09 Nov 2019 21:38:26 +0200
 
-libmorda (0.5.92) unstable; urgency=medium
+libruis (0.5.92) unstable; urgency=medium
 
   * r4 adaptation
 
  -- Ivan Gagis <igagis@gmail.com>  Fri, 08 Nov 2019 15:46:36 +0200
 
-libmorda (0.5.91) unstable; urgency=medium
+libruis (0.5.91) unstable; urgency=medium
 
   * deploy to bionic
 
  -- Ivan Gagis <igagis@gmail.com>  Tue, 16 Apr 2019 19:10:10 +0300
 
-libmorda (0.5.90) unstable; urgency=medium
+libruis (0.5.90) unstable; urgency=medium
 
   * ScrollArea 'max' layout parameter improved
 
  -- Ivan Gagis <igagis@gmail.com>  Tue, 02 Apr 2019 23:25:26 +0300
 
-libmorda (0.5.89) unstable; urgency=medium
+libruis (0.5.89) unstable; urgency=medium
 
   * removed unnecessary logging
 
  -- Ivan Gagis <igagis@gmail.com>  Wed, 16 Jan 2019 00:17:29 +0200
 
-libmorda (0.5.88) unstable; urgency=medium
+libruis (0.5.88) unstable; urgency=medium
 
   * small check of layout parameters
 
  -- Ivan Gagis <igagis@gmail.com>  Tue, 15 Jan 2019 23:48:33 +0200
 
-libmorda (0.5.87) unstable; urgency=medium
+libruis (0.5.87) unstable; urgency=medium
 
   * nuget res path correction
 
  -- Ivan Gagis <igagis@gmail.com>  Mon, 14 Jan 2019 01:50:50 +0200
 
-libmorda (0.5.86) unstable; urgency=medium
+libruis (0.5.86) unstable; urgency=medium
 
   * do not correct paths in nuget
 
  -- Ivan Gagis <igagis@gmail.com>  Sat, 12 Jan 2019 17:43:12 +0200
 
-libmorda (0.5.85) unstable; urgency=medium
+libruis (0.5.85) unstable; urgency=medium
 
   * nuget dependencies corrected
 
  -- Ivan Gagis <igagis@gmail.com>  Sat, 12 Jan 2019 16:08:59 +0200
 
-libmorda (0.5.84) unstable; urgency=medium
+libruis (0.5.84) unstable; urgency=medium
 
   * deploying to msys2 and updating to v141 tools
 
  -- Ivan Gagis <igagis@gmail.com>  Wed, 09 Jan 2019 19:10:19 +0200
 
-libmorda (0.5.83) unstable; urgency=medium
+libruis (0.5.83) unstable; urgency=medium
 
   * DropDownSelector user experience improved
 
  -- Ivan Gagis <igagis@gmail.com>  Thu, 04 Oct 2018 18:26:03 +0300
 
-libmorda (0.5.82) unstable; urgency=medium
+libruis (0.5.82) unstable; urgency=medium
 
   * pt renamed to dp
 
  -- Ivan Gagis <igagis@gmail.com>  Tue, 11 Sep 2018 23:07:19 +0300
 
-libmorda (0.5.81) unstable; urgency=medium
+libruis (0.5.81) unstable; urgency=medium
 
   * DropDownSelector items selected callback added
 
  -- Ivan Gagis <igagis@gmail.com>  Sat, 08 Sep 2018 13:08:26 +0300
 
-libmorda (0.5.80) unstable; urgency=medium
+libruis (0.5.80) unstable; urgency=medium
 
   * test release
 
  -- Ivan Gagis <igagis@gmail.com>  Thu, 05 Jul 2018 16:19:45 +0300
 
-libmorda (0.5.79) unstable; urgency=medium
+libruis (0.5.79) unstable; urgency=medium
 
   * test release
 
  -- Ivan Gagis <igagis@gmail.com>  Wed, 27 Jun 2018 17:32:30 +0300
 
-libmorda (0.5.78) unstable; urgency=medium
+libruis (0.5.78) unstable; urgency=medium
 
   * test release
 
  -- Ivan Gagis <igagis@gmail.com>  Sat, 12 May 2018 10:42:30 +0300
 
-libmorda (0.5.77) unstable; urgency=medium
+libruis (0.5.77) unstable; urgency=medium
 
   * texture font refactored
 
  -- Ivan Gagis <igagis@gmail.com>  Thu, 05 Apr 2018 18:06:45 +0300
 
-libmorda (0.5.76) unstable; urgency=medium
+libruis (0.5.76) unstable; urgency=medium
 
   * test release
 
  -- Ivan Gagis <igagis@gmail.com>  Thu, 29 Mar 2018 15:29:12 +0300
 
-libmorda (0.5.75) unstable; urgency=medium
+libruis (0.5.75) unstable; urgency=medium
 
   * test release
 
  -- Ivan Gagis <igagis@gmail.com>  Sat, 17 Mar 2018 00:55:33 +0200
 
-libmorda (0.5.74) unstable; urgency=medium
+libruis (0.5.74) unstable; urgency=medium
 
   * bintray deployment bug workaround
 
  -- Ivan Gagis <igagis@gmail.com>  Mon, 12 Mar 2018 18:29:43 +0200
 
-libmorda (0.5.73) unstable; urgency=medium
+libruis (0.5.73) unstable; urgency=medium
 
   * bintray access token renewed
 
  -- Ivan Gagis <igagis@gmail.com>  Mon, 12 Mar 2018 18:17:17 +0200
 
-libmorda (0.5.72) unstable; urgency=medium
+libruis (0.5.72) unstable; urgency=medium
 
   * rebuild against latest dependancies
 
  -- Ivan Gagis <igagis@gmail.com>  Mon, 12 Mar 2018 18:02:55 +0200
 
-libmorda (0.5.71) unstable; urgency=medium
+libruis (0.5.71) unstable; urgency=medium
 
   * test release
 
  -- Ivan Gagis <igagis@gmail.com>  Tue, 27 Feb 2018 15:27:06 +0200
 
-libmorda (0.5.70) unstable; urgency=medium
+libruis (0.5.70) unstable; urgency=medium
 
   * colorPosLum shader added
 
  -- Ivan Gagis <igagis@gmail.com>  Wed, 24 Jan 2018 17:38:54 +0200
 
-libmorda (0.5.69) unstable; urgency=medium
+libruis (0.5.69) unstable; urgency=medium
 
   * refactoring
 
  -- Ivan Gagis <igagis@gmail.com>  Thu, 18 Jan 2018 15:03:54 +0200
 
-libmorda (0.5.68) unstable; urgency=medium
+libruis (0.5.68) unstable; urgency=medium
 
   * findChildren does not return the parent
 
  -- Ivan Gagis <igagis@gmail.com>  Wed, 17 Jan 2018 16:28:55 +0200
 
-libmorda (0.5.67) unstable; urgency=medium
+libruis (0.5.67) unstable; urgency=medium
 
   * find all children of given type return list instead of vector
 
  -- Ivan Gagis <igagis@gmail.com>  Tue, 16 Jan 2018 16:32:40 +0200
 
-libmorda (0.5.66) unstable; urgency=medium
+libruis (0.5.66) unstable; urgency=medium
 
   * find all children of give ntype
 
  -- Ivan Gagis <igagis@gmail.com>  Tue, 16 Jan 2018 14:56:31 +0200
 
-libmorda (0.5.65) unstable; urgency=medium
+libruis (0.5.65) unstable; urgency=medium
 
   * find all children of give ntype
 
  -- Ivan Gagis <igagis@gmail.com>  Tue, 16 Jan 2018 14:55:53 +0200
 
-libmorda (0.5.64) unstable; urgency=medium
+libruis (0.5.64) unstable; urgency=medium
 
   * find all children of give ntype
 
  -- Ivan Gagis <igagis@gmail.com>  Tue, 16 Jan 2018 14:26:10 +0200
 
-libmorda (0.5.63) unstable; urgency=medium
+libruis (0.5.63) unstable; urgency=medium
 
   * font rendering fix
 
  -- Ivan Gagis <igagis@gmail.com>  Thu, 14 Dec 2017 20:35:31 +0200
 
-libmorda (0.5.62) unstable; urgency=medium
+libruis (0.5.62) unstable; urgency=medium
 
   * y axis directed downwards
 
  -- Ivan Gagis <igagis@gmail.com>  Wed, 13 Dec 2017 17:08:52 +0200
 
-libmorda (0.5.61) unstable; urgency=medium
+libruis (0.5.61) unstable; urgency=medium
 
   * bug fix
 
  -- Ivan Gagis <igagis@gmail.com>  Sat, 25 Nov 2017 18:00:58 +0200
 
-libmorda (0.5.60) unstable; urgency=medium
+libruis (0.5.60) unstable; urgency=medium
 
   * shader render methods made const
 
  -- Ivan Gagis <igagis@gmail.com>  Fri, 24 Nov 2017 17:40:52 +0200
 
-libmorda (0.5.59) unstable; urgency=medium
+libruis (0.5.59) unstable; urgency=medium
 
   * cocoapods deploy
 
  -- Ivan Gagis <igagis@gmail.com>  Wed, 15 Nov 2017 16:18:44 +0200
 
-libmorda (0.5.58) unstable; urgency=medium
+libruis (0.5.58) unstable; urgency=medium
 
   * float vertex buffer
 
  -- Ivan Gagis <igagis@gmail.com>  Wed, 15 Nov 2017 15:24:45 +0200
 
-libmorda (0.5.57) unstable; urgency=medium
+libruis (0.5.57) unstable; urgency=medium
 
   * ImageToggle inheritance corrected
 
  -- Ivan Gagis <igagis@gmail.com>  Wed, 04 Oct 2017 11:09:07 +0300
 
-libmorda (0.5.56) unstable; urgency=medium
+libruis (0.5.56) unstable; urgency=medium
 
   * ImageButton inheritance fix
 
  -- Ivan Gagis <igagis@gmail.com>  Tue, 03 Oct 2017 16:00:43 +0300
 
-libmorda (0.5.55) unstable; urgency=medium
+libruis (0.5.55) unstable; urgency=medium
 
   * image button added
 
  -- Ivan Gagis <igagis@gmail.com>  Fri, 29 Sep 2017 15:46:48 +0300
 
-libmorda (0.5.54) unstable; urgency=medium
+libruis (0.5.54) unstable; urgency=medium
 
   * ios
 
  -- Ivan Gagis <igagis@gmail.com>  Mon, 25 Sep 2017 19:12:41 +0300
 
-libmorda (0.5.53) unstable; urgency=medium
+libruis (0.5.53) unstable; urgency=medium
 
   * render api refactored
 
  -- Ivan Gagis <igagis@gmail.com>  Mon, 25 Sep 2017 10:59:12 +0300
 
-libmorda (0.5.52) unstable; urgency=medium
+libruis (0.5.52) unstable; urgency=medium
 
   * renamed labels
 
  -- Ivan Gagis <igagis@gmail.com>  Sat, 16 Sep 2017 17:06:04 +0300
 
-libmorda (0.5.51) unstable; urgency=medium
+libruis (0.5.51) unstable; urgency=medium
 
   * test release
 
  -- Ivan Gagis <igagis@gmail.com>  Tue, 29 Aug 2017 16:45:30 +0300
 
-libmorda (0.5.50) unstable; urgency=medium
+libruis (0.5.50) unstable; urgency=medium
 
   * test release
 
  -- Ivan Gagis <igagis@gmail.com>  Wed, 23 Aug 2017 15:45:10 +0300
 
-libmorda (0.5.49) unstable; urgency=medium
+libruis (0.5.49) unstable; urgency=medium
 
   * test release
 
  -- Ivan Gagis <igagis@gmail.com>  Tue, 15 Aug 2017 17:17:27 +0300
 
-libmorda (0.5.48) unstable; urgency=medium
+libruis (0.5.48) unstable; urgency=medium
 
   * test release
 
  -- Ivan Gagis <igagis@gmail.com>  Thu, 10 Aug 2017 00:55:39 +0300
 
-libmorda (0.5.47) unstable; urgency=medium
+libruis (0.5.47) unstable; urgency=medium
 
   * test release
 
  -- Ivan Gagis <igagis@gmail.com>  Mon, 07 Aug 2017 23:47:25 +0300
 
-libmorda (0.5.46) unstable; urgency=medium
+libruis (0.5.46) unstable; urgency=medium
 
   * margins fixed
 
  -- Ivan Gagis <igagis@gmail.com>  Mon, 07 Aug 2017 21:48:31 +0300
 
-libmorda (0.5.45) unstable; urgency=medium
+libruis (0.5.45) unstable; urgency=medium
 
   * margins fix
 
  -- Ivan Gagis <igagis@gmail.com>  Mon, 07 Aug 2017 20:08:32 +0300
 
-libmorda (0.5.44) unstable; urgency=medium
+libruis (0.5.44) unstable; urgency=medium
 
   * margins fix
 
  -- Ivan Gagis <igagis@gmail.com>  Mon, 07 Aug 2017 19:56:48 +0300
 
-libmorda (0.5.43) unstable; urgency=medium
+libruis (0.5.43) unstable; urgency=medium
 
   * test release
 
  -- Ivan Gagis <igagis@gmail.com>  Sun, 06 Aug 2017 23:48:45 +0300
 
-libmorda (0.5.42) unstable; urgency=medium
+libruis (0.5.42) unstable; urgency=medium
 
   * test release
 
  -- Ivan Gagis <igagis@gmail.com>  Sun, 06 Aug 2017 17:53:15 +0300
 
-libmorda (0.5.41) unstable; urgency=medium
+libruis (0.5.41) unstable; urgency=medium
 
   * test release
 
  -- Ivan Gagis <igagis@gmail.com>  Fri, 04 Aug 2017 16:59:13 +0300
 
-libmorda (0.5.40) unstable; urgency=medium
+libruis (0.5.40) unstable; urgency=medium
 
   * test release
 
  -- Ivan Gagis <igagis@gmail.com>  Fri, 04 Aug 2017 16:54:06 +0300
 
-libmorda (0.5.39) unstable; urgency=medium
+libruis (0.5.39) unstable; urgency=medium
 
   * test release
 
  -- Ivan Gagis <igagis@gmail.com>  Thu, 03 Aug 2017 22:19:10 +0300
 
-libmorda (0.5.38) unstable; urgency=medium
+libruis (0.5.38) unstable; urgency=medium
 
   * test release
 
  -- Ivan Gagis <igagis@gmail.com>  Thu, 03 Aug 2017 20:57:47 +0300
 
-libmorda (0.5.37) unstable; urgency=medium
+libruis (0.5.37) unstable; urgency=medium
 
   * test release
 
  -- Ivan Gagis <igagis@gmail.com>  Mon, 08 May 2017 15:30:01 +0300
 
-libmorda (0.5.36) unstable; urgency=medium
+libruis (0.5.36) unstable; urgency=medium
 
   * test release
 
  -- Ivan Gagis <igagis@gmail.com>  Fri, 05 May 2017 11:34:06 +0300
 
-libmorda (0.5.35) unstable; urgency=medium
+libruis (0.5.35) unstable; urgency=medium
 
   * pack resources to android assets
 
  -- Ivan Gagis <igagis@gmail.com>  Mon, 01 May 2017 23:28:22 +0300
 
-libmorda (0.5.34) unstable; urgency=medium
+libruis (0.5.34) unstable; urgency=medium
 
   * fix POM file dependencies
 
  -- Ivan Gagis <igagis@gmail.com>  Sat, 29 Apr 2017 13:57:02 +0300
 
-libmorda (0.5.33) unstable; urgency=medium
+libruis (0.5.33) unstable; urgency=medium
 
   * deploy to android
 
  -- Ivan Gagis <igagis@gmail.com>  Sat, 29 Apr 2017 12:03:58 +0300
 
-libmorda (0.5.32) unstable; urgency=medium
+libruis (0.5.32) unstable; urgency=medium
 
   * Widget::getChildByName method added
 
  -- Ivan Gagis <igagis@gmail.com>  Tue, 14 Mar 2017 21:37:16 +0200
 
-libmorda (0.5.31) unstable; urgency=medium
+libruis (0.5.31) unstable; urgency=medium
 
   * test release
 
  -- Ivan Gagis <igagis@gmail.com>  Sun, 12 Mar 2017 23:03:27 +0200
 
-libmorda (0.5.30) unstable; urgency=medium
+libruis (0.5.30) unstable; urgency=medium
 
   * test release
 
  -- Ivan Gagis <igagis@gmail.com>  Sun, 12 Mar 2017 22:09:57 +0200
 
-libmorda (0.5.29) unstable; urgency=medium
+libruis (0.5.29) unstable; urgency=medium
 
   * test release
 
  -- Ivan Gagis <igagis@gmail.com>  Sun, 19 Feb 2017 19:41:58 +0200
 
-libmorda (0.5.28) unstable; urgency=medium
+libruis (0.5.28) unstable; urgency=medium
 
   * test release
 
  -- Ivan Gagis <igagis@gmail.com>  Wed, 15 Feb 2017 17:52:09 +0200
 
-libmorda (0.5.27) unstable; urgency=medium
+libruis (0.5.27) unstable; urgency=medium
 
   * test release
 
  -- Ivan Gagis <igagis@gmail.com>  Wed, 15 Feb 2017 00:44:40 +0200
 
-libmorda (0.5.26) unstable; urgency=medium
+libruis (0.5.26) unstable; urgency=medium
 
   * test release
 
  -- Ivan Gagis <igagis@gmail.com>  Tue, 14 Feb 2017 22:08:26 +0200
 
-libmorda (0.5.25) unstable; urgency=medium
+libruis (0.5.25) unstable; urgency=medium
 
   * test release
 
  -- Ivan Gagis <igagis@gmail.com>  Tue, 14 Feb 2017 19:17:36 +0200
 
-libmorda (0.5.24) unstable; urgency=medium
+libruis (0.5.24) unstable; urgency=medium
 
   * test release
 
  -- Ivan Gagis <igagis@gmail.com>  Sun, 12 Feb 2017 22:02:33 +0200
 
-libmorda (0.5.23) unstable; urgency=medium
+libruis (0.5.23) unstable; urgency=medium
 
   * test release
 
  -- Ivan Gagis <igagis@gmail.com>  Sat, 11 Feb 2017 13:03:03 +0200
 
-libmorda (0.5.22) unstable; urgency=medium
+libruis (0.5.22) unstable; urgency=medium
 
   * test release
 
  -- Ivan Gagis <igagis@gmail.com>  Thu, 09 Feb 2017 20:50:01 +0200
 
-libmorda (0.5.21) unstable; urgency=medium
+libruis (0.5.21) unstable; urgency=medium
 
   * test release
 
  -- Ivan Gagis <igagis@gmail.com>  Thu, 09 Feb 2017 18:58:54 +0200
 
-libmorda (0.5.20) unstable; urgency=medium
+libruis (0.5.20) unstable; urgency=medium
 
   * test release
 
  -- Ivan Gagis <igagis@gmail.com>  Wed, 08 Feb 2017 20:39:02 +0200
 
-libmorda (0.5.19) unstable; urgency=medium
+libruis (0.5.19) unstable; urgency=medium
 
   * test release
 
  -- Ivan Gagis <igagis@gmail.com>  Wed, 08 Feb 2017 20:34:32 +0200
 
-libmorda (0.5.18) unstable; urgency=medium
+libruis (0.5.18) unstable; urgency=medium
 
   * findDotsPerPt() function removed
 
  -- Ivan Gagis <igagis@gmail.com>  Tue, 07 Feb 2017 16:43:28 +0200
 
-libmorda (0.5.17) unstable; urgency=medium
+libruis (0.5.17) unstable; urgency=medium
 
   * nuget upate
 
  -- Ivan Gagis <igagis@gmail.com>  Sun, 05 Feb 2017 21:08:20 +0200
 
-libmorda (0.5.16) unstable; urgency=medium
+libruis (0.5.16) unstable; urgency=medium
 
   * opengl2 renderer moved to mordaren namespace
 
  -- Ivan Gagis <igagis@gmail.com>  Sun, 05 Feb 2017 20:33:06 +0200
 
-libmorda (0.5.15) unstable; urgency=medium
+libruis (0.5.15) unstable; urgency=medium
 
   * deploy test
 
  -- Ivan Gagis <igagis@gmail.com>  Wed, 01 Feb 2017 17:40:14 +0200
 
-libmorda (0.5.14) unstable; urgency=medium
+libruis (0.5.14) unstable; urgency=medium
 
   * deploy test
 
  -- Ivan Gagis <igagis@gmail.com>  Wed, 01 Feb 2017 14:33:24 +0200
 
-libmorda (0.5.13) unstable; urgency=medium
+libruis (0.5.13) unstable; urgency=medium
 
-  * adding dependency on libmorda
+  * adding dependency on libruis
 
  -- Ivan Gagis <igagis@gmail.com>  Tue, 17 Jan 2017 17:28:29 +0200
 
-libmorda (0.5.12) unstable; urgency=medium
+libruis (0.5.12) unstable; urgency=medium
 
   * adding debug package for opengl2 renderer
 
  -- Ivan Gagis <igagis@gmail.com>  Tue, 17 Jan 2017 17:08:30 +0200
 
-libmorda (0.5.11) unstable; urgency=medium
+libruis (0.5.11) unstable; urgency=medium
 
   * renderer abstraction
 
  -- Ivan Gagis <igagis@gmail.com>  Tue, 17 Jan 2017 16:40:19 +0200
 
-libmorda (0.5.10) unstable; urgency=medium
+libruis (0.5.10) unstable; urgency=medium
 
   * release rasp build
 
  -- Ivan Gagis <igagis@gmail.com>  Sun, 18 Sep 2016 12:30:17 +0300
 
-libmorda (0.5.9) unstable; urgency=medium
+libruis (0.5.9) unstable; urgency=medium
 
   * deploy to debian, ubuntu, rasp
 
  -- Ivan Gagis <igagis@gmail.com>  Fri, 16 Sep 2016 19:22:24 +0300
 
-libmorda (0.5.8) unstable; urgency=medium
+libruis (0.5.8) unstable; urgency=medium
 
   * nuget: copy resources to working dir
 
  -- Ivan Gagis <igagis@gmail.com>  Tue, 16 Aug 2016 22:14:34 +0300
 
-libmorda (0.5.7) unstable; urgency=medium
+libruis (0.5.7) unstable; urgency=medium
 
   * cocoapods release
 
  -- Ivan Gagis <igagis@gmail.com>  Sun, 14 Aug 2016 22:17:36 +0300
 
-libmorda (0.5.6) unstable; urgency=medium
+libruis (0.5.6) unstable; urgency=medium
 
   * travis test
 
  -- Ivan Gagis <igagis@gmail.com>  Sat, 13 Aug 2016 15:11:08 +0300
 
-libmorda (0.5.5) unstable; urgency=medium
+libruis (0.5.5) unstable; urgency=medium
 
   * cocoapods fix
 
  -- Ivan Gagis <igagis@gmail.com>  Sat, 13 Aug 2016 12:26:30 +0300
 
-libmorda (0.5.4) unstable; urgency=medium
+libruis (0.5.4) unstable; urgency=medium
 
   * fix for empty gradient
 
  -- Ivan Gagis <igagis@gmail.com>  Sat, 13 Aug 2016 02:56:20 +0300
 
-libmorda (0.5.3) unstable; urgency=medium
+libruis (0.5.3) unstable; urgency=medium
 
   * nuget: correct resource path names
 
  -- Ivan Gagis <igagis@gmail.com>  Sat, 13 Aug 2016 01:43:36 +0300
 
-libmorda (0.5.2) unstable; urgency=medium
+libruis (0.5.2) unstable; urgency=medium
 
   * msvs debug symbols
 
  -- Ivan Gagis <igagis@gmail.com>  Fri, 12 Aug 2016 15:51:29 +0300
 
-libmorda (0.5.1) unstable; urgency=medium
+libruis (0.5.1) unstable; urgency=medium
 
   * nuget pack symbols to bin
 
  -- Ivan Gagis <igagis@gmail.com>  Thu, 11 Aug 2016 20:11:50 +0300
 
-libmorda (0.5.0) unstable; urgency=medium
+libruis (0.5.0) unstable; urgency=medium
 
   * morda is now non-intrusive
 
  -- Ivan Gagis <igagis@gmail.com>  Thu, 11 Aug 2016 11:51:27 +0300
 
-libmorda (0.4.15) unstable; urgency=medium
+libruis (0.4.15) unstable; urgency=medium
 
   * resources search paths logic improved
 
  -- Ivan Gagis <igagis@gmail.com>  Thu, 04 Aug 2016 13:36:46 +0300
 
-libmorda (0.4.14) unstable; urgency=medium
+libruis (0.4.14) unstable; urgency=medium
 
   * test release
 
  -- Ivan Gagis <igagis@gmail.com>  Wed, 03 Aug 2016 23:55:31 +0300
 
-libmorda (0.4.13) unstable; urgency=medium
+libruis (0.4.13) unstable; urgency=medium
 
   * MouseButton_e moved to morda namespace
 
  -- Ivan Gagis <igagis@gmail.com>  Wed, 03 Aug 2016 22:56:05 +0300
 
-libmorda (0.4.12) unstable; urgency=medium
+libruis (0.4.12) unstable; urgency=medium
 
   * bintray: deploy also .tar.gz
 
  -- Ivan Gagis <igagis@gmail.com>  Wed, 03 Aug 2016 19:36:50 +0300
 
-libmorda (0.4.11) unstable; urgency=medium
+libruis (0.4.11) unstable; urgency=medium
 
   * bintray: upload source packages also
 
  -- Ivan Gagis <igagis@gmail.com>  Wed, 03 Aug 2016 18:51:41 +0300
 
-libmorda (0.4.10) unstable; urgency=medium
+libruis (0.4.10) unstable; urgency=medium
 
   * fix: append soname to res folder on linux/macosx
 
  -- Ivan Gagis <igagis@gmail.com>  Wed, 03 Aug 2016 17:51:50 +0300
 
-libmorda (0.4.9) unstable; urgency=medium
+libruis (0.4.9) unstable; urgency=medium
 
   * nuget
 
  -- Ivan Gagis <igagis@gmail.com>  Wed, 03 Aug 2016 00:37:42 +0300
 
-libmorda (0.4.8) unstable; urgency=medium
+libruis (0.4.8) unstable; urgency=medium
 
   * podspec resources
 
  -- Ivan Gagis <igagis@gmail.com>  Wed, 03 Aug 2016 00:17:24 +0300
 
-libmorda (0.4.7) unstable; urgency=medium
+libruis (0.4.7) unstable; urgency=medium
 
   * windows: opengl by default
 
  -- Ivan Gagis <igagis@gmail.com>  Tue, 02 Aug 2016 23:21:54 +0300
 
-libmorda (0.4.6) unstable; urgency=medium
+libruis (0.4.6) unstable; urgency=medium
 
   * nuget fix
 
  -- Ivan Gagis <igagis@gmail.com>  Tue, 02 Aug 2016 21:20:49 +0300
 
-libmorda (0.4.5) unstable; urgency=medium
+libruis (0.4.5) unstable; urgency=medium
 
   * build fixes
 
  -- Ivan Gagis <igagis@gmail.com>  Tue, 02 Aug 2016 20:50:43 +0300
 
-libmorda (0.4.4) unstable; urgency=medium
+libruis (0.4.4) unstable; urgency=medium
 
   * trying to bundle resources to cocoapods
 
  -- Ivan Gagis <igagis@gmail.com>  Tue, 02 Aug 2016 18:14:39 +0300
 
-libmorda (0.4.3) unstable; urgency=medium
+libruis (0.4.3) unstable; urgency=medium
 
   * added dependency on aika
 
  -- Ivan Gagis <igagis@gmail.com>  Tue, 02 Aug 2016 14:15:12 +0300
 
-libmorda (0.4.2) unstable; urgency=medium
+libruis (0.4.2) unstable; urgency=medium
 
   * added dependency on aika
 
  -- Ivan Gagis <igagis@gmail.com>  Tue, 02 Aug 2016 14:13:10 +0300
 
-libmorda (0.4.1) unstable; urgency=medium
+libruis (0.4.1) unstable; urgency=medium
 
   * homebrew fix, nuget fix
 
  -- Ivan Gagis <igagis@gmail.com>  Mon, 01 Aug 2016 23:36:45 +0300
 
-libmorda (0.4.0) unstable; urgency=medium
+libruis (0.4.0) unstable; urgency=medium
 
   * morda made non-intrusive
 
  -- Ivan Gagis <igagis@gmail.com>  Mon, 01 Aug 2016 19:51:39 +0300
 
-libmorda (0.3.0) unstable; urgency=medium
+libruis (0.3.0) unstable; urgency=medium
 
   * basic sample application added
 
  -- Ivan Gagis <igagis@gmail.com>  Fri, 29 Jul 2016 01:12:25 +0300
 
-libmorda (0.2.7) unstable; urgency=medium
+libruis (0.2.7) unstable; urgency=medium
 
   * use OpenGL coordinate system everywhere
 
  -- Ivan Gagis <igagis@gmail.com>  Thu, 28 Jul 2016 14:52:15 +0300
 
-libmorda (0.2.6) unstable; urgency=medium
+libruis (0.2.6) unstable; urgency=medium
 
   * add not found widget name to exception description
 
  -- Ivan Gagis <igagis@gmail.com>  Tue, 26 Jul 2016 16:28:58 +0300
 
-libmorda (0.2.5) unstable; urgency=medium
+libruis (0.2.5) unstable; urgency=medium
 
-  * removing dependency on libmorda-res
+  * removing dependency on libruis-res
 
  -- Ivan Gagis <igagis@gmail.com>  Tue, 26 Jul 2016 15:18:40 +0300
 
-libmorda (0.2.4) unstable; urgency=medium
+libruis (0.2.4) unstable; urgency=medium
 
   * periodic release
 
  -- Ivan Gagis <igagis@gmail.com>  Tue, 26 Jul 2016 13:55:17 +0300
 
-libmorda (0.2.3) unstable; urgency=medium
+libruis (0.2.3) unstable; urgency=medium
 
   * periodic release
 
  -- Ivan Gagis <igagis@gmail.com>  Mon, 25 Jul 2016 22:21:28 +0300
 
-libmorda (0.2.2) unstable; urgency=medium
+libruis (0.2.2) unstable; urgency=medium
 
   * periodic release
 
  -- Ivan Gagis <igagis@gmail.com>  Thu, 21 Jul 2016 17:26:21 +0300
 
-libmorda (0.2.1) unstable; urgency=medium
+libruis (0.2.1) unstable; urgency=medium
 
   * periodic release
 
  -- Ivan Gagis <igagis@gmail.com>  Mon, 11 Jul 2016 16:53:56 +0300
 
-libmorda (0.2.0) unstable; urgency=medium
+libruis (0.2.0) unstable; urgency=medium
 
   * development release
 
  -- Ivan Gagis <igagis@gmail.com>  Wed, 22 Jun 2016 21:20:29 +0300
 
-libmorda (0.1.2-2) stable; urgency=medium
+libruis (0.1.2-2) stable; urgency=medium
 
   * updating build dependencies for debian
 
  -- Ivan Gagis <igagis@gmail.com>  Tue, 10 Nov 2015 03:10:33 +0200
 
-libmorda (0.1.2-1) stable; urgency=medium
+libruis (0.1.2-1) stable; urgency=medium
 
   * updating for ci
 
  -- Ivan Gagis <igagis@gmail.com>  Fri, 06 Nov 2015 21:14:49 +0200
 
-libmorda (0.1.1-1) unstable; urgency=low
+libruis (0.1.1-1) unstable; urgency=low
 
   * Initial release.
   * bump

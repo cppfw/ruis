@@ -1,4 +1,4 @@
-Source: libmorda
+Source: libruis
 Maintainer: Ivan Gagis <igagis@gmail.com>
 Standards-Version: 3.9.5
 Section: libs
@@ -26,7 +26,7 @@ Build-Depends:
 		libgtk-3-dev
 Build-Depends-Indep: doxygen
 
-Package: libmorda$(soname)
+Package: libruis$(soname)
 Architecture: any
 Priority: extra
 Section: libs
@@ -34,31 +34,31 @@ Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: GUI framework
  Cross platform GUI framework written in C++.
 
-Package: libmorda-dev
+Package: libruis-dev
 Architecture: any
-Depends: libmorda$(soname) (= ${binary:Version}), ${misc:Depends},
+Depends: libruis$(soname) (= ${binary:Version}), ${misc:Depends},
 	libutki-dev,
 	libpapki-dev,
 	libr4-dev,
 	libtreeml-dev,
 	librasterimage-dev
-Suggests: libmorda-doc
+Suggests: libruis-doc
 Priority: extra
 Section: libdevel
 Description: GUI framework development files
  Cross platform GUI framework written in C++.
  Development files.
 
-Package: libmorda$(soname)-dbgsrc
+Package: libruis$(soname)-dbgsrc
 Section: debug
 Architecture: any
-Depends: libmorda$(soname)-dbgsym (= ${binary:Version}), ${misc:Depends}
-Description: debugging sources for libmorda$(soname) package.
+Depends: libruis$(soname)-dbgsym (= ${binary:Version}), ${misc:Depends}
+Description: debugging sources for libruis$(soname) package.
 
-Package: libmorda-doc
+Package: libruis-doc
 Architecture: all
 Section: doc
 Priority: extra
 Depends: ${misc:Depends}
-Description: Documentation for libmorda
+Description: Documentation for libruis
  Doxygen docs.
