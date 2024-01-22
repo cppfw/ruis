@@ -17,14 +17,14 @@ else
 	exit 1
 fi
 
-packageName=morda
+packageName=ruis
 
 pkgname="${pkgPrefix}${packageName}"
 pkgver=$(version)
 pkgrel=1
 epoch=
 pkgdesc="GUI library in C++"
-#arch=('any') #defined above
+# arch=('any') # defined above
 url="http://github.com/cppfw/${packageName}"
 license=('MIT')
 groups=()
@@ -60,7 +60,7 @@ backup=()
 options=()
 install=
 changelog=
-source=() # Do not download any sources
+source=() # do not download any sources
 noextract=()
 md5sums=()
 validpgpkeys=()
@@ -73,15 +73,15 @@ prepare() {
 
 build() {
 	cd "$rootDir"
-	make CXX=clang++
+	make
 }
 
 check() {
 	cd "$rootDir"
-	make CXX=clang++ test
+	make test
 }
 
 package() {
 	cd "$rootDir"
-	make CXX=clang++ DESTDIR="$pkgdir" PREFIX="$dirPrefix" install
+	make DESTDIR="$pkgdir" PREFIX="$dirPrefix" install
 }
