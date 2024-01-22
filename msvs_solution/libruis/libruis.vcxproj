@@ -53,7 +53,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{111D4939-C046-4338-B740-ECA7F87785D6}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>libmorda</RootNamespace>
+    <RootNamespace>libruis</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />

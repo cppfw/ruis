@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libmorda", "libmorda\libmorda.vcxproj", "{111D4939-C046-4338-B740-ECA7F87785D6}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libruis", "libruis\libruis.vcxproj", "{111D4939-C046-4338-B740-ECA7F87785D6}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_app", "test_app\test_app.vcxproj", "{F8B0DC6C-B76F-48DD-9CC0-2B7E92135BDF}"
 EndProject

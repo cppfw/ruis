@@ -450,7 +450,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\libmorda\libmorda.vcxproj">
+    <ProjectReference Include="..\libruis\libruis.vcxproj">
       <Project>{111d4939-c046-4338-b740-eca7f87785d6}</Project>
     </ProjectReference>
     <ProjectReference Include="..\morda-render-opengl\morda-render-opengl.vcxproj">
