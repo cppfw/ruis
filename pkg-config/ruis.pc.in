@@ -1,0 +1,9 @@
+Name: ruis   # human-readable name
+Description: C++ GUI library
+Version: $(version)
+URL: https://github.com/cppfw/ruis
+Requires:
+Conflicts:
+Libs: -lruis
+Libs.private:
+Cflags:
