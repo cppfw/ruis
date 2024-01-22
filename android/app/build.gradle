@@ -12,7 +12,7 @@ android {
 
         externalNativeBuild {
             cmake {
-                targets "mordavokneapp"
+                targets "ruisapp_application"
 
                 arguments "-DANDROID_STL=c++_shared", "-DANDROID_TOOLCHAIN=clang"
             }
@@ -54,7 +54,7 @@ dependencies {
     implementation 'io.github.cppfw:png:+'
     implementation 'io.github.cppfw:jpeg:+'
     implementation 'io.github.cppfw:freetype:+'
-    implementation project(path: ':morda', configuration: 'default')
+    implementation project(path: ':ruis', configuration: 'default')
 }
 
 task copyResToAssets {

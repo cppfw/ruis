@@ -1,1 +1,1 @@
-include ':app', ':morda'
+include ':app', ':ruis'

@@ -1,4 +1,4 @@
-package io.github.cppfw.mordavokne;
+package io.github.cppfw.ruisapp;
 
 import android.app.NativeActivity;
 import android.app.Service;
@@ -17,13 +17,13 @@ import android.view.inputmethod.InputMethodManager;
 import java.io.IOException;
 
 
-public class MordaVOkneActivity extends NativeActivity {
+public class RuisappActivity extends NativeActivity {
 	{
 		System.loadLibrary("c++_shared");
-		System.loadLibrary("mordavokneapp");
+		System.loadLibrary("ruisapp_application");
 	}
 
-	public static final String LOGTAG = "mordavokne java side";
+	public static final String LOGTAG = "ruisapp java side";
 
 	private int curKeyDevice;
 	private KeyCharacterMap curCharMap;

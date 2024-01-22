@@ -12,7 +12,7 @@ cmake_minimum_required(VERSION 3.4.1)
 
 file(GLOB_RECURSE srcs "../../src/*.cpp")
 
-set(name morda)
+set(name ruis)
 
 include (${ANDROID_GRADLE_NATIVE_BUNDLE_PLUGIN_MK})
 
@@ -30,6 +30,6 @@ add_library(
     )
 
 target_link_libraries(
-        morda
+        ruis
         android log z ${ANDROID_GRADLE_NATIVE_MODULES}
     )

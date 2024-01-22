@@ -13,7 +13,7 @@ android {
 
         externalNativeBuild {
             cmake {
-                targets "morda"
+                targets "ruis"
             }
         }
     }
@@ -69,7 +69,7 @@ task copy_aar(type: Zip) {
 
     from zipTree("build/outputs/aar/" + aarName + "-static-release.aar")
 
-    // pack morda resource files to AAR
+    // pack ruis resource files to AAR
     from("../../res/ruis_res"){
         into('assets/ruis_res')
     }
