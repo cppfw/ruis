@@ -453,7 +453,7 @@
     <ProjectReference Include="..\libruis\libruis.vcxproj">
       <Project>{111d4939-c046-4338-b740-eca7f87785d6}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\morda-render-opengl\morda-render-opengl.vcxproj">
+    <ProjectReference Include="..\ruis-render-opengl\ruis-render-opengl.vcxproj">
       <Project>{452cf27f-ff7d-44de-8161-4ba4dd0e1d85}</Project>
     </ProjectReference>
     <ProjectReference Include="..\mordavokne\mordavokne.vcxproj">

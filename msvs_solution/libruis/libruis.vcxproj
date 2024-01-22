@@ -459,10 +459,10 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\morda\**\*.cpp" />
+    <ClCompile Include="..\..\src\ruis\**\*.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\morda\**\*.hpp" />
+    <ClInclude Include="..\..\src\ruis\**\*.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

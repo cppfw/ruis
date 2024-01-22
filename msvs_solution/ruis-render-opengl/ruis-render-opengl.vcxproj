@@ -147,7 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\tests\harness\modules\morda-render-opengl\src\**\*.cpp" />
+    <ClCompile Include="..\..\tests\harness\modules\ruis-render-opengl\src\**\*.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\libruis\libruis.vcxproj">
