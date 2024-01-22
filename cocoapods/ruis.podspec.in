@@ -1,5 +1,5 @@
 Pod::Spec.new do |s|
-  s.name         = "morda"
+  s.name         = "ruis"
   s.version      = "$(version)"
   s.summary      = "C++ cross-platform GUI library."
   s.homepage     = "https://github.com/cppfw/#{s.name}"
