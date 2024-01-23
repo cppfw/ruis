@@ -197,8 +197,8 @@ std::shared_ptr<nine_patch::image_matrix> nine_patch::get(sides<real> borders) c
 	scaled_borders.top() *= act_mul.y();
 	scaled_borders.bottom() *= act_mul.y();
 
-	std::cout << "this->borders = " << this->borders << std::endl;
-	std::cout << "scaled_borders = " << scaled_borders << std::endl;
+	// std::cout << "this->borders = " << this->borders << std::endl;
+	// std::cout << "scaled_borders = " << scaled_borders << std::endl;
 
 	auto ret = std::make_shared<image_matrix>( // TODO: make shared_ref
 		std::array<std::array<utki::shared_ref<const res::image>, 3>, 3>({
