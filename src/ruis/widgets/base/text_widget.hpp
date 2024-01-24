@@ -61,7 +61,9 @@ public:
 	}
 
 	void set_font_size(real size);
-	real get_font_size()const noexcept{
+
+	real get_font_size() const noexcept
+	{
 		return this->font_size;
 	}
 
