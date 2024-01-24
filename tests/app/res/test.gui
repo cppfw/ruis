@@ -83,6 +83,8 @@ cursor{crs_arrow}
 
 				@text{
 					text{"some checkbox"}
+					font{fnt_monospace}
+					font_size{20pp}
 				}
 			}
 

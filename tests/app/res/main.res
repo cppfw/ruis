@@ -1,3 +1,5 @@
+include_subdirs
+
 tex_sample{
 	file {texture.jpg}
 }
