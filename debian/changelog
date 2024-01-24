@@ -1,3 +1,9 @@
+libruis (0.5.211) unstable; urgency=medium
+
+  * cache font styles
+
+ -- Ivan Gagis <igagis@gmail.com>  Wed, 24 Jan 2024 11:22:13 +0200
+
 libruis (0.5.210) unstable; urgency=medium
 
   * rename morda to ruis
