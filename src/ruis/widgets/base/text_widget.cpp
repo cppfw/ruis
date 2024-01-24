@@ -41,9 +41,9 @@ void text_widget::set_font_face(const utki::shared_ref<const res::font>& font_re
 
 void text_widget::set_font_size(real size)
 {
-	if (this->font_size == size) {
-		return;
-	}
+	// do not exit early if requested size is same as the current one,
+	// because set_font_size() is called from within set_font_face() to
+	// create fonts for all font styles
 
 	this->font_size = size;
 

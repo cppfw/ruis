@@ -61,6 +61,9 @@ public:
 	}
 
 	void set_font_size(real size);
+	real get_font_size()const noexcept{
+		return this->font_size;
+	}
 
 	void set_text(std::string_view text)
 	{
