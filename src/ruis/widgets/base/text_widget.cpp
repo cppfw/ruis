@@ -47,7 +47,9 @@ void text_widget::set_font_size(real size)
 
 	this->font_size = size;
 
-	this->font = this->font_face.get().get(this->font_size);
+	for (size_t i = 0; i != size_t(res::font::style::enum_size); ++i) {
+		this->fonts[i] = this->font_face.get().get(this->font_size, res::font::style(i));
+	}
 
 	this->invalidate_layout();
 
@@ -83,7 +85,12 @@ text_widget::text_widget(const utki::shared_ref<ruis::context>& c, const treeml:
 		// load default font
 		return this->context.get().loader.load<res::font>("ruis_fnt_text");
 	}()),
-	font(this->font_face.get().get(this->font_size))
+	fonts{
+		this->font_face.get().get(this->font_size, res::font::style(0)),
+		this->font_face.get().get(this->font_size, res::font::style(1)),
+		this->font_face.get().get(this->font_size, res::font::style(2)),
+		this->font_face.get().get(this->font_size, res::font::style(3))
+	}
 {
 	for (const auto& p : desc) {
 		if (!is_property(p)) {

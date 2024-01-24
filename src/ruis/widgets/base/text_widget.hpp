@@ -42,7 +42,7 @@ class text_widget : virtual public widget
 
 	utki::shared_ref<const res::font> font_face;
 
-	utki::shared_ref<const ruis::font> font;
+	std::array<utki::shared_ref<const ruis::font>, size_t(res::font::style::enum_size)> fonts;
 
 public:
 	text_widget(const text_widget&) = delete;
@@ -55,9 +55,9 @@ public:
 
 	void set_font_face(const utki::shared_ref<const res::font>& font_res);
 
-	const ruis::font& get_font() const
+	const ruis::font& get_font(res::font::style style = res::font::style::normal) const
 	{
-		return this->font.get();
+		return this->fonts[size_t(style)].get();
 	}
 
 	void set_font_size(real size);

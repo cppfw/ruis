@@ -99,7 +99,7 @@ public:
 		if (ret) {
 			return ret->get(size);
 		}
-		return this->fonts[unsigned(style::normal)]->get(size);
+		return this->fonts[size_t(style::normal)]->get(size);
 	}
 
 private:
