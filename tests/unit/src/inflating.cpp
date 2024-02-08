@@ -3,6 +3,7 @@
 
 #include <ruis/gui.hpp>
 #include <ruis/container.hpp>
+#include <ruis/widgets/label/color.hpp>
 
 #include "../../harness/util/dummy_context.hpp"
 
@@ -382,6 +383,29 @@ const tst::set set("inflating", [](tst::suite& suite){
 		auto w = c.get().try_get_widget("widget1");
 
 		tst::check(w, SL);
+	});
+
+	suite.add("using_vars_in_children", [](){
+		ruis::gui g(make_dummy_context());
+
+		auto t = g.context.get().inflater.inflate(tml::read(R"qwertyuiop(
+			@container{
+				defs{
+					a{13}
+				}
+
+				@color{
+					color{${a}}
+				}
+			}
+		)qwertyuiop"));
+
+		auto c = utki::dynamic_reference_cast<ruis::container>(t);
+
+		tst::check_eq(c.get().size(), size_t(1), SL);
+		
+		auto& w = dynamic_cast<ruis::color&>(c.get().children().front().get());
+		tst::check_eq(w.get_color(), uint32_t(13), SL);
 	});
 });
 }
