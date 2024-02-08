@@ -330,14 +330,17 @@ void container::clear()
 
 std::shared_ptr<widget> container::try_get_widget(const std::string& id, bool allow_itself) noexcept
 {
-	if (allow_itself) {
-		if (auto r = this->widget::try_get_widget(id, true)) {
-			return r;
-		}
+	if (auto r = this->widget::try_get_widget(id, allow_itself)) {
+		return r;
 	}
 
 	for (auto& w : this->children()) {
-		if (auto r = w.get().try_get_widget(id, true)) {
+		if (auto r = w.get().widget::try_get_widget(id, true)) {
+			return r;
+		}
+	}
+	for (auto& w : this->children()) {
+		if (auto r = w.get().try_get_widget(id, false)) {
 			return r;
 		}
 	}

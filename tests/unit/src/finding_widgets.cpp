@@ -7,7 +7,7 @@
 #include "../../harness/util/dummy_context.hpp"
 
 namespace{
-const tst::set set("get_all_widgets", [](tst::suite& suite){
+const tst::set set("finding_widgets", [](tst::suite& suite){
     suite.add("get_all_widgets_function", []{
 		ruis::gui m(make_dummy_context());
 		auto w = m.context.get().inflater.inflate(treeml::read(R"qwertyuiop(
@@ -65,6 +65,45 @@ const tst::set set("get_all_widgets", [](tst::suite& suite){
 				);
             tst::check(i != aaas.end(), SL) << "id = '" << id <<"' not found";
 		}
+	});
+
+	suite.add("chaining_get_widget", [](){
+		ruis::gui m(make_dummy_context());
+		auto w = m.context.get().inflater.inflate(treeml::read(R"qwertyuiop(
+			@container{
+				id{root}
+
+				@container{
+					@container{
+						id{child} // should not find this
+						x{1} y{1}
+
+						@widget
+					}
+				}
+
+				@container{
+					id{child} // should find this
+					@container{
+						id{child2}
+						x{1} y{2}
+					}
+				}
+
+				@container{
+					id{child3}
+
+					@container{
+						@container{
+							id{child1}
+						}
+					}
+				}
+			}
+		)qwertyuiop"));
+
+		auto& found = w.get().get_widget("child").get_widget("child2");
+		tst::check_eq(found.rect().p, ruis::vector2{1, 2}, SL);
 	});
 });
 }
