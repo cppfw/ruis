@@ -71,7 +71,7 @@ public:
 	using ruis::container::on_resize;
 	using ruis::container::on_parent_change;
 	using ruis::container::measure;
-	using ruis::container::on_enable_change;
+	using ruis::container::on_enabled_change;
 };
 
 } // namespace ruis

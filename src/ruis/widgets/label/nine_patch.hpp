@@ -127,7 +127,7 @@ public:
 
 	void on_blending_change() override;
 
-	void on_enable_change() override;
+	void on_enabled_change() override;
 
 private:
 	void apply_images();

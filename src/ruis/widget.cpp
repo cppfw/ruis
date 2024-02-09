@@ -439,7 +439,7 @@ void widget::set_enabled(bool enable)
 		this->set_unhovered();
 	}
 
-	this->on_enable_change();
+	this->on_enabled_change();
 }
 
 void widget::set_visible(bool visible)

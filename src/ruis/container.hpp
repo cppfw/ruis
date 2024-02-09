@@ -385,7 +385,7 @@ public:
 	 * @brief Handler of enable state change.
 	 * This implementation sets the same enabled state to all children of the container.
 	 */
-	void on_enable_change() override;
+	void on_enabled_change() override;
 
 	/**
 	 * @brief Handler of resources reload request.

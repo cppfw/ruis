@@ -592,7 +592,7 @@ public:
 	/**
 	 * @brief Invoked when enabled state of the widget changes.
 	 */
-	virtual void on_enable_change() {}
+	virtual void on_enabled_change() {}
 
 	/**
 	 * @brief Check if widget can receive user input.

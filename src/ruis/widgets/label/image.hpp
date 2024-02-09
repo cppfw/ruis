@@ -98,7 +98,7 @@ public:
 		this->invalidate_layout();
 	}
 
-	void on_enable_change() override;
+	void on_enabled_change() override;
 };
 
 } // namespace ruis

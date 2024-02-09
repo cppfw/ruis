@@ -205,7 +205,7 @@ void image::on_resize()
 	this->texture.reset();
 }
 
-void image::on_enable_change()
+void image::on_enabled_change()
 {
 	if (!this->disabled_img) {
 		// no disabled image set, nothing changes
