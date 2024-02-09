@@ -19,14 +19,34 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 /* ================ LICENSE END ================ */
 
-#include "make.hpp"
+#include "lp.hpp"
 
-using namespace ruis::make;
+#include "util/util.hpp"
 
-utki::shared_ref<ruis::widget> ruis::make::widget(
-	utki::shared_ref<ruis::context> context,
-	ruis::widget::parameters params
-)
+using namespace ruis;
+
+lp lp::make(const tml::forest& desc, const ruis::units& units)
 {
-	return utki::make_shared<ruis::widget>(std::move(context), std::move(params));
+	lp ret;
+	for (const auto& p : desc) {
+		if (!is_property(p)) {
+			continue;
+		}
+
+		try {
+			if (p.value == "dx") {
+				ret.dims.x() = parse_layout_dimension_value(get_property_value(p), units);
+			} else if (p.value == "dy") {
+				ret.dims.y() = parse_layout_dimension_value(get_property_value(p), units);
+			} else if (p.value == "weight") {
+				ret.weight = get_property_value(p).to_float();
+			}
+		} catch (std::invalid_argument&) {
+			LOG([&](auto& o) {
+				o << "could not parse value of " << treeml::to_string(p) << std::endl;
+			})
+			throw;
+		}
+	}
+	return ret;
 }

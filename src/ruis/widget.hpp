@@ -38,6 +38,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "util/units.hpp"
 
 #include "config.hpp"
+#include "lp.hpp"
 
 namespace ruis {
 
@@ -466,12 +467,28 @@ public:
 	}
 
 public:
+	struct parameters {
+		std::string id;
+		ruis::lp lp;
+		ruis::rectangle rect;
+		bool clip = false;
+		bool cache = false;
+		bool visible = true;
+		bool enabled = true;
+	};
+
+private:
+	parameters params;
+
+public:
 	/**
 	 * @brief Constructor.
 	 * @param c - context to which this widget belongs.
 	 * @param desc - widget description.
 	 */
 	widget(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
+
+	widget(utki::shared_ref<ruis::context> context, parameters params);
 
 	widget(const widget&) = delete;
 	widget& operator=(const widget&) = delete;

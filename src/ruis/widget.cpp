@@ -69,6 +69,11 @@ widget::widget(const utki::shared_ref<ruis::context>& c, const treeml::forest& d
 	}
 }
 
+widget::widget(utki::shared_ref<ruis::context> context, parameters params) :
+	context(std::move(context)),
+	params(std::move(params))
+{}
+
 layout_params::layout_params(const treeml::forest& desc, const ruis::units& units)
 {
 	for (const auto& p : desc) {
