@@ -26,6 +26,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <utki/shared_ref.hpp>
 
+#include "layouts/trivial_layout.hpp"
 #include "util/util.hpp"
 #include "util/widget_list.hpp"
 
@@ -79,8 +80,6 @@ private:
 		}
 	} children_list;
 
-	utki::shared_ref<ruis::layout> layout;
-
 private:
 	struct mouse_capture_info {
 		std::weak_ptr<widget> capturing_widget;
@@ -122,6 +121,22 @@ protected:
 	void render_child(const matrix4& matrix, const widget& c) const;
 
 public:
+	struct parameters {
+		utki::shared_ref<ruis::layout> layout = trivial_layout::instance;
+	};
+
+private:
+	parameters params;
+
+public:
+	struct constructor_parameters : public parameters, public widget::parameters {};
+
+	container(
+		utki::shared_ref<ruis::context> context,
+		constructor_parameters params,
+		utki::span<utki::shared_ref<widget>> children
+	);
+
 	/**
 	 * @brief Constructor.
 	 * @param c - context to which this widget belongs.
@@ -137,7 +152,7 @@ public:
 
 	const ruis::layout& get_layout() const
 	{
-		return this->layout.get();
+		return this->params.layout.get();
 	}
 
 	void render(const matrix4& matrix) const override;

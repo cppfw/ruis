@@ -21,11 +21,18 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
+#include "container.hpp"
 #include "lp.hpp"
 #include "widget.hpp"
 
 namespace ruis::make {
 
 utki::shared_ref<ruis::widget> widget(utki::shared_ref<ruis::context> context, ruis::widget::parameters params);
+
+utki::shared_ref<ruis::widget> container(
+	utki::shared_ref<ruis::context> context,
+	ruis::container::constructor_parameters params,
+	utki::span<utki::shared_ref<ruis::widget>> children
+);
 
 } // namespace ruis::make

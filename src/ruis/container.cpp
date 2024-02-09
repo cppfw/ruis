@@ -21,12 +21,23 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "container.hpp"
 
-#include "layouts/trivial_layout.hpp"
 #include "util/util.hpp"
 
 #include "context.hpp"
 
 using namespace ruis;
+
+container::container(
+	utki::shared_ref<ruis::context> context,
+	constructor_parameters params,
+	utki::span<utki::shared_ref<widget>> children
+) :
+	widget(std::move(context), std::move(params))
+{
+	for (const auto& c : children) {
+		this->push_back(c);
+	}
+}
 
 container::container(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
 	container(c, desc, trivial_layout::instance)
@@ -39,7 +50,7 @@ container::container(
 	const utki::shared_ref<ruis::layout>& layout
 ) :
 	widget(c, desc),
-	layout(layout)
+	params{.layout = std::move(layout)}
 {
 	for (const auto& p : desc) {
 		if (!is_property(p)) {
@@ -51,7 +62,7 @@ container::container(
 				if (p.children.size() != 1) {
 					throw std::invalid_argument("layout parameter has zero or more than 1 child");
 				}
-				this->layout = this->context.get().layout_factory.create(
+				this->params.layout = this->context.get().layout_factory.create(
 					p.children.front().value.to_string(),
 					p.children.front().children
 				);

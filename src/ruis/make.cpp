@@ -30,3 +30,12 @@ utki::shared_ref<ruis::widget> ruis::make::widget(
 {
 	return utki::make_shared<ruis::widget>(std::move(context), std::move(params));
 }
+
+utki::shared_ref<ruis::widget> container(
+	utki::shared_ref<ruis::context> context,
+	ruis::container::constructor_parameters params,
+	utki::span<utki::shared_ref<ruis::widget>> children
+)
+{
+	return utki::make_shared<ruis::container>(std::move(context), std::move(params), children);
+}
