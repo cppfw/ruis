@@ -27,13 +27,24 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis::make {
 
-utki::shared_ref<ruis::widget> widget(utki::shared_ref<ruis::context> context, ruis::widget::parameters params);
+inline utki::shared_ref<ruis::widget> widget(utki::shared_ref<ruis::context> context, ruis::widget::parameters params)
+{
+	return utki::make_shared<ruis::widget>(std::move(context), std::move(params));
+}
 
-utki::shared_ref<ruis::widget> container(
+inline utki::shared_ref<ruis::widget> container(
 	utki::shared_ref<ruis::context> context,
 	ruis::widget::parameters widget_params,
 	ruis::container::parameters params,
 	const std::vector<utki::shared_ref<ruis::widget>> children
-);
+)
+{
+	return utki::make_shared<ruis::container>(
+		std::move(context),
+		std::move(widget_params),
+		std::move(params),
+		children
+	);
+}
 
 } // namespace ruis::make
