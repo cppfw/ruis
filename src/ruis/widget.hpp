@@ -529,7 +529,7 @@ public:
 	 * Called by framework when mouse pointer enters or leaves the widget boundaries.
 	 * @param pointer_id - id of the mouse pointer on systems with multiple mouse pointers, like multitouch screens.
 	 */
-	virtual void on_hover_change(unsigned pointer_id)
+	virtual void on_hovered_change(unsigned pointer_id)
 	{
 		//		TRACE(<< "widget::on_hover_change(): this->IsHovered() = " << this->IsHovered() << std::endl)
 	}

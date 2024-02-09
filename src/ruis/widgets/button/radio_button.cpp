@@ -53,9 +53,9 @@ radio_button::radio_button(const utki::shared_ref<ruis::context>& c, const treem
 	this->check_widget.get().set_visible(this->is_pressed());
 }
 
-void radio_button::on_press_change()
+void radio_button::on_pressed_change()
 {
-	this->choice_button::on_press_change();
+	this->choice_button::on_pressed_change();
 	this->check_widget.get().set_visible(this->is_pressed());
 	this->clear_cache();
 }

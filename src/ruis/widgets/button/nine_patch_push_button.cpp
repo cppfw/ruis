@@ -32,8 +32,8 @@ nine_patch_push_button::nine_patch_push_button(const utki::shared_ref<ruis::cont
 	nine_patch_button(this->context, desc)
 {}
 
-void nine_patch_push_button::on_press_change()
+void nine_patch_push_button::on_pressed_change()
 {
-	this->nine_patch_button::on_press_change();
-	this->push_button::on_press_change();
+	this->nine_patch_button::on_pressed_change();
+	this->push_button::on_pressed_change();
 }

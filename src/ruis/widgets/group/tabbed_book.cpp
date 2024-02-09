@@ -76,7 +76,7 @@ void tabbed_book::add(const utki::shared_ref<tab>& tab, const utki::shared_ref<r
 
 	tab.get().set_pressed(true);
 
-	tab.get().press_handler = [page](ruis::button& btn) {
+	tab.get().pressed_change_handler = [page](ruis::button& btn) {
 		if (btn.is_pressed()) {
 			page.get().activate();
 		}

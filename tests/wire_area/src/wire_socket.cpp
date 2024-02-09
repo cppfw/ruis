@@ -110,7 +110,7 @@ bool wire_socket::on_mouse_button(const ruis::mouse_button_event& e){
 	return false;
 }
 
-void wire_socket::on_hover_change(unsigned pointer_id){
+void wire_socket::on_hovered_change(unsigned pointer_id){
 	// LOG("Hover changed: " << this->is_hovered(pointer_id) << std::endl)
 	if(auto wa = this->try_get_ancestor<wire_area>()){
 		if(this->is_hovered()){

@@ -146,7 +146,7 @@ public:
 
 	bool on_mouse_move(const mouse_move_event& event) override;
 
-	void on_hover_change(unsigned pointer_id) override;
+	void on_hovered_change(unsigned pointer_id) override;
 
 	ruis::vector2 measure(const ruis::vector2& quotum) const override;
 

@@ -35,7 +35,7 @@ class image_button : virtual public button, public image
 	void update_image();
 
 protected:
-	void on_press_change() override;
+	void on_pressed_change() override;
 
 	image_button(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
 

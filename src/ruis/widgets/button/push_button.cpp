@@ -52,7 +52,7 @@ bool push_button::on_mouse_button(const mouse_button_event& e)
 	return true;
 }
 
-void push_button::on_hover_change(unsigned pointer_id)
+void push_button::on_hovered_change(unsigned pointer_id)
 {
 	//	TRACE(<< "push_button::on_hover_change(): enter" << std::endl)
 
@@ -63,9 +63,9 @@ void push_button::on_hover_change(unsigned pointer_id)
 	}
 }
 
-void push_button::on_press_change()
+void push_button::on_pressed_change()
 {
-	this->button::on_press_change();
+	this->button::on_pressed_change();
 
 	if (this->currentlyPressed && this->is_hovered()) {
 		ASSERT(!this->is_pressed())

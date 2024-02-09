@@ -23,10 +23,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
-void image_push_button::on_press_change()
+void image_push_button::on_pressed_change()
 {
-	this->image_button::on_press_change();
-	this->push_button::on_press_change();
+	this->image_button::on_pressed_change();
+	this->push_button::on_pressed_change();
 }
 
 image_push_button::image_push_button(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :

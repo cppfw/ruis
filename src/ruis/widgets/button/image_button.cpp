@@ -34,10 +34,10 @@ void image_button::update_image()
 	}
 }
 
-void image_button::on_press_change()
+void image_button::on_pressed_change()
 {
 	this->update_image();
-	this->button::on_press_change();
+	this->button::on_pressed_change();
 }
 
 image_button::image_button(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :

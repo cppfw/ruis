@@ -60,7 +60,7 @@ public:
 
 	bool on_mouse_button(const ruis::mouse_button_event& event)override;
 
-	void on_hover_change(unsigned pointer_id) override;
+	void on_hovered_change(unsigned pointer_id) override;
 	
 	/**
 	 * @brief Connection event callback.

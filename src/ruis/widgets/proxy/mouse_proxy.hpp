@@ -62,9 +62,9 @@ public:
 	 * @brief Hover changed event signal.
 	 * Emitted when hover changed event reaches this widget.
 	 */
-	std::function<void(mouse_proxy& w, unsigned pointer_id)> hover_change_handler;
+	std::function<void(mouse_proxy& w, unsigned pointer_id)> hovered_change_handler;
 
-	void on_hover_change(unsigned pointer_id) override;
+	void on_hovered_change(unsigned pointer_id) override;
 };
 
 } // namespace ruis

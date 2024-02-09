@@ -37,7 +37,7 @@ namespace ruis {
 class choice_button : virtual public toggle_button
 {
 protected:
-	void on_press_change() override;
+	void on_pressed_change() override;
 
 	bool on_mouse_button(const mouse_button_event& event) override;
 

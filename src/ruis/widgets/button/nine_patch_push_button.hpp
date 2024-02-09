@@ -34,16 +34,16 @@ public:
 	nine_patch_push_button(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
 
 protected:
-	void on_press_change() override;
+	void on_pressed_change() override;
 
 	bool on_mouse_button(const mouse_button_event& e) override
 	{
 		return this->push_button::on_mouse_button(e);
 	}
 
-	void on_hover_change(unsigned pointer_id) override
+	void on_hovered_change(unsigned pointer_id) override
 	{
-		this->push_button::on_hover_change(pointer_id);
+		this->push_button::on_hovered_change(pointer_id);
 	}
 };
 

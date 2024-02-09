@@ -28,7 +28,7 @@ namespace ruis {
 class image_push_button : virtual public push_button, public image_button
 {
 protected:
-	void on_press_change() override;
+	void on_pressed_change() override;
 
 public:
 	image_push_button(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);

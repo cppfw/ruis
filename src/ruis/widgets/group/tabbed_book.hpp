@@ -67,7 +67,7 @@ public:
 	using ruis::container::on_mouse_button;
 	using ruis::container::on_key;
 	using ruis::container::on_focus_change;
-	using ruis::container::on_hover_change;
+	using ruis::container::on_hovered_change;
 	using ruis::container::on_resize;
 	using ruis::container::on_parent_change;
 	using ruis::container::measure;

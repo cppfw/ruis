@@ -37,7 +37,7 @@ class push_button : virtual public button
 	unsigned pointer_id = 0;
 
 protected:
-	void on_press_change() override;
+	void on_pressed_change() override;
 
 	/**
 	 * @brief Invoked when the button is clicked.
@@ -47,7 +47,7 @@ protected:
 
 	bool on_mouse_button(const mouse_button_event& event) override;
 
-	void on_hover_change(unsigned pointer_id) override;
+	void on_hovered_change(unsigned pointer_id) override;
 
 public:
 	push_button(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :

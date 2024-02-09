@@ -41,7 +41,7 @@ protected:
 	 * @brief Called when button pressed state changes.
 	 * Default implementation emits the 'pressedChanged' signal.
 	 */
-	virtual void on_press_change();
+	virtual void on_pressed_change();
 
 public:
 	button(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
@@ -62,7 +62,7 @@ public:
 	 * @brief Pressed changed signal.
 	 * Emitted when button pressed state changes.
 	 */
-	std::function<void(button&)> press_handler;
+	std::function<void(button&)> pressed_change_handler;
 };
 
 } // namespace ruis

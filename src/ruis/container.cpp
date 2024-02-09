@@ -243,7 +243,7 @@ bool container::on_mouse_move(const mouse_move_event& e)
 	return false;
 }
 
-void container::on_hover_change(unsigned pointer_id)
+void container::on_hovered_change(unsigned pointer_id)
 {
 	if (this->is_hovered(pointer_id)) {
 		return;

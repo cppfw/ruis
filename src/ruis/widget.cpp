@@ -455,7 +455,7 @@ void widget::set_unhovered()
 	auto hover_set = std::move(this->hovered);
 	ASSERT(this->hovered.size() == 0)
 	for (auto h : hover_set) {
-		this->on_hover_change(h);
+		this->on_hovered_change(h);
 	}
 }
 
@@ -474,7 +474,7 @@ void widget::set_hovered(bool is_hovered, unsigned pointer_id)
 		this->hovered.erase(pointer_id);
 	}
 
-	this->on_hover_change(pointer_id);
+	this->on_hovered_change(pointer_id);
 }
 
 void widget::reload()

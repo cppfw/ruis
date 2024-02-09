@@ -44,9 +44,9 @@ bool mouse_proxy::on_mouse_move(const mouse_move_event& e)
 	return false;
 }
 
-void mouse_proxy::on_hover_change(unsigned pointer_id)
+void mouse_proxy::on_hovered_change(unsigned pointer_id)
 {
-	if (this->hover_change_handler) {
-		this->hover_change_handler(*this, pointer_id);
+	if (this->hovered_change_handler) {
+		this->hovered_change_handler(*this, pointer_id);
 	}
 }

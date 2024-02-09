@@ -32,7 +32,7 @@ public:
 	nine_patch_toggle(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
 
 protected:
-	void on_press_change() override;
+	void on_pressed_change() override;
 
 	bool on_mouse_button(const mouse_button_event& e) override
 	{

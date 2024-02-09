@@ -525,12 +525,12 @@ public:
 
 			auto& cp = c.get().get_widget_as<ruis::click_proxy>("cube_click_proxy");
 			auto& bg = c.get().get_widget_as<ruis::color>("cube_bg_color");
-			cp.press_change_handler = [bg{utki::make_shared_from(bg)}](ruis::click_proxy& w) -> bool {
+			cp.pressed_change_handler = [bg{utki::make_shared_from(bg)}](ruis::click_proxy& w) -> bool {
 				// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers)
 				bg.get().set_color(w.is_pressed() ? 0xff808080 : 0x80808080);
 				return true;
 			};
-			cp.press_change_handler(cp); // set initial color
+			cp.pressed_change_handler(cp); // set initial color
 			cp.click_handler = [cube](ruis::click_proxy&) -> bool {
 				if(cube->is_updating()){
 					cube->context.get().updater.get().stop(*cube);

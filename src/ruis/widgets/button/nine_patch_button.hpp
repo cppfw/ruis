@@ -38,6 +38,7 @@ class nine_patch_button :
 	virtual public button, //
 	public nine_patch
 {
+	// TODO: naming convention
 	std::shared_ptr<const res::nine_patch> unpressedNinePatch_v;
 	std::shared_ptr<const res::nine_patch> pressedNinePatch_v;
 
@@ -67,7 +68,7 @@ public:
 protected:
 	nine_patch_button(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
 
-	void on_press_change() override;
+	void on_pressed_change() override;
 };
 
 } // namespace ruis

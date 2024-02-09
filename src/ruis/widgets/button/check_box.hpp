@@ -56,12 +56,12 @@ public:
 		return this->toggle_button::on_mouse_button(e);
 	}
 
-	void on_hover_change(unsigned pointer_id) override
+	void on_hovered_change(unsigned pointer_id) override
 	{
-		this->toggle_button::on_hover_change(pointer_id);
+		this->toggle_button::on_hovered_change(pointer_id);
 	}
 
-	void on_press_change() override;
+	void on_pressed_change() override;
 
 private:
 };

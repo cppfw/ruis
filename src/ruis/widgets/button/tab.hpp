@@ -46,9 +46,9 @@ public:
 protected:
 	bool on_mouse_button(const mouse_button_event& event) override;
 
-	void on_hover_change(unsigned pointer_id) override {}
+	void on_hovered_change(unsigned pointer_id) override {}
 
-	void on_press_change() override;
+	void on_pressed_change() override;
 };
 
 } // namespace ruis

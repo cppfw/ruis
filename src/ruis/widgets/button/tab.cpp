@@ -79,10 +79,10 @@ bool tab::on_mouse_button(const mouse_button_event& e)
 	return this->choice_button::on_mouse_button(e);
 }
 
-void tab::on_press_change()
+void tab::on_pressed_change()
 {
-	this->choice_button::on_press_change();
-	this->nine_patch_toggle::on_press_change();
+	this->choice_button::on_pressed_change();
+	this->nine_patch_toggle::on_pressed_change();
 }
 
 tab::tab(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
@@ -104,5 +104,5 @@ tab::tab(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
 	}
 
 	// initialize nine-patch
-	this->tab::on_press_change();
+	this->tab::on_pressed_change();
 }
