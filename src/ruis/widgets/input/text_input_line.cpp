@@ -45,7 +45,7 @@ text_input_line::text_input_line(const utki::shared_ref<ruis::context>& c, const
 	character_input_widget(this->context),
 	color_widget(this->context, desc)
 {
-	this->set_clip_enabled(true);
+	this->set_clip(true);
 }
 
 void text_input_line::render(const ruis::matrix4& matrix) const

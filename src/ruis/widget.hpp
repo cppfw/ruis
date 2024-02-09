@@ -93,8 +93,7 @@ public:
 	 * @brief Enable/Disable scissor test.
 	 * @param enable - whether to enable (true) or disable (false) the scissor test.
 	 */
-	// TODO: rename to set_clip()
-	void set_clip_enabled(bool enable) noexcept
+	void set_clip(bool enable) noexcept
 	{
 		this->params.clip = enable;
 	}
