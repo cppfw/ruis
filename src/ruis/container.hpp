@@ -129,14 +129,10 @@ private:
 	parameters params;
 
 public:
-	struct constructor_parameters {
-		widget::parameters widget_params;
-		parameters container_params;
-	};
-
 	container(
 		utki::shared_ref<ruis::context> context,
-		constructor_parameters params,
+		widget::parameters widget_params,
+		parameters params,
 		utki::span<const utki::shared_ref<widget>> children
 	);
 

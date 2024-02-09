@@ -12,7 +12,7 @@ const tst::set set("make", [](tst::suite& suite){
     suite.add("make_empty_container", [](){
         ruis::gui gui(make_dummy_context());
 
-        auto c = ruis::make::container(gui.context, {}, {});
+        auto c = ruis::make::container(gui.context, {}, {}, {});
     });
 
     suite.add("basic_make", [](){
@@ -21,15 +21,11 @@ const tst::set set("make", [](tst::suite& suite){
         auto c = ruis::make::container(
             gui.context,
             {
-                // {
-                    // .lp = {
-                    //     .dims = {ruis::lp::min, ruis::lp::fill}
-                    // }
-                // },
-                // {.layout = ruis::pile_layout::instance}
-                .container_params = {
-                    .layout = ruis::pile_layout::instance
+                .lp = {
+                    .dims = {ruis::lp::min, ruis::lp::fill}
                 }
+            },{
+                .layout = ruis::pile_layout::instance
             },
             {
                 ruis::make::widget(
