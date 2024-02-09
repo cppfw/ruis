@@ -409,7 +409,7 @@ public:
 	struct parameters {
 		std::string id;
 		ruis::lp lp;
-		ruis::rectangle rectangle;
+		ruis::rectangle rectangle = {0, 0};
 
 		/**
 		 * @brief Clip widgets contents by widget's border.
