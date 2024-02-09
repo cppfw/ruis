@@ -32,7 +32,7 @@ utki::shared_ref<ruis::widget> widget(utki::shared_ref<ruis::context> context, r
 utki::shared_ref<ruis::widget> container(
 	utki::shared_ref<ruis::context> context,
 	ruis::container::constructor_parameters params,
-	utki::span<utki::shared_ref<ruis::widget>> children
+	const std::vector<utki::shared_ref<ruis::widget>> children
 );
 
 } // namespace ruis::make

@@ -30,9 +30,10 @@ using namespace ruis;
 container::container(
 	utki::shared_ref<ruis::context> context,
 	constructor_parameters params,
-	utki::span<utki::shared_ref<widget>> children
+	utki::span<const utki::shared_ref<widget>> children
 ) :
-	widget(std::move(context), std::move(params))
+	widget(std::move(context), std::move(params.widget_params)),
+	params(std::move(params.container_params))
 {
 	for (const auto& c : children) {
 		this->push_back(c);
