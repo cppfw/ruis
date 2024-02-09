@@ -39,7 +39,7 @@ widget::widget(const utki::shared_ref<ruis::context>& c, const treeml::forest& d
 
 		try {
 			if (p.value == "lp") {
-				this->layout_parameters = lp::make(p.children, this->context.get().units);
+				this->params.lp = lp::make(p.children, this->context.get().units);
 			} else if (p.value == "x") {
 				this->rectangle.p.x() = parse_dimension_value(get_property_value(p), this->context.get().units);
 			} else if (p.value == "y") {
@@ -49,7 +49,7 @@ widget::widget(const utki::shared_ref<ruis::context>& c, const treeml::forest& d
 			} else if (p.value == "dy") {
 				this->rectangle.d.y() = parse_dimension_value(get_property_value(p), this->context.get().units);
 			} else if (p.value == "id") {
-				this->id = get_property_value(p).to_string();
+				this->params.id = get_property_value(p).to_string();
 				// TRACE(<< "inflating '" << this->id << "'" << std::endl)
 			} else if (p.value == "clip") {
 				this->clip_enabled = get_property_value(p).to_bool();
@@ -76,7 +76,7 @@ widget::widget(utki::shared_ref<ruis::context> context, parameters params) :
 
 std::shared_ptr<widget> widget::try_get_widget(const std::string& id, bool allow_itself) noexcept
 {
-	if (allow_itself && this->id == id) {
+	if (allow_itself && this->id() == id) {
 		return utki::make_shared_from(*this).to_shared_ptr();
 	}
 	return nullptr;
@@ -96,7 +96,7 @@ widget* widget::try_get_ancestor(const std::string& id)
 		return nullptr;
 	}
 
-	if (this->parent()->id == id) {
+	if (this->parent()->id() == id) {
 		return this->parent();
 	}
 
@@ -165,7 +165,7 @@ utki::shared_ref<widget> widget::replace_by(const utki::shared_ref<widget>& w)
 	// TODO: performace can be improved by adding dedicated container::replace_by(iter, widget) function
 	this->parent()->insert(w, this->parent()->find(*this));
 
-	w.get().layout_parameters = std::move(this->layout_parameters);
+	w.get().params.lp = std::move(this->params.lp);
 
 	return this->remove_from_parent();
 }
@@ -416,7 +416,7 @@ widget& widget::get_widget(const std::string& id, bool allow_itself)
 	auto w = this->try_get_widget(id, allow_itself);
 	if (!w) {
 		std::stringstream ss;
-		ss << "widget '" << id << "' not found in '" << this->id << "'";
+		ss << "widget '" << id << "' not found in '" << this->id() << "'";
 
 		// gui scripts are supposed to be static (not dynamically generated),
 		// so if there is no expected widget the gui script, then it is a logic error

@@ -142,10 +142,11 @@ public:
 private:
 	bool layout_dirty = true;
 
-	lp layout_parameters;
-
 public:
-	std::string id;
+	std::string_view id() const
+	{
+		return this->params.id;
+	}
 
 	/**
 	 * @brief Get layout parameters of the widget.
@@ -160,7 +161,7 @@ public:
 	 */
 	const lp& get_layout_params_const() const
 	{
-		return this->layout_parameters;
+		return this->params.lp;
 	}
 
 	/**

@@ -408,7 +408,7 @@ widget_type* widget::try_get_ancestor(const std::string& id)
 	);
 
 	if (p) {
-		if (id.empty() || p->id == id) {
+		if (id.empty() || p->id() == id) {
 			return p;
 		}
 	}

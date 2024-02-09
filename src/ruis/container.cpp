@@ -215,7 +215,7 @@ bool container::on_mouse_move(const mouse_move_event& e)
 
 		if (!c.is_interactive()) {
 			ASSERT(!c.is_hovered(), [&](auto& o) {
-				o << "c->name() = " << c.id;
+				o << "c->name() = " << c.id();
 			})
 			continue;
 		}

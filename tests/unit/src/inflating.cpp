@@ -8,6 +8,7 @@
 #include "../../harness/util/dummy_context.hpp"
 
 using namespace std::string_literals;
+using namespace std::string_view_literals;
 
 namespace{
 const tst::set set("inflating", [](tst::suite& suite){
@@ -346,7 +347,7 @@ const tst::set set("inflating", [](tst::suite& suite){
 		auto c = utki::dynamic_reference_cast<ruis::container>(w);
 
 		tst::check_eq(c.get().children().size(), size_t(1), SL);
-		tst::check_eq(c.get().children().front().get().id, "widget1"s, SL);
+		tst::check_eq(c.get().children().front().get().id(), "widget1"sv, SL);
 	});
 
 	suite.add("inflating_left_alignment", [](){
