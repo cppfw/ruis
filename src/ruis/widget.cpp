@@ -41,24 +41,24 @@ widget::widget(const utki::shared_ref<ruis::context>& c, const treeml::forest& d
 			if (p.value == "lp") {
 				this->params.lp = lp::make(p.children, this->context.get().units);
 			} else if (p.value == "x") {
-				this->rectangle.p.x() = parse_dimension_value(get_property_value(p), this->context.get().units);
+				this->params.rectangle.p.x() = parse_dimension_value(get_property_value(p), this->context.get().units);
 			} else if (p.value == "y") {
-				this->rectangle.p.y() = parse_dimension_value(get_property_value(p), this->context.get().units);
+				this->params.rectangle.p.y() = parse_dimension_value(get_property_value(p), this->context.get().units);
 			} else if (p.value == "dx") {
-				this->rectangle.d.x() = parse_dimension_value(get_property_value(p), this->context.get().units);
+				this->params.rectangle.d.x() = parse_dimension_value(get_property_value(p), this->context.get().units);
 			} else if (p.value == "dy") {
-				this->rectangle.d.y() = parse_dimension_value(get_property_value(p), this->context.get().units);
+				this->params.rectangle.d.y() = parse_dimension_value(get_property_value(p), this->context.get().units);
 			} else if (p.value == "id") {
 				this->params.id = get_property_value(p).to_string();
 				// TRACE(<< "inflating '" << this->id << "'" << std::endl)
 			} else if (p.value == "clip") {
-				this->clip_enabled = get_property_value(p).to_bool();
+				this->params.clip = get_property_value(p).to_bool();
 			} else if (p.value == "cache") {
-				this->cache = get_property_value(p).to_bool();
+				this->params.cache = get_property_value(p).to_bool();
 			} else if (p.value == "visible") {
-				this->visible = get_property_value(p).to_bool();
+				this->params.visible = get_property_value(p).to_bool();
 			} else if (p.value == "enabled") {
-				this->enabled = get_property_value(p).to_bool();
+				this->params.enabled = get_property_value(p).to_bool();
 			}
 		} catch (std::invalid_argument&) {
 			LOG([&](auto& o) {
@@ -116,12 +116,12 @@ widget& widget::get_ancestor(const std::string& id)
 
 void widget::move_to(const vector2& new_pos)
 {
-	this->rectangle.p = new_pos;
+	this->params.rectangle.p = new_pos;
 }
 
 void widget::resize(const ruis::vector2& new_dims)
 {
-	if (this->rectangle.d == new_dims) {
+	if (this->params.rectangle.d == new_dims) {
 		if (this->is_layout_dirty()) {
 			this->lay_out();
 		}
@@ -130,7 +130,7 @@ void widget::resize(const ruis::vector2& new_dims)
 
 	using std::max;
 
-	this->rectangle.d = max(new_dims, real(0)); // clamp bottom
+	this->params.rectangle.d = max(new_dims, real(0)); // clamp bottom
 	this->on_resize();
 }
 
@@ -192,7 +192,7 @@ void widget::render_internal(const ruis::matrix4& matrix) const
 
 	auto& r = this->context.get().renderer.get();
 
-	if (this->cache) {
+	if (this->params.cache) {
 		if (this->cache_dirty) {
 			bool scissor_test_was_enabled = r.is_scissor_enabled();
 			r.set_scissor_enabled(false);
@@ -215,7 +215,7 @@ void widget::render_internal(const ruis::matrix4& matrix) const
 
 		this->render_from_cache(matrix);
 	} else {
-		if (this->clip_enabled) {
+		if (this->params.clip) {
 			//		TRACE(<< "widget::RenderInternal(): oldScissorBox = " << Rect2i(oldcissorBox[0], oldcissorBox[1],
 			// oldcissorBox[2], oldcissorBox[3]) << std::endl)
 
@@ -428,11 +428,11 @@ widget& widget::get_widget(const std::string& id, bool allow_itself)
 void widget::set_enabled(bool enable)
 {
 	//	TRACE(<< "widget::set_enabled(): enable = " << enable << " this->name() = " << this->name()<< std::endl)
-	if (this->enabled == enable) {
+	if (this->params.enabled == enable) {
 		return;
 	}
 
-	this->enabled = enable;
+	this->params.enabled = enable;
 
 	// un-hover this widget if it becomes disabled because it is not supposed to receive mouse input
 	if (!this->is_enabled()) {
@@ -444,8 +444,8 @@ void widget::set_enabled(bool enable)
 
 void widget::set_visible(bool visible)
 {
-	this->visible = visible;
-	if (!this->visible) {
+	this->params.visible = visible;
+	if (!this->params.visible) {
 		this->set_unhovered();
 	}
 }

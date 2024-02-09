@@ -78,15 +78,6 @@ private:
 
 	std::set<unsigned> hovered;
 
-	bool visible = true;
-
-	bool enabled = true;
-
-	ruis::rectangle rectangle = {0, 0};
-
-	// clip widgets contents by widget's border if set to true
-	bool clip_enabled = false;
-
 public:
 	/**
 	 * @brief Check if scissor test is enabled for this widget.
@@ -95,20 +86,20 @@ public:
 	 */
 	bool is_clip_enabled() const noexcept
 	{
-		return this->clip_enabled;
+		return this->params.clip;
 	}
 
 	/**
 	 * @brief Enable/Disable scissor test.
 	 * @param enable - whether to enable (true) or disable (false) the scissor test.
 	 */
+	// TODO: rename to set_clip()
 	void set_clip_enabled(bool enable) noexcept
 	{
-		this->clip_enabled = enable;
+		this->params.clip = enable;
 	}
 
 private:
-	bool cache = false;
 	mutable bool cache_dirty = true;
 	mutable std::shared_ptr<texture_2d> cache_texture;
 
@@ -127,7 +118,7 @@ public:
 	 */
 	void set_cache(bool enabled) noexcept
 	{
-		this->cache = enabled;
+		this->params.cache = enabled;
 	}
 
 	/**
@@ -265,7 +256,7 @@ public:
 	 */
 	const ruis::rectangle& rect() const noexcept
 	{
-		return this->rectangle;
+		return this->params.rectangle;
 	}
 
 	/**
@@ -299,7 +290,7 @@ public:
 	 */
 	void move_by(const vector2& delta)
 	{
-		this->move_to(this->rectangle.p + delta);
+		this->move_to(this->params.rectangle.p + delta);
 	}
 
 	/**
@@ -419,8 +410,13 @@ public:
 	struct parameters {
 		std::string id;
 		ruis::lp lp;
-		ruis::rectangle rect;
+		ruis::rectangle rectangle;
+
+		/**
+		 * @brief Clip widgets contents by widget's border.
+		 */
 		bool clip = false;
+
 		bool cache = false;
 		bool visible = true;
 		bool enabled = true;
@@ -575,7 +571,7 @@ public:
 	 */
 	bool is_visible() const noexcept
 	{
-		return this->visible;
+		return this->params.visible;
 	}
 
 	/**
@@ -591,7 +587,7 @@ public:
 	 */
 	bool is_enabled() const noexcept
 	{
-		return this->enabled;
+		return this->params.enabled;
 	}
 
 	/**
