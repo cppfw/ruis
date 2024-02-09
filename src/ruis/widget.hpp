@@ -46,58 +46,6 @@ class context;
 class container;
 
 /**
- * @brief Layout parameters.
- */
-class layout_params final
-{
-public:
-	/**
-	 * @brief Requests minimal dimensions of the widget.
-	 * The widget will always be given minimal space it needs to properly draw.
-	 */
-	constexpr static const real min = real(-1);
-
-	/**
-	 * @brief Requests minimal or bigger dimensions of widget.
-	 * The widget will be given at least minimal space it needs to properly draw.
-	 * 'max' behaves the same way as 'min' during measure, but during layouting
-	 * the widget will be given same size as parent.
-	 */
-	constexpr static const real max = real(-2);
-
-	/**
-	 * @brief Requests widget to be same size as its parent.
-	 * Minimal size of the widget is assumed to be 0.
-	 */
-	constexpr static const real fill = real(-3);
-
-	/**
-	 * @brief desired dimensions.
-	 * Components should hold non-negative value in pixels or [min, max, fill].
-	 */
-	vector2 dims = vector2(layout_params::min);
-
-	/**
-	 * @brief Weight of the widget.
-	 * Weight defines how much space widget occupies in addition to its minimal or explicitly set size.
-	 * Default value is 0, which means that the widget will not occupy extra space.
-	 */
-	real weight = 0;
-
-	layout_params() = default;
-
-	layout_params(const layout_params&) = default;
-	layout_params& operator=(const layout_params&) = default;
-
-	layout_params(layout_params&&) = default;
-	layout_params& operator=(layout_params&&) = default;
-
-	layout_params(const treeml::forest& desc, const ruis::units& units);
-
-	~layout_params() noexcept = default;
-};
-
-/**
  * @brief Basic widget class.
  * From GUI script it can be instantiated as "widget".
  * It can have the following parameters:
@@ -194,7 +142,7 @@ public:
 private:
 	bool layout_dirty = true;
 
-	layout_params layout_parameters;
+	lp layout_parameters;
 
 public:
 	std::string id;
@@ -204,13 +152,13 @@ public:
 	 * This method invalidates layout.
 	 * @return Layout parameters of the widget.
 	 */
-	layout_params& get_layout_params();
+	lp& get_layout_params();
 
 	/**
 	 * @brief Get constant layout parameters of the widget.
 	 * @return Constant layout parameters of the widget.
 	 */
-	const layout_params& get_layout_params_const() const
+	const lp& get_layout_params_const() const
 	{
 		return this->layout_parameters;
 	}

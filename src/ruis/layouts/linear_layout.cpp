@@ -57,8 +57,8 @@ void linear_layout::lay_out(const vector2& size, semiconst_widget_list& widgets)
 
 			net_weight += lp.weight;
 
-			ASSERT(lp.dims[long_index] != layout_params::max)
-			ASSERT(lp.dims[long_index] != layout_params::fill)
+			ASSERT(lp.dims[long_index] != lp::max)
+			ASSERT(lp.dims[long_index] != lp::fill)
 
 			vector2 d = dims_for_widget(w.get(), size);
 			info->measured_dims = d;
@@ -98,10 +98,10 @@ void linear_layout::lay_out(const vector2& size, semiconst_widget_list& widgets)
 					}
 				}
 
-				if (lp.dims[trans_index] == layout_params::max || lp.dims[trans_index] == layout_params::fill) {
+				if (lp.dims[trans_index] == lp::max || lp.dims[trans_index] == lp::fill) {
 					d[trans_index] = size[trans_index];
 				} else {
-					if (lp.dims[trans_index] == layout_params::min) {
+					if (lp.dims[trans_index] == lp::min) {
 						d[trans_index] = -1;
 					} else {
 						d[trans_index] = lp.dims[trans_index];
@@ -162,22 +162,22 @@ vector2 linear_layout::measure(const vector2& quotum, const_widget_list& widgets
 
 			net_weight += lp.weight;
 
-			if (lp.dims[long_index] == layout_params::max || lp.dims[long_index] == layout_params::fill) {
+			if (lp.dims[long_index] == lp::max || lp.dims[long_index] == lp::fill) {
 				throw std::logic_error(
 					"linear_layout::measure(): 'max' or 'fill' in longitudional direction specified in layout parameters"
 				);
 			}
 
 			vector2 child_quotum;
-			if (lp.dims[trans_index] == layout_params::max) {
+			if (lp.dims[trans_index] == lp::max) {
 				if (quotum[trans_index] >= 0) {
 					child_quotum[trans_index] = quotum[trans_index];
 				} else {
 					child_quotum[trans_index] = -1;
 				}
-			} else if (lp.dims[trans_index] == layout_params::min) {
+			} else if (lp.dims[trans_index] == lp::min) {
 				child_quotum[trans_index] = -1;
-			} else if (lp.dims[trans_index] == layout_params::fill) {
+			} else if (lp.dims[trans_index] == lp::fill) {
 				if (quotum[trans_index] >= 0) {
 					child_quotum[trans_index] = quotum[trans_index];
 				} else {
@@ -187,9 +187,9 @@ vector2 linear_layout::measure(const vector2& quotum, const_widget_list& widgets
 				child_quotum[trans_index] = lp.dims[trans_index];
 			}
 
-			ASSERT(lp.dims[long_index] != layout_params::max)
-			ASSERT(lp.dims[long_index] != layout_params::fill)
-			if (lp.dims[long_index] == layout_params::min) {
+			ASSERT(lp.dims[long_index] != lp::max)
+			ASSERT(lp.dims[long_index] != lp::fill)
+			if (lp.dims[long_index] == lp::min) {
 				child_quotum[long_index] = -1;
 			} else {
 				child_quotum[long_index] = lp.dims[long_index];
@@ -260,15 +260,15 @@ vector2 linear_layout::measure(const vector2& quotum, const_widget_list& widgets
 				}
 			}
 
-			if (lp.dims[trans_index] == layout_params::max) {
+			if (lp.dims[trans_index] == lp::max) {
 				if (quotum[trans_index] >= 0) {
 					d[trans_index] = quotum[trans_index];
 				} else {
 					d[trans_index] = -1;
 				}
-			} else if (lp.dims[trans_index] == layout_params::min) {
+			} else if (lp.dims[trans_index] == lp::min) {
 				d[trans_index] = -1;
-			} else if (lp.dims[trans_index] == layout_params::fill) {
+			} else if (lp.dims[trans_index] == lp::fill) {
 				if (quotum[trans_index] >= 0) {
 					d[trans_index] = quotum[trans_index];
 				} else {

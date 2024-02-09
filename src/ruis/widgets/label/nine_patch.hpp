@@ -51,7 +51,7 @@ class nine_patch :
 
 	std::shared_ptr<res::nine_patch::image_matrix> img_res_matrix;
 
-	sides<real> borders = sides<real>(layout_params::min);
+	sides<real> borders = sides<real>(lp::min);
 
 	// TODO: refactoring: use utki::shared_ref
 	const std::array<std::array<std::shared_ptr<image>, 3>, 3> img_widgets_matrix;

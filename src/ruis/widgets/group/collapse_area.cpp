@@ -105,7 +105,7 @@ collapse_area::collapse_area(const utki::shared_ref<ruis::context>& c, const tre
 			if (tb.is_pressed()) {
 				lp.dims.y() = 0;
 			} else {
-				lp.dims.y() = layout_params::min;
+				lp.dims.y() = lp::min;
 			}
 		};
 	}

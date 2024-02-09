@@ -37,8 +37,8 @@ tree_view::tree_view(const utki::shared_ref<ruis::context>& c, const treeml::for
 
 	auto& lp = this->item_list.get().get_layout_params();
 
-	lp.dims.y() = layout_params::max;
-	lp.dims.x() = layout_params::min;
+	lp.dims.y() = lp::max;
+	lp.dims.x() = lp::min;
 
 	this->item_list.get().data_set_change_handler = [this](list_widget&) {
 		this->notify_view_change();

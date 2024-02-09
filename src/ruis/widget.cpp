@@ -39,7 +39,7 @@ widget::widget(const utki::shared_ref<ruis::context>& c, const treeml::forest& d
 
 		try {
 			if (p.value == "lp") {
-				this->layout_parameters = layout_params(p.children, this->context.get().units);
+				this->layout_parameters = lp::make(p.children, this->context.get().units);
 			} else if (p.value == "x") {
 				this->rectangle.p.x() = parse_dimension_value(get_property_value(p), this->context.get().units);
 			} else if (p.value == "y") {
@@ -73,30 +73,6 @@ widget::widget(utki::shared_ref<ruis::context> context, parameters params) :
 	context(std::move(context)),
 	params(std::move(params))
 {}
-
-layout_params::layout_params(const treeml::forest& desc, const ruis::units& units)
-{
-	for (const auto& p : desc) {
-		if (!is_property(p)) {
-			continue;
-		}
-
-		try {
-			if (p.value == "dx") {
-				this->dims.x() = parse_layout_dimension_value(get_property_value(p), units);
-			} else if (p.value == "dy") {
-				this->dims.y() = parse_layout_dimension_value(get_property_value(p), units);
-			} else if (p.value == "weight") {
-				this->weight = get_property_value(p).to_float();
-			}
-		} catch (std::invalid_argument&) {
-			LOG([&](auto& o) {
-				o << "could not parse value of " << treeml::to_string(p) << std::endl;
-			})
-			throw;
-		}
-	}
-}
 
 std::shared_ptr<widget> widget::try_get_widget(const std::string& id, bool allow_itself) noexcept
 {
@@ -425,14 +401,14 @@ vector2 widget::pos_in_ancestor(vector2 pos, const widget* ancestor)
 	return this->parent()->pos_in_ancestor(this->rect().p + pos, ancestor);
 }
 
-layout_params& widget::get_layout_params()
+lp& widget::get_layout_params()
 {
 	if (this->parent()) {
 		this->parent()->invalidate_layout();
 	}
 
 	// NOLINTNEXTLINE(cppcoreguidelines-pro-type-const-cast)
-	return const_cast<layout_params&>(this->get_layout_params_const());
+	return const_cast<lp&>(this->get_layout_params_const());
 }
 
 widget& widget::get_widget(const std::string& id, bool allow_itself)
@@ -509,12 +485,12 @@ void widget::reload()
 
 vector2 ruis::dims_for_widget(const widget& w, const vector2& parent_dims)
 {
-	const layout_params& lp = w.get_layout_params_const();
+	const lp& lp = w.get_layout_params_const();
 	vector2 d;
 	for (unsigned i = 0; i != 2; ++i) {
-		if (lp.dims[i] == layout_params::max || lp.dims[i] == layout_params::fill) {
+		if (lp.dims[i] == lp::max || lp.dims[i] == lp::fill) {
 			d[i] = parent_dims[i];
-		} else if (lp.dims[i] == layout_params::min) {
+		} else if (lp.dims[i] == lp::min) {
 			d[i] = -1; // will be updated below
 		} else {
 			d[i] = lp.dims[i];

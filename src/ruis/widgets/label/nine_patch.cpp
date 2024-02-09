@@ -235,7 +235,7 @@ void nine_patch::apply_images()
 		// possible
 		auto& tl_lp = this->img_widgets_matrix[0][0]->get_layout_params_const();
 
-		if (this->borders.left() == layout_params::min) {
+		if (this->borders.left() == lp::min) {
 			if (tl_lp.dims.x() != min_borders.left()) {
 				auto& lp = this->img_widgets_matrix[0][0]->get_layout_params();
 				lp.dims.x() = min_borders.left();
@@ -247,7 +247,7 @@ void nine_patch::apply_images()
 			}
 		}
 
-		if (this->borders.top() == layout_params::min) {
+		if (this->borders.top() == lp::min) {
 			if (tl_lp.dims.y() != min_borders.top()) {
 				auto& lp = this->img_widgets_matrix[0][0]->get_layout_params();
 				lp.dims.y() = min_borders.top();
@@ -265,7 +265,7 @@ void nine_patch::apply_images()
 		// possible
 		auto& br_lp = this->img_widgets_matrix[2][2]->get_layout_params_const();
 
-		if (this->borders.right() == layout_params::min) {
+		if (this->borders.right() == lp::min) {
 			if (br_lp.dims.x() != min_borders.right()) {
 				auto& lp = this->img_widgets_matrix[2][2]->get_layout_params();
 				lp.dims.x() = min_borders.right();
@@ -277,7 +277,7 @@ void nine_patch::apply_images()
 			}
 		}
 
-		if (this->borders.bottom() == layout_params::min) {
+		if (this->borders.bottom() == lp::min) {
 			if (br_lp.dims.y() != min_borders.bottom()) {
 				auto& lp = this->img_widgets_matrix[2][2]->get_layout_params();
 				lp.dims.y() = min_borders.bottom();

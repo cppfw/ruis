@@ -85,9 +85,9 @@ ruis::vector2 tab_group::measure(const ruis::vector2& quotum) const
 		ruis::vector2 d;
 
 		for (unsigned j = 0; j != d.size(); ++j) {
-			if (lp.dims[j] == layout_params::max || lp.dims[j] == layout_params::fill) {
+			if (lp.dims[j] == lp::max || lp.dims[j] == lp::fill) {
 				throw std::logic_error("'max' or 'fill' encountered in layout parameters for tab_group container");
-			} else if (lp.dims[j] == layout_params::min) {
+			} else if (lp.dims[j] == lp::min) {
 				d[j] = -1;
 			} else {
 				d[j] = lp.dims[j];
