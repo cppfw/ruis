@@ -36,7 +36,7 @@ inline utki::shared_ref<ruis::widget> container(
 	utki::shared_ref<ruis::context> context,
 	ruis::widget::parameters widget_params,
 	ruis::container::parameters params,
-	const std::vector<utki::shared_ref<ruis::widget>> children
+	utki::span<const utki::shared_ref<ruis::widget>> children
 )
 {
 	return utki::make_shared<ruis::container>(
