@@ -21,6 +21,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "container.hpp"
 
+#include <utki/config.hpp>
+
 #include "util/util.hpp"
 
 #include "context.hpp"
@@ -52,7 +54,13 @@ container::container(
 	const utki::shared_ref<ruis::layout>& layout
 ) :
 	widget(c, desc),
-	params{.layout = std::move(layout)}
+	params{
+#if CFG_CPP >= 20
+		.layout = std::move(layout)
+#else
+		std::move(layout)
+#endif
+	}
 {
 	for (const auto& p : desc) {
 		if (!is_property(p)) {
