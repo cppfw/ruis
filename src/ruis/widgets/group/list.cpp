@@ -21,6 +21,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "list.hpp"
 
+#include <utki/config.hpp>
+
 #include "../../context.hpp"
 
 using namespace ruis;
@@ -59,7 +61,13 @@ public:
 list_widget::list_widget(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc, bool vertical) :
 	widget(c, desc),
 	container(this->context, treeml::forest()),
-	oriented(vertical)
+	oriented({
+#if CFG_CPP >= 20
+		.vertial = vertical
+#else
+		vertical
+#endif
+	})
 {
 	std::shared_ptr<static_provider> pr = std::make_shared<static_provider>();
 

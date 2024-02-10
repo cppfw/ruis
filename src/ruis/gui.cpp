@@ -235,7 +235,6 @@ gui::gui(const utki::shared_ref<ruis::context>& context) :
 	this->context.get().inflater.register_widget<pan_list>("pan_list");
 	this->context.get().inflater.register_widget<list>("list");
 	this->context.get().inflater.register_widget<book>("book");
-	this->context.get().inflater.register_widget<spinner>("spinner");
 
 	// label
 	this->context.get().inflater.register_widget<text>("text");
@@ -243,6 +242,7 @@ gui::gui(const utki::shared_ref<ruis::context>& context) :
 	this->context.get().inflater.register_widget<gradient>("gradient");
 	this->context.get().inflater.register_widget<image>("image");
 	this->context.get().inflater.register_widget<nine_patch>("nine_patch");
+	this->context.get().inflater.register_widget<spinner>("spinner");
 
 	// button
 	this->context.get().inflater.register_widget<nine_patch_push_button>("nine_patch_push_button");

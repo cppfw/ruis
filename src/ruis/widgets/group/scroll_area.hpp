@@ -51,6 +51,13 @@ protected:
 	vector2 dims_for_widget(const widget& w) const;
 
 public:
+	scroll_area(
+		utki::shared_ref<ruis::context> context,
+		widget::parameters widget_params,
+		container::parameters container_params,
+		utki::span<const utki::shared_ref<widget>> children
+	);
+
 	scroll_area(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
 
 	scroll_area(const scroll_area&) = delete;

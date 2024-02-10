@@ -21,6 +21,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "scroll_bar.hpp"
 
+#include <utki/config.hpp>
+
 #include "../../context.hpp"
 #include "../../util/util.hpp"
 #include "../label/nine_patch.hpp"
@@ -67,7 +69,13 @@ const auto layout_description = treeml::read(R"qwertyuiop(
 scroll_bar::scroll_bar(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc, bool vertical) :
 	widget(c, desc),
 	fraction_band_widget(this->context, treeml::forest()),
-	oriented(vertical),
+	oriented({
+#if CFG_CPP >= 20
+		.vertical = vertical
+#else
+		vertical
+#endif
+	}),
 	container(this->context, layout_description),
 	handle(this->get_widget("ruis_handle"))
 {

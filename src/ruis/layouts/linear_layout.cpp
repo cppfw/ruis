@@ -21,6 +21,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "linear_layout.hpp"
 
+#include <utki/config.hpp>
+
 #include "../util/util.hpp"
 #include "../widget.hpp"
 
@@ -30,7 +32,13 @@ const utki::shared_ref<row_layout> row_layout::instance = utki::make_shared<row_
 const utki::shared_ref<column_layout> column_layout::instance = utki::make_shared<column_layout>();
 
 linear_layout::linear_layout(bool is_vertical) :
-	oriented(is_vertical)
+	oriented({
+#if CFG_CPP >= 20
+		.vertial = is_vertical
+#else
+		is_vertical
+#endif
+	})
 {}
 
 namespace {

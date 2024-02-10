@@ -26,6 +26,16 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
+scroll_area::scroll_area(
+	utki::shared_ref<ruis::context> context,
+	widget::parameters widget_params,
+	container::parameters container_params,
+	utki::span<const utki::shared_ref<widget>> children
+) :
+	widget(std::move(context), std::move(widget_params)),
+	container(this->context, {}, std::move(container_params), children)
+{}
+
 scroll_area::scroll_area(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
 	widget(c, desc),
 	container(this->context, desc)

@@ -34,6 +34,12 @@ namespace ruis {
 class overlay : public container
 {
 public:
+	overlay(
+		utki::shared_ref<ruis::context> context,
+		widget::parameters widget_params,
+		utki::span<const utki::shared_ref<widget>> children
+	);
+
 	overlay(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
 
 	overlay(const overlay&) = delete;
