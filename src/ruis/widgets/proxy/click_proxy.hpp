@@ -31,6 +31,8 @@ class click_proxy : virtual public widget
 	bool deferred_release_ret = false;
 
 public:
+	click_proxy(utki::shared_ref<ruis::context> context, widget::parameters params);
+
 	click_proxy(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
 
 	click_proxy(const click_proxy&) = delete;

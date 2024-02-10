@@ -21,6 +21,12 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
+#include "widgets/proxy/click_proxy.hpp"
+#include "widgets/proxy/key_proxy.hpp"
+#include "widgets/proxy/min_proxy.hpp"
+#include "widgets/proxy/mouse_proxy.hpp"
+#include "widgets/proxy/resize_proxy.hpp"
+
 #include "container.hpp"
 #include "lp.hpp"
 #include "widget.hpp"
@@ -45,6 +51,51 @@ inline utki::shared_ref<ruis::widget> container(
 		std::move(params),
 		children
 	);
+}
+
+inline utki::shared_ref<ruis::widget> mouse_proxy(
+	utki::shared_ref<ruis::context> context,
+	ruis::widget::parameters params
+)
+{
+	return utki::make_shared<ruis::mouse_proxy>(std::move(context), std::move(params));
+}
+
+inline utki::shared_ref<ruis::widget> click_proxy(
+	utki::shared_ref<ruis::context> context,
+	ruis::widget::parameters params
+)
+{
+	return utki::make_shared<ruis::click_proxy>(std::move(context), std::move(params));
+}
+
+inline utki::shared_ref<ruis::widget> key_proxy(
+	utki::shared_ref<ruis::context> context,
+	ruis::widget::parameters widget_params,
+	ruis::container::parameters container_params,
+	utki::span<const utki::shared_ref<ruis::widget>> children
+)
+{
+	return utki::make_shared<ruis::key_proxy>(
+		std::move(context),
+		std::move(widget_params),
+		std::move(container_params),
+		children
+	);
+}
+
+inline utki::shared_ref<ruis::widget> resize_proxy(utki::shared_ref<ruis::context> context, widget::parameters params)
+{
+	return utki::make_shared<ruis::resize_proxy>(std::move(context), std::move(params));
+}
+
+inline utki::shared_ref<ruis::widget> min_proxy(
+	utki::shared_ref<ruis::context> context,
+	widget::parameters widget_params,
+	min_proxy::parameters params
+)
+{
+	return utki::make_shared<ruis::min_proxy>(std::move(context), std::move(widget_params), std::move(params));
 }
 
 } // namespace ruis::make

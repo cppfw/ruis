@@ -32,6 +32,8 @@ namespace ruis {
 class mouse_proxy : virtual public widget
 {
 public:
+	mouse_proxy(utki::shared_ref<ruis::context> context, widget::parameters params);
+
 	mouse_proxy(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
 
 	mouse_proxy(const mouse_proxy&) = delete;

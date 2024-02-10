@@ -23,6 +23,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
+click_proxy::click_proxy(utki::shared_ref<ruis::context> context, widget::parameters params) :
+	widget(std::move(context), std::move(params))
+{}
+
 click_proxy::click_proxy(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
 	widget(c, desc)
 {}

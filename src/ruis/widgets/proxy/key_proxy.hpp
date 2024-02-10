@@ -33,6 +33,13 @@ namespace ruis {
 class key_proxy : public container
 {
 public:
+	key_proxy(
+		utki::shared_ref<ruis::context> context,
+		widget::parameters widget_params,
+		container::parameters container_params,
+		utki::span<const utki::shared_ref<widget>> children
+	);
+
 	key_proxy(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
 		widget(c, desc),
 		container(this->context, desc, pile_layout::instance)

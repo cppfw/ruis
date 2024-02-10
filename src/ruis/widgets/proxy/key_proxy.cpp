@@ -23,6 +23,16 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
+key_proxy::key_proxy(
+	utki::shared_ref<ruis::context> context,
+	widget::parameters widget_params,
+	container::parameters container_params,
+	utki::span<const utki::shared_ref<widget>> children
+) :
+	widget(std::move(context), std::move(widget_params)),
+	container(this->context, std::move(widget_params), std::move(container_params), children)
+{}
+
 bool key_proxy::on_key(const ruis::key_event& e)
 {
 	if (this->key_handler) {
