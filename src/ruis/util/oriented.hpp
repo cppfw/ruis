@@ -29,7 +29,7 @@ class oriented
 {
 public:
 	struct parameters {
-		bool vertical;
+		bool vertical = true;
 	};
 
 private:
