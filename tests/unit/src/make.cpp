@@ -69,6 +69,6 @@ const tst::set set("make", [](tst::suite& suite){
                 )
             }
         );
-    });
+    }); // NOLINT(clang-analyzer-cplusplus.NewDeleteLeaks)
 });
 }
