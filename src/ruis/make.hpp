@@ -23,6 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <utki/config.hpp>
 
+#include "widgets/group/book.hpp"
 #include "widgets/group/list.hpp"
 #include "widgets/group/overlay.hpp"
 #include "widgets/group/scroll_area.hpp"
@@ -140,6 +141,14 @@ inline utki::shared_ref<ruis::widget> list(
 )
 {
 	return utki::make_shared<ruis::list>(std::move(context), std::move(widget_params), std::move(oriented_params));
+}
+
+inline utki::shared_ref<ruis::book> book(
+	utki::shared_ref<ruis::context> context,
+	ruis::widget::parameters widget_params
+)
+{
+	return utki::make_shared<ruis::book>(std::move(context), std::move(widget_params));
 }
 
 } // namespace ruis::make
