@@ -36,8 +36,8 @@ class list :
 	//       see
 	//       http://stackoverflow.com/questions/42427145/clang-cannot-cast-to-private-base-while-there-is-a-public-virtual-inheritance
 	virtual public widget,
-	public container,
-	protected oriented
+	public container, // TODO: does it have to be public container? can be changed to private?
+	public oriented
 {
 	// index of the first item added to container as child
 	size_t added_index = size_t(-1);
@@ -216,6 +216,7 @@ private:
  * Panorama list widget.
  * From GUI script it can be instantiated as "pan_list".
  */
+// TODO: remove?
 class pan_list : public list
 {
 public:
