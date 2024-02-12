@@ -31,7 +31,7 @@ namespace ruis {
  * @brief Scrollable list widget.
  * This is a base class for vertical and horizontal lists.
  */
-class list_widget :
+class list :
 	// NOTE: order of virtual public and private declarations here matters for clang due to some bug,
 	//       see
 	//       http://stackoverflow.com/questions/42427145/clang-cannot-cast-to-private-base-while-there-is-a-public-virtual-inheritance
@@ -54,16 +54,20 @@ class list_widget :
 	real first_tail_item_dim = real(0);
 
 protected:
-	list_widget(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc, bool vertical);
+	list(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc, bool vertical);
 
 public:
-	list_widget(const list_widget&) = delete;
-	list_widget& operator=(const list_widget&) = delete;
+	list(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
+		list(c, desc, true)
+	{}
 
-	list_widget(list_widget&&) = delete;
-	list_widget& operator=(list_widget&&) = delete;
+	list(const list&) = delete;
+	list& operator=(const list&) = delete;
 
-	~list_widget() override = default;
+	list(list&&) = delete;
+	list& operator=(list&&) = delete;
+
+	~list() override = default;
 
 	/**
 	 * @brief list items provider.
@@ -71,9 +75,9 @@ public:
 	 */
 	class provider : virtual public utki::shared
 	{
-		friend class list_widget;
+		friend class list;
 
-		list_widget* parent_list = nullptr;
+		list* parent_list = nullptr;
 
 	protected:
 		provider() = default;
@@ -92,7 +96,7 @@ public:
 		 * @return list widget which owns the provider, in case the provider is set to some list widget.
 		 * @return nullptr in case the provider is not set to any list widget.
 		 */
-		list_widget* get_list() noexcept
+		list* get_list() noexcept
 		{
 			return this->parent_list;
 		}
@@ -175,13 +179,13 @@ public:
 	 * @brief Data set changed signal.
 	 * Emitted when list widget contents have actually been updated due to change in provider's model data set.
 	 */
-	std::function<void(list_widget&)> data_set_change_handler;
+	std::function<void(list&)> data_set_change_handler;
 
 	/**
 	 * @brief Scroll position changed signal.
 	 * Emitted when list's scroll position has changed.
 	 */
-	std::function<void(list_widget&)> scroll_change_handler;
+	std::function<void(list&)> scroll_change_handler;
 
 private:
 	std::shared_ptr<provider> item_provider;
@@ -212,12 +216,12 @@ private:
  * Panorama list widget.
  * From GUI script it can be instantiated as "pan_list".
  */
-class pan_list : public list_widget
+class pan_list : public list
 {
 public:
 	pan_list(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
 		widget(c, desc),
-		list_widget(this->context, desc, false)
+		list(this->context, desc, false)
 	{}
 
 	pan_list(const pan_list&) = delete;
@@ -227,27 +231,6 @@ public:
 	pan_list& operator=(pan_list&&) = delete;
 
 	~pan_list() override = default;
-};
-
-/**
- * @brief Vertical list widget.
- * From GUI script it can be instantiated as "list".
- */
-class list : public list_widget
-{
-public:
-	list(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
-		widget(c, desc),
-		list_widget(this->context, desc, true)
-	{}
-
-	list(const list&) = delete;
-	list& operator=(const list&) = delete;
-
-	list(list&&) = delete;
-	list& operator=(list&&) = delete;
-
-	~list() override = default;
 };
 
 } // namespace ruis
