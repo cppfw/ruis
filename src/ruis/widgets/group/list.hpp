@@ -57,6 +57,12 @@ protected:
 	list(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc, bool vertical);
 
 public:
+	list(
+		utki::shared_ref<ruis::context> context,
+		widget::parameters widget_params,
+		oriented::parameters oriented_params
+	);
+
 	list(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
 		list(c, desc, true)
 	{}
