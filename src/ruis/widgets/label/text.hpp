@@ -32,7 +32,9 @@ namespace ruis {
  * This widget shows text.
  * From GUI script it can be instantiated as "text".
  */
-class text : public single_line_text_widget, public color_widget
+class text :
+	public single_line_text_widget, //
+	public color_widget
 {
 public:
 	text(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);

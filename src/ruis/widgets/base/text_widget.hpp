@@ -45,6 +45,15 @@ class text_widget : virtual public widget
 	std::array<utki::shared_ref<const ruis::font>, size_t(res::font::style::enum_size)> fonts;
 
 public:
+	struct parameters {
+		real font_size = 12;
+		std::string_view font_face_res = "ruis_fnt_text";
+	};
+
+protected:
+	text_widget(utki::shared_ref<ruis::context> context, widget::parameters widget_params, parameters params);
+
+public:
 	text_widget(const text_widget&) = delete;
 	text_widget& operator=(const text_widget&) = delete;
 
