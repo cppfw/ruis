@@ -51,7 +51,7 @@ private:
 	std::array<utki::shared_ref<const ruis::font>, size_t(res::font::style::enum_size)> fonts;
 
 protected:
-	text_widget(utki::shared_ref<ruis::context> context, widget::parameters widget_params, parameters params);
+	text_widget(utki::shared_ref<ruis::context> context, parameters params);
 
 public:
 	text_widget(const text_widget&) = delete;

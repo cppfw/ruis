@@ -36,6 +36,12 @@ protected:
 
 	single_line_text_widget(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
 
+	single_line_text_widget(
+		utki::shared_ref<ruis::context> context,
+		text_widget::parameters widget_params,
+		std::u32string text
+	);
+
 	const ruis::rectangle& get_bounding_box() const
 	{
 		return this->bb;

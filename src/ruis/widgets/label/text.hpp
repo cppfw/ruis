@@ -39,6 +39,14 @@ class text :
 public:
 	text(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
 
+	text(
+		utki::shared_ref<ruis::context> context,
+		widget::parameters widget_params,
+		text_widget::parameters text_widget_params,
+		color_widget::parameters color_widget_params,
+		std::u32string text
+	);
+
 public:
 	text(const text&) = delete;
 	text& operator=(const text&) = delete;

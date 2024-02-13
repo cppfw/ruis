@@ -104,8 +104,8 @@ text_widget::text_widget(const utki::shared_ref<ruis::context>& c, const treeml:
 	}
 }
 
-text_widget::text_widget(utki::shared_ref<ruis::context> context, widget::parameters widget_params, parameters params) :
-	widget(std::move(context), std::move(widget_params)),
+text_widget::text_widget(utki::shared_ref<ruis::context> context, parameters params) :
+	widget(std::move(context), widget::parameters{}),
 	params(std::move(params)),
 	fonts{
 		this->params.font_face->get(this->params.font_size, res::font::style(0)),

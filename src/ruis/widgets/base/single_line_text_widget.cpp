@@ -23,6 +23,18 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
+single_line_text_widget::single_line_text_widget(
+	utki::shared_ref<ruis::context> context,
+	text_widget::parameters text_widget_params,
+	std::u32string text
+) :
+	widget(std::move(context), widget::parameters{}),
+	text_widget(this->context, std::move(text_widget_params)),
+	text(std::move(text))
+{
+	this->recompute_bounding_box();
+}
+
 single_line_text_widget::single_line_text_widget(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
 	widget(c, desc),
 	text_widget(this->context, desc)

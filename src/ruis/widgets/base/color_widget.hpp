@@ -33,14 +33,23 @@ namespace ruis {
  */
 class color_widget : public virtual widget
 {
-	constexpr static auto default_color = 0xffffffff;
-	uint32_t color = default_color;
-
-	constexpr static auto default_disabled_color = 0xff808080;
-	uint32_t disabled_color = default_disabled_color;
-
 protected:
 	color_widget(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
+
+public:
+	struct parameters {
+		constexpr static auto default_color = 0xffffffff;
+		uint32_t color = default_color;
+
+		constexpr static auto default_disabled_color = 0xff808080;
+		uint32_t disabled_color = default_disabled_color;
+	};
+
+private:
+	parameters params;
+
+protected:
+	color_widget(utki::shared_ref<ruis::context> context, parameters params);
 
 public:
 	color_widget(const color_widget&) = delete;
@@ -55,14 +64,14 @@ public:
 
 	uint32_t get_color() const noexcept
 	{
-		return this->color;
+		return this->params.color;
 	}
 
 	void set_disabled_color(uint32_t color);
 
 	uint32_t get_disabled_color() const noexcept
 	{
-		return this->disabled_color;
+		return this->params.disabled_color;
 	}
 
 	/**

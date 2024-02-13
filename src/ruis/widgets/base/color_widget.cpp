@@ -25,6 +25,11 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
+color_widget::color_widget(utki::shared_ref<ruis::context> context, parameters params) :
+	widget(std::move(context), widget::parameters{}),
+	params(std::move(params))
+{}
+
 color_widget::color_widget(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
 	widget(c, desc)
 {
@@ -34,30 +39,30 @@ color_widget::color_widget(const utki::shared_ref<ruis::context>& c, const treem
 		}
 
 		if (p.value == "color") {
-			this->color = get_property_value(p).to_uint32();
+			this->params.color = get_property_value(p).to_uint32();
 		} else if (p.value == "disabled_color") {
-			this->disabled_color = get_property_value(p).to_uint32();
+			this->params.disabled_color = get_property_value(p).to_uint32();
 		}
 	}
 }
 
 void color_widget::set_color(uint32_t color)
 {
-	if (this->color == color) {
+	if (this->params.color == color) {
 		return;
 	}
 
-	this->color = color;
+	this->params.color = color;
 	this->clear_cache();
 }
 
 void color_widget::set_disabled_color(uint32_t color)
 {
-	if (this->disabled_color == color) {
+	if (this->params.disabled_color == color) {
 		return;
 	}
 
-	this->disabled_color = color;
+	this->params.disabled_color = color;
 	this->clear_cache();
 }
 
