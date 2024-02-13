@@ -34,9 +34,9 @@ constexpr auto default_font_size_pp = 12;
 
 void text_widget::set_font_face(const utki::shared_ref<const res::font>& font_res)
 {
-	this->font_face = font_res;
+	this->params.font_face = font_res.to_shared_ptr();
 
-	this->set_font_size(this->font_size);
+	this->set_font_size(this->params.font_size);
 }
 
 void text_widget::set_font_size(real size)
@@ -45,10 +45,11 @@ void text_widget::set_font_size(real size)
 	// because set_font_size() is called from within set_font_face() to
 	// create fonts for all font styles
 
-	this->font_size = size;
+	this->params.font_size = size;
 
 	for (size_t i = 0; i != size_t(res::font::style::enum_size); ++i) {
-		this->fonts[i] = this->font_face.get().get(this->font_size, res::font::style(i));
+		ASSERT(this->params.font_face) // always set in constructor to at least default font
+		this->fonts[i] = this->params.font_face->get(this->params.font_size, res::font::style(i));
 	}
 
 	this->invalidate_layout();
@@ -58,43 +59,62 @@ void text_widget::set_font_size(real size)
 
 text_widget::text_widget(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
 	widget(c, desc),
-	font_size([&desc, this]() {
-		for (const auto& p : desc) {
-			if (!is_property(p)) {
-				continue;
-			}
+	params({//
+			[&desc, this]() {
+				for (const auto& p : desc) {
+					if (!is_property(p)) {
+						continue;
+					}
 
-			if (p.value == "font_size") {
-				return parse_dimension_value(get_property_value(p), this->context.get().units);
-			}
-		}
+					if (p.value == "font_size") {
+						return parse_dimension_value(get_property_value(p), this->context.get().units);
+					}
+				}
 
-		return this->context.get().units.pp_to_px(default_font_size_pp);
-	}()),
-	font_face([&desc, this]() {
-		for (const auto& p : desc) {
-			if (!is_property(p)) {
-				continue;
-			}
+				return this->context.get().units.pp_to_px(default_font_size_pp);
+			}(),
+			[&desc, this]() {
+				for (const auto& p : desc) {
+					if (!is_property(p)) {
+						continue;
+					}
 
-			if (p.value == "font") {
-				return this->context.get().loader.load<ruis::res::font>(get_property_value(p).to_string().c_str());
-			}
-		}
+					if (p.value == "font") {
+						return this->context.get()
+							.loader.load<ruis::res::font>(get_property_value(p).to_string().c_str())
+							.to_shared_ptr();
+					}
+				}
 
-		// load default font
-		return this->context.get().loader.load<res::font>("ruis_fnt_text");
-	}()),
+				// load default font
+				return this->context.get().loader.load<res::font>("ruis_fnt_text").to_shared_ptr();
+			}()
+	}),
 	fonts{
-		this->font_face.get().get(this->font_size, res::font::style(0)),
-		this->font_face.get().get(this->font_size, res::font::style(1)),
-		this->font_face.get().get(this->font_size, res::font::style(2)),
-		this->font_face.get().get(this->font_size, res::font::style(3))
+		this->params.font_face->get(this->params.font_size, res::font::style(0)),
+		this->params.font_face->get(this->params.font_size, res::font::style(1)),
+		this->params.font_face->get(this->params.font_size, res::font::style(2)),
+		this->params.font_face->get(this->params.font_size, res::font::style(3))
 	}
 {
 	for (const auto& p : desc) {
 		if (!is_property(p)) {
 			continue;
 		}
+	}
+}
+
+text_widget::text_widget(utki::shared_ref<ruis::context> context, widget::parameters widget_params, parameters params) :
+	widget(std::move(context), std::move(widget_params)),
+	params(std::move(params)),
+	fonts{
+		this->params.font_face->get(this->params.font_size, res::font::style(0)),
+		this->params.font_face->get(this->params.font_size, res::font::style(1)),
+		this->params.font_face->get(this->params.font_size, res::font::style(2)),
+		this->params.font_face->get(this->params.font_size, res::font::style(3))
+	}
+{
+	if (!this->params.font_face) {
+		this->params.font_face = this->context.get().loader.load<res::font>("ruis_fnt_text").to_shared_ptr();
 	}
 }
