@@ -115,6 +115,6 @@ text_widget::text_widget(utki::shared_ref<ruis::context> context, widget::parame
 	}
 {
 	if (!this->params.font_face) {
-		this->params.font_face = this->context.get().loader.load<res::font>("ruis_fnt_text").to_shared_ptr();
+		this->params.font_face = this->context.get().loader.load<res::font>("ruis_fnt_text");
 	}
 }
