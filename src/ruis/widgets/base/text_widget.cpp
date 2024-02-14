@@ -106,15 +106,17 @@ text_widget::text_widget(const utki::shared_ref<ruis::context>& c, const treeml:
 
 text_widget::text_widget(utki::shared_ref<ruis::context> context, parameters params) :
 	widget(std::move(context), widget::parameters{}),
-	params(std::move(params)),
+	params([this, &params]() {
+		auto p = std::move(params);
+		if (!p.font_face) {
+			p.font_face = this->context.get().loader.load<res::font>("ruis_fnt_text");
+		}
+		return p;
+	}()),
 	fonts{
 		this->params.font_face->get(this->params.font_size, res::font::style(0)),
 		this->params.font_face->get(this->params.font_size, res::font::style(1)),
 		this->params.font_face->get(this->params.font_size, res::font::style(2)),
 		this->params.font_face->get(this->params.font_size, res::font::style(3))
 	}
-{
-	if (!this->params.font_face) {
-		this->params.font_face = this->context.get().loader.load<res::font>("ruis_fnt_text");
-	}
-}
+{}
