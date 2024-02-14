@@ -36,5 +36,5 @@ texture_font_provider::texture_font_provider(
 
 utki::shared_ref<const font> texture_font_provider::create(real size) const
 {
-	return utki::make_shared<texture_font>(this->context, this->face, size, max_cached);
+	return utki::make_shared<texture_font>(this->context, this->face, unsigned(size), max_cached);
 }
