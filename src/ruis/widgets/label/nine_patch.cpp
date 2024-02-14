@@ -102,15 +102,23 @@ nine_patch::nine_patch(const utki::shared_ref<ruis::context>& c, const treeml::f
 	container(this->context, nine_patch_layout),
 	img_widgets_matrix([this]() -> decltype(this->img_widgets_matrix) {
 		return {
-			{{this->try_get_widget_as<image>("ruis_lt"),
+			{//
+			 {//
+			  this->try_get_widget_as<image>("ruis_lt"),
 			  this->try_get_widget_as<image>("ruis_t"),
-			  this->try_get_widget_as<image>("ruis_rt")},
-			 {this->try_get_widget_as<image>("ruis_l"),
+			  this->try_get_widget_as<image>("ruis_rt")
+			 }, //
+			 {//
+			  this->try_get_widget_as<image>("ruis_l"),
 			  this->try_get_widget_as<image>("ruis_m"),
-			  this->try_get_widget_as<image>("ruis_r")},
-			 {this->try_get_widget_as<image>("ruis_lb"),
+			  this->try_get_widget_as<image>("ruis_r")
+			 }, //
+			 {//
+			  this->try_get_widget_as<image>("ruis_lb"),
 			  this->try_get_widget_as<image>("ruis_b"),
-			  this->try_get_widget_as<image>("ruis_rb")}}
+			  this->try_get_widget_as<image>("ruis_rb")
+			 }
+			}
 		};
 	}()),
 	// TODO: use get_widget_as()
