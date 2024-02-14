@@ -29,6 +29,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "widgets/group/scroll_area.hpp"
 #include "widgets/label/color.hpp"
 #include "widgets/label/gradient.hpp"
+#include "widgets/label/image.hpp"
 #include "widgets/label/text.hpp"
 #include "widgets/proxy/click_proxy.hpp"
 #include "widgets/proxy/key_proxy.hpp"
@@ -195,6 +196,21 @@ inline utki::shared_ref<ruis::widget> gradient(
 )
 {
 	return utki::make_shared<ruis::gradient>(std::move(context), std::move(widget_params), std::move(params));
+}
+
+inline utki::shared_ref<ruis::widget> image(
+	utki::shared_ref<ruis::context> context,
+	ruis::widget::parameters widget_params,
+	ruis::image::parameters params,
+	ruis::blending_widget::parameters blending_widget_params = {}
+)
+{
+	return utki::make_shared<ruis::image>(
+		std::move(context),
+		std::move(widget_params),
+		std::move(blending_widget_params),
+		std::move(params)
+	);
 }
 
 } // namespace ruis::make
