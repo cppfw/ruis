@@ -35,6 +35,12 @@ class color : public color_widget
 public:
 	color(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
 
+	color(
+		utki::shared_ref<ruis::context> context,
+		widget::parameters widget_params,
+		color_widget::parameters color_widget_params
+	);
+
 	color(const color&) = delete;
 	color& operator=(const color&) = delete;
 

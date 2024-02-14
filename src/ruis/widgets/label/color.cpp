@@ -31,6 +31,15 @@ color::color(const utki::shared_ref<ruis::context>& c, const treeml::forest& des
 	color_widget(this->context, desc)
 {}
 
+color::color(
+	utki::shared_ref<ruis::context> context,
+	widget::parameters widget_params,
+	color_widget::parameters color_widget_params
+) :
+	widget(std::move(context), std::move(widget_params)),
+	color_widget(this->context, std::move(color_widget_params))
+{}
+
 void color::render(const ruis::matrix4& matrix) const
 {
 	auto& r = this->context.get().renderer.get();
