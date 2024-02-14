@@ -46,12 +46,7 @@ class nine_patch :
 	public blending_widget,
 	private container
 {
-	std::shared_ptr<const res::nine_patch> np_res;
-	std::shared_ptr<const res::nine_patch> disabled_np_res;
-
 	std::shared_ptr<res::nine_patch::image_matrix> img_res_matrix;
-
-	sides<real> borders = sides<real>(lp::min);
 
 	const std::array<std::array<std::reference_wrapper<image>, 3>, 3> img_widgets_matrix;
 
@@ -69,6 +64,24 @@ protected:
 	}
 
 public:
+	struct parameters {
+		std::shared_ptr<const res::nine_patch> nine_patch;
+		std::shared_ptr<const res::nine_patch> disabled_nine_patch;
+		sides<real> borders = sides<real>(lp::min);
+	};
+
+private:
+	parameters params;
+
+public:
+	nine_patch(
+		utki::shared_ref<ruis::context> context,
+		widget::parameters widget_params,
+		blending_widget::parameters blending_widget_params,
+		parameters params,
+		utki::span<const utki::shared_ref<widget>> children
+	);
+
 	nine_patch(const nine_patch&) = delete;
 	nine_patch& operator=(const nine_patch&) = delete;
 
@@ -107,7 +120,7 @@ public:
 	 */
 	void set_borders(sides<real> borders)
 	{
-		this->borders = borders;
+		this->params.borders = borders;
 		this->apply_images();
 		this->invalidate_layout();
 	}
@@ -117,9 +130,9 @@ public:
 	 * Border values are in pixels or min_c.
 	 * @return Current borders.
 	 */
-	decltype(borders) get_borders() const noexcept
+	decltype(params.borders) get_borders() const noexcept
 	{
-		return this->borders;
+		return this->params.borders;
 	}
 
 	sides<real> get_actual_borders() const noexcept;

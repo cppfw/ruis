@@ -201,7 +201,7 @@ inline utki::shared_ref<ruis::widget> gradient(
 inline utki::shared_ref<ruis::widget> image(
 	utki::shared_ref<ruis::context> context,
 	ruis::widget::parameters widget_params,
-	ruis::image::parameters params,
+	ruis::image::parameters params = {},
 	ruis::blending_widget::parameters blending_widget_params = {}
 )
 {

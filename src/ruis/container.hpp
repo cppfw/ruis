@@ -204,6 +204,18 @@ public:
 	}
 
 	/**
+	 * @brief Insert widgets to the end of children list of the container.
+	 * This function invalidates iterators which were obtained before calling to it.
+	 * @param ww - span of widgets to insert.
+	 */
+	void push_back(utki::span<const utki::shared_ref<widget>> ww)
+	{
+		for (const auto& w : ww) {
+			this->push_back(w);
+		}
+	}
+
+	/**
 	 * @brief Add child widgets inflating them from GUI description.
 	 * This function invalidates iterators which were obtained before calling to it.
 	 * @param desc - GUI description of the widgets to add.
