@@ -27,6 +27,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "widgets/group/list.hpp"
 #include "widgets/group/overlay.hpp"
 #include "widgets/group/scroll_area.hpp"
+#include "widgets/label/text.hpp"
 #include "widgets/proxy/click_proxy.hpp"
 #include "widgets/proxy/key_proxy.hpp"
 #include "widgets/proxy/min_proxy.hpp"
@@ -149,6 +150,25 @@ inline utki::shared_ref<ruis::book> book(
 )
 {
 	return utki::make_shared<ruis::book>(std::move(context), std::move(widget_params));
+}
+
+// label widgets
+
+inline utki::shared_ref<ruis::widget> text(
+	utki::shared_ref<ruis::context> context,
+	ruis::widget::parameters widget_params,
+	std::u32string text = {},
+	ruis::color_widget::parameters color_widget_params = {},
+	ruis::text_widget::parameters text_widget_params = {}
+)
+{
+	return utki::make_shared<ruis::text>(
+		std::move(context),
+		std::move(widget_params),
+		std::move(text_widget_params),
+		std::move(color_widget_params),
+		std::move(text)
+	);
 }
 
 } // namespace ruis::make

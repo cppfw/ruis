@@ -67,6 +67,12 @@ const tst::set set("make", [](tst::suite& suite){
                     gui.context,
                     {}
                 )
+                // ,
+                // ruis::make::text(
+                //     gui.context,
+                //     {},
+                //     U"hello world"
+                // )
             }
         );
     }); // NOLINT(clang-analyzer-cplusplus.NewDeleteLeaks)

@@ -38,7 +38,7 @@ protected:
 
 	single_line_text_widget(
 		utki::shared_ref<ruis::context> context,
-		text_widget::parameters widget_params,
+		text_widget::parameters text_widget_params,
 		std::u32string text
 	);
 
