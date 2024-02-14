@@ -28,6 +28,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "widgets/group/overlay.hpp"
 #include "widgets/group/scroll_area.hpp"
 #include "widgets/label/color.hpp"
+#include "widgets/label/gradient.hpp"
 #include "widgets/label/text.hpp"
 #include "widgets/proxy/click_proxy.hpp"
 #include "widgets/proxy/key_proxy.hpp"
@@ -43,7 +44,10 @@ namespace ruis::make {
 
 // core widgets
 
-inline utki::shared_ref<ruis::widget> widget(utki::shared_ref<ruis::context> context, ruis::widget::parameters params)
+inline utki::shared_ref<ruis::widget> widget( //
+	utki::shared_ref<ruis::context> context,
+	ruis::widget::parameters params
+)
 {
 	return utki::make_shared<ruis::widget>(std::move(context), std::move(params));
 }
@@ -96,7 +100,10 @@ inline utki::shared_ref<ruis::widget> key_proxy(
 	);
 }
 
-inline utki::shared_ref<ruis::widget> resize_proxy(utki::shared_ref<ruis::context> context, widget::parameters params)
+inline utki::shared_ref<ruis::widget> resize_proxy( //
+	utki::shared_ref<ruis::context> context,
+	widget::parameters params
+)
 {
 	return utki::make_shared<ruis::resize_proxy>(std::move(context), std::move(params));
 }
@@ -179,6 +186,15 @@ inline utki::shared_ref<ruis::widget> color(
 )
 {
 	return utki::make_shared<ruis::color>(std::move(context), std::move(widget_params), std::move(color_widget_params));
+}
+
+inline utki::shared_ref<ruis::widget> gradient(
+	utki::shared_ref<ruis::context> context,
+	ruis::widget::parameters widget_params,
+	ruis::gradient::parameters params
+)
+{
+	return utki::make_shared<ruis::gradient>(std::move(context), std::move(widget_params), std::move(params));
 }
 
 } // namespace ruis::make

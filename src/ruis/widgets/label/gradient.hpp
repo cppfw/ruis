@@ -35,9 +35,17 @@ namespace ruis {
  */
 class gradient : public widget
 {
-	std::shared_ptr<res::gradient> res;
+public:
+	struct parameters {
+		std::shared_ptr<res::gradient> gradient;
+	};
+
+private:
+	parameters params;
 
 public:
+	gradient(utki::shared_ref<ruis::context> context, widget::parameters widget_params, parameters params);
+
 	gradient(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
 
 	gradient(const gradient&) = delete;
