@@ -59,7 +59,7 @@ const tst::set set("make", [](tst::suite& suite){
                     ruis::widget::parameters{
                         "",
                         {},
-                        ruis::rectangle{10, 20, 30, 40}
+                        ruis::rect{10, 20, 30, 40}
                     }
 #endif
                 ),

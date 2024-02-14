@@ -253,7 +253,7 @@ public:
 	 * The rectangle is in parent's coordinates.
 	 * @return Widget's rectangle.
 	 */
-	const ruis::rectangle& rect() const noexcept
+	const ruis::rect& rect() const noexcept
 	{
 		return this->params.rectangle;
 	}
@@ -268,7 +268,7 @@ public:
 	 * @brief Get widget's rectangle in absolute coordinates.
 	 * @return widget's absolute coordinates rectangle.
 	 */
-	ruis::rectangle get_absolute_rect() const noexcept;
+	ruis::rect get_absolute_rect() const noexcept;
 
 	/**
 	 * @brief Get rectangle occupied by the widget in viewport coordinates.
@@ -409,7 +409,7 @@ public:
 	struct parameters {
 		std::string id;
 		ruis::lp lp;
-		ruis::rectangle rectangle = {0, 0};
+		ruis::rect rectangle = {0, 0};
 
 		/**
 		 * @brief Clip widgets contents by widget's border.
@@ -613,7 +613,7 @@ public:
 	 */
 	bool overlaps(const ruis::vector2& pos) const noexcept
 	{
-		return ruis::rectangle(ruis::vector2(0, 0), this->rect().d).overlaps(pos);
+		return ruis::rect(ruis::vector2(0, 0), this->rect().d).overlaps(pos);
 	}
 
 	/**

@@ -377,7 +377,7 @@ ruis::vector2 widget::get_absolute_pos() const noexcept
 	return this->parent()->get_absolute_pos() + this->rect().p;
 }
 
-ruis::rectangle widget::get_absolute_rect() const noexcept
+ruis::rect widget::get_absolute_rect() const noexcept
 {
 	if (this->parent()) {
 		return {this->get_absolute_pos(), this->rect().d};

@@ -276,9 +276,9 @@ real texture_font::get_advance_internal(std::u32string_view str, unsigned tab_si
 	return ret;
 }
 
-ruis::rectangle texture_font::get_bounding_box_internal(std::u32string_view str, unsigned tab_size) const
+ruis::rect texture_font::get_bounding_box_internal(std::u32string_view str, unsigned tab_size) const
 {
-	ruis::rectangle ret;
+	ruis::rect ret;
 
 	if (str.empty()) {
 		ret.p.set(0);

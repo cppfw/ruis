@@ -39,7 +39,7 @@ static_assert(sizeof(matrix4) == sizeof(real) * 4 * 4, "size mismatch");
 using quaternion = r4::quaternion<real>;
 static_assert(sizeof(quaternion) == sizeof(real) * 4, "size mismatch");
 
-using rectangle = r4::rectangle<real>;
+using rect = r4::rectangle<real>;
 
 using vector2 = r4::vector2<real>;
 static_assert(sizeof(vector2) == sizeof(real) * 2, "size mismatch");

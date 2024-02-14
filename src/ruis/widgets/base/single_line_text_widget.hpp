@@ -27,7 +27,7 @@ namespace ruis {
 
 class single_line_text_widget : public text_widget
 {
-	mutable ruis::rectangle bb{};
+	mutable ruis::rect bb{};
 
 	std::u32string text;
 
@@ -42,7 +42,7 @@ protected:
 		std::u32string text
 	);
 
-	const ruis::rectangle& get_bounding_box() const
+	const ruis::rect& get_bounding_box() const
 	{
 		return this->bb;
 	}

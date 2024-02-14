@@ -158,7 +158,7 @@ protected:
 
 	real get_advance_internal(std::u32string_view str, unsigned tab_size) const override;
 
-	ruis::rectangle get_bounding_box_internal(std::u32string_view str, unsigned tab_size) const override;
+	ruis::rect get_bounding_box_internal(std::u32string_view str, unsigned tab_size) const override;
 
 private:
 	real render_glyph_internal(const ruis::matrix4& matrix, r4::vector4<float> color, char32_t ch) const;

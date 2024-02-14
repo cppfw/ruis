@@ -49,7 +49,7 @@ ruis::vector2 ruis::parse_vec2(treeml::forest::const_iterator begin, treeml::for
 	return ret;
 }
 
-ruis::rectangle ruis::parse_rect(const treeml::forest& desc)
+ruis::rect ruis::parse_rect(const treeml::forest& desc)
 {
 	using std::min;
 	vector2 p = parse_vec2(desc.begin(), desc.end());
