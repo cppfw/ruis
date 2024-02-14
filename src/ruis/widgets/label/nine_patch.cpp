@@ -37,35 +37,92 @@ std::vector<utki::shared_ref<ruis::widget>> build_layout(utki::shared_ref<ruis::
 	namespace m = ruis::make;
 	using ruis::lp;
 
+	// clang-format off
 	return {
-		m::container(
-			c,
-			{.lp = ruis::lp{.dims = {ruis::lp::fill, ruis::lp::min}}},
+		m::container(c,
+			{
+				.lp = {
+					.dims = {ruis::lp::fill, ruis::lp::min}
+				}
+			},
 			{row_layout::instance},
-			{m::image(c, {.id = "ruis_lt"}),
-			  m::image(c, {.id = "ruis_t", .lp = {.dims = {0, lp::min}, .weight = 1}}),
-			  m::image(c, {.id = "ruis_rt"})}
+			{
+			m::image(c, {.id = "ruis_lt"}),
+			m::image(c,
+				{
+					.id = "ruis_t",
+					.lp = {
+						.dims = {0, lp::min},
+						.weight = 1
+					}
+				}),
+			m::image(c, {.id = "ruis_rt"})
+			}
 		),
-		m::container(
-			c,
-			{.lp = {.dims = {ruis::lp::max, ruis::lp::min}, .weight = 1}},
+		m::container(c,
+			{
+				.lp = {
+					.dims = {ruis::lp::max, ruis::lp::min},
+					.weight = 1
+				}
+			},
 			{row_layout::instance},
-			{m::image(c, {.id = "ruis_l", .lp = {.dims = {lp::min, lp::fill}}}),
-			  m::container(
-				 c, {.id = "ruis_content", .lp = {.dims = {lp::min, lp::max}, .weight = 1}},
-              {pile_layout::instance},
-              {m::image(c, {.id = "ruis_m", .lp = {.dims = {lp::fill, lp::fill}}})}
-			 ), m::image(c, {.id = "ruis_r", .lp = {.dims = {lp::min, lp::fill}}})}
+			{
+			m::image(c,
+				{
+					.id = "ruis_l",
+					.lp = {
+						.dims = {lp::min, lp::fill}
+					}
+				}),
+			m::container(c,
+				{
+					.id = "ruis_content",
+					.lp = {
+						.dims = {lp::min, lp::max},
+						.weight = 1
+					}
+				},
+				{pile_layout::instance},
+				{
+					m::image(c,
+						{
+							.id = "ruis_m",
+							.lp = {
+								.dims = {lp::fill, lp::fill}
+							}
+						})
+				}),
+			m::image(c,
+				{
+					.id = "ruis_r",
+					.lp = {
+						.dims = {lp::min, lp::fill}
+					}
+				})
+			}
 		),
-		m::container(
-			c,
-			{.lp = ruis::lp{.dims = {ruis::lp::fill, ruis::lp::min}}},
+		m::container(c,
+			{
+				.lp = {
+					.dims = {ruis::lp::fill, ruis::lp::min}
+				}
+			},
 			{row_layout::instance},
-			{m::image(c, {.id = "ruis_lb"}),
-			  m::image(c, {.id = "ruis_b", .lp = {.dims = {0, lp::min}, .weight = 1}}),
-			  m::image(c, {.id = "ruis_rb"})}
-		)
+			{
+			m::image(c, {.id = "ruis_lb"}),
+			m::image(c,
+				{
+					.id = "ruis_b",
+					.lp = {
+						.dims = {0, lp::min},
+						.weight = 1
+					}
+				}),
+			m::image(c, {.id = "ruis_rb"})
+			})
 	};
+	// clang-format on
 }
 } // namespace
 
