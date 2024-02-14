@@ -100,29 +100,26 @@ nine_patch::nine_patch(const utki::shared_ref<ruis::context>& c, const treeml::f
 	widget(c, desc),
 	blending_widget(this->context, desc),
 	container(this->context, nine_patch_layout),
-	img_widgets_matrix([this]() -> decltype(this->img_widgets_matrix) {
-		return {
-			{//
-			 {//
-			  this->try_get_widget_as<image>("ruis_lt"),
-			  this->try_get_widget_as<image>("ruis_t"),
-			  this->try_get_widget_as<image>("ruis_rt")
-			 }, //
-			 {//
-			  this->try_get_widget_as<image>("ruis_l"),
-			  this->try_get_widget_as<image>("ruis_m"),
-			  this->try_get_widget_as<image>("ruis_r")
-			 }, //
-			 {//
-			  this->try_get_widget_as<image>("ruis_lb"),
-			  this->try_get_widget_as<image>("ruis_b"),
-			  this->try_get_widget_as<image>("ruis_rb")
-			 }
-			}
-		};
-	}()),
-	// TODO: use get_widget_as()
-	inner_content(this->try_get_widget_as<container>("ruis_content"))
+	img_widgets_matrix({
+		{//
+		 {//
+		  this->get_widget_as<image>("ruis_lt"),
+		  this->get_widget_as<image>("ruis_t"),
+		  this->get_widget_as<image>("ruis_rt")
+		 }, //
+		 {//
+		  this->get_widget_as<image>("ruis_l"),
+		  this->get_widget_as<image>("ruis_m"),
+		  this->get_widget_as<image>("ruis_r")
+		 }, //
+		 {//
+		  this->get_widget_as<image>("ruis_lb"),
+		  this->get_widget_as<image>("ruis_b"),
+		  this->get_widget_as<image>("ruis_rb")
+		 }
+		}
+}),
+	inner_content(this->get_widget_as<container>("ruis_content"))
 {
 	this->nine_patch::on_blending_change();
 
@@ -164,7 +161,7 @@ nine_patch::nine_patch(const utki::shared_ref<ruis::context>& c, const treeml::f
 		}
 	}
 
-	this->inner_content->push_back_inflate(desc);
+	this->inner_content.push_back_inflate(desc);
 }
 
 void nine_patch::render(const ruis::matrix4& matrix) const
@@ -228,7 +225,7 @@ void nine_patch::apply_images()
 	if (!np) {
 		for (auto& i : this->img_widgets_matrix) {
 			for (auto& j : i) {
-				j->set_image(nullptr);
+				j.get().set_image(nullptr);
 			}
 		}
 		return;
@@ -241,28 +238,28 @@ void nine_patch::apply_images()
 	{
 		// non-const call to get_layout_params requests re-layout which is not necessarily needed, so try to avoid it if
 		// possible
-		auto& tl_lp = this->img_widgets_matrix[0][0]->get_layout_params_const();
+		auto& tl_lp = this->img_widgets_matrix[0][0].get().get_layout_params_const();
 
 		if (this->borders.left() == lp::min) {
 			if (tl_lp.dims.x() != min_borders.left()) {
-				auto& lp = this->img_widgets_matrix[0][0]->get_layout_params();
+				auto& lp = this->img_widgets_matrix[0][0].get().get_layout_params();
 				lp.dims.x() = min_borders.left();
 			}
 		} else {
 			if (tl_lp.dims.x() != this->borders.left()) {
-				auto& lp = this->img_widgets_matrix[0][0]->get_layout_params();
+				auto& lp = this->img_widgets_matrix[0][0].get().get_layout_params();
 				lp.dims.x() = this->borders.left();
 			}
 		}
 
 		if (this->borders.top() == lp::min) {
 			if (tl_lp.dims.y() != min_borders.top()) {
-				auto& lp = this->img_widgets_matrix[0][0]->get_layout_params();
+				auto& lp = this->img_widgets_matrix[0][0].get().get_layout_params();
 				lp.dims.y() = min_borders.top();
 			}
 		} else {
 			if (tl_lp.dims.y() != this->borders.top()) {
-				auto& lp = this->img_widgets_matrix[0][0]->get_layout_params();
+				auto& lp = this->img_widgets_matrix[0][0].get().get_layout_params();
 				lp.dims.y() = this->borders.top();
 			}
 		}
@@ -271,28 +268,28 @@ void nine_patch::apply_images()
 	{
 		// non-const call to get_layout_params requests relayout which is not necessarily needed, so try to avoid it if
 		// possible
-		auto& br_lp = this->img_widgets_matrix[2][2]->get_layout_params_const();
+		auto& br_lp = this->img_widgets_matrix[2][2].get().get_layout_params_const();
 
 		if (this->borders.right() == lp::min) {
 			if (br_lp.dims.x() != min_borders.right()) {
-				auto& lp = this->img_widgets_matrix[2][2]->get_layout_params();
+				auto& lp = this->img_widgets_matrix[2][2].get().get_layout_params();
 				lp.dims.x() = min_borders.right();
 			}
 		} else {
 			if (br_lp.dims.x() != this->borders.right()) {
-				auto& lp = this->img_widgets_matrix[2][2]->get_layout_params();
+				auto& lp = this->img_widgets_matrix[2][2].get().get_layout_params();
 				lp.dims.x() = this->borders.right();
 			}
 		}
 
 		if (this->borders.bottom() == lp::min) {
 			if (br_lp.dims.y() != min_borders.bottom()) {
-				auto& lp = this->img_widgets_matrix[2][2]->get_layout_params();
+				auto& lp = this->img_widgets_matrix[2][2].get().get_layout_params();
 				lp.dims.y() = min_borders.bottom();
 			}
 		} else {
 			if (br_lp.dims.y() != this->borders.bottom()) {
-				auto& lp = this->img_widgets_matrix[2][2]->get_layout_params();
+				auto& lp = this->img_widgets_matrix[2][2].get().get_layout_params();
 				lp.dims.y() = this->borders.bottom();
 			}
 		}
@@ -305,15 +302,14 @@ void nine_patch::apply_images()
 	for (unsigned i = 0; i != 3; ++i) {
 		for (unsigned j = 0; j != 3; ++j) {
 			// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-constant-array-index)
-			this->img_widgets_matrix[i][j]->set_image(this->img_res_matrix->images()[i][j].to_shared_ptr());
+			this->img_widgets_matrix[i][j].get().set_image(this->img_res_matrix->images()[i][j].to_shared_ptr());
 		}
 	}
 }
 
 void nine_patch::set_center_visible(bool visible)
 {
-	ASSERT(this->img_widgets_matrix[1][1])
-	this->img_widgets_matrix[1][1]->set_visible(visible);
+	this->img_widgets_matrix[1][1].get().set_visible(visible);
 }
 
 void nine_patch::on_blending_change()
@@ -321,7 +317,7 @@ void nine_patch::on_blending_change()
 	for (unsigned i = 0; i != 3; ++i) {
 		for (unsigned j = 0; j != 3; ++j) {
 			// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-constant-array-index)
-			this->img_widgets_matrix[i][j]->set_blending_params(this->get_blending_params());
+			this->img_widgets_matrix[i][j].get().set_blending_params(this->get_blending_params());
 		}
 	}
 }

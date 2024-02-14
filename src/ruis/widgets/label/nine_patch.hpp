@@ -53,10 +53,9 @@ class nine_patch :
 
 	sides<real> borders = sides<real>(lp::min);
 
-	// TODO: refactoring: use utki::shared_ref
-	const std::array<std::array<std::shared_ptr<image>, 3>, 3> img_widgets_matrix;
+	const std::array<std::array<std::reference_wrapper<image>, 3>, 3> img_widgets_matrix;
 
-	const std::shared_ptr<container> inner_content;
+	container& inner_content;
 
 protected:
 	bool on_mouse_move(const mouse_move_event& e) override
@@ -90,7 +89,7 @@ public:
 	 */
 	container& content()
 	{
-		return *this->inner_content;
+		return this->inner_content;
 	}
 
 	void render(const ruis::matrix4& matrix) const override;
