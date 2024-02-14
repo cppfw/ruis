@@ -42,7 +42,7 @@ std::vector<utki::shared_ref<ruis::widget>> build_layout(utki::shared_ref<ruis::
 		m::container(c,
 			{
 				.lp = {
-					.dims = {ruis::lp::fill, ruis::lp::min}
+					.dims = {lp::fill, lp::min}
 				}
 			},
 			{row_layout::instance},
@@ -62,7 +62,7 @@ std::vector<utki::shared_ref<ruis::widget>> build_layout(utki::shared_ref<ruis::
 		m::container(c,
 			{
 				.lp = {
-					.dims = {ruis::lp::max, ruis::lp::min},
+					.dims = {lp::max, lp::min},
 					.weight = 1
 				}
 			},
@@ -105,7 +105,7 @@ std::vector<utki::shared_ref<ruis::widget>> build_layout(utki::shared_ref<ruis::
 		m::container(c,
 			{
 				.lp = {
-					.dims = {ruis::lp::fill, ruis::lp::min}
+					.dims = {lp::fill, lp::min}
 				}
 			},
 			{row_layout::instance},
