@@ -85,13 +85,13 @@ std::vector<utki::shared_ref<ruis::widget>> build_layout(utki::shared_ref<ruis::
 				},
 				{pile_layout::instance},
 				{
-					m::image(c,
-						{
-							.id = "ruis_m",
-							.lp = {
-								.dims = {lp::fill, lp::fill}
-							}
-						})
+				m::image(c,
+					{
+						.id = "ruis_m",
+						.lp = {
+							.dims = {lp::fill, lp::fill}
+						}
+					})
 				}),
 			m::image(c,
 				{
