@@ -30,6 +30,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "widgets/label/color.hpp"
 #include "widgets/label/gradient.hpp"
 #include "widgets/label/image.hpp"
+#include "widgets/label/nine_patch.hpp"
 #include "widgets/label/text.hpp"
 #include "widgets/proxy/click_proxy.hpp"
 #include "widgets/proxy/key_proxy.hpp"
@@ -210,6 +211,23 @@ inline utki::shared_ref<ruis::widget> image(
 		std::move(widget_params),
 		std::move(blending_widget_params),
 		std::move(params)
+	);
+}
+
+inline utki::shared_ref<ruis::widget> nine_patch(
+	utki::shared_ref<ruis::context> context,
+	ruis::widget::parameters widget_params,
+	ruis::nine_patch::parameters params,
+	utki::span<const utki::shared_ref<ruis::widget>> children,
+	blending_widget::parameters blending_widget_params = {}
+)
+{
+	return utki::make_shared<ruis::nine_patch>(
+		std::move(context),
+		std::move(widget_params),
+		std::move(blending_widget_params),
+		std::move(params),
+		children
 	);
 }
 
