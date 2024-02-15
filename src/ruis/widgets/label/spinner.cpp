@@ -32,6 +32,16 @@ spinner::spinner(const utki::shared_ref<ruis::context>& c, const treeml::forest&
 	image(this->context, desc)
 {}
 
+spinner::spinner(
+	utki::shared_ref<ruis::context> context,
+	widget::parameters widget_params,
+	blending_widget::parameters blending_widget_params,
+	image::parameters image_params
+) :
+	widget(std::move(context), std::move(widget_params)),
+	image(this->context, {}, std::move(blending_widget_params), std::move(image_params))
+{}
+
 void spinner::render(const matrix4& matrix) const
 {
 	matrix4 matr(matrix);
