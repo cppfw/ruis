@@ -26,24 +26,44 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 namespace ruis {
 
 /**
- * @brief Color widget.
+ * @brief Rectangle widget.
  * This is a widget which can display a rectangle of a single color.
- * From GUI script it can be instantiated as "color".
  */
-class color : public color_widget
+class rectangle : public color_widget
 {
 public:
-	color(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
+	rectangle(
+		utki::shared_ref<ruis::context> context,
+		widget::parameters widget_params,
+		color_widget::parameters color_widget_params
+	);
 
-	color(const color&) = delete;
-	color& operator=(const color&) = delete;
+	rectangle(const rectangle&) = delete;
+	rectangle& operator=(const rectangle&) = delete;
 
-	color(color&&) = delete;
-	color& operator=(color&&) = delete;
+	rectangle(rectangle&&) = delete;
+	rectangle& operator=(rectangle&&) = delete;
 
-	~color() override = default;
+	~rectangle() override = default;
 
 	void render(const ruis::matrix4& matrix) const override;
 };
+
+namespace make {
+
+utki::shared_ref<ruis::widget> rectangle(
+	utki::shared_ref<ruis::context> context,
+	ruis::widget::parameters widget_params,
+	ruis::color_widget::parameters color_widget_params
+)
+{
+	return utki::make_shared<ruis::rectangle>(
+		std::move(context),
+		std::move(widget_params),
+		std::move(color_widget_params)
+	);
+}
+
+} // namespace make
 
 } // namespace ruis

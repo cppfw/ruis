@@ -19,19 +19,23 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 /* ================ LICENSE END ================ */
 
-#include "color.hpp"
+#include "rectangle.hpp"
 
 #include "../../context.hpp"
 #include "../../util/util.hpp"
 
 using namespace ruis;
 
-color::color(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
-	widget(c, desc),
-	color_widget(this->context, desc)
+rectangle::rectangle(
+	utki::shared_ref<ruis::context> context,
+	widget::parameters widget_params,
+	color_widget::parameters color_widget_params
+) :
+	widget(std::move(context), std::move(widget_params)),
+	color_widget(this->context, std::move(color_widget_params))
 {}
 
-void color::render(const ruis::matrix4& matrix) const
+void rectangle::render(const ruis::matrix4& matrix) const
 {
 	auto& r = this->context.get().renderer.get();
 	r.set_simple_alpha_blending();

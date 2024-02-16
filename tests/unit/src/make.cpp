@@ -8,6 +8,7 @@
 #include <ruis/gui.hpp>
 #include <ruis/make.hpp>
 #include <ruis/layouts/pile_layout.hpp>
+#include <ruis/widgets/label/rectangle.hpp>
 
 namespace{
 // NOLINTNEXTLINE(cppcoreguidelines-interfaces-global-init)
@@ -74,7 +75,7 @@ const tst::set set("make", [](tst::suite& suite){
                 //     U"hello world"
                 // )
                 ,
-                ruis::make::color(
+                ruis::make::rectangle(
                     gui.context,
                     {},
                     {0xff0000ff}

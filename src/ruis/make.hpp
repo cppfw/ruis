@@ -27,7 +27,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "widgets/group/list.hpp"
 #include "widgets/group/overlay.hpp"
 #include "widgets/group/scroll_area.hpp"
-#include "widgets/label/color.hpp"
 #include "widgets/label/gradient.hpp"
 #include "widgets/label/image.hpp"
 #include "widgets/label/nine_patch.hpp"
@@ -179,15 +178,6 @@ inline utki::shared_ref<ruis::widget> text(
 		std::move(color_widget_params),
 		std::move(text)
 	);
-}
-
-inline utki::shared_ref<ruis::widget> color(
-	utki::shared_ref<ruis::context> context,
-	ruis::widget::parameters widget_params,
-	ruis::color_widget::parameters color_widget_params
-)
-{
-	return utki::make_shared<ruis::color>(std::move(context), std::move(widget_params), std::move(color_widget_params));
 }
 
 inline utki::shared_ref<ruis::widget> gradient(
