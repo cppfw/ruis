@@ -698,6 +698,16 @@ public:
  */
 vector2 dims_for_widget(const widget& w, const vector2& parent_dims);
 
+namespace make {
+inline utki::shared_ref<ruis::widget> widget( //
+	utki::shared_ref<ruis::context> context,
+	ruis::widget::parameters params
+)
+{
+	return utki::make_shared<ruis::widget>(std::move(context), std::move(params));
+}
+} // namespace make
+
 } // namespace ruis
 
 // include definitions for forward declared classes

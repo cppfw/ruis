@@ -62,4 +62,21 @@ public:
 	bool on_key(const ruis::key_event& e) override;
 };
 
+namespace make {
+inline utki::shared_ref<ruis::widget> key_proxy(
+	utki::shared_ref<ruis::context> context,
+	ruis::widget::parameters widget_params,
+	ruis::container::parameters container_params,
+	utki::span<const utki::shared_ref<ruis::widget>> children
+)
+{
+	return utki::make_shared<ruis::key_proxy>(
+		std::move(context),
+		std::move(widget_params),
+		std::move(container_params),
+		children
+	);
+}
+} // namespace make
+
 } // namespace ruis

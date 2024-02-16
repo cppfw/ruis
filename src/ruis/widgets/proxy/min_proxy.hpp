@@ -46,4 +46,15 @@ public:
 	vector2 measure(const vector2& quotum) const override;
 };
 
+namespace make {
+inline utki::shared_ref<ruis::widget> min_proxy(
+	utki::shared_ref<ruis::context> context,
+	widget::parameters widget_params,
+	min_proxy::parameters params
+)
+{
+	return utki::make_shared<ruis::min_proxy>(std::move(context), std::move(widget_params), std::move(params));
+}
+} // namespace make
+
 } // namespace ruis

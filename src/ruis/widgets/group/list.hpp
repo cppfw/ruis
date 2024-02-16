@@ -240,4 +240,15 @@ public:
 	~pan_list() override = default;
 };
 
+namespace make {
+inline utki::shared_ref<ruis::widget> list(
+	utki::shared_ref<ruis::context> context,
+	ruis::widget::parameters widget_params,
+	ruis::oriented::parameters oriented_params
+)
+{
+	return utki::make_shared<ruis::list>(std::move(context), std::move(widget_params), std::move(oriented_params));
+}
+} // namespace make
+
 } // namespace ruis

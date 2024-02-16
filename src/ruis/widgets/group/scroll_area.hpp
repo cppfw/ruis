@@ -131,4 +131,21 @@ private:
 	void arrange_widgets();
 };
 
+namespace make {
+inline utki::shared_ref<ruis::widget> scroll_area(
+	utki::shared_ref<ruis::context> context,
+	ruis::widget::parameters widget_params,
+	ruis::container::parameters container_params,
+	utki::span<const utki::shared_ref<ruis::widget>> children
+)
+{
+	return utki::make_shared<ruis::scroll_area>(
+		std::move(context),
+		std::move(widget_params),
+		std::move(container_params),
+		children
+	);
+}
+} // namespace make
+
 } // namespace ruis

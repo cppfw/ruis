@@ -69,4 +69,14 @@ public:
 	void on_hovered_change(unsigned pointer_id) override;
 };
 
+namespace make {
+inline utki::shared_ref<ruis::widget> mouse_proxy(
+	utki::shared_ref<ruis::context> context,
+	ruis::widget::parameters params
+)
+{
+	return utki::make_shared<ruis::mouse_proxy>(std::move(context), std::move(params));
+}
+} // namespace make
+
 } // namespace ruis

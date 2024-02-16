@@ -62,4 +62,14 @@ public:
 	std::function<void(click_proxy& w)> click_handler;
 };
 
+namespace make {
+inline utki::shared_ref<ruis::widget> click_proxy(
+	utki::shared_ref<ruis::context> context,
+	ruis::widget::parameters params
+)
+{
+	return utki::make_shared<ruis::click_proxy>(std::move(context), std::move(params));
+}
+} // namespace make
+
 } // namespace ruis

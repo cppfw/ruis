@@ -6,7 +6,6 @@
 #include <utki/config.hpp>
 
 #include <ruis/gui.hpp>
-#include <ruis/make.hpp>
 #include <ruis/layouts/pile_layout.hpp>
 #include <ruis/widgets/label/rectangle.hpp>
 

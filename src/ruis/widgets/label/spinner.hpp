@@ -57,7 +57,7 @@ private:
 };
 
 namespace make {
-inline utki::shared_ref<widget> spinner(
+inline utki::shared_ref<ruis::widget> spinner(
 	utki::shared_ref<ruis::context> context,
 	widget::parameters widget_params,
 	image::parameters image_params,

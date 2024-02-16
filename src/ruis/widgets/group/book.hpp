@@ -119,4 +119,14 @@ private:
 	void notify_pages_change(const page& p);
 };
 
+namespace make {
+inline utki::shared_ref<ruis::book> book(
+	utki::shared_ref<ruis::context> context,
+	ruis::widget::parameters widget_params
+)
+{
+	return utki::make_shared<ruis::book>(std::move(context), std::move(widget_params));
+}
+} // namespace make
+
 } // namespace ruis

@@ -59,4 +59,15 @@ public:
 	void render(const ruis::matrix4& matrix) const override;
 };
 
+namespace make {
+inline utki::shared_ref<ruis::widget> gradient(
+	utki::shared_ref<ruis::context> context,
+	ruis::widget::parameters widget_params,
+	ruis::gradient::parameters params
+)
+{
+	return utki::make_shared<ruis::gradient>(std::move(context), std::move(widget_params), std::move(params));
+}
+} // namespace make
+
 } // namespace ruis

@@ -113,4 +113,21 @@ public:
 	void on_enabled_change() override;
 };
 
+namespace make {
+inline utki::shared_ref<ruis::widget> image(
+	utki::shared_ref<ruis::context> context,
+	ruis::widget::parameters widget_params,
+	ruis::image::parameters params = {},
+	ruis::blending_widget::parameters blending_widget_params = {}
+)
+{
+	return utki::make_shared<ruis::image>(
+		std::move(context),
+		std::move(widget_params),
+		std::move(blending_widget_params),
+		std::move(params)
+	);
+}
+} // namespace make
+
 } // namespace ruis

@@ -497,6 +497,23 @@ std::vector<utki::shared_ref<widget_type>> widget::get_all_widgets(bool allow_it
 	return ret;
 }
 
+namespace make {
+inline utki::shared_ref<ruis::widget> container(
+	utki::shared_ref<ruis::context> context,
+	ruis::widget::parameters widget_params,
+	ruis::container::parameters params,
+	utki::span<const utki::shared_ref<ruis::widget>> children
+)
+{
+	return utki::make_shared<ruis::container>(
+		std::move(context),
+		std::move(widget_params),
+		std::move(params),
+		children
+	);
+}
+} // namespace make
+
 } // namespace ruis
 
 // include definitions for forward declared classes
