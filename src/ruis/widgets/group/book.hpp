@@ -68,7 +68,9 @@ public:
 	utki::shared_ref<page> tear_out();
 };
 
-class book : public virtual widget, private container
+class book :
+	public virtual widget, //
+	private container
 {
 	friend class page;
 
@@ -77,6 +79,8 @@ class book : public virtual widget, private container
 	std::vector<utki::shared_ref<page>> pages;
 
 public:
+	book(utki::shared_ref<ruis::context> context, widget::parameters widget_params);
+
 	book(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
 
 	book(const book&) = delete;
@@ -114,5 +118,15 @@ private:
 
 	void notify_pages_change(const page& p);
 };
+
+namespace make {
+inline utki::shared_ref<ruis::book> book(
+	utki::shared_ref<ruis::context> context,
+	ruis::widget::parameters widget_params
+)
+{
+	return utki::make_shared<ruis::book>(std::move(context), std::move(widget_params));
+}
+} // namespace make
 
 } // namespace ruis

@@ -38,11 +38,20 @@ namespace ruis {
  */
 class text_widget : virtual public widget
 {
-	real font_size;
+public:
+	struct parameters {
+		constexpr static auto default_font_size = 12;
+		real font_size = default_font_size;
+		std::shared_ptr<const res::font> font_face;
+	};
 
-	utki::shared_ref<const res::font> font_face;
+private:
+	parameters params;
 
 	std::array<utki::shared_ref<const ruis::font>, size_t(res::font::style::enum_size)> fonts;
+
+protected:
+	text_widget(utki::shared_ref<ruis::context> context, parameters params);
 
 public:
 	text_widget(const text_widget&) = delete;
@@ -64,7 +73,7 @@ public:
 
 	real get_font_size() const noexcept
 	{
-		return this->font_size;
+		return this->params.font_size;
 	}
 
 	void set_text(std::string_view text)

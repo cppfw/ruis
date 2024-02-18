@@ -47,17 +47,17 @@ void button::set_pressed(bool pressed)
 	}
 	this->is_pressed_v = pressed;
 	this->is_pressed_changed_notified = false;
-	this->on_press_change();
+	this->on_pressed_change();
 }
 
-void button::on_press_change()
+void button::on_pressed_change()
 {
 	if (this->is_pressed_changed_notified) {
 		return;
 	}
 	this->is_pressed_changed_notified = true;
 
-	if (this->press_handler) {
-		this->press_handler(*this);
+	if (this->pressed_change_handler) {
+		this->pressed_change_handler(*this);
 	}
 }

@@ -46,17 +46,11 @@ class nine_patch :
 	public blending_widget,
 	private container
 {
-	std::shared_ptr<const res::nine_patch> np_res;
-	std::shared_ptr<const res::nine_patch> disabled_np_res;
-
 	std::shared_ptr<res::nine_patch::image_matrix> img_res_matrix;
 
-	sides<real> borders = sides<real>(layout_params::min);
+	const std::array<std::array<std::reference_wrapper<image>, 3>, 3> img_widgets_matrix;
 
-	// TODO: refactoring: use utki::shared_ref
-	const std::array<std::array<std::shared_ptr<image>, 3>, 3> img_widgets_matrix;
-
-	const std::shared_ptr<container> inner_content;
+	container& inner_content;
 
 protected:
 	bool on_mouse_move(const mouse_move_event& e) override
@@ -70,6 +64,24 @@ protected:
 	}
 
 public:
+	struct parameters {
+		std::shared_ptr<const res::nine_patch> nine_patch;
+		std::shared_ptr<const res::nine_patch> disabled_nine_patch;
+		sides<real> borders = sides<real>(lp::min);
+	};
+
+private:
+	parameters params;
+
+public:
+	nine_patch(
+		utki::shared_ref<ruis::context> context,
+		widget::parameters widget_params,
+		blending_widget::parameters blending_widget_params,
+		parameters params,
+		utki::span<const utki::shared_ref<widget>> children
+	);
+
 	nine_patch(const nine_patch&) = delete;
 	nine_patch& operator=(const nine_patch&) = delete;
 
@@ -90,7 +102,7 @@ public:
 	 */
 	container& content()
 	{
-		return *this->inner_content;
+		return this->inner_content;
 	}
 
 	void render(const ruis::matrix4& matrix) const override;
@@ -108,7 +120,7 @@ public:
 	 */
 	void set_borders(sides<real> borders)
 	{
-		this->borders = borders;
+		this->params.borders = borders;
 		this->apply_images();
 		this->invalidate_layout();
 	}
@@ -118,20 +130,39 @@ public:
 	 * Border values are in pixels or min_c.
 	 * @return Current borders.
 	 */
-	decltype(borders) get_borders() const noexcept
+	decltype(params.borders) get_borders() const noexcept
 	{
-		return this->borders;
+		return this->params.borders;
 	}
 
 	sides<real> get_actual_borders() const noexcept;
 
 	void on_blending_change() override;
 
-	void on_enable_change() override;
+	void on_enabled_change() override;
 
 private:
 	void apply_images();
 	void update_images();
 };
+
+namespace make {
+inline utki::shared_ref<ruis::widget> nine_patch(
+	utki::shared_ref<ruis::context> context,
+	ruis::widget::parameters widget_params,
+	ruis::nine_patch::parameters params,
+	utki::span<const utki::shared_ref<ruis::widget>> children,
+	blending_widget::parameters blending_widget_params = {}
+)
+{
+	return utki::make_shared<ruis::nine_patch>(
+		std::move(context),
+		std::move(widget_params),
+		std::move(blending_widget_params),
+		std::move(params),
+		children
+	);
+}
+} // namespace make
 
 } // namespace ruis

@@ -23,6 +23,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
+resize_proxy::resize_proxy(utki::shared_ref<ruis::context> context, widget::parameters params) :
+	widget(std::move(context), std::move(params))
+{}
+
 void resize_proxy::on_resize()
 {
 	this->widget::on_resize();

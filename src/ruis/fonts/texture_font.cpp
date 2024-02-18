@@ -51,6 +51,7 @@ freetype_face::freetype_lib_wrapper::~freetype_lib_wrapper()
 freetype_face::freetype_face_wrapper::freetype_face_wrapper(FT_Library& lib, const papki::file& fi)
 {
 	this->font_file = fi.load();
+	ASSERT(!this->font_file.empty())
 	if (FT_New_Memory_Face(lib, this->font_file.data(), int(this->font_file.size()), 0 /* face_index */, &this->f) != 0)
 	{
 		throw std::runtime_error("freetype_face_wrapper::freetype_face_wrapper(): unable to crate font face object");
@@ -275,9 +276,9 @@ real texture_font::get_advance_internal(std::u32string_view str, unsigned tab_si
 	return ret;
 }
 
-ruis::rectangle texture_font::get_bounding_box_internal(std::u32string_view str, unsigned tab_size) const
+ruis::rect texture_font::get_bounding_box_internal(std::u32string_view str, unsigned tab_size) const
 {
-	ruis::rectangle ret;
+	ruis::rect ret;
 
 	if (str.empty()) {
 		ret.p.set(0);

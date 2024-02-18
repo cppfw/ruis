@@ -49,7 +49,7 @@ ruis::vector2 ruis::parse_vec2(treeml::forest::const_iterator begin, treeml::for
 	return ret;
 }
 
-ruis::rectangle ruis::parse_rect(const treeml::forest& desc)
+ruis::rect ruis::parse_rect(const treeml::forest& desc)
 {
 	using std::min;
 	vector2 p = parse_vec2(desc.begin(), desc.end());
@@ -84,11 +84,11 @@ real ruis::parse_dimension_value(const treeml::leaf& l, const ruis::units& units
 real ruis::parse_layout_dimension_value(const treeml::leaf& l, const ruis::units& units)
 {
 	if (l == "min") {
-		return layout_params::min;
+		return lp::min;
 	} else if (l == "fill") {
-		return layout_params::fill;
+		return lp::fill;
 	} else if (l == "max") {
-		return layout_params::max;
+		return lp::max;
 	}
 	return parse_dimension_value(l, units);
 }

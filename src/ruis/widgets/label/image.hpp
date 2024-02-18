@@ -37,20 +37,32 @@ namespace ruis {
  * @param repeat_x - replicate image horizontally if size of the widget is bigger than size of the image resource.
  * @param repeat_y - replicate image vertically if size of the widget is bigger than size of the image resource.
  */
-class image : public virtual widget, public blending_widget
+class image :
+	public virtual widget, //
+	public blending_widget
 {
-	std::shared_ptr<const ruis::res::image> img;
-	std::shared_ptr<const ruis::res::image> disabled_img; // image for disabled state
+public:
+	struct parameters {
+		std::shared_ptr<const ruis::res::image> img;
+		std::shared_ptr<const ruis::res::image> disabled_img; // image for disabled state
+		bool keep_aspect_ratio = false;
+		r4::vector2<bool> repeat_v = r4::vector2<bool>(false);
+	};
+
+private:
+	parameters params;
 
 	mutable std::shared_ptr<const ruis::res::image::texture> texture;
-
-	bool keep_aspect_ratio = false;
-
-	r4::vector2<bool> repeat_v = r4::vector2<bool>(false);
-
 	mutable utki::shared_ref<const vertex_array> vao;
 
 public:
+	image(
+		utki::shared_ref<ruis::context> context,
+		widget::parameters widget_params,
+		blending_widget::parameters blending_widget_params,
+		parameters params
+	);
+
 	image(const image&) = delete;
 	image& operator=(const image&) = delete;
 
@@ -69,36 +81,53 @@ public:
 
 	const std::shared_ptr<const res::image>& get_image() const
 	{
-		return this->img;
+		return this->params.img;
 	}
 
 	void set_disabled_image(std::shared_ptr<const res::image> image);
 
 	const std::shared_ptr<const res::image>& get_disabled_image() const
 	{
-		return this->disabled_img;
+		return this->params.disabled_img;
 	}
 
 	void on_resize() override;
 
-	const decltype(repeat_v)& repeat() const noexcept
+	const decltype(params.repeat_v)& repeat() const noexcept
 	{
-		return this->repeat_v;
+		return this->params.repeat_v;
 	}
 
-	void set_repeat(decltype(repeat_v) r)
+	void set_repeat(decltype(params.repeat_v) r)
 	{
-		this->repeat_v = r;
+		this->params.repeat_v = r;
 		this->texture.reset();
 	}
 
 	void set_keep_aspect_ratio(bool keep_aspect_ratio)
 	{
-		this->keep_aspect_ratio = keep_aspect_ratio;
+		this->params.keep_aspect_ratio = keep_aspect_ratio;
 		this->invalidate_layout();
 	}
 
-	void on_enable_change() override;
+	void on_enabled_change() override;
 };
+
+namespace make {
+inline utki::shared_ref<ruis::widget> image(
+	utki::shared_ref<ruis::context> context,
+	ruis::widget::parameters widget_params,
+	ruis::image::parameters params = {},
+	ruis::blending_widget::parameters blending_widget_params = {}
+)
+{
+	return utki::make_shared<ruis::image>(
+		std::move(context),
+		std::move(widget_params),
+		std::move(blending_widget_params),
+		std::move(params)
+	);
+}
+} // namespace make
 
 } // namespace ruis

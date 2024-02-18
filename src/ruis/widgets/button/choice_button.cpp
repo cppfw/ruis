@@ -31,9 +31,9 @@ choice_button::choice_button(const utki::shared_ref<ruis::context>& c, const tre
 	toggle_button(this->context, desc)
 {}
 
-void choice_button::on_press_change()
+void choice_button::on_pressed_change()
 {
-	this->toggle_button::on_press_change();
+	this->toggle_button::on_pressed_change();
 
 	if (this->is_pressed()) {
 		this->activate();

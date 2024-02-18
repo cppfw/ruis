@@ -39,26 +39,26 @@ widget::widget(const utki::shared_ref<ruis::context>& c, const treeml::forest& d
 
 		try {
 			if (p.value == "lp") {
-				this->layout_parameters = layout_params(p.children, this->context.get().units);
+				this->params.lp = lp::make(p.children, this->context.get().units);
 			} else if (p.value == "x") {
-				this->rectangle.p.x() = parse_dimension_value(get_property_value(p), this->context.get().units);
+				this->params.rectangle.p.x() = parse_dimension_value(get_property_value(p), this->context.get().units);
 			} else if (p.value == "y") {
-				this->rectangle.p.y() = parse_dimension_value(get_property_value(p), this->context.get().units);
+				this->params.rectangle.p.y() = parse_dimension_value(get_property_value(p), this->context.get().units);
 			} else if (p.value == "dx") {
-				this->rectangle.d.x() = parse_dimension_value(get_property_value(p), this->context.get().units);
+				this->params.rectangle.d.x() = parse_dimension_value(get_property_value(p), this->context.get().units);
 			} else if (p.value == "dy") {
-				this->rectangle.d.y() = parse_dimension_value(get_property_value(p), this->context.get().units);
+				this->params.rectangle.d.y() = parse_dimension_value(get_property_value(p), this->context.get().units);
 			} else if (p.value == "id") {
-				this->id = get_property_value(p).to_string();
+				this->params.id = get_property_value(p).to_string();
 				// TRACE(<< "inflating '" << this->id << "'" << std::endl)
 			} else if (p.value == "clip") {
-				this->clip_enabled = get_property_value(p).to_bool();
+				this->params.clip = get_property_value(p).to_bool();
 			} else if (p.value == "cache") {
-				this->cache = get_property_value(p).to_bool();
+				this->params.cache = get_property_value(p).to_bool();
 			} else if (p.value == "visible") {
-				this->visible = get_property_value(p).to_bool();
+				this->params.visible = get_property_value(p).to_bool();
 			} else if (p.value == "enabled") {
-				this->enabled = get_property_value(p).to_bool();
+				this->params.enabled = get_property_value(p).to_bool();
 			}
 		} catch (std::invalid_argument&) {
 			LOG([&](auto& o) {
@@ -69,33 +69,14 @@ widget::widget(const utki::shared_ref<ruis::context>& c, const treeml::forest& d
 	}
 }
 
-layout_params::layout_params(const treeml::forest& desc, const ruis::units& units)
-{
-	for (const auto& p : desc) {
-		if (!is_property(p)) {
-			continue;
-		}
-
-		try {
-			if (p.value == "dx") {
-				this->dims.x() = parse_layout_dimension_value(get_property_value(p), units);
-			} else if (p.value == "dy") {
-				this->dims.y() = parse_layout_dimension_value(get_property_value(p), units);
-			} else if (p.value == "weight") {
-				this->weight = get_property_value(p).to_float();
-			}
-		} catch (std::invalid_argument&) {
-			LOG([&](auto& o) {
-				o << "could not parse value of " << treeml::to_string(p) << std::endl;
-			})
-			throw;
-		}
-	}
-}
+widget::widget(utki::shared_ref<ruis::context> context, parameters params) :
+	context(std::move(context)),
+	params(std::move(params))
+{}
 
 std::shared_ptr<widget> widget::try_get_widget(const std::string& id, bool allow_itself) noexcept
 {
-	if (allow_itself && this->id == id) {
+	if (allow_itself && this->id() == id) {
 		return utki::make_shared_from(*this).to_shared_ptr();
 	}
 	return nullptr;
@@ -115,7 +96,7 @@ widget* widget::try_get_ancestor(const std::string& id)
 		return nullptr;
 	}
 
-	if (this->parent()->id == id) {
+	if (this->parent()->id() == id) {
 		return this->parent();
 	}
 
@@ -135,12 +116,12 @@ widget& widget::get_ancestor(const std::string& id)
 
 void widget::move_to(const vector2& new_pos)
 {
-	this->rectangle.p = new_pos;
+	this->params.rectangle.p = new_pos;
 }
 
 void widget::resize(const ruis::vector2& new_dims)
 {
-	if (this->rectangle.d == new_dims) {
+	if (this->params.rectangle.d == new_dims) {
 		if (this->is_layout_dirty()) {
 			this->lay_out();
 		}
@@ -149,7 +130,7 @@ void widget::resize(const ruis::vector2& new_dims)
 
 	using std::max;
 
-	this->rectangle.d = max(new_dims, real(0)); // clamp bottom
+	this->params.rectangle.d = max(new_dims, real(0)); // clamp bottom
 	this->on_resize();
 }
 
@@ -184,7 +165,7 @@ utki::shared_ref<widget> widget::replace_by(const utki::shared_ref<widget>& w)
 	// TODO: performace can be improved by adding dedicated container::replace_by(iter, widget) function
 	this->parent()->insert(w, this->parent()->find(*this));
 
-	w.get().layout_parameters = std::move(this->layout_parameters);
+	w.get().params.lp = std::move(this->params.lp);
 
 	return this->remove_from_parent();
 }
@@ -211,7 +192,7 @@ void widget::render_internal(const ruis::matrix4& matrix) const
 
 	auto& r = this->context.get().renderer.get();
 
-	if (this->cache) {
+	if (this->params.cache) {
 		if (this->cache_dirty) {
 			bool scissor_test_was_enabled = r.is_scissor_enabled();
 			r.set_scissor_enabled(false);
@@ -234,7 +215,7 @@ void widget::render_internal(const ruis::matrix4& matrix) const
 
 		this->render_from_cache(matrix);
 	} else {
-		if (this->clip_enabled) {
+		if (this->params.clip) {
 			//		TRACE(<< "widget::RenderInternal(): oldScissorBox = " << Rect2i(oldcissorBox[0], oldcissorBox[1],
 			// oldcissorBox[2], oldcissorBox[3]) << std::endl)
 
@@ -396,7 +377,7 @@ ruis::vector2 widget::get_absolute_pos() const noexcept
 	return this->parent()->get_absolute_pos() + this->rect().p;
 }
 
-ruis::rectangle widget::get_absolute_rect() const noexcept
+ruis::rect widget::get_absolute_rect() const noexcept
 {
 	if (this->parent()) {
 		return {this->get_absolute_pos(), this->rect().d};
@@ -420,14 +401,14 @@ vector2 widget::pos_in_ancestor(vector2 pos, const widget* ancestor)
 	return this->parent()->pos_in_ancestor(this->rect().p + pos, ancestor);
 }
 
-layout_params& widget::get_layout_params()
+lp& widget::get_layout_params()
 {
 	if (this->parent()) {
 		this->parent()->invalidate_layout();
 	}
 
 	// NOLINTNEXTLINE(cppcoreguidelines-pro-type-const-cast)
-	return const_cast<layout_params&>(this->get_layout_params_const());
+	return const_cast<lp&>(this->get_layout_params_const());
 }
 
 widget& widget::get_widget(const std::string& id, bool allow_itself)
@@ -435,7 +416,7 @@ widget& widget::get_widget(const std::string& id, bool allow_itself)
 	auto w = this->try_get_widget(id, allow_itself);
 	if (!w) {
 		std::stringstream ss;
-		ss << "widget '" << id << "' not found in '" << this->id << "'";
+		ss << "widget '" << id << "' not found in '" << this->id() << "'";
 
 		// gui scripts are supposed to be static (not dynamically generated),
 		// so if there is no expected widget the gui script, then it is a logic error
@@ -447,24 +428,24 @@ widget& widget::get_widget(const std::string& id, bool allow_itself)
 void widget::set_enabled(bool enable)
 {
 	//	TRACE(<< "widget::set_enabled(): enable = " << enable << " this->name() = " << this->name()<< std::endl)
-	if (this->enabled == enable) {
+	if (this->params.enabled == enable) {
 		return;
 	}
 
-	this->enabled = enable;
+	this->params.enabled = enable;
 
 	// un-hover this widget if it becomes disabled because it is not supposed to receive mouse input
 	if (!this->is_enabled()) {
 		this->set_unhovered();
 	}
 
-	this->on_enable_change();
+	this->on_enabled_change();
 }
 
 void widget::set_visible(bool visible)
 {
-	this->visible = visible;
-	if (!this->visible) {
+	this->params.visible = visible;
+	if (!this->params.visible) {
 		this->set_unhovered();
 	}
 }
@@ -474,7 +455,7 @@ void widget::set_unhovered()
 	auto hover_set = std::move(this->hovered);
 	ASSERT(this->hovered.size() == 0)
 	for (auto h : hover_set) {
-		this->on_hover_change(h);
+		this->on_hovered_change(h);
 	}
 }
 
@@ -493,7 +474,7 @@ void widget::set_hovered(bool is_hovered, unsigned pointer_id)
 		this->hovered.erase(pointer_id);
 	}
 
-	this->on_hover_change(pointer_id);
+	this->on_hovered_change(pointer_id);
 }
 
 void widget::reload()
@@ -504,12 +485,12 @@ void widget::reload()
 
 vector2 ruis::dims_for_widget(const widget& w, const vector2& parent_dims)
 {
-	const layout_params& lp = w.get_layout_params_const();
+	const lp& lp = w.get_layout_params_const();
 	vector2 d;
 	for (unsigned i = 0; i != 2; ++i) {
-		if (lp.dims[i] == layout_params::max || lp.dims[i] == layout_params::fill) {
+		if (lp.dims[i] == lp::max || lp.dims[i] == lp::fill) {
 			d[i] = parent_dims[i];
-		} else if (lp.dims[i] == layout_params::min) {
+		} else if (lp.dims[i] == lp::min) {
 			d[i] = -1; // will be updated below
 		} else {
 			d[i] = lp.dims[i];

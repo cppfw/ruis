@@ -33,6 +33,13 @@ namespace ruis {
 class key_proxy : public container
 {
 public:
+	key_proxy(
+		utki::shared_ref<ruis::context> context,
+		widget::parameters widget_params,
+		container::parameters container_params,
+		utki::span<const utki::shared_ref<widget>> children
+	);
+
 	key_proxy(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
 		widget(c, desc),
 		container(this->context, desc, pile_layout::instance)
@@ -54,5 +61,22 @@ public:
 
 	bool on_key(const ruis::key_event& e) override;
 };
+
+namespace make {
+inline utki::shared_ref<ruis::widget> key_proxy(
+	utki::shared_ref<ruis::context> context,
+	ruis::widget::parameters widget_params,
+	ruis::container::parameters container_params,
+	utki::span<const utki::shared_ref<ruis::widget>> children
+)
+{
+	return utki::make_shared<ruis::key_proxy>(
+		std::move(context),
+		std::move(widget_params),
+		std::move(container_params),
+		children
+	);
+}
+} // namespace make
 
 } // namespace ruis

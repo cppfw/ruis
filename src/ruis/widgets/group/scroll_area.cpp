@@ -26,6 +26,16 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
+scroll_area::scroll_area(
+	utki::shared_ref<ruis::context> context,
+	widget::parameters widget_params,
+	container::parameters container_params,
+	utki::span<const utki::shared_ref<widget>> children
+) :
+	widget(std::move(context), std::move(widget_params)),
+	container(this->context, {}, std::move(container_params), children)
+{}
+
 scroll_area::scroll_area(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
 	widget(c, desc),
 	container(this->context, desc)
@@ -106,12 +116,12 @@ void scroll_area::update_scroll_factor()
 // it wants 'max' children to be bigger than scroll_area in case their minimal dimensions are bigger.
 vector2 scroll_area::dims_for_widget(const widget& w) const
 {
-	const layout_params& lp = w.get_layout_params_const();
+	const lp& lp = w.get_layout_params_const();
 	vector2 d;
 	for (unsigned i = 0; i != 2; ++i) {
-		if (lp.dims[i] == layout_params::fill) {
+		if (lp.dims[i] == lp::fill) {
 			d[i] = this->rect().d[i];
-		} else if (lp.dims[i] == layout_params::min || lp.dims[i] == layout_params::max) {
+		} else if (lp.dims[i] == lp::min || lp.dims[i] == lp::max) {
 			d[i] = -1; // will be updated below
 		} else {
 			d[i] = lp.dims[i];
@@ -121,7 +131,7 @@ vector2 scroll_area::dims_for_widget(const widget& w) const
 		vector2 md = w.measure(d);
 		for (unsigned i = 0; i != md.size(); ++i) {
 			if (d[i] < 0) {
-				if (lp.dims[i] == layout_params::max && md[i] < this->rect().d[i]) {
+				if (lp.dims[i] == lp::max && md[i] < this->rect().d[i]) {
 					d[i] = this->rect().d[i];
 				} else {
 					d[i] = md[i];

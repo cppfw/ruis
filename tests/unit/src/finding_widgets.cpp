@@ -60,7 +60,7 @@ const tst::set set("finding_widgets", [](tst::suite& suite){
 					aaas.begin(),
 					aaas.end(),
 					[&id](const decltype(aaas)::value_type& wg) -> bool {
-						return wg.get().id == id;
+						return wg.get().id() == id;
 					}
 				);
             tst::check(i != aaas.end(), SL) << "id = '" << id <<"' not found";

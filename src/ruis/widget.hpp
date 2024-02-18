@@ -38,63 +38,12 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "util/units.hpp"
 
 #include "config.hpp"
+#include "lp.hpp"
 
 namespace ruis {
 
 class context;
 class container;
-
-/**
- * @brief Layout parameters.
- */
-class layout_params final
-{
-public:
-	/**
-	 * @brief Requests minimal dimensions of the widget.
-	 * The widget will always be given minimal space it needs to properly draw.
-	 */
-	constexpr static const real min = real(-1);
-
-	/**
-	 * @brief Requests minimal or bigger dimensions of widget.
-	 * The widget will be given at least minimal space it needs to properly draw.
-	 * 'max' behaves the same way as 'min' during measure, but during layouting
-	 * the widget will be given same size as parent.
-	 */
-	constexpr static const real max = real(-2);
-
-	/**
-	 * @brief Requests widget to be same size as its parent.
-	 * Minimal size of the widget is assumed to be 0.
-	 */
-	constexpr static const real fill = real(-3);
-
-	/**
-	 * @brief desired dimensions.
-	 * Components should hold non-negative value in pixels or [min, max, fill].
-	 */
-	vector2 dims = vector2(layout_params::min);
-
-	/**
-	 * @brief Weight of the widget.
-	 * Weight defines how much space widget occupies in addition to its minimal or explicitly set size.
-	 * Default value is 0, which means that the widget will not occupy extra space.
-	 */
-	real weight = 0;
-
-	layout_params() = default;
-
-	layout_params(const layout_params&) = default;
-	layout_params& operator=(const layout_params&) = default;
-
-	layout_params(layout_params&&) = default;
-	layout_params& operator=(layout_params&&) = default;
-
-	layout_params(const treeml::forest& desc, const ruis::units& units);
-
-	~layout_params() noexcept = default;
-};
 
 /**
  * @brief Basic widget class.
@@ -129,15 +78,6 @@ private:
 
 	std::set<unsigned> hovered;
 
-	bool visible = true;
-
-	bool enabled = true;
-
-	ruis::rectangle rectangle = {0, 0};
-
-	// clip widgets contents by widget's border if set to true
-	bool clip_enabled = false;
-
 public:
 	/**
 	 * @brief Check if scissor test is enabled for this widget.
@@ -146,20 +86,19 @@ public:
 	 */
 	bool is_clip_enabled() const noexcept
 	{
-		return this->clip_enabled;
+		return this->params.clip;
 	}
 
 	/**
 	 * @brief Enable/Disable scissor test.
 	 * @param enable - whether to enable (true) or disable (false) the scissor test.
 	 */
-	void set_clip_enabled(bool enable) noexcept
+	void set_clip(bool enable) noexcept
 	{
-		this->clip_enabled = enable;
+		this->params.clip = enable;
 	}
 
 private:
-	bool cache = false;
 	mutable bool cache_dirty = true;
 	mutable std::shared_ptr<texture_2d> cache_texture;
 
@@ -178,7 +117,7 @@ public:
 	 */
 	void set_cache(bool enabled) noexcept
 	{
-		this->cache = enabled;
+		this->params.cache = enabled;
 	}
 
 	/**
@@ -193,25 +132,26 @@ public:
 private:
 	bool layout_dirty = true;
 
-	layout_params layout_parameters;
-
 public:
-	std::string id;
+	std::string_view id() const
+	{
+		return this->params.id;
+	}
 
 	/**
 	 * @brief Get layout parameters of the widget.
 	 * This method invalidates layout.
 	 * @return Layout parameters of the widget.
 	 */
-	layout_params& get_layout_params();
+	lp& get_layout_params();
 
 	/**
 	 * @brief Get constant layout parameters of the widget.
 	 * @return Constant layout parameters of the widget.
 	 */
-	const layout_params& get_layout_params_const() const
+	const lp& get_layout_params_const() const
 	{
-		return this->layout_parameters;
+		return this->params.lp;
 	}
 
 	/**
@@ -313,9 +253,9 @@ public:
 	 * The rectangle is in parent's coordinates.
 	 * @return Widget's rectangle.
 	 */
-	const ruis::rectangle& rect() const noexcept
+	const ruis::rect& rect() const noexcept
 	{
-		return this->rectangle;
+		return this->params.rectangle;
 	}
 
 	/**
@@ -328,7 +268,7 @@ public:
 	 * @brief Get widget's rectangle in absolute coordinates.
 	 * @return widget's absolute coordinates rectangle.
 	 */
-	ruis::rectangle get_absolute_rect() const noexcept;
+	ruis::rect get_absolute_rect() const noexcept;
 
 	/**
 	 * @brief Get rectangle occupied by the widget in viewport coordinates.
@@ -349,7 +289,7 @@ public:
 	 */
 	void move_by(const vector2& delta)
 	{
-		this->move_to(this->rectangle.p + delta);
+		this->move_to(this->params.rectangle.p + delta);
 	}
 
 	/**
@@ -466,12 +406,33 @@ public:
 	}
 
 public:
+	struct parameters {
+		std::string id;
+		ruis::lp lp;
+		ruis::rect rectangle = {0, 0};
+
+		/**
+		 * @brief Clip widgets contents by widget's border.
+		 */
+		bool clip = false;
+
+		bool cache = false;
+		bool visible = true;
+		bool enabled = true;
+	};
+
+private:
+	parameters params;
+
+public:
 	/**
 	 * @brief Constructor.
 	 * @param c - context to which this widget belongs.
 	 * @param desc - widget description.
 	 */
 	widget(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
+
+	widget(utki::shared_ref<ruis::context> context, parameters params);
 
 	widget(const widget&) = delete;
 	widget& operator=(const widget&) = delete;
@@ -568,7 +529,7 @@ public:
 	 * Called by framework when mouse pointer enters or leaves the widget boundaries.
 	 * @param pointer_id - id of the mouse pointer on systems with multiple mouse pointers, like multitouch screens.
 	 */
-	virtual void on_hover_change(unsigned pointer_id)
+	virtual void on_hovered_change(unsigned pointer_id)
 	{
 		//		TRACE(<< "widget::on_hover_change(): this->IsHovered() = " << this->IsHovered() << std::endl)
 	}
@@ -609,7 +570,7 @@ public:
 	 */
 	bool is_visible() const noexcept
 	{
-		return this->visible;
+		return this->params.visible;
 	}
 
 	/**
@@ -625,13 +586,13 @@ public:
 	 */
 	bool is_enabled() const noexcept
 	{
-		return this->enabled;
+		return this->params.enabled;
 	}
 
 	/**
 	 * @brief Invoked when enabled state of the widget changes.
 	 */
-	virtual void on_enable_change() {}
+	virtual void on_enabled_change() {}
 
 	/**
 	 * @brief Check if widget can receive user input.
@@ -652,7 +613,7 @@ public:
 	 */
 	bool overlaps(const ruis::vector2& pos) const noexcept
 	{
-		return ruis::rectangle(ruis::vector2(0, 0), this->rect().d).overlaps(pos);
+		return ruis::rect(ruis::vector2(0, 0), this->rect().d).overlaps(pos);
 	}
 
 	/**
@@ -736,6 +697,16 @@ public:
  * @return Dimensions of widget.
  */
 vector2 dims_for_widget(const widget& w, const vector2& parent_dims);
+
+namespace make {
+inline utki::shared_ref<ruis::widget> widget( //
+	utki::shared_ref<ruis::context> context,
+	ruis::widget::parameters params
+)
+{
+	return utki::make_shared<ruis::widget>(std::move(context), std::move(params));
+}
+} // namespace make
 
 } // namespace ruis
 

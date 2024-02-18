@@ -64,42 +64,52 @@ blending_widget::blending_widget(const utki::shared_ref<ruis::context>& c, const
 		}
 
 		if (p.value == "blend") {
-			this->is_blending_enabled_v = get_property_value(p).to_bool();
+			this->params.is_blending_enabled_v = get_property_value(p).to_bool();
 		} else if (p.value == "blend_src") {
-			this->blend_v.src = blend_factor_from_string(get_property_value(p).to_string());
+			this->params.blend_v.src = blend_factor_from_string(get_property_value(p).to_string());
 		} else if (p.value == "blend_dst") {
-			this->blend_v.dst = blend_factor_from_string(get_property_value(p).to_string());
+			this->params.blend_v.dst = blend_factor_from_string(get_property_value(p).to_string());
 		} else if (p.value == "blend_src_alpha") {
-			this->blend_v.src_alpha = blend_factor_from_string(get_property_value(p).to_string());
+			this->params.blend_v.src_alpha = blend_factor_from_string(get_property_value(p).to_string());
 		} else if (p.value == "blend_dst_alpha") {
-			this->blend_v.dst_alpha = blend_factor_from_string(get_property_value(p).to_string());
+			this->params.blend_v.dst_alpha = blend_factor_from_string(get_property_value(p).to_string());
 		}
 	}
 }
+
+blending_widget::blending_widget(utki::shared_ref<ruis::context> context, parameters params) :
+	widget(std::move(context), widget::parameters{}),
+	params(std::move(params))
+{}
 
 void blending_widget::set_blending_to_renderer() const
 {
 	auto& r = this->context.get().renderer.get();
 	r.set_blend_enabled(this->is_blending_enabled());
 	if (this->is_blending_enabled()) {
-		r.set_blend_func(this->blend_v.src, this->blend_v.dst, this->blend_v.src_alpha, this->blend_v.dst_alpha);
+		r.set_blend_func(
+			this->params.blend_v.src,
+			this->params.blend_v.dst,
+			this->params.blend_v.src_alpha,
+			this->params.blend_v.dst_alpha
+		);
 	}
 }
 
 void blending_widget::set_blending_enabled(bool enable)
 {
-	if (this->is_blending_enabled_v == enable) {
+	if (this->params.is_blending_enabled_v == enable) {
 		return;
 	}
-	this->is_blending_enabled_v = enable;
+	this->params.is_blending_enabled_v = enable;
 	this->on_blending_change();
 }
 
 void blending_widget::set_blending_params(const blending_params& params)
 {
-	if (this->blend_v == params) {
+	if (this->params.blend_v == params) {
 		return;
 	}
-	this->blend_v = params;
+	this->params.blend_v = params;
 	this->on_blending_change();
 }

@@ -48,9 +48,9 @@ check_box::check_box(const utki::shared_ref<ruis::context>& c, const treeml::for
 	this->set_nine_patch(this->context.get().loader.load<res::nine_patch>("ruis_npt_checkbox_bg").to_shared_ptr());
 }
 
-void check_box::on_press_change()
+void check_box::on_pressed_change()
 {
 	this->check_widget->set_visible(this->is_pressed());
 	this->clear_cache();
-	this->toggle_button::on_press_change();
+	this->toggle_button::on_pressed_change();
 }

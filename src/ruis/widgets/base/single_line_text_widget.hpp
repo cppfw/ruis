@@ -27,7 +27,7 @@ namespace ruis {
 
 class single_line_text_widget : public text_widget
 {
-	mutable ruis::rectangle bb{};
+	mutable ruis::rect bb{};
 
 	std::u32string text;
 
@@ -36,7 +36,13 @@ protected:
 
 	single_line_text_widget(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
 
-	const ruis::rectangle& get_bounding_box() const
+	single_line_text_widget(
+		utki::shared_ref<ruis::context> context,
+		text_widget::parameters text_widget_params,
+		std::u32string text
+	);
+
+	const ruis::rect& get_bounding_box() const
 	{
 		return this->bb;
 	}

@@ -50,15 +50,15 @@ vector2 pile_layout::measure(const vector2& quotum, const_widget_list& widgets) 
 		ruis::vector2 d;
 
 		for (unsigned j = 0; j != d.size(); ++j) {
-			if (lp.dims[j] == layout_params::max) {
+			if (lp.dims[j] == lp::max) {
 				if (quotum[j] >= 0) {
 					d[j] = quotum[j];
 				} else {
 					d[j] = -1;
 				}
-			} else if (lp.dims[j] == layout_params::min) {
+			} else if (lp.dims[j] == lp::min) {
 				d[j] = -1;
-			} else if (lp.dims[j] == layout_params::fill) {
+			} else if (lp.dims[j] == lp::fill) {
 				if (quotum[j] >= 0) {
 					d[j] = quotum[j];
 				} else {

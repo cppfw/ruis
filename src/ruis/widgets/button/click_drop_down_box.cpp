@@ -115,7 +115,7 @@ click_drop_down_box::click_drop_down_box(const utki::shared_ref<ruis::context>& 
 	nine_patch_push_button(this->context, drop_down_box_layout),
 	drop_down_box(this->context, desc, this->get_widget_as<ruis::container>("ruis_dropdown_selection"))
 {
-	this->press_handler = [this](button& b) {
+	this->pressed_change_handler = [this](button& b) {
 		if (!b.is_pressed()) {
 			return;
 		}
@@ -243,7 +243,7 @@ utki::shared_ref<widget> click_drop_down_box::wrap_item(const utki::shared_ref<w
 	wd.get().push_back(w);
 
 	// TODO: which pointer id?
-	mp->hover_change_handler = [this, cl_weak, index](mouse_proxy& w, unsigned id) {
+	mp->hovered_change_handler = [this, cl_weak, index](mouse_proxy& w, unsigned id) {
 		// LOG("hover index = " << index << std::endl)
 		if (auto c = cl_weak.lock()) {
 			c->set_visible(w.is_hovered(id));

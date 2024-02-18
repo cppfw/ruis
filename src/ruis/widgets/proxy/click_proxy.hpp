@@ -27,10 +27,12 @@ namespace ruis {
 
 class click_proxy : virtual public widget
 {
-	bool is_pressed_ = false;
+	bool is_pressed_v = false;
 	bool deferred_release_ret = false;
 
 public:
+	click_proxy(utki::shared_ref<ruis::context> context, widget::parameters params);
+
 	click_proxy(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
 
 	click_proxy(const click_proxy&) = delete;
@@ -42,22 +44,32 @@ public:
 	~click_proxy() override = default;
 
 	bool on_mouse_button(const mouse_button_event& event) override;
-	void on_hover_change(unsigned pointer_id) override;
+	void on_hovered_change(unsigned pointer_id) override;
 
 	bool is_pressed() const noexcept
 	{
-		return this->is_pressed_;
+		return this->is_pressed_v;
 	}
 
 	/**
 	 * @brief Handler for mouse press state changes.
 	 */
-	std::function<bool(click_proxy& w)> press_change_handler;
+	std::function<bool(click_proxy& w)> pressed_change_handler;
 
 	/**
 	 * @brief Handler for clicked event.
 	 */
 	std::function<void(click_proxy& w)> click_handler;
 };
+
+namespace make {
+inline utki::shared_ref<ruis::widget> click_proxy(
+	utki::shared_ref<ruis::context> context,
+	ruis::widget::parameters params
+)
+{
+	return utki::make_shared<ruis::click_proxy>(std::move(context), std::move(params));
+}
+} // namespace make
 
 } // namespace ruis

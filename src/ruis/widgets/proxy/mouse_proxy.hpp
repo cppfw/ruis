@@ -32,6 +32,8 @@ namespace ruis {
 class mouse_proxy : virtual public widget
 {
 public:
+	mouse_proxy(utki::shared_ref<ruis::context> context, widget::parameters params);
+
 	mouse_proxy(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
 
 	mouse_proxy(const mouse_proxy&) = delete;
@@ -62,9 +64,19 @@ public:
 	 * @brief Hover changed event signal.
 	 * Emitted when hover changed event reaches this widget.
 	 */
-	std::function<void(mouse_proxy& w, unsigned pointer_id)> hover_change_handler;
+	std::function<void(mouse_proxy& w, unsigned pointer_id)> hovered_change_handler;
 
-	void on_hover_change(unsigned pointer_id) override;
+	void on_hovered_change(unsigned pointer_id) override;
 };
+
+namespace make {
+inline utki::shared_ref<ruis::widget> mouse_proxy(
+	utki::shared_ref<ruis::context> context,
+	ruis::widget::parameters params
+)
+{
+	return utki::make_shared<ruis::mouse_proxy>(std::move(context), std::move(params));
+}
+} // namespace make
 
 } // namespace ruis

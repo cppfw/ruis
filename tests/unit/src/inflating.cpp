@@ -8,6 +8,7 @@
 #include "../../harness/util/dummy_context.hpp"
 
 using namespace std::string_literals;
+using namespace std::string_view_literals;
 
 namespace{
 const tst::set set("inflating", [](tst::suite& suite){
@@ -40,7 +41,7 @@ const tst::set set("inflating", [](tst::suite& suite){
 		auto c = utki::dynamic_reference_cast<ruis::container>(w);
 		tst::check_eq(c.get().children().size(), size_t(2), SL);
 		auto lp = c.get().children().front().get().get_layout_params();
-		tst::check_eq(lp.dims[0], ruis::layout_params::max, SL);
+		tst::check_eq(lp.dims[0], ruis::lp::max, SL);
 		tst::check_eq(lp.dims[1], ruis::real(123), SL);
     });
 
@@ -77,8 +78,8 @@ const tst::set set("inflating", [](tst::suite& suite){
 		tst::check_eq(c.get().children().front().get().rect().p.y(), ruis::real(12), SL);
 		tst::check_eq(c.get().children().front().get().rect().d.x(), ruis::real(45), SL);
 		auto lp = c.get().children().front().get().get_layout_params();
-		tst::check_eq(lp.dims[0], ruis::layout_params::max, SL);
-		tst::check_eq(lp.dims[1], ruis::layout_params::min, SL);
+		tst::check_eq(lp.dims[0], ruis::lp::max, SL);
+		tst::check_eq(lp.dims[1], ruis::lp::min, SL);
 	});
 
     suite.add("template_arguments", []{
@@ -123,8 +124,8 @@ const tst::set set("inflating", [](tst::suite& suite){
 		tst::check_eq(c.get().children().front().get().rect().d.x(), ruis::real(45), SL);
 		tst::check_eq(c.get().children().front().get().get_widget("test_widget").rect().p.x(), ruis::real(13), SL);
 		auto lp = c.get().children().front().get().get_layout_params();
-		tst::check_eq(lp.dims[0], ruis::layout_params::max, SL);
-		tst::check_eq(lp.dims[1], ruis::layout_params::max, SL);
+		tst::check_eq(lp.dims[0], ruis::lp::max, SL);
+		tst::check_eq(lp.dims[1], ruis::lp::max, SL);
 	});
 
     suite.add("template_arguments_inside_of_nested_containers", []{
@@ -199,8 +200,8 @@ const tst::set set("inflating", [](tst::suite& suite){
 		tst::check_eq(c.get().children().front().get().rect().d.x(), ruis::real(0), SL);
 		tst::check_eq(c.get().children().front().get().rect().d.y(), ruis::real(45), SL);
 		auto lp = c.get().children().front().get().get_layout_params();
-		tst::check_eq(lp.dims[0], ruis::layout_params::max, SL);
-		tst::check_eq(lp.dims[1], ruis::layout_params::max, SL);
+		tst::check_eq(lp.dims[0], ruis::lp::max, SL);
+		tst::check_eq(lp.dims[1], ruis::lp::max, SL);
 	});
 
     suite.add("template_which_nests_same_named_widget_on_2nd_level", []{
@@ -346,7 +347,7 @@ const tst::set set("inflating", [](tst::suite& suite){
 		auto c = utki::dynamic_reference_cast<ruis::container>(w);
 
 		tst::check_eq(c.get().children().size(), size_t(1), SL);
-		tst::check_eq(c.get().children().front().get().id, "widget1"s, SL);
+		tst::check_eq(c.get().children().front().get().id(), "widget1"sv, SL);
 	});
 
 	suite.add("inflating_left_alignment", [](){

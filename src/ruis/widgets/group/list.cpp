@@ -21,12 +21,34 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "list.hpp"
 
+#include <utki/config.hpp>
+
 #include "../../context.hpp"
 
 using namespace ruis;
 
+list::list(
+	utki::shared_ref<ruis::context> context,
+	widget::parameters widget_params,
+	oriented::parameters oriented_params
+) :
+	widget(std::move(context), std::move(widget_params)),
+	ruis::container(
+		this->context,
+		{},
+#if CFG_CPP >= 20
+		{ .layout = trivial_layout::instance }
+#else
+		{trivial_layout::instance}
+#endif
+		,
+		{}
+	),
+	oriented(std::move(oriented_params))
+{}
+
 namespace {
-class static_provider : public list_widget::provider
+class static_provider : public list::provider
 {
 	std::vector<treeml::tree> widgets;
 
@@ -56,10 +78,16 @@ public:
 };
 } // namespace
 
-list_widget::list_widget(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc, bool vertical) :
+list::list(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc, bool vertical) :
 	widget(c, desc),
 	container(this->context, treeml::forest()),
-	oriented(vertical)
+	oriented({
+#if CFG_CPP >= 20
+		.vertial = vertical
+#else
+		vertical
+#endif
+	})
 {
 	std::shared_ptr<static_provider> pr = std::make_shared<static_provider>();
 
@@ -74,9 +102,9 @@ list_widget::list_widget(const utki::shared_ref<ruis::context>& c, const treeml:
 	this->set_provider(std::move(pr));
 }
 
-void list_widget::on_lay_out()
+void list::on_lay_out()
 {
-	//	TRACE(<< "list_widget::on_lay_out(): invoked" << std::endl)
+	//	TRACE(<< "list::on_lay_out(): invoked" << std::endl)
 
 	this->num_tail_items = 0; // 0 means that it needs to be recomputed
 
@@ -90,7 +118,7 @@ void list_widget::on_lay_out()
 	});
 }
 
-void list_widget::set_provider(std::shared_ptr<provider> item_provider)
+void list::set_provider(std::shared_ptr<provider> item_provider)
 {
 	if (item_provider && item_provider->parent_list) {
 		throw std::logic_error("given provider is already set to some list_widget");
@@ -106,7 +134,7 @@ void list_widget::set_provider(std::shared_ptr<provider> item_provider)
 	this->handle_data_set_changed();
 }
 
-real list_widget::calc_num_visible_items() const noexcept
+real list::calc_num_visible_items() const noexcept
 {
 	// calculate number of visible items,
 	// this number can have fraction part because of partially visible items
@@ -133,7 +161,7 @@ real list_widget::calc_num_visible_items() const noexcept
 	return items_num;
 }
 
-real list_widget::get_scroll_band() const noexcept
+real list::get_scroll_band() const noexcept
 {
 	if (!this->item_provider || this->item_provider->count() == 0) {
 		return 0;
@@ -144,7 +172,7 @@ real list_widget::get_scroll_band() const noexcept
 	return items_num / ruis::real(this->item_provider->count());
 }
 
-real list_widget::get_scroll_factor() const noexcept
+real list::get_scroll_factor() const noexcept
 {
 	if (!this->item_provider || this->item_provider->count() == 0) {
 		return 0;
@@ -182,7 +210,7 @@ real list_widget::get_scroll_factor() const noexcept
 		(real(real(length) + this->first_tail_item_offset / this->first_tail_item_dim) * average_item_dim);
 }
 
-void list_widget::set_scroll_factor(real factor)
+void list::set_scroll_factor(real factor)
 {
 	if (!this->item_provider || this->item_provider->count() == 0) {
 		return;
@@ -197,7 +225,7 @@ void list_widget::set_scroll_factor(real factor)
 
 	this->pos_index = size_t(factor * real(this->item_provider->count() - this->num_tail_items));
 
-	//	TRACE(<< "list_widget::setScrollPosAsFactor(): this->pos_index = " << this->pos_index << std::endl)
+	//	TRACE(<< "list::setScrollPosAsFactor(): this->pos_index = " << this->pos_index << std::endl)
 
 	using std::round;
 
@@ -226,7 +254,7 @@ void list_widget::set_scroll_factor(real factor)
 }
 
 // TODO: refactor
-bool list_widget::arrange_widget(
+bool list::arrange_widget(
 	const utki::shared_ref<widget>& w,
 	real& pos,
 	bool added,
@@ -281,7 +309,7 @@ bool list_widget::arrange_widget(
 }
 
 // TODO: refactor
-void list_widget::update_children_list()
+void list::update_children_list()
 {
 	if (!this->item_provider) {
 		this->pos_index = 0;
@@ -307,7 +335,7 @@ void list_widget::update_children_list()
 
 	real pos = -this->pos_offset;
 
-	//	TRACE(<< "list_widget::update_children_list(): this->added_index = " << this->added_index << " this->pos_index =
+	//	TRACE(<< "list::update_children_list(): this->added_index = " << this->added_index << " this->pos_index =
 	//" << this->pos_index << std::endl)
 
 	// remove widgets from top
@@ -355,7 +383,7 @@ void list_widget::update_children_list()
 	}
 }
 
-void list_widget::update_tail_items_info()
+void list::update_tail_items_info()
 {
 	this->num_tail_items = 0;
 
@@ -395,21 +423,21 @@ void list_widget::update_tail_items_info()
 	}
 }
 
-void list_widget::notify_scroll_pos_changed()
+void list::notify_scroll_pos_changed()
 {
 	if (this->scroll_change_handler) {
 		this->scroll_change_handler(*this);
 	}
 }
 
-void list_widget::notify_scroll_pos_changed(size_t old_index, real old_offset)
+void list::notify_scroll_pos_changed(size_t old_index, real old_offset)
 {
 	if (old_index != this->pos_index || old_offset != this->pos_offset) {
 		this->notify_scroll_pos_changed();
 	}
 }
 
-void list_widget::scroll_by(real delta)
+void list::scroll_by(real delta)
 {
 	if (!this->item_provider) {
 		return;
@@ -486,7 +514,7 @@ void list_widget::scroll_by(real delta)
 	this->notify_scroll_pos_changed(old_index, old_offset);
 }
 
-ruis::vector2 list_widget::measure(const ruis::vector2& quotum) const
+ruis::vector2 list::measure(const ruis::vector2& quotum) const
 {
 	unsigned long_index = this->get_long_index();
 	unsigned trans_index = this->get_trans_index();
@@ -509,7 +537,7 @@ ruis::vector2 list_widget::measure(const ruis::vector2& quotum) const
 	return ret;
 }
 
-void list_widget::provider::notify_data_set_change()
+void list::provider::notify_data_set_change()
 {
 	if (!this->get_list()) {
 		return;
@@ -520,7 +548,7 @@ void list_widget::provider::notify_data_set_change()
 	});
 }
 
-void list_widget::handle_data_set_changed()
+void list::handle_data_set_changed()
 {
 	this->num_tail_items = 0; // 0 means that it needs to be recomputed
 

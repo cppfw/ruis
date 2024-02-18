@@ -100,12 +100,12 @@ collapse_area::collapse_area(const utki::shared_ref<ruis::context>& c, const tre
 	{
 		auto sw = this->try_get_widget_as<toggle_button>("switch");
 		ASSERT(sw)
-		sw->press_handler = [this](button& tb) {
+		sw->pressed_change_handler = [this](button& tb) {
 			auto& lp = this->contentArea->get_layout_params();
 			if (tb.is_pressed()) {
 				lp.dims.y() = 0;
 			} else {
-				lp.dims.y() = layout_params::min;
+				lp.dims.y() = lp::min;
 			}
 		};
 	}

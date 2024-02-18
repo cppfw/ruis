@@ -25,16 +25,36 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
-class min_proxy : public ruis::container
+class min_proxy : virtual public ruis::widget
 {
 	mutable std::weak_ptr<const ruis::widget> target;
-	mutable std::string root_id;
-	mutable std::vector<std::string> target_id;
 
 public:
+	struct parameters {
+		std::string root_id;
+		std::vector<std::string> target_id;
+	};
+
+private:
+	mutable parameters params;
+
+public:
+	min_proxy(utki::shared_ref<ruis::context> context, widget::parameters widget_params, parameters params);
+
 	min_proxy(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
 
 	vector2 measure(const vector2& quotum) const override;
 };
+
+namespace make {
+inline utki::shared_ref<ruis::widget> min_proxy(
+	utki::shared_ref<ruis::context> context,
+	widget::parameters widget_params,
+	min_proxy::parameters params
+)
+{
+	return utki::make_shared<ruis::min_proxy>(std::move(context), std::move(widget_params), std::move(params));
+}
+} // namespace make
 
 } // namespace ruis

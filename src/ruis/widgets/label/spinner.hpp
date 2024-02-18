@@ -41,6 +41,13 @@ class spinner :
 public:
 	spinner(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
 
+	spinner(
+		utki::shared_ref<ruis::context> context,
+		widget::parameters widget_params,
+		blending_widget::parameters blending_widget_params,
+		image::parameters image_params
+	);
+
 	void set_active(bool active);
 
 	void render(const matrix4& matrix) const override;
@@ -48,5 +55,22 @@ public:
 private:
 	void update(uint32_t dt_ms) override;
 };
+
+namespace make {
+inline utki::shared_ref<ruis::widget> spinner(
+	utki::shared_ref<ruis::context> context,
+	widget::parameters widget_params,
+	image::parameters image_params,
+	blending_widget::parameters blending_widget_params = {}
+)
+{
+	return utki::make_shared<ruis::spinner>(
+		std::move(context),
+		std::move(widget_params),
+		std::move(blending_widget_params),
+		std::move(image_params)
+	);
+}
+} // namespace make
 
 } // namespace ruis

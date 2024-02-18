@@ -32,10 +32,20 @@ namespace ruis {
  * This widget shows text.
  * From GUI script it can be instantiated as "text".
  */
-class text : public single_line_text_widget, public color_widget
+class text :
+	public single_line_text_widget, //
+	public color_widget
 {
 public:
 	text(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
+
+	text(
+		utki::shared_ref<ruis::context> context,
+		widget::parameters widget_params,
+		text_widget::parameters text_widget_params,
+		color_widget::parameters color_widget_params,
+		std::u32string text
+	);
 
 public:
 	text(const text&) = delete;
@@ -48,5 +58,24 @@ public:
 
 	void render(const ruis::matrix4& matrix) const override;
 };
+
+namespace make {
+inline utki::shared_ref<ruis::widget> text(
+	utki::shared_ref<ruis::context> context,
+	ruis::widget::parameters widget_params,
+	std::u32string text = {},
+	ruis::color_widget::parameters color_widget_params = {},
+	ruis::text_widget::parameters text_widget_params = {}
+)
+{
+	return utki::make_shared<ruis::text>(
+		std::move(context),
+		std::move(widget_params),
+		std::move(text_widget_params),
+		std::move(color_widget_params),
+		std::move(text)
+	);
+}
+} // namespace make
 
 } // namespace ruis

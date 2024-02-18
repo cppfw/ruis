@@ -25,9 +25,13 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
+min_proxy::min_proxy(utki::shared_ref<ruis::context> context, widget::parameters widget_params, parameters params) :
+	widget(std::move(context), std::move(widget_params)),
+	params(std::move(params))
+{}
+
 min_proxy::min_proxy(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
-	ruis::widget(c, desc),
-	ruis::container(this->context, desc, pile_layout::instance)
+	ruis::widget(c, desc)
 {
 	for (const auto& p : desc) {
 		if (!is_property(p)) {
@@ -36,10 +40,10 @@ min_proxy::min_proxy(const utki::shared_ref<ruis::context>& c, const treeml::for
 
 		try {
 			if (p.value == "root") {
-				this->root_id = get_property_value(p).to_string();
+				this->params.root_id = get_property_value(p).to_string();
 			} else if (p.value == "target") {
 				for (const auto& id : p.children) {
-					this->target_id.push_back(id.value.to_string());
+					this->params.target_id.push_back(id.value.to_string());
 				}
 			}
 		} catch (std::invalid_argument&) {
@@ -55,23 +59,23 @@ ruis::vector2 min_proxy::measure(const vector2& quotum) const
 {
 	auto t = this->target.lock();
 	if (!t) {
-		if (this->target_id.empty()) {
+		if (this->params.target_id.empty()) {
 			return {0, 0};
 		}
 
 		const widget* root = [&]() {
-			if (this->root_id.empty()) {
+			if (this->params.root_id.empty()) {
 				return &this->get_root_widget();
 			} else {
-				return &this->get_ancestor(this->root_id.c_str());
+				return &this->get_ancestor(this->params.root_id.c_str());
 			}
 		}();
 		ASSERT(root)
-		for (const auto& id : this->target_id) {
+		for (const auto& id : this->params.target_id) {
 			root = &root->get_widget(id, false);
 		}
-		this->root_id.clear();
-		this->target_id.clear();
+		this->params.root_id.clear();
+		this->params.target_id.clear();
 		ASSERT(root)
 		this->target = utki::make_weak_from(*root);
 		t = this->target.lock();

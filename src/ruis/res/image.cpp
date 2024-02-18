@@ -77,7 +77,7 @@ utki::shared_ref<atlas_image> atlas_image::load(
 )
 {
 	std::shared_ptr<res::texture> tex;
-	rectangle rect(-1, -1);
+	ruis::rect rect(-1, -1);
 
 	for (auto& p : desc) {
 		if (p.value == "tex") {

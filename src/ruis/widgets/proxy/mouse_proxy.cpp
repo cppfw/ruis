@@ -23,6 +23,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
+mouse_proxy::mouse_proxy(utki::shared_ref<ruis::context> context, widget::parameters params) :
+	widget(std::move(context), std::move(params))
+{}
+
 mouse_proxy::mouse_proxy(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
 	widget(c, desc)
 {}
@@ -44,9 +48,9 @@ bool mouse_proxy::on_mouse_move(const mouse_move_event& e)
 	return false;
 }
 
-void mouse_proxy::on_hover_change(unsigned pointer_id)
+void mouse_proxy::on_hovered_change(unsigned pointer_id)
 {
-	if (this->hover_change_handler) {
-		this->hover_change_handler(*this, pointer_id);
+	if (this->hovered_change_handler) {
+		this->hovered_change_handler(*this, pointer_id);
 	}
 }

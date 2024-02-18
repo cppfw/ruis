@@ -34,6 +34,12 @@ namespace ruis {
 class overlay : public container
 {
 public:
+	overlay(
+		utki::shared_ref<ruis::context> context,
+		widget::parameters widget_params,
+		utki::span<const utki::shared_ref<widget>> children
+	);
+
 	overlay(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
 
 	overlay(const overlay&) = delete;
@@ -62,5 +68,16 @@ public:
 	 */
 	void close_all_context_menus();
 };
+
+namespace make {
+inline utki::shared_ref<ruis::widget> overlay(
+	utki::shared_ref<ruis::context> context,
+	ruis::widget::parameters widget_params,
+	utki::span<const utki::shared_ref<ruis::widget>> children
+)
+{
+	return utki::make_shared<ruis::overlay>(std::move(context), std::move(widget_params), children);
+}
+} // namespace make
 
 } // namespace ruis

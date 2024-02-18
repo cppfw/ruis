@@ -40,8 +40,6 @@ namespace ruis {
  */
 class blending_widget : public virtual widget
 {
-	bool is_blending_enabled_v = true;
-
 public:
 	/**
 	 * @brief Structure holding blending parameters.
@@ -54,20 +52,31 @@ public:
 
 		bool operator==(const blending_params& b)
 		{
-			return this->src == b.src && this->dst == b.dst && this->src_alpha == b.src_alpha &&
+			return //
+				this->src == b.src && //
+				this->dst == b.dst && //
+				this->src_alpha == b.src_alpha && //
 				this->dst_alpha == b.dst_alpha;
 		}
 	};
 
-private:
-	blending_params blend_v = {
-		ruis::renderer::blend_factor::src_alpha,
-		ruis::renderer::blend_factor::one_minus_src_alpha,
-		ruis::renderer::blend_factor::one,
-		ruis::renderer::blend_factor::one_minus_src_alpha
+public:
+	struct parameters {
+		bool is_blending_enabled_v = true;
+		blending_params blend_v = {
+			ruis::renderer::blend_factor::src_alpha,
+			ruis::renderer::blend_factor::one_minus_src_alpha,
+			ruis::renderer::blend_factor::one,
+			ruis::renderer::blend_factor::one_minus_src_alpha
+		};
 	};
 
+private:
+	parameters params;
+
 protected:
+	blending_widget(utki::shared_ref<ruis::context> context, parameters params);
+
 	blending_widget(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
 
 public:
@@ -94,7 +103,7 @@ public:
 	 */
 	bool is_blending_enabled() const noexcept
 	{
-		return this->is_blending_enabled_v;
+		return this->params.is_blending_enabled_v;
 	}
 
 	/**
@@ -109,7 +118,7 @@ public:
 	 */
 	const blending_params& get_blending_params() const noexcept
 	{
-		return this->blend_v;
+		return this->params.blend_v;
 	}
 
 	/**

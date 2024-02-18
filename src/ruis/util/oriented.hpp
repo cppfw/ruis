@@ -21,30 +21,38 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
+#include <utility>
+
 namespace ruis {
 
 class oriented
 {
-	bool is_vertical_v;
+public:
+	struct parameters {
+		bool vertical = true;
+	};
+
+private:
+	parameters params;
 
 public:
 	unsigned get_long_index() const noexcept
 	{
-		return this->is_vertical_v ? 1 : 0;
+		return this->params.vertical ? 1 : 0;
 	}
 
 	unsigned get_trans_index() const noexcept
 	{
-		return this->is_vertical_v ? 0 : 1;
+		return this->params.vertical ? 0 : 1;
 	}
 
-	oriented(bool vertical) :
-		is_vertical_v(vertical)
+	oriented(parameters params) :
+		params(std::move(params))
 	{}
 
 	bool is_vertical() const noexcept
 	{
-		return this->is_vertical_v;
+		return this->params.vertical;
 	}
 };
 

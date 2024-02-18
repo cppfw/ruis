@@ -36,7 +36,7 @@ class tree_view :
 	virtual public widget, //
 	private scroll_area
 {
-	utki::shared_ref<list_widget> item_list;
+	utki::shared_ref<list> item_list;
 
 public:
 	tree_view(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
@@ -49,7 +49,7 @@ public:
 
 	~tree_view() override = default;
 
-	class provider : public virtual utki::shared, private list_widget::provider
+	class provider : public virtual utki::shared, private list::provider
 	{
 		friend class tree_view;
 
@@ -96,7 +96,7 @@ public:
 
 		void notify_item_changed()
 		{
-			this->list_widget::provider::notify_data_set_change();
+			this->list::provider::notify_data_set_change();
 		}
 
 		/**

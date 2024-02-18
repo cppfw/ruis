@@ -21,10 +21,27 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "book.hpp"
 
+#include <utki/config.hpp>
+
 #include "../../context.hpp"
 #include "../../layouts/pile_layout.hpp"
 
 using namespace ruis;
+
+book::book(utki::shared_ref<ruis::context> context, widget::parameters widget_params) :
+	widget(std::move(context), std::move(widget_params)),
+	container(
+		this->context,
+		{},
+#if CFG_CPP >= 20
+		{ .layout = pile_layout::instance }
+#else
+		{pile_layout::instance}
+#endif
+		,
+		{}
+	)
+{}
 
 book::book(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
 	widget(c, desc),
@@ -41,7 +58,7 @@ void book::push(const utki::shared_ref<page>& pg)
 	}
 
 	auto& lp = pg.get().get_layout_params();
-	lp.dims.set(layout_params::fill);
+	lp.dims.set(lp::fill);
 
 	pg.get().parent_book = this;
 	this->pages.push_back(pg);

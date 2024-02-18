@@ -21,12 +21,27 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "container.hpp"
 
-#include "layouts/trivial_layout.hpp"
+#include <utki/config.hpp>
+
 #include "util/util.hpp"
 
 #include "context.hpp"
 
 using namespace ruis;
+
+container::container(
+	utki::shared_ref<ruis::context> context,
+	widget::parameters widget_params,
+	parameters params,
+	utki::span<const utki::shared_ref<widget>> children
+) :
+	widget(std::move(context), std::move(widget_params)),
+	params(std::move(params))
+{
+	for (const auto& c : children) {
+		this->push_back(c);
+	}
+}
 
 container::container(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
 	container(c, desc, trivial_layout::instance)
@@ -39,7 +54,13 @@ container::container(
 	const utki::shared_ref<ruis::layout>& layout
 ) :
 	widget(c, desc),
-	layout(layout)
+	params{
+#if CFG_CPP >= 20
+		.layout = std::move(layout)
+#else
+		std::move(layout)
+#endif
+	}
 {
 	for (const auto& p : desc) {
 		if (!is_property(p)) {
@@ -51,7 +72,7 @@ container::container(
 				if (p.children.size() != 1) {
 					throw std::invalid_argument("layout parameter has zero or more than 1 child");
 				}
-				this->layout = this->context.get().layout_factory.create(
+				this->params.layout = this->context.get().layout_factory.create(
 					p.children.front().value.to_string(),
 					p.children.front().children
 				);
@@ -79,7 +100,7 @@ void container::push_back_inflate(const treeml::forest& desc)
 	// in case this widget is initially disabled, as specified in gui script
 	// we need to update enabled state of children
 	if (!this->is_enabled()) {
-		this->container::on_enable_change();
+		this->container::on_enabled_change();
 	}
 }
 
@@ -215,7 +236,7 @@ bool container::on_mouse_move(const mouse_move_event& e)
 
 		if (!c.is_interactive()) {
 			ASSERT(!c.is_hovered(), [&](auto& o) {
-				o << "c->name() = " << c.id;
+				o << "c->name() = " << c.id();
 			})
 			continue;
 		}
@@ -243,7 +264,7 @@ bool container::on_mouse_move(const mouse_move_event& e)
 	return false;
 }
 
-void container::on_hover_change(unsigned pointer_id)
+void container::on_hovered_change(unsigned pointer_id)
 {
 	if (this->is_hovered(pointer_id)) {
 		return;
@@ -422,7 +443,7 @@ const_widget_list::const_iterator container::find(const widget& w) const
 	);
 }
 
-void container::on_enable_change()
+void container::on_enabled_change()
 {
 	blocked_flag_guard blocked_guard(this->is_blocked);
 

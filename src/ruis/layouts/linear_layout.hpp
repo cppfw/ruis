@@ -26,8 +26,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
-// TODO: consider inheriting oriented
-class linear_layout : public layout, public oriented
+class linear_layout :
+	public layout, //
+	public oriented
 {
 public:
 	linear_layout(bool is_vertical);

@@ -54,7 +54,7 @@ inline ruis::vector2 parse_vec2(const treeml::forest& desc)
  *               If zero pointer is passed the resulting rectangle will be filled with zeros.
  * @return parsed rectangle.
  */
-ruis::rectangle parse_rect(const treeml::forest& desc);
+ruis::rect parse_rect(const treeml::forest& desc);
 
 /**
  * @brief Parse chain of 4 treeml nodes as sides.

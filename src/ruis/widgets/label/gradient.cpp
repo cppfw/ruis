@@ -26,6 +26,11 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
+gradient::gradient(utki::shared_ref<ruis::context> context, widget::parameters widget_params, parameters params) :
+	widget(std::move(context), std::move(widget_params)),
+	params(std::move(params))
+{}
+
 gradient::gradient(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
 	widget(c, desc)
 {
@@ -35,7 +40,7 @@ gradient::gradient(const utki::shared_ref<ruis::context>& c, const treeml::fores
 		}
 
 		if (p.value == "gradient") {
-			this->res =
+			this->params.gradient =
 				this->context.get().loader.load<res::gradient>(get_property_value(p).to_string()).to_shared_ptr();
 		}
 	}
@@ -48,8 +53,8 @@ void gradient::render(const matrix4& matrix) const
 	ruis::matrix4 matr(matrix);
 	matr.scale(this->rect().d);
 
-	if (this->res) {
+	if (this->params.gradient) {
 		//		TRACE(<< "this->rect().d = " << this->rect().d << std::endl)
-		this->res->render(matr);
+		this->params.gradient->render(matr);
 	}
 }

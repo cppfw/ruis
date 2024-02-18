@@ -21,6 +21,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "overlay.hpp"
 
+#include <utki/config.hpp>
+
 #include "../../container.hpp"
 #include "../../context.hpp"
 #include "../../layouts/pile_layout.hpp"
@@ -39,6 +41,26 @@ public:
 	{}
 };
 } // namespace
+
+overlay::overlay(
+	utki::shared_ref<ruis::context> context,
+	widget::parameters widget_params,
+	utki::span<const utki::shared_ref<widget>> children
+) :
+	widget(std::move(context), std::move(widget_params)),
+	container( //
+		this->context,
+		{},
+#if CFG_CPP >= 20
+		{//
+		 .layout = pile_layout::instance
+		},
+#else
+		{pile_layout::instance},
+#endif
+		children
+	)
+{}
 
 overlay::overlay(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
 	widget(c, desc),

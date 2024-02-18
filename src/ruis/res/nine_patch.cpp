@@ -42,7 +42,7 @@ class res_subimage : public res::image, public res::image::texture
 
 public:
 	// rect is a rectangle on the texture, Y axis down.
-	res_subimage(const utki::shared_ref<ruis::context>& c, decltype(tex) tex, const rectangle& rect) :
+	res_subimage(const utki::shared_ref<ruis::context>& c, decltype(tex) tex, const ruis::rect& rect) :
 		res::image(c),
 		res::image::texture(
 			c.get().renderer,
@@ -206,7 +206,7 @@ std::shared_ptr<nine_patch::image_matrix> nine_patch::get(sides<real> borders) c
 				 utki::make_shared<res_subimage>(
 					 this->context,
 					 quad_tex,
-					 rectangle(
+					 ruis::rect(
 						 0,
 						 0,
 						 scaled_borders.left(),
@@ -216,7 +216,7 @@ std::shared_ptr<nine_patch::image_matrix> nine_patch::get(sides<real> borders) c
 				 utki::make_shared<res_subimage>(
 					 this->context,
 					 quad_tex,
-					 rectangle(
+					 ruis::rect(
 						 scaled_borders.left(),
 						 0,
 						 round(quad_tex.get().dims.x() - scaled_borders.left() - scaled_borders.right()),
@@ -226,7 +226,7 @@ std::shared_ptr<nine_patch::image_matrix> nine_patch::get(sides<real> borders) c
 				 utki::make_shared<res_subimage>(
 					 this->context,
 					 quad_tex,
-					 rectangle(
+					 ruis::rect(
 						 round(quad_tex.get().dims.x() - scaled_borders.right()),
 						 0,
 						 scaled_borders.right(),
@@ -238,7 +238,7 @@ std::shared_ptr<nine_patch::image_matrix> nine_patch::get(sides<real> borders) c
 				 utki::make_shared<res_subimage>(
 					 this->context,
 					 quad_tex,
-					 rectangle(
+					 ruis::rect(
 						 0,
 						 scaled_borders.top(),
 						 scaled_borders.left(),
@@ -248,7 +248,7 @@ std::shared_ptr<nine_patch::image_matrix> nine_patch::get(sides<real> borders) c
 				 utki::make_shared<res_subimage>(
 					 this->context,
 					 quad_tex,
-					 rectangle(
+					 ruis::rect(
 						 scaled_borders.left(),
 						 scaled_borders.top(),
 						 round(quad_tex.get().dims.x() - scaled_borders.left() - scaled_borders.right()),
@@ -258,7 +258,7 @@ std::shared_ptr<nine_patch::image_matrix> nine_patch::get(sides<real> borders) c
 				 utki::make_shared<res_subimage>(
 					 this->context,
 					 quad_tex,
-					 rectangle(
+					 ruis::rect(
 						 round(quad_tex.get().dims.x() - scaled_borders.right()),
 						 scaled_borders.top(),
 						 scaled_borders.right(),
@@ -270,7 +270,7 @@ std::shared_ptr<nine_patch::image_matrix> nine_patch::get(sides<real> borders) c
 				 utki::make_shared<res_subimage>(
 					 this->context,
 					 quad_tex,
-					 rectangle(
+					 ruis::rect(
 						 0,
 						 round(quad_tex.get().dims.y() - scaled_borders.bottom()),
 						 scaled_borders.left(),
@@ -280,7 +280,7 @@ std::shared_ptr<nine_patch::image_matrix> nine_patch::get(sides<real> borders) c
 				 utki::make_shared<res_subimage>(
 					 this->context,
 					 quad_tex,
-					 rectangle(
+					 ruis::rect(
 						 scaled_borders.left(),
 						 round(quad_tex.get().dims.y() - scaled_borders.bottom()),
 						 round(quad_tex.get().dims.x() - scaled_borders.left() - scaled_borders.right()),
@@ -290,7 +290,7 @@ std::shared_ptr<nine_patch::image_matrix> nine_patch::get(sides<real> borders) c
 				 utki::make_shared<res_subimage>(
 					 this->context,
 					 quad_tex,
-					 rectangle(
+					 ruis::rect(
 						 round(quad_tex.get().dims.x() - scaled_borders.right()),
 						 round(quad_tex.get().dims.y() - scaled_borders.bottom()),
 						 scaled_borders.right(),

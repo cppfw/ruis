@@ -27,6 +27,7 @@ namespace ruis {
 
 class fraction_band_widget : public fraction_widget
 {
+	// TODO: naming convention
 	float curBandSizeFraction = 0; // current bar size factor from 0 to 1
 
 protected:

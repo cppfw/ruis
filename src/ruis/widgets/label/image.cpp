@@ -26,6 +26,18 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
+image::image(
+	utki::shared_ref<ruis::context> context,
+	widget::parameters widget_params,
+	blending_widget::parameters blending_widget_params,
+	parameters params
+) :
+	widget(std::move(context), std::move(widget_params)),
+	blending_widget(this->context, std::move(blending_widget_params)),
+	params(std::move(params)),
+	vao(this->context.get().renderer.get().empty_vertex_array)
+{}
+
 image::image(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
 	widget(c, desc),
 	blending_widget(this->context, desc),
@@ -37,16 +49,17 @@ image::image(const utki::shared_ref<ruis::context>& c, const treeml::forest& des
 		}
 
 		if (p.value == "image") {
-			this->img = this->context.get().loader.load<res::image>(get_property_value(p).to_string()).to_shared_ptr();
+			this->params.img =
+				this->context.get().loader.load<res::image>(get_property_value(p).to_string()).to_shared_ptr();
 		} else if (p.value == "disabled_image") {
-			this->disabled_img =
+			this->params.disabled_img =
 				this->context.get().loader.load<res::image>(get_property_value(p).to_string()).to_shared_ptr();
 		} else if (p.value == "keep_aspect_ratio") {
-			this->keep_aspect_ratio = get_property_value(p).to_bool();
+			this->params.keep_aspect_ratio = get_property_value(p).to_bool();
 		} else if (p.value == "repeat_x") {
-			this->repeat_v.x() = get_property_value(p).to_bool();
+			this->params.repeat_v.x() = get_property_value(p).to_bool();
 		} else if (p.value == "repeat_y") {
-			this->repeat_v.y() = get_property_value(p).to_bool();
+			this->params.repeat_v.y() = get_property_value(p).to_bool();
 		}
 	}
 }
@@ -59,10 +72,10 @@ const std::array<r4::vector2<float>, 4> quad_fan_tex_coords = {
 
 void image::render(const ruis::matrix4& matrix) const
 {
-	auto img = this->img.get();
+	auto img = this->params.img.get();
 
-	if (!this->is_enabled() && this->disabled_img) {
-		img = this->disabled_img.get();
+	if (!this->is_enabled() && this->params.disabled_img) {
+		img = this->params.disabled_img.get();
 	}
 
 	if (!img) {
@@ -76,16 +89,16 @@ void image::render(const ruis::matrix4& matrix) const
 	if (!this->texture) {
 		this->texture = img->get(this->rect().d).to_shared_ptr();
 
-		if (this->repeat_v.x() || this->repeat_v.y()) {
+		if (this->params.repeat_v.x() || this->params.repeat_v.y()) {
 			std::array<r4::vector2<float>, 4> tex_coords{};
 			ASSERT(quad_fan_tex_coords.size() == tex_coords.size())
 			auto src = quad_fan_tex_coords.cbegin();
 			auto dst = tex_coords.begin();
 			auto scale = this->rect().d.comp_div(img->dims());
-			if (!this->repeat_v.x()) {
+			if (!this->params.repeat_v.x()) {
 				scale.x() = 1;
 			}
-			if (!this->repeat_v.y()) {
+			if (!this->params.repeat_v.y()) {
 				scale.y() = 1;
 			}
 			for (; dst != tex_coords.end(); ++src, ++dst) {
@@ -110,10 +123,10 @@ void image::render(const ruis::matrix4& matrix) const
 
 ruis::vector2 image::measure(const ruis::vector2& quotum) const
 {
-	auto img = this->img.get();
+	auto img = this->params.img.get();
 
-	if (!this->is_enabled() && this->disabled_img) {
-		img = this->disabled_img.get();
+	if (!this->is_enabled() && this->params.disabled_img) {
+		img = this->params.disabled_img.get();
 	}
 
 	if (!img) {
@@ -123,10 +136,10 @@ ruis::vector2 image::measure(const ruis::vector2& quotum) const
 	vector2 img_dims = img->dims();
 
 	ASSERT(img_dims.is_positive_or_zero(), [&](auto& o) {
-		o << "img_dims = " << img_dims << " widget id = " << this->id;
+		o << "img_dims = " << img_dims << " widget id = " << this->id();
 	})
 
-	if (!this->keep_aspect_ratio) {
+	if (!this->params.keep_aspect_ratio) {
 		vector2 ret = img_dims;
 
 		for (unsigned i = 0; i != ret.size(); ++i) {
@@ -177,25 +190,25 @@ ruis::vector2 image::measure(const ruis::vector2& quotum) const
 
 void image::set_image(std::shared_ptr<const res::image> image)
 {
-	if (this->img && image && this->img->dims() == image->dims()) {
+	if (this->params.img && image && this->params.img->dims() == image->dims()) {
 	} else {
 		this->invalidate_layout();
 	}
 
-	this->img = std::move(image);
+	this->params.img = std::move(image);
 	this->texture.reset();
 }
 
 void image::set_disabled_image(std::shared_ptr<const res::image> image)
 {
-	if (this->disabled_img && image && this->disabled_img->dims() == image->dims()) {
+	if (this->params.disabled_img && image && this->params.disabled_img->dims() == image->dims()) {
 	} else {
 		if (!this->is_enabled()) {
 			this->invalidate_layout();
 		}
 	}
 
-	this->disabled_img = std::move(image);
+	this->params.disabled_img = std::move(image);
 	this->texture.reset();
 }
 
@@ -205,9 +218,9 @@ void image::on_resize()
 	this->texture.reset();
 }
 
-void image::on_enable_change()
+void image::on_enabled_change()
 {
-	if (!this->disabled_img) {
+	if (!this->params.disabled_img) {
 		// no disabled image set, nothing changes
 		return;
 	}
@@ -215,9 +228,9 @@ void image::on_enable_change()
 	this->texture.reset();
 	this->clear_cache();
 
-	if (this->img) {
+	if (this->params.img) {
 		// if dimension of active image change then need to re-layout
-		if (this->disabled_img->dims() != this->img->dims()) {
+		if (this->params.disabled_img->dims() != this->params.img->dims()) {
 			this->invalidate_layout();
 		}
 	} else {

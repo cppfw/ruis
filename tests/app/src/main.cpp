@@ -525,12 +525,12 @@ public:
 
 			auto& cp = c.get().get_widget_as<ruis::click_proxy>("cube_click_proxy");
 			auto& bg = c.get().get_widget_as<ruis::color>("cube_bg_color");
-			cp.press_change_handler = [bg{utki::make_shared_from(bg)}](ruis::click_proxy& w) -> bool {
+			cp.pressed_change_handler = [bg{utki::make_shared_from(bg)}](ruis::click_proxy& w) -> bool {
 				// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers)
 				bg.get().set_color(w.is_pressed() ? 0xff808080 : 0x80808080);
 				return true;
 			};
-			cp.press_change_handler(cp); // set initial color
+			cp.pressed_change_handler(cp); // set initial color
 			cp.click_handler = [cube](ruis::click_proxy&) -> bool {
 				if(cube->is_updating()){
 					cube->context.get().updater.get().stop(*cube);
@@ -596,7 +596,7 @@ public:
 				}
 			};
 
-			vertical_list->scroll_change_handler = [vs](ruis::list_widget& l){
+			vertical_list->scroll_change_handler = [vs](ruis::list& l){
 				if(auto s = vs.lock()){
 					s->set_fraction(l.get_scroll_factor(), false);
                     s->set_band_fraction(l.get_scroll_band());
@@ -649,14 +649,14 @@ public:
 
 		// pan_list
 		{
-			auto pan_list = c.get().try_get_widget_as<ruis::list_widget>("pan_list");
+			auto pan_list = c.get().try_get_widget_as<ruis::list>("pan_list");
 			auto hl = utki::make_weak(pan_list);
 
 			auto horizontal_slider = c.get().try_get_widget_as<ruis::scroll_bar>("horizontal_list_slider");
 			ASSERT(horizontal_slider)
 			auto hs = utki::make_weak(horizontal_slider);
 
-			pan_list->scroll_change_handler = [hs](ruis::list_widget& l){
+			pan_list->scroll_change_handler = [hs](ruis::list& l){
 				if(auto h = hs.lock()){
 					h->set_fraction(l.get_scroll_factor(), false);
 					h->set_band_fraction(l.get_scroll_band());

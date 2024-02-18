@@ -51,6 +51,13 @@ protected:
 	vector2 dims_for_widget(const widget& w) const;
 
 public:
+	scroll_area(
+		utki::shared_ref<ruis::context> context,
+		widget::parameters widget_params,
+		container::parameters container_params,
+		utki::span<const utki::shared_ref<widget>> children
+	);
+
 	scroll_area(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
 
 	scroll_area(const scroll_area&) = delete;
@@ -123,5 +130,22 @@ private:
 
 	void arrange_widgets();
 };
+
+namespace make {
+inline utki::shared_ref<ruis::widget> scroll_area(
+	utki::shared_ref<ruis::context> context,
+	ruis::widget::parameters widget_params,
+	ruis::container::parameters container_params,
+	utki::span<const utki::shared_ref<ruis::widget>> children
+)
+{
+	return utki::make_shared<ruis::scroll_area>(
+		std::move(context),
+		std::move(widget_params),
+		std::move(container_params),
+		children
+	);
+}
+} // namespace make
 
 } // namespace ruis

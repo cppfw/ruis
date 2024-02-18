@@ -115,7 +115,7 @@ protected:
 	 * @param tab_size - tabulation size in widths of space character.
 	 * @return Bounding box of the text string.
 	 */
-	virtual ruis::rectangle get_bounding_box_internal(std::u32string_view str, unsigned tab_size) const = 0;
+	virtual ruis::rect get_bounding_box_internal(std::u32string_view str, unsigned tab_size) const = 0;
 
 public:
 	virtual ~font() = default;
@@ -266,7 +266,7 @@ public:
 	 * @param tab_size - tabulation size in widths of space character.
 	 * @return Bounding box of the text string.
 	 */
-	ruis::rectangle get_bounding_box(utki::utf8_iterator str, unsigned tab_size = 4) const
+	ruis::rect get_bounding_box(utki::utf8_iterator str, unsigned tab_size = 4) const
 	{
 		return this->get_bounding_box_internal(utki::to_utf32(str), tab_size);
 	}
@@ -277,7 +277,7 @@ public:
 	 * @param tab_size - tabulation size in widths of space character.
 	 * @return Bounding box of the text string.
 	 */
-	ruis::rectangle get_bounding_box(const std::u32string& str, unsigned tab_size = 4) const
+	ruis::rect get_bounding_box(const std::u32string& str, unsigned tab_size = 4) const
 	{
 		return this->get_bounding_box_internal(str, tab_size);
 	}
@@ -288,7 +288,7 @@ public:
 	 * @param tab_size - tabulation size in widths of space character.
 	 * @return Bounding box of the text string.
 	 */
-	ruis::rectangle get_bounding_box(const char* str, unsigned tab_size = 4) const
+	ruis::rect get_bounding_box(const char* str, unsigned tab_size = 4) const
 	{
 		return this->get_bounding_box(utki::utf8_iterator(str), tab_size);
 	}
@@ -299,7 +299,7 @@ public:
 	 * @param tab_size - tabulation size in widths of space character.
 	 * @return Bounding box of the text string.
 	 */
-	ruis::rectangle get_bounding_box(const std::string& str, unsigned tab_size = 4) const
+	ruis::rect get_bounding_box(const std::string& str, unsigned tab_size = 4) const
 	{
 		return this->get_bounding_box(str.c_str(), tab_size);
 	}

@@ -251,8 +251,8 @@ void ruis::window::setup_widgets()
 			});
 		};
 
-	std::function<decltype(ruis::mouse_proxy::hover_change_handler)(ruis::mouse_cursor, cursor_iter&)>
-		make_hover_change_handler = [this](ruis::mouse_cursor cursor, cursor_iter& iter) {
+	std::function<decltype(ruis::mouse_proxy::hovered_change_handler)(ruis::mouse_cursor, cursor_iter&)>
+		make_hovered_change_handler = [this](ruis::mouse_cursor cursor, cursor_iter& iter) {
 			return [this, cursor, &iter](mouse_proxy& mp, unsigned pointer_id) {
 				// LOG("hover = " << mp.is_hovered() << std::endl)
 				// LOG("this->mouse_captured = " << this->mouse_captured << std::endl)
@@ -280,7 +280,8 @@ void ruis::window::setup_widgets()
 			}
 			return false;
 		};
-		caption->hover_change_handler = make_hover_change_handler(ruis::mouse_cursor::grab, this->caption_cursor_iter);
+		caption->hovered_change_handler =
+			make_hovered_change_handler(ruis::mouse_cursor::grab, this->caption_cursor_iter);
 	}
 
 	{
@@ -297,8 +298,8 @@ void ruis::window::setup_widgets()
 			}
 			return false;
 		};
-		w->hover_change_handler =
-			make_hover_change_handler(ruis::mouse_cursor::top_left_corner, this->lt_border_cursor_iter);
+		w->hovered_change_handler =
+			make_hovered_change_handler(ruis::mouse_cursor::top_left_corner, this->lt_border_cursor_iter);
 		this->lt_border = w;
 	}
 
@@ -318,8 +319,8 @@ void ruis::window::setup_widgets()
 			}
 			return false;
 		};
-		w->hover_change_handler =
-			make_hover_change_handler(ruis::mouse_cursor::bottom_left_corner, this->lb_border_cursor_iter);
+		w->hovered_change_handler =
+			make_hovered_change_handler(ruis::mouse_cursor::bottom_left_corner, this->lb_border_cursor_iter);
 		this->lb_border = w;
 	}
 
@@ -339,8 +340,8 @@ void ruis::window::setup_widgets()
 			}
 			return false;
 		};
-		w->hover_change_handler =
-			make_hover_change_handler(ruis::mouse_cursor::top_right_corner, this->rt_border_cursor_iter);
+		w->hovered_change_handler =
+			make_hovered_change_handler(ruis::mouse_cursor::top_right_corner, this->rt_border_cursor_iter);
 		this->rt_border = w;
 	}
 
@@ -357,8 +358,8 @@ void ruis::window::setup_widgets()
 			}
 			return false;
 		};
-		w->hover_change_handler =
-			make_hover_change_handler(ruis::mouse_cursor::bottom_right_corner, this->rb_border_cursor_iter);
+		w->hovered_change_handler =
+			make_hovered_change_handler(ruis::mouse_cursor::bottom_right_corner, this->rb_border_cursor_iter);
 		this->rb_border = w;
 	}
 
@@ -376,7 +377,8 @@ void ruis::window::setup_widgets()
 			}
 			return false;
 		};
-		w->hover_change_handler = make_hover_change_handler(ruis::mouse_cursor::left_side, this->l_border_cursor_iter);
+		w->hovered_change_handler =
+			make_hovered_change_handler(ruis::mouse_cursor::left_side, this->l_border_cursor_iter);
 		this->l_border = w;
 	}
 
@@ -393,7 +395,8 @@ void ruis::window::setup_widgets()
 			}
 			return false;
 		};
-		w->hover_change_handler = make_hover_change_handler(ruis::mouse_cursor::right_side, this->r_border_cursor_iter);
+		w->hovered_change_handler =
+			make_hovered_change_handler(ruis::mouse_cursor::right_side, this->r_border_cursor_iter);
 		this->r_border = w;
 	}
 
@@ -411,7 +414,8 @@ void ruis::window::setup_widgets()
 			}
 			return false;
 		};
-		w->hover_change_handler = make_hover_change_handler(ruis::mouse_cursor::top_side, this->t_border_cursor_iter);
+		w->hovered_change_handler =
+			make_hovered_change_handler(ruis::mouse_cursor::top_side, this->t_border_cursor_iter);
 		this->t_border = w;
 	}
 
@@ -428,8 +432,8 @@ void ruis::window::setup_widgets()
 			}
 			return false;
 		};
-		w->hover_change_handler =
-			make_hover_change_handler(ruis::mouse_cursor::bottom_side, this->b_border_cursor_iter);
+		w->hovered_change_handler =
+			make_hovered_change_handler(ruis::mouse_cursor::bottom_side, this->b_border_cursor_iter);
 		this->b_border = w;
 	}
 }

@@ -35,9 +35,17 @@ namespace ruis {
  */
 class gradient : public widget
 {
-	std::shared_ptr<res::gradient> res;
+public:
+	struct parameters {
+		std::shared_ptr<res::gradient> gradient;
+	};
+
+private:
+	parameters params;
 
 public:
+	gradient(utki::shared_ref<ruis::context> context, widget::parameters widget_params, parameters params);
+
 	gradient(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
 
 	gradient(const gradient&) = delete;
@@ -50,5 +58,16 @@ public:
 
 	void render(const ruis::matrix4& matrix) const override;
 };
+
+namespace make {
+inline utki::shared_ref<ruis::widget> gradient(
+	utki::shared_ref<ruis::context> context,
+	ruis::widget::parameters widget_params,
+	ruis::gradient::parameters params
+)
+{
+	return utki::make_shared<ruis::gradient>(std::move(context), std::move(widget_params), std::move(params));
+}
+} // namespace make
 
 } // namespace ruis

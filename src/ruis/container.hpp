@@ -26,6 +26,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <utki/shared_ref.hpp>
 
+#include "layouts/trivial_layout.hpp"
 #include "util/util.hpp"
 #include "util/widget_list.hpp"
 
@@ -79,8 +80,6 @@ private:
 		}
 	} children_list;
 
-	utki::shared_ref<ruis::layout> layout;
-
 private:
 	struct mouse_capture_info {
 		std::weak_ptr<widget> capturing_widget;
@@ -122,6 +121,21 @@ protected:
 	void render_child(const matrix4& matrix, const widget& c) const;
 
 public:
+	struct parameters {
+		utki::shared_ref<ruis::layout> layout = trivial_layout::instance;
+	};
+
+private:
+	parameters params;
+
+public:
+	container(
+		utki::shared_ref<ruis::context> context,
+		widget::parameters widget_params,
+		parameters params,
+		utki::span<const utki::shared_ref<widget>> children
+	);
+
 	/**
 	 * @brief Constructor.
 	 * @param c - context to which this widget belongs.
@@ -137,7 +151,7 @@ public:
 
 	const ruis::layout& get_layout() const
 	{
-		return this->layout.get();
+		return this->params.layout.get();
 	}
 
 	void render(const matrix4& matrix) const override;
@@ -146,7 +160,7 @@ public:
 
 	bool on_mouse_move(const mouse_move_event& event) override;
 
-	void on_hover_change(unsigned pointer_id) override;
+	void on_hovered_change(unsigned pointer_id) override;
 
 	ruis::vector2 measure(const ruis::vector2& quotum) const override;
 
@@ -187,6 +201,18 @@ public:
 	widget_list::const_iterator push_back(const utki::shared_ref<widget>& w)
 	{
 		return this->insert(w, this->children().end());
+	}
+
+	/**
+	 * @brief Insert widgets to the end of children list of the container.
+	 * This function invalidates iterators which were obtained before calling to it.
+	 * @param ww - span of widgets to insert.
+	 */
+	void push_back(utki::span<const utki::shared_ref<widget>> ww)
+	{
+		for (const auto& w : ww) {
+			this->push_back(w);
+		}
 	}
 
 	/**
@@ -385,7 +411,7 @@ public:
 	 * @brief Handler of enable state change.
 	 * This implementation sets the same enabled state to all children of the container.
 	 */
-	void on_enable_change() override;
+	void on_enabled_change() override;
 
 	/**
 	 * @brief Handler of resources reload request.
@@ -408,7 +434,7 @@ widget_type* widget::try_get_ancestor(const std::string& id)
 	);
 
 	if (p) {
-		if (id.empty() || p->id == id) {
+		if (id.empty() || p->id() == id) {
 			return p;
 		}
 	}
@@ -470,6 +496,23 @@ std::vector<utki::shared_ref<widget_type>> widget::get_all_widgets(bool allow_it
 
 	return ret;
 }
+
+namespace make {
+inline utki::shared_ref<ruis::widget> container(
+	utki::shared_ref<ruis::context> context,
+	ruis::widget::parameters widget_params,
+	ruis::container::parameters params,
+	utki::span<const utki::shared_ref<ruis::widget>> children
+)
+{
+	return utki::make_shared<ruis::container>(
+		std::move(context),
+		std::move(widget_params),
+		std::move(params),
+		children
+	);
+}
+} // namespace make
 
 } // namespace ruis
 

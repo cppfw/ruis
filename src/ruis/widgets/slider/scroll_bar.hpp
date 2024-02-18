@@ -34,13 +34,11 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
-class scroll_bar :
-	public fraction_band_widget,
-	protected oriented,
-	private container // users do not need to know that it is a container
+class scroll_bar : public fraction_band_widget, protected oriented, private container
 {
 	widget& handle;
 
+	// TODO: naming convention
 	bool isGrabbed = false;
 	float clickPoint;
 

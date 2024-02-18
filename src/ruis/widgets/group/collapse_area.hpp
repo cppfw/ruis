@@ -26,8 +26,11 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
-class collapse_area : virtual public widget, private container
+class collapse_area :
+	virtual public widget, //
+	private container
 {
+	// TODO: naming convention
 	std::shared_ptr<container> contentArea;
 	std::shared_ptr<container> title_v;
 
