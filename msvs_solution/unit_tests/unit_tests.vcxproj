@@ -302,7 +302,6 @@
     <Import Project="..\packages\libjpeg_static.6.1.1.14\build\native\libjpeg_static.targets" Condition="Exists('..\packages\libjpeg_static.6.1.1.14\build\native\libjpeg_static.targets')" />
     <Import Project="..\packages\zlib_static.1.2.11.12\build\native\zlib_static.targets" Condition="Exists('..\packages\zlib_static.1.2.11.12\build\native\zlib_static.targets')" />
     <Import Project="..\packages\libpng_static.1.6.39.1\build\native\libpng_static.targets" Condition="Exists('..\packages\libpng_static.1.6.39.1\build\native\libpng_static.targets')" />
-    <Import Project="..\packages\libtreeml.0.2.12\build\native\libtreeml.targets" Condition="Exists('..\packages\libtreeml.0.2.12\build\native\libtreeml.targets')" />
     <Import Project="..\packages\libagg.2.8.22\build\native\libagg.targets" Condition="Exists('..\packages\libagg.2.8.22\build\native\libagg.targets')" />
     <Import Project="..\packages\libutki.1.1.228\build\native\libutki.targets" Condition="Exists('..\packages\libutki.1.1.228\build\native\libutki.targets')" />
     <Import Project="..\packages\libclargs.0.2.55\build\native\libclargs.targets" Condition="Exists('..\packages\libclargs.0.2.55\build\native\libclargs.targets')" />
@@ -316,6 +315,7 @@
     <Import Project="..\packages\librasterimage.0.1.11\build\native\librasterimage.targets" Condition="Exists('..\packages\librasterimage.0.1.11\build\native\librasterimage.targets')" />
     <Import Project="..\packages\libsvgdom.0.4.11\build\native\libsvgdom.targets" Condition="Exists('..\packages\libsvgdom.0.4.11\build\native\libsvgdom.targets')" />
     <Import Project="..\packages\libsvgren.0.6.10\build\native\libsvgren.targets" Condition="Exists('..\packages\libsvgren.0.6.10\build\native\libsvgren.targets')" />
+    <Import Project="..\packages\libtreeml.0.2.13\build\native\libtreeml.targets" Condition="Exists('..\packages\libtreeml.0.2.13\build\native\libtreeml.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -325,7 +325,6 @@
     <Error Condition="!Exists('..\packages\libjpeg_static.6.1.1.14\build\native\libjpeg_static.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libjpeg_static.6.1.1.14\build\native\libjpeg_static.targets'))" />
     <Error Condition="!Exists('..\packages\zlib_static.1.2.11.12\build\native\zlib_static.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\zlib_static.1.2.11.12\build\native\zlib_static.targets'))" />
     <Error Condition="!Exists('..\packages\libpng_static.1.6.39.1\build\native\libpng_static.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libpng_static.1.6.39.1\build\native\libpng_static.targets'))" />
-    <Error Condition="!Exists('..\packages\libtreeml.0.2.12\build\native\libtreeml.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libtreeml.0.2.12\build\native\libtreeml.targets'))" />
     <Error Condition="!Exists('..\packages\libagg.2.8.22\build\native\libagg.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libagg.2.8.22\build\native\libagg.targets'))" />
     <Error Condition="!Exists('..\packages\libutki.1.1.228\build\native\libutki.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libutki.1.1.228\build\native\libutki.targets'))" />
     <Error Condition="!Exists('..\packages\libclargs.0.2.55\build\native\libclargs.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libclargs.0.2.55\build\native\libclargs.targets'))" />
@@ -339,5 +338,6 @@
     <Error Condition="!Exists('..\packages\librasterimage.0.1.11\build\native\librasterimage.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\librasterimage.0.1.11\build\native\librasterimage.targets'))" />
     <Error Condition="!Exists('..\packages\libsvgdom.0.4.11\build\native\libsvgdom.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libsvgdom.0.4.11\build\native\libsvgdom.targets'))" />
     <Error Condition="!Exists('..\packages\libsvgren.0.6.10\build\native\libsvgren.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libsvgren.0.6.10\build\native\libsvgren.targets'))" />
+    <Error Condition="!Exists('..\packages\libtreeml.0.2.13\build\native\libtreeml.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libtreeml.0.2.13\build\native\libtreeml.targets'))" />
   </Target>
 </Project>
