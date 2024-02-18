@@ -137,6 +137,9 @@ nuget{
 			res: ..\res\ruis_res\**\*;
 		}
 */
+
+		// ====== v143 ======
+
 		[x86,v143,release,MultiThreadedDLL] {
 			lib: ..\msvs_solution\v143_Release_MD\libruis.lib;
 			res: ..\res\ruis_res\**\*;

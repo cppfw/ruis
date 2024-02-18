@@ -51,7 +51,7 @@ public:
 
 namespace make {
 
-utki::shared_ref<ruis::widget> rectangle(
+inline utki::shared_ref<ruis::widget> rectangle(
 	utki::shared_ref<ruis::context> context,
 	ruis::widget::parameters widget_params,
 	ruis::color_widget::parameters color_widget_params
