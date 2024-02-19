@@ -51,6 +51,7 @@ public:
 
 namespace make {
 
+[[deprecated]]
 inline utki::shared_ref<ruis::widget> rectangle(
 	utki::shared_ref<ruis::context> context,
 	ruis::widget::parameters widget_params,
@@ -61,6 +62,20 @@ inline utki::shared_ref<ruis::widget> rectangle(
 		std::move(context),
 		std::move(widget_params),
 		std::move(color_widget_params)
+	);
+}
+
+struct rectangle_parameters {
+	widget::parameters widget_params;
+	color_widget::parameters color_params;
+};
+
+inline utki::shared_ref<ruis::widget> rectangle(utki::shared_ref<ruis::context> context, rectangle_parameters params)
+{
+	return utki::make_shared<ruis::rectangle>(
+		std::move(context),
+		std::move(params.widget_params),
+		std::move(params.color_params)
 	);
 }
 
