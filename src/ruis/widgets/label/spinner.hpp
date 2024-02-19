@@ -57,6 +57,7 @@ private:
 };
 
 namespace make {
+[[deprecated]]
 inline utki::shared_ref<ruis::widget> spinner(
 	utki::shared_ref<ruis::context> context,
 	widget::parameters widget_params,
@@ -71,6 +72,26 @@ inline utki::shared_ref<ruis::widget> spinner(
 		std::move(image_params)
 	);
 }
+
+struct spinner_parameters {
+	widget::parameters widget_params;
+	image::parameters image_params;
+	blending_widget::parameters blending_params;
+};
+
+inline utki::shared_ref<ruis::widget> spinner(
+	utki::shared_ref<ruis::context> context, //
+	spinner_parameters params
+)
+{
+	return utki::make_shared<ruis::spinner>(
+		std::move(context),
+		std::move(params.widget_params),
+		std::move(params.blending_params),
+		std::move(params.image_params)
+	);
+}
+
 } // namespace make
 
 } // namespace ruis
