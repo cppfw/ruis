@@ -63,6 +63,7 @@ public:
 };
 
 namespace make {
+[[deprecated]]
 inline utki::shared_ref<ruis::widget> key_proxy(
 	utki::shared_ref<ruis::context> context,
 	ruis::widget::parameters widget_params,
@@ -77,6 +78,26 @@ inline utki::shared_ref<ruis::widget> key_proxy(
 		children
 	);
 }
+
+struct key_proxy_parameters {
+	widget::parameters widget_params;
+	container::parameters container_params;
+};
+
+inline utki::shared_ref<ruis::widget> key_proxy(
+	utki::shared_ref<ruis::context> context,
+	key_proxy_parameters params,
+	utki::span<const utki::shared_ref<ruis::widget>> children
+)
+{
+	return utki::make_shared<ruis::key_proxy>(
+		std::move(context),
+		std::move(params.widget_params),
+		std::move(params.container_params),
+		children
+	);
+}
+
 } // namespace make
 
 } // namespace ruis
