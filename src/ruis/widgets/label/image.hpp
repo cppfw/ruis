@@ -114,6 +114,7 @@ public:
 };
 
 namespace make {
+[[deprecated]]
 inline utki::shared_ref<ruis::widget> image(
 	utki::shared_ref<ruis::context> context,
 	ruis::widget::parameters widget_params,
@@ -128,6 +129,23 @@ inline utki::shared_ref<ruis::widget> image(
 		std::move(params)
 	);
 }
+
+struct image_parameters {
+	widget::parameters widget_params;
+	blending_widget::parameters blending_params;
+	image::parameters image_params;
+};
+
+inline utki::shared_ref<ruis::widget> image(utki::shared_ref<ruis::context> context, image_parameters params)
+{
+	return utki::make_shared<ruis::image>(
+		std::move(context),
+		std::move(params.widget_params),
+		std::move(params.blending_params),
+		std::move(params.image_params)
+	);
+}
+
 } // namespace make
 
 } // namespace ruis

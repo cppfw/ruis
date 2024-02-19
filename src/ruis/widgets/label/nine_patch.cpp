@@ -29,6 +29,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../../layouts/pile_layout.hpp"
 #include "../../util/util.hpp"
 
+using namespace std::string_literals;
+
 using namespace ruis;
 
 namespace {
@@ -51,17 +53,31 @@ std::vector<utki::shared_ref<ruis::widget>> build_layout(utki::shared_ref<ruis::
 				}
 			},
 			{
-				m::image(c, {.id = "ruis_lt"}),
 				m::image(c,
 					{
-						.id = "ruis_t",
-						.lp = {
-							.dims = {0, lp::min},
-							.weight = 1
+						.widget_params = {
+							.id = "ruis_lt"s
 						}
 					}
 				),
-				m::image(c, {.id = "ruis_rt"})
+				m::image(c,
+					{
+						.widget_params = {
+							.id = "ruis_t"s,
+							.lp = {
+								.dims = {0, lp::min},
+								.weight = 1
+							}
+						}
+					}
+				),
+				m::image(c,
+					{
+						.widget_params = {
+							.id = "ruis_rt"s
+						}
+					}
+				)
 			}
 		),
 		m::container(c,
@@ -79,16 +95,18 @@ std::vector<utki::shared_ref<ruis::widget>> build_layout(utki::shared_ref<ruis::
 			{
 				m::image(c,
 					{
-						.id = "ruis_l",
-						.lp = {
-							.dims = {lp::min, lp::fill}
+						.widget_params = {
+							.id = "ruis_l"s,
+							.lp = {
+								.dims = {lp::min, lp::fill}
+							}
 						}
 					}
 				),
 				m::container(c,
 					{
 						.widget_params = {
-							.id = "ruis_content",
+							.id = "ruis_content"s,
 							.lp = {
 								.dims = {lp::min, lp::max},
 								.weight = 1
@@ -101,9 +119,11 @@ std::vector<utki::shared_ref<ruis::widget>> build_layout(utki::shared_ref<ruis::
 					{
 						m::image(c,
 							{
-								.id = "ruis_m",
-								.lp = {
-									.dims = {lp::fill, lp::fill}
+								.widget_params = {
+									.id = "ruis_m"s,
+									.lp = {
+										.dims = {lp::fill, lp::fill}
+									}
 								}
 							}
 						)
@@ -111,9 +131,11 @@ std::vector<utki::shared_ref<ruis::widget>> build_layout(utki::shared_ref<ruis::
 				),
 				m::image(c,
 					{
-						.id = "ruis_r",
-						.lp = {
-							.dims = {lp::min, lp::fill}
+						.widget_params = {
+							.id = "ruis_r"s,
+							.lp = {
+								.dims = {lp::min, lp::fill}
+							}
 						}
 					}
 				)
@@ -131,17 +153,31 @@ std::vector<utki::shared_ref<ruis::widget>> build_layout(utki::shared_ref<ruis::
 				}
 			},
 			{
-				m::image(c, {.id = "ruis_lb"}),
 				m::image(c,
 					{
-						.id = "ruis_b",
-						.lp = {
-							.dims = {0, lp::min},
-							.weight = 1
+						.widget_params = {
+							.id = "ruis_lb"s
 						}
 					}
 				),
-				m::image(c, {.id = "ruis_rb"})
+				m::image(c,
+					{
+						.widget_params = {
+							.id = "ruis_b"s,
+							.lp = {
+								.dims = {0, lp::min},
+								.weight = 1
+							}
+						}
+					}
+				),
+				m::image(c,
+					{
+						.widget_params = {
+							.id = "ruis_rb"s
+						}
+					}
+				)
 			}
 		)
 	};
