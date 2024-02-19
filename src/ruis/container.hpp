@@ -498,6 +498,7 @@ std::vector<utki::shared_ref<widget_type>> widget::get_all_widgets(bool allow_it
 }
 
 namespace make {
+[[deprecated]]
 inline utki::shared_ref<ruis::widget> container(
 	utki::shared_ref<ruis::context> context,
 	ruis::widget::parameters widget_params,
@@ -512,6 +513,26 @@ inline utki::shared_ref<ruis::widget> container(
 		children
 	);
 }
+
+struct container_parameters {
+	widget::parameters widget_params;
+	container::parameters container_params;
+};
+
+inline utki::shared_ref<ruis::widget> container(
+	utki::shared_ref<ruis::context> context,
+	container_parameters params,
+	utki::span<const utki::shared_ref<ruis::widget>> children
+)
+{
+	return utki::make_shared<ruis::container>(
+		std::move(context),
+		std::move(params.widget_params),
+		std::move(params.container_params),
+		children
+	);
+}
+
 } // namespace make
 
 } // namespace ruis

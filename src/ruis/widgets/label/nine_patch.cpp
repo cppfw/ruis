@@ -41,86 +41,109 @@ std::vector<utki::shared_ref<ruis::widget>> build_layout(utki::shared_ref<ruis::
 	return {
 		m::container(c,
 			{
-				.lp = {
-					.dims = {lp::fill, lp::min}
+				.widget_params = {
+					.lp = {
+						.dims = {lp::fill, lp::min}
+					}
+				},
+				.container_params = {
+					.layout = row_layout::instance
 				}
 			},
-			{row_layout::instance},
 			{
-			m::image(c, {.id = "ruis_lt"}),
-			m::image(c,
-				{
-					.id = "ruis_t",
-					.lp = {
-						.dims = {0, lp::min},
-						.weight = 1
+				m::image(c, {.id = "ruis_lt"}),
+				m::image(c,
+					{
+						.id = "ruis_t",
+						.lp = {
+							.dims = {0, lp::min},
+							.weight = 1
+						}
 					}
-				}),
-			m::image(c, {.id = "ruis_rt"})
+				),
+				m::image(c, {.id = "ruis_rt"})
 			}
 		),
 		m::container(c,
 			{
-				.lp = {
-					.dims = {lp::max, lp::min},
-					.weight = 1
-				}
-			},
-			{row_layout::instance},
-			{
-			m::image(c,
-				{
-					.id = "ruis_l",
+				.widget_params = {
 					.lp = {
-						.dims = {lp::min, lp::fill}
-					}
-				}),
-			m::container(c,
-				{
-					.id = "ruis_content",
-					.lp = {
-						.dims = {lp::min, lp::max},
+						.dims = {lp::max, lp::min},
 						.weight = 1
 					}
 				},
-				{pile_layout::instance},
-				{
+				.container_params = {
+					.layout = row_layout::instance
+				}
+			},
+			{
 				m::image(c,
 					{
-						.id = "ruis_m",
+						.id = "ruis_l",
 						.lp = {
-							.dims = {lp::fill, lp::fill}
+							.dims = {lp::min, lp::fill}
 						}
-					})
-				}),
-			m::image(c,
-				{
-					.id = "ruis_r",
-					.lp = {
-						.dims = {lp::min, lp::fill}
 					}
-				})
+				),
+				m::container(c,
+					{
+						.widget_params = {
+							.id = "ruis_content",
+							.lp = {
+								.dims = {lp::min, lp::max},
+								.weight = 1
+							}
+						},
+						.container_params = {
+							.layout = pile_layout::instance
+						}
+					},
+					{
+						m::image(c,
+							{
+								.id = "ruis_m",
+								.lp = {
+									.dims = {lp::fill, lp::fill}
+								}
+							}
+						)
+					}
+				),
+				m::image(c,
+					{
+						.id = "ruis_r",
+						.lp = {
+							.dims = {lp::min, lp::fill}
+						}
+					}
+				)
 			}
 		),
 		m::container(c,
 			{
-				.lp = {
-					.dims = {lp::fill, lp::min}
+				.widget_params = {
+					.lp = {
+						.dims = {lp::fill, lp::min}
+					}
+				},
+				.container_params = {
+					.layout = row_layout::instance
 				}
 			},
-			{row_layout::instance},
 			{
-			m::image(c, {.id = "ruis_lb"}),
-			m::image(c,
-				{
-					.id = "ruis_b",
-					.lp = {
-						.dims = {0, lp::min},
-						.weight = 1
+				m::image(c, {.id = "ruis_lb"}),
+				m::image(c,
+					{
+						.id = "ruis_b",
+						.lp = {
+							.dims = {0, lp::min},
+							.weight = 1
+						}
 					}
-				}),
-			m::image(c, {.id = "ruis_rb"})
-			})
+				),
+				m::image(c, {.id = "ruis_rb"})
+			}
+		)
 	};
 	// clang-format on
 }
