@@ -132,6 +132,7 @@ private:
 };
 
 namespace make {
+[[deprecated]]
 inline utki::shared_ref<ruis::widget> scroll_area(
 	utki::shared_ref<ruis::context> context,
 	ruis::widget::parameters widget_params,
@@ -146,6 +147,26 @@ inline utki::shared_ref<ruis::widget> scroll_area(
 		children
 	);
 }
+
+struct scroll_area_parameters {
+	widget::parameters widget_params;
+	container::parameters container_params;
+};
+
+inline utki::shared_ref<ruis::widget> scroll_area(
+	utki::shared_ref<ruis::context> context,
+	scroll_area_parameters params,
+	utki::span<const utki::shared_ref<ruis::widget>> children
+)
+{
+	return utki::make_shared<ruis::scroll_area>(
+		std::move(context),
+		std::move(params.widget_params),
+		std::move(params.container_params),
+		children
+	);
+}
+
 } // namespace make
 
 } // namespace ruis
