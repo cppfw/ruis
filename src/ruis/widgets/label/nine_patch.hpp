@@ -147,6 +147,7 @@ private:
 };
 
 namespace make {
+[[deprecated]]
 inline utki::shared_ref<ruis::widget> nine_patch(
 	utki::shared_ref<ruis::context> context,
 	ruis::widget::parameters widget_params,
@@ -163,6 +164,28 @@ inline utki::shared_ref<ruis::widget> nine_patch(
 		children
 	);
 }
+
+struct nine_patch_parameters {
+	widget::parameters widget_params;
+	blending_widget::parameters blending_params;
+	nine_patch::parameters nine_patch_params;
+};
+
+inline utki::shared_ref<ruis::widget> nine_patch(
+	utki::shared_ref<ruis::context> context,
+	nine_patch_parameters params,
+	utki::span<const utki::shared_ref<ruis::widget>> children
+)
+{
+	return utki::make_shared<ruis::nine_patch>(
+		std::move(context),
+		std::move(params.widget_params),
+		std::move(params.blending_params),
+		std::move(params.nine_patch_params),
+		children
+	);
+}
+
 } // namespace make
 
 } // namespace ruis
