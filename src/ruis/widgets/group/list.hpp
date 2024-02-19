@@ -241,6 +241,7 @@ public:
 };
 
 namespace make {
+[[deprecated]]
 inline utki::shared_ref<ruis::widget> list(
 	utki::shared_ref<ruis::context> context,
 	ruis::widget::parameters widget_params,
@@ -249,6 +250,24 @@ inline utki::shared_ref<ruis::widget> list(
 {
 	return utki::make_shared<ruis::list>(std::move(context), std::move(widget_params), std::move(oriented_params));
 }
+
+struct list_parameters {
+	widget::parameters widget_params;
+	ruis::oriented::parameters oriented_params;
+};
+
+inline utki::shared_ref<ruis::widget> list( //
+	utki::shared_ref<ruis::context> context,
+	list_parameters params
+)
+{
+	return utki::make_shared<ruis::list>( //
+		std::move(context),
+		std::move(params.widget_params),
+		std::move(params.oriented_params)
+	);
+}
+
 } // namespace make
 
 } // namespace ruis
