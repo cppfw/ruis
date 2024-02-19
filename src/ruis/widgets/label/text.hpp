@@ -60,6 +60,7 @@ public:
 };
 
 namespace make {
+[[deprecated]]
 inline utki::shared_ref<ruis::widget> text(
 	utki::shared_ref<ruis::context> context,
 	ruis::widget::parameters widget_params,
@@ -76,6 +77,28 @@ inline utki::shared_ref<ruis::widget> text(
 		std::move(text)
 	);
 }
+
+struct text_parameters {
+	widget::parameters widget_params;
+	color_widget::parameters color_params;
+	text_widget::parameters text_params;
+};
+
+inline utki::shared_ref<ruis::widget> text(
+	utki::shared_ref<ruis::context> context,
+	text_parameters params,
+	std::u32string text
+)
+{
+	return utki::make_shared<ruis::text>(
+		std::move(context),
+		std::move(params.widget_params),
+		std::move(params.text_params),
+		std::move(params.color_params),
+		std::move(text)
+	);
+}
+
 } // namespace make
 
 } // namespace ruis
