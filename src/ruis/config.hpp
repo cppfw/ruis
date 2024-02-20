@@ -33,21 +33,26 @@ namespace ruis {
 
 using real = float;
 
-using matrix4 = r4::matrix4<real>;
-static_assert(sizeof(matrix4) == sizeof(real) * 4 * 4, "size mismatch");
+using mat4 = r4::matrix4<real>;
+using matrix4 = mat4;
+static_assert(sizeof(mat4) == sizeof(real) * 4 * 4, "size mismatch");
 
-using quaternion = r4::quaternion<real>;
-static_assert(sizeof(quaternion) == sizeof(real) * 4, "size mismatch");
+using quat = r4::quaternion<real>;
+using quaternion = quat;
+static_assert(sizeof(quat) == sizeof(real) * 4, "size mismatch");
 
 using rect = r4::rectangle<real>;
 
-using vector2 = r4::vector2<real>;
-static_assert(sizeof(vector2) == sizeof(real) * 2, "size mismatch");
+using vec2 = r4::vector2<real>;
+using vector2 = vec2;
+static_assert(sizeof(vec2) == sizeof(real) * 2, "size mismatch");
 
-using vector3 = r4::vector3<real>;
-static_assert(sizeof(vector3) == sizeof(real) * 3, "size mismatch");
+using vec3 = r4::vector3<real>;
+using vector3 = vec3;
+static_assert(sizeof(vec3) == sizeof(real) * 3, "size mismatch");
 
-using vector4 = r4::vector4<real>;
-static_assert(sizeof(vector4) == sizeof(real) * 4, "size mismatch");
+using vec4 = r4::vector4<real>;
+using vector4 = vec4;
+static_assert(sizeof(vec4) == sizeof(real) * 4, "size mismatch");
 
 } // namespace ruis
