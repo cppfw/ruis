@@ -195,9 +195,9 @@ const tst::set set("inflating", [](tst::suite& suite){
 
 		auto c = utki::dynamic_reference_cast<ruis::container>(w);
 		tst::check_eq(c.get().children().size(), size_t(2), SL);
-		tst::check_eq(c.get().children().front().get().rect().p.x(), ruis::real(0), SL);
+		tst::check_eq(c.get().children().front().get().rect().p.x(), ruis::real(-1), SL);
 		tst::check_eq(c.get().children().front().get().rect().p.y(), ruis::real(67), SL);
-		tst::check_eq(c.get().children().front().get().rect().d.x(), ruis::real(0), SL);
+		tst::check_eq(c.get().children().front().get().rect().d.x(), ruis::real(-1), SL);
 		tst::check_eq(c.get().children().front().get().rect().d.y(), ruis::real(45), SL);
 		auto lp = c.get().children().front().get().get_layout_params();
 		tst::check_eq(lp.dims[0], ruis::lp::max, SL);

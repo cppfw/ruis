@@ -409,7 +409,11 @@ public:
 	struct parameters {
 		std::string id;
 		ruis::lp lp;
-		ruis::rect rectangle = {0, 0};
+
+		// initialize the rect to invalid values to make sure that a
+		// newly created widget will receive at least one on_resize()
+		// notification before being rendered
+		ruis::rect rectangle = {-1, -1};
 
 		/**
 		 * @brief Clip widgets contents by widget's border.
