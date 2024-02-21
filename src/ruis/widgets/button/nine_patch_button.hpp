@@ -38,9 +38,8 @@ class nine_patch_button :
 	virtual public button, //
 	public nine_patch
 {
-	// TODO: naming convention
-	std::shared_ptr<const res::nine_patch> unpressedNinePatch_v;
-	std::shared_ptr<const res::nine_patch> pressedNinePatch_v;
+	std::shared_ptr<const res::nine_patch> unpressed_nine_patch;
+	std::shared_ptr<const res::nine_patch> pressed_nine_patch;
 
 public:
 	nine_patch_button(const nine_patch_button&) = delete;
@@ -53,16 +52,16 @@ public:
 
 	void set_unpressed_nine_patch(std::shared_ptr<const res::nine_patch> np);
 
-	const decltype(unpressedNinePatch_v)& get_unpressed_nine_patch() const noexcept
+	const decltype(unpressed_nine_patch)& get_unpressed_nine_patch() const noexcept
 	{
-		return this->unpressedNinePatch_v;
+		return this->unpressed_nine_patch;
 	}
 
 	void set_pressed_nine_patch(std::shared_ptr<const res::nine_patch> np);
 
-	const decltype(pressedNinePatch_v)& get_pressed_nine_patch() const noexcept
+	const decltype(pressed_nine_patch)& get_pressed_nine_patch() const noexcept
 	{
-		return this->pressedNinePatch_v;
+		return this->pressed_nine_patch;
 	}
 
 protected:

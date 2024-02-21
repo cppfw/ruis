@@ -59,16 +59,16 @@ nine_patch_button::nine_patch_button(const utki::shared_ref<ruis::context>& c, c
 
 void nine_patch_button::on_pressed_change()
 {
-	this->set_nine_patch(this->is_pressed() ? this->pressedNinePatch_v : this->unpressedNinePatch_v);
+	this->set_nine_patch(this->is_pressed() ? this->pressed_nine_patch : this->unpressed_nine_patch);
 	this->button::on_pressed_change();
 }
 
 void nine_patch_button::set_pressed_nine_patch(std::shared_ptr<const res::nine_patch> np)
 {
-	this->pressedNinePatch_v = std::move(np);
+	this->pressed_nine_patch = std::move(np);
 }
 
 void nine_patch_button::set_unpressed_nine_patch(std::shared_ptr<const res::nine_patch> np)
 {
-	this->unpressedNinePatch_v = std::move(np);
+	this->unpressed_nine_patch = std::move(np);
 }
