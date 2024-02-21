@@ -50,8 +50,8 @@ bool push_button::on_mouse_button(const mouse_button_event& e)
 		}
 	} else {
 		if (this->is_pressed()) {
-			if (this->pointer_id == e.pointer_id)
-			{ // check that released the same pointer which has pressed the button before
+			if (this->pointer_id == e.pointer_id) {
+				// check that released the same pointer which has pressed the button before
 				this->set_pressed(false);
 			}
 		}
@@ -75,12 +75,12 @@ void push_button::on_pressed_change()
 {
 	this->button::on_pressed_change();
 
-	if (this->currentlyPressed && this->is_hovered()) {
+	if (this->is_currently_pressed && this->is_hovered()) {
 		ASSERT(!this->is_pressed())
 		this->on_click();
 	}
 
-	this->currentlyPressed = this->is_pressed();
+	this->is_currently_pressed = this->is_pressed();
 }
 
 void push_button::on_click()

@@ -32,8 +32,7 @@ namespace ruis {
  */
 class push_button : virtual public button
 {
-	// TODO: naming convention
-	bool currentlyPressed = false;
+	bool is_currently_pressed = false;
 
 	unsigned pointer_id = 0;
 
