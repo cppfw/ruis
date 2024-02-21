@@ -33,7 +33,14 @@ namespace ruis {
  */
 class button : public virtual widget
 {
-	bool is_pressed_v = false;
+public:
+	struct parameters {
+		bool pressed = false;
+	};
+
+private:
+	parameters params;
+
 	bool is_pressed_changed_notified = true;
 
 protected:
@@ -43,9 +50,14 @@ protected:
 	 */
 	virtual void on_pressed_change();
 
-public:
 	button(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
 
+	button( //
+		utki::shared_ref<ruis::context> context,
+		parameters params
+	);
+
+public:
 	/**
 	 * @brief Check if button is currently pressed.
 	 * @return true if button is pressed.
@@ -53,7 +65,7 @@ public:
 	 */
 	bool is_pressed() const noexcept
 	{
-		return this->is_pressed_v;
+		return this->params.pressed;
 	}
 
 	void set_pressed(bool pressed);

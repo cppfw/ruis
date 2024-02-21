@@ -26,6 +26,14 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
+button::button( //
+	utki::shared_ref<ruis::context> context,
+	parameters params
+) :
+	widget(std::move(context), widget::parameters{}),
+	params(std::move(params))
+{}
+
 button::button(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
 	widget(c, desc)
 {
@@ -35,17 +43,17 @@ button::button(const utki::shared_ref<ruis::context>& c, const treeml::forest& d
 		}
 
 		if (p.value == "pressed") {
-			this->is_pressed_v = get_property_value(p).to_bool();
+			this->params.pressed = get_property_value(p).to_bool();
 		}
 	}
 }
 
 void button::set_pressed(bool pressed)
 {
-	if (this->is_pressed_v == pressed) {
+	if (this->params.pressed == pressed) {
 		return;
 	}
-	this->is_pressed_v = pressed;
+	this->params.pressed = pressed;
 	this->is_pressed_changed_notified = false;
 	this->on_pressed_change();
 }
