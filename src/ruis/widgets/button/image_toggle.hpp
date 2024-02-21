@@ -21,12 +21,14 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "image_button.hpp"
-#include "toggle_button.hpp"
+#include "base/image_button.hpp"
+#include "base/toggle_button.hpp"
 
 namespace ruis {
 
-class image_toggle : virtual public toggle_button, public image_button
+class image_toggle :
+	virtual public toggle_button, //
+	public image_button
 {
 public:
 	image_toggle(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);

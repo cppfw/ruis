@@ -22,12 +22,13 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #pragma once
 
 #include "base/nine_patch_button.hpp"
-
-#include "toggle_button.hpp"
+#include "base/toggle_button.hpp"
 
 namespace ruis {
 
-class nine_patch_toggle : virtual public toggle_button, public nine_patch_button
+class nine_patch_toggle :
+	virtual public toggle_button, //
+	public nine_patch_button
 {
 public:
 	nine_patch_toggle(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);

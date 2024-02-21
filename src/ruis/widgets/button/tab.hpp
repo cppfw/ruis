@@ -23,12 +23,15 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../label/nine_patch.hpp"
 
-#include "choice_button.hpp"
+#include "base/choice_button.hpp"
+
 #include "nine_patch_toggle.hpp"
 
 namespace ruis {
 
-class tab : virtual public choice_button, public nine_patch_toggle
+class tab :
+	virtual public choice_button, //
+	public nine_patch_toggle
 {
 	bool mask_overlaps(vector2 pos);
 

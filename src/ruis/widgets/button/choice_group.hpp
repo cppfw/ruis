@@ -23,7 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../../container.hpp"
 
-#include "choice_button.hpp"
+#include "base/choice_button.hpp"
 
 namespace ruis {
 

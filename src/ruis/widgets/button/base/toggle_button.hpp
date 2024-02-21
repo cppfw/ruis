@@ -21,40 +21,31 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "../../res/image.hpp"
-#include "../label/image.hpp"
-
-#include "base/button.hpp"
+#include "button.hpp"
 
 namespace ruis {
-class image_button :
-	virtual public button, //
-	public image
+
+/**
+ * @brief Basic class of a toggle button.
+ * Toggle button is a button which can be checked and unchecked.
+ * In GUI script it has the 'checked{true/false}' attribute which can set initial
+ * checked state of the widget.
+ */
+class toggle_button : virtual public button
 {
-	// TODO: naming convention
-	std::shared_ptr<const res::image> unpressedImage_v;
-	std::shared_ptr<const res::image> pressedImage_v;
-
-	void update_image();
-
 protected:
-	void on_pressed_change() override;
+	bool on_mouse_button(const mouse_button_event& event) override;
 
-	image_button(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
+	toggle_button(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
 
 public:
-	void set_pressed_image(std::shared_ptr<const res::image> image);
-
-	const decltype(pressedImage_v)& get_pressed_image() const
+	/**
+	 * @brief Change checked state to opposite.
+	 */
+	void toggle()
 	{
-		return this->pressedImage_v;
-	}
-
-	void set_unpressed_image(std::shared_ptr<const res::image> image);
-
-	const decltype(unpressedImage_v)& get_unpressed_image() const
-	{
-		return this->unpressedImage_v;
+		this->set_pressed(!this->is_pressed());
 	}
 };
+
 } // namespace ruis

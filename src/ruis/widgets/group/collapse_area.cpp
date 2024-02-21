@@ -23,7 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../../context.hpp"
 #include "../../util/util.hpp"
-#include "../button/toggle_button.hpp"
+#include "../button/base/toggle_button.hpp"
 
 using namespace ruis;
 
