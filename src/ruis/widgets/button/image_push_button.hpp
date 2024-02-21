@@ -25,7 +25,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "base/push_button.hpp"
 
 namespace ruis {
-class image_push_button : virtual public push_button, public image_button
+class image_push_button :
+	virtual public push_button, //
+	public image_button
 {
 protected:
 	void on_pressed_change() override;
