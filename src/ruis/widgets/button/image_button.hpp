@@ -27,8 +27,11 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "button.hpp"
 
 namespace ruis {
-class image_button : virtual public button, public image
+class image_button :
+	virtual public button, //
+	public image
 {
+	// TODO: naming convention
 	std::shared_ptr<const res::image> unpressedImage_v;
 	std::shared_ptr<const res::image> pressedImage_v;
 
