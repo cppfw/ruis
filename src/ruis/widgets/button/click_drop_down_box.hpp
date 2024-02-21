@@ -21,12 +21,16 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "drop_down_box.hpp"
+#include "base/drop_down_box.hpp"
+
 #include "nine_patch_push_button.hpp"
 
 namespace ruis {
 
-class click_drop_down_box : virtual public widget, private nine_patch_push_button, public drop_down_box
+class click_drop_down_box :
+	virtual public widget, //
+	private nine_patch_push_button,
+	public drop_down_box
 {
 	std::weak_ptr<widget> current_drop_down_menu;
 
