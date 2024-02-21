@@ -4,7 +4,7 @@
 
 #include <ruisapp/application.hpp>
 
-#include <ruis/widgets/button/push_button.hpp>
+#include <ruis/widgets/button/base/push_button.hpp>
 #include <ruis/widgets/label/busy.hpp>
 #include <ruis/widgets/group/book.hpp>
 #include <ruis/widgets/button/tab_group.hpp>

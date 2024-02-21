@@ -3,7 +3,7 @@
 #include <utki/debug.hpp>
 #include <ruisapp/application.hpp>
 
-#include <ruis/widgets/button/push_button.hpp>
+#include <ruis/widgets/button/base/push_button.hpp>
 #include <ruis/widgets/label/text.hpp>
 #include <ruis/widgets/group/tabbed_book.hpp>
 

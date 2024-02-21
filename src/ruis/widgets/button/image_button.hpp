@@ -24,7 +24,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../../res/image.hpp"
 #include "../label/image.hpp"
 
-#include "button.hpp"
+#include "base/button.hpp"
 
 namespace ruis {
 class image_button :

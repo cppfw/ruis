@@ -21,8 +21,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
+#include "base/push_button.hpp"
+
 #include "image_button.hpp"
-#include "push_button.hpp"
 
 namespace ruis {
 class image_push_button : virtual public push_button, public image_button

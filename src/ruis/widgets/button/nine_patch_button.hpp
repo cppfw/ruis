@@ -23,7 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../label/nine_patch.hpp"
 
-#include "push_button.hpp"
+#include "base/push_button.hpp"
 
 namespace ruis {
 

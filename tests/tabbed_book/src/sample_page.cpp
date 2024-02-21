@@ -1,7 +1,7 @@
 #include "sample_page.hpp"
 
 #include <ruis/widgets/label/text.hpp>
-#include <ruis/widgets/button/push_button.hpp>
+#include <ruis/widgets/button/base/push_button.hpp>
 
 sample_page::sample_page(const utki::shared_ref<ruis::context>& c, const std::string& text) :
         ruis::widget(c, treeml::forest()),
