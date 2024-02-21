@@ -33,6 +33,16 @@ class nine_patch_push_button :
 public:
 	nine_patch_push_button(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
 
+	nine_patch_push_button( //
+		utki::shared_ref<ruis::context> context,
+		widget::parameters widget_params,
+		button::parameters button_params,
+		blending_widget::parameters blending_params,
+		nine_patch::parameters nine_patch_params,
+		nine_patch_button::parameters nine_patch_button_params,
+		utki::span<const utki::shared_ref<ruis::widget>> children
+	);
+
 protected:
 	void on_pressed_change() override;
 
@@ -46,5 +56,34 @@ protected:
 		this->push_button::on_hovered_change(pointer_id);
 	}
 };
+
+namespace make {
+
+struct nine_patch_push_button_parameters {
+	ruis::widget::parameters widget_params;
+	button::parameters button_params;
+	blending_widget::parameters blending_params;
+	nine_patch::parameters nine_patch_params;
+	nine_patch_button::parameters nine_patch_button_params;
+};
+
+inline utki::shared_ref<ruis::widget> nine_patch_push_button(
+	utki::shared_ref<ruis::context> context,
+	nine_patch_push_button_parameters params,
+	utki::span<const utki::shared_ref<ruis::widget>> children
+)
+{
+	return utki::make_shared<ruis::nine_patch_push_button>(
+		std::move(context),
+		std::move(params.widget_params),
+		std::move(params.button_params),
+		std::move(params.blending_params),
+		std::move(params.nine_patch_params),
+		std::move(params.nine_patch_button_params),
+		children
+	);
+}
+
+} // namespace make
 
 } // namespace ruis

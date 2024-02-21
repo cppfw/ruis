@@ -25,6 +25,30 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
+nine_patch_push_button::nine_patch_push_button( //
+	utki::shared_ref<ruis::context> context,
+	widget::parameters widget_params,
+	button::parameters button_params,
+	blending_widget::parameters blending_params,
+	nine_patch::parameters nine_patch_params,
+	nine_patch_button::parameters nine_patch_button_params,
+	utki::span<const utki::shared_ref<ruis::widget>> children
+) :
+	widget(std::move(context), std::move(widget_params)),
+	button(this->context, std::move(button_params)),
+	push_button(this->context, button::parameters{}),
+	nine_patch_button(
+		this->context,
+		{},
+		std::move(blending_params),
+		std::move(nine_patch_params),
+		std::move(nine_patch_button_params),
+		children
+	)
+{
+	// TODO: load default pressed/unpressed nine-patches
+}
+
 nine_patch_push_button::nine_patch_push_button(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
 	widget(c, desc),
 	button(this->context, desc),
