@@ -32,6 +32,7 @@ namespace ruis {
  */
 class push_button : virtual public button
 {
+	// TODO: naming convention
 	bool currentlyPressed = false;
 
 	unsigned pointer_id = 0;
@@ -49,12 +50,17 @@ protected:
 
 	void on_hovered_change(unsigned pointer_id) override;
 
-public:
 	push_button(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
 		widget(c, desc),
 		button(this->context, desc)
 	{}
 
+	push_button( //
+		utki::shared_ref<ruis::context> context,
+		button::parameters button_params
+	);
+
+public:
 	push_button(const push_button&) = delete;
 	push_button& operator=(const push_button&) = delete;
 

@@ -23,6 +23,14 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
+push_button::push_button( //
+	utki::shared_ref<ruis::context> context,
+	button::parameters button_params
+) :
+	widget(std::move(context), widget::parameters{}),
+	button(this->context, std::move(button_params))
+{}
+
 bool push_button::on_mouse_button(const mouse_button_event& e)
 {
 	if (e.button != mouse_button::left) {
