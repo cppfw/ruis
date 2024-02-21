@@ -21,9 +21,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "../label/nine_patch.hpp"
+#include "../../label/nine_patch.hpp"
 
-#include "base/push_button.hpp"
+#include "push_button.hpp"
 
 namespace ruis {
 
@@ -38,8 +38,28 @@ class nine_patch_button :
 	virtual public button, //
 	public nine_patch
 {
-	std::shared_ptr<const res::nine_patch> unpressed_nine_patch;
-	std::shared_ptr<const res::nine_patch> pressed_nine_patch;
+public:
+	struct parameters {
+		std::shared_ptr<const res::nine_patch> unpressed_nine_patch;
+		std::shared_ptr<const res::nine_patch> pressed_nine_patch;
+	};
+
+private:
+	parameters params;
+
+protected:
+	nine_patch_button(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
+
+	nine_patch_button( //
+		utki::shared_ref<ruis::context> context,
+		button::parameters button_params,
+		blending_widget::parameters blending_params,
+		nine_patch::parameters nine_patch_params,
+		parameters params,
+		utki::span<const utki::shared_ref<ruis::widget>> children
+	);
+
+	void on_pressed_change() override;
 
 public:
 	nine_patch_button(const nine_patch_button&) = delete;
@@ -52,22 +72,17 @@ public:
 
 	void set_unpressed_nine_patch(std::shared_ptr<const res::nine_patch> np);
 
-	const decltype(unpressed_nine_patch)& get_unpressed_nine_patch() const noexcept
+	const decltype(parameters::unpressed_nine_patch)& get_unpressed_nine_patch() const noexcept
 	{
-		return this->unpressed_nine_patch;
+		return this->params.unpressed_nine_patch;
 	}
 
 	void set_pressed_nine_patch(std::shared_ptr<const res::nine_patch> np);
 
-	const decltype(pressed_nine_patch)& get_pressed_nine_patch() const noexcept
+	const decltype(parameters::pressed_nine_patch)& get_pressed_nine_patch() const noexcept
 	{
-		return this->pressed_nine_patch;
+		return this->params.pressed_nine_patch;
 	}
-
-protected:
-	nine_patch_button(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
-
-	void on_pressed_change() override;
 };
 
 } // namespace ruis

@@ -21,10 +21,23 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "nine_patch_button.hpp"
 
-#include "../../context.hpp"
-#include "../../util/util.hpp"
+#include "../../../context.hpp"
+#include "../../../util/util.hpp"
 
 using namespace ruis;
+
+nine_patch_button::nine_patch_button( //
+	utki::shared_ref<ruis::context> context,
+	button::parameters button_params,
+	blending_widget::parameters blending_params,
+	nine_patch::parameters nine_patch_params,
+	parameters params,
+	utki::span<const utki::shared_ref<ruis::widget>> children
+) :
+	widget(std::move(context), widget::parameters{}),
+	button(this->context, std::move(button_params)),
+	nine_patch(this->context, {}, std::move(blending_params), std::move(nine_patch_params), children)
+{}
 
 nine_patch_button::nine_patch_button(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
 	widget(c, desc),
@@ -59,16 +72,16 @@ nine_patch_button::nine_patch_button(const utki::shared_ref<ruis::context>& c, c
 
 void nine_patch_button::on_pressed_change()
 {
-	this->set_nine_patch(this->is_pressed() ? this->pressed_nine_patch : this->unpressed_nine_patch);
+	this->set_nine_patch(this->is_pressed() ? this->params.pressed_nine_patch : this->params.unpressed_nine_patch);
 	this->button::on_pressed_change();
 }
 
 void nine_patch_button::set_pressed_nine_patch(std::shared_ptr<const res::nine_patch> np)
 {
-	this->pressed_nine_patch = std::move(np);
+	this->params.pressed_nine_patch = std::move(np);
 }
 
 void nine_patch_button::set_unpressed_nine_patch(std::shared_ptr<const res::nine_patch> np)
 {
-	this->unpressed_nine_patch = std::move(np);
+	this->params.unpressed_nine_patch = std::move(np);
 }
