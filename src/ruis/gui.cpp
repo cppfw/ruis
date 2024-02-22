@@ -28,7 +28,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "res/treeml.hpp"
 #include "widgets/button/check_box.hpp"
 #include "widgets/button/choice_group.hpp"
-#include "widgets/button/click_drop_down_box.hpp"
+#include "widgets/button/drop_down_box.hpp"
 #include "widgets/button/image_push_button.hpp"
 #include "widgets/button/image_toggle.hpp"
 #include "widgets/button/nine_patch_push_button.hpp"
@@ -324,7 +324,7 @@ void gui::init_standard_widgets(papki::file& fi)
 
 	this->context.get().inflater.register_widget<check_box>("check_box");
 	this->context.get().inflater.register_widget<tree_view>("tree_view");
-	this->context.get().inflater.register_widget<click_drop_down_box>("click_drop_down_box");
+	this->context.get().inflater.register_widget<drop_down_box>("drop_down_box");
 	this->context.get().inflater.register_widget<radio_button>("radio_button");
 	this->context.get().inflater.register_widget<choice_group>("choice_group");
 	this->context.get().inflater.register_widget<image_mouse_cursor>("image_mouse_cursor");

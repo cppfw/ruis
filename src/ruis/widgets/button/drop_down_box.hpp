@@ -21,31 +21,31 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "base/drop_down_box.hpp"
+#include "base/selection_box.hpp"
 
 #include "nine_patch_push_button.hpp"
 
 namespace ruis {
 
-class click_drop_down_box :
+class drop_down_box :
 	virtual public widget, //
 	private nine_patch_push_button,
-	public drop_down_box
+	public selection_box
 {
 	std::weak_ptr<widget> current_drop_down_menu;
 
 	unsigned num_mouse_buttons_pressed = 0;
 
 public:
-	click_drop_down_box(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
+	drop_down_box(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
 
-	click_drop_down_box(const click_drop_down_box&) = delete;
-	click_drop_down_box& operator=(const click_drop_down_box&) = delete;
+	drop_down_box(const drop_down_box&) = delete;
+	drop_down_box& operator=(const drop_down_box&) = delete;
 
-	click_drop_down_box(click_drop_down_box&&) = delete;
-	click_drop_down_box& operator=(click_drop_down_box&&) = delete;
+	drop_down_box(drop_down_box&&) = delete;
+	drop_down_box& operator=(drop_down_box&&) = delete;
 
-	~click_drop_down_box() override = default;
+	~drop_down_box() override = default;
 
 private:
 	// index of the hovered item in the drop down menu

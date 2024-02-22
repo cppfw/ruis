@@ -19,7 +19,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 /* ================ LICENSE END ================ */
 
-#include "click_drop_down_box.hpp"
+#include "drop_down_box.hpp"
 
 #include <utki/debug.hpp>
 
@@ -109,11 +109,11 @@ const auto drop_down_menu_layout = treeml::read(R"qwertyuiop(
 	)qwertyuiop");
 } // namespace
 
-click_drop_down_box::click_drop_down_box(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
+drop_down_box::drop_down_box(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
 	widget(c, desc),
 	button(this->context, drop_down_box_layout),
 	nine_patch_push_button(this->context, drop_down_box_layout),
-	drop_down_box(this->context, desc, this->get_widget_as<ruis::container>("ruis_dropdown_selection"))
+	selection_box(this->context, desc, this->get_widget_as<ruis::container>("ruis_dropdown_selection"))
 {
 	this->pressed_change_handler = [this](button& b) {
 		if (!b.is_pressed()) {
@@ -124,7 +124,7 @@ click_drop_down_box::click_drop_down_box(const utki::shared_ref<ruis::context>& 
 	};
 }
 
-bool click_drop_down_box::on_mouse_button(const mouse_button_event& e)
+bool drop_down_box::on_mouse_button(const mouse_button_event& e)
 {
 	if (e.is_down) {
 		++this->num_mouse_buttons_pressed;
@@ -140,7 +140,7 @@ bool click_drop_down_box::on_mouse_button(const mouse_button_event& e)
 	return this->nine_patch_push_button::on_mouse_button(e);
 }
 
-bool click_drop_down_box::on_mouse_move(const mouse_move_event& e)
+bool drop_down_box::on_mouse_move(const mouse_move_event& e)
 {
 	if (auto cm = this->current_drop_down_menu.lock()) {
 		if (this->num_mouse_buttons_pressed != 0) {
@@ -155,7 +155,7 @@ bool click_drop_down_box::on_mouse_move(const mouse_move_event& e)
 	return this->nine_patch_push_button::on_mouse_move(e);
 }
 
-void click_drop_down_box::show_drop_down_menu()
+void drop_down_box::show_drop_down_menu()
 {
 	if (!this->get_provider()) {
 		return;
@@ -202,7 +202,7 @@ void click_drop_down_box::show_drop_down_menu()
 			.to_shared_ptr();
 }
 
-void click_drop_down_box::handle_mouse_button_up(bool is_first_button_up_event)
+void drop_down_box::handle_mouse_button_up(bool is_first_button_up_event)
 {
 	auto ddm = this->current_drop_down_menu.lock();
 	if (!ddm) {
@@ -229,7 +229,7 @@ void click_drop_down_box::handle_mouse_button_up(bool is_first_button_up_event)
 	});
 }
 
-utki::shared_ref<widget> click_drop_down_box::wrap_item(const utki::shared_ref<widget>& w, size_t index)
+utki::shared_ref<widget> drop_down_box::wrap_item(const utki::shared_ref<widget>& w, size_t index)
 {
 	auto wd = this->context.get().inflater.inflate_as<ruis::container>(item_layout);
 

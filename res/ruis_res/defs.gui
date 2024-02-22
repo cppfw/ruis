@@ -80,12 +80,6 @@ defs{
 		}
 	}
 
-	@drop_down_box{
-		@click_drop_down_box{
-			${children}
-		}
-	}
-
 	@window_background{
 		@nine_patch{
 			lp{dx{fill} dy{fill}}

@@ -24,7 +24,7 @@
 #include <ruis/widgets/label/color.hpp>
 #include <ruis/widgets/label/image.hpp>
 #include <ruis/widgets/input/text_input_line.hpp>
-#include <ruis/widgets/button/base/drop_down_box.hpp>
+#include <ruis/widgets/button/base/selection_box.hpp>
 #include <ruis/layouts/linear_layout.hpp>
 
 #ifdef assert
@@ -824,11 +824,11 @@ public:
 
 		// dropdown
 		{
-			auto dds = c.get().try_get_widget_as<ruis::drop_down_box>("dropdownselector");
+			auto dds = c.get().try_get_widget_as<ruis::selection_box>("dropdownselector");
 			auto ddst = c.get().try_get_widget_as<ruis::text>("dropdownselector_selection");
 			auto ddstw = utki::make_weak(ddst);
 
-			dds->selection_handler = [ddstw](ruis::drop_down_box& dds){
+			dds->selection_handler = [ddstw](ruis::selection_box& dds){
 				if(auto t = ddstw.lock()){
 					std::stringstream ss;
 					ss << "index_" << dds.get_selection();

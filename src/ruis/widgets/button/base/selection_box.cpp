@@ -19,14 +19,14 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 /* ================ LICENSE END ================ */
 
-#include "drop_down_box.hpp"
+#include "selection_box.hpp"
 
 #include "../../../context.hpp"
 
 using namespace ruis;
 
 namespace {
-class static_provider : public drop_down_box::provider
+class static_provider : public selection_box::provider
 {
 	std::vector<treeml::tree> widgets;
 
@@ -55,7 +55,7 @@ public:
 };
 } // namespace
 
-drop_down_box::drop_down_box(
+selection_box::selection_box(
 	const utki::shared_ref<ruis::context>& c,
 	const treeml::forest& desc,
 	container& selection_container
@@ -76,10 +76,10 @@ drop_down_box::drop_down_box(
 	this->set_provider(std::move(pr));
 }
 
-void drop_down_box::set_provider(std::shared_ptr<provider> item_provider)
+void selection_box::set_provider(std::shared_ptr<provider> item_provider)
 {
 	if (item_provider && item_provider->dd) {
-		throw std::logic_error("drop_down_box::setItemsProvider(): given provider is already set to some drop_down_box"
+		throw std::logic_error("selection_box::setItemsProvider(): given provider is already set to some selection_box"
 		);
 	}
 
@@ -93,14 +93,14 @@ void drop_down_box::set_provider(std::shared_ptr<provider> item_provider)
 	this->handle_data_set_changed();
 }
 
-void drop_down_box::provider::notify_data_set_changed()
+void selection_box::provider::notify_data_set_changed()
 {
 	if (this->dd) {
 		this->dd->handle_data_set_changed();
 	}
 }
 
-void drop_down_box::handle_data_set_changed()
+void selection_box::handle_data_set_changed()
 {
 	this->selection_container.clear();
 
@@ -115,7 +115,7 @@ void drop_down_box::handle_data_set_changed()
 	this->selection_container.push_back(this->item_provider->get_widget(this->get_selection()));
 }
 
-void drop_down_box::set_selection(size_t i)
+void selection_box::set_selection(size_t i)
 {
 	this->selected_index = i;
 

@@ -31,7 +31,7 @@ namespace ruis {
  * This is a base class for drop down box widgets.
  * Drop down box widget allows selection of an item from list of items.
  */
-class drop_down_box : virtual public widget
+class selection_box : virtual public widget
 {
 	container& selection_container;
 
@@ -42,9 +42,9 @@ public:
 	 */
 	class provider : virtual public utki::shared
 	{
-		friend class drop_down_box;
+		friend class selection_box;
 
-		drop_down_box* dd = nullptr;
+		selection_box* dd = nullptr;
 
 	protected:
 		provider() = default;
@@ -55,7 +55,7 @@ public:
 		 * @return pointer to a drop down box widget.
 		 * @return nullptr if this provider is not set to any drop down box.
 		 */
-		drop_down_box* get_drop_down_box()
+		selection_box* get_drop_down_box()
 		{
 			return this->dd;
 		}
@@ -103,16 +103,16 @@ public:
 	}
 
 protected:
-	drop_down_box(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc, container& selection_container);
+	selection_box(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc, container& selection_container);
 
 public:
-	drop_down_box(const drop_down_box&) = delete;
-	drop_down_box& operator=(const drop_down_box&) = delete;
+	selection_box(const selection_box&) = delete;
+	selection_box& operator=(const selection_box&) = delete;
 
-	drop_down_box(drop_down_box&&) = delete;
-	drop_down_box& operator=(drop_down_box&&) = delete;
+	selection_box(selection_box&&) = delete;
+	selection_box& operator=(selection_box&&) = delete;
 
-	~drop_down_box() override = default;
+	~selection_box() override = default;
 
 	/**
 	 * @brief Set currently selected item.
@@ -129,7 +129,7 @@ public:
 		return this->selected_index;
 	}
 
-	std::function<void(drop_down_box& dds)> selection_handler;
+	std::function<void(selection_box& dds)> selection_handler;
 
 private:
 	void handle_data_set_changed();
