@@ -202,7 +202,7 @@ jobs:
         repo: deb https://gagis.hopto.org/repo/cppfw/$(lsb_release --id --short | tr '[:upper:]' '[:lower:]') $(lsb_release --codename --short) main
         repo-name: cppfw
         keys-asc: https://gagis.hopto.org/repo/cppfw/pubkey.gpg
-        install: myci
+        install: myci ninja-build
     - name: set PACKAGE_VERSION
       uses: myci-actions/export-env-var@master
       with: {name: PACKAGE_VERSION, value: $(myci-deb-version.sh debian/changelog)}
