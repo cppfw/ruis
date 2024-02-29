@@ -297,7 +297,7 @@
     <Import Project="..\packages\libr4.1.0.79\build\native\libr4.targets" Condition="Exists('..\packages\libr4.1.0.79\build\native\libr4.targets')" />
     <Import Project="..\packages\libpapki.1.0.134\build\native\libpapki.targets" Condition="Exists('..\packages\libpapki.1.0.134\build\native\libpapki.targets')" />
     <Import Project="..\packages\librasterimage.0.1.11\build\native\librasterimage.targets" Condition="Exists('..\packages\librasterimage.0.1.11\build\native\librasterimage.targets')" />
-    <Import Project="..\packages\libtml.0.2.13\build\native\libtml.targets" Condition="Exists('..\packages\libtml.0.2.13\build\native\libtml.targets')" />
+    <Import Project="..\packages\libtml.0.2.17\build\native\libtml.targets" Condition="Exists('..\packages\libtml.0.2.17\build\native\libtml.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -311,6 +311,6 @@
     <Error Condition="!Exists('..\packages\libr4.1.0.79\build\native\libr4.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libr4.1.0.79\build\native\libr4.targets'))" />
     <Error Condition="!Exists('..\packages\libpapki.1.0.134\build\native\libpapki.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libpapki.1.0.134\build\native\libpapki.targets'))" />
     <Error Condition="!Exists('..\packages\librasterimage.0.1.11\build\native\librasterimage.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\librasterimage.0.1.11\build\native\librasterimage.targets'))" />
-    <Error Condition="!Exists('..\packages\libtml.0.2.13\build\native\libtml.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libtml.0.2.13\build\native\libtml.targets'))" />
+    <Error Condition="!Exists('..\packages\libtml.0.2.17\build\native\libtml.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libtml.0.2.17\build\native\libtml.targets'))" />
   </Target>
 </Project>

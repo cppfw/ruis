@@ -638,7 +638,7 @@
     <Import Project="..\packages\librasterimage.0.1.11\build\native\librasterimage.targets" Condition="Exists('..\packages\librasterimage.0.1.11\build\native\librasterimage.targets')" />
     <Import Project="..\packages\libsvgdom.0.4.11\build\native\libsvgdom.targets" Condition="Exists('..\packages\libsvgdom.0.4.11\build\native\libsvgdom.targets')" />
     <Import Project="..\packages\libsvgren.0.6.10\build\native\libsvgren.targets" Condition="Exists('..\packages\libsvgren.0.6.10\build\native\libsvgren.targets')" />
-    <Import Project="..\packages\libtml.0.2.13\build\native\libtml.targets" Condition="Exists('..\packages\libtml.0.2.13\build\native\libtml.targets')" />
+    <Import Project="..\packages\libtml.0.2.17\build\native\libtml.targets" Condition="Exists('..\packages\libtml.0.2.17\build\native\libtml.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -659,6 +659,6 @@
     <Error Condition="!Exists('..\packages\librasterimage.0.1.11\build\native\librasterimage.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\librasterimage.0.1.11\build\native\librasterimage.targets'))" />
     <Error Condition="!Exists('..\packages\libsvgdom.0.4.11\build\native\libsvgdom.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libsvgdom.0.4.11\build\native\libsvgdom.targets'))" />
     <Error Condition="!Exists('..\packages\libsvgren.0.6.10\build\native\libsvgren.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libsvgren.0.6.10\build\native\libsvgren.targets'))" />
-    <Error Condition="!Exists('..\packages\libtml.0.2.13\build\native\libtml.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libtml.0.2.13\build\native\libtml.targets'))" />
+    <Error Condition="!Exists('..\packages\libtml.0.2.17\build\native\libtml.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libtml.0.2.17\build\native\libtml.targets'))" />
   </Target>
 </Project>
