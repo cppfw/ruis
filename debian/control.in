@@ -19,7 +19,7 @@ Build-Depends:
 		libr4-dev (>= 1.0.52),
 		libsvgdom-dev (>= 0.3.56),
 		libsvgren-dev (>= 0.5.7),
-		libtreeml-dev (>= 0.1.26),
+		libtml-dev (>= 0.1.26),
 		libnitki-dev (>= 1.0.39),
 		librasterimage-dev (>= 0.1.4),
 		libtst-dev (>= 0.3.9),
@@ -40,7 +40,7 @@ Depends: libruis$(soname) (= ${binary:Version}), ${misc:Depends},
 	libutki-dev,
 	libpapki-dev,
 	libr4-dev,
-	libtreeml-dev,
+	libtml-dev,
 	librasterimage-dev
 Suggests: libruis-doc
 Priority: extra

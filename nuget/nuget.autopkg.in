@@ -35,7 +35,7 @@ nuget{
 			freetype_static/2.10.1.12;
 			libpapki/1.0.134;
 			librasterimage/0.1.11;
-			libtreeml/0.2.12;
+			libtml/0.2.12;
 			libutki/1.1.228;
 			zlib_static/1.2.11.12;
 			libsvgdom/0.4.11;

@@ -12,7 +12,7 @@ class Libruis < Formula
   depends_on "libtst" => :build
   depends_on "libutki"
   depends_on "libpapki"
-  depends_on "libtreeml"
+  depends_on "libtml"
   depends_on "librasterimage"
   depends_on "z"
   depends_on "freetype"
