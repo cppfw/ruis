@@ -28,7 +28,7 @@ using namespace ruis;
 
 namespace {
 
-const auto window_layout_description = treeml::read(R"qwertyuiop(
+const auto window_layout_description = tml::read(R"qwertyuiop(
 		layout{pile}
 
 		@column{
@@ -170,7 +170,7 @@ void ruis::window::set_background(const utki::shared_ref<widget>& w)
 	this->insert(w, this->children().begin());
 }
 
-ruis::window::window(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
+ruis::window::window(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 	widget(c, desc),
 	container(this->context, window_layout_description)
 {
@@ -185,7 +185,7 @@ ruis::window::window(const utki::shared_ref<ruis::context>& c, const treeml::for
 		}
 
 		if (p.value == "title") {
-			this->set_title(get_property_value(p).to_string());
+			this->set_title(get_property_value(p).string);
 		} else if (p.value == "look") {
 			for (const auto& pp : p.children) {
 				if (!is_property(pp)) {

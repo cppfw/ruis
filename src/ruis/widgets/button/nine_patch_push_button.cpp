@@ -49,7 +49,7 @@ nine_patch_push_button::nine_patch_push_button( //
 	// TODO: load default pressed/unpressed nine-patches
 }
 
-nine_patch_push_button::nine_patch_push_button(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
+nine_patch_push_button::nine_patch_push_button(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 	widget(c, desc),
 	button(this->context, desc),
 	push_button(this->context, desc),

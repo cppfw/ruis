@@ -21,7 +21,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include <treeml/tree.hpp>
+#include <tml/tree.hpp>
 
 #include "../render/texture_2d.hpp"
 #include "../resource_loader.hpp"
@@ -80,7 +80,7 @@ public:
 private:
 	static utki::shared_ref<texture> load(
 		const utki::shared_ref<ruis::context>& ctx,
-		const ::treeml::forest& desc,
+		const ::tml::forest& desc,
 		const papki::file& fi
 	);
 };

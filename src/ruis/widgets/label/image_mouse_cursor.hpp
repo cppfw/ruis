@@ -42,7 +42,7 @@ class image_mouse_cursor : public container
 	vector2 cursorPos;
 
 public:
-	image_mouse_cursor(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
+	image_mouse_cursor(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 
 	image_mouse_cursor(const image_mouse_cursor&) = delete;
 	image_mouse_cursor& operator=(const image_mouse_cursor&) = delete;

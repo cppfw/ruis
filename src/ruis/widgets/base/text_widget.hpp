@@ -102,7 +102,7 @@ public:
 	std::function<void(text_widget& w)> text_change_handler;
 
 protected:
-	text_widget(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
+	text_widget(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 
 private:
 };

@@ -37,7 +37,7 @@ class drop_down_box :
 	unsigned num_mouse_buttons_pressed = 0;
 
 public:
-	drop_down_box(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
+	drop_down_box(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 
 	drop_down_box(const drop_down_box&) = delete;
 	drop_down_box& operator=(const drop_down_box&) = delete;

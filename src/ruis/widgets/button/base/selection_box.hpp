@@ -103,7 +103,7 @@ public:
 	}
 
 protected:
-	selection_box(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc, container& selection_container);
+	selection_box(const utki::shared_ref<ruis::context>& c, const tml::forest& desc, container& selection_container);
 
 public:
 	selection_box(const selection_box&) = delete;

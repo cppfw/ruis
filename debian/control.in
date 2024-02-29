@@ -51,7 +51,7 @@ Description: GUI framework development files
 
 Package: libruis$(soname)-dbgsrc
 Section: debug
-Architecture: any
+Architecture: all
 Depends: libruis$(soname)-dbgsym (= ${binary:Version}), ${misc:Depends}
 Description: debugging sources for libruis$(soname) package.
 

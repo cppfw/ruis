@@ -21,7 +21,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include <treeml/tree.hpp>
+#include <tml/tree.hpp>
 
 #include "../resource_loader.hpp"
 #include "../util/util.hpp"
@@ -29,11 +29,11 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 namespace ruis::res {
 
 /**
- * @brief resource holding a treeml forest.
+ * @brief resource holding a tml forest.
  *
  * %resource description:
  *
- * @param file - file to read the treeml from.
+ * @param file - file to read the tml from.
  *
  * Example:
  * @code
@@ -42,37 +42,37 @@ namespace ruis::res {
  * }
  * @endcode
  */
-class treeml : public resource
+class tml : public resource
 {
 	friend class ruis::resource_loader;
 
-	::treeml::forest s;
+	::tml::forest s;
 
 public:
 	/**
-	 * @brief Create treeml resource.
+	 * @brief Create tml resource.
 	 * @param c - context.
-	 * @param s - treeml forest to initialize the resource with.
+	 * @param s - tml forest to initialize the resource with.
 	 */
-	treeml(const utki::shared_ref<ruis::context>& c, ::treeml::forest s);
+	tml(const utki::shared_ref<ruis::context>& c, ::tml::forest s);
 
-	treeml(const treeml&) = delete;
-	treeml& operator=(const treeml&) = delete;
+	tml(const tml&) = delete;
+	tml& operator=(const tml&) = delete;
 
-	treeml(treeml&&) = delete;
-	treeml& operator=(treeml&&) = delete;
+	tml(tml&&) = delete;
+	tml& operator=(tml&&) = delete;
 
-	~treeml() override = default;
+	~tml() override = default;
 
-	const ::treeml::forest& forest() const noexcept
+	const ::tml::forest& forest() const noexcept
 	{
 		return this->s;
 	}
 
 private:
-	static utki::shared_ref<treeml> load(
+	static utki::shared_ref<tml> load(
 		const utki::shared_ref<ruis::context>& ctx,
-		const ::treeml::forest& desc,
+		const ::tml::forest& desc,
 		const papki::file& fi
 	);
 };

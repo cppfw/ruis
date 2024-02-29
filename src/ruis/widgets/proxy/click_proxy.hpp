@@ -33,7 +33,7 @@ class click_proxy : virtual public widget
 public:
 	click_proxy(utki::shared_ref<ruis::context> context, widget::parameters params);
 
-	click_proxy(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
+	click_proxy(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 
 	click_proxy(const click_proxy&) = delete;
 	click_proxy& operator=(const click_proxy&) = delete;

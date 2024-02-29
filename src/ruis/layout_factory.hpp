@@ -24,7 +24,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <functional>
 #include <map>
 
-#include <treeml/tree.hpp>
+#include <tml/tree.hpp>
 #include <utki/shared_ref.hpp>
 
 namespace ruis {

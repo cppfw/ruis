@@ -14,7 +14,7 @@ namespace{
 const tst::set set("inflating", [](tst::suite& suite){
     suite.add("whole_definition_chain_is_substituted", []{
         ruis::gui m(make_dummy_context());
-		auto w = m.context.get().inflater.inflate(treeml::read(R"qwertyuiop(
+		auto w = m.context.get().inflater.inflate(tml::read(R"qwertyuiop(
 			@container{
 				defs{
 					dims{dx{max} dy{123}}
@@ -47,7 +47,7 @@ const tst::set set("inflating", [](tst::suite& suite){
 
     suite.add("template_properties_overriding", []{
 		ruis::gui m(make_dummy_context());
-		auto w = m.context.get().inflater.inflate(treeml::read(R"qwertyuiop(
+		auto w = m.context.get().inflater.inflate(tml::read(R"qwertyuiop(
 			@container{
 				defs{
 					@Cont{
@@ -84,7 +84,7 @@ const tst::set set("inflating", [](tst::suite& suite){
 
     suite.add("template_arguments", []{
 		ruis::gui m(make_dummy_context());
-		auto w = m.context.get().inflater.inflate(treeml::read(R"qwertyuiop(
+		auto w = m.context.get().inflater.inflate(tml::read(R"qwertyuiop(
 			@container{
 				defs{
 					@Cont{
@@ -130,7 +130,7 @@ const tst::set set("inflating", [](tst::suite& suite){
 
     suite.add("template_arguments_inside_of_nested_containers", []{
 		ruis::gui m(make_dummy_context());
-		auto w = m.context.get().inflater.inflate(treeml::read(R"qwertyuiop(
+		auto w = m.context.get().inflater.inflate(tml::read(R"qwertyuiop(
 			@container{
 				@container{
 					defs{
@@ -171,7 +171,7 @@ const tst::set set("inflating", [](tst::suite& suite){
 				}
 			}
 		)");
-		auto w = m.context.get().inflater.inflate(treeml::read(R"qwertyuiop(
+		auto w = m.context.get().inflater.inflate(tml::read(R"qwertyuiop(
 			@container{
 				defs{
 					@Cont{ x y
@@ -232,7 +232,7 @@ const tst::set set("inflating", [](tst::suite& suite){
 			}
 		)");
 
-		auto w = m.context.get().inflater.inflate(treeml::read(R"qwertyuiop(
+		auto w = m.context.get().inflater.inflate(tml::read(R"qwertyuiop(
 			@container{
 				@Tmpl
 			}
@@ -247,7 +247,7 @@ const tst::set set("inflating", [](tst::suite& suite){
 		ruis::gui m(make_dummy_context());
 		bool logic_error_occurred = false;
 		try{
-			auto w = m.context.get().inflater.inflate(treeml::read(R"qwertyuiop(
+			auto w = m.context.get().inflater.inflate(tml::read(R"qwertyuiop(
 				defs{
 					@container{ x y layout dx
 						@pile{
@@ -284,7 +284,7 @@ const tst::set set("inflating", [](tst::suite& suite){
 
     suite.add("two_defs_blocks_in_widget", []{
 		ruis::gui m(make_dummy_context());
-		auto w = m.context.get().inflater.inflate(treeml::read(R"qwertyuiop(
+		auto w = m.context.get().inflater.inflate(tml::read(R"qwertyuiop(
 			@container{
 				defs{
 					@Tmpl1{@pile}
@@ -317,7 +317,7 @@ const tst::set set("inflating", [](tst::suite& suite){
 			)"
 		);
 
-		auto w = m.context.get().inflater.inflate(treeml::read(R"qwertyuiop(
+		auto w = m.context.get().inflater.inflate(tml::read(R"qwertyuiop(
 			@widget{
 				defs{
 					test_var{666}
@@ -336,7 +336,7 @@ const tst::set set("inflating", [](tst::suite& suite){
 	suite.add("inflating_row_layout", [](){
 		ruis::gui m(make_dummy_context());
 
-		auto w = m.context.get().inflater.inflate(treeml::read(R"qwertyuiop(
+		auto w = m.context.get().inflater.inflate(tml::read(R"qwertyuiop(
 			@row{
 				@widget{
 					id{ widget1 }
@@ -353,7 +353,7 @@ const tst::set set("inflating", [](tst::suite& suite){
 	suite.add("inflating_left_alignment", [](){
 		ruis::gui m(make_dummy_context());
 
-		auto t = m.context.get().inflater.inflate(treeml::read(R"qwertyuiop(
+		auto t = m.context.get().inflater.inflate(tml::read(R"qwertyuiop(
 			@left{
 				@widget{
 					id{ widget1 }
@@ -371,7 +371,7 @@ const tst::set set("inflating", [](tst::suite& suite){
 	suite.add("inflating_top_alignment", [](){
 		ruis::gui m(make_dummy_context());
 
-		auto t = m.context.get().inflater.inflate(treeml::read(R"qwertyuiop(
+		auto t = m.context.get().inflater.inflate(tml::read(R"qwertyuiop(
 			@top{
 				@widget{
 					id{ widget1 }

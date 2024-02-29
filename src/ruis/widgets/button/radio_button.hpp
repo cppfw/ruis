@@ -40,7 +40,7 @@ class radio_button :
 	const utki::shared_ref<widget> check_widget;
 
 public:
-	radio_button(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
+	radio_button(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 
 	radio_button(const radio_button&) = delete;
 	radio_button& operator=(const radio_button&) = delete;

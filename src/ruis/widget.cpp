@@ -29,7 +29,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace ruis;
 
 // NOLINTNEXTLINE(modernize-pass-by-value)
-widget::widget(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
+widget::widget(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 	context(c)
 {
 	for (const auto& p : desc) {
@@ -49,7 +49,7 @@ widget::widget(const utki::shared_ref<ruis::context>& c, const treeml::forest& d
 			} else if (p.value == "dy") {
 				this->params.rectangle.d.y() = parse_dimension_value(get_property_value(p), this->context.get().units);
 			} else if (p.value == "id") {
-				this->params.id = get_property_value(p).to_string();
+				this->params.id = get_property_value(p).string;
 				// TRACE(<< "inflating '" << this->id << "'" << std::endl)
 			} else if (p.value == "clip") {
 				this->params.clip = get_property_value(p).to_bool();
@@ -62,7 +62,7 @@ widget::widget(const utki::shared_ref<ruis::context>& c, const treeml::forest& d
 			}
 		} catch (std::invalid_argument&) {
 			LOG([&](auto& o) {
-				o << "could not parse value of " << treeml::to_string(p) << std::endl;
+				o << "could not parse value of " << tml::to_string(p) << std::endl;
 			})
 			throw;
 		}

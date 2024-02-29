@@ -35,7 +35,7 @@ class tab_group :
 	std::shared_ptr<const res::image::texture> filler_texture;
 
 public:
-	tab_group(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
+	tab_group(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 
 	tab_group(const tab_group&) = delete;
 	tab_group& operator=(const tab_group&) = delete;

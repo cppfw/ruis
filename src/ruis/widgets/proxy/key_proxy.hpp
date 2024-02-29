@@ -40,7 +40,7 @@ public:
 		utki::span<const utki::shared_ref<widget>> children
 	);
 
-	key_proxy(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
+	key_proxy(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 		widget(c, desc),
 		container(this->context, desc, pile_layout::instance)
 	{}

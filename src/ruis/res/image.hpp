@@ -119,7 +119,7 @@ public:
 private:
 	static utki::shared_ref<image> load(
 		const utki::shared_ref<ruis::context>& ctx,
-		const ::treeml::forest& desc,
+		const ::tml::forest& desc,
 		const papki::file& fi
 	);
 
@@ -175,7 +175,7 @@ public:
 private:
 	static utki::shared_ref<atlas_image> load(
 		const utki::shared_ref<ruis::context>& ctx,
-		const ::treeml::forest& desc,
+		const ::tml::forest& desc,
 		const papki::file& fi
 	);
 };

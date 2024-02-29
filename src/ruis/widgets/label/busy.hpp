@@ -32,7 +32,7 @@ namespace ruis {
 class busy : public spinner
 {
 public:
-	busy(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
+	busy(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 
 	void set_active(bool active);
 };

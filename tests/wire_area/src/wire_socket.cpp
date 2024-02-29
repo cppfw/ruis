@@ -4,7 +4,7 @@
 
 #include <ruis/util/util.hpp>
 
-wire_socket::wire_socket(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
+wire_socket::wire_socket(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 		ruis::widget(c, desc)
 {
 	for(const auto& p : desc){

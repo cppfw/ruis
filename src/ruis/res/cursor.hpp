@@ -74,7 +74,7 @@ private:
 
 	static utki::shared_ref<cursor> load(
 		const utki::shared_ref<ruis::context>& ctx,
-		const ::treeml::forest& desc,
+		const ::tml::forest& desc,
 		const papki::file& fi
 	);
 };

@@ -31,7 +31,7 @@ gradient::gradient(utki::shared_ref<ruis::context> context, widget::parameters w
 	params(std::move(params))
 {}
 
-gradient::gradient(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
+gradient::gradient(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 	widget(c, desc)
 {
 	for (const auto& p : desc) {
@@ -41,7 +41,7 @@ gradient::gradient(const utki::shared_ref<ruis::context>& c, const treeml::fores
 
 		if (p.value == "gradient") {
 			this->params.gradient =
-				this->context.get().loader.load<res::gradient>(get_property_value(p).to_string()).to_shared_ptr();
+				this->context.get().loader.load<res::gradient>(get_property_value(p).string).to_shared_ptr();
 		}
 	}
 }

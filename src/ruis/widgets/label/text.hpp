@@ -37,7 +37,7 @@ class text :
 	public color_widget
 {
 public:
-	text(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
+	text(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 
 	text(
 		utki::shared_ref<ruis::context> context,

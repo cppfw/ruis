@@ -25,7 +25,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <map>
 
 #include <papki/file.hpp>
-#include <treeml/tree.hpp>
+#include <tml/tree.hpp>
 #include <utki/shared.hpp>
 
 namespace ruis {
@@ -35,10 +35,10 @@ class context;
 
 /**
  * @brief Resource loader.
- * This class manages application recources loading from treeml resource description scripts.
+ * This class manages application recources loading from tml resource description scripts.
  *
- * Format of resource description scripts is simple. It uses treeml markup.
- * Each resource is a root-level treeml node, the value is a name of the resource, by that name
+ * Format of resource description scripts is simple. It uses tml markup.
+ * Each resource is a root-level tml node, the value is a name of the resource, by that name
  * the application will load that resource.The children of resource name are the properties of the resource.
  * Each resource type defines their own properties.
  *
@@ -76,7 +76,7 @@ class resource_loader
 		std::unique_ptr<const papki::file> fi;
 
 		// TODO: use std::map/std::unordered_map?
-		treeml::forest script;
+		tml::forest script;
 
 		res_pack_entry(decltype(fi) fi, decltype(script) script) :
 			fi(std::move(fi)),
@@ -92,7 +92,7 @@ class resource_loader
 
 		void add_resource_to_res_map(const utki::shared_ref<resource>& res, std::string_view id);
 		std::shared_ptr<resource> find_resource_in_res_map(std::string_view id);
-		const treeml::forest* find_resource_in_script(std::string_view id) const;
+		const tml::forest* find_resource_in_script(std::string_view id) const;
 	};
 
 	// use std::list to be able to use iterator as resource pack id

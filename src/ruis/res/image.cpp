@@ -72,7 +72,7 @@ atlas_image::atlas_image(const utki::shared_ref<ruis::context>& c, const utki::s
 
 utki::shared_ref<atlas_image> atlas_image::load(
 	const utki::shared_ref<ruis::context>& ctx,
-	const treeml::forest& desc,
+	const tml::forest& desc,
 	const papki::file& fi
 )
 {
@@ -82,7 +82,7 @@ utki::shared_ref<atlas_image> atlas_image::load(
 	for (auto& p : desc) {
 		if (p.value == "tex") {
 			tex = ctx.get()
-					  .loader.load<res::texture>(get_property_value(p).to_string())
+					  .loader.load<res::texture>(get_property_value(p).string)
 					  .to_shared_ptr(); // TODO: do not use to_shared_ptr() here
 		} else if (p.value == "rect") {
 			rect = parse_rect(p.children);
@@ -270,13 +270,13 @@ public:
 
 utki::shared_ref<image> image::load(
 	const utki::shared_ref<ruis::context>& ctx,
-	const treeml::forest& desc,
+	const tml::forest& desc,
 	const papki::file& fi
 )
 {
 	for (auto& p : desc) {
 		if (p.value == "file") {
-			fi.set_path(get_property_value(p).to_string());
+			fi.set_path(get_property_value(p).string);
 			return image::load(ctx, fi);
 		}
 	}

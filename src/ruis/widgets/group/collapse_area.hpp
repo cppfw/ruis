@@ -35,7 +35,7 @@ class collapse_area :
 	std::shared_ptr<container> title_v;
 
 public:
-	collapse_area(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
+	collapse_area(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 
 	container& content() noexcept
 	{

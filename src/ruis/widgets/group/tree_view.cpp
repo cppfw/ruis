@@ -28,10 +28,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
-tree_view::tree_view(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
+tree_view::tree_view(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 	widget(c, desc),
-	scroll_area(this->context, treeml::forest()),
-	item_list(utki::make_shared<ruis::list>(this->context, treeml::forest()))
+	scroll_area(this->context, tml::forest()),
+	item_list(utki::make_shared<ruis::list>(this->context, tml::forest()))
 {
 	this->push_back(this->item_list);
 
@@ -89,7 +89,7 @@ size_t tree_view::provider::count() const noexcept
 }
 
 namespace {
-const treeml::forest plus_minus_layout = treeml::read(R"qwertyuiop(
+const tml::forest plus_minus_layout = tml::read(R"qwertyuiop(
 		@pile{
 			@image{
 				id{plusminus}
@@ -103,7 +103,7 @@ const treeml::forest plus_minus_layout = treeml::read(R"qwertyuiop(
 		}
 	)qwertyuiop");
 
-const treeml::forest vert_line_layout = treeml::read(R"qwertyuiop(
+const tml::forest vert_line_layout = tml::read(R"qwertyuiop(
 		@pile{
 			lp{dx{${ruis_tree_view_indent}} dy{fill}}
 			@color{
@@ -113,7 +113,7 @@ const treeml::forest vert_line_layout = treeml::read(R"qwertyuiop(
 		}
 	)qwertyuiop");
 
-const treeml::forest line_end_layout = treeml::read(R"qwertyuiop(
+const tml::forest line_end_layout = tml::read(R"qwertyuiop(
 		@pile{
 			lp{dx{${ruis_tree_view_indent}} dy{max}}
 			@column{
@@ -135,7 +135,7 @@ const treeml::forest line_end_layout = treeml::read(R"qwertyuiop(
 		}
 	)qwertyuiop");
 
-const treeml::forest line_middle_layout = treeml::read(R"qwertyuiop(
+const tml::forest line_middle_layout = tml::read(R"qwertyuiop(
 		@pile{
 			lp{dx{${ruis_tree_view_indent}} dy{max}}
 			@color{
@@ -153,7 +153,7 @@ const treeml::forest line_middle_layout = treeml::read(R"qwertyuiop(
 		}
 	)qwertyuiop");
 
-const treeml::forest empty_layout = treeml::read(R"qwertyuiop(
+const tml::forest empty_layout = tml::read(R"qwertyuiop(
 		@widget{lp{dx{${ruis_tree_view_indent}}dy{0}}}
 	)qwertyuiop");
 } // namespace
@@ -181,7 +181,7 @@ utki::shared_ref<widget> tree_view::provider::get_widget(size_t index)
 		o << "provider is not set to a list_widget";
 	})
 
-	auto ret = utki::make_shared<ruis::container>(this->get_list()->context, treeml::forest(), row_layout::instance);
+	auto ret = utki::make_shared<ruis::container>(this->get_list()->context, tml::forest(), row_layout::instance);
 
 	ASSERT(is_last_item_in_parent.size() == path.size())
 

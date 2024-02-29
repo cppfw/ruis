@@ -15,8 +15,8 @@ public:
     container_which_invalidates_its_layout_during_layouting(
                 const utki::shared_ref<ruis::context>& c
         ) :
-            ruis::widget(c, treeml::forest()),
-            ruis::container(this->context, treeml::forest())
+            ruis::widget(c, tml::forest()),
+            ruis::container(this->context, tml::forest())
     {}
 
     void on_lay_out()override{
@@ -30,7 +30,7 @@ const tst::set set("layouting", [](tst::suite& suite){
     suite.add("invalidate_layout_during_layouting_should_result_in_dirty_layout__lay_out_method", []{
         auto context = make_dummy_context();
 
-        auto c = std::make_shared<ruis::container>(context, treeml::forest());
+        auto c = std::make_shared<ruis::container>(context, tml::forest());
         auto tc = utki::make_shared<container_which_invalidates_its_layout_during_layouting>(context);
 
         tst::check(tc.get().is_layout_dirty(), SL);
@@ -46,7 +46,7 @@ const tst::set set("layouting", [](tst::suite& suite){
     suite.add("invalidate_layout_during_layouting_should_result_in_dirty_layout__resize_to_same_size", []{
         auto context = make_dummy_context();
 
-        auto c = std::make_shared<ruis::container>(context, treeml::forest());
+        auto c = std::make_shared<ruis::container>(context, tml::forest());
         auto tc = utki::make_shared<container_which_invalidates_its_layout_during_layouting>(context);
 
         tst::check(tc.get().is_layout_dirty(), SL);
@@ -62,7 +62,7 @@ const tst::set set("layouting", [](tst::suite& suite){
     suite.add("invalidate_layout_during_layouting_should_result_in_dirty_layout__resize_to_different_size", []{
         auto context = make_dummy_context();
 
-        auto c = std::make_shared<ruis::container>(context, treeml::forest());
+        auto c = std::make_shared<ruis::container>(context, tml::forest());
         auto tc = utki::make_shared<container_which_invalidates_its_layout_during_layouting>(context);
 
         tst::check(tc.get().is_layout_dirty(), SL);

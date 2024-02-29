@@ -19,29 +19,29 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 /* ================ LICENSE END ================ */
 
-#include "treeml.hpp"
+#include "tml.hpp"
 
 #include "../context.hpp"
 #include "../resource_loader.hpp"
 
 using namespace ruis::res;
 
-ruis::res::treeml::treeml(const utki::shared_ref<ruis::context>& c, ::treeml::forest forest) :
+ruis::res::tml::tml(const utki::shared_ref<ruis::context>& c, ::tml::forest forest) :
 	resource(c),
 	s(std::move(forest))
 {}
 
-utki::shared_ref<ruis::res::treeml> ruis::res::treeml::load(
+utki::shared_ref<ruis::res::tml> ruis::res::tml::load(
 	const utki::shared_ref<ruis::context>& ctx,
-	const ::treeml::forest& desc,
+	const ::tml::forest& desc,
 	const papki::file& fi
 )
 {
 	for (auto& p : desc) {
 		if (p.value == "file") {
-			fi.set_path(get_property_value(p).to_string());
+			fi.set_path(get_property_value(p).string);
 		}
 	}
 
-	return utki::make_shared<treeml>(ctx, ::treeml::read(fi));
+	return utki::make_shared<tml>(ctx, ::tml::read(fi));
 }

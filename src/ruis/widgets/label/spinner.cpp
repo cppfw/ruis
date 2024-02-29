@@ -27,7 +27,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
-spinner::spinner(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
+spinner::spinner(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 	widget(c, desc),
 	image(this->context, desc)
 {}

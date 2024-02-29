@@ -43,7 +43,7 @@ lp lp::make(const tml::forest& desc, const ruis::units& units)
 			}
 		} catch (std::invalid_argument&) {
 			LOG([&](auto& o) {
-				o << "could not parse value of " << treeml::to_string(p) << std::endl;
+				o << "could not parse value of " << tml::to_string(p) << std::endl;
 			})
 			throw;
 		}

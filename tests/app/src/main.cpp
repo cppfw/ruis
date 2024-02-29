@@ -39,7 +39,7 @@ class simple_widget :
 	utki::shared_ref<const ruis::res::texture> tex;
 
 public:
-	simple_widget(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
+	simple_widget(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 			ruis::widget(c, desc),
 			ruis::character_input_widget(this->context),
 			tex(this->context.get().loader.load<ruis::res::texture>("tex_sample"))
@@ -143,7 +143,7 @@ class cube_widget : public ruis::widget, public ruis::updateable{
 public:
 	std::shared_ptr<ruis::vertex_array> cubeVAO;
 
-	cube_widget(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
+	cube_widget(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 			ruis::widget(c, desc)
 	{
 		// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers)
@@ -237,7 +237,7 @@ public:
 };
 
 class tree_view_items_provider : public ruis::tree_view::provider{
-	treeml::forest root;
+	tml::forest root;
 
 	utki::shared_ref<ruis::context> context;
 public:
@@ -246,7 +246,7 @@ public:
 	tree_view_items_provider(const utki::shared_ref<ruis::context>& c) :
 			context(c)
 	{
-		this->root = treeml::read(R"qwertyuiop(
+		this->root = tml::read(R"qwertyuiop(
 				root1{
 					subroot1{
 						subsubroot1
@@ -302,8 +302,8 @@ public:
 			return;
 		}
 
-		treeml::forest* list = &this->root;
-		treeml::forest* parent_list = nullptr;
+		tml::forest* list = &this->root;
+		tml::forest* parent_list = nullptr;
 
 		for(auto& i : this->selected_item){
 			parent_list = list;
@@ -314,7 +314,7 @@ public:
 			return;
 		}
 
-		parent_list->insert(utki::next(parent_list->begin(), this->selected_item.back()), treeml::leaf(this->generate_new_item_value()));
+		parent_list->insert(utki::next(parent_list->begin(), this->selected_item.back()), tml::leaf(this->generate_new_item_value()));
 
 		this->notify_item_added(utki::make_span(this->selected_item));
 		++this->selected_item.back();
@@ -325,8 +325,8 @@ public:
 			return;
 		}
 
-		treeml::forest* list = &this->root;
-		treeml::forest* parent_list = nullptr;
+		tml::forest* list = &this->root;
+		tml::forest* parent_list = nullptr;
 
 		for(auto& i : this->selected_item){
 			parent_list = list;
@@ -337,7 +337,7 @@ public:
 			return;
 		}
 
-		parent_list->insert(utki::next(parent_list->begin(), this->selected_item.back() + 1), treeml::leaf(this->generate_new_item_value()));
+		parent_list->insert(utki::next(parent_list->begin(), this->selected_item.back() + 1), tml::leaf(this->generate_new_item_value()));
 
 		++this->selected_item.back();
 		this->notify_item_added(utki::make_span(this->selected_item));
@@ -349,7 +349,7 @@ public:
 			return;
 		}
 
-		treeml::forest* list = &this->root;
+		tml::forest* list = &this->root;
 
 		for(auto& i : this->selected_item){
 			list = &(*list)[i].children;
@@ -368,7 +368,7 @@ public:
 		auto list = &this->root;
 		decltype(list) parent_list = nullptr;
 
-		treeml::tree* n = nullptr;
+		tml::tree* n = nullptr;
 
 		for(const auto& i : path){
 			n = &(*list)[i];
@@ -376,7 +376,7 @@ public:
 			list = &n->children;
 		}
 
-		auto ret = utki::make_shared<ruis::container>(this->context, treeml::forest(), ruis::row_layout::instance);
+		auto ret = utki::make_shared<ruis::container>(this->context, tml::forest(), ruis::row_layout::instance);
 
 		{
 			auto v = this->context.get().inflater.inflate(
@@ -403,7 +403,7 @@ public:
 				auto value = v.get().try_get_widget_as<ruis::text>("value");
 				ASSERT(value)
 				value->set_text(
-						n->value.to_string() // NOLINT(clang-analyzer-core.CallAndMessage): due to ASSERT(!path.empty()) in the beginning of the function 'n' is not nullptr
+						n->value.string // NOLINT(clang-analyzer-core.CallAndMessage): due to ASSERT(!path.empty()) in the beginning of the function 'n' is not nullptr
 					);
 			}
 			{

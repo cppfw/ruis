@@ -10,7 +10,7 @@ namespace{
 const tst::set set("finding_widgets", [](tst::suite& suite){
     suite.add("get_all_widgets_function", []{
 		ruis::gui m(make_dummy_context());
-		auto w = m.context.get().inflater.inflate(treeml::read(R"qwertyuiop(
+		auto w = m.context.get().inflater.inflate(tml::read(R"qwertyuiop(
 			@container{
 				@scroll_area{
 					id{1}
@@ -69,7 +69,7 @@ const tst::set set("finding_widgets", [](tst::suite& suite){
 
 	suite.add("chaining_get_widget", [](){
 		ruis::gui m(make_dummy_context());
-		auto w = m.context.get().inflater.inflate(treeml::read(R"qwertyuiop(
+		auto w = m.context.get().inflater.inflate(tml::read(R"qwertyuiop(
 			@container{
 				id{root}
 

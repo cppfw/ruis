@@ -79,7 +79,7 @@ void gradient::set(std::vector<std::tuple<real, uint32_t>>& stops, bool vertical
 
 utki::shared_ref<gradient> gradient::load(
 	const utki::shared_ref<ruis::context>& ctx,
-	const treeml::forest& desc,
+	const tml::forest& desc,
 	const papki::file& fi
 )
 {

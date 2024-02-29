@@ -60,7 +60,8 @@ jobs:
           - {os: debian, codename: bullseye, image_owner: , package_type: deb}
           # - {os: debian, codename: bullseye, image_owner: i386/, package_type: deb, labels: [i386,docker]}
           - {os: debian, codename: bullseye, image_owner: arm32v7/, package_type: deb, labels: [arm,docker]}
-          - {os: ubuntu, codename: focal, image_owner: , package_type: deb}
+          - {os: debian, codename: bullseye, image_owner: arm64v8/, package_type: deb, labels: [arm64,docker]}
+          # - {os: ubuntu, codename: focal, image_owner: , package_type: deb}
           - {os: ubuntu, codename: jammy, image_owner: , package_type: deb}
           # - {os: raspbian, codename: buster, image_owner: igagis/, package_type: deb, labels: [arm,docker]}
           - {os: raspbian, codename: bullseye, image_owner: igagis/, package_type: deb, labels: [arm,docker]}
@@ -101,7 +102,7 @@ jobs:
       - name: deploy deb packages
         run: |
           echo "${{ secrets.MYCI_REPO_SSH_KEY }}" > repo_key_rsa && chmod 600 repo_key_rsa
-          myci-deploy-debian-ssh-freight.sh --key repo_key_rsa --server gagis.hopto.org --repo cppfw/${{ matrix.os }} --distro ${{ matrix.codename }} --component main ../lib${PACKAGE_NAME}*_${PACKAGE_VERSION}_*.deb
+          myci-deploy-apt-ssh.sh --key repo_key_rsa --server gagis.hopto.org --repo cppfw/${{ matrix.os }} --distro ${{ matrix.codename }} --component main ../lib${PACKAGE_NAME}*_${PACKAGE_VERSION}_*.deb
         if: matrix.package_type == 'deb' && startsWith(github.ref, 'refs/tags/')
 ##### macosx #####
   macosx:

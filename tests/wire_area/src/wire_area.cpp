@@ -10,7 +10,7 @@ const ruis::real antialias_width = ruis::real(0.55f);
 const ruis::real spline_control_length = ruis::real(100);
 }
 
-wire_area::wire_area(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
+wire_area::wire_area(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 		widget(c, desc),
 		container(this->context, desc, ruis::pile_layout::instance)
 {

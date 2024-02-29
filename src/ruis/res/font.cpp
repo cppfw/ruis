@@ -74,7 +74,7 @@ res::font::font(
 
 utki::shared_ref<res::font> res::font::load(
 	const utki::shared_ref<ruis::context>& ctx,
-	const treeml::forest& desc,
+	const tml::forest& desc,
 	const papki::file& fi
 )
 {
@@ -92,13 +92,13 @@ utki::shared_ref<res::font> res::font::load(
 		} else if (p.value == "max_cached") {
 			max_cached = unsigned(get_property_value(p).to_uint32());
 		} else if (p.value == "normal") {
-			fi.set_path(get_property_value(p).to_string());
+			fi.set_path(get_property_value(p).string);
 		} else if (p.value == "bold") {
-			file_bold = fi.spawn(get_property_value(p).to_string());
+			file_bold = fi.spawn(get_property_value(p).string);
 		} else if (p.value == "italic") {
-			file_italic = fi.spawn(get_property_value(p).to_string());
+			file_italic = fi.spawn(get_property_value(p).string);
 		} else if (p.value == "bold_italic") {
-			file_bold_italic = fi.spawn(get_property_value(p).to_string());
+			file_bold_italic = fi.spawn(get_property_value(p).string);
 		}
 	}
 

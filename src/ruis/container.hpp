@@ -141,11 +141,11 @@ public:
 	 * @param c - context to which this widget belongs.
 	 * @param desc - description of the widget.
 	 */
-	container(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
+	container(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 
 	container(
 		const utki::shared_ref<ruis::context>& c,
-		const treeml::forest& desc,
+		const tml::forest& desc,
 		const utki::shared_ref<ruis::layout>& layout
 	);
 
@@ -220,7 +220,7 @@ public:
 	 * This function invalidates iterators which were obtained before calling to it.
 	 * @param desc - GUI description of the widgets to add.
 	 */
-	void push_back_inflate(const treeml::forest& desc);
+	void push_back_inflate(const tml::forest& desc);
 
 	/**
 	 * @brief Remove last child.

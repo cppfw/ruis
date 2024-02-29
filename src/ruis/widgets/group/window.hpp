@@ -80,7 +80,7 @@ class window :
 	void update_topmost();
 
 public:
-	window(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
+	window(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 
 	window(const window&) = delete;
 	window& operator=(const window&) = delete;

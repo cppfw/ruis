@@ -8,7 +8,7 @@ target "ruis" do
 	pod 'utki', '>= 1.1.124'
 	pod 'papki', '>= 1.0.93'
 	pod 'r4', '>= 1.0.53'
-	pod 'treeml', '>= 0.1.28'
+	pod 'tml', '>= 0.1.28'
 	pod 'svgdom', '>= 0.3.61'
 	pod 'svgren', '>= 0.5.11'
 	pod 'nitki', '>= 1.0.41'

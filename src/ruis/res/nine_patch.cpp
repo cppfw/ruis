@@ -102,7 +102,7 @@ public:
 
 utki::shared_ref<nine_patch> nine_patch::load(
 	const utki::shared_ref<ruis::context>& ctx,
-	const treeml::forest& desc,
+	const tml::forest& desc,
 	const papki::file& fi
 )
 {
@@ -111,7 +111,7 @@ utki::shared_ref<nine_patch> nine_patch::load(
 		if (p.value == "borders") {
 			borders = parse_sides(p.children);
 		} else if (p.value == "file") {
-			fi.set_path(get_property_value(p).to_string());
+			fi.set_path(get_property_value(p).string);
 		}
 	}
 	if (borders.left() < 0) {

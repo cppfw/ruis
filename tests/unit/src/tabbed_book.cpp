@@ -26,11 +26,11 @@ const tst::set set("tabbed_book", [](tst::suite& suite){
 
 		class sub_tabbed_book : public ruis::tabbed_book{
 		public:
-			sub_tabbed_book(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
+			sub_tabbed_book(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 					ruis::widget(c, desc),
 					tabbed_book(this->context, desc)
 			{}
-		} stb(c, treeml::forest());
+		} stb(c, tml::forest());
 
 		ruis::matrix4 m;
 		stb.render(m);

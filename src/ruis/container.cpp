@@ -43,13 +43,13 @@ container::container(
 	}
 }
 
-container::container(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
+container::container(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 	container(c, desc, trivial_layout::instance)
 {}
 
 container::container(
 	const utki::shared_ref<ruis::context>& c,
-	const treeml::forest& desc,
+	const tml::forest& desc,
 	// NOLINTNEXTLINE(modernize-pass-by-value)
 	const utki::shared_ref<ruis::layout>& layout
 ) :
@@ -73,13 +73,13 @@ container::container(
 					throw std::invalid_argument("layout parameter has zero or more than 1 child");
 				}
 				this->params.layout = this->context.get().layout_factory.create(
-					p.children.front().value.to_string(),
+					p.children.front().value.string,
 					p.children.front().children
 				);
 			}
 		} catch (std::invalid_argument&) {
 			LOG([&](auto& o) {
-				o << "could not parse value of " << treeml::to_string(p) << std::endl;
+				o << "could not parse value of " << tml::to_string(p) << std::endl;
 			})
 			throw;
 		}
@@ -88,7 +88,7 @@ container::container(
 	this->push_back_inflate(desc);
 }
 
-void container::push_back_inflate(const treeml::forest& desc)
+void container::push_back_inflate(const tml::forest& desc)
 {
 	for (auto i = desc.begin(); i != desc.end(); ++i) {
 		if (is_leaf_property(i->value)) {

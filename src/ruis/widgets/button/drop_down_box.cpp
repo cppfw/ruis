@@ -30,7 +30,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace ruis;
 
 namespace {
-const auto drop_down_box_layout = treeml::read(R"qwertyuiop(
+const auto drop_down_box_layout = tml::read(R"qwertyuiop(
 	lp{dx{max} dy{max}}
 
 	look{
@@ -58,7 +58,7 @@ const auto drop_down_box_layout = treeml::read(R"qwertyuiop(
 } // namespace
 
 namespace {
-const auto item_layout = treeml::read(R"qwertyuiop(
+const auto item_layout = tml::read(R"qwertyuiop(
 		@pile{
 			lp{
 				dx{max}
@@ -82,7 +82,7 @@ const auto item_layout = treeml::read(R"qwertyuiop(
 } // namespace
 
 namespace {
-const auto drop_down_menu_layout = treeml::read(R"qwertyuiop(
+const auto drop_down_menu_layout = tml::read(R"qwertyuiop(
 		@pile{
 			@widget{
 				id{ruis_min_size_forcer}
@@ -109,7 +109,7 @@ const auto drop_down_menu_layout = treeml::read(R"qwertyuiop(
 	)qwertyuiop");
 } // namespace
 
-drop_down_box::drop_down_box(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
+drop_down_box::drop_down_box(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 	widget(c, desc),
 	button(this->context, drop_down_box_layout),
 	nine_patch_push_button(this->context, drop_down_box_layout),

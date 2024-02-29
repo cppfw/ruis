@@ -37,7 +37,7 @@ public:
 		{
 			auto mp = utki::make_shared<pile_page>(
 					this->gui.context,
-					treeml::read(R"qwertyuiop(
+					tml::read(R"qwertyuiop(
 							@column{
 								lp{dx{fill} dy{fill}}
 
@@ -83,7 +83,7 @@ public:
 				mp.get_parent_book()->push(utki::make_shared<cube_page>(mp.context));
 			};
 			mp.get().get_widget_as<ruis::push_button>("stuff_button").click_handler = [&mp = mp.get()](ruis::push_button& b){
-				auto pg = utki::make_shared<pile_page>(mp.context, treeml::read(R"qwertyuiop(
+				auto pg = utki::make_shared<pile_page>(mp.context, tml::read(R"qwertyuiop(
 					@push_button{
 						id{back_button}
 						@text{

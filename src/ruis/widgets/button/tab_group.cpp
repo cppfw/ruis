@@ -27,7 +27,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
-tab_group::tab_group(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
+tab_group::tab_group(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 	widget(c, desc),
 	choice_group(this->context, desc)
 {
@@ -44,7 +44,7 @@ tab_group::tab_group(const utki::shared_ref<ruis::context>& c, const treeml::for
 
 				if (p.value == "filler") {
 					this->set_filler(
-						this->context.get().loader.load<res::image>(get_property_value(pp).to_string()).to_shared_ptr()
+						this->context.get().loader.load<res::image>(get_property_value(pp).string).to_shared_ptr()
 					);
 				}
 			}

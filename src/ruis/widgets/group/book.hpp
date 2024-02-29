@@ -32,7 +32,7 @@ class page : public virtual widget
 	friend class book;
 
 protected:
-	page(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
+	page(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 
 	book* parent_book = nullptr;
 
@@ -81,7 +81,7 @@ class book :
 public:
 	book(utki::shared_ref<ruis::context> context, widget::parameters widget_params);
 
-	book(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
+	book(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 
 	book(const book&) = delete;
 	book& operator=(const book&) = delete;

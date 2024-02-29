@@ -31,7 +31,7 @@ using namespace std::string_literals;
 
 using namespace ruis;
 
-ruis::vector2 ruis::parse_vec2(treeml::forest::const_iterator begin, treeml::forest::const_iterator end)
+ruis::vector2 ruis::parse_vec2(tml::forest::const_iterator begin, tml::forest::const_iterator end)
 {
 	ruis::vector2 ret;
 
@@ -49,7 +49,7 @@ ruis::vector2 ruis::parse_vec2(treeml::forest::const_iterator begin, treeml::for
 	return ret;
 }
 
-ruis::rect ruis::parse_rect(const treeml::forest& desc)
+ruis::rect ruis::parse_rect(const tml::forest& desc)
 {
 	using std::min;
 	vector2 p = parse_vec2(desc.begin(), desc.end());
@@ -57,7 +57,7 @@ ruis::rect ruis::parse_rect(const treeml::forest& desc)
 	return {p, d};
 }
 
-ruis::sides<real> ruis::parse_sides(const treeml::forest& desc)
+ruis::sides<real> ruis::parse_sides(const tml::forest& desc)
 {
 	using std::min;
 	vector2 p = parse_vec2(desc.begin(), desc.end());
@@ -65,7 +65,7 @@ ruis::sides<real> ruis::parse_sides(const treeml::forest& desc)
 	return {p.x(), p.y(), d.x(), d.y()};
 }
 
-real ruis::parse_dimension_value(const treeml::leaf& l, const ruis::units& units)
+real ruis::parse_dimension_value(const tml::leaf& l, const ruis::units& units)
 {
 	// check if millimeters
 	if (l.length() >= 2 && l[l.length() - 1] == 'm' && l[l.length() - 2] == 'm') {
@@ -81,7 +81,7 @@ real ruis::parse_dimension_value(const treeml::leaf& l, const ruis::units& units
 	return real(l.to_float());
 }
 
-real ruis::parse_layout_dimension_value(const treeml::leaf& l, const ruis::units& units)
+real ruis::parse_layout_dimension_value(const tml::leaf& l, const ruis::units& units)
 {
 	if (l == "min") {
 		return lp::min;
@@ -98,18 +98,18 @@ r4::vector4<float> ruis::color_to_vec4f(uint32_t color)
 	return rasterimage::to<float>(rasterimage::from_32bit_pixel(color));
 }
 
-bool ruis::is_leaf_property(const treeml::leaf& l)
+bool ruis::is_leaf_property(const tml::leaf& l)
 {
 	return l.empty() || l[0] != '@';
 }
 
-bool ruis::is_property(const treeml::tree& t)
+bool ruis::is_property(const tml::tree& t)
 {
 	return is_leaf_property(t.value) && t.children.size() != 0;
 }
 
 // TODO: rename to is_leaf_widget
-bool ruis::is_leaf_child(const treeml::leaf& l)
+bool ruis::is_leaf_child(const tml::leaf& l)
 {
 	return !is_leaf_property(l);
 }

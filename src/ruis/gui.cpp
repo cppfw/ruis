@@ -25,7 +25,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "layouts/pile_layout.hpp"
 #include "layouts/size_layout.hpp"
 #include "layouts/trivial_layout.hpp"
-#include "res/treeml.hpp"
+#include "res/tml.hpp"
 #include "widgets/button/check_box.hpp"
 #include "widgets/button/choice_group.hpp"
 #include "widgets/button/drop_down_box.hpp"
@@ -337,7 +337,7 @@ void gui::init_standard_widgets(papki::file& fi)
 	this->context.get().inflater.register_widget<busy>("busy");
 	this->context.get().inflater.register_widget<tabbed_book>("tabbed_book");
 
-	auto t = this->context.get().loader.load<res::treeml>("ruis_gui_defs");
+	auto t = this->context.get().loader.load<res::tml>("ruis_gui_defs");
 
 	this->context.get().inflater.push_defs(t.get().forest());
 }

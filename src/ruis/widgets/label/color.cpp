@@ -26,7 +26,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
-color::color(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
+color::color(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 	widget(c, desc),
 	color_widget(this->context, desc)
 {}

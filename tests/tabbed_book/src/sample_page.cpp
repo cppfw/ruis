@@ -4,9 +4,9 @@
 #include <ruis/widgets/button/base/push_button.hpp>
 
 sample_page::sample_page(const utki::shared_ref<ruis::context>& c, const std::string& text) :
-        ruis::widget(c, treeml::forest()),
-        ruis::page(this->context, treeml::forest()),
-        ruis::container(this->context, treeml::read(R"qwer(
+        ruis::widget(c, tml::forest()),
+        ruis::page(this->context, tml::forest()),
+        ruis::container(this->context, tml::read(R"qwer(
                 layout{row}
                 
                 @text{

@@ -43,9 +43,9 @@ book::book(utki::shared_ref<ruis::context> context, widget::parameters widget_pa
 	)
 {}
 
-book::book(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
+book::book(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 	widget(c, desc),
-	container(this->context, treeml::forest(), pile_layout::instance)
+	container(this->context, tml::forest(), pile_layout::instance)
 {}
 
 void book::push(const utki::shared_ref<page>& pg)
@@ -193,7 +193,7 @@ const page* book::get_active_page() const
 	return nullptr;
 }
 
-page::page(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
+page::page(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 	widget(c, desc)
 {}
 

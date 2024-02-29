@@ -41,7 +41,7 @@ class check_box :
 	std::shared_ptr<widget> check_widget;
 
 public:
-	check_box(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
+	check_box(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 
 	check_box(const check_box&) = delete;
 	check_box& operator=(const check_box&) = delete;

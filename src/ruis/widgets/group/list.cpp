@@ -50,7 +50,7 @@ list::list(
 namespace {
 class static_provider : public list::provider
 {
-	std::vector<treeml::tree> widgets;
+	std::vector<tml::tree> widgets;
 
 public:
 	size_t count() const noexcept override
@@ -71,16 +71,16 @@ public:
 		//		TRACE(<< "static_provider::recycle(): index = " << index << std::endl)
 	}
 
-	void add(treeml::tree w)
+	void add(tml::tree w)
 	{
 		this->widgets.emplace_back(std::move(w));
 	}
 };
 } // namespace
 
-list::list(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc, bool vertical) :
+list::list(const utki::shared_ref<ruis::context>& c, const tml::forest& desc, bool vertical) :
 	widget(c, desc),
-	container(this->context, treeml::forest()),
+	container(this->context, tml::forest()),
 	oriented({
 #if CFG_CPP >= 20
 		.vertial = vertical
@@ -96,7 +96,7 @@ list::list(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc,
 			continue;
 		}
 
-		pr->add(treeml::tree(p));
+		pr->add(tml::tree(p));
 	}
 
 	this->set_provider(std::move(pr));

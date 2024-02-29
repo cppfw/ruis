@@ -34,7 +34,7 @@ class single_line_text_widget : public text_widget
 protected:
 	vector2 measure(const ruis::vector2& quotum) const noexcept override;
 
-	single_line_text_widget(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
+	single_line_text_widget(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 
 	single_line_text_widget(
 		utki::shared_ref<ruis::context> context,

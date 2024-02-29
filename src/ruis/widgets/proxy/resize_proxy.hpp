@@ -34,7 +34,7 @@ class resize_proxy : virtual public widget
 public:
 	resize_proxy(utki::shared_ref<ruis::context> context, widget::parameters params);
 
-	resize_proxy(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
+	resize_proxy(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 		widget(c, desc)
 	{}
 

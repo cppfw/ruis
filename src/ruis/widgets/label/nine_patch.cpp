@@ -185,7 +185,7 @@ std::vector<utki::shared_ref<ruis::widget>> build_layout(utki::shared_ref<ruis::
 }
 } // namespace
 
-nine_patch::nine_patch(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
+nine_patch::nine_patch(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 	widget(c, desc),
 	blending_widget(this->context, desc),
 	container(
@@ -241,7 +241,7 @@ nine_patch::nine_patch(const utki::shared_ref<ruis::context>& c, const treeml::f
 		auto i = std::find(desc.begin(), desc.end(), "image");
 		if (i != desc.end()) {
 			this->set_nine_patch(
-				this->context.get().loader.load<res::nine_patch>(get_property_value(*i).to_string()).to_shared_ptr()
+				this->context.get().loader.load<res::nine_patch>(get_property_value(*i).string).to_shared_ptr()
 			);
 		}
 	}
@@ -249,7 +249,7 @@ nine_patch::nine_patch(const utki::shared_ref<ruis::context>& c, const treeml::f
 		auto i = std::find(desc.begin(), desc.end(), "disabled_image");
 		if (i != desc.end()) {
 			this->set_disabled_nine_patch(
-				this->context.get().loader.load<res::nine_patch>(get_property_value(*i).to_string()).to_shared_ptr()
+				this->context.get().loader.load<res::nine_patch>(get_property_value(*i).string).to_shared_ptr()
 			);
 		}
 	}

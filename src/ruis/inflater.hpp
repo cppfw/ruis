@@ -26,7 +26,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <memory>
 #include <set>
 
-#include <treeml/tree.hpp>
+#include <tml/tree.hpp>
 #include <utki/shared_ref.hpp>
 
 namespace ruis {
@@ -35,9 +35,9 @@ class widget;
 class context;
 
 /**
- * @brief Inflater of GUI from treeml description.
- * This class is used to inflate GUI widget hierarchies from treeml descriptions.
- * The GUI can be described in treeml with the following basic rules:
+ * @brief Inflater of GUI from tml description.
+ * This class is used to inflate GUI widget hierarchies from tml descriptions.
+ * The GUI can be described in tml with the following basic rules:
  * A widget name should start with capital letter. A widget property should start
  * with small letter. Specific widgets define more detailed rules of their description.
  */
@@ -52,7 +52,7 @@ class inflater
 private:
 	std::map<
 		std::string,
-		std::function<utki::shared_ref<ruis::widget>(const utki::shared_ref<ruis::context>&, const treeml::forest&)>>
+		std::function<utki::shared_ref<ruis::widget>(const utki::shared_ref<ruis::context>&, const tml::forest&)>>
 		factories;
 
 	const decltype(factories)::value_type::second_type& find_factory(const std::string& widget_name);
@@ -63,7 +63,7 @@ public:
 	/**
 	 * @brief Registers a new widget type.
 	 * Use this function to associate some widget class with a name which can be used
-	 * in treeml GUI description.
+	 * in tml GUI description.
 	 * @param widget_name - name of the widget as it appears in GUI script.
 	 */
 	template <class widget_type>
@@ -71,7 +71,7 @@ public:
 	{
 		this->add_factory(
 			widget_name,
-			[](const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) -> utki::shared_ref<ruis::widget> {
+			[](const utki::shared_ref<ruis::context>& c, const tml::forest& desc) -> utki::shared_ref<ruis::widget> {
 				return utki::make_shared<widget_type>(c, desc);
 			}
 		);
@@ -86,10 +86,10 @@ public:
 	bool unregister_widget(const std::string& widget_name) noexcept;
 
 	// TODO: doxygen
-	void push_defs(const treeml::forest& chain);
+	void push_defs(const tml::forest& chain);
 
 	// TODO: doxygen
-	void push_defs(treeml::forest::const_iterator begin, treeml::forest::const_iterator end);
+	void push_defs(tml::forest::const_iterator begin, tml::forest::const_iterator end);
 
 	// TODO: doxygen
 	void push_defs(const char* str);
@@ -100,26 +100,26 @@ public:
 	 * @param end - begin iterator into the GUI script.
 	 * @return the inflated widget.
 	 */
-	utki::shared_ref<widget> inflate(treeml::forest::const_iterator begin, treeml::forest::const_iterator end);
+	utki::shared_ref<widget> inflate(tml::forest::const_iterator begin, tml::forest::const_iterator end);
 
 	/**
 	 * @brief Create widgets hierarchy from GUI script.
 	 * @param gui_script - GUI script to use.
 	 * @return the inflated widget.
 	 */
-	utki::shared_ref<widget> inflate(const treeml::forest& gui_script)
+	utki::shared_ref<widget> inflate(const tml::forest& gui_script)
 	{
 		return this->inflate(gui_script.begin(), gui_script.end());
 	}
 
 	/**
 	 * @brief Inflate widget and cast to specified type.
-	 * Only the first widget from the treeml chain is returned.
+	 * Only the first widget from the tml chain is returned.
 	 * @param gui_script - gui script to inflate widget from.
 	 * @return the inflated widget.
 	 */
 	template <typename widget_type>
-	utki::shared_ref<widget_type> inflate_as(const treeml::forest& gui_script)
+	utki::shared_ref<widget_type> inflate_as(const tml::forest& gui_script)
 	{
 		return utki::dynamic_reference_cast<widget_type>(this->inflate(gui_script));
 	}
@@ -173,29 +173,29 @@ private:
 	// TODO: why does clang-tidy complains about this line on macosx?
 	// NOLINTNEXTLINE(bugprone-exception-escape)
 	struct widget_template {
-		treeml::tree templ;
+		tml::tree templ;
 		std::set<std::string> vars;
 	};
 
-	widget_template parse_template(const std::string& name, const treeml::forest& chain);
+	widget_template parse_template(const std::string& name, const tml::forest& chain);
 
 	std::vector<std::map<std::string, widget_template>> templates;
 
 	const widget_template* find_template(const std::string& name) const;
 
-	void push_templates(const treeml::forest& chain);
+	void push_templates(const tml::forest& chain);
 
 	void pop_templates();
 
 	// variable name-value mapping
-	std::vector<std::map<std::string, treeml::forest>> variables;
+	std::vector<std::map<std::string, tml::forest>> variables;
 
-	const treeml::forest* find_variable(const std::string& name) const;
+	const tml::forest* find_variable(const std::string& name) const;
 
-	void push_variables(const treeml::forest& trees);
+	void push_variables(const tml::forest& trees);
 	void pop_variables();
 
-	void push_defs_block(const treeml::forest& chain);
+	void push_defs_block(const tml::forest& chain);
 	void pop_defs_block();
 };
 

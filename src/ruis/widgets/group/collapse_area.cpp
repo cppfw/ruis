@@ -28,7 +28,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace ruis;
 
 namespace {
-const auto layout_c = treeml::read(R"qwertyuiop(
+const auto layout_c = tml::read(R"qwertyuiop(
 	layout{column}
 	
 	@pile{
@@ -73,7 +73,7 @@ const auto layout_c = treeml::read(R"qwertyuiop(
 )qwertyuiop");
 } // namespace
 
-collapse_area::collapse_area(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
+collapse_area::collapse_area(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 	widget(c, desc),
 	container(this->context, layout_c)
 {

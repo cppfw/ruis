@@ -69,7 +69,7 @@ public:
 	image(image&&) = delete;
 	image& operator=(image&&) = delete;
 
-	image(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
+	image(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 
 	~image() override = default;
 

@@ -31,7 +31,7 @@ public:
 	~wire_socket() override = default;
 
 public:
-	wire_socket(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
+	wire_socket(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 	
 protected:
 	std::shared_ptr<wire_socket> get_remote();

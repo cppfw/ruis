@@ -57,7 +57,7 @@ void text_widget::set_font_size(real size)
 	this->on_font_change();
 }
 
-text_widget::text_widget(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
+text_widget::text_widget(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 	widget(c, desc),
 	params({//
 			[&desc, this]() {
@@ -81,7 +81,7 @@ text_widget::text_widget(const utki::shared_ref<ruis::context>& c, const treeml:
 
 					if (p.value == "font") {
 						return this->context.get()
-							.loader.load<ruis::res::font>(get_property_value(p).to_string().c_str())
+							.loader.load<ruis::res::font>(get_property_value(p).string.c_str())
 							.to_shared_ptr();
 					}
 				}

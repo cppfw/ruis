@@ -28,7 +28,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <r4/matrix.hpp>
 #include <r4/rectangle.hpp>
 #include <r4/vector.hpp>
-#include <treeml/tree.hpp>
+#include <tml/tree.hpp>
 #include <utki/shared.hpp>
 #include <utki/types.hpp>
 
@@ -434,7 +434,7 @@ public:
 	 * @param c - context to which this widget belongs.
 	 * @param desc - widget description.
 	 */
-	widget(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
+	widget(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 
 	widget(utki::shared_ref<ruis::context> context, parameters params);
 

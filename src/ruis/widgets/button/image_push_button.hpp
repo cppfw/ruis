@@ -33,6 +33,6 @@ protected:
 	void on_pressed_change() override;
 
 public:
-	image_push_button(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
+	image_push_button(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 };
 } // namespace ruis

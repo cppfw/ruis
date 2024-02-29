@@ -39,7 +39,7 @@ class spinner :
 	real angle = 0;
 
 public:
-	spinner(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
+	spinner(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 
 	spinner(
 		utki::shared_ref<ruis::context> context,

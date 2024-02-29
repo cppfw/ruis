@@ -9,7 +9,7 @@
 class path_widget : virtual public ruis::widget{
 	ruis::path_vao vao;
 public:
-	path_widget(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
+	path_widget(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 			ruis::widget(c, desc),
 			vao(this->context.get().renderer)
 	{}
@@ -33,7 +33,7 @@ public:
 class frame_widget : virtual public ruis::widget{
 	ruis::frame_vao vao;
 public:
-	frame_widget(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
+	frame_widget(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 			ruis::widget(c, desc),
 			vao(this->context.get().renderer)
 	{}
@@ -66,10 +66,10 @@ public:
 		this->gui.context.get().inflater.register_widget<path_widget>("path_widget");
 		this->gui.context.get().inflater.register_widget<frame_widget>("frame_widget");
 	
-		// this->gui.set_root(std::make_shared<path_widget>(this->gui.context, treeml::forest()));
+		// this->gui.set_root(std::make_shared<path_widget>(this->gui.context, tml::forest()));
 
 		this->gui.set_root(
-			this->gui.context.get().inflater.inflate(treeml::read(R"(
+			this->gui.context.get().inflater.inflate(tml::read(R"(
 			@pile{
 				@path_widget{
 					lp{

@@ -41,7 +41,7 @@ class choice_group : public container
 	std::weak_ptr<choice_button> active_choice_button;
 
 public:
-	choice_group(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
+	choice_group(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 
 	choice_group(const choice_group&) = delete;
 	choice_group& operator=(const choice_group&) = delete;

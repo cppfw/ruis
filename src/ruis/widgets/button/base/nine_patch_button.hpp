@@ -48,7 +48,7 @@ private:
 	parameters params;
 
 protected:
-	nine_patch_button(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
+	nine_patch_button(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 
 	nine_patch_button( //
 		utki::shared_ref<ruis::context> context,

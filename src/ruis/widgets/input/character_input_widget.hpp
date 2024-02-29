@@ -34,7 +34,7 @@ class character_input_widget : virtual public widget
 {
 protected:
 	character_input_widget(const utki::shared_ref<ruis::context>& c) :
-		widget(c, treeml::forest())
+		widget(c, tml::forest())
 	{}
 
 public:

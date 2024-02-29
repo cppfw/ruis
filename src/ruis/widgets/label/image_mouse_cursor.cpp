@@ -27,7 +27,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
-image_mouse_cursor::image_mouse_cursor(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
+image_mouse_cursor::image_mouse_cursor(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 	widget(c, desc),
 	container(this->context, desc, pile_layout::instance)
 {
@@ -37,7 +37,7 @@ image_mouse_cursor::image_mouse_cursor(const utki::shared_ref<ruis::context>& c,
 		}
 
 		if (p.value == "cursor") {
-			this->set_cursor(this->context.get().loader.load<res::cursor>(get_property_value(p).to_string()));
+			this->set_cursor(this->context.get().loader.load<res::cursor>(get_property_value(p).string));
 		}
 	}
 }

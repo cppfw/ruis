@@ -30,7 +30,7 @@ min_proxy::min_proxy(utki::shared_ref<ruis::context> context, widget::parameters
 	params(std::move(params))
 {}
 
-min_proxy::min_proxy(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
+min_proxy::min_proxy(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 	ruis::widget(c, desc)
 {
 	for (const auto& p : desc) {
@@ -40,15 +40,15 @@ min_proxy::min_proxy(const utki::shared_ref<ruis::context>& c, const treeml::for
 
 		try {
 			if (p.value == "root") {
-				this->params.root_id = get_property_value(p).to_string();
+				this->params.root_id = get_property_value(p).string;
 			} else if (p.value == "target") {
 				for (const auto& id : p.children) {
-					this->params.target_id.push_back(id.value.to_string());
+					this->params.target_id.push_back(id.value.string);
 				}
 			}
 		} catch (std::invalid_argument&) {
 			LOG([&](auto& o) {
-				o << "could not parse value of " << treeml::to_string(p) << std::endl;
+				o << "could not parse value of " << tml::to_string(p) << std::endl;
 			})
 			throw;
 		}

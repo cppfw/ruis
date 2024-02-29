@@ -39,7 +39,7 @@ class tree_view :
 	utki::shared_ref<list> item_list;
 
 public:
-	tree_view(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
+	tree_view(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 
 	tree_view(const tree_view&) = delete;
 	tree_view& operator=(const tree_view&) = delete;

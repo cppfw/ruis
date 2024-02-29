@@ -41,7 +41,7 @@ private:
 public:
 	min_proxy(utki::shared_ref<ruis::context> context, widget::parameters widget_params, parameters params);
 
-	min_proxy(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
+	min_proxy(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 
 	vector2 measure(const vector2& quotum) const override;
 };

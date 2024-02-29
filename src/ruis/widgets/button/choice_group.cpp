@@ -25,7 +25,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
-choice_group::choice_group(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
+choice_group::choice_group(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 	widget(c, desc),
 	container(this->context, desc, pile_layout::instance)
 {}

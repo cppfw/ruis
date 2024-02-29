@@ -31,7 +31,7 @@ class nine_patch_toggle :
 	public nine_patch_button
 {
 public:
-	nine_patch_toggle(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
+	nine_patch_toggle(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 
 protected:
 	void on_pressed_change() override;

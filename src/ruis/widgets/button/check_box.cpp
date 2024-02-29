@@ -27,7 +27,7 @@ using namespace ruis;
 
 namespace {
 
-const auto check_box_layout = treeml::read(R"qwertyuiop(
+const auto check_box_layout = tml::read(R"qwertyuiop(
 		@image{
 			id{ruis_checkbox_check}
 			image{ruis_img_checkbox_tick}
@@ -36,7 +36,7 @@ const auto check_box_layout = treeml::read(R"qwertyuiop(
 
 } // namespace
 
-check_box::check_box(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
+check_box::check_box(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 	widget(c, desc),
 	button(this->context, desc),
 	toggle_button(this->context, desc),

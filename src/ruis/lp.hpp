@@ -21,7 +21,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include <treeml/tree.hpp>
+#include <tml/tree.hpp>
 
 #include "util/units.hpp"
 

@@ -90,7 +90,7 @@ public:
 
 	~nine_patch() override = default;
 
-	nine_patch(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
+	nine_patch(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 
 	void set_nine_patch(std::shared_ptr<const res::nine_patch> np);
 

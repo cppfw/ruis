@@ -35,7 +35,7 @@ single_line_text_widget::single_line_text_widget(
 	this->recompute_bounding_box();
 }
 
-single_line_text_widget::single_line_text_widget(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
+single_line_text_widget::single_line_text_widget(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 	widget(c, desc),
 	text_widget(this->context, desc)
 {
@@ -45,7 +45,7 @@ single_line_text_widget::single_line_text_widget(const utki::shared_ref<ruis::co
 		}
 
 		if (p.value == "text") {
-			this->text = utki::to_utf32(get_property_value(p).to_string());
+			this->text = utki::to_utf32(get_property_value(p).string);
 			this->recompute_bounding_box();
 		}
 	}

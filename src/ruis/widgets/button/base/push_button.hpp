@@ -49,7 +49,7 @@ protected:
 
 	void on_hovered_change(unsigned pointer_id) override;
 
-	push_button(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
+	push_button(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 		widget(c, desc),
 		button(this->context, desc)
 	{}

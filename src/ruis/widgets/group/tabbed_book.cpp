@@ -25,9 +25,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
-tabbed_book::tabbed_book(const utki::shared_ref<ruis::context>& context, const treeml::forest& desc) :
+tabbed_book::tabbed_book(const utki::shared_ref<ruis::context>& context, const tml::forest& desc) :
 	ruis::widget(context, desc),
-	ruis::container(this->context, treeml::read(R"(
+	ruis::container(this->context, tml::read(R"(
 					layout{column}
 					
 					@tab_group{

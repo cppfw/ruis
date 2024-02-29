@@ -39,7 +39,7 @@ const uint32_t cursor_blink_period = 500; // milliseconds
 const real cursor_width = real(1.0);
 } // namespace
 
-text_input_line::text_input_line(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
+text_input_line::text_input_line(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 	widget(c, desc),
 	single_line_text_widget(this->context, desc),
 	character_input_widget(this->context),

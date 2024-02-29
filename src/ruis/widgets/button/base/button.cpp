@@ -34,7 +34,7 @@ button::button( //
 	params(std::move(params))
 {}
 
-button::button(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
+button::button(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 	widget(c, desc)
 {
 	for (const auto& p : desc) {

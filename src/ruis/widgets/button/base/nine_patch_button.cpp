@@ -39,7 +39,7 @@ nine_patch_button::nine_patch_button( //
 	nine_patch(this->context, {}, std::move(blending_params), std::move(nine_patch_params), children)
 {}
 
-nine_patch_button::nine_patch_button(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
+nine_patch_button::nine_patch_button(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 	widget(c, desc),
 	button(this->context, desc),
 	nine_patch(this->context, desc)
@@ -56,13 +56,13 @@ nine_patch_button::nine_patch_button(const utki::shared_ref<ruis::context>& c, c
 				}
 
 				if (pp.value == "unpressed") {
-					this->set_unpressed_nine_patch(this->context.get()
-													   .loader.load<res::nine_patch>(get_property_value(pp).to_string())
-													   .to_shared_ptr());
+					this->set_unpressed_nine_patch(
+						this->context.get().loader.load<res::nine_patch>(get_property_value(pp).string).to_shared_ptr()
+					);
 				} else if (pp.value == "pressed") {
-					this->set_pressed_nine_patch(this->context.get()
-													 .loader.load<res::nine_patch>(get_property_value(pp).to_string())
-													 .to_shared_ptr());
+					this->set_pressed_nine_patch(
+						this->context.get().loader.load<res::nine_patch>(get_property_value(pp).string).to_shared_ptr()
+					);
 				}
 			}
 		}

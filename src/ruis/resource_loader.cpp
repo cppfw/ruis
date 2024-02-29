@@ -43,13 +43,13 @@ decltype(resource_loader::res_packs)::const_iterator resource_loader::mount_res_
 		fi.set_path(dir + "main.res");
 	}
 
-	auto script = treeml::read(fi);
+	auto script = tml::read(fi);
 	ASSERT(!fi.is_open())
 
 	// handle includes
 	for (auto& p : script) {
 		if (p.value == wording_include) {
-			fi.set_path(dir + get_property_value(p).to_string());
+			fi.set_path(dir + get_property_value(p).string);
 			this->mount_res_pack(fi);
 			// TODO: remove "include" tree from the forest?
 		} else if (p.value == wording_include_subdirs) {
@@ -106,11 +106,11 @@ std::shared_ptr<resource> resource_loader::res_pack_entry::find_resource_in_res_
 	return nullptr; // no resource found with given id, return invalid reference
 }
 
-const treeml::forest* resource_loader::res_pack_entry::find_resource_in_script(std::string_view id) const
+const tml::forest* resource_loader::res_pack_entry::find_resource_in_script(std::string_view id) const
 {
 	auto j = std::find(this->script.begin(), this->script.end(), id);
 	if (j != this->script.end()) {
-		ASSERT(j->value.to_string() == id)
+		ASSERT(j->value.string == id)
 		return &j->children;
 	}
 

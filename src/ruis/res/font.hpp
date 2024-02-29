@@ -23,7 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <string>
 
-#include <treeml/tree.hpp>
+#include <tml/tree.hpp>
 
 #include "../fonts/font_provider.hpp"
 #include "../resource_loader.hpp"
@@ -105,7 +105,7 @@ public:
 private:
 	static utki::shared_ref<font> load(
 		const utki::shared_ref<ruis::context>& ctx,
-		const ::treeml::forest& desc,
+		const ::tml::forest& desc,
 		const papki::file& fi
 	);
 };

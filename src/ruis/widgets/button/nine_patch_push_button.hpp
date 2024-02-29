@@ -31,7 +31,7 @@ class nine_patch_push_button :
 	public nine_patch_button
 {
 public:
-	nine_patch_push_button(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
+	nine_patch_push_button(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 
 	nine_patch_push_button( //
 		utki::shared_ref<ruis::context> context,

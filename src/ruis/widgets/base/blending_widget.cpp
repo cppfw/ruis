@@ -55,7 +55,7 @@ renderer::blend_factor blend_factor_from_string(const std::string& s)
 }
 } // namespace
 
-blending_widget::blending_widget(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
+blending_widget::blending_widget(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 	widget(c, desc)
 {
 	for (const auto& p : desc) {
@@ -66,13 +66,13 @@ blending_widget::blending_widget(const utki::shared_ref<ruis::context>& c, const
 		if (p.value == "blend") {
 			this->params.is_blending_enabled_v = get_property_value(p).to_bool();
 		} else if (p.value == "blend_src") {
-			this->params.blend_v.src = blend_factor_from_string(get_property_value(p).to_string());
+			this->params.blend_v.src = blend_factor_from_string(get_property_value(p).string);
 		} else if (p.value == "blend_dst") {
-			this->params.blend_v.dst = blend_factor_from_string(get_property_value(p).to_string());
+			this->params.blend_v.dst = blend_factor_from_string(get_property_value(p).string);
 		} else if (p.value == "blend_src_alpha") {
-			this->params.blend_v.src_alpha = blend_factor_from_string(get_property_value(p).to_string());
+			this->params.blend_v.src_alpha = blend_factor_from_string(get_property_value(p).string);
 		} else if (p.value == "blend_dst_alpha") {
-			this->params.blend_v.dst_alpha = blend_factor_from_string(get_property_value(p).to_string());
+			this->params.blend_v.dst_alpha = blend_factor_from_string(get_property_value(p).string);
 		}
 	}
 }

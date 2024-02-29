@@ -32,7 +32,7 @@ using namespace ruis;
 
 namespace {
 
-const auto layout_description = treeml::read(R"qwertyuiop(
+const auto layout_description = tml::read(R"qwertyuiop(
 		layout{pile}
 
 		@nine_patch{
@@ -66,9 +66,9 @@ const auto layout_description = treeml::read(R"qwertyuiop(
 
 } // namespace
 
-scroll_bar::scroll_bar(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc, bool vertical) :
+scroll_bar::scroll_bar(const utki::shared_ref<ruis::context>& c, const tml::forest& desc, bool vertical) :
 	widget(c, desc),
-	fraction_band_widget(this->context, treeml::forest()),
+	fraction_band_widget(this->context, tml::forest()),
 	oriented({
 #if CFG_CPP >= 20
 		.vertical = vertical
@@ -95,12 +95,12 @@ scroll_bar::scroll_bar(const utki::shared_ref<ruis::context>& c, const treeml::f
 
 		if (p.value == "background") {
 			np->set_nine_patch(
-				this->context.get().loader.load<res::nine_patch>(get_property_value(p).to_string()).to_shared_ptr()
+				this->context.get().loader.load<res::nine_patch>(get_property_value(p).string).to_shared_ptr()
 			);
 			background_set = true;
 		} else if (p.value == "nine_patch_of_handle") {
 			hi->set_nine_patch(
-				this->context.get().loader.load<res::nine_patch>(get_property_value(p).to_string()).to_shared_ptr()
+				this->context.get().loader.load<res::nine_patch>(get_property_value(p).string).to_shared_ptr()
 			);
 			handle_set = true;
 		}

@@ -25,7 +25,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
-choice_button::choice_button(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
+choice_button::choice_button(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 	widget(c, desc),
 	button(this->context, desc),
 	toggle_button(this->context, desc)

@@ -6,7 +6,7 @@ this_srcs += $(call prorab-src-dir, src)
 
 $(eval $(call prorab-config, ../../config))
 
-this_cxxflags += -I../../src -I../harness/modules/ruisapp/src
+this_cxxflags += -isystem ../../src -isystem ../harness/modules/ruisapp/src
 
 this_libruis_dir := ../../src/out/$(c)/
 this_libruis := $(this_libruis_dir)libruis$(dot_so)
@@ -42,7 +42,7 @@ ifeq ($(this_is_interactive),true)
     this_ldlibs += $(this_libruis_render)
 endif
 
-this_ldlibs += $(this_libruis) -lpapki -ltreeml -lutki -lm
+this_ldlibs += $(this_libruis) -lpapki -ltml -lutki -lm
 
 this_no_install := true
 

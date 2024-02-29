@@ -7,7 +7,7 @@ class pile_page :
 		public ruis::container
 {
 public:
-	pile_page(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
+	pile_page(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 	
 	pile_page(const pile_page&) = delete;
 	pile_page& operator=(const pile_page&) = delete;

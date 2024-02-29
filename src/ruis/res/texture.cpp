@@ -29,13 +29,13 @@ using namespace ruis::res;
 
 utki::shared_ref<texture> texture::load(
 	const utki::shared_ref<ruis::context>& ctx,
-	const treeml::forest& desc,
+	const tml::forest& desc,
 	const papki::file& fi
 )
 {
 	for (auto& p : desc) {
 		if (p.value == "file") {
-			fi.set_path(get_property_value(p).to_string());
+			fi.set_path(get_property_value(p).string);
 		}
 	}
 

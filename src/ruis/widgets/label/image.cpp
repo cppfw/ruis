@@ -38,7 +38,7 @@ image::image(
 	vao(this->context.get().renderer.get().empty_vertex_array)
 {}
 
-image::image(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
+image::image(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 	widget(c, desc),
 	blending_widget(this->context, desc),
 	vao(this->context.get().renderer.get().empty_vertex_array)
@@ -50,10 +50,10 @@ image::image(const utki::shared_ref<ruis::context>& c, const treeml::forest& des
 
 		if (p.value == "image") {
 			this->params.img =
-				this->context.get().loader.load<res::image>(get_property_value(p).to_string()).to_shared_ptr();
+				this->context.get().loader.load<res::image>(get_property_value(p).string).to_shared_ptr();
 		} else if (p.value == "disabled_image") {
 			this->params.disabled_img =
-				this->context.get().loader.load<res::image>(get_property_value(p).to_string()).to_shared_ptr();
+				this->context.get().loader.load<res::image>(get_property_value(p).string).to_shared_ptr();
 		} else if (p.value == "keep_aspect_ratio") {
 			this->params.keep_aspect_ratio = get_property_value(p).to_bool();
 		} else if (p.value == "repeat_x") {

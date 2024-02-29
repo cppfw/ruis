@@ -54,7 +54,7 @@ class list :
 	real first_tail_item_dim = real(0);
 
 protected:
-	list(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc, bool vertical);
+	list(const utki::shared_ref<ruis::context>& c, const tml::forest& desc, bool vertical);
 
 public:
 	list(
@@ -63,7 +63,7 @@ public:
 		oriented::parameters oriented_params
 	);
 
-	list(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
+	list(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 		list(c, desc, true)
 	{}
 
@@ -226,7 +226,7 @@ private:
 class pan_list : public list
 {
 public:
-	pan_list(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
+	pan_list(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 		widget(c, desc),
 		list(this->context, desc, false)
 	{}

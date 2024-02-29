@@ -33,7 +33,7 @@ namespace ruis {
 class color : public color_widget
 {
 public:
-	color(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
+	color(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 
 	color(const color&) = delete;
 	color& operator=(const color&) = delete;

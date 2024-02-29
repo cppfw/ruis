@@ -50,7 +50,7 @@ class tabbed_book :
 	void activate_another_tab(tab& t);
 
 public:
-	tabbed_book(const utki::shared_ref<ruis::context>& context, const treeml::forest& desc);
+	tabbed_book(const utki::shared_ref<ruis::context>& context, const tml::forest& desc);
 
 	void add(const utki::shared_ref<tab>& tab, const utki::shared_ref<ruis::page>& page);
 

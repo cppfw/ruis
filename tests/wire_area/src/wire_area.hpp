@@ -21,7 +21,7 @@ public:
 
 	~wire_area() override = default;
 	
-	wire_area(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc);
+	wire_area(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 	
 	void render(const ruis::matrix4& matrix)const override;
 

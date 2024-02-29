@@ -17,7 +17,7 @@ public:
 	std::shared_ptr<ruis::vertex_array> cube_vao;
 	
 	cube_widget(const utki::shared_ref<ruis::context>& c) :
-			widget(c, treeml::forest())
+			widget(c, tml::forest())
 	{
 		std::array<ruis::vector3, 36> cube_pos = {{
 			{-1, -1, 1}, {1, -1, 1}, {-1, 1, 1},
@@ -103,9 +103,9 @@ public:
 }
 
 cube_page::cube_page(const utki::shared_ref<ruis::context>& c) :
-		widget(c, treeml::forest()),
-		page(this->context, treeml::forest()),
-		container(this->context, treeml::read(R"qwertyuiop(
+		widget(c, tml::forest()),
+		page(this->context, tml::forest()),
+		container(this->context, tml::read(R"qwertyuiop(
 				layout{pile}
 				@column{
 					lp{

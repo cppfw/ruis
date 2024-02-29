@@ -27,7 +27,7 @@ click_proxy::click_proxy(utki::shared_ref<ruis::context> context, widget::parame
 	widget(std::move(context), std::move(params))
 {}
 
-click_proxy::click_proxy(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
+click_proxy::click_proxy(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 	widget(c, desc)
 {}
 

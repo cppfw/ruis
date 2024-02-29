@@ -29,7 +29,7 @@ void nine_patch_toggle::on_pressed_change()
 	this->toggle_button::on_pressed_change();
 }
 
-nine_patch_toggle::nine_patch_toggle(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
+nine_patch_toggle::nine_patch_toggle(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 	widget(c, desc),
 	button(this->context, desc),
 	toggle_button(this->context, desc),

@@ -40,7 +40,7 @@ void image_button::on_pressed_change()
 	this->button::on_pressed_change();
 }
 
-image_button::image_button(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
+image_button::image_button(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 	widget(c, desc),
 	button(this->context, desc),
 	image(this->context, desc)
@@ -58,10 +58,10 @@ image_button::image_button(const utki::shared_ref<ruis::context>& c, const treem
 
 				if (pp.value == "pressed") {
 					this->pressedImage_v =
-						this->context.get().loader.load<res::image>(get_property_value(pp).to_string()).to_shared_ptr();
+						this->context.get().loader.load<res::image>(get_property_value(pp).string).to_shared_ptr();
 				} else if (pp.value == "unpressed") {
 					this->unpressedImage_v =
-						this->context.get().loader.load<res::image>(get_property_value(pp).to_string()).to_shared_ptr();
+						this->context.get().loader.load<res::image>(get_property_value(pp).string).to_shared_ptr();
 				}
 				this->update_image();
 			}

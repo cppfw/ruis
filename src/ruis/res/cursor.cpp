@@ -38,14 +38,14 @@ ruis::res::cursor::cursor(
 
 utki::shared_ref<cursor> cursor::load(
 	const utki::shared_ref<ruis::context>& ctx,
-	const treeml::forest& desc,
+	const tml::forest& desc,
 	const papki::file& fi
 )
 {
 	vector2 hotspot;
 	bool hotspot_set = false;
 
-	const treeml::leaf* image_res_id = nullptr;
+	const tml::leaf* image_res_id = nullptr;
 	for (auto& p : desc) {
 		if (p.value == "image") {
 			image_res_id = &get_property_value(p);
@@ -63,5 +63,5 @@ utki::shared_ref<cursor> cursor::load(
 		throw std::logic_error("cursor::load(): resource description does not contain 'hotspot' property");
 	}
 
-	return utki::make_shared<cursor>(ctx, ctx.get().loader.load<res::image>(image_res_id->to_string()), hotspot);
+	return utki::make_shared<cursor>(ctx, ctx.get().loader.load<res::image>(image_res_id->string), hotspot);
 }

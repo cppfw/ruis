@@ -27,7 +27,7 @@ Pod::Spec.new do |s|
 
   s.dependency 'papki', '>= 1.0.93'
   s.dependency 'r4', '>= 1.0.53'
-  s.dependency 'treeml', '>= 0.1.28'
+  s.dependency 'tml', '>= 0.1.28'
   s.dependency 'freetype', '>= 2.10.1.9'
   s.dependency 'svgdom', '>= 0.3.61'
   s.dependency 'svgren', '>= 0.5.11'

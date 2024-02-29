@@ -30,7 +30,7 @@ color_widget::color_widget(utki::shared_ref<ruis::context> context, parameters p
 	params(std::move(params))
 {}
 
-color_widget::color_widget(const utki::shared_ref<ruis::context>& c, const treeml::forest& desc) :
+color_widget::color_widget(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 	widget(c, desc)
 {
 	for (const auto& p : desc) {

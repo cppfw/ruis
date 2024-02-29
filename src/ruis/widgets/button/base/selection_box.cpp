@@ -28,7 +28,7 @@ using namespace ruis;
 namespace {
 class static_provider : public selection_box::provider
 {
-	std::vector<treeml::tree> widgets;
+	std::vector<tml::tree> widgets;
 
 public:
 	size_t count() const noexcept override
@@ -48,7 +48,7 @@ public:
 		//		TRACE(<< "static_provider::recycle(): index = " << index << std::endl)
 	}
 
-	void add(treeml::tree w)
+	void add(tml::tree w)
 	{
 		this->widgets.emplace_back(std::move(w));
 	}
@@ -57,7 +57,7 @@ public:
 
 selection_box::selection_box(
 	const utki::shared_ref<ruis::context>& c,
-	const treeml::forest& desc,
+	const tml::forest& desc,
 	container& selection_container
 ) :
 	widget(c, desc),
@@ -70,7 +70,7 @@ selection_box::selection_box(
 			continue;
 		}
 
-		pr->add(treeml::tree(p));
+		pr->add(tml::tree(p));
 	}
 
 	this->set_provider(std::move(pr));
