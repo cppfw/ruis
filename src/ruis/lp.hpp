@@ -29,16 +29,30 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
-enum class align{
-	center,
-	front,
-	back
-};
-
 /**
  * @brief Layout parameters.
  */
 struct lp {
+	/**
+	 * @brief Alignment parameter values.
+	 */
+	enum class align {
+		/**
+		 * @brief Center lignment.
+		 */
+		center,
+
+		/**
+		 * @brief Left or top alignment.
+		 */
+		front,
+
+		/**
+		 * @brief Right or bottom alignment.
+		 */
+		back
+	};
+
 	/**
 	 * @brief Requests minimal dimensions of the widget.
 	 * The widget will always be given minimal space it needs to properly draw.
@@ -76,7 +90,7 @@ struct lp {
 	 * @brief Alignment of the widget within its parent.
 	 * Horizontal and vertical alignment.
 	 */
-	r4::vector2<ruis::align> align = {align::center, align::center};
+	r4::vector2<align> align = {align::center, align::center};
 
 	static lp make(const tml::forest& desc, const ruis::units& units);
 };
