@@ -181,7 +181,7 @@ utki::shared_ref<widget> tree_view::provider::get_widget(size_t index)
 		o << "provider is not set to a list_widget";
 	})
 
-	auto ret = utki::make_shared<ruis::container>(this->get_list()->context, tml::forest(), row_layout::instance);
+	auto ret = utki::make_shared<ruis::container>(this->get_list()->context, tml::forest(), layout::row);
 
 	ASSERT(is_last_item_in_parent.size() == path.size())
 

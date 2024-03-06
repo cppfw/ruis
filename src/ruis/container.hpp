@@ -122,7 +122,7 @@ protected:
 
 public:
 	struct parameters {
-		utki::shared_ref<ruis::layout> layout = trivial_layout::instance;
+		utki::shared_ref<ruis::layout> layout = layout::trivial;
 	};
 
 private:

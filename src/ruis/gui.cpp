@@ -251,19 +251,19 @@ gui::gui(const utki::shared_ref<ruis::context>& context) :
 
 	// register basic layouts
 	this->context.get().layout_factory.add_factory("trivial", [](const auto&) {
-		return trivial_layout::instance;
+		return layout::trivial;
 	});
 	this->context.get().layout_factory.add_factory("size", [](const auto&) {
-		return size_layout::instance;
+		return layout::size;
 	});
 	this->context.get().layout_factory.add_factory("pile", [](const auto&) {
-		return pile_layout::instance;
+		return layout::pile;
 	});
 	this->context.get().layout_factory.add_factory("row", [](const auto&) {
-		return row_layout::instance;
+		return layout::row;
 	});
 	this->context.get().layout_factory.add_factory("column", [](const auto&) {
-		return column_layout::instance;
+		return layout::column;
 	});
 }
 

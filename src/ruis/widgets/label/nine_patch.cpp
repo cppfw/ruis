@@ -49,7 +49,7 @@ std::vector<utki::shared_ref<ruis::widget>> build_layout(utki::shared_ref<ruis::
 					}
 				},
 				.container_params = {
-					.layout = row_layout::instance
+					.layout = layout::row
 				}
 			},
 			{
@@ -89,7 +89,7 @@ std::vector<utki::shared_ref<ruis::widget>> build_layout(utki::shared_ref<ruis::
 					}
 				},
 				.container_params = {
-					.layout = row_layout::instance
+					.layout = layout::row
 				}
 			},
 			{
@@ -113,7 +113,7 @@ std::vector<utki::shared_ref<ruis::widget>> build_layout(utki::shared_ref<ruis::
 							}
 						},
 						.container_params = {
-							.layout = pile_layout::instance
+							.layout = layout::pile
 						}
 					},
 					{
@@ -149,7 +149,7 @@ std::vector<utki::shared_ref<ruis::widget>> build_layout(utki::shared_ref<ruis::
 					}
 				},
 				.container_params = {
-					.layout = row_layout::instance
+					.layout = layout::row
 				}
 			},
 			{
@@ -192,7 +192,7 @@ nine_patch::nine_patch(const utki::shared_ref<ruis::context>& c, const tml::fore
 		this->context,
 		{
 },
-		{column_layout::instance},
+		{layout::column},
 		build_layout(this->context)
 	),
 	img_widgets_matrix({{//
@@ -270,7 +270,7 @@ nine_patch::nine_patch(
 		this->context,
 		{
 },
-		{column_layout::instance},
+		{layout::column},
 		build_layout(this->context)
 	),
 	img_widgets_matrix({{//

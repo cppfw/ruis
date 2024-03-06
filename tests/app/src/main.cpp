@@ -376,7 +376,7 @@ public:
 			list = &n->children;
 		}
 
-		auto ret = utki::make_shared<ruis::container>(this->context, tml::forest(), ruis::row_layout::instance);
+		auto ret = utki::make_shared<ruis::container>(this->context, tml::forest(), ruis::layout::row);
 
 		{
 			auto v = this->context.get().inflater.inflate(

@@ -34,9 +34,9 @@ book::book(utki::shared_ref<ruis::context> context, widget::parameters widget_pa
 		this->context,
 		{},
 #if CFG_CPP >= 20
-		{ .layout = pile_layout::instance }
+		{ .layout = layout::pile }
 #else
-		{pile_layout::instance}
+		{layout::pile}
 #endif
 		,
 		{}
@@ -45,7 +45,7 @@ book::book(utki::shared_ref<ruis::context> context, widget::parameters widget_pa
 
 book::book(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 	widget(c, desc),
-	container(this->context, tml::forest(), pile_layout::instance)
+	container(this->context, tml::forest(), layout::pile)
 {}
 
 void book::push(const utki::shared_ref<page>& pg)

@@ -37,7 +37,7 @@ class context_menu_wrapper : public container
 public:
 	context_menu_wrapper(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 		widget(c, desc),
-		container(this->context, desc, size_layout::instance)
+		container(this->context, desc, layout::size)
 	{}
 };
 } // namespace
@@ -53,10 +53,10 @@ overlay::overlay(
 		{},
 #if CFG_CPP >= 20
 		{//
-		 .layout = pile_layout::instance
+		 .layout = layout::pile
 		},
 #else
-		{pile_layout::instance},
+		{layout::pile},
 #endif
 		children
 	)
@@ -64,7 +64,7 @@ overlay::overlay(
 
 overlay::overlay(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 	widget(c, desc),
-	container(this->context, desc, pile_layout::instance)
+	container(this->context, desc, layout::pile)
 {}
 
 utki::shared_ref<widget> overlay::show_context_menu(const utki::shared_ref<widget>& w, vector2 anchor)

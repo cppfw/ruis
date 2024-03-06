@@ -26,15 +26,13 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
-const utki::shared_ref<pile_layout> pile_layout::instance = utki::make_shared<pile_layout>();
-
-void pile_layout::lay_out(const vector2& size, semiconst_widget_list& widgets) const
+void pile_layout::lay_out(const vector2& dims, semiconst_widget_list& widgets) const
 {
 	for (const auto& w : widgets) {
-		w.get().resize(dims_for_widget(w.get(), size));
+		w.get().resize(dims_for_widget(w.get(), dims));
 
 		using std::round;
-		w.get().move_to(round((size - w.get().rect().d) / 2));
+		w.get().move_to(round((dims - w.get().rect().d) / 2));
 	}
 }
 

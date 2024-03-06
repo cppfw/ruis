@@ -44,7 +44,7 @@ container::container(
 }
 
 container::container(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
-	container(c, desc, trivial_layout::instance)
+	container(c, desc, layout::trivial)
 {}
 
 container::container(

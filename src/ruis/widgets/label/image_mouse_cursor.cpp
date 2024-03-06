@@ -29,7 +29,7 @@ using namespace ruis;
 
 image_mouse_cursor::image_mouse_cursor(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 	widget(c, desc),
-	container(this->context, desc, pile_layout::instance)
+	container(this->context, desc, layout::pile)
 {
 	for (const auto& p : desc) {
 		if (!is_property(p)) {

@@ -44,12 +44,18 @@ public:
 
 	/**
 	 * @brief Arrange widgets.
-	 * @param size - size of the area available to the layout.
+	 * @param dims - dimensions of the area available to the layout.
 	 * @param widgets - widgets to arrange.
 	 */
-	virtual void lay_out(const vector2& size, semiconst_widget_list& widgets) const = 0;
+	virtual void lay_out(const vector2& dims, semiconst_widget_list& widgets) const = 0;
 
 	virtual ~layout() = default;
+
+	static const utki::shared_ref<layout> trivial;
+	static const utki::shared_ref<layout> size;
+	static const utki::shared_ref<layout> pile;
+	static const utki::shared_ref<layout> row;
+	static const utki::shared_ref<layout> column;
 };
 
 } // namespace ruis

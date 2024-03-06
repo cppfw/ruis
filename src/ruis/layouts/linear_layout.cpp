@@ -28,9 +28,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
-const utki::shared_ref<row_layout> row_layout::instance = utki::make_shared<row_layout>();
-const utki::shared_ref<column_layout> column_layout::instance = utki::make_shared<column_layout>();
-
 linear_layout::linear_layout(bool is_vertical) :
 	oriented({
 #if CFG_CPP >= 20
@@ -47,7 +44,7 @@ struct info {
 };
 } // namespace
 
-void linear_layout::lay_out(const vector2& size, semiconst_widget_list& widgets) const
+void linear_layout::lay_out(const vector2& dims, semiconst_widget_list& widgets) const
 {
 	unsigned long_index = this->get_long_index();
 	unsigned trans_index = this->get_trans_index();
@@ -68,7 +65,7 @@ void linear_layout::lay_out(const vector2& size, semiconst_widget_list& widgets)
 			ASSERT(lp.dims[long_index] != lp::max)
 			ASSERT(lp.dims[long_index] != lp::fill)
 
-			vector2 d = dims_for_widget(w.get(), size);
+			vector2 d = dims_for_widget(w.get(), dims);
 			info->measured_dims = d;
 
 			rigid += d[long_index];
@@ -79,7 +76,7 @@ void linear_layout::lay_out(const vector2& size, semiconst_widget_list& widgets)
 
 	// arrange widgets
 	{
-		real flexible = size[long_index] - rigid;
+		real flexible = dims[long_index] - rigid;
 
 		real pos = 0;
 
@@ -107,7 +104,7 @@ void linear_layout::lay_out(const vector2& size, semiconst_widget_list& widgets)
 				}
 
 				if (lp.dims[trans_index] == lp::max || lp.dims[trans_index] == lp::fill) {
-					d[trans_index] = size[trans_index];
+					d[trans_index] = dims[trans_index];
 				} else {
 					if (lp.dims[trans_index] == lp::min) {
 						d[trans_index] = -1;
@@ -134,7 +131,7 @@ void linear_layout::lay_out(const vector2& size, semiconst_widget_list& widgets)
 
 			pos += w.get().rect().d[long_index];
 
-			new_pos[trans_index] = std::round((size[trans_index] - w.get().rect().d[trans_index]) / 2);
+			new_pos[trans_index] = std::round((dims[trans_index] - w.get().rect().d[trans_index]) / 2);
 
 			w.get().move_to(new_pos);
 

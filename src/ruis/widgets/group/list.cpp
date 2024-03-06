@@ -37,9 +37,9 @@ list::list(
 		this->context,
 		{},
 #if CFG_CPP >= 20
-		{ .layout = trivial_layout::instance }
+		{ .layout = layout::trivial }
 #else
-		{trivial_layout::instance}
+		{layout::trivial}
 #endif
 		,
 		{}

@@ -30,7 +30,7 @@ const tst::set set("make", [](tst::suite& suite){
                     }
                 },
                 .container_params = {
-                    .layout = ruis::pile_layout::instance
+                    .layout = ruis::layout::pile
                 }
             },
             {
