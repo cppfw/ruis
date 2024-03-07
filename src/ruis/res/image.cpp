@@ -196,6 +196,7 @@ public:
 		svg_texture(svg_texture&&) = delete;
 		svg_texture& operator=(svg_texture&&) = delete;
 
+		// NOLINTNEXTLINE(bugprone-exception-escape, "false positive")
 		~svg_texture() override
 		{
 			if (auto p = this->parent.lock()) {

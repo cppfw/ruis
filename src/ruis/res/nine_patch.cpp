@@ -152,7 +152,7 @@ nine_patch::image_matrix::image_matrix(
 	mul(mul)
 {}
 
-nine_patch::image_matrix::~image_matrix() noexcept
+nine_patch::image_matrix::~image_matrix()
 {
 	if (auto p = this->parent.lock()) {
 		p->cache.erase(this->mul);
