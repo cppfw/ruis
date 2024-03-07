@@ -43,6 +43,7 @@ res::font::font(
 ) :
 	resource(context)
 {
+	// NOLINTNEXTLINE(bugprone-unused-return-value, "false positive")
 	this->fonts[unsigned(style::normal)] = std::make_unique<texture_font_provider>(
 		this->context,
 		utki::make_shared<freetype_face>(file_normal),
@@ -50,6 +51,7 @@ res::font::font(
 	);
 
 	if (file_bold) {
+		// NOLINTNEXTLINE(bugprone-unused-return-value, "false positive")
 		this->fonts[unsigned(style::bold)] = std::make_unique<texture_font_provider>(
 			this->context,
 			utki::make_shared<freetype_face>(*file_bold),
@@ -57,6 +59,7 @@ res::font::font(
 		);
 	}
 	if (file_italic) {
+		// NOLINTNEXTLINE(bugprone-unused-return-value, "false positive")
 		this->fonts[unsigned(style::italic)] = std::make_unique<texture_font_provider>(
 			this->context,
 			utki::make_shared<freetype_face>(*file_italic),
@@ -64,6 +67,7 @@ res::font::font(
 		);
 	}
 	if (file_bold_italic) {
+		// NOLINTNEXTLINE(bugprone-unused-return-value, "false positive")
 		this->fonts[unsigned(style::bold_italic)] = std::make_unique<texture_font_provider>(
 			this->context,
 			utki::make_shared<freetype_face>(*file_bold_italic),
@@ -94,10 +98,13 @@ utki::shared_ref<res::font> res::font::load(
 		} else if (p.value == "normal") {
 			fi.set_path(get_property_value(p).string);
 		} else if (p.value == "bold") {
+			// NOLINTNEXTLINE(bugprone-unused-return-value, "false positive")
 			file_bold = fi.spawn(get_property_value(p).string);
 		} else if (p.value == "italic") {
+			// NOLINTNEXTLINE(bugprone-unused-return-value, "false positive")
 			file_italic = fi.spawn(get_property_value(p).string);
 		} else if (p.value == "bold_italic") {
+			// NOLINTNEXTLINE(bugprone-unused-return-value, "false positive")
 			file_bold_italic = fi.spawn(get_property_value(p).string);
 		}
 	}
