@@ -1,3 +1,9 @@
+libruis (0.5.216) unstable; urgency=medium
+
+  * bookworm
+
+ -- Ivan Gagis <igagis@gmail.com>  Thu, 07 Mar 2024 14:10:20 +0200
+
 libruis (0.5.215) unstable; urgency=medium
 
   * aptian
