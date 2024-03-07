@@ -100,6 +100,7 @@ public:
 		image_matrix(image_matrix&&) = delete;
 		image_matrix& operator=(image_matrix&&) = delete;
 
+		// NOLINTNEXTLINE(bugprone-exception-escape, "false positive")
 		~image_matrix();
 	};
 
