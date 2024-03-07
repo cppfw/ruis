@@ -152,6 +152,7 @@ nine_patch::image_matrix::image_matrix(
 	mul(mul)
 {}
 
+// NOLINTNEXTLINE(bugprone-exception-escape, "false positive")
 nine_patch::image_matrix::~image_matrix()
 {
 	if (auto p = this->parent.lock()) {
