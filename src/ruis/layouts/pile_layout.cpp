@@ -28,11 +28,32 @@ using namespace ruis;
 
 void pile_layout::lay_out(const vector2& dims, semiconst_widget_list& widgets) const
 {
-	for (const auto& w : widgets) {
-		w.get().resize(dims_for_widget(w.get(), dims));
+	for (const auto& widget : widgets) {
+		auto& w = widget.get();
+		w.resize(dims_for_widget(w, dims));
+
+		ruis::vector2 pos;
+		for (unsigned i = 0; i != 2; ++i) {
+			const auto& lp = w.get_layout_params_const();
+
+			auto align = lp.align[i];
+			switch (align) {
+				case lp::align::front:
+					pos[i] = 0;
+					break;
+				case lp::align::center:
+					pos[i] = (dims[i] - w.rect().d[i]) / 2;
+					break;
+				case lp::align::back:
+					pos[i] = dims[i] - w.rect().d[i];
+					break;
+			}
+		}
 
 		using std::round;
-		w.get().move_to(round((dims - w.get().rect().d) / 2));
+		pos = round(pos);
+
+		w.move_to(pos);
 	}
 }
 

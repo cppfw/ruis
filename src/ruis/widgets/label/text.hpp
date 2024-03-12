@@ -64,9 +64,9 @@ namespace make {
 inline utki::shared_ref<ruis::widget> text(
 	utki::shared_ref<ruis::context> context,
 	ruis::widget::parameters widget_params,
-	std::u32string text = {},
-	ruis::color_widget::parameters color_widget_params = {},
-	ruis::text_widget::parameters text_widget_params = {}
+	std::u32string text,
+	ruis::color_widget::parameters color_widget_params,
+	ruis::text_widget::parameters text_widget_params
 )
 {
 	return utki::make_shared<ruis::text>(
