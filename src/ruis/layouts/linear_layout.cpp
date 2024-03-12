@@ -76,6 +76,8 @@ void linear_layout::lay_out(const vector2& dims, semiconst_widget_list& widgets)
 
 	// arrange widgets
 	{
+		using std::round;
+
 		real flexible = dims[long_index] - rigid;
 
 		real pos = 0;
@@ -131,7 +133,7 @@ void linear_layout::lay_out(const vector2& dims, semiconst_widget_list& widgets)
 
 			pos += w.get().rect().d[long_index];
 
-			new_pos[trans_index] = std::round((dims[trans_index] - w.get().rect().d[trans_index]) / 2);
+			new_pos[trans_index] = round((dims[trans_index] - w.get().rect().d[trans_index]) / 2);
 
 			w.get().move_to(new_pos);
 
@@ -141,7 +143,7 @@ void linear_layout::lay_out(const vector2& dims, semiconst_widget_list& widgets)
 		if (remainder > 0) {
 			vector2 d;
 			d[trans_index] = 0;
-			d[long_index] = std::round(remainder);
+			d[long_index] = round(remainder);
 			widgets.back().get().resize_by(d);
 			widgets.back().get().move_by(-d);
 		}
@@ -228,6 +230,8 @@ vector2 linear_layout::measure(const vector2& quotum, const_widget_list& widgets
 	}();
 
 	{
+		using std::round;
+
 		real remainder = 0;
 
 		auto last_child = widgets.size() != 0 ? &widgets.back().get() : nullptr;
@@ -246,8 +250,10 @@ vector2 linear_layout::measure(const vector2& quotum, const_widget_list& widgets
 			d[long_index] = info->measured_dims[long_index];
 
 			if (flex_len > 0) {
+				using std::floor;
+
 				real dl = flex_len * lp.weight / net_weight;
-				real floored = std::floor(dl);
+				real floored = floor(dl);
 				ASSERT(dl >= floored)
 				d[long_index] += floored;
 				remainder += (dl - floored);
@@ -259,7 +265,7 @@ vector2 linear_layout::measure(const vector2& quotum, const_widget_list& widgets
 					if (remainder > 0) {
 						vector2 correction;
 						correction[trans_index] = 0;
-						correction[long_index] = std::round(remainder);
+						correction[long_index] = round(remainder);
 						d += correction;
 					}
 				}
