@@ -68,6 +68,22 @@
             "dependsOn": "build-dbg",
             "group": "build"
 		},
+        {
+            "label": "run-align",
+            "type": "shell",
+            "command": "make run-align",
+            "problemMatcher": [],
+            "dependsOn": "build",
+            "group": "build"
+		},
+		{
+            "label": "run-align-dbg",
+            "type": "shell",
+            "command": "make run-align config=dbg",
+            "problemMatcher": [],
+            "dependsOn": "build-dbg",
+            "group": "build"
+		},
 		{
             "label": "run-ratio_proxy",
             "type": "shell",
