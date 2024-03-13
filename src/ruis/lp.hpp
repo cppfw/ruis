@@ -38,14 +38,14 @@ struct lp {
 	 */
 	enum class align {
 		/**
-		 * @brief Center lignment.
-		 */
-		center,
-
-		/**
 		 * @brief Left or top alignment.
 		 */
 		front,
+
+		/**
+		 * @brief Center lignment.
+		 */
+		center,
 
 		/**
 		 * @brief Right or bottom alignment.

@@ -64,15 +64,15 @@ blending_widget::blending_widget(const utki::shared_ref<ruis::context>& c, const
 		}
 
 		if (p.value == "blend") {
-			this->params.is_blending_enabled_v = get_property_value(p).to_bool();
+			this->params.enabled = get_property_value(p).to_bool();
 		} else if (p.value == "blend_src") {
-			this->params.blend_v.src = blend_factor_from_string(get_property_value(p).string);
+			this->params.factors.src = blend_factor_from_string(get_property_value(p).string);
 		} else if (p.value == "blend_dst") {
-			this->params.blend_v.dst = blend_factor_from_string(get_property_value(p).string);
+			this->params.factors.dst = blend_factor_from_string(get_property_value(p).string);
 		} else if (p.value == "blend_src_alpha") {
-			this->params.blend_v.src_alpha = blend_factor_from_string(get_property_value(p).string);
+			this->params.factors.src_alpha = blend_factor_from_string(get_property_value(p).string);
 		} else if (p.value == "blend_dst_alpha") {
-			this->params.blend_v.dst_alpha = blend_factor_from_string(get_property_value(p).string);
+			this->params.factors.dst_alpha = blend_factor_from_string(get_property_value(p).string);
 		}
 	}
 }
@@ -88,28 +88,28 @@ void blending_widget::set_blending_to_renderer() const
 	r.set_blend_enabled(this->is_blending_enabled());
 	if (this->is_blending_enabled()) {
 		r.set_blend_func(
-			this->params.blend_v.src,
-			this->params.blend_v.dst,
-			this->params.blend_v.src_alpha,
-			this->params.blend_v.dst_alpha
+			this->params.factors.src,
+			this->params.factors.dst,
+			this->params.factors.src_alpha,
+			this->params.factors.dst_alpha
 		);
 	}
 }
 
 void blending_widget::set_blending_enabled(bool enable)
 {
-	if (this->params.is_blending_enabled_v == enable) {
+	if (this->params.enabled == enable) {
 		return;
 	}
-	this->params.is_blending_enabled_v = enable;
+	this->params.enabled = enable;
 	this->on_blending_change();
 }
 
-void blending_widget::set_blending_params(const blending_params& params)
+void blending_widget::set_blending_factors(const blending_factors& params)
 {
-	if (this->params.blend_v == params) {
+	if (this->params.factors == params) {
 		return;
 	}
-	this->params.blend_v = params;
+	this->params.factors = params;
 	this->on_blending_change();
 }

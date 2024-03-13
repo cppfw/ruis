@@ -44,13 +44,13 @@ public:
 	/**
 	 * @brief Structure holding blending parameters.
 	 */
-	struct blending_params {
+	struct blending_factors {
 		ruis::renderer::blend_factor src;
 		ruis::renderer::blend_factor dst;
 		ruis::renderer::blend_factor src_alpha;
 		ruis::renderer::blend_factor dst_alpha;
 
-		bool operator==(const blending_params& b)
+		bool operator==(const blending_factors& b)
 		{
 			return //
 				this->src == b.src && //
@@ -62,8 +62,8 @@ public:
 
 public:
 	struct parameters {
-		bool is_blending_enabled_v = true;
-		blending_params blend_v = {
+		bool enabled = true;
+		blending_factors factors = {
 			ruis::renderer::blend_factor::src_alpha,
 			ruis::renderer::blend_factor::one_minus_src_alpha,
 			ruis::renderer::blend_factor::one,
@@ -103,22 +103,22 @@ public:
 	 */
 	bool is_blending_enabled() const noexcept
 	{
-		return this->params.is_blending_enabled_v;
+		return this->params.enabled;
 	}
 
 	/**
 	 * @brief Set blending parameters for this widget.
 	 * @param params - blending parameters to take into use.
 	 */
-	void set_blending_params(const blending_params& params);
+	void set_blending_factors(const blending_factors& params);
 
 	/**
 	 * @brief Get blending parameters of this widget.
 	 * @return Blending parameters of this widget.
 	 */
-	const blending_params& get_blending_params() const noexcept
+	const blending_factors& get_blending_factors() const noexcept
 	{
-		return this->params.blend_v;
+		return this->params.factors;
 	}
 
 	/**

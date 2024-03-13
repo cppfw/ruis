@@ -448,7 +448,7 @@ void nine_patch::on_blending_change()
 	for (unsigned i = 0; i != 3; ++i) {
 		for (unsigned j = 0; j != 3; ++j) {
 			// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-constant-array-index)
-			this->img_widgets_matrix[i][j].get().set_blending_params(this->get_blending_params());
+			this->img_widgets_matrix[i][j].get().set_blending_factors(this->get_blending_factors());
 		}
 	}
 }
