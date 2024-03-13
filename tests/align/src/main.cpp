@@ -171,31 +171,77 @@ utki::shared_ref<ruis::widget> make_row_layout(utki::shared_ref<ruis::context> c
 }
 
 namespace{
-utki::shared_ref<ruis::widget> make_layout(utki::shared_ref<ruis::context> c){
+utki::shared_ref<ruis::widget> make_layout(utki::shared_ref<ruis::context> c){	
 	return m::container(
 		c,
 		{
 			.container_params = {
-				.layout = ruis::layout::column
+				.layout = ruis::layout::row
 			}
 		},
 		{
-			make_pile_layout(
+			m::container(
 				c,
 				{
-					.lp = {
-						.dims = {lp::fill, 0},
-						.weight = 1
+					.widget_params = {
+						.lp = {
+							.dims = {0, lp::fill},
+							.weight = 1
+						}
+					},
+					.container_params = {
+						.layout = ruis::layout::column
 					}
+				},
+				{
+					make_pile_layout(
+						c,
+						{
+							.lp = {
+								.dims = {lp::fill, 0},
+								.weight = 1
+							}
+						}
+					),
+					make_row_layout(
+						c,
+						{
+							.lp = {
+								.dims = {lp::fill, 0},
+								.weight = 1
+							}
+						}
+					)
 				}
 			),
-			make_row_layout(
+			m::container(
 				c,
 				{
-					.lp = {
-						.dims = {lp::fill, 0},
-						.weight = 1
+					.widget_params = {
+						.lp = {
+							.dims = {0, lp::fill},
+							.weight = 1
+						}
+					},
+					.container_params = {
+						.layout = ruis::layout::column
 					}
+				},
+				{
+					m::rectangle(
+						c,
+						{
+							.widget_params = {
+								.lp = {
+									.dims = {100, 50},
+									.weight = 1
+								}
+							},
+							.color_params = {
+								.color = 0xff0000ff
+							}
+						}
+					)
 				}
 			)
 		}
