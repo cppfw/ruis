@@ -56,12 +56,13 @@ private:
 	mutable utki::shared_ref<const vertex_array> vao;
 
 public:
-	image(
-		utki::shared_ref<ruis::context> context,
-		widget::parameters widget_params,
-		blending_widget::parameters blending_widget_params,
-		parameters params
-	);
+	struct all_parameters {
+		widget::parameters widget_params;
+		blending_widget::parameters blending_params;
+		image::parameters image_params;
+	};
+
+	image(utki::shared_ref<ruis::context> context, all_parameters params);
 
 	image(const image&) = delete;
 	image& operator=(const image&) = delete;
@@ -114,36 +115,9 @@ public:
 };
 
 namespace make {
-[[deprecated]]
-inline utki::shared_ref<ruis::widget> image(
-	utki::shared_ref<ruis::context> context,
-	ruis::widget::parameters widget_params,
-	ruis::image::parameters params = {},
-	ruis::blending_widget::parameters blending_widget_params = {}
-)
+inline utki::shared_ref<ruis::image> image(utki::shared_ref<ruis::context> context, image::all_parameters params)
 {
-	return utki::make_shared<ruis::image>(
-		std::move(context),
-		std::move(widget_params),
-		std::move(blending_widget_params),
-		std::move(params)
-	);
-}
-
-struct image_parameters {
-	widget::parameters widget_params;
-	blending_widget::parameters blending_params;
-	image::parameters image_params;
-};
-
-inline utki::shared_ref<ruis::widget> image(utki::shared_ref<ruis::context> context, image_parameters params)
-{
-	return utki::make_shared<ruis::image>(
-		std::move(context),
-		std::move(params.widget_params),
-		std::move(params.blending_params),
-		std::move(params.image_params)
-	);
+	return utki::make_shared<ruis::image>(std::move(context), std::move(params));
 }
 
 } // namespace make

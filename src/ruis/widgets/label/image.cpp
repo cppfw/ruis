@@ -26,15 +26,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
-image::image(
-	utki::shared_ref<ruis::context> context,
-	widget::parameters widget_params,
-	blending_widget::parameters blending_widget_params,
-	parameters params
-) :
-	widget(std::move(context), widget::all_parameters{std::move(widget_params)}),
-	blending_widget(this->context, std::move(blending_widget_params)),
-	params(std::move(params)),
+image::image(utki::shared_ref<ruis::context> context, all_parameters params) :
+	widget(std::move(context), widget::all_parameters{std::move(params.widget_params)}),
+	blending_widget(this->context, std::move(params.blending_params)),
+	params(std::move(params.image_params)),
 	vao(this->context.get().renderer.get().empty_vertex_array)
 {}
 

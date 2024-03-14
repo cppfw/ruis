@@ -39,7 +39,10 @@ spinner::spinner(
 	image::parameters image_params
 ) :
 	widget(std::move(context), widget::all_parameters{std::move(widget_params)}),
-	image(this->context, {}, std::move(blending_widget_params), std::move(image_params))
+	image(
+		this->context,
+		{.blending_params = std::move(blending_widget_params), .image_params = std::move(image_params)}
+	)
 {}
 
 void spinner::render(const matrix4& matrix) const
