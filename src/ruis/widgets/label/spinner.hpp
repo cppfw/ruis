@@ -41,12 +41,13 @@ class spinner :
 public:
 	spinner(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 
-	spinner(
-		utki::shared_ref<ruis::context> context,
-		widget::parameters widget_params,
-		blending_widget::parameters blending_widget_params,
-		image::parameters image_params
-	);
+	struct all_parameters {
+		widget::parameters widget_params;
+		image::parameters image_params;
+		blending_widget::parameters blending_params;
+	};
+
+	spinner(utki::shared_ref<ruis::context> context, all_parameters params);
 
 	void set_active(bool active);
 
@@ -57,39 +58,12 @@ private:
 };
 
 namespace make {
-[[deprecated]]
-inline utki::shared_ref<ruis::widget> spinner(
-	utki::shared_ref<ruis::context> context,
-	widget::parameters widget_params,
-	image::parameters image_params,
-	blending_widget::parameters blending_widget_params = {}
-)
-{
-	return utki::make_shared<ruis::spinner>(
-		std::move(context),
-		std::move(widget_params),
-		std::move(blending_widget_params),
-		std::move(image_params)
-	);
-}
-
-struct spinner_parameters {
-	widget::parameters widget_params;
-	image::parameters image_params;
-	blending_widget::parameters blending_params;
-};
-
-inline utki::shared_ref<ruis::widget> spinner(
+inline utki::shared_ref<ruis::spinner> spinner(
 	utki::shared_ref<ruis::context> context, //
-	spinner_parameters params
+	spinner::all_parameters params
 )
 {
-	return utki::make_shared<ruis::spinner>(
-		std::move(context),
-		std::move(params.widget_params),
-		std::move(params.blending_params),
-		std::move(params.image_params)
-	);
+	return utki::make_shared<ruis::spinner>(std::move(context), std::move(params));
 }
 
 } // namespace make

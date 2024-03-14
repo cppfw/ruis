@@ -32,11 +32,12 @@ namespace ruis {
 class rectangle : public color_widget
 {
 public:
-	rectangle(
-		utki::shared_ref<ruis::context> context,
-		widget::parameters widget_params,
-		color_widget::parameters color_widget_params
-	);
+	struct all_parameters {
+		widget::parameters widget_params;
+		color_widget::parameters color_params;
+	};
+
+	rectangle(utki::shared_ref<ruis::context> context, all_parameters params);
 
 	rectangle(const rectangle&) = delete;
 	rectangle& operator=(const rectangle&) = delete;
@@ -50,33 +51,12 @@ public:
 };
 
 namespace make {
-
-[[deprecated]]
-inline utki::shared_ref<ruis::widget> rectangle(
+inline utki::shared_ref<ruis::rectangle> rectangle(
 	utki::shared_ref<ruis::context> context,
-	ruis::widget::parameters widget_params,
-	ruis::color_widget::parameters color_widget_params
+	rectangle::all_parameters params
 )
 {
-	return utki::make_shared<ruis::rectangle>(
-		std::move(context),
-		std::move(widget_params),
-		std::move(color_widget_params)
-	);
-}
-
-struct rectangle_parameters {
-	widget::parameters widget_params;
-	color_widget::parameters color_params;
-};
-
-inline utki::shared_ref<ruis::widget> rectangle(utki::shared_ref<ruis::context> context, rectangle_parameters params)
-{
-	return utki::make_shared<ruis::rectangle>(
-		std::move(context),
-		std::move(params.widget_params),
-		std::move(params.color_params)
-	);
+	return utki::make_shared<ruis::rectangle>(std::move(context), std::move(params));
 }
 
 } // namespace make

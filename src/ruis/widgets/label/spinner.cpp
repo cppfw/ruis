@@ -32,16 +32,11 @@ spinner::spinner(const utki::shared_ref<ruis::context>& c, const tml::forest& de
 	image(this->context, desc)
 {}
 
-spinner::spinner(
-	utki::shared_ref<ruis::context> context,
-	widget::parameters widget_params,
-	blending_widget::parameters blending_widget_params,
-	image::parameters image_params
-) :
-	widget(std::move(context), widget::all_parameters{std::move(widget_params)}),
+spinner::spinner(utki::shared_ref<ruis::context> context, all_parameters params) :
+	widget(std::move(context), widget::all_parameters{std::move(params.widget_params)}),
 	image(
 		this->context,
-		{.blending_params = std::move(blending_widget_params), .image_params = std::move(image_params)}
+		{.blending_params = std::move(params.blending_params), .image_params = std::move(params.image_params)}
 	)
 {}
 
