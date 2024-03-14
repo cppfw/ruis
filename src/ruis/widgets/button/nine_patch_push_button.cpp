@@ -27,22 +27,18 @@ using namespace ruis;
 
 nine_patch_push_button::nine_patch_push_button( //
 	utki::shared_ref<ruis::context> context,
-	widget::parameters widget_params,
-	button::parameters button_params,
-	blending_widget::parameters blending_params,
-	nine_patch::parameters nine_patch_params,
-	nine_patch_button::parameters nine_patch_button_params,
+	all_parameters params,
 	utki::span<const utki::shared_ref<ruis::widget>> children
 ) :
-	widget(std::move(context), widget::all_parameters{std::move(widget_params)}),
-	button(this->context, std::move(button_params)),
+	widget(std::move(context), widget::all_parameters{std::move(params.widget_params)}),
+	button(this->context, std::move(params.button_params)),
 	push_button(this->context, button::parameters{}),
 	nine_patch_button(
 		this->context,
 		{},
-		std::move(blending_params),
-		std::move(nine_patch_params),
-		std::move(nine_patch_button_params),
+		std::move(params.blending_params),
+		std::move(params.nine_patch_params),
+		std::move(params.nine_patch_button_params),
 		children
 	)
 {
