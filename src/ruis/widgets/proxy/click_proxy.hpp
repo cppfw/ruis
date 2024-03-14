@@ -31,7 +31,11 @@ class click_proxy : virtual public widget
 	bool deferred_release_ret = false;
 
 public:
-	click_proxy(utki::shared_ref<ruis::context> context, widget::parameters params);
+	struct all_parameters{
+		widget::parameters widget_params;
+	};
+
+	click_proxy(utki::shared_ref<ruis::context> context, all_parameters params);
 
 	click_proxy(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 
@@ -65,7 +69,7 @@ public:
 namespace make {
 inline utki::shared_ref<ruis::click_proxy> click_proxy(
 	utki::shared_ref<ruis::context> context,
-	ruis::widget::parameters params
+	ruis::click_proxy::all_parameters params
 )
 {
 	return utki::make_shared<ruis::click_proxy>(std::move(context), std::move(params));
