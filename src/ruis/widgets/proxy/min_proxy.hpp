@@ -35,11 +35,16 @@ public:
 		std::vector<std::string> target_id;
 	};
 
+	struct all_parameters {
+		widget::parameters widget_params;
+		min_proxy::parameters min_proxy_params;
+	};
+
 private:
 	mutable parameters params;
 
 public:
-	min_proxy(utki::shared_ref<ruis::context> context, widget::parameters widget_params, parameters params);
+	min_proxy(utki::shared_ref<ruis::context> context, all_parameters params);
 
 	min_proxy(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 
@@ -47,31 +52,12 @@ public:
 };
 
 namespace make {
-[[deprecated]]
-inline utki::shared_ref<ruis::widget> min_proxy(
-	utki::shared_ref<ruis::context> context,
-	widget::parameters widget_params,
-	min_proxy::parameters params
-)
-{
-	return utki::make_shared<ruis::min_proxy>(std::move(context), std::move(widget_params), std::move(params));
-}
-
-struct min_proxy_parameters {
-	widget::parameters widget_params;
-	min_proxy::parameters min_proxy_params;
-};
-
 inline utki::shared_ref<ruis::widget> min_proxy( //
 	utki::shared_ref<ruis::context> context,
-	min_proxy_parameters params
+	min_proxy::all_parameters params
 )
 {
-	return utki::make_shared<ruis::min_proxy>(
-		std::move(context),
-		std::move(params.widget_params),
-		std::move(params.min_proxy_params)
-	);
+	return utki::make_shared<ruis::min_proxy>(std::move(context), std::move(params));
 }
 
 } // namespace make
