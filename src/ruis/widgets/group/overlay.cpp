@@ -50,13 +50,14 @@ overlay::overlay(
 	widget(std::move(context), std::move(widget_params)),
 	container( //
 		this->context,
-		{},
 #if CFG_CPP >= 20
-		{//
-		 .layout = layout::pile
+		{
+			.container_params = {
+		 		.layout = layout::pile
+			}
 		},
 #else
-		{layout::pile},
+		{{}, {layout::pile}},
 #endif
 		children
 	)

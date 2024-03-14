@@ -35,11 +35,14 @@ list::list(
 	widget(std::move(context), std::move(widget_params)),
 	ruis::container(
 		this->context,
-		{},
 #if CFG_CPP >= 20
-		{ .layout = layout::trivial }
+		{ 
+			.container_params = {
+				.layout = layout::trivial
+			}
+		}
 #else
-		{layout::trivial}
+		{{}, {layout::trivial}}
 #endif
 		,
 		{}

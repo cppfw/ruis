@@ -30,7 +30,7 @@ key_proxy::key_proxy(
 	utki::span<const utki::shared_ref<widget>> children
 ) :
 	widget(std::move(context), std::move(widget_params)),
-	container(this->context, {}, std::move(container_params), children)
+	container(this->context, {{}, std::move(container_params)}, children)
 {}
 
 bool key_proxy::on_key(const ruis::key_event& e)

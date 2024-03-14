@@ -33,7 +33,7 @@ scroll_area::scroll_area(
 	utki::span<const utki::shared_ref<widget>> children
 ) :
 	widget(std::move(context), std::move(widget_params)),
-	container(this->context, {}, std::move(container_params), children)
+	container(this->context, {{}, std::move(container_params)}, children)
 {}
 
 scroll_area::scroll_area(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :

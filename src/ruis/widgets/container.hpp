@@ -125,14 +125,18 @@ public:
 		utki::shared_ref<ruis::layout> layout = layout::trivial;
 	};
 
+	struct all_parameters {
+		widget::parameters widget_params;
+		container::parameters container_params;
+	};
+
 private:
 	parameters params;
 
 public:
 	container(
 		utki::shared_ref<ruis::context> context,
-		widget::parameters widget_params,
-		parameters params,
+		all_parameters params,
 		utki::span<const utki::shared_ref<widget>> children
 	);
 
@@ -498,41 +502,18 @@ std::vector<utki::shared_ref<widget_type>> widget::get_all_widgets(bool allow_it
 }
 
 namespace make {
-[[deprecated]]
 inline utki::shared_ref<ruis::widget> container(
 	utki::shared_ref<ruis::context> context,
-	ruis::widget::parameters widget_params,
-	ruis::container::parameters params,
+	container::all_parameters params,
 	utki::span<const utki::shared_ref<ruis::widget>> children
 )
 {
 	return utki::make_shared<ruis::container>(
 		std::move(context),
-		std::move(widget_params),
 		std::move(params),
 		children
 	);
 }
-
-struct container_parameters {
-	widget::parameters widget_params;
-	container::parameters container_params;
-};
-
-inline utki::shared_ref<ruis::widget> container(
-	utki::shared_ref<ruis::context> context,
-	container_parameters params,
-	utki::span<const utki::shared_ref<ruis::widget>> children
-)
-{
-	return utki::make_shared<ruis::container>(
-		std::move(context),
-		std::move(params.widget_params),
-		std::move(params.container_params),
-		children
-	);
-}
-
 } // namespace make
 
 } // namespace ruis
