@@ -26,7 +26,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace ruis;
 
 min_proxy::min_proxy(utki::shared_ref<ruis::context> context, all_parameters params) :
-	widget(std::move(context), std::move(params.widget_params)),
+	widget(std::move(context), widget::all_parameters{std::move(params.widget_params)}),
 	params(std::move(params.min_proxy_params))
 {}
 

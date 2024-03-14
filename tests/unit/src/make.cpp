@@ -37,7 +37,9 @@ const tst::set set("make", [](tst::suite& suite){
                 ruis::make::widget(
                     gui.context,
                     {
-                        .rectangle = {10, 20, 30, 40}
+                        .widget_params = {
+                            .rectangle = {10, 20, 30, 40}
+                        }
                     }
                 ),
                 ruis::make::widget(

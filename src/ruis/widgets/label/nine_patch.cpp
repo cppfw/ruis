@@ -265,7 +265,7 @@ nine_patch::nine_patch(
 	parameters params,
 	utki::span<const utki::shared_ref<widget>> children
 ) :
-	widget(std::move(context), std::move(widget_params)),
+	widget(std::move(context), widget::all_parameters{std::move(widget_params)}),
 	blending_widget(this->context, std::move(blending_widget_params)),
 	container(
 		this->context,

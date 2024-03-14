@@ -39,7 +39,7 @@ text::text(
 	color_widget::parameters color_widget_params,
 	std::u32string text
 ) :
-	widget(std::move(context), std::move(widget_params)),
+	widget(std::move(context), widget::all_parameters{std::move(widget_params)}),
 	single_line_text_widget(this->context, std::move(text_widget_params), std::move(text)),
 	color_widget(this->context, std::move(color_widget_params))
 {}

@@ -30,7 +30,7 @@ class fraction_widget : public virtual widget
 
 protected:
 	fraction_widget(utki::shared_ref<ruis::context> c) :
-		widget(std::move(c), widget::parameters{})
+		widget(std::move(c), widget::all_parameters{})
 	{}
 
 	fraction_widget(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :

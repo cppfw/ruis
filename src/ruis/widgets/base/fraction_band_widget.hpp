@@ -31,7 +31,7 @@ class fraction_band_widget : public fraction_widget
 
 protected:
 	fraction_band_widget(utki::shared_ref<ruis::context> c) :
-		widget(std::move(c), widget::parameters{}),
+		widget(std::move(c), widget::all_parameters{}),
 		fraction_widget(this->context)
 	{}
 

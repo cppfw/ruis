@@ -32,7 +32,7 @@ list::list(
 	widget::parameters widget_params,
 	oriented::parameters oriented_params
 ) :
-	widget(std::move(context), std::move(widget_params)),
+	widget(std::move(context), widget::all_parameters{std::move(widget_params)}),
 	ruis::container(
 		this->context,
 #if CFG_CPP >= 20

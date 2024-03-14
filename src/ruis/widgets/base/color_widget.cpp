@@ -26,7 +26,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace ruis;
 
 color_widget::color_widget(utki::shared_ref<ruis::context> context, parameters params) :
-	widget(std::move(context), widget::parameters{}),
+	widget(std::move(context), widget::all_parameters{}),
 	params(std::move(params))
 {}
 

@@ -28,7 +28,7 @@ key_proxy::key_proxy(
 	all_parameters params,
 	utki::span<const utki::shared_ref<widget>> children
 ) :
-	widget(std::move(context), std::move(params.widget_params)),
+	widget(std::move(context), widget::all_parameters{std::move(params.widget_params)}),
 	container(this->context, {{}, std::move(params.container_params)}, children)
 {}
 

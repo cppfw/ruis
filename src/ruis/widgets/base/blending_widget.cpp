@@ -78,7 +78,7 @@ blending_widget::blending_widget(const utki::shared_ref<ruis::context>& c, const
 }
 
 blending_widget::blending_widget(utki::shared_ref<ruis::context> context, parameters params) :
-	widget(std::move(context), widget::parameters{}),
+	widget(std::move(context), widget::all_parameters{}),
 	params(std::move(params))
 {}
 

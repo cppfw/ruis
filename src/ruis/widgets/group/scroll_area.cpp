@@ -32,7 +32,7 @@ scroll_area::scroll_area(
 	container::parameters container_params,
 	utki::span<const utki::shared_ref<widget>> children
 ) :
-	widget(std::move(context), std::move(widget_params)),
+	widget(std::move(context), widget::all_parameters{std::move(widget_params)}),
 	container(this->context, {{}, std::move(container_params)}, children)
 {}
 

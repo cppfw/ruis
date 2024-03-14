@@ -32,7 +32,7 @@ image::image(
 	blending_widget::parameters blending_widget_params,
 	parameters params
 ) :
-	widget(std::move(context), std::move(widget_params)),
+	widget(std::move(context), widget::all_parameters{std::move(widget_params)}),
 	blending_widget(this->context, std::move(blending_widget_params)),
 	params(std::move(params)),
 	vao(this->context.get().renderer.get().empty_vertex_array)

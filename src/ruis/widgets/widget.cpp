@@ -69,9 +69,9 @@ widget::widget(const utki::shared_ref<ruis::context>& c, const tml::forest& desc
 	}
 }
 
-widget::widget(utki::shared_ref<ruis::context> context, parameters params) :
+widget::widget(utki::shared_ref<ruis::context> context, all_parameters params) :
 	context(std::move(context)),
-	params(std::move(params))
+	params(std::move(params.widget_params))
 {}
 
 std::shared_ptr<widget> widget::try_get_widget(const std::string& id, bool allow_itself) noexcept

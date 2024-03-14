@@ -38,7 +38,7 @@ spinner::spinner(
 	blending_widget::parameters blending_widget_params,
 	image::parameters image_params
 ) :
-	widget(std::move(context), std::move(widget_params)),
+	widget(std::move(context), widget::all_parameters{std::move(widget_params)}),
 	image(this->context, {}, std::move(blending_widget_params), std::move(image_params))
 {}
 

@@ -28,8 +28,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
-book::book(utki::shared_ref<ruis::context> context, widget::parameters widget_params) :
-	widget(std::move(context), std::move(widget_params)),
+book::book(utki::shared_ref<ruis::context> context, all_parameters params) :
+	widget(std::move(context), widget::all_parameters{std::move(params.widget_params)}),
 	container(
 		this->context,
 #if CFG_CPP >= 20

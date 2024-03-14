@@ -31,7 +31,7 @@ rectangle::rectangle(
 	widget::parameters widget_params,
 	color_widget::parameters color_widget_params
 ) :
-	widget(std::move(context), std::move(widget_params)),
+	widget(std::move(context), widget::all_parameters{std::move(widget_params)}),
 	color_widget(this->context, std::move(color_widget_params))
 {}
 

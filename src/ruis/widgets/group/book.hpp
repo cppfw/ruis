@@ -79,7 +79,11 @@ class book :
 	std::vector<utki::shared_ref<page>> pages;
 
 public:
-	book(utki::shared_ref<ruis::context> context, widget::parameters widget_params);
+	struct all_parameters{
+		widget::parameters widget_params;
+	};
+
+	book(utki::shared_ref<ruis::context> context, all_parameters params);
 
 	book(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 
@@ -122,10 +126,10 @@ private:
 namespace make {
 inline utki::shared_ref<ruis::book> book(
 	utki::shared_ref<ruis::context> context,
-	ruis::widget::parameters widget_params
+	ruis::book::all_parameters params
 )
 {
-	return utki::make_shared<ruis::book>(std::move(context), std::move(widget_params));
+	return utki::make_shared<ruis::book>(std::move(context), std::move(params));
 }
 } // namespace make
 

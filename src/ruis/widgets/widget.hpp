@@ -424,6 +424,10 @@ public:
 		bool enabled = true;
 	};
 
+	struct all_parameters {
+		parameters widget_params;
+	};
+
 private:
 	parameters params;
 
@@ -435,7 +439,7 @@ public:
 	 */
 	widget(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 
-	widget(utki::shared_ref<ruis::context> context, parameters params);
+	widget(utki::shared_ref<ruis::context> context, all_parameters params);
 
 	widget(const widget&) = delete;
 	widget& operator=(const widget&) = delete;
@@ -704,7 +708,7 @@ vector2 dims_for_widget(const widget& w, const vector2& parent_dims);
 namespace make {
 inline utki::shared_ref<ruis::widget> widget( //
 	utki::shared_ref<ruis::context> context,
-	ruis::widget::parameters params
+	ruis::widget::all_parameters params
 )
 {
 	return utki::make_shared<ruis::widget>(std::move(context), std::move(params));
