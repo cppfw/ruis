@@ -29,6 +29,10 @@ class fraction_widget : public virtual widget
 	float fraction_v = 0; // current position from 0 to 1
 
 protected:
+	fraction_widget(utki::shared_ref<ruis::context> c) :
+		widget(std::move(c), widget::parameters{})
+	{}
+
 	fraction_widget(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 		widget(c, desc)
 	{}

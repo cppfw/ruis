@@ -63,7 +63,7 @@ public:
 };
 
 namespace make {
-inline utki::shared_ref<ruis::widget> click_proxy(
+inline utki::shared_ref<ruis::click_proxy> click_proxy(
 	utki::shared_ref<ruis::context> context,
 	ruis::widget::parameters params
 )

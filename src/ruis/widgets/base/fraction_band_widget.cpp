@@ -32,10 +32,10 @@ void fraction_band_widget::on_band_change()
 
 void fraction_band_widget::set_band_fraction(real fraction)
 {
-	if (this->curBandSizeFraction == fraction) {
+	if (this->band_fraction == fraction) {
 		return;
 	}
 
-	this->curBandSizeFraction = fraction;
+	this->band_fraction = fraction;
 	this->on_band_change();
 }

@@ -502,7 +502,7 @@ std::vector<utki::shared_ref<widget_type>> widget::get_all_widgets(bool allow_it
 }
 
 namespace make {
-inline utki::shared_ref<ruis::widget> container(
+inline utki::shared_ref<ruis::container> container(
 	utki::shared_ref<ruis::context> context,
 	container::all_parameters params,
 	utki::span<const utki::shared_ref<ruis::widget>> children
