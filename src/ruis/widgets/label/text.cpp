@@ -32,16 +32,10 @@ text::text(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 	color_widget(this->context, desc)
 {}
 
-text::text(
-	utki::shared_ref<ruis::context> context,
-	widget::parameters widget_params,
-	text_widget::parameters text_widget_params,
-	color_widget::parameters color_widget_params,
-	std::u32string text
-) :
-	widget(std::move(context), widget::all_parameters{std::move(widget_params)}),
-	single_line_text_widget(this->context, std::move(text_widget_params), std::move(text)),
-	color_widget(this->context, std::move(color_widget_params))
+text::text(utki::shared_ref<ruis::context> context, all_parameters params, std::u32string text) :
+	widget(std::move(context), widget::all_parameters{std::move(params.widget_params)}),
+	single_line_text_widget(this->context, std::move(params.text_params), std::move(text)),
+	color_widget(this->context, std::move(params.color_params))
 {}
 
 void text::render(const ruis::matrix4& matrix) const

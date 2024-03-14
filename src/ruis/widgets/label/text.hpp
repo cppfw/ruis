@@ -39,13 +39,13 @@ class text :
 public:
 	text(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 
-	text(
-		utki::shared_ref<ruis::context> context,
-		widget::parameters widget_params,
-		text_widget::parameters text_widget_params,
-		color_widget::parameters color_widget_params,
-		std::u32string text
-	);
+	struct all_parameters {
+		widget::parameters widget_params;
+		color_widget::parameters color_params;
+		text_widget::parameters text_params;
+	};
+
+	text(utki::shared_ref<ruis::context> context, all_parameters params, std::u32string text);
 
 public:
 	text(const text&) = delete;
@@ -60,43 +60,13 @@ public:
 };
 
 namespace make {
-[[deprecated]]
-inline utki::shared_ref<ruis::widget> text(
+inline utki::shared_ref<ruis::text> text(
 	utki::shared_ref<ruis::context> context,
-	ruis::widget::parameters widget_params,
-	std::u32string text,
-	ruis::color_widget::parameters color_widget_params,
-	ruis::text_widget::parameters text_widget_params
-)
-{
-	return utki::make_shared<ruis::text>(
-		std::move(context),
-		std::move(widget_params),
-		std::move(text_widget_params),
-		std::move(color_widget_params),
-		std::move(text)
-	);
-}
-
-struct text_parameters {
-	widget::parameters widget_params;
-	color_widget::parameters color_params;
-	text_widget::parameters text_params;
-};
-
-inline utki::shared_ref<ruis::widget> text(
-	utki::shared_ref<ruis::context> context,
-	text_parameters params,
+	text::all_parameters params,
 	std::u32string text
 )
 {
-	return utki::make_shared<ruis::text>(
-		std::move(context),
-		std::move(params.widget_params),
-		std::move(params.text_params),
-		std::move(params.color_params),
-		std::move(text)
-	);
+	return utki::make_shared<ruis::text>(std::move(context), std::move(params), std::move(text));
 }
 
 } // namespace make
