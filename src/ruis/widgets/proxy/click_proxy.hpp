@@ -31,7 +31,7 @@ class click_proxy : virtual public widget
 	bool deferred_release_ret = false;
 
 public:
-	struct all_parameters{
+	struct all_parameters {
 		widget::parameters widget_params;
 	};
 

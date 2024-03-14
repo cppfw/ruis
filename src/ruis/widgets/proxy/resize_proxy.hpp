@@ -32,7 +32,11 @@ namespace ruis {
 class resize_proxy : virtual public widget
 {
 public:
-	resize_proxy(utki::shared_ref<ruis::context> context, widget::parameters params);
+	struct all_parameters {
+		widget::parameters widget_params;
+	};
+
+	resize_proxy(utki::shared_ref<ruis::context> context, all_parameters params);
 
 	resize_proxy(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 		widget(c, desc)
@@ -56,9 +60,9 @@ public:
 };
 
 namespace make {
-inline utki::shared_ref<ruis::widget> resize_proxy( //
+inline utki::shared_ref<ruis::resize_proxy> resize_proxy( //
 	utki::shared_ref<ruis::context> context,
-	widget::parameters params
+	resize_proxy::all_parameters params
 )
 {
 	return utki::make_shared<ruis::resize_proxy>(std::move(context), std::move(params));

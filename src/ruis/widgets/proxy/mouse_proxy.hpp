@@ -32,7 +32,11 @@ namespace ruis {
 class mouse_proxy : virtual public widget
 {
 public:
-	mouse_proxy(utki::shared_ref<ruis::context> context, widget::parameters params);
+	struct all_parameters {
+		widget::parameters widget_params;
+	};
+
+	mouse_proxy(utki::shared_ref<ruis::context> context, all_parameters params);
 
 	mouse_proxy(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 
@@ -70,9 +74,9 @@ public:
 };
 
 namespace make {
-inline utki::shared_ref<ruis::widget> mouse_proxy(
+inline utki::shared_ref<ruis::mouse_proxy> mouse_proxy(
 	utki::shared_ref<ruis::context> context,
-	ruis::widget::parameters params
+	ruis::mouse_proxy::all_parameters params
 )
 {
 	return utki::make_shared<ruis::mouse_proxy>(std::move(context), std::move(params));

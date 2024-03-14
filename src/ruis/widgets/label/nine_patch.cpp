@@ -265,16 +265,14 @@ nine_patch::nine_patch(
 	parameters params,
 	utki::span<const utki::shared_ref<widget>> children
 ) :
-	widget(std::move(context), widget::all_parameters{std::move(widget_params)}),
-	blending_widget(this->context, std::move(blending_widget_params)),
-	container(
-		this->context,
-		{
-			{			 },
-			{layout::column}
-},
-		build_layout(this->context)
+	widget(
+		std::move(context),
+		widget::all_parameters{
+			std::move(widget_params)
+}
 	),
+	blending_widget(this->context, std::move(blending_widget_params)),
+	container(this->context, {{}, {layout::column}}, build_layout(this->context)),
 	img_widgets_matrix({{//
 						 {//
 						  this->get_widget_as<image>("ruis_lt"),

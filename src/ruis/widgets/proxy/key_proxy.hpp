@@ -67,7 +67,7 @@ public:
 };
 
 namespace make {
-inline utki::shared_ref<ruis::widget> key_proxy(
+inline utki::shared_ref<ruis::key_proxy> key_proxy(
 	utki::shared_ref<ruis::context> context,
 	key_proxy::all_parameters params,
 	utki::span<const utki::shared_ref<ruis::widget>> children

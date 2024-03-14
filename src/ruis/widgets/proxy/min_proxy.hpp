@@ -52,7 +52,7 @@ public:
 };
 
 namespace make {
-inline utki::shared_ref<ruis::widget> min_proxy( //
+inline utki::shared_ref<ruis::min_proxy> min_proxy( //
 	utki::shared_ref<ruis::context> context,
 	min_proxy::all_parameters params
 )
