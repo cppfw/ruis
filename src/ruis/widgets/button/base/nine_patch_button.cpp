@@ -36,7 +36,11 @@ nine_patch_button::nine_patch_button( //
 ) :
 	widget(std::move(context), widget::all_parameters{}),
 	button(this->context, std::move(button_params)),
-	nine_patch(this->context, {}, std::move(blending_params), std::move(nine_patch_params), children)
+	nine_patch(
+		this->context,
+		{.blending_params = std::move(blending_params), .nine_patch_params = std::move(nine_patch_params)},
+		children
+	)
 {}
 
 nine_patch_button::nine_patch_button(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :

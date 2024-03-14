@@ -260,18 +260,16 @@ nine_patch::nine_patch(const utki::shared_ref<ruis::context>& c, const tml::fore
 
 nine_patch::nine_patch(
 	utki::shared_ref<ruis::context> context,
-	widget::parameters widget_params,
-	blending_widget::parameters blending_widget_params,
-	parameters params,
+	all_parameters params,
 	utki::span<const utki::shared_ref<widget>> children
 ) :
 	widget(
 		std::move(context),
-		widget::all_parameters{
-			std::move(widget_params)
+		{
+			.widget_params = std::move(params.widget_params)
 }
 	),
-	blending_widget(this->context, std::move(blending_widget_params)),
+	blending_widget(this->context, std::move(params.blending_params)),
 	container(this->context, {{}, {layout::column}}, build_layout(this->context)),
 	img_widgets_matrix({{//
 						 {//
@@ -290,7 +288,7 @@ nine_patch::nine_patch(
 						  this->get_widget_as<image>("ruis_rb")
 						 }
 	}}),
-	inner_content(this->get_widget_as<container>("ruis_content")), params(std::move(params))
+	inner_content(this->get_widget_as<container>("ruis_content")), params(std::move(params.nine_patch_params))
 {
 	this->inner_content.push_back(children);
 }

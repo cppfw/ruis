@@ -74,11 +74,15 @@ private:
 	parameters params;
 
 public:
+	struct all_parameters {
+		widget::parameters widget_params;
+		blending_widget::parameters blending_params;
+		nine_patch::parameters nine_patch_params;
+	};
+
 	nine_patch(
 		utki::shared_ref<ruis::context> context,
-		widget::parameters widget_params,
-		blending_widget::parameters blending_widget_params,
-		parameters params,
+		all_parameters params,
 		utki::span<const utki::shared_ref<widget>> children
 	);
 
@@ -147,43 +151,13 @@ private:
 };
 
 namespace make {
-[[deprecated]]
-inline utki::shared_ref<ruis::widget> nine_patch(
+inline utki::shared_ref<ruis::nine_patch> nine_patch(
 	utki::shared_ref<ruis::context> context,
-	ruis::widget::parameters widget_params,
-	ruis::nine_patch::parameters params,
-	utki::span<const utki::shared_ref<ruis::widget>> children,
-	blending_widget::parameters blending_widget_params = {}
-)
-{
-	return utki::make_shared<ruis::nine_patch>(
-		std::move(context),
-		std::move(widget_params),
-		std::move(blending_widget_params),
-		std::move(params),
-		children
-	);
-}
-
-struct nine_patch_parameters {
-	widget::parameters widget_params;
-	blending_widget::parameters blending_params;
-	nine_patch::parameters nine_patch_params;
-};
-
-inline utki::shared_ref<ruis::widget> nine_patch(
-	utki::shared_ref<ruis::context> context,
-	nine_patch_parameters params,
+	nine_patch::all_parameters params,
 	utki::span<const utki::shared_ref<ruis::widget>> children
 )
 {
-	return utki::make_shared<ruis::nine_patch>(
-		std::move(context),
-		std::move(params.widget_params),
-		std::move(params.blending_params),
-		std::move(params.nine_patch_params),
-		children
-	);
+	return utki::make_shared<ruis::nine_patch>(std::move(context), std::move(params), children);
 }
 
 } // namespace make
