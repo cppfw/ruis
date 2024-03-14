@@ -24,8 +24,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <functional>
 
 #include "../../util/oriented.hpp"
-#include "../../widget.hpp"
 #include "../base/fraction_band_widget.hpp"
+#include "../widget.hpp"
 
 // disable stupid warnings
 #if M_COMPILER == M_COMPILER_MSVC

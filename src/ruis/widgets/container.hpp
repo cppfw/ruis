@@ -26,11 +26,11 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <utki/shared_ref.hpp>
 
-#include "layouts/trivial_layout.hpp"
-#include "util/util.hpp"
-#include "util/widget_list.hpp"
+#include "../config.hpp"
+#include "../layouts/trivial_layout.hpp"
+#include "../util/util.hpp"
+#include "../util/widget_list.hpp"
 
-#include "config.hpp"
 #include "widget.hpp"
 
 namespace ruis {
@@ -538,4 +538,4 @@ inline utki::shared_ref<ruis::widget> container(
 } // namespace ruis
 
 // include definitions for forward declared classes
-#include "layout.hpp"
+#include "../layout.hpp"

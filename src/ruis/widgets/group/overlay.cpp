@@ -23,10 +23,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <utki/config.hpp>
 
-#include "../../container.hpp"
 #include "../../context.hpp"
 #include "../../layouts/pile_layout.hpp"
 #include "../../layouts/size_layout.hpp"
+#include "../container.hpp"
 #include "../proxy/mouse_proxy.hpp"
 
 using namespace ruis;

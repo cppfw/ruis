@@ -27,7 +27,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <r4/rectangle.hpp>
 
 #include "../../res/font.hpp"
-#include "../../widget.hpp"
+#include "../widget.hpp"
 
 #include "color_widget.hpp"
 

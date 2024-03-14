@@ -32,13 +32,12 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <utki/shared.hpp>
 #include <utki/types.hpp>
 
-#include "render/texture_2d.hpp"
-#include "util/events.hpp"
-#include "util/key.hpp"
-#include "util/units.hpp"
-
-#include "config.hpp"
-#include "lp.hpp"
+#include "../config.hpp"
+#include "../lp.hpp"
+#include "../render/texture_2d.hpp"
+#include "../util/events.hpp"
+#include "../util/key.hpp"
+#include "../util/units.hpp"
 
 namespace ruis {
 
@@ -715,8 +714,9 @@ inline utki::shared_ref<ruis::widget> widget( //
 } // namespace ruis
 
 // include definitions for forward declared classes
+#include "../context.hpp"
+
 #include "container.hpp"
-#include "context.hpp"
 
 template <typename resource_type>
 void ruis::widget::reload(std::shared_ptr<resource_type>& p)

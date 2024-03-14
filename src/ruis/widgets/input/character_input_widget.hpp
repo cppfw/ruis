@@ -22,7 +22,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #pragma once
 
 #include "../../util/key.hpp"
-#include "../../widget.hpp"
+#include "../widget.hpp"
 
 namespace ruis {
 

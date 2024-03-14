@@ -21,7 +21,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "context.hpp"
 
-#include "widget.hpp"
+#include "widgets/widget.hpp"
 
 using namespace ruis;
 

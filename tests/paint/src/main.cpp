@@ -2,7 +2,7 @@
 
 #include <ruisapp/application.hpp>
 
-#include <ruis/widget.hpp>
+#include <ruis/widgets/widget.hpp>
 #include <ruis/paint/path_vao.hpp>
 #include <ruis/paint/frame_vao.hpp>
 

@@ -21,10 +21,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "widget.hpp"
 
-#include "util/util.hpp"
+#include "../context.hpp"
+#include "../util/util.hpp"
 
 #include "container.hpp"
-#include "context.hpp"
 
 using namespace ruis;
 

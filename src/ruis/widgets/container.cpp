@@ -23,9 +23,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <utki/config.hpp>
 
-#include "util/util.hpp"
-
-#include "context.hpp"
+#include "../context.hpp"
+#include "../util/util.hpp"
 
 using namespace ruis;
 
