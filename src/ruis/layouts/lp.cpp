@@ -19,17 +19,34 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 /* ================ LICENSE END ================ */
 
-#include "layout.hpp"
+#include "lp.hpp"
 
-#include "layouts/linear_layout.hpp"
-#include "layouts/pile_layout.hpp"
-#include "layouts/size_layout.hpp"
-#include "layouts/trivial_layout.hpp"
+#include "../util/util.hpp"
 
 using namespace ruis;
 
-const utki::shared_ref<layout> layout::trivial = utki::make_shared<trivial_layout>();
-const utki::shared_ref<layout> layout::size = utki::make_shared<size_layout>();
-const utki::shared_ref<layout> layout::pile = utki::make_shared<pile_layout>();
-const utki::shared_ref<layout> layout::row = utki::make_shared<linear_layout>(false);
-const utki::shared_ref<layout> layout::column = utki::make_shared<linear_layout>(true);
+lp lp::make(const tml::forest& desc, const ruis::units& units)
+{
+	lp ret;
+	for (const auto& p : desc) {
+		if (!is_property(p)) {
+			continue;
+		}
+
+		try {
+			if (p.value == "dx") {
+				ret.dims.x() = parse_layout_dimension_value(get_property_value(p), units);
+			} else if (p.value == "dy") {
+				ret.dims.y() = parse_layout_dimension_value(get_property_value(p), units);
+			} else if (p.value == "weight") {
+				ret.weight = get_property_value(p).to_float();
+			}
+		} catch (std::invalid_argument&) {
+			LOG([&](auto& o) {
+				o << "could not parse value of " << tml::to_string(p) << std::endl;
+			})
+			throw;
+		}
+	}
+	return ret;
+}

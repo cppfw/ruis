@@ -23,9 +23,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <tml/tree.hpp>
 
-#include "util/units.hpp"
-
-#include "config.hpp"
+#include "../config.hpp"
+#include "../util/units.hpp"
 
 namespace ruis {
 
