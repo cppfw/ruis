@@ -51,10 +51,14 @@ protected:
 	vector2 dims_for_widget(const widget& w) const;
 
 public:
+	struct all_parameters {
+		widget::parameters widget_params;
+		container::parameters container_params;
+	};
+
 	scroll_area(
 		utki::shared_ref<ruis::context> context,
-		widget::parameters widget_params,
-		container::parameters container_params,
+		all_parameters params,
 		utki::span<const utki::shared_ref<widget>> children
 	);
 
@@ -132,39 +136,13 @@ private:
 };
 
 namespace make {
-[[deprecated]]
-inline utki::shared_ref<ruis::widget> scroll_area(
+inline utki::shared_ref<ruis::scroll_area> scroll_area(
 	utki::shared_ref<ruis::context> context,
-	ruis::widget::parameters widget_params,
-	ruis::container::parameters container_params,
+	scroll_area::all_parameters params,
 	utki::span<const utki::shared_ref<ruis::widget>> children
 )
 {
-	return utki::make_shared<ruis::scroll_area>(
-		std::move(context),
-		std::move(widget_params),
-		std::move(container_params),
-		children
-	);
-}
-
-struct scroll_area_parameters {
-	widget::parameters widget_params;
-	container::parameters container_params;
-};
-
-inline utki::shared_ref<ruis::widget> scroll_area(
-	utki::shared_ref<ruis::context> context,
-	scroll_area_parameters params,
-	utki::span<const utki::shared_ref<ruis::widget>> children
-)
-{
-	return utki::make_shared<ruis::scroll_area>(
-		std::move(context),
-		std::move(params.widget_params),
-		std::move(params.container_params),
-		children
-	);
+	return utki::make_shared<ruis::scroll_area>(std::move(context), std::move(params), children);
 }
 
 } // namespace make

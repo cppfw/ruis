@@ -28,12 +28,11 @@ using namespace ruis;
 
 scroll_area::scroll_area(
 	utki::shared_ref<ruis::context> context,
-	widget::parameters widget_params,
-	container::parameters container_params,
+	all_parameters params,
 	utki::span<const utki::shared_ref<widget>> children
 ) :
-	widget(std::move(context), widget::all_parameters{std::move(widget_params)}),
-	container(this->context, {{}, std::move(container_params)}, children)
+	widget(std::move(context), widget::all_parameters{std::move(params.widget_params)}),
+	container(this->context, {{}, std::move(params.container_params)}, children)
 {}
 
 scroll_area::scroll_area(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
