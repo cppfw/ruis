@@ -191,9 +191,9 @@ nine_patch::nine_patch(const utki::shared_ref<ruis::context>& c, const tml::fore
 	container(
 		this->context,
 		{
-		{
+			{			 },
+			{layout::column}
 },
-		{layout::column}},
 		build_layout(this->context)
 	),
 	img_widgets_matrix({{//
@@ -270,9 +270,9 @@ nine_patch::nine_patch(
 	container(
 		this->context,
 		{
-			{},
+			{			 },
 			{layout::column}
-		},
+},
 		build_layout(this->context)
 	),
 	img_widgets_matrix({{//

@@ -51,11 +51,7 @@ overlay::overlay(
 	container( //
 		this->context,
 #if CFG_CPP >= 20
-		{
-			.container_params = {
-		 		.layout = layout::pile
-			}
-		},
+		{.container_params = {.layout = layout::pile}},
 #else
 		{{}, {layout::pile}},
 #endif

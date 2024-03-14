@@ -33,18 +33,11 @@ book::book(utki::shared_ref<ruis::context> context, widget::parameters widget_pa
 	container(
 		this->context,
 #if CFG_CPP >= 20
-		{ 
-			container_params = {
-				.layout = layout::pile
-			}
+		{
+			.container_params = {.layout = layout::pile }
 		}
 #else
-		{
-			{},
-			{
-				layout::pile
-			}
-		}
+		{{}, {layout::pile}}
 #endif
 		,
 		{}

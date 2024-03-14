@@ -36,10 +36,8 @@ list::list(
 	ruis::container(
 		this->context,
 #if CFG_CPP >= 20
-		{ 
-			.container_params = {
-				.layout = layout::trivial
-			}
+		{
+			.container_params = {.layout = layout::trivial }
 		}
 #else
 		{{}, {layout::trivial}}
@@ -86,7 +84,7 @@ list::list(const utki::shared_ref<ruis::context>& c, const tml::forest& desc, bo
 	container(this->context, tml::forest()),
 	oriented({
 #if CFG_CPP >= 20
-		.vertial = vertical
+		.vertical = vertical
 #else
 		vertical
 #endif

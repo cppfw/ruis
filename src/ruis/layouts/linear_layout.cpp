@@ -31,7 +31,7 @@ using namespace ruis;
 linear_layout::linear_layout(bool is_vertical) :
 	oriented({
 #if CFG_CPP >= 20
-		.vertial = is_vertical
+		.vertical = is_vertical
 #else
 		is_vertical
 #endif

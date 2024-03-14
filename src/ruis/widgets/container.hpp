@@ -508,11 +508,7 @@ inline utki::shared_ref<ruis::widget> container(
 	utki::span<const utki::shared_ref<ruis::widget>> children
 )
 {
-	return utki::make_shared<ruis::container>(
-		std::move(context),
-		std::move(params),
-		children
-	);
+	return utki::make_shared<ruis::container>(std::move(context), std::move(params), children);
 }
 } // namespace make
 
