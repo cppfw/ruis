@@ -40,11 +40,16 @@ public:
 		std::shared_ptr<res::gradient> gradient;
 	};
 
+	struct all_parameters {
+		widget::parameters widget_params;
+		ruis::gradient::parameters gradient_params;
+	};
+
 private:
 	parameters params;
 
 public:
-	gradient(utki::shared_ref<ruis::context> context, widget::parameters widget_params, parameters params);
+	gradient(utki::shared_ref<ruis::context> context, all_parameters params);
 
 	gradient(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 
@@ -60,28 +65,9 @@ public:
 };
 
 namespace make {
-[[deprecated]]
-inline utki::shared_ref<ruis::widget> gradient(
-	utki::shared_ref<ruis::context> context,
-	ruis::widget::parameters widget_params,
-	ruis::gradient::parameters params
-)
+inline utki::shared_ref<ruis::widget> gradient(utki::shared_ref<ruis::context> context, gradient::all_parameters params)
 {
-	return utki::make_shared<ruis::gradient>(std::move(context), std::move(widget_params), std::move(params));
-}
-
-struct gradient_parameters {
-	widget::parameters widget_params;
-	ruis::gradient::parameters gradient_params;
-};
-
-inline utki::shared_ref<ruis::widget> gradient(utki::shared_ref<ruis::context> context, gradient_parameters params)
-{
-	return utki::make_shared<ruis::gradient>(
-		std::move(context),
-		std::move(params.widget_params),
-		std::move(params.gradient_params)
-	);
+	return utki::make_shared<ruis::gradient>(std::move(context), std::move(params));
 }
 
 } // namespace make
