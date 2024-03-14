@@ -57,11 +57,12 @@ protected:
 	list(const utki::shared_ref<ruis::context>& c, const tml::forest& desc, bool vertical);
 
 public:
-	list(
-		utki::shared_ref<ruis::context> context,
-		widget::parameters widget_params,
-		oriented::parameters oriented_params
-	);
+	struct all_parameters {
+		widget::parameters widget_params;
+		oriented::parameters oriented_params;
+	};
+
+	list(utki::shared_ref<ruis::context> context, all_parameters params);
 
 	list(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 		list(c, desc, true)
@@ -241,30 +242,14 @@ public:
 };
 
 namespace make {
-[[deprecated]]
-inline utki::shared_ref<ruis::widget> list(
+inline utki::shared_ref<ruis::list> list( //
 	utki::shared_ref<ruis::context> context,
-	ruis::widget::parameters widget_params,
-	ruis::oriented::parameters oriented_params
-)
-{
-	return utki::make_shared<ruis::list>(std::move(context), std::move(widget_params), std::move(oriented_params));
-}
-
-struct list_parameters {
-	widget::parameters widget_params;
-	ruis::oriented::parameters oriented_params;
-};
-
-inline utki::shared_ref<ruis::widget> list( //
-	utki::shared_ref<ruis::context> context,
-	list_parameters params
+	list::all_parameters params
 )
 {
 	return utki::make_shared<ruis::list>( //
 		std::move(context),
-		std::move(params.widget_params),
-		std::move(params.oriented_params)
+		std::move(params)
 	);
 }
 

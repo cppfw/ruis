@@ -27,12 +27,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
-list::list(
-	utki::shared_ref<ruis::context> context,
-	widget::parameters widget_params,
-	oriented::parameters oriented_params
-) :
-	widget(std::move(context), widget::all_parameters{std::move(widget_params)}),
+list::list(utki::shared_ref<ruis::context> context, all_parameters params) :
+	widget(std::move(context), widget::all_parameters{std::move(params.widget_params)}),
 	ruis::container(
 		this->context,
 #if CFG_CPP >= 20
@@ -45,7 +41,7 @@ list::list(
 		,
 		{}
 	),
-	oriented(std::move(oriented_params))
+	oriented(std::move(params.oriented_params))
 {}
 
 namespace {
