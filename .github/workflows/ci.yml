@@ -10,14 +10,70 @@ env:
   MYCI_GIT_USERNAME: igagis
   MYCI_GIT_PASSWORD: ${{ secrets.MYCI_GIT_ACCESS_TOKEN }}
 jobs:
+##### coverage #####
+  coverage:
+    runs-on: ubuntu-latest
+    container: debian:bullseye
+    name: coverage - measure
+    env:
+      linux_distro: debian
+      linux_release: bullseye
+    steps:
+      - name: add cppfw deb repo
+        uses: myci-actions/add-deb-repo@master
+        with:
+          repo: deb https://gagis.hopto.org/repo/cppfw/${{ env.linux_distro }} ${{ env.linux_release }} main
+          repo-name: cppfw
+          keys-asc: https://gagis.hopto.org/repo/cppfw/pubkey.gpg
+          install: myci locales git
+      - name: add llvm repo (for clang-format)
+        uses: myci-actions/add-deb-repo@master
+        with:
+          repo: deb https://apt.llvm.org/${{ env.linux_release }} llvm-toolchain-${{ env.linux_release }} main
+          repo-name: llvm
+          keys-asc: https://apt.llvm.org/llvm-snapshot.gpg.key
+      - name: install ci tools
+        run: |
+          apt --quiet install --assume-yes devscripts equivs python3-pip
+
+          # install gcovr >5.2
+          pip install git+https://github.com/gcovr/gcovr.git
+      - name: git clone
+        uses: myci-actions/checkout@master
+      - name: prepare debian package
+        run: myci-deb-prepare.sh
+      - name: install deps
+        run: myci-deb-install-build-deps.sh
+      - name: build
+        run: make config=gcov
+      - name: test
+        run: make config=gcov test
+      - name: generate coverage report
+        run: gcovr --exclude-throw-branches --filter src/ --cobertura > cobertura.xml
+      - name: upload coverage report to artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: cobertura.xml
+          path: cobertura.xml
+      - name: upload coverage data to codecov.io
+        uses: codecov/codecov-action@v4.0.1
+        if: always() # even if previous steps fail, this one needs to be run
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: cobertura.xml
+          # flags: unittests # optional
+          name: codecov-umbrella # optional
+          fail_ci_if_error: true # optional (default = false)
+          verbose: true # optional (default = false)
 ##### sanitizer #####
   sanitizer:
     strategy:
       fail-fast: false
       matrix:
         include:
-          - {os: debian, codename: bullseye, image_owner: , package_type: deb}
-          - {os: debian, codename: bullseye, image_owner: arm32v7/, package_type: deb, labels: [arm,docker]}
+          - {os: debian, codename: bookworm, image_owner: , package_type: deb}
+          - {os: debian, codename: bookworm, image_owner: arm32v7/, package_type: deb, labels: [arm,docker]}
+          - {os: debian, codename: bookworm, image_owner: arm64v8/, package_type: deb, labels: [arm64,docker]}
     runs-on: ${{ (matrix.labels == '' && 'ubuntu-latest') || matrix.labels }}
     container: ${{ matrix.image_owner }}${{ matrix.os }}:${{ matrix.codename }}
     name: sanitizer - ${{ matrix.image_owner }}${{ matrix.os }}:${{ matrix.codename }}
