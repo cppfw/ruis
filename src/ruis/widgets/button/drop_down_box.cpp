@@ -42,7 +42,7 @@ const auto drop_down_box_layout = tml::read(R"qwertyuiop(
 		lp{dx{max}}
 		@pile{
 			id{ruis_dropdown_selection}
-			lp{dx{min}dy{max} weight{1}}
+			lp{dx{max}dy{max} weight{1}}
 		}
 		@widget{lp{dx{3dp}}}
 		@image{

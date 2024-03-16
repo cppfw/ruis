@@ -119,16 +119,16 @@ const tml::forest line_end_layout = tml::read(R"qwertyuiop(
 			@column{
 				lp{dx{max}dy{max}}
 				@color{
-					lp{dx{1pp}dy{0}weight{1}}
+					lp{dx{1pp}dy{fill}weight{1}}
 					color{${ruis_color_highlight}}
 				}
-				@widget{lp{dx{max}dy{0}weight{1}}}
+				@widget{lp{dx{max}dy{fill}weight{1}}}
 			}
 			@row{
 				lp{dx{max}dy{max}}
-				@widget{lp{dx{0}dy{max}weight{1}}}
+				@widget{lp{dx{fill}dy{max}weight{1}}}
 				@color{
-					lp{dx{0}dy{1pp}weight{1}}
+					lp{dx{fill}dy{1pp}weight{1}}
 					color{${ruis_color_highlight}}
 				}
 			}
@@ -144,9 +144,9 @@ const tml::forest line_middle_layout = tml::read(R"qwertyuiop(
 			}
 			@row{
 				lp{dx{max}dy{max}}
-				@widget{lp{dx{0}dy{max}weight{1}}}
+				@widget{lp{dx{fill}dy{max}weight{1}}}
 				@color{
-					lp{dx{0}dy{1pp}weight{1}}
+					lp{dx{fill}dy{1pp}weight{1}}
 					color{${ruis_color_highlight}}
 				}
 			}

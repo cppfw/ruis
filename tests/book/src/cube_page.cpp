@@ -113,7 +113,7 @@ cube_page::cube_page(const utki::shared_ref<ruis::context>& c) :
 					}
 					@widget{
 						id{placeholder}
-						lp{dx{fill}dy{0}weight{1}}
+						lp{dx{fill}dy{fill}weight{1}}
 					}
 					@text{text{"cube page"}}
 					@push_button{

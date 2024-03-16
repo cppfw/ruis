@@ -58,11 +58,34 @@ void linear_layout::lay_out(const vector2& dims, semiconst_widget_list& widgets)
 	{
 		auto info = info_array.begin();
 		for (const auto& w : widgets) {
-			auto& lp = w.get().get_layout_params_const();
+			const auto& lp = w.get().get_layout_params_const();
 
 			net_weight += lp.weight;
 
-			vector2 d = dims_for_widget(w.get(), dims);
+			vector2 d;
+			if (lp.dims[trans_index] == lp::max || lp.dims[trans_index] == lp::fill) {
+				d[trans_index] = dims[trans_index];
+			} else if (lp.dims[trans_index] == lp::min) {
+				d[trans_index] = -1; // will be updated below
+			} else {
+				d[trans_index] = lp.dims[trans_index];
+			}
+			if(lp.dims[long_index] == lp::fill){
+				d[long_index] = 0;
+			}else if (lp.dims[long_index] == lp::min || lp.dims[long_index] == lp::max){
+				d[long_index] = -1; // will be updated below
+			}else{
+				d[long_index] = lp.dims[long_index];
+			}
+			if (!d.is_positive_or_zero()) {
+				vector2 md = w.get().measure(d);
+				for (unsigned i = 0; i != md.size(); ++i) {
+					if (d[i] < 0) {
+						d[i] = md[i];
+					}
+				}
+			}
+
 			info->measured_dims = d;
 
 			rigid += d[long_index];
@@ -103,7 +126,11 @@ void linear_layout::lay_out(const vector2& dims, semiconst_widget_list& widgets)
 					}
 				}
 
-				d[long_index] = long_room;
+				if(lp.dims[long_index] == lp::fill || lp.dims[long_index] == lp::max){
+					d[long_index] = long_room;
+				}else{
+					d[long_index] = info->measured_dims[long_index];
+				}
 
 				if (lp.dims[trans_index] == lp::max || lp.dims[trans_index] == lp::fill) {
 					d[trans_index] = dims[trans_index];
@@ -131,7 +158,7 @@ void linear_layout::lay_out(const vector2& dims, semiconst_widget_list& widgets)
 
 			new_pos[long_index] = pos;
 
-			pos += w.get().rect().d[long_index];
+			pos += long_room;
 
 			new_pos[trans_index] = round((dims[trans_index] - w.get().rect().d[trans_index]) / 2);
 
@@ -140,13 +167,14 @@ void linear_layout::lay_out(const vector2& dims, semiconst_widget_list& widgets)
 			++info;
 		}
 
-		if (remainder > 0) {
-			vector2 d;
-			d[trans_index] = 0;
-			d[long_index] = round(remainder);
-			widgets.back().get().resize_by(d);
-			widgets.back().get().move_by(-d);
-		}
+		// TODO: is this needed?
+		// if (remainder > 0) {
+		// 	vector2 d;
+		// 	d[trans_index] = 0;
+		// 	d[long_index] = round(remainder);
+		// 	widgets.back().get().resize_by(d);
+		// 	widgets.back().get().move_by(-d);
+		// }
 	}
 }
 
@@ -233,18 +261,18 @@ vector2 linear_layout::measure(const vector2& quotum, const_widget_list& widgets
 		auto info = info_array.begin();
 		for (const auto& w : widgets) {
 			auto& lp = w.get().get_layout_params_const();
-			ASSERT(lp.weight >= 0)
+			ASSERT(lp.weight >= 0, [&](auto&o){o << "lp.weight = " << lp.weight << ", id = " << w.get().id();})
 			if (lp.weight == 0) {
 				continue;
 			}
-
-			ASSERT(net_weight > 0)
 
 			vector2 d;
 			d[long_index] = info->measured_dims[long_index];
 
 			if (flex_len > 0) {
 				using std::floor;
+
+				ASSERT(net_weight > 0)
 
 				real dl = flex_len * lp.weight / net_weight;
 				real floored = floor(dl);

@@ -65,7 +65,7 @@ std::vector<utki::shared_ref<ruis::widget>> build_layout(utki::shared_ref<ruis::
 						.widget_params = {
 							.id = "ruis_t"s,
 							.lp = {
-								.dims = {0, lp::min},
+								.dims = {lp::fill, lp::min},
 								.weight = 1
 							}
 						}
@@ -84,7 +84,7 @@ std::vector<utki::shared_ref<ruis::widget>> build_layout(utki::shared_ref<ruis::
 			{
 				.widget_params = {
 					.lp = {
-						.dims = {lp::max, lp::min},
+						.dims = {lp::max, lp::max},
 						.weight = 1
 					}
 				},
@@ -108,7 +108,7 @@ std::vector<utki::shared_ref<ruis::widget>> build_layout(utki::shared_ref<ruis::
 						.widget_params = {
 							.id = "ruis_content"s,
 							.lp = {
-								.dims = {lp::min, lp::max},
+								.dims = {lp::max, lp::max},
 								.weight = 1
 							}
 						},
@@ -165,7 +165,7 @@ std::vector<utki::shared_ref<ruis::widget>> build_layout(utki::shared_ref<ruis::
 						.widget_params = {
 							.id = "ruis_b"s,
 							.lp = {
-								.dims = {0, lp::min},
+								.dims = {lp::fill, lp::min},
 								.weight = 1
 							}
 						}

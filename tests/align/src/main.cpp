@@ -303,7 +303,7 @@ utki::shared_ref<ruis::widget> make_layout(utki::shared_ref<ruis::context> c){
 				{
 					.widget_params = {
 						.lp = {
-							.dims = {0, lp::fill},
+							.dims = {lp::fill, lp::fill},
 							.weight = 1
 						}
 					},
@@ -316,7 +316,7 @@ utki::shared_ref<ruis::widget> make_layout(utki::shared_ref<ruis::context> c){
 						c,
 						{
 							.lp = {
-								.dims = {lp::fill, 0},
+								.dims = {lp::fill, lp::fill},
 								.weight = 1
 							}
 						}
@@ -325,7 +325,7 @@ utki::shared_ref<ruis::widget> make_layout(utki::shared_ref<ruis::context> c){
 						c,
 						{
 							.lp = {
-								.dims = {lp::fill, 0},
+								.dims = {lp::fill, lp::fill},
 								.weight = 1
 							}
 						},
@@ -337,7 +337,7 @@ utki::shared_ref<ruis::widget> make_layout(utki::shared_ref<ruis::context> c){
 				c,
 				{
 					.lp = {
-						.dims = {0, lp::fill},
+						.dims = {lp::fill, lp::fill},
 						.weight = 1
 					}
 				},

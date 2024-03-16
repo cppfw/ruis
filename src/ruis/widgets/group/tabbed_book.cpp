@@ -40,6 +40,7 @@ tabbed_book::tabbed_book(const utki::shared_ref<ruis::context>& context, const t
 						id { ruis_book }
 						lp {
 							dx { fill }
+							dy { max }
 							weight { 1 }
 						}
 					}

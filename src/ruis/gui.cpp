@@ -96,7 +96,7 @@ defs{
 			}
 			@column{
 				lp{
-					weight{1} dy{max}
+					weight{1} dx{max} dy{max}
 				}
 				@widget{
 					lp{
@@ -106,7 +106,7 @@ defs{
 				}
 				@pile{
 					lp{
-						weight{1} dx{max}
+						weight{1} dx{max} dy{max}
 					}
 					${children}
 				}
@@ -137,7 +137,7 @@ defs{
 
 			@widget{
 				lp{
-					dx{0}
+					dx{fill}
 					weight{1}
 				}
 			}
@@ -153,7 +153,7 @@ defs{
 
 			@widget{
 				lp{
-					dx{0}
+					dx{fill}
 					weight{1}
 				}
 			}
@@ -173,7 +173,7 @@ defs{
 
 			@widget{
 				lp{
-					dy{0}
+					dy{fill}
 					weight{1}
 				}
 			}
@@ -189,7 +189,7 @@ defs{
 
 			@widget{
 				lp{
-					dy{0}
+					dy{fill}
 					weight{1}
 				}
 			}

@@ -12,6 +12,7 @@
 	@tabbed_book{
 		lp{
 			dx { fill }
+			dy { max }
 			weight { 1 }
 		}
 

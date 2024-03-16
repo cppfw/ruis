@@ -1,7 +1,7 @@
 @column{
 	@book{
 		lp{
-			dx { fill }
+			dx { fill } dy{max}
 			weight { 1 }
 		}
 

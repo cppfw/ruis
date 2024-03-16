@@ -176,9 +176,6 @@ cursor{crs_arrow}
 			}
 
 			@row{
-				x{50pp} y{100pp}
-				dx{220pp} dy{100pp}
-
 				id { someContainer }
 
 				clip {true}
@@ -190,25 +187,19 @@ cursor{crs_arrow}
 				@text{
 					id {label1}
 					text {trololo}
-					padding {10pp 20pp 30pp 40pp}
-
 
 					lp{
 						weight {0}
 					}
-
 				}
 
 				@text{
 					id {label2}
 					text {"blah bla"}
-					padding {0}
-
 
 					lp{
-						weight {0}
+						weight {1}
 					}
-
 				}
 
 				@push_button{
@@ -220,8 +211,8 @@ cursor{crs_arrow}
 
 
 					lp{
-						dx{20mm} dy{min}
-						weight {1}
+						dx{fill} dy{min}
+						weight{1}
 					}
 
 
@@ -246,7 +237,7 @@ cursor{crs_arrow}
 			@pile{
 				lp{
 					dx{fill}
-					dy{0}
+					dy{fill}
 					weight{1}
 				}
 				@pan_list{
@@ -327,13 +318,13 @@ cursor{crs_arrow}
 
 			@row{
 				lp{
-					dx{max} dy{0}
+					dx{max} dy{fill}
 					weight{1}
 				}
 
 				@pile{
 					lp{
-						dx{0} dy{max}
+						dx{fill} dy{max}
 						weight{1}
 					}
 					@tree_view{
@@ -420,7 +411,7 @@ cursor{crs_arrow}
 
 			@horizontal_scroll_bar{
 				lp{
-					dx{50pp} dy{40pp} //TODO: min min
+					dx{fill} dy{40pp} //TODO: min min
 					weight{1}
 				}
 			}
@@ -544,16 +535,16 @@ cursor{crs_arrow}
 					dx{max} dy{min}
 				}
 			}
-			@push_button{lp{dy{0}weight{1}}@text{text{button!!!}}}
-			@push_button{lp{dy{0}weight{1}}@text{text{button!!!}}}
-			@push_button{lp{dy{0}weight{1}}@text{text{button!!!}}}
-			@push_button{lp{dy{0}weight{1}}@text{text{button!!!}}}
-			@push_button{lp{dy{0}weight{1}}@text{text{button!!!}}}
-			@push_button{lp{dy{0}weight{1}}@text{text{button!!!}}}
-			@push_button{lp{dy{0}weight{1}}@text{text{button!!!}}}
-			@push_button{lp{dy{0}weight{1}}@text{text{button!!!}}}
-			@push_button{lp{dy{0}weight{1}}@text{text{button!!!}}}
-			@push_button{lp{dy{0}weight{1}}@text{text{button!!!}}}
+			@push_button{lp{dy{fill}weight{1}}@text{text{button!!!}}}
+			@push_button{lp{dy{fill}weight{1}}@text{text{button!!!}}}
+			@push_button{lp{dy{fill}weight{1}}@text{text{button!!!}}}
+			@push_button{lp{dy{fill}weight{1}}@text{text{button!!!}}}
+			@push_button{lp{dy{fill}weight{1}}@text{text{button!!!}}}
+			@push_button{lp{dy{fill}weight{1}}@text{text{button!!!}}}
+			@push_button{lp{dy{fill}weight{1}}@text{text{button!!!}}}
+			@push_button{lp{dy{fill}weight{1}}@text{text{button!!!}}}
+			@push_button{lp{dy{fill}weight{1}}@text{text{button!!!}}}
+			@push_button{lp{dy{fill}weight{1}}@text{text{button!!!}}}
 
 		}
 	}
@@ -574,7 +565,7 @@ cursor{crs_arrow}
 
 			@row{
 				lp{
-					dx{max} dy{0}
+					dx{max} dy{fill}
 					weight{1}
 				}
 
@@ -582,7 +573,7 @@ cursor{crs_arrow}
 
 				@pile{
 					lp{
-						dx{0} dy{max}
+						dx{fill} dy{max}
 						weight{1}
 					}
 					@scroll_area{
@@ -648,7 +639,7 @@ cursor{crs_arrow}
 					id{scroll_area_horizontal_slider}
 
 					lp{
-						dx{0}
+						dx{fill}
 						weight{1}
 					}
 				}
@@ -713,7 +704,7 @@ cursor{crs_arrow}
 
 			@pile{
 				lp{
-					dx{0} dy{max}
+					dx{fill} dy{max}
 					weight{1}
 				}
 				@list{

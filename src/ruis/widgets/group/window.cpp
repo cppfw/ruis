@@ -46,7 +46,7 @@ const auto window_layout_description = tml::read(R"qwertyuiop(
 				@mouse_proxy{
 					id{ruis_t_proxy}
 					lp{
-						dx{0} dy{fill} weight{1}
+						dx{fill} dy{fill} weight{1}
 					}
 				}
 
@@ -59,6 +59,7 @@ const auto window_layout_description = tml::read(R"qwertyuiop(
 				lp{
 					weight{1}
 					dx{max}
+					dy{max}
 				}
 
 				@mouse_proxy{
@@ -70,6 +71,7 @@ const auto window_layout_description = tml::read(R"qwertyuiop(
 				@column{
 					lp{
 						weight{1}
+						dx{max}
 						dy{max}
 					}
 
@@ -106,7 +108,7 @@ const auto window_layout_description = tml::read(R"qwertyuiop(
 								bottom{2dp}
 
 								lp{
-									dx{0}
+									dx{fill}
 									weight{1}
 								}
 
@@ -121,7 +123,7 @@ const auto window_layout_description = tml::read(R"qwertyuiop(
 						id{ruis_content}
 						clip{true}
 						lp{
-							dx{fill} dy{0}
+							dx{fill} dy{fill}
 							weight{1}
 						}
 					}
@@ -145,7 +147,7 @@ const auto window_layout_description = tml::read(R"qwertyuiop(
 					id{ruis_b_proxy}
 					lp{
 						dy{fill}
-						dx{0}
+						dx{fill}
 						weight{1}
 					}
 				}
