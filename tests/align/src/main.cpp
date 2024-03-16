@@ -141,59 +141,147 @@ utki::shared_ref<ruis::widget> make_pile_layout(utki::shared_ref<ruis::context> 
 }
 
 namespace{
-utki::shared_ref<ruis::widget> make_row_layout(utki::shared_ref<ruis::context> c, ruis::widget::parameters widget_params){
-	return m::container(
+utki::shared_ref<ruis::widget> make_separator(utki::shared_ref<ruis::context> c, bool vertical){
+	return m::rectangle(
 		c,
 		{
-			.widget_params = widget_params,
-			.container_params = {
-				.layout = ruis::layout::row
-			}
-		},
-		{
-			m::rectangle(
-				c,
-				{
-					.widget_params = {
-						.lp = {
-							.dims = {100, 50},
-							.weight = 1
-						}
-					},
-					.color_params = {
-						.color = 0xff800000
-					}
+			.widget_params = {
+				.lp = {
+					.dims = {vertical ? lp::fill : 1, vertical ? 1 : lp::fill}
 				}
-			)
+			},
+			.color_params = {
+				.color = 0xffffffff
+			}
 		}
 	);
 }
-}
 
-namespace{
-utki::shared_ref<ruis::widget> make_column_layout(utki::shared_ref<ruis::context> c, ruis::widget::parameters widget_params){
+utki::shared_ref<ruis::widget> make_linear_layout(utki::shared_ref<ruis::context> c, ruis::widget::parameters widget_params, bool vertical){
 	return m::container(
 		c,
 		{
 			.widget_params = widget_params,
 			.container_params = {
-				.layout = ruis::layout::column
+				.layout = vertical ? ruis::layout::column : ruis::layout::row
 			}
 		},
 		{
-			m::rectangle(
+			m::text(
 				c,
 				{
 					.widget_params = {
 						.lp = {
-							.dims = {100, 50},
-							.weight = 1
+							.weight = 1,
+							.align = {lp::align::front, lp::align::front}
 						}
-					},
-					.color_params = {
-						.color = 0xff0000ff
 					}
-				}
+				},
+				U"left-top"s
+			),
+			make_separator(c, vertical),
+			m::text(
+				c,
+				{
+					.widget_params = {
+						.lp = {
+							.weight = 1,
+							.align = {lp::align::center, lp::align::front}
+						}
+					}
+				},
+				U"center-top"s
+			),
+			make_separator(c, vertical),
+			m::text(
+				c,
+				{
+					.widget_params = {
+						.lp = {
+							.weight = 1,
+							.align = {lp::align::back, lp::align::front}
+						}
+					}
+				},
+				U"right-top"s
+			),
+			make_separator(c, vertical),
+			m::text(
+				c,
+				{
+					.widget_params = {
+						.lp = {
+							.weight = 1,
+							.align = {lp::align::back, lp::align::center}
+						}
+					}
+				},
+				U"right-center"s
+			),
+			make_separator(c, vertical),
+			m::text(
+				c,
+				{
+					.widget_params = {
+						.lp = {
+							.weight = 1,
+							.align = {lp::align::back, lp::align::back}
+						}
+					}
+				},
+				U"right-bottom"s
+			),
+			make_separator(c, vertical),
+			m::text(
+				c,
+				{
+					.widget_params = {
+						.lp = {
+							.weight = 1,
+							.align = {lp::align::center, lp::align::back}
+						}
+					}
+				},
+				U"center-bottom"s
+			),
+			make_separator(c, vertical),
+			m::text(
+				c,
+				{
+					.widget_params = {
+						.lp = {
+							.weight = 1,
+							.align = {lp::align::front, lp::align::back}
+						}
+					}
+				},
+				U"left-bottom"s
+			),
+			make_separator(c, vertical),
+			m::text(
+				c,
+				{
+					.widget_params = {
+						.lp = {
+							.weight = 1,
+							.align = {lp::align::front, lp::align::center}
+						}
+					}
+				},
+				U"left-center"s
+			),
+			make_separator(c, vertical),
+			m::text(
+				c,
+				{
+					.widget_params = {
+						.lp = {
+							.weight = 1,
+							.align = {lp::align::center, lp::align::center}
+						}
+					}
+				},
+				U"center"s
 			)
 		}
 	);
@@ -233,25 +321,27 @@ utki::shared_ref<ruis::widget> make_layout(utki::shared_ref<ruis::context> c){
 							}
 						}
 					),
-					make_row_layout(
+					make_linear_layout(
 						c,
 						{
 							.lp = {
 								.dims = {lp::fill, 0},
 								.weight = 1
 							}
-						}
+						},
+						false // vertical=false
 					)
 				}
 			),
-			make_column_layout(
+			make_linear_layout(
 				c,
 				{
 					.lp = {
 						.dims = {0, lp::fill},
 						.weight = 1
 					}
-				}
+				},
+				true // vertical=true
 			)
 		}
 	);
