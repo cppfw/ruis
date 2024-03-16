@@ -62,9 +62,6 @@ void linear_layout::lay_out(const vector2& dims, semiconst_widget_list& widgets)
 
 			net_weight += lp.weight;
 
-			ASSERT(lp.dims[long_index] != lp::max)
-			ASSERT(lp.dims[long_index] != lp::fill)
-
 			vector2 d = dims_for_widget(w.get(), dims);
 			info->measured_dims = d;
 
@@ -88,22 +85,25 @@ void linear_layout::lay_out(const vector2& dims, semiconst_widget_list& widgets)
 		for (const auto& w : widgets) {
 			auto& lp = w.get().get_layout_params_const();
 
+			auto long_room = info->measured_dims[long_index];
+
 			if (lp.weight != 0) {
 				ASSERT(lp.weight > 0)
 				vector2 d;
-				d[long_index] = info->measured_dims[long_index];
 				if (flexible > 0) {
 					ASSERT(net_weight > 0)
 					real dl = flexible * lp.weight / net_weight;
 					real floored = std::floor(dl);
 					ASSERT(dl >= floored)
-					d[long_index] += floored;
+					long_room += floored;
 					remainder += (dl - floored);
 					if (remainder >= real(1)) {
-						d[long_index] += real(1);
+						long_room += real(1);
 						remainder -= real(1);
 					}
 				}
+
+				d[long_index] = long_room;
 
 				if (lp.dims[trans_index] == lp::max || lp.dims[trans_index] == lp::fill) {
 					d[trans_index] = dims[trans_index];
@@ -169,12 +169,6 @@ vector2 linear_layout::measure(const vector2& quotum, const_widget_list& widgets
 
 			net_weight += lp.weight;
 
-			if (lp.dims[long_index] == lp::max || lp.dims[long_index] == lp::fill) {
-				throw std::logic_error(
-					"linear_layout::measure(): 'max' or 'fill' in longitudional direction specified in layout parameters"
-				);
-			}
-
 			vector2 child_quotum;
 			if (lp.dims[trans_index] == lp::max) {
 				if (quotum[trans_index] >= 0) {
@@ -194,10 +188,10 @@ vector2 linear_layout::measure(const vector2& quotum, const_widget_list& widgets
 				child_quotum[trans_index] = lp.dims[trans_index];
 			}
 
-			ASSERT(lp.dims[long_index] != lp::max)
-			ASSERT(lp.dims[long_index] != lp::fill)
-			if (lp.dims[long_index] == lp::min) {
+			if (lp.dims[long_index] == lp::min || lp.dims[long_index] == lp::max) {
 				child_quotum[long_index] = -1;
+			} else if(lp.dims[long_index] == lp::fill){
+				child_quotum[long_index] = 0;
 			} else {
 				child_quotum[long_index] = lp.dims[long_index];
 			}
