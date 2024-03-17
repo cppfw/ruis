@@ -304,7 +304,7 @@ utki::shared_ref<ruis::widget> make_layout(utki::shared_ref<ruis::context> c){
 					.widget_params = {
 						.lp = {
 							.dims = {lp::fill, lp::fill},
-							.weight = 1
+							.weight = 2
 						}
 					},
 					.container_params = {

@@ -29,13 +29,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace ruis;
 
 linear_layout::linear_layout(bool is_vertical) :
-	oriented({
-#if CFG_CPP >= 20
-		.vertical = is_vertical
-#else
-		is_vertical
-#endif
-	})
+	oriented({.vertical = is_vertical})
 {}
 
 namespace {
