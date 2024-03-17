@@ -148,22 +148,32 @@ void linear_layout::lay_out(const vector2& dims, semiconst_widget_list& widgets)
 				w.get().resize(info->measured_dims);
 			}
 
+			vector2 room;
+			room[long_index] = long_room;
+			room[trans_index] = dims[trans_index];
+
 			vector2 new_pos;
-
 			new_pos[long_index] = pos;
+			new_pos[trans_index] = 0;
 
-			pos += long_room;
-
-			new_pos[trans_index] = round((dims[trans_index] - w.get().rect().d[trans_index]) / 2);
+			for (unsigned i = 0; i != 2; ++i) {
+				if (lp.align[i] == lp::align::center) {
+					new_pos[i] += round((room[i] - w.get().rect().d[i]) / 2);
+				} else if (lp.align[i] == lp::align::back) {
+					new_pos[i] += room[i] - w.get().rect().d[i];
+				}
+			}
 
 			w.get().move_to(new_pos);
 
+			pos += long_room;
 			++info;
 		}
 
 		ASSERT(remainder >= 0)
 		ASSERT(remainder < real(1))
 
+		// TODO: is it ok to always reisze last widget?
 		if (remainder > 0) {
 			vector2 d;
 			d[trans_index] = 0;
