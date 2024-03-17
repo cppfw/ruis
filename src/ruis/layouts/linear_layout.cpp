@@ -62,15 +62,19 @@ void linear_layout::lay_out(const vector2& dims, semiconst_widget_list& widgets)
 			} else if (lp.dims[trans_index] == lp::min) {
 				d[trans_index] = -1; // will be updated below
 			} else {
-				d[trans_index] = lp.dims[trans_index];
+				ASSERT(lp.dims[trans_index].is_number())
+				d[trans_index] = lp.dims[trans_index].get_number();
 			}
+
 			if (lp.dims[long_index] == lp::fill) {
 				d[long_index] = 0;
 			} else if (lp.dims[long_index] == lp::min || lp.dims[long_index] == lp::max) {
 				d[long_index] = -1; // will be updated below
 			} else {
-				d[long_index] = lp.dims[long_index];
+				ASSERT(lp.dims[long_index].is_number())
+				d[long_index] = lp.dims[long_index].get_number();
 			}
+
 			if (!d.is_positive_or_zero()) {
 				vector2 md = w.get().measure(d);
 				for (unsigned i = 0; i != md.size(); ++i) {
@@ -132,7 +136,8 @@ void linear_layout::lay_out(const vector2& dims, semiconst_widget_list& widgets)
 					if (lp.dims[trans_index] == lp::min) {
 						d[trans_index] = -1;
 					} else {
-						d[trans_index] = lp.dims[trans_index];
+						ASSERT(lp.dims[trans_index].is_number())
+						d[trans_index] = lp.dims[trans_index].get_number();
 					}
 					if (d.x() < 0 || d.y() < 0) {
 						vector2 md = w.get().measure(d);
@@ -218,7 +223,8 @@ vector2 linear_layout::measure(const vector2& quotum, const_widget_list& widgets
 					child_quotum[trans_index] = 0;
 				}
 			} else {
-				child_quotum[trans_index] = lp.dims[trans_index];
+				ASSERT(lp.dims[trans_index].is_number())
+				child_quotum[trans_index] = lp.dims[trans_index].get_number();
 			}
 
 			if (lp.dims[long_index] == lp::min || lp.dims[long_index] == lp::max) {
@@ -226,7 +232,8 @@ vector2 linear_layout::measure(const vector2& quotum, const_widget_list& widgets
 			} else if (lp.dims[long_index] == lp::fill) {
 				child_quotum[long_index] = 0;
 			} else {
-				child_quotum[long_index] = lp.dims[long_index];
+				ASSERT(lp.dims[long_index].is_number())
+				child_quotum[long_index] = lp.dims[long_index].get_number();
 			}
 
 			info->measured_dims = w.get().measure(child_quotum);
@@ -315,7 +322,8 @@ vector2 linear_layout::measure(const vector2& quotum, const_widget_list& widgets
 					d[trans_index] = 0;
 				}
 			} else {
-				d[trans_index] = lp.dims[trans_index];
+				ASSERT(lp.dims[trans_index].is_number())
+				d[trans_index] = lp.dims[trans_index].get_number();
 			}
 
 			if (quotum[trans_index] < 0) {

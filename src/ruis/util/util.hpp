@@ -27,6 +27,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <utki/config.hpp>
 
 #include "../config.hpp"
+#include "../layouts/lp.hpp"
 
 #include "units.hpp"
 
@@ -83,7 +84,7 @@ real parse_dimension_value(const tml::leaf& l, const ruis::units& units);
  * @param units - information about units. Can be obtained from context.
  * @return Parsed value.
  */
-real parse_layout_dimension_value(const tml::leaf& l, const ruis::units& units);
+ruis::lp::dimension_policy parse_layout_dimension_value(const tml::leaf& l, const ruis::units& units);
 
 bool is_property(const tml::tree& t);
 

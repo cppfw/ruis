@@ -90,7 +90,8 @@ ruis::vector2 tab_group::measure(const ruis::vector2& quotum) const
 			} else if (lp.dims[j] == lp::min) {
 				d[j] = -1;
 			} else {
-				d[j] = lp.dims[j];
+				ASSERT(lp.dims[j].is_number())
+				d[j] = lp.dims[j].get_number();
 			}
 		}
 

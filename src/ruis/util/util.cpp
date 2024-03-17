@@ -81,7 +81,7 @@ real ruis::parse_dimension_value(const tml::leaf& l, const ruis::units& units)
 	return real(l.to_float());
 }
 
-real ruis::parse_layout_dimension_value(const tml::leaf& l, const ruis::units& units)
+lp::dimension_policy ruis::parse_layout_dimension_value(const tml::leaf& l, const ruis::units& units)
 {
 	if (l == "min") {
 		return lp::min;

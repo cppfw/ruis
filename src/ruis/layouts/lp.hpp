@@ -21,6 +21,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
+#include <variant>
+
 #include <tml/tree.hpp>
 
 #include "../config.hpp"
@@ -52,31 +54,114 @@ struct lp {
 		back
 	};
 
-	/**
-	 * @brief Requests minimal dimensions of the widget.
-	 * The widget will always be given minimal space it needs to properly draw.
-	 */
-	constexpr static const real min = real(-1);
+	class dimension_policy
+	{
+	public:
+		enum class special {
+			/**
+			 * @brief Requests minimal dimensions of the widget.
+			 * The widget will always be given minimal space it needs to properly draw.
+			 */
+			min,
 
-	/**
-	 * @brief Requests minimal or bigger dimensions of widget.
-	 * The widget will be given at least minimal space it needs to properly draw.
-	 * 'max' behaves the same way as 'min' during measure, but during layouting
-	 * the widget will be given same size as parent.
-	 */
-	constexpr static const real max = real(-2);
+			/**
+			 * @brief Requests minimal or bigger dimensions of widget.
+			 * The widget will be given at least minimal space it needs to properly draw.
+			 * 'max' behaves the same way as 'min' during measure, but during layouting
+			 * the widget will be given same size as parent.
+			 */
+			max,
 
-	/**
-	 * @brief Requests widget to be same size as its parent.
-	 * Minimal size of the widget is assumed to be 0.
-	 */
-	constexpr static const real fill = real(-3);
+			/**
+			 * @brief Requests widget to be same size as its parent.
+			 * Minimal size of the widget is assumed to be 0.
+			 */
+			fill
+		};
+
+	private:
+		std::variant<special, real> value;
+
+	public:
+		/**
+		 * @brief Construct a new dimension policy object.
+		 * @param number - number in pixels, negative number is equivalent to 'min' special value.
+		 */
+		dimension_policy(real number) :
+			value([&]() -> decltype(value) {
+				if (number < 0) {
+					return special::min;
+				} else {
+					return number;
+				}
+			}())
+		{}
+
+		dimension_policy(special special_value) :
+			value(special_value)
+		{}
+
+		bool is_min() const noexcept
+		{
+			return std::holds_alternative<special>(this->value) && std::get<special>(this->value) == special::min;
+		}
+
+		bool is_max() const noexcept
+		{
+			return std::holds_alternative<special>(this->value) && std::get<special>(this->value) == special::max;
+		}
+
+		bool is_fill() const noexcept
+		{
+			return std::holds_alternative<special>(this->value) && std::get<special>(this->value) == special::fill;
+		}
+
+		bool is_number() const noexcept
+		{
+			return std::holds_alternative<real>(this->value);
+		}
+
+		real get_number() const noexcept
+		{
+			ASSERT(this->is_number())
+			return std::get<real>(this->value);
+		}
+
+		bool operator==(const dimension_policy& p) const noexcept
+		{
+			return this->value == p.value;
+		}
+
+		bool operator!=(const dimension_policy& p) const noexcept
+		{
+			return !this->operator==(p);
+		}
+
+		bool operator==(real number) const noexcept
+		{
+			if (this->is_number()) {
+				return this->get_number() == number;
+			} else if (this->is_min()) {
+				return number < 0;
+			}
+			return false;
+		}
+
+		bool operator!=(real number) const noexcept
+		{
+			return !this->operator==(number);
+		}
+	};
+
+	const static dimension_policy min;
+	const static dimension_policy max;
+	const static dimension_policy fill;
 
 	/**
 	 * @brief desired dimensions.
 	 * Components should hold non-negative value in pixels or [min, max, fill].
 	 */
-	vector2 dims = vector2(lp::min);
+	r4::vector2<dimension_policy> dims = {dimension_policy::special::min, dimension_policy::special::min};
 
 	/**
 	 * @brief Weight of the widget.
