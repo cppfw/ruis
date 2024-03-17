@@ -103,17 +103,17 @@ struct lp {
 
 		bool is_min() const noexcept
 		{
-			return std::holds_alternative<special>(this->value) && std::get<special>(this->value) == special::min;
+			return std::holds_alternative<special>(this->value) && *std::get_if<special>(&this->value) == special::min;
 		}
 
 		bool is_max() const noexcept
 		{
-			return std::holds_alternative<special>(this->value) && std::get<special>(this->value) == special::max;
+			return std::holds_alternative<special>(this->value) && *std::get_if<special>(&this->value) == special::max;
 		}
 
 		bool is_fill() const noexcept
 		{
-			return std::holds_alternative<special>(this->value) && std::get<special>(this->value) == special::fill;
+			return std::holds_alternative<special>(this->value) && *std::get_if<special>(&this->value) == special::fill;
 		}
 
 		bool is_number() const noexcept
@@ -121,23 +121,23 @@ struct lp {
 			return std::holds_alternative<real>(this->value);
 		}
 
-		real get_number() const noexcept
+		real get_number() const
 		{
 			ASSERT(this->is_number())
 			return std::get<real>(this->value);
 		}
 
-		bool operator==(const dimension_policy& p) const noexcept
+		bool operator==(const dimension_policy& p) const
 		{
 			return this->value == p.value;
 		}
 
-		bool operator!=(const dimension_policy& p) const noexcept
+		bool operator!=(const dimension_policy& p) const
 		{
 			return !this->operator==(p);
 		}
 
-		bool operator==(real number) const noexcept
+		bool operator==(real number) const
 		{
 			if (this->is_number()) {
 				return this->get_number() == number;
@@ -147,7 +147,7 @@ struct lp {
 			return false;
 		}
 
-		bool operator!=(real number) const noexcept
+		bool operator!=(real number) const
 		{
 			return !this->operator==(number);
 		}

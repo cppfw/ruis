@@ -11,6 +11,7 @@ using namespace std::string_literals;
 using namespace std::string_view_literals;
 
 namespace{
+// NOLINTNEXTLINE(cppcoreguidelines-interfaces-global-init)
 const tst::set set("inflating", [](tst::suite& suite){
     suite.add("whole_definition_chain_is_substituted", []{
         ruis::gui m(make_dummy_context());
