@@ -32,39 +32,35 @@
 
 	id{wire_area}
 
-	@container{
-		lp{ dx{fill} dy{fill}}
-
-		layout{size}
-
-		@window{
-			x{10} y{20}
-			lp{
-				dx{100} dy{50}
-			}
-
-			title{"window 1"}
-
-			@out_socket{
-				id{in11}
-				outlet{top}
-				text{in1}
-			}
+	@window{
+		x{0} y{20}
+		dx{100} dy{50}
+		lp{
+			dx{100} dy{50}
 		}
 
-		@window{
-			x{150} y{20}
-			lp{
-				dx{100} dy{50}
-			}
+		title{"window 1"}
 
-			title{"window 2"}
+		@out_socket{
+			id{in11}
+			outlet{top}
+			text{in1}
+		}
+	}
 
-			@in_socket{
-				id{in11}
-				outlet{right}
-				text{in1}
-			}
+	@window{
+		x{150} y{20}
+		dx{100} dy{50}
+		lp{
+			dx{100} dy{50}
+		}
+
+		title{"window 2"}
+
+		@in_socket{
+			id{in11}
+			outlet{right}
+			text{in1}
 		}
 	}
 }

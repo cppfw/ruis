@@ -70,11 +70,11 @@ void linear_layout::lay_out(const vector2& dims, semiconst_widget_list& widgets)
 			} else {
 				d[trans_index] = lp.dims[trans_index];
 			}
-			if(lp.dims[long_index] == lp::fill){
+			if (lp.dims[long_index] == lp::fill) {
 				d[long_index] = 0;
-			}else if (lp.dims[long_index] == lp::min || lp.dims[long_index] == lp::max){
+			} else if (lp.dims[long_index] == lp::min || lp.dims[long_index] == lp::max) {
 				d[long_index] = -1; // will be updated below
-			}else{
+			} else {
 				d[long_index] = lp.dims[long_index];
 			}
 			if (!d.is_positive_or_zero()) {
@@ -126,9 +126,9 @@ void linear_layout::lay_out(const vector2& dims, semiconst_widget_list& widgets)
 					}
 				}
 
-				if(lp.dims[long_index] == lp::fill || lp.dims[long_index] == lp::max){
+				if (lp.dims[long_index] == lp::fill || lp.dims[long_index] == lp::max) {
 					d[long_index] = long_room;
-				}else{
+				} else {
 					d[long_index] = info->measured_dims[long_index];
 				}
 
@@ -167,14 +167,15 @@ void linear_layout::lay_out(const vector2& dims, semiconst_widget_list& widgets)
 			++info;
 		}
 
-		// TODO: is this needed?
-		// if (remainder > 0) {
-		// 	vector2 d;
-		// 	d[trans_index] = 0;
-		// 	d[long_index] = round(remainder);
-		// 	widgets.back().get().resize_by(d);
-		// 	widgets.back().get().move_by(-d);
-		// }
+		ASSERT(remainder >= 0)
+		ASSERT(remainder < real(1))
+
+		if (remainder > 0) {
+			vector2 d;
+			d[trans_index] = 0;
+			d[long_index] = round(remainder);
+			widgets.back().get().resize_by(d);
+		}
 	}
 }
 
@@ -218,7 +219,7 @@ vector2 linear_layout::measure(const vector2& quotum, const_widget_list& widgets
 
 			if (lp.dims[long_index] == lp::min || lp.dims[long_index] == lp::max) {
 				child_quotum[long_index] = -1;
-			} else if(lp.dims[long_index] == lp::fill){
+			} else if (lp.dims[long_index] == lp::fill) {
 				child_quotum[long_index] = 0;
 			} else {
 				child_quotum[long_index] = lp.dims[long_index];
@@ -261,7 +262,9 @@ vector2 linear_layout::measure(const vector2& quotum, const_widget_list& widgets
 		auto info = info_array.begin();
 		for (const auto& w : widgets) {
 			auto& lp = w.get().get_layout_params_const();
-			ASSERT(lp.weight >= 0, [&](auto&o){o << "lp.weight = " << lp.weight << ", id = " << w.get().id();})
+			ASSERT(lp.weight >= 0, [&](auto& o) {
+				o << "lp.weight = " << lp.weight << ", id = " << w.get().id();
+			})
 			if (lp.weight == 0) {
 				continue;
 			}

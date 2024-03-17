@@ -52,13 +52,7 @@ container::container(
 	const utki::shared_ref<ruis::layout>& layout
 ) :
 	widget(c, desc),
-	params{
-#if CFG_CPP >= 20
-		.layout = std::move(layout)
-#else
-		std::move(layout)
-#endif
-	}
+	params{.layout = layout}
 {
 	for (const auto& p : desc) {
 		if (!is_property(p)) {
