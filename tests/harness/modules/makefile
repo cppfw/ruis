@@ -24,15 +24,17 @@ define this_modules_deps
             $(this_libruis) \
         )
     $(call prorab-depend, \
-            ruisapp/src/out/$(module_cfg)/libruisapp-$(strip $1)$(dot_so), \
+            ruisapp/src/out/$(module_cfg)/libruisapp-$(strip $1)$(if $2,-$2)$(dot_so), \
             ruis-render-$(strip $1)/src/out/$(module_cfg)/libruis-render-$(strip $1)$(dot_so) \
             $(this_libruis) \
         )
 endef
-$(eval $(call this_modules_deps, opengl))
 
 ifeq ($(os),linux)
-    $(eval $(call this_modules_deps, opengles))
+    $(eval $(call this_modules_deps, opengl, x11))
+    $(eval $(call this_modules_deps, opengles, x11))
+else
+    $(eval $(call this_modules_deps, opengl,))
 endif
 
 $(eval $(call prorab-try-include, ruisapp/src/makefile, $(module_cfg)))

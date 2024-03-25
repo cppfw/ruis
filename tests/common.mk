@@ -31,10 +31,17 @@ else
     $(error unknown value of 'ren': $(ren))
 endif
 
-this_libruisapp := ruisapp-$(this_render)
+ifeq ($(os), linux)
+    this_libruisapp := ruisapp-$(this_render)-x11
+    this__libruisapp_subcfg := $(this_render)-x11
+else
+    this_libruisapp := ruisapp-$(this_render)
+    this__libruisapp_subcfg := $(this_render)
+endif
+
 this_libruis_render := ruis-render-$(this_render)
 
-this_libruisapp := ../harness/modules/ruisapp/src/out/$(module_cfg)/lib$(this_libruisapp)$(dot_so)
+this_libruisapp := ../harness/modules/ruisapp/src/out/$(module_cfg)/$(this__libruisapp_subcfg)/lib$(this_libruisapp)$(dot_so)
 this_libruis_render := ../harness/modules/$(this_libruis_render)/src/out/$(module_cfg)/lib$(this_libruis_render)$(dot_so)
 
 ifeq ($(this_is_interactive),true)
