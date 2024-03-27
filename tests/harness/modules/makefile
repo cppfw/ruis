@@ -17,8 +17,8 @@ CXXFLAGS += -I$(abspath $(d)$(module_ruis_dir))
 LDFLAGS += -L$(abspath $(d)$(this_libruis_dir))
 
 define this_modules_deps
-    CXXFLAGS += -I$(d)ruis-render-$(strip $1)/src
-    LDFLAGS += -L$(d)ruis-render-$(strip $1)/src/out/$(module_cfg)
+    CXXFLAGS += -isystem $(d)ruis-render-$(strip $1)/src
+    LDFLAGS += -L $(d)ruis-render-$(strip $1)/src/out/$(module_cfg)
     $(call prorab-depend, \
             ruis-render-$(strip $1)/src/out/$(module_cfg)/libruis-render-$(strip $1)$(dot_so), \
             $(this_libruis) \
@@ -33,15 +33,17 @@ endef
 ifeq ($(os),linux)
     $(eval $(call this_modules_deps,opengl,x11))
     $(eval $(call this_modules_deps,opengles,x11))
+    $(eval $(call this_modules_deps,opengl,wayland))
+    $(eval $(call this_modules_deps,opengles,wayland))
 else
     $(eval $(call this_modules_deps,opengl,))
 endif
 
-$(eval $(call prorab-try-include, ruisapp/src/makefile, $(module_cfg)))
-$(eval $(call prorab-try-include, ruis-render-opengl/src/makefile, $(module_cfg)))
+$(eval $(call prorab-include, ruisapp/src/makefile, $(module_cfg)))
+$(eval $(call prorab-include, ruis-render-opengl/src/makefile, $(module_cfg)))
 
 ifeq ($(os),linux)
-    $(eval $(call prorab-try-include, ruis-render-opengles/src/makefile, $(module_cfg)))
+    $(eval $(call prorab-include, ruis-render-opengles/src/makefile, $(module_cfg)))
 endif
 
 # restore global flags

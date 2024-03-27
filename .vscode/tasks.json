@@ -49,7 +49,6 @@
             "type": "shell",
             "command": "make run-app",
             "problemMatcher": [],
-            "dependsOn": "build",
             "group": "build"
 		},
 		{
@@ -57,7 +56,6 @@
             "type": "shell",
             "command": "make run-busy",
             "problemMatcher": [],
-            "dependsOn": "build",
             "group": "build"
 		},
 		{
@@ -65,7 +63,6 @@
             "type": "shell",
             "command": "make run-busy config=dbg",
             "problemMatcher": [],
-            "dependsOn": "build-dbg",
             "group": "build"
 		},
         {
@@ -73,7 +70,6 @@
             "type": "shell",
             "command": "make run-align",
             "problemMatcher": [],
-            "dependsOn": "build",
             "group": "build"
 		},
 		{
@@ -81,7 +77,6 @@
             "type": "shell",
             "command": "make run-align config=dbg",
             "problemMatcher": [],
-            "dependsOn": "build-dbg",
             "group": "build"
 		},
 		{
@@ -89,7 +84,6 @@
             "type": "shell",
             "command": "make run-ratio_proxy",
             "problemMatcher": [],
-            "dependsOn": "build",
             "group": "build"
 		},
 		{
@@ -97,7 +91,6 @@
             "type": "shell",
             "command": "make run-ratio_proxy config=dbg",
             "problemMatcher": [],
-            "dependsOn": "build-dbg",
             "group": "build"
         },
         {
@@ -105,7 +98,6 @@
             "type": "shell",
             "command": "make run-paint",
             "problemMatcher": [],
-            "dependsOn": "build",
             "group": "build"
 		},
 		{
@@ -113,7 +105,6 @@
             "type": "shell",
             "command": "make run-paint config=dbg",
             "problemMatcher": [],
-            "dependsOn": "build-dbg",
             "group": "build"
 		},
 		{
@@ -121,7 +112,6 @@
             "type": "shell",
             "command": "make run-paint config=dbg ren=gles2",
             "problemMatcher": [],
-            "dependsOn": "build-dbg",
             "group": "build"
 		},
 		{
@@ -129,7 +119,6 @@
             "type": "shell",
             "command": "make run-widget_set config=dbg",
             "problemMatcher": [],
-            "dependsOn": "build-dbg",
             "group": "build"
 		},
 		{
@@ -137,7 +126,6 @@
             "type": "shell",
             "command": "make run-book",
             "problemMatcher": [],
-            "dependsOn": "build",
             "group": "build"
 		},
 		{
@@ -145,7 +133,6 @@
             "type": "shell",
             "command": "make run-book config=dbg",
             "problemMatcher": [],
-            "dependsOn": "build-dbg",
             "group": "build"
         },
         {
@@ -153,7 +140,6 @@
             "type": "shell",
             "command": "make run-tabbed_book config=dbg",
             "problemMatcher": [],
-            "dependsOn": "build-dbg",
             "group": "build"
         },
         {
@@ -177,7 +163,6 @@
             "type": "shell",
             "command": "make run-app ren=gles2",
             "problemMatcher": [],
-            "dependsOn": "build-gles2",
             "group": "build"
         },
         {
@@ -185,7 +170,6 @@
             "type": "shell",
             "command": "make run-app config=dbg",
             "problemMatcher": [],
-            "dependsOn": "build-dbg",
             "group": "build"
         },
         {
@@ -193,7 +177,6 @@
             "type": "shell",
             "command": "make run-wire_area config=dbg",
             "problemMatcher": [],
-            "dependsOn": "build-dbg",
             "group": "build"
         },
         {
