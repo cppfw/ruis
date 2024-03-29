@@ -40,6 +40,11 @@ enum class mouse_button {
 	wheel_down,
 	wheel_left,
 	wheel_right,
+	side,
+	extra,
+	forward,
+	back,
+	task,
 
 	enum_size
 };
