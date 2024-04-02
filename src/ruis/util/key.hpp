@@ -30,7 +30,7 @@ namespace ruis {
 /**
  * @brief Keyboard keys enumeration.
  */
-enum class key {
+enum class key : uint8_t{
 	space,
 	enter,
 	zero,
@@ -131,7 +131,7 @@ enum class key {
 	unknown = enum_size
 };
 
-enum class key_modifier {
+enum class key_modifier : uint8_t{
 	left_shift,
 	right_shift,
 	left_alt,
