@@ -1,3 +1,9 @@
+libruis (0.5.219) unstable; urgency=medium
+
+  * add new mouse button enum items
+
+ -- Ivan Gagis <igagis@gmail.com>  Wed, 03 Apr 2024 13:42:33 +0300
+
 libruis (0.5.218) unstable; urgency=medium
 
   * deploy ddeb packages from ci
