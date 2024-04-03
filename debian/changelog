@@ -1,3 +1,9 @@
+libruis (0.5.220) unstable; urgency=medium
+
+  * use prorab-try-include
+
+ -- Ivan Gagis <igagis@gmail.com>  Wed, 03 Apr 2024 15:08:23 +0300
+
 libruis (0.5.219) unstable; urgency=medium
 
   * add new mouse button enum items
