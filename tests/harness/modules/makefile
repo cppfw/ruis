@@ -31,8 +31,8 @@ define this_modules_deps
 endef
 
 ifeq ($(os),linux)
-    $(eval $(call this_modules_deps,opengl,x11))
-    $(eval $(call this_modules_deps,opengles,x11))
+    $(eval $(call this_modules_deps,opengl,xorg))
+    $(eval $(call this_modules_deps,opengles,xorg))
     $(eval $(call this_modules_deps,opengl,wayland))
     $(eval $(call this_modules_deps,opengles,wayland))
 else
