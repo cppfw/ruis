@@ -39,11 +39,12 @@ else
     $(eval $(call this_modules_deps,opengl,))
 endif
 
-$(eval $(call prorab-include, ruisapp/src/makefile, $(module_cfg)))
-$(eval $(call prorab-include, ruis-render-opengl/src/makefile, $(module_cfg)))
-
+# use prorab-try-include because on macos homebrew will try to build from source when installing,
+# and of course, it will not have git submodules in the source archive
+$(eval $(call prorab-try-include, ruisapp/src/makefile, $(module_cfg)))
+$(eval $(call prorab-try-include, ruis-render-opengl/src/makefile, $(module_cfg)))
 ifeq ($(os),linux)
-    $(eval $(call prorab-include, ruis-render-opengles/src/makefile, $(module_cfg)))
+    $(eval $(call prorab-try-include, ruis-render-opengles/src/makefile, $(module_cfg)))
 endif
 
 # restore global flags
