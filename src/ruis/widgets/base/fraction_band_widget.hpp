@@ -48,11 +48,6 @@ protected:
 		params(std::move(params.fraction_band_params))
 	{}
 
-	fraction_band_widget(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
-		widget(c, desc),
-		fraction_widget(this->context, desc)
-	{}
-
 	virtual void on_band_change();
 
 public:

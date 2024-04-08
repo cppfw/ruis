@@ -40,10 +40,6 @@ protected:
 		params(std::move(params))
 	{}
 
-	fraction_widget(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
-		widget(c, desc)
-	{}
-
 	virtual void on_fraction_change();
 
 public:
