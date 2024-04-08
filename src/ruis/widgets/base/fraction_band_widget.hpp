@@ -28,7 +28,7 @@ namespace ruis {
 class fraction_band_widget : public fraction_widget
 {
 protected:
-	struct parameters{
+	struct parameters {
 		float band_fraction = 0; // current bar size factor from 0 to 1
 	};
 
@@ -36,7 +36,7 @@ private:
 	parameters params;
 
 protected:
-	struct all_parameters{
+	struct all_parameters {
 		fraction_widget::parameters fraction_params;
 		parameters fraction_band_params;
 	};

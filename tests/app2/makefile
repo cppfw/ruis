@@ -4,3 +4,5 @@ include prorab-test.mk
 this_is_interactive := true
 
 include $(d)../common.mk
+
+$(eval $(prorab-clang-format))
