@@ -26,7 +26,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 namespace ruis {
 class fraction_widget : public virtual widget
 {
-	float fraction_v = 0; // current position from 0 to 1
+	float fraction = 0; // current position from 0 to 1
 
 protected:
 	fraction_widget(utki::shared_ref<ruis::context> c) :
@@ -42,9 +42,9 @@ protected:
 public:
 	std::function<void(fraction_widget&)> fraction_change_handler;
 
-	real fraction() const noexcept
+	real get_fraction() const noexcept
 	{
-		return this->fraction_v;
+		return this->fraction;
 	}
 
 	/**

@@ -568,7 +568,7 @@ public:
 			vert_slider->fraction_change_handler = [sa](ruis::fraction_widget& slider){
 				if(auto s = sa.lock()){
 					auto sf = s->get_scroll_factor();
-					sf.y() = slider.fraction();
+					sf.y() = slider.get_fraction();
 					s->set_scroll_factor(sf);
 				}
 			};
@@ -576,7 +576,7 @@ public:
 			hori_slider->fraction_change_handler = [sa](ruis::fraction_widget& slider){
 				if(auto s = sa.lock()){
 					auto sf = s->get_scroll_factor();
-					sf.x() = slider.fraction();
+					sf.x() = slider.get_fraction();
 					s->set_scroll_factor(sf);
 				}
 			};
@@ -592,7 +592,7 @@ public:
 
 			vertical_slider->fraction_change_handler = [vl](ruis::fraction_widget& slider){
 				if(auto l = vl.lock()){
-					l->set_scroll_factor(slider.fraction());
+					l->set_scroll_factor(slider.get_fraction());
 				}
 			};
 
@@ -666,7 +666,7 @@ public:
 			horizontal_slider->fraction_change_handler = [hl](ruis::fraction_widget& slider){
 //				TRACE(<< "horizontal slider factor = " << slider.factor() << std::endl)
 				if(auto l = hl.lock()){
-					l->set_scroll_factor(slider.fraction());
+					l->set_scroll_factor(slider.get_fraction());
 				}
 			};
 
@@ -740,7 +740,7 @@ public:
 
 			vertical_slider->fraction_change_handler = [tv](ruis::fraction_widget& slider){
 				if(auto t = tv.lock()){
-					t->set_vertical_scroll_factor(slider.fraction());
+					t->set_vertical_scroll_factor(slider.get_fraction());
 				}
 			};
 
@@ -750,7 +750,7 @@ public:
 
 			horizontal_slider->fraction_change_handler = [tv](ruis::fraction_widget& slider){
 				if(auto t = tv.lock()){
-					t->set_horizontal_scroll_factor(slider.fraction());
+					t->set_horizontal_scroll_factor(slider.get_fraction());
 				}
 			};
 

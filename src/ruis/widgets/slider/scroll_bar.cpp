@@ -210,10 +210,10 @@ void scroll_bar::on_lay_out()
 		float effective_length = this->rect().d[long_index] - this->handle.rect().d[long_index];
 		ruis::vector2 new_pos(0);
 		if (effective_length > 0) {
-			new_pos[long_index] = round(effective_length * this->fraction());
+			new_pos[long_index] = round(effective_length * this->get_fraction());
 			ASSERT(new_pos[long_index] <= effective_length, [&](auto& o) {
 				o << "new_pos[long_index] = " << new_pos[long_index] << ", effective_length = " << effective_length
-				  << ", this->factor() = " << this->fraction();
+				  << ", this->factor() = " << this->get_fraction();
 			})
 		}
 		this->handle.move_to(new_pos);
