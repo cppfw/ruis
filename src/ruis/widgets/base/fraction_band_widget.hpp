@@ -27,12 +27,25 @@ namespace ruis {
 
 class fraction_band_widget : public fraction_widget
 {
-	float band_fraction = 0; // current bar size factor from 0 to 1
+protected:
+	struct parameters{
+		float band_fraction = 0; // current bar size factor from 0 to 1
+	};
+
+private:
+	parameters params;
 
 protected:
-	fraction_band_widget(utki::shared_ref<ruis::context> c) :
+	struct all_parameters{
+		fraction_widget::parameters fraction_params;
+		parameters fraction_band_params;
+	};
+
+protected:
+	fraction_band_widget(utki::shared_ref<ruis::context> c, all_parameters params) :
 		widget(std::move(c), widget::all_parameters{}),
-		fraction_widget(this->context)
+		fraction_widget(this->context, std::move(params.fraction_params)),
+		params(std::move(params.fraction_band_params))
 	{}
 
 	fraction_band_widget(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
@@ -49,7 +62,7 @@ public:
 
 	real get_band_fraction() const noexcept
 	{
-		return this->band_fraction;
+		return this->params.band_fraction;
 	}
 };
 

@@ -121,16 +121,16 @@ scroll_bar::scroll_bar(const utki::shared_ref<ruis::context>& c, const tml::fore
 		}
 
 		if (e.is_down) {
-			ASSERT(!this->isGrabbed)
-			this->isGrabbed = true;
+			ASSERT(!this->is_grabbed)
+			this->is_grabbed = true;
 
 			unsigned long_index = this->get_long_index();
-			this->clickPoint = e.pos[long_index];
+			this->grab_point = e.pos[long_index];
 
 			return true;
 		} else {
-			if (this->isGrabbed) {
-				this->isGrabbed = false;
+			if (this->is_grabbed) {
+				this->is_grabbed = false;
 				return true;
 			} else {
 				return false;
@@ -139,7 +139,7 @@ scroll_bar::scroll_bar(const utki::shared_ref<ruis::context>& c, const tml::fore
 	};
 
 	hp->mouse_move_handler = [this](mouse_proxy&, const mouse_move_event& e) -> bool {
-		if (!this->isGrabbed) {
+		if (!this->is_grabbed) {
 			return false;
 		}
 
@@ -152,7 +152,7 @@ scroll_bar::scroll_bar(const utki::shared_ref<ruis::context>& c, const tml::fore
 		max_pos = max(max_pos, 0.0f); // clamp bottom
 
 		float new_pos = this->handle.rect().p[long_index];
-		new_pos += e.pos[long_index] - this->clickPoint;
+		new_pos += e.pos[long_index] - this->grab_point;
 		new_pos = max(new_pos, real(0)); // clamp bottom
 		new_pos = min(new_pos, max_pos); // clamp top
 

@@ -41,9 +41,8 @@ class scroll_bar :
 {
 	widget& handle;
 
-	// TODO: naming convention
-	bool isGrabbed = false;
-	float clickPoint;
+	bool is_grabbed = false;
+	float grab_point;
 
 protected:
 	scroll_bar(const utki::shared_ref<ruis::context>& c, const tml::forest& desc, bool vertical);
