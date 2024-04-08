@@ -21,7 +21,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "../label/color.hpp"
+#include "../label/rectangle.hpp"
 #include "../label/text.hpp"
 #include "../proxy/mouse_proxy.hpp"
 
@@ -42,7 +42,7 @@ class window :
 {
 	ruis::vector2 empty_min_dim; // minimal dimension of empty window
 
-	std::shared_ptr<color> title_bg;
+	std::shared_ptr<rectangle> title_bg;
 	constexpr static auto default_title_bg_color_topmost = 0xffff0000;
 	uint32_t title_bg_color_topmost = default_title_bg_color_topmost;
 	constexpr static auto default_title_bg_color_non_topmost = 0xff808080;
@@ -80,6 +80,16 @@ class window :
 	void update_topmost();
 
 public:
+	struct all_parameters {
+		widget::parameters widget_params;
+	};
+
+	window(
+		utki::shared_ref<ruis::context> c,
+		all_parameters params,
+		utki::span<const utki::shared_ref<ruis::widget>> children
+	);
+
 	window(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 
 	window(const window&) = delete;

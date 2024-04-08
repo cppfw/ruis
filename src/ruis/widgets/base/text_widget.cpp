@@ -111,6 +111,9 @@ text_widget::text_widget(utki::shared_ref<ruis::context> context, parameters par
 		if (!p.font_face) {
 			p.font_face = this->context.get().loader.load<res::font>("ruis_fnt_text");
 		}
+		if (p.font_size <= 0) {
+			p.font_size = this->context.get().units.pp_to_px(default_font_size_pp);
+		}
 		return p;
 	}()),
 	fonts{

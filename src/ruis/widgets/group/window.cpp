@@ -24,140 +24,281 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../../context.hpp"
 #include "../../util/util.hpp"
 
+using namespace std::string_literals;
+
 using namespace ruis;
 
 namespace {
 
-const auto window_layout_description = tml::read(R"qwertyuiop(
-		layout{pile}
+namespace m = ruis::make;
+using lp = ruis::lp;
 
-		@column{
-			lp{
-				dx{max} dy{max}
+utki::shared_ref<container> make_top_row(utki::shared_ref<context> c)
+{
+	// clang-format off
+	return m::container(c,
+		{
+			.widget_params = {
+				.lp = {
+					.dims = {lp::fill, lp::min}
+				}
+			},
+			.container_params = {
+				.layout = ruis::layout::row
 			}
-
-			@row{
-				lp{dx{fill}}
-
-				@mouse_proxy{
-					id{ruis_lt_proxy}
-				}
-
-				@mouse_proxy{
-					id{ruis_t_proxy}
-					lp{
-						dx{fill} dy{fill} weight{1}
+		},
+		{
+			m::mouse_proxy(c,
+				{
+					.widget_params = {
+						.id = "ruis_lb_proxy"s
 					}
 				}
-
-				@mouse_proxy{
-					id{ruis_rt_proxy}
-				}
-			}
-
-			@row{
-				lp{
-					weight{1}
-					dx{max}
-					dy{max}
-				}
-
-				@mouse_proxy{
-					id{ruis_l_proxy}
-					lp{dy{fill}}
-				}
-
-				// middle
-				@column{
-					lp{
-						weight{1}
-						dx{max}
-						dy{max}
-					}
-
-					// caption
-					@pile{
-						lp{
-							dx{max}
-						}
-
-						clip{true}
-
-						@mouse_proxy{
-							id{ruis_caption_proxy}
-							lp{
-								dx{max} dy{max}
-							}
-						}
-
-						@color{
-							id{ruis_window_title_bg}
-							lp{
-								dx{max} dy{max}
-							}
-						}
-
-						@row{
-							lp{
-								dx{max} dy{max}
-							}
-
-							@margins{
-								left{3dp}
-								top{2dp}
-								bottom{2dp}
-
-								lp{
-									dx{fill}
-									weight{1}
-								}
-
-								@text{
-									id{ruis_title}
-								}
-							}
-						}
-					}
-
-					@pile{
-						id{ruis_content}
-						clip{true}
-						lp{
-							dx{fill} dy{fill}
-							weight{1}
+			),
+			m::mouse_proxy(c,
+				{
+					.widget_params = {
+						.id = "ruis_b_proxy"s,
+						.lp = {
+							.dims = {lp::fill, lp::fill},
+							.weight = 1
 						}
 					}
 				}
-
-				@mouse_proxy{
-					id{ruis_r_proxy}
-					lp{dy{fill}}
-				}
-			}
-
-			@row{
-				lp{
-					dx{fill}
-				}
-				@mouse_proxy{
-					id{ruis_lb_proxy}
-				}
-
-				@mouse_proxy{
-					id{ruis_b_proxy}
-					lp{
-						dy{fill}
-						dx{fill}
-						weight{1}
+			),
+			m::mouse_proxy(c,
+				{
+					.widget_params = {
+						.id = "ruis_rb_proxy"s
 					}
 				}
-
-				@mouse_proxy{
-					id{ruis_rb_proxy}
-				}
-			}
+			)
 		}
-	)qwertyuiop");
+	);
+	// clang-format on
+}
+
+utki::shared_ref<container> make_bottom_row(utki::shared_ref<context> c)
+{
+	// clang-format off
+	return m::container(c,
+		{
+			.widget_params = {
+				.lp = {
+					.dims = {lp::fill, lp::min}
+				}
+			},
+			.container_params = {
+				.layout = ruis::layout::row
+			}
+		},
+		{
+			m::mouse_proxy(c,
+				{
+					.widget_params = {
+						.id = "ruis_lt_proxy"s
+					}
+				}
+			),
+			m::mouse_proxy(c,
+				{
+					.widget_params = {
+						.id = "ruis_t_proxy"s,
+						.lp = {
+							.dims = {lp::fill, lp::fill},
+							.weight = 1
+						}
+					}
+				}
+			),
+			m::mouse_proxy(c,
+				{
+					.widget_params = {
+						.id = "ruis_rt_proxy"s
+					}
+				}
+			)
+		}
+	);
+	// clang-format on
+}
+
+utki::shared_ref<container> make_caption(utki::shared_ref<context> c)
+{
+	// clang-format off
+	return m::container(c,
+		{
+			.widget_params = {
+				.lp = {
+					.dims = {lp::max, lp::min}
+				},
+				.clip = true
+			},
+			.container_params = {
+				.layout = ruis::layout::pile
+			}
+		},
+		{
+			m::mouse_proxy(c,
+				{
+					.widget_params = {
+						.id = "ruis_caption_proxy"s,
+						.lp = {
+							.dims = {lp::max, lp::max}
+						}
+					}
+				}
+			),
+			m::rectangle(c,
+				{
+					.widget_params = {
+						.id = "ruis_window_title_bg"s,
+						.lp = {
+							.dims = {lp::max, lp::max}
+						}
+					}
+				}
+			),
+			m::container(c,
+				{
+					.widget_params = {
+						.lp = {
+							.dims = {lp::max, lp::max}
+						}
+					},
+					.container_params = {
+						.layout = ruis::layout::row
+					}
+				},
+				{
+					// TODO:
+					// 				@margins{
+					// 					left{3dp}
+					// 					top{2dp}
+					// 					bottom{2dp}
+					m::text(c,
+						{
+							.widget_params = {
+								.id = "ruis_title"s,
+								.lp = {
+									.dims = {lp::fill, lp::min},
+									.weight = 1
+								}
+							}
+						},
+						{}
+					)
+				}
+			)
+		}
+	);
+	// clang-format on
+}
+
+utki::shared_ref<container> make_middle(utki::shared_ref<context> c)
+{
+	// clang-format off
+	return m::container(c,
+		{
+			.widget_params = {
+				.lp = {
+					.dims = {lp::max, lp::max},
+					.weight = 1
+				}
+			},
+			.container_params = {
+				.layout = ruis::layout::column
+			}
+		},
+		{
+			make_caption(c),
+			m::container(c,
+				{
+					.widget_params = {
+						.id = "ruis_content"s,
+						.lp = {
+							.dims = {lp::fill, lp::fill},
+							.weight = 1
+						},
+						.clip = true
+					},
+					.container_params = {
+						.layout = ruis::layout::pile
+					}
+				},
+				{}
+			)
+		}
+	);
+	// clang-format on
+}
+
+utki::shared_ref<container> make_middle_row(utki::shared_ref<context> c)
+{
+	// clang-format off
+	return m::container(c,
+		{
+			.widget_params = {
+				.lp = {
+					.dims = {lp::max, lp::max},
+					.weight = 1
+				}
+			},
+			.container_params = {
+				.layout = ruis::layout::row
+			}
+		},
+		{
+			m::mouse_proxy(c,
+				{
+					.widget_params = {
+						.id = "ruis_l_proxy"s,
+						.lp = {
+							.dims = {lp::min, lp::fill}
+						}
+					}
+				}
+			),
+			make_middle(c),
+			m::mouse_proxy(c,
+				{
+					.widget_params = {
+						.id = "ruis_r_proxy"s,
+						.lp = {
+							.dims = {lp::min, lp::fill}
+						}
+					}
+				}
+			)
+		}
+	);
+	// clang-format on
+}
+
+std::vector<utki::shared_ref<widget>> make_children(utki::shared_ref<context> c)
+{
+	// clang-format off
+	return {
+		m::container(c,
+			{
+				.widget_params = {
+					.lp = {
+						.dims = {lp::max, lp::max}
+					}
+				},
+				.container_params = {
+					.layout = ruis::layout::column
+				}
+			},
+			{
+				make_top_row(c),
+				make_middle_row(c),
+				make_bottom_row(c)
+			}
+		)
+	};
+	// clang-format on
+}
 } // namespace
 
 void ruis::window::set_background(const utki::shared_ref<widget>& w)
@@ -172,9 +313,20 @@ void ruis::window::set_background(const utki::shared_ref<widget>& w)
 	this->insert(w, this->children().begin());
 }
 
+window::window(
+	utki::shared_ref<ruis::context> c,
+	all_parameters params,
+	utki::span<const utki::shared_ref<ruis::widget>> children
+) :
+	widget(std::move(c), {.widget_params = std::move(params.widget_params)}),
+	container(this->context, {.container_params = {.layout = ruis::layout::pile}}, make_children(this->context))
+{
+	// TODO:
+}
+
 ruis::window::window(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 	widget(c, desc),
-	container(this->context, window_layout_description)
+	container(this->context, {.container_params = {.layout = ruis::layout::pile}}, make_children(this->context))
 {
 	this->setup_widgets();
 
@@ -229,7 +381,7 @@ void ruis::window::setup_widgets()
 	this->title = this->try_get_widget_as<text>("ruis_title");
 	ASSERT(this->title)
 
-	this->title_bg = this->try_get_widget_as<color>("ruis_window_title_bg");
+	this->title_bg = this->try_get_widget_as<rectangle>("ruis_window_title_bg");
 	ASSERT(this->title_bg);
 
 	std::function<decltype(mouse_proxy::mouse_button_handler)(cursor_iter&)> make_mouse_button_handler =

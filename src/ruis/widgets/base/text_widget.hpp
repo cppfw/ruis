@@ -40,8 +40,7 @@ class text_widget : virtual public widget
 {
 public:
 	struct parameters {
-		constexpr static auto default_font_size = 12;
-		real font_size = default_font_size;
+		real font_size = -1; // negative = default size
 		std::shared_ptr<const res::font> font_face;
 	};
 
