@@ -51,6 +51,13 @@
             "problemMatcher": [],
             "group": "build"
 		},
+        {
+            "label": "run-app2",
+            "type": "shell",
+            "command": "make run-app2",
+            "problemMatcher": [],
+            "group": "build"
+		},
 		{
             "label": "run-busy",
             "type": "shell",
@@ -169,6 +176,20 @@
             "label": "run-app-dbg",
             "type": "shell",
             "command": "make run-app config=dbg",
+            "problemMatcher": [],
+            "group": "build"
+        },
+        {
+            "label": "run-app2-gles2",
+            "type": "shell",
+            "command": "make run-app2 ren=gles2",
+            "problemMatcher": [],
+            "group": "build"
+        },
+        {
+            "label": "run-app2-dbg",
+            "type": "shell",
+            "command": "make run-app2 config=dbg",
             "problemMatcher": [],
             "group": "build"
         },
