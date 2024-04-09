@@ -129,7 +129,10 @@ bool drop_down_box::on_mouse_button(const mouse_button_event& e)
 	if (e.is_down) {
 		++this->num_mouse_buttons_pressed;
 	} else {
+		// TODO: once I got this assert triggered, perhaps there are situations when
+		//       button release event comes without prior button press, need to investigate
 		ASSERT(this->num_mouse_buttons_pressed != 0)
+
 		--this->num_mouse_buttons_pressed;
 	}
 
