@@ -51,14 +51,14 @@ utki::shared_ref<container> make_top_row(utki::shared_ref<context> c)
 			m::mouse_proxy(c,
 				{
 					.widget_params = {
-						.id = "ruis_lb_proxy"s
+						.id = "ruis_lt_proxy"s
 					}
 				}
 			),
 			m::mouse_proxy(c,
 				{
 					.widget_params = {
-						.id = "ruis_b_proxy"s,
+						.id = "ruis_t_proxy"s,
 						.lp = {
 							.dims = {lp::fill, lp::fill},
 							.weight = 1
@@ -69,7 +69,7 @@ utki::shared_ref<container> make_top_row(utki::shared_ref<context> c)
 			m::mouse_proxy(c,
 				{
 					.widget_params = {
-						.id = "ruis_rb_proxy"s
+						.id = "ruis_rt_proxy"s
 					}
 				}
 			)
@@ -96,14 +96,14 @@ utki::shared_ref<container> make_bottom_row(utki::shared_ref<context> c)
 			m::mouse_proxy(c,
 				{
 					.widget_params = {
-						.id = "ruis_lt_proxy"s
+						.id = "ruis_lb_proxy"s
 					}
 				}
 			),
 			m::mouse_proxy(c,
 				{
 					.widget_params = {
-						.id = "ruis_t_proxy"s,
+						.id = "ruis_b_proxy"s,
 						.lp = {
 							.dims = {lp::fill, lp::fill},
 							.weight = 1
@@ -114,7 +114,7 @@ utki::shared_ref<container> make_bottom_row(utki::shared_ref<context> c)
 			m::mouse_proxy(c,
 				{
 					.widget_params = {
-						.id = "ruis_rt_proxy"s
+						.id = "ruis_rb_proxy"s
 					}
 				}
 			)
@@ -301,7 +301,7 @@ std::vector<utki::shared_ref<widget>> make_children(utki::shared_ref<context> c)
 }
 } // namespace
 
-void ruis::window::set_background(const utki::shared_ref<widget>& w)
+void ruis::window::set_background(utki::shared_ref<widget> w)
 {
 	ASSERT(this->children().size() == 1 || this->children().size() == 2)
 	if (this->children().size() == 2) {
@@ -321,7 +321,25 @@ window::window(
 	widget(std::move(c), {.widget_params = std::move(params.widget_params)}),
 	container(this->context, {.container_params = {.layout = ruis::layout::pile}}, make_children(this->context))
 {
-	// TODO:
+	this->setup_widgets();
+
+	const real default_border_size_px = 5;
+	sides<real> borders(default_border_size_px);
+
+	this->set_title(params.title);
+
+	if (params.background) {
+		this->set_background(utki::make_shared_from(*params.background));
+	}
+
+	// TODO: border sizes and caption colors
+
+	this->set_borders(borders);
+
+	// this should go after initializing borders
+	this->empty_min_dim = this->measure(vector2(-1));
+
+	this->content_area->push_back(children);
 }
 
 ruis::window::window(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
@@ -595,6 +613,11 @@ void ruis::window::setup_widgets()
 void ruis::window::set_title(const std::string& str)
 {
 	this->title->set_text(utki::to_utf32(str));
+}
+
+void ruis::window::set_title(std::u32string str)
+{
+	this->title->set_text(str);
 }
 
 void ruis::window::set_borders(sides<real> borders)

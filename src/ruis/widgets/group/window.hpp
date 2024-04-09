@@ -82,6 +82,8 @@ class window :
 public:
 	struct all_parameters {
 		widget::parameters widget_params;
+		std::u32string title;
+		std::shared_ptr<widget> background;
 	};
 
 	window(
@@ -101,6 +103,8 @@ public:
 	~window() override = default;
 
 	void set_title(const std::string& str);
+
+	void set_title(std::u32string str);
 
 	/**
 	 * @brief Get window content area.
@@ -128,7 +132,7 @@ public:
 
 	bool on_mouse_move(const mouse_move_event& event) override;
 
-	void set_background(const utki::shared_ref<widget>& w);
+	void set_background(utki::shared_ref<widget> w);
 
 	void on_lay_out() override;
 
@@ -138,5 +142,16 @@ public:
 	 */
 	void set_borders(sides<real> borders);
 };
+
+namespace make {
+inline utki::shared_ref<window> window(
+	utki::shared_ref<context> context,
+	window::all_parameters params,
+	utki::span<const utki::shared_ref<ruis::widget>> children
+)
+{
+	return utki::make_shared<ruis::window>(std::move(context), std::move(params), children);
+}
+} // namespace make
 
 } // namespace ruis
