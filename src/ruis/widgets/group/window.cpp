@@ -23,6 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../../context.hpp"
 #include "../../util/util.hpp"
+#include "../label/nine_patch.hpp"
 
 using namespace std::string_literals;
 
@@ -323,16 +324,28 @@ window::window(
 {
 	this->setup_widgets();
 
-	const real default_border_size_px = 5;
-	sides<real> borders(default_border_size_px);
+	sides<real> borders = {
+		params.borders[0].get(this->context),
+		params.borders[1].get(this->context),
+		params.borders[2].get(this->context),
+		params.borders[3].get(this->context)
+	};
 
 	this->set_title(params.title);
 
 	if (params.background) {
 		this->set_background(utki::make_shared_from(*params.background));
+	} else {
+		this->set_background(ruis::make::nine_patch(
+			this->context,
+			{.widget_params = {.lp = {.dims = {ruis::lp::fill, ruis::lp::fill}}},
+			 .nine_patch_params =
+				 {.nine_patch = this->context.get().loader.load<ruis::res::nine_patch>("ruis_npt_window_bg")}},
+			{}
+		));
 	}
 
-	// TODO: border sizes and caption colors
+	// TODO: caption colors
 
 	this->set_borders(borders);
 

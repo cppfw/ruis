@@ -21,6 +21,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
+#include "../../util/length.hpp"
 #include "../label/rectangle.hpp"
 #include "../label/text.hpp"
 #include "../proxy/mouse_proxy.hpp"
@@ -43,9 +44,9 @@ class window :
 	ruis::vector2 empty_min_dim; // minimal dimension of empty window
 
 	std::shared_ptr<rectangle> title_bg;
-	constexpr static auto default_title_bg_color_topmost = 0xffff0000;
+	constexpr static auto default_title_bg_color_topmost = 0xffad9869;
 	uint32_t title_bg_color_topmost = default_title_bg_color_topmost;
-	constexpr static auto default_title_bg_color_non_topmost = 0xff808080;
+	constexpr static auto default_title_bg_color_non_topmost = 0xff505050;
 	uint32_t title_bg_color_non_topmost = default_title_bg_color_non_topmost;
 
 	std::shared_ptr<text> title;
@@ -84,6 +85,15 @@ public:
 		widget::parameters widget_params;
 		std::u32string title;
 		std::shared_ptr<widget> background;
+
+		constexpr static const auto default_border_size_pp = 5;
+
+		sides<length> borders = {
+			length::make_pp(default_border_size_pp),
+			length::make_pp(default_border_size_pp),
+			length::make_pp(default_border_size_pp),
+			length::make_pp(default_border_size_pp)
+		};
 	};
 
 	window(

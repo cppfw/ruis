@@ -290,6 +290,16 @@ nine_patch::nine_patch(
 	}}),
 	inner_content(this->get_widget_as<container>("ruis_content")), params(std::move(params.nine_patch_params))
 {
+	this->nine_patch::on_blending_change();
+
+	// this should go after setting up border widgets
+	if (this->params.nine_patch) {
+		this->set_nine_patch(this->params.nine_patch);
+	}
+	if (this->params.disabled_nine_patch) {
+		this->set_disabled_nine_patch(this->params.disabled_nine_patch);
+	}
+
 	this->inner_content.push_back(children);
 }
 
