@@ -18,6 +18,8 @@ public:
 private:
 	units value_units;
 
+	real get_internal(const context& ctx) const noexcept;
+
 public:
 	length() :
 		value(-1),
@@ -44,7 +46,11 @@ public:
 		return this->get(ctx.get());
 	}
 
-	real get(const context& ctx) const noexcept;
+	real get(const context& ctx) const noexcept
+	{
+		ASSERT(this->is_valid())
+		return this->get_internal(ctx);
+	}
 
 	static length make_px(real value)
 	{

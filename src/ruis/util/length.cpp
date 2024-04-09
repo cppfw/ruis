@@ -2,7 +2,7 @@
 
 using namespace ruis;
 
-real length::get(const context& ctx) const noexcept
+real length::get_internal(const context& ctx) const noexcept
 {
 	switch (this->value_units) {
 		default:
