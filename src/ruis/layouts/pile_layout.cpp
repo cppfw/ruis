@@ -41,6 +41,8 @@ void pile_layout::lay_out(const vector2& dims, semiconst_widget_list& widgets) c
 				case lp::align::front:
 					pos[i] = 0;
 					break;
+				case lp::align::undefined:
+					[[fallthrough]];
 				case lp::align::center:
 					pos[i] = (dims[i] - w.rect().d[i]) / 2;
 					break;

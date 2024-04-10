@@ -327,7 +327,7 @@ window::window(
 	using namespace ruis::length_literals;
 	constexpr static const auto default_border_size_pp = 5_pp;
 	for (auto& b : params.borders) {
-		if (!b.is_valid()) {
+		if (b.is_undefined()) {
 			b = default_border_size_pp;
 		}
 	}

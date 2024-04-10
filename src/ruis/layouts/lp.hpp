@@ -39,6 +39,12 @@ struct lp {
 	 */
 	enum class align {
 		/**
+		 * @brief Undefined alignment.
+		 * In case alignemnt is undefined the default center alignment is assumed.
+		 */
+		undefined,
+
+		/**
 		 * @brief Left or top alignment.
 		 */
 		front,
@@ -80,9 +86,21 @@ struct lp {
 		};
 
 	private:
-		std::variant<special, real> value;
+		struct undefined {
+			bool operator==(const undefined&) const noexcept
+			{
+				return true;
+			}
+		};
+
+		// TODO: use length
+		std::variant<undefined, special, real> value;
 
 	public:
+		dimension_policy() :
+			value(undefined())
+		{}
+
 		/**
 		 * @brief Construct a new dimension policy object.
 		 * @param number - number in pixels, negative number is equivalent to 'min' special value.
@@ -127,6 +145,11 @@ struct lp {
 			return std::get<real>(this->value);
 		}
 
+		bool is_undefined() const noexcept
+		{
+			return std::holds_alternative<undefined>(this->value);
+		}
+
 		bool operator==(const dimension_policy& p) const
 		{
 			return this->value == p.value;
@@ -161,20 +184,21 @@ struct lp {
 	 * @brief desired dimensions.
 	 * Components should hold non-negative value in pixels or [min, max, fill].
 	 */
-	r4::vector2<dimension_policy> dims = {dimension_policy::special::min, dimension_policy::special::min};
+	r4::vector2<dimension_policy> dims;
 
 	/**
 	 * @brief Weight of the widget.
 	 * Weight defines how much space widget occupies in addition to its minimal or explicitly set size.
-	 * Default value is 0, which means that the widget will not occupy extra space.
+	 * Default weight is 0, which means that the widget will not occupy extra space.
+	 * Value less than 0 is invalid, default weight will be assumed.
 	 */
-	real weight = 0;
+	real weight = -1;
 
 	/**
 	 * @brief Alignment of the widget within its parent.
 	 * Horizontal and vertical alignment.
 	 */
-	r4::vector2<align> align = {align::center, align::center};
+	r4::vector2<align> align = {align::undefined, align::undefined};
 
 	static lp make(const tml::forest& desc, const ruis::units& units);
 };

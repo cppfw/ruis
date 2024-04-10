@@ -53,9 +53,9 @@ public:
 		value_units(u)
 	{}
 
-	bool is_valid() const noexcept
+	bool is_undefined() const noexcept
 	{
-		return this->value >= real(0);
+		return this->value < real(0);
 	}
 
 	real get(const utki::shared_ref<const context>& ctx) const noexcept
@@ -65,7 +65,7 @@ public:
 
 	real get(const context& ctx) const noexcept
 	{
-		ASSERT(this->is_valid())
+		ASSERT(!this->is_undefined())
 		return this->get_internal(ctx);
 	}
 

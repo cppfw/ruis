@@ -67,12 +67,34 @@ widget::widget(const utki::shared_ref<ruis::context>& c, const tml::forest& desc
 			throw;
 		}
 	}
+
+	for (auto& d : this->params.lp.dims) {
+		if (d.is_undefined()) {
+			d = lp::min;
+		}
+	}
+
+	if (this->params.lp.weight < 0) {
+		// use default weight of 0
+		this->params.lp.weight = 0;
+	}
 }
 
 widget::widget(utki::shared_ref<ruis::context> context, all_parameters params) :
 	context(std::move(context)),
 	params(std::move(params.widget_params))
-{}
+{
+	for (auto& d : this->params.lp.dims) {
+		if (d.is_undefined()) {
+			d = lp::min;
+		}
+	}
+
+	if (this->params.lp.weight < 0) {
+		// use default weight of 0
+		this->params.lp.weight = 0;
+	}
+}
 
 std::shared_ptr<widget> widget::try_get_widget(const std::string& id, bool allow_itself) noexcept
 {

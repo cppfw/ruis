@@ -162,10 +162,17 @@ void linear_layout::lay_out(const vector2& dims, semiconst_widget_list& widgets)
 			new_pos[trans_index] = 0;
 
 			for (unsigned i = 0; i != 2; ++i) {
-				if (lp.align[i] == lp::align::center) {
-					new_pos[i] += round((room[i] - w.get().rect().d[i]) / 2);
-				} else if (lp.align[i] == lp::align::back) {
-					new_pos[i] += room[i] - w.get().rect().d[i];
+				switch (lp.align[i]) {
+					case lp::align::front:
+						break;
+					case lp::align::undefined:
+						[[fallthrough]];
+					case lp::align::center:
+						new_pos[i] += round((room[i] - w.get().rect().d[i]) / 2);
+						break;
+					case lp::align::back:
+						new_pos[i] += room[i] - w.get().rect().d[i];
+						break;
 				}
 			}
 
