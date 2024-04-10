@@ -25,6 +25,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
+class context;
+
 class length
 {
 	real value = -1;
@@ -67,6 +69,10 @@ public:
 	{
 		ASSERT(!this->is_undefined())
 		return this->get_internal(ctx);
+	}
+
+	bool operator==(const length& l)const noexcept{
+		return this->value == l.value && this->value_units == l.value_units;
 	}
 
 	constexpr static length make_px(real value)

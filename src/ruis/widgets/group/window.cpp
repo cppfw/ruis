@@ -392,13 +392,13 @@ ruis::window::window(const utki::shared_ref<ruis::context>& c, const tml::forest
 				} else if (pp.value == "background") {
 					this->set_background(this->context.get().inflater.inflate(pp.children));
 				} else if (pp.value == "left") {
-					borders.left() = parse_dimension_value(get_property_value(pp), this->context.get().units);
+					borders.left() = parse_dimension_value(get_property_value(pp), this->context.get().units).get(this->context);
 				} else if (pp.value == "top") {
-					borders.top() = parse_dimension_value(get_property_value(pp), this->context.get().units);
+					borders.top() = parse_dimension_value(get_property_value(pp), this->context.get().units).get(this->context);
 				} else if (pp.value == "right") {
-					borders.right() = parse_dimension_value(get_property_value(pp), this->context.get().units);
+					borders.right() = parse_dimension_value(get_property_value(pp), this->context.get().units).get(this->context);
 				} else if (pp.value == "bottom") {
-					borders.bottom() = parse_dimension_value(get_property_value(pp), this->context.get().units);
+					borders.bottom() = parse_dimension_value(get_property_value(pp), this->context.get().units).get(this->context);
 				}
 			}
 		}
@@ -641,24 +641,25 @@ void ruis::window::set_title(std::u32string str)
 	this->title->set_text(str);
 }
 
+// TODO: use length
 void ruis::window::set_borders(sides<real> borders)
 {
-	this->l_border->get_layout_params().dims.x() = borders.left();
-	this->t_border->get_layout_params().dims.y() = borders.top();
-	this->r_border->get_layout_params().dims.x() = borders.right();
-	this->b_border->get_layout_params().dims.y() = borders.bottom();
+	this->l_border->get_layout_params().dims.x() = length::make_px(borders.left());
+	this->t_border->get_layout_params().dims.y() = length::make_px(borders.top());
+	this->r_border->get_layout_params().dims.x() = length::make_px(borders.right());
+	this->b_border->get_layout_params().dims.y() = length::make_px(borders.bottom());
 
-	this->lb_border->get_layout_params().dims.x() = borders.left();
-	this->lb_border->get_layout_params().dims.y() = borders.bottom();
+	this->lb_border->get_layout_params().dims.x() = length::make_px(borders.left());
+	this->lb_border->get_layout_params().dims.y() = length::make_px(borders.bottom());
 
-	this->rb_border->get_layout_params().dims.x() = borders.right();
-	this->rb_border->get_layout_params().dims.y() = borders.bottom();
+	this->rb_border->get_layout_params().dims.x() = length::make_px(borders.right());
+	this->rb_border->get_layout_params().dims.y() = length::make_px(borders.bottom());
 
-	this->lt_border->get_layout_params().dims.x() = borders.left();
-	this->lt_border->get_layout_params().dims.y() = borders.top();
+	this->lt_border->get_layout_params().dims.x() = length::make_px(borders.left());
+	this->lt_border->get_layout_params().dims.y() = length::make_px(borders.top());
 
-	this->rt_border->get_layout_params().dims.x() = borders.right();
-	this->rt_border->get_layout_params().dims.y() = borders.top();
+	this->rt_border->get_layout_params().dims.x() = length::make_px(borders.right());
+	this->rt_border->get_layout_params().dims.y() = length::make_px(borders.top());
 }
 
 bool ruis::window::on_mouse_button(const mouse_button_event& e)

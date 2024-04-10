@@ -65,20 +65,20 @@ ruis::sides<real> ruis::parse_sides(const tml::forest& desc)
 	return {p.x(), p.y(), d.x(), d.y()};
 }
 
-real ruis::parse_dimension_value(const tml::leaf& l, const ruis::units& units)
+length ruis::parse_dimension_value(const tml::leaf& l, const ruis::units& units)
 {
 	// check if millimeters
 	if (l.length() >= 2 && l[l.length() - 1] == 'm' && l[l.length() - 2] == 'm') {
-		return units.mm_to_px(l.to_float());
+		return length::make_mm(l.to_float());
 	} else if (l.length() >= 2 && l[l.length() - 1] == 'p' && l[l.length() - 2] == 'p') { // if in perception pixels
-		return units.pp_to_px(l.to_float());
+		return length::make_pp(l.to_float());
 	}
 
 	if (l.empty()) {
-		return real(0);
+		return length::make_px(0);
 	}
 
-	return real(l.to_float());
+	return length::make_px(l.to_float());
 }
 
 lp::dimension_policy ruis::parse_layout_dimension_value(const tml::leaf& l, const ruis::units& units)

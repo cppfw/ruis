@@ -123,8 +123,8 @@ vector2 scroll_area::dims_for_widget(const widget& w) const
 		} else if (lp.dims[i] == lp::min || lp.dims[i] == lp::max) {
 			d[i] = -1; // will be updated below
 		} else {
-			ASSERT(lp.dims[i].is_number())
-			d[i] = lp.dims[i].get_number();
+			ASSERT(lp.dims[i].is_length())
+			d[i] = lp.dims[i].get_length().get(this->context);
 		}
 	}
 	if (!d.is_positive_or_zero()) {

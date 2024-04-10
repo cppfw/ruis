@@ -177,7 +177,7 @@ void drop_down_box::show_drop_down_menu()
 		auto min_size_forcer = np.get().try_get_widget("ruis_min_size_forcer");
 
 		auto& lp = min_size_forcer->get_layout_params();
-		lp.dims.x() = this->rect().d.x();
+		lp.dims.x() = length::make_px(this->rect().d.x());
 	}
 
 	// TODO: use get_widget_as()

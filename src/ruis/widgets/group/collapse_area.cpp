@@ -103,7 +103,8 @@ collapse_area::collapse_area(const utki::shared_ref<ruis::context>& c, const tml
 		sw->pressed_change_handler = [this](button& tb) {
 			auto& lp = this->contentArea->get_layout_params();
 			if (tb.is_pressed()) {
-				lp.dims.y() = 0;
+				using namespace length_literals;
+				lp.dims.y() = 0_px;
 			} else {
 				lp.dims.y() = lp::min;
 			}

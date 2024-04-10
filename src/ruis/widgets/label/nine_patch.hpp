@@ -67,6 +67,7 @@ public:
 	struct parameters {
 		std::shared_ptr<const res::nine_patch> nine_patch;
 		std::shared_ptr<const res::nine_patch> disabled_nine_patch;
+		// TODO: use length
 		sides<real> borders{-1};
 	};
 

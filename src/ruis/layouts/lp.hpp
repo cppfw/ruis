@@ -26,6 +26,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <tml/tree.hpp>
 
 #include "../config.hpp"
+#include "../util/length.hpp"
 #include "../util/units.hpp"
 
 namespace ruis {
@@ -93,8 +94,7 @@ struct lp {
 			}
 		};
 
-		// TODO: use length
-		std::variant<undefined, special, real> value;
+		std::variant<undefined, special, length> value;
 
 	public:
 		dimension_policy() :
@@ -105,12 +105,12 @@ struct lp {
 		 * @brief Construct a new dimension policy object.
 		 * @param number - number in pixels, negative number is equivalent to 'min' special value.
 		 */
-		dimension_policy(real number) :
+		dimension_policy(length dimension) :
 			value([&]() -> decltype(value) {
-				if (number < 0) {
+				if (dimension.is_undefined()) {
 					return special::min;
 				} else {
-					return number;
+					return dimension;
 				}
 			}())
 		{}
@@ -134,15 +134,15 @@ struct lp {
 			return std::holds_alternative<special>(this->value) && *std::get_if<special>(&this->value) == special::fill;
 		}
 
-		bool is_number() const noexcept
+		bool is_length() const noexcept
 		{
-			return std::holds_alternative<real>(this->value);
+			return std::holds_alternative<length>(this->value);
 		}
 
-		real get_number() const
+		const length& get_length() const
 		{
-			ASSERT(this->is_number())
-			return std::get<real>(this->value);
+			ASSERT(this->is_length())
+			return std::get<length>(this->value);
 		}
 
 		bool is_undefined() const noexcept
@@ -160,19 +160,19 @@ struct lp {
 			return !this->operator==(p);
 		}
 
-		bool operator==(real number) const
+		bool operator==(const length& d) const
 		{
-			if (this->is_number()) {
-				return this->get_number() == number;
+			if (this->is_length()) {
+				return this->get_length() == d;
 			} else if (this->is_min()) {
-				return number < 0;
+				return d.is_undefined();
 			}
 			return false;
 		}
 
-		bool operator!=(real number) const
+		bool operator!=(const length& d) const
 		{
-			return !this->operator==(number);
+			return !this->operator==(d);
 		}
 	};
 

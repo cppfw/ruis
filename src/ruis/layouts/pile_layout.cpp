@@ -86,8 +86,8 @@ vector2 pile_layout::measure(const vector2& quotum, const_widget_list& widgets) 
 					d[j] = 0;
 				}
 			} else {
-				ASSERT(lp.dims[j].is_number())
-				d[j] = lp.dims[j].get_number();
+				ASSERT(lp.dims[j].is_length())
+				d[j] = lp.dims[j].get_length().get(w.get().context);
 			}
 		}
 

@@ -75,7 +75,7 @@ ruis::sides<real> parse_sides(const tml::forest& desc);
  * @param units - information about units. Can be obtained from context.
  * @return Parsed value in pixels.
  */
-real parse_dimension_value(const tml::leaf& l, const ruis::units& units);
+length parse_dimension_value(const tml::leaf& l, const ruis::units& units);
 
 /**
  * @brief Parse layout dimension value.

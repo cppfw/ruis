@@ -38,7 +38,7 @@ res::font::font(
 	std::unique_ptr<const papki::file> file_bold,
 	std::unique_ptr<const papki::file> file_italic,
 	std::unique_ptr<const papki::file> file_bold_italic,
-	unsigned font_size,
+	unsigned font_size, // TODO: font size is not used anymore, remove
 	unsigned max_cached
 ) :
 	resource(context)
@@ -92,7 +92,7 @@ utki::shared_ref<res::font> res::font::load(
 
 	for (auto& p : desc) {
 		if (p.value == "size") {
-			font_size = unsigned(parse_dimension_value(get_property_value(p), ctx.get().units));
+			font_size = unsigned(parse_dimension_value(get_property_value(p), ctx.get().units).get(ctx));
 		} else if (p.value == "max_cached") {
 			max_cached = unsigned(get_property_value(p).to_uint32());
 		} else if (p.value == "normal") {

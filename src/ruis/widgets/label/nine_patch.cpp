@@ -225,13 +225,13 @@ nine_patch::nine_patch(const utki::shared_ref<ruis::context>& c, const tml::fore
 		if (p.value == "left") {
 			// 'min' is by default, but not allowed to specify explicitly, as well as 'max' and 'fill',
 			// thus we can use parse_dimension_value().
-			this->params.borders.left() = parse_dimension_value(get_property_value(p), this->context.get().units);
+			this->params.borders.left() = parse_dimension_value(get_property_value(p), this->context.get().units).get(this->context);
 		} else if (p.value == "right") {
-			this->params.borders.right() = parse_dimension_value(get_property_value(p), this->context.get().units);
+			this->params.borders.right() = parse_dimension_value(get_property_value(p), this->context.get().units).get(this->context);
 		} else if (p.value == "top") {
-			this->params.borders.top() = parse_dimension_value(get_property_value(p), this->context.get().units);
+			this->params.borders.top() = parse_dimension_value(get_property_value(p), this->context.get().units).get(this->context);
 		} else if (p.value == "bottom") {
-			this->params.borders.bottom() = parse_dimension_value(get_property_value(p), this->context.get().units);
+			this->params.borders.bottom() = parse_dimension_value(get_property_value(p), this->context.get().units).get(this->context);
 		} else if (p.value == "center_visible") {
 			this->set_center_visible(get_property_value(p).to_bool());
 		}
@@ -382,24 +382,24 @@ void nine_patch::apply_images()
 		if (this->params.borders.left() < 0) { // min
 			if (tl_lp.dims.x() != min_borders.left()) {
 				auto& lp = this->img_widgets_matrix[0][0].get().get_layout_params();
-				lp.dims.x() = min_borders.left();
+				lp.dims.x() = length::make_px(min_borders.left());
 			}
 		} else {
 			if (tl_lp.dims.x() != this->params.borders.left()) {
 				auto& lp = this->img_widgets_matrix[0][0].get().get_layout_params();
-				lp.dims.x() = this->params.borders.left();
+				lp.dims.x() = length::make_px(this->params.borders.left());
 			}
 		}
 
 		if (this->params.borders.top() < 0) { // min
 			if (tl_lp.dims.y() != min_borders.top()) {
 				auto& lp = this->img_widgets_matrix[0][0].get().get_layout_params();
-				lp.dims.y() = min_borders.top();
+				lp.dims.y() = length::make_px(min_borders.top());
 			}
 		} else {
 			if (tl_lp.dims.y() != this->params.borders.top()) {
 				auto& lp = this->img_widgets_matrix[0][0].get().get_layout_params();
-				lp.dims.y() = this->params.borders.top();
+				lp.dims.y() = length::make_px(this->params.borders.top());
 			}
 		}
 		//			TRACE(<< "tl_lp.dim = " << tl_lp.dim << std::endl)
@@ -412,24 +412,24 @@ void nine_patch::apply_images()
 		if (this->params.borders.right() < 0) { // min
 			if (br_lp.dims.x() != min_borders.right()) {
 				auto& lp = this->img_widgets_matrix[2][2].get().get_layout_params();
-				lp.dims.x() = min_borders.right();
+				lp.dims.x() = length::make_px(min_borders.right());
 			}
 		} else {
 			if (br_lp.dims.x() != this->params.borders.right()) {
 				auto& lp = this->img_widgets_matrix[2][2].get().get_layout_params();
-				lp.dims.x() = this->params.borders.right();
+				lp.dims.x() = length::make_px(this->params.borders.right());
 			}
 		}
 
 		if (this->params.borders.bottom() < 0) { // min
 			if (br_lp.dims.y() != min_borders.bottom()) {
 				auto& lp = this->img_widgets_matrix[2][2].get().get_layout_params();
-				lp.dims.y() = min_borders.bottom();
+				lp.dims.y() = length::make_px(min_borders.bottom());
 			}
 		} else {
 			if (br_lp.dims.y() != this->params.borders.bottom()) {
 				auto& lp = this->img_widgets_matrix[2][2].get().get_layout_params();
-				lp.dims.y() = this->params.borders.bottom();
+				lp.dims.y() = length::make_px(this->params.borders.bottom());
 			}
 		}
 		//			TRACE(<< "lp.dim = " << lp.dim << std::endl)

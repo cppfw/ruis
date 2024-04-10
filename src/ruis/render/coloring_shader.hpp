@@ -22,8 +22,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #pragma once
 
 #include <r4/matrix.hpp>
-
-#include "../util/util.hpp"
+#include <rasterimage/operations.hpp>
 
 #include "vertex_array.hpp"
 
@@ -46,7 +45,7 @@ public:
 
 	void render(const r4::matrix4<float>& m, const vertex_array& va, uint32_t color) const
 	{
-		this->render(m, va, color_to_vec4f(color));
+		this->render(m, va, rasterimage::to_float(rasterimage::from_32bit_pixel(color)));
 	}
 };
 
