@@ -140,9 +140,9 @@ public:
 
 	/**
 	 * @brief Set window borders.
-	 * @param borders - borders in pixels.
+	 * @param borders - window borders.
 	 */
-	void set_borders(sides<real> borders);
+	void set_borders(sides<length> borders);
 };
 
 namespace make {
