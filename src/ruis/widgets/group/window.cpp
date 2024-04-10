@@ -392,13 +392,17 @@ ruis::window::window(const utki::shared_ref<ruis::context>& c, const tml::forest
 				} else if (pp.value == "background") {
 					this->set_background(this->context.get().inflater.inflate(pp.children));
 				} else if (pp.value == "left") {
-					borders.left() = parse_dimension_value(get_property_value(pp), this->context.get().units).get(this->context);
+					borders.left() =
+						parse_dimension_value(get_property_value(pp), this->context.get().units).get(this->context);
 				} else if (pp.value == "top") {
-					borders.top() = parse_dimension_value(get_property_value(pp), this->context.get().units).get(this->context);
+					borders.top() =
+						parse_dimension_value(get_property_value(pp), this->context.get().units).get(this->context);
 				} else if (pp.value == "right") {
-					borders.right() = parse_dimension_value(get_property_value(pp), this->context.get().units).get(this->context);
+					borders.right() =
+						parse_dimension_value(get_property_value(pp), this->context.get().units).get(this->context);
 				} else if (pp.value == "bottom") {
-					borders.bottom() = parse_dimension_value(get_property_value(pp), this->context.get().units).get(this->context);
+					borders.bottom() =
+						parse_dimension_value(get_property_value(pp), this->context.get().units).get(this->context);
 				}
 			}
 		}

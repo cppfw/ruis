@@ -62,6 +62,7 @@ public:
 
 	real get(const utki::shared_ref<const context>& ctx) const noexcept
 	{
+		ASSERT(!this->is_undefined())
 		return this->get(ctx.get());
 	}
 
@@ -71,7 +72,8 @@ public:
 		return this->get_internal(ctx);
 	}
 
-	bool operator==(const length& l)const noexcept{
+	bool operator==(const length& l) const noexcept
+	{
 		return this->value == l.value && this->value_units == l.value_units;
 	}
 

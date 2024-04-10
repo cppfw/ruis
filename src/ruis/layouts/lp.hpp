@@ -103,7 +103,7 @@ struct lp {
 
 		/**
 		 * @brief Construct a new dimension policy object.
-		 * @param number - number in pixels, negative number is equivalent to 'min' special value.
+		 * @param dimension - the exact length, undefined length value is equivalent to 'min' special value.
 		 */
 		dimension_policy(length dimension) :
 			value([&]() -> decltype(value) {

@@ -41,13 +41,17 @@ widget::widget(const utki::shared_ref<ruis::context>& c, const tml::forest& desc
 			if (p.value == "lp") {
 				this->params.lp = lp::make(p.children, this->context.get().units);
 			} else if (p.value == "x") {
-				this->params.rectangle.p.x() = parse_dimension_value(get_property_value(p), this->context.get().units).get(this->context);
+				this->params.rectangle.p.x() =
+					parse_dimension_value(get_property_value(p), this->context.get().units).get(this->context);
 			} else if (p.value == "y") {
-				this->params.rectangle.p.y() = parse_dimension_value(get_property_value(p), this->context.get().units).get(this->context);
+				this->params.rectangle.p.y() =
+					parse_dimension_value(get_property_value(p), this->context.get().units).get(this->context);
 			} else if (p.value == "dx") {
-				this->params.rectangle.d.x() = parse_dimension_value(get_property_value(p), this->context.get().units).get(this->context);
+				this->params.rectangle.d.x() =
+					parse_dimension_value(get_property_value(p), this->context.get().units).get(this->context);
 			} else if (p.value == "dy") {
-				this->params.rectangle.d.y() = parse_dimension_value(get_property_value(p), this->context.get().units).get(this->context);
+				this->params.rectangle.d.y() =
+					parse_dimension_value(get_property_value(p), this->context.get().units).get(this->context);
 			} else if (p.value == "id") {
 				this->params.id = get_property_value(p).string;
 				// TRACE(<< "inflating '" << this->id << "'" << std::endl)

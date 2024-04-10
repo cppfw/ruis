@@ -43,8 +43,8 @@ const tst::set set("inflating", [](tst::suite& suite){
 		tst::check_eq(c.get().children().size(), size_t(2), SL);
 		auto lp = c.get().children().front().get().get_layout_params();
 		tst::check(lp.dims[0] == ruis::lp::max, SL);
-		tst::check(lp.dims[1].is_number(), SL);
-		tst::check_eq(lp.dims[1].get_number(), ruis::real(123), SL);
+		tst::check(lp.dims[1].is_length(), SL);
+		tst::check_eq(lp.dims[1].get_length().get(m.context), ruis::real(123), SL);
     });
 
     suite.add("template_properties_overriding", []{

@@ -147,7 +147,7 @@ utki::shared_ref<ruis::widget> make_separator(utki::shared_ref<ruis::context> c,
 		{
 			.widget_params = {
 				.lp = {
-					.dims = {vertical ? lp::fill : 1, vertical ? 1 : lp::fill}
+					.dims = {vertical ? lp::fill : ruis::length::make_px(1), vertical ? ruis::length::make_px(1) : lp::fill}
 				}
 			},
 			.color_params = {

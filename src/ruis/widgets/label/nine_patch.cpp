@@ -225,13 +225,17 @@ nine_patch::nine_patch(const utki::shared_ref<ruis::context>& c, const tml::fore
 		if (p.value == "left") {
 			// 'min' is by default, but not allowed to specify explicitly, as well as 'max' and 'fill',
 			// thus we can use parse_dimension_value().
-			this->params.borders.left() = parse_dimension_value(get_property_value(p), this->context.get().units).get(this->context);
+			this->params.borders.left() =
+				parse_dimension_value(get_property_value(p), this->context.get().units).get(this->context);
 		} else if (p.value == "right") {
-			this->params.borders.right() = parse_dimension_value(get_property_value(p), this->context.get().units).get(this->context);
+			this->params.borders.right() =
+				parse_dimension_value(get_property_value(p), this->context.get().units).get(this->context);
 		} else if (p.value == "top") {
-			this->params.borders.top() = parse_dimension_value(get_property_value(p), this->context.get().units).get(this->context);
+			this->params.borders.top() =
+				parse_dimension_value(get_property_value(p), this->context.get().units).get(this->context);
 		} else if (p.value == "bottom") {
-			this->params.borders.bottom() = parse_dimension_value(get_property_value(p), this->context.get().units).get(this->context);
+			this->params.borders.bottom() =
+				parse_dimension_value(get_property_value(p), this->context.get().units).get(this->context);
 		} else if (p.value == "center_visible") {
 			this->set_center_visible(get_property_value(p).to_bool());
 		}

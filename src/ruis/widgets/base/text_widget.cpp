@@ -60,35 +60,38 @@ void text_widget::set_font_size(real size)
 text_widget::text_widget(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 	widget(c, desc),
 	params({//
-			.font_size = [&desc, this]() {
-				for (const auto& p : desc) {
-					if (!is_property(p)) {
-						continue;
+			.font_size =
+				[&desc, this]() {
+					for (const auto& p : desc) {
+						if (!is_property(p)) {
+							continue;
+						}
+
+						if (p.value == "font_size") {
+							return parse_dimension_value(get_property_value(p), this->context.get().units)
+								.get(this->context);
+						}
 					}
 
-					if (p.value == "font_size") {
-						return parse_dimension_value(get_property_value(p), this->context.get().units).get(this->context);
-					}
-				}
+					return this->context.get().units.pp_to_px(default_font_size_pp);
+				}(),
+			.font_face =
+				[&desc, this]() {
+					for (const auto& p : desc) {
+						if (!is_property(p)) {
+							continue;
+						}
 
-				return this->context.get().units.pp_to_px(default_font_size_pp);
-			}(),
-			.font_face = [&desc, this]() {
-				for (const auto& p : desc) {
-					if (!is_property(p)) {
-						continue;
+						if (p.value == "font") {
+							return this->context.get()
+								.loader.load<ruis::res::font>(get_property_value(p).string.c_str())
+								.to_shared_ptr();
+						}
 					}
 
-					if (p.value == "font") {
-						return this->context.get()
-							.loader.load<ruis::res::font>(get_property_value(p).string.c_str())
-							.to_shared_ptr();
-					}
-				}
-
-				// load default font
-				return this->context.get().loader.load<res::font>("ruis_fnt_text").to_shared_ptr();
-			}()
+					// load default font
+					return this->context.get().loader.load<res::font>("ruis_fnt_text").to_shared_ptr();
+				}()
 	}),
 	fonts{
 		this->params.font_face->get(this->params.font_size, res::font::style(0)),
