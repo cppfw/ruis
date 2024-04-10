@@ -85,15 +85,7 @@ public:
 		widget::parameters widget_params;
 		std::u32string title;
 		std::shared_ptr<widget> background;
-
-		constexpr static const auto default_border_size_pp = 5;
-
-		sides<length> borders = {
-			length::make_pp(default_border_size_pp),
-			length::make_pp(default_border_size_pp),
-			length::make_pp(default_border_size_pp),
-			length::make_pp(default_border_size_pp)
-		};
+		sides<length> borders;
 	};
 
 	window(

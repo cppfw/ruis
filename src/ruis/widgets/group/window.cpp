@@ -324,6 +324,14 @@ window::window(
 {
 	this->setup_widgets();
 
+	using namespace ruis::length_literals;
+	constexpr static const auto default_border_size_pp = 5_pp;
+	for (auto& b : params.borders) {
+		if (!b.is_valid()) {
+			b = default_border_size_pp;
+		}
+	}
+
 	sides<real> borders = {
 		params.borders[0].get(this->context),
 		params.borders[1].get(this->context),

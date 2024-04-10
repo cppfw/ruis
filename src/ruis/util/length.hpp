@@ -21,17 +21,17 @@ private:
 	real get_internal(const context& ctx) const noexcept;
 
 public:
-	length() :
+	constexpr length() :
 		value(-1),
 		value_units(units::px)
 	{}
 
-	length(real value) :
+	constexpr length(real value) :
 		value(value),
 		value_units(units::px)
 	{}
 
-	length(real value, units u) :
+	constexpr length(real value, units u) :
 		value(value),
 		value_units(u)
 	{}
@@ -52,20 +52,54 @@ public:
 		return this->get_internal(ctx);
 	}
 
-	static length make_px(real value)
+	constexpr static length make_px(real value)
 	{
 		return length(value, units::px);
 	}
 
-	static length make_pp(real value)
+	constexpr static length make_pp(real value)
 	{
 		return length(value, units::pp);
 	}
 
-	static length make_mm(real value)
+	constexpr static length make_mm(real value)
 	{
 		return length(value, units::mm);
 	}
 };
+
+namespace length_literals {
+
+inline constexpr length operator""_px(unsigned long long value)
+{
+	return length::make_px(value);
+}
+
+inline constexpr length operator""_px(long double value)
+{
+	return length::make_px(value);
+}
+
+inline constexpr length operator""_pp(unsigned long long value)
+{
+	return length::make_pp(value);
+}
+
+inline constexpr length operator""_pp(long double value)
+{
+	return length::make_pp(value);
+}
+
+inline constexpr length operator""_mm(unsigned long long value)
+{
+	return length::make_mm(value);
+}
+
+inline constexpr length operator""_mm(long double value)
+{
+	return length::make_mm(value);
+}
+
+} // namespace length_literals
 
 } // namespace ruis
