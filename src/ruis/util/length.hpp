@@ -54,17 +54,17 @@ public:
 
 	constexpr static length make_px(real value)
 	{
-		return length(value, units::px);
+		return {value, units::px};
 	}
 
 	constexpr static length make_pp(real value)
 	{
-		return length(value, units::pp);
+		return {value, units::pp};
 	}
 
 	constexpr static length make_mm(real value)
 	{
-		return length(value, units::mm);
+		return {value, units::mm};
 	}
 };
 
@@ -72,32 +72,32 @@ namespace length_literals {
 
 inline constexpr length operator""_px(unsigned long long value)
 {
-	return length::make_px(value);
+	return length::make_px(real(value));
 }
 
 inline constexpr length operator""_px(long double value)
 {
-	return length::make_px(value);
+	return length::make_px(real(value));
 }
 
 inline constexpr length operator""_pp(unsigned long long value)
 {
-	return length::make_pp(value);
+	return length::make_pp(real(value));
 }
 
 inline constexpr length operator""_pp(long double value)
 {
-	return length::make_pp(value);
+	return length::make_pp(real(value));
 }
 
 inline constexpr length operator""_mm(unsigned long long value)
 {
-	return length::make_mm(value);
+	return length::make_mm(real(value));
 }
 
 inline constexpr length operator""_mm(long double value)
 {
-	return length::make_mm(value);
+	return length::make_mm(real(value));
 }
 
 } // namespace length_literals
