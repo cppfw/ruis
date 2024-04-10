@@ -205,7 +205,7 @@ std::shared_ptr<nine_patch::image_matrix> nine_patch::get(sides<length> borders)
 	// std::cout << "scaled_borders = " << scaled_borders << std::endl;
 
 	auto ret = std::make_shared<image_matrix>( // TODO: make shared_ref
-		std::array<std::array<utki::shared_ref<const res::image>, 3>, 3>({
+		std::array<std::array<utki::shared_ref<const res::image>, 3>, 3>{
 			{{{
 				 utki::make_shared<res_subimage>(
 					 this->context,
@@ -302,7 +302,7 @@ std::shared_ptr<nine_patch::image_matrix> nine_patch::get(sides<length> borders)
 					 )
 				 ) // right bottom
 			 }}}
-    }),
+    },
 		utki::make_shared_from(*this).to_shared_ptr(),
 		mul
 	);

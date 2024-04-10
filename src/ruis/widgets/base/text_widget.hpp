@@ -40,8 +40,7 @@ class text_widget : virtual public widget
 {
 public:
 	struct parameters {
-		// TODO: use length
-		real font_size = -1; // negative = default size
+		length font_size;
 		std::shared_ptr<const res::font> font_face;
 	};
 
@@ -69,9 +68,9 @@ public:
 		return this->fonts[size_t(style)].get();
 	}
 
-	void set_font_size(real size);
+	void set_font_size(length size);
 
-	real get_font_size() const noexcept
+	const length& get_font_size() const noexcept
 	{
 		return this->params.font_size;
 	}

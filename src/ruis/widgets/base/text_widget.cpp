@@ -39,7 +39,7 @@ void text_widget::set_font_face(const utki::shared_ref<const res::font>& font_re
 	this->set_font_size(this->params.font_size);
 }
 
-void text_widget::set_font_size(real size)
+void text_widget::set_font_size(length size)
 {
 	// do not exit early if requested size is same as the current one,
 	// because set_font_size() is called from within set_font_face() to
@@ -49,7 +49,7 @@ void text_widget::set_font_size(real size)
 
 	for (size_t i = 0; i != size_t(res::font::style::enum_size); ++i) {
 		ASSERT(this->params.font_face) // always set in constructor to at least default font
-		this->fonts[i] = this->params.font_face->get(this->params.font_size, res::font::style(i));
+		this->fonts[i] = this->params.font_face->get(this->params.font_size.get(this->context), res::font::style(i));
 	}
 
 	this->invalidate_layout();
@@ -94,10 +94,10 @@ text_widget::text_widget(const utki::shared_ref<ruis::context>& c, const tml::fo
 				}()
 	}),
 	fonts{
-		this->params.font_face->get(this->params.font_size, res::font::style(0)),
-		this->params.font_face->get(this->params.font_size, res::font::style(1)),
-		this->params.font_face->get(this->params.font_size, res::font::style(2)),
-		this->params.font_face->get(this->params.font_size, res::font::style(3))
+		this->params.font_face->get(this->params.font_size.get(this->context), res::font::style(0)),
+		this->params.font_face->get(this->params.font_size.get(this->context), res::font::style(1)),
+		this->params.font_face->get(this->params.font_size.get(this->context), res::font::style(2)),
+		this->params.font_face->get(this->params.font_size.get(this->context), res::font::style(3))
 	}
 {
 	for (const auto& p : desc) {
@@ -114,15 +114,15 @@ text_widget::text_widget(utki::shared_ref<ruis::context> context, parameters par
 		if (!p.font_face) {
 			p.font_face = this->context.get().loader.load<res::font>("ruis_fnt_text");
 		}
-		if (p.font_size <= 0) {
+		if (p.font_size.is_undefined()) {
 			p.font_size = this->context.get().units.pp_to_px(default_font_size_pp);
 		}
 		return p;
 	}()),
 	fonts{
-		this->params.font_face->get(this->params.font_size, res::font::style(0)),
-		this->params.font_face->get(this->params.font_size, res::font::style(1)),
-		this->params.font_face->get(this->params.font_size, res::font::style(2)),
-		this->params.font_face->get(this->params.font_size, res::font::style(3))
+		this->params.font_face->get(this->params.font_size.get(this->context), res::font::style(0)),
+		this->params.font_face->get(this->params.font_size.get(this->context), res::font::style(1)),
+		this->params.font_face->get(this->params.font_size.get(this->context), res::font::style(2)),
+		this->params.font_face->get(this->params.font_size.get(this->context), res::font::style(3))
 	}
 {}
