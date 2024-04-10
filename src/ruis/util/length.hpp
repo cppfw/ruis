@@ -6,7 +6,7 @@ namespace ruis {
 
 class length
 {
-	real value;
+	real value = -1;
 
 public:
 	enum class units {
@@ -16,15 +16,12 @@ public:
 	};
 
 private:
-	units value_units;
+	units value_units = units::px;
 
 	real get_internal(const context& ctx) const noexcept;
 
 public:
-	constexpr length() :
-		value(-1),
-		value_units(units::px)
-	{}
+	constexpr length() = default;
 
 	constexpr length(real value) :
 		value(value),
