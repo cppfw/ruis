@@ -160,18 +160,21 @@ nine_patch::image_matrix::~image_matrix()
 	}
 }
 
-std::shared_ptr<nine_patch::image_matrix> nine_patch::get(sides<real> borders) const
+std::shared_ptr<nine_patch::image_matrix> nine_patch::get(sides<length> borders) const
 {
 	real mul = 1;
 	{
 		auto req = borders.begin();
 		for (auto orig = this->borders.begin(); orig != this->borders.end(); ++orig, ++req) {
-			if (*orig <= 0 || *req <= 0) {
+			if (*orig <= 0 || req->is_undefined()) {
 				continue;
 			}
 
-			if (*req > (*orig) * mul) {
-				mul = *req / *orig;
+			auto req_px = req->get(this->context);
+
+			if (req_px > (*orig) * mul) {
+				ASSERT(*orig > 0)
+				mul = req_px / *orig;
 			}
 		}
 	}

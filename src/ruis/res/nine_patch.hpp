@@ -104,7 +104,7 @@ public:
 		~image_matrix();
 	};
 
-	std::shared_ptr<image_matrix> get(sides<real> borders) const;
+	std::shared_ptr<image_matrix> get(sides<length> borders) const;
 
 	const decltype(borders)& get_borders() const noexcept
 	{

@@ -67,8 +67,7 @@ public:
 	struct parameters {
 		std::shared_ptr<const res::nine_patch> nine_patch;
 		std::shared_ptr<const res::nine_patch> disabled_nine_patch;
-		// TODO: use length
-		sides<real> borders{-1};
+		sides<length> borders;
 	};
 
 private:
@@ -123,7 +122,7 @@ public:
 	 * Border values are in pixels or -1 for minimal size.
 	 * @param borders - border values to set.
 	 */
-	void set_borders(sides<real> borders)
+	void set_borders(sides<length> borders)
 	{
 		this->params.borders = borders;
 		this->apply_images();

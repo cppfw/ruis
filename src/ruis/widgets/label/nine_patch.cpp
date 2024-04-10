@@ -336,7 +336,7 @@ void nine_patch::set_disabled_nine_patch(std::shared_ptr<const res::nine_patch> 
 
 sides<real> nine_patch::get_actual_borders() const noexcept
 {
-	auto np = this->params.nine_patch.get();
+	auto* np = this->params.nine_patch.get();
 
 	if (!this->is_enabled() && this->params.disabled_nine_patch) {
 		np = this->params.disabled_nine_patch.get();
@@ -345,8 +345,8 @@ sides<real> nine_patch::get_actual_borders() const noexcept
 	sides<real> ret;
 
 	for (size_t i = 0; i != ret.size(); ++i) {
-		if (this->params.borders[i] >= 0) {
-			ret[i] = this->params.borders[i];
+		if (!this->params.borders[i].is_undefined()) {
+			ret[i] = this->params.borders[i].get(this->context);
 		} else if (!np) {
 			ret[i] = 0;
 		} else {
@@ -359,7 +359,7 @@ sides<real> nine_patch::get_actual_borders() const noexcept
 
 void nine_patch::apply_images()
 {
-	auto np = this->params.nine_patch.get();
+	auto* np = this->params.nine_patch.get();
 
 	if (!this->is_enabled() && this->params.disabled_nine_patch) {
 		np = this->params.disabled_nine_patch.get();
@@ -376,14 +376,13 @@ void nine_patch::apply_images()
 
 	ASSERT(np)
 	auto& min_borders = np->get_borders();
-	//		TRACE(<< "min_borders = " << min_borders << std::endl)
 
 	{
 		// non-const call to get_layout_params requests re-layout which is not necessarily needed, so try to avoid it if
 		// possible
 		auto& tl_lp = this->img_widgets_matrix[0][0].get().get_layout_params_const();
 
-		if (this->params.borders.left() < 0) { // min
+		if (this->params.borders.left().is_undefined()) { // min
 			if (tl_lp.dims.x() != min_borders.left()) {
 				auto& lp = this->img_widgets_matrix[0][0].get().get_layout_params();
 				lp.dims.x() = length::make_px(min_borders.left());
@@ -391,11 +390,11 @@ void nine_patch::apply_images()
 		} else {
 			if (tl_lp.dims.x() != this->params.borders.left()) {
 				auto& lp = this->img_widgets_matrix[0][0].get().get_layout_params();
-				lp.dims.x() = length::make_px(this->params.borders.left());
+				lp.dims.x() = this->params.borders.left();
 			}
 		}
 
-		if (this->params.borders.top() < 0) { // min
+		if (this->params.borders.top().is_undefined()) { // min
 			if (tl_lp.dims.y() != min_borders.top()) {
 				auto& lp = this->img_widgets_matrix[0][0].get().get_layout_params();
 				lp.dims.y() = length::make_px(min_borders.top());
@@ -403,17 +402,16 @@ void nine_patch::apply_images()
 		} else {
 			if (tl_lp.dims.y() != this->params.borders.top()) {
 				auto& lp = this->img_widgets_matrix[0][0].get().get_layout_params();
-				lp.dims.y() = length::make_px(this->params.borders.top());
+				lp.dims.y() = this->params.borders.top();
 			}
 		}
-		//			TRACE(<< "tl_lp.dim = " << tl_lp.dim << std::endl)
 	}
 	{
 		// non-const call to get_layout_params requests relayout which is not necessarily needed, so try to avoid it if
 		// possible
 		auto& br_lp = this->img_widgets_matrix[2][2].get().get_layout_params_const();
 
-		if (this->params.borders.right() < 0) { // min
+		if (this->params.borders.right().is_undefined()) { // min
 			if (br_lp.dims.x() != min_borders.right()) {
 				auto& lp = this->img_widgets_matrix[2][2].get().get_layout_params();
 				lp.dims.x() = length::make_px(min_borders.right());
@@ -421,11 +419,11 @@ void nine_patch::apply_images()
 		} else {
 			if (br_lp.dims.x() != this->params.borders.right()) {
 				auto& lp = this->img_widgets_matrix[2][2].get().get_layout_params();
-				lp.dims.x() = length::make_px(this->params.borders.right());
+				lp.dims.x() = this->params.borders.right();
 			}
 		}
 
-		if (this->params.borders.bottom() < 0) { // min
+		if (this->params.borders.bottom().is_undefined()) { // min
 			if (br_lp.dims.y() != min_borders.bottom()) {
 				auto& lp = this->img_widgets_matrix[2][2].get().get_layout_params();
 				lp.dims.y() = length::make_px(min_borders.bottom());
@@ -433,7 +431,7 @@ void nine_patch::apply_images()
 		} else {
 			if (br_lp.dims.y() != this->params.borders.bottom()) {
 				auto& lp = this->img_widgets_matrix[2][2].get().get_layout_params();
-				lp.dims.y() = length::make_px(this->params.borders.bottom());
+				lp.dims.y() = this->params.borders.bottom();
 			}
 		}
 		//			TRACE(<< "lp.dim = " << lp.dim << std::endl)
