@@ -27,7 +27,7 @@ namespace ruis {
 
 class frame_widget :
 	public virtual widget, //
-	private container
+	protected container
 {
 public:
 	struct parameters {

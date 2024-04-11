@@ -188,13 +188,13 @@ std::vector<utki::shared_ref<ruis::widget>> build_layout(utki::shared_ref<ruis::
 nine_patch::nine_patch(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 	widget(c, desc),
 	blending_widget(this->context, desc),
-	container(
+	frame_widget(
 		this->context,
 		{
-			{			 },
-			{layout::column}
+			.container_params = {.layout = layout::column}
 },
-		build_layout(this->context)
+		build_layout(this->context),
+		{}
 	),
 	img_widgets_matrix({{//
 						 {//
@@ -212,8 +212,7 @@ nine_patch::nine_patch(const utki::shared_ref<ruis::context>& c, const tml::fore
 						  this->get_widget_as<image>("ruis_b"),
 						  this->get_widget_as<image>("ruis_rb")
 						 }
-	}}),
-	inner_content(this->get_widget_as<container>("ruis_content"))
+	}})
 {
 	this->nine_patch::on_blending_change();
 
@@ -222,23 +221,23 @@ nine_patch::nine_patch(const utki::shared_ref<ruis::context>& c, const tml::fore
 			continue;
 		}
 
-		if (p.value == "left") {
-			// 'min' is by default, but not allowed to specify explicitly, as well as 'max' and 'fill',
-			// thus we can use parse_dimension_value().
-			this->params.borders.left() =
-				parse_dimension_value(get_property_value(p), this->context.get().units).get(this->context);
-		} else if (p.value == "right") {
-			this->params.borders.right() =
-				parse_dimension_value(get_property_value(p), this->context.get().units).get(this->context);
-		} else if (p.value == "top") {
-			this->params.borders.top() =
-				parse_dimension_value(get_property_value(p), this->context.get().units).get(this->context);
-		} else if (p.value == "bottom") {
-			this->params.borders.bottom() =
-				parse_dimension_value(get_property_value(p), this->context.get().units).get(this->context);
-		} else if (p.value == "center_visible") {
-			this->set_center_visible(get_property_value(p).to_bool());
-		}
+		// if (p.value == "left") {
+		// 	// 'min' is by default, but not allowed to specify explicitly, as well as 'max' and 'fill',
+		// 	// thus we can use parse_dimension_value().
+		// 	this->params.borders.left() =
+		// 		parse_dimension_value(get_property_value(p), this->context.get().units).get(this->context);
+		// } else if (p.value == "right") {
+		// 	this->params.borders.right() =
+		// 		parse_dimension_value(get_property_value(p), this->context.get().units).get(this->context);
+		// } else if (p.value == "top") {
+		// 	this->params.borders.top() =
+		// 		parse_dimension_value(get_property_value(p), this->context.get().units).get(this->context);
+		// } else if (p.value == "bottom") {
+		// 	this->params.borders.bottom() =
+		// 		parse_dimension_value(get_property_value(p), this->context.get().units).get(this->context);
+		// } else if (p.value == "center_visible") {
+		// 	this->set_center_visible(get_property_value(p).to_bool());
+		// }
 	}
 
 	// this should go after setting up border widgets
@@ -259,7 +258,7 @@ nine_patch::nine_patch(const utki::shared_ref<ruis::context>& c, const tml::fore
 		}
 	}
 
-	this->inner_content.push_back_inflate(desc);
+	this->content().push_back_inflate(desc);
 }
 
 nine_patch::nine_patch(
@@ -274,7 +273,15 @@ nine_patch::nine_patch(
 }
 	),
 	blending_widget(this->context, std::move(params.blending_params)),
-	container(this->context, {{}, {layout::column}}, build_layout(this->context)),
+	frame_widget(
+		this->context,
+		{//
+		 .container_params = {.layout = layout::column},
+		 .frame_params = std::move(params.frame_params)
+		},
+		build_layout(this->context),
+		children
+	),
 	img_widgets_matrix({{//
 						 {//
 						  this->get_widget_as<image>("ruis_lt"),
@@ -292,7 +299,7 @@ nine_patch::nine_patch(
 						  this->get_widget_as<image>("ruis_rb")
 						 }
 	}}),
-	inner_content(this->get_widget_as<container>("ruis_content")), params(std::move(params.nine_patch_params))
+	params(std::move(params.nine_patch_params))
 {
 	this->nine_patch::on_blending_change();
 
@@ -303,13 +310,6 @@ nine_patch::nine_patch(
 	if (this->params.disabled_nine_patch) {
 		this->set_disabled_nine_patch(this->params.disabled_nine_patch);
 	}
-
-	this->inner_content.push_back(children);
-}
-
-void nine_patch::render(const ruis::matrix4& matrix) const
-{
-	this->container::render(matrix);
 }
 
 void nine_patch::set_nine_patch(std::shared_ptr<const res::nine_patch> np)
@@ -345,8 +345,8 @@ sides<real> nine_patch::get_actual_borders() const noexcept
 	sides<real> ret;
 
 	for (size_t i = 0; i != ret.size(); ++i) {
-		if (!this->params.borders[i].is_undefined()) {
-			ret[i] = this->params.borders[i].get(this->context);
+		if (!this->get_borders()[i].is_undefined()) {
+			ret[i] = this->get_borders()[i].get(this->context);
 		} else if (!np) {
 			ret[i] = 0;
 		} else {
@@ -382,27 +382,27 @@ void nine_patch::apply_images()
 		// possible
 		auto& tl_lp = this->img_widgets_matrix[0][0].get().get_layout_params_const();
 
-		if (this->params.borders.left().is_undefined()) { // min
+		if (this->get_borders().left().is_undefined()) { // min
 			if (tl_lp.dims.x() != min_borders.left()) {
 				auto& lp = this->img_widgets_matrix[0][0].get().get_layout_params();
 				lp.dims.x() = length::make_px(min_borders.left());
 			}
 		} else {
-			if (tl_lp.dims.x() != this->params.borders.left()) {
+			if (tl_lp.dims.x() != this->get_borders().left()) {
 				auto& lp = this->img_widgets_matrix[0][0].get().get_layout_params();
-				lp.dims.x() = this->params.borders.left();
+				lp.dims.x() = this->get_borders().left();
 			}
 		}
 
-		if (this->params.borders.top().is_undefined()) { // min
+		if (this->get_borders().top().is_undefined()) { // min
 			if (tl_lp.dims.y() != min_borders.top()) {
 				auto& lp = this->img_widgets_matrix[0][0].get().get_layout_params();
 				lp.dims.y() = length::make_px(min_borders.top());
 			}
 		} else {
-			if (tl_lp.dims.y() != this->params.borders.top()) {
+			if (tl_lp.dims.y() != this->get_borders().top()) {
 				auto& lp = this->img_widgets_matrix[0][0].get().get_layout_params();
-				lp.dims.y() = this->params.borders.top();
+				lp.dims.y() = this->get_borders().top();
 			}
 		}
 	}
@@ -411,34 +411,34 @@ void nine_patch::apply_images()
 		// possible
 		auto& br_lp = this->img_widgets_matrix[2][2].get().get_layout_params_const();
 
-		if (this->params.borders.right().is_undefined()) { // min
+		if (this->get_borders().right().is_undefined()) { // min
 			if (br_lp.dims.x() != min_borders.right()) {
 				auto& lp = this->img_widgets_matrix[2][2].get().get_layout_params();
 				lp.dims.x() = length::make_px(min_borders.right());
 			}
 		} else {
-			if (br_lp.dims.x() != this->params.borders.right()) {
+			if (br_lp.dims.x() != this->get_borders().right()) {
 				auto& lp = this->img_widgets_matrix[2][2].get().get_layout_params();
-				lp.dims.x() = this->params.borders.right();
+				lp.dims.x() = this->get_borders().right();
 			}
 		}
 
-		if (this->params.borders.bottom().is_undefined()) { // min
+		if (this->get_borders().bottom().is_undefined()) { // min
 			if (br_lp.dims.y() != min_borders.bottom()) {
 				auto& lp = this->img_widgets_matrix[2][2].get().get_layout_params();
 				lp.dims.y() = length::make_px(min_borders.bottom());
 			}
 		} else {
-			if (br_lp.dims.y() != this->params.borders.bottom()) {
+			if (br_lp.dims.y() != this->get_borders().bottom()) {
 				auto& lp = this->img_widgets_matrix[2][2].get().get_layout_params();
-				lp.dims.y() = this->params.borders.bottom();
+				lp.dims.y() = this->get_borders().bottom();
 			}
 		}
 		//			TRACE(<< "lp.dim = " << lp.dim << std::endl)
 	}
 	//		TRACE(<< "this->borders = " << this->borders << std::endl)
 
-	this->img_res_matrix = np->get(this->params.borders);
+	this->img_res_matrix = np->get(this->get_borders());
 
 	for (unsigned i = 0; i != 3; ++i) {
 		for (unsigned j = 0; j != 3; ++j) {
@@ -465,7 +465,7 @@ void nine_patch::on_blending_change()
 
 void nine_patch::on_enabled_change()
 {
-	this->container::on_enabled_change();
+	this->frame_widget::on_enabled_change();
 
 	if (!this->params.disabled_nine_patch) {
 		// there is no disabled nine patch, so nothing changes
@@ -480,4 +480,10 @@ void nine_patch::update_images()
 	this->img_res_matrix.reset();
 	this->apply_images();
 	this->clear_cache();
+}
+
+void nine_patch::on_borders_change()
+{
+	this->apply_images();
+	this->invalidate_layout();
 }

@@ -23,7 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../../res/nine_patch.hpp"
 #include "../base/blending_widget.hpp"
-#include "../container.hpp"
+#include "../base/frame_widget.hpp"
 
 #include "image.hpp"
 
@@ -44,30 +44,16 @@ namespace ruis {
 class nine_patch :
 	public virtual widget, //
 	public blending_widget,
-	private container
+	public frame_widget
 {
 	std::shared_ptr<res::nine_patch::image_matrix> img_res_matrix;
 
 	const std::array<std::array<std::reference_wrapper<image>, 3>, 3> img_widgets_matrix;
 
-	container& inner_content;
-
-protected:
-	bool on_mouse_move(const mouse_move_event& e) override
-	{
-		return this->container::on_mouse_move(e);
-	}
-
-	bool on_mouse_button(const mouse_button_event& e) override
-	{
-		return this->container::on_mouse_button(e);
-	}
-
 public:
 	struct parameters {
 		std::shared_ptr<const res::nine_patch> nine_patch;
 		std::shared_ptr<const res::nine_patch> disabled_nine_patch;
-		sides<length> borders;
 	};
 
 private:
@@ -77,6 +63,7 @@ public:
 	struct all_parameters {
 		widget::parameters widget_params;
 		blending_widget::parameters blending_params;
+		frame_widget::parameters frame_params;
 		nine_patch::parameters nine_patch_params;
 	};
 
@@ -101,49 +88,18 @@ public:
 	void set_disabled_nine_patch(std::shared_ptr<const res::nine_patch> np);
 
 	/**
-	 * @brief Get content container.
-	 * @return The content container. This is where the child widgets are stored.
-	 */
-	container& content()
-	{
-		return this->inner_content;
-	}
-
-	void render(const ruis::matrix4& matrix) const override;
-
-	/**
 	 * @brief Show/hide central part of nine-patch.
 	 * @param visible - show (true) or hide (false) central part of the nine-patch.
 	 */
 	void set_center_visible(bool visible);
-
-	/**
-	 * @brief Set border settings.
-	 * Border values are in pixels or -1 for minimal size.
-	 * @param borders - border values to set.
-	 */
-	void set_borders(sides<length> borders)
-	{
-		this->params.borders = borders;
-		this->apply_images();
-		this->invalidate_layout();
-	}
-
-	/**
-	 * @brief Get current border settings.
-	 * Border values are in pixels or min_c.
-	 * @return Current borders.
-	 */
-	decltype(params.borders) get_borders() const noexcept
-	{
-		return this->params.borders;
-	}
 
 	sides<real> get_actual_borders() const noexcept;
 
 	void on_blending_change() override;
 
 	void on_enabled_change() override;
+
+	void on_borders_change() override;
 
 private:
 	void apply_images();
