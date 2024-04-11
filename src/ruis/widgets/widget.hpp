@@ -316,7 +316,7 @@ public:
 	 * @return pointer to the widget if found.
 	 * @return nullptr if there is no widget with given id found.
 	 */
-	virtual std::shared_ptr<widget> try_get_widget(const std::string& id, bool allow_itself = true) noexcept;
+	virtual std::shared_ptr<widget> try_get_widget(std::string_view id, bool allow_itself = true) noexcept;
 
 	/**
 	 * @brief Try get widget by id.
@@ -327,7 +327,7 @@ public:
 	 * @return nullptr if there is no widget with given id found or if the widget could not be cast to specified class.
 	 */
 	template <typename widget_type>
-	std::shared_ptr<widget_type> try_get_widget_as(const std::string& id, bool allow_itself = true) noexcept
+	std::shared_ptr<widget_type> try_get_widget_as(std::string_view id, bool allow_itself = true) noexcept
 	{
 		return std::dynamic_pointer_cast<widget_type>(this->try_get_widget(id, allow_itself));
 	}
@@ -350,9 +350,9 @@ public:
 	 * @return reference to the widget.
 	 * @throw std::logic_error - if no widget with given id has been found.
 	 */
-	widget& get_widget(const std::string& id, bool allow_itself = true);
+	widget& get_widget(std::string_view id, bool allow_itself = true);
 
-	const widget& get_widget(const std::string& id, bool allow_itself = true) const
+	const widget& get_widget(std::string_view id, bool allow_itself = true) const
 	{
 		// NOLINTNEXTLINE(cppcoreguidelines-pro-type-const-cast)
 		return const_cast<utki::remove_const_pointer<decltype(this)>::type*>(this)->get_widget(id, allow_itself);
@@ -367,7 +367,7 @@ public:
 	 * @throw std::bad_cast - if requested widget is not of the specified type.
 	 */
 	template <typename widget_type>
-	widget_type& get_widget_as(const std::string& id, bool allow_itself = true)
+	widget_type& get_widget_as(std::string_view id, bool allow_itself = true)
 	{
 		return dynamic_cast<widget_type&>(this->get_widget(id, allow_itself));
 	}

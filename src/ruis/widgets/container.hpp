@@ -271,7 +271,7 @@ public:
 	 * @return pointer to widget with given id if found.
 	 * @return nullptr if there is no widget with given id found.
 	 */
-	std::shared_ptr<widget> try_get_widget(const std::string& id, bool allow_itself = true) noexcept final;
+	std::shared_ptr<widget> try_get_widget(std::string_view id, bool allow_itself = true) noexcept final;
 
 	/**
 	 * @brief Get list of child widgets.

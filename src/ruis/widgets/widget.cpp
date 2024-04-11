@@ -100,7 +100,7 @@ widget::widget(utki::shared_ref<ruis::context> context, all_parameters params) :
 	}
 }
 
-std::shared_ptr<widget> widget::try_get_widget(const std::string& id, bool allow_itself) noexcept
+std::shared_ptr<widget> widget::try_get_widget(std::string_view id, bool allow_itself) noexcept
 {
 	if (allow_itself && this->id() == id) {
 		return utki::make_shared_from(*this).to_shared_ptr();
@@ -437,7 +437,7 @@ lp& widget::get_layout_params()
 	return const_cast<lp&>(this->get_layout_params_const());
 }
 
-widget& widget::get_widget(const std::string& id, bool allow_itself)
+widget& widget::get_widget(std::string_view id, bool allow_itself)
 {
 	auto w = this->try_get_widget(id, allow_itself);
 	if (!w) {

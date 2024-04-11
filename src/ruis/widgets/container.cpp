@@ -341,7 +341,7 @@ void container::clear()
 	}
 }
 
-std::shared_ptr<widget> container::try_get_widget(const std::string& id, bool allow_itself) noexcept
+std::shared_ptr<widget> container::try_get_widget(std::string_view id, bool allow_itself) noexcept
 {
 	if (auto r = this->widget::try_get_widget(id, allow_itself)) {
 		return r;
