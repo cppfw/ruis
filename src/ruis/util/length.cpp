@@ -37,3 +37,23 @@ real length::get_internal(const context& ctx) const noexcept
 			return ctx.units.mm_to_px(this->value);
 	}
 }
+
+std::ostream& ruis::operator<<(std::ostream& o, const ruis::length& l)
+{
+	if (l.is_undefined()) {
+		return o << "undefiend";
+	}
+
+	o << l.value;
+
+	switch (l.value_units) {
+		case length::units::px:
+			return o << "px";
+		case length::units::pp:
+			return o << "pp";
+		case length::units::mm:
+			return o << "mm";
+	}
+
+	return o;
+}

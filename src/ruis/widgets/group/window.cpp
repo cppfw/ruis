@@ -25,7 +25,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../../util/util.hpp"
 #include "../label/nine_patch.hpp"
 
+#include "margins.hpp"
+
 using namespace std::string_literals;
+using namespace ruis::length_literals;
 
 using namespace ruis;
 
@@ -172,22 +175,32 @@ utki::shared_ref<container> make_caption(utki::shared_ref<context> c)
 					}
 				},
 				{
-					// TODO:
-					// 				@margins{
-					// 					left{3dp}
-					// 					top{2dp}
-					// 					bottom{2dp}
-					m::text(c,
+					m::margins(c,
 						{
 							.widget_params = {
-								.id = "ruis_title"s,
 								.lp = {
 									.dims = {lp::fill, lp::min},
 									.weight = 1
 								}
+							},
+							.frame_params = {
+								.borders = {3_pp, 2_pp, 0_pp, 2_pp}
 							}
 						},
-						{}
+						{
+							m::text(c,
+								{
+									.widget_params = {
+										.id = "ruis_title"s,
+										.lp = {
+											.dims = {lp::min, lp::min},
+											.align = {lp::align::front, lp::align::center}
+										}
+									}
+								},
+								{}
+							)
+						}
 					)
 				}
 			)

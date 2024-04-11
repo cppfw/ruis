@@ -33,6 +33,7 @@ frame_widget::frame_widget(
 ) :
 	widget(std::move(context), widget::all_parameters{}),
 	container(this->context, {.container_params = std::move(params.container_params)}, frame_layout),
+	params(std::move(params.frame_params)),
 	inner_content(this->get_widget_as<container>("ruis_content"sv))
 {
 	this->inner_content.push_back(children);

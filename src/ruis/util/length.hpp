@@ -27,6 +27,10 @@ namespace ruis {
 
 class context;
 
+class length;
+
+std::ostream& operator<<(std::ostream& o, const length& l);
+
 class length
 {
 	real value = -1;
@@ -91,6 +95,8 @@ public:
 	{
 		return {value, units::mm};
 	}
+
+	friend std::ostream& ruis::operator<<(std::ostream& o, const length& l);
 };
 
 namespace length_literals {
