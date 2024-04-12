@@ -93,7 +93,7 @@ margins::margins(
 	bottom(this->get_widget("ruis_bottom"sv))
 {
 	this->margins::on_borders_change();
-}
+} // NOLINT(clang-analyzer-cplusplus.NewDeleteLeaks, "false positive")
 
 void margins::on_borders_change()
 {
