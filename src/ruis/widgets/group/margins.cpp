@@ -99,7 +99,7 @@ void margins::on_borders_change()
 {
 	const auto& b = this->get_borders();
 
-	std::cout << "borders = " << b << std::endl;
+	// std::cout << "borders = " << b << std::endl;
 
 	this->left.get_layout_params().dims.x() = b.left();
 	this->top.get_layout_params().dims.y() = b.top();
