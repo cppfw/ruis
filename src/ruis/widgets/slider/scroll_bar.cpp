@@ -66,16 +66,14 @@ const auto layout_description = tml::read(R"qwertyuiop(
 
 } // namespace
 
-scroll_bar::scroll_bar(const utki::shared_ref<ruis::context>& c, const tml::forest& desc, bool vertical) :
+scroll_bar::scroll_bar( //
+	const utki::shared_ref<ruis::context>& c,
+	const tml::forest& desc,
+	bool vertical
+) :
 	widget(c, desc),
 	fraction_band_widget(this->context, fraction_band_widget::all_parameters{}),
-	oriented({
-#if CFG_CPP >= 20
-		.vertical = vertical
-#else
-		vertical
-#endif
-	}),
+	oriented({.vertical = vertical}),
 	container(this->context, layout_description),
 	handle(this->get_widget("ruis_handle"))
 {
