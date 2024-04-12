@@ -28,42 +28,76 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../label/nine_patch.hpp"
 #include "../proxy/mouse_proxy.hpp"
 
+using namespace std::string_literals;
+
 using namespace ruis;
 
+namespace m {
+using namespace ruis::make;
+} // namespace m
+
 namespace {
+using lp = ruis::lp;
+} // namespace
 
-const auto layout_description = tml::read(R"qwertyuiop(
-		layout{pile}
-
-		@nine_patch{
-			id{ruis_slider_bg}
-			lp{
-				dx{max} dy{max}
-			}
-		}
-		@container{
-			lp{
-				dx{max} dy{max}
-			}
-			@pile{
-				id{ruis_handle}
-				@nine_patch{
-					id{ruis_handle_image}
-
-					lp{
-						dx{max} dy{max}
-					}
-				}
-				@mouse_proxy{
-					id{ruis_handle_proxy}
-					lp{
-						dx{fill} dy{fill}
+namespace {
+std::vector<utki::shared_ref<ruis::widget>> make_widgets(utki::shared_ref<ruis::context> c)
+{
+	// clang-format off
+	return {
+		m::nine_patch(c,
+			{
+				.widget_params = {
+					.id = "ruis_background"s,
+					.lp = {
+						.dims = {lp::max, lp::max}
 					}
 				}
 			}
-		}
-	)qwertyuiop");
-
+		),
+		m::container(c,
+			{
+				.widget_params = {
+					.lp = {
+						.dims = {lp::max, lp::max}
+					}
+				}
+			},
+			{
+				m::pile(c,
+					{
+						.widget_params = {
+							.id = "ruis_handle"s
+						}
+					},
+					{
+						m::nine_patch(c,
+							{
+								.widget_params = {
+									.id = "ruis_handle_image"s,
+									.lp = {
+										.dims = {lp::max, lp::max}
+									}
+								}
+							}
+						),
+						m::mouse_proxy(c,
+							{
+								.widget_params = {
+									.id = "ruis_handle_proxy"s,
+									.lp = {
+										.dims = {lp::fill, lp::fill}
+									}
+								}
+							}
+						)
+					}
+				)
+			}
+		)
+	};
+	// clang-format on
+}
 } // namespace
 
 scroll_bar::scroll_bar( //
@@ -74,14 +108,12 @@ scroll_bar::scroll_bar( //
 	widget(c, desc),
 	fraction_band_widget(this->context, fraction_band_widget::all_parameters{}),
 	oriented({.vertical = vertical}),
-	container(this->context, layout_description),
+	container(this->context, {.container_params = {.layout = layout::pile}}, make_widgets(this->context)),
 	handle(this->get_widget("ruis_handle"))
 {
-	auto np = this->try_get_widget_as<nine_patch>("ruis_slider_bg");
-	ASSERT(np)
+	auto& np = this->get_widget_as<nine_patch>("ruis_background");
 
-	auto hi = this->try_get_widget_as<nine_patch>("ruis_handle_image");
-	ASSERT(hi)
+	auto& hi = this->get_widget_as<nine_patch>("ruis_handle_image");
 
 	bool background_set = false;
 	bool handle_set = false;
@@ -92,12 +124,12 @@ scroll_bar::scroll_bar( //
 		}
 
 		if (p.value == "background") {
-			np->set_nine_patch(
+			np.set_nine_patch(
 				this->context.get().loader.load<res::nine_patch>(get_property_value(p).string).to_shared_ptr()
 			);
 			background_set = true;
 		} else if (p.value == "nine_patch_of_handle") {
-			hi->set_nine_patch(
+			hi.set_nine_patch(
 				this->context.get().loader.load<res::nine_patch>(get_property_value(p).string).to_shared_ptr()
 			);
 			handle_set = true;
@@ -105,11 +137,11 @@ scroll_bar::scroll_bar( //
 	}
 
 	if (!background_set) {
-		np->set_nine_patch(this->context.get().loader.load<res::nine_patch>("ruis_npt_slider_bg").to_shared_ptr());
+		np.set_nine_patch(this->context.get().loader.load<res::nine_patch>("ruis_npt_slider_bg").to_shared_ptr());
 	}
 
 	if (!handle_set) {
-		hi->set_nine_patch(this->context.get().loader.load<res::nine_patch>("ruis_npt_slider_handle").to_shared_ptr());
+		hi.set_nine_patch(this->context.get().loader.load<res::nine_patch>("ruis_npt_slider_handle").to_shared_ptr());
 	}
 
 	auto hp = this->try_get_widget_as<mouse_proxy>("ruis_handle_proxy");

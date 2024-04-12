@@ -505,10 +505,58 @@ namespace make {
 inline utki::shared_ref<ruis::container> container(
 	utki::shared_ref<ruis::context> context,
 	container::all_parameters params,
-	utki::span<const utki::shared_ref<ruis::widget>> children
+	utki::span<const utki::shared_ref<ruis::widget>> children = nullptr
 )
 {
 	return utki::make_shared<ruis::container>(std::move(context), std::move(params), children);
+}
+
+inline utki::shared_ref<ruis::container> pile(
+	utki::shared_ref<ruis::context> context,
+	widget::all_parameters params,
+	utki::span<const utki::shared_ref<ruis::widget>> children = nullptr
+)
+{
+	return make::container(
+		std::move(context),
+		{//
+		 .widget_params = std::move(params.widget_params),
+		 .container_params = {.layout = layout::pile}
+		},
+		children
+	);
+}
+
+inline utki::shared_ref<ruis::container> column(
+	utki::shared_ref<ruis::context> context,
+	widget::all_parameters params,
+	utki::span<const utki::shared_ref<ruis::widget>> children = nullptr
+)
+{
+	return make::container(
+		std::move(context),
+		{//
+		 .widget_params = std::move(params.widget_params),
+		 .container_params = {.layout = layout::column}
+		},
+		children
+	);
+}
+
+inline utki::shared_ref<ruis::container> row(
+	utki::shared_ref<ruis::context> context,
+	widget::all_parameters params,
+	utki::span<const utki::shared_ref<ruis::widget>> children = nullptr
+)
+{
+	return make::container(
+		std::move(context),
+		{//
+		 .widget_params = std::move(params.widget_params),
+		 .container_params = {.layout = layout::row}
+		},
+		children
+	);
 }
 } // namespace make
 

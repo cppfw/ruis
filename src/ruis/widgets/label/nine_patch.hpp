@@ -110,7 +110,7 @@ namespace make {
 inline utki::shared_ref<ruis::nine_patch> nine_patch(
 	utki::shared_ref<ruis::context> context,
 	nine_patch::all_parameters params,
-	utki::span<const utki::shared_ref<ruis::widget>> children
+	utki::span<const utki::shared_ref<ruis::widget>> children = nullptr
 )
 {
 	return utki::make_shared<ruis::nine_patch>(std::move(context), std::move(params), children);
