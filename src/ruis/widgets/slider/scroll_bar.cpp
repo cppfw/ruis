@@ -208,9 +208,9 @@ scroll_bar::scroll_bar( //
 
 void scroll_bar::on_fraction_change()
 {
-	this->lay_out();
-
 	this->fraction_widget::on_fraction_change();
+
+	this->lay_out();
 }
 
 void scroll_bar::on_lay_out()
@@ -252,7 +252,7 @@ void scroll_bar::on_lay_out()
 
 void scroll_bar::on_band_change()
 {
-	this->lay_out();
-
 	this->fraction_band_widget::on_band_change();
+
+	this->lay_out();
 }
