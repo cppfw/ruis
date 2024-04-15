@@ -83,6 +83,7 @@ class window :
 public:
 	struct all_parameters {
 		widget::parameters widget_params;
+		container::parameters container_params;
 		std::u32string title;
 		std::shared_ptr<widget> background; // TODO: only nine_patch?
 		sides<length> borders;

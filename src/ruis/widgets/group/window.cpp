@@ -209,7 +209,7 @@ utki::shared_ref<container> make_caption(utki::shared_ref<context> c)
 	// clang-format on
 }
 
-utki::shared_ref<container> make_middle(utki::shared_ref<context> c)
+utki::shared_ref<container> make_middle(utki::shared_ref<context> c, container::parameters container_params)
 {
 	// clang-format off
 	return m::container(c,
@@ -236,9 +236,7 @@ utki::shared_ref<container> make_middle(utki::shared_ref<context> c)
 						},
 						.clip = true
 					},
-					.container_params = {
-						.layout = ruis::layout::pile
-					}
+					.container_params = std::move(container_params)
 				},
 				{}
 			)
@@ -247,7 +245,7 @@ utki::shared_ref<container> make_middle(utki::shared_ref<context> c)
 	// clang-format on
 }
 
-utki::shared_ref<container> make_middle_row(utki::shared_ref<context> c)
+utki::shared_ref<container> make_middle_row(utki::shared_ref<context> c, container::parameters container_params)
 {
 	// clang-format off
 	return m::container(c,
@@ -273,7 +271,7 @@ utki::shared_ref<container> make_middle_row(utki::shared_ref<context> c)
 					}
 				}
 			),
-			make_middle(c),
+			make_middle(c, std::move(container_params)),
 			m::mouse_proxy(c,
 				{
 					.widget_params = {
@@ -289,7 +287,7 @@ utki::shared_ref<container> make_middle_row(utki::shared_ref<context> c)
 	// clang-format on
 }
 
-std::vector<utki::shared_ref<widget>> make_children(utki::shared_ref<context> c)
+std::vector<utki::shared_ref<widget>> make_children(utki::shared_ref<context> c, container::parameters container_params)
 {
 	// clang-format off
 	return {
@@ -306,7 +304,7 @@ std::vector<utki::shared_ref<widget>> make_children(utki::shared_ref<context> c)
 			},
 			{
 				make_top_row(c),
-				make_middle_row(c),
+				make_middle_row(c, std::move(container_params)),
 				make_bottom_row(c)
 			}
 		)
@@ -333,7 +331,11 @@ window::window(
 	utki::span<const utki::shared_ref<ruis::widget>> children
 ) :
 	widget(std::move(c), {.widget_params = std::move(params.widget_params)}),
-	container(this->context, {.container_params = {.layout = ruis::layout::pile}}, make_children(this->context))
+	container(
+		this->context,
+		{.container_params = {.layout = ruis::layout::pile}},
+		make_children(this->context, std::move(params.container_params))
+	)
 {
 	this->setup_widgets();
 
@@ -371,7 +373,11 @@ window::window(
 
 ruis::window::window(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 	widget(c, desc),
-	container(this->context, {.container_params = {.layout = ruis::layout::pile}}, make_children(this->context))
+	container(
+		this->context,
+		{.container_params = {.layout = ruis::layout::pile}},
+		make_children(this->context, {.layout = ruis::layout::pile})
+	)
 {
 	this->setup_widgets();
 

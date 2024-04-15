@@ -91,6 +91,7 @@ inline utki::shared_ref<scroll_bar> scroll_bar(utki::shared_ref<context> context
 }
 } // namespace make
 
+// TODO: deprecated
 class vertical_scroll_bar : public scroll_bar
 {
 public:
@@ -108,6 +109,7 @@ public:
 	~vertical_scroll_bar() override = default;
 };
 
+// TODO: deprecated
 class horizontal_scroll_bar : public scroll_bar
 {
 public:
