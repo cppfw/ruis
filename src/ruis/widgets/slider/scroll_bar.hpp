@@ -23,6 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <functional>
 
+#include "../../res/nine_patch.hpp"
 #include "../../util/oriented.hpp"
 #include "../base/fraction_band_widget.hpp"
 #include "../widget.hpp"
@@ -44,12 +45,31 @@ class scroll_bar :
 	bool is_grabbed = false;
 	float grab_point;
 
-protected:
-	scroll_bar(const utki::shared_ref<ruis::context>& c, const tml::forest& desc, bool vertical);
+public:
+	struct parameters {
+		std::shared_ptr<res::nine_patch> background;
+		std::shared_ptr<res::nine_patch> handle;
+	};
+
+private:
+	parameters params;
 
 	void on_fraction_change() override;
 
 	void on_band_change() override;
+
+public:
+	scroll_bar(const utki::shared_ref<ruis::context>& c, const tml::forest& desc, bool vertical);
+
+	struct all_parameters {
+		widget::parameters widget_params;
+		fraction_widget::parameters fraction_params;
+		fraction_band_widget::parameters fraction_band_params;
+		oriented::parameters oriented_params;
+		parameters scroll_bar_params;
+	};
+
+	scroll_bar(utki::shared_ref<ruis::context> c, all_parameters params);
 
 public:
 	scroll_bar(const scroll_bar&) = delete;
@@ -63,6 +83,13 @@ public:
 private:
 	void on_lay_out() override;
 };
+
+namespace make {
+inline utki::shared_ref<scroll_bar> scroll_bar(utki::shared_ref<context> context, scroll_bar::all_parameters params)
+{
+	return utki::make_shared<ruis::scroll_bar>(std::move(context), std::move(params));
+}
+} // namespace make
 
 class vertical_scroll_bar : public scroll_bar
 {

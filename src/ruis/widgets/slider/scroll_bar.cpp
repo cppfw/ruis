@@ -100,6 +100,95 @@ std::vector<utki::shared_ref<ruis::widget>> make_widgets(utki::shared_ref<ruis::
 }
 } // namespace
 
+scroll_bar::scroll_bar(utki::shared_ref<ruis::context> c, all_parameters params) :
+	widget(std::move(c), {.widget_params = std::move(params.widget_params)}),
+	fraction_band_widget(
+		this->context,
+		{.fraction_params = std::move(params.fraction_params),
+		 .fraction_band_params = std::move(params.fraction_band_params)}
+	),
+	oriented(std::move(params.oriented_params)),
+	container(this->context, {.container_params = {.layout = layout::pile}}, make_widgets(this->context)),
+	handle(this->get_widget("ruis_handle")),
+	params([&]() {
+		auto& sbp = params.scroll_bar_params;
+		if (!sbp.background) {
+			sbp.background = this->context.get().loader.load<res::nine_patch>("ruis_npt_slider_bg").to_shared_ptr();
+		}
+		if (!sbp.handle) {
+			sbp.handle = this->context.get().loader.load<res::nine_patch>("ruis_npt_slider_handle").to_shared_ptr();
+		}
+		return params.scroll_bar_params;
+	}())
+{
+	auto& np = this->get_widget_as<nine_patch>("ruis_background");
+	auto& hi = this->get_widget_as<nine_patch>("ruis_handle_image");
+
+	np.set_nine_patch(this->params.background);
+	hi.set_nine_patch(this->params.handle);
+
+	auto hp = this->try_get_widget_as<mouse_proxy>("ruis_handle_proxy");
+	hp->mouse_button_handler = [this](mouse_proxy&, const mouse_button_event& e) -> bool {
+		if (e.button != mouse_button::left) {
+			return false;
+		}
+
+		if (e.is_down) {
+			ASSERT(!this->is_grabbed)
+			this->is_grabbed = true;
+
+			unsigned long_index = this->get_long_index();
+			this->grab_point = e.pos[long_index];
+
+			return true;
+		} else {
+			if (this->is_grabbed) {
+				this->is_grabbed = false;
+				return true;
+			} else {
+				return false;
+			}
+		}
+	};
+
+	hp->mouse_move_handler = [this](mouse_proxy&, const mouse_move_event& e) -> bool {
+		if (!this->is_grabbed) {
+			return false;
+		}
+
+		using std::min;
+		using std::max;
+
+		unsigned long_index = this->get_long_index();
+
+		float max_pos = this->rect().d[long_index] - this->handle.rect().d[long_index];
+		max_pos = max(max_pos, 0.0f); // clamp bottom
+
+		float new_pos = this->handle.rect().p[long_index];
+		new_pos += e.pos[long_index] - this->grab_point;
+		new_pos = max(new_pos, real(0)); // clamp bottom
+		new_pos = min(new_pos, max_pos); // clamp top
+
+		ASSERT(0 <= new_pos && new_pos <= max_pos, [&](auto& o) {
+			o << "new_pos = " << new_pos << ", max_pos = " << max_pos;
+		})
+
+		ruis::vector2 new_position(0);
+		new_position[long_index] = new_pos;
+
+		this->handle.move_to(new_position);
+
+		ASSERT(max_pos >= 0)
+
+		if (max_pos > 0) {
+			// update factor
+			this->set_fraction(new_pos / max_pos);
+		}
+
+		return true;
+	};
+}
+
 scroll_bar::scroll_bar( //
 	const utki::shared_ref<ruis::context>& c,
 	const tml::forest& desc,
