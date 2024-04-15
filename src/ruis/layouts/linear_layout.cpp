@@ -77,6 +77,7 @@ void linear_layout::lay_out(const vector2& dims, semiconst_widget_list& widgets)
 				case lp::dimension::type::fill:
 					d[long_index] = 0;
 					break;
+				// NOLINTNEXTLINE(bugprone-branch-clone, "false positive")
 				case lp::dimension::type::undefined:
 					[[fallthrough]];
 				case lp::dimension::type::min:
@@ -144,6 +145,7 @@ void linear_layout::lay_out(const vector2& dims, semiconst_widget_list& widgets)
 					case lp::dimension::type::max:
 						d[long_index] = long_room;
 						break;
+					// NOLINTNEXTLINE(bugprone-branch-clone, "false positive")
 					case lp::dimension::type::undefined:
 						[[fallthrough]];
 					case lp::dimension::type::min:
@@ -169,6 +171,7 @@ void linear_layout::lay_out(const vector2& dims, semiconst_widget_list& widgets)
 						break;
 				}
 				switch (lp.dims[trans_index].get_type()) {
+					// NOLINTNEXTLINE(bugprone-branch-clone, "false positive")
 					case lp::dimension::type::undefined:
 						[[fallthrough]];
 					case lp::dimension::type::min:
@@ -283,6 +286,7 @@ vector2 linear_layout::measure(const vector2& quotum, const_widget_list& widgets
 			}
 
 			switch (lp.dims[long_index].get_type()) {
+				// NOLINTNEXTLINE(bugprone-branch-clone, "false positive")
 				case lp::dimension::type::undefined:
 					[[fallthrough]];
 				case lp::dimension::type::min:
