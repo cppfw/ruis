@@ -122,6 +122,7 @@ vector2 scroll_area::dims_for_widget(const widget& w) const
 			case lp::dimension::type::fill:
 				d[i] = this->rect().d[i];
 				break;
+			// NOLINTNEXTLINE(bugprone-branch-clone, "false positive")
 			case lp::dimension::type::undefined:
 				[[fallthrough]];
 			case lp::dimension::type::min:
