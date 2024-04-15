@@ -118,20 +118,27 @@ vector2 scroll_area::dims_for_widget(const widget& w) const
 	const lp& lp = w.get_layout_params_const();
 	vector2 d;
 	for (unsigned i = 0; i != 2; ++i) {
-		if (lp.dims[i] == lp::fill) {
-			d[i] = this->rect().d[i];
-		} else if (lp.dims[i] == lp::min || lp.dims[i] == lp::max) {
-			d[i] = -1; // will be updated below
-		} else {
-			ASSERT(lp.dims[i].is_length())
-			d[i] = lp.dims[i].get_length().get(this->context);
+		switch (lp.dims[i].get_type()) {
+			case lp::dimension::type::fill:
+				d[i] = this->rect().d[i];
+				break;
+			case lp::dimension::type::undefined:
+				[[fallthrough]];
+			case lp::dimension::type::min:
+				[[fallthrough]];
+			case lp::dimension::type::max:
+				d[i] = -1; // will be updated below
+				break;
+			case lp::dimension::type::length:
+				d[i] = lp.dims[i].get_length().get(this->context);
+				break;
 		}
 	}
 	if (!d.is_positive_or_zero()) {
 		vector2 md = w.measure(d);
 		for (unsigned i = 0; i != md.size(); ++i) {
 			if (d[i] < 0) {
-				if (lp.dims[i] == lp::max && md[i] < this->rect().d[i]) {
+				if (lp.dims[i].get_type() == lp::dimension::type::max && md[i] < this->rect().d[i]) {
 					d[i] = this->rect().d[i];
 				} else {
 					d[i] = md[i];

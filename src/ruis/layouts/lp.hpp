@@ -21,8 +21,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include <variant>
-
 #include <tml/tree.hpp>
 
 #include "../config.hpp"
@@ -61,10 +59,16 @@ struct lp {
 		back
 	};
 
-	class dimension_policy
+	class dimension
 	{
 	public:
-		enum class special {
+		enum class type {
+			/**
+			 * @brief The dimension policy is undefined.
+			 * Most of the layouts will default to 'min' dimension policy in this case.
+			 */
+			undefined,
+
 			/**
 			 * @brief Requests minimal dimensions of the widget.
 			 * The widget will always be given minimal space it needs to properly draw.
@@ -83,88 +87,60 @@ struct lp {
 			 * @brief Requests widget to be same size as its parent.
 			 * Minimal size of the widget is assumed to be 0.
 			 */
-			fill
+			fill,
+
+			/**
+			 * @brief Requests an exact specified length.
+			 * The widget size will be set to the specified length.
+			 */
+			length
 		};
 
 	private:
-		struct undefined {
-			bool operator==(const undefined&) const noexcept
-			{
-				return true;
-			}
-		};
-
-		std::variant<undefined, special, length> value;
+		type type_v;
+		length value;
 
 	public:
-		dimension_policy() :
-			value(undefined())
-		{}
-
 		/**
 		 * @brief Construct a new dimension policy object.
-		 * @param dimension - the exact length, undefined length value is equivalent to 'min' special value.
+		 * @param dim - the exact length, undefined length value is equivalent to 'min'.
 		 */
-		dimension_policy(length dimension) :
-			value([&]() -> decltype(value) {
-				if (dimension.is_undefined()) {
-					return special::min;
+		dimension(length dim) :
+			type_v([&]() {
+				if (dim.is_undefined()) {
+					return type::min;
 				} else {
-					return dimension;
+					return type::length;
 				}
-			}())
+			}()),
+			value(dim)
 		{}
 
-		dimension_policy(special special_value) :
-			value(special_value)
+		dimension(type t = type::undefined) :
+			type_v(t)
 		{}
 
-		bool is_min() const noexcept
+		type get_type() const noexcept
 		{
-			return std::holds_alternative<special>(this->value) && *std::get_if<special>(&this->value) == special::min;
+			return this->type_v;
 		}
 
-		bool is_max() const noexcept
+		auto get_length() const noexcept
 		{
-			return std::holds_alternative<special>(this->value) && *std::get_if<special>(&this->value) == special::max;
-		}
-
-		bool is_fill() const noexcept
-		{
-			return std::holds_alternative<special>(this->value) && *std::get_if<special>(&this->value) == special::fill;
-		}
-
-		bool is_length() const noexcept
-		{
-			return std::holds_alternative<length>(this->value);
-		}
-
-		const length& get_length() const
-		{
-			ASSERT(this->is_length())
-			return std::get<length>(this->value);
+			ASSERT(this->get_type() == type::length)
+			return this->value;
 		}
 
 		bool is_undefined() const noexcept
 		{
-			return std::holds_alternative<undefined>(this->value);
-		}
-
-		bool operator==(const dimension_policy& p) const
-		{
-			return this->value == p.value;
-		}
-
-		bool operator!=(const dimension_policy& p) const
-		{
-			return !this->operator==(p);
+			return this->type_v == type::undefined;
 		}
 
 		bool operator==(const length& d) const
 		{
-			if (this->is_length()) {
-				return this->get_length() == d;
-			} else if (this->is_min()) {
+			if (this->type_v == type::length) {
+				return this->value == d;
+			} else if (this->type_v == type::min) {
 				return d.is_undefined();
 			}
 			return false;
@@ -176,15 +152,15 @@ struct lp {
 		}
 	};
 
-	const static dimension_policy min;
-	const static dimension_policy max;
-	const static dimension_policy fill;
+	const static dimension min;
+	const static dimension max;
+	const static dimension fill;
 
 	/**
 	 * @brief desired dimensions.
 	 * Components should hold non-negative value in pixels or [min, max, fill].
 	 */
-	r4::vector2<dimension_policy> dims;
+	r4::vector2<dimension> dims;
 
 	/**
 	 * @brief Weight of the widget.

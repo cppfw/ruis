@@ -57,22 +57,36 @@ void linear_layout::lay_out(const vector2& dims, semiconst_widget_list& widgets)
 			net_weight += lp.weight;
 
 			vector2 d;
-			if (lp.dims[trans_index] == lp::max || lp.dims[trans_index] == lp::fill) {
-				d[trans_index] = dims[trans_index];
-			} else if (lp.dims[trans_index] == lp::min) {
-				d[trans_index] = -1; // will be updated below
-			} else {
-				ASSERT(lp.dims[trans_index].is_length())
-				d[trans_index] = lp.dims[trans_index].get_length().get(w.get().context);
+			switch (lp.dims[trans_index].get_type()) {
+				case lp::dimension::type::max:
+					[[fallthrough]];
+				case lp::dimension::type::fill:
+					d[trans_index] = dims[trans_index];
+					break;
+				case lp::dimension::type::undefined:
+					[[fallthrough]];
+				case lp::dimension::type::min:
+					d[trans_index] = -1; // will be updated below
+					break;
+				case lp::dimension::type::length:
+					d[trans_index] = lp.dims[trans_index].get_length().get(w.get().context);
+					break;
 			}
 
-			if (lp.dims[long_index] == lp::fill) {
-				d[long_index] = 0;
-			} else if (lp.dims[long_index] == lp::min || lp.dims[long_index] == lp::max) {
-				d[long_index] = -1; // will be updated below
-			} else {
-				ASSERT(lp.dims[long_index].is_length())
-				d[long_index] = lp.dims[long_index].get_length().get(w.get().context);
+			switch (lp.dims[long_index].get_type()) {
+				case lp::dimension::type::fill:
+					d[long_index] = 0;
+					break;
+				case lp::dimension::type::undefined:
+					[[fallthrough]];
+				case lp::dimension::type::min:
+					[[fallthrough]];
+				case lp::dimension::type::max:
+					d[long_index] = -1; // will be updated below
+					break;
+				case lp::dimension::type::length:
+					d[long_index] = lp.dims[long_index].get_length().get(w.get().context);
+					break;
 			}
 
 			if (!d.is_positive_or_zero()) {
@@ -124,30 +138,57 @@ void linear_layout::lay_out(const vector2& dims, semiconst_widget_list& widgets)
 					}
 				}
 
-				if (lp.dims[long_index] == lp::fill || lp.dims[long_index] == lp::max) {
-					d[long_index] = long_room;
-				} else {
-					d[long_index] = info->measured_dims[long_index];
+				switch (lp.dims[long_index].get_type()) {
+					case lp::dimension::type::fill:
+						[[fallthrough]];
+					case lp::dimension::type::max:
+						d[long_index] = long_room;
+						break;
+					case lp::dimension::type::undefined:
+						[[fallthrough]];
+					case lp::dimension::type::min:
+						[[fallthrough]];
+					case lp::dimension::type::length:
+						d[long_index] = info->measured_dims[long_index];
+						break;
 				}
 
-				if (lp.dims[trans_index] == lp::max || lp.dims[trans_index] == lp::fill) {
-					d[trans_index] = dims[trans_index];
-				} else {
-					if (lp.dims[trans_index] == lp::min) {
+				switch (lp.dims[trans_index].get_type()) {
+					case lp::dimension::type::max:
+						[[fallthrough]];
+					case lp::dimension::type::fill:
+						d[trans_index] = dims[trans_index];
+						break;
+					case lp::dimension::type::undefined:
+						[[fallthrough]];
+					case lp::dimension::type::min:
 						d[trans_index] = -1;
-					} else {
-						ASSERT(lp.dims[trans_index].is_length())
+						break;
+					case lp::dimension::type::length:
 						d[trans_index] = lp.dims[trans_index].get_length().get(w.get().context);
-					}
-					if (d.x() < 0 || d.y() < 0) {
-						vector2 md = w.get().measure(d);
-						for (unsigned i = 0; i != md.size(); ++i) {
-							if (d[i] < 0) {
-								d[i] = md[i];
+						break;
+				}
+				switch (lp.dims[trans_index].get_type()) {
+					case lp::dimension::type::undefined:
+						[[fallthrough]];
+					case lp::dimension::type::min:
+						[[fallthrough]];
+					case lp::dimension::type::length:
+						if (d.x() < 0 || d.y() < 0) {
+							vector2 md = w.get().measure(d);
+							for (unsigned i = 0; i != md.size(); ++i) {
+								if (d[i] < 0) {
+									d[i] = md[i];
+								}
 							}
 						}
-					}
+						break;
+					case lp::dimension::type::max:
+						[[fallthrough]];
+					case lp::dimension::type::fill:
+						break;
 				}
+
 				w.get().resize(d);
 			} else {
 				w.get().resize(info->measured_dims);
@@ -215,32 +256,46 @@ vector2 linear_layout::measure(const vector2& quotum, const_widget_list& widgets
 			net_weight += lp.weight;
 
 			vector2 child_quotum;
-			if (lp.dims[trans_index] == lp::max) {
-				if (quotum[trans_index] >= 0) {
-					child_quotum[trans_index] = quotum[trans_index];
-				} else {
+
+			switch (lp.dims[trans_index].get_type()) {
+				case lp::dimension::type::max:
+					if (quotum[trans_index] >= 0) {
+						child_quotum[trans_index] = quotum[trans_index];
+					} else {
+						child_quotum[trans_index] = -1;
+					}
+					break;
+				case lp::dimension::type::undefined:
+					[[fallthrough]];
+				case lp::dimension::type::min:
 					child_quotum[trans_index] = -1;
-				}
-			} else if (lp.dims[trans_index] == lp::min) {
-				child_quotum[trans_index] = -1;
-			} else if (lp.dims[trans_index] == lp::fill) {
-				if (quotum[trans_index] >= 0) {
-					child_quotum[trans_index] = quotum[trans_index];
-				} else {
-					child_quotum[trans_index] = 0;
-				}
-			} else {
-				ASSERT(lp.dims[trans_index].is_length())
-				child_quotum[trans_index] = lp.dims[trans_index].get_length().get(w.get().context);
+					break;
+				case lp::dimension::type::fill:
+					if (quotum[trans_index] >= 0) {
+						child_quotum[trans_index] = quotum[trans_index];
+					} else {
+						child_quotum[trans_index] = 0;
+					}
+					break;
+				case lp::dimension::type::length:
+					child_quotum[trans_index] = lp.dims[trans_index].get_length().get(w.get().context);
+					break;
 			}
 
-			if (lp.dims[long_index] == lp::min || lp.dims[long_index] == lp::max) {
-				child_quotum[long_index] = -1;
-			} else if (lp.dims[long_index] == lp::fill) {
-				child_quotum[long_index] = 0;
-			} else {
-				ASSERT(lp.dims[long_index].is_length())
-				child_quotum[long_index] = lp.dims[long_index].get_length().get(w.get().context);
+			switch (lp.dims[long_index].get_type()) {
+				case lp::dimension::type::undefined:
+					[[fallthrough]];
+				case lp::dimension::type::min:
+					[[fallthrough]];
+				case lp::dimension::type::max:
+					child_quotum[long_index] = -1;
+					break;
+				case lp::dimension::type::fill:
+					child_quotum[long_index] = 0;
+					break;
+				case lp::dimension::type::length:
+					child_quotum[long_index] = lp.dims[long_index].get_length().get(w.get().context);
+					break;
 			}
 
 			info->measured_dims = w.get().measure(child_quotum);
@@ -314,23 +369,29 @@ vector2 linear_layout::measure(const vector2& quotum, const_widget_list& widgets
 				}
 			}
 
-			if (lp.dims[trans_index] == lp::max) {
-				if (quotum[trans_index] >= 0) {
-					d[trans_index] = quotum[trans_index];
-				} else {
+			switch (lp.dims[trans_index].get_type()) {
+				case lp::dimension::type::max:
+					if (quotum[trans_index] >= 0) {
+						d[trans_index] = quotum[trans_index];
+					} else {
+						d[trans_index] = -1;
+					}
+					break;
+				case lp::dimension::type::undefined:
+					[[fallthrough]];
+				case lp::dimension::type::min:
 					d[trans_index] = -1;
-				}
-			} else if (lp.dims[trans_index] == lp::min) {
-				d[trans_index] = -1;
-			} else if (lp.dims[trans_index] == lp::fill) {
-				if (quotum[trans_index] >= 0) {
-					d[trans_index] = quotum[trans_index];
-				} else {
-					d[trans_index] = 0;
-				}
-			} else {
-				ASSERT(lp.dims[trans_index].is_length())
-				d[trans_index] = lp.dims[trans_index].get_length().get(w.get().context);
+					break;
+				case lp::dimension::type::fill:
+					if (quotum[trans_index] >= 0) {
+						d[trans_index] = quotum[trans_index];
+					} else {
+						d[trans_index] = 0;
+					}
+					break;
+				case lp::dimension::type::length:
+					d[trans_index] = lp.dims[trans_index].get_length().get(w.get().context);
+					break;
 			}
 
 			if (quotum[trans_index] < 0) {

@@ -42,8 +42,8 @@ const tst::set set("inflating", [](tst::suite& suite){
 		auto c = utki::dynamic_reference_cast<ruis::container>(w);
 		tst::check_eq(c.get().children().size(), size_t(2), SL);
 		auto lp = c.get().children().front().get().get_layout_params();
-		tst::check(lp.dims[0] == ruis::lp::max, SL);
-		tst::check(lp.dims[1].is_length(), SL);
+		tst::check(lp.dims[0].get_type() == ruis::lp::dimension::type::max, SL);
+		tst::check(lp.dims[1].get_type() == ruis::lp::dimension::type::length, SL);
 		tst::check_eq(lp.dims[1].get_length().get(m.context), ruis::real(123), SL);
     });
 
@@ -80,8 +80,8 @@ const tst::set set("inflating", [](tst::suite& suite){
 		tst::check_eq(c.get().children().front().get().rect().p.y(), ruis::real(12), SL);
 		tst::check_eq(c.get().children().front().get().rect().d.x(), ruis::real(45), SL);
 		auto lp = c.get().children().front().get().get_layout_params();
-		tst::check(lp.dims[0] == ruis::lp::max, SL);
-		tst::check(lp.dims[1] == ruis::lp::min, SL);
+		tst::check(lp.dims[0].get_type() == ruis::lp::dimension::type::max, SL);
+		tst::check(lp.dims[1].get_type() == ruis::lp::dimension::type::min, SL);
 	});
 
     suite.add("template_arguments", []{
@@ -126,8 +126,8 @@ const tst::set set("inflating", [](tst::suite& suite){
 		tst::check_eq(c.get().children().front().get().rect().d.x(), ruis::real(45), SL);
 		tst::check_eq(c.get().children().front().get().get_widget("test_widget").rect().p.x(), ruis::real(13), SL);
 		auto lp = c.get().children().front().get().get_layout_params();
-		tst::check(lp.dims[0] == ruis::lp::max, SL);
-		tst::check(lp.dims[1] == ruis::lp::max, SL);
+		tst::check(lp.dims[0].get_type() == ruis::lp::dimension::type::max, SL);
+		tst::check(lp.dims[1].get_type() == ruis::lp::dimension::type::max, SL);
 	});
 
     suite.add("template_arguments_inside_of_nested_containers", []{
@@ -202,8 +202,8 @@ const tst::set set("inflating", [](tst::suite& suite){
 		tst::check_eq(c.get().children().front().get().rect().d.x(), ruis::real(-1), SL);
 		tst::check_eq(c.get().children().front().get().rect().d.y(), ruis::real(45), SL);
 		auto lp = c.get().children().front().get().get_layout_params();
-		tst::check(lp.dims[0] == ruis::lp::max, SL);
-		tst::check(lp.dims[1] == ruis::lp::max, SL);
+		tst::check(lp.dims[0].get_type() == ruis::lp::dimension::type::max, SL);
+		tst::check(lp.dims[1].get_type() == ruis::lp::dimension::type::max, SL);
 	});
 
     suite.add("template_which_nests_same_named_widget_on_2nd_level", []{

@@ -25,9 +25,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
-const lp::dimension_policy lp::min = lp::dimension_policy::special::min;
-const lp::dimension_policy lp::max = lp::dimension_policy::special::max;
-const lp::dimension_policy lp::fill = lp::dimension_policy::special::fill;
+const lp::dimension lp::min = lp::dimension::type::min;
+const lp::dimension lp::max = lp::dimension::type::max;
+const lp::dimension lp::fill = lp::dimension::type::fill;
 
 lp lp::make(const tml::forest& desc, const ruis::units& units)
 {

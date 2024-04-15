@@ -514,13 +514,20 @@ vector2 ruis::dims_for_widget(const widget& w, const vector2& parent_dims)
 	const lp& lp = w.get_layout_params_const();
 	vector2 d;
 	for (unsigned i = 0; i != 2; ++i) {
-		if (lp.dims[i] == lp::max || lp.dims[i] == lp::fill) {
-			d[i] = parent_dims[i];
-		} else if (lp.dims[i] == lp::min) {
-			d[i] = -1; // will be updated below
-		} else {
-			ASSERT(lp.dims[i].is_length())
-			d[i] = lp.dims[i].get_length().get(w.context);
+		switch (lp.dims[i].get_type()) {
+			case lp::dimension::type::max:
+				[[fallthrough]];
+			case lp::dimension::type::fill:
+				d[i] = parent_dims[i];
+				break;
+			case lp::dimension::type::undefined:
+				[[fallthrough]];
+			case lp::dimension::type::min:
+				d[i] = -1; // will be updated below
+				break;
+			case lp::dimension::type::length:
+				d[i] = lp.dims[i].get_length().get(w.context);
+				break;
 		}
 	}
 	if (!d.is_positive_or_zero()) {

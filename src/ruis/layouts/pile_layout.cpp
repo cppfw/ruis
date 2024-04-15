@@ -71,23 +71,29 @@ vector2 pile_layout::measure(const vector2& quotum, const_widget_list& widgets) 
 		ruis::vector2 d;
 
 		for (unsigned j = 0; j != d.size(); ++j) {
-			if (lp.dims[j].is_max()) {
-				if (quotum[j] >= 0) {
-					d[j] = quotum[j];
-				} else {
+			switch (lp.dims[j].get_type()) {
+				case lp::dimension::type::max:
+					if (quotum[j] >= 0) {
+						d[j] = quotum[j];
+					} else {
+						d[j] = -1;
+					}
+					break;
+				case lp::dimension::type::undefined:
+					[[fallthrough]];
+				case lp::dimension::type::min:
 					d[j] = -1;
-				}
-			} else if (lp.dims[j].is_min()) {
-				d[j] = -1;
-			} else if (lp.dims[j].is_fill()) {
-				if (quotum[j] >= 0) {
-					d[j] = quotum[j];
-				} else {
-					d[j] = 0;
-				}
-			} else {
-				ASSERT(lp.dims[j].is_length())
-				d[j] = lp.dims[j].get_length().get(w.get().context);
+					break;
+				case lp::dimension::type::fill:
+					if (quotum[j] >= 0) {
+						d[j] = quotum[j];
+					} else {
+						d[j] = 0;
+					}
+					break;
+				case lp::dimension::type::length:
+					d[j] = lp.dims[j].get_length().get(w.get().context);
+					break;
 			}
 		}
 
