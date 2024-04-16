@@ -37,6 +37,7 @@ namespace ruis {
  * @param title - text of the window title.
  * @param look - style settings.
  */
+// TODO: derive from frame_widget
 class window :
 	virtual public widget, //
 	private container
