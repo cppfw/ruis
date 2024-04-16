@@ -26,27 +26,25 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
+// TODO: derive from frame_widget?
 class collapse_area :
 	virtual public widget, //
 	private container
 {
-	// TODO: naming convention
-	std::shared_ptr<container> contentArea;
-	std::shared_ptr<container> title_v;
+	container& content_area;
+	container& title_v;
 
 public:
 	collapse_area(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 
 	container& content() noexcept
 	{
-		ASSERT(this->contentArea)
-		return *this->contentArea;
+		return this->content_area;
 	}
 
 	container& title() noexcept
 	{
-		ASSERT(this->title_v)
-		return *this->title_v;
+		return this->title_v;
 	}
 };
 

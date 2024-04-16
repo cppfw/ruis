@@ -52,7 +52,7 @@ const auto layout_c = tml::read(R"qwertyuiop(
 			@row{
 				lp{dx{max}}
 				@image_toggle{
-					id{switch}
+					id{ruis_switch}
 					look{
 						unpressed{ruis_img_dropdown_arrow}
 						pressed{ruis_img_dropright_arrow}
@@ -62,46 +62,39 @@ const auto layout_c = tml::read(R"qwertyuiop(
 					lp{dx{${marHor}}}
 				}
 				@pile{
-					id{title}
+					id{ruis_title}
 				}
 			}
 		}
 	}
 	@pile{
-		id{content}
+		id{ruis_content}
 	}
 )qwertyuiop");
 } // namespace
 
 collapse_area::collapse_area(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 	widget(c, desc),
-	container(this->context, layout_c)
+	container(this->context, layout_c),
+	content_area(this->get_widget_as<container>("ruis_content")),
+	title_v(this->get_widget_as<container>("ruis_title"))
 {
-	// TODO: use get_widget_as()
-	this->contentArea = this->try_get_widget_as<container>("content");
-	ASSERT(this->contentArea)
-
-	// TODO: use get_widget_as()
-	this->title_v = this->try_get_widget_as<container>("title");
-	ASSERT(this->title_v)
-
 	for (const auto& p : desc) {
 		if (!is_property(p)) {
 			continue;
 		}
 
 		if (p.value == "title") {
-			this->title_v->push_back_inflate(p.children);
+			this->title_v.push_back_inflate(p.children);
 		}
 	}
 
-	this->contentArea->push_back_inflate(desc);
+	this->content_area.push_back_inflate(desc);
 
 	{
-		auto sw = this->try_get_widget_as<toggle_button>("switch");
-		ASSERT(sw)
-		sw->pressed_change_handler = [this](button& tb) {
-			auto& lp = this->contentArea->get_layout_params();
+		auto& sw = this->get_widget_as<toggle_button>("ruis_switch");
+		sw.pressed_change_handler = [this](button& tb) {
+			auto& lp = this->content_area.get_layout_params();
 			if (tb.is_pressed()) {
 				using namespace length_literals;
 				lp.dims.y() = 0_px;
