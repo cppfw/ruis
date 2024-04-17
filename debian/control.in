@@ -3,27 +3,27 @@ Maintainer: Ivan Gagis <igagis@gmail.com>
 Standards-Version: 3.9.5
 Section: libs
 Build-Depends:
-		g++ (>= 4:4.8),
-		debhelper (>= 9),
-		prorab (>= 1.8.3),
-		prorab-extra,
-		myci,
-		pkg-config,
-		clang-format,
-		clang-tidy,
-		libglew-dev,
-		libfreetype6-dev,
-		libgles2-mesa-dev,
-		libutki-dev (>= 1.1.112),
-		libpapki-dev (>= 1.0.91),
-		libr4-dev (>= 1.0.52),
-		libsvgdom-dev (>= 0.3.56),
-		libsvgren-dev (>= 0.5.7),
-		libtml-dev (>= 0.1.26),
-		libnitki-dev (>= 1.0.39),
-		librasterimage-dev (>= 0.1.4),
-		libtst-dev (>= 0.3.9),
-		libgtk-3-dev
+	g++ (>= 4:4.8),
+	debhelper (>= 9),
+	prorab (>= 1.8.3),
+	prorab-extra,
+	myci,
+	pkg-config,
+	clang-format,
+	clang-tidy,
+	libglew-dev,
+	libfreetype6-dev,
+	libgles2-mesa-dev,
+	libutki-dev (>= 1.1.112),
+	libpapki-dev (>= 1.0.91),
+	libr4-dev (>= 1.0.52),
+	libsvgdom-dev (>= 0.3.56),
+	libsvgren-dev (>= 0.5.7),
+	libtml-dev (>= 0.1.26),
+	libnitki-dev (>= 1.0.39),
+	librasterimage-dev (>= 0.1.4),
+	libtst-dev (>= 0.3.9),
+	libgtk-3-dev
 Build-Depends-Indep: doxygen
 
 Package: libruis$(soname)
@@ -36,7 +36,10 @@ Description: GUI framework
 
 Package: libruis-dev
 Architecture: any
-Depends: libruis$(soname) (= ${binary:Version}), ${misc:Depends},
+Depends:
+	libruis$(soname) (= ${binary:Version}),
+	libruis$(soname)-dbgsrc (= ${binary:Version}),
+	${misc:Depends},
 	libutki-dev,
 	libpapki-dev,
 	libr4-dev,
@@ -52,7 +55,9 @@ Description: GUI framework development files
 Package: libruis$(soname)-dbgsrc
 Section: debug
 Architecture: all
-Depends: libruis$(soname)-dbgsym (= ${binary:Version}), ${misc:Depends}
+Depends:
+	libruis$(soname)-dbgsym (= ${binary:Version}),
+	${misc:Depends}
 Description: debugging sources for libruis$(soname) package.
 
 Package: libruis-doc
