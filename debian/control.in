@@ -38,7 +38,6 @@ Package: libruis-dev
 Architecture: any
 Depends:
 	libruis$(soname) (= ${binary:Version}),
-	libruis$(soname)-dbgsrc (= ${binary:Version}),
 	${misc:Depends},
 	libutki-dev,
 	libpapki-dev,
