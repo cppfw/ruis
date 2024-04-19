@@ -1,3 +1,9 @@
+libruis (0.5.222) unstable; urgency=medium
+
+  * remove dbgsrc dependeny from dev package
+
+ -- Ivan Gagis <igagis@gmail.com>  Fri, 19 Apr 2024 22:18:26 +0300
+
 libruis (0.5.221) unstable; urgency=medium
 
   * test release
