@@ -3,6 +3,12 @@ include prorab-test.mk
 
 this_is_interactive := true
 
-this_ldlibs += -lGL
+# ifeq ($(os), linux)
+#     this_ldlibs += -lGL
+# else ifeq ($(os), windows)
+#     this_ldlibs += -lopengl32
+# else ifeq ($(os), macosx)
+#     this_ldlibs += -framework OpenGL
+# endif
 
 include $(d)../common.mk

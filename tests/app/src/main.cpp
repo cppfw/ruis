@@ -1,6 +1,6 @@
 #include <ratio>
 
-#include <GL/gl.h>
+// #include <GL/gl.h>
 
 #include <r4/quaternion.hpp>
 #include <utki/debug.hpp>
@@ -231,16 +231,16 @@ public:
 		matr.translate(0, 0, -4);
 		matr.rotate(this->rot);
 
-		glDisable(GL_CULL_FACE);
+		// glDisable(GL_CULL_FACE);
 
-		glEnable(GL_DEPTH_TEST);
+		// glEnable(GL_DEPTH_TEST);
 		// glDepthFunc(GL_LESS);
 		// glDepthFunc(GL_GREATER);
 
 		this->context.get().renderer.get().shader->pos_tex->render(matr, *this->cubeVAO, this->tex->tex());
 
-//		glDisable(GL_CULL_FACE);
-		glDisable(GL_DEPTH_TEST);
+		// glDisable(GL_CULL_FACE);
+		// glDisable(GL_DEPTH_TEST);
 	}
 };
 
