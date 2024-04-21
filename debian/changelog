@@ -1,3 +1,9 @@
+libruis (0.5.223) unstable; urgency=medium
+
+  * coordinate system fix
+
+ -- Ivan Gagis <igagis@gmail.com>  Mon, 22 Apr 2024 00:30:05 +0300
+
 libruis (0.5.222) unstable; urgency=medium
 
   * remove dbgsrc dependeny from dev package
