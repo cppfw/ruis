@@ -371,12 +371,20 @@ void gui::render(const matrix4& matrix) const
 		this->root_widget.get().lay_out();
 	}
 
+	// The initial matrix sets up an initial coordinate system as defined by OpenGL.
+	// Left, right, bottom, top edges of viewport correspond to coordinates -1, 1, -1, 1.
+	// Coordinate system is right-handed.
 	ruis::matrix4 m(matrix);
 
-	// direct y-axis down
-	m.scale(1, -1);
+	// Setup right-handed coordinate system with:
 
+	// x-axis right, y-axis down, z-axis away
+	m.scale(1, -1, -1);
+
+	// zero at top-left corner of viewport
 	m.translate(-1, -1);
+
+	// viewport right and bottom edges correspond to coordinates equal to viewport size in pixels.
 	m.scale(vector2(2).comp_divide(this->viewport_size));
 
 	this->get_root().render_internal(m);

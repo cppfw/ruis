@@ -1,5 +1,7 @@
 #include <ratio>
 
+#include <GL/gl.h>
+
 #include <r4/quaternion.hpp>
 #include <utki/debug.hpp>
 #include <papki/fs_file.hpp>
@@ -122,6 +124,7 @@ public:
 			matr.scale(this->rect().d);
 
 			auto& r = this->context.get().renderer.get();
+
 			r.shader->pos_tex->render(matr, r.pos_tex_quad_01_vao.get(), this->tex.get().tex());
 		}
 
@@ -222,17 +225,22 @@ public:
 		ruis::matrix4 matr(matrix);
 		matr.scale(this->rect().d / 2);
 		matr.translate(1, 1);
-		matr.scale(1, -1);
+		matr.scale(1, -1, -1); // y down, z away
 		// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers)
 		matr.frustum(-2, 2, -1.5, 1.5, 2, 100);
 		matr.translate(0, 0, -4);
 		matr.rotate(this->rot);
 
-//		glEnable(GL_CULL_FACE);
+		glDisable(GL_CULL_FACE);
+
+		glEnable(GL_DEPTH_TEST);
+		// glDepthFunc(GL_LESS);
+		// glDepthFunc(GL_GREATER);
 
 		this->context.get().renderer.get().shader->pos_tex->render(matr, *this->cubeVAO, this->tex->tex());
 
 //		glDisable(GL_CULL_FACE);
+		glDisable(GL_DEPTH_TEST);
 	}
 };
 
@@ -475,7 +483,7 @@ public:
 			ruisapp::application("ruis-tests", [](){
 				// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers)
 				ruisapp::window_params wp(r4::vector2<unsigned>(1024, 800));
-		// wp.graphics_api_request = ruisapp::window_params::graphics_api::gl_4_5;
+				wp.buffers.set(ruisapp::window_params::buffer::depth);
 
 		return wp;
 			}())
