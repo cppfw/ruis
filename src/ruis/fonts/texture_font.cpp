@@ -182,7 +182,16 @@ texture_font::glyph texture_font::load_glyph(char32_t c) const
 					vertex_array::mode::triangle_fan
 				)
 				.to_shared_ptr();
-	g.tex = this->context.get().renderer.get().factory->create_texture_2d(std::move(ftg.image)).to_shared_ptr();
+	g.tex = this->context.get()
+				.renderer.get()
+				.factory
+				->create_texture_2d(
+					std::move(ftg.image),
+					{.min_filter = texture_2d::filter::nearest,
+					 .mag_filter = texture_2d::filter::nearest,
+					 .mipmap = texture_2d::mipmap::none}
+				)
+				.to_shared_ptr();
 
 	return g;
 }

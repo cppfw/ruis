@@ -30,6 +30,17 @@ class texture_2d
 	vector2 dims_v;
 
 public:
+	enum class filter {
+		nearest,
+		linear
+	};
+
+	enum class mipmap {
+		none,
+		nearest,
+		linear
+	};
+
 	texture_2d(vector2 dims) :
 		dims_v(dims)
 	{}
@@ -46,6 +57,9 @@ public:
 	{
 		return this->dims_v;
 	}
+
+	// TODO: add functions to change filtering
+	// TODO: add virtual generate_mipmap()
 };
 
 } // namespace ruis

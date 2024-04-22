@@ -54,17 +54,29 @@ public:
 
 	virtual ~render_factory() = default;
 
+	struct texture_2d_parameters {
+		texture_2d::filter min_filter = texture_2d::filter::linear;
+		texture_2d::filter mag_filter = texture_2d::filter::linear;
+		texture_2d::mipmap mipmap = texture_2d::mipmap::linear;
+	};
+
 	virtual utki::shared_ref<texture_2d> create_texture_2d(
 		rasterimage::format format,
 		rasterimage::dimensioned::dimensions_type dims
 	) = 0;
 
-	virtual utki::shared_ref<texture_2d> create_texture_2d(const rasterimage::image_variant& imvar) = 0;
+	virtual utki::shared_ref<texture_2d> create_texture_2d(
+		const rasterimage::image_variant& imvar,
+		texture_2d_parameters params
+	) = 0;
 
 	// NOLINTNEXTLINE(cppcoreguidelines-rvalue-reference-param-not-moved)
-	virtual utki::shared_ref<texture_2d> create_texture_2d(rasterimage::image_variant&& imvar)
+	virtual utki::shared_ref<texture_2d> create_texture_2d(
+		rasterimage::image_variant&& imvar,
+		texture_2d_parameters params
+	)
 	{
-		return this->create_texture_2d(imvar);
+		return this->create_texture_2d(imvar, std::move(params));
 	}
 
 	virtual utki::shared_ref<vertex_buffer> create_vertex_buffer(utki::span<const r4::vector4<float>> vertices) = 0;
