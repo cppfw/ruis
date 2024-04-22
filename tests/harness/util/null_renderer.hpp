@@ -61,7 +61,7 @@ public:
 		return utki::make_shared<null_texture_2d>();
 	}
 
-	utki::shared_ref<ruis::texture_2d> create_texture_2d(const rasterimage::image_variant& imvar)override{
+	utki::shared_ref<ruis::texture_2d> create_texture_2d(const rasterimage::image_variant& imvar, texture_2d_parameters params)override{
 		return utki::make_shared<null_texture_2d>();
 	}
 

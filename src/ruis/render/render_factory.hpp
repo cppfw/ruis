@@ -70,8 +70,8 @@ public:
 		texture_2d_parameters params
 	) = 0;
 
-	// NOLINTNEXTLINE(cppcoreguidelines-rvalue-reference-param-not-moved)
 	virtual utki::shared_ref<texture_2d> create_texture_2d(
+		// NOLINTNEXTLINE(cppcoreguidelines-rvalue-reference-param-not-moved)
 		rasterimage::image_variant&& imvar,
 		texture_2d_parameters params
 	)
