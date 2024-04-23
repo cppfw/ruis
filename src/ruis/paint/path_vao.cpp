@@ -24,7 +24,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace ruis;
 
 // NOLINTNEXTLINE(modernize-pass-by-value)
-path_vao::path_vao(const utki::shared_ref<const ruis::renderer>& r) :
+path_vao::path_vao(const utki::shared_ref<const ruis::render::renderer>& r) :
 	renderer(r),
 	core(this->renderer.get().empty_vertex_array),
 	border(this->renderer.get().empty_vertex_array)
@@ -39,7 +39,7 @@ void path_vao::set(const path::vertices& path)
 			core_buf,
 		},
 		this->renderer.get().factory->create_index_buffer(path.in_indices),
-		ruis::vertex_array::mode::triangle_strip
+		ruis::render::vertex_array::mode::triangle_strip
 	);
 	this->border = this->renderer.get().factory->create_vertex_array(
 		{
@@ -47,7 +47,7 @@ void path_vao::set(const path::vertices& path)
 			this->renderer.get().factory->create_vertex_buffer(path.alpha),
 		},
 		this->renderer.get().factory->create_index_buffer(path.out_indices),
-		ruis::vertex_array::mode::triangle_strip
+		ruis::render::vertex_array::mode::triangle_strip
 	);
 }
 

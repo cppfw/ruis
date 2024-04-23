@@ -27,7 +27,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "texture_2d.hpp"
 #include "vertex_array.hpp"
 
-namespace ruis {
+namespace ruis::render {
 
 class coloring_texturing_shader
 {
@@ -44,10 +44,10 @@ public:
 
 	virtual void render(
 		const r4::matrix4<float>& m,
-		const ruis::vertex_array& va,
+		const ruis::render::vertex_array& va,
 		r4::vector4<float> color,
-		const ruis::texture_2d& tex
+		const ruis::render::texture_2d& tex
 	) const = 0;
 };
 
-} // namespace ruis
+} // namespace ruis::render

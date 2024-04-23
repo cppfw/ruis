@@ -101,7 +101,7 @@ utki::shared_ref<atlas_image> atlas_image::load(
 	// }
 }
 
-void atlas_image::render(const matrix4& matrix, const vertex_array& vao) const
+void atlas_image::render(const matrix4& matrix, const render::vertex_array& vao) const
 {
 	this->context.get().renderer.get().shader->pos_tex->render(matrix, this->vao.get(), this->tex.get().tex());
 }
@@ -115,24 +115,29 @@ namespace {
 class fixed_texture : public image::texture
 {
 protected:
-	const utki::shared_ref<const texture_2d> tex_2d;
+	const utki::shared_ref<const render::texture_2d> tex_2d;
 
-	fixed_texture(const utki::shared_ref<const ruis::renderer>& r, const utki::shared_ref<const texture_2d>& tex) :
+	fixed_texture(
+		const utki::shared_ref<const ruis::render::renderer>& r,
+		const utki::shared_ref<const render::texture_2d>& tex
+	) :
 		image::texture(r, tex.get().dims()),
 		tex_2d(tex)
 	{}
 
 public:
-	void render(const matrix4& matrix, const vertex_array& vao) const override
+	void render(const matrix4& matrix, const render::vertex_array& vao) const override
 	{
 		this->renderer.get().shader->pos_tex->render(matrix, vao, this->tex_2d.get());
 	}
 };
 
-class res_raster_image : public image, public fixed_texture
+class res_raster_image :
+	public image, //
+	public fixed_texture
 {
 public:
-	res_raster_image(const utki::shared_ref<ruis::context>& c, const utki::shared_ref<const texture_2d>& tex) :
+	res_raster_image(const utki::shared_ref<ruis::context>& c, const utki::shared_ref<const render::texture_2d>& tex) :
 		image(c),
 		fixed_texture(this->context.get().renderer, tex)
 	{}
@@ -187,9 +192,9 @@ public:
 
 	public:
 		svg_texture(
-			const utki::shared_ref<const ruis::renderer>& r,
+			const utki::shared_ref<const ruis::render::renderer>& r,
 			const utki::shared_ref<const res_svg_image>& parent,
-			const utki::shared_ref<const texture_2d>& tex
+			const utki::shared_ref<const render::texture_2d>& tex
 		) :
 			fixed_texture(r, tex),
 			parent(parent.to_shared_ptr())
@@ -257,9 +262,9 @@ public:
 			utki::make_shared_from(*this),
 			this->context.get().renderer.get().factory->create_texture_2d(
 				std::move(im),
-				{.min_filter = texture_2d::filter::nearest,
-				 .mag_filter = texture_2d::filter::nearest,
-				 .mipmap = texture_2d::mipmap::none}
+				{.min_filter = render::texture_2d::filter::nearest,
+				 .mag_filter = render::texture_2d::filter::nearest,
+				 .mipmap = render::texture_2d::mipmap::none}
 			)
 		);
 

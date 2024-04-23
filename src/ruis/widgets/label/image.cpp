@@ -102,7 +102,7 @@ void image::render(const ruis::matrix4& matrix) const
 			this->vao = r.factory->create_vertex_array(
 				{r.quad_01_vbo, r.factory->create_vertex_buffer(utki::make_span(tex_coords))},
 				r.quad_indices,
-				vertex_array::mode::triangle_fan
+				render::vertex_array::mode::triangle_fan
 			);
 		} else {
 			this->vao = this->context.get().renderer.get().pos_tex_quad_01_vao;

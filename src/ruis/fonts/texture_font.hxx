@@ -114,8 +114,8 @@ class texture_font : public font
 		ruis::vector2 bottom_right;
 
 		// TOOD: make utki::shared_ref?
-		std::shared_ptr<vertex_array> vao;
-		std::shared_ptr<texture_2d> tex;
+		std::shared_ptr<render::vertex_array> vao;
+		std::shared_ptr<render::texture_2d> tex;
 
 		real advance = 0;
 

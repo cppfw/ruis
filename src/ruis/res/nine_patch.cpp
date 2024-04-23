@@ -32,13 +32,15 @@ using namespace ruis::res;
 
 namespace {
 
-class res_subimage : public res::image, public res::image::texture
+class res_subimage :
+	public res::image, //
+	public res::image::texture
 {
 	friend class res::image;
 
 	const utki::shared_ref<const res::image::texture> tex;
 
-	const utki::shared_ref<const vertex_array> vao;
+	const utki::shared_ref<const render::vertex_array> vao;
 
 public:
 	// rect is a rectangle on the texture, Y axis down.
@@ -69,7 +71,7 @@ public:
 			return r.factory->create_vertex_array(
 				{r.quad_01_vbo, r.factory->create_vertex_buffer(tex_coords)},
 				r.quad_indices,
-				vertex_array::mode::triangle_fan
+				render::vertex_array::mode::triangle_fan
 			);
 		}())
 	{}
@@ -92,7 +94,7 @@ public:
 		return utki::make_shared_from(*this);
 	}
 
-	void render(const matrix4& matrix, const vertex_array& vao) const override
+	void render(const matrix4& matrix, const render::vertex_array& vao) const override
 	{
 		this->tex.get().render(matrix, this->vao.get());
 	}

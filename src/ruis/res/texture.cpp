@@ -30,12 +30,12 @@ using namespace ruis;
 using namespace ruis::res;
 
 namespace {
-texture_2d::filter parse_filter(std::string_view str)
+render::texture_2d::filter parse_filter(std::string_view str)
 {
 	if (str == "nearest"sv) {
-		return texture_2d::filter::nearest;
+		return render::texture_2d::filter::nearest;
 	} else if (str == "linear"sv) {
-		return texture_2d::filter::linear;
+		return render::texture_2d::filter::linear;
 	}
 	throw std::invalid_argument(
 		utki::cat("res::texture: unknown filter value specified in the resource description: ", str)
@@ -44,14 +44,14 @@ texture_2d::filter parse_filter(std::string_view str)
 } // namespace
 
 namespace {
-texture_2d::mipmap parse_mipmap(std::string_view str)
+render::texture_2d::mipmap parse_mipmap(std::string_view str)
 {
 	if (str == "none"sv) {
-		return texture_2d::mipmap::none;
+		return render::texture_2d::mipmap::none;
 	} else if (str == "nearest"sv) {
-		return texture_2d::mipmap::nearest;
+		return render::texture_2d::mipmap::nearest;
 	} else if (str == "linear"sv) {
-		return texture_2d::mipmap::linear;
+		return render::texture_2d::mipmap::linear;
 	}
 	throw std::invalid_argument(
 		utki::cat("res::texture: unknown mipmap value specified in the resource description: ", str)
@@ -65,10 +65,10 @@ utki::shared_ref<texture> texture::load(
 	const papki::file& fi
 )
 {
-	render_factory::texture_2d_parameters params{
-		.min_filter = texture_2d::filter::linear,
-		.mag_filter = texture_2d::filter::linear,
-		.mipmap = texture_2d::mipmap::nearest
+	render::render_factory::texture_2d_parameters params{
+		.min_filter = render::texture_2d::filter::linear,
+		.mag_filter = render::texture_2d::filter::linear,
+		.mipmap = render::texture_2d::mipmap::nearest
 	};
 
 	for (auto& p : desc) {

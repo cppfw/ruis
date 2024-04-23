@@ -144,7 +144,7 @@ class cube_widget : public ruis::widget, public ruis::updateable{
 
 	ruis::quaternion rot = ruis::quaternion().set_identity();
 public:
-	std::shared_ptr<ruis::vertex_array> cubeVAO;
+	std::shared_ptr<ruis::render::vertex_array> cubeVAO;
 
 	cube_widget(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 			ruis::widget(c, desc)
@@ -196,7 +196,7 @@ public:
 		this->cubeVAO = this->context.get().renderer.get().factory->create_vertex_array(
 			{pos_vbo, tex_vbo},
 			cube_indices,
-			ruis::vertex_array::mode::triangles
+			ruis::render::vertex_array::mode::triangles
 		).to_shared_ptr();
 
 		this->tex = this->context.get().loader.load<ruis::res::texture>("tex_sample").to_shared_ptr();

@@ -46,11 +46,11 @@ namespace ruis::res {
  * Example:
  * @code
  * ruis_grd_window_background{
- *     Stop{ pos{0} color{0} }
- *     Stop{ pos{0.43} color{0x10ffffff} }
- *     Stop{ pos{0.5} color{0x12ffffff} }
- *     Stop{ pos{0.57} color{0x10ffffff} }
- *     Stop{ pos{1} color{0} }
+ *     stop{ pos{0} color{0} }
+ *     stop{ pos{0.43} color{0x10ffffff} }
+ *     stop{ pos{0.5} color{0x12ffffff} }
+ *     stop{ pos{0.57} color{0x10ffffff} }
+ *     stop{ pos{1} color{0} }
  * }
  * @endcode
  */
@@ -58,7 +58,7 @@ class gradient : public resource
 {
 	friend class ruis::resource_loader;
 
-	utki::shared_ref<const vertex_array> vao;
+	utki::shared_ref<const render::vertex_array> vao;
 
 public:
 	/**

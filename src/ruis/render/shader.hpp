@@ -25,7 +25,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "vertex_array.hpp"
 
-namespace ruis {
+namespace ruis::render {
 
 class shader
 {
@@ -43,4 +43,4 @@ public:
 	virtual void render(const r4::matrix4<float>& m, const vertex_array& va) const = 0;
 };
 
-} // namespace ruis
+} // namespace ruis::render

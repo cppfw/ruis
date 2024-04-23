@@ -99,7 +99,7 @@ public:
 
 private:
 	mutable bool cache_dirty = true;
-	mutable std::shared_ptr<texture_2d> cache_texture;
+	mutable std::shared_ptr<render::texture_2d> cache_texture;
 
 	void render_from_cache(const r4::matrix4<float>& matrix) const;
 
@@ -127,9 +127,9 @@ public:
 	 *                of the widget then new texture will be allocated.
 	 * @return Texture containing rendered widget.
 	 */
-	utki::shared_ref<texture_2d> render_to_texture(
-		render_factory::texture_2d_parameters params,
-		std::shared_ptr<texture_2d> reuse = nullptr
+	utki::shared_ref<render::texture_2d> render_to_texture(
+		render::render_factory::texture_2d_parameters params,
+		std::shared_ptr<render::texture_2d> reuse = nullptr
 	) const;
 
 private:

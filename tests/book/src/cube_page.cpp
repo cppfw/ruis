@@ -14,7 +14,7 @@ class cube_widget : public ruis::widget, public ruis::updateable{
 	
 	ruis::quaternion rot = ruis::quaternion().set_identity();
 public:
-	std::shared_ptr<ruis::vertex_array> cube_vao;
+	std::shared_ptr<ruis::render::vertex_array> cube_vao;
 	
 	cube_widget(const utki::shared_ref<ruis::context>& c) :
 			widget(c, tml::forest())
@@ -64,7 +64,7 @@ public:
 		
 		auto cube_indices = this->context.get().renderer.get().factory->create_index_buffer(utki::make_span(indices));
 		
-		this->cube_vao = this->context.get().renderer.get().factory->create_vertex_array({pos_vbo, tex_vbo}, cube_indices, ruis::vertex_array::mode::triangles)
+		this->cube_vao = this->context.get().renderer.get().factory->create_vertex_array({pos_vbo, tex_vbo}, cube_indices, ruis::render::vertex_array::mode::triangles)
 			.to_shared_ptr();
 		
 		this->tex = this->context.get().loader.load<ruis::res::texture>("tex_sample").to_shared_ptr();

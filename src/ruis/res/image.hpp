@@ -70,10 +70,10 @@ public:
 	class texture
 	{
 	protected:
-		const utki::shared_ref<const ruis::renderer> renderer;
+		const utki::shared_ref<const ruis::render::renderer> renderer;
 
 		// NOLINTNEXTLINE(modernize-pass-by-value)
-		texture(const utki::shared_ref<const ruis::renderer>& r, vector2 dims) :
+		texture(const utki::shared_ref<const ruis::render::renderer>& r, vector2 dims) :
 			renderer(r),
 			dims(dims)
 		{}
@@ -99,7 +99,7 @@ public:
 		 * @param matrix - transformation matrix to use for rendering.
 		 * @param vao - vertex array to use for rendering.
 		 */
-		virtual void render(const matrix4& matrix, const vertex_array& vao) const = 0;
+		virtual void render(const matrix4& matrix, const render::vertex_array& vao) const = 0;
 	};
 
 	/**
@@ -144,7 +144,7 @@ class atlas_image : public image, public image::texture
 
 	const utki::shared_ref<const res::texture> tex;
 
-	const utki::shared_ref<const vertex_array> vao;
+	const utki::shared_ref<const render::vertex_array> vao;
 
 public:
 	// TODO:
@@ -170,7 +170,7 @@ public:
 
 	utki::shared_ref<const image::texture> get(vector2 for_dims) const override;
 
-	void render(const matrix4& matrix, const vertex_array& vao) const override;
+	void render(const matrix4& matrix, const render::vertex_array& vao) const override;
 
 private:
 	static utki::shared_ref<atlas_image> load(

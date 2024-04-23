@@ -27,12 +27,12 @@ namespace ruis {
 
 class frame_vao
 {
-	utki::shared_ref<const ruis::renderer> renderer;
+	utki::shared_ref<const ruis::render::renderer> renderer;
 
-	utki::shared_ref<const ruis::vertex_array> vao;
+	utki::shared_ref<const ruis::render::vertex_array> vao;
 
 public:
-	frame_vao(const utki::shared_ref<const ruis::renderer>& r);
+	frame_vao(const utki::shared_ref<const ruis::render::renderer>& r);
 
 	frame_vao(const frame_vao&) = delete;
 	frame_vao& operator=(const frame_vao&) = delete;

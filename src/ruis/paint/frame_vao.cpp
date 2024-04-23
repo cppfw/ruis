@@ -24,7 +24,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace ruis;
 
 // NOLINTNEXTLINE(modernize-pass-by-value)
-frame_vao::frame_vao(const utki::shared_ref<const ruis::renderer>& r) :
+frame_vao::frame_vao(const utki::shared_ref<const ruis::render::renderer>& r) :
 	renderer(r),
 	vao(this->renderer.get().empty_vertex_array)
 {}
@@ -53,7 +53,7 @@ void frame_vao::set(vector2 dims, vector2 thickness)
 			this->renderer.get().factory->create_vertex_buffer(vertices),
 		},
 		this->renderer.get().factory->create_index_buffer(indices),
-		ruis::vertex_array::mode::triangle_strip
+		ruis::render::vertex_array::mode::triangle_strip
 	);
 }
 

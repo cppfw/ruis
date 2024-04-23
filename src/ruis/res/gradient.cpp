@@ -73,7 +73,7 @@ void gradient::set(std::vector<std::tuple<real, uint32_t>>& stops, bool vertical
 		{r.factory->create_vertex_buffer(utki::make_span(vertices)),
 		 r.factory->create_vertex_buffer(utki::make_span(colors))},
 		r.factory->create_index_buffer(utki::make_span(indices)),
-		vertex_array::mode::triangle_strip
+		render::vertex_array::mode::triangle_strip
 	);
 }
 

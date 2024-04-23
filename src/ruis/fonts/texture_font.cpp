@@ -179,7 +179,7 @@ texture_font::glyph texture_font::load_glyph(char32_t c) const
 					{r.factory->create_vertex_buffer(utki::make_span(ftg.vertices)),
 					 this->context.get().renderer.get().quad_01_vbo},
 					this->context.get().renderer.get().quad_indices,
-					vertex_array::mode::triangle_fan
+					render::vertex_array::mode::triangle_fan
 				)
 				.to_shared_ptr();
 	g.tex = this->context.get()
@@ -187,9 +187,9 @@ texture_font::glyph texture_font::load_glyph(char32_t c) const
 				.factory
 				->create_texture_2d(
 					std::move(ftg.image),
-					{.min_filter = texture_2d::filter::nearest,
-					 .mag_filter = texture_2d::filter::nearest,
-					 .mipmap = texture_2d::mipmap::none}
+					{.min_filter = render::texture_2d::filter::nearest,
+					 .mag_filter = render::texture_2d::filter::nearest,
+					 .mipmap = render::texture_2d::mipmap::none}
 				)
 				.to_shared_ptr();
 

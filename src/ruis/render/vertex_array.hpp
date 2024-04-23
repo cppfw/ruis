@@ -29,7 +29,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "index_buffer.hpp"
 #include "vertex_buffer.hpp"
 
-namespace ruis {
+namespace ruis::render {
 
 class vertex_array
 {
@@ -57,7 +57,7 @@ public:
 
 	const mode rendering_mode;
 
-	vertex_array(buffers_type buffers, const utki::shared_ref<const ruis::index_buffer>& indices, mode rendering_mode);
+	vertex_array(buffers_type buffers, const utki::shared_ref<const index_buffer>& indices, mode rendering_mode);
 
 	vertex_array(const vertex_array&) = delete;
 	vertex_array& operator=(const vertex_array&) = delete;
@@ -68,4 +68,4 @@ public:
 	virtual ~vertex_array() = default;
 };
 
-} // namespace ruis
+} // namespace ruis::render

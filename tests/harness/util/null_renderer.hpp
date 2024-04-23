@@ -4,17 +4,17 @@
 
 #include <ruis/render/renderer.hpp>
 
-class null_texture_2d : public ruis::texture_2d{
+class null_texture_2d : public ruis::render::texture_2d{
 public:
-	null_texture_2d() : ruis::texture_2d(ruis::vector2(13, 666)){}
+	null_texture_2d() : ruis::render::texture_2d(ruis::vector2(13, 666)){}
 };
 
-class null_frame_buffer : public ruis::frame_buffer{
+class null_frame_buffer : public ruis::render::frame_buffer{
 public:
-	null_frame_buffer() : ruis::frame_buffer(utki::make_shared<null_texture_2d>()){}
+	null_frame_buffer() : ruis::render::frame_buffer(utki::make_shared<null_texture_2d>()){}
 };
 
-class null_index_buffer : public ruis::index_buffer{
+class null_index_buffer : public ruis::render::index_buffer{
 public:
 };
 
@@ -25,35 +25,35 @@ public:
 	{}
 };
 
-class null_vertex_array : public ruis::vertex_array{
+class null_vertex_array : public ruis::render::vertex_array{
 public:
 	null_vertex_array() :
-		ruis::vertex_array(
+		ruis::render::vertex_array(
 			{utki::make_shared<null_vertex_buffer>()},
 			utki::make_shared<null_index_buffer>(),
-			ruis::vertex_array::mode::triangles
+			ruis::render::vertex_array::mode::triangles
 		)
 	{}
 };
 
-class null_factory : public ruis::render_factory{
+class null_factory : public ruis::render::render_factory{
 public:
-	utki::shared_ref<ruis::frame_buffer> create_framebuffer(
-		const utki::shared_ref<ruis::texture_2d>& color
+	utki::shared_ref<ruis::render::frame_buffer> create_framebuffer(
+		const utki::shared_ref<ruis::render::texture_2d>& color
 	)override
 	{
 		return utki::make_shared<null_frame_buffer>();
 	}
 
-	utki::shared_ref<ruis::index_buffer> create_index_buffer(utki::span<const uint16_t> indices)override{
+	utki::shared_ref<ruis::render::index_buffer> create_index_buffer(utki::span<const uint16_t> indices)override{
 		return utki::make_shared<null_index_buffer>();
 	}
 
-	std::unique_ptr<ruis::render_factory::shaders> create_shaders() override{
+	std::unique_ptr<ruis::render::render_factory::shaders> create_shaders() override{
 		return nullptr;
 	}
 
-	utki::shared_ref<ruis::texture_2d> create_texture_2d(
+	utki::shared_ref<ruis::render::texture_2d> create_texture_2d(
 		rasterimage::format format,
 		rasterimage::dimensioned::dimensions_type dims,
 		texture_2d_parameters params
@@ -62,14 +62,14 @@ public:
 		return utki::make_shared<null_texture_2d>();
 	}
 
-	utki::shared_ref<ruis::texture_2d> create_texture_2d(const rasterimage::image_variant& imvar, texture_2d_parameters params)override{
+	utki::shared_ref<ruis::render::texture_2d> create_texture_2d(const rasterimage::image_variant& imvar, texture_2d_parameters params)override{
 		return utki::make_shared<null_texture_2d>();
 	}
 
-	utki::shared_ref<ruis::vertex_array> create_vertex_array(
+	utki::shared_ref<ruis::render::vertex_array> create_vertex_array(
 			std::vector<utki::shared_ref<const ruis::vertex_buffer>> buffers,
-			const utki::shared_ref<const ruis::index_buffer>& indices,
-			ruis::vertex_array::mode rendering_mode
+			const utki::shared_ref<const ruis::render::index_buffer>& indices,
+			ruis::render::vertex_array::mode rendering_mode
 		)override
 	{
 		return utki::make_shared<null_vertex_array>();
@@ -92,10 +92,10 @@ public:
 
 };
 
-class null_renderer : public ruis::renderer{
+class null_renderer : public ruis::render::renderer{
 public:
 	null_renderer() :
-			ruis::renderer(std::make_unique<null_factory>(), params())
+			ruis::render::renderer(std::make_unique<null_factory>(), params())
 	{}
 
 	void clear_framebuffer()override{}
@@ -110,7 +110,7 @@ public:
 	}
 	void set_blend_enabled(bool enable)override{}
 	void set_blend_func(blend_factor src_color, blend_factor dst_color, blend_factor src_alpha, blend_factor dst_alpha)override{}
-	void set_framebuffer_internal(ruis::frame_buffer* fb)override{}
+	void set_framebuffer_internal(ruis::render::frame_buffer* fb)override{}
 	void set_scissor_enabled(bool enabled)override{}
 	void set_scissor(r4::rectangle<int> r)override{}
 	void set_viewport(r4::rectangle<int> r)override{}

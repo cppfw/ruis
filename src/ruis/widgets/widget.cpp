@@ -224,9 +224,9 @@ void widget::render_internal(const ruis::matrix4& matrix) const
 			r.set_scissor_enabled(false);
 
 			this->cache_texture = this->render_to_texture(
-										  {.min_filter = texture_2d::filter::nearest,
-										   .mag_filter = texture_2d::filter::nearest,
-										   .mipmap = texture_2d::mipmap::none},
+										  {.min_filter = render::texture_2d::filter::nearest,
+										   .mag_filter = render::texture_2d::filter::nearest,
+										   .mipmap = render::texture_2d::mipmap::none},
 										  std::move(this->cache_texture)
 			)
 									  .to_shared_ptr();
@@ -287,14 +287,14 @@ void widget::render_internal(const ruis::matrix4& matrix) const
 #endif
 }
 
-utki::shared_ref<texture_2d> widget::render_to_texture(
-	render_factory::texture_2d_parameters params,
-	std::shared_ptr<texture_2d> reuse
+utki::shared_ref<render::texture_2d> widget::render_to_texture(
+	render::render_factory::texture_2d_parameters params,
+	std::shared_ptr<render::texture_2d> reuse
 ) const
 {
 	auto& r = this->context.get().renderer.get();
 
-	utki::shared_ref<texture_2d> tex = [&]() {
+	utki::shared_ref<render::texture_2d> tex = [&]() {
 		if (reuse && reuse->dims() == this->rect().d) {
 			ASSERT(reuse)
 			return utki::shared_ref(std::move(reuse));

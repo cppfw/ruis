@@ -53,7 +53,7 @@ private:
 	parameters params;
 
 	mutable std::shared_ptr<const ruis::res::image::texture> texture;
-	mutable utki::shared_ref<const vertex_array> vao;
+	mutable utki::shared_ref<const render::vertex_array> vao;
 
 public:
 	struct all_parameters {

@@ -27,7 +27,7 @@ using namespace ruis;
 
 context::context(
 	// NOLINTNEXTLINE(modernize-pass-by-value)
-	const utki::shared_ref<ruis::renderer>& r,
+	const utki::shared_ref<ruis::render::renderer>& r,
 	// NOLINTNEXTLINE(modernize-pass-by-value)
 	const utki::shared_ref<ruis::updater>& u,
 	std::function<void(std::function<void()>)> run_from_ui_thread_function,

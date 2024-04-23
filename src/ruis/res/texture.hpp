@@ -53,7 +53,7 @@ class texture : public ruis::resource
 {
 	friend class ruis::resource_loader;
 
-	const utki::shared_ref<const texture_2d> tex2d;
+	const utki::shared_ref<const render::texture_2d> tex2d;
 
 public:
 	/**
@@ -78,7 +78,7 @@ public:
 	 * @brief Get texture object held by this resource.
 	 * @return Texture object.
 	 */
-	const texture_2d& tex() const noexcept
+	const render::texture_2d& tex() const noexcept
 	{
 		return this->tex2d.get();
 	}

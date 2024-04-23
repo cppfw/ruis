@@ -23,7 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <cstddef>
 
-namespace ruis {
+namespace ruis::render {
 
 class vertex_buffer
 {
@@ -43,4 +43,4 @@ public:
 	virtual ~vertex_buffer() = default;
 };
 
-} // namespace ruis
+} // namespace ruis::render

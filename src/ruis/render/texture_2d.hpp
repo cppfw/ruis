@@ -23,7 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../config.hpp"
 
-namespace ruis {
+namespace ruis::render {
 
 class texture_2d
 {
@@ -62,4 +62,4 @@ public:
 	// TODO: add virtual generate_mipmap()
 };
 
-} // namespace ruis
+} // namespace ruis::render

@@ -27,29 +27,29 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace ruis;
 
 namespace {
-const std::map<std::string, renderer::blend_factor> blend_factor_names = {
-	{					"zero",					 renderer::blend_factor::zero},
-	{					 "one",					  renderer::blend_factor::one},
-	{			   "src_color",                renderer::blend_factor::src_color},
-	{	 "one_minus_src_color",      renderer::blend_factor::one_minus_src_color},
-	{			   "dst_color",                renderer::blend_factor::dst_color},
-	{	 "one_minus_dst_color",      renderer::blend_factor::one_minus_dst_color},
-	{			   "src_alpha",                renderer::blend_factor::src_alpha},
-	{	 "one_minus_src_alpha",      renderer::blend_factor::one_minus_src_alpha},
-	{			   "dst_alpha",                renderer::blend_factor::dst_alpha},
-	{	 "one_minus_dst_alpha",      renderer::blend_factor::one_minus_dst_alpha},
-	{		  "constant_color",           renderer::blend_factor::constant_color},
-	{"one_minus_constant_color", renderer::blend_factor::one_minus_constant_color},
-	{		  "constant_alpha",           renderer::blend_factor::constant_alpha},
-	{"one_minus_constant_alpha", renderer::blend_factor::one_minus_constant_alpha},
-	{	  "src_alpha_saturate",       renderer::blend_factor::src_alpha_saturate}
+const std::map<std::string, render::renderer::blend_factor> blend_factor_names = {
+	{					"zero",					 render::renderer::blend_factor::zero},
+	{					 "one",					  render::renderer::blend_factor::one},
+	{			   "src_color",                render::renderer::blend_factor::src_color},
+	{	 "one_minus_src_color",      render::renderer::blend_factor::one_minus_src_color},
+	{			   "dst_color",                render::renderer::blend_factor::dst_color},
+	{	 "one_minus_dst_color",      render::renderer::blend_factor::one_minus_dst_color},
+	{			   "src_alpha",                render::renderer::blend_factor::src_alpha},
+	{	 "one_minus_src_alpha",      render::renderer::blend_factor::one_minus_src_alpha},
+	{			   "dst_alpha",                render::renderer::blend_factor::dst_alpha},
+	{	 "one_minus_dst_alpha",      render::renderer::blend_factor::one_minus_dst_alpha},
+	{		  "constant_color",           render::renderer::blend_factor::constant_color},
+	{"one_minus_constant_color", render::renderer::blend_factor::one_minus_constant_color},
+	{		  "constant_alpha",           render::renderer::blend_factor::constant_alpha},
+	{"one_minus_constant_alpha", render::renderer::blend_factor::one_minus_constant_alpha},
+	{	  "src_alpha_saturate",       render::renderer::blend_factor::src_alpha_saturate}
 };
 
-renderer::blend_factor blend_factor_from_string(const std::string& s)
+render::renderer::blend_factor blend_factor_from_string(const std::string& s)
 {
 	auto i = blend_factor_names.find(s);
 	if (i == blend_factor_names.end()) {
-		return renderer::blend_factor::one;
+		return render::renderer::blend_factor::one;
 	}
 	return i->second;
 }

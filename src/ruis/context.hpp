@@ -44,7 +44,7 @@ class context : public std::enable_shared_from_this<context>
 	void set_focused_widget(const std::shared_ptr<widget>& w);
 
 public:
-	const utki::shared_ref<ruis::renderer> renderer;
+	const utki::shared_ref<ruis::render::renderer> renderer;
 
 	const utki::shared_ref<ruis::updater> updater;
 
@@ -77,7 +77,7 @@ public:
 	 * @param dots_per_pp - desired dots per perception pixel.
 	 */
 	context(
-		const utki::shared_ref<ruis::renderer>& r,
+		const utki::shared_ref<ruis::render::renderer>& r,
 		const utki::shared_ref<ruis::updater>& u,
 		std::function<void(std::function<void()>)> run_from_ui_thread_function,
 		std::function<void(ruis::mouse_cursor)> set_mouse_cursor_function,

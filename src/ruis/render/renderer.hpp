@@ -23,7 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "render_factory.hpp"
 
-namespace ruis {
+namespace ruis::render {
 
 class renderer
 {
@@ -139,4 +139,4 @@ protected:
 	virtual void set_framebuffer_internal(frame_buffer* fb) = 0;
 };
 
-} // namespace ruis
+} // namespace ruis::render
