@@ -304,28 +304,25 @@ utki::shared_ref<render::texture_2d> widget::render_to_texture(
 		}
 	}();
 
+	utki::scope_exit viewport_scope_exit([old_viewport = r.get_viewport(), &r]() {
+		r.set_viewport(old_viewport);
+	});
+
+	utki::scope_exit framebuffer_scope_exit([old_framebuffer = r.get_framebuffer(), &r]() {
+		r.set_framebuffer(std::move(old_framebuffer));
+	});
+
 	r.set_framebuffer(r.factory->create_framebuffer(tex).to_shared_ptr());
 
 	//	ASSERT_INFO(Render::isBoundFrameBufferComplete(), "tex.dims() = " << tex.dims())
-
-	auto old_viewport = r.get_viewport();
-	utki::scope_exit scope_exit([&old_viewport, &r]() {
-		r.set_viewport(old_viewport);
-	});
 
 	r.set_viewport(r4::rectangle<int>(0, this->rect().d.to<int>()));
 
 	r.clear_framebuffer();
 
-	matrix4 matrix = r.initial_matrix;
-	matrix.translate(-1, 1);
-	constexpr auto viewport_initial_dimension = 2.0;
-	matrix.scale(vector2(viewport_initial_dimension, -viewport_initial_dimension).comp_divide(this->rect().d));
+	matrix4 matrix = set_up_coordinate_system(r.initial_matrix, this->rect().d);
 
 	this->render(matrix);
-
-	// TODO: get rid of default framebuffer, get previous framebuffer and set it here
-	r.set_framebuffer(nullptr);
 
 	return tex;
 }

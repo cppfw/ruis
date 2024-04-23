@@ -72,11 +72,20 @@ public:
 	const r4::matrix4<float> initial_matrix;
 
 	/**
-	 * @brief Set current framebuffer.
-	 * @param fb - framebuffer to set as the current one. If 'nullptr' then screen buffer is set as current frame
+	 * @brief Set current frame buffer.
+	 * @param fb - frame buffer to set as the current one. If 'nullptr' then screen buffer is set as current frame
 	 * buffer.
 	 */
 	void set_framebuffer(std::shared_ptr<frame_buffer> fb);
+
+	/**
+	 * @brief Get current frame buffer.
+	 * @return Current frame buffer. If nullptr, then it is a screen buffer.
+	 */
+	const std::shared_ptr<frame_buffer>& get_framebuffer()
+	{
+		return this->cur_fb;
+	}
 
 	virtual void clear_framebuffer() = 0;
 

@@ -33,6 +33,21 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
+/**
+ * @brief Set up coordinate system.
+ * Set up right-handed coordinate system with:
+ * - x-axis right, y-axis down, z-axis away
+ * - zero at top-left corner of viewport
+ * - viewport right and bottom edges correspond to coordinates equal to viewport size in pixels.
+ *
+ * @param initial - renderer's initial matrix. The initial matrix sets up an initial coordinate
+ *                  system as defined by OpenGL. Left, right, bottom, top edges of viewport
+ *                  correspond to coordinates -1, 1, -1, 1. Coordinate system is right-handed.
+ * @param viewport_dim - dimensions of the renderer's viewport.
+ * @return Matrix for the ruis coordinate system.
+ */
+ruis::matrix4 set_up_coordinate_system(const ruis::matrix4& initial, ruis::vector2 viewport_dim);
+
 ruis::vector2 parse_vec2(tml::forest::const_iterator begin, tml::forest::const_iterator end);
 
 /**
