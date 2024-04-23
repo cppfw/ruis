@@ -55,14 +55,15 @@ public:
 	virtual ~render_factory() = default;
 
 	struct texture_2d_parameters {
-		texture_2d::filter min_filter = texture_2d::filter::linear;
-		texture_2d::filter mag_filter = texture_2d::filter::linear;
-		texture_2d::mipmap mipmap = texture_2d::mipmap::linear;
+		texture_2d::filter min_filter = texture_2d::filter::nearest;
+		texture_2d::filter mag_filter = texture_2d::filter::nearest;
+		texture_2d::mipmap mipmap = texture_2d::mipmap::none;
 	};
 
 	virtual utki::shared_ref<texture_2d> create_texture_2d(
 		rasterimage::format format,
-		rasterimage::dimensioned::dimensions_type dims
+		rasterimage::dimensioned::dimensions_type dims,
+		texture_2d_parameters params
 	) = 0;
 
 	virtual utki::shared_ref<texture_2d> create_texture_2d(

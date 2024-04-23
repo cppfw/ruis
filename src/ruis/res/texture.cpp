@@ -24,8 +24,40 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../context.hpp"
 #include "../util/util.hpp"
 
+using namespace std::string_view_literals;
+
 using namespace ruis;
 using namespace ruis::res;
+
+namespace {
+texture_2d::filter parse_filter(std::string_view str)
+{
+	if (str == "nearest"sv) {
+		return texture_2d::filter::nearest;
+	} else if (str == "linear"sv) {
+		return texture_2d::filter::linear;
+	}
+	throw std::invalid_argument(
+		utki::cat("res::texture: unknown filter value specified in the resource description: ", str)
+	);
+}
+} // namespace
+
+namespace {
+texture_2d::mipmap parse_mipmap(std::string_view str)
+{
+	if (str == "none"sv) {
+		return texture_2d::mipmap::none;
+	} else if (str == "nearest"sv) {
+		return texture_2d::mipmap::nearest;
+	} else if (str == "linear"sv) {
+		return texture_2d::mipmap::linear;
+	}
+	throw std::invalid_argument(
+		utki::cat("res::texture: unknown mipmap value specified in the resource description: ", str)
+	);
+}
+} // namespace
 
 utki::shared_ref<texture> texture::load(
 	const utki::shared_ref<ruis::context>& ctx,
@@ -33,16 +65,26 @@ utki::shared_ref<texture> texture::load(
 	const papki::file& fi
 )
 {
+	render_factory::texture_2d_parameters params{
+		.min_filter = texture_2d::filter::linear,
+		.mag_filter = texture_2d::filter::linear,
+		.mipmap = texture_2d::mipmap::nearest
+	};
+
 	for (auto& p : desc) {
-		if (p.value == "file") {
+		if (p.value == "file"sv) {
 			fi.set_path(get_property_value(p).string);
+		} else if (p.value == "min_filter") {
+			params.min_filter = parse_filter(get_property_value(p).string);
+		} else if (p.value == "mag_filter") {
+			params.mag_filter = parse_filter(get_property_value(p).string);
+		} else if (p.value == "mipmap") {
+			params.mipmap = parse_mipmap(get_property_value(p).string);
 		}
 	}
 
-	// TODO: tex params
-
 	return utki::make_shared<texture>(
 		ctx,
-		ctx.get().renderer.get().factory->create_texture_2d(rasterimage::read(fi), {})
+		ctx.get().renderer.get().factory->create_texture_2d(rasterimage::read(fi), std::move(params))
 	);
 }

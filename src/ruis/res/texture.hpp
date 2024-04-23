@@ -35,11 +35,17 @@ namespace ruis::res {
  * %resource description:
  *
  * @param file - name of the image file, can be raster image.
+ * @param min_filter - texture minification filter, possible values are [nearest, linear]. Default is 'linear'.
+ * @param mag_filter - texture magnification filter, possible values are [nearest, linear]. Default is 'linear'.
+ * @param mipmap - texture mipmapping, possible values are [none, nearest, linear]. Default is 'nearest'.
  *
  * Example:
  * @code
  * tex_sample{
  *     file{texture_sample.png}
+ *     min_filter{linear}
+ *     mag_filter{linear}
+ *     mipmap{nearest}
  * }
  * @endcode
  */

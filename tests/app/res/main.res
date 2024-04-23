@@ -2,6 +2,9 @@ include_subdirs
 
 tex_sample{
 	file {texture.jpg}
+	min_filter{linear}
+	mag_filter{linear}
+	mipmap{nearest}
 }
 
 tex_lattice{

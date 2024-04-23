@@ -55,7 +55,8 @@ public:
 
 	utki::shared_ref<ruis::texture_2d> create_texture_2d(
 		rasterimage::format format,
-		rasterimage::dimensioned::dimensions_type dims
+		rasterimage::dimensioned::dimensions_type dims,
+		texture_2d_parameters params
 	)override
 	{
 		return utki::make_shared<null_texture_2d>();

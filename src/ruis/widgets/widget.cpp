@@ -223,14 +223,13 @@ void widget::render_internal(const ruis::matrix4& matrix) const
 			bool scissor_test_was_enabled = r.is_scissor_enabled();
 			r.set_scissor_enabled(false);
 
-			// TODO: this is already checked inside of render_to_texture()
-			// check if can re-use old texture
-			if (!this->cache_texture || this->cache_texture->dims() != this->rect().d) {
-				this->cache_texture = this->render_to_texture().to_shared_ptr();
-			} else {
-				ASSERT(this->cache_texture->dims() == this->rect().d)
-				this->cache_texture = this->render_to_texture(std::move(this->cache_texture)).to_shared_ptr();
-			}
+			this->cache_texture = this->render_to_texture(
+										  {.min_filter = texture_2d::filter::nearest,
+										   .mag_filter = texture_2d::filter::nearest,
+										   .mipmap = texture_2d::mipmap::none},
+										  std::move(this->cache_texture)
+			)
+									  .to_shared_ptr();
 
 			r.set_scissor_enabled(scissor_test_was_enabled);
 			this->cache_dirty = false;
@@ -288,7 +287,10 @@ void widget::render_internal(const ruis::matrix4& matrix) const
 #endif
 }
 
-utki::shared_ref<texture_2d> widget::render_to_texture(std::shared_ptr<texture_2d> reuse) const
+utki::shared_ref<texture_2d> widget::render_to_texture(
+	render_factory::texture_2d_parameters params,
+	std::shared_ptr<texture_2d> reuse
+) const
 {
 	auto& r = this->context.get().renderer.get();
 
@@ -297,7 +299,8 @@ utki::shared_ref<texture_2d> widget::render_to_texture(std::shared_ptr<texture_2
 			ASSERT(reuse)
 			return utki::shared_ref(std::move(reuse));
 		} else {
-			return r.factory->create_texture_2d(rasterimage::format::rgba, this->rect().d.to<uint32_t>());
+			return r.factory
+				->create_texture_2d(rasterimage::format::rgba, this->rect().d.to<uint32_t>(), std::move(params));
 		}
 	}();
 
