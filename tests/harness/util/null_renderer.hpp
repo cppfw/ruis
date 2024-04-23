@@ -18,10 +18,10 @@ class null_index_buffer : public ruis::render::index_buffer{
 public:
 };
 
-class null_vertex_buffer : public ruis::vertex_buffer{
+class null_vertex_buffer : public ruis::render::vertex_buffer{
 public:
 	null_vertex_buffer() :
-		ruis::vertex_buffer(13)
+		ruis::render::vertex_buffer(13)
 	{}
 };
 
@@ -67,7 +67,7 @@ public:
 	}
 
 	utki::shared_ref<ruis::render::vertex_array> create_vertex_array(
-			std::vector<utki::shared_ref<const ruis::vertex_buffer>> buffers,
+			std::vector<utki::shared_ref<const ruis::render::vertex_buffer>> buffers,
 			const utki::shared_ref<const ruis::render::index_buffer>& indices,
 			ruis::render::vertex_array::mode rendering_mode
 		)override
@@ -75,18 +75,18 @@ public:
 		return utki::make_shared<null_vertex_array>();
 	}
 
-	utki::shared_ref<ruis::vertex_buffer> create_vertex_buffer(utki::span<const float> vertices)override{
+	utki::shared_ref<ruis::render::vertex_buffer> create_vertex_buffer(utki::span<const float> vertices)override{
 		return utki::make_shared<null_vertex_buffer>();
 	}
 
-	utki::shared_ref<ruis::vertex_buffer> create_vertex_buffer(utki::span<const r4::vector2<float>> vertices)override{
+	utki::shared_ref<ruis::render::vertex_buffer> create_vertex_buffer(utki::span<const r4::vector2<float>> vertices)override{
 		return utki::make_shared<null_vertex_buffer>();
 	}
-	utki::shared_ref<ruis::vertex_buffer> create_vertex_buffer(utki::span<const r4::vector3<float>> vertices)override{
+	utki::shared_ref<ruis::render::vertex_buffer> create_vertex_buffer(utki::span<const r4::vector3<float>> vertices)override{
 		return utki::make_shared<null_vertex_buffer>();
 	}
 
-	utki::shared_ref<ruis::vertex_buffer> create_vertex_buffer(utki::span<const r4::vector4<float>> vertices)override{
+	utki::shared_ref<ruis::render::vertex_buffer> create_vertex_buffer(utki::span<const r4::vector4<float>> vertices)override{
 		return utki::make_shared<null_vertex_buffer>();
 	}
 
