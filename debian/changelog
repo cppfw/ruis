@@ -1,3 +1,9 @@
+libruis (0.5.224) unstable; urgency=medium
+
+  * mipmap
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 23 Apr 2024 17:25:31 +0300
+
 libruis (0.5.223) unstable; urgency=medium
 
   * coordinate system fix
