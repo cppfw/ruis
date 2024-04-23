@@ -38,7 +38,7 @@ ruis::matrix4 ruis::set_up_coordinate_system(const ruis::matrix4& initial, ruis:
 	// Setup right-handed coordinate system with:
 
 	// x-axis right, y-axis down, z-axis away
-	m.scale(1, -1, -1);
+	m.scale(1, -1, -1); // this is eqivalent to rotating by pi radians around x-axis
 
 	// zero at top-left corner of viewport
 	m.translate(-1, -1);

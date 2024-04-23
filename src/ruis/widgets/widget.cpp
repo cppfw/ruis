@@ -21,6 +21,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "widget.hpp"
 
+#include <GL/gl.h>
+
 #include "../context.hpp"
 #include "../util/util.hpp"
 
@@ -299,8 +301,11 @@ utki::shared_ref<render::texture_2d> widget::render_to_texture(
 			ASSERT(reuse)
 			return utki::shared_ref(std::move(reuse));
 		} else {
-			return r.factory
-				->create_texture_2d(rasterimage::format::rgba, this->rect().d.to<uint32_t>(), std::move(params));
+			return r.factory->create_texture_2d(
+				rasterimage::format::rgba, //
+				this->rect().d.to<uint32_t>(),
+				std::move(params)
+			);
 		}
 	}();
 
@@ -320,9 +325,20 @@ utki::shared_ref<render::texture_2d> widget::render_to_texture(
 
 	r.clear_framebuffer();
 
-	matrix4 matrix = set_up_coordinate_system(r.initial_matrix, this->rect().d);
+	matrix4 mm(r.initial_matrix);
+
+	mm.scale(1, -1, -1);
+
+	matrix4 matrix = set_up_coordinate_system(mm, this->rect().d);
+
+	// matrix.scale(1, -1, 1);
+
+	glFrontFace(GL_CW);
+	glDisable(GL_CULL_FACE);
 
 	this->render(matrix);
+
+	glFrontFace(GL_CCW);
 
 	return tex;
 }
