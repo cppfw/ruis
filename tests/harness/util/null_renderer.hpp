@@ -102,7 +102,7 @@ public:
 	r4::rectangle<int> get_scissor()const override{
 		return {0, 0};
 	}
-	r4::rectangle<int> get_viewport()const override{
+	r4::rectangle<uint32_t> get_viewport()const override{
 		return {0, 0};
 	}
 	bool is_scissor_enabled()const override{
@@ -113,5 +113,5 @@ public:
 	void set_framebuffer_internal(ruis::render::frame_buffer* fb)override{}
 	void set_scissor_enabled(bool enabled)override{}
 	void set_scissor(r4::rectangle<int> r)override{}
-	void set_viewport(r4::rectangle<int> r)override{}
+	void set_viewport(r4::rectangle<uint32_t> r)override{}
 };
