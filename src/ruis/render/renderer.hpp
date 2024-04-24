@@ -108,7 +108,7 @@ public:
 	 * @return Current rendering viewport rectangle.
 	 */
 	// TODO: int -> unsigned?
-	virtual r4::rectangle<int> get_viewport() const = 0;
+	virtual r4::rectangle<uint32_t> get_viewport() const = 0;
 
 	/**
 	 * @brief Set rendering viewport within application window.
@@ -119,7 +119,7 @@ public:
 	 * covering the whole framebuffer.
 	 * @param r - new viewport rectangle.
 	 */
-	virtual void set_viewport(r4::rectangle<int> r) = 0;
+	virtual void set_viewport(r4::rectangle<uint32_t> r) = 0;
 
 	virtual void set_blend_enabled(bool enable) = 0;
 

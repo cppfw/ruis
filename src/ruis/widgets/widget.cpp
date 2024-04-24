@@ -316,7 +316,7 @@ utki::shared_ref<render::texture_2d> widget::render_to_texture(
 
 	//	ASSERT_INFO(Render::isBoundFrameBufferComplete(), "tex.dims() = " << tex.dims())
 
-	r.set_viewport(r4::rectangle<int>(0, this->rect().d.to<int>()));
+	r.set_viewport(r4::rectangle<uint32_t>(0, this->rect().d.to<uint32_t>()));
 
 	r.clear_framebuffer();
 
