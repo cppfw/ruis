@@ -99,11 +99,11 @@ public:
 
 	/**
 	 * @brief Get current rendering viewport within application window.
-	 * Get the rendering viewport rectangle within application window.
-	 * The coordinate system is renderer-specific. It can be top-bottom or bottom-top.
+	 * Get the rendering viewport rectangle in application window coordinates.
+	 * The window coordinate system is renderer-specific. It can be top-bottom or bottom-top.
 	 * For example, OpenGL/ES renderer has bottom-top coordinate system, i.e. origin is
-	 * at the bottom left corner of the window and y-axis up. So, the viewport's position
-	 * should be interpreted lso in context of the specific renderer.
+	 * at the bottom left corner of the window and y-axis goes up. So, the viewport's position
+	 * should be interpreted in context of the specific renderer.
 	 * The viewport's dimensions are renderer-agnostic.
 	 * @return Current rendering viewport rectangle.
 	 */
