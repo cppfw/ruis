@@ -99,6 +99,11 @@ public:
 	{}
 
 	void clear_framebuffer()override{}
+
+	r4::vector2<uint32_t> to_window_coords(ruis::vec2 point) const override{
+		return {0, 0};
+	}
+
 	r4::rectangle<uint32_t> get_scissor()const override{
 		return {0, 0};
 	}
