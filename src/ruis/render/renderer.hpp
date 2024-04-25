@@ -93,9 +93,22 @@ public:
 
 	virtual void set_scissor_enabled(bool enabled) = 0;
 
-	virtual r4::rectangle<int> get_scissor() const = 0;
+	/**
+	 * @brief Get scissor rectangle.
+	 * Get scissor rectangle in application window coordinates.
+	 * TODO:
+	 *
+	 * @return Current scissor rectangle.
+	 */
+	virtual r4::rectangle<uint32_t> get_scissor() const = 0;
 
-	virtual void set_scissor(r4::rectangle<int> r) = 0;
+	/**
+	 * @brief Set scissor rectangle.
+	 * Set scissor rectangle in application window coordinates.
+	 * TODO:
+	 * @param r - new scissor rectangle.
+	 */
+	virtual void set_scissor(r4::rectangle<uint32_t> r) = 0;
 
 	/**
 	 * @brief Get current rendering viewport within application window.
