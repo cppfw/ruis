@@ -89,6 +89,18 @@ public:
 
 	virtual void clear_framebuffer() = 0;
 
+	/**
+	 * @brief Get window coordinates of a point in renderer's clipping coordinates.
+	 * Renderer's clipping coordinates of a point are coordinates after all matrix transformations
+	 * and perspective division.
+	 * The window coordinate system is renderer-specific. It can be top-bottom or bottom-top.
+	 * For example, OpenGL/ES renderer has bottom-top coordinate system, i.e. origin is
+	 * at the bottom left corner of the window and y-axis goes up. So, the resulting position of a point
+	 * should be interpreted in context of the specific renderer.
+	 * @return Window coordinates of the point.
+	 */
+	virtual r4::vector2<uint32_t> to_window_coords(ruis::vec2 point) const = 0;
+
 	virtual bool is_scissor_enabled() const = 0;
 
 	virtual void set_scissor_enabled(bool enabled) = 0;

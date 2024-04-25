@@ -385,10 +385,10 @@ void widget::unfocus() noexcept
 r4::rectangle<uint32_t> widget::compute_viewport_rect(const matrix4& matrix) const noexcept
 {
 	using std::round;
+
+	// TODO: construct rect by 2 points
 	r4::rectangle<uint32_t> ret(
-		round(((matrix * vector2(0, 0) + vector2(1, 1)) / 2)
-				  .comp_multiply(this->context.get().renderer.get().get_viewport().d.to<real>()))
-			.to<uint32_t>(),
+		this->context.get().renderer.get().to_window_coords(matrix * vector2(0, 0)),
 		this->rect().d.to<uint32_t>()
 	);
 	ret.p.y() -= ret.d.y();
