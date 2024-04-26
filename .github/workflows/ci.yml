@@ -121,7 +121,7 @@ jobs:
           # - {os: debian, codename: bookworm, image_owner: i386/, package_type: deb, labels: [i386,docker]}
           - {os: debian, codename: bookworm, image_owner: arm32v7/, package_type: deb, labels: [arm,docker]}
           - {os: debian, codename: bookworm, image_owner: arm64v8/, package_type: deb, labels: [arm64,docker]}
-          - {os: ubuntu, codename: focal, image_owner: , package_type: deb}
+          # - {os: ubuntu, codename: focal, image_owner: , package_type: deb}
           - {os: ubuntu, codename: jammy, image_owner: , package_type: deb}
           # - {os: raspbian, codename: buster, image_owner: igagis/, package_type: deb, labels: [arm,docker]}
           - {os: raspbian, codename: bullseye, image_owner: igagis/, package_type: deb, labels: [arm,docker]}
@@ -130,10 +130,10 @@ jobs:
     container: ${{ matrix.image_owner }}${{ matrix.os }}:${{ matrix.codename }}
     name: linux - ${{ matrix.image_owner }}${{ matrix.os }}:${{ matrix.codename }}
     steps:
-      - name: set TZ for ubuntu:focal
-        run: |
-          # configure timezone to avoid 'tzdata' package to require user interaction during installation (needed for ubuntu:focal)
-          TZ=Europe/Helsinki ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+      # - name: set TZ for ubuntu:focal
+      #   run: |
+      #     # configure timezone to avoid 'tzdata' package to require user interaction during installation (needed for ubuntu:focal)
+      #     TZ=Europe/Helsinki ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
       - name: add llvm repo (for clang-format)
         uses: myci-actions/add-deb-repo@master
         with:
