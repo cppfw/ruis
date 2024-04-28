@@ -29,7 +29,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../widget.hpp"
 
 // disable stupid warnings
-#if M_COMPILER == M_COMPILER_MSVC
+#if CFG_COMPILER == CFG_COMPILER_MSVC
 #	pragma warning(disable : 4250)
 #endif
 
