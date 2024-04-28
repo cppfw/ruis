@@ -278,7 +278,7 @@ public:
 	 * @param matrix - transformation matrix which transforms point (0,0) to left top corner point of the widget.
 	 * @return Rectangle of the widget in viewport coordinates.
 	 */
-	r4::rectangle<int> compute_viewport_rect(const matrix4& matrix) const noexcept;
+	r4::rectangle<uint32_t> compute_viewport_rect(const matrix4& matrix) const noexcept;
 
 	/**
 	 * @brief Move widget to position within its parent.

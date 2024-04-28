@@ -89,17 +89,62 @@ public:
 
 	virtual void clear_framebuffer() = 0;
 
+	/**
+	 * @brief Get window coordinates of a point in renderer's clipping coordinates.
+	 * Renderer's clipping coordinates of a point are coordinates after all matrix transformations
+	 * and perspective division.
+	 * The window coordinate system is renderer-specific. It can be top-bottom or bottom-top.
+	 * For example, OpenGL/ES renderer has bottom-top coordinate system, i.e. origin is
+	 * at the bottom left corner of the window and y-axis goes up. So, the resulting position of a point
+	 * should be interpreted in context of the specific renderer.
+	 * @return Window coordinates of the point.
+	 */
+	virtual r4::vector2<uint32_t> to_window_coords(ruis::vec2 point) const = 0;
+
 	virtual bool is_scissor_enabled() const = 0;
 
 	virtual void set_scissor_enabled(bool enabled) = 0;
 
-	virtual r4::rectangle<int> get_scissor() const = 0;
+	/**
+	 * @brief Get scissor rectangle.
+	 * Get scissor rectangle in application window coordinates.
+	 * TODO:
+	 *
+	 * @return Current scissor rectangle.
+	 */
+	virtual r4::rectangle<uint32_t> get_scissor() const = 0;
 
-	virtual void set_scissor(r4::rectangle<int> r) = 0;
+	/**
+	 * @brief Set scissor rectangle.
+	 * Set scissor rectangle in application window coordinates.
+	 * TODO:
+	 * @param r - new scissor rectangle.
+	 */
+	virtual void set_scissor(r4::rectangle<uint32_t> r) = 0;
 
-	virtual r4::rectangle<int> get_viewport() const = 0;
+	/**
+	 * @brief Get current rendering viewport within application window.
+	 * Get the rendering viewport rectangle in application window coordinates.
+	 * The window coordinate system is renderer-specific. It can be top-bottom or bottom-top.
+	 * For example, OpenGL/ES renderer has bottom-top coordinate system, i.e. origin is
+	 * at the bottom left corner of the window and y-axis goes up. So, the viewport's position
+	 * should be interpreted in context of the specific renderer.
+	 * The viewport's dimensions are renderer-agnostic.
+	 * @return Current rendering viewport rectangle.
+	 */
+	// TODO: int -> unsigned?
+	virtual r4::rectangle<uint32_t> get_viewport() const = 0;
 
-	virtual void set_viewport(r4::rectangle<int> r) = 0;
+	/**
+	 * @brief Set rendering viewport within application window.
+	 * Since application window's coordinate system is renderer-specific
+	 * (see description of get_viewport() for details), the meaning of the viewport rectangle's
+	 * position is also renderer-specific. Though, the position of (0, 0) in combination with
+	 * framebuffer's dimensions can safely be used regardless of the renderer to set the viewport
+	 * covering the whole framebuffer.
+	 * @param r - new viewport rectangle.
+	 */
+	virtual void set_viewport(r4::rectangle<uint32_t> r) = 0;
 
 	virtual void set_blend_enabled(bool enable) = 0;
 

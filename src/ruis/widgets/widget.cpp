@@ -247,9 +247,9 @@ void widget::render_internal(const ruis::matrix4& matrix) const
 			// oldcissorBox[2], oldcissorBox[3]) << std::endl)
 
 			// set scissor test
-			r4::rectangle<int> scissor = this->compute_viewport_rect(matrix);
+			r4::rectangle<uint32_t> scissor = this->compute_viewport_rect(matrix);
 
-			r4::rectangle<int> old_scissor{};
+			r4::rectangle<uint32_t> old_scissor{};
 			bool scissor_test_was_enabled = r.is_scissor_enabled();
 			if (scissor_test_was_enabled) {
 				old_scissor = r.get_scissor();
@@ -321,7 +321,7 @@ utki::shared_ref<render::texture_2d> widget::render_to_texture(
 
 	//	ASSERT_INFO(Render::isBoundFrameBufferComplete(), "tex.dims() = " << tex.dims())
 
-	r.set_viewport(r4::rectangle<int>(0, this->rect().d.to<int>()));
+	r.set_viewport(r4::rectangle<uint32_t>(0, this->rect().d.to<uint32_t>()));
 
 	r.clear_framebuffer();
 
@@ -398,14 +398,14 @@ void widget::unfocus() noexcept
 	this->context.get().set_focused_widget(nullptr);
 }
 
-r4::rectangle<int> widget::compute_viewport_rect(const matrix4& matrix) const noexcept
+r4::rectangle<uint32_t> widget::compute_viewport_rect(const matrix4& matrix) const noexcept
 {
 	using std::round;
-	r4::rectangle<int> ret(
-		round(((matrix * vector2(0, 0) + vector2(1, 1)) / 2)
-				  .comp_multiply(this->context.get().renderer.get().get_viewport().d.to<real>()))
-			.to<int>(),
-		this->rect().d.to<int>()
+
+	// TODO: construct rect by 2 points
+	r4::rectangle<uint32_t> ret(
+		this->context.get().renderer.get().to_window_coords(matrix * vector2(0, 0)),
+		this->rect().d.to<uint32_t>()
 	);
 	ret.p.y() -= ret.d.y();
 	return ret;
