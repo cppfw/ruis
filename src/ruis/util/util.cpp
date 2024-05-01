@@ -31,24 +31,6 @@ using namespace std::string_literals;
 
 using namespace ruis;
 
-ruis::matrix4 ruis::set_up_coordinate_system(const ruis::matrix4& initial, ruis::vector2 viewport_dim)
-{
-	ruis::matrix4 m(initial);
-
-	// Setup right-handed coordinate system with:
-
-	// x-axis right, y-axis down, z-axis away
-	m.scale(1, -1, -1); // this is eqivalent to rotating by pi radians around x-axis
-
-	// zero at top-left corner of viewport
-	m.translate(-1, -1);
-
-	// viewport right and bottom edges correspond to coordinates equal to viewport size in pixels.
-	m.scale(vector2(2).comp_divide(viewport_dim));
-
-	return m;
-}
-
 ruis::vector2 ruis::parse_vec2(tml::forest::const_iterator begin, tml::forest::const_iterator end)
 {
 	ruis::vector2 ret;

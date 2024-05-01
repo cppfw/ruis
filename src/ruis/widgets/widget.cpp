@@ -328,10 +328,9 @@ utki::shared_ref<render::texture_2d> widget::render_to_texture(
 	matrix4 mm(r.initial_matrix);
 
 	mm.scale(1, -1, -1);
+	mm.translate(0, -1);
 
-	matrix4 matrix = set_up_coordinate_system(mm, this->rect().d);
-
-	// matrix.scale(1, -1, 1);
+	matrix4 matrix = make_viewport_matrix(mm, this->rect().d);
 
 	glFrontFace(GL_CW);
 	glDisable(GL_CULL_FACE);
@@ -402,12 +401,11 @@ r4::rectangle<uint32_t> widget::compute_viewport_rect(const matrix4& matrix) con
 {
 	using std::round;
 
-	// TODO: construct rect by 2 points
-	r4::rectangle<uint32_t> ret(
-		this->context.get().renderer.get().to_window_coords(matrix * vector2(0, 0)),
-		this->rect().d.to<uint32_t>()
-	);
-	ret.p.y() -= ret.d.y();
+	r4::rectangle<uint32_t> ret{{
+			this->context.get().renderer.get().to_window_coords(matrix * vector2(0, 0)),
+			this->context.get().renderer.get().to_window_coords(matrix * this->rect().d)
+		}
+	};
 	return ret;
 }
 

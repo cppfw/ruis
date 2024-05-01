@@ -371,7 +371,7 @@ void gui::render(const matrix4& matrix) const
 		this->root_widget.get().lay_out();
 	}
 
-	ruis::matrix4 m = set_up_coordinate_system(matrix, this->viewport_size);
+	ruis::matrix4 m = make_viewport_matrix(matrix, this->viewport_size);
 
 	this->get_root().render_internal(m);
 }

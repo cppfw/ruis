@@ -46,7 +46,7 @@ protected:
 	struct params {
 		constexpr static auto default_max_texture_size = 2048;
 		unsigned max_texture_size = default_max_texture_size;
-		r4::matrix4<float> initial_matrix = r4::matrix4<float>().set_identity();
+		r4::matrix4<float> initial_matrix;
 	};
 
 	renderer(std::unique_ptr<render_factory> factory, const params& params);
@@ -67,7 +67,8 @@ public:
 
 	/**
 	 * @brief Initial matrix to use for rendering.
-	 * This is the matrix which makes screen edges to be: left = -1, right = 1, top = 1, bottom = -1.
+	 * The initial coordinate system is right-handed.
+	 * The initial matrix makes viewport edges to be: left = 0, right = 1, top = 0, bottom = 1.
 	 */
 	const r4::matrix4<float> initial_matrix;
 
