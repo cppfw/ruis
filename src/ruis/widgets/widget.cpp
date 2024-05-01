@@ -320,7 +320,7 @@ utki::shared_ref<render::texture_2d> widget::render_to_texture(
 
 	r.clear_framebuffer();
 
-	matrix4 matrix = set_up_coordinate_system(r.initial_matrix, this->rect().d);
+	matrix4 matrix = make_viewport_matrix(r.initial_matrix, this->rect().d);
 
 	this->render(matrix);
 
