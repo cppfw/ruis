@@ -333,7 +333,7 @@ utki::shared_ref<render::texture_2d> widget::render_to_texture(
 	matrix4 matrix = make_viewport_matrix(mm, this->rect().d);
 
 	glFrontFace(GL_CW);
-	glDisable(GL_CULL_FACE);
+	// glDisable(GL_CULL_FACE);
 
 	this->render(matrix);
 
