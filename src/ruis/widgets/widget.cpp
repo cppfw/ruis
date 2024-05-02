@@ -21,8 +21,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "widget.hpp"
 
-#include <GL/gl.h>
-
 #include "../context.hpp"
 #include "../util/util.hpp"
 
@@ -325,19 +323,9 @@ utki::shared_ref<render::texture_2d> widget::render_to_texture(
 
 	r.clear_framebuffer();
 
-	matrix4 mm(r.initial_matrix);
-
-	mm.scale(1, -1, -1);
-	mm.translate(0, -1);
-
-	matrix4 matrix = make_viewport_matrix(mm, this->rect().d);
-
-	glFrontFace(GL_CW);
-	// glDisable(GL_CULL_FACE);
+	matrix4 matrix = make_viewport_matrix(r.initial_matrix, this->rect().d);
 
 	this->render(matrix);
-
-	glFrontFace(GL_CCW);
 
 	return tex;
 }
@@ -401,10 +389,9 @@ r4::rectangle<uint32_t> widget::compute_viewport_rect(const matrix4& matrix) con
 {
 	using std::round;
 
-	r4::rectangle<uint32_t> ret{{
-			this->context.get().renderer.get().to_window_coords(matrix * vector2(0, 0)),
-			this->context.get().renderer.get().to_window_coords(matrix * this->rect().d)
-		}
+	r4::rectangle<uint32_t> ret{
+		{this->context.get().renderer.get().to_window_coords(matrix * vector2(0, 0)),
+		 this->context.get().renderer.get().to_window_coords(matrix * this->rect().d)}
 	};
 	return ret;
 }
