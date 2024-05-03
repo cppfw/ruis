@@ -98,7 +98,9 @@ public:
 			ruis::render::renderer(std::make_unique<null_factory>(), params())
 	{}
 
-	void clear_framebuffer()override{}
+	void clear_framebuffer_color()override{}
+	void clear_framebuffer_depth()override{}
+	void clear_framebuffer_stencil()override{}
 
 	r4::vector2<uint32_t> to_window_coords(ruis::vec2 point) const override{
 		return {0, 0};
@@ -119,4 +121,5 @@ public:
 	void set_scissor_enabled(bool enabled)override{}
 	void set_scissor(r4::rectangle<uint32_t> r)override{}
 	void set_viewport(r4::rectangle<uint32_t> r)override{}
+	void set_depth_test_enabled(bool enable)override{}
 };
