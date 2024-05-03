@@ -102,7 +102,7 @@ public:
 
 	/**
 	 * @brief Clear stencil buffer of the current framebuffer.
-	 * TODO: how does stencil work?
+	 * The stencil buffer is filled with values of 0.
 	 */
 	virtual void clear_framebuffer_stencil() = 0;
 
@@ -205,6 +205,13 @@ public:
 	 * And, ONE and ONE_MINUS_SRC_ALPHA for source and destination alpha components respectively.
 	 */
 	void set_simple_alpha_blending();
+
+	/**
+	 * @brief Enable/disable depth test
+	 *
+	 * @param enable - if true the depth test will be enabled. Otherwise, it will be disabled.
+	 */
+	virtual void set_depth_test_enabled(bool enable) = 0;
 
 protected:
 	virtual void set_framebuffer_internal(frame_buffer* fb) = 0;
