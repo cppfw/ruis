@@ -88,7 +88,23 @@ public:
 		return this->cur_fb;
 	}
 
-	virtual void clear_framebuffer() = 0;
+	/**
+	 * @brief Clear color buffer of the current framebuffer.
+	 * The color buffer is filled with (0, 0, 0, 0) color values.
+	 */
+	virtual void clear_framebuffer_color() = 0;
+
+	/**
+	 * @brief Clear depth buffer of the current framebuffer.
+	 * The depth buffer is filled with values of 1.
+	 */
+	virtual void clear_framebuffer_depth() = 0;
+
+	/**
+	 * @brief Clear stencil buffer of the current framebuffer.
+	 * TODO: how does stencil work?
+	 */
+	virtual void clear_framebuffer_stencil() = 0;
 
 	/**
 	 * @brief Get window coordinates of a point in renderer's clipping coordinates.

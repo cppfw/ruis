@@ -321,7 +321,7 @@ utki::shared_ref<render::texture_2d> widget::render_to_texture(
 
 	r.set_viewport(r4::rectangle<uint32_t>(0, this->rect().d.to<uint32_t>()));
 
-	r.clear_framebuffer();
+	r.clear_framebuffer_color();
 
 	matrix4 matrix = make_viewport_matrix(r.initial_matrix, this->rect().d);
 
