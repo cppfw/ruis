@@ -100,7 +100,7 @@ ruis_npt_textfield_background{
 
 ruis_npt_window_bg{
 	file{window_bg.svg}
-	borders{0.5 0.5 0.5 0.5}
+	borders{0.499 0.499 0.499 0.499}
 }
 
 ruis_npt_frame{
