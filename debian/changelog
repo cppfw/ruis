@@ -1,3 +1,9 @@
+libruis (0.5.225) unstable; urgency=medium
+
+  * tex coords
+
+ -- Ivan Gagis <igagis@gmail.com>  Sat, 04 May 2024 21:14:52 +0300
+
 libruis (0.5.224) unstable; urgency=medium
 
   * mipmap
