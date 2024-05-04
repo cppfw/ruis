@@ -220,7 +220,9 @@ void widget::render_internal(const ruis::matrix4& matrix) const
 
 	if (this->params.cache) {
 		if (this->cache_dirty) {
-			bool scissor_test_was_enabled = r.is_scissor_enabled();
+			utki::scope_exit scissor_test_enabled_scope_exit([&r, scissor_test_was_enabled = r.is_scissor_enabled()]() {
+				r.set_scissor_enabled(scissor_test_was_enabled);
+			});
 			r.set_scissor_enabled(false);
 
 			this->cache_texture = this->render_to_texture(
@@ -231,7 +233,6 @@ void widget::render_internal(const ruis::matrix4& matrix) const
 			)
 									  .to_shared_ptr();
 
-			r.set_scissor_enabled(scissor_test_was_enabled);
 			this->cache_dirty = false;
 		}
 
