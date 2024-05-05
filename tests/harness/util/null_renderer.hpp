@@ -49,6 +49,10 @@ public:
 		return utki::make_shared<null_index_buffer>();
 	}
 
+	utki::shared_ref<ruis::render::index_buffer> create_index_buffer(utki::span<const uint32_t> indices)override{
+		return utki::make_shared<null_index_buffer>();
+	}
+
 	std::unique_ptr<ruis::render::render_factory::shaders> create_shaders() override{
 		return nullptr;
 	}

@@ -90,6 +90,8 @@ public:
 
 	virtual utki::shared_ref<index_buffer> create_index_buffer(utki::span<const uint16_t> indices) = 0;
 
+	virtual utki::shared_ref<index_buffer> create_index_buffer(utki::span<const uint32_t> indices) = 0;
+
 	virtual utki::shared_ref<vertex_array> create_vertex_array(
 		std::vector<utki::shared_ref<const ruis::render::vertex_buffer>> buffers,
 		const utki::shared_ref<const ruis::render::index_buffer>& indices,

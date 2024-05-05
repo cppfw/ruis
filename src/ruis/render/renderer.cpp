@@ -30,7 +30,7 @@ renderer::renderer(std::unique_ptr<render_factory> factory, const renderer::para
 		{
 			this->factory->create_vertex_buffer(utki::span<const r4::vector2<float>>(nullptr))
 },
-		this->factory->create_index_buffer(nullptr),
+		this->factory->create_index_buffer(utki::span<const uint16_t>()),
 		ruis::render::vertex_array::mode::triangle_strip
 	)),
 	quad_01_vbo(this->factory->create_vertex_buffer(utki::make_span(std::array<r4::vector2<float>, 4>(
