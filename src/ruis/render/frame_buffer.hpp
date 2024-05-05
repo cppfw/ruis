@@ -34,8 +34,8 @@ protected:
 
 public:
 	// NOLINTNEXTLINE(modernize-pass-by-value)
-	frame_buffer(const utki::shared_ref<texture_2d>& color) :
-		color(color)
+	frame_buffer(utki::shared_ref<texture_2d> color) :
+		color(std::move(color))
 	{}
 
 	frame_buffer(const frame_buffer&) = delete;
