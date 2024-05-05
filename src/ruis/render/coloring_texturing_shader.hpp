@@ -31,9 +31,10 @@ namespace ruis::render {
 
 class coloring_texturing_shader
 {
-public:
+protected:
 	coloring_texturing_shader() = default;
 
+public:
 	coloring_texturing_shader(const coloring_texturing_shader&) = delete;
 	coloring_texturing_shader& operator=(const coloring_texturing_shader&) = delete;
 

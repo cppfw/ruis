@@ -57,8 +57,10 @@ public:
 
 	const mode rendering_mode;
 
+protected:
 	vertex_array(buffers_type buffers, const utki::shared_ref<const index_buffer>& indices, mode rendering_mode);
 
+public:
 	vertex_array(const vertex_array&) = delete;
 	vertex_array& operator=(const vertex_array&) = delete;
 

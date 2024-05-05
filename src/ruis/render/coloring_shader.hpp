@@ -30,9 +30,10 @@ namespace ruis::render {
 
 class coloring_shader
 {
-public:
+protected:
 	coloring_shader() = default;
 
+public:
 	coloring_shader(const coloring_shader&) = delete;
 	coloring_shader& operator=(const coloring_shader&) = delete;
 

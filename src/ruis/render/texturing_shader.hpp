@@ -28,9 +28,10 @@ namespace ruis::render {
 
 class texturing_shader
 {
-public:
+protected:
 	texturing_shader() = default;
 
+public:
 	texturing_shader(const texturing_shader&) = delete;
 	texturing_shader& operator=(const texturing_shader&) = delete;
 

@@ -29,9 +29,10 @@ namespace ruis::render {
 
 class shader
 {
-public:
+protected:
 	shader() = default;
 
+public:
 	shader(const shader&) = delete;
 	shader& operator=(const shader&) = delete;
 

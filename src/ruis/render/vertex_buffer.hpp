@@ -30,10 +30,12 @@ class vertex_buffer
 public:
 	const size_t size;
 
+protected:
 	vertex_buffer(size_t size) :
 		size(size)
 	{}
 
+public:
 	vertex_buffer(const vertex_buffer&) = delete;
 	vertex_buffer& operator=(const vertex_buffer&) = delete;
 

@@ -25,9 +25,10 @@ namespace ruis::render {
 
 class index_buffer
 {
-public:
+protected:
 	index_buffer() = default;
 
+public:
 	index_buffer(const index_buffer&) = delete;
 	index_buffer& operator=(const index_buffer&) = delete;
 

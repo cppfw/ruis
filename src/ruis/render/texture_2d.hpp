@@ -41,10 +41,12 @@ public:
 		linear
 	};
 
+protected:
 	texture_2d(vector2 dims) :
 		dims_v(dims)
 	{}
 
+public:
 	texture_2d(const texture_2d&) = delete;
 	texture_2d& operator=(const texture_2d&) = delete;
 
