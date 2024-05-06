@@ -21,9 +21,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include <utki/shared_ref.hpp>
-
 #include <rasterimage/dimensioned.hpp>
+#include <utki/shared_ref.hpp>
 
 #include "texture_2d.hpp"
 
