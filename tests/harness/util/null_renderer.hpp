@@ -6,7 +6,7 @@
 
 class null_texture_2d : public ruis::render::texture_2d{
 public:
-	null_texture_2d() : ruis::render::texture_2d(ruis::vector2(13, 666)){}
+	null_texture_2d() : ruis::render::texture_2d(r4::vector2<uint32_t>(13, 666)){}
 };
 
 class null_frame_buffer : public ruis::render::frame_buffer{

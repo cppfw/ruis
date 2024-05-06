@@ -296,7 +296,7 @@ utki::shared_ref<render::texture_2d> widget::render_to_texture(
 	auto& r = this->context.get().renderer.get();
 
 	utki::shared_ref<render::texture_2d> tex = [&]() {
-		if (reuse && reuse->dims() == this->rect().d) {
+		if (reuse && reuse->dims() == this->rect().d.to<uint32_t>()) {
 			ASSERT(reuse)
 			return utki::shared_ref(std::move(reuse));
 		} else {

@@ -21,14 +21,14 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
+#include <rasterimage/dimensioned.hpp>
+
 #include "../config.hpp"
 
 namespace ruis::render {
 
-class texture_2d
+class texture_2d : public rasterimage::dimensioned
 {
-	vector2 dims_v;
-
 public:
 	enum class filter {
 		nearest,
@@ -42,8 +42,8 @@ public:
 	};
 
 protected:
-	texture_2d(vector2 dims) :
-		dims_v(dims)
+	texture_2d(r4::vector2<uint32_t> dims) :
+		rasterimage::dimensioned(dims)
 	{}
 
 public:
@@ -54,11 +54,6 @@ public:
 	texture_2d& operator=(texture_2d&&) = delete;
 
 	virtual ~texture_2d() = default;
-
-	const decltype(dims_v)& dims() const noexcept
-	{
-		return this->dims_v;
-	}
 
 	// TODO: add functions to change filtering
 	// TODO: add virtual generate_mipmap()

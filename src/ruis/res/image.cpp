@@ -147,7 +147,7 @@ public:
 		return utki::make_shared_from(*this);
 	}
 
-	vector2 dims() const noexcept override
+	r4::vector2<uint32_t> dims() const noexcept override
 	{
 		return this->tex_2d.get().dims();
 	}
@@ -176,14 +176,14 @@ public:
 		dom(std::move(dom))
 	{}
 
-	vector2 dims() const noexcept override
+	r4::vector2<uint32_t> dims() const noexcept override
 	{
 		auto& ctx = this->context.get();
 		ASSERT(ctx.units.dots_per_pp > 0)
 		auto wh = this->dom->get_dimensions(ctx.units.dots_per_inch / ctx.units.dots_per_pp);
 		wh *= ctx.units.dots_per_pp;
 		using std::ceil;
-		return ceil(wh);
+		return ceil(wh).to<uint32_t>();
 	}
 
 	class svg_texture : public fixed_texture
@@ -236,7 +236,7 @@ public:
 		ASSERT(this->dom)
 
 		// in ruis, SVG dimensions are in pp, this is why we cannot use 0 to use native dimension of SVG.
-		auto svg_dims = this->dims();
+		auto svg_dims = this->dims().to<real>();
 		for (unsigned i = 0; i != 2; ++i) {
 			if (for_dims[i] == 0) {
 				for_dims[i] = svg_dims[i];

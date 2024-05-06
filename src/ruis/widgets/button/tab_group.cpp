@@ -174,8 +174,8 @@ void tab_group::render(const ruis::matrix4& matrix) const
 		real l = this->rect().d.x() - ce;
 		if (l > 0) {
 			matrix4 m(matrix);
-			m.translate(ce, this->rect().d.y() - this->filler_texture->dims.y());
-			m.scale(l, this->filler_texture->dims.y());
+			m.translate(ce, this->rect().d.y() - real(this->filler_texture->dims().y()));
+			m.scale(l, real(this->filler_texture->dims().y()));
 			this->filler_texture->render(m);
 		}
 	}

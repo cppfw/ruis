@@ -67,7 +67,7 @@ public:
 		const utki::shared_ref<ruis::context>& c,
 		// NOLINTNEXTLINE(modernize-pass-by-value)
 		const utki::shared_ref<const res::image>& image,
-		sides<real> borders
+		sides<real> borders // TODO: uint32_t sides?
 	) :
 		resource(c),
 		image(image),

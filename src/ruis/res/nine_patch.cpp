@@ -44,7 +44,11 @@ class res_subimage :
 
 public:
 	// rect is a rectangle on the texture, Y axis down.
-	res_subimage(const utki::shared_ref<ruis::context>& c, decltype(tex) tex, const ruis::rect& rect) :
+	res_subimage( //
+		const utki::shared_ref<ruis::context>& c,
+		decltype(tex) tex,
+		const ruis::rect& rect // TODO: uint32_t rect?
+	) :
 		res::image(c),
 		res::image::texture(
 			c.get().renderer,
@@ -52,16 +56,16 @@ public:
 				ASSERT(rect.d.is_positive_or_zero(), [&](auto& o) {
 					o << "rect.d = " << rect.d;
 				})
-				return rect.d;
+				return rect.d.to<uint32_t>();
 			}()
 		),
 		tex(std::move(tex)),
 		vao([&]() {
 			std::array<vector2, 4> tex_coords = {
-				rect.p.comp_div(this->tex.get().dims),
-				rect.x1_y2().comp_div(this->tex.get().dims),
-				rect.x2_y2().comp_div(this->tex.get().dims),
-				rect.x2_y1().comp_div(this->tex.get().dims),
+				rect.p.comp_div(this->tex.get().dims().to<real>()),
+				rect.x1_y2().comp_div(this->tex.get().dims().to<real>()),
+				rect.x2_y2().comp_div(this->tex.get().dims().to<real>()),
+				rect.x2_y1().comp_div(this->tex.get().dims().to<real>()),
 			};
 
 			// TRACE(<< "this->tex_coords = (" << tex_coords[0] << ", " << tex_coords[1] << ", " << tex_coords[2] << ",
@@ -84,9 +88,9 @@ public:
 
 	~res_subimage() override = default;
 
-	vector2 dims() const noexcept override
+	r4::vector2<uint32_t> dims() const noexcept override
 	{
-		return this->res::image::texture::dims;
+		return this->res::image::texture::dims();
 	}
 
 	utki::shared_ref<const res::image::texture> get(vector2 for_dims) const override
@@ -128,7 +132,7 @@ utki::shared_ref<nine_patch> nine_patch::load(
 
 	auto image = res::image::load(ctx, fi);
 
-	auto dims = image.get().dims();
+	auto dims = image.get().dims().to<real>();
 
 	using std::round;
 
@@ -191,11 +195,11 @@ std::shared_ptr<nine_patch::image_matrix> nine_patch::get(sides<length> borders)
 	}
 
 	using std::round;
-	auto quad_tex = this->image.get().get(round(this->image.get().dims() * mul));
+	auto quad_tex = this->image.get().get(round(this->image.get().dims().to<real>() * mul));
 
 	// std::cout << "quad_tex dims = " << quad_tex.get().dims << std::endl;
 
-	vector2 act_mul = quad_tex.get().dims.comp_div(this->image.get().dims());
+	vector2 act_mul = quad_tex.get().dims().to<real>().comp_div(this->image.get().dims().to<real>());
 
 	sides<real> scaled_borders(this->borders);
 	scaled_borders.left() *= act_mul.x();
@@ -225,7 +229,7 @@ std::shared_ptr<nine_patch::image_matrix> nine_patch::get(sides<length> borders)
 					 ruis::rect(
 						 scaled_borders.left(),
 						 0,
-						 round(quad_tex.get().dims.x() - scaled_borders.left() - scaled_borders.right()),
+						 round(real(quad_tex.get().dims().x()) - scaled_borders.left() - scaled_borders.right()),
 						 scaled_borders.top()
 					 )
 				 ), // top
@@ -233,7 +237,7 @@ std::shared_ptr<nine_patch::image_matrix> nine_patch::get(sides<length> borders)
 					 this->context,
 					 quad_tex,
 					 ruis::rect(
-						 round(quad_tex.get().dims.x() - scaled_borders.right()),
+						 round(real(quad_tex.get().dims().x()) - scaled_borders.right()),
 						 0,
 						 scaled_borders.right(),
 						 scaled_borders.top()
@@ -248,7 +252,7 @@ std::shared_ptr<nine_patch::image_matrix> nine_patch::get(sides<length> borders)
 						 0,
 						 scaled_borders.top(),
 						 scaled_borders.left(),
-						 round(quad_tex.get().dims.y() - scaled_borders.top() - scaled_borders.bottom())
+						 round(real(quad_tex.get().dims().y()) - scaled_borders.top() - scaled_borders.bottom())
 					 )
 				 ), // left
 				 utki::make_shared<res_subimage>(
@@ -257,18 +261,18 @@ std::shared_ptr<nine_patch::image_matrix> nine_patch::get(sides<length> borders)
 					 ruis::rect(
 						 scaled_borders.left(),
 						 scaled_borders.top(),
-						 round(quad_tex.get().dims.x() - scaled_borders.left() - scaled_borders.right()),
-						 round(quad_tex.get().dims.y() - scaled_borders.top() - scaled_borders.bottom())
+						 round(real(quad_tex.get().dims().x()) - scaled_borders.left() - scaled_borders.right()),
+						 round(real(quad_tex.get().dims().y()) - scaled_borders.top() - scaled_borders.bottom())
 					 )
 				 ), // middle
 				 utki::make_shared<res_subimage>(
 					 this->context,
 					 quad_tex,
 					 ruis::rect(
-						 round(quad_tex.get().dims.x() - scaled_borders.right()),
+						 round(real(quad_tex.get().dims().x()) - scaled_borders.right()),
 						 scaled_borders.top(),
 						 scaled_borders.right(),
-						 round(quad_tex.get().dims.y() - scaled_borders.top() - scaled_borders.bottom())
+						 round(real(quad_tex.get().dims().y()) - scaled_borders.top() - scaled_borders.bottom())
 					 )
 				 ) // right
 			 }},
@@ -278,7 +282,7 @@ std::shared_ptr<nine_patch::image_matrix> nine_patch::get(sides<length> borders)
 					 quad_tex,
 					 ruis::rect(
 						 0,
-						 round(quad_tex.get().dims.y() - scaled_borders.bottom()),
+						 round(real(quad_tex.get().dims().y()) - scaled_borders.bottom()),
 						 scaled_borders.left(),
 						 scaled_borders.bottom()
 					 )
@@ -288,8 +292,8 @@ std::shared_ptr<nine_patch::image_matrix> nine_patch::get(sides<length> borders)
 					 quad_tex,
 					 ruis::rect(
 						 scaled_borders.left(),
-						 round(quad_tex.get().dims.y() - scaled_borders.bottom()),
-						 round(quad_tex.get().dims.x() - scaled_borders.left() - scaled_borders.right()),
+						 round(real(quad_tex.get().dims().y()) - scaled_borders.bottom()),
+						 round(real(quad_tex.get().dims().x()) - scaled_borders.left() - scaled_borders.right()),
 						 scaled_borders.bottom()
 					 )
 				 ), // bottom
@@ -297,8 +301,8 @@ std::shared_ptr<nine_patch::image_matrix> nine_patch::get(sides<length> borders)
 					 this->context,
 					 quad_tex,
 					 ruis::rect(
-						 round(quad_tex.get().dims.x() - scaled_borders.right()),
-						 round(quad_tex.get().dims.y() - scaled_borders.bottom()),
+						 round(real(quad_tex.get().dims().x()) - scaled_borders.right()),
+						 round(real(quad_tex.get().dims().y()) - scaled_borders.bottom()),
 						 scaled_borders.right(),
 						 scaled_borders.bottom()
 					 )

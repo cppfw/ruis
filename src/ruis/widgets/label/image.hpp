@@ -46,7 +46,7 @@ public:
 		std::shared_ptr<const ruis::res::image> img;
 		std::shared_ptr<const ruis::res::image> disabled_img; // image for disabled state
 		bool keep_aspect_ratio = false;
-		r4::vector2<bool> repeat_v = r4::vector2<bool>(false);
+		r4::vector2<bool> repeat_v = r4::vector2<bool>(false); // TODO: deprecate?
 	};
 
 private:

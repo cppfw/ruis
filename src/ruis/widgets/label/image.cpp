@@ -89,7 +89,7 @@ void image::render(const ruis::matrix4& matrix) const
 			ASSERT(quad_fan_tex_coords.size() == tex_coords.size())
 			auto src = quad_fan_tex_coords.cbegin();
 			auto dst = tex_coords.begin();
-			auto scale = this->rect().d.comp_div(img->dims());
+			auto scale = this->rect().d.comp_div(img->dims().to<real>());
 			if (!this->params.repeat_v.x()) {
 				scale.x() = 1;
 			}
@@ -128,7 +128,7 @@ ruis::vector2 image::measure(const ruis::vector2& quotum) const
 		return {0, 0};
 	}
 
-	vector2 img_dims = img->dims();
+	vector2 img_dims = img->dims().to<real>();
 
 	ASSERT(img_dims.is_positive_or_zero(), [&](auto& o) {
 		o << "img_dims = " << img_dims << " widget id = " << this->id();

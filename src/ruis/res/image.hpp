@@ -24,6 +24,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <array>
 
 #include <r4/rectangle.hpp>
+#include <rasterimage/dimensioned.hpp>
 
 #include "../context.hpp"
 #include "../resource_loader.hpp"
@@ -67,20 +68,18 @@ public:
 	 * The texture which was created from an image resource.
 	 * This texture is to be used on a quad to render the image.
 	 */
-	class texture
+	class texture : public rasterimage::dimensioned
 	{
 	protected:
 		const utki::shared_ref<const ruis::render::renderer> renderer;
 
 		// NOLINTNEXTLINE(modernize-pass-by-value)
-		texture(const utki::shared_ref<const ruis::render::renderer>& r, vector2 dims) :
-			renderer(r),
-			dims(dims)
+		texture(const utki::shared_ref<const ruis::render::renderer>& r, r4::vector2<uint32_t> dims) :
+			rasterimage::dimensioned(dims),
+			renderer(r)
 		{}
 
 	public:
-		const vector2 dims;
-
 		texture(const texture&) = delete;
 		texture& operator=(const texture&) = delete;
 
@@ -106,7 +105,7 @@ public:
 	 * @brief Get dimensions of this image in pixels.
 	 * @return Dimensions of the image in pixels.
 	 */
-	virtual vector2 dims() const noexcept = 0;
+	virtual r4::vector2<uint32_t> dims() const noexcept = 0;
 
 	/**
 	 * @brief Get raster texture of given dimensions.
@@ -165,9 +164,9 @@ public:
 
 	~atlas_image() override = default;
 
-	vector2 dims() const noexcept override
+	r4::vector2<uint32_t> dims() const noexcept override
 	{
-		return this->image::texture::dims;
+		return this->image::texture::dims();
 	}
 
 	utki::shared_ref<const image::texture> get(vector2 for_dims) const override;

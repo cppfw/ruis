@@ -73,7 +73,7 @@ void image_mouse_cursor::render(const ruis::matrix4& matrix) const
 	matrix4 matr(matrix);
 	matr.translate(this->cursorPos);
 	matr.translate(-this->cursor->hotspot());
-	matr.scale(this->quad_tex->dims);
+	matr.scale(this->quad_tex->dims().to<real>());
 
 	//	TRACE(<< "image_mouse_cursor::render(): this->cursorPos = " << this->cursorPos << " this->quadTex->dim() = " <<
 	// this->quadTex->dim() << std::endl)
