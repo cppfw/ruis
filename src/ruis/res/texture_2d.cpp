@@ -19,7 +19,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 /* ================ LICENSE END ================ */
 
-#include "texture.hpp"
+#include "texture_2d.hpp"
 
 #include "../context.hpp"
 #include "../util/util.hpp"
@@ -59,7 +59,7 @@ render::texture_2d::mipmap parse_mipmap(std::string_view str)
 }
 } // namespace
 
-utki::shared_ref<texture> texture::load(
+utki::shared_ref<texture_2d> texture_2d::load(
 	const utki::shared_ref<ruis::context>& ctx,
 	const tml::forest& desc,
 	const papki::file& fi
@@ -83,7 +83,7 @@ utki::shared_ref<texture> texture::load(
 		}
 	}
 
-	return utki::make_shared<texture>(
+	return utki::make_shared<texture_2d>(
 		ctx,
 		ctx.get().renderer.get().factory->create_texture_2d(rasterimage::read(fi), std::move(params))
 	);

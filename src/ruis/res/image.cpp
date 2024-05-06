@@ -63,7 +63,7 @@ image::image(const utki::shared_ref<ruis::context>& c) :
 // 	ASSERT(false)
 // }
 
-atlas_image::atlas_image(const utki::shared_ref<ruis::context>& c, const utki::shared_ref<res::texture>& tex) :
+atlas_image::atlas_image(const utki::shared_ref<ruis::context>& c, const utki::shared_ref<res::texture_2d>& tex) :
 	image(c),
 	image::texture(this->context.get().renderer, tex.get().tex().dims()),
 	tex(std::move(tex)),
@@ -76,13 +76,13 @@ utki::shared_ref<atlas_image> atlas_image::load(
 	const papki::file& fi
 )
 {
-	std::shared_ptr<res::texture> tex;
+	std::shared_ptr<res::texture_2d> tex;
 	ruis::rect rect(-1, -1);
 
 	for (auto& p : desc) {
 		if (p.value == "tex") {
 			tex = ctx.get()
-					  .loader.load<res::texture>(get_property_value(p).string)
+					  .loader.load<res::texture_2d>(get_property_value(p).string)
 					  .to_shared_ptr(); // TODO: do not use to_shared_ptr() here
 		} else if (p.value == "rect") {
 			rect = parse_rect(p.children);

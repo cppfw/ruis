@@ -1,6 +1,6 @@
 #include <ruis/context.hpp>
 #include <ruis/updateable.hpp>
-#include <ruis/res/texture.hpp>
+#include <ruis/res/texture_2d.hpp>
 #include <ruis/render/renderer.hpp>
 #include <ruis/widgets/button/base/push_button.hpp>
 #include <ruis/widgets/group/book.hpp>
@@ -10,7 +10,7 @@
 namespace{
 
 class cube_widget : public ruis::widget, public ruis::updateable{
-	std::shared_ptr<ruis::res::texture> tex;
+	std::shared_ptr<ruis::res::texture_2d> tex;
 	
 	ruis::quaternion rot = ruis::quaternion().set_identity();
 public:
@@ -67,7 +67,7 @@ public:
 		this->cube_vao = this->context.get().renderer.get().factory->create_vertex_array({pos_vbo, tex_vbo}, cube_indices, ruis::render::vertex_array::mode::triangles)
 			.to_shared_ptr();
 		
-		this->tex = this->context.get().loader.load<ruis::res::texture>("tex_sample").to_shared_ptr();
+		this->tex = this->context.get().loader.load<ruis::res::texture_2d>("tex_sample").to_shared_ptr();
 		this->rot.set_identity();
 	}
 	

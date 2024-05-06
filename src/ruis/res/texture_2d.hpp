@@ -49,7 +49,7 @@ namespace ruis::res {
  * }
  * @endcode
  */
-class texture : public ruis::resource
+class texture_2d : public ruis::resource
 {
 	friend class ruis::resource_loader;
 
@@ -57,26 +57,26 @@ class texture : public ruis::resource
 
 public:
 	/**
-	 * @brief Create texture.
-	 * @param c - context.
-	 * @param tex - texture object to initialize this resource with.
+	 * @brief Create 2d texture resource.
+	 * @param c - ruis context.
+	 * @param tex - 2d texture object to initialize this resource with.
 	 */
-	texture(const utki::shared_ref<ruis::context>& c, decltype(tex2d) tex) :
+	texture_2d(const utki::shared_ref<ruis::context>& c, decltype(tex2d) tex) :
 		resource(c),
 		tex2d(std::move(tex))
 	{}
 
-	texture(const texture&) = delete;
-	texture& operator=(const texture&) = delete;
+	texture_2d(const texture_2d&) = delete;
+	texture_2d& operator=(const texture_2d&) = delete;
 
-	texture(texture&&) = delete;
-	texture& operator=(texture&&) = delete;
+	texture_2d(texture_2d&&) = delete;
+	texture_2d& operator=(texture_2d&&) = delete;
 
-	~texture() override = default;
+	~texture_2d() override = default;
 
 	/**
-	 * @brief Get texture object held by this resource.
-	 * @return Texture object.
+	 * @brief Get 2d texture object held by this resource.
+	 * @return 2d texture object.
 	 */
 	const render::texture_2d& tex() const noexcept
 	{
@@ -84,7 +84,7 @@ public:
 	}
 
 private:
-	static utki::shared_ref<texture> load(
+	static utki::shared_ref<texture_2d> load(
 		const utki::shared_ref<ruis::context>& ctx,
 		const ::tml::forest& desc,
 		const papki::file& fi

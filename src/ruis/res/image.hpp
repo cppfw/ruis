@@ -28,7 +28,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../context.hpp"
 #include "../resource_loader.hpp"
 
-#include "texture.hpp"
+#include "texture_2d.hpp"
 
 namespace ruis::res {
 
@@ -138,11 +138,13 @@ public:
 /**
  * @brief Undocumented.
  */
-class atlas_image : public image, public image::texture
+class atlas_image :
+	public image, //
+	public image::texture
 {
 	friend class image;
 
-	const utki::shared_ref<const res::texture> tex;
+	const utki::shared_ref<const res::texture_2d> tex;
 
 	const utki::shared_ref<const render::vertex_array> vao;
 
@@ -153,7 +155,7 @@ public:
 	// 	const utki::shared_ref<res::texture>& tex,
 	// 	const rectangle& rect
 	// );
-	atlas_image(const utki::shared_ref<ruis::context>& c, const utki::shared_ref<res::texture>& tex);
+	atlas_image(const utki::shared_ref<ruis::context>& c, const utki::shared_ref<res::texture_2d>& tex);
 
 	atlas_image(const atlas_image&) = delete;
 	atlas_image& operator=(const atlas_image&) = delete;

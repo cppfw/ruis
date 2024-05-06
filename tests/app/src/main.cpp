@@ -14,7 +14,7 @@
 #include <ruis/widgets/proxy/key_proxy.hpp>
 #include <ruis/widgets/button/base/push_button.hpp>
 #include <ruis/widgets/label/text.hpp>
-#include <ruis/res/texture.hpp>
+#include <ruis/res/texture_2d.hpp>
 #include <ruis/widgets/input/character_input_widget.hpp>
 #include <ruis/widgets/group/scroll_area.hpp>
 #include <ruis/widgets/proxy/mouse_proxy.hpp>
@@ -38,13 +38,13 @@ class simple_widget :
 		public ruis::updateable,
 		public ruis::character_input_widget
 {
-	utki::shared_ref<const ruis::res::texture> tex;
+	utki::shared_ref<const ruis::res::texture_2d> tex;
 
 public:
 	simple_widget(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 			ruis::widget(c, desc),
 			ruis::character_input_widget(this->context),
-			tex(this->context.get().loader.load<ruis::res::texture>("tex_sample"))
+			tex(this->context.get().loader.load<ruis::res::texture_2d>("tex_sample"))
 	{}
 
 	uint32_t timer = 0;
@@ -140,7 +140,7 @@ public:
 };
 
 class cube_widget : public ruis::widget, public ruis::updateable{
-	std::shared_ptr<ruis::res::texture> tex;
+	std::shared_ptr<ruis::res::texture_2d> tex;
 
 	ruis::quaternion rot = ruis::quaternion().set_identity();
 public:
@@ -199,7 +199,7 @@ public:
 			ruis::render::vertex_array::mode::triangles
 		).to_shared_ptr();
 
-		this->tex = this->context.get().loader.load<ruis::res::texture>("tex_sample").to_shared_ptr();
+		this->tex = this->context.get().loader.load<ruis::res::texture_2d>("tex_sample").to_shared_ptr();
 		this->rot.set_identity();
 	}
 
