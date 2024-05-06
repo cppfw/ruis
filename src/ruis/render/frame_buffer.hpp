@@ -23,16 +23,19 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <utki/shared_ref.hpp>
 
+#include <rasterimage/dimensioned.hpp>
+
 #include "texture_2d.hpp"
 
 namespace ruis::render {
 
-class frame_buffer
+class frame_buffer : public rasterimage::dimensioned
 {
 protected:
 	const utki::shared_ref<texture_2d> color;
 
 	frame_buffer(utki::shared_ref<texture_2d> color) :
+		rasterimage::dimensioned(color.get().dims()),
 		color(std::move(color))
 	{}
 
