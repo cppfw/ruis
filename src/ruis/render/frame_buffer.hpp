@@ -32,14 +32,14 @@ namespace ruis::render {
 class frame_buffer : public rasterimage::dimensioned
 {
 protected:
-	const utki::shared_ref<texture_2d> color;
-
 	frame_buffer(utki::shared_ref<texture_2d> color) :
 		rasterimage::dimensioned(color.get().dims()),
 		color(std::move(color))
 	{}
 
 public:
+	const utki::shared_ref<texture_2d> color;
+
 	frame_buffer(const frame_buffer&) = delete;
 	frame_buffer& operator=(const frame_buffer&) = delete;
 
