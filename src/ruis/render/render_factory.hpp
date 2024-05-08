@@ -34,6 +34,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "index_buffer.hpp"
 #include "shader.hpp"
 #include "texture_2d.hpp"
+#include "texture_depth.hpp"
 #include "texturing_shader.hpp"
 #include "vertex_array.hpp"
 #include "vertex_buffer.hpp"
@@ -79,6 +80,8 @@ public:
 	{
 		return this->create_texture_2d(imvar, std::move(params));
 	}
+
+	virtual utki::shared_ref<texture_depth> create_texture_depth(rasterimage::dimensioned::dimensions_type dims) = 0;
 
 	virtual utki::shared_ref<vertex_buffer> create_vertex_buffer(utki::span<const r4::vector4<float>> vertices) = 0;
 
