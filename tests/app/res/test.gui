@@ -454,6 +454,8 @@ cursor{crs_arrow}
 
 		@cube_widget{
 			id{cube_widget}
+			cache{true}
+			depth{true}
 			lp{
 				dx{max} dy{max}
 			}

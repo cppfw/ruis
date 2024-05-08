@@ -219,9 +219,7 @@ public:
 		this->clear_cache();
 	}
 
-	void render(const ruis::matrix4& matrix)const override{
-		this->widget::render(matrix);
-		
+	void render(const ruis::matrix4& matrix)const override{		
 		ruis::matrix4 matr(matrix);
 		matr.scale(this->rect().d / 2);
 		matr.translate(1, 1);
@@ -231,16 +229,11 @@ public:
 		matr.translate(0, 0, -4);
 		matr.rotate(this->rot);
 
-		// glDisable(GL_CULL_FACE);
+		// std::cout << "depth = " << this->get_params().depth << std::endl;
 
-		// glEnable(GL_DEPTH_TEST);
-		// glDepthFunc(GL_LESS);
-		// glDepthFunc(GL_GREATER);
+		// glDisable(GL_CULL_FACE);
 
 		this->context.get().renderer.get().shader->pos_tex->render(matr, *this->cubeVAO, this->tex->tex());
-
-		// glDisable(GL_CULL_FACE);
-		// glDisable(GL_DEPTH_TEST);
 	}
 };
 

@@ -63,6 +63,8 @@ widget::widget(const utki::shared_ref<ruis::context>& c, const tml::forest& desc
 				this->params.visible = get_property_value(p).to_bool();
 			} else if (p.value == "enabled") {
 				this->params.enabled = get_property_value(p).to_bool();
+			} else if (p.value == "depth") {
+				this->params.depth = get_property_value(p).to_bool();
 			}
 		} catch (std::invalid_argument&) {
 			LOG([&](auto& o) {
@@ -241,11 +243,12 @@ void widget::render_internal(const ruis::matrix4& matrix) const
 
 		this->render_from_cache(matrix);
 	} else {
-		if (this->params.clip) {
-			//		TRACE(<< "widget::RenderInternal(): oldScissorBox = " << Rect2i(oldcissorBox[0], oldcissorBox[1],
-			// oldcissorBox[2], oldcissorBox[3]) << std::endl)
+		if (this->params.depth) {
+			r.set_depth_test_enabled(true);
+			r.clear_framebuffer_depth();
+		}
 
-			// set scissor test
+		if (this->params.clip) {
 			r4::rectangle<uint32_t> scissor = this->compute_viewport_rect(matrix);
 
 			r4::rectangle<uint32_t> old_scissor{};
@@ -269,6 +272,8 @@ void widget::render_internal(const ruis::matrix4& matrix) const
 		} else {
 			this->render(matrix);
 		}
+
+		r.set_depth_test_enabled(false);
 	}
 
 	// render border
@@ -295,7 +300,7 @@ utki::shared_ref<render::texture_2d> widget::render_to_texture(
 {
 	auto& r = this->context.get().renderer.get();
 
-	utki::shared_ref<render::texture_2d> tex = [&]() {
+	utki::shared_ref<render::texture_2d> tex_color = [&]() {
 		if (reuse && reuse->dims() == this->rect().d.to<uint32_t>()) {
 			ASSERT(reuse)
 			return utki::shared_ref(std::move(reuse));
@@ -308,6 +313,14 @@ utki::shared_ref<render::texture_2d> widget::render_to_texture(
 		}
 	}();
 
+	auto tex_depth = [&]() -> std::shared_ptr<render::texture_depth> {
+		if (!this->params.depth) {
+			return nullptr;
+		}
+
+		return r.factory->create_texture_depth(tex_color.get().dims());
+	}();
+
 	utki::scope_exit viewport_scope_exit([old_viewport = r.get_viewport(), &r]() {
 		r.set_viewport(old_viewport);
 	});
@@ -316,17 +329,22 @@ utki::shared_ref<render::texture_2d> widget::render_to_texture(
 		r.set_framebuffer(std::move(old_framebuffer));
 	});
 
-	r.set_framebuffer(r.factory->create_framebuffer(tex, nullptr, nullptr).to_shared_ptr());
+	r.set_framebuffer(r.factory->create_framebuffer(tex_color, tex_depth, nullptr).to_shared_ptr());
 
 	r.set_viewport(r4::rectangle<uint32_t>(0, this->rect().d.to<uint32_t>()));
 
 	r.clear_framebuffer_color();
 
-	matrix4 matrix = make_viewport_matrix(r.initial_matrix, this->rect().d);
+	if (this->params.depth) {
+		r.set_depth_test_enabled(true);
+		r.clear_framebuffer_depth();
+	}
 
-	this->render(matrix);
+	this->render(make_viewport_matrix(r.initial_matrix, this->rect().d));
 
-	return tex;
+	r.set_depth_test_enabled(false);
+
+	return tex_color;
 }
 
 void widget::render_from_cache(const r4::matrix4<float>& matrix) const

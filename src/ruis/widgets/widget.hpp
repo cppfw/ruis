@@ -423,9 +423,25 @@ public:
 		 */
 		bool clip = false;
 
+		/**
+		 * @brief Enable caching widget's image to texture.
+		 */
 		bool cache = false;
+
+		/**
+		 * @brief Visibility of the widget.
+		 */
 		bool visible = true;
+
+		/**
+		 * @brief Widget's enabled state.
+		 */
 		bool enabled = true;
+
+		/**
+		 * @brief Usage of depth buffer for rendering the widget.
+		 */
+		bool depth = false;
 	};
 
 	struct all_parameters {
@@ -436,6 +452,15 @@ private:
 	parameters params;
 
 public:
+	/**
+	 * @brief Get currently set parameters.
+	 * @return Constant reference to the widget's parameters.
+	 */
+	const parameters& get_params() const noexcept
+	{
+		return this->params;
+	}
+
 	/**
 	 * @brief Constructor.
 	 * @param c - context to which this widget belongs.
