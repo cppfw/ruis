@@ -207,7 +207,7 @@ public:
 	void set_simple_alpha_blending();
 
 	/**
-	 * @brief Enable/disable depth test
+	 * @brief Enable/disable depth test.
 	 *
 	 * @param enable - if true the depth test will be enabled. Otherwise, it will be disabled.
 	 */

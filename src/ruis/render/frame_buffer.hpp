@@ -26,17 +26,23 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "texture_2d.hpp"
 #include "texture_depth.hpp"
+#include "texture_stencil.hpp"
 
 namespace ruis::render {
 
 class frame_buffer : public rasterimage::dimensioned
 {
 protected:
-	frame_buffer(std::shared_ptr<texture_2d> color, std::shared_ptr<texture_depth> depth);
+	frame_buffer( //
+		std::shared_ptr<texture_2d> color,
+		std::shared_ptr<texture_depth> depth,
+		std::shared_ptr<texture_stencil> stencil
+	);
 
 public:
 	const std::shared_ptr<texture_2d> color;
 	const std::shared_ptr<texture_depth> depth;
+	const std::shared_ptr<texture_stencil> stencil;
 
 	frame_buffer(const frame_buffer&) = delete;
 	frame_buffer& operator=(const frame_buffer&) = delete;

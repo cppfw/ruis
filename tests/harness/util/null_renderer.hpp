@@ -9,9 +9,14 @@ public:
 	null_texture_2d() : ruis::render::texture_2d(r4::vector2<uint32_t>(13, 666)){}
 };
 
+class null_texture_depth : public ruis::render::texture_depth{
+public:
+	null_texture_depth() : ruis::render::texture_depth(r4::vector2<uint32_t>(13, 666)){}
+};
+
 class null_frame_buffer : public ruis::render::frame_buffer{
 public:
-	null_frame_buffer() : ruis::render::frame_buffer(utki::make_shared<null_texture_2d>()){}
+	null_frame_buffer() : ruis::render::frame_buffer(nullptr, nullptr, nullptr){}
 };
 
 class null_index_buffer : public ruis::render::index_buffer{
@@ -39,7 +44,9 @@ public:
 class null_factory : public ruis::render::render_factory{
 public:
 	utki::shared_ref<ruis::render::frame_buffer> create_framebuffer(
-		const utki::shared_ref<ruis::render::texture_2d>& color
+		std::shared_ptr<ruis::render::texture_2d> color,
+		std::shared_ptr<ruis::render::texture_depth> depth,
+		std::shared_ptr<ruis::render::texture_stencil> stencil
 	)override
 	{
 		return utki::make_shared<null_frame_buffer>();
@@ -68,6 +75,10 @@ public:
 
 	utki::shared_ref<ruis::render::texture_2d> create_texture_2d(const rasterimage::image_variant& imvar, texture_2d_parameters params)override{
 		return utki::make_shared<null_texture_2d>();
+	}
+
+	utki::shared_ref<ruis::render::texture_depth> create_texture_depth(r4::vector2<uint32_t> dims)override{
+		return utki::make_shared<null_texture_depth>();
 	}
 
 	utki::shared_ref<ruis::render::vertex_array> create_vertex_array(
