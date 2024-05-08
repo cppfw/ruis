@@ -35,6 +35,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "shader.hpp"
 #include "texture_2d.hpp"
 #include "texture_depth.hpp"
+#include "texture_stencil.hpp"
 #include "texturing_shader.hpp"
 #include "vertex_array.hpp"
 #include "vertex_buffer.hpp"
@@ -112,7 +113,11 @@ public:
 
 	virtual std::unique_ptr<shaders> create_shaders() = 0;
 
-	virtual utki::shared_ref<frame_buffer> create_framebuffer(const utki::shared_ref<texture_2d>& color) = 0;
+	virtual utki::shared_ref<frame_buffer> create_framebuffer( //
+		std::shared_ptr<texture_2d> color,
+		std::shared_ptr<texture_depth> depth,
+		std::shared_ptr<texture_stencil> stencil
+	) = 0;
 };
 
 } // namespace ruis::render

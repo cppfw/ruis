@@ -316,9 +316,7 @@ utki::shared_ref<render::texture_2d> widget::render_to_texture(
 		r.set_framebuffer(std::move(old_framebuffer));
 	});
 
-	r.set_framebuffer(r.factory->create_framebuffer(tex).to_shared_ptr());
-
-	//	ASSERT_INFO(Render::isBoundFrameBufferComplete(), "tex.dims() = " << tex.dims())
+	r.set_framebuffer(r.factory->create_framebuffer(tex, nullptr, nullptr).to_shared_ptr());
 
 	r.set_viewport(r4::rectangle<uint32_t>(0, this->rect().d.to<uint32_t>()));
 
