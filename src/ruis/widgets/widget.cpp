@@ -209,7 +209,7 @@ void widget::invalidate_layout() noexcept
 	}
 
 	// TODO: this->clear_cache()?
-	this->cache_texture.reset();
+	this->cache_frame_buffer.reset();
 }
 
 void widget::render_internal(const ruis::matrix4& matrix) const
@@ -227,13 +227,7 @@ void widget::render_internal(const ruis::matrix4& matrix) const
 			});
 			r.set_scissor_enabled(false);
 
-			this->cache_texture = this->render_to_texture(
-										  {.min_filter = render::texture_2d::filter::nearest,
-										   .mag_filter = render::texture_2d::filter::nearest,
-										   .mipmap = render::texture_2d::mipmap::none},
-										  std::move(this->cache_texture)
-			)
-									  .to_shared_ptr();
+			this->cache_frame_buffer = this->render_to_texture(std::move(this->cache_frame_buffer)).to_shared_ptr();
 
 			this->cache_dirty = false;
 		}
@@ -293,44 +287,38 @@ void widget::render_internal(const ruis::matrix4& matrix) const
 #endif
 }
 
-utki::shared_ref<render::texture_2d> widget::render_to_texture(
-	render::render_factory::texture_2d_parameters params,
-	std::shared_ptr<render::texture_2d> reuse
-) const
+utki::shared_ref<render::frame_buffer> widget::render_to_texture(std::shared_ptr<render::frame_buffer> reuse) const
 {
 	auto& r = this->context.get().renderer.get();
 
-	utki::shared_ref<render::texture_2d> tex_color = [&]() {
-		if (reuse && reuse->dims() == this->rect().d.to<uint32_t>()) {
+	auto fb = [&]() {
+		auto dims = this->rect().d.to<uint32_t>();
+
+		if (reuse && reuse->dims() == dims) {
 			ASSERT(reuse)
 			return utki::shared_ref(std::move(reuse));
-		} else {
-			return r.factory->create_texture_2d(
-				rasterimage::format::rgba, //
-				this->rect().d.to<uint32_t>(),
-				std::move(params)
-			);
-		}
-	}();
-
-	auto tex_depth = [&]() -> std::shared_ptr<render::texture_depth> {
-		if (!this->params.depth) {
-			return nullptr;
 		}
 
-		return r.factory->create_texture_depth(tex_color.get().dims());
+		return r.factory->create_framebuffer(
+			r.factory->create_texture_2d( //
+				rasterimage::format::rgba,
+				dims,
+				{}
+			),
+			this->params.depth ? r.factory->create_texture_depth(dims)
+							   : std::shared_ptr<ruis::render::texture_depth>(nullptr),
+			nullptr
+		);
 	}();
-
-	utki::scope_exit viewport_scope_exit([old_viewport = r.get_viewport(), &r]() {
-		r.set_viewport(old_viewport);
-	});
 
 	utki::scope_exit framebuffer_scope_exit([old_framebuffer = r.get_framebuffer(), &r]() {
 		r.set_framebuffer(std::move(old_framebuffer));
 	});
+	r.set_framebuffer(fb.to_shared_ptr());
 
-	r.set_framebuffer(r.factory->create_framebuffer(tex_color, tex_depth, nullptr).to_shared_ptr());
-
+	utki::scope_exit viewport_scope_exit([old_viewport = r.get_viewport(), &r]() {
+		r.set_viewport(old_viewport);
+	});
 	r.set_viewport(r4::rectangle<uint32_t>(0, this->rect().d.to<uint32_t>()));
 
 	r.clear_framebuffer_color();
@@ -342,9 +330,10 @@ utki::shared_ref<render::texture_2d> widget::render_to_texture(
 
 	this->render(make_viewport_matrix(r.initial_matrix, this->rect().d));
 
+	// TODO: restore old depth test
 	r.set_depth_test_enabled(false);
 
-	return tex_color;
+	return fb;
 }
 
 void widget::render_from_cache(const r4::matrix4<float>& matrix) const
@@ -353,8 +342,9 @@ void widget::render_from_cache(const r4::matrix4<float>& matrix) const
 	matr.scale(this->rect().d);
 
 	auto& r = this->context.get().renderer.get();
-	ASSERT(this->cache_texture)
-	r.shader->pos_tex->render(matr, r.pos_tex_quad_01_vao.get(), *this->cache_texture);
+	ASSERT(this->cache_frame_buffer)
+	ASSERT(this->cache_frame_buffer->color)
+	r.shader->pos_tex->render(matr, r.pos_tex_quad_01_vao.get(), *this->cache_frame_buffer->color);
 }
 
 void widget::clear_cache()
