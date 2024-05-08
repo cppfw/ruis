@@ -223,9 +223,9 @@ void widget::render_internal(const ruis::matrix4& matrix) const
 	if (this->params.cache) {
 		if (this->cache_dirty) {
 			utki::scope_exit scissor_test_enabled_scope_exit([&r, scissor_test_was_enabled = r.is_scissor_enabled()]() {
-				r.set_scissor_enabled(scissor_test_was_enabled);
+				r.enable_scissor(scissor_test_was_enabled);
 			});
-			r.set_scissor_enabled(false);
+			r.enable_scissor(false);
 
 			this->cache_frame_buffer = this->render_to_texture(std::move(this->cache_frame_buffer)).to_shared_ptr();
 
@@ -238,7 +238,7 @@ void widget::render_internal(const ruis::matrix4& matrix) const
 		this->render_from_cache(matrix);
 	} else {
 		if (this->params.depth) {
-			r.set_depth_test_enabled(true);
+			r.enable_depth(true);
 			r.clear_framebuffer_depth();
 		}
 
@@ -251,7 +251,7 @@ void widget::render_internal(const ruis::matrix4& matrix) const
 				old_scissor = r.get_scissor();
 				scissor.intersect(old_scissor);
 			} else {
-				r.set_scissor_enabled(true);
+				r.enable_scissor(true);
 			}
 
 			r.set_scissor(scissor);
@@ -261,13 +261,13 @@ void widget::render_internal(const ruis::matrix4& matrix) const
 			if (scissor_test_was_enabled) {
 				r.set_scissor(old_scissor);
 			} else {
-				r.set_scissor_enabled(false);
+				r.enable_scissor(false);
 			}
 		} else {
 			this->render(matrix);
 		}
 
-		r.set_depth_test_enabled(false);
+		r.enable_depth(false);
 	}
 
 	// render border
@@ -323,15 +323,16 @@ utki::shared_ref<render::frame_buffer> widget::render_to_texture(std::shared_ptr
 
 	r.clear_framebuffer_color();
 
+	utki::scope_exit depth_scope_exit([old_depth = r.is_depth_enabled(), &r]() {
+		r.enable_depth(old_depth);
+	});
+	r.enable_depth(this->params.depth);
+
 	if (this->params.depth) {
-		r.set_depth_test_enabled(true);
 		r.clear_framebuffer_depth();
 	}
 
 	this->render(make_viewport_matrix(r.initial_matrix, this->rect().d));
-
-	// TODO: restore old depth test
-	r.set_depth_test_enabled(false);
 
 	return fb;
 }

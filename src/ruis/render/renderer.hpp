@@ -118,9 +118,18 @@ public:
 	 */
 	virtual r4::vector2<uint32_t> to_window_coords(ruis::vec2 point) const = 0;
 
-	virtual bool is_scissor_enabled() const = 0;
+	/**
+	 * @brief Check if scissor test is enabled.
+	 * @return true if scissor test is enabled.
+	 * @return false otherwise.
+	 */
+	virtual bool is_scissor_enabled() const noexcept = 0;
 
-	virtual void set_scissor_enabled(bool enabled) = 0;
+	/**
+	 * @brief Enable/disable scissor test.
+	 * @param enable - if true the scissor test will be enabled. Otherwise, it will be disabled.
+	 */
+	virtual void enable_scissor(bool enable) = 0;
 
 	/**
 	 * @brief Get scissor rectangle.
@@ -163,7 +172,7 @@ public:
 	 */
 	virtual void set_viewport(r4::rectangle<uint32_t> r) = 0;
 
-	virtual void set_blend_enabled(bool enable) = 0;
+	virtual void enable_blend(bool enable) = 0;
 
 	/**
 	 * @brief Blending factor type.
@@ -207,11 +216,18 @@ public:
 	void set_simple_alpha_blending();
 
 	/**
+	 * @brief Check if depth test is enabled.
+	 * @return true if depth test is enabled.
+	 * @return false otherwise.
+	 */
+	virtual bool is_depth_enabled() const noexcept = 0;
+
+	/**
 	 * @brief Enable/disable depth test.
 	 *
 	 * @param enable - if true the depth test will be enabled. Otherwise, it will be disabled.
 	 */
-	virtual void set_depth_test_enabled(bool enable) = 0;
+	virtual void enable_depth(bool enable) = 0;
 
 protected:
 	virtual void set_framebuffer_internal(frame_buffer* fb) = 0;

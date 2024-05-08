@@ -85,7 +85,7 @@ blending_widget::blending_widget(utki::shared_ref<ruis::context> context, parame
 void blending_widget::set_blending_to_renderer() const
 {
 	auto& r = this->context.get().renderer.get();
-	r.set_blend_enabled(this->is_blending_enabled());
+	r.enable_blend(this->is_blending_enabled());
 	if (this->is_blending_enabled()) {
 		r.set_blend_func(
 			this->params.factors.src,
