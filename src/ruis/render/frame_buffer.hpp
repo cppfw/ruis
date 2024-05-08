@@ -25,19 +25,18 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <utki/shared_ref.hpp>
 
 #include "texture_2d.hpp"
+#include "texture_depth.hpp"
 
 namespace ruis::render {
 
 class frame_buffer : public rasterimage::dimensioned
 {
 protected:
-	frame_buffer(utki::shared_ref<texture_2d> color) :
-		rasterimage::dimensioned(color.get().dims()),
-		color(std::move(color))
-	{}
+	frame_buffer(std::shared_ptr<texture_2d> color, std::shared_ptr<texture_depth> depth);
 
 public:
-	const utki::shared_ref<texture_2d> color;
+	const std::shared_ptr<texture_2d> color;
+	const std::shared_ptr<texture_depth> depth;
 
 	frame_buffer(const frame_buffer&) = delete;
 	frame_buffer& operator=(const frame_buffer&) = delete;
