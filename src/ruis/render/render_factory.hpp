@@ -34,6 +34,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "index_buffer.hpp"
 #include "shader.hpp"
 #include "texture_2d.hpp"
+#include "texture_cube.hpp"
 #include "texture_depth.hpp"
 #include "texture_stencil.hpp"
 #include "texturing_shader.hpp"
@@ -74,15 +75,20 @@ public:
 	) = 0;
 
 	virtual utki::shared_ref<texture_2d> create_texture_2d(
-		// NOLINTNEXTLINE(cppcoreguidelines-rvalue-reference-param-not-moved)
 		rasterimage::image_variant&& imvar,
 		texture_2d_parameters params
-	)
-	{
-		return this->create_texture_2d(imvar, std::move(params));
-	}
+	) = 0;
 
 	virtual utki::shared_ref<texture_depth> create_texture_depth(rasterimage::dimensioned::dimensions_type dims) = 0;
+
+	virtual utki::shared_ref<texture_cube> create_texture_cube(
+		rasterimage::image_variant&& positive_x,
+		rasterimage::image_variant&& negative_x,
+		rasterimage::image_variant&& positive_y,
+		rasterimage::image_variant&& negative_y,
+		rasterimage::image_variant&& positive_z,
+		rasterimage::image_variant&& negative_z
+	) = 0;
 
 	virtual utki::shared_ref<vertex_buffer> create_vertex_buffer(utki::span<const r4::vector4<float>> vertices) = 0;
 
