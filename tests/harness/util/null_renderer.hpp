@@ -14,6 +14,11 @@ public:
 	null_texture_depth() : ruis::render::texture_depth(r4::vector2<uint32_t>(13, 666)){}
 };
 
+class null_texture_cube : public ruis::render::texture_cube{
+public:
+	null_texture_cube() : ruis::render::texture_cube(){}
+};
+
 class null_frame_buffer : public ruis::render::frame_buffer{
 public:
 	null_frame_buffer() : ruis::render::frame_buffer(nullptr, nullptr, nullptr){}
@@ -73,12 +78,36 @@ public:
 		return utki::make_shared<null_texture_2d>();
 	}
 
-	utki::shared_ref<ruis::render::texture_2d> create_texture_2d(const rasterimage::image_variant& imvar, texture_2d_parameters params)override{
+	utki::shared_ref<ruis::render::texture_2d> create_texture_2d(
+		const rasterimage::image_variant& imvar,
+		texture_2d_parameters params
+	)override
+	{
+		return utki::make_shared<null_texture_2d>();
+	}
+
+	utki::shared_ref<ruis::render::texture_2d> create_texture_2d(
+		rasterimage::image_variant&& imvar,
+		texture_2d_parameters params
+	)override
+	{
 		return utki::make_shared<null_texture_2d>();
 	}
 
 	utki::shared_ref<ruis::render::texture_depth> create_texture_depth(r4::vector2<uint32_t> dims)override{
 		return utki::make_shared<null_texture_depth>();
+	}
+
+	utki::shared_ref<ruis::render::texture_cube> create_texture_cube(
+		rasterimage::image_variant&& positive_x,
+		rasterimage::image_variant&& negative_x,
+		rasterimage::image_variant&& positive_y,
+		rasterimage::image_variant&& negative_y,
+		rasterimage::image_variant&& positive_z,
+		rasterimage::image_variant&& negative_z
+	) override
+	{
+		return utki::make_shared<null_texture_cube>();
 	}
 
 	utki::shared_ref<ruis::render::vertex_array> create_vertex_array(
