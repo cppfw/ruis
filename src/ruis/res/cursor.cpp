@@ -27,17 +27,17 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace ruis::res;
 
 ruis::res::cursor::cursor(
-	const utki::shared_ref<ruis::context>& c,
-	const utki::shared_ref<ruis::res::image>& image,
+	utki::shared_ref<ruis::context> c,
+	utki::shared_ref<ruis::res::image> image,
 	const vector2& hotspot
 ) :
-	resource(c),
-	image_v(image),
+	resource(std::move(c)),
+	image_v(std::move(image)),
 	hotspot_v(hotspot)
 {}
 
 utki::shared_ref<cursor> cursor::load(
-	const utki::shared_ref<ruis::context>& ctx,
+	utki::shared_ref<ruis::context> ctx,
 	const tml::forest& desc,
 	const papki::file& fi
 )
@@ -63,5 +63,10 @@ utki::shared_ref<cursor> cursor::load(
 		throw std::logic_error("cursor::load(): resource description does not contain 'hotspot' property");
 	}
 
-	return utki::make_shared<cursor>(ctx, ctx.get().loader.load<res::image>(image_res_id->string), hotspot);
+	auto cursor_im = ctx.get().loader.load<res::image>(image_res_id->string);
+	return utki::make_shared<cursor>( //
+		std::move(ctx),
+		std::move(cursor_im),
+		hotspot
+	);
 }

@@ -158,8 +158,8 @@ protected:
 	const utki::shared_ref<ruis::context> context;
 
 	// NOLINTNEXTLINE(modernize-pass-by-value)
-	resource(const utki::shared_ref<ruis::context>& c) :
-		context(c)
+	resource(utki::shared_ref<ruis::context> c) :
+		context(std::move(c))
 	{}
 
 public:

@@ -133,7 +133,6 @@ public:
 	utki::shared_ref<ruis::render::vertex_buffer> create_vertex_buffer(utki::span<const r4::vector4<float>> vertices)override{
 		return utki::make_shared<null_vertex_buffer>();
 	}
-
 };
 
 class null_renderer : public ruis::render::renderer{

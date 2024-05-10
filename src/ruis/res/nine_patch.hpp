@@ -64,13 +64,13 @@ public:
 	~nine_patch() override = default;
 
 	nine_patch(
-		const utki::shared_ref<ruis::context>& c,
+		utki::shared_ref<ruis::context> c,
 		// NOLINTNEXTLINE(modernize-pass-by-value)
-		const utki::shared_ref<const res::image>& image,
+		utki::shared_ref<const res::image> image,
 		sides<real> borders // TODO: uint32_t sides?
 	) :
-		resource(c),
-		image(image),
+		resource(std::move(c)),
+		image(std::move(image)),
 		borders(borders)
 	{}
 
@@ -115,7 +115,7 @@ private:
 	mutable std::map<real, std::weak_ptr<image_matrix>> cache;
 
 	static utki::shared_ref<nine_patch> load(
-		const utki::shared_ref<ruis::context>& ctx,
+		utki::shared_ref<ruis::context> ctx,
 		const ::tml::forest& desc,
 		const papki::file& fi
 	);

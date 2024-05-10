@@ -29,8 +29,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis::res;
 
-ruis::res::gradient::gradient(const utki::shared_ref<ruis::context>& c) :
-	resource(c),
+ruis::res::gradient::gradient(utki::shared_ref<ruis::context> c) :
+	resource(std::move(c)),
 	vao(this->context.get().renderer.get().empty_vertex_array)
 {}
 
@@ -78,7 +78,7 @@ void gradient::set(std::vector<std::tuple<real, uint32_t>>& stops, bool vertical
 }
 
 utki::shared_ref<gradient> gradient::load(
-	const utki::shared_ref<ruis::context>& ctx,
+	utki::shared_ref<ruis::context> ctx,
 	const tml::forest& desc,
 	const papki::file& fi
 )
@@ -106,7 +106,7 @@ utki::shared_ref<gradient> gradient::load(
 		}
 	}
 
-	auto ret = utki::make_shared<gradient>(ctx);
+	auto ret = utki::make_shared<gradient>(std::move(ctx));
 
 	ret.get().set(stops, vertical);
 

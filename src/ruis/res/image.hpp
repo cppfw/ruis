@@ -52,7 +52,7 @@ class image : public resource
 	friend class ruis::resource_loader;
 
 protected:
-	image(const utki::shared_ref<ruis::context>& c);
+	image(utki::shared_ref<ruis::context> c);
 
 public:
 	image(const image&) = delete;
@@ -74,9 +74,9 @@ public:
 		const utki::shared_ref<const ruis::render::renderer> renderer;
 
 		// NOLINTNEXTLINE(modernize-pass-by-value)
-		texture(const utki::shared_ref<const ruis::render::renderer>& r, r4::vector2<uint32_t> dims) :
+		texture(utki::shared_ref<const ruis::render::renderer> r, r4::vector2<uint32_t> dims) :
 			rasterimage::dimensioned(dims),
-			renderer(r)
+			renderer(std::move(r))
 		{}
 
 	public:
@@ -117,7 +117,7 @@ public:
 
 private:
 	static utki::shared_ref<image> load(
-		const utki::shared_ref<ruis::context>& ctx,
+		utki::shared_ref<ruis::context> ctx,
 		const ::tml::forest& desc,
 		const papki::file& fi
 	);
@@ -130,7 +130,10 @@ public:
 	 * @param fi - image file.
 	 * @return Loaded resource.
 	 */
-	static utki::shared_ref<image> load(const utki::shared_ref<ruis::context>& ctx, const papki::file& fi);
+	static utki::shared_ref<image> load( //
+		utki::shared_ref<ruis::context> ctx,
+		const papki::file& fi
+	);
 };
 
 // TODO: is atlas_image needed?
@@ -154,7 +157,10 @@ public:
 	// 	const utki::shared_ref<res::texture>& tex,
 	// 	const rectangle& rect
 	// );
-	atlas_image(const utki::shared_ref<ruis::context>& c, const utki::shared_ref<res::texture_2d>& tex);
+	atlas_image( //
+		utki::shared_ref<ruis::context> c,
+		utki::shared_ref<res::texture_2d> tex
+	);
 
 	atlas_image(const atlas_image&) = delete;
 	atlas_image& operator=(const atlas_image&) = delete;
@@ -175,7 +181,7 @@ public:
 
 private:
 	static utki::shared_ref<atlas_image> load(
-		const utki::shared_ref<ruis::context>& ctx,
+		utki::shared_ref<ruis::context> ctx,
 		const ::tml::forest& desc,
 		const papki::file& fi
 	);

@@ -33,7 +33,7 @@ using namespace ruis;
 using namespace ruis::res;
 
 res::font::font(
-	const utki::shared_ref<ruis::context>& context,
+	utki::shared_ref<ruis::context> context,
 	const papki::file& file_normal,
 	std::unique_ptr<const papki::file> file_bold,
 	std::unique_ptr<const papki::file> file_italic,
@@ -41,7 +41,7 @@ res::font::font(
 	unsigned font_size, // TODO: font size is not used anymore, remove
 	unsigned max_cached
 ) :
-	resource(context)
+	resource(std::move(context))
 {
 	// NOLINTNEXTLINE(bugprone-unused-return-value, "false positive")
 	this->fonts[unsigned(style::normal)] = std::make_unique<texture_font_provider>(
@@ -77,7 +77,7 @@ res::font::font(
 }
 
 utki::shared_ref<res::font> res::font::load(
-	const utki::shared_ref<ruis::context>& ctx,
+	utki::shared_ref<ruis::context> ctx,
 	const tml::forest& desc,
 	const papki::file& fi
 )
@@ -110,7 +110,7 @@ utki::shared_ref<res::font> res::font::load(
 	}
 
 	return utki::make_shared<font>(
-		ctx,
+		std::move(ctx),
 		fi,
 		std::move(file_bold),
 		std::move(file_italic),

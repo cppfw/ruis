@@ -61,8 +61,8 @@ public:
 	 * @param c - ruis context.
 	 * @param tex - 2d texture object to initialize this resource with.
 	 */
-	texture_2d(const utki::shared_ref<ruis::context>& c, decltype(tex2d) tex) :
-		resource(c),
+	texture_2d(utki::shared_ref<ruis::context> c, decltype(tex2d) tex) :
+		resource(std::move(c)),
 		tex2d(std::move(tex))
 	{}
 
@@ -85,7 +85,7 @@ public:
 
 private:
 	static utki::shared_ref<texture_2d> load(
-		const utki::shared_ref<ruis::context>& ctx,
+		utki::shared_ref<ruis::context> ctx,
 		const ::tml::forest& desc,
 		const papki::file& fi
 	);

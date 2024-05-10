@@ -45,13 +45,13 @@ class res_subimage :
 public:
 	// rect is a rectangle on the texture, Y axis down.
 	res_subimage( //
-		const utki::shared_ref<ruis::context>& c,
+		utki::shared_ref<ruis::context> c,
 		decltype(tex) tex,
 		const ruis::rect& rect // TODO: uint32_t rect?
 	) :
-		res::image(c),
+		res::image(std::move(c)),
 		res::image::texture(
-			c.get().renderer,
+			this->context.get().renderer,
 			[&]() {
 				ASSERT(rect.d.is_positive_or_zero(), [&](auto& o) {
 					o << "rect.d = " << rect.d;
@@ -107,7 +107,7 @@ public:
 } // namespace
 
 utki::shared_ref<nine_patch> nine_patch::load(
-	const utki::shared_ref<ruis::context>& ctx,
+	utki::shared_ref<ruis::context> ctx,
 	const tml::forest& desc,
 	const papki::file& fi
 )
@@ -145,7 +145,11 @@ utki::shared_ref<nine_patch> nine_patch::load(
 		throw std::invalid_argument("nine_patch::load(): borders are bigger than image dimensions");
 	}
 
-	return utki::make_shared<nine_patch>(ctx, image, borders);
+	return utki::make_shared<nine_patch>( //
+		std::move(ctx),
+		std::move(image),
+		borders
+	);
 }
 
 nine_patch::image_matrix::image_matrix(

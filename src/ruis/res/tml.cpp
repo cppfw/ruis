@@ -26,13 +26,16 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis::res;
 
-ruis::res::tml::tml(const utki::shared_ref<ruis::context>& c, ::tml::forest forest) :
-	resource(c),
+ruis::res::tml::tml( //
+	utki::shared_ref<ruis::context> c,
+	::tml::forest forest
+) :
+	resource(std::move(c)),
 	s(std::move(forest))
 {}
 
-utki::shared_ref<ruis::res::tml> ruis::res::tml::load(
-	const utki::shared_ref<ruis::context>& ctx,
+utki::shared_ref<ruis::res::tml> ruis::res::tml::load( //
+	utki::shared_ref<ruis::context> ctx,
 	const ::tml::forest& desc,
 	const papki::file& fi
 )
@@ -43,5 +46,8 @@ utki::shared_ref<ruis::res::tml> ruis::res::tml::load(
 		}
 	}
 
-	return utki::make_shared<tml>(ctx, ::tml::read(fi));
+	return utki::make_shared<tml>( //
+		std::move(ctx),
+		::tml::read(fi)
+	);
 }

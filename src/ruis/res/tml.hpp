@@ -54,7 +54,10 @@ public:
 	 * @param c - context.
 	 * @param s - tml forest to initialize the resource with.
 	 */
-	tml(const utki::shared_ref<ruis::context>& c, ::tml::forest s);
+	tml( //
+		utki::shared_ref<ruis::context> c,
+		::tml::forest s
+	);
 
 	tml(const tml&) = delete;
 	tml& operator=(const tml&) = delete;
@@ -70,8 +73,8 @@ public:
 	}
 
 private:
-	static utki::shared_ref<tml> load(
-		const utki::shared_ref<ruis::context>& ctx,
+	static utki::shared_ref<tml> load( //
+		utki::shared_ref<ruis::context> ctx,
 		const ::tml::forest& desc,
 		const papki::file& fi
 	);

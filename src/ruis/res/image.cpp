@@ -38,8 +38,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace ruis;
 using namespace ruis::res;
 
-image::image(const utki::shared_ref<ruis::context>& c) :
-	resource(c)
+image::image(utki::shared_ref<ruis::context> c) :
+	resource(std::move(c))
 {}
 
 // atlas_image::atlas_image(
@@ -63,15 +63,15 @@ image::image(const utki::shared_ref<ruis::context>& c) :
 // 	ASSERT(false)
 // }
 
-atlas_image::atlas_image(const utki::shared_ref<ruis::context>& c, const utki::shared_ref<res::texture_2d>& tex) :
-	image(c),
+atlas_image::atlas_image(utki::shared_ref<ruis::context> c, utki::shared_ref<res::texture_2d> tex) :
+	image(std::move(c)),
 	image::texture(this->context.get().renderer, tex.get().tex().dims()),
 	tex(std::move(tex)),
 	vao(this->context.get().renderer.get().pos_tex_quad_01_vao)
 {}
 
 utki::shared_ref<atlas_image> atlas_image::load(
-	const utki::shared_ref<ruis::context>& ctx,
+	utki::shared_ref<ruis::context> ctx,
 	const tml::forest& desc,
 	const papki::file& fi
 )
@@ -117,12 +117,9 @@ class fixed_texture : public image::texture
 protected:
 	const utki::shared_ref<const render::texture_2d> tex_2d;
 
-	fixed_texture(
-		const utki::shared_ref<const ruis::render::renderer>& r,
-		const utki::shared_ref<const render::texture_2d>& tex
-	) :
-		image::texture(r, tex.get().dims()),
-		tex_2d(tex)
+	fixed_texture(utki::shared_ref<const ruis::render::renderer> r, utki::shared_ref<const render::texture_2d> tex) :
+		image::texture(std::move(r), tex.get().dims()),
+		tex_2d(std::move(tex))
 	{}
 
 public:
@@ -137,9 +134,15 @@ class res_raster_image :
 	public fixed_texture
 {
 public:
-	res_raster_image(const utki::shared_ref<ruis::context>& c, const utki::shared_ref<const render::texture_2d>& tex) :
-		image(c),
-		fixed_texture(this->context.get().renderer, tex)
+	res_raster_image( //
+		utki::shared_ref<ruis::context> c,
+		utki::shared_ref<const render::texture_2d> tex
+	) :
+		image(std::move(c)),
+		fixed_texture( //
+			this->context.get().renderer,
+			std::move(tex)
+		)
 	{}
 
 	utki::shared_ref<const image::texture> get(vector2 for_dims) const override
@@ -152,10 +155,13 @@ public:
 		return this->tex_2d.get().dims();
 	}
 
-	static utki::shared_ref<res_raster_image> load(const utki::shared_ref<ruis::context>& ctx, const papki::file& fi)
+	static utki::shared_ref<res_raster_image> load( //
+		utki::shared_ref<ruis::context> ctx,
+		const papki::file& fi
+	)
 	{
 		return utki::make_shared<res_raster_image>(
-			ctx,
+			std::move(ctx),
 			ctx.get().renderer.get().factory->create_texture_2d(
 				rasterimage::read(fi),
 				{
@@ -171,8 +177,11 @@ class res_svg_image : public image
 	std::unique_ptr<svgdom::svg_element> dom;
 
 public:
-	res_svg_image(const utki::shared_ref<ruis::context>& c, decltype(dom) dom) :
-		image(c),
+	res_svg_image( //
+		utki::shared_ref<ruis::context> c,
+		decltype(dom) dom
+	) :
+		image(std::move(c)),
 		dom(std::move(dom))
 	{}
 
@@ -192,11 +201,11 @@ public:
 
 	public:
 		svg_texture(
-			const utki::shared_ref<const ruis::render::renderer>& r,
-			const utki::shared_ref<const res_svg_image>& parent,
-			const utki::shared_ref<const render::texture_2d>& tex
+			utki::shared_ref<const ruis::render::renderer> r,
+			utki::shared_ref<const res_svg_image> parent,
+			utki::shared_ref<const render::texture_2d> tex
 		) :
-			fixed_texture(r, tex),
+			fixed_texture(std::move(r), std::move(tex)),
 			parent(parent.to_shared_ptr())
 		{}
 
@@ -275,17 +284,20 @@ public:
 
 	mutable std::map<r4::vector2<unsigned>, std::weak_ptr<texture>> cache;
 
-	static utki::shared_ref<res_svg_image> load(const utki::shared_ref<ruis::context>& ctx, const papki::file& fi)
+	static utki::shared_ref<res_svg_image> load( //
+		utki::shared_ref<ruis::context> ctx,
+		const papki::file& fi
+	)
 	{
 		auto dom = svgdom::load(fi);
 		ASSERT(dom)
-		return utki::make_shared<res_svg_image>(ctx, std::move(dom));
+		return utki::make_shared<res_svg_image>(std::move(ctx), std::move(dom));
 	}
 };
 } // namespace
 
-utki::shared_ref<image> image::load(
-	const utki::shared_ref<ruis::context>& ctx,
+utki::shared_ref<image> image::load( //
+	utki::shared_ref<ruis::context> ctx,
 	const tml::forest& desc,
 	const papki::file& fi
 )
@@ -293,18 +305,21 @@ utki::shared_ref<image> image::load(
 	for (auto& p : desc) {
 		if (p.value == "file") {
 			fi.set_path(get_property_value(p).string);
-			return image::load(ctx, fi);
+			return image::load(std::move(ctx), fi);
 		}
 	}
 
-	return atlas_image::load(ctx, desc, fi);
+	return atlas_image::load(std::move(ctx), desc, fi);
 }
 
-utki::shared_ref<image> image::load(const utki::shared_ref<ruis::context>& ctx, const papki::file& fi)
+utki::shared_ref<image> image::load( //
+	utki::shared_ref<ruis::context> ctx,
+	const papki::file& fi
+)
 {
 	if (fi.suffix().compare("svg") == 0) {
-		return res_svg_image::load(ctx, fi);
+		return res_svg_image::load(std::move(ctx), fi);
 	} else {
-		return res_raster_image::load(ctx, fi);
+		return res_raster_image::load(std::move(ctx), fi);
 	}
 }

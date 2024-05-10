@@ -60,7 +60,7 @@ render::texture_2d::mipmap parse_mipmap(std::string_view str)
 } // namespace
 
 utki::shared_ref<texture_2d> texture_2d::load(
-	const utki::shared_ref<ruis::context>& ctx,
+	utki::shared_ref<ruis::context> ctx,
 	const tml::forest& desc,
 	const papki::file& fi
 )
@@ -83,8 +83,13 @@ utki::shared_ref<texture_2d> texture_2d::load(
 		}
 	}
 
-	return utki::make_shared<texture_2d>(
-		ctx,
-		ctx.get().renderer.get().factory->create_texture_2d(rasterimage::read(fi), std::move(params))
+	auto tex = ctx.get().renderer.get().factory->create_texture_2d( //
+		rasterimage::read(fi),
+		std::move(params)
+	);
+
+	return utki::make_shared<texture_2d>( //
+		std::move(ctx),
+		std::move(tex)
 	);
 }

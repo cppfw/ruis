@@ -45,11 +45,7 @@ class cursor : public resource
 	vector2 hotspot_v;
 
 public:
-	cursor(
-		const utki::shared_ref<ruis::context>& c,
-		const utki::shared_ref<ruis::res::image>& image,
-		const vector2& hotspot
-	);
+	cursor(utki::shared_ref<ruis::context> c, utki::shared_ref<ruis::res::image> image, const vector2& hotspot);
 
 	cursor(const cursor&) = delete;
 	cursor& operator=(const cursor&) = delete;
@@ -73,7 +69,7 @@ private:
 	friend class ruis::resource_loader;
 
 	static utki::shared_ref<cursor> load(
-		const utki::shared_ref<ruis::context>& ctx,
+		utki::shared_ref<ruis::context> ctx,
 		const ::tml::forest& desc,
 		const papki::file& fi
 	);

@@ -68,7 +68,7 @@ public:
 	 * defines the color of the stop.
 	 * @param c - context.
 	 */
-	gradient(const utki::shared_ref<ruis::context>& c);
+	gradient(utki::shared_ref<ruis::context> c);
 
 	gradient(const gradient&) = delete;
 	gradient& operator=(const gradient&) = delete;
@@ -94,7 +94,7 @@ public:
 
 private:
 	static utki::shared_ref<gradient> load(
-		const utki::shared_ref<ruis::context>& ctx,
+		utki::shared_ref<ruis::context> ctx,
 		const ::tml::forest& desc,
 		const papki::file& fi
 	);
