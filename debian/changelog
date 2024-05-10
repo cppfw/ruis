@@ -1,3 +1,9 @@
+libruis (0.5.226) unstable; urgency=medium
+
+  * texture_cube
+
+ -- Ivan Gagis <igagis@gmail.com>  Fri, 10 May 2024 16:25:25 +0300
+
 libruis (0.5.225) unstable; urgency=medium
 
   * tex coords
