@@ -87,7 +87,7 @@ public:
 	}
 
 	utki::shared_ref<ruis::render::texture_2d> create_texture_2d(
-		rasterimage::image_variant&& imvar,
+		rasterimage::image_variant&& imvar, // NOLINT(cppcoreguidelines-rvalue-reference-param-not-moved)
 		texture_2d_parameters params
 	)override
 	{
@@ -99,12 +99,12 @@ public:
 	}
 
 	utki::shared_ref<ruis::render::texture_cube> create_texture_cube(
-		rasterimage::image_variant&& positive_x,
-		rasterimage::image_variant&& negative_x,
-		rasterimage::image_variant&& positive_y,
-		rasterimage::image_variant&& negative_y,
-		rasterimage::image_variant&& positive_z,
-		rasterimage::image_variant&& negative_z
+		rasterimage::image_variant&& positive_x, // NOLINT(cppcoreguidelines-rvalue-reference-param-not-moved)
+		rasterimage::image_variant&& negative_x, // NOLINT(cppcoreguidelines-rvalue-reference-param-not-moved)
+		rasterimage::image_variant&& positive_y, // NOLINT(cppcoreguidelines-rvalue-reference-param-not-moved)
+		rasterimage::image_variant&& negative_y, // NOLINT(cppcoreguidelines-rvalue-reference-param-not-moved)
+		rasterimage::image_variant&& positive_z, // NOLINT(cppcoreguidelines-rvalue-reference-param-not-moved)
+		rasterimage::image_variant&& negative_z // NOLINT(cppcoreguidelines-rvalue-reference-param-not-moved)
 	) override
 	{
 		return utki::make_shared<null_texture_cube>();
