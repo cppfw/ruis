@@ -59,6 +59,14 @@ render::texture_2d::mipmap parse_mipmap(std::string_view str)
 }
 } // namespace
 
+texture_2d::texture_2d( //
+	utki::shared_ref<ruis::context> c,
+	utki::shared_ref<const render::texture_2d> tex
+) :
+	resource(std::move(c)),
+	tex2d(std::move(tex))
+{}
+
 utki::shared_ref<texture_2d> texture_2d::load(
 	utki::shared_ref<ruis::context> ctx,
 	const tml::forest& desc,
@@ -74,11 +82,11 @@ utki::shared_ref<texture_2d> texture_2d::load(
 	for (auto& p : desc) {
 		if (p.value == "file"sv) {
 			fi.set_path(get_property_value(p).string);
-		} else if (p.value == "min_filter") {
+		} else if (p.value == "min_filter"sv) {
 			params.min_filter = parse_filter(get_property_value(p).string);
-		} else if (p.value == "mag_filter") {
+		} else if (p.value == "mag_filter"sv) {
 			params.mag_filter = parse_filter(get_property_value(p).string);
-		} else if (p.value == "mipmap") {
+		} else if (p.value == "mipmap"sv) {
 			params.mipmap = parse_mipmap(get_property_value(p).string);
 		}
 	}
