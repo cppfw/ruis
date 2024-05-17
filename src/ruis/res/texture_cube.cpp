@@ -83,30 +83,12 @@ utki::shared_ref<texture_cube> texture_cube::load(
 	}
 
 	auto tex = ctx.get().renderer.get().factory->create_texture_cube( //
-		[&]() {
-			fi.set_path(check_not_empty(file_px, file_px_param));
-			return rasterimage::read(fi);
-		}(),
-		[&]() {
-			fi.set_path(check_not_empty(file_px, file_nx_param));
-			return rasterimage::read(fi);
-		}(),
-		[&]() {
-			fi.set_path(check_not_empty(file_px, file_py_param));
-			return rasterimage::read(fi);
-		}(),
-		[&]() {
-			fi.set_path(check_not_empty(file_px, file_ny_param));
-			return rasterimage::read(fi);
-		}(),
-		[&]() {
-			fi.set_path(check_not_empty(file_px, file_pz_param));
-			return rasterimage::read(fi);
-		}(),
-		[&]() {
-			fi.set_path(check_not_empty(file_px, file_nz_param));
-			return rasterimage::read(fi);
-		}()
+		rasterimage::read(fi.set_path(check_not_empty(file_px, file_px_param))),
+		rasterimage::read(fi.set_path(check_not_empty(file_nx, file_nx_param))),
+		rasterimage::read(fi.set_path(check_not_empty(file_py, file_py_param))),
+		rasterimage::read(fi.set_path(check_not_empty(file_ny, file_ny_param))),
+		rasterimage::read(fi.set_path(check_not_empty(file_pz, file_pz_param))),
+		rasterimage::read(fi.set_path(check_not_empty(file_nz, file_nz_param)))
 	);
 
 	return utki::make_shared<texture_cube>( //
