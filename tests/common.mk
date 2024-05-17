@@ -15,7 +15,8 @@ ifeq ($(os),windows)
     this_ldlibs += -lmingw32 -mwindows # these should go first, otherwise linker will complain about undefined reference to WinMain
     this_ldlibs += -lglew32 -lopengl32 -lz -lfreetype
 else ifeq ($(os),macosx)
-    this_ldlibs += -framework OpenGL -framework Cocoa -lfreetype
+    this_ldlibs += -framework OpenGL -framework Cocoa
+    this_ldlibs += $(shell pkg-config --libs freetype2)
     this_cxxflags += -stdlib=libc++ # this is needed to be able to use c++11 std lib
 
     this_ldflags += -rdynamic

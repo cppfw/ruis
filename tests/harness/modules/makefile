@@ -11,7 +11,7 @@ this_libruis := $(this_libruis_dir)libruis$(dot_so)
 
 # save global flags
 harness_old_cxxflags := $(CXXFLAGS)
-harness_old_ldflags := $(LDLFAGS)
+harness_old_ldflags := $(LDFLAGS)
 
 CXXFLAGS += -I$(abspath $(d)$(module_ruis_dir))
 LDFLAGS += -L$(abspath $(d)$(this_libruis_dir))
