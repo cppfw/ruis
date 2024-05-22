@@ -56,8 +56,6 @@ this_no_install := true
 
 $(eval $(prorab-build-app))
 
-$(eval $(call prorab-depend, $(prorab_this_name), $(this_libruisapp) $(this_libruis)))
-
 this_test_cmd := $(prorab_this_name)
 this_test_deps := $(prorab_this_name)
 this_test_ld_path := $(this_libruis_dir)
