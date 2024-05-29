@@ -40,7 +40,8 @@ namespace ruis {
  */
 class units
 {
-	real dots_per_inch_v = 96;
+	constexpr static const auto default_dots_per_inch = 96;
+	real dots_per_inch_v = default_dots_per_inch;
 
 	/**
 	 * @brief Dots per perception pixel.
