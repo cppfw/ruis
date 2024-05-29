@@ -88,7 +88,7 @@ void text_input_line::render(const ruis::matrix4& matrix) const
 	if (this->is_focused() && this->cursor_blink_visible) {
 		ruis::matrix4 matr(matrix);
 		matr.translate(this->cursor_pos, 0);
-		matr.scale(vector2(cursor_width * this->context.get().units.dots_per_fp, this->rect().d.y()));
+		matr.scale(vector2(cursor_width * this->context.get().units.dots_per_fp(), this->rect().d.y()));
 
 		auto& r = this->context.get().renderer.get();
 		r.shader->color_pos->render(matr, r.pos_quad_01_vao.get(), this->get_current_color());
@@ -126,7 +126,7 @@ vector2 text_input_line::measure(const ruis::vector2& quotum) const noexcept
 
 	if (quotum.x() < 0) {
 		ret.x() = this->single_line_text_widget::measure(vector2(-1)).x() +
-			cursor_width * this->context.get().units.dots_per_fp;
+			cursor_width * this->context.get().units.dots_per_fp();
 	} else {
 		ret.x() = quotum.x();
 	}
@@ -182,8 +182,8 @@ void text_input_line::set_cursor_index(size_t index, bool selection)
 
 	ASSERT(this->cursor_pos >= 0)
 
-	if (this->cursor_pos > this->rect().d.x() - cursor_width * this->context.get().units.dots_per_fp) {
-		this->cursor_pos = this->rect().d.x() - cursor_width * this->context.get().units.dots_per_fp;
+	if (this->cursor_pos > this->rect().d.x() - cursor_width * this->context.get().units.dots_per_fp()) {
+		this->cursor_pos = this->rect().d.x() - cursor_width * this->context.get().units.dots_per_fp();
 
 		this->x_offset = this->cursor_pos; // start from rightmost cursor position
 		this->first_visible_char_index = this->cursor_index;

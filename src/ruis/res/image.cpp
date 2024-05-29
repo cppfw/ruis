@@ -188,9 +188,9 @@ public:
 	r4::vector2<uint32_t> dims() const noexcept override
 	{
 		auto& ctx = this->context.get();
-		ASSERT(ctx.units.dots_per_pp > 0)
-		auto wh = this->dom->get_dimensions(ctx.units.dots_per_inch / ctx.units.dots_per_pp);
-		wh *= ctx.units.dots_per_pp;
+		ASSERT(ctx.units.dots_per_pp() > 0)
+		auto wh = this->dom->get_dimensions(ctx.units.dots_per_inch() / ctx.units.dots_per_pp());
+		wh *= ctx.units.dots_per_pp();
 		using std::ceil;
 		return ceil(wh).to<uint32_t>();
 	}
@@ -253,7 +253,7 @@ public:
 		}
 
 		svgren::parameters svg_params;
-		svg_params.dpi = unsigned(ctx.units.dots_per_inch);
+		svg_params.dpi = unsigned(ctx.units.dots_per_inch());
 		svg_params.dims_request = for_dims.to<unsigned>();
 
 		auto im = svgren::rasterize(*this->dom, svg_params);

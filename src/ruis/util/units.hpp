@@ -21,6 +21,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
+#include <ratio>
+
 #include "../config.hpp"
 
 namespace ruis {
@@ -38,18 +40,27 @@ namespace ruis {
  */
 class units
 {
-public:
-	const real dots_per_inch;
+	real dots_per_inch_v = 96;
 
 	/**
 	 * @brief Dots per perception pixel.
 	 */
-	const real dots_per_pp;
+	real dots_per_pp_v = 1;
 
 	/**
 	 * @brief Dots per font pixel.
 	 */
-	const real dots_per_fp; // TODO: is needed?
+	real dots_per_fp_v = 1; // TODO: is needed?
+
+public:
+	/**
+	 * @brief Constructor.
+	 * Constructs units object with default values:
+	 * - dots per inch = 96
+	 * - dots per perception pixel = 1
+	 * - dots per font pixel = 1
+	 */
+	units() = default;
 
 	/**
 	 * @brief Constructor.
@@ -57,10 +68,47 @@ public:
 	 * @param dots_per_pp - dots per perception pixel.
 	 */
 	units(real dots_per_inch, real dots_per_pp) :
-		dots_per_inch(dots_per_inch),
-		dots_per_pp(dots_per_pp),
-		dots_per_fp(dots_per_pp) // TODO: for now same as pp
+		dots_per_inch_v(dots_per_inch),
+		dots_per_pp_v(dots_per_pp),
+		dots_per_fp_v(dots_per_pp) // TODO: for now same as pp
 	{}
+
+	void set_dots_per_pp(real dots_per_pp)
+	{
+		this->dots_per_pp_v = dots_per_pp;
+	}
+
+	void set_dots_per_inch(real dpi)
+	{
+		this->dots_per_inch_v = dpi;
+	}
+
+	/**
+	 * @brief Get dots (pixels) per perception pixel.
+	 * @return Dots per perception pixel.
+	 */
+	real dots_per_pp() const noexcept
+	{
+		return this->dots_per_pp_v;
+	}
+
+	/**
+	 * @brief Get dots (pixels) per font pixel.
+	 * @return Dots per font pixel.
+	 */
+	real dots_per_fp() const noexcept
+	{
+		return this->dots_per_fp_v;
+	}
+
+	/**
+	 * @brief Get dots (pixels) per inch.
+	 * @return Dots per inch.
+	 */
+	real dots_per_inch() const noexcept
+	{
+		return this->dots_per_inch_v;
+	}
 
 	/**
 	 * @brief Get dots (pixels) per centimeter.
@@ -68,8 +116,8 @@ public:
 	 */
 	real dots_per_cm() const noexcept
 	{
-		constexpr auto num_cm_in_inch = 2.54;
-		return this->dots_per_inch / real(num_cm_in_inch);
+		constexpr auto num_cm_in_inch = 2.54; // TODO: use constant from utki
+		return this->dots_per_inch() / real(num_cm_in_inch);
 	}
 
 	/**
@@ -79,8 +127,8 @@ public:
 	 */
 	real mm_to_px(real mm) const noexcept
 	{
-		constexpr auto num_mm_in_cm = 10;
-		return std::round(mm * this->dots_per_cm() / real(num_mm_in_cm));
+		using std::round;
+		return round(mm * this->dots_per_cm() / real(std::deci::den));
 	}
 
 	/**
@@ -90,7 +138,8 @@ public:
 	 */
 	real pp_to_px(real pp) const noexcept
 	{
-		return std::round(pp * this->dots_per_pp);
+		using std::round;
+		return round(pp * this->dots_per_pp());
 	}
 };
 
