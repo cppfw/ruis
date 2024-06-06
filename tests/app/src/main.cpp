@@ -512,7 +512,7 @@ public:
 		};
 
 		std::dynamic_pointer_cast<ruis::push_button>(c.get().try_get_widget("push_button_in_scroll_container"))->click_handler = [this](ruis::push_button&){
-			this->gui.context.get().run_from_ui_thread(
+			this->gui.context.get().post_to_ui_thread(
 					[](){
 						std::cout << "Print from UI thread!!!!!!!!" << std::endl;
 					}

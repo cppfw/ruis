@@ -92,14 +92,14 @@ public:
 					}
 				)qwertyuiop"));
 				pg.get().get_widget_as<ruis::push_button>("back_button").click_handler = [&pg = pg.get()](ruis::push_button& b){
-					b.context.get().run_from_ui_thread([pg = utki::make_shared_from(pg)]{
+					b.context.get().post_to_ui_thread([pg = utki::make_shared_from(pg)]{
 						pg.get().tear_out();
 					});
 				};
 				mp.get_parent_book()->push(pg);
 			};
 			mp.get().get_widget_as<ruis::push_button>("close_button").click_handler = [&mp = mp.get()](ruis::push_button& b){
-				b.context.get().run_from_ui_thread([pg = utki::make_shared_from(mp)]{
+				b.context.get().post_to_ui_thread([pg = utki::make_shared_from(mp)]{
 					pg.get().tear_out();
 				});
 			};

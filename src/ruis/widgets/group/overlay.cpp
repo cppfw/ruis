@@ -83,7 +83,7 @@ utki::shared_ref<widget> overlay::show_context_menu(const utki::shared_ref<widge
 
 	mp.mouse_button_handler = [cntr{utki::make_weak(c)}](mouse_proxy& w, const mouse_button_event& e) -> bool {
 		if (auto c = cntr.lock()) {
-			c->context.get().run_from_ui_thread([c]() {
+			c->context.get().post_to_ui_thread([c]() {
 				c->remove_from_parent();
 			});
 		}
@@ -107,7 +107,7 @@ utki::shared_ref<widget> overlay::show_context_menu(const utki::shared_ref<widge
 	w.get().move_to(anchor);
 
 	auto sp = utki::make_shared_from(*this);
-	this->context.get().run_from_ui_thread([c, sp]() {
+	this->context.get().post_to_ui_thread([c, sp]() {
 		sp.get().push_back(c);
 	});
 

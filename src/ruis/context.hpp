@@ -48,7 +48,10 @@ public:
 
 	const utki::shared_ref<ruis::updater> updater;
 
-	const std::function<void(std::function<void()>)> run_from_ui_thread;
+	const std::function<void(std::function<void()>)> post_to_ui_thread;
+
+	// TODO: deprecated, remove
+	decltype(post_to_ui_thread)& run_from_ui_thread = post_to_ui_thread;
 
 	mouse_cursor_manager cursor_manager;
 
@@ -68,21 +71,29 @@ public:
 	ruis::layout_factory layout_factory;
 
 	/**
+	 * @brief Unit values.
+	 */
+	ruis::units units;
+
+	constexpr static const auto default_dots_per_inch = 96;
+	constexpr static const auto default_dots_per_pp = 1;
+
+	/**
 	 * @brief Constructor.
 	 * @param r - renderer implementation.
 	 * @param u - updater to use along with this context.
-	 * @param run_from_ui_thread_function - function to use when posting an action to UI thread is needed.
-	 * @param set_mouse_cursor_function - function to use for setting the mouse cursor.
+	 * @param post_to_ui_thread_function - function for posting an action to UI thread.
+	 * @param set_mouse_cursor_function - function for setting the mouse cursor.
 	 * @param dots_per_inch - DPI of your display.
 	 * @param dots_per_pp - desired dots per perception pixel.
 	 */
 	context(
-		const utki::shared_ref<ruis::render::renderer>& r,
-		const utki::shared_ref<ruis::updater>& u,
-		std::function<void(std::function<void()>)> run_from_ui_thread_function,
+		utki::shared_ref<ruis::render::renderer> r,
+		utki::shared_ref<ruis::updater> u,
+		std::function<void(std::function<void()>)> post_to_ui_thread_function,
 		std::function<void(ruis::mouse_cursor)> set_mouse_cursor_function,
-		real dots_per_inch,
-		real dots_per_pp
+		real dots_per_inch = default_dots_per_inch,
+		real dots_per_pp = default_dots_per_pp
 	);
 
 	context(const context&) = delete;
@@ -92,8 +103,6 @@ public:
 	context& operator=(context&&) = delete;
 
 	~context() = default;
-
-	const ruis::units units;
 };
 
 } // namespace ruis

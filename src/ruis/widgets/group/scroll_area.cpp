@@ -180,7 +180,7 @@ void scroll_area::on_lay_out()
 	}
 
 	// TODO: why notification is deferred? figure out why and write a comment with explanation here
-	this->context.get().run_from_ui_thread([sa = utki::make_weak_from(*this)]() {
+	this->context.get().post_to_ui_thread([sa = utki::make_weak_from(*this)]() {
 		if (auto s = sa.lock()) {
 			s->on_scroll_pos_change();
 		}

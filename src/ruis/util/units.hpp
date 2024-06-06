@@ -40,29 +40,19 @@ namespace ruis {
  */
 class units
 {
-	constexpr static const auto default_dots_per_inch = 96;
-	real dots_per_inch_v = default_dots_per_inch;
+	real dots_per_inch_v;
 
 	/**
 	 * @brief Dots per perception pixel.
 	 */
-	real dots_per_pp_v = 1;
+	real dots_per_pp_v;
 
 	/**
 	 * @brief Dots per font pixel.
 	 */
-	real dots_per_fp_v = 1; // TODO: is needed?
+	real dots_per_fp_v; // TODO: is needed?
 
 public:
-	/**
-	 * @brief Constructor.
-	 * Constructs units object with default values:
-	 * - dots per inch = 96
-	 * - dots per perception pixel = 1
-	 * - dots per font pixel = 1
-	 */
-	units() = default;
-
 	/**
 	 * @brief Constructor.
 	 * @param dots_per_inch - dots per inch.

@@ -128,7 +128,7 @@ cube_page::cube_page(const utki::shared_ref<ruis::context>& c) :
 	auto& ph = this->get_widget("placeholder");
 	
 	this->get_widget_as<ruis::push_button>("back_button").click_handler = [this](ruis::push_button&){
-		this->context.get().run_from_ui_thread([book = utki::make_shared_from(*this->get_parent_book()), this]{
+		this->context.get().post_to_ui_thread([book = utki::make_shared_from(*this->get_parent_book()), this]{
 			this->tear_out();
 		});
 	};

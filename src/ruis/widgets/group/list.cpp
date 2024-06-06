@@ -102,7 +102,7 @@ void list::on_lay_out()
 	this->update_children_list();
 
 	// defer the scroll position change notification, because layouting happens during render phase
-	this->context.get().run_from_ui_thread([wl = utki::make_weak_from(*this)]() {
+	this->context.get().post_to_ui_thread([wl = utki::make_weak_from(*this)]() {
 		if (auto l = wl.lock()) {
 			l->notify_scroll_pos_changed();
 		}
@@ -534,7 +534,7 @@ void list::provider::notify_data_set_change()
 		return;
 	}
 
-	this->get_list()->context.get().run_from_ui_thread([this]() {
+	this->get_list()->context.get().post_to_ui_thread([this]() {
 		this->get_list()->handle_data_set_changed();
 	});
 }

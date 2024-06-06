@@ -214,7 +214,7 @@ void drop_down_box::handle_mouse_button_up(bool is_first_button_up_event)
 
 	if (this->hovered_index < 0) {
 		if (!is_first_button_up_event) {
-			this->context.get().run_from_ui_thread([ddm]() {
+			this->context.get().post_to_ui_thread([ddm]() {
 				ddm->remove_from_parent(); // close drop down menu
 			});
 		}
@@ -224,7 +224,7 @@ void drop_down_box::handle_mouse_button_up(bool is_first_button_up_event)
 
 	auto ddb = utki::make_shared_from(*this);
 
-	this->context.get().run_from_ui_thread([ddb, ddm]() {
+	this->context.get().post_to_ui_thread([ddb, ddm]() {
 		ddm->remove_from_parent(); // close drop down menu
 		if (ddb.get().selection_handler) {
 			ddb.get().selection_handler(ddb.get());

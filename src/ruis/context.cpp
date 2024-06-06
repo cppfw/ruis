@@ -26,24 +26,22 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace ruis;
 
 context::context(
-	// NOLINTNEXTLINE(modernize-pass-by-value)
-	const utki::shared_ref<ruis::render::renderer>& r,
-	// NOLINTNEXTLINE(modernize-pass-by-value)
-	const utki::shared_ref<ruis::updater>& u,
-	std::function<void(std::function<void()>)> run_from_ui_thread_function,
+	utki::shared_ref<ruis::render::renderer> r,
+	utki::shared_ref<ruis::updater> u,
+	std::function<void(std::function<void()>)> post_to_ui_thread_function,
 	std::function<void(ruis::mouse_cursor)> set_mouse_cursor_function,
 	real dots_per_inch,
 	real dots_per_pp
 ) :
-	renderer(r),
-	updater(u),
-	run_from_ui_thread(std::move(run_from_ui_thread_function)),
+	renderer(std::move(r)),
+	updater(std::move(u)),
+	post_to_ui_thread(std::move(post_to_ui_thread_function)),
 	cursor_manager(std::move(set_mouse_cursor_function)),
 	loader(*this),
 	inflater(*this),
 	units(dots_per_inch, dots_per_pp)
 {
-	if (!this->run_from_ui_thread) {
+	if (!this->post_to_ui_thread) {
 		throw std::invalid_argument("context::context(): no post to UI thread function provided");
 	}
 }

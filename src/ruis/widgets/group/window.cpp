@@ -676,7 +676,7 @@ void ruis::window::set_borders(sides<length> borders)
 bool ruis::window::on_mouse_button(const mouse_button_event& e)
 {
 	if (e.is_down && !this->is_topmost()) {
-		this->context.get().run_from_ui_thread([this]() {
+		this->context.get().post_to_ui_thread([this]() {
 			this->move_to_top();
 			this->focus();
 		});

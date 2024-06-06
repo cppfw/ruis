@@ -37,7 +37,7 @@ class mouse_cursor_manager
 public:
 	using iterator = decltype(cursor_stack)::iterator;
 
-	mouse_cursor_manager(std::function<void(ruis::mouse_cursor)>&& set_mouse_cursor) :
+	mouse_cursor_manager(std::function<void(ruis::mouse_cursor)> set_mouse_cursor) :
 		set_mouse_cursor(std::move(set_mouse_cursor))
 	{}
 

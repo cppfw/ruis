@@ -66,7 +66,7 @@ void book::push(const utki::shared_ref<page>& pg)
 
 	this->notify_pages_change(pg.get());
 
-	this->context.get().run_from_ui_thread([bk = utki::make_shared_from(*this), index = this->pages.size() - 1]() {
+	this->context.get().post_to_ui_thread([bk = utki::make_shared_from(*this), index = this->pages.size() - 1]() {
 		bk.get().activate(index);
 	});
 }

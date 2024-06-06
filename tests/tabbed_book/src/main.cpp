@@ -51,7 +51,7 @@ utki::shared_ref<ruis::tab> inflate_tab(ruis::tabbed_book& tb, const std::string
 		auto t = tab_wp.lock();
 		ASSERT(t)
 
-		btn.context.get().run_from_ui_thread([tb, t]{
+		btn.context.get().post_to_ui_thread([tb, t]{
 			tb->tear_out(*t);
 		});
 	};
