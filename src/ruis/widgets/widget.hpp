@@ -699,7 +699,7 @@ public:
 	/**
 	 * @brief Reload widget's resources.
 	 * Requests widget to reload it's resources due to poissible change
-	 * in mounted resource packs of the resource_loader.
+	 * in mounted resource packs of the resource_loader, or change in context::units values.
 	 * This function will invalidate the layout and call virtual on_reload().
 	 */
 	void reload();
@@ -707,8 +707,8 @@ public:
 	/**
 	 * @brief Called when the widget is requested to reload it's resources.
 	 * This function is called when widget is requesterd to reload it's resources.
-	 * This can be useful whenm for example there was a change to mounted resource
-	 * packs of the resource_loader.
+	 * This can be useful when, for example, there was a change to mounted resource
+	 * packs of the resource_loader, or change of context::units values.
 	 * The widget is expected to reload it's resources loaded via resource_loader.
 	 */
 	virtual void on_reload() {}
