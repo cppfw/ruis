@@ -120,9 +120,9 @@ text_widget::text_widget(utki::shared_ref<ruis::context> context, parameters par
 		return p;
 	}()),
 	fonts{
-		this->params.font_face->get(this->params.font_size.get(this->context), res::font::style(0)),
-		this->params.font_face->get(this->params.font_size.get(this->context), res::font::style(1)),
-		this->params.font_face->get(this->params.font_size.get(this->context), res::font::style(2)),
-		this->params.font_face->get(this->params.font_size.get(this->context), res::font::style(3))
+		this->params.font_face->get(this->params.font_size.get(this->context), res::font::style::normal),
+		this->params.font_face->get(this->params.font_size.get(this->context), res::font::style::bold),
+		this->params.font_face->get(this->params.font_size.get(this->context), res::font::style::italic),
+		this->params.font_face->get(this->params.font_size.get(this->context), res::font::style::bold_italic)
 	}
 {}
