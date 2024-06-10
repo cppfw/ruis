@@ -76,7 +76,7 @@ jobs:
           - {os: debian, codename: bookworm, image_owner: , package_type: deb, labels: [arm64,docker]}
     runs-on: ${{ (matrix.labels == '' && 'ubuntu-latest') || matrix.labels }}
     container: ${{ matrix.image_owner }}${{ matrix.os }}:${{ matrix.codename }}
-    name: sanitizer - ${{ matrix.image_owner }}${{ matrix.os }}:${{ matrix.codename }} | | ${{ matrix.labels[0] }}
+    name: sanitizer - ${{ matrix.image_owner }}${{ matrix.os }}:${{ matrix.codename }} | ${{ matrix.labels[0] }}
     steps:
       - name: add llvm repo (for clang-format)
         uses: myci-actions/add-deb-repo@master
