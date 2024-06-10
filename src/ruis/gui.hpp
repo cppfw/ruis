@@ -60,6 +60,8 @@ public:
 
 	/**
 	 * @brief Get current root widget.
+	 * Root widget is always present, so it is safe to call this function at any time.
+	 * By default, the root widget is set to a dummy ruis::widget object.
 	 * @return reference to the currently set root widget.
 	 */
 	ruis::widget& get_root() noexcept
@@ -69,6 +71,8 @@ public:
 
 	/**
 	 * @brief Get constant current root widget.
+	 * Root widget is always present, so it is safe to call this function at any time.
+	 * By default, the root widget is set to a dummy ruis::widget object.
 	 * @return constant reference to the currently set root widget.
 	 */
 	const ruis::widget& get_root() const noexcept
