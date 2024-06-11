@@ -730,12 +730,16 @@ public:
 
 		// tree_view
 		{
-			auto treeview = c.get().try_get_widget_as<ruis::tree_view>("treeview_widget");
-			ASSERT(treeview)
-
+			auto treeview = ruis::make::tree_view(this->gui.context, {
+				.widget_params = {
+					.clip = true
+				}
+			});
+			
+			c.get().get_widget_as<ruis::tree_view>("treeview_widget").replace_by(treeview);
 
 			auto provider = std::make_shared<tree_view_items_provider>(c.get().context);
-			treeview->set_provider(provider);
+			treeview.get().set_provider(provider);
 			auto tv = utki::make_weak(treeview);
 
 			auto vertical_slider = c.get().try_get_widget_as<ruis::vertical_scroll_bar>("treeview_vertical_slider");
@@ -757,7 +761,7 @@ public:
 				}
 			};
 
-			treeview->scroll_change_handler = [
+			treeview.get().scroll_change_handler = [
 					hs = utki::make_weak(horizontal_slider),
 					vs = utki::make_weak(vertical_slider)
 				](ruis::tree_view& tw)
