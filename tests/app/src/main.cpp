@@ -732,6 +732,8 @@ public:
 		{
 			auto treeview = c.get().try_get_widget_as<ruis::tree_view>("treeview_widget");
 			ASSERT(treeview)
+
+
 			auto provider = std::make_shared<tree_view_items_provider>(c.get().context);
 			treeview->set_provider(provider);
 			auto tv = utki::make_weak(treeview);

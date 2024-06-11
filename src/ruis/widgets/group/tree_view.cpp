@@ -28,6 +28,41 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
+tree_view::tree_view(utki::shared_ref<ruis::context> context, all_parameters params) :
+	widget(std::move(context), {.widget_params = std::move(params.widget_params)}),
+	scroll_area(this->context, {}, {}),
+	item_list(
+		// clang-format off
+		ruis::make::list(this->context,
+			{
+				.widget_params = {
+					.lp = {
+						.dims = {ruis::lp::min, ruis::lp::max}
+					}
+				},
+				.oriented_params = {
+					.vertical = true
+				}
+			}
+		)
+		// clang-format on
+	)
+{
+	this->push_back(this->item_list);
+
+	this->item_list.get().data_set_change_handler = [this](list&) {
+		this->notify_view_change();
+	};
+
+	this->item_list.get().scroll_change_handler = [this](list&) {
+		this->notify_view_change();
+	};
+
+	this->scroll_area::scroll_change_handler = [this](scroll_area& sa) {
+		this->notify_view_change();
+	};
+}
+
 tree_view::tree_view(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 	widget(c, desc),
 	scroll_area(this->context, tml::forest()),

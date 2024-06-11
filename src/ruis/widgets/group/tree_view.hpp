@@ -39,6 +39,12 @@ class tree_view :
 	utki::shared_ref<list> item_list;
 
 public:
+	struct all_parameters {
+		widget::parameters widget_params;
+	};
+
+	tree_view(utki::shared_ref<ruis::context> context, all_parameters params);
+
 	tree_view(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 
 	tree_view(const tree_view&) = delete;
@@ -147,5 +153,18 @@ public:
 private:
 	void notify_view_change();
 };
+
+namespace make {
+inline utki::shared_ref<tree_view> tree_view( //
+	utki::shared_ref<ruis::context> context,
+	ruis::tree_view::all_parameters params
+)
+{
+	return utki::make_shared<ruis::tree_view>( //
+		std::move(context),
+		std::move(params)
+	);
+}
+} // namespace make
 
 } // namespace ruis
