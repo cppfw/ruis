@@ -1,3 +1,9 @@
+libruis (0.5.231) unstable; urgency=medium
+
+  * update
+
+ -- Ivan Gagis <igagis@gmail.com>  Wed, 12 Jun 2024 16:45:52 +0300
+
 libruis (0.5.230) unstable; urgency=medium
 
   * rename render_factory -> factory
