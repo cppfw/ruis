@@ -21,16 +21,16 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "render_factory.hpp"
+#include "factory.hpp"
 
 namespace ruis::render {
 
 class renderer
 {
 public:
-	const std::unique_ptr<render_factory> factory;
+	const std::unique_ptr<ruis::render::factory> factory;
 
-	const std::unique_ptr<render_factory::shaders> shader;
+	const std::unique_ptr<ruis::render::factory::shaders> shader;
 
 public:
 	const utki::shared_ref<const vertex_array> empty_vertex_array;
@@ -49,7 +49,7 @@ protected:
 		r4::matrix4<float> initial_matrix;
 	};
 
-	renderer(std::unique_ptr<render_factory> factory, const params& params);
+	renderer(std::unique_ptr<ruis::render::factory> factory, const params& params);
 
 private:
 	std::shared_ptr<frame_buffer> cur_fb;

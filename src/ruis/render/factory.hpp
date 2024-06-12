@@ -43,19 +43,19 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis::render {
 
-class render_factory
+class factory
 {
 protected:
-	render_factory() = default;
+	factory() = default;
 
 public:
-	render_factory(const render_factory&) = delete;
-	render_factory& operator=(const render_factory&) = delete;
+	factory(const factory&) = delete;
+	factory& operator=(const factory&) = delete;
 
-	render_factory(render_factory&&) = delete;
-	render_factory& operator=(render_factory&&) = delete;
+	factory(factory&&) = delete;
+	factory& operator=(factory&&) = delete;
 
-	virtual ~render_factory() = default;
+	virtual ~factory() = default;
 
 	struct texture_2d_parameters {
 		texture_2d::filter min_filter = texture_2d::filter::nearest;

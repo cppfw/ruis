@@ -46,7 +46,7 @@ public:
 	{}
 };
 
-class null_factory : public ruis::render::render_factory{
+class null_factory : public ruis::render::factory{
 public:
 	utki::shared_ref<ruis::render::frame_buffer> create_framebuffer(
 		std::shared_ptr<ruis::render::texture_2d> color,
@@ -65,7 +65,7 @@ public:
 		return utki::make_shared<null_index_buffer>();
 	}
 
-	std::unique_ptr<ruis::render::render_factory::shaders> create_shaders() override{
+	std::unique_ptr<ruis::render::factory::shaders> create_shaders() override{
 		return nullptr;
 	}
 

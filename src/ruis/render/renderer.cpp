@@ -23,7 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis::render;
 
-renderer::renderer(std::unique_ptr<render_factory> factory, const renderer::params& params) :
+renderer::renderer(std::unique_ptr<ruis::render::factory> factory, const renderer::params& params) :
 	factory(std::move(factory)),
 	shader(this->factory->create_shaders()),
 	empty_vertex_array(this->factory->create_vertex_array(
