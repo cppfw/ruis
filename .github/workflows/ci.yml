@@ -345,7 +345,7 @@ jobs:
         shell: powershell
     steps:
     - name: git clone
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
       with: {submodules: true}
     - name: install CoAPP tools
       uses: myci-actions/install-coapp-tools@master
@@ -354,7 +354,7 @@ jobs:
         nuget restore msvs_solution/msvs_solution.sln
         nuget update msvs_solution/msvs_solution.sln
     - name: add msbuild to PATH
-      uses: microsoft/setup-msbuild@v1.0.2
+      uses: microsoft/setup-msbuild@v2
     - name: build
       run: .\nuget\build_nuget.ps1
     - name: correct structure of the bin dir inside nuget package
