@@ -14,3 +14,6 @@
 	path = tool-configs
 	url = ../../cppfw/tool-configs
 	branch = master
+[submodule "tests/harness/modules/ruis-render-null"]
+	path = tests/harness/modules/ruis-render-null
+	url = ../ruis-render-null

@@ -16,6 +16,13 @@ harness_old_ldflags := $(LDFLAGS)
 CXXFLAGS += -I$(abspath $(d)$(module_ruis_dir))
 LDFLAGS += -L$(abspath $(d)$(this_libruis_dir))
 
+CXXFLAGS += -isystem $(d)ruis-render-null/src
+LDFLAGS += -L $(d)ruis-render-null/src/out/$(module_cfg)
+$(call prorab-depend, \
+        ruis-render-null/src/out/$(module_cfg)/libruis-render-null$(dot_so), \
+        $(this_libruis) \
+    )
+
 define this_modules_deps
     CXXFLAGS += -isystem $(d)ruis-render-$(strip $1)/src
     LDFLAGS += -L $(d)ruis-render-$(strip $1)/src/out/$(module_cfg)
@@ -43,6 +50,7 @@ endif
 # and of course, it will not have git submodules in the source archive
 $(eval $(call prorab-try-include, ruisapp/src/makefile, $(module_cfg)))
 $(eval $(call prorab-try-include, ruis-render-opengl/src/makefile, $(module_cfg)))
+$(eval $(call prorab-try-include, ruis-render-null/src/makefile, $(module_cfg)))
 ifeq ($(os),linux)
     $(eval $(call prorab-try-include, ruis-render-opengles/src/makefile, $(module_cfg)))
 endif
