@@ -24,12 +24,16 @@ else ifeq ($(os),linux)
     this_ldflags += -rdynamic
 endif
 
-ifeq ($(ren),gles2)
-    this__render := opengles
-else ifeq ($(filter-out gl2,$(ren)),)
-    this__render := opengl
+ifeq ($(this__is_interactive),true)
+    ifeq ($(ren),gles2)
+        this__render := opengles
+    else ifeq ($(filter-out gl2,$(ren)),)
+        this__render := opengl
+    else
+        $(error unknown value of 'ren': $(ren))
+    endif
 else
-    $(error unknown value of 'ren': $(ren))
+    this__render := null
 endif
 
 ifeq ($(os), linux)
@@ -58,11 +62,11 @@ $(eval $(prorab-build-app))
 
 this_test_cmd := $(prorab_this_name)
 this_test_deps := $(prorab_this_name)
-this_test_ld_path := $(this__libruis_dir)
+this_test_ld_path := $(this__libruis_dir) $(dir $(this__libruis_render))
 
 ifeq ($(this__is_interactive),true)
     this_run_name := $(notdir $(abspath $(d)))
-    this_test_ld_path += $(dir $(this__libruisapp)) $(dir $(this__libruis_render))
+    this_test_ld_path += $(dir $(this__libruisapp))
     $(eval $(prorab-run))
 else
     $(eval $(prorab-test))
