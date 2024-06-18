@@ -180,6 +180,13 @@
             "group": "build"
         },
         {
+            "label": "run-app-gles2-wayland-dbg",
+            "type": "shell",
+            "command": "make run-app ren=gles2 win=wayland config=dbg",
+            "problemMatcher": [],
+            "group": "build"
+        },
+        {
             "label": "run-app-dbg",
             "type": "shell",
             "command": "make run-app config=dbg",

@@ -37,8 +37,12 @@ else
 endif
 
 ifeq ($(os), linux)
-    this__libruisapp := ruisapp-$(this__render)-xorg
-    this__libruisapp_subcfg := $(this__render)-xorg
+    ifeq ($(win),)
+        win := xorg
+    endif
+
+    this__libruisapp := ruisapp-$(this__render)-$(win)
+    this__libruisapp_subcfg := $(this__render)-$(win)
 else
     this__libruisapp := ruisapp-$(this__render)
     this__libruisapp_subcfg := $(this__render)
