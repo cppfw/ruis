@@ -73,7 +73,7 @@ public:
 	// returns dt to wait before next update
 	uint32_t update();
 
-	constexpr static auto default_update_interval_ms = 30;
+	constexpr static auto default_update_interval_ms = 16;
 
 	/**
 	 * @brief Subscribe updateable for updates.

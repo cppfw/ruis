@@ -46,6 +46,7 @@ class context : public std::enable_shared_from_this<context>
 public:
 	const utki::shared_ref<ruis::render::renderer> renderer;
 
+	// potentially, updater can be shared between contexts, this is why it is shared_ref
 	const utki::shared_ref<ruis::updater> updater;
 
 	const std::function<void(std::function<void()>)> post_to_ui_thread;

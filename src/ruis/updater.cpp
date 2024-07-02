@@ -149,7 +149,7 @@ uint32_t updater::update()
 		//		TRACE(<< "updateable::Updater::Update(): time has warped, this->active_queue->Size() = " <<
 		// this->active_queue->size() << std::endl)
 
-		// if time has warped, then all Updateables from active queue have expired.
+		// if time has warped, then all updateables from active queue have expired.
 		while (this->active_queue->size() != 0) {
 			this->update_updateable(this->active_queue->pop_front());
 		}
@@ -170,7 +170,7 @@ uint32_t updater::update()
 		this->update_updateable(this->active_queue->pop_front());
 	}
 
-	this->add_pending(); // after updating need to add recurring Updateables if any
+	this->add_pending(); // after updating need to add recurring updateables if any
 
 	// after updating all the stuff some time has passed, so might need to correct the time need to wait
 
