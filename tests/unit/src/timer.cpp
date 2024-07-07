@@ -25,6 +25,8 @@ const tst::set set("timer", [](tst::suite& suite){
             }
         );
 
+        tst::check_eq(timer.get().get_timeout_ms(), uint32_t(0), SL);
+
         updater.get().update();
 
         tst::check(!triggered, SL);
@@ -38,6 +40,8 @@ const tst::set set("timer", [](tst::suite& suite){
         tst::check(!timer.get().is_running(), SL);
 
         timer.get().start(10);
+
+        tst::check_eq(timer.get().get_timeout_ms(), uint32_t(10), SL);
 
         tst::check(!triggered, SL);
         tst::check(timer.get().is_running(), SL);
