@@ -1,14 +1,18 @@
 #include <tst/set.hpp>
 #include <tst/check.hpp>
 
-#include <thread>
-
 #include <ruis/util/timer.hpp>
 
 namespace{
 const tst::set set("timer", [](tst::suite& suite){
     suite.add("basic", [](){
-        auto updater = utki::make_shared<ruis::updater>();
+        uint32_t cur_ticks = 0;
+
+        auto updater = utki::make_shared<ruis::updater>(
+            [&](){
+                return cur_ticks;
+            }
+        );
 
         bool triggered = false;
         uint32_t time_elapsed_ms = 0;
@@ -26,12 +30,25 @@ const tst::set set("timer", [](tst::suite& suite){
         tst::check(!triggered, SL);
         tst::check(!timer.get().is_running(), SL);
 
+        cur_ticks = 20;
+
+        updater.get().update();
+
+        tst::check(!triggered, SL);
+        tst::check(!timer.get().is_running(), SL);
+
         timer.get().start(10);
 
         tst::check(!triggered, SL);
         tst::check(timer.get().is_running(), SL);
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(11));
+        cur_ticks = 28;
+        updater.get().update();
+
+        tst::check(!triggered, SL);
+        tst::check(timer.get().is_running(), SL);
+
+        cur_ticks = 30;
         updater.get().update();
 
         tst::check(triggered, SL);

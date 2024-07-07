@@ -21,8 +21,11 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
+#include <functional>
 #include <list>
 #include <memory>
+
+#include <utki/debug.hpp>
 
 namespace ruis {
 
@@ -31,6 +34,8 @@ class updateable;
 class updater : public std::enable_shared_from_this<updater>
 {
 	friend class ruis::updateable;
+
+	std::function<uint32_t()> get_ticks_ms;
 
 	struct update_queue_item {
 		uint32_t ends_at = 0;
@@ -64,14 +69,16 @@ class updater : public std::enable_shared_from_this<updater>
 
 	void remove_from_to_add(updateable* u);
 
-public:
-	updater() :
-		active_queue(&q1),
-		inactive_queue(&q2)
-	{}
+	static decltype(get_ticks_ms) get_default_get_ticks_ms();
 
-	// returns dt to wait before next update
-	uint32_t update();
+public:
+	updater(std::function<uint32_t()> get_ticks_ms = get_default_get_ticks_ms()) :
+		get_ticks_ms(std::move(get_ticks_ms)),
+		active_queue(&q1),
+		inactive_queue(&q2){ASSERT(this->get_ticks_ms)}
+
+		// returns dt to wait before next update
+		uint32_t update();
 
 	constexpr static auto default_update_interval_ms = 16;
 

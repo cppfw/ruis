@@ -27,6 +27,13 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
+decltype(updater::get_ticks_ms) updater::get_default_get_ticks_ms()
+{
+	return []() {
+		return utki::get_ticks_ms();
+	};
+}
+
 void updater::start(std::weak_ptr<updateable> u, uint16_t dt_ms)
 {
 	auto uu = u.lock();
@@ -39,7 +46,7 @@ void updater::start(std::weak_ptr<updateable> u, uint16_t dt_ms)
 	}
 
 	uu->dt = dt_ms;
-	uu->started_at = utki::get_ticks_ms();
+	uu->started_at = this->get_ticks_ms();
 	uu->updating = true;
 
 	uu->pending_addition = true;
@@ -136,7 +143,7 @@ void updater::update_updateable(const std::shared_ptr<ruis::updateable>& u)
 
 uint32_t updater::update()
 {
-	uint32_t cur_ticks = utki::get_ticks_ms();
+	uint32_t cur_ticks = this->get_ticks_ms();
 
 	//	TRACE(<< "updateable::Updater::Update(): invoked" << std::endl)
 
@@ -187,7 +194,7 @@ uint32_t updater::update()
 
 	uint32_t uncorrected_dt = closest_time_point - cur_ticks;
 
-	uint32_t correction = utki::get_ticks_ms() - cur_ticks;
+	uint32_t correction = this->get_ticks_ms() - cur_ticks;
 
 	if (correction >= uncorrected_dt) {
 		return 0;
