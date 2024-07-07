@@ -30,10 +30,10 @@ using namespace ruis;
 
 timer::timer( //
 	utki::shared_ref<ruis::updater> updater,
-	decltype(expire_handler) on_expire
+	decltype(expire_handler) expire_handler
 ) :
 	updater(std::move(updater)),
-	expire_handler(std::move(on_expire))
+	expire_handler(std::move(expire_handler))
 {}
 
 void timer::update(uint32_t dt_ms)

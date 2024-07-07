@@ -57,11 +57,11 @@ public:
 	 * @brief Constructor.
 	 * The timer is supposed to be dynamically allocated.
 	 * @param updater - updater to use for running the timer.
-	 * @param on_expire - callback to invoke when timer expires.
+	 * @param expire_handler - callback to invoke when timer expires.
 	 */
 	timer( //
 		utki::shared_ref<ruis::updater> updater,
-		expire_handler_type on_expire
+		expire_handler_type expire_handler
 	);
 
 	/**
