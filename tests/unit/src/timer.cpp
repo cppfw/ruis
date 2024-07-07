@@ -31,7 +31,7 @@ const tst::set set("timer", [](tst::suite& suite){
         tst::check(!triggered, SL);
         tst::check(timer.get().is_running(), SL);
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(10));
+        std::this_thread::sleep_for(std::chrono::milliseconds(11));
         updater.get().update();
 
         tst::check(triggered, SL);
