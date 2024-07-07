@@ -26,7 +26,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
-class timer : private updateable
+class timer :
+	virtual public utki::shared, //
+	private updateable
 {
 	utki::shared_ref<ruis::updater> updater;
 

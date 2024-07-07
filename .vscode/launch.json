@@ -57,7 +57,7 @@
 			"args": [],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}/tests/book",
-			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/build:../harness/ruisapp/build"}],
+			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/out/dbg:../harness/ruisapp/build"}],
 			"externalConsole": false,
 			"MIMode": "gdb",
 			"setupCommands": [
@@ -97,7 +97,7 @@
 			"args": [],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}/tests/paint",
-			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/build:../harness/ruisapp/build"}],
+			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/out/dbg:../harness/ruisapp/build"}],
 			"externalConsole": false,
 			"MIMode": "gdb",
 			"setupCommands": [
@@ -117,7 +117,7 @@
 			"args": [],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}/tests/widget_set",
-			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/build:../harness/ruisapp/build"}],
+			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/out/dbg:../harness/ruisapp/build"}],
 			"externalConsole": false,
 			"MIMode": "gdb",
 			"setupCommands": [
@@ -137,7 +137,7 @@
 			"args": [],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}/tests/get_all_widgets",
-			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/build:../harness/ruisapp/build"}],
+			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/out/dbg:../harness/ruisapp/build"}],
 			"externalConsole": false,
 			"MIMode": "gdb",
 			"setupCommands": [
@@ -157,7 +157,7 @@
 			"args": ["--suite=inflating", "--test=inflating_left_alignment"],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}/tests/unit",
-			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/out/dbg"}],
+			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/out/dbg:../harness/ruisapp/build"}],
 			"externalConsole": false,
 			"MIMode": "gdb",
 			"setupCommands": [
@@ -177,7 +177,7 @@
 			"args": [],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}/tests/unit",
-			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/out/dbg"}],
+			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/out/dbg:../harness/modules/ruis-render-null/src/out/rel_no_install"}],
 			"externalConsole": false,
 			"MIMode": "gdb",
 			"setupCommands": [

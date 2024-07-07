@@ -23,6 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <limits>
 
+#include <utki/exception.hpp>
 #include <utki/string.hpp>
 
 using namespace ruis;
@@ -71,14 +72,14 @@ void timer::start(uint32_t timeout_ms)
 {
 	try {
 		this->updater.get().start( //
-			utki::make_weak_from(static_cast<updateable&>(*this)),
+			utki::make_weak_from(static_cast<ruis::updateable&>(*this)),
 			std::min(timeout_ms, uint32_t(std::numeric_limits<uint16_t>::max()))
 		);
 
 		this->timeout_ms = timeout_ms;
 		this->left_ms = 0;
 	} catch (...) {
-		std::throw_with_nested(std::runtime_error("timer::start(): failed"));
+		utki::throw_with_nested(std::runtime_error("timer::start(): failed"));
 	}
 }
 

@@ -154,7 +154,6 @@
             "type": "shell",
             "command": "make test",
             "problemMatcher": [],
-            "dependsOn": "build",
             "group": "build"
 		},
 		{
@@ -162,7 +161,6 @@
             "type": "shell",
             "command": "make test config=dbg",
             "problemMatcher": [],
-            "dependsOn": "build-dbg",
             "group": "build"
 		},
         {
