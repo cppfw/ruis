@@ -11,7 +11,7 @@ const tst::set set("timer", [](tst::suite& suite){
         auto updater = utki::make_shared<ruis::updater>();
 
         bool triggered = false;
-        uint32_t time_elapsed_ms;
+        uint32_t time_elapsed_ms = 0;
 
         auto timer = utki::make_shared<ruis::timer>(
             updater,
@@ -45,5 +45,7 @@ const tst::set set("timer", [](tst::suite& suite){
     // TODO: add test: restarting from callback
 
     // TODO: add test: stopping after expired
+
+    // TODO: add test: restarting after expired
 });
 }
