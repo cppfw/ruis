@@ -24,18 +24,26 @@ const tst::set set("timer", [](tst::suite& suite){
         updater.get().update();
 
         tst::check(!triggered, SL);
+        tst::check(!timer.get().is_running(), SL);
 
         timer.get().start(10);
 
         tst::check(!triggered, SL);
+        tst::check(timer.get().is_running(), SL);
 
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
         updater.get().update();
 
         tst::check(triggered, SL);
+        tst::check(!timer.get().is_running(), SL);
+
         tst::check_ge(time_elapsed_ms, uint32_t(10), SL);
     });
 
-    // TODO:
+    // TODO: add test: stopping before expired
+
+    // TODO: add test: restarting from callback
+
+    // TODO: add test: stopping after expired
 });
 }
