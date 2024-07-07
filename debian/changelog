@@ -1,3 +1,9 @@
+libruis (0.5.232) unstable; urgency=medium
+
+  * add timer
+
+ -- Ivan Gagis <igagis@gmail.com>  Sun, 07 Jul 2024 18:13:41 +0300
+
 libruis (0.5.231) unstable; urgency=medium
 
   * update
