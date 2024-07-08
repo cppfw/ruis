@@ -76,7 +76,7 @@ margins::margins(
 							 .weight = 1
 							}
 					   },
-				   .container_params = {.layout = layout::pile}
+				   .container_params = std::move(params.container_params)
 				  },
 				  {}
 			  ),

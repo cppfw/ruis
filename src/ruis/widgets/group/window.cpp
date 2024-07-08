@@ -183,6 +183,9 @@ utki::shared_ref<container> make_caption(utki::shared_ref<context> c)
 									.weight = 1
 								}
 							},
+							.container_params = {
+								.layout = layout::pile
+							},
 							.frame_params = {
 								.borders = {3_pp, 2_pp, 0_pp, 2_pp}
 							}

@@ -35,6 +35,7 @@ class margins : public frame_widget
 public:
 	struct all_parameters {
 		widget::parameters widget_params;
+		container::parameters container_params;
 		frame_widget::parameters frame_params;
 	};
 
