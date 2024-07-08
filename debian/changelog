@@ -1,3 +1,9 @@
+libruis (0.5.233) unstable; urgency=medium
+
+  * add margins container params
+
+ -- Ivan Gagis <igagis@gmail.com>  Mon, 08 Jul 2024 21:10:55 +0300
+
 libruis (0.5.232) unstable; urgency=medium
 
   * add timer
