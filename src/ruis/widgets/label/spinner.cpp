@@ -45,7 +45,7 @@ void spinner::render(const matrix4& matrix) const
 	matrix4 matr(matrix);
 
 	matr.translate(this->rect().d / 2);
-	matr.rotate(this->angle);
+	matr.rotate(ruis::quat(this->angle));
 	matr.translate(-this->rect().d / 2);
 
 	this->image::render(matr);
