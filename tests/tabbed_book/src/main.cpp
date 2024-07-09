@@ -3,9 +3,9 @@
 #include <utki/debug.hpp>
 #include <ruisapp/application.hpp>
 
-#include <ruis/widgets/button/base/push_button.hpp>
-#include <ruis/widgets/label/text.hpp>
-#include <ruis/widgets/group/tabbed_book.hpp>
+#include <ruis/widget/button/base/push_button.hpp>
+#include <ruis/widget/label/text.hpp>
+#include <ruis/widget/group/tabbed_book.hpp>
 
 #include "sample_page.hpp"
 

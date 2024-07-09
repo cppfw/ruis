@@ -1,6 +1,6 @@
 #pragma once
 
-#include <ruis/widgets/group/book.hpp>
+#include <ruis/widget/group/book.hpp>
 
 class sample_page :
         public ruis::page,

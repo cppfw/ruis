@@ -2,8 +2,8 @@
 #include <ruis/updateable.hpp>
 #include <ruis/res/texture_2d.hpp>
 #include <ruis/render/renderer.hpp>
-#include <ruis/widgets/button/base/push_button.hpp>
-#include <ruis/widgets/group/book.hpp>
+#include <ruis/widget/button/base/push_button.hpp>
+#include <ruis/widget/group/book.hpp>
 
 #include "cube_page.hpp"
 

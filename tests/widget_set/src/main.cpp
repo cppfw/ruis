@@ -4,9 +4,9 @@
 
 #include <ruisapp/application.hpp>
 
-#include <ruis/widgets/container.hpp>
-#include <ruis/widgets/button/base/push_button.hpp>
-#include <ruis/widgets/label/busy.hpp>
+#include <ruis/widget/container.hpp>
+#include <ruis/widget/button/base/push_button.hpp>
+#include <ruis/widget/label/busy.hpp>
 #include <ruis/util/weak_widget_set.hpp>
 
 class application : public ruisapp::application{

@@ -1,10 +1,10 @@
 #include "gui.hpp"
 
-#include <ruis/widgets/container.hpp>
-#include <ruis/widgets/group/window.hpp>
-#include <ruis/widgets/proxy/key_proxy.hpp>
-#include <ruis/widgets/slider/scroll_bar.hpp>
-#include <ruis/widgets/slider/slider.hpp>
+#include <ruis/widget/container.hpp>
+#include <ruis/widget/group/window.hpp>
+#include <ruis/widget/proxy/key_proxy.hpp>
+#include <ruis/widget/slider/scroll_bar.hpp>
+#include <ruis/widget/slider/slider.hpp>
 
 using namespace std::string_literals;
 

@@ -2,7 +2,7 @@
 #include <tst/check.hpp>
 
 #include <ruis/gui.hpp>
-#include <ruis/widgets/group/scroll_area.hpp>
+#include <ruis/widget/group/scroll_area.hpp>
 
 #include "../../harness/util/dummy_context.hpp"
 

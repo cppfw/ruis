@@ -26,7 +26,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <utki/unicode.hpp>
 
 #include "../context.hpp"
-#include "../fonts/texture_font_provider.hxx"
+#include "../font/texture_font_provider.hxx"
 #include "../util/util.hpp"
 
 using namespace ruis;

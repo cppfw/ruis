@@ -24,7 +24,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <utki/config.hpp>
 
 #include "../util/util.hpp"
-#include "../widgets/widget.hpp"
+#include "../widget/widget.hpp"
 
 using namespace ruis;
 

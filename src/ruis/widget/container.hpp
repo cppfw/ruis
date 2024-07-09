@@ -27,7 +27,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <utki/shared_ref.hpp>
 
 #include "../config.hpp"
-#include "../layouts/trivial_layout.hpp"
+#include "../layout/trivial_layout.hpp"
 #include "../util/util.hpp"
 #include "../util/widget_list.hpp"
 
@@ -563,4 +563,4 @@ inline utki::shared_ref<ruis::container> row(
 } // namespace ruis
 
 // include definitions for forward declared classes
-#include "../layouts/layout.hpp"
+#include "../layout/layout.hpp"

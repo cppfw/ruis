@@ -1,7 +1,7 @@
 #pragma once
 
 #include <ruis/updateable.hpp>
-#include <ruis/widgets/group/book.hpp>
+#include <ruis/widget/group/book.hpp>
 
 class cube_page :
 		public ruis::page,

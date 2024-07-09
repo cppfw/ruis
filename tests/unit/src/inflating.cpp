@@ -2,8 +2,8 @@
 #include <tst/check.hpp>
 
 #include <ruis/gui.hpp>
-#include <ruis/widgets/container.hpp>
-#include <ruis/widgets/label/color.hpp>
+#include <ruis/widget/container.hpp>
+#include <ruis/widget/label/color.hpp>
 
 #include "../../harness/util/dummy_context.hpp"
 

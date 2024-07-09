@@ -2,10 +2,10 @@
 
 #include <ruisapp/application.hpp>
 
-#include <ruis/widgets/container.hpp>
-#include <ruis/layouts/layout.hpp>
-#include <ruis/widgets/label/text.hpp>
-#include <ruis/widgets/label/rectangle.hpp>
+#include <ruis/widget/container.hpp>
+#include <ruis/layout/layout.hpp>
+#include <ruis/widget/label/text.hpp>
+#include <ruis/widget/label/rectangle.hpp>
 
 using namespace std::string_literals;
 

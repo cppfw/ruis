@@ -19,23 +19,34 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 /* ================ LICENSE END ================ */
 
-#include "trivial_layout.hpp"
+#include "choice_group.hpp"
 
-#include "../widgets/widget.hpp"
+#include "../../layout/pile_layout.hpp"
 
 using namespace ruis;
 
-vector2 trivial_layout::measure(const vector2& quotum, const_widget_list& widgets) const
+choice_group::choice_group(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
+	widget(c, desc),
+	container(this->context, desc, layout::pile)
+{}
+
+bool choice_group::is_active(const widget& w) const noexcept
 {
-	return max(quotum, 0);
+	widget* aw = this->active_choice_button.lock().get();
+	return aw == &w;
 }
 
-void trivial_layout::lay_out(const vector2& dims, semiconst_widget_list& widgets) const
+void choice_group::set_active_choice_button(std::weak_ptr<choice_button> cb)
 {
-	for (auto& w : widgets) {
-		auto& ww = w.get();
-		if (ww.is_layout_dirty()) {
-			ww.lay_out();
-		}
+	auto oldactive = this->active_choice_button.lock();
+
+	if (cb.lock() == oldactive) {
+		return;
+	}
+
+	this->active_choice_button = cb;
+
+	if (oldactive) {
+		oldactive->set_pressed(false);
 	}
 }

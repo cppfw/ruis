@@ -9,25 +9,25 @@
 #include <ruisapp/application.hpp>
 
 #include <ruis/config.hpp>
-#include <ruis/widgets/widget.hpp>
-#include <ruis/widgets/container.hpp>
-#include <ruis/widgets/proxy/key_proxy.hpp>
-#include <ruis/widgets/button/base/push_button.hpp>
-#include <ruis/widgets/label/text.hpp>
+#include <ruis/widget/widget.hpp>
+#include <ruis/widget/container.hpp>
+#include <ruis/widget/proxy/key_proxy.hpp>
+#include <ruis/widget/button/base/push_button.hpp>
+#include <ruis/widget/label/text.hpp>
 #include <ruis/res/texture_2d.hpp>
-#include <ruis/widgets/input/character_input_widget.hpp>
-#include <ruis/widgets/group/scroll_area.hpp>
-#include <ruis/widgets/proxy/mouse_proxy.hpp>
-#include <ruis/widgets/slider/scroll_bar.hpp>
-#include <ruis/widgets/group/list.hpp>
-#include <ruis/widgets/group/tree_view.hpp>
-#include <ruis/widgets/proxy/resize_proxy.hpp>
-#include <ruis/widgets/proxy/click_proxy.hpp>
-#include <ruis/widgets/label/color.hpp>
-#include <ruis/widgets/label/image.hpp>
-#include <ruis/widgets/input/text_input_line.hpp>
-#include <ruis/widgets/button/base/selection_box.hpp>
-#include <ruis/layouts/linear_layout.hpp>
+#include <ruis/widget/input/character_input_widget.hpp>
+#include <ruis/widget/group/scroll_area.hpp>
+#include <ruis/widget/proxy/mouse_proxy.hpp>
+#include <ruis/widget/slider/scroll_bar.hpp>
+#include <ruis/widget/group/list.hpp>
+#include <ruis/widget/group/tree_view.hpp>
+#include <ruis/widget/proxy/resize_proxy.hpp>
+#include <ruis/widget/proxy/click_proxy.hpp>
+#include <ruis/widget/label/color.hpp>
+#include <ruis/widget/label/image.hpp>
+#include <ruis/widget/input/text_input_line.hpp>
+#include <ruis/widget/button/base/selection_box.hpp>
+#include <ruis/layout/linear_layout.hpp>
 
 #ifdef assert
 #	undef assert

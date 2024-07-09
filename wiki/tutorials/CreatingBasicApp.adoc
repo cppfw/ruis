@@ -98,8 +98,8 @@ Let's add some action on the button press
 ....
 #include <ruisapp/application.hpp>
 
-#include <ruis/widgets/label/text.hpp>
-#include <ruis/widgets/button/button.hpp>
+#include <ruis/widget/label/text.hpp>
+#include <ruis/widget/button/button.hpp>
 
 
 class application : public ruisapp::application{

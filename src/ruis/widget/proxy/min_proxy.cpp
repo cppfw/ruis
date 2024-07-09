@@ -21,7 +21,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "min_proxy.hpp"
 
-#include "../../layouts/pile_layout.hpp"
+#include "../../layout/pile_layout.hpp"
 
 using namespace ruis;
 

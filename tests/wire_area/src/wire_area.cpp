@@ -3,7 +3,7 @@
 #include <ruis/paint/path_vao.hpp>
 #include <ruis/context.hpp>
 #include <ruis/util/util.hpp>
-#include <ruis/layouts/pile_layout.hpp>
+#include <ruis/layout/pile_layout.hpp>
 
 namespace{
 const ruis::real antialias_width = ruis::real(0.55f);

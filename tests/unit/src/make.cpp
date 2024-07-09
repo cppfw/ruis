@@ -6,8 +6,8 @@
 #include <utki/config.hpp>
 
 #include <ruis/gui.hpp>
-#include <ruis/layouts/pile_layout.hpp>
-#include <ruis/widgets/label/rectangle.hpp>
+#include <ruis/layout/pile_layout.hpp>
+#include <ruis/widget/label/rectangle.hpp>
 
 namespace{
 // NOLINTNEXTLINE(cppcoreguidelines-interfaces-global-init)

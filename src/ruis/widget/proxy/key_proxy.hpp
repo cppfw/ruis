@@ -21,7 +21,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "../../layouts/pile_layout.hpp"
+#include "../../layout/pile_layout.hpp"
 #include "../container.hpp"
 
 namespace ruis {

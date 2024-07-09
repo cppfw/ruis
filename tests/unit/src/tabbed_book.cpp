@@ -3,9 +3,9 @@
 
 #include <papki/fs_file.hpp>
 
-#include <ruis/widgets/button/tab_group.hpp>
-#include <ruis/widgets/group/book.hpp>
-#include <ruis/widgets/group/tabbed_book.hpp>
+#include <ruis/widget/button/tab_group.hpp>
+#include <ruis/widget/group/book.hpp>
+#include <ruis/widget/group/tabbed_book.hpp>
 #include <ruis/gui.hpp>
 
 #include "../../harness/util/dummy_context.hpp"

@@ -4,12 +4,12 @@
 
 #include <ruisapp/application.hpp>
 
-#include <ruis/widgets/button/base/push_button.hpp>
-#include <ruis/widgets/label/busy.hpp>
-#include <ruis/widgets/group/book.hpp>
-#include <ruis/widgets/button/tab_group.hpp>
-#include <ruis/widgets/button/tab.hpp>
-#include <ruis/widgets/label/text.hpp>
+#include <ruis/widget/button/base/push_button.hpp>
+#include <ruis/widget/label/busy.hpp>
+#include <ruis/widget/group/book.hpp>
+#include <ruis/widget/button/tab_group.hpp>
+#include <ruis/widget/button/tab.hpp>
+#include <ruis/widget/label/text.hpp>
 
 #include "pile_page.hpp"
 #include "cube_page.hpp"

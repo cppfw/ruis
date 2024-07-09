@@ -1,6 +1,6 @@
 #pragma once
 
-#include <ruis/widgets/widget.hpp>
+#include <ruis/widget/widget.hpp>
 
 class wire_socket : virtual public ruis::widget{
 	friend class wire_area;

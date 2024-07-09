@@ -22,7 +22,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "tree_view.hpp"
 
 #include "../../context.hpp"
-#include "../../layouts/linear_layout.hpp"
+#include "../../layout/linear_layout.hpp"
 #include "../label/image.hpp"
 #include "../proxy/mouse_proxy.hpp"
 

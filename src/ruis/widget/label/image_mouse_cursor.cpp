@@ -22,7 +22,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "image_mouse_cursor.hpp"
 
 #include "../../context.hpp"
-#include "../../layouts/pile_layout.hpp"
+#include "../../layout/pile_layout.hpp"
 #include "../../util/util.hpp"
 
 using namespace ruis;

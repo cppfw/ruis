@@ -25,8 +25,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <utki/util.hpp>
 
 #include "../../context.hpp"
-#include "../../layouts/linear_layout.hpp"
-#include "../../layouts/pile_layout.hpp"
+#include "../../layout/linear_layout.hpp"
+#include "../../layout/pile_layout.hpp"
 #include "../../util/util.hpp"
 
 using namespace std::string_literals;

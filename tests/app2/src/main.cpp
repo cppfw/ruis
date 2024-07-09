@@ -1,4 +1,4 @@
-#include <ruis/widgets/proxy/key_proxy.hpp>
+#include <ruis/widget/proxy/key_proxy.hpp>
 #include <ruisapp/application.hpp>
 
 #include "gui.hpp"
