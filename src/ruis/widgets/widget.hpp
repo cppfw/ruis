@@ -33,7 +33,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <utki/types.hpp>
 
 #include "../config.hpp"
-#include "../layouts/lp.hpp"
+#include "../layouts/layout_parameters.hpp"
 #include "../render/texture_2d.hpp"
 #include "../util/events.hpp"
 #include "../util/key.hpp"

@@ -32,7 +32,7 @@ namespace ruis {
 /**
  * @brief Layout parameters.
  */
-struct lp {
+struct layout_parameters {
 	/**
 	 * @brief Alignment parameter values.
 	 */
@@ -176,7 +176,9 @@ struct lp {
 	 */
 	r4::vector2<align> align = {align::undefined, align::undefined};
 
-	static lp make(const tml::forest& desc, const ruis::units& units);
+	static layout_parameters make(const tml::forest& desc, const ruis::units& units);
 };
+
+using lp = layout_parameters;
 
 }; // namespace ruis
