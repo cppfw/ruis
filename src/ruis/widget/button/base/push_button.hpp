@@ -75,4 +75,14 @@ public:
 	std::function<void(push_button&)> click_handler;
 };
 
+namespace make {
+
+utki::shared_ref<ruis::push_button> push_button( //
+	utki::shared_ref<ruis::context> context,
+	ruis::widget::all_parameters params,
+	utki::span<const utki::shared_ref<ruis::widget>> children
+);
+
+} // namespace make
+
 } // namespace ruis

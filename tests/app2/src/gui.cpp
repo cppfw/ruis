@@ -1,5 +1,6 @@
 #include "gui.hpp"
 
+#include <ruis/widget/button/base/push_button.hpp>
 #include <ruis/widget/container.hpp>
 #include <ruis/widget/group/margins.hpp>
 #include <ruis/widget/group/window.hpp>
@@ -65,6 +66,15 @@ utki::shared_ref<ruis::window> make_sliders_window(utki::shared_ref<ruis::contex
 								.vertical = false
 							}
 						}
+					)
+				}
+			),
+			m::push_button(c,
+				{},
+				{
+					m::text(c,
+						{},
+						U"Hello world!"s
 					)
 				}
 			)
