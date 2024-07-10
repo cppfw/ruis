@@ -42,6 +42,7 @@ public:
 	spinner(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 
 	struct all_parameters {
+		layout_parameters layout_params;
 		widget::parameters widget_params;
 		image::parameters image_params;
 		blending_widget::parameters blending_params;

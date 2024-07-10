@@ -62,6 +62,7 @@ private:
 public:
 	struct all_parameters {
 		// TODO: add container_params
+		layout_parameters layout_params;
 		widget::parameters widget_params;
 		blending_widget::parameters blending_params;
 		frame_widget::parameters frame_params;

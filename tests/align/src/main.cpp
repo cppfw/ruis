@@ -13,11 +13,15 @@ namespace m = ruis::make;
 using lp = ruis::lp;
 
 namespace{
-utki::shared_ref<ruis::widget> make_pile_layout(utki::shared_ref<ruis::context> c, ruis::widget::parameters widget_params){
+utki::shared_ref<ruis::container> make_pile_layout( //
+	utki::shared_ref<ruis::context> c,
+	ruis::layout_parameters layout_params
+)
+{
 	return m::container(
 		c,
 		{
-			.widget_params = widget_params,
+			.layout_params = layout_params,
 			.container_params = {
 				.layout = ruis::layout::pile
 			}
@@ -26,10 +30,8 @@ utki::shared_ref<ruis::widget> make_pile_layout(utki::shared_ref<ruis::context> 
 			m::rectangle(
 				c,
 				{
-					.widget_params = {
-						.lp = {
-							.dims = {lp::fill, lp::fill}
-						}
+					.layout_params = {
+						.dims = {lp::fill, lp::fill}
 					},
 					.color_params = {
 						.color = 0xff808080
@@ -39,10 +41,8 @@ utki::shared_ref<ruis::widget> make_pile_layout(utki::shared_ref<ruis::context> 
 			m::text(
 				c,
 				{
-					.widget_params = {
-						.lp = {
-							.align = {lp::align::center, lp::align::center}
-						}
+					.layout_params = {
+						.align = {lp::align::center, lp::align::center}
 					}
 				},
 				U"center"s
@@ -50,10 +50,8 @@ utki::shared_ref<ruis::widget> make_pile_layout(utki::shared_ref<ruis::context> 
 			m::text(
 				c,
 				{
-					.widget_params = {
-						.lp = {
-							.align = {lp::align::front, lp::align::center}
-						}
+					.layout_params = {
+						.align = {lp::align::front, lp::align::center}
 					}
 				},
 				U"left"s
@@ -61,10 +59,8 @@ utki::shared_ref<ruis::widget> make_pile_layout(utki::shared_ref<ruis::context> 
 			m::text(
 				c,
 				{
-					.widget_params = {
-						.lp = {
-							.align = {lp::align::front, lp::align::front}
-						}
+					.layout_params = {
+						.align = {lp::align::front, lp::align::front}
 					}
 				},
 				U"left-top"s
@@ -72,10 +68,8 @@ utki::shared_ref<ruis::widget> make_pile_layout(utki::shared_ref<ruis::context> 
 			m::text(
 				c,
 				{
-					.widget_params = {
-						.lp = {
-							.align = {lp::align::center, lp::align::front}
-						}
+					.layout_params = {
+						.align = {lp::align::center, lp::align::front}
 					}
 				},
 				U"top"s
@@ -83,10 +77,8 @@ utki::shared_ref<ruis::widget> make_pile_layout(utki::shared_ref<ruis::context> 
 			m::text(
 				c,
 				{
-					.widget_params = {
-						.lp = {
-							.align = {lp::align::back, lp::align::front}
-						}
+					.layout_params = {
+						.align = {lp::align::back, lp::align::front}
 					}
 				},
 				U"right-top"s
@@ -94,10 +86,8 @@ utki::shared_ref<ruis::widget> make_pile_layout(utki::shared_ref<ruis::context> 
 			m::text(
 				c,
 				{
-					.widget_params = {
-						.lp = {
-							.align = {lp::align::back, lp::align::center}
-						}
+					.layout_params = {
+						.align = {lp::align::back, lp::align::center}
 					}
 				},
 				U"right"s
@@ -105,10 +95,8 @@ utki::shared_ref<ruis::widget> make_pile_layout(utki::shared_ref<ruis::context> 
 			m::text(
 				c,
 				{
-					.widget_params = {
-						.lp = {
-							.align = {lp::align::back, lp::align::back}
-						}
+					.layout_params = {
+						.align = {lp::align::back, lp::align::back}
 					}
 				},
 				U"right-bottom"s
@@ -116,10 +104,8 @@ utki::shared_ref<ruis::widget> make_pile_layout(utki::shared_ref<ruis::context> 
 			m::text(
 				c,
 				{
-					.widget_params = {
-						.lp = {
-							.align = {lp::align::center, lp::align::back}
-						}
+					.layout_params = {
+						.align = {lp::align::center, lp::align::back}
 					}
 				},
 				U"bottom"s
@@ -127,10 +113,8 @@ utki::shared_ref<ruis::widget> make_pile_layout(utki::shared_ref<ruis::context> 
 			m::text(
 				c,
 				{
-					.widget_params = {
-						.lp = {
-							.align = {lp::align::front, lp::align::back}
-						}
+					.layout_params = {
+						.align = {lp::align::front, lp::align::back}
 					}
 				},
 				U"left-bottom"s
@@ -145,10 +129,8 @@ utki::shared_ref<ruis::widget> make_separator(utki::shared_ref<ruis::context> c,
 	return m::rectangle(
 		c,
 		{
-			.widget_params = {
-				.lp = {
-					.dims = {vertical ? lp::fill : ruis::length::make_px(1), vertical ? ruis::length::make_px(1) : lp::fill}
-				}
+			.layout_params = {
+				.dims = {vertical ? lp::fill : ruis::length::make_px(1), vertical ? ruis::length::make_px(1) : lp::fill}
 			},
 			.color_params = {
 				.color = 0xffffffff
@@ -157,11 +139,16 @@ utki::shared_ref<ruis::widget> make_separator(utki::shared_ref<ruis::context> c,
 	);
 }
 
-utki::shared_ref<ruis::widget> make_linear_layout(utki::shared_ref<ruis::context> c, ruis::widget::parameters widget_params, bool vertical){
+utki::shared_ref<ruis::container> make_linear_layout( //
+	utki::shared_ref<ruis::context> c,
+	ruis::layout_parameters layout_params,
+	bool vertical
+)
+{
 	return m::container(
 		c,
 		{
-			.widget_params = widget_params,
+			.layout_params = layout_params,
 			.container_params = {
 				.layout = vertical ? ruis::layout::column : ruis::layout::row
 			}
@@ -170,11 +157,9 @@ utki::shared_ref<ruis::widget> make_linear_layout(utki::shared_ref<ruis::context
 			m::text(
 				c,
 				{
-					.widget_params = {
-						.lp = {
-							.weight = 1,
-							.align = {lp::align::front, lp::align::front}
-						}
+					.layout_params = {
+						.weight = 1,
+						.align = {lp::align::front, lp::align::front}
 					}
 				},
 				U"left-top"s
@@ -183,11 +168,9 @@ utki::shared_ref<ruis::widget> make_linear_layout(utki::shared_ref<ruis::context
 			m::text(
 				c,
 				{
-					.widget_params = {
-						.lp = {
-							.weight = 1,
-							.align = {lp::align::center, lp::align::front}
-						}
+					.layout_params = {
+						.weight = 1,
+						.align = {lp::align::center, lp::align::front}
 					}
 				},
 				U"center-top"s
@@ -196,11 +179,9 @@ utki::shared_ref<ruis::widget> make_linear_layout(utki::shared_ref<ruis::context
 			m::text(
 				c,
 				{
-					.widget_params = {
-						.lp = {
-							.weight = 1,
-							.align = {lp::align::back, lp::align::front}
-						}
+					.layout_params = {
+						.weight = 1,
+						.align = {lp::align::back, lp::align::front}
 					}
 				},
 				U"right-top"s
@@ -209,11 +190,9 @@ utki::shared_ref<ruis::widget> make_linear_layout(utki::shared_ref<ruis::context
 			m::text(
 				c,
 				{
-					.widget_params = {
-						.lp = {
-							.weight = 1,
-							.align = {lp::align::back, lp::align::center}
-						}
+					.layout_params = {
+						.weight = 1,
+						.align = {lp::align::back, lp::align::center}
 					}
 				},
 				U"right-center"s
@@ -222,11 +201,9 @@ utki::shared_ref<ruis::widget> make_linear_layout(utki::shared_ref<ruis::context
 			m::text(
 				c,
 				{
-					.widget_params = {
-						.lp = {
-							.weight = 1,
-							.align = {lp::align::back, lp::align::back}
-						}
+					.layout_params = {
+						.weight = 1,
+						.align = {lp::align::back, lp::align::back}
 					}
 				},
 				U"right-bottom"s
@@ -235,11 +212,9 @@ utki::shared_ref<ruis::widget> make_linear_layout(utki::shared_ref<ruis::context
 			m::text(
 				c,
 				{
-					.widget_params = {
-						.lp = {
-							.weight = 1,
-							.align = {lp::align::center, lp::align::back}
-						}
+					.layout_params = {
+						.weight = 1,
+						.align = {lp::align::center, lp::align::back}
 					}
 				},
 				U"center-bottom"s
@@ -248,11 +223,9 @@ utki::shared_ref<ruis::widget> make_linear_layout(utki::shared_ref<ruis::context
 			m::text(
 				c,
 				{
-					.widget_params = {
-						.lp = {
-							.weight = 1,
-							.align = {lp::align::front, lp::align::back}
-						}
+					.layout_params = {
+						.weight = 1,
+						.align = {lp::align::front, lp::align::back}
 					}
 				},
 				U"left-bottom"s
@@ -261,11 +234,9 @@ utki::shared_ref<ruis::widget> make_linear_layout(utki::shared_ref<ruis::context
 			m::text(
 				c,
 				{
-					.widget_params = {
-						.lp = {
-							.weight = 1,
-							.align = {lp::align::front, lp::align::center}
-						}
+					.layout_params = {
+						.weight = 1,
+						.align = {lp::align::front, lp::align::center}
 					}
 				},
 				U"left-center"s
@@ -274,11 +245,9 @@ utki::shared_ref<ruis::widget> make_linear_layout(utki::shared_ref<ruis::context
 			m::text(
 				c,
 				{
-					.widget_params = {
-						.lp = {
-							.weight = 1,
-							.align = {lp::align::center, lp::align::center}
-						}
+					.layout_params = {
+						.weight = 1,
+						.align = {lp::align::center, lp::align::center}
 					}
 				},
 				U"center"s
@@ -289,7 +258,7 @@ utki::shared_ref<ruis::widget> make_linear_layout(utki::shared_ref<ruis::context
 }
 
 namespace{
-utki::shared_ref<ruis::widget> make_layout(utki::shared_ref<ruis::context> c){	
+utki::shared_ref<ruis::container> make_layout(utki::shared_ref<ruis::context> c){	
 	return m::container(
 		c,
 		{
@@ -301,11 +270,9 @@ utki::shared_ref<ruis::widget> make_layout(utki::shared_ref<ruis::context> c){
 			m::container(
 				c,
 				{
-					.widget_params = {
-						.lp = {
-							.dims = {lp::fill, lp::fill},
-							.weight = 2
-						}
+					.layout_params = {
+						.dims = {lp::fill, lp::fill},
+						.weight = 2
 					},
 					.container_params = {
 						.layout = ruis::layout::column
@@ -315,19 +282,15 @@ utki::shared_ref<ruis::widget> make_layout(utki::shared_ref<ruis::context> c){
 					make_pile_layout(
 						c,
 						{
-							.lp = {
-								.dims = {lp::fill, lp::fill},
-								.weight = 1
-							}
+							.dims = {lp::fill, lp::fill},
+							.weight = 1
 						}
 					),
 					make_linear_layout(
 						c,
 						{
-							.lp = {
-								.dims = {lp::fill, lp::fill},
-								.weight = 1
-							}
+							.dims = {lp::fill, lp::fill},
+							.weight = 1
 						},
 						false // vertical=false
 					)
@@ -336,10 +299,8 @@ utki::shared_ref<ruis::widget> make_layout(utki::shared_ref<ruis::context> c){
 			make_linear_layout(
 				c,
 				{
-					.lp = {
-						.dims = {lp::fill, lp::fill},
-						.weight = 1
-					}
+					.dims = {lp::fill, lp::fill},
+					.weight = 1
 				},
 				true // vertical=true
 			)

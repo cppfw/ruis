@@ -47,20 +47,18 @@ std::vector<utki::shared_ref<ruis::widget>> make_widgets(utki::shared_ref<ruis::
 	return {
 		m::nine_patch(c,
 			{
+				.layout_params = {
+					.dims = {lp::max, lp::max}
+				},
 				.widget_params = {
 					.id = "ruis_background"s,
-					.lp = {
-						.dims = {lp::max, lp::max}
-					}
 				}
 			}
 		),
 		m::container(c,
 			{
-				.widget_params = {
-					.lp = {
-						.dims = {lp::max, lp::max}
-					}
+				.layout_params = {
+					.dims = {lp::max, lp::max}
 				}
 			},
 			{
@@ -73,21 +71,21 @@ std::vector<utki::shared_ref<ruis::widget>> make_widgets(utki::shared_ref<ruis::
 					{
 						m::nine_patch(c,
 							{
+								.layout_params = {
+									.dims = {lp::max, lp::max}
+								},
 								.widget_params = {
-									.id = "ruis_handle_image"s,
-									.lp = {
-										.dims = {lp::max, lp::max}
-									}
+									.id = "ruis_handle_image"s
 								}
 							}
 						),
 						m::mouse_proxy(c,
 							{
+								.layout_params = {
+									.dims = {lp::fill, lp::fill}
+								},
 								.widget_params = {
-									.id = "ruis_handle_proxy"s,
-									.lp = {
-										.dims = {lp::fill, lp::fill}
-									}
+									.id = "ruis_handle_proxy"s
 								}
 							}
 						)
@@ -106,7 +104,7 @@ slider::slider( //
 ) :
 	widget( //
 		std::move(c),
-		std::move(params.widget_params.lp),
+		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
 	fraction_widget( //

@@ -409,9 +409,6 @@ public:
 	struct parameters {
 		std::string id;
 
-		// TODO: remove
-		ruis::lp lp;
-
 		// initialize the rect to invalid values to make sure that a
 		// newly created widget will receive at least one on_resize()
 		// notification before being rendered

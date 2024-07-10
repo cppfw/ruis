@@ -25,10 +25,8 @@ const tst::set set("make", [](tst::suite& suite){
         auto c = ruis::make::container(
             gui.context,
             {
-                .widget_params = {
-                    .lp = {
-                        .dims = {ruis::lp::min, ruis::lp::fill}
-                    }
+                .layout_params = {
+                    .dims = {ruis::lp::min, ruis::lp::fill}
                 },
                 .container_params = {
                     .layout = ruis::layout::pile

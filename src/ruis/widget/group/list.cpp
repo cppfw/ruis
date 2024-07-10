@@ -30,7 +30,7 @@ using namespace ruis;
 list::list(utki::shared_ref<ruis::context> context, all_parameters params) :
 	widget( //
 		std::move(context),
-		std::move(params.widget_params.lp),
+		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
 	ruis::container(this->context, {.container_params = {.layout = layout::trivial}}, {}),

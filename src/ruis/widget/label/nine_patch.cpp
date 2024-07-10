@@ -43,10 +43,8 @@ std::vector<utki::shared_ref<ruis::widget>> build_layout(utki::shared_ref<ruis::
 	return {
 		m::container(c,
 			{
-				.widget_params = {
-					.lp = {
-						.dims = {lp::fill, lp::min}
-					}
+				.layout_params = {
+					.dims = {lp::fill, lp::min}
 				},
 				.container_params = {
 					.layout = layout::row
@@ -62,12 +60,12 @@ std::vector<utki::shared_ref<ruis::widget>> build_layout(utki::shared_ref<ruis::
 				),
 				m::image(c,
 					{
+						.layout_params = {
+							.dims = {lp::fill, lp::min},
+							.weight = 1
+						},
 						.widget_params = {
-							.id = "ruis_t"s,
-							.lp = {
-								.dims = {lp::fill, lp::min},
-								.weight = 1
-							}
+							.id = "ruis_t"s
 						}
 					}
 				),
@@ -82,11 +80,9 @@ std::vector<utki::shared_ref<ruis::widget>> build_layout(utki::shared_ref<ruis::
 		),
 		m::container(c,
 			{
-				.widget_params = {
-					.lp = {
-						.dims = {lp::max, lp::max},
-						.weight = 1
-					}
+				.layout_params = {
+					.dims = {lp::max, lp::max},
+					.weight = 1
 				},
 				.container_params = {
 					.layout = layout::row
@@ -95,22 +91,22 @@ std::vector<utki::shared_ref<ruis::widget>> build_layout(utki::shared_ref<ruis::
 			{
 				m::image(c,
 					{
+						.layout_params = {
+							.dims = {lp::min, lp::fill}
+						},
 						.widget_params = {
-							.id = "ruis_l"s,
-							.lp = {
-								.dims = {lp::min, lp::fill}
-							}
+							.id = "ruis_l"s
 						}
 					}
 				),
 				m::container(c,
 					{
+						.layout_params = {
+							.dims = {lp::max, lp::max},
+							.weight = 1
+						},
 						.widget_params = {
-							.id = "ruis_content"s,
-							.lp = {
-								.dims = {lp::max, lp::max},
-								.weight = 1
-							}
+							.id = "ruis_content"s
 						},
 						.container_params = {
 							.layout = layout::pile
@@ -119,11 +115,11 @@ std::vector<utki::shared_ref<ruis::widget>> build_layout(utki::shared_ref<ruis::
 					{
 						m::image(c,
 							{
+								.layout_params = {
+									.dims = {lp::fill, lp::fill}
+								},
 								.widget_params = {
-									.id = "ruis_m"s,
-									.lp = {
-										.dims = {lp::fill, lp::fill}
-									}
+									.id = "ruis_m"s
 								}
 							}
 						)
@@ -131,11 +127,11 @@ std::vector<utki::shared_ref<ruis::widget>> build_layout(utki::shared_ref<ruis::
 				),
 				m::image(c,
 					{
+						.layout_params = {
+							.dims = {lp::min, lp::fill}
+						},
 						.widget_params = {
-							.id = "ruis_r"s,
-							.lp = {
-								.dims = {lp::min, lp::fill}
-							}
+							.id = "ruis_r"s
 						}
 					}
 				)
@@ -143,10 +139,8 @@ std::vector<utki::shared_ref<ruis::widget>> build_layout(utki::shared_ref<ruis::
 		),
 		m::container(c,
 			{
-				.widget_params = {
-					.lp = {
-						.dims = {lp::fill, lp::min}
-					}
+				.layout_params = {
+					.dims = {lp::fill, lp::min}
 				},
 				.container_params = {
 					.layout = layout::row
@@ -162,12 +156,12 @@ std::vector<utki::shared_ref<ruis::widget>> build_layout(utki::shared_ref<ruis::
 				),
 				m::image(c,
 					{
+						.layout_params = {
+							.dims = {lp::fill, lp::min},
+							.weight = 1
+						},
 						.widget_params = {
-							.id = "ruis_b"s,
-							.lp = {
-								.dims = {lp::fill, lp::min},
-								.weight = 1
-							}
+							.id = "ruis_b"s
 						}
 					}
 				),
@@ -268,7 +262,7 @@ nine_patch::nine_patch( //
 ) :
 	widget( //
 		std::move(context),
-		std::move(params.widget_params.lp),
+		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
 	blending_widget( //

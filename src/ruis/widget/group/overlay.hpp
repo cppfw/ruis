@@ -35,6 +35,7 @@ class overlay : public container
 {
 public:
 	struct all_parameters {
+		layout_parameters layout_params;
 		widget::parameters widget_params;
 	};
 

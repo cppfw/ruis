@@ -34,6 +34,7 @@ public:
 	nine_patch_push_button(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 
 	struct all_parameters {
+		layout_parameters layout_params;
 		ruis::widget::parameters widget_params;
 		button::parameters button_params;
 		blending_widget::parameters blending_params;

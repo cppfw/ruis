@@ -62,6 +62,7 @@ public:
 	scroll_bar(const utki::shared_ref<ruis::context>& c, const tml::forest& desc, bool vertical);
 
 	struct all_parameters {
+		layout_parameters layout_params;
 		widget::parameters widget_params;
 		fraction_widget::parameters fraction_params;
 		fraction_band_widget::parameters fraction_band_params;

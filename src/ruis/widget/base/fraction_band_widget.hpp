@@ -36,6 +36,7 @@ private:
 	parameters params;
 
 protected:
+	// TODO: remove?
 	struct all_parameters {
 		fraction_widget::parameters fraction_params;
 		parameters fraction_band_params;

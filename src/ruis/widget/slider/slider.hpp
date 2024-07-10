@@ -58,6 +58,7 @@ private:
 
 public:
 	struct all_parameters {
+		layout_parameters layout_params;
 		widget::parameters widget_params;
 		fraction_widget::parameters fraction_params;
 		oriented::parameters oriented_params;

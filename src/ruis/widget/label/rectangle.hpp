@@ -33,6 +33,7 @@ class rectangle : public color_widget
 {
 public:
 	struct all_parameters {
+		layout_parameters layout_params;
 		widget::parameters widget_params;
 		color_widget::parameters color_params;
 	};

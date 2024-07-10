@@ -34,7 +34,7 @@ tree_view::tree_view( //
 ) :
 	widget( //
 		std::move(context),
-		std::move(params.widget_params.lp),
+		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
 	scroll_area(this->context, {}, {}),
@@ -42,10 +42,8 @@ tree_view::tree_view( //
 		// clang-format off
 		ruis::make::list(this->context,
 			{
-				.widget_params = {
-					.lp = {
-						.dims = {ruis::lp::min, ruis::lp::max}
-					}
+				.layout_params = {
+					.dims = {ruis::lp::min, ruis::lp::max}
 				},
 				.oriented_params = {
 					.vertical = true

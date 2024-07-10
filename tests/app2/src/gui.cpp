@@ -31,10 +31,8 @@ utki::shared_ref<ruis::window> make_sliders_window(utki::shared_ref<ruis::contex
 		{
 			m::margins(c,
 				{
-					.widget_params = {
-						.lp = {
-							.dims = {lp::fill, lp::fill}
-						}
+					.layout_params = {
+						.dims = {lp::fill, lp::fill}
 					},
 					.container_params = {
 						.layout = ruis::layout::column
@@ -46,11 +44,9 @@ utki::shared_ref<ruis::window> make_sliders_window(utki::shared_ref<ruis::contex
 				{
 					m::scroll_bar(c,
 						{
-							.widget_params = {
-								.lp = {
-									.dims = {lp::fill, lp::min},
-									.align = {lp::align::front, lp::align::front}
-								}
+							.layout_params = {
+								.dims = {lp::fill, lp::min},
+								.align = {lp::align::front, lp::align::front}
 							},
 							.fraction_band_params = {
 								.band_fraction = 0.2
@@ -62,11 +58,8 @@ utki::shared_ref<ruis::window> make_sliders_window(utki::shared_ref<ruis::contex
 					),
 					m::slider(c,
 						{
-							.widget_params ={
-								.lp = {
-									.dims = {lp::fill, lp::min},
-
-								}
+							.layout_params = {
+								.dims = {lp::fill, lp::min}
 							},
 							.oriented_params = {
 								.vertical = false
@@ -87,10 +80,8 @@ utki::shared_ref<ruis::widget> make_gui(utki::shared_ref<ruis::context> c)
 	return m::container(
 		c,
 		{
-			.widget_params = {
-				.lp = {
-					.dims = {lp::fill, lp::fill}
-				}
+			.layout_params = {
+				.dims = {lp::fill, lp::fill}
 			},
 			.container_params = {
 				.layout = ruis::layout::trivial

@@ -39,7 +39,7 @@ margins::margins(
 ) :
 	widget( //
 		std::move(context),
-		std::move(params.widget_params.lp),
+		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
 	frame_widget(
@@ -54,13 +54,10 @@ margins::margins(
 		 m::container(
 			 this->context,
 			 {//
-			  .widget_params =
+			  .layout_params =
 				  {//
-				   .lp =
-					   {//
-						.dims = {lp::max, lp::max},
-						.weight = 1
-					   }
+				   .dims = {lp::max, lp::max},
+				   .weight = 1
 				  },
 			  .container_params = {.layout = layout::column}
 			 },
@@ -69,14 +66,14 @@ margins::margins(
 			  m::container(
 				  this->context,
 				  {//
+				   .layout_params =
+					   {//
+						.dims = {lp::max, lp::max},
+						.weight = 1
+					   },
 				   .widget_params =
 					   {//
-						.id = "ruis_content"s,
-						.lp =
-							{//
-							 .dims = {lp::max, lp::max},
-							 .weight = 1
-							}
+						.id = "ruis_content"s
 					   },
 				   .container_params = std::move(params.container_params)
 				  },

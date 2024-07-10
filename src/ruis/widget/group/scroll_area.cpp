@@ -33,7 +33,7 @@ scroll_area::scroll_area(
 ) :
 	widget( //
 		std::move(context),
-		std::move(params.widget_params.lp),
+		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
 	container( //

@@ -33,6 +33,7 @@ class mouse_proxy : virtual public widget
 {
 public:
 	struct all_parameters {
+		layout_parameters layout_params;
 		widget::parameters widget_params;
 	};
 
