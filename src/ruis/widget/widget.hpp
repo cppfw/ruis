@@ -474,8 +474,13 @@ public:
 	widget(utki::shared_ref<ruis::context> context, all_parameters params);
 
 protected:
-	widget(utki::shared_ref<ruis::context> context, layout_parameters layout_params, parameters params);
+	widget( //
+		utki::shared_ref<ruis::context> context,
+		layout_parameters layout_params,
+		parameters params
+	);
 
+public:
 	widget(const widget&) = delete;
 	widget& operator=(const widget&) = delete;
 
@@ -739,17 +744,6 @@ public:
  * @return Dimensions of widget.
  */
 vector2 dims_for_widget(const widget& w, const vector2& parent_dims);
-
-namespace make {
-// TODO: remove
-inline utki::shared_ref<ruis::widget> widget( //
-	utki::shared_ref<ruis::context> context,
-	ruis::widget::all_parameters params
-)
-{
-	return utki::make_shared<ruis::widget>(std::move(context), std::move(params));
-}
-} // namespace make
 
 } // namespace ruis
 

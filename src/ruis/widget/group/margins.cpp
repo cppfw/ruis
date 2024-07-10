@@ -21,6 +21,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "margins.hpp"
 
+#include "../label/gap.hpp"
+
 using namespace std::string_literals;
 using namespace std::string_view_literals;
 
@@ -48,7 +50,7 @@ margins::margins(
 		 .frame_params = std::move(params.frame_params)
 		},
 		{//
-		 m::widget(this->context, {.widget_params = {.id = "ruis_left"s}}),
+		 m::gap(this->context, {.widget_params = {.id = "ruis_left"s}}),
 		 m::container(
 			 this->context,
 			 {//
@@ -63,7 +65,7 @@ margins::margins(
 			  .container_params = {.layout = layout::column}
 			 },
 			 {//
-			  m::widget(this->context, {.widget_params = {.id = "ruis_top"s}}),
+			  m::gap(this->context, {.widget_params = {.id = "ruis_top"s}}),
 			  m::container(
 				  this->context,
 				  {//
@@ -80,10 +82,10 @@ margins::margins(
 				  },
 				  {}
 			  ),
-			  m::widget(this->context, {.widget_params = {.id = "ruis_bottom"s}})
+			  m::gap(this->context, {.widget_params = {.id = "ruis_bottom"s}})
 			 }
 		 ),
-		 m::widget(this->context, {.widget_params = {.id = "ruis_right"s}})
+		 m::gap(this->context, {.widget_params = {.id = "ruis_right"s}})
 		},
 		children
 	),

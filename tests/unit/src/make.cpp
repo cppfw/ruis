@@ -8,6 +8,7 @@
 #include <ruis/gui.hpp>
 #include <ruis/layout/pile_layout.hpp>
 #include <ruis/widget/label/rectangle.hpp>
+#include <ruis/widget/label/gap.hpp>
 
 namespace{
 // NOLINTNEXTLINE(cppcoreguidelines-interfaces-global-init)
@@ -34,7 +35,7 @@ const tst::set set("make", [](tst::suite& suite){
                 }
             },
             {
-                ruis::make::widget(
+                ruis::make::gap(
                     gui.context,
                     {
                         .widget_params = {
@@ -42,7 +43,7 @@ const tst::set set("make", [](tst::suite& suite){
                         }
                     }
                 ),
-                ruis::make::widget(
+                ruis::make::gap(
                     gui.context,
                     {}
                 ),
