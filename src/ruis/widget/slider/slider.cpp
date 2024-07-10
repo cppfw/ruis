@@ -100,11 +100,25 @@ std::vector<utki::shared_ref<ruis::widget>> make_widgets(utki::shared_ref<ruis::
 }
 } // namespace
 
-slider::slider(utki::shared_ref<ruis::context> c, all_parameters params) :
-	widget(std::move(c), {.widget_params = std::move(params.widget_params)}),
-	fraction_widget(this->context, std::move(params.fraction_params)),
+slider::slider( //
+	utki::shared_ref<ruis::context> c,
+	all_parameters params
+) :
+	widget( //
+		std::move(c),
+		std::move(params.widget_params.lp),
+		std::move(params.widget_params)
+	),
+	fraction_widget( //
+		this->context,
+		std::move(params.fraction_params)
+	),
 	oriented(std::move(params.oriented_params)),
-	container(this->context, {.container_params = {.layout = layout::pile}}, make_widgets(this->context)),
+	container( //
+		this->context,
+		{.container_params = {.layout = layout::pile}},
+		make_widgets(this->context)
+	),
 	handle(this->get_widget("ruis_handle")),
 	params([&]() {
 		auto& sbp = params.slider_params;

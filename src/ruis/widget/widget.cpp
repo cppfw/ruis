@@ -86,10 +86,6 @@ widget::widget(const utki::shared_ref<ruis::context>& c, const tml::forest& desc
 	}
 }
 
-widget::widget(utki::shared_ref<ruis::context> context, all_parameters params) :
-	widget(std::move(context), std::move(params.widget_params.lp), std::move(params.widget_params))
-{}
-
 widget::widget(utki::shared_ref<ruis::context> context, layout_parameters layout_params, parameters params) :
 	context(std::move(context)),
 	layout_params(std::move(layout_params)),

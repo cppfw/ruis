@@ -30,7 +30,7 @@ button::button( //
 	utki::shared_ref<ruis::context> context,
 	parameters params
 ) :
-	widget(std::move(context), widget::all_parameters{}),
+	widget(std::move(context), {}, {}),
 	params(std::move(params))
 {}
 

@@ -31,7 +31,7 @@ frame_widget::frame_widget(
 	utki::span<const utki::shared_ref<widget>> frame_layout,
 	utki::span<const utki::shared_ref<widget>> children
 ) :
-	widget(std::move(context), widget::all_parameters{}),
+	widget(std::move(context), {}, {}),
 	container(this->context, {.container_params = std::move(params.container_params)}, frame_layout),
 	params(std::move(params.frame_params)),
 	inner_content(this->get_widget_as<container>("ruis_content"sv))

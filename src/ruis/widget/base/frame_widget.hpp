@@ -40,6 +40,7 @@ private:
 	container& inner_content;
 
 protected:
+	// TODO: remove?
 	struct all_parameters {
 		container::parameters container_params;
 		parameters frame_params;

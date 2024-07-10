@@ -34,7 +34,7 @@ nine_patch_button::nine_patch_button( //
 	parameters params,
 	utki::span<const utki::shared_ref<ruis::widget>> children
 ) :
-	widget(std::move(context), widget::all_parameters{}),
+	widget(std::move(context), {}, {}),
 	button(this->context, std::move(button_params)),
 	nine_patch(
 		this->context,

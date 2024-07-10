@@ -26,8 +26,15 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
-gradient::gradient(utki::shared_ref<ruis::context> context, all_parameters params) :
-	widget(std::move(context), widget::all_parameters{std::move(params.widget_params)}),
+gradient::gradient( //
+	utki::shared_ref<ruis::context> context,
+	all_parameters params
+) :
+	widget( //
+		std::move(context),
+		std::move(params.widget_params.lp),
+		std::move(params.widget_params)
+	),
 	params(std::move(params.gradient_params))
 {}
 

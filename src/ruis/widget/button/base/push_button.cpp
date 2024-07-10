@@ -27,7 +27,7 @@ push_button::push_button( //
 	utki::shared_ref<ruis::context> context,
 	button::parameters button_params
 ) :
-	widget(std::move(context), widget::all_parameters{}),
+	widget(std::move(context), {}, {}),
 	button(this->context, std::move(button_params))
 {}
 

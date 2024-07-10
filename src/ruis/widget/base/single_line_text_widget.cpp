@@ -28,7 +28,7 @@ single_line_text_widget::single_line_text_widget(
 	text_widget::parameters text_widget_params,
 	std::u32string text
 ) :
-	widget(std::move(context), widget::all_parameters{}),
+	widget(std::move(context), {}, {}),
 	text_widget(this->context, std::move(text_widget_params)),
 	text(std::move(text))
 {

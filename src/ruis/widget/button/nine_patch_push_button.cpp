@@ -30,10 +30,20 @@ nine_patch_push_button::nine_patch_push_button( //
 	all_parameters params,
 	utki::span<const utki::shared_ref<ruis::widget>> children
 ) :
-	widget(std::move(context), widget::all_parameters{std::move(params.widget_params)}),
-	button(this->context, std::move(params.button_params)),
-	push_button(this->context, button::parameters{}),
-	nine_patch_button(
+	widget( //
+		std::move(context),
+		std::move(params.widget_params.lp),
+		std::move(params.widget_params)
+	),
+	button( //
+		this->context,
+		std::move(params.button_params)
+	),
+	push_button( //
+		this->context,
+		button::parameters{}
+	),
+	nine_patch_button( //
 		this->context,
 		{},
 		std::move(params.blending_params),
@@ -42,7 +52,7 @@ nine_patch_push_button::nine_patch_push_button( //
 		children
 	)
 {
-	// TODO: load default pressed/unpressed nine-patches
+	// TODO: load default pressed/unpressed nine-patches? Or no?
 }
 
 nine_patch_push_button::nine_patch_push_button(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :

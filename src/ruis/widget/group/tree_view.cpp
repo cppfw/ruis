@@ -28,8 +28,15 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
-tree_view::tree_view(utki::shared_ref<ruis::context> context, all_parameters params) :
-	widget(std::move(context), {.widget_params = std::move(params.widget_params)}),
+tree_view::tree_view( //
+	utki::shared_ref<ruis::context> context,
+	all_parameters params
+) :
+	widget( //
+		std::move(context),
+		std::move(params.widget_params.lp),
+		std::move(params.widget_params)
+	),
 	scroll_area(this->context, {}, {}),
 	item_list(
 		// clang-format off

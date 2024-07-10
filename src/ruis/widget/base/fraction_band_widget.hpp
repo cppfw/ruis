@@ -42,11 +42,7 @@ protected:
 	};
 
 protected:
-	fraction_band_widget(utki::shared_ref<ruis::context> c, all_parameters params) :
-		widget(std::move(c), widget::all_parameters{}),
-		fraction_widget(this->context, std::move(params.fraction_params)),
-		params(std::move(params.fraction_band_params))
-	{}
+	fraction_band_widget(utki::shared_ref<ruis::context> c, all_parameters params);
 
 	virtual void on_band_change();
 

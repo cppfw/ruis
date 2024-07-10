@@ -37,18 +37,18 @@ margins::margins(
 	all_parameters params,
 	utki::span<const utki::shared_ref<ruis::widget>> children
 ) :
-	widget(
+	widget( //
 		std::move(context),
-		{
-			.widget_params = std::move(params.widget_params)
-}
+		std::move(params.widget_params.lp),
+		std::move(params.widget_params)
 	),
 	frame_widget(
 		this->context,
-		{//
-		 .container_params = {.layout = layout::row},
-		 .frame_params = std::move(params.frame_params)
-		},
+		{
+			//
+			.container_params = {.layout = layout::row},
+			.frame_params = std::move(params.frame_params)
+},
 		{//
 		 m::gap(this->context, {.widget_params = {.id = "ruis_left"s}}),
 		 m::container(

@@ -261,24 +261,26 @@ nine_patch::nine_patch(const utki::shared_ref<ruis::context>& c, const tml::fore
 	this->content().push_back_inflate(desc);
 }
 
-nine_patch::nine_patch(
+nine_patch::nine_patch( //
 	utki::shared_ref<ruis::context> context,
 	all_parameters params,
 	utki::span<const utki::shared_ref<widget>> children
 ) :
-	widget(
+	widget( //
 		std::move(context),
-		{
-			.widget_params = std::move(params.widget_params)
-}
+		std::move(params.widget_params.lp),
+		std::move(params.widget_params)
 	),
-	blending_widget(this->context, std::move(params.blending_params)),
-	frame_widget(
+	blending_widget( //
 		this->context,
-		{//
-		 .container_params = {.layout = layout::column},
-		 .frame_params = std::move(params.frame_params)
-		},
+		std::move(params.blending_params)
+	),
+	frame_widget( //
+		this->context,
+		{
+			.container_params = {.layout = layout::column}, //
+			.frame_params = std::move(params.frame_params)
+},
 		build_layout(this->context),
 		children
 	),

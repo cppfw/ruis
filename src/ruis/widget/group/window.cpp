@@ -333,8 +333,12 @@ window::window(
 	all_parameters params,
 	utki::span<const utki::shared_ref<ruis::widget>> children
 ) :
-	widget(std::move(c), {.widget_params = std::move(params.widget_params)}),
-	container(
+	widget( //
+		std::move(c),
+		std::move(params.widget_params.lp),
+		std::move(params.widget_params)
+	),
+	container( //
 		this->context,
 		{.container_params = {.layout = ruis::layout::pile}},
 		make_children(this->context, std::move(params.container_params))

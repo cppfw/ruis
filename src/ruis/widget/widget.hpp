@@ -443,8 +443,8 @@ public:
 		bool depth = false;
 	};
 
-	// TODO: remove
 	struct all_parameters {
+		layout_parameters layout_params;
 		parameters widget_params;
 	};
 
@@ -469,9 +469,6 @@ public:
 	 */
 	// TODO: remove
 	widget(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
-
-	// TODO: remove
-	widget(utki::shared_ref<ruis::context> context, all_parameters params);
 
 protected:
 	widget( //

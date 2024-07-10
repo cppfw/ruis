@@ -26,9 +26,19 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
-rectangle::rectangle(utki::shared_ref<ruis::context> context, all_parameters params) :
-	widget(std::move(context), widget::all_parameters{std::move(params.widget_params)}),
-	color_widget(this->context, std::move(params.color_params))
+rectangle::rectangle( //
+	utki::shared_ref<ruis::context> context,
+	all_parameters params
+) :
+	widget( //
+		std::move(context),
+		std::move(params.widget_params.lp),
+		std::move(params.widget_params)
+	),
+	color_widget( //
+		this->context,
+		std::move(params.color_params)
+	)
 {}
 
 void rectangle::render(const ruis::matrix4& matrix) const

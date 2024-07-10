@@ -47,14 +47,14 @@ overlay::overlay(
 	all_parameters params,
 	utki::span<const utki::shared_ref<widget>> children
 ) :
-	widget(std::move(context), widget::all_parameters{std::move(params.widget_params)}),
+	widget( //
+		std::move(context),
+		std::move(params.widget_params.lp),
+		std::move(params.widget_params)
+	),
 	container( //
 		this->context,
-#if CFG_CPP >= 20
 		{.container_params = {.layout = layout::pile}},
-#else
-		{{}, {layout::pile}},
-#endif
 		children
 	)
 {}
