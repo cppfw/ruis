@@ -108,7 +108,7 @@ text_widget::text_widget(const utki::shared_ref<ruis::context>& c, const tml::fo
 }
 
 text_widget::text_widget(utki::shared_ref<ruis::context> context, parameters params) :
-	widget(std::move(context), widget::all_parameters{}),
+	widget(std::move(context), {}, {}),
 	params([this, &params]() {
 		auto p = std::move(params);
 		if (!p.font_face) {
