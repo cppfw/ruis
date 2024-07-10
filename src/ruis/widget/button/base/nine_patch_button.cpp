@@ -41,6 +41,7 @@ nine_patch_button::nine_patch_button( //
 		{.blending_params = std::move(blending_params), .nine_patch_params = std::move(nine_patch_params)},
 		children
 	)
+// TODO: initialize params
 {}
 
 nine_patch_button::nine_patch_button(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :

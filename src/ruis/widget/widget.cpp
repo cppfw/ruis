@@ -39,7 +39,7 @@ widget::widget(const utki::shared_ref<ruis::context>& c, const tml::forest& desc
 
 		try {
 			if (p.value == "lp") {
-				this->params.lp = lp::make(p.children, this->context.get().units);
+				this->layout_params = lp::make(p.children, this->context.get().units);
 			} else if (p.value == "x") {
 				this->params.rectangle.p.x() =
 					parse_dimension_value(get_property_value(p), this->context.get().units).get(this->context);
@@ -74,31 +74,36 @@ widget::widget(const utki::shared_ref<ruis::context>& c, const tml::forest& desc
 		}
 	}
 
-	for (auto& d : this->params.lp.dims) {
+	for (auto& d : this->layout_params.dims) {
 		if (d.is_undefined()) {
 			d = lp::min;
 		}
 	}
 
-	if (this->params.lp.weight < 0) {
+	if (this->layout_params.weight < 0) {
 		// use default weight of 0
-		this->params.lp.weight = 0;
+		this->layout_params.weight = 0;
 	}
 }
 
 widget::widget(utki::shared_ref<ruis::context> context, all_parameters params) :
+	widget(std::move(context), std::move(params.widget_params.lp), std::move(params.widget_params))
+{}
+
+widget::widget(utki::shared_ref<ruis::context> context, layout_parameters layout_params, parameters params) :
 	context(std::move(context)),
-	params(std::move(params.widget_params))
+	layout_params(std::move(layout_params)),
+	params(std::move(params))
 {
-	for (auto& d : this->params.lp.dims) {
+	for (auto& d : this->layout_params.dims) {
 		if (d.is_undefined()) {
 			d = lp::min;
 		}
 	}
 
-	if (this->params.lp.weight < 0) {
+	if (this->layout_params.weight < 0) {
 		// use default weight of 0
-		this->params.lp.weight = 0;
+		this->layout_params.weight = 0;
 	}
 }
 
@@ -193,7 +198,7 @@ utki::shared_ref<widget> widget::replace_by(const utki::shared_ref<widget>& w)
 	// TODO: performace can be improved by adding dedicated container::replace_by(iter, widget) function
 	this->parent()->insert(w, this->parent()->find(*this));
 
-	w.get().params.lp = std::move(this->params.lp);
+	w.get().layout_params = std::move(this->layout_params);
 
 	return this->remove_from_parent();
 }

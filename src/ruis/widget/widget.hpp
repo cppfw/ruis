@@ -151,7 +151,7 @@ public:
 	 */
 	const lp& get_layout_params_const() const
 	{
-		return this->params.lp;
+		return this->layout_params;
 	}
 
 	/**
@@ -408,6 +408,8 @@ public:
 public:
 	struct parameters {
 		std::string id;
+
+		// TODO: remove
 		ruis::lp lp;
 
 		// initialize the rect to invalid values to make sure that a
@@ -441,11 +443,13 @@ public:
 		bool depth = false;
 	};
 
+	// TODO: remove
 	struct all_parameters {
 		parameters widget_params;
 	};
 
 private:
+	layout_parameters layout_params;
 	parameters params;
 
 public:
@@ -463,9 +467,14 @@ public:
 	 * @param c - context to which this widget belongs.
 	 * @param desc - widget description.
 	 */
+	// TODO: remove
 	widget(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 
+	// TODO: remove
 	widget(utki::shared_ref<ruis::context> context, all_parameters params);
+
+protected:
+	widget(utki::shared_ref<ruis::context> context, layout_parameters layout_params, parameters params);
 
 	widget(const widget&) = delete;
 	widget& operator=(const widget&) = delete;
@@ -732,6 +741,7 @@ public:
 vector2 dims_for_widget(const widget& w, const vector2& parent_dims);
 
 namespace make {
+// TODO: remove
 inline utki::shared_ref<ruis::widget> widget( //
 	utki::shared_ref<ruis::context> context,
 	ruis::widget::all_parameters params
