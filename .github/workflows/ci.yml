@@ -13,11 +13,11 @@ jobs:
 ##### coverage #####
   coverage:
     runs-on: ubuntu-latest
-    container: debian:bullseye
+    container: debian:bookworm
     name: coverage - measure
     env:
       linux_distro: debian
-      linux_release: bullseye
+      linux_release: bookworm
     steps:
       - name: add cppfw deb repo
         uses: myci-actions/add-deb-repo@master
@@ -25,19 +25,13 @@ jobs:
           repo: deb https://gagis.hopto.org/repo/cppfw/${{ env.linux_distro }} ${{ env.linux_release }} main
           repo-name: cppfw
           keys-asc: https://gagis.hopto.org/repo/cppfw/pubkey.gpg
-          install: myci locales git
+          install: myci locales git pipx
       - name: add llvm repo (for clang-format)
         uses: myci-actions/add-deb-repo@master
         with:
           repo: deb https://apt.llvm.org/${{ env.linux_release }} llvm-toolchain-${{ env.linux_release }} main
           repo-name: llvm
           keys-asc: https://apt.llvm.org/llvm-snapshot.gpg.key
-      - name: install ci tools
-        run: |
-          apt --quiet install --assume-yes devscripts equivs python3-pip
-
-          # install gcovr >5.2
-          pip install git+https://github.com/gcovr/gcovr.git
       - name: git clone
         uses: myci-actions/checkout@master
       - name: prepare debian package
@@ -49,7 +43,7 @@ jobs:
       - name: test
         run: make config=gcov test
       - name: generate coverage report
-        run: gcovr --exclude-throw-branches --filter src/ --cobertura > cobertura.xml
+        run: pipx run gcovr --exclude-throw-branches --filter src/ --cobertura > cobertura.xml
       - name: upload coverage report to artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -76,7 +70,7 @@ jobs:
           - {os: debian, codename: bookworm, image_owner: , package_type: deb, labels: [arm64,docker]}
     runs-on: ${{ (matrix.labels == '' && 'ubuntu-latest') || matrix.labels }}
     container: ${{ matrix.image_owner }}${{ matrix.os }}:${{ matrix.codename }}
-    name: sanitizer - ${{ matrix.image_owner }}${{ matrix.os }}:${{ matrix.codename }} | ${{ matrix.labels[0] }}
+    name: sanitizer - ${{ matrix.image_owner }}${{ matrix.os }}:${{ matrix.codename }} - ${{ matrix.labels[0] }}
     steps:
       - name: add llvm repo (for clang-format)
         uses: myci-actions/add-deb-repo@master
@@ -128,7 +122,7 @@ jobs:
           - {os: raspbian, codename: bookworm, image_owner: igagis/, package_type: deb, labels: [arm32,docker]}
     runs-on: ${{ (matrix.labels == '' && 'ubuntu-latest') || matrix.labels }}
     container: ${{ matrix.image_owner }}${{ matrix.os }}:${{ matrix.codename }}
-    name: linux - ${{ matrix.image_owner }}${{ matrix.os }}:${{ matrix.codename }} | ${{ matrix.labels[0] }}
+    name: linux - ${{ matrix.image_owner }}${{ matrix.os }}:${{ matrix.codename }} - ${{ matrix.labels[0] }}
     steps:
       # - name: set TZ for ubuntu:focal
       #   run: |
@@ -295,7 +289,7 @@ jobs:
         include:
           - {arch: i686, repo: mingw32}
           - {arch: x86_64, repo: mingw64}
-    name: msys2 | ${{ matrix.repo }}
+    name: msys2 - ${{ matrix.repo }}
     steps:
     - name: make msys2 to provide the default shell
       uses: msys2/setup-msys2@v2
