@@ -29,7 +29,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 namespace ruis {
 class image_button :
 	virtual public button, //
-	public image // TODO: why public?
+	// No reason to hide it by making image inheritance private.
+	// There should be access to image interface, e.g. to configure
+	// image and blending parameters in runtime.
+	public image
 {
 public:
 	struct parameters {
@@ -44,6 +47,13 @@ private:
 
 protected:
 	void on_pressed_change() override;
+
+	image_button( //
+		utki::shared_ref<ruis::context> context,
+		blending_widget::parameters blending_params,
+		image::parameters image_params,
+		parameters params
+	);
 
 	image_button(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 

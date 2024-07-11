@@ -29,6 +29,31 @@ void image_push_button::on_pressed_change()
 	this->push_button::on_pressed_change();
 }
 
+image_push_button::image_push_button( //
+	utki::shared_ref<ruis::context> context,
+	all_parameters params
+) :
+	widget( //
+		std::move(context),
+		std::move(params.layout_params),
+		std::move(params.widget_params)
+	),
+	button( //
+		this->context,
+		std::move(params.button_params)
+	),
+	push_button( //
+		this->context,
+		button::parameters{}
+	),
+	image_button( //
+		this->context,
+		std::move(params.blending_params),
+		std::move(params.image_params),
+		std::move(params.image_button_params)
+	)
+{}
+
 image_push_button::image_push_button(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 	widget(c, desc),
 	button(this->context, desc),

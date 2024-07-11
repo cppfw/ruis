@@ -33,6 +33,20 @@ protected:
 	void on_pressed_change() override;
 
 public:
+	struct all_parameters {
+		layout_parameters layout_params;
+		widget::parameters widget_params;
+		button::parameters button_params;
+		blending_widget::parameters blending_params;
+		image::parameters image_params;
+		image_button::parameters image_button_params;
+	};
+
+	image_push_button( //
+		utki::shared_ref<ruis::context> context,
+		all_parameters params
+	);
+
 	image_push_button(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 };
 } // namespace ruis

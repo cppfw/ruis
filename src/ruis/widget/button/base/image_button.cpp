@@ -40,6 +40,24 @@ void image_button::on_pressed_change()
 	this->button::on_pressed_change();
 }
 
+image_button::image_button( //
+	utki::shared_ref<ruis::context> context,
+	blending_widget::parameters blending_params,
+	image::parameters image_params,
+	parameters params
+) :
+	widget(std::move(context), {}, {}),
+	button(this->context, button::parameters{}),
+	image( //
+		this->context,
+		{.blending_params = std::move(blending_params), //
+		 .image_params = std::move(image_params)}
+	),
+	params(std::move(params))
+{
+	this->update_image();
+}
+
 image_button::image_button(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 	widget(c, desc),
 	button(this->context, desc),
