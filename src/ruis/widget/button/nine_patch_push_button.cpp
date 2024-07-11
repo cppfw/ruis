@@ -45,6 +45,7 @@ nine_patch_push_button::nine_patch_push_button( //
 	),
 	nine_patch_button( //
 		this->context,
+		std::move(params.container_params),
 		{},
 		std::move(params.blending_params),
 		std::move(params.nine_patch_params),

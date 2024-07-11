@@ -34,7 +34,10 @@ using namespace std::string_literals;
 using namespace ruis;
 
 namespace {
-std::vector<utki::shared_ref<ruis::widget>> build_layout(utki::shared_ref<ruis::context> c)
+std::vector<utki::shared_ref<ruis::widget>> build_layout(
+	utki::shared_ref<ruis::context> c,
+	container::parameters container_params
+)
 {
 	namespace m = ruis::make;
 	using ruis::lp;
@@ -108,9 +111,7 @@ std::vector<utki::shared_ref<ruis::widget>> build_layout(utki::shared_ref<ruis::
 						.widget_params = {
 							.id = "ruis_content"s
 						},
-						.container_params = {
-							.layout = layout::pile
-						}
+						.container_params = std::move(container_params)
 					},
 					{
 						m::image(c,
@@ -187,7 +188,7 @@ nine_patch::nine_patch(const utki::shared_ref<ruis::context>& c, const tml::fore
 		{
 			.container_params = {.layout = layout::column}
 },
-		build_layout(this->context),
+		build_layout(this->context, {.layout = ruis::layout::pile}),
 		{}
 	),
 	img_widgets_matrix({{//
@@ -275,7 +276,10 @@ nine_patch::nine_patch( //
 			.container_params = {.layout = layout::column}, //
 			.frame_params = std::move(params.frame_params)
 },
-		build_layout(this->context),
+		build_layout( //
+			this->context,
+			std::move(params.container_params)
+		),
 		children
 	),
 	img_widgets_matrix({{//

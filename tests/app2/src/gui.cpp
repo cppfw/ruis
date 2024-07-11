@@ -70,7 +70,11 @@ utki::shared_ref<ruis::window> make_sliders_window(utki::shared_ref<ruis::contex
 				}
 			),
 			m::push_button(c,
-				{},
+				{
+					.container_params = {
+						.layout = ruis::layout::pile
+					}
+				},
 				{
 					m::text(c,
 						{},
