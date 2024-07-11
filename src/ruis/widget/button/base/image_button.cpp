@@ -28,9 +28,9 @@ using namespace ruis;
 void image_button::update_image()
 {
 	if (this->is_pressed()) {
-		this->set_image(this->pressedImage_v);
+		this->set_image(this->params.pressed_image);
 	} else {
-		this->set_image(this->unpressedImage_v);
+		this->set_image(this->params.unpressed_image);
 	}
 }
 
@@ -57,10 +57,10 @@ image_button::image_button(const utki::shared_ref<ruis::context>& c, const tml::
 				}
 
 				if (pp.value == "pressed") {
-					this->pressedImage_v =
+					this->params.pressed_image =
 						this->context.get().loader.load<res::image>(get_property_value(pp).string).to_shared_ptr();
 				} else if (pp.value == "unpressed") {
-					this->unpressedImage_v =
+					this->params.unpressed_image =
 						this->context.get().loader.load<res::image>(get_property_value(pp).string).to_shared_ptr();
 				}
 				this->update_image();
@@ -71,12 +71,12 @@ image_button::image_button(const utki::shared_ref<ruis::context>& c, const tml::
 
 void image_button::set_pressed_image(std::shared_ptr<const res::image> image)
 {
-	this->pressedImage_v = std::move(image);
+	this->params.pressed_image = std::move(image);
 	this->update_image();
 }
 
 void image_button::set_unpressed_image(std::shared_ptr<const res::image> image)
 {
-	this->unpressedImage_v = std::move(image);
+	this->params.unpressed_image = std::move(image);
 	this->update_image();
 }

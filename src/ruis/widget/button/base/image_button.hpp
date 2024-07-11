@@ -29,11 +29,16 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 namespace ruis {
 class image_button :
 	virtual public button, //
-	public image
+	public image // TODO: why public?
 {
-	// TODO: naming convention
-	std::shared_ptr<const res::image> unpressedImage_v;
-	std::shared_ptr<const res::image> pressedImage_v;
+public:
+	struct parameters {
+		std::shared_ptr<const res::image> unpressed_image;
+		std::shared_ptr<const res::image> pressed_image;
+	};
+
+private:
+	parameters params;
 
 	void update_image();
 
@@ -45,16 +50,16 @@ protected:
 public:
 	void set_pressed_image(std::shared_ptr<const res::image> image);
 
-	const decltype(pressedImage_v)& get_pressed_image() const
+	const decltype(params.pressed_image)& get_pressed_image() const
 	{
-		return this->pressedImage_v;
+		return this->params.pressed_image;
 	}
 
 	void set_unpressed_image(std::shared_ptr<const res::image> image);
 
-	const decltype(unpressedImage_v)& get_unpressed_image() const
+	const decltype(params.unpressed_image)& get_unpressed_image() const
 	{
-		return this->unpressedImage_v;
+		return this->params.unpressed_image;
 	}
 };
 } // namespace ruis
