@@ -349,6 +349,9 @@ window::window(
 			this->context,
 			{//
 			 .layout_params = {.dims = {ruis::lp::fill, ruis::lp::fill}},
+			 .container_params = {
+				.layout = layout::pile
+			 },
 			 .nine_patch_params =
 				 {//
 				  .nine_patch = this->context.get().loader.load<ruis::res::nine_patch>("ruis_npt_window_bg")

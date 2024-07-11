@@ -38,6 +38,8 @@ protected:
 
 	toggle_button(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 
+	toggle_button(utki::shared_ref<ruis::context> context);
+
 public:
 	/**
 	 * @brief Change checked state to opposite.
