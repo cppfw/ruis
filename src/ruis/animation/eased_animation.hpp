@@ -21,50 +21,24 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "../config.hpp"
-#include "../updateable.hpp"
-#include "../updater.hpp"
+#include "animation.hpp"
+#include "easing.hpp"
 
 namespace ruis {
 
-class animation :
-	virtual public utki::shared, //
-	private updateable
+class eased_animation : public animation
 {
-	utki::shared_ref<ruis::updater> updater;
-
-	uint32_t duration_ms;
-	uint32_t left_ms = 0;
-
-	void update(uint32_t dt) override;
+	std::function<real(real factor)> easing;
 
 protected:
-	virtual void on_update(real factor);
-	virtual void on_end(uint32_t over_end_ms);
+	void on_update(real factor) override;
 
 public:
-	std::function<void(real factor)> update_handler;
-	std::function<void(uint32_t over_end_ms)> end_handler;
-
-	animation( //
+	eased_animation( //
 		utki::shared_ref<ruis::updater> updater,
-		uint32_t duration_ms
+		uint32_t duration_ms,
+		decltype(easing) easing = easing::linear
 	);
-
-	bool is_running() const noexcept
-	{
-		return this->is_updating();
-	}
-
-	void start();
-	void stop() noexcept;
-
-	/**
-	 * @brief Reset the animation.
-	 * Stops the animation if it is running.
-	 * Resets to initial state.
-	 */
-	void reset();
 };
 
 } // namespace ruis

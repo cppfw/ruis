@@ -25,26 +25,11 @@ using namespace ruis;
 
 animation::animation( //
 	utki::shared_ref<ruis::updater> updater,
-	uint32_t duration_ms,
-	decltype(update_handler) update_handler,
-	decltype(end_handler) end_handler
+	uint32_t duration_ms
 ) :
 	updater(std::move(updater)),
 	duration_ms(duration_ms),
-	left_ms(duration_ms),
-	update_handler(std::move(update_handler))
-{}
-
-animation::animation( //
-	utki::shared_ref<ruis::updater> updater,
-	uint32_t duration_ms
-) :
-	animation( //
-		std::move(updater),
-		duration_ms,
-		nullptr,
-		nullptr
-	)
+	left_ms(duration_ms)
 {}
 
 void animation::on_update(real factor)
