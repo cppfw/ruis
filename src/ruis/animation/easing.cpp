@@ -45,3 +45,42 @@ real ruis::easing::out_sine(real f)
 	using std::sin;
 	return sin(f * real(utki::pi) / 2);
 }
+
+real ruis::easing::in_out_sine(real f)
+{
+	ASSERT(f >= 0)
+	ASSERT(f <= 1)
+	using std::cos;
+	return -(cos(real(utki::pi) * f) - 1) / 2;
+}
+
+real ruis::easing::in_quad(real f)
+{
+	ASSERT(f >= 0)
+	ASSERT(f <= 1)
+	using utki::pow2;
+	return pow2(f);
+}
+
+real ruis::easing::out_quad(real f)
+{
+	ASSERT(f >= 0)
+	ASSERT(f <= 1)
+	using utki::pow2;
+	return real(1) - pow2(f - 1);
+}
+
+real ruis::easing::in_out_quad(real f)
+{
+	ASSERT(f >= 0)
+	ASSERT(f <= 1)
+	using utki::pow2;
+
+	constexpr auto half_way_factor = 0.5;
+
+	if (f < real(half_way_factor)) {
+		return 2 * pow2(f);
+	} else {
+		return real(1) - 2 * pow2(f - 1);
+	}
+}

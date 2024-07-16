@@ -53,4 +53,43 @@ real in_sine(real factor);
  */
 real out_sine(real factor);
 
+/**
+ * @brief Ease in-out sine.
+ * Function:
+ *   F(f) = -(cos(pi * f) - 1) / 2;
+ * @param factor - factor from [0:1].
+ * @return sine-in-out eased factor from [0:1].
+ */
+real in_out_sine(real factor);
+
+/**
+ * @brief Ease in quadratic.
+ * Function:
+ *   F(f) = x^2;
+ * @param factor - factor from [0:1].
+ * @return quadratic-in eased factor from [0:1].
+ */
+real in_quad(real factor);
+
+/**
+ * @brief Ease out quadratic.
+ * Function:
+ *   F(f) = 1 - (f - 1)^2
+ * @param factor - factor from [0:1].
+ * @return quadratic-out eased factor from [0:1].
+ */
+real out_quad(real factor);
+
+/**
+ * @brief Ease in-out quadratic.
+ * Function:
+ *   F(f) = | 2 * f^2, f < 0.5
+ *          | 1 - 2 * (f - 1)^2, f >= 0.5
+ * @param factor - factor from [0:1].
+ * @return quadratic-in-out eased factor from [0:1].
+ */
+real in_out_quad(real factor);
+
+// TODO: add other easings from https://easings.net
+
 } // namespace ruis::easing
