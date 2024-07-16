@@ -54,16 +54,18 @@ void animation::on_update(real factor)
 	}
 }
 
-void animation::on_end()
+void animation::on_end(uint32_t over_end_ms)
 {
 	if (this->end_handler) {
-		this->end_handler();
+		this->end_handler(over_end_ms);
 	}
 }
 
 void animation::update(uint32_t dt)
 {
+	uint32_t over_end_ms = 0;
 	if (this->left_ms <= dt) {
+		over_end_ms = dt - this->left_ms;
 		this->left_ms = 0;
 	} else {
 		this->left_ms -= dt;
@@ -75,7 +77,7 @@ void animation::update(uint32_t dt)
 
 	if (this->left_ms == 0) {
 		this->stop();
-		this->on_end();
+		this->on_end(over_end_ms);
 	}
 }
 

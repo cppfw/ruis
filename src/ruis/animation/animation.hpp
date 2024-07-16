@@ -25,6 +25,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../updateable.hpp"
 #include "../updater.hpp"
 
+#include "easing.hpp"
+
 namespace ruis {
 
 class animation :
@@ -36,15 +38,17 @@ class animation :
 	uint32_t duration_ms;
 	uint32_t left_ms = 0;
 
+	std::function<real(real factor)> easing;
+
 	void update(uint32_t dt) override;
 
 protected:
 	virtual void on_update(real factor);
-	virtual void on_end();
+	virtual void on_end(uint32_t over_end_ms);
 
 public:
 	std::function<void(real factor)> update_handler;
-	std::function<void()> end_handler;
+	std::function<void(uint32_t over_end_ms)> end_handler;
 
 	animation( //
 		utki::shared_ref<ruis::updater> updater,
