@@ -26,17 +26,38 @@ using namespace ruis;
 animation::animation( //
 	utki::shared_ref<ruis::updater> updater,
 	uint32_t duration_ms,
-	decltype(update_handler) update_handler
+	decltype(update_handler) update_handler,
+	decltype(end_handler) end_handler
 ) :
 	updater(std::move(updater)),
 	duration_ms(duration_ms),
+	left_ms(duration_ms),
 	update_handler(std::move(update_handler))
+{}
+
+animation::animation( //
+	utki::shared_ref<ruis::updater> updater,
+	uint32_t duration_ms
+) :
+	animation( //
+		std::move(updater),
+		duration_ms,
+		nullptr,
+		nullptr
+	)
 {}
 
 void animation::on_update(real factor)
 {
 	if (this->update_handler) {
 		this->update_handler(factor);
+	}
+}
+
+void animation::on_end()
+{
+	if (this->end_handler) {
+		this->end_handler();
 	}
 }
 
@@ -51,15 +72,25 @@ void animation::update(uint32_t dt)
 	auto factor = real(this->duration_ms - this->left_ms) / real(this->duration_ms);
 
 	this->on_update(factor);
+
+	if (this->left_ms == 0) {
+		this->stop();
+		this->on_end();
+	}
 }
 
 void animation::start()
 {
 	this->updater.get().start(utki::make_weak_from(static_cast<updateable&>(*this)));
-	this->left_ms = this->duration_ms;
 }
 
 void animation::stop() noexcept
 {
 	this->updater.get().stop(*this);
+}
+
+void animation::reset()
+{
+	this->stop();
+	this->left_ms = this->duration_ms;
 }

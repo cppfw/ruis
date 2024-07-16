@@ -38,16 +38,24 @@ class animation :
 
 	void update(uint32_t dt) override;
 
-	std::function<void(real factor)> update_handler;
-
 protected:
 	virtual void on_update(real factor);
+	virtual void on_end();
 
 public:
+	std::function<void(real factor)> update_handler;
+	std::function<void()> end_handler;
+
+	animation( //
+		utki::shared_ref<ruis::updater> updater,
+		uint32_t duration_ms
+	);
+
 	animation( //
 		utki::shared_ref<ruis::updater> updater,
 		uint32_t duration_ms,
-		decltype(update_handler) update_handler
+		decltype(update_handler) update_handler,
+		decltype(end_handler) end_handler
 	);
 
 	bool is_running() const noexcept
@@ -57,6 +65,13 @@ public:
 
 	void start();
 	void stop() noexcept;
+
+	/**
+	 * @brief Reset the animation.
+	 * Stops the animation if it is running.
+	 * Resets to initial state.
+	 */
+	void reset();
 };
 
 } // namespace ruis

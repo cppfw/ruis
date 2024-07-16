@@ -68,5 +68,7 @@ const tst::set set("timer", [](tst::suite& suite){
     // TODO: add test: stopping after expired
 
     // TODO: add test: restarting after expired
+
+    // TODO: add test: timeout more than 65535 ms
 });
 }
