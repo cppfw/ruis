@@ -355,3 +355,51 @@ real ruis::easing::in_out_elastic(real f)
 	}
 	return 1;
 }
+
+real ruis::easing::in_bounce(real f)
+{
+	ASSERT(f >= 0)
+	ASSERT(f <= 1)
+	return real(1) - out_bounce(real(1) - f);
+}
+
+real ruis::easing::out_bounce(real f)
+{
+	ASSERT(f >= 0)
+	ASSERT(f <= 1)
+
+	using utki::pow2;
+
+	constexpr real n1 = 7.5625;
+	constexpr real d1 = 2.75;
+
+	if (f < real(1) / d1) {
+		return n1 * pow2(f);
+	}
+	if (f < 2 / d1) {
+		constexpr real a = 1.5;
+		constexpr real b = 0.75;
+		return n1 * pow2(f - a / d1) + b;
+	}
+	if (constexpr real threshold = 2.5; f < threshold / d1) {
+		constexpr real a = 2.25;
+		constexpr real b = 0.9375;
+		return n1 * pow2(f - a / d1) + b;
+	}
+
+	constexpr real a = 2.625;
+	constexpr real b = 0.984375;
+	return n1 * pow2(f - a / d1) + b;
+}
+
+real ruis::easing::in_out_bounce(real f)
+{
+	ASSERT(f >= 0)
+	ASSERT(f <= 1)
+
+	if (f < real(half_way_factor)) {
+		return (1 - out_bounce(1 - 2 * f)) / 2;
+	} else {
+		return (1 + out_bounce(2 * f - 1)) / 2;
+	}
+}
