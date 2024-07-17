@@ -65,11 +65,11 @@ real in_out_sine(real factor);
 /**
  * @brief Ease in quadratic.
  * Function:
- *   F(f) = x^2;
+ *   F(f) = f^2;
  * @param factor - factor from [0:1].
  * @return quadratic-in eased factor from [0:1].
  */
-real in_quad(real factor);
+real in_quadratic(real factor);
 
 /**
  * @brief Ease out quadratic.
@@ -78,22 +78,22 @@ real in_quad(real factor);
  * @param factor - factor from [0:1].
  * @return quadratic-out eased factor from [0:1].
  */
-real out_quad(real factor);
+real out_quadratic(real factor);
 
 /**
  * @brief Ease in-out quadratic.
  * Function:
- *   F(f) = | 2 * f^2, f < 0.5
- *          | 1 - 2 * (1 - f)^2, f >= 0.5
+ *   F(f) = | (2 * f)^2 / 2, f < 0.5
+ *          | 1 - (2 - 2 * f)^2 / 2, f >= 0.5
  * @param factor - factor from [0:1].
  * @return quadratic-in-out eased factor from [0:1].
  */
-real in_out_quad(real factor);
+real in_out_quadratic(real factor);
 
 /**
  * @brief Ease in cubic.
  * Function:
- *   F(f) = x^3;
+ *   F(f) = f^3;
  * @param factor - factor from [0:1].
  * @return cubic-in eased factor from [0:1].
  */
@@ -111,12 +111,40 @@ real out_cubic(real factor);
 /**
  * @brief Ease in-out cubic.
  * Function:
- *   F(f) = | 4 * f^3, f < 0.5
- *          | 1 - 4 * (1 - f)^3, f >= 0.5
+ *   F(f) = | (2 * f)^3 / 2, f < 0.5
+ *          | 1 - (2 - 2 * f)^3 / 2, f >= 0.5
  * @param factor - factor from [0:1].
  * @return cubic-in-out eased factor from [0:1].
  */
 real in_out_cubic(real factor);
+
+/**
+ * @brief Ease in quartic.
+ * Function:
+ *   F(f) = f^4;
+ * @param factor - factor from [0:1].
+ * @return quartic-in eased factor from [0:1].
+ */
+real in_quartic(real factor);
+
+/**
+ * @brief Ease out quartic.
+ * Function:
+ *   F(f) = 1 - (1 - f)^4
+ * @param factor - factor from [0:1].
+ * @return quartic-out eased factor from [0:1].
+ */
+real out_quartic(real factor);
+
+/**
+ * @brief Ease in-out quartic.
+ * Function:
+ *   F(f) = | 8 * f^4, f < 0.5
+ *          | 1 - (2 - 2 * f)^4 / 2, f >= 0.5
+ * @param factor - factor from [0:1].
+ * @return quartic-in-out eased factor from [0:1].
+ */
+real in_out_quartic(real factor);
 
 // TODO: add other easings from https://easings.net
 

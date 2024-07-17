@@ -58,7 +58,7 @@ real ruis::easing::in_out_sine(real f)
 	return -(cos(real(utki::pi) * f) - 1) / 2;
 }
 
-real ruis::easing::in_quad(real f)
+real ruis::easing::in_quadratic(real f)
 {
 	ASSERT(f >= 0)
 	ASSERT(f <= 1)
@@ -66,7 +66,7 @@ real ruis::easing::in_quad(real f)
 	return pow2(f);
 }
 
-real ruis::easing::out_quad(real f)
+real ruis::easing::out_quadratic(real f)
 {
 	ASSERT(f >= 0)
 	ASSERT(f <= 1)
@@ -74,16 +74,16 @@ real ruis::easing::out_quad(real f)
 	return real(1) - pow2(real(1) - f);
 }
 
-real ruis::easing::in_out_quad(real f)
+real ruis::easing::in_out_quadratic(real f)
 {
 	ASSERT(f >= 0)
 	ASSERT(f <= 1)
 	using utki::pow2;
 
 	if (f < real(half_way_factor)) {
-		return 2 * pow2(f);
+		return pow2(2 * f) / 2;
 	} else {
-		return real(1) - 2 * pow2(real(1) - f);
+		return real(1) - pow2(real(2) - 2 * f) / 2;
 	}
 }
 
@@ -110,8 +110,37 @@ real ruis::easing::in_out_cubic(real f)
 	using utki::pow3;
 
 	if (f < real(half_way_factor)) {
-		return 4 * pow3(f);
+		return pow3(2 * f) / 2;
 	} else {
-		return real(1) - 4 * pow3(real(1) - f);
+		return real(1) - pow3(real(2) - 2 * f) / 2;
+	}
+}
+
+real ruis::easing::in_quartic(real f)
+{
+	ASSERT(f >= 0)
+	ASSERT(f <= 1)
+	using utki::pow4;
+	return pow4(f);
+}
+
+real ruis::easing::out_quartic(real f)
+{
+	ASSERT(f >= 0)
+	ASSERT(f <= 1)
+	using utki::pow4;
+	return real(1) - pow4(real(1) - f);
+}
+
+real ruis::easing::in_out_quartic(real f)
+{
+	ASSERT(f >= 0)
+	ASSERT(f <= 1)
+	using utki::pow4;
+
+	if (f < real(half_way_factor)) {
+		return pow4(2 * f) / 2;
+	} else {
+		return real(1) - pow4(real(2) - 2 * f) / 2;
 	}
 }
