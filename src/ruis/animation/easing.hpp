@@ -38,7 +38,7 @@ real linear(real factor);
 /**
  * @brief Ease in sine.
  * Function:
- *   F(f) = 1 - cos(f * pi / 2);
+ *   F(f) = 1 - cos(f * pi / 2)
  * @param factor - factor from [0:1].
  * @return sine-in eased factor from [0:1].
  */
@@ -56,7 +56,7 @@ real out_sine(real factor);
 /**
  * @brief Ease in-out sine.
  * Function:
- *   F(f) = -(cos(pi * f) - 1) / 2;
+ *   F(f) = -(cos(pi * f) - 1) / 2
  * @param factor - factor from [0:1].
  * @return sine-in-out eased factor from [0:1].
  */
@@ -65,7 +65,7 @@ real in_out_sine(real factor);
 /**
  * @brief Ease in quadratic.
  * Function:
- *   F(f) = f^2;
+ *   F(f) = f^2
  * @param factor - factor from [0:1].
  * @return quadratic-in eased factor from [0:1].
  */
@@ -93,7 +93,7 @@ real in_out_quadratic(real factor);
 /**
  * @brief Ease in cubic.
  * Function:
- *   F(f) = f^3;
+ *   F(f) = f^3
  * @param factor - factor from [0:1].
  * @return cubic-in eased factor from [0:1].
  */
@@ -121,7 +121,7 @@ real in_out_cubic(real factor);
 /**
  * @brief Ease in quartic.
  * Function:
- *   F(f) = f^4;
+ *   F(f) = f^4
  * @param factor - factor from [0:1].
  * @return quartic-in eased factor from [0:1].
  */
@@ -149,7 +149,7 @@ real in_out_quartic(real factor);
 /**
  * @brief Ease in quintic.
  * Function:
- *   F(f) = f^5;
+ *   F(f) = f^5
  * @param factor - factor from [0:1].
  * @return quintic-in eased factor from [0:1].
  */
@@ -173,6 +173,38 @@ real out_quintic(real factor);
  * @return quintic-in-out eased factor from [0:1].
  */
 real in_out_quintic(real factor);
+
+/**
+ * @brief Ease in exponent.
+ * Function:
+ *   F(f) = | 0, f = 0
+ *          | 2^(10 * (f - 1)), f > 0
+ * @param factor - factor from [0:1].
+ * @return exponent-in eased factor from [0:1].
+ */
+real in_exponent(real factor);
+
+/**
+ * @brief Ease out exponent.
+ * Function:
+ *   F(f) = | 1 - 2^(-10 * f), f < 1
+ *          | 1, f = 1
+ * @param factor - factor from [0:1].
+ * @return exponent-out eased factor from [0:1].
+ */
+real out_exponent(real factor);
+
+/**
+ * @brief Ease in-out exponent.
+ * Function:
+ *   F(f) = | 0, f = 0
+ *          | 2^(10 * (f - 1)) / 2, f < 0.5
+ *          | (2 - 2^(10 * (1 - f))) / 2, f >= 0.5
+ *          | 1, f = 1
+ * @param factor - factor from [0:1].
+ * @return exponent-in-out eased factor from [0:1].
+ */
+real in_out_exponent(real factor);
 
 // TODO: add other easings from https://easings.net
 

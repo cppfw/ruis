@@ -173,3 +173,48 @@ real ruis::easing::in_out_quintic(real f)
 		return real(1) - pow5(real(2) - 2 * f) / 2;
 	}
 }
+
+namespace {
+constexpr auto exponent_arg_infinity = 10;
+} // namespace
+
+real ruis::easing::in_exponent(real f)
+{
+	ASSERT(f >= 0)
+	ASSERT(f <= 1)
+	using std::pow;
+	if (f == 0) {
+		return 0;
+	}
+	return pow(real(2), exponent_arg_infinity * (f - 1));
+}
+
+real ruis::easing::out_exponent(real f)
+{
+	ASSERT(f >= 0)
+	ASSERT(f <= 1)
+	using std::pow;
+
+	if (f == 1) {
+		return 1;
+	}
+	return real(1) - pow(real(2), -exponent_arg_infinity * f);
+}
+
+real ruis::easing::in_out_exponent(real f)
+{
+	ASSERT(f >= 0)
+	ASSERT(f <= 1)
+	using std::pow;
+
+	if (f == 0) {
+		return 0;
+	}
+	if (f < half_way_factor) {
+		return pow(real(2), exponent_arg_infinity * (f - 1)) / 2;
+	}
+	if (f < 1) {
+		return (real(2) - pow(real(2), exponent_arg_infinity * (real(1) - f))) / 2;
+	}
+	return 1;
+}
