@@ -74,7 +74,7 @@ real in_quad(real factor);
 /**
  * @brief Ease out quadratic.
  * Function:
- *   F(f) = 1 - (f - 1)^2
+ *   F(f) = 1 - (1 - f)^2
  * @param factor - factor from [0:1].
  * @return quadratic-out eased factor from [0:1].
  */
@@ -84,11 +84,39 @@ real out_quad(real factor);
  * @brief Ease in-out quadratic.
  * Function:
  *   F(f) = | 2 * f^2, f < 0.5
- *          | 1 - 2 * (f - 1)^2, f >= 0.5
+ *          | 1 - 2 * (1 - f)^2, f >= 0.5
  * @param factor - factor from [0:1].
  * @return quadratic-in-out eased factor from [0:1].
  */
 real in_out_quad(real factor);
+
+/**
+ * @brief Ease in cubic.
+ * Function:
+ *   F(f) = x^3;
+ * @param factor - factor from [0:1].
+ * @return cubic-in eased factor from [0:1].
+ */
+real in_cubic(real factor);
+
+/**
+ * @brief Ease out cubic.
+ * Function:
+ *   F(f) = 1 - (1 - f)^3
+ * @param factor - factor from [0:1].
+ * @return cubic-out eased factor from [0:1].
+ */
+real out_cubic(real factor);
+
+/**
+ * @brief Ease in-out cubic.
+ * Function:
+ *   F(f) = | 4 * f^3, f < 0.5
+ *          | 1 - 4 * (1 - f)^3, f >= 0.5
+ * @param factor - factor from [0:1].
+ * @return cubic-in-out eased factor from [0:1].
+ */
+real in_out_cubic(real factor);
 
 // TODO: add other easings from https://easings.net
 

@@ -23,6 +23,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
+namespace {
+constexpr auto half_way_factor = 0.5;
+} // namespace
+
 real ruis::easing::linear(real f)
 {
 	ASSERT(f >= 0)
@@ -67,7 +71,7 @@ real ruis::easing::out_quad(real f)
 	ASSERT(f >= 0)
 	ASSERT(f <= 1)
 	using utki::pow2;
-	return real(1) - pow2(f - 1);
+	return real(1) - pow2(real(1) - f);
 }
 
 real ruis::easing::in_out_quad(real f)
@@ -76,11 +80,38 @@ real ruis::easing::in_out_quad(real f)
 	ASSERT(f <= 1)
 	using utki::pow2;
 
-	constexpr auto half_way_factor = 0.5;
-
 	if (f < real(half_way_factor)) {
 		return 2 * pow2(f);
 	} else {
-		return real(1) - 2 * pow2(f - 1);
+		return real(1) - 2 * pow2(real(1) - f);
+	}
+}
+
+real ruis::easing::in_cubic(real f)
+{
+	ASSERT(f >= 0)
+	ASSERT(f <= 1)
+	using utki::pow3;
+	return pow3(f);
+}
+
+real ruis::easing::out_cubic(real f)
+{
+	ASSERT(f >= 0)
+	ASSERT(f <= 1)
+	using utki::pow3;
+	return real(1) - pow3(real(1) - f);
+}
+
+real ruis::easing::in_out_cubic(real f)
+{
+	ASSERT(f >= 0)
+	ASSERT(f <= 1)
+	using utki::pow3;
+
+	if (f < real(half_way_factor)) {
+		return 4 * pow3(f);
+	} else {
+		return real(1) - 4 * pow3(real(1) - f);
 	}
 }

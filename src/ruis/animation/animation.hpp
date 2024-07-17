@@ -27,9 +27,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
-class animation :
-	virtual public utki::shared, //
-	private updateable
+class animation : public updateable
 {
 	utki::shared_ref<ruis::updater> updater;
 
@@ -50,11 +48,6 @@ public:
 		utki::shared_ref<ruis::updater> updater,
 		uint32_t duration_ms
 	);
-
-	bool is_running() const noexcept
-	{
-		return this->is_updating();
-	}
 
 	void start();
 	void stop() noexcept;
