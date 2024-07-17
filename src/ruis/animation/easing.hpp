@@ -234,6 +234,40 @@ real out_circular(real factor);
  */
 real in_out_circular(real factor);
 
+/**
+ * @brief Ease in back.
+ * Function:
+ *   c1 = 1.70158
+ *   c3 = c1 + 1
+ *   F(f) = c3 * f^3 - c1 * f^2
+ * @param factor - factor from [0:1].
+ * @return back-in eased factor from [0:1].
+ */
+real in_back(real factor);
+
+/**
+ * @brief Ease out back.
+ * Function:
+ *   c1 = 1.70158
+ *   c3 = c1 + 1
+ *   F(f) = 1 + c3 * (f - 1)^3 + c1 * (f - 1)^2
+ * @param factor - factor from [0:1].
+ * @return back-out eased factor from [0:1].
+ */
+real out_back(real factor);
+
+/**
+ * @brief Ease in-out back.
+ * Function:
+ *   c1 = 1.70158
+ *   c2 = c1 * 1.525
+ *   F(f) = | ((2 * f)^2 * (2 * (c2 + 1) * f - c2)) / 2, f < 0.5
+ *          | ((2 * (f - 1))^2 * (2 * (c2 + 1) * (f - 1) + c2) + 2) / 2, f >= 0.5
+ * @param factor - factor from [0:1].
+ * @return back-in-out eased factor from [0:1].
+ */
+real in_out_back(real factor);
+
 // TODO: add other easings from https://easings.net
 
 } // namespace ruis::easing

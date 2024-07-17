@@ -250,3 +250,45 @@ real ruis::easing::in_out_circular(real f)
 		return sqrt(real(1) - pow2(2 * (real(1) - f))) / 2;
 	}
 }
+
+real ruis::easing::in_back(real f)
+{
+	ASSERT(f >= 0)
+	ASSERT(f <= 1)
+	using utki::pow2;
+	using utki::pow3;
+
+	constexpr real c1 = 1.70158;
+	constexpr real c3 = c1 + 1;
+
+	return c3 * pow3(f) - c1 * pow2(f);
+}
+
+real ruis::easing::out_back(real f)
+{
+	ASSERT(f >= 0)
+	ASSERT(f <= 1)
+	using utki::pow2;
+	using utki::pow3;
+
+	constexpr real c1 = 1.70158;
+	constexpr real c3 = c1 + 1;
+
+	return real(1) + c3 * pow3(f - 1) + c1 * pow2(f - 1);
+}
+
+real ruis::easing::in_out_back(real f)
+{
+	ASSERT(f >= 0)
+	ASSERT(f <= 1)
+	using utki::pow2;
+
+	constexpr real c1 = 1.70158;
+	constexpr real c2 = c1 * 1.525;
+
+	if (f < real(half_way_factor)) {
+		return (pow2(2 * f) * (2 * (c2 + 1) * f - c2)) / 2;
+	} else {
+		return (pow2(2 * (f - 1)) * (2 * (c2 + 1) * (f - 1) + c2) + 2) / 2;
+	}
+}
