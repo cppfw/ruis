@@ -218,3 +218,35 @@ real ruis::easing::in_out_exponent(real f)
 	}
 	return 1;
 }
+
+real ruis::easing::in_circular(real f)
+{
+	ASSERT(f >= 0)
+	ASSERT(f <= 1)
+	using utki::pow2;
+	using std::sqrt;
+	return real(1) - sqrt(real(1) - pow2(f));
+}
+
+real ruis::easing::out_circular(real f)
+{
+	ASSERT(f >= 0)
+	ASSERT(f <= 1)
+	using utki::pow2;
+	using std::sqrt;
+	return sqrt(real(1) - pow2(f - 1));
+}
+
+real ruis::easing::in_out_circular(real f)
+{
+	ASSERT(f >= 0)
+	ASSERT(f <= 1)
+	using utki::pow2;
+	using std::sqrt;
+
+	if (f < real(half_way_factor)) {
+		return (real(1) - sqrt(real(1) - pow2(2 * f))) / 2;
+	} else {
+		return sqrt(real(1) - pow2(2 * (real(1) - f))) / 2;
+	}
+}

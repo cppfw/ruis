@@ -206,6 +206,34 @@ real out_exponent(real factor);
  */
 real in_out_exponent(real factor);
 
+/**
+ * @brief Ease in circular.
+ * Function:
+ *   F(f) = 1 - sqrt(1 - f^2)
+ * @param factor - factor from [0:1].
+ * @return circular-in eased factor from [0:1].
+ */
+real in_circular(real factor);
+
+/**
+ * @brief Ease out circular.
+ * Function:
+ *   F(f) = sqrt(1 - (f - 1)^2)
+ * @param factor - factor from [0:1].
+ * @return circular-out eased factor from [0:1].
+ */
+real out_circular(real factor);
+
+/**
+ * @brief Ease in-out circular.
+ * Function:
+ *   F(f) = | (1 - sqrt(1 - (2 * f)^2)) / 2, f < 0.5
+ *          | sqrt(1 - (2 * (1 - f))^2) / 2, f >= 0.5
+ * @param factor - factor from [0:1].
+ * @return circular-in-out eased factor from [0:1].
+ */
+real in_out_circular(real factor);
+
 // TODO: add other easings from https://easings.net
 
 } // namespace ruis::easing
