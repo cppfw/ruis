@@ -139,12 +139,40 @@ real out_quartic(real factor);
 /**
  * @brief Ease in-out quartic.
  * Function:
- *   F(f) = | 8 * f^4, f < 0.5
+ *   F(f) = | (2 * f)^4 / 2, f < 0.5
  *          | 1 - (2 - 2 * f)^4 / 2, f >= 0.5
  * @param factor - factor from [0:1].
  * @return quartic-in-out eased factor from [0:1].
  */
 real in_out_quartic(real factor);
+
+/**
+ * @brief Ease in quintic.
+ * Function:
+ *   F(f) = f^5;
+ * @param factor - factor from [0:1].
+ * @return quintic-in eased factor from [0:1].
+ */
+real in_quintic(real factor);
+
+/**
+ * @brief Ease out quintic.
+ * Function:
+ *   F(f) = 1 - (1 - f)^5
+ * @param factor - factor from [0:1].
+ * @return quintic-out eased factor from [0:1].
+ */
+real out_quintic(real factor);
+
+/**
+ * @brief Ease in-out quintic.
+ * Function:
+ *   F(f) = | (2 * f)^5 / 2, f < 0.5
+ *          | 1 - (2 - 2 * f)^5 / 2, f >= 0.5
+ * @param factor - factor from [0:1].
+ * @return quintic-in-out eased factor from [0:1].
+ */
+real in_out_quintic(real factor);
 
 // TODO: add other easings from https://easings.net
 

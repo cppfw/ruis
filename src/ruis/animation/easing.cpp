@@ -144,3 +144,32 @@ real ruis::easing::in_out_quartic(real f)
 		return real(1) - pow4(real(2) - 2 * f) / 2;
 	}
 }
+
+real ruis::easing::in_quintic(real f)
+{
+	ASSERT(f >= 0)
+	ASSERT(f <= 1)
+	using utki::pow5;
+	return pow5(f);
+}
+
+real ruis::easing::out_quintic(real f)
+{
+	ASSERT(f >= 0)
+	ASSERT(f <= 1)
+	using utki::pow5;
+	return real(1) - pow5(real(1) - f);
+}
+
+real ruis::easing::in_out_quintic(real f)
+{
+	ASSERT(f >= 0)
+	ASSERT(f <= 1)
+	using utki::pow5;
+
+	if (f < real(half_way_factor)) {
+		return pow5(2 * f) / 2;
+	} else {
+		return real(1) - pow5(real(2) - 2 * f) / 2;
+	}
+}
