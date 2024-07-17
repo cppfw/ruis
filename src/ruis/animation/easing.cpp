@@ -292,3 +292,66 @@ real ruis::easing::in_out_back(real f)
 		return (pow2(2 * (f - 1)) * (2 * (c2 + 1) * (f - 1) + c2) + 2) / 2;
 	}
 }
+
+real ruis::easing::in_elastic(real f)
+{
+	ASSERT(f >= 0)
+	ASSERT(f <= 1)
+	using std::pow;
+	using std::sin;
+
+	constexpr real c4 = (2 * utki::pi) / 3;
+	constexpr real compress = 10;
+	constexpr real sin_shift = 10.75;
+
+	if (f == 0) {
+		return 0;
+	}
+	if (f < 1) {
+		return -pow(real(2), compress * (f - 1)) * sin((compress * f - sin_shift) * c4);
+	}
+	return 1;
+}
+
+real ruis::easing::out_elastic(real f)
+{
+	ASSERT(f >= 0)
+	ASSERT(f <= 1)
+	using std::pow;
+	using std::sin;
+
+	constexpr real c4 = (2 * utki::pi) / 3;
+	constexpr real compress = 10;
+	constexpr real sin_shift = 0.75;
+
+	if (f == 0) {
+		return 0;
+	}
+	if (f < 1) {
+		return pow(real(2), -compress * f) * sin((compress * f - sin_shift) * c4) + 1;
+	}
+	return 1;
+}
+
+real ruis::easing::in_out_elastic(real f)
+{
+	ASSERT(f >= 0)
+	ASSERT(f <= 1)
+	using std::pow;
+	using std::sin;
+
+	constexpr real c5 = (2 * utki::pi) / 4.5;
+	constexpr real compress = 10;
+	constexpr real sin_shift = 11.125;
+
+	if (f == 0) {
+		return 0;
+	}
+	if (f < real(half_way_factor)) {
+		return -pow(real(2), compress * (2 * f - 1)) * sin((2 * compress * f - sin_shift) * c5) / 2;
+	}
+	if (f < 1) {
+		return pow(real(2), -compress * (2 * f - 1)) * sin((2 * compress * f - sin_shift) * c5) / 2 + 1;
+	}
+	return 1;
+}

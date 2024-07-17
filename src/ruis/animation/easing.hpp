@@ -268,6 +268,43 @@ real out_back(real factor);
  */
 real in_out_back(real factor);
 
+/**
+ * @brief Ease in elastic.
+ * Function:
+ *   c4 = (2 * pi) / 3
+ *   F(f) = | 0, f = 0
+ *          | -2^(10 * (f - 1)) * sin((f * 10 - 10.75) * c4), f < 1
+ *          | 1, f = 1
+ * @param factor - factor from [0:1].
+ * @return elastic-in eased factor from [0:1].
+ */
+real in_elastic(real factor);
+
+/**
+ * @brief Ease out elastic.
+ * Function:
+ *   c4 = (2 * pi) / 3
+ *   F(f) = | 0, f = 0
+ *          | 2^(-10 * f) * sin((f * 10 - 0.75) * c4) + 1, f < 1
+ *          | 1, f = 1
+ * @param factor - factor from [0:1].
+ * @return elastic-out eased factor from [0:1].
+ */
+real out_elastic(real factor);
+
+/**
+ * @brief Ease in-out elastic.
+ * Function:
+ *   c5 = (2 * pi) / 4.5
+ *   F(f) = | 0, f = 0
+ *          | -2^(10 * (2 * f - 1)) * sin((2 * 10 * f - 11.125) * c5) / 2, f < 0.5
+ *          | 2^(-10 * (2 * f - 1)) * sin((2 * 10 * f - 11.125) * c5) / 2 + 1, f >= 0.5
+ *          | 1, f = 1
+ * @param factor - factor from [0:1].
+ * @return elastic-in-out eased factor from [0:1].
+ */
+real in_out_elastic(real factor);
+
 // TODO: add other easings from https://easings.net
 
 } // namespace ruis::easing
