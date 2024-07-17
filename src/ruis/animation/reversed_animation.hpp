@@ -26,6 +26,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 namespace ruis {
 
 class reversed_animation : public animation
-{};
+{
+	// TODO: implement
+};
 
 } // namespace ruis

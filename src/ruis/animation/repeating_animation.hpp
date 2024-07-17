@@ -31,7 +31,7 @@ class repeating_animation : public animation
 	// unsigned num_repeats = 0;
 
 public:
-	// TODO:
+	// TODO: implement
 };
 
 } // namespace ruis

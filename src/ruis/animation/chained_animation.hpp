@@ -34,7 +34,7 @@ class chained_animation : public animation
 	decltype(chain)::iterator cur_anim;
 
 public:
-	// TODO:
+	// TODO: implement
 };
 
 } // namespace ruis

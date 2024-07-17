@@ -31,7 +31,7 @@ class bouncing_animation : public animation
 	// unsigned num_bounces = 0;
 
 public:
-	// TODO:
+	// TODO: implement
 };
 
 } // namespace ruis
