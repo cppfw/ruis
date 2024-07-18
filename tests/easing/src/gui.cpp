@@ -25,7 +25,6 @@ constexpr uint32_t animation_duration_ms = 1000;
 namespace {
 utki::shared_ref<ruis::widget> make_eased_animation_sample( //
 	utki::shared_ref<ruis::context> c,
-	ruis::layout_parameters layout_params,
 	std::function<ruis::real(ruis::real)> easing,
 	std::string name
 )
@@ -33,7 +32,9 @@ utki::shared_ref<ruis::widget> make_eased_animation_sample( //
 	// clang-format off
 	auto ret = m::margins(c,
 		{
-			.layout_params = std::move(layout_params),
+			.layout_params = {
+				.dims = {lp::fill, lp::min}
+			},
 			.container_params = {
 				.layout = ruis::layout::column
 			},
@@ -101,45 +102,30 @@ utki::shared_ref<ruis::widget> make_eased_animation_sample( //
 } // namespace
 
 namespace {
-utki::shared_ref<ruis::window> make_sliders_window(utki::shared_ref<ruis::context> c, ruis::rect rect)
+utki::shared_ref<ruis::widget> make_left_column(utki::shared_ref<ruis::context> c)
 {
-	auto make_anim_sample =
-		[](utki::shared_ref<ruis::context> c, std::function<ruis::real(ruis::real)> easing, std::string name) {
-			return make_eased_animation_sample(
-				c,
-				{
-					.dims = {lp::fill, lp::min}
-            },
-				std::move(easing),
-				std::move(name)
-			);
-		};
-
 	// clang-format off
-	return m::window(c,
+	return m::column(c,
 		{
-			.widget_params = {
-				.rectangle = rect
-			},
-			.container_params = {
-				.layout = ruis::layout::column
-			},
-			.title = U"sliders"s
+			.layout_params = {
+				.dims = {lp::fill, lp::fill},
+				.weight = 1
+			}
 		},
 		{
-			make_anim_sample(c,
+			make_eased_animation_sample(c,
 				ruis::easing::linear,
 				"linear"
 			),
-			make_anim_sample(c,
+			make_eased_animation_sample(c,
 				ruis::easing::in_sine,
 				"in sine"
 			),
-			make_anim_sample(c,
+			make_eased_animation_sample(c,
 				ruis::easing::out_sine,
 				"out sine"
 			),
-			make_anim_sample(c,
+			make_eased_animation_sample(c,
 				ruis::easing::in_out_sine,
 				"in out sine"
 			)
@@ -152,18 +138,25 @@ utki::shared_ref<ruis::window> make_sliders_window(utki::shared_ref<ruis::contex
 utki::shared_ref<ruis::widget> make_gui(utki::shared_ref<ruis::context> c)
 {
 	// clang-format off
-	return m::container(
-		c,
+	return m::row(c,
 		{
 			.layout_params = {
 				.dims = {lp::fill, lp::fill}
-			},
-			.container_params = {
-				.layout = ruis::layout::trivial
 			}
 		},
 		{
-			make_sliders_window(c, {10, 20, 300, 200})
+			make_left_column(c),
+			m::rectangle(c,
+				{
+					.layout_params = {
+						.dims = {lp::fill, lp::fill},
+						.weight = 1
+					},
+					.color_params = {
+						.color = 0xff00ff00
+					}
+				}
+			)
 		}
 	);
 	// clang-format on

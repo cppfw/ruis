@@ -521,6 +521,7 @@ inline utki::shared_ref<ruis::container> pile(
 	return make::container(
 		std::move(context),
 		{//
+		 .layout_params = std::move(params.layout_params),
 		 .widget_params = std::move(params.widget_params),
 		 .container_params = {.layout = layout::pile}
 		},
@@ -537,6 +538,7 @@ inline utki::shared_ref<ruis::container> column(
 	return make::container(
 		std::move(context),
 		{//
+		 .layout_params = std::move(params.layout_params),
 		 .widget_params = std::move(params.widget_params),
 		 .container_params = {.layout = layout::column}
 		},
@@ -553,6 +555,7 @@ inline utki::shared_ref<ruis::container> row(
 	return make::container(
 		std::move(context),
 		{//
+		 .layout_params = std::move(params.layout_params),
 		 .widget_params = std::move(params.widget_params),
 		 .container_params = {.layout = layout::row}
 		},
