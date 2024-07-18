@@ -19,7 +19,7 @@ namespace m = ruis::make;
 using lp = ruis::layout_parameters;
 
 namespace {
-constexpr uint32_t animation_duration_ms = 500;
+constexpr uint32_t animation_duration_ms = 1000;
 } // namespace
 
 namespace {
@@ -91,16 +91,10 @@ utki::shared_ref<ruis::widget> make_eased_animation_sample( //
 		slider.set_fraction(1);
 	};
 
-	// clang-format off
-	button.click_handler = [ //
-		&slider = slider,
-		anim = std::move(animation)
-	](ruis::push_button& b)
-	{
+	button.click_handler = [anim = std::move(animation)](ruis::push_button& b) {
 		anim.get().reset();
 		anim.get().start();
 	};
-	// clang-format on
 
 	return ret;
 }
@@ -109,15 +103,17 @@ utki::shared_ref<ruis::widget> make_eased_animation_sample( //
 namespace {
 utki::shared_ref<ruis::window> make_sliders_window(utki::shared_ref<ruis::context> c, ruis::rect rect)
 {
-	auto make_anim_sample = [](utki::shared_ref<ruis::context> c, std::function<ruis::real(ruis::real)> easing, std::string name){
-		return make_eased_animation_sample(c,
-			{
-				.dims = {lp::fill, lp::min}
-			},
-			std::move(easing),
-			std::move(name)
-		);
-	};
+	auto make_anim_sample =
+		[](utki::shared_ref<ruis::context> c, std::function<ruis::real(ruis::real)> easing, std::string name) {
+			return make_eased_animation_sample(
+				c,
+				{
+					.dims = {lp::fill, lp::min}
+            },
+				std::move(easing),
+				std::move(name)
+			);
+		};
 
 	// clang-format off
 	return m::window(c,
@@ -142,6 +138,10 @@ utki::shared_ref<ruis::window> make_sliders_window(utki::shared_ref<ruis::contex
 			make_anim_sample(c,
 				ruis::easing::out_sine,
 				"out sine"
+			),
+			make_anim_sample(c,
+				ruis::easing::in_out_sine,
+				"in out sine"
 			)
 		}
 	);
