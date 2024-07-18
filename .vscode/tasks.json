@@ -58,6 +58,13 @@
             "problemMatcher": [],
             "group": "build"
 		},
+        {
+            "label": "run-easing",
+            "type": "shell",
+            "command": "make run-easing",
+            "problemMatcher": [],
+            "group": "build"
+		},
 		{
             "label": "run-busy",
             "type": "shell",
@@ -202,6 +209,13 @@
             "label": "run-app2-dbg",
             "type": "shell",
             "command": "make run-app2 config=dbg",
+            "problemMatcher": [],
+            "group": "build"
+        },
+        {
+            "label": "run-easing-dbg",
+            "type": "shell",
+            "command": "make run-easing config=dbg",
             "problemMatcher": [],
             "group": "build"
         },

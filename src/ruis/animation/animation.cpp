@@ -58,11 +58,11 @@ void animation::update(uint32_t dt)
 
 	auto factor = real(this->duration_ms - this->left_ms) / real(this->duration_ms);
 
-	this->on_update(factor);
-
 	if (this->left_ms == 0) {
 		this->stop();
 		this->on_end(over_end_ms);
+	} else {
+		this->on_update(factor);
 	}
 }
 
