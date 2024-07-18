@@ -24,7 +24,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace ruis;
 
 namespace {
-constexpr auto half_way_factor = 0.5;
+constexpr real half_way_factor = 0.5;
 } // namespace
 
 real ruis::easing::linear(real f)
@@ -80,7 +80,7 @@ real ruis::easing::in_out_quadratic(real f)
 	ASSERT(f <= 1)
 	using utki::pow2;
 
-	if (f < real(half_way_factor)) {
+	if (f < half_way_factor) {
 		return pow2(2 * f) / 2;
 	} else {
 		return real(1) - pow2(real(2) - 2 * f) / 2;
@@ -109,7 +109,7 @@ real ruis::easing::in_out_cubic(real f)
 	ASSERT(f <= 1)
 	using utki::pow3;
 
-	if (f < real(half_way_factor)) {
+	if (f < half_way_factor) {
 		return pow3(2 * f) / 2;
 	} else {
 		return real(1) - pow3(real(2) - 2 * f) / 2;
@@ -138,7 +138,7 @@ real ruis::easing::in_out_quartic(real f)
 	ASSERT(f <= 1)
 	using utki::pow4;
 
-	if (f < real(half_way_factor)) {
+	if (f < half_way_factor) {
 		return pow4(2 * f) / 2;
 	} else {
 		return real(1) - pow4(real(2) - 2 * f) / 2;
@@ -167,7 +167,7 @@ real ruis::easing::in_out_quintic(real f)
 	ASSERT(f <= 1)
 	using utki::pow5;
 
-	if (f < real(half_way_factor)) {
+	if (f < half_way_factor) {
 		return pow5(2 * f) / 2;
 	} else {
 		return real(1) - pow5(real(2) - 2 * f) / 2;
@@ -175,7 +175,7 @@ real ruis::easing::in_out_quintic(real f)
 }
 
 namespace {
-constexpr auto exponent_arg_infinity = 10;
+constexpr real exponent_arg_infinity = 10;
 } // namespace
 
 real ruis::easing::in_exponent(real f)
@@ -211,10 +211,10 @@ real ruis::easing::in_out_exponent(real f)
 		return 0;
 	}
 	if (f < half_way_factor) {
-		return pow(real(2), exponent_arg_infinity * (f - 1)) / 2;
+		return pow(real(2), exponent_arg_infinity * (2 * f - 1)) / 2;
 	}
 	if (f < 1) {
-		return (real(2) - pow(real(2), exponent_arg_infinity * (real(1) - f))) / 2;
+		return (real(2) - pow(real(2), exponent_arg_infinity * (real(1) - 2 * f))) / 2;
 	}
 	return 1;
 }
@@ -244,10 +244,10 @@ real ruis::easing::in_out_circular(real f)
 	using utki::pow2;
 	using std::sqrt;
 
-	if (f < real(half_way_factor)) {
+	if (f < half_way_factor) {
 		return (real(1) - sqrt(real(1) - pow2(2 * f))) / 2;
 	} else {
-		return sqrt(real(1) - pow2(2 * (real(1) - f))) / 2;
+		return (sqrt(real(1) - pow2(2 * (real(1) - f))) + 1) / 2;
 	}
 }
 
@@ -286,7 +286,7 @@ real ruis::easing::in_out_back(real f)
 	constexpr real c1 = 1.70158;
 	constexpr real c2 = c1 * 1.525;
 
-	if (f < real(half_way_factor)) {
+	if (f < half_way_factor) {
 		return (pow2(2 * f) * (2 * (c2 + 1) * f - c2)) / 2;
 	} else {
 		return (pow2(2 * (f - 1)) * (2 * (c2 + 1) * (f - 1) + c2) + 2) / 2;
@@ -347,7 +347,7 @@ real ruis::easing::in_out_elastic(real f)
 	if (f == 0) {
 		return 0;
 	}
-	if (f < real(half_way_factor)) {
+	if (f < half_way_factor) {
 		return -pow(real(2), compress * (2 * f - 1)) * sin((2 * compress * f - sin_shift) * c5) / 2;
 	}
 	if (f < 1) {
@@ -397,7 +397,7 @@ real ruis::easing::in_out_bounce(real f)
 	ASSERT(f >= 0)
 	ASSERT(f <= 1)
 
-	if (f < real(half_way_factor)) {
+	if (f < half_way_factor) {
 		return (1 - out_bounce(1 - 2 * f)) / 2;
 	} else {
 		return (1 + out_bounce(2 * f - 1)) / 2;

@@ -117,6 +117,7 @@ utki::shared_ref<ruis::widget> make_left_column(utki::shared_ref<ruis::context> 
 				ruis::easing::linear,
 				"linear"
 			),
+			// sine
 			make_eased_animation_sample(c,
 				ruis::easing::in_sine,
 				"in sine"
@@ -128,6 +129,141 @@ utki::shared_ref<ruis::widget> make_left_column(utki::shared_ref<ruis::context> 
 			make_eased_animation_sample(c,
 				ruis::easing::in_out_sine,
 				"in out sine"
+			),
+			// quadratic
+			make_eased_animation_sample(c,
+				ruis::easing::in_quadratic,
+				"in quadratic"
+			),
+			make_eased_animation_sample(c,
+				ruis::easing::out_quadratic,
+				"out quadratic"
+			),
+			make_eased_animation_sample(c,
+				ruis::easing::in_out_quadratic,
+				"in out quadratic"
+			),
+			// cubic
+			make_eased_animation_sample(c,
+				ruis::easing::in_cubic,
+				"in cubic"
+			),
+			make_eased_animation_sample(c,
+				ruis::easing::out_cubic,
+				"out cubic"
+			),
+			make_eased_animation_sample(c,
+				ruis::easing::in_out_cubic,
+				"in out cubic"
+			),
+			// quartic
+			make_eased_animation_sample(c,
+				ruis::easing::in_quartic,
+				"in quartic"
+			),
+			make_eased_animation_sample(c,
+				ruis::easing::out_quartic,
+				"out quartic"
+			),
+			make_eased_animation_sample(c,
+				ruis::easing::in_out_quartic,
+				"in out quartic"
+			),
+			// quintic
+			make_eased_animation_sample(c,
+				ruis::easing::in_quintic,
+				"in quintic"
+			),
+			make_eased_animation_sample(c,
+				ruis::easing::out_quintic,
+				"out quintic"
+			),
+			make_eased_animation_sample(c,
+				ruis::easing::in_out_quintic,
+				"in out quintic"
+			)
+		}
+	);
+	// clang-format on
+}
+} // namespace
+
+namespace {
+utki::shared_ref<ruis::widget> make_right_column(utki::shared_ref<ruis::context> c)
+{
+	// clang-format off
+	return m::column(c,
+		{
+			.layout_params = {
+				.dims = {lp::fill, lp::fill},
+				.weight = 1
+			}
+		},
+		{
+			// exponential
+			make_eased_animation_sample(c,
+				ruis::easing::in_exponent,
+				"in exponent"
+			),
+			make_eased_animation_sample(c,
+				ruis::easing::out_exponent,
+				"out exponent"
+			),
+			make_eased_animation_sample(c,
+				ruis::easing::in_out_exponent,
+				"in out exponent"
+			),
+			// circular
+			make_eased_animation_sample(c,
+				ruis::easing::in_circular,
+				"in circular"
+			),
+			make_eased_animation_sample(c,
+				ruis::easing::out_circular,
+				"out circular"
+			),
+			make_eased_animation_sample(c,
+				ruis::easing::in_out_circular,
+				"in out circular"
+			),
+			// back
+			make_eased_animation_sample(c,
+				ruis::easing::in_back,
+				"in back"
+			),
+			make_eased_animation_sample(c,
+				ruis::easing::out_back,
+				"out back"
+			),
+			make_eased_animation_sample(c,
+				ruis::easing::in_out_back,
+				"in out back"
+			),
+			// elastic
+			make_eased_animation_sample(c,
+				ruis::easing::in_elastic,
+				"in elastic"
+			),
+			make_eased_animation_sample(c,
+				ruis::easing::out_elastic,
+				"out elastic"
+			),
+			make_eased_animation_sample(c,
+				ruis::easing::in_out_elastic,
+				"in out elastic"
+			),
+			// bounce
+			make_eased_animation_sample(c,
+				ruis::easing::in_bounce,
+				"in bounce"
+			),
+			make_eased_animation_sample(c,
+				ruis::easing::out_bounce,
+				"out bounce"
+			),
+			make_eased_animation_sample(c,
+				ruis::easing::in_out_bounce,
+				"in out bounce"
 			)
 		}
 	);
@@ -146,17 +282,7 @@ utki::shared_ref<ruis::widget> make_gui(utki::shared_ref<ruis::context> c)
 		},
 		{
 			make_left_column(c),
-			m::rectangle(c,
-				{
-					.layout_params = {
-						.dims = {lp::fill, lp::fill},
-						.weight = 1
-					},
-					.color_params = {
-						.color = 0xff00ff00
-					}
-				}
-			)
+			make_right_column(c)
 		}
 	);
 	// clang-format on
