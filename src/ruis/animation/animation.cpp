@@ -62,13 +62,11 @@ void animation::update(uint32_t dt)
 {
 	auto over_end_ms = this->forward(dt);
 
-	auto factor = this->get_factor();
-
 	if (this->is_ended()) {
 		this->stop();
 		this->on_end(over_end_ms);
 	} else {
-		this->on_update(factor);
+		this->on_update(this->get_factor());
 	}
 }
 
