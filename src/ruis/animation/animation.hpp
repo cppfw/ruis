@@ -27,7 +27,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
-class animation : public updateable
+class animation :
+	virtual public utki::shared, //
+	private updateable
 {
 	utki::shared_ref<ruis::updater> updater;
 
@@ -39,6 +41,22 @@ class animation : public updateable
 protected:
 	virtual void on_update(real factor);
 	virtual void on_end(uint32_t over_end_ms);
+
+	real get_factor() const
+	{
+		return real(this->duration_ms - this->left_ms) / real(this->duration_ms);
+	}
+
+	bool is_ended() const
+	{
+		return this->left_ms == 0;
+	}
+
+	/**
+	 * @brief Move animation forward.
+	 * @return Number of milliseconds over the end if the animation has ended.
+	 */
+	uint32_t forward(uint32_t dt);
 
 public:
 	std::function<void(real factor)> update_handler;
@@ -53,11 +71,13 @@ public:
 	void stop() noexcept;
 
 	/**
-	 * @brief Reset the animation.
-	 * Stops the animation if it is running.
-	 * Resets to initial state.
+	 * @brief Rewind the animation.
+	 * Rewind to beginning.
 	 */
-	void reset();
+	void rewind()
+	{
+		this->left_ms = this->duration_ms;
+	}
 };
 
 } // namespace ruis

@@ -93,7 +93,8 @@ utki::shared_ref<ruis::widget> make_eased_animation_sample( //
 	};
 
 	button.click_handler = [anim = std::move(animation)](ruis::push_button& b) {
-		anim.get().reset();
+		anim.get().stop();
+		anim.get().rewind();
 		anim.get().start();
 	};
 

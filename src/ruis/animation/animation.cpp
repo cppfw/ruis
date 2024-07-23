@@ -46,19 +46,25 @@ void animation::on_end(uint32_t over_end_ms)
 	}
 }
 
-void animation::update(uint32_t dt)
+uint32_t animation::forward(uint32_t dt)
 {
-	uint32_t over_end_ms = 0;
 	if (this->left_ms <= dt) {
-		over_end_ms = dt - this->left_ms;
+		uint32_t over_end_ms = dt - this->left_ms;
 		this->left_ms = 0;
-	} else {
-		this->left_ms -= dt;
+		return over_end_ms;
 	}
 
-	auto factor = real(this->duration_ms - this->left_ms) / real(this->duration_ms);
+	this->left_ms -= dt;
+	return 0;
+}
 
-	if (this->left_ms == 0) {
+void animation::update(uint32_t dt)
+{
+	auto over_end_ms = this->forward(dt);
+
+	auto factor = this->get_factor();
+
+	if (this->is_ended()) {
 		this->stop();
 		this->on_end(over_end_ms);
 	} else {
@@ -74,10 +80,4 @@ void animation::start()
 void animation::stop() noexcept
 {
 	this->updater.get().stop(*this);
-}
-
-void animation::reset()
-{
-	this->stop();
-	this->left_ms = this->duration_ms;
 }
