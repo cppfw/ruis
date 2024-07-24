@@ -23,24 +23,33 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../../context.hpp"
 
+using namespace std::string_literals;
+
 using namespace ruis;
-
-namespace {
-
-const auto check_box_layout = tml::read(R"qwertyuiop(
-		@image{
-			id{ruis_checkbox_check}
-			image{ruis_img_checkbox_tick}
-		}
-	)qwertyuiop");
-
-} // namespace
 
 check_box::check_box(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 	widget(c, desc),
 	button(this->context, desc),
 	toggle_button(this->context, desc),
-	nine_patch(this->context, check_box_layout)
+	nine_patch(this->context,
+		{
+			.container_params = {
+				.layout = layout::pile
+			}
+		},
+		{
+			make::image(this->context,
+				{
+					.widget_params = {
+						.id = "ruis_checkbox_check"s
+					},
+					.image_params = {
+						.img = this->context.get().loader.load<res::image>("ruis_img_checkbox_tick"s)
+					}
+				}
+			)
+		}
+	)
 {
 	this->check_widget = this->content().try_get_widget("ruis_checkbox_check");
 	this->check_widget->set_visible(this->is_pressed());
