@@ -7,8 +7,10 @@
 #include <ruis/widget/proxy/key_proxy.hpp>
 #include <ruis/widget/slider/scroll_bar.hpp>
 #include <ruis/widget/slider/slider.hpp>
+#include <ruis/widget/button/check_box.hpp>
 
 using namespace std::string_literals;
+using namespace std::string_view_literals;
 
 using namespace ruis::length_literals;
 
@@ -25,7 +27,7 @@ utki::shared_ref<ruis::window> make_sliders_window(utki::shared_ref<ruis::contex
 				.rectangle = rect
 			},
 			.container_params = {
-				.layout = ruis::layout::pile
+				.layout = ruis::layout::column
 			},
 			.title = U"sliders"s
 		},
@@ -33,7 +35,7 @@ utki::shared_ref<ruis::window> make_sliders_window(utki::shared_ref<ruis::contex
 			m::margins(c,
 				{
 					.layout_params = {
-						.dims = {lp::fill, lp::fill}
+						.dims = {lp::fill, lp::min}
 					},
 					.container_params = {
 						.layout = ruis::layout::column
@@ -79,6 +81,19 @@ utki::shared_ref<ruis::window> make_sliders_window(utki::shared_ref<ruis::contex
 					m::text(c,
 						{},
 						U"Hello world!"s
+					)
+				}
+			),
+			m::row(c,
+				{},
+				{
+					// TODO: uncomment and fix the segfault
+					// m::check_box(c,
+					// 	{}
+					// ),
+					m::text(c,
+						{},
+						U"some checkbox"s
 					)
 				}
 			)

@@ -21,6 +21,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
+#include "../label/image.hpp"
 #include "../label/nine_patch.hpp"
 
 #include "base/toggle_button.hpp"
@@ -38,10 +39,21 @@ class check_box :
 	private nine_patch
 {
 	// TODO: refactor to use utki::shared_ref
-	std::shared_ptr<widget> check_widget;
+	// std::shared_ptr<widget> check_widget;
+	image& tick_widget;
 
 public:
 	check_box(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
+
+	struct all_parameters {
+		layout_parameters layout_params;
+		widget::parameters widget_params;
+		button::parameters button_params;
+		nine_patch::parameters nine_patch_params;
+		image::parameters image_params;
+	};
+
+	check_box(utki::shared_ref<ruis::context> context, all_parameters params);
 
 	check_box(const check_box&) = delete;
 	check_box& operator=(const check_box&) = delete;
@@ -65,5 +77,18 @@ public:
 
 private:
 };
+
+namespace make {
+inline utki::shared_ref<ruis::check_box> check_box( //
+	utki::shared_ref<ruis::context> context,
+	check_box::all_parameters params
+)
+{
+	return utki::make_shared<ruis::check_box>( //
+		std::move(context),
+		std::move(params)
+	);
+}
+} // namespace make
 
 } // namespace ruis

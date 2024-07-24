@@ -24,18 +24,34 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../../context.hpp"
 
 using namespace std::string_literals;
+using namespace std::string_view_literals;
 
 using namespace ruis;
 
-check_box::check_box(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
-	widget(c, desc),
-	button(this->context, desc),
-	toggle_button(this->context, desc),
+check_box::check_box(utki::shared_ref<ruis::context> context, all_parameters params) :
+	widget( //
+		std::move(context),
+		std::move(params.layout_params),
+		std::move(params.widget_params)
+	),
+	button( //
+		this->context,
+		std::move(params.button_params)
+	),
+	toggle_button(this->context),
+	// clang-format off
 	nine_patch(this->context,
 		{
 			.container_params = {
 				.layout = layout::pile
-			}
+			},
+			.nine_patch_params = [&](){
+				auto p = std::move(params.nine_patch_params);
+				if(!p.nine_patch){
+					p.nine_patch = this->context.get().loader.load<res::nine_patch>("ruis_npt_checkbox_bg"sv);
+				}
+				return p;
+			}()
 		},
 		{
 			make::image(this->context,
@@ -43,23 +59,45 @@ check_box::check_box(const utki::shared_ref<ruis::context>& c, const tml::forest
 					.widget_params = {
 						.id = "ruis_checkbox_check"s
 					},
-					.image_params = {
-						.img = this->context.get().loader.load<res::image>("ruis_img_checkbox_tick"s)
-					}
+					.image_params = [&](){
+						auto p = std::move(params.image_params);
+						if(!p.img){
+							p.img = this->context.get().loader.load<res::image>("ruis_img_checkbox_tick"sv);
+						}
+						return p;
+					}()
 				}
 			)
 		}
-	)
+	),
+	tick_widget(this->content().get_widget_as<image>("ruis_checkbox_check"sv))
+// clang-format on
 {
-	this->check_widget = this->content().try_get_widget("ruis_checkbox_check");
-	this->check_widget->set_visible(this->is_pressed());
+	this->tick_widget.set_visible(this->is_pressed());
+}
 
+check_box::check_box(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
+	widget(c, desc),
+	button(this->context, desc),
+	toggle_button(this->context, desc),
+	nine_patch(
+		this->context,
+		{.container_params = {.layout = layout::pile}},
+		{make::image(
+			this->context,
+			{.widget_params = {.id = "ruis_checkbox_check"s},
+			 .image_params = {.img = this->context.get().loader.load<res::image>("ruis_img_checkbox_tick"sv)}}
+		)}
+	),
+	tick_widget(this->content().get_widget_as<image>("ruis_checkbox_check"sv))
+{
+	this->tick_widget.set_visible(this->is_pressed());
 	this->set_nine_patch(this->context.get().loader.load<res::nine_patch>("ruis_npt_checkbox_bg").to_shared_ptr());
 }
 
 void check_box::on_pressed_change()
 {
-	this->check_widget->set_visible(this->is_pressed());
+	this->tick_widget.set_visible(this->is_pressed());
 	this->clear_cache();
 	this->toggle_button::on_pressed_change();
 }

@@ -30,6 +30,31 @@
 			"preLaunchTask": "build-dbg"
 		},
 		{
+			"name": "(gdb) app2",
+			"type": "cppdbg",
+			"request": "launch",
+			"program": "${workspaceFolder}/tests/app2/out/dbg/tests",
+			"args": [],
+			"stopAtEntry": false,
+			"cwd": "${workspaceFolder}/tests/app2",
+			"environment": [
+				{
+					"name": "LD_LIBRARY_PATH",
+					"value": "../../src/out/dbg:../harness/modules/ruisapp/src/out/rel_no_install:../harness/modules/ruis-render-opengl/src/out/rel_no_install"
+				}
+			],
+			"externalConsole": false,
+			"MIMode": "gdb",
+			"setupCommands": [
+				{
+					"description": "Enable pretty-printing for gdb",
+					"text": "-enable-pretty-printing",
+					"ignoreFailures": true
+				}
+			],
+			"preLaunchTask": "build-dbg"
+		},
+		{
 			"name": "(gdb) busy",
 			"type": "cppdbg",
 			"request": "launch",
