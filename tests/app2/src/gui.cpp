@@ -87,10 +87,9 @@ utki::shared_ref<ruis::window> make_sliders_window(utki::shared_ref<ruis::contex
 			m::row(c,
 				{},
 				{
-					// TODO: uncomment and fix the segfault
-					// m::check_box(c,
-					// 	{}
-					// ),
+					m::check_box(c,
+						{}
+					),
 					m::text(c,
 						{},
 						U"some checkbox"s

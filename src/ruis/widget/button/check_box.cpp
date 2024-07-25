@@ -30,7 +30,7 @@ using namespace ruis;
 
 check_box::check_box(utki::shared_ref<ruis::context> context, all_parameters params) :
 	widget( //
-		std::move(context),
+		context,
 		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
@@ -48,7 +48,7 @@ check_box::check_box(utki::shared_ref<ruis::context> context, all_parameters par
 			.nine_patch_params = [&](){
 				auto p = std::move(params.nine_patch_params);
 				if(!p.nine_patch){
-					p.nine_patch = this->context.get().loader.load<res::nine_patch>("ruis_npt_checkbox_bg"sv);
+					p.nine_patch = context.get().loader.load<res::nine_patch>("ruis_npt_checkbox_bg"sv);
 				}
 				return p;
 			}()
@@ -62,7 +62,7 @@ check_box::check_box(utki::shared_ref<ruis::context> context, all_parameters par
 					.image_params = [&](){
 						auto p = std::move(params.image_params);
 						if(!p.img){
-							p.img = this->context.get().loader.load<res::image>("ruis_img_checkbox_tick"sv);
+							p.img = context.get().loader.load<res::image>("ruis_img_checkbox_tick"sv);
 						}
 						return p;
 					}()
