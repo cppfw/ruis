@@ -1,13 +1,13 @@
 #include "gui.hpp"
 
 #include <ruis/widget/button/base/push_button.hpp>
+#include <ruis/widget/button/check_box.hpp>
 #include <ruis/widget/container.hpp>
 #include <ruis/widget/group/margins.hpp>
 #include <ruis/widget/group/window.hpp>
 #include <ruis/widget/proxy/key_proxy.hpp>
 #include <ruis/widget/slider/scroll_bar.hpp>
 #include <ruis/widget/slider/slider.hpp>
-#include <ruis/widget/button/check_box.hpp>
 
 using namespace std::string_literals;
 using namespace std::string_view_literals;

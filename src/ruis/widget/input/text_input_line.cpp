@@ -173,11 +173,13 @@ void text_input_line::set_cursor_index(size_t index, bool selection)
 
 	ASSERT(this->first_visible_char_index <= this->get_text().size())
 	ASSERT(this->cursor_index > this->first_visible_char_index)
-	this->cursor_pos = font.get_advance(std::u32string(
-						   this->get_text(),
-						   this->first_visible_char_index,
-						   this->cursor_index - this->first_visible_char_index
-					   )) +
+	this->cursor_pos = font.get_advance(
+						   std::u32string(
+							   this->get_text(),
+							   this->first_visible_char_index,
+							   this->cursor_index - this->first_visible_char_index
+						   )
+					   ) +
 		this->x_offset;
 
 	ASSERT(this->cursor_pos >= 0)

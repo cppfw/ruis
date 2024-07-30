@@ -79,7 +79,8 @@ selection_box::selection_box(
 void selection_box::set_provider(std::shared_ptr<provider> item_provider)
 {
 	if (item_provider && item_provider->dd) {
-		throw std::logic_error("selection_box::setItemsProvider(): given provider is already set to some selection_box"
+		throw std::logic_error(
+			"selection_box::setItemsProvider(): given provider is already set to some selection_box"
 		);
 	}
 
