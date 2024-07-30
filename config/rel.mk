@@ -1,6 +1,9 @@
 include $(config_dir)base/base.mk
 
-this_cxxflags += -O3
+# TODO: compilation with -O3 currently fails with unjjustified "maybe used uninitialized" error
+#       when building with "g++ (Debian 12.2.0-14) 12.2.0",
+#       have't tried it with clang++. Need to restore -O3 when GCC is fixed.
+this_cxxflags += -O2
 
 this_lint_cmd = $(prorab_lint_cmd_clang_tidy)
 
