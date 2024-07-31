@@ -1,4 +1,0 @@
-# TODO: remove after moving to C++20 standard
-Checks: |
-  -modernize-use-designated-initializers
-InheritParentConfig: true
