@@ -26,8 +26,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis::res;
 
-ruis::res::tml::tml( //
-	utki::shared_ref<ruis::context> c,
+ruis::res::tml::tml(
+	utki::shared_ref<ruis::context> c, //
 	::tml::forest forest
 ) :
 	resource(std::move(c)),

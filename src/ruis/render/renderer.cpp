@@ -33,9 +33,14 @@ renderer::renderer(std::unique_ptr<ruis::render::factory> factory, const rendere
 		this->factory->create_index_buffer(utki::span<const uint16_t>()),
 		ruis::render::vertex_array::mode::triangle_strip
 	)),
-	quad_01_vbo(this->factory->create_vertex_buffer(utki::make_span(std::array<r4::vector2<float>, 4>(
-		{{r4::vector2<float>(0, 0), r4::vector2<float>(0, 1), r4::vector2<float>(1, 1), r4::vector2<float>(1, 0)}}
-	)))),
+	quad_01_vbo(this->factory->create_vertex_buffer(
+		utki::make_span(
+			std::array<r4::vector2<float>, 4>(
+				{{r4::vector2<float>(0, 0), r4::vector2<float>(0, 1), r4::vector2<float>(1, 1), r4::vector2<float>(1, 0)
+				}}
+			)
+		)
+	)),
 	quad_indices(this->factory->create_index_buffer(utki::make_span(std::array<uint16_t, 4>({{0, 1, 2, 3}})))),
 	pos_quad_01_vao(
 		this->factory->create_vertex_array({this->quad_01_vbo}, this->quad_indices, vertex_array::mode::triangle_fan)

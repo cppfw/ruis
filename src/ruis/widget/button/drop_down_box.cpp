@@ -147,11 +147,13 @@ bool drop_down_box::on_mouse_move(const mouse_move_event& e)
 {
 	if (auto cm = this->current_drop_down_menu.lock()) {
 		if (this->num_mouse_buttons_pressed != 0) {
-			cm->on_mouse_move(mouse_move_event{
-				e.pos + this->get_absolute_pos() - cm->get_absolute_pos(),
-				e.pointer_id,
-				e.ignore_mouse_capture
-			});
+			cm->on_mouse_move(
+				mouse_move_event{
+					e.pos + this->get_absolute_pos() - cm->get_absolute_pos(),
+					e.pointer_id,
+					e.ignore_mouse_capture
+				}
+			);
 		}
 	}
 
