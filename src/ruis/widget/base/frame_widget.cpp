@@ -27,13 +27,20 @@ using namespace ruis;
 
 frame_widget::frame_widget(
 	utki::shared_ref<ruis::context> context,
-	all_parameters params,
+	container::parameters container_params,
+	parameters frame_params,
 	utki::span<const utki::shared_ref<widget>> frame_layout,
 	utki::span<const utki::shared_ref<widget>> children
 ) :
 	widget(std::move(context), {}, {}),
-	container(this->context, {.container_params = std::move(params.container_params)}, frame_layout),
-	params(std::move(params.frame_params)),
+	container(//
+		this->context,
+		{
+			.container_params = std::move(container_params)
+		},
+		frame_layout
+	),
+	params(std::move(frame_params)),
 	inner_content(this->get_widget_as<container>("ruis_content"sv))
 {
 	this->inner_content.push_back(children);

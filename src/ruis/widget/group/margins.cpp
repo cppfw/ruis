@@ -44,11 +44,8 @@ margins::margins(
 	),
 	frame_widget(
 		this->context,
-		{
-			//
-			.container_params = {.layout = layout::row},
-			.frame_params = std::move(params.frame_params)
-},
+		{.layout = layout::row},
+		std::move(params.frame_params),
 		{//
 		 m::gap(this->context, {.widget_params = {.id = "ruis_left"s}}),
 		 m::container(

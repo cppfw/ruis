@@ -40,15 +40,10 @@ private:
 	container& inner_content;
 
 protected:
-	// TODO: remove?
-	struct all_parameters {
-		container::parameters container_params;
-		parameters frame_params;
-	};
-
 	frame_widget(
 		utki::shared_ref<ruis::context> context,
-		all_parameters params,
+		container::parameters container_params,
+		parameters frame_params,
 		utki::span<const utki::shared_ref<widget>> frame_layout,
 		utki::span<const utki::shared_ref<widget>> children
 	);

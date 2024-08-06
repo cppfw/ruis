@@ -193,8 +193,9 @@ nine_patch::nine_patch(const utki::shared_ref<ruis::context>& c, const tml::fore
 	frame_widget(
 		this->context,
 		{
-			.container_params = {.layout = layout::column}
+			.layout = layout::column
 },
+		{},
 		build_layout(this->context, {.layout = ruis::layout::pile}),
 		{}
 	),
@@ -279,10 +280,8 @@ nine_patch::nine_patch( //
 	),
 	frame_widget( //
 		this->context,
-		{
-			.container_params = {.layout = layout::column}, //
-			.frame_params = std::move(params.frame_params)
-},
+		{.layout = layout::column},
+		std::move(params.frame_params),
 		build_layout( //
 			this->context,
 			[&](){
