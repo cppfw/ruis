@@ -102,16 +102,12 @@ std::vector<utki::shared_ref<ruis::widget>> build_layout(
 						}
 					}
 				),
-				m::container(c,
+				m::pile(c,
 					{
 						.layout_params = {
 							.dims = {lp::max, lp::max},
 							.weight = 1
-						},
-						.widget_params = {
-							.id = "ruis_content"s
-						},
-						.container_params = std::move(container_params)
+						}
 					},
 					{
 						m::image(c,
@@ -122,6 +118,17 @@ std::vector<utki::shared_ref<ruis::widget>> build_layout(
 								.widget_params = {
 									.id = "ruis_m"s
 								}
+							}
+						),
+						m::container(c,
+							{
+								.layout_params = {
+									.dims = {lp::max, lp::max}
+								},
+								.widget_params = {
+									.id = "ruis_content"s
+								},
+								.container_params = std::move(container_params)
 							}
 						)
 					}
@@ -278,7 +285,14 @@ nine_patch::nine_patch( //
 },
 		build_layout( //
 			this->context,
-			std::move(params.container_params)
+			[&](){
+				auto ret = std::move(params.container_params);
+				if(!ret.layout){
+					// pile layout by default
+					ret.layout = ruis::layout::pile;
+				}
+				return ret;
+			}()
 		),
 		children
 	),

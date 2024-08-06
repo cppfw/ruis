@@ -70,7 +70,11 @@ inline utki::shared_ref<ruis::nine_patch_push_button> nine_patch_push_button(
 	utki::span<const utki::shared_ref<ruis::widget>> children
 )
 {
-	return utki::make_shared<ruis::nine_patch_push_button>(std::move(context), std::move(params), children);
+	return utki::make_shared<ruis::nine_patch_push_button>( //
+		std::move(context),
+		std::move(params),
+		children
+	);
 }
 
 } // namespace make

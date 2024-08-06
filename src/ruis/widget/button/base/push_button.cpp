@@ -100,6 +100,11 @@ utki::shared_ref<ruis::push_button> ruis::make::push_button( //
 	utki::span<const utki::shared_ref<ruis::widget>> children
 )
 {
+	if (!params.container_params.layout) {
+		// pile layout by default
+		params.container_params.layout = ruis::layout::pile;
+	}
+
 	auto& c = context.get();
 	return make::nine_patch_push_button( //
 		std::move(context),

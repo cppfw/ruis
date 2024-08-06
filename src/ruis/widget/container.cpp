@@ -38,7 +38,12 @@ container::container(
 		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
-	params(std::move(params.container_params))
+	layout([&](){
+		if(!params.container_params.layout){
+			return ruis::layout::trivial;
+		}
+		return utki::shared_ref(params.container_params.layout);
+	}())
 {
 	for (const auto& c : children) {
 		this->push_back(c);
@@ -56,7 +61,7 @@ container::container(
 	const utki::shared_ref<ruis::layout>& layout
 ) :
 	widget(c, desc),
-	params{.layout = layout}
+	layout(layout)
 {
 	for (const auto& p : desc) {
 		if (!is_property(p)) {
@@ -68,7 +73,7 @@ container::container(
 				if (p.children.size() != 1) {
 					throw std::invalid_argument("layout parameter has zero or more than 1 child");
 				}
-				this->params.layout = this->context.get().layout_factory.create(
+				this->layout = this->context.get().layout_factory.create(
 					p.children.front().value.string,
 					p.children.front().children
 				);

@@ -122,7 +122,7 @@ protected:
 
 public:
 	struct parameters {
-		utki::shared_ref<ruis::layout> layout = layout::trivial;
+		std::shared_ptr<ruis::layout> layout;
 	};
 
 	struct all_parameters {
@@ -132,7 +132,7 @@ public:
 	};
 
 private:
-	parameters params;
+	utki::shared_ref<ruis::layout> layout;
 
 public:
 	container(
@@ -156,7 +156,7 @@ public:
 
 	const ruis::layout& get_layout() const
 	{
-		return this->params.layout.get();
+		return this->layout.get();
 	}
 
 	void render(const matrix4& matrix) const override;
