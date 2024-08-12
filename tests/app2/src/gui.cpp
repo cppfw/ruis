@@ -6,6 +6,7 @@
 #include <ruis/widget/group/margins.hpp>
 #include <ruis/widget/group/window.hpp>
 #include <ruis/widget/proxy/key_proxy.hpp>
+#include <ruis/widget/proxy/resize_proxy.hpp>
 #include <ruis/widget/slider/scroll_bar.hpp>
 #include <ruis/widget/slider/slider.hpp>
 
@@ -80,22 +81,6 @@ utki::shared_ref<ruis::window> make_sliders_window(utki::shared_ref<ruis::contex
 					)
 				}
 			),
-			m::push_button(c,
-				{},
-				{
-					m::image(c,
-					{
-						.layout_params = {
-							.dims = {lp::min, 40_pp}
-						},
-				 		.image_params = {
-							.img = c.get().loader.load<ruis::res::image>("img_home"sv),
-							.keep_aspect_ratio = true
-						}
-				 	}
-				)
-				}
-			),
 			m::row(c,
 				{},
 				{
@@ -114,6 +99,59 @@ utki::shared_ref<ruis::window> make_sliders_window(utki::shared_ref<ruis::contex
 }
 } // namespace
 
+namespace {
+utki::shared_ref<ruis::window> make_image_window(utki::shared_ref<ruis::context> c, ruis::rect rect)
+{
+	// clang-format off
+	auto ret = m::window(c,
+		{
+			.widget_params = {
+				.rectangle = rect
+			},
+			.container_params = {
+				.layout = ruis::layout::pile
+			},
+			.title = U"image"s
+		},
+		{
+			m::image(c,
+				{
+					.layout_params = {
+						.dims = {lp::min, lp::fill}
+					},
+					.widget_params = {
+						.id = "image"s
+					},
+					.image_params = {
+						.img = c.get().loader.load<ruis::res::image>("img_home"sv),
+						.keep_aspect_ratio = true
+					}
+				}
+			),
+			m::resize_proxy(c,
+				{
+					.layout_params = {
+						.dims = {lp::fill, lp::fill}
+					},
+					.widget_params = {
+						.id = "resize_proxy"s
+					}
+				}
+			)
+		}
+	);
+	// clang-format on
+
+	auto& rp = ret.get().get_widget_as<ruis::resize_proxy>("resize_proxy"sv);
+
+	rp.resize_handler = [&im = ret.get().get_widget("image"sv)](ruis::resize_proxy& rp) {
+		std::cout << "image size = " << im.rect().d << std::endl;
+	};
+
+	return ret;
+}
+} // namespace
+
 utki::shared_ref<ruis::widget> make_gui(utki::shared_ref<ruis::context> c)
 {
 	// clang-format off
@@ -128,7 +166,8 @@ utki::shared_ref<ruis::widget> make_gui(utki::shared_ref<ruis::context> c)
 			}
 		},
 		{
-			make_sliders_window(c, {10, 20, 300, 200})
+			make_sliders_window(c, {10, 20, 300, 200}),
+			make_image_window(c, {310, 20, 300, 200})
 		}
 	);
 	// clang-format on

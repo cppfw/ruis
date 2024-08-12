@@ -94,6 +94,7 @@ void image::render(const ruis::matrix4& matrix) const
 	if (!this->texture) {
 		this->texture = img->get(this->rect().d).to_shared_ptr();
 
+		// TODO: remove repeat feature
 		if (this->params.repeat_v.x() || this->params.repeat_v.y()) {
 			std::array<r4::vector2<float>, 4> tex_coords{};
 			ASSERT(quad_fan_tex_coords.size() == tex_coords.size())
@@ -161,19 +162,22 @@ ruis::vector2 image::measure(const ruis::vector2& quotum) const
 
 	real ratio = img_dims.x() / img_dims.y();
 
+	using std::round;
+
 	if (quotum.x() < 0 && quotum.y() < 0) {
 		return img_dims;
 	} else if (quotum.x() < 0) {
 		ASSERT(quotum.y() >= 0)
 
-		vector2 ret;
-		ret.y() = quotum.y();
-		ret.x() = ratio * quotum.y();
+		vector2 ret = {
+			round(ratio * quotum.y()), //
+			quotum.y()
+		};
 		return ret;
 	} else if (quotum.y() >= 0) {
 		ASSERT(quotum.x() >= 0)
 		ASSERT(quotum.y() >= 0)
-		// This case is possible when image layout parameters are, for example 'dx{max} dy{fill}', so the
+		// This case is possible when image layout parameters are, for example 'layout dims = {max, fill}', so the
 		// minimum x size will be determined to keep aspect ratio, but later, the x size of the image widget can be
 		// set to fill all the allowed space, in this case the measure() method will be called with
 		// both quotum components to be positive numbers.
@@ -186,9 +190,10 @@ ruis::vector2 image::measure(const ruis::vector2& quotum) const
 
 		ASSERT(ratio > 0)
 
-		vector2 ret;
-		ret.x() = quotum.x();
-		ret.y() = quotum.x() / ratio;
+		vector2 ret = {
+			quotum.x(), //
+			round(quotum.x() / ratio)
+		};
 		return ret;
 	}
 }
