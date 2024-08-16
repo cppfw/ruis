@@ -21,6 +21,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "renderer.hpp"
 
+#include <rasterimage/image_variant.hpp>
+
 using namespace ruis::render;
 
 renderer::renderer(std::unique_ptr<ruis::render::factory> factory, const renderer::params& params) :
@@ -49,6 +51,15 @@ renderer::renderer(std::unique_ptr<ruis::render::factory> factory, const rendere
 		{this->quad_01_vbo, this->quad_01_vbo},
 		this->quad_indices,
 		vertex_array::mode::triangle_fan
+	)),
+	white_texture(this->factory->create_texture_2d(
+		[]() {
+			rasterimage::image_variant img({1, 1}); // create raster image 1 by 1 pixel
+			// set the pixel to opaque white color
+			img.get<rasterimage::format::rgba, rasterimage::depth::uint_8_bit>()[0][0] = {0xff, 0xff, 0xff, 0xff};
+			return img;
+		}(),
+		{}
 	)),
 	max_texture_size(params.max_texture_size), initial_matrix(params.initial_matrix)
 {}

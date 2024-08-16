@@ -42,6 +42,8 @@ public:
 
 	const utki::shared_ref<const vertex_array> pos_tex_quad_01_vao;
 
+	const utki::shared_ref<const texture_2d> white_texture;
+
 protected:
 	struct params {
 		constexpr static auto default_max_texture_size = 2048;
