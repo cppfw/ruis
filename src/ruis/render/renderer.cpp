@@ -54,10 +54,17 @@ renderer::renderer(std::unique_ptr<ruis::render::factory> factory, const rendere
 	)),
 	white_texture(this->factory->create_texture_2d(
 		[]() {
-			rasterimage::image_variant img({1, 1}); // create raster image 1 by 1 pixel
-			// set the pixel to opaque white color
-			img.get<rasterimage::format::rgba, rasterimage::depth::uint_8_bit>()[0][0] = {0xff, 0xff, 0xff, 0xff};
-			return img;
+			// raster image 1 by 1 pixel
+			rasterimage::image_variant imvar(
+				{1, 1}, //
+				rasterimage::format::rgba,
+				rasterimage::depth::uint_8_bit
+			);
+
+			auto& im = imvar.get<rasterimage::format::rgba, rasterimage::depth::uint_8_bit>();
+			constexpr auto opaque_white = std::remove_reference_t<decltype(im)>::pixel_type{0xff, 0xff, 0xff, 0xff};
+			im[0][0] = opaque_white;
+			return imvar;
 		}(),
 		{}
 	)),
