@@ -282,7 +282,7 @@ void text_input_line::start_cursor_blinking()
 	this->context.get().updater.get().stop(*this);
 	this->cursor_blink_visible = true;
 	this->context.get().updater.get().start(
-		utki::make_shared_from(*static_cast<updateable*>(this)).to_shared_ptr(),
+		utki::make_shared_from(*static_cast<updateable*>(this)), //
 		cursor_blink_period
 	);
 }

@@ -26,6 +26,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <memory>
 
 #include <utki/debug.hpp>
+#include <utki/shared_ref.hpp>
 
 namespace ruis {
 
@@ -57,7 +58,8 @@ class updater : public std::enable_shared_from_this<updater>
 
 	update_queue q1, q2;
 
-	update_queue *active_queue, *inactive_queue;
+	update_queue* active_queue;
+	update_queue* inactive_queue;
 
 	uint32_t last_updated_timestamp = 0;
 
@@ -92,7 +94,10 @@ public:
 	 * @param u - updateable to start updating.
 	 * @param dt_ms - time period between updates, in milliseconds.
 	 */
-	void start(std::weak_ptr<updateable> u, uint16_t dt_ms = default_update_interval_ms);
+	void start(
+		const utki::shared_ref<updateable>& u, //
+		uint16_t dt_ms = default_update_interval_ms
+	);
 
 	/**
 	 * @brief Unsubscribe from updating.

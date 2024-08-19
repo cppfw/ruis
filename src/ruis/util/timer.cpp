@@ -47,7 +47,7 @@ void timer::update(uint32_t dt_ms)
 			if (this->left_ms < max_dt_ms) {
 				this->updater.get().stop(*this);
 				this->updater.get().start( //
-					utki::make_weak_from(static_cast<updateable&>(*this)),
+					utki::make_shared_from(static_cast<updateable&>(*this)),
 					this->left_ms
 				);
 			}
@@ -72,7 +72,7 @@ void timer::start(uint32_t timeout_ms)
 {
 	try {
 		this->updater.get().start( //
-			utki::make_weak_from(static_cast<ruis::updateable&>(*this)),
+			utki::make_shared_from(static_cast<ruis::updateable&>(*this)),
 			std::min(timeout_ms, uint32_t(std::numeric_limits<uint16_t>::max()))
 		);
 

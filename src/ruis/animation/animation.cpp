@@ -72,7 +72,7 @@ void animation::update(uint32_t dt)
 
 void animation::start()
 {
-	this->updater.get().start(utki::make_weak_from(static_cast<updateable&>(*this)));
+	this->updater.get().start(utki::make_shared_from(static_cast<updateable&>(*this)));
 }
 
 void animation::stop() noexcept

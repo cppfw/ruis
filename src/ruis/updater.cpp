@@ -34,24 +34,21 @@ decltype(updater::get_ticks_ms) updater::get_default_get_ticks_ms()
 	};
 }
 
-void updater::start(std::weak_ptr<updateable> u, uint16_t dt_ms)
+void updater::start(
+	const utki::shared_ref<updateable>& u, //
+	uint16_t dt_ms
+)
 {
-	auto uu = u.lock();
-	if (!uu) {
-		return;
-	}
-
-	if (uu->is_updating()) {
+	if (u.get().is_updating()) {
 		throw std::logic_error("updater::start(): updateable is already being updated");
 	}
 
-	uu->dt = dt_ms;
-	uu->started_at = this->get_ticks_ms();
-	uu->updating = true;
+	u.get().dt = dt_ms;
+	u.get().started_at = this->get_ticks_ms();
+	u.get().updating = true;
+	u.get().pending_addition = true;
 
-	uu->pending_addition = true;
-
-	this->to_add.push_front(uu); // TODO: add weak ptr
+	this->to_add.push_front(u.to_shared_ptr()); // TODO: add weak_ptr
 }
 
 void updater::stop(updateable& u) noexcept
@@ -106,11 +103,11 @@ void updater::add_pending()
 		p.updateable = this->to_add.front();
 
 		if (p.ends_at < this->last_updated_timestamp) {
-			//			TRACE(<< "updateable::Updater::AddPending(): inserted to inactive queue" << std::endl)
+			std::cout << "updater::add_pending(): inserted to inactive queue" << std::endl;
 			this->to_add.front()->queue = this->inactive_queue;
 			this->to_add.front()->iter = this->inactive_queue->insert(p);
 		} else {
-			//			TRACE(<< "updateable::Updater::AddPending(): inserted to active queue" << std::endl)
+			std::cout << "updater::add_pending(): inserted to active queue" << std::endl;
 			this->to_add.front()->queue = this->active_queue;
 			this->to_add.front()->iter = this->active_queue->insert(p);
 		}
@@ -145,7 +142,7 @@ uint32_t updater::update()
 {
 	uint32_t cur_ticks = this->get_ticks_ms();
 
-	//	TRACE(<< "updateable::Updater::Update(): invoked" << std::endl)
+	std::cout << "updater::update(): invoked" << std::endl;
 
 	this->add_pending(); // add pending before updating this->last_updated_timestamp
 
@@ -153,8 +150,8 @@ uint32_t updater::update()
 	if (cur_ticks < this->last_updated_timestamp) {
 		this->last_updated_timestamp = cur_ticks;
 
-		//		TRACE(<< "updateable::Updater::Update(): time has warped, this->active_queue->Size() = " <<
-		// this->active_queue->size() << std::endl)
+		std::cout << "updater::update(): time has warped, this->active_queue->size() = " << this->active_queue->size()
+				  << std::endl;
 
 		// if time has warped, then all updateables from active queue have expired.
 		while (this->active_queue->size() != 0) {
@@ -167,8 +164,7 @@ uint32_t updater::update()
 	}
 	ASSERT(this->last_updated_timestamp == cur_ticks)
 
-	//	TRACE(<< "updateable::Updater::Update(): this->active_queue->Size() = " << this->active_queue->size() <<
-	// std::endl)
+	std::cout << "updater::update(): this->active_queue->size() = " << this->active_queue->size() << std::endl;
 
 	while (this->active_queue->size() != 0) {
 		if (this->active_queue->front().ends_at > cur_ticks) {

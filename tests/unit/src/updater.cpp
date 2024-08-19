@@ -34,7 +34,7 @@ const tst::set set("updater", [](tst::suite& suite){
         tst::check(!u.get().is_updating(), SL);
         tst::check_eq(u.get().num_updated, unsigned(0), SL);
 
-        updater.get().start(u.to_shared_ptr(), 10);
+        updater.get().start(u, 10);
 
         tst::check(u.get().is_updating(), SL);
 
@@ -77,7 +77,7 @@ const tst::set set("updater", [](tst::suite& suite){
             void update(uint32_t dt)override{
                 ++this->num_updated;
                 this->updater.get().stop(*this);
-                this->updater.get().start(utki::make_weak_from(*this), 7);
+                this->updater.get().start(utki::make_shared_from(*this), 7);
             }
         };
 
@@ -86,7 +86,7 @@ const tst::set set("updater", [](tst::suite& suite){
         tst::check(!u.get().is_updating(), SL);
         tst::check_eq(u.get().num_updated, unsigned(0), SL);
 
-        updater.get().start(u.to_shared_ptr(), 10);
+        updater.get().start(u, 10);
 
         tst::check(u.get().is_updating(), SL);
 
