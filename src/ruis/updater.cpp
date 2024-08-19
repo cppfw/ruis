@@ -103,11 +103,11 @@ void updater::add_pending()
 		p.updateable = this->to_add.front();
 
 		if (p.ends_at < this->last_updated_timestamp) {
-			std::cout << "updater::add_pending(): inserted to inactive queue" << std::endl;
+			// std::cout << "updater::add_pending(): inserted to inactive queue" << std::endl;
 			this->to_add.front()->queue = this->inactive_queue;
 			this->to_add.front()->iter = this->inactive_queue->insert(p);
 		} else {
-			std::cout << "updater::add_pending(): inserted to active queue" << std::endl;
+			// std::cout << "updater::add_pending(): inserted to active queue" << std::endl;
 			this->to_add.front()->queue = this->active_queue;
 			this->to_add.front()->iter = this->active_queue->insert(p);
 		}
@@ -130,8 +130,8 @@ void updater::update_updateable(const std::shared_ptr<ruis::updateable>& u)
 
 	u->update(this->last_updated_timestamp - u->started_at);
 
-	// if not stopped during update, add it back
-	if (u->is_updating()) {
+	// if not stopped during update, and not started again, then add it back
+	if (u->is_updating() && !u->pending_addition) {
 		u->started_at = this->last_updated_timestamp;
 		u->pending_addition = true;
 		this->to_add.push_back(u);
@@ -142,7 +142,7 @@ uint32_t updater::update()
 {
 	uint32_t cur_ticks = this->get_ticks_ms();
 
-	std::cout << "updater::update(): invoked" << std::endl;
+	// std::cout << "updater::update(): invoked" << std::endl;
 
 	this->add_pending(); // add pending before updating this->last_updated_timestamp
 
@@ -150,8 +150,8 @@ uint32_t updater::update()
 	if (cur_ticks < this->last_updated_timestamp) {
 		this->last_updated_timestamp = cur_ticks;
 
-		std::cout << "updater::update(): time has warped, this->active_queue->size() = " << this->active_queue->size()
-				  << std::endl;
+		// std::cout << "updater::update(): time has warped, this->active_queue->size() = " <<
+		// this->active_queue->size() << std::endl;
 
 		// if time has warped, then all updateables from active queue have expired.
 		while (this->active_queue->size() != 0) {
@@ -164,7 +164,7 @@ uint32_t updater::update()
 	}
 	ASSERT(this->last_updated_timestamp == cur_ticks)
 
-	std::cout << "updater::update(): this->active_queue->size() = " << this->active_queue->size() << std::endl;
+	// std::cout << "updater::update(): this->active_queue->size() = " << this->active_queue->size() << std::endl;
 
 	while (this->active_queue->size() != 0) {
 		if (this->active_queue->front().ends_at > cur_ticks) {
