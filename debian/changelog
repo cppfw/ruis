@@ -1,3 +1,9 @@
+libruis (0.5.237) unstable; urgency=medium
+
+  * fix timer
+
+ -- Ivan Gagis <igagis@gmail.com>  Mon, 19 Aug 2024 12:55:03 +0300
+
 libruis (0.5.236) unstable; urgency=medium
 
   * test release
