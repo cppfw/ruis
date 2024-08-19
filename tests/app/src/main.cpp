@@ -73,7 +73,7 @@ public:
 			this->context.get().updater.get().stop(*this);
 		}else{
 			this->context.get().updater.get().start(
-					utki::make_shared_from(*this).to_shared_ptr(),
+					utki::make_shared_from(*this), //
 					0
 				);
 		}
@@ -521,8 +521,7 @@ public:
 
 		// cube click_proxy
 		{
-			auto cube = c.get().try_get_widget_as<cube_widget>("cube_widget");
-			ASSERT(cube)
+			auto& cube = c.get().get_widget_as<cube_widget>("cube_widget");
 
 			auto& cp = c.get().get_widget_as<ruis::click_proxy>("cube_click_proxy");
 			auto& bg = c.get().get_widget_as<ruis::color>("cube_bg_color");
@@ -532,11 +531,11 @@ public:
 				return true;
 			};
 			cp.pressed_change_handler(cp); // set initial color
-			cp.click_handler = [cube](ruis::click_proxy&) -> bool {
-				if(cube->is_updating()){
-					cube->context.get().updater.get().stop(*cube);
+			cp.click_handler = [cube = utki::make_shared_from(cube)](ruis::click_proxy&) -> bool {
+				if(cube.get().is_updating()){
+					cube.get().context.get().updater.get().stop(cube.get());
 				}else{
-					cube->context.get().updater.get().start(cube, 0);
+					cube.get().context.get().updater.get().start(cube, 0);
 				}
 				return true;
 			};

@@ -9,7 +9,7 @@ class cube_page :
 {
 	std::shared_ptr<ruis::updateable> cube;
 public:
-	cube_page(const utki::shared_ref<ruis::context>& c);
+	cube_page(utki::shared_ref<ruis::context> c);
 	
 	cube_page(const cube_page&) = delete;
 	cube_page& operator=(const cube_page&) = delete;

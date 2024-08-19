@@ -102,8 +102,8 @@ public:
 };
 }
 
-cube_page::cube_page(const utki::shared_ref<ruis::context>& c) :
-		widget(c, tml::forest()),
+cube_page::cube_page(utki::shared_ref<ruis::context> c) :
+		widget(std::move(c), tml::forest()),
 		page(this->context, tml::forest()),
 		container(this->context, tml::read(R"qwertyuiop(
 				layout{pile}
@@ -142,7 +142,7 @@ cube_page::cube_page(const utki::shared_ref<ruis::context>& c) :
 }
 
 void cube_page::on_show(){
-	this->context.get().updater.get().start(this->cube, 0);
+	this->context.get().updater.get().start(utki::shared_ref(this->cube), 0);
 }
 
 void cube_page::on_hide()noexcept{
