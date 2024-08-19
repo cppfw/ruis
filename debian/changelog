@@ -1,3 +1,9 @@
+libruis (0.5.240) unstable; urgency=medium
+
+  * doxygen: remove timestamp setting
+
+ -- Ivan Gagis <igagis@gmail.com>  Mon, 19 Aug 2024 16:15:13 +0300
+
 libruis (0.5.239) unstable; urgency=medium
 
   * doxygen: do not use timestamp
