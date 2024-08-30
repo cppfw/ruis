@@ -59,7 +59,7 @@ public:
 		value_units(u)
 	{}
 
-	bool is_undefined() const noexcept
+	constexpr bool is_undefined() const noexcept
 	{
 		return this->value < real(0);
 	}
@@ -76,7 +76,7 @@ public:
 		return this->get_internal(ctx);
 	}
 
-	bool operator==(const length& l) const noexcept
+	constexpr bool operator==(const length& l) const noexcept
 	{
 		return this->value == l.value && this->value_units == l.value_units;
 	}

@@ -77,7 +77,7 @@ public:
 	 * @param len - the exact length, undefined length value is equivalent to 'min'.
 	 */
 	constexpr dimension(length len) :
-		type([&]() {
+		type([&]() constexpr {
 			if (len.is_undefined()) {
 				return dim::min;
 			} else {
@@ -91,18 +91,17 @@ public:
 		type(t)
 	{}
 
-	dim get_type() const noexcept
+	constexpr dim get_type() const noexcept
 	{
 		return this->type;
 	}
 
-	auto get_length() const noexcept
+	constexpr auto get_length() const noexcept
 	{
-		ASSERT(this->get_type() == dim::length)
 		return this->value;
 	}
 
-	bool is_undefined() const noexcept
+	constexpr bool is_undefined() const noexcept
 	{
 		return this->get_type() == dim::undefined;
 	}
