@@ -37,10 +37,6 @@ using namespace ruis::make;
 } // namespace m
 
 namespace {
-using lp = ruis::lp;
-} // namespace
-
-namespace {
 std::vector<utki::shared_ref<ruis::widget>> make_widgets(utki::shared_ref<ruis::context> c)
 {
 	// clang-format off
@@ -48,7 +44,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_widgets(utki::shared_ref<ruis::
 		m::nine_patch(c,
 			{
 				.layout_params = {
-					.dims = {lp::max, lp::max}
+					.dims = {ruis::dim::max, ruis::dim::max}
 				},
 				.widget_params = {
 					.id = "ruis_background"s
@@ -58,7 +54,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_widgets(utki::shared_ref<ruis::
 		m::container(c,
 			{
 				.layout_params = {
-					.dims = {lp::max, lp::max}
+					.dims = {ruis::dim::max, ruis::dim::max}
 				}
 			},
 			{
@@ -72,7 +68,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_widgets(utki::shared_ref<ruis::
 						m::nine_patch(c,
 							{
 								.layout_params = {
-									.dims = {lp::max, lp::max}
+									.dims = {ruis::dim::max, ruis::dim::max}
 								},
 								.widget_params = {
 									.id = "ruis_handle_image"s
@@ -82,7 +78,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_widgets(utki::shared_ref<ruis::
 						m::mouse_proxy(c,
 							{
 								.layout_params = {
-									.dims = {lp::fill, lp::fill}
+									.dims = {ruis::dim::fill, ruis::dim::fill}
 								},
 								.widget_params = {
 									.id = "ruis_handle_proxy"s

@@ -25,10 +25,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
-const lp::dimension lp::min = lp::dimension::type::min;
-const lp::dimension lp::max = lp::dimension::type::max;
-const lp::dimension lp::fill = lp::dimension::type::fill;
-
 lp lp::make(const tml::forest& desc, const ruis::units& units)
 {
 	lp ret;

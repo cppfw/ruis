@@ -16,7 +16,6 @@ using namespace std::string_view_literals;
 using namespace ruis::length_literals;
 
 namespace m = ruis::make;
-using lp = ruis::layout_parameters;
 
 namespace {
 utki::shared_ref<ruis::window> make_sliders_window(utki::shared_ref<ruis::context> c, ruis::rect rect)
@@ -36,7 +35,7 @@ utki::shared_ref<ruis::window> make_sliders_window(utki::shared_ref<ruis::contex
 			m::margins(c,
 				{
 					.layout_params = {
-						.dims = {lp::fill, lp::min}
+						.dims = {ruis::dim::fill, ruis::dim::min}
 					},
 					.container_params = {
 						.layout = ruis::layout::column
@@ -49,7 +48,7 @@ utki::shared_ref<ruis::window> make_sliders_window(utki::shared_ref<ruis::contex
 					m::scroll_bar(c,
 						{
 							.layout_params = {
-								.dims = {lp::fill, lp::min},
+								.dims = {ruis::dim::fill, ruis::dim::min},
 								.align = {ruis::align::front, ruis::align::front}
 							},
 							.fraction_band_params = {
@@ -63,7 +62,7 @@ utki::shared_ref<ruis::window> make_sliders_window(utki::shared_ref<ruis::contex
 					m::slider(c,
 						{
 							.layout_params = {
-								.dims = {lp::fill, lp::min}
+								.dims = {ruis::dim::fill, ruis::dim::min}
 							},
 							.oriented_params = {
 								.vertical = false
@@ -117,7 +116,7 @@ utki::shared_ref<ruis::window> make_image_window(utki::shared_ref<ruis::context>
 			m::image(c,
 				{
 					.layout_params = {
-						.dims = {lp::min, lp::fill}
+						.dims = {ruis::dim::min, ruis::dim::fill}
 					},
 					.widget_params = {
 						.id = "image"s
@@ -131,7 +130,7 @@ utki::shared_ref<ruis::window> make_image_window(utki::shared_ref<ruis::context>
 			m::resize_proxy(c,
 				{
 					.layout_params = {
-						.dims = {lp::fill, lp::fill}
+						.dims = {ruis::dim::fill, ruis::dim::fill}
 					},
 					.widget_params = {
 						.id = "resize_proxy"s
@@ -159,7 +158,7 @@ utki::shared_ref<ruis::widget> make_gui(utki::shared_ref<ruis::context> c)
 		c,
 		{
 			.layout_params = {
-				.dims = {lp::fill, lp::fill}
+				.dims = {ruis::dim::fill, ruis::dim::fill}
 			},
 			.container_params = {
 				.layout = ruis::layout::trivial

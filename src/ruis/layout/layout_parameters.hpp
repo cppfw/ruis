@@ -24,9 +24,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <tml/tree.hpp>
 
 #include "../config.hpp"
+#include "../util/align.hpp"
+#include "../util/dimension.hpp"
 #include "../util/length.hpp"
 #include "../util/units.hpp"
-#include "../util/align.hpp"
 
 namespace ruis {
 
@@ -34,106 +35,12 @@ namespace ruis {
  * @brief Layout parameters.
  */
 struct layout_parameters {
-	class dimension
-	{
-	public:
-		enum class type {
-			/**
-			 * @brief The dimension policy is undefined.
-			 * Most of the layouts will default to 'min' dimension policy in this case.
-			 */
-			undefined,
-
-			/**
-			 * @brief Requests minimal dimensions of the widget.
-			 * The widget will always be given minimal space it needs to properly draw.
-			 */
-			min,
-
-			/**
-			 * @brief Requests minimal or bigger dimensions of widget.
-			 * The widget will be given at least minimal space it needs to properly draw.
-			 * 'max' behaves the same way as 'min' during measure, but during layouting
-			 * the widget will be given same size as parent.
-			 */
-			max,
-
-			/**
-			 * @brief Requests widget to be same size as its parent.
-			 * Minimal size of the widget is assumed to be 0.
-			 */
-			fill,
-
-			/**
-			 * @brief Requests an exact specified length.
-			 * The widget size will be set to the specified length.
-			 */
-			length
-		};
-
-	private:
-		type type_v;
-		length value;
-
-	public:
-		/**
-		 * @brief Construct a new dimension policy object.
-		 * @param dim - the exact length, undefined length value is equivalent to 'min'.
-		 */
-		dimension(length dim) :
-			type_v([&]() {
-				if (dim.is_undefined()) {
-					return type::min;
-				} else {
-					return type::length;
-				}
-			}()),
-			value(dim)
-		{}
-
-		dimension(type t = type::undefined) :
-			type_v(t)
-		{}
-
-		type get_type() const noexcept
-		{
-			return this->type_v;
-		}
-
-		auto get_length() const noexcept
-		{
-			ASSERT(this->get_type() == type::length)
-			return this->value;
-		}
-
-		bool is_undefined() const noexcept
-		{
-			return this->type_v == type::undefined;
-		}
-
-		bool operator==(const length& d) const
-		{
-			if (this->type_v == type::length) {
-				return this->value == d;
-			} else if (this->type_v == type::min) {
-				return d.is_undefined();
-			}
-			return false;
-		}
-
-		bool operator!=(const length& d) const
-		{
-			return !this->operator==(d);
-		}
-	};
-
-	const static dimension min;
-	const static dimension max;
-	const static dimension fill;
+	constexpr const static dimension min = dim::min;
+	constexpr const static dimension max = dim::max;
+	constexpr const static dimension fill = dim::fill;
 
 	/**
 	 * @brief desired dimensions.
-	 * Components should hold non-negative value in pixels or [min, max, fill].
 	 */
 	r4::vector2<dimension> dims;
 

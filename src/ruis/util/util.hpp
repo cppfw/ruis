@@ -105,7 +105,7 @@ length parse_dimension_value(const tml::leaf& l, const ruis::units& units);
  * @param units - information about units. Can be obtained from context.
  * @return Parsed value.
  */
-ruis::lp::dimension parse_layout_dimension_value(const tml::leaf& l, const ruis::units& units);
+ruis::dimension parse_layout_dimension_value(const tml::leaf& l, const ruis::units& units);
 
 bool is_property(const tml::tree& t);
 

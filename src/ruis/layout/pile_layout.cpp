@@ -72,26 +72,26 @@ vector2 pile_layout::measure(const vector2& quotum, const_widget_list& widgets) 
 
 		for (unsigned j = 0; j != d.size(); ++j) {
 			switch (lp.dims[j].get_type()) {
-				case lp::dimension::type::max:
+				case dim::max:
 					if (quotum[j] >= 0) {
 						d[j] = quotum[j];
 					} else {
 						d[j] = -1;
 					}
 					break;
-				case lp::dimension::type::undefined:
+				case dim::undefined:
 					[[fallthrough]];
-				case lp::dimension::type::min:
+				case dim::min:
 					d[j] = -1;
 					break;
-				case lp::dimension::type::fill:
+				case dim::fill:
 					if (quotum[j] >= 0) {
 						d[j] = quotum[j];
 					} else {
 						d[j] = 0;
 					}
 					break;
-				case lp::dimension::type::length:
+				case dim::length:
 					d[j] = lp.dims[j].get_length().get(w.get().context);
 					break;
 			}

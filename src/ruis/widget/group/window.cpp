@@ -35,7 +35,6 @@ using namespace ruis;
 namespace {
 
 namespace m = ruis::make;
-using lp = ruis::lp;
 
 utki::shared_ref<container> make_top_row(utki::shared_ref<context> c)
 {
@@ -43,7 +42,7 @@ utki::shared_ref<container> make_top_row(utki::shared_ref<context> c)
 	return m::container(c,
 		{
 			.layout_params = {
-				.dims = {lp::fill, lp::min}
+				.dims = {ruis::dim::fill, ruis::dim::min}
 			},
 			.container_params = {
 				.layout = ruis::layout::row
@@ -60,7 +59,7 @@ utki::shared_ref<container> make_top_row(utki::shared_ref<context> c)
 			m::mouse_proxy(c,
 				{
 					.layout_params = {
-						.dims = {lp::fill, lp::fill},
+						.dims = {ruis::dim::fill, ruis::dim::fill},
 						.weight = 1
 					},
 					.widget_params = {
@@ -86,7 +85,7 @@ utki::shared_ref<container> make_bottom_row(utki::shared_ref<context> c)
 	return m::container(c,
 		{
 			.layout_params = {
-				.dims = {lp::fill, lp::min}
+				.dims = {ruis::dim::fill, ruis::dim::min}
 			},
 			.container_params = {
 				.layout = ruis::layout::row
@@ -103,7 +102,7 @@ utki::shared_ref<container> make_bottom_row(utki::shared_ref<context> c)
 			m::mouse_proxy(c,
 				{
 					.layout_params = {
-						.dims = {lp::fill, lp::fill},
+						.dims = {ruis::dim::fill, ruis::dim::fill},
 						.weight = 1
 					},
 					.widget_params = {
@@ -129,7 +128,7 @@ utki::shared_ref<container> make_caption(utki::shared_ref<context> c)
 	return m::container(c,
 		{
 			.layout_params = {
-				.dims = {lp::max, lp::min}
+				.dims = {ruis::dim::max, ruis::dim::min}
 			},
 			.widget_params = {
 				.clip = true
@@ -142,7 +141,7 @@ utki::shared_ref<container> make_caption(utki::shared_ref<context> c)
 			m::mouse_proxy(c,
 				{
 					.layout_params = {
-						.dims = {lp::max, lp::max}
+						.dims = {ruis::dim::max, ruis::dim::max}
 					},
 					.widget_params = {
 						.id = "ruis_caption_proxy"s
@@ -152,7 +151,7 @@ utki::shared_ref<container> make_caption(utki::shared_ref<context> c)
 			m::rectangle(c,
 				{
 					.layout_params = {
-						.dims = {lp::max, lp::max}
+						.dims = {ruis::dim::max, ruis::dim::max}
 					},
 					.widget_params = {
 						.id = "ruis_window_title_bg"s
@@ -162,7 +161,7 @@ utki::shared_ref<container> make_caption(utki::shared_ref<context> c)
 			m::container(c,
 				{
 					.layout_params = {
-						.dims = {lp::max, lp::max}
+						.dims = {ruis::dim::max, ruis::dim::max}
 					},
 					.container_params = {
 						.layout = ruis::layout::row
@@ -172,7 +171,7 @@ utki::shared_ref<container> make_caption(utki::shared_ref<context> c)
 					m::margins(c,
 						{
 							.layout_params = {
-								.dims = {lp::fill, lp::min},
+								.dims = {ruis::dim::fill, ruis::dim::min},
 								.weight = 1
 							},
 							.container_params = {
@@ -186,7 +185,7 @@ utki::shared_ref<container> make_caption(utki::shared_ref<context> c)
 							m::text(c,
 								{
 									.layout_params = {
-										.dims = {lp::min, lp::min},
+										.dims = {ruis::dim::min, ruis::dim::min},
 										.align = {ruis::align::front, ruis::align::center}
 									},
 									.widget_params = {
@@ -210,7 +209,7 @@ utki::shared_ref<container> make_middle(utki::shared_ref<context> c, container::
 	return m::container(c,
 		{
 			.layout_params = {
-				.dims = {lp::max, lp::max},
+				.dims = {ruis::dim::max, ruis::dim::max},
 				.weight = 1
 			},
 			.container_params = {
@@ -222,7 +221,7 @@ utki::shared_ref<container> make_middle(utki::shared_ref<context> c, container::
 			m::container(c,
 				{
 					.layout_params = {
-						.dims = {lp::fill, lp::fill},
+						.dims = {ruis::dim::fill, ruis::dim::fill},
 						.weight = 1
 					},
 					.widget_params = {
@@ -244,7 +243,7 @@ utki::shared_ref<container> make_middle_row(utki::shared_ref<context> c, contain
 	return m::container(c,
 		{
 			.layout_params = {
-				.dims = {lp::max, lp::max},
+				.dims = {ruis::dim::max, ruis::dim::max},
 				.weight = 1
 			},
 			.container_params = {
@@ -255,7 +254,7 @@ utki::shared_ref<container> make_middle_row(utki::shared_ref<context> c, contain
 			m::mouse_proxy(c,
 				{
 					.layout_params = {
-						.dims = {lp::min, lp::fill}
+						.dims = {ruis::dim::min, ruis::dim::fill}
 					},
 					.widget_params = {
 						.id = "ruis_l_proxy"s
@@ -266,7 +265,7 @@ utki::shared_ref<container> make_middle_row(utki::shared_ref<context> c, contain
 			m::mouse_proxy(c,
 				{
 					.layout_params = {
-						.dims = {lp::min, lp::fill}
+						.dims = {ruis::dim::min, ruis::dim::fill}
 					},
 					.widget_params = {
 						.id = "ruis_r_proxy"s
@@ -285,7 +284,7 @@ std::vector<utki::shared_ref<widget>> make_children(utki::shared_ref<context> c,
 		m::container(c,
 			{
 				.layout_params = {
-					.dims = {lp::max, lp::max}
+					.dims = {ruis::dim::max, ruis::dim::max}
 				},
 				.container_params = {
 					.layout = ruis::layout::column
@@ -349,11 +348,17 @@ window::window(
 			ruis::make::nine_patch(
 				this->context,
 				{//
-				 .layout_params = {.dims = {ruis::lp::fill, ruis::lp::fill}},
-				 .container_params = {.layout = layout::pile},
+				 .layout_params =
+					 {
+						 .dims = {ruis::dim::fill, ruis::dim::fill} //
+					 },
+				 .container_params =
+					 {
+						 .layout = layout::pile //
+					 },
 				 .nine_patch_params =
-					 {//
-					  .nine_patch = this->context.get().loader.load<ruis::res::nine_patch>("ruis_npt_window_bg")
+					 {
+						 .nine_patch = this->context.get().loader.load<ruis::res::nine_patch>("ruis_npt_window_bg") //
 					 }
 				},
 				{}

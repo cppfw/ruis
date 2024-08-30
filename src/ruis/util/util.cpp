@@ -81,7 +81,7 @@ length ruis::parse_dimension_value(const tml::leaf& l, const ruis::units& units)
 	return length::make_px(l.to_float());
 }
 
-lp::dimension ruis::parse_layout_dimension_value(const tml::leaf& l, const ruis::units& units)
+dimension ruis::parse_layout_dimension_value(const tml::leaf& l, const ruis::units& units)
 {
 	if (l == "min") {
 		return lp::min;

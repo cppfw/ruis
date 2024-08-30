@@ -10,7 +10,6 @@
 using namespace std::string_literals;
 
 namespace m = ruis::make;
-using lp = ruis::lp;
 
 namespace{
 utki::shared_ref<ruis::container> make_pile_layout( //
@@ -31,7 +30,7 @@ utki::shared_ref<ruis::container> make_pile_layout( //
 				c,
 				{
 					.layout_params = {
-						.dims = {lp::fill, lp::fill}
+						.dims = {ruis::dim::fill, ruis::dim::fill}
 					},
 					.color_params = {
 						.color = 0xff808080
@@ -130,7 +129,10 @@ utki::shared_ref<ruis::widget> make_separator(utki::shared_ref<ruis::context> c,
 		c,
 		{
 			.layout_params = {
-				.dims = {vertical ? lp::fill : ruis::length::make_px(1), vertical ? ruis::length::make_px(1) : lp::fill}
+				.dims = {
+					vertical ? ruis::dimension(ruis::dim::fill) : ruis::dimension(ruis::length::make_px(1)),//
+				 	vertical ? ruis::dimension(ruis::length::make_px(1)) : ruis::dimension(ruis::dim::fill)
+				}
 			},
 			.color_params = {
 				.color = 0xffffffff
@@ -271,7 +273,7 @@ utki::shared_ref<ruis::container> make_layout(utki::shared_ref<ruis::context> c)
 				c,
 				{
 					.layout_params = {
-						.dims = {lp::fill, lp::fill},
+						.dims = {ruis::dim::fill, ruis::dim::fill},
 						.weight = 2
 					},
 					.container_params = {
@@ -282,14 +284,14 @@ utki::shared_ref<ruis::container> make_layout(utki::shared_ref<ruis::context> c)
 					make_pile_layout(
 						c,
 						{
-							.dims = {lp::fill, lp::fill},
+							.dims = {ruis::dim::fill, ruis::dim::fill},
 							.weight = 1
 						}
 					),
 					make_linear_layout(
 						c,
 						{
-							.dims = {lp::fill, lp::fill},
+							.dims = {ruis::dim::fill, ruis::dim::fill},
 							.weight = 1
 						},
 						false // vertical=false
@@ -299,7 +301,7 @@ utki::shared_ref<ruis::container> make_layout(utki::shared_ref<ruis::context> c)
 			make_linear_layout(
 				c,
 				{
-					.dims = {lp::fill, lp::fill},
+					.dims = {ruis::dim::fill, ruis::dim::fill},
 					.weight = 1
 				},
 				true // vertical=true

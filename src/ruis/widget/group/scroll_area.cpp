@@ -127,18 +127,18 @@ vector2 scroll_area::dims_for_widget(const widget& w) const
 	vector2 d;
 	for (unsigned i = 0; i != 2; ++i) {
 		switch (lp.dims[i].get_type()) {
-			case lp::dimension::type::fill:
+			case dim::fill:
 				d[i] = this->rect().d[i];
 				break;
 			// NOLINTNEXTLINE(bugprone-branch-clone, "false positive")
-			case lp::dimension::type::undefined:
+			case dim::undefined:
 				[[fallthrough]];
-			case lp::dimension::type::min:
+			case dim::min:
 				[[fallthrough]];
-			case lp::dimension::type::max:
+			case dim::max:
 				d[i] = -1; // will be updated below
 				break;
-			case lp::dimension::type::length:
+			case dim::length:
 				d[i] = lp.dims[i].get_length().get(this->context);
 				break;
 		}
@@ -147,7 +147,7 @@ vector2 scroll_area::dims_for_widget(const widget& w) const
 		vector2 md = w.measure(d);
 		for (unsigned i = 0; i != md.size(); ++i) {
 			if (d[i] < 0) {
-				if (lp.dims[i].get_type() == lp::dimension::type::max && md[i] < this->rect().d[i]) {
+				if (lp.dims[i].get_type() == dim::max && md[i] < this->rect().d[i]) {
 					d[i] = this->rect().d[i];
 				} else {
 					d[i] = md[i];
