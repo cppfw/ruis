@@ -50,7 +50,7 @@ utki::shared_ref<ruis::window> make_sliders_window(utki::shared_ref<ruis::contex
 						{
 							.layout_params = {
 								.dims = {lp::fill, lp::min},
-								.align = {lp::align::front, lp::align::front}
+								.align = {ruis::align::front, ruis::align::front}
 							},
 							.fraction_band_params = {
 								.band_fraction = 0.2

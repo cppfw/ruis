@@ -38,15 +38,15 @@ void pile_layout::lay_out(const vector2& dims, semiconst_widget_list& widgets) c
 
 			auto align = lp.align[i];
 			switch (align) {
-				case lp::align::front:
+				case align::front:
 					pos[i] = 0;
 					break;
-				case lp::align::undefined:
+				case align::undefined:
 					[[fallthrough]];
-				case lp::align::center:
+				case align::center:
 					pos[i] = (dims[i] - w.rect().d[i]) / 2;
 					break;
-				case lp::align::back:
+				case align::back:
 					pos[i] = dims[i] - w.rect().d[i];
 					break;
 			}

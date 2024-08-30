@@ -26,6 +26,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../config.hpp"
 #include "../util/length.hpp"
 #include "../util/units.hpp"
+#include "../util/align.hpp"
 
 namespace ruis {
 
@@ -33,32 +34,6 @@ namespace ruis {
  * @brief Layout parameters.
  */
 struct layout_parameters {
-	/**
-	 * @brief Alignment parameter values.
-	 */
-	enum class align {
-		/**
-		 * @brief Undefined alignment.
-		 * In case alignemnt is undefined the default center alignment is assumed.
-		 */
-		undefined,
-
-		/**
-		 * @brief Left or top alignment.
-		 */
-		front,
-
-		/**
-		 * @brief Center lignment.
-		 */
-		center,
-
-		/**
-		 * @brief Right or bottom alignment.
-		 */
-		back
-	};
-
 	class dimension
 	{
 	public:
@@ -174,7 +149,7 @@ struct layout_parameters {
 	 * @brief Alignment of the widget within its parent.
 	 * Horizontal and vertical alignment.
 	 */
-	r4::vector2<align> align = {align::undefined, align::undefined};
+	r4::vector2<ruis::align> align = {ruis::align::undefined, ruis::align::undefined};
 
 	static layout_parameters make(const tml::forest& desc, const ruis::units& units);
 };

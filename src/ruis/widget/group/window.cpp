@@ -187,7 +187,7 @@ utki::shared_ref<container> make_caption(utki::shared_ref<context> c)
 								{
 									.layout_params = {
 										.dims = {lp::min, lp::min},
-										.align = {lp::align::front, lp::align::center}
+										.align = {ruis::align::front, ruis::align::center}
 									},
 									.widget_params = {
 										.id = "ruis_title"s
