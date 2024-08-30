@@ -40,14 +40,13 @@ std::vector<utki::shared_ref<ruis::widget>> build_layout(
 )
 {
 	namespace m = ruis::make;
-	using ruis::lp;
 
 	// clang-format off
 	return {
 		m::container(c,
 			{
 				.layout_params = {
-					.dims = {lp::fill, lp::min}
+					.dims = {dim::fill, dim::min}
 				},
 				.container_params = {
 					.layout = layout::row
@@ -64,7 +63,7 @@ std::vector<utki::shared_ref<ruis::widget>> build_layout(
 				m::image(c,
 					{
 						.layout_params = {
-							.dims = {lp::fill, lp::min},
+							.dims = {dim::fill, dim::min},
 							.weight = 1
 						},
 						.widget_params = {
@@ -84,7 +83,7 @@ std::vector<utki::shared_ref<ruis::widget>> build_layout(
 		m::container(c,
 			{
 				.layout_params = {
-					.dims = {lp::max, lp::max},
+					.dims = {dim::max, dim::max},
 					.weight = 1
 				},
 				.container_params = {
@@ -95,7 +94,7 @@ std::vector<utki::shared_ref<ruis::widget>> build_layout(
 				m::image(c,
 					{
 						.layout_params = {
-							.dims = {lp::min, lp::fill}
+							.dims = {dim::min, dim::fill}
 						},
 						.widget_params = {
 							.id = "ruis_l"s
@@ -105,7 +104,7 @@ std::vector<utki::shared_ref<ruis::widget>> build_layout(
 				m::pile(c,
 					{
 						.layout_params = {
-							.dims = {lp::max, lp::max},
+							.dims = {dim::max, dim::max},
 							.weight = 1
 						}
 					},
@@ -113,7 +112,7 @@ std::vector<utki::shared_ref<ruis::widget>> build_layout(
 						m::image(c,
 							{
 								.layout_params = {
-									.dims = {lp::fill, lp::fill}
+									.dims = {dim::fill, dim::fill}
 								},
 								.widget_params = {
 									.id = "ruis_m"s
@@ -123,7 +122,7 @@ std::vector<utki::shared_ref<ruis::widget>> build_layout(
 						m::container(c,
 							{
 								.layout_params = {
-									.dims = {lp::max, lp::max}
+									.dims = {dim::max, dim::max}
 								},
 								.widget_params = {
 									.id = "ruis_content"s
@@ -136,7 +135,7 @@ std::vector<utki::shared_ref<ruis::widget>> build_layout(
 				m::image(c,
 					{
 						.layout_params = {
-							.dims = {lp::min, lp::fill}
+							.dims = {dim::min, dim::fill}
 						},
 						.widget_params = {
 							.id = "ruis_r"s
@@ -148,7 +147,7 @@ std::vector<utki::shared_ref<ruis::widget>> build_layout(
 		m::container(c,
 			{
 				.layout_params = {
-					.dims = {lp::fill, lp::min}
+					.dims = {dim::fill, dim::min}
 				},
 				.container_params = {
 					.layout = layout::row
@@ -165,7 +164,7 @@ std::vector<utki::shared_ref<ruis::widget>> build_layout(
 				m::image(c,
 					{
 						.layout_params = {
-							.dims = {lp::fill, lp::min},
+							.dims = {dim::fill, dim::min},
 							.weight = 1
 						},
 						.widget_params = {

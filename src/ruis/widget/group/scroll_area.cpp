@@ -123,7 +123,7 @@ void scroll_area::update_scroll_factor()
 // it wants 'max' children to be bigger than scroll_area in case their minimal dimensions are bigger.
 vector2 scroll_area::dims_for_widget(const widget& w) const
 {
-	const lp& lp = w.get_layout_params_const();
+	const layout_parameters& lp = w.get_layout_params_const();
 	vector2 d;
 	for (unsigned i = 0; i != 2; ++i) {
 		switch (lp.dims[i].get_type()) {

@@ -35,10 +35,6 @@ namespace ruis {
  * @brief Layout parameters.
  */
 struct layout_parameters {
-	constexpr const static dimension min = dim::min;
-	constexpr const static dimension max = dim::max;
-	constexpr const static dimension fill = dim::fill;
-
 	/**
 	 * @brief desired dimensions.
 	 */
@@ -60,7 +56,5 @@ struct layout_parameters {
 
 	static layout_parameters make(const tml::forest& desc, const ruis::units& units);
 };
-
-using lp = layout_parameters;
 
 }; // namespace ruis

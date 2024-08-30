@@ -53,7 +53,7 @@ margins::margins(
 			 {//
 			  .layout_params =
 				  {//
-				   .dims = {lp::max, lp::max},
+				   .dims = {dim::max, dim::max},
 				   .weight = 1
 				  },
 			  .container_params = {.layout = layout::column}
@@ -65,7 +65,7 @@ margins::margins(
 				  {//
 				   .layout_params =
 					   {//
-						.dims = {lp::max, lp::max},
+						.dims = {dim::max, dim::max},
 						.weight = 1
 					   },
 				   .widget_params =

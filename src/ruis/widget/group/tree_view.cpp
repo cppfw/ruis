@@ -43,7 +43,7 @@ tree_view::tree_view( //
 		ruis::make::list(this->context,
 			{
 				.layout_params = {
-					.dims = {ruis::lp::min, ruis::lp::max}
+					.dims = {ruis::dim::min, ruis::dim::max}
 				},
 				.oriented_params = {
 					.vertical = true
@@ -77,8 +77,8 @@ tree_view::tree_view(const utki::shared_ref<ruis::context>& c, const tml::forest
 
 	auto& lp = this->item_list.get().get_layout_params();
 
-	lp.dims.y() = lp::max;
-	lp.dims.x() = lp::min;
+	lp.dims.y() = dim::max;
+	lp.dims.x() = dim::min;
 
 	this->item_list.get().data_set_change_handler = [this](list&) {
 		this->notify_view_change();

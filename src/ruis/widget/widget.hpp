@@ -144,13 +144,13 @@ public:
 	 * This method invalidates layout.
 	 * @return Layout parameters of the widget.
 	 */
-	lp& get_layout_params();
+	layout_parameters& get_layout_params();
 
 	/**
 	 * @brief Get constant layout parameters of the widget.
 	 * @return Constant layout parameters of the widget.
 	 */
-	const lp& get_layout_params_const() const
+	const layout_parameters& get_layout_params_const() const
 	{
 		return this->layout_params;
 	}

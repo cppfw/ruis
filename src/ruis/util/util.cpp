@@ -84,11 +84,11 @@ length ruis::parse_dimension_value(const tml::leaf& l, const ruis::units& units)
 dimension ruis::parse_layout_dimension_value(const tml::leaf& l, const ruis::units& units)
 {
 	if (l == "min") {
-		return lp::min;
+		return dim::min;
 	} else if (l == "fill") {
-		return lp::fill;
+		return dim::fill;
 	} else if (l == "max") {
-		return lp::max;
+		return dim::max;
 	}
 	return parse_dimension_value(l, units);
 }

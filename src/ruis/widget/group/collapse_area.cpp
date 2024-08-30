@@ -99,7 +99,7 @@ collapse_area::collapse_area(const utki::shared_ref<ruis::context>& c, const tml
 				using namespace length_literals;
 				lp.dims.y() = 0_px;
 			} else {
-				lp.dims.y() = lp::min;
+				lp.dims.y() = dim::min;
 			}
 		};
 	}

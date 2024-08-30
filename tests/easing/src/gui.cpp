@@ -16,7 +16,6 @@ using namespace std::string_view_literals;
 using namespace ruis::length_literals;
 
 namespace m = ruis::make;
-using lp = ruis::layout_parameters;
 
 namespace {
 constexpr uint32_t animation_duration_ms = 1000;
@@ -33,7 +32,7 @@ utki::shared_ref<ruis::widget> make_eased_animation_sample( //
 	auto ret = m::margins(c,
 		{
 			.layout_params = {
-				.dims = {lp::fill, lp::min}
+				.dims = {ruis::dim::fill, ruis::dim::min}
 			},
 			.container_params = {
 				.layout = ruis::layout::column
@@ -46,7 +45,7 @@ utki::shared_ref<ruis::widget> make_eased_animation_sample( //
 			m::slider(c,
 				{
 					.layout_params = {
-						.dims = {lp::fill, lp::min}
+						.dims = {ruis::dim::fill, ruis::dim::min}
 					},
 					.widget_params = {
 						.id = "slider"s
@@ -109,7 +108,7 @@ utki::shared_ref<ruis::widget> make_left_column(utki::shared_ref<ruis::context> 
 	return m::column(c,
 		{
 			.layout_params = {
-				.dims = {lp::fill, lp::fill},
+				.dims = {ruis::dim::fill, ruis::dim::fill},
 				.weight = 1
 			}
 		},
@@ -196,7 +195,7 @@ utki::shared_ref<ruis::widget> make_right_column(utki::shared_ref<ruis::context>
 	return m::column(c,
 		{
 			.layout_params = {
-				.dims = {lp::fill, lp::fill},
+				.dims = {ruis::dim::fill, ruis::dim::fill},
 				.weight = 1
 			}
 		},
@@ -278,7 +277,7 @@ utki::shared_ref<ruis::widget> make_gui(utki::shared_ref<ruis::context> c)
 	return m::row(c,
 		{
 			.layout_params = {
-				.dims = {lp::fill, lp::fill}
+				.dims = {ruis::dim::fill, ruis::dim::fill}
 			}
 		},
 		{

@@ -39,7 +39,7 @@ widget::widget(const utki::shared_ref<ruis::context>& c, const tml::forest& desc
 
 		try {
 			if (p.value == "lp") {
-				this->layout_params = lp::make(p.children, this->context.get().units);
+				this->layout_params = layout_parameters::make(p.children, this->context.get().units);
 			} else if (p.value == "x") {
 				this->params.rectangle.p.x() =
 					parse_dimension_value(get_property_value(p), this->context.get().units).get(this->context);
@@ -76,7 +76,7 @@ widget::widget(const utki::shared_ref<ruis::context>& c, const tml::forest& desc
 
 	for (auto& d : this->layout_params.dims) {
 		if (d.is_undefined()) {
-			d = lp::min;
+			d = dim::min;
 		}
 	}
 
@@ -93,7 +93,7 @@ widget::widget(utki::shared_ref<ruis::context> context, layout_parameters layout
 {
 	for (auto& d : this->layout_params.dims) {
 		if (d.is_undefined()) {
-			d = lp::min;
+			d = dim::min;
 		}
 	}
 
@@ -437,14 +437,14 @@ vector2 widget::pos_in_ancestor(vector2 pos, const widget* ancestor)
 	return this->parent()->pos_in_ancestor(this->rect().p + pos, ancestor);
 }
 
-lp& widget::get_layout_params()
+layout_parameters& widget::get_layout_params()
 {
 	if (this->parent()) {
 		this->parent()->invalidate_layout();
 	}
 
 	// NOLINTNEXTLINE(cppcoreguidelines-pro-type-const-cast)
-	return const_cast<lp&>(this->get_layout_params_const());
+	return const_cast<layout_parameters&>(this->get_layout_params_const());
 }
 
 widget& widget::get_widget(std::string_view id, bool allow_itself)
@@ -521,7 +521,7 @@ void widget::reload()
 
 vector2 ruis::dims_for_widget(const widget& w, const vector2& parent_dims)
 {
-	const lp& lp = w.get_layout_params_const();
+	const layout_parameters& lp = w.get_layout_params_const();
 	vector2 d;
 	for (unsigned i = 0; i != 2; ++i) {
 		switch (lp.dims[i].get_type()) {

@@ -25,9 +25,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
-lp lp::make(const tml::forest& desc, const ruis::units& units)
+layout_parameters layout_parameters::make(const tml::forest& desc, const ruis::units& units)
 {
-	lp ret;
+	layout_parameters ret;
 	for (const auto& p : desc) {
 		if (!is_property(p)) {
 			continue;
