@@ -1,5 +1,7 @@
 #!/usr/bin/make -f
 
+$(info SOURCE_DATE_EPOCH=$(SOURCE_DATE_EPOCH))
+
 export PREFIX := /usr
 
 dbgsrc_pkg_name := $(filter %-dbgsrc, $(shell awk '/^Package: /{print $2}' debian/control))
