@@ -37,6 +37,15 @@ class drop_down_box :
 	unsigned num_mouse_buttons_pressed = 0;
 
 public:
+	struct all_parameters {
+		ruis::layout_parameters layout_params;
+		ruis::widget::parameters widget_params;
+		nine_patch_button::parameters nine_patch_button_params;
+		selection_box::parameters selection_params;
+	};
+
+	drop_down_box(utki::shared_ref<ruis::context> context, all_parameters params);
+
 	drop_down_box(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 
 	drop_down_box(const drop_down_box&) = delete;
@@ -60,5 +69,12 @@ private:
 
 	void handle_mouse_button_up(bool is_first_button_up_event);
 };
+
+namespace make {
+utki::shared_ref<ruis::drop_down_box> drop_down_box(
+	utki::shared_ref<ruis::context> context, //
+	drop_down_box::all_parameters params
+);
+} // namespace make
 
 } // namespace ruis

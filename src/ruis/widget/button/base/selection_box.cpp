@@ -56,6 +56,17 @@ public:
 } // namespace
 
 selection_box::selection_box(
+	utki::shared_ref<ruis::context> context,
+	container& selection_container,
+	parameters params
+) :
+	widget(std::move(context), {}, {}),
+	selection_container(selection_container)
+{
+	this->set_provider(params.provider);
+}
+
+selection_box::selection_box(
 	const utki::shared_ref<ruis::context>& c,
 	const tml::forest& desc,
 	container& selection_container
@@ -79,7 +90,7 @@ selection_box::selection_box(
 void selection_box::set_provider(std::shared_ptr<provider> item_provider)
 {
 	if (item_provider && item_provider->dd) {
-		throw std::logic_error(
+		throw std::invalid_argument(
 			"selection_box::setItemsProvider(): given provider is already set to some selection_box"
 		);
 	}

@@ -27,6 +27,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../label/color.hpp"
 #include "../proxy/mouse_proxy.hpp"
 
+using namespace std::string_view_literals;
+
 using namespace ruis;
 
 namespace {
@@ -124,6 +126,42 @@ drop_down_box::drop_down_box(const utki::shared_ref<ruis::context>& c, const tml
 	};
 }
 
+namespace {
+std::vector<utki::shared_ref<widget>> make_drop_down_box_widget_structure(utki::shared_ref<ruis::context> c)
+{
+	// clang-format off
+	return {
+		// TODO:
+	};
+	// clang-format on
+}
+} // namespace
+
+drop_down_box::drop_down_box(utki::shared_ref<ruis::context> context, all_parameters params) :
+	widget(std::move(context), std::move(params.layout_params), std::move(params.widget_params)),
+	button(this->context, button::parameters{}),
+	nine_patch_push_button(
+		this->context, //
+		{
+			.nine_patch_button_params = std::move(params.nine_patch_button_params) //
+		},
+		make_drop_down_box_widget_structure(this->context)
+	),
+	selection_box(
+		this->context, //
+		this->get_widget_as<ruis::container>("ruis_dropdown_selection"),
+		std::move(params.selection_params)
+	)
+{
+	this->pressed_change_handler = [this](button& b) {
+		if (!b.is_pressed()) {
+			return;
+		}
+
+		this->show_drop_down_menu();
+	};
+}
+
 bool drop_down_box::on_mouse_button(const mouse_button_event& e)
 {
 	if (e.is_down) {
@@ -203,8 +241,7 @@ void drop_down_box::show_drop_down_menu()
 	};
 
 	this->current_drop_down_menu =
-		olay->show_popup(np, this->pos_in_ancestor(vector2(0), olay) + vector2(0, this->rect().d.y()))
-			.to_shared_ptr();
+		olay->show_popup(np, this->pos_in_ancestor(vector2(0), olay) + vector2(0, this->rect().d.y())).to_shared_ptr();
 }
 
 void drop_down_box::handle_mouse_button_up(bool is_first_button_up_event)
@@ -265,4 +302,23 @@ utki::shared_ref<widget> drop_down_box::wrap_item(const utki::shared_ref<widget>
 	};
 
 	return wd;
+}
+
+utki::shared_ref<ruis::drop_down_box> ruis::make::drop_down_box(
+	utki::shared_ref<ruis::context> context, //
+	drop_down_box::all_parameters params
+)
+{
+	if(!params.nine_patch_button_params.unpressed_nine_patch){
+		params.nine_patch_button_params.unpressed_nine_patch = context.get().loader.load<res::nine_patch>("ruis_npt_button_normal"sv);
+	}
+
+	if(!params.nine_patch_button_params.pressed_nine_patch){
+		params.nine_patch_button_params.pressed_nine_patch = context.get().loader.load<res::nine_patch>("ruis_npt_button_pressed"sv);
+	}
+
+	return utki::make_shared<ruis::drop_down_box>(
+		std::move(context), //
+		std::move(params)
+	);
 }

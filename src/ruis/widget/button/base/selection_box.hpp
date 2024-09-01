@@ -85,8 +85,13 @@ public:
 
 		/**
 		 * @brief Notify about change of items model.
+		 * The user is supposed to invoke this function when items model change.
 		 */
 		void notify_data_set_changed();
+	};
+
+	struct parameters {
+		std::shared_ptr<selection_box::provider> provider;
 	};
 
 private:
@@ -104,6 +109,8 @@ public:
 
 protected:
 	selection_box(const utki::shared_ref<ruis::context>& c, const tml::forest& desc, container& selection_container);
+
+	selection_box(utki::shared_ref<ruis::context> context, container& selection_container, parameters params);
 
 public:
 	selection_box(const selection_box&) = delete;
