@@ -303,22 +303,3 @@ utki::shared_ref<widget> drop_down_box::wrap_item(const utki::shared_ref<widget>
 
 	return wd;
 }
-
-utki::shared_ref<ruis::drop_down_box> ruis::make::drop_down_box(
-	utki::shared_ref<ruis::context> context, //
-	drop_down_box::all_parameters params
-)
-{
-	if(!params.nine_patch_button_params.unpressed_nine_patch){
-		params.nine_patch_button_params.unpressed_nine_patch = context.get().loader.load<res::nine_patch>("ruis_npt_button_normal"sv);
-	}
-
-	if(!params.nine_patch_button_params.pressed_nine_patch){
-		params.nine_patch_button_params.pressed_nine_patch = context.get().loader.load<res::nine_patch>("ruis_npt_button_pressed"sv);
-	}
-
-	return utki::make_shared<ruis::drop_down_box>(
-		std::move(context), //
-		std::move(params)
-	);
-}

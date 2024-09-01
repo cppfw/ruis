@@ -94,6 +94,12 @@ public:
 		std::shared_ptr<selection_box::provider> provider;
 	};
 
+	struct all_parameters {
+		layout_parameters layout_params;
+		widget::parameters widget_params;
+		parameters selection_params;
+	};
+
 private:
 	std::shared_ptr<provider> item_provider;
 
@@ -141,5 +147,12 @@ public:
 private:
 	void handle_data_set_changed();
 };
+
+namespace make {
+utki::shared_ref<ruis::selection_box> selection_box(
+	utki::shared_ref<ruis::context> context, //
+	ruis::selection_box::all_parameters params
+);
+} // namespace make
 
 } // namespace ruis

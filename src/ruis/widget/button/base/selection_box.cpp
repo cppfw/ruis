@@ -22,6 +22,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "selection_box.hpp"
 
 #include "../../../context.hpp"
+#include "../drop_down_box.hpp"
+
+using namespace std::string_view_literals;
 
 using namespace ruis;
 
@@ -132,4 +135,26 @@ void selection_box::set_selection(size_t i)
 	this->selected_index = i;
 
 	this->handle_data_set_changed();
+}
+
+utki::shared_ref<ruis::selection_box> ruis::make::selection_box(
+	utki::shared_ref<ruis::context> context, //
+	ruis::selection_box::all_parameters params
+)
+{
+	auto& c = context.get();
+	return utki::make_shared<ruis::drop_down_box>(
+		std::move(context), //
+		// clang-format off
+		ruis::drop_down_box::all_parameters{
+			.layout_params = std::move(params.layout_params), //
+			.widget_params = std::move(params.widget_params),
+			.nine_patch_button_params = {
+				.unpressed_nine_patch = c.loader.load<res::nine_patch>("ruis_npt_button_normal"sv),
+				.pressed_nine_patch = c.loader.load<res::nine_patch>("ruis_npt_button_pressed"sv)
+			},
+			.selection_params = std::move(params.selection_params)
+		}
+		// clang-format on
+	);
 }
