@@ -28,8 +28,7 @@ namespace ruis {
 /**
  * @brief Overlay container for displaying widgets on top of anything.
  * Overlay container is used for displaying topmost widgets like context menus, hint popups etc.
- * Essentially, the overlay is a simple container which keeps track of open overlay widgets.
- * From GUI scripts it can be instantiated as "overlay".
+ * Essentially, the overlay is a simple container with pile-layout which keeps track of open popup widgets.
  */
 class overlay : public container
 {
@@ -57,21 +56,21 @@ public:
 
 	/**
 	 * @brief Showing context menu.
-	 * This function adds the context menu widget to the overlay as the topmost widget.
-	 * The given context menu widget is wrapped into special overhead container to make it properly positioned
-	 * on the screen and to handle mouse clicks outside of the context menu widget
-	 * (i.e. close the context menu in case of mouse click outside).
-	 * @param menu - context menu widget.
-	 * @param pos - position of top left corner of the context menu within the overlay container.
-	 * @return the final widget added to the overlay pile. This widget can be used to later close the particular context
-	 * menu by just removing the widget from its parent.
+	 * This function adds the popup widget to the overlay as the topmost widget.
+	 * The given oppup widget is wrapped into special overhead container to make it properly positioned
+	 * on the screen and to handle mouse clicks outside of the popup widget
+	 * (i.e. close the popup in case of mouse click outside).
+	 * @param popup - popup widget to show.
+	 * @param pos - position of top left corner of the popup within the overlay container.
+	 * @return the final widget added to the overlay. This widget can be used to later close the particular popup
+	 * by just removing the widget from its parent.
 	 */
-	utki::shared_ref<widget> show_context_menu(const utki::shared_ref<widget>& menu, vector2 pos);
+	utki::shared_ref<widget> show_popup(const utki::shared_ref<widget>& menu, vector2 pos);
 
 	/**
-	 * @brief Close all context menus.
+	 * @brief Close all popups.
 	 */
-	void close_all_context_menus();
+	void close_all_popups();
 };
 
 namespace make {

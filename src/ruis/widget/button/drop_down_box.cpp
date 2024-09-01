@@ -203,7 +203,7 @@ void drop_down_box::show_drop_down_menu()
 	};
 
 	this->current_drop_down_menu =
-		olay->show_context_menu(np, this->pos_in_ancestor(vector2(0), olay) + vector2(0, this->rect().d.y()))
+		olay->show_popup(np, this->pos_in_ancestor(vector2(0), olay) + vector2(0, this->rect().d.y()))
 			.to_shared_ptr();
 }
 

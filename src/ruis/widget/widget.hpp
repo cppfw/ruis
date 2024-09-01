@@ -410,10 +410,13 @@ public:
 	struct parameters {
 		std::string id;
 
-		// initialize the rect to invalid values to make sure that a
-		// newly created widget will receive at least one on_resize()
-		// notification before being rendered
-		ruis::rect rectangle = {-1, -1};
+		/**
+		 * @brief Initial widget rectangle within its parent.
+		 * Default position is (0, 0) and default size is (-1, -1).
+		 * Negative size values assure that if the widget is governed by a layout
+		 * it will be resized (and will recieve on_resize() notification) before it's first render.
+		 */
+		ruis::rect rectangle = {0, -1};
 
 		/**
 		 * @brief Clip widgets contents by widget's border.

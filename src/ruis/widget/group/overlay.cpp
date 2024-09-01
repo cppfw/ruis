@@ -32,10 +32,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace ruis;
 
 namespace {
-class context_menu_wrapper : public container
+class popup_wrapper : public container
 {
 public:
-	context_menu_wrapper(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
+	popup_wrapper(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 		widget(c, desc),
 		container(this->context, desc, layout::size)
 	{}
@@ -64,9 +64,9 @@ overlay::overlay(const utki::shared_ref<ruis::context>& c, const tml::forest& de
 	container(this->context, desc, layout::pile)
 {}
 
-utki::shared_ref<widget> overlay::show_context_menu(const utki::shared_ref<widget>& w, vector2 anchor)
+utki::shared_ref<widget> overlay::show_popup(const utki::shared_ref<widget>& w, vector2 anchor)
 {
-	auto c = utki::make_shared<context_menu_wrapper>(this->context, tml::read(R"qwertyuiop(
+	auto c = utki::make_shared<popup_wrapper>(this->context, tml::read(R"qwertyuiop(
 		lp{
 			dx{fill} dy{fill}
 		}
@@ -114,9 +114,9 @@ utki::shared_ref<widget> overlay::show_context_menu(const utki::shared_ref<widge
 	return c;
 }
 
-void overlay::close_all_context_menus()
+void overlay::close_all_popups()
 {
-	auto menus = this->get_all_widgets<context_menu_wrapper>();
+	auto menus = this->get_all_widgets<popup_wrapper>();
 	for (auto& w : menus) {
 		w.get().remove_from_parent();
 	}
