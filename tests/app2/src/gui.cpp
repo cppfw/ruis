@@ -9,6 +9,7 @@
 #include <ruis/widget/proxy/resize_proxy.hpp>
 #include <ruis/widget/slider/scroll_bar.hpp>
 #include <ruis/widget/slider/slider.hpp>
+#include <ruis/widget/button/base/selection_box.hpp>
 
 using namespace std::string_literals;
 using namespace std::string_view_literals;
@@ -151,6 +152,37 @@ utki::shared_ref<ruis::window> make_image_window(utki::shared_ref<ruis::context>
 }
 } // namespace
 
+namespace {
+utki::shared_ref<ruis::window> make_selection_box_window(utki::shared_ref<ruis::context> c, ruis::rect rect)
+{
+	// clang-format off
+	return m::window(c,
+		{
+			.widget_params = {
+				.rectangle = rect
+			},
+			.container_params = {
+				.layout = ruis::layout::column
+			},
+			.title = U"selection box"s
+		},
+		{
+			m::selection_box(c,
+				{
+					.layout_params = {
+						.dims = {ruis::dim::max, ruis::dim::min}
+					},
+					.selection_params = {
+
+					}
+				}
+			)
+		}
+	);
+	// clang-format on
+}
+} // namespace
+
 utki::shared_ref<ruis::widget> make_gui(utki::shared_ref<ruis::context> c)
 {
 	// clang-format off
@@ -166,7 +198,8 @@ utki::shared_ref<ruis::widget> make_gui(utki::shared_ref<ruis::context> c)
 		},
 		{
 			make_sliders_window(c, {10, 20, 300, 200}),
-			make_image_window(c, {310, 20, 300, 200})
+			make_image_window(c, {310, 20, 300, 200}),
+			make_selection_box_window(c, {630, 20, 300, 200})
 		}
 	);
 	// clang-format on
