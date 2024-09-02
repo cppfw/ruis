@@ -44,7 +44,7 @@ public:
 	{
 		friend class selection_box;
 
-		selection_box* dd = nullptr;
+		selection_box* owner = nullptr;
 
 	protected:
 		provider() = default;
@@ -55,9 +55,9 @@ public:
 		 * @return pointer to a drop down box widget.
 		 * @return nullptr if this provider is not set to any drop down box.
 		 */
-		selection_box* get_drop_down_box()
+		selection_box* get_selection_box()
 		{
-			return this->dd;
+			return this->owner;
 		}
 
 		/**
