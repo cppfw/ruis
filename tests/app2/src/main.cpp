@@ -20,7 +20,7 @@ public:
 		auto kp = ruis::make::key_proxy(
 			this->gui.context,
 			{.container_params = {.layout = ruis::layout::pile}},
-			{make_gui(this->gui.context)}
+			{make_root_widgets_structure(this->gui.context)}
 		);
 
 		kp.get().key_handler = [this](ruis::key_proxy&, const ruis::key_event& e) -> bool {

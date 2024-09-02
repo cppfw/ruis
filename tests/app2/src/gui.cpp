@@ -6,6 +6,7 @@
 #include <ruis/widget/container.hpp>
 #include <ruis/widget/group/margins.hpp>
 #include <ruis/widget/group/window.hpp>
+#include <ruis/widget/group/overlay.hpp>
 #include <ruis/widget/proxy/key_proxy.hpp>
 #include <ruis/widget/proxy/resize_proxy.hpp>
 #include <ruis/widget/slider/scroll_bar.hpp>
@@ -153,6 +154,35 @@ utki::shared_ref<ruis::window> make_image_window(utki::shared_ref<ruis::context>
 } // namespace
 
 namespace {
+class selection_box_provider : public ruis::selection_box::provider
+{
+	std::vector<std::string> items;
+
+public:
+	selection_box_provider(std::vector<std::string> items) :
+		items(std::move(items))
+	{}
+
+	size_t count() const noexcept override
+	{
+		return this->items.size();
+	}
+
+	utki::shared_ref<ruis::widget> get_widget(size_t index) override
+	{
+		auto i = utki::next(this->items.begin(), index);
+		ASSERT(i < this->items.end())
+		ASSERT(this->get_selection_box())
+		return m::text(
+			this->get_selection_box()->context, //
+			{},
+			utki::to_utf32(*i)
+		);
+	}
+};
+} // namespace
+
+namespace {
 utki::shared_ref<ruis::window> make_selection_box_window(utki::shared_ref<ruis::context> c, ruis::rect rect)
 {
 	// clang-format off
@@ -173,7 +203,10 @@ utki::shared_ref<ruis::window> make_selection_box_window(utki::shared_ref<ruis::
 						.dims = {ruis::dim::max, ruis::dim::min}
 					},
 					.selection_params = {
-
+						.provider = std::make_shared<selection_box_provider>(std::vector<std::string>{
+							"Hello"s,
+							"World!"s
+						})
 					}
 				}
 			)
@@ -183,23 +216,31 @@ utki::shared_ref<ruis::window> make_selection_box_window(utki::shared_ref<ruis::
 }
 } // namespace
 
-utki::shared_ref<ruis::widget> make_gui(utki::shared_ref<ruis::context> c)
+utki::shared_ref<ruis::widget> make_root_widgets_structure(utki::shared_ref<ruis::context> c)
 {
 	// clang-format off
-	return m::container(
-		c,
+	return m::overlay(c,
 		{
 			.layout_params = {
 				.dims = {ruis::dim::fill, ruis::dim::fill}
-			},
-			.container_params = {
-				.layout = ruis::layout::trivial
 			}
 		},
 		{
-			make_sliders_window(c, {10, 20, 300, 200}),
-			make_image_window(c, {310, 20, 300, 200}),
-			make_selection_box_window(c, {630, 20, 300, 200})
+			m::container(c,
+				{
+					.layout_params = {
+						.dims = {ruis::dim::fill, ruis::dim::fill}
+					},
+					.container_params = {
+						.layout = ruis::layout::trivial
+					}
+				},
+				{
+					make_sliders_window(c, {10, 20, 300, 200}),
+					make_image_window(c, {310, 20, 300, 200}),
+					make_selection_box_window(c, {630, 20, 300, 200})
+				}
+			)
 		}
 	);
 	// clang-format on

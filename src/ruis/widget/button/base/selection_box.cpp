@@ -29,6 +29,7 @@ using namespace std::string_view_literals;
 using namespace ruis;
 
 namespace {
+// TODO: remove?
 class static_provider : public selection_box::provider
 {
 	std::vector<tml::tree> widgets;
