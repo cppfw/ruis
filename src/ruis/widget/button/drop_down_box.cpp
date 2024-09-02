@@ -25,9 +25,13 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../group/overlay.hpp"
 #include "../label/color.hpp"
+#include "../label/gap.hpp"
 #include "../proxy/mouse_proxy.hpp"
 
+using namespace std::string_literals;
 using namespace std::string_view_literals;
+
+using namespace ruis::length_literals;
 
 using namespace ruis;
 
@@ -129,9 +133,52 @@ drop_down_box::drop_down_box(const utki::shared_ref<ruis::context>& c, const tml
 namespace {
 std::vector<utki::shared_ref<widget>> make_drop_down_box_widget_structure(utki::shared_ref<ruis::context> c)
 {
+	namespace m = make;
+
 	// clang-format off
 	return {
-		// TODO:
+		m::pile(c,
+			{
+				.layout_params = {
+					.dims = {ruis::dim::max, ruis::dim::max},
+					.weight = 1
+				},
+				.widget_params = {
+					.id = "ruis_dropdown_selection"s
+				}
+			}
+		),
+		m::gap(c,
+			{
+				.layout_params = {
+					.dims = {3_pp, 0_px}
+				}
+			}
+		),
+		m::image(c,
+			{
+				.layout_params = {
+					.dims = {ruis::dim::min, ruis::dim::fill}
+				},
+				.image_params = {
+					.img = c.get().loader.load<ruis::res::image>("ruis_img_divider_vert"sv)
+				}
+			}
+		),
+		m::gap(c,
+			{
+				.layout_params = {
+					.dims = {3_pp, 0_px}
+				}
+			}
+		),
+		m::image(c,
+			{
+				.image_params = {
+					.img = c.get().loader.load<ruis::res::image>("ruis_img_dropdown_arrow"sv)
+				}
+			}
+		)
 	};
 	// clang-format on
 }
@@ -143,6 +190,7 @@ drop_down_box::drop_down_box(utki::shared_ref<ruis::context> context, all_parame
 	nine_patch_push_button(
 		this->context, //
 		{
+			.container_params = {.layout = ruis::layout::row},
 			.nine_patch_button_params = std::move(params.nine_patch_button_params) //
 		},
 		make_drop_down_box_widget_structure(this->context)

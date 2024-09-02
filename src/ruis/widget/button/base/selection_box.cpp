@@ -154,7 +154,6 @@ utki::shared_ref<ruis::selection_box> ruis::make::selection_box(
 				.pressed_nine_patch = c.loader.load<res::nine_patch>("ruis_npt_button_pressed"sv)
 			},
 			.selection_params = std::move(params.selection_params)
-		}
-		// clang-format on
+		} // clang-format on
 	);
 }
