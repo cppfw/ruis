@@ -5,8 +5,8 @@
 #include <ruis/widget/button/check_box.hpp>
 #include <ruis/widget/container.hpp>
 #include <ruis/widget/group/margins.hpp>
-#include <ruis/widget/group/window.hpp>
 #include <ruis/widget/group/overlay.hpp>
+#include <ruis/widget/group/window.hpp>
 #include <ruis/widget/proxy/key_proxy.hpp>
 #include <ruis/widget/proxy/resize_proxy.hpp>
 #include <ruis/widget/slider/scroll_bar.hpp>
