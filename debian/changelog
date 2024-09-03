@@ -1,3 +1,9 @@
+libruis (0.5.245) unstable; urgency=medium
+
+  * rebuild
+
+ -- Ivan Gagis <igagis@gmail.com>  Wed, 04 Sep 2024 00:59:43 +0300
+
 libruis (0.5.244) unstable; urgency=medium
 
   * selection_box
