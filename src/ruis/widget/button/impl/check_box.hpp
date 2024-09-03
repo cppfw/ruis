@@ -23,7 +23,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../../label/image.hpp"
 #include "../../label/nine_patch.hpp"
-
 #include "../toggle_button.hpp"
 
 namespace ruis {

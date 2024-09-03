@@ -23,9 +23,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../label/nine_patch.hpp"
 
-#include "choice_button.hpp"
-
 #include "impl/nine_patch_toggle.hpp"
+
+#include "choice_button.hpp"
 
 namespace ruis {
 

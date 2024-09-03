@@ -22,7 +22,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #pragma once
 
 #include "../../label/nine_patch.hpp"
-
 #include "../push_button.hpp"
 
 namespace ruis {

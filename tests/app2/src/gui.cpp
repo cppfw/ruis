@@ -1,8 +1,8 @@
 #include "gui.hpp"
 
+#include <ruis/widget/button/impl/check_box.hpp>
 #include <ruis/widget/button/push_button.hpp>
 #include <ruis/widget/button/selection_box.hpp>
-#include <ruis/widget/button/impl/check_box.hpp>
 #include <ruis/widget/container.hpp>
 #include <ruis/widget/group/margins.hpp>
 #include <ruis/widget/group/overlay.hpp>
