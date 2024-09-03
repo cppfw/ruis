@@ -19,30 +19,35 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 /* ================ LICENSE END ================ */
 
-#include "toggle_button.hpp"
+#pragma once
 
-#include "../../../util/util.hpp"
+#include "base/button.hpp"
 
-using namespace ruis;
+namespace ruis {
 
-toggle_button::toggle_button(utki::shared_ref<ruis::context> context) :
-	widget(std::move(context), {}, {}),
-	button(this->context, button::parameters{})
-{}
-
-toggle_button::toggle_button(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
-	widget(c, desc),
-	button(this->context, desc)
-{}
-
-bool toggle_button::on_mouse_button(const mouse_button_event& e)
+/**
+ * @brief Basic class of a toggle button.
+ * Toggle button is a button which can be checked and unchecked.
+ * In GUI script it has the 'checked{true/false}' attribute which can set initial
+ * checked state of the widget.
+ */
+class toggle_button : virtual public button
 {
-	if (e.button == mouse_button::left) {
-		if (e.is_down) {
-			this->toggle();
-		}
-		return true;
-	}
+protected:
+	bool on_mouse_button(const mouse_button_event& event) override;
 
-	return false;
-}
+	toggle_button(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
+
+	toggle_button(utki::shared_ref<ruis::context> context);
+
+public:
+	/**
+	 * @brief Change checked state to opposite.
+	 */
+	void toggle()
+	{
+		this->set_pressed(!this->is_pressed());
+	}
+};
+
+} // namespace ruis

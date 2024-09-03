@@ -21,7 +21,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "base/selection_box.hpp"
+#include "../selection_box.hpp"
 
 #include "nine_patch_push_button.hpp"
 

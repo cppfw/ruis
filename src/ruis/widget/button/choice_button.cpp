@@ -21,7 +21,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "choice_button.hpp"
 
-#include "../choice_group.hpp"
+#include "choice_group.hpp"
 
 using namespace ruis;
 

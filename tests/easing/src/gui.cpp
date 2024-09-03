@@ -2,7 +2,7 @@
 
 #include <ruis/animation/eased_animation.hpp>
 #include <ruis/animation/easing.hpp>
-#include <ruis/widget/button/base/push_button.hpp>
+#include <ruis/widget/button/push_button.hpp>
 #include <ruis/widget/container.hpp>
 #include <ruis/widget/group/margins.hpp>
 #include <ruis/widget/group/window.hpp>

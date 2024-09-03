@@ -21,9 +21,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "../container.hpp"
+#include "../../container.hpp"
 
-#include "base/choice_button.hpp"
+#include "../choice_button.hpp"
 
 namespace ruis {
 

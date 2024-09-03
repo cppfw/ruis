@@ -23,10 +23,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <utki/debug.hpp>
 
-#include "../group/overlay.hpp"
-#include "../label/color.hpp"
-#include "../label/gap.hpp"
-#include "../proxy/mouse_proxy.hpp"
+#include "../../group/overlay.hpp"
+#include "../../label/color.hpp"
+#include "../../label/gap.hpp"
+#include "../../proxy/mouse_proxy.hpp"
 
 using namespace std::string_literals;
 using namespace std::string_view_literals;

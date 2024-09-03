@@ -21,7 +21,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "push_button.hpp"
 
-#include "../nine_patch_push_button.hpp"
+#include "impl/nine_patch_push_button.hpp"
 
 using namespace std::string_view_literals;
 

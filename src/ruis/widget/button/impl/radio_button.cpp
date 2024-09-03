@@ -21,9 +21,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "radio_button.hpp"
 
-#include "../../context.hpp"
+#include "../../../context.hpp"
 
-#include "choice_group.hpp"
+#include "../choice_group.hpp"
 
 using namespace ruis;
 

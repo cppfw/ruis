@@ -5,7 +5,7 @@
 #include <ruisapp/application.hpp>
 
 #include <ruis/widget/container.hpp>
-#include <ruis/widget/button/base/push_button.hpp>
+#include <ruis/widget/button/push_button.hpp>
 #include <ruis/widget/label/busy.hpp>
 #include <ruis/util/weak_widget_set.hpp>
 

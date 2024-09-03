@@ -19,16 +19,30 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 /* ================ LICENSE END ================ */
 
-#include "image_toggle.hpp"
+#include "toggle_button.hpp"
 
-#include "../../context.hpp"
 #include "../../util/util.hpp"
 
 using namespace ruis;
 
-image_toggle::image_toggle(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
-	widget(c, desc),
-	button(this->context, desc),
-	toggle_button(this->context, desc),
-	image_button(this->context, desc)
+toggle_button::toggle_button(utki::shared_ref<ruis::context> context) :
+	widget(std::move(context), {}, {}),
+	button(this->context, button::parameters{})
 {}
+
+toggle_button::toggle_button(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
+	widget(c, desc),
+	button(this->context, desc)
+{}
+
+bool toggle_button::on_mouse_button(const mouse_button_event& e)
+{
+	if (e.button == mouse_button::left) {
+		if (e.is_down) {
+			this->toggle();
+		}
+		return true;
+	}
+
+	return false;
+}

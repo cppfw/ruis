@@ -19,35 +19,16 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 /* ================ LICENSE END ================ */
 
-#pragma once
+#include "image_toggle.hpp"
 
-#include "button.hpp"
+#include "../../../context.hpp"
+#include "../../../util/util.hpp"
 
-namespace ruis {
+using namespace ruis;
 
-/**
- * @brief Basic class of a toggle button.
- * Toggle button is a button which can be checked and unchecked.
- * In GUI script it has the 'checked{true/false}' attribute which can set initial
- * checked state of the widget.
- */
-class toggle_button : virtual public button
-{
-protected:
-	bool on_mouse_button(const mouse_button_event& event) override;
-
-	toggle_button(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
-
-	toggle_button(utki::shared_ref<ruis::context> context);
-
-public:
-	/**
-	 * @brief Change checked state to opposite.
-	 */
-	void toggle()
-	{
-		this->set_pressed(!this->is_pressed());
-	}
-};
-
-} // namespace ruis
+image_toggle::image_toggle(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
+	widget(c, desc),
+	button(this->context, desc),
+	toggle_button(this->context, desc),
+	image_button(this->context, desc)
+{}

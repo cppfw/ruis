@@ -4,7 +4,7 @@
 
 #include <ruisapp/application.hpp>
 
-#include <ruis/widget/button/base/push_button.hpp>
+#include <ruis/widget/button/push_button.hpp>
 #include <ruis/widget/label/busy.hpp>
 
 class application : public ruisapp::application{

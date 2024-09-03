@@ -21,8 +21,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "base/nine_patch_button.hpp"
-#include "base/push_button.hpp"
+#include "../base/nine_patch_button.hpp"
+#include "../push_button.hpp"
 
 namespace ruis {
 

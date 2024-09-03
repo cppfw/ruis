@@ -21,8 +21,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "base/image_button.hpp"
-#include "base/toggle_button.hpp"
+#include "../base/image_button.hpp"
+#include "../toggle_button.hpp"
 
 namespace ruis {
 
