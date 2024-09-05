@@ -117,6 +117,7 @@ jobs:
           - {os: debian, codename: bookworm, image_owner: , package_type: deb, labels: [arm64,docker]}
           # - {os: ubuntu, codename: focal, image_owner: , package_type: deb}
           - {os: ubuntu, codename: jammy, image_owner: , package_type: deb}
+          - {os: ubuntu, codename: noble, image_owner: , package_type: deb}
           # - {os: raspbian, codename: buster, image_owner: igagis/, package_type: deb, labels: [arm32,docker]}
           # - {os: raspbian, codename: bullseye, image_owner: igagis/, package_type: deb, labels: [arm32,docker]}
           - {os: raspbian, codename: bookworm, image_owner: igagis/, package_type: deb, labels: [arm32,docker]}
