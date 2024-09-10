@@ -1,3 +1,9 @@
+libruis (0.5.246) unstable; urgency=medium
+
+  * ubuntu noble
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 10 Sep 2024 11:28:43 +0300
+
 libruis (0.5.245) unstable; urgency=medium
 
   * rebuild
