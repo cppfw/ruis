@@ -41,9 +41,9 @@ void timer::update(uint32_t dt_ms)
 	if (dt_ms < this->left_ms) {
 		constexpr auto max_dt_ms = std::numeric_limits<uint16_t>::max();
 
-		if (this->left_ms > max_dt_ms) {
-			this->left_ms -= dt_ms;
+		this->left_ms -= dt_ms;
 
+		if (this->left_ms > max_dt_ms) {
 			if (this->left_ms < max_dt_ms) {
 				this->updater.get().stop(*this);
 				this->updater.get().start( //
@@ -51,8 +51,6 @@ void timer::update(uint32_t dt_ms)
 					this->left_ms
 				);
 			}
-		} else {
-			this->left_ms -= dt_ms;
 		}
 
 		return;
@@ -77,7 +75,7 @@ void timer::start(uint32_t timeout_ms)
 		);
 
 		this->timeout_ms = timeout_ms;
-		this->left_ms = 0;
+		this->left_ms = timeout_ms;
 	} catch (...) {
 		utki::throw_with_nested(std::runtime_error("timer::start(): failed"));
 	}

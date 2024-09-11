@@ -199,7 +199,7 @@
 			"type": "cppdbg",
 			"request": "launch",
 			"program": "${workspaceFolder}/tests/unit/out/dbg/tests",
-			"args": [],
+			"args": ["--suite=timer", "--test=basic"],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}/tests/unit",
 			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/out/dbg:../harness/modules/ruis-render-null/src/out/rel_no_install"}],
