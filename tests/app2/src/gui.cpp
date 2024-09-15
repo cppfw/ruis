@@ -1,5 +1,6 @@
 #include "gui.hpp"
 
+#include <ruis/widget/label/gap.hpp>
 #include <ruis/widget/button/impl/check_box.hpp>
 #include <ruis/widget/button/push_button.hpp>
 #include <ruis/widget/button/selection_box.hpp>
@@ -79,6 +80,31 @@ utki::shared_ref<ruis::window> make_sliders_window(utki::shared_ref<ruis::contex
 					m::text(c,
 						{},
 						U"Hello world!"s
+					)
+				}
+			),
+			m::nine_patch(c,
+				{
+					.nine_patch_params{
+						.nine_patch = c.get().loader.load<ruis::res::nine_patch>("ruis_npt_window_bg")
+					}
+				},
+				{
+					m::nine_patch(c,
+						{
+							.nine_patch_params{
+								.nine_patch = c.get().loader.load<ruis::res::nine_patch>("ruis_npt_button_normal")
+							}
+						},
+						{
+							m::gap(c,
+								{
+									.layout_params{
+										.dims{10_pp, 10_pp}
+									}
+								}
+							)
+						}
 					)
 				}
 			),
@@ -236,7 +262,7 @@ utki::shared_ref<ruis::widget> make_root_widgets_structure(utki::shared_ref<ruis
 					}
 				},
 				{
-					make_sliders_window(c, {10, 20, 300, 200}),
+					make_sliders_window(c, {10, 20, 600, 400}),
 					make_image_window(c, {310, 20, 300, 200}),
 					make_selection_box_window(c, {630, 20, 300, 200})
 				}
