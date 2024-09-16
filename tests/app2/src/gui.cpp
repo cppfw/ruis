@@ -262,7 +262,7 @@ utki::shared_ref<ruis::widget> make_root_widgets_structure(utki::shared_ref<ruis
 					}
 				},
 				{
-					make_sliders_window(c, {10, 20, 600, 400}),
+					make_sliders_window(c, {10, 20, 300, 200}),
 					make_image_window(c, {310, 20, 300, 200}),
 					make_selection_box_window(c, {630, 20, 300, 200})
 				}

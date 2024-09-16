@@ -34,13 +34,18 @@ using namespace std::string_literals;
 using namespace ruis;
 
 namespace {
-std::vector<utki::shared_ref<ruis::widget>> build_layout(
+namespace m {
+using namespace ruis::make;
+} // namespace m
+} // namespace
+
+namespace {
+std::vector<utki::shared_ref<ruis::widget>> make_widget_structure(
 	utki::shared_ref<ruis::context> c,
-	container::parameters container_params
+	container::parameters container_params,
+	std::array<std::array<utki::shared_ref<ruis::image>, 3>, 3> image_widgets_matrix
 )
 {
-	namespace m = ruis::make;
-
 	// clang-format off
 	return {
 		m::container(c,
@@ -53,31 +58,9 @@ std::vector<utki::shared_ref<ruis::widget>> build_layout(
 				}
 			},
 			{
-				m::image(c,
-					{
-						.widget_params = {
-							.id = "ruis_lt"s
-						}
-					}
-				),
-				m::image(c,
-					{
-						.layout_params = {
-							.dims = {dim::fill, dim::min},
-							.weight = 1
-						},
-						.widget_params = {
-							.id = "ruis_t"s
-						}
-					}
-				),
-				m::image(c,
-					{
-						.widget_params = {
-							.id = "ruis_rt"s
-						}
-					}
-				)
+				std::move(image_widgets_matrix[0][0]),
+				std::move(image_widgets_matrix[0][1]),
+				std::move(image_widgets_matrix[0][2])
 			}
 		),
 		m::container(c,
@@ -91,16 +74,7 @@ std::vector<utki::shared_ref<ruis::widget>> build_layout(
 				}
 			},
 			{
-				m::image(c,
-					{
-						.layout_params = {
-							.dims = {dim::min, dim::fill}
-						},
-						.widget_params = {
-							.id = "ruis_l"s
-						}
-					}
-				),
+				std::move(image_widgets_matrix[1][0]),
 				m::pile(c,
 					{
 						.layout_params = {
@@ -109,16 +83,7 @@ std::vector<utki::shared_ref<ruis::widget>> build_layout(
 						}
 					},
 					{
-						m::image(c,
-							{
-								.layout_params = {
-									.dims = {dim::fill, dim::fill}
-								},
-								.widget_params = {
-									.id = "ruis_m"s
-								}
-							}
-						),
+						std::move(image_widgets_matrix[1][1]),
 						m::container(c,
 							{
 								.layout_params = {
@@ -132,16 +97,7 @@ std::vector<utki::shared_ref<ruis::widget>> build_layout(
 						)
 					}
 				),
-				m::image(c,
-					{
-						.layout_params = {
-							.dims = {dim::min, dim::fill}
-						},
-						.widget_params = {
-							.id = "ruis_r"s
-						}
-					}
-				)
+				std::move(image_widgets_matrix[1][2]),
 			}
 		),
 		m::container(c,
@@ -154,31 +110,9 @@ std::vector<utki::shared_ref<ruis::widget>> build_layout(
 				}
 			},
 			{
-				m::image(c,
-					{
-						.widget_params = {
-							.id = "ruis_lb"s
-						}
-					}
-				),
-				m::image(c,
-					{
-						.layout_params = {
-							.dims = {dim::fill, dim::min},
-							.weight = 1
-						},
-						.widget_params = {
-							.id = "ruis_b"s
-						}
-					}
-				),
-				m::image(c,
-					{
-						.widget_params = {
-							.id = "ruis_rb"s
-						}
-					}
-				)
+				std::move(image_widgets_matrix[2][0]),
+				std::move(image_widgets_matrix[2][1]),
+				std::move(image_widgets_matrix[2][2])
 			}
 		)
 	};
@@ -195,7 +129,99 @@ nine_patch::nine_patch(const utki::shared_ref<ruis::context>& c, const tml::fore
 			.layout = layout::column
 },
 		{},
-		build_layout(this->context, {.layout = ruis::layout::pile}),
+		make_widget_structure(
+			this->context,
+			{.layout = ruis::layout::pile},
+			// clang-format off
+			{{
+				{{
+					m::image(c,
+						{
+							.widget_params = {
+								.id = "ruis_lt"s
+							}
+						}
+					),
+					m::image(c,
+						{
+							.layout_params = {
+								.dims = {dim::fill, dim::min},
+								.weight = 1
+							},
+							.widget_params = {
+								.id = "ruis_t"s
+							}
+						}
+					),
+					m::image(c,
+						{
+							.widget_params = {
+								.id = "ruis_rt"s
+							}
+						}
+					)
+				}},
+				{{
+					m::image(c,
+						{
+							.layout_params = {
+								.dims = {dim::min, dim::fill}
+							},
+							.widget_params = {
+								.id = "ruis_l"s
+							}
+						}
+					),
+					m::image(c,
+						{
+							.layout_params = {
+								.dims = {dim::fill, dim::fill}
+							},
+							.widget_params = {
+								.id = "ruis_m"s
+							}
+						}
+					),
+					m::image(c,
+						{
+							.layout_params = {
+								.dims = {dim::min, dim::fill}
+							},
+							.widget_params = {
+								.id = "ruis_r"s
+							}
+						}
+					)
+				}},
+				{{
+					m::image(c,
+						{
+							.widget_params = {
+								.id = "ruis_lb"s
+							}
+						}
+					),
+					m::image(c,
+						{
+							.layout_params = {
+								.dims = {dim::fill, dim::min},
+								.weight = 1
+							},
+							.widget_params = {
+								.id = "ruis_b"s
+							}
+						}
+					),
+					m::image(c,
+						{
+							.widget_params = {
+								.id = "ruis_rb"s
+							}
+						}
+					)
+				}}
+			}} // clang-format on
+		),
 		{}
 	),
 	img_widgets_matrix({{//
@@ -268,6 +294,78 @@ nine_patch::nine_patch( //
 	all_parameters params,
 	utki::span<const utki::shared_ref<widget>> children
 ) :
+	nine_patch(
+		context,
+		std::move(params),
+		children,
+		// clang-format off
+		{{
+			{{
+				m::image(context,
+					{}
+				),
+				m::image(context,
+					{
+						.layout_params = {
+							.dims = {dim::fill, dim::min},
+							.weight = 1
+						}
+					}
+				),
+				m::image(context,
+					{}
+				)
+			}},
+			{{
+				m::image(context,
+					{
+						.layout_params = {
+							.dims = {dim::min, dim::fill}
+						}
+					}
+				),
+				m::image(context,
+					{
+						.layout_params = {
+							.dims = {dim::fill, dim::fill}
+						}
+					}
+				),
+				m::image(context,
+					{
+						.layout_params = {
+							.dims = {dim::min, dim::fill}
+						}
+					}
+				)
+			}},
+			{{
+				m::image(context,
+					{}
+				),
+				m::image(context,
+					{
+						.layout_params = {
+							.dims = {dim::fill, dim::min},
+							.weight = 1
+						}
+					}
+				),
+				m::image(context,
+					{}
+				)
+			}}
+		}}
+		// clang-format on
+	)
+{}
+
+nine_patch::nine_patch( //
+	utki::shared_ref<ruis::context> context,
+	all_parameters params,
+	utki::span<const utki::shared_ref<widget>> children,
+	std::array<std::array<utki::shared_ref<ruis::image>, 3>, 3> image_widgets_matrix
+) :
 	widget( //
 		std::move(context),
 		std::move(params.layout_params),
@@ -281,7 +379,7 @@ nine_patch::nine_patch( //
 		this->context,
 		{.layout = layout::column},
 		std::move(params.frame_params),
-		build_layout( //
+		make_widget_structure( //
 			this->context,
 			[&](){
 				auto ret = std::move(params.container_params);
@@ -290,27 +388,32 @@ nine_patch::nine_patch( //
 					ret.layout = ruis::layout::pile;
 				}
 				return ret;
-			}()
+			}(),
+			image_widgets_matrix
 		),
 		children
 	),
-	img_widgets_matrix({{//
-						 {//
-						  this->get_widget_as<image>("ruis_lt"),
-						  this->get_widget_as<image>("ruis_t"),
-						  this->get_widget_as<image>("ruis_rt")
-						 }, //
-						 {//
-						  this->get_widget_as<image>("ruis_l"),
-						  this->get_widget_as<image>("ruis_m"),
-						  this->get_widget_as<image>("ruis_r")
-						 }, //
-						 {//
-						  this->get_widget_as<image>("ruis_lb"),
-						  this->get_widget_as<image>("ruis_b"),
-						  this->get_widget_as<image>("ruis_rb")
-						 }
-	}}),
+	img_widgets_matrix(
+		// clang-format off
+		{{
+			{
+				image_widgets_matrix[0][0].get(),
+				image_widgets_matrix[0][1].get(),
+				image_widgets_matrix[0][2].get()
+			},
+			{
+				image_widgets_matrix[1][0].get(),
+				image_widgets_matrix[1][1].get(),
+				image_widgets_matrix[1][2].get()
+			},
+			{
+				image_widgets_matrix[2][0].get(),
+				image_widgets_matrix[2][1].get(),
+				image_widgets_matrix[2][2].get()
+			}
+		}}
+		// clang-format on
+	),
 	params(std::move(params.nine_patch_params))
 {
 	this->nine_patch::on_blending_change();

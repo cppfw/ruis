@@ -85,6 +85,15 @@ public:
 
 	nine_patch(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 
+private:
+	nine_patch(
+		utki::shared_ref<ruis::context> context,
+		all_parameters params,
+		utki::span<const utki::shared_ref<widget>> children,
+		std::array<std::array<utki::shared_ref<ruis::image>, 3>, 3> image_widgets_matrix
+	);
+
+public:
 	void set_nine_patch(std::shared_ptr<const res::nine_patch> np);
 
 	void set_disabled_nine_patch(std::shared_ptr<const res::nine_patch> np);
