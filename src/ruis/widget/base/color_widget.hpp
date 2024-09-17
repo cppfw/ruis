@@ -79,6 +79,12 @@ public:
 	 * @return color for the current enabled/disabled state.
 	 */
 	uint32_t get_current_color() const noexcept;
+
+	/**
+	 * @brief Color change callback.
+	 * Invoked when color changes.
+	 */
+	virtual void on_color_change() {}
 };
 
 } // namespace ruis

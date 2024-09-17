@@ -54,6 +54,7 @@ void color_widget::set_color(uint32_t color)
 
 	this->params.color = color;
 	this->clear_cache();
+	this->on_color_change();
 }
 
 void color_widget::set_disabled_color(uint32_t color)
