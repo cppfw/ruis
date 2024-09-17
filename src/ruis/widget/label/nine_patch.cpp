@@ -121,18 +121,20 @@ std::vector<utki::shared_ref<ruis::widget>> make_widget_structure(
 } // namespace
 
 nine_patch::nine_patch(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
+	// clang-format off
 	widget(c, desc),
 	blending_widget(this->context, desc),
 	frame_widget(
 		this->context,
 		{
 			.layout = layout::column
-},
+		},
 		{},
 		make_widget_structure(
 			this->context,
-			{.layout = ruis::layout::pile},
-			// clang-format off
+			{
+				.layout = ruis::layout::pile
+			},
 			{{
 				{{
 					m::image(c,
@@ -220,27 +222,30 @@ nine_patch::nine_patch(const utki::shared_ref<ruis::context>& c, const tml::fore
 						}
 					)
 				}}
-			}} // clang-format on
+			}}
 		),
 		{}
 	),
-	img_widgets_matrix({{//
-						 {//
-						  this->get_widget_as<image>("ruis_lt"),
-						  this->get_widget_as<image>("ruis_t"),
-						  this->get_widget_as<image>("ruis_rt")
-						 }, //
-						 {//
-						  this->get_widget_as<image>("ruis_l"),
-						  this->get_widget_as<image>("ruis_m"),
-						  this->get_widget_as<image>("ruis_r")
-						 }, //
-						 {//
-						  this->get_widget_as<image>("ruis_lb"),
-						  this->get_widget_as<image>("ruis_b"),
-						  this->get_widget_as<image>("ruis_rb")
-						 }
-	}})
+	img_widgets_matrix(
+		{{
+			{
+				this->get_widget_as<image>("ruis_lt"),
+				this->get_widget_as<image>("ruis_t"),
+				this->get_widget_as<image>("ruis_rt")
+			},
+			{
+				this->get_widget_as<image>("ruis_l"),
+				this->get_widget_as<image>("ruis_m"),
+				this->get_widget_as<image>("ruis_r")
+			},
+			{
+				this->get_widget_as<image>("ruis_lb"),
+				this->get_widget_as<image>("ruis_b"),
+				this->get_widget_as<image>("ruis_rb")
+			}
+		}}
+	)
+// clang-format on
 {
 	this->nine_patch::on_blending_change();
 
