@@ -65,6 +65,7 @@ void color_widget::set_disabled_color(uint32_t color)
 
 	this->params.disabled_color = color;
 	this->clear_cache();
+	this->on_color_change();
 }
 
 uint32_t color_widget::get_current_color() const noexcept
