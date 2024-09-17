@@ -23,9 +23,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../../context.hpp"
 #include "../../util/util.hpp"
+#include "../label/margins.hpp"
 #include "../label/nine_patch.hpp"
-
-#include "margins.hpp"
 
 using namespace std::string_literals;
 using namespace ruis::length_literals;
