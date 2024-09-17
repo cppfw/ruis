@@ -1,3 +1,9 @@
+libruis (0.5.249) unstable; urgency=medium
+
+  * add color_widget::on_color_change()
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 17 Sep 2024 20:05:06 +0300
+
 libruis (0.5.248) unstable; urgency=medium
 
   * fix nine_patch bug
