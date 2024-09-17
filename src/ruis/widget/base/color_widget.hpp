@@ -82,7 +82,7 @@ public:
 
 	/**
 	 * @brief Color change callback.
-	 * Invoked when color changes.
+	 * Invoked when color or disabled color changes.
 	 */
 	virtual void on_color_change() {}
 };
