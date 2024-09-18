@@ -1,3 +1,9 @@
+libruis (0.5.250) unstable; urgency=medium
+
+  * click_proxy: no matter what is the pointer id
+
+ -- Ivan Gagis <igagis@gmail.com>  Wed, 18 Sep 2024 14:45:33 +0300
+
 libruis (0.5.249) unstable; urgency=medium
 
   * add color_widget::on_color_change()
