@@ -46,10 +46,6 @@ bool click_proxy::on_mouse_button(const mouse_button_event& e)
 		return false;
 	}
 
-	if (e.pointer_id != 0) {
-		return false;
-	}
-
 	if (e.is_down) {
 		this->is_pressed_v = true;
 		if (this->pressed_change_handler) {
