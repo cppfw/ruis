@@ -30,7 +30,7 @@ renderer::renderer(std::unique_ptr<ruis::render::factory> factory, const rendere
 	shader(this->factory->create_shaders()),
 	empty_vertex_array(this->factory->create_vertex_array(
 		{
-			this->factory->create_vertex_buffer(utki::span<const r4::vector2<float>>(nullptr))
+			this->factory->create_vertex_buffer(utki::span<const r4::vector2<float>>())
 },
 		this->factory->create_index_buffer(utki::span<const uint16_t>()),
 		ruis::render::vertex_array::mode::triangle_strip

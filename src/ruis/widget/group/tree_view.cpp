@@ -114,7 +114,7 @@ void tree_view::set_provider(std::shared_ptr<provider> item_provider)
 
 void tree_view::provider::notify_data_set_changed()
 {
-	auto size = this->count(nullptr);
+	auto size = this->count({});
 	this->visible_tree.children.clear();
 	this->visible_tree.children.resize(size);
 	this->visible_tree.value.subtree_size = size;
@@ -430,7 +430,7 @@ void tree_view::provider::notify_item_added(utki::span<const size_t> index)
 	}
 
 	auto old_iter_index = this->iter.index();
-	if (utki::make_span(old_iter_index) >= index) {
+	if (utki::deep_greater_or_equals(utki::make_span(old_iter_index), index)) {
 		++this->iter_index;
 	}
 
@@ -489,7 +489,7 @@ void tree_view::provider::notify_item_removed(utki::span<const size_t> index)
 	auto ri = this->traversal().make_iterator(index);
 
 	auto cur_iter_index = this->iter.index();
-	if (utki::make_span(cur_iter_index) >= index) {
+	if (utki::deep_greater_or_equals(utki::make_span(cur_iter_index), index)) {
 		auto next_index = utki::make_vector(index);
 		++next_index.back();
 
