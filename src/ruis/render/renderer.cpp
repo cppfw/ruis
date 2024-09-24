@@ -38,8 +38,10 @@ renderer::renderer(std::unique_ptr<ruis::render::factory> factory, const rendere
 	quad_01_vbo(this->factory->create_vertex_buffer(
 		utki::make_span(
 			std::array<r4::vector2<float>, 4>(
-				{{r4::vector2<float>(0, 0), r4::vector2<float>(0, 1), r4::vector2<float>(1, 1), r4::vector2<float>(1, 0)
-				}}
+				{{r4::vector2<float>(0, 0),
+				  r4::vector2<float>(0, 1),
+				  r4::vector2<float>(1, 1),
+				  r4::vector2<float>(1, 0)}}
 			)
 		)
 	)),

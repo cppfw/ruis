@@ -410,7 +410,7 @@ public:
 			{
 				auto color_label = v.get().try_get_widget_as<ruis::color>("selection");
 
-				color_label->set_visible(path == utki::make_span(this->selected_item));
+				color_label->set_visible(utki::deep_equals(path, utki::make_span(this->selected_item)));
 
 				auto mp = v.get().try_get_widget_as<ruis::mouse_proxy>("mouse_proxy");
 				ASSERT(mp)
