@@ -21,6 +21,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "localization.hpp"
 
+#include <utki/unicode.hpp>
+
+using namespace std::string_view_literals;
+
 using namespace ruis;
 
 wording::wording(
@@ -45,8 +49,23 @@ wording localization::get(std::string_view id)
 
 utki::shared_ref<wording::vocabulary_type> localization::read_localization_vocabulary(const tml::forest& desc)
 {
-	// TODO:
-	return utki::make_shared<wording::vocabulary_type>();
+	auto vocabulary = utki::make_shared<wording::vocabulary_type>();
+	auto& voc = vocabulary.get();
+
+	for (const auto& d : desc) {
+		if (d.value == "vocabulary"sv) {
+			for (const auto& v : d.children) {
+				voc[v.value.string] = [&]() -> std::u32string {
+					if (v.children.empty()) {
+						return {};
+					}
+					return utki::to_utf32(v.children.front().value.string);
+				}();
+			}
+		}
+	}
+
+	return vocabulary;
 }
 
 localization::localization(const tml::forest& desc) :
