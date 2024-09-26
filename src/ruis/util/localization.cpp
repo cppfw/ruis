@@ -22,3 +22,33 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "localization.hpp"
 
 using namespace ruis;
+
+wording::wording(
+	std::shared_ptr<vocabulary_type> vocabulary, //
+	std::string_view id
+) :
+	vocabulary(std::move(vocabulary)),
+	iter([&]() {
+		ASSERT(this->vocabulary)
+		auto i = this->vocabulary->find(id);
+		if (i == this->vocabulary->end()) {
+			throw std::invalid_argument(utki::cat("could not find localized string with id: ", id));
+		}
+		return i;
+	}())
+{}
+
+wording localization::get(std::string_view id)
+{
+	return {this->vocabulary.to_shared_ptr(), id};
+}
+
+utki::shared_ref<wording::vocabulary_type> localization::read_localization_vocabulary(const tml::forest& desc)
+{
+	// TODO:
+	return utki::make_shared<wording::vocabulary_type>();
+}
+
+localization::localization(const tml::forest& desc) :
+	vocabulary(read_localization_vocabulary(desc))
+{}

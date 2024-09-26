@@ -25,20 +25,57 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <string>
 
 #include <tml/tree.hpp>
+#include <utki/debug.hpp>
+#include <utki/shared_ref.hpp>
 
 namespace ruis {
 
+class wording
+{
+	friend class localization;
+
+	using vocabulary_type = std::map<std::string, std::u32string, std::less<>>;
+
+	std::shared_ptr<vocabulary_type> vocabulary;
+
+	vocabulary_type::const_iterator iter;
+
+	wording(
+		std::shared_ptr<vocabulary_type> vocabulary, //
+		std::string_view id
+	);
+
+public:
+	wording() = default;
+
+	bool empty() const noexcept
+	{
+		return !this->vocabulary;
+	}
+
+	std::string_view id() const
+	{
+		ASSERT(!this->empty())
+		return this->iter->first;
+	}
+
+	std::u32string_view string() const
+	{
+		ASSERT(!this->empty())
+		return this->iter->second;
+	}
+};
+
 class localization
 {
-	std::string language_two_letter_code;
-	std::u32string language_name;
+	utki::shared_ref<wording::vocabulary_type> vocabulary;
 
-	std::map<std::string, std::u32string> strings;
+	static utki::shared_ref<wording::vocabulary_type> read_localization_vocabulary(const tml::forest& desc);
 
 public:
 	localization(const tml::forest& desc);
 
-	// const std::u32string& get(std::string_view id);
+	wording get(std::string_view id);
 };
 
 } // namespace ruis
