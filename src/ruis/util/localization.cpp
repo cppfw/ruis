@@ -47,6 +47,22 @@ wording localization::get(std::string_view id)
 	return {this->vocabulary.to_shared_ptr(), id};
 }
 
+namespace {
+std::u32string read_localization_string(const tml::forest& desc)
+{
+	for (const auto& d : desc) {
+		if (d.value.string == "str"sv) {
+			if (d.children.empty()) {
+				return {};
+			}
+
+			return utki::to_utf32(d.children.front().value.string);
+		}
+	}
+	return {};
+}
+} // namespace
+
 utki::shared_ref<wording::vocabulary_type> localization::read_localization_vocabulary(const tml::forest& desc)
 {
 	auto vocabulary = utki::make_shared<wording::vocabulary_type>();
@@ -55,12 +71,7 @@ utki::shared_ref<wording::vocabulary_type> localization::read_localization_vocab
 	for (const auto& d : desc) {
 		if (d.value == "vocabulary"sv) {
 			for (const auto& v : d.children) {
-				voc[v.value.string] = [&]() -> std::u32string {
-					if (v.children.empty()) {
-						return {};
-					}
-					return utki::to_utf32(v.children.front().value.string);
-				}();
+				voc[v.value.string] = read_localization_string(v.children);
 			}
 		}
 	}

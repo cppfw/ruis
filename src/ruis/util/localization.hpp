@@ -68,11 +68,13 @@ public:
 
 class localization
 {
-	utki::shared_ref<wording::vocabulary_type> vocabulary;
+	utki::shared_ref<wording::vocabulary_type> vocabulary = utki::make_shared<wording::vocabulary_type>();
 
 	static utki::shared_ref<wording::vocabulary_type> read_localization_vocabulary(const tml::forest& desc);
 
 public:
+	localization() = default;
+
 	localization(const tml::forest& desc);
 
 	wording get(std::string_view id);

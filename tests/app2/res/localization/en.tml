@@ -1,0 +1,17 @@
+vocabulary{
+    sliders{
+        str{sliders}
+    }
+    image{
+        str{image}
+    }
+    selection_box{
+        str{"selection box"}
+    }
+    hello_world{
+        str{"Hello world!"}
+    }
+    some_checkbox{
+        str{"some checkbox"}
+    }
+}

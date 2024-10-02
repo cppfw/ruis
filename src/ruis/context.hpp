@@ -23,6 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "render/renderer.hpp"
 #include "util/events.hpp"
+#include "util/localization.hpp"
 #include "util/mouse_cursor.hpp"
 #include "util/mouse_cursor_manager.hpp"
 #include "util/units.hpp"
@@ -60,6 +61,12 @@ public:
 	 * @brief Instantiation of the resource loader.
 	 */
 	resource_loader loader;
+
+	/**
+	 * @brief current localization.
+	 * Vocabulary of localized strings.
+	 */
+	ruis::localization localization;
 
 	/**
 	 * @brief Instantiation of the GUI inflater.

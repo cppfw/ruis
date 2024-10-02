@@ -10,8 +10,12 @@ const tst::set set("localization", [](tst::suite& suite){
     suite.add("load", [](){
         auto desc = tml::read(R"qwertyuiop(
             vocabulary{
-                str_1{"hello"}
-                str_2{world!}
+                str_1{
+                    str{"hello"}
+                }
+                str_2{
+                    str{world!}
+                }
             }
         )qwertyuiop");
 

@@ -1,0 +1,17 @@
+vocabulary{
+    sliders{
+        str{liukusäädin}
+    }
+    image{
+        str{kuva}
+    }
+    selection_box{
+        str{"valintalaatikko"}
+    }
+    hello_world{
+        str{"Hei maailman!"}
+    }
+    some_checkbox{
+        str{"jokin valintaruutu"}
+    }
+}
