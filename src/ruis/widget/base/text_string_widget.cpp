@@ -97,10 +97,10 @@ void text_string_widget::set_text(std::u32string text)
 const std::u32string& text_string_widget::get_text_string() const noexcept
 {
 	if (std::holds_alternative<std::u32string>(this->text_string)) {
-		return std::get<std::u32string>(this->text_string);
+		return *std::get_if<std::u32string>(&this->text_string);
 	}
 	ASSERT(std::holds_alternative<wording>(this->text_string));
-	return std::get<wording>(this->text_string).string();
+	return std::get_if<wording>(&this->text_string)->string();
 }
 
 std::u32string text_string_widget::get_text() const
