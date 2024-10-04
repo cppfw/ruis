@@ -209,7 +209,7 @@ public:
 } // namespace
 
 namespace {
-std::array<std::pair<std::string_view, std::u32string_view>, 3> language_id_to_name_mapping{
+constexpr const std::array<std::pair<std::string_view, std::u32string_view>, 3> language_id_to_name_mapping{
 	{
      {"en"sv, U"English"sv},
      {"fi"sv, U"Suomi"sv},
