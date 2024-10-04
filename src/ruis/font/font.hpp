@@ -44,7 +44,7 @@ protected:
 	/**
 	 * @brief Distance between baselines.
 	 */
-	real height = 0;
+	real line_height = 0;
 
 	real descender = 0;
 
@@ -305,20 +305,41 @@ public:
 	}
 
 	/**
+	 * @brief Baseline to baseline distance.
+	 * Disatance between baselines of two consecutive lines of text.
+	 */
+	real get_line_height() const noexcept
+	{
+		return this->line_height;
+	}
+
+	/**
 	 * @brief Get height of the font.
-	 * Height of the font is the distance normally used between lines of text.
+	 * Height of the font is the vertical size of the all glyphs bounding box.
+	 * All glyphs bounding box is a bounding box enclosing all the font glyphs as if
+	 * they all were drawn at the same origin point.
 	 * @return Height of the font.
 	 */
 	real get_height() const noexcept
 	{
-		return this->height;
+		return this->get_ascender() + this->get_descender();
 	}
 
+	/**
+	 * @brief Distance from the baseline to the bottom edge of all glyphs bounding box.
+	 * Positive value.
+	 * The assumption is that the baseline intersects the all glyphs bounding box.
+	 */
 	real get_descender() const noexcept
 	{
 		return this->descender;
 	}
 
+	/**
+	 * @brief Distance from the baseline to the top edge of all glyphs bounding box.
+	 * Positive value.
+	 * The assumption is that the baseline intersects the all glyphs bounding box.
+	 */
 	real get_ascender() const noexcept
 	{
 		return this->ascender;

@@ -218,7 +218,7 @@ texture_font::texture_font(
 
 	auto m = this->face.get().get_metrics(this->font_size);
 
-	this->height = m.height;
+	this->line_height = m.height;
 	this->descender = m.descender;
 	this->ascender = m.ascender;
 

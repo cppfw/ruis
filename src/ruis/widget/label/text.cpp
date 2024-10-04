@@ -62,9 +62,13 @@ void text::render(const ruis::matrix4& matrix) const
 	const auto& font = this->get_font();
 
 	matr.translate(
-		-this->get_bounding_box().p.x(),
-		round((font.get_height() + font.get_ascender() - font.get_descender()) / 2)
+		-this->get_bounding_box().p.x(), //
+		font.get_ascender()
 	);
 
-	font.render(matr, ruis::color_to_vec4f(this->get_current_color()), this->get_text_string());
+	font.render(
+		matr, //
+		ruis::color_to_vec4f(this->get_current_color()),
+		this->get_text_string()
+	);
 }

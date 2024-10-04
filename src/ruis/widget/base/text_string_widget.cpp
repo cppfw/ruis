@@ -53,7 +53,7 @@ text_string_widget::text_string_widget(const utki::shared_ref<ruis::context>& c,
 
 void text_string_widget::recompute_bounding_box()
 {
-	this->bb = this->get_font().get_bounding_box(this->text_string_widget::get_text());
+	this->bb = this->get_font().get_bounding_box(this->get_text_string());
 }
 
 vector2 text_string_widget::measure(const ruis::vector2& quotum) const noexcept
