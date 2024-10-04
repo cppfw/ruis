@@ -76,12 +76,12 @@ void text_input_line::render(const ruis::matrix4& matrix) const
 			round((font.get_height() + font.get_ascender() - font.get_descender()) / 2)
 		);
 
-		ASSERT(this->first_visible_char_index <= this->get_text().size())
+		ASSERT(this->first_visible_char_index <= this->get_text_string().size())
 		font.render(
 			matr,
 			ruis::color_to_vec4f(this->get_current_color()),
-			this->get_text()
-				.substr(this->first_visible_char_index, this->get_text().size() - this->first_visible_char_index)
+			this->get_text_string()
+				.substr(this->first_visible_char_index, this->get_text_string().size() - this->first_visible_char_index)
 		);
 	}
 
@@ -145,7 +145,7 @@ void text_input_line::set_cursor_index(size_t index, bool selection)
 	this->cursor_index = index;
 
 	using std::min;
-	this->cursor_index = min(this->cursor_index, this->get_text().size()); // clamp top
+	this->cursor_index = min(this->cursor_index, this->get_text_string().size()); // clamp top
 
 	if (!selection) {
 		this->selection_start_index = this->cursor_index;
@@ -171,11 +171,11 @@ void text_input_line::set_cursor_index(size_t index, bool selection)
 
 	const auto& font = this->get_font();
 
-	ASSERT(this->first_visible_char_index <= this->get_text().size())
+	ASSERT(this->first_visible_char_index <= this->get_text_string().size())
 	ASSERT(this->cursor_index > this->first_visible_char_index)
 	this->cursor_pos = font.get_advance(
 						   std::u32string(
-							   this->get_text(),
+							   this->get_text_string(),
 							   this->first_visible_char_index,
 							   this->cursor_index - this->first_visible_char_index
 						   )
@@ -191,11 +191,11 @@ void text_input_line::set_cursor_index(size_t index, bool selection)
 		this->first_visible_char_index = this->cursor_index;
 
 		// calculate advance backwards
-		for (auto i = utki::next(this->get_text().rbegin(), this->get_text().size() - this->cursor_index);
+		for (auto i = utki::next(this->get_text_string().rbegin(), this->get_text_string().size() - this->cursor_index);
 			 this->x_offset > 0;
 			 ++i)
 		{
-			ASSERT(i != this->get_text().rend())
+			ASSERT(i != this->get_text_string().rend())
 			this->x_offset -= font.get_advance(*i);
 			ASSERT(this->first_visible_char_index > 0)
 			--this->first_visible_char_index;
@@ -205,19 +205,19 @@ void text_input_line::set_cursor_index(size_t index, bool selection)
 
 real text_input_line::index_to_pos(size_t index)
 {
-	ASSERT(this->first_visible_char_index <= this->get_text().size())
+	ASSERT(this->first_visible_char_index <= this->get_text_string().size())
 
 	if (index <= this->first_visible_char_index) {
 		return 0;
 	}
 
 	using std::min;
-	index = min(index, this->get_text().size()); // clamp top
+	index = min(index, this->get_text_string().size()); // clamp top
 
 	real ret = this->x_offset;
 
-	for (auto i = utki::next(this->get_text().begin(), this->first_visible_char_index);
-		 i != this->get_text().end() && index != this->first_visible_char_index;
+	for (auto i = utki::next(this->get_text_string().begin(), this->first_visible_char_index);
+		 i != this->get_text_string().end() && index != this->first_visible_char_index;
 		 ++i, --index)
 	{
 		ret += this->get_font().get_advance(*i);
@@ -235,7 +235,8 @@ size_t text_input_line::pos_to_index(real pos)
 	size_t index = this->first_visible_char_index;
 	real p = this->x_offset;
 
-	for (auto i = utki::next(this->get_text().begin(), this->first_visible_char_index); i != this->get_text().end();
+	for (auto i = utki::next(this->get_text_string().begin(), this->first_visible_char_index);
+		 i != this->get_text_string().end();
 		 ++i)
 	{
 		real w = this->get_font().get_advance(*i);
@@ -310,12 +311,13 @@ void text_input_line::on_character_input(const character_input_event& e)
 		case ruis::key::enter:
 			break;
 		case ruis::key::arrow_right:
-			if (this->cursor_index != this->get_text().size()) {
+			if (this->cursor_index != this->get_text_string().size()) {
 				size_t new_index = 0;
 				if (this->ctrl_pressed) {
 					bool space_skipped = false;
 					new_index = this->cursor_index;
-					for (auto i = utki::next(this->get_text().begin(), this->cursor_index); i != this->get_text().end();
+					for (auto i = utki::next(this->get_text_string().begin(), this->cursor_index);
+						 i != this->get_text_string().end();
 						 ++i, ++new_index)
 					{
 						if (*i == uint32_t(' ')) {
@@ -339,8 +341,11 @@ void text_input_line::on_character_input(const character_input_event& e)
 				if (this->ctrl_pressed) {
 					bool space_skipped = false;
 					new_index = this->cursor_index;
-					for (auto i = utki::next(this->get_text().rbegin(), this->get_text().size() - this->cursor_index);
-						 i != this->get_text().rend();
+					for (auto i = utki::next(
+							 this->get_text_string().rbegin(),
+							 this->get_text_string().size() - this->cursor_index
+						 );
+						 i != this->get_text_string().rend();
 						 ++i, --new_index)
 					{
 						if (*i == uint32_t(' ')) {
@@ -358,7 +363,7 @@ void text_input_line::on_character_input(const character_input_event& e)
 			}
 			break;
 		case ruis::key::end:
-			this->set_cursor_index(this->get_text().size(), this->shift_pressed);
+			this->set_cursor_index(this->get_text_string().size(), this->shift_pressed);
 			break;
 		case ruis::key::home:
 			this->set_cursor_index(0, this->shift_pressed);
@@ -368,7 +373,7 @@ void text_input_line::on_character_input(const character_input_event& e)
 				this->set_cursor_index(this->delete_selection());
 			} else {
 				if (this->cursor_index != 0) {
-					auto t = this->get_text();
+					auto t = this->get_text_string();
 					this->clear();
 					t.erase(utki::next(t.begin(), this->cursor_index - 1));
 					this->set_text(std::move(t));
@@ -380,8 +385,8 @@ void text_input_line::on_character_input(const character_input_event& e)
 			if (this->there_is_selection()) {
 				this->set_cursor_index(this->delete_selection());
 			} else {
-				if (this->cursor_index < this->get_text().size()) {
-					auto t = this->get_text();
+				if (this->cursor_index < this->get_text_string().size()) {
+					auto t = this->get_text_string();
 					this->clear();
 					t.erase(utki::next(t.begin(), this->cursor_index));
 					this->set_text(std::move(t));
@@ -395,7 +400,7 @@ void text_input_line::on_character_input(const character_input_event& e)
 		case ruis::key::a:
 			if (this->ctrl_pressed) {
 				this->selection_start_index = 0;
-				this->set_cursor_index(this->get_text().size(), true);
+				this->set_cursor_index(this->get_text_string().size(), true);
 				break;
 			}
 			// fall through
@@ -405,7 +410,7 @@ void text_input_line::on_character_input(const character_input_event& e)
 					this->cursor_index = this->delete_selection();
 				}
 
-				auto t = this->get_text();
+				auto t = this->get_text_string();
 				this->clear();
 				t.insert(utki::next(t.begin(), this->cursor_index), e.string.begin(), e.string.end());
 				this->set_text(std::move(t));
@@ -431,7 +436,7 @@ size_t text_input_line::delete_selection()
 		end = this->cursor_index;
 	}
 
-	auto t = this->get_text();
+	auto t = this->get_text_string();
 	this->clear();
 	t.erase(utki::next(t.begin(), start), utki::next(t.begin(), end));
 	this->set_text(std::move(t));
