@@ -49,13 +49,7 @@ public:
 	text(
 		utki::shared_ref<ruis::context> context, //
 		all_parameters params,
-		std::u32string text
-	);
-
-	text(
-		utki::shared_ref<ruis::context> context, //
-		all_parameters params,
-		wording localized_text
+		text_string_widget::text_type text
 	);
 
 public:
@@ -74,26 +68,13 @@ namespace make {
 inline utki::shared_ref<ruis::text> text(
 	utki::shared_ref<ruis::context> context,
 	text::all_parameters params,
-	std::u32string text = {}
+	text_string_widget::text_type text = {}
 )
 {
 	return utki::make_shared<ruis::text>(
 		std::move(context), //
 		std::move(params),
 		std::move(text)
-	);
-}
-
-inline utki::shared_ref<ruis::text> text(
-	utki::shared_ref<ruis::context> context,
-	text::all_parameters params,
-	wording localized_text
-)
-{
-	return utki::make_shared<ruis::text>(
-		std::move(context), //
-		std::move(params),
-		std::move(localized_text)
 	);
 }
 } // namespace make

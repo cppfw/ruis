@@ -121,7 +121,10 @@ utki::shared_ref<container> make_bottom_row(utki::shared_ref<context> c)
 	// clang-format on
 }
 
-utki::shared_ref<container> make_caption(utki::shared_ref<context> c)
+utki::shared_ref<container> make_caption(
+	utki::shared_ref<context> c, //
+	text_string_widget::text_type title
+)
 {
 	// clang-format off
 	return m::container(c,
@@ -190,7 +193,8 @@ utki::shared_ref<container> make_caption(utki::shared_ref<context> c)
 									.widget_params = {
 										.id = "ruis_title"s
 									}
-								}
+								},
+								std::move(title)
 							)
 						}
 					)
@@ -201,7 +205,11 @@ utki::shared_ref<container> make_caption(utki::shared_ref<context> c)
 	// clang-format on
 }
 
-utki::shared_ref<container> make_middle(utki::shared_ref<context> c, container::parameters container_params)
+utki::shared_ref<container> make_middle(
+	utki::shared_ref<context> c, //
+	container::parameters container_params,
+	text_string_widget::text_type title
+)
 {
 	// clang-format off
 	return m::container(c,
@@ -215,7 +223,9 @@ utki::shared_ref<container> make_middle(utki::shared_ref<context> c, container::
 			}
 		},
 		{
-			make_caption(c),
+			make_caption(c,
+				std::move(title)
+			),
 			m::container(c,
 				{
 					.layout_params = {
@@ -235,7 +245,11 @@ utki::shared_ref<container> make_middle(utki::shared_ref<context> c, container::
 	// clang-format on
 }
 
-utki::shared_ref<container> make_middle_row(utki::shared_ref<context> c, container::parameters container_params)
+utki::shared_ref<container> make_middle_row(
+	utki::shared_ref<context> c, //
+	container::parameters container_params,
+	text_string_widget::text_type title
+)
 {
 	// clang-format off
 	return m::container(c,
@@ -259,7 +273,10 @@ utki::shared_ref<container> make_middle_row(utki::shared_ref<context> c, contain
 					}
 				}
 			),
-			make_middle(c, std::move(container_params)),
+			make_middle(c,
+				std::move(container_params),
+				std::move(title)
+			),
 			m::mouse_proxy(c,
 				{
 					.layout_params = {
@@ -275,7 +292,11 @@ utki::shared_ref<container> make_middle_row(utki::shared_ref<context> c, contain
 	// clang-format on
 }
 
-std::vector<utki::shared_ref<widget>> make_children(utki::shared_ref<context> c, container::parameters container_params)
+std::vector<utki::shared_ref<widget>> make_children(
+	utki::shared_ref<context> c, //
+	container::parameters container_params,
+	text_string_widget::text_type title
+)
 {
 	// clang-format off
 	return {
@@ -290,7 +311,10 @@ std::vector<utki::shared_ref<widget>> make_children(utki::shared_ref<context> c,
 			},
 			{
 				make_top_row(c),
-				make_middle_row(c, std::move(container_params)),
+				make_middle_row(c,
+					std::move(container_params),
+					std::move(title)
+				),
 				make_bottom_row(c)
 			}
 		)
@@ -324,7 +348,11 @@ window::window(
 	container( //
 		this->context,
 		{.container_params = {.layout = ruis::layout::pile}},
-		make_children(this->context, std::move(params.container_params))
+		make_children(
+			this->context, //
+			std::move(params.container_params),
+			std::move(params.title)
+		)
 	)
 {
 	this->setup_widgets();
@@ -336,8 +364,6 @@ window::window(
 			b = default_border_size_pp;
 		}
 	}
-
-	this->set_title(params.title);
 
 	if (params.background) {
 		this->set_background(utki::make_shared_from(*params.background));
@@ -379,7 +405,11 @@ ruis::window::window(const utki::shared_ref<ruis::context>& c, const tml::forest
 	container(
 		this->context,
 		{.container_params = {.layout = ruis::layout::pile}},
-		make_children(this->context, {.layout = ruis::layout::pile})
+		make_children(
+			this->context, //
+			{.layout = ruis::layout::pile},
+			{}
+		)
 	)
 {
 	this->setup_widgets();
@@ -653,7 +683,7 @@ void ruis::window::set_title(const std::string& str)
 
 void ruis::window::set_title(std::u32string str)
 {
-	this->title->set_text(str);
+	this->title->set_text(std::move(str));
 }
 
 void ruis::window::set_borders(sides<length> borders)

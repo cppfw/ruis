@@ -35,7 +35,7 @@ text::text(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 text::text(
 	utki::shared_ref<ruis::context> context, //
 	all_parameters params,
-	std::u32string text
+	text_string_widget::text_type text
 ) :
 	widget(
 		std::move(context), //
@@ -46,27 +46,6 @@ text::text(
 		this->context, //
 		std::move(params.text_params),
 		std::move(text)
-	),
-	color_widget(
-		this->context, //
-		std::move(params.color_params)
-	)
-{}
-
-text::text(
-	utki::shared_ref<ruis::context> context, //
-	all_parameters params,
-	wording localized_text
-) :
-	widget(
-		std::move(context), //
-		std::move(params.layout_params),
-		std::move(params.widget_params)
-	),
-	text_string_widget(
-		this->context, //
-		std::move(params.text_params),
-		std::move(localized_text)
 	),
 	color_widget(
 		this->context, //

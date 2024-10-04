@@ -32,7 +32,7 @@ utki::shared_ref<ruis::window> make_sliders_window(utki::shared_ref<ruis::contex
 			.container_params = {
 				.layout = ruis::layout::column
 			},
-			.title = U"sliders"s
+			.title = c.get().localization.get("sliders"sv)
 		},
 		{
 			m::margins(c,
@@ -138,7 +138,7 @@ utki::shared_ref<ruis::window> make_image_window(utki::shared_ref<ruis::context>
 			.container_params = {
 				.layout = ruis::layout::pile
 			},
-			.title = U"image"s
+			.title = c.get().localization.get("image"sv)
 		},
 		{
 			m::image(c,
@@ -240,7 +240,10 @@ public:
 } // namespace
 
 namespace {
-utki::shared_ref<ruis::window> make_selection_box_window(utki::shared_ref<ruis::context> c, ruis::rect rect)
+utki::shared_ref<ruis::window> make_selection_box_window(
+	utki::shared_ref<ruis::context> c, //
+	ruis::rect rect
+)
 {
 	// clang-format off
 	return m::window(c,
@@ -251,7 +254,7 @@ utki::shared_ref<ruis::window> make_selection_box_window(utki::shared_ref<ruis::
 			.container_params = {
 				.layout = ruis::layout::column
 			},
-			.title = U"selection box"s
+			.title = c.get().localization.get("selection_box"sv)
 		},
 		{
 			m::selection_box(c,

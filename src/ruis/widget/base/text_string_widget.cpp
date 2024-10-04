@@ -26,23 +26,18 @@ using namespace ruis;
 text_string_widget::text_string_widget(
 	utki::shared_ref<ruis::context> context,
 	text_widget::parameters text_widget_params,
-	std::u32string text
+	text_type text
 ) :
-	widget(std::move(context), {}, {}),
-	text_widget(this->context, std::move(text_widget_params)),
+	widget(
+		std::move(context), //
+		{},
+		{}
+	),
+	text_widget(
+		this->context, //
+		std::move(text_widget_params)
+	),
 	text_string(std::move(text))
-{
-	this->recompute_bounding_box();
-}
-
-text_string_widget::text_string_widget(
-	utki::shared_ref<ruis::context> context,
-	text_widget::parameters text_widget_params,
-	wording localized_text
-) :
-	widget(std::move(context), {}, {}),
-	text_widget(this->context, std::move(text_widget_params)),
-	text_string(std::move(localized_text))
 {
 	this->recompute_bounding_box();
 }

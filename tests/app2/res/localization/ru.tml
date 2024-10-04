@@ -9,7 +9,7 @@ vocabulary{
         str{"выпадающее меню выбора"}
     }
     hello_world{
-        str{"Привет мир!"}
+        str{"Привет медвед!"}
     }
     some_checkbox{
         str{"какая-то галочка"}

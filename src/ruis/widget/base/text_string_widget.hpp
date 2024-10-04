@@ -31,7 +31,14 @@ class text_string_widget : public text_widget
 {
 	mutable ruis::rect bb{};
 
-	std::variant<std::u32string, wording> text_string;
+public:
+	using text_type = std::variant<
+		std::u32string, //
+		wording //
+		>;
+
+private:
+	text_type text_string;
 
 protected:
 	vector2 measure(const ruis::vector2& quotum) const noexcept override;
@@ -41,13 +48,7 @@ protected:
 	text_string_widget(
 		utki::shared_ref<ruis::context> context,
 		text_widget::parameters text_widget_params,
-		std::u32string text
-	);
-
-	text_string_widget(
-		utki::shared_ref<ruis::context> context,
-		text_widget::parameters text_widget_params,
-		wording localized_text
+		text_type text
 	);
 
 	const ruis::rect& get_bounding_box() const
