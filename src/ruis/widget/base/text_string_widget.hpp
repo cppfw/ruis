@@ -58,6 +58,8 @@ protected:
 
 	void recompute_bounding_box();
 
+	void set_text(text_type text);
+
 public:
 	using text_widget::set_text;
 
@@ -73,6 +75,8 @@ public:
 	}
 
 	void on_text_change() override;
+
+	void on_reload() override;
 };
 
 } // namespace ruis

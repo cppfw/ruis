@@ -12,6 +12,7 @@
 #include <ruis/widget/proxy/resize_proxy.hpp>
 #include <ruis/widget/slider/scroll_bar.hpp>
 #include <ruis/widget/slider/slider.hpp>
+#include <ruisapp/application.hpp>
 
 using namespace std::string_literals;
 using namespace std::string_view_literals;
@@ -246,6 +247,37 @@ utki::shared_ref<ruis::window> make_selection_box_window(
 )
 {
 	// clang-format off
+	auto sel_box = m::selection_box(c,
+		{
+			.layout_params{
+				.dims = {ruis::dim::max, ruis::dim::min}
+			},
+			.selection_params{
+				.provider = std::make_shared<language_selection_provider>()
+			}
+		}
+	);
+	// clang-format on
+
+	sel_box.get().selection_handler = [](ruis::selection_box& sb) {
+		auto sel = sb.get_selection();
+
+		// std::cout << "localization selection changed = " << sel << std::endl;
+
+		ASSERT(sel < language_id_to_name_mapping.size())
+
+		sb.context.get().post_to_ui_thread([lng = language_id_to_name_mapping.at(sel).first]() {
+			auto& app = ruisapp::inst();
+
+			// std::cout << "new localization = " << lng << std::endl;
+
+			app.gui.context.get().localization =
+				ruis::localization(tml::read(*app.get_res_file(utki::cat("res/localization/", lng, ".tml"))));
+			app.gui.get_root().reload();
+		});
+	};
+
+	// clang-format off
 	return m::window(c,
 		{
 			.widget_params = {
@@ -278,16 +310,7 @@ utki::shared_ref<ruis::window> make_selection_box_window(
 				},
 				c.get().localization.get("language"sv)
 			),
-			m::selection_box(c,
-				{
-					.layout_params{
-						.dims = {ruis::dim::max, ruis::dim::min}
-					},
-					.selection_params{
-						.provider = std::make_shared<language_selection_provider>()
-					}
-				}
-			)
+			std::move(sel_box)
 		}
 	);
 	// clang-format on

@@ -103,7 +103,7 @@ public:
 private:
 	std::shared_ptr<provider> item_provider;
 
-	std::size_t selected_index = 0;
+	size_t selected_index = 0;
 
 public:
 	void set_provider(std::shared_ptr<provider> item_provider = nullptr);
@@ -137,12 +137,12 @@ public:
 	 * @brief Get index of the selected item.
 	 * @return Index of the selected item.
 	 */
-	std::size_t get_selection() const noexcept
+	size_t get_selection() const noexcept
 	{
 		return this->selected_index;
 	}
 
-	std::function<void(selection_box& dds)> selection_handler;
+	std::function<void(selection_box& sb)> selection_handler;
 
 private:
 	void handle_data_set_changed();

@@ -82,11 +82,16 @@ void text_string_widget::on_text_change()
 	this->text_widget::on_text_change();
 }
 
-void text_string_widget::set_text(std::u32string text)
+void text_string_widget::set_text(text_type text)
 {
 	this->text_string = std::move(text);
 	this->invalidate_layout();
 	this->on_text_change();
+}
+
+void text_string_widget::set_text(std::u32string text)
+{
+	this->set_text(text_type(text));
 }
 
 const std::u32string& text_string_widget::get_text_string() const noexcept
@@ -101,4 +106,13 @@ const std::u32string& text_string_widget::get_text_string() const noexcept
 std::u32string text_string_widget::get_text() const
 {
 	return this->get_text_string();
+}
+
+void text_string_widget::on_reload()
+{
+	if (std::holds_alternative<wording>(this->text_string)) {
+		const auto& w = std::get<wording>(this->text_string);
+		auto new_wording = this->context.get().localization.get(w.id());
+		this->set_text(text_type(new_wording));
+	}
 }
