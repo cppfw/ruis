@@ -86,7 +86,7 @@ public:
 		layout_parameters layout_params;
 		widget::parameters widget_params;
 		container::parameters container_params;
-		text_string_widget::text_type title;
+		string title;
 		std::shared_ptr<widget> background; // TODO: only nine_patch?
 		sides<length> borders;
 	};

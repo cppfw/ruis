@@ -49,7 +49,7 @@ public:
 	text(
 		utki::shared_ref<ruis::context> context, //
 		all_parameters params,
-		text_string_widget::text_type text
+		string text
 	);
 
 public:
@@ -68,7 +68,7 @@ namespace make {
 inline utki::shared_ref<ruis::text> text(
 	utki::shared_ref<ruis::context> context,
 	text::all_parameters params,
-	text_string_widget::text_type text = {}
+	string text = {}
 )
 {
 	return utki::make_shared<ruis::text>(

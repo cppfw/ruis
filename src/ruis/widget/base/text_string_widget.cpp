@@ -26,7 +26,7 @@ using namespace ruis;
 text_string_widget::text_string_widget(
 	utki::shared_ref<ruis::context> context,
 	text_widget::parameters text_widget_params,
-	text_type text
+	string text
 ) :
 	widget(
 		std::move(context), //
@@ -82,7 +82,7 @@ void text_string_widget::on_text_change()
 	this->text_widget::on_text_change();
 }
 
-void text_string_widget::set_text(text_type text)
+void text_string_widget::set_text(string text)
 {
 	this->text_string = std::move(text);
 	this->invalidate_layout();
@@ -91,7 +91,7 @@ void text_string_widget::set_text(text_type text)
 
 void text_string_widget::set_text(std::u32string text)
 {
-	this->set_text(text_type(text));
+	this->set_text(string(text));
 }
 
 const std::u32string& text_string_widget::get_text_string() const noexcept
@@ -113,6 +113,6 @@ void text_string_widget::on_reload()
 	if (std::holds_alternative<wording>(this->text_string)) {
 		const auto& w = std::get<wording>(this->text_string);
 		auto new_wording = this->context.get().localization.get(w.id());
-		this->set_text(text_type(new_wording));
+		this->set_text(string(new_wording));
 	}
 }

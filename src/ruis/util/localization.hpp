@@ -80,4 +80,13 @@ public:
 	wording get(std::string_view id);
 };
 
+/**
+ * @brief GUI string.
+ * GUI string can be either exact UTF-32 string or a reference to a localized wording.
+ */
+using string = std::variant<
+	std::u32string, //
+	wording //
+	>;
+
 } // namespace ruis

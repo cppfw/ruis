@@ -123,7 +123,7 @@ utki::shared_ref<container> make_bottom_row(utki::shared_ref<context> c)
 
 utki::shared_ref<container> make_caption(
 	utki::shared_ref<context> c, //
-	text_string_widget::text_type title
+	string title
 )
 {
 	// clang-format off
@@ -208,7 +208,7 @@ utki::shared_ref<container> make_caption(
 utki::shared_ref<container> make_middle(
 	utki::shared_ref<context> c, //
 	container::parameters container_params,
-	text_string_widget::text_type title
+	string title
 )
 {
 	// clang-format off
@@ -248,7 +248,7 @@ utki::shared_ref<container> make_middle(
 utki::shared_ref<container> make_middle_row(
 	utki::shared_ref<context> c, //
 	container::parameters container_params,
-	text_string_widget::text_type title
+	string title
 )
 {
 	// clang-format off
@@ -295,7 +295,7 @@ utki::shared_ref<container> make_middle_row(
 std::vector<utki::shared_ref<widget>> make_children(
 	utki::shared_ref<context> c, //
 	container::parameters container_params,
-	text_string_widget::text_type title
+	string title
 )
 {
 	// clang-format off

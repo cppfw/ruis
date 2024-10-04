@@ -35,7 +35,7 @@ text::text(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 text::text(
 	utki::shared_ref<ruis::context> context, //
 	all_parameters params,
-	text_string_widget::text_type text
+	string text
 ) :
 	widget(
 		std::move(context), //
