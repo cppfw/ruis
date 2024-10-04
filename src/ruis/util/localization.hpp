@@ -53,13 +53,13 @@ public:
 		return !this->vocabulary;
 	}
 
-	std::string_view id() const
+	const std::string& id() const
 	{
 		ASSERT(!this->empty())
 		return this->iter->first;
 	}
 
-	std::u32string_view string() const
+	const std::u32string& string() const
 	{
 		ASSERT(!this->empty())
 		return this->iter->second;

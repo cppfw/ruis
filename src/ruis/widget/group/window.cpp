@@ -190,8 +190,7 @@ utki::shared_ref<container> make_caption(utki::shared_ref<context> c)
 									.widget_params = {
 										.id = "ruis_title"s
 									}
-								},
-								{}
+								}
 							)
 						}
 					)

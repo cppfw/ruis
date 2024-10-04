@@ -53,6 +53,27 @@ text::text(
 	)
 {}
 
+text::text(
+	utki::shared_ref<ruis::context> context, //
+	all_parameters params,
+	wording localized_text
+) :
+	widget(
+		std::move(context), //
+		std::move(params.layout_params),
+		std::move(params.widget_params)
+	),
+	text_string_widget(
+		this->context, //
+		std::move(params.text_params),
+		std::move(localized_text)
+	),
+	color_widget(
+		this->context, //
+		std::move(params.color_params)
+	)
+{}
+
 void text::render(const ruis::matrix4& matrix) const
 {
 	ruis::matrix4 matr(matrix);

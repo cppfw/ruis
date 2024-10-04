@@ -21,6 +21,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
+#include "../../util/localization.hpp"
+
 #include "text_widget.hpp"
 
 namespace ruis {
@@ -29,7 +31,7 @@ class text_string_widget : public text_widget
 {
 	mutable ruis::rect bb{};
 
-	std::u32string text;
+	std::variant<std::u32string, wording> text_string;
 
 protected:
 	vector2 measure(const ruis::vector2& quotum) const noexcept override;
@@ -40,6 +42,12 @@ protected:
 		utki::shared_ref<ruis::context> context,
 		text_widget::parameters text_widget_params,
 		std::u32string text
+	);
+
+	text_string_widget(
+		utki::shared_ref<ruis::context> context,
+		text_widget::parameters text_widget_params,
+		wording localized_text
 	);
 
 	const ruis::rect& get_bounding_box() const
@@ -56,10 +64,7 @@ public:
 
 	std::u32string get_text() const override;
 
-	const std::u32string& get_text_string() const
-	{
-		return this->text;
-	}
+	const std::u32string& get_text_string() const noexcept;
 
 	void on_font_change() override
 	{

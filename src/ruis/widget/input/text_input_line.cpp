@@ -125,8 +125,7 @@ vector2 text_input_line::measure(const ruis::vector2& quotum) const noexcept
 	vector2 ret;
 
 	if (quotum.x() < 0) {
-		ret.x() =
-			this->get_bounding_box().d.x() + cursor_width * this->context.get().units.dots_per_fp();
+		ret.x() = this->get_bounding_box().d.x() + cursor_width * this->context.get().units.dots_per_fp();
 	} else {
 		ret.x() = quotum.x();
 	}

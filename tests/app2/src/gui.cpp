@@ -79,7 +79,7 @@ utki::shared_ref<ruis::window> make_sliders_window(utki::shared_ref<ruis::contex
 				{
 					m::text(c,
 						{},
-						U"Hello world!"s
+						c.get().localization.get("hello_world"sv)
 					)
 				}
 			),
@@ -116,7 +116,7 @@ utki::shared_ref<ruis::window> make_sliders_window(utki::shared_ref<ruis::contex
 					),
 					m::text(c,
 						{},
-						U"some checkbox"s
+						c.get().localization.get("some_checkbox"sv)
 					)
 				}
 			)
@@ -273,7 +273,7 @@ utki::shared_ref<ruis::window> make_selection_box_window(utki::shared_ref<ruis::
 						.align = {ruis::align::front, ruis::align::center}
 					}
 				},
-				U"Language:"s
+				c.get().localization.get("language"sv)
 			),
 			m::selection_box(c,
 				{

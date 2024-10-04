@@ -14,4 +14,7 @@ vocabulary{
     some_checkbox{
         str{"какая-то галочка"}
     }
+    language{
+        str{"Язык (Language):"}
+    }
 }

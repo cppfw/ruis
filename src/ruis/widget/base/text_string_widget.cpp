@@ -30,7 +30,19 @@ text_string_widget::text_string_widget(
 ) :
 	widget(std::move(context), {}, {}),
 	text_widget(this->context, std::move(text_widget_params)),
-	text(std::move(text))
+	text_string(std::move(text))
+{
+	this->recompute_bounding_box();
+}
+
+text_string_widget::text_string_widget(
+	utki::shared_ref<ruis::context> context,
+	text_widget::parameters text_widget_params,
+	wording localized_text
+) :
+	widget(std::move(context), {}, {}),
+	text_widget(this->context, std::move(text_widget_params)),
+	text_string(std::move(localized_text))
 {
 	this->recompute_bounding_box();
 }
@@ -45,7 +57,7 @@ text_string_widget::text_string_widget(const utki::shared_ref<ruis::context>& c,
 		}
 
 		if (p.value == "text") {
-			this->text = utki::to_utf32(get_property_value(p).string);
+			this->text_string = utki::to_utf32(get_property_value(p).string);
 			this->recompute_bounding_box();
 		}
 	}
@@ -77,12 +89,21 @@ void text_string_widget::on_text_change()
 
 void text_string_widget::set_text(std::u32string text)
 {
-	this->text = std::move(text);
+	this->text_string = std::move(text);
 	this->invalidate_layout();
 	this->on_text_change();
 }
 
+const std::u32string& text_string_widget::get_text_string() const noexcept
+{
+	if (std::holds_alternative<std::u32string>(this->text_string)) {
+		return std::get<std::u32string>(this->text_string);
+	}
+	ASSERT(std::holds_alternative<wording>(this->text_string));
+	return std::get<wording>(this->text_string).string();
+}
+
 std::u32string text_string_widget::get_text() const
 {
-	return this->text;
+	return this->get_text_string();
 }

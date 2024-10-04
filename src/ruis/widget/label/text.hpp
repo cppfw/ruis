@@ -22,7 +22,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #pragma once
 
 #include "../../res/font.hpp"
-#include "../../util/localization.hpp"
 #include "../base/text_string_widget.hpp"
 #include "../widget.hpp"
 
@@ -37,8 +36,6 @@ class text :
 	public text_string_widget, //
 	public color_widget
 {
-	wording localized_wording;
-
 public:
 	text(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 
@@ -58,7 +55,7 @@ public:
 	text(
 		utki::shared_ref<ruis::context> context, //
 		all_parameters params,
-		wording localized_wording
+		wording localized_text
 	);
 
 public:
@@ -77,12 +74,28 @@ namespace make {
 inline utki::shared_ref<ruis::text> text(
 	utki::shared_ref<ruis::context> context,
 	text::all_parameters params,
-	std::u32string text
+	std::u32string text = {}
 )
 {
-	return utki::make_shared<ruis::text>(std::move(context), std::move(params), std::move(text));
+	return utki::make_shared<ruis::text>(
+		std::move(context), //
+		std::move(params),
+		std::move(text)
+	);
 }
 
+inline utki::shared_ref<ruis::text> text(
+	utki::shared_ref<ruis::context> context,
+	text::all_parameters params,
+	wording localized_text
+)
+{
+	return utki::make_shared<ruis::text>(
+		std::move(context), //
+		std::move(params),
+		std::move(localized_text)
+	);
+}
 } // namespace make
 
 } // namespace ruis

@@ -3,6 +3,7 @@
 
 #include <ruis/util/localization.hpp>
 
+using namespace std::string_literals;
 using namespace std::string_view_literals;
 
 namespace{
@@ -37,8 +38,8 @@ const tst::set set("localization", [](tst::suite& suite){
         tst::check(!wording_1.empty(), SL);
         tst::check(!wording_2.empty(), SL);
 
-        tst::check_eq(wording_1.id(), "str_1"sv, SL);
-        tst::check_eq(wording_2.id(), "str_2"sv, SL);
+        tst::check_eq(wording_1.id(), "str_1"s, SL);
+        tst::check_eq(wording_2.id(), "str_2"s, SL);
         tst::check(wording_1.string() == U"hello"sv, SL);
         tst::check(wording_2.string() == U"world!"sv, SL);
     });

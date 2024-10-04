@@ -14,4 +14,7 @@ vocabulary{
     some_checkbox{
         str{"jokin valintaruutu"}
     }
+    language{
+        str{"Kieli (Language):"}
+    }
 }
