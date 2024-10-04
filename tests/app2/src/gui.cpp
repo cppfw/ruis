@@ -209,6 +209,37 @@ public:
 } // namespace
 
 namespace {
+std::array<std::pair<std::string_view, std::u32string_view>, 3> language_id_to_name_mapping{
+	{
+     {"en"sv, U"English"sv},
+     {"fi"sv, U"Suomi"sv},
+     {"ru"sv, U"Русский"sv},
+	 }
+};
+} // namespace
+
+namespace {
+class language_selection_provider : public ruis::selection_box::provider
+{
+public:
+	size_t count() const noexcept override
+	{
+		return language_id_to_name_mapping.size();
+	}
+
+	utki::shared_ref<ruis::widget> get_widget(size_t index) override
+	{
+		ASSERT(this->get_selection_box())
+		return m::text(
+			this->get_selection_box()->context, //
+			{},
+			std::u32string(language_id_to_name_mapping.at(index).second)
+		);
+	}
+};
+} // namespace
+
+namespace {
 utki::shared_ref<ruis::window> make_selection_box_window(utki::shared_ref<ruis::context> c, ruis::rect rect)
 {
 	// clang-format off
@@ -233,6 +264,24 @@ utki::shared_ref<ruis::window> make_selection_box_window(utki::shared_ref<ruis::
 							"Hello"s,
 							"World!"s
 						})
+					}
+				}
+			),
+			m::text(c,
+				{
+					.layout_params{
+						.align = {ruis::align::front, ruis::align::center}
+					}
+				},
+				U"Language:"s
+			),
+			m::selection_box(c,
+				{
+					.layout_params{
+						.dims = {ruis::dim::max, ruis::dim::min}
+					},
+					.selection_params{
+						.provider = std::make_shared<language_selection_provider>()
 					}
 				}
 			)
