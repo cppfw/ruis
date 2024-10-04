@@ -56,6 +56,11 @@ public:
 
 	std::u32string get_text() const override;
 
+	const std::u32string& get_text_string() const
+	{
+		return this->text;
+	}
+
 	void on_font_change() override
 	{
 		this->recompute_bounding_box();

@@ -66,5 +66,5 @@ void text::render(const ruis::matrix4& matrix) const
 		round((font.get_height() + font.get_ascender() - font.get_descender()) / 2)
 	);
 
-	font.render(matr, ruis::color_to_vec4f(this->get_current_color()), this->get_text());
+	font.render(matr, ruis::color_to_vec4f(this->get_current_color()), this->get_text_string());
 }
