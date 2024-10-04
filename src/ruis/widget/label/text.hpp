@@ -22,7 +22,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #pragma once
 
 #include "../../res/font.hpp"
-#include "../base/single_line_text_widget.hpp"
+#include "../../util/localization.hpp"
+#include "../base/text_string_widget.hpp"
 #include "../widget.hpp"
 
 namespace ruis {
@@ -33,9 +34,11 @@ namespace ruis {
  * From GUI script it can be instantiated as "text".
  */
 class text :
-	public single_line_text_widget, //
+	public text_string_widget, //
 	public color_widget
 {
+	wording localized_wording;
+
 public:
 	text(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 
@@ -46,7 +49,17 @@ public:
 		text_widget::parameters text_params;
 	};
 
-	text(utki::shared_ref<ruis::context> context, all_parameters params, std::u32string text);
+	text(
+		utki::shared_ref<ruis::context> context, //
+		all_parameters params,
+		std::u32string text
+	);
+
+	text(
+		utki::shared_ref<ruis::context> context, //
+		all_parameters params,
+		wording localized_wording
+	);
 
 public:
 	text(const text&) = delete;

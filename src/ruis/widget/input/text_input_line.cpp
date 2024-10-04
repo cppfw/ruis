@@ -41,7 +41,7 @@ const real cursor_width = real(1.0);
 
 text_input_line::text_input_line(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 	widget(c, desc),
-	single_line_text_widget(this->context, desc),
+	text_string_widget(this->context, desc),
 	character_input_widget(this->context),
 	color_widget(this->context, desc)
 {
@@ -125,8 +125,8 @@ vector2 text_input_line::measure(const ruis::vector2& quotum) const noexcept
 	vector2 ret;
 
 	if (quotum.x() < 0) {
-		ret.x() = this->single_line_text_widget::measure(vector2(-1)).x() +
-			cursor_width * this->context.get().units.dots_per_fp();
+		ret.x() =
+			this->text_string_widget::measure(vector2(-1)).x() + cursor_width * this->context.get().units.dots_per_fp();
 	} else {
 		ret.x() = quotum.x();
 	}

@@ -22,7 +22,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #pragma once
 
 #include "../../updateable.hpp"
-#include "../base/single_line_text_widget.hpp"
+#include "../base/text_string_widget.hpp"
 #include "../widget.hpp"
 
 #include "character_input_widget.hpp"
@@ -33,7 +33,7 @@ namespace ruis {
  * @brief TODO:.
  */
 class text_input_line :
-	public single_line_text_widget,
+	public text_string_widget,
 	public character_input_widget,
 	public color_widget,
 	private updateable

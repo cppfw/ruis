@@ -28,27 +28,27 @@ using namespace ruis;
 
 text::text(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 	widget(c, desc),
-	single_line_text_widget(this->context, desc),
+	text_string_widget(this->context, desc),
 	color_widget(this->context, desc)
 {}
 
-text::text( //
-	utki::shared_ref<ruis::context> context,
+text::text(
+	utki::shared_ref<ruis::context> context, //
 	all_parameters params,
 	std::u32string text
 ) :
-	widget( //
-		std::move(context),
+	widget(
+		std::move(context), //
 		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
-	single_line_text_widget( //
-		this->context,
+	text_string_widget(
+		this->context, //
 		std::move(params.text_params),
 		std::move(text)
 	),
-	color_widget( //
-		this->context,
+	color_widget(
+		this->context, //
 		std::move(params.color_params)
 	)
 {}

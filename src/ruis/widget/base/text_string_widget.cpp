@@ -19,11 +19,11 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 /* ================ LICENSE END ================ */
 
-#include "single_line_text_widget.hpp"
+#include "text_string_widget.hpp"
 
 using namespace ruis;
 
-single_line_text_widget::single_line_text_widget(
+text_string_widget::text_string_widget(
 	utki::shared_ref<ruis::context> context,
 	text_widget::parameters text_widget_params,
 	std::u32string text
@@ -35,7 +35,7 @@ single_line_text_widget::single_line_text_widget(
 	this->recompute_bounding_box();
 }
 
-single_line_text_widget::single_line_text_widget(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
+text_string_widget::text_string_widget(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 	widget(c, desc),
 	text_widget(this->context, desc)
 {
@@ -51,12 +51,12 @@ single_line_text_widget::single_line_text_widget(const utki::shared_ref<ruis::co
 	}
 }
 
-void single_line_text_widget::recompute_bounding_box()
+void text_string_widget::recompute_bounding_box()
 {
-	this->bb = this->get_font().get_bounding_box(this->single_line_text_widget::get_text());
+	this->bb = this->get_font().get_bounding_box(this->text_string_widget::get_text());
 }
 
-vector2 single_line_text_widget::measure(const ruis::vector2& quotum) const noexcept
+vector2 text_string_widget::measure(const ruis::vector2& quotum) const noexcept
 {
 	vector2 ret(this->bb.d.x(), this->get_font().get_height());
 
@@ -69,20 +69,20 @@ vector2 single_line_text_widget::measure(const ruis::vector2& quotum) const noex
 	return ret;
 }
 
-void single_line_text_widget::on_text_change()
+void text_string_widget::on_text_change()
 {
 	this->recompute_bounding_box();
 	this->text_widget::on_text_change();
 }
 
-void single_line_text_widget::set_text(std::u32string text)
+void text_string_widget::set_text(std::u32string text)
 {
 	this->text = std::move(text);
 	this->invalidate_layout();
 	this->on_text_change();
 }
 
-std::u32string single_line_text_widget::get_text() const
+std::u32string text_string_widget::get_text() const
 {
 	return this->text;
 }

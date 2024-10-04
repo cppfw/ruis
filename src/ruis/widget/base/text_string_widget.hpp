@@ -25,7 +25,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
-class single_line_text_widget : public text_widget
+class text_string_widget : public text_widget
 {
 	mutable ruis::rect bb{};
 
@@ -34,9 +34,9 @@ class single_line_text_widget : public text_widget
 protected:
 	vector2 measure(const ruis::vector2& quotum) const noexcept override;
 
-	single_line_text_widget(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
+	text_string_widget(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 
-	single_line_text_widget(
+	text_string_widget(
 		utki::shared_ref<ruis::context> context,
 		text_widget::parameters text_widget_params,
 		std::u32string text
