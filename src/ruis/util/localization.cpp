@@ -82,3 +82,7 @@ utki::shared_ref<wording::vocabulary_type> localization::read_localization_vocab
 localization::localization(const tml::forest& desc) :
 	vocabulary(read_localization_vocabulary(desc))
 {}
+
+wording localization::reload(wording&& w){
+	return this->get(w.id());
+}

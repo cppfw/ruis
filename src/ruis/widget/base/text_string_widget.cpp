@@ -111,8 +111,8 @@ std::u32string text_string_widget::get_text() const
 void text_string_widget::on_reload()
 {
 	if (std::holds_alternative<wording>(this->text_string)) {
-		const auto& w = std::get<wording>(this->text_string);
-		auto new_wording = this->context.get().localization.get(w.id());
+		auto& w = std::get<wording>(this->text_string);
+		auto new_wording = this->context.get().localization.reload(std::move(w));
 		this->set_text(string(new_wording));
 	}
 }

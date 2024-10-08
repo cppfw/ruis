@@ -78,6 +78,8 @@ public:
 	localization(const tml::forest& desc);
 
 	wording get(std::string_view id);
+
+	wording reload(wording&& w);
 };
 
 /**
