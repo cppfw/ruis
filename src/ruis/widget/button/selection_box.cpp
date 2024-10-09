@@ -159,3 +159,10 @@ utki::shared_ref<ruis::selection_box> ruis::make::selection_box(
 		} // clang-format on
 	);
 }
+
+void selection_box::on_reload()
+{
+	if (this->item_provider) {
+		this->item_provider->on_reload();
+	}
+}

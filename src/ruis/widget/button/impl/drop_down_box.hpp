@@ -56,6 +56,8 @@ public:
 
 	~drop_down_box() override = default;
 
+	void on_reload() override;
+
 private:
 	// index of the hovered item in the drop down menu
 	int hovered_index = -1;

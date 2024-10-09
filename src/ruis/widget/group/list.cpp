@@ -545,3 +545,12 @@ void list::handle_data_set_changed()
 		this->data_set_change_handler(*this);
 	}
 }
+
+void list::on_reload()
+{
+	this->container::on_reload();
+
+	if (this->item_provider) {
+		this->item_provider->on_reload();
+	}
+}

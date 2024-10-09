@@ -84,6 +84,12 @@ public:
 		virtual void recycle(size_t index, std::shared_ptr<widget> w) {}
 
 		/**
+		 * @brief Reload callback.
+		 * Called from owner selection_box's on_reload().
+		 */
+		virtual void on_reload() {}
+
+		/**
 		 * @brief Notify about change of items model.
 		 * The user is supposed to invoke this function when items model change.
 		 */
@@ -143,6 +149,8 @@ public:
 	}
 
 	std::function<void(selection_box& sb)> selection_handler;
+
+	void on_reload() override;
 
 private:
 	void handle_data_set_changed();

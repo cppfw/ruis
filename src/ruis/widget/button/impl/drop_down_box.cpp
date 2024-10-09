@@ -351,3 +351,9 @@ utki::shared_ref<widget> drop_down_box::wrap_item(const utki::shared_ref<widget>
 
 	return wd;
 }
+
+void drop_down_box::on_reload()
+{
+	this->nine_patch_push_button::on_reload();
+	this->selection_box::on_reload();
+}

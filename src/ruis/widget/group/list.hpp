@@ -129,6 +129,12 @@ public:
 		 */
 		virtual void recycle(size_t index, const utki::shared_ref<widget>& w) {}
 
+		/**
+		 * @brief Reload callback.
+		 * Called from owner list's on_reload().
+		 */
+		virtual void on_reload() {}
+
 		void notify_data_set_change();
 	};
 
@@ -182,6 +188,8 @@ public:
 	 * @param delta - number of pixels to scroll, can be positive or negative.
 	 */
 	void scroll_by(real delta);
+
+	void on_reload() override;
 
 	/**
 	 * @brief Data set changed signal.

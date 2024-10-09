@@ -56,7 +56,9 @@ public:
 
 	~tree_view() override = default;
 
-	class provider : public virtual utki::shared, private list::provider
+	class provider :
+		public virtual utki::shared, //
+		private list::provider
 	{
 		friend class tree_view;
 
@@ -90,11 +92,24 @@ public:
 		provider() = default;
 
 	public:
-		virtual utki::shared_ref<widget> get_widget(utki::span<const size_t> index, bool is_collapsed) = 0;
+		virtual utki::shared_ref<widget> get_widget(
+			utki::span<const size_t> index, //
+			bool is_collapsed
+		) = 0;
 
-		virtual void recycle(utki::span<const size_t> index, const utki::shared_ref<widget>& w) {}
+		virtual void recycle(
+			utki::span<const size_t> index, //
+			const utki::shared_ref<widget>& w
+		)
+		{}
 
 		virtual size_t count(utki::span<const size_t> index) const noexcept = 0;
+
+		/**
+		 * @brief Reload callback.
+		 * Called from owner tree_view's on_reload().
+		 */
+		void on_reload() override {}
 
 		void uncollapse(utki::span<const size_t> index);
 		void collapse(utki::span<const size_t> index);
