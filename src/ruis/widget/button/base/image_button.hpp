@@ -60,14 +60,14 @@ protected:
 public:
 	void set_pressed_image(std::shared_ptr<const res::image> image);
 
-	const decltype(params.pressed_image)& get_pressed_image() const
+	const decltype(params.pressed_image) & get_pressed_image() const
 	{
 		return this->params.pressed_image;
 	}
 
 	void set_unpressed_image(std::shared_ptr<const res::image> image);
 
-	const decltype(params.unpressed_image)& get_unpressed_image() const
+	const decltype(params.unpressed_image) & get_unpressed_image() const
 	{
 		return this->params.unpressed_image;
 	}

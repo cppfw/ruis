@@ -295,7 +295,7 @@ void tree_view::provider::recycle(size_t index, const utki::shared_ref<widget>& 
 	this->recycle(utki::make_span(path), w);
 }
 
-const decltype(tree_view::provider::iter)& tree_view::provider::iter_for(size_t index) const
+const decltype(tree_view::provider::iter) & tree_view::provider::iter_for(size_t index) const
 {
 	if (index != this->iter_index) {
 		if (index > this->iter_index) {

@@ -83,7 +83,7 @@ public:
 		mutable size_t iter_index = 0;
 		mutable utki::traversal<decltype(visible_tree)::container_type>::iterator iter = this->traversal().begin();
 
-		const decltype(iter)& iter_for(size_t index) const;
+		const decltype(iter) & iter_for(size_t index) const;
 
 		void remove_children(decltype(iter) from);
 		void set_children(decltype(iter) i, size_t num_children);

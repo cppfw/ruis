@@ -47,8 +47,8 @@ std::u32string ruis::format(
 		auto c = *pos;
 		if (c == U'{') {
 			auto [number, new_pos] = read_number(pos, fmt.cend());
-			ss << args[number];
 			pos = new_pos;
+			ss << args.at(number);
 		} else {
 			ss << c;
 			++pos;

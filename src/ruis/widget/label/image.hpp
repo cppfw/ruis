@@ -95,7 +95,7 @@ public:
 
 	void on_resize() override;
 
-	const decltype(params.repeat_v)& repeat() const noexcept
+	const decltype(params.repeat_v) & repeat() const noexcept
 	{
 		return this->params.repeat_v;
 	}
