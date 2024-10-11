@@ -35,7 +35,7 @@ const tst::set set("format", [](tst::suite& suite){
     suite.add("too_big_replacement_id_throws", [](){
         bool thrown = false;
         try{
-            auto str = ruis::format(
+            ruis::format(
                 U"{10000} {0}!"sv, //
                 {
                     U"world"s,
@@ -53,7 +53,7 @@ const tst::set set("format", [](tst::suite& suite){
     suite.add("invalid_replacement_id_throws", [](){
         bool thrown = false;
         try{
-            auto str = ruis::format(
+            ruis::format(
                 U"{0} {asd0}!"sv, //
                 {
                     U"world"s,
