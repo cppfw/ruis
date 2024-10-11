@@ -258,7 +258,7 @@ real ruis::easing::in_back(real f)
 	using utki::pow2;
 	using utki::pow3;
 
-	constexpr real c1 = 1.70158;
+	constexpr real c1 = real(1.70158);
 	constexpr real c3 = c1 + 1;
 
 	return c3 * pow3(f) - c1 * pow2(f);
@@ -271,7 +271,7 @@ real ruis::easing::out_back(real f)
 	using utki::pow2;
 	using utki::pow3;
 
-	constexpr real c1 = 1.70158;
+	constexpr real c1 = real(1.70158);
 	constexpr real c3 = c1 + 1;
 
 	return real(1) + c3 * pow3(f - 1) + c1 * pow2(f - 1);
@@ -283,8 +283,8 @@ real ruis::easing::in_out_back(real f)
 	ASSERT(f <= 1)
 	using utki::pow2;
 
-	constexpr real c1 = 1.70158;
-	constexpr real c2 = c1 * 1.525;
+	constexpr real c1 = real(1.70158);
+	constexpr real c2 = c1 * real(1.525);
 
 	if (f < half_way_factor) {
 		return (pow2(2 * f) * (2 * (c2 + 1) * f - c2)) / 2;
@@ -300,7 +300,7 @@ real ruis::easing::in_elastic(real f)
 	using std::pow;
 	using std::sin;
 
-	constexpr real c4 = (2 * utki::pi) / 3;
+	constexpr real c4 = real(2 * utki::pi / 3);
 	constexpr real compress = 10;
 	constexpr real sin_shift = 10.75;
 
@@ -320,7 +320,7 @@ real ruis::easing::out_elastic(real f)
 	using std::pow;
 	using std::sin;
 
-	constexpr real c4 = (2 * utki::pi) / 3;
+	constexpr real c4 = real(2 * utki::pi / 3);
 	constexpr real compress = 10;
 	constexpr real sin_shift = 0.75;
 
@@ -340,7 +340,7 @@ real ruis::easing::in_out_elastic(real f)
 	using std::pow;
 	using std::sin;
 
-	constexpr real c5 = (2 * utki::pi) / 4.5;
+	constexpr real c5 = real(2 * utki::pi / 4.5);
 	constexpr real compress = 10;
 	constexpr real sin_shift = 11.125;
 
