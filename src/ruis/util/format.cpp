@@ -21,7 +21,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "format.hpp"
 
+#include <charconv>
 #include <sstream>
+
+#include <utki/string.hpp>
 
 using namespace ruis;
 
@@ -31,8 +34,43 @@ std::tuple<unsigned, std::u32string_view::const_iterator> read_number(
 	std::u32string_view::const_iterator end
 )
 {
-	// TODO: read until }
-	return std::make_tuple(0, begin);
+	std::array<char, 4> number_chars{};
+	auto number_i = number_chars.begin();
+
+	auto i = begin;
+	for (; i != end; ++i, ++number_i) {
+		if (*i == U'}') {
+			++i;
+			break;
+		}
+
+		if (number_i == number_chars.end()) {
+			throw std::invalid_argument("format replacement id is too big");
+		}
+
+		*number_i = char(*i);
+	}
+
+	unsigned value{};
+	auto res = std::from_chars(
+		&*number_chars.begin(), //
+		&*number_i,
+		value
+	);
+
+	if (res.ec != std::errc()) {
+		throw std::invalid_argument(
+			utki::cat(
+				"could not parse format replacement field id: ",
+				std::string_view(
+					&*number_chars.begin(), //
+					std::distance(number_chars.begin(), number_i)
+				)
+			)
+		);
+	}
+
+	return std::make_tuple(value, i);
 }
 } // namespace
 
@@ -45,13 +83,13 @@ std::u32string ruis::format(
 
 	for (auto pos = fmt.cbegin(); pos != fmt.cend();) {
 		auto c = *pos;
+		++pos;
 		if (c == U'{') {
 			auto [number, new_pos] = read_number(pos, fmt.cend());
 			pos = new_pos;
 			ss << args.at(number);
 		} else {
 			ss << c;
-			++pos;
 		}
 	}
 

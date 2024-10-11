@@ -83,6 +83,7 @@ localization::localization(const tml::forest& desc) :
 	vocabulary(read_localization_vocabulary(desc))
 {}
 
+// NOLINTNEXTLINE(cppcoreguidelines-rvalue-reference-param-not-moved, "TODO: implement moving for formatted wording")
 wording localization::reload(wording&& w)
 {
 	return this->get(w.id());
