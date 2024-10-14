@@ -112,17 +112,25 @@ std::u32string ruis::format(
 	utki::span<const std::u32string> args
 )
 {
-	std::basic_stringstream<char32_t> ss;
+	std::u32string ret;
 
+	size_t capacity = 0;
 	for (const auto& c : fmt) {
-		ss << c.chunk;
-
-		if (c.replacement_id >= args.size()) {
-			continue;
+		capacity += c.chunk.size();
+		if (c.replacement_id < args.size()) {
+			capacity += args[c.replacement_id].size();
 		}
-
-		ss << args.at(c.replacement_id);
 	}
 
-	return ss.str();
+	ret.reserve(capacity);
+
+	for (const auto& c : fmt) {
+		ret.append(c.chunk);
+
+		if (c.replacement_id < args.size()) {
+			ret.append(args[c.replacement_id]);
+		}
+	}
+
+	return ret;
 }
