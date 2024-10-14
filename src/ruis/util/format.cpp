@@ -74,12 +74,14 @@ std::tuple<unsigned, std::u32string_view::const_iterator> read_number(
 }
 } // namespace
 
-std::u32string ruis::format(
-	std::u32string_view fmt, //
-	utki::span<const std::u32string> args
-)
+std::vector<format_chunk> ruis::parse_format(std::u32string_view fmt)
 {
-	std::basic_stringstream<char32_t> ss;
+	std::vector<format_chunk> ret;
+
+	format_chunk cur_chunk{
+		.chunk = std::u32string_view(fmt.data(), 0), //
+		.replacement_id = std::numeric_limits<unsigned>::max()
+	};
 
 	for (auto pos = fmt.cbegin(); pos != fmt.cend();) {
 		auto c = *pos;
@@ -87,10 +89,39 @@ std::u32string ruis::format(
 		if (c == U'{') {
 			auto [number, new_pos] = read_number(pos, fmt.cend());
 			pos = new_pos;
-			ss << args.at(number);
+			cur_chunk.replacement_id = number;
+			ret.push_back(std::move(cur_chunk));
+			cur_chunk = {
+				.chunk = std::u32string_view(&*pos, 0), //
+				.replacement_id = std::numeric_limits<unsigned>::max()
+			};
 		} else {
-			ss << c;
+			cur_chunk.chunk = std::u32string_view(cur_chunk.chunk.data(), cur_chunk.chunk.size() + 1);
 		}
+	}
+
+	if (!cur_chunk.chunk.empty()) {
+		ret.push_back(std::move(cur_chunk));
+	}
+
+	return ret;
+}
+
+std::u32string ruis::format(
+	utki::span<const format_chunk> fmt, //
+	utki::span<const std::u32string> args
+)
+{
+	std::basic_stringstream<char32_t> ss;
+
+	for (const auto& c : fmt) {
+		ss << c.chunk;
+
+		if (c.replacement_id >= args.size()) {
+			continue;
+		}
+
+		ss << args.at(c.replacement_id);
 	}
 
 	return ss.str();

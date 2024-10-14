@@ -25,9 +25,24 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
+struct format_chunk {
+	std::u32string_view chunk;
+	unsigned replacement_id;
+};
+
+std::vector<format_chunk> parse_format(std::u32string_view fmt);
+
 std::u32string format(
-	std::u32string_view fmt, //
+	utki::span<const format_chunk> fmt, //
 	utki::span<const std::u32string> args
 );
+
+inline std::u32string format(
+	std::u32string_view fmt, //
+	utki::span<const std::u32string> args
+)
+{
+	return format(parse_format(fmt), args);
+}
 
 } // namespace ruis

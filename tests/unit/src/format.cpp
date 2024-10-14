@@ -2,6 +2,7 @@
 #include <tst/check.hpp>
 
 #include <ruis/util/format.hpp>
+#include <utki/unicode.hpp>
 
 using namespace std::string_literals;
 using namespace std::string_view_literals;
@@ -17,7 +18,7 @@ const tst::set set("format", [](tst::suite& suite){
             }
         );
 
-        tst::check(str == U"Hello world!"s, SL);
+        tst::check(str == U"Hello world!"s, SL) << "str = " << utki::to_utf8(str);
     });
 
     suite.add("substitute_same_string_twice", [](){
@@ -29,7 +30,7 @@ const tst::set set("format", [](tst::suite& suite){
             }
         );
 
-        tst::check(str == U"Hello-Hello world!"s, SL);
+        tst::check(str == U"Hello-Hello world!"s, SL) << "str = " << utki::to_utf8(str);
     });
 
     suite.add("too_big_replacement_id_throws", [](){
