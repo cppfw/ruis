@@ -1,3 +1,9 @@
+libruis (0.5.253) unstable; urgency=medium
+
+  * formatted localization
+
+ -- Ivan Gagis <igagis@gmail.com>  Mon, 14 Oct 2024 22:01:38 +0300
+
 libruis (0.5.252) unstable; urgency=medium
 
   * localization support
