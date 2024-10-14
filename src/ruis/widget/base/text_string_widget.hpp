@@ -60,7 +60,21 @@ public:
 
 	std::u32string get_text() const override;
 
-	const std::u32string& get_text_string() const noexcept;
+	void set_wording(wording w);
+
+	/**
+	 * @brief Get wording.
+	 * @return Reference to the wording held by this instance.
+	 * @throw std::ivalid_argument - in case this instance does not hold a wording.
+	 */
+	wording& get_wording();
+
+	/**
+	 * @brief Get actual text string.
+	 * Obtain reference to the actual displayed string of text.
+	 * @return Constant reference to the actual text string of the text_string_widget.
+	 */
+	const std::u32string& get_string() const noexcept;
 
 	void on_font_change() override
 	{

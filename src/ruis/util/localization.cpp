@@ -42,6 +42,17 @@ wording::wording(
 	}())
 {}
 
+wording& wording::format(std::vector<std::u32string> args)
+{
+	if (this->format_chunks.empty()) {
+		this->format_chunks = ruis::parse_format(this->get_string());
+	}
+	this->format_args = std::move(args);
+	this->formatted_string = ruis::format(this->format_chunks, this->format_args);
+
+	return *this;
+}
+
 wording localization::get(std::string_view id)
 {
 	return {this->vocabulary.to_shared_ptr(), id};
@@ -83,8 +94,14 @@ localization::localization(const tml::forest& desc) :
 	vocabulary(read_localization_vocabulary(desc))
 {}
 
-// NOLINTNEXTLINE(cppcoreguidelines-rvalue-reference-param-not-moved, "TODO: implement moving for formatted wording")
+// NOLINTNEXTLINE(cppcoreguidelines-rvalue-reference-param-not-moved, "w is not moved, but w.format_args is moved")
 wording localization::reload(wording&& w)
 {
-	return this->get(w.id());
+	auto ret = this->get(w.id());
+
+	if (w.is_formatted()) {
+		ret.format(std::move(w.format_args));
+	}
+
+	return ret;
 }

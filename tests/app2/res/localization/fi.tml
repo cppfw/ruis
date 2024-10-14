@@ -17,4 +17,7 @@ vocabulary{
     language{
         str{"Kieli (Language):"}
     }
+    formatted_str{
+        str{"Muotoiltu {1} {0}!"}
+    }
 }

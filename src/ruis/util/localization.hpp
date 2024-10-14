@@ -28,6 +28,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <utki/debug.hpp>
 #include <utki/shared_ref.hpp>
 
+#include "format.hpp"
+
 namespace ruis {
 
 class wording
@@ -37,13 +39,26 @@ class wording
 	using vocabulary_type = std::map<std::string, std::u32string, std::less<>>;
 
 	std::shared_ptr<vocabulary_type> vocabulary;
-
 	vocabulary_type::const_iterator iter;
+
+	std::vector<format_chunk> format_chunks;
+	std::vector<std::u32string> format_args;
+	std::u32string formatted_string;
 
 	wording(
 		std::shared_ptr<vocabulary_type> vocabulary, //
 		std::string_view id
 	);
+
+	bool is_formatted() const noexcept
+	{
+		return !this->format_chunks.empty();
+	}
+
+	const std::u32string& get_string() const noexcept
+	{
+		return this->iter->second;
+	}
 
 public:
 	wording() = default;
@@ -59,10 +74,21 @@ public:
 		return this->iter->first;
 	}
 
-	const std::u32string& string() const
+	/**
+	 * @brief Aply formatting to this wording.
+	 * @param args - replacement strings.
+	 * @return Reference to this instance.
+	 */
+	wording& format(std::vector<std::u32string> args);
+
+	const std::u32string& string() const noexcept
 	{
 		ASSERT(!this->empty())
-		return this->iter->second;
+		if (this->is_formatted()) {
+			return this->formatted_string;
+		} else {
+			return this->get_string();
+		}
 	}
 };
 

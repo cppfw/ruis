@@ -60,7 +60,7 @@ text_string_widget::text_string_widget(const utki::shared_ref<ruis::context>& c,
 
 void text_string_widget::recompute_bounding_box()
 {
-	this->bb = this->get_font().get_bounding_box(this->get_text_string());
+	this->bb = this->get_font().get_bounding_box(this->get_string());
 }
 
 vector2 text_string_widget::measure(const ruis::vector2& quotum) const noexcept
@@ -94,7 +94,7 @@ void text_string_widget::set_text(std::u32string text)
 	this->set_text(string(text));
 }
 
-const std::u32string& text_string_widget::get_text_string() const noexcept
+const std::u32string& text_string_widget::get_string() const noexcept
 {
 	if (std::holds_alternative<std::u32string>(this->text_string)) {
 		return *std::get_if<std::u32string>(&this->text_string);
@@ -105,14 +105,28 @@ const std::u32string& text_string_widget::get_text_string() const noexcept
 
 std::u32string text_string_widget::get_text() const
 {
-	return this->get_text_string();
+	return this->get_string();
+}
+
+wording& text_string_widget::get_wording()
+{
+	if (!std::holds_alternative<wording>(this->text_string)) {
+		throw std::invalid_argument("text_string_widget(): this instance does not hold a wording");
+	}
+
+	return *std::get_if<wording>(&this->text_string);
+}
+
+void text_string_widget::set_wording(wording w)
+{
+	this->set_text(std::move(w));
 }
 
 void text_string_widget::on_reload()
 {
 	if (std::holds_alternative<wording>(this->text_string)) {
-		auto& w = std::get<wording>(this->text_string);
+		auto& w = this->get_wording();
 		auto new_wording = this->context.get().localization.reload(std::move(w));
-		this->set_text(string(new_wording));
+		this->set_wording(std::move(new_wording));
 	}
 }

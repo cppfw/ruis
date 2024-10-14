@@ -17,4 +17,7 @@ vocabulary{
     language{
         str{"Language:"}
     }
+    formatted_str{
+        str{"Formatted {1} {0}!"}
+    }
 }

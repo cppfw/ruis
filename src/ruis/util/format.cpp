@@ -79,6 +79,7 @@ std::vector<format_chunk> ruis::parse_format(std::u32string_view fmt)
 	std::vector<format_chunk> ret;
 
 	format_chunk cur_chunk{
+		// NOLINTNEXTLINE(bugprone-suspicious-stringview-data-usage, "false positive")
 		.chunk = std::u32string_view(fmt.data(), 0), //
 		.replacement_id = std::numeric_limits<unsigned>::max()
 	};
@@ -92,6 +93,7 @@ std::vector<format_chunk> ruis::parse_format(std::u32string_view fmt)
 			cur_chunk.replacement_id = number;
 			ret.push_back(std::move(cur_chunk));
 			cur_chunk = {
+				// NOLINTNEXTLINE(bugprone-string-constructor, "false positive")
 				.chunk = std::u32string_view(&*pos, 0), //
 				.replacement_id = std::numeric_limits<unsigned>::max()
 			};

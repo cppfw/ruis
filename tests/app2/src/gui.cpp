@@ -247,7 +247,7 @@ utki::shared_ref<ruis::window> make_selection_box_window(
 )
 {
 	// clang-format off
-	auto sel_box = m::selection_box(c,
+	auto lang_sel_box = m::selection_box(c,
 		{
 			.layout_params{
 				.dims = {ruis::dim::max, ruis::dim::min}
@@ -259,7 +259,7 @@ utki::shared_ref<ruis::window> make_selection_box_window(
 	);
 	// clang-format on
 
-	sel_box.get().selection_handler = [](ruis::selection_box& sb) {
+	lang_sel_box.get().selection_handler = [](ruis::selection_box& sb) {
 		auto sel = sb.get_selection();
 
 		// std::cout << "localization selection changed = " << sel << std::endl;
@@ -310,7 +310,11 @@ utki::shared_ref<ruis::window> make_selection_box_window(
 				},
 				c.get().localization.get("language"sv)
 			),
-			std::move(sel_box)
+			std::move(lang_sel_box),
+			m::text(c,
+				{},
+				c.get().localization.get("formatted_str"sv).format({U"world"s, U"Hello"s})
+			)
 		}
 	);
 	// clang-format on
