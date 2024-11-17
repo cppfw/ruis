@@ -18,9 +18,9 @@ nuget{
 		title: C++ GUI library;
 		authors: {Ivan Gagis};
 		owners: {Ivan Gagis};
-		licenseUrl: "https://raw.githubusercontent.com/cppfw/ruis/master/LICENSE";
+		licenseUrl: "https://raw.githubusercontent.com/cppfw/ruis/main/LICENSE";
 		projectUrl: "https://github.com/cppfw/ruis";
-		iconUrl: "https://github.com/cppfw/ruis/blob/master/logo.svg";
+		iconUrl: "https://github.com/cppfw/ruis/blob/main/logo.svg";
 		requireLicenseAcceptance:false;
 		summary: C++ GUI library;
 
