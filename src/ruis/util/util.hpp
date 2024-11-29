@@ -40,7 +40,7 @@ namespace ruis {
  * - zero at top-left corner of the viewport
  * - viewport right and bottom edges correspond to coordinates equal to viewport size in pixels.
  *
- * @param initial - renderer's initial matrix.
+ * @param initial - renderer's initial matrix (y-axis down, x-axis right, z-axis away, zero at top left corner).
  * @param viewport_dim - dimensions of the viewport.
  * @return Viewport matrix.
  */

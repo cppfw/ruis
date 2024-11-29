@@ -92,7 +92,7 @@ const tst::set set("layouting", [](tst::suite& suite){
         tc.get().invalidate_layout();
 
         // gui render method will check if layout is dirty and perform re-layouting
-        gui.render();
+        gui.render(ruis::matrix4().set_identity());
         tst::check(tc.get().is_layout_dirty(), SL);
     });
 });

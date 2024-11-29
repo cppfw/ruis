@@ -93,10 +93,13 @@ public:
 
 	/**
 	 * @brief Render GUI.
-	 * Y axis directed upwards. Left screen edge is at -1, right is at 1, top at 1, bottom at -1.
-	 * @param matrix - use this transformation matrix.
+	 * Assumes that passed in matrix sets up a right-handed coordinate system so that:
+	 * - x-axis right, left screen edge is at 0, right screen edge is at 1.
+	 * - y-axis down, top screen edge is at 0, bottom screen edge is at 1.
+	 * - z-axis away.
+	 * @param matrix - use this transformation matrix. Usually a renderer's initial matrix.
 	 */
-	void render(const matrix4& matrix = matrix4().set_identity()) const;
+	void render(const matrix4& matrix) const;
 
 	/**
 	 * @brief Initialize standard widgets library.
