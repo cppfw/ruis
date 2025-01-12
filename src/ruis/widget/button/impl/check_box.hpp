@@ -33,6 +33,7 @@ namespace ruis {
  * In GUI script can be instantiated as 'Checkbox'. Only available after initializing
  * standard ruis widgets.
  */
+// NOLINTNEXTLINE(bugprone-incorrect-enable-shared-from-this, "std::shared_from_this is public via toggle_button")
 class check_box :
 	virtual public toggle_button, //
 	private nine_patch

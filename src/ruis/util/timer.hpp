@@ -31,6 +31,7 @@ namespace ruis {
  * The class is not thread safe and is supposed to be only used from
  * within the UI-thread. Timer callback is invoked from UI-thread.
  */
+// NOLINTNEXTLINE(bugprone-incorrect-enable-shared-from-this, "std::shared_from_this is public via utki::shared")
 class timer :
 	virtual public utki::shared, //
 	private updateable

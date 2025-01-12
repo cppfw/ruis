@@ -35,6 +35,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
+// suppress lint, because "std::shared_from_this is public via fraction_band_widget"
+// NOLINTNEXTLINE(bugprone-incorrect-enable-shared-from-this)
 class scroll_bar :
 	public fraction_band_widget, //
 	protected oriented,

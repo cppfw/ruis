@@ -32,6 +32,7 @@ namespace ruis {
  * an empty round when unchecked. In GUI script it can be instantiated as
  * "radio_button". Only available after initializing standard ruis widgets.
  */
+// NOLINTNEXTLINE(bugprone-incorrect-enable-shared-from-this, "std::shared_from_this is public via choice_button")
 class radio_button :
 	virtual public choice_button, //
 	private container

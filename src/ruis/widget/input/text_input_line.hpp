@@ -32,6 +32,7 @@ namespace ruis {
 /**
  * @brief TODO:.
  */
+// NOLINTNEXTLINE(bugprone-incorrect-enable-shared-from-this, "std::shared_from_this is public via text_string_widget")
 class text_input_line :
 	public text_string_widget,
 	public character_input_widget,

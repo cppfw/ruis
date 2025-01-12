@@ -32,7 +32,7 @@ namespace ruis {
 // ruis::updateable virtually iherits from utki::shared which inherits
 // from std::shared_from_this, but ruis::animation also publicly and virtually inherits utki::shared,
 // so std::shared_from_this inheritance is effectively public.
-// NOLINTNEXTLINE(bugprone-incorrect-enable-shared-from-this)
+// NOLINTNEXTLINE(bugprone-incorrect-enable-shared-from-this, "std::shared_from_this is public via utki::shared")
 class animation :
 	virtual public utki::shared, //
 	private updateable

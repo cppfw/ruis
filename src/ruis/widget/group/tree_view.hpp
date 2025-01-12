@@ -32,6 +32,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
+// NOLINTNEXTLINE(bugprone-incorrect-enable-shared-from-this, "std::shared_from_this is public via widget")
 class tree_view :
 	virtual public widget, //
 	private scroll_area
@@ -56,6 +57,7 @@ public:
 
 	~tree_view() override = default;
 
+	// NOLINTNEXTLINE(bugprone-incorrect-enable-shared-from-this, "std::shared_from_this is public via utki::shared")
 	class provider :
 		public virtual utki::shared, //
 		private list::provider

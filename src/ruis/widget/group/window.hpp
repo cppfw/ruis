@@ -38,6 +38,7 @@ namespace ruis {
  * @param look - style settings.
  */
 // TODO: derive from frame_widget
+// NOLINTNEXTLINE(bugprone-incorrect-enable-shared-from-this, "std::shared_from_this is public via widget")
 class window :
 	virtual public widget, //
 	private container

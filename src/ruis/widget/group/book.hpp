@@ -25,6 +25,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
+// NOLINTNEXTLINE(bugprone-incorrect-enable-shared-from-this, "std::shared_from_this is public via widget")
 class book;
 
 class page : public virtual widget
@@ -68,6 +69,7 @@ public:
 	utki::shared_ref<page> tear_out();
 };
 
+// NOLINTNEXTLINE(bugprone-incorrect-enable-shared-from-this, "std::shared_from_this is public via widget")
 class book :
 	public virtual widget, //
 	private container
