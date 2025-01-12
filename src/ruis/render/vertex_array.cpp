@@ -27,12 +27,11 @@ using namespace ruis::render;
 
 vertex_array::vertex_array(
 	buffers_type buffers,
-	// NOLINTNEXTLINE(modernize-pass-by-value)
-	const utki::shared_ref<const ruis::render::index_buffer>& indices,
+	utki::shared_ref<const ruis::render::index_buffer> indices,
 	mode rendering_mode
 ) :
 	buffers(std::move(buffers)),
-	indices(indices),
+	indices(std::move(indices)),
 	rendering_mode(rendering_mode)
 {
 	if (this->buffers.empty()) {

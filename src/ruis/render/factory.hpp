@@ -104,7 +104,7 @@ public:
 
 	virtual utki::shared_ref<vertex_array> create_vertex_array(
 		std::vector<utki::shared_ref<const ruis::render::vertex_buffer>> buffers,
-		const utki::shared_ref<const ruis::render::index_buffer>& indices,
+		utki::shared_ref<const ruis::render::index_buffer> indices,
 		vertex_array::mode rendering_mode
 	) = 0;
 
