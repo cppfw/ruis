@@ -27,6 +27,12 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
+// Lint complains that std::shared_from_this is privately inherited via ruis::updateable
+// and trying to use it will result in undefined behaviour. This is false, because
+// ruis::updateable virtually iherits from utki::shared which inherits
+// from std::shared_from_this, but ruis::animation also publicly and virtually inherits utki::shared,
+// so std::shared_from_this inheritance is effectively public.
+// NOLINTNEXTLINE(bugprone-incorrect-enable-shared-from-this)
 class animation :
 	virtual public utki::shared, //
 	private updateable
