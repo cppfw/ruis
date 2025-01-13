@@ -1,3 +1,9 @@
+libruis (0.5.255) unstable; urgency=medium
+
+  * pass by value
+
+ -- Ivan Gagis <igagis@gmail.com>  Mon, 13 Jan 2025 11:22:58 +0200
+
 libruis (0.5.254) unstable; urgency=medium
 
   * update
