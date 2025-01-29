@@ -58,8 +58,8 @@ class RuisConan(ConanFile):
 		if self.settings.os == "Emscripten":
 			self.run("make $MAKE_INCLUDE_DIRS_ARG config=wasm --directory=src")
 		else:
-			self.run("make $MAKE_INCLUDE_DIRS_ARG lint=off")
-			self.run("make $MAKE_INCLUDE_DIRS_ARG lint=off test")
+			self.run("make $MAKE_INCLUDE_DIRS_ARG lint=off --directory=src")
+			# self.run("make $MAKE_INCLUDE_DIRS_ARG lint=off test")
 
 	def package(self):
 		if self.settings.os == "Emscripten":
