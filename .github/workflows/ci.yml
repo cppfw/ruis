@@ -9,6 +9,9 @@ env:
   MYCI_NEXUS_PASSWORD: ${{ secrets.MYCI_NEXUS_PASSWORD }}
   MYCI_GIT_USERNAME: igagis
   MYCI_GIT_PASSWORD: ${{ secrets.MYCI_GIT_ACCESS_TOKEN }}
+  MYCI_CONAN_REMOTE: https://gagis.hopto.org/conan
+  MYCI_CONAN_USER: cppfw
+  MYCI_CONAN_PASSWORD: ${{ secrets.MYCI_CONAN_PASSWORD }}
 jobs:
 ##### coverage #####
   coverage:
