@@ -83,7 +83,7 @@ public:
 		real mul; // for erasing from the cache
 
 	public:
-		decltype(img_matrix) & images() const noexcept
+		decltype(img_matrix)& images() const noexcept
 		{
 			return this->img_matrix;
 		}
@@ -106,7 +106,7 @@ public:
 
 	std::shared_ptr<image_matrix> get(sides<length> borders) const;
 
-	const decltype(borders) & get_borders() const noexcept
+	const decltype(borders)& get_borders() const noexcept
 	{
 		return this->borders;
 	}

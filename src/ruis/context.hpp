@@ -53,7 +53,7 @@ public:
 	const std::function<void(std::function<void()>)> post_to_ui_thread;
 
 	// TODO: deprecated, remove
-	decltype(post_to_ui_thread) & run_from_ui_thread = post_to_ui_thread;
+	decltype(post_to_ui_thread)& run_from_ui_thread = post_to_ui_thread;
 
 	mouse_cursor_manager cursor_manager;
 

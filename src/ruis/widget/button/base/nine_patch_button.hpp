@@ -72,14 +72,14 @@ public:
 
 	void set_unpressed_nine_patch(std::shared_ptr<const res::nine_patch> np);
 
-	const decltype(parameters::unpressed_nine_patch) & get_unpressed_nine_patch() const noexcept
+	const decltype(parameters::unpressed_nine_patch)& get_unpressed_nine_patch() const noexcept
 	{
 		return this->params.unpressed_nine_patch;
 	}
 
 	void set_pressed_nine_patch(std::shared_ptr<const res::nine_patch> np);
 
-	const decltype(parameters::pressed_nine_patch) & get_pressed_nine_patch() const noexcept
+	const decltype(parameters::pressed_nine_patch)& get_pressed_nine_patch() const noexcept
 	{
 		return this->params.pressed_nine_patch;
 	}
