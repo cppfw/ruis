@@ -38,6 +38,22 @@ class tab :
 public:
 	tab(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 
+	struct all_parameters {
+		ruis::layout_parameters layout_params;
+		ruis::widget::parameters widget_params;
+		container::parameters container_params;
+		button::parameters button_params;
+		blending_widget::parameters blending_params;
+		nine_patch::parameters nine_patch_params;
+		nine_patch_button::parameters nine_patch_button_params;
+	};
+
+	tab( //
+		utki::shared_ref<ruis::context> context,
+		all_parameters params,
+		utki::span<const utki::shared_ref<ruis::widget>> children
+	);
+
 	tab(const tab&) = delete;
 	tab& operator=(const tab&) = delete;
 

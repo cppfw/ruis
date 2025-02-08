@@ -44,6 +44,8 @@ protected:
 
 	choice_button(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 
+	choice_button(utki::shared_ref<ruis::context> context);
+
 public:
 	choice_button(const choice_button&) = delete;
 	choice_button& operator=(const choice_button&) = delete;

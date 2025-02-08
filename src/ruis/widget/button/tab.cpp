@@ -85,6 +85,44 @@ void tab::on_pressed_change()
 	this->nine_patch_toggle::on_pressed_change();
 }
 
+tab::tab(
+	utki::shared_ref<ruis::context> context, //
+	all_parameters params,
+	utki::span<const utki::shared_ref<ruis::widget>> children
+) :
+	widget(
+		std::move(context), //
+		std::move(params.layout_params),
+		std::move(params.widget_params)
+	),
+	button(this->context, ruis::button::parameters{}),
+	toggle_button(this->context),
+	choice_button(this->context),
+	nine_patch_toggle(
+		this->context,
+		std::move(params.container_params),
+		std::move(params.button_params),
+		std::move(params.blending_params),
+		std::move(params.nine_patch_params),
+		std::move(params.nine_patch_button_params),
+		children
+	)
+{
+	if (!this->get_pressed_nine_patch()) {
+		this->set_pressed_nine_patch(
+			this->context.get().loader.load<res::nine_patch>("ruis_npt_tab_active").to_shared_ptr()
+		);
+	}
+	if (!this->get_unpressed_nine_patch()) {
+		this->set_unpressed_nine_patch(
+			this->context.get().loader.load<res::nine_patch>("ruis_npt_tab_inactive").to_shared_ptr()
+		);
+	}
+
+	// initialize nine-patch
+	this->tab::on_pressed_change();
+}
+
 tab::tab(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 	widget(c, desc),
 	button(this->context, desc),

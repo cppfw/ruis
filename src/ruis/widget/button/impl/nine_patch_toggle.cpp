@@ -29,6 +29,32 @@ void nine_patch_toggle::on_pressed_change()
 	this->toggle_button::on_pressed_change();
 }
 
+nine_patch_toggle::nine_patch_toggle(
+	utki::shared_ref<ruis::context> context, //
+	container::parameters container_params,
+	button::parameters button_params,
+	blending_widget::parameters blending_params,
+	nine_patch::parameters nine_patch_params,
+	nine_patch_button::parameters nine_patch_button_params,
+	utki::span<const utki::shared_ref<ruis::widget>> children
+) :
+	widget(std::move(context), {}, {}),
+	button(
+		this->context, //
+		std::move(button_params)
+	),
+	toggle_button(this->context),
+	nine_patch_button(
+		this->context, //
+		std::move(container_params),
+		button::parameters{},
+		std::move(blending_params),
+		std::move(nine_patch_params),
+		std::move(nine_patch_button_params),
+		children
+	)
+{}
+
 nine_patch_toggle::nine_patch_toggle(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 	widget(c, desc),
 	button(this->context, desc),

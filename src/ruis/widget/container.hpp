@@ -254,7 +254,8 @@ public:
 	 */
 	widget_list::const_reverse_iterator erase(widget_list::const_reverse_iterator child)
 	{
-		return widget_list::const_reverse_iterator(this->erase(--child.base())
+		return widget_list::const_reverse_iterator(
+			this->erase(--child.base())
 		); // the base iterator points to the next element to the one the reverse iterator points, so use decrement
 	}
 
