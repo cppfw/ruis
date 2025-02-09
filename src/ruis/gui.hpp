@@ -56,7 +56,7 @@ public:
 	 * @brief Set the root widget of the application.
 	 * @param w - the widget to set as a root widget.
 	 */
-	void set_root(const utki::shared_ref<ruis::widget>& w);
+	void set_root(utki::shared_ref<ruis::widget> w);
 
 	/**
 	 * @brief Get current root widget.

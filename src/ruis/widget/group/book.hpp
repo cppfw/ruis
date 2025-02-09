@@ -91,7 +91,10 @@ public:
 		widget::parameters widget_params;
 	};
 
-	book(utki::shared_ref<ruis::context> context, all_parameters params);
+	book(
+		utki::shared_ref<ruis::context> context, //
+		all_parameters params
+	);
 
 	book(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 
@@ -132,9 +135,15 @@ private:
 };
 
 namespace make {
-inline utki::shared_ref<ruis::book> book(utki::shared_ref<ruis::context> context, ruis::book::all_parameters params)
+inline utki::shared_ref<ruis::book> book(
+	utki::shared_ref<ruis::context> context, //
+	ruis::book::all_parameters params
+)
 {
-	return utki::make_shared<ruis::book>(std::move(context), std::move(params));
+	return utki::make_shared<ruis::book>(
+		std::move(context), //
+		std::move(params)
+	);
 }
 } // namespace make
 

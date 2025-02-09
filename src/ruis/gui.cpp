@@ -349,13 +349,13 @@ void gui::set_viewport(const ruis::vector2& size)
 	this->root_widget.get().resize(this->viewport_size);
 }
 
-void gui::set_root(const utki::shared_ref<ruis::widget>& w)
+void gui::set_root(utki::shared_ref<ruis::widget> w)
 {
 	if (w.get().parent()) {
 		throw std::invalid_argument("given widget is already added to some container");
 	}
 
-	this->root_widget = w;
+	this->root_widget = std::move(w);
 
 	this->root_widget.get().move_to(ruis::vector2(0));
 	this->root_widget.get().resize(this->viewport_size);

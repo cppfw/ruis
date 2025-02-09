@@ -36,9 +36,25 @@ public:
 
 		this->gui.context.get().loader.mount_res_pack(*this->get_res_file("res/"));
 
-		auto c = this->gui.context.get().inflater.inflate(
-				*this->get_res_file("res/test.gui")
-			);
+		// clang-format off
+		auto c = m::column(this->gui.context,
+			{},
+			{
+				m::book(this->gui.context,
+					{
+						.layout_params{
+							.dims = {ruis::dim::fill, ruis::dim::max},
+							.weight = 1
+						},
+						.widget_params{
+							.id = "book"s
+						}
+					}
+				)
+			}
+		);
+		// clang-format on
+
 		this->gui.set_root(c);
 
 		auto& book = c.get().get_widget_as<ruis::book>("book");
