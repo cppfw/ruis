@@ -77,4 +77,5 @@ task copy_aar(type: Zip) {
 
 afterEvaluate {
     copy_aar.dependsOn(assembleRelease)
+    copy_aar.dependsOn(bundleStaticLibRelease)
 }
