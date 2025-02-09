@@ -35,9 +35,9 @@ add_library(
 
 include_directories(
         ../../src/
-        ../../tests/harness/ruisapp/
-        ../../tests/harness/opengles2/
-    )
+        ../../tests/harness/modules/ruisapp/src
+        ../../tests/harness/modules/ruis-render-opengles2/src
+)
 
 message(LINK = ${ANDROID_GRADLE_NATIVE_MODULES})
 
