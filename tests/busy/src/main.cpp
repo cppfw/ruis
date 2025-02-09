@@ -7,6 +7,8 @@
 #include <ruis/widget/button/push_button.hpp>
 #include <ruis/widget/label/busy.hpp>
 
+#include "root_gui.hpp"
+
 class application : public ruisapp::application{
 public:
 	application() :
@@ -18,9 +20,7 @@ public:
 	{
 		this->gui.init_standard_widgets(*this->get_res_file("../../res/ruis_res/"));
 
-		auto c = this->gui.context.get().inflater.inflate(
-				*this->get_res_file("res/test.gui")
-			);
+		auto c = make_root_gui(this->gui.context);
 		this->gui.set_root(c);
 
 		{

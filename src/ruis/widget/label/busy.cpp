@@ -28,6 +28,30 @@ busy::busy(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 	spinner(this->context, desc)
 {}
 
+busy::busy(
+	utki::shared_ref<ruis::context> context, //
+	all_parameters params
+) :
+	widget(
+		std::move(context), //
+		std::move(params.layout_params),
+		std::move(params.widget_params)
+	),
+	spinner(
+		this->context, //
+		// clang-format off
+		{
+			.image_params = std::move(params.image_params),
+			.blending_params = std::move(params.blending_params)
+		}
+		// clang-format on
+	)
+{
+	if (!this->get_image()) {
+		this->set_image(this->context.get().loader.load<ruis::res::image>("ruis_img_busy"));
+	}
+}
+
 void busy::set_active(bool active)
 {
 	this->set_visible(active);

@@ -67,6 +67,11 @@ inline utki::shared_ref<ruis::spinner> spinner(
 	return utki::make_shared<ruis::spinner>(std::move(context), std::move(params));
 }
 
+utki::shared_ref<ruis::spinner> refresh(
+	utki::shared_ref<ruis::context> context, //
+	spinner::all_parameters params
+);
+
 } // namespace make
 
 } // namespace ruis

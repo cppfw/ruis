@@ -25,6 +25,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <utki/math.hpp>
 
+using namespace std::string_view_literals;
+
 using namespace ruis;
 
 spinner::spinner(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
@@ -71,4 +73,22 @@ void spinner::set_active(bool active)
 void spinner::update(uint32_t dt_ms)
 {
 	angle += real(utki::pi) / real(std::milli::den) * real(dt_ms);
+}
+
+utki::shared_ref<ruis::spinner> ruis::make::refresh(
+	utki::shared_ref<ruis::context> context, //
+	spinner::all_parameters params
+)
+{
+	if (!params.image_params.img) {
+		params.image_params.img = context.get().loader.load<res::image>("ruis_img_refresh"sv);
+	}
+	if (!params.image_params.disabled_img) {
+		params.image_params.disabled_img = context.get().loader.load<res::image>("ruis_img_refresh_disabled"sv);
+	}
+
+	return utki::make_shared<ruis::spinner>(
+		std::move(context), //
+		std::move(params)
+	);
 }

@@ -34,7 +34,32 @@ class busy : public spinner
 public:
 	busy(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 
+	struct all_parameters {
+		layout_parameters layout_params;
+		widget::parameters widget_params;
+		image::parameters image_params;
+		blending_widget::parameters blending_params;
+	};
+
+	busy(
+		utki::shared_ref<ruis::context> context, //
+		all_parameters params
+	);
+
 	void set_active(bool active);
 };
+
+namespace make {
+inline utki::shared_ref<ruis::busy> busy(
+	utki::shared_ref<ruis::context> context, //
+	ruis::busy::all_parameters params
+)
+{
+	return utki::make_shared<ruis::busy>(
+		std::move(context), //
+		std::move(params)
+	);
+}
+} // namespace make
 
 } // namespace ruis
