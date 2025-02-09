@@ -5,13 +5,27 @@
 #include <ruis/widget/widget.hpp>
 #include <ruis/paint/path_vao.hpp>
 #include <ruis/paint/frame_vao.hpp>
+#include <ruis/widget/label/margins.hpp>
+#include <ruis/widget/slider/scroll_bar.hpp>
+#include <ruis/widget/button/push_button.hpp>
+#include <ruis/widget/label/text.hpp>
+
+using namespace std::string_literals;
 
 class path_widget : virtual public ruis::widget{
 	ruis::path_vao vao;
 public:
-	path_widget(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
-			ruis::widget(c, desc),
-			vao(this->context.get().renderer)
+	struct all_parameters{
+		ruis::layout_parameters layout_params;
+		ruis::widget::parameters widget_params;
+	};
+
+	path_widget(
+		utki::shared_ref<ruis::context> context, //
+		all_parameters params
+	) :
+		widget(std::move(context), std::move(params.layout_params), std::move(params.widget_params)),
+		vao(this->context.get().renderer)
 	{}
 
 	void render(const ruis::matrix4& matrix)const override{
@@ -30,12 +44,33 @@ public:
 	}
 };
 
+namespace make{
+inline utki::shared_ref<::path_widget> path_widget(
+	utki::shared_ref<ruis::context> context,
+	::path_widget::all_parameters params
+)
+{
+	return utki::make_shared<::path_widget>(
+		std::move(context),
+		std::move(params)
+	);
+}
+}
+
 class frame_widget : virtual public ruis::widget{
 	ruis::frame_vao vao;
 public:
-	frame_widget(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
-			ruis::widget(c, desc),
-			vao(this->context.get().renderer)
+	struct all_parameters{
+		ruis::layout_parameters layout_params;
+		ruis::widget::parameters widget_params;
+	};
+
+	frame_widget(
+		utki::shared_ref<ruis::context> context, //
+		all_parameters params
+	) :
+		widget(std::move(context), std::move(params.layout_params), std::move(params.widget_params)),
+		vao(this->context.get().renderer)
 	{}
 
 	void render(const ruis::matrix4& matrix)const override{
@@ -50,6 +85,97 @@ public:
 	}
 };
 
+namespace make{
+inline utki::shared_ref<::frame_widget> frame_widget(
+	utki::shared_ref<ruis::context> context,
+	::frame_widget::all_parameters params
+)
+{
+	return utki::make_shared<::frame_widget>(
+		std::move(context),
+		std::move(params)
+	);
+}
+}
+
+namespace m{
+using namespace ruis::make;
+using namespace ::make;
+}
+
+utki::shared_ref<ruis::widget> make_root_widget(utki::shared_ref<ruis::context> c){
+	// clang-format off
+	return m::pile(c,
+		{},
+		{
+			m::path_widget(c,
+				{
+					.layout_params{
+						.dims = {ruis::dim::fill, ruis::dim::fill}
+					}
+				}
+			),
+			m::margins(c,
+				{
+					.layout_params{
+						.dims = {ruis::dim::fill, ruis::dim::fill}
+					},
+					.container_params{
+						.layout = ruis::layout::pile
+					},
+					.frame_params{
+						.borders = {
+							ruis::length::make_pp(5),
+							ruis::length::make_pp(5),
+							ruis::length::make_pp(5),
+							ruis::length::make_pp(5)
+						}
+					}
+				},
+				{
+					m::frame_widget(c,
+						{
+							.layout_params{
+								.dims = {ruis::dim::fill, ruis::dim::fill}
+							}
+						}
+					)
+				}
+			),
+			m::scroll_bar(c,
+				{
+					.layout_params{
+						.dims = {ruis::dim::min, ruis::dim::max}
+					},
+					.oriented_params{
+						.vertical = true
+					}
+				}
+			),
+			m::scroll_bar(c,
+				{
+					.layout_params{
+						.dims = {ruis::dim::max, ruis::dim::min}
+					},
+					.oriented_params{
+						.vertical = false
+					}
+				}
+			),
+			m::push_button(c,
+				{},
+				{
+					m::text(c,
+						{},
+						U"stuff"s
+					)
+				}
+			)
+		}
+	);
+	// clang-format on
+}
+
 class application : public ruisapp::application{
 public:
 	application() :
@@ -63,54 +189,7 @@ public:
 	{
 		this->gui.init_standard_widgets(*this->get_res_file("../../res/ruis_res/"));
 
-		this->gui.context.get().inflater.register_widget<path_widget>("path_widget");
-		this->gui.context.get().inflater.register_widget<frame_widget>("frame_widget");
-	
-		// this->gui.set_root(std::make_shared<path_widget>(this->gui.context, tml::forest()));
-
-		this->gui.set_root(
-			this->gui.context.get().inflater.inflate(tml::read(R"(
-			@pile{
-				@path_widget{
-					lp{
-						dx{fill} dy{fill}
-					}
-				}
-
-				@margins{
-					left{5dp}
-					right{5dp}
-					top{5dp}
-					bottom{5dp}
-
-					lp{
-						dx{fill} dy{fill}
-					}
-
-					@frame_widget{
-						lp{
-							dx{fill} dy{fill}
-						}
-					}
-				}
-
-				@vertical_scroll_bar{
-					lp{
-						dx{min} dy{max}
-					}
-				}
-				@horizontal_scroll_bar{
-					lp{
-						dx{max} dy{min}
-					}
-				}
-				@push_button{
-					@text{
-						text{stuff}
-					}
-				}
-			}
-		)")));
+		this->gui.set_root(make_root_widget(this->gui.context));
 	}
 };
 

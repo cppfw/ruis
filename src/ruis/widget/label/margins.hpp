@@ -50,13 +50,17 @@ public:
 };
 
 namespace make {
-inline utki::shared_ref<margins> margins(
-	utki::shared_ref<context> context,
+inline utki::shared_ref<ruis::margins> margins(
+	utki::shared_ref<context> context, //
 	margins::all_parameters params,
 	utki::span<const utki::shared_ref<ruis::widget>> children
 )
 {
-	return utki::make_shared<ruis::margins>(std::move(context), std::move(params), children);
+	return utki::make_shared<ruis::margins>(
+		std::move(context), //
+		std::move(params),
+		children
+	);
 }
 } // namespace make
 
