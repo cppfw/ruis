@@ -14,6 +14,15 @@
 #include "pile_page.hpp"
 #include "cube_page.hpp"
 
+#include "main_page.hpp"
+
+using namespace std::string_literals;
+
+namespace m{
+    using namespace ruis::make;
+    using namespace ::make;
+}
+
 class application : public ruisapp::application{
 public:
 	application() :
@@ -35,62 +44,34 @@ public:
 		auto& book = c.get().get_widget_as<ruis::book>("book");
 
 		{
-			auto mp = utki::make_shared<pile_page>(
-					this->gui.context,
-					tml::read(R"qwertyuiop(
-							@column{
-								lp{dx{fill} dy{fill}}
-
-								@push_button{
-									id{cube_button}
-
-									lp{
-										dx{fill}
-									}
-
-									@text{
-										text{Cube!}
-									}
-								}
-
-								@push_button{
-									id{stuff_button}
-
-									lp{
-										dx{fill}
-									}
-
-									@text{
-										text{Stuff!}
-									}
-								}
-
-								@push_button{
-									id{close_button}
-
-									lp{
-										dx{fill}
-									}
-
-									@text{
-										text{close}
-									}
-								}
-							}
-						)qwertyuiop")
-				);
+			auto mp = make_main_page(this->gui.context);
+					
 			mp.get().get_widget_as<ruis::push_button>("cube_button").click_handler = [&mp = mp.get()](ruis::push_button& b){
 				mp.get_parent_book()->push(utki::make_shared<cube_page>(mp.context));
 			};
 			mp.get().get_widget_as<ruis::push_button>("stuff_button").click_handler = [&mp = mp.get()](ruis::push_button& b){
-				auto pg = utki::make_shared<pile_page>(mp.context, tml::read(R"qwertyuiop(
-					@push_button{
-						id{back_button}
-						@text{
-							text{"Go back"}
-						}
+				// clang-format off
+				auto pg = make::pile_page(
+					mp.context,
+					{},
+					{
+						m::push_button(mp.context,
+							{
+								.widget_params{
+									.id = "back_button"s
+								}
+							},
+							{
+								m::text(mp.context,
+									{},
+									U"Go back"s
+								)
+							}
+						)
 					}
-				)qwertyuiop"));
+				);
+				// clang-format on
+				
 				pg.get().get_widget_as<ruis::push_button>("back_button").click_handler = [&pg = pg.get()](ruis::push_button& b){
 					b.context.get().post_to_ui_thread([pg = utki::make_shared_from(pg)]{
 						pg.get().tear_out();

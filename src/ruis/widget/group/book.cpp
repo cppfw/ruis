@@ -191,6 +191,13 @@ page::page(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 	widget(c, desc)
 {}
 
+page::page(
+	utki::shared_ref<ruis::context> context, //
+	ruis::widget::parameters widget_params
+) :
+	widget(std::move(context), {}, std::move(widget_params))
+{}
+
 utki::shared_ref<page> page::tear_out()
 {
 	if (!this->get_parent_book()) {

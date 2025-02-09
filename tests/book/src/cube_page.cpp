@@ -4,8 +4,16 @@
 #include <ruis/render/renderer.hpp>
 #include <ruis/widget/button/push_button.hpp>
 #include <ruis/widget/group/book.hpp>
+#include <ruis/widget/label/text.hpp>
+#include <ruis/widget/label/gap.hpp>
 
 #include "cube_page.hpp"
+
+using namespace std::string_literals;
+
+namespace m{
+    using namespace ruis::make;
+}
 
 namespace{
 
@@ -103,27 +111,57 @@ public:
 }
 
 cube_page::cube_page(utki::shared_ref<ruis::context> c) :
-		widget(std::move(c), tml::forest()),
-		page(this->context, tml::forest()),
-		container(this->context, tml::read(R"qwertyuiop(
-				layout{pile}
-				@column{
-					lp{
-						dx{fill}dy{fill}
-					}
-					@widget{
-						id{placeholder}
-						lp{dx{fill}dy{fill}weight{1}}
-					}
-					@text{text{"cube page"}}
-					@push_button{
-						id{back_button}
-						@text{
-							text{back}
+		// clang-format off
+		widget(
+			std::move(c),
+			{
+				.dims = {ruis::dim::fill, ruis::dim::fill}
+			},
+			{}
+		),
+		page(
+			this->context,
+			ruis::widget::parameters{}
+		),
+		container(
+			this->context,
+			ruis::container::all_parameters{
+				.container_params{
+					.layout = ruis::layout::column
+				}
+			},
+			{
+				m::gap(this->context,
+					{
+						.layout_params{
+							.dims = {ruis::dim::fill, ruis::dim::fill},
+							.weight = 1
+						},
+						.widget_params{
+							.id = "placeholder"
 						}
 					}
-				}
-			)qwertyuiop"))
+				),
+				m::text(this->context,
+					{},
+					U"cube page"s
+				),
+				m::push_button(this->context,
+					{
+						.widget_params{
+							.id = "back_button"s
+						}
+					},
+					{
+						m::text(this->context,
+							{},
+							U"back"s
+						)
+					}
+				)
+			}
+		)
+		// clang-format on
 {
 	auto& ph = this->get_widget("placeholder");
 	

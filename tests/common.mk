@@ -6,7 +6,8 @@ this_srcs += $(call prorab-src-dir, src)
 
 $(eval $(call prorab-config, ../../config))
 
-this_cxxflags += -isystem ../../src -isystem ../harness/modules/ruisapp/src
+this_cxxflags += -isystem ../../src
+this_cxxflags += -isystem ../harness/modules/ruisapp/src
 
 this__libruis_dir := ../../src/out/$(c)/
 this__libruis := $(this__libruis_dir)libruis$(dot_so)

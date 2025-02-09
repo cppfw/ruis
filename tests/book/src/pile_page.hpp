@@ -7,8 +7,12 @@ class pile_page :
 		public ruis::container
 {
 public:
-	pile_page(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
-	
+	pile_page( //
+		utki::shared_ref<ruis::context> context,
+		ruis::widget::parameters widget_params,
+		utki::span<const utki::shared_ref<ruis::widget>> contents
+	);
+
 	pile_page(const pile_page&) = delete;
 	pile_page& operator=(const pile_page&) = delete;
 
@@ -22,3 +26,18 @@ public:
 private:
 
 };
+
+namespace make{
+inline utki::shared_ref<::pile_page> pile_page(
+	utki::shared_ref<ruis::context> context,
+	ruis::widget::parameters widget_params,
+	utki::span<const utki::shared_ref<ruis::widget>> contents = {}
+)
+{
+	return utki::make_shared<::pile_page>( //
+		std::move(context),
+		std::move(widget_params),
+		contents
+	);
+}
+}

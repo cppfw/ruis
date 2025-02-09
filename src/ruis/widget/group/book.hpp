@@ -35,6 +35,11 @@ class page : public virtual widget
 protected:
 	page(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 
+	page(
+		utki::shared_ref<ruis::context> context, //
+		ruis::widget::parameters widget_params
+	);
+
 	book* parent_book = nullptr;
 
 public:
