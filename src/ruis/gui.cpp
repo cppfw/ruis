@@ -48,10 +48,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "widget/label/image_mouse_cursor.hpp"
 #include "widget/label/spinner.hpp"
 #include "widget/label/text.hpp"
+#include "widget/proxy/aspect_ratio_proxy.hpp"
 #include "widget/proxy/click_proxy.hpp"
 #include "widget/proxy/key_proxy.hpp"
 #include "widget/proxy/min_proxy.hpp"
-#include "widget/proxy/ratio_proxy.hpp"
 #include "widget/proxy/resize_proxy.hpp"
 #include "widget/slider/scroll_bar.hpp"
 
@@ -225,7 +225,7 @@ gui::gui(const utki::shared_ref<ruis::context>& context) :
 	// proxy
 	this->context.get().inflater.register_widget<mouse_proxy>("mouse_proxy");
 	this->context.get().inflater.register_widget<click_proxy>("click_proxy");
-	this->context.get().inflater.register_widget<ratio_proxy>("ratio_proxy");
+	this->context.get().inflater.register_widget<aspect_ratio_proxy>("aspect_ratio_proxy");
 	this->context.get().inflater.register_widget<key_proxy>("key_proxy");
 	this->context.get().inflater.register_widget<resize_proxy>("resize_proxy");
 	this->context.get().inflater.register_widget<min_proxy>("min_proxy");

@@ -94,16 +94,16 @@
             "group": "build"
 		},
 		{
-            "label": "run-ratio_proxy",
+            "label": "run-aspect_ratio_proxy",
             "type": "shell",
-            "command": "make run-ratio_proxy",
+            "command": "make run-aspect_ratio_proxy",
             "problemMatcher": [],
             "group": "build"
 		},
 		{
-            "label": "run-ratio_proxy-dbg",
+            "label": "run-aspect_ratio_proxy-dbg",
             "type": "shell",
-            "command": "make run-ratio_proxy config=dbg",
+            "command": "make run-aspect_ratio_proxy config=dbg",
             "problemMatcher": [],
             "group": "build"
         },

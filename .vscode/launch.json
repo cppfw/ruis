@@ -55,6 +55,31 @@
 			"preLaunchTask": "build-dbg"
 		},
 		{
+			"name": "(gdb) aspect_ratio_proxy",
+			"type": "cppdbg",
+			"request": "launch",
+			"program": "${workspaceFolder}/tests/aspect_ratio_proxy/out/dbg/tests",
+			"args": [],
+			"stopAtEntry": false,
+			"cwd": "${workspaceFolder}/tests/aspect_ratio_proxy",
+			"environment": [
+				{
+					"name": "LD_LIBRARY_PATH",
+					"value": "../../src/out/dbg:../harness/modules/ruisapp/src/out/rel_no_install:../harness/modules/ruis-render-opengl/src/out/rel_no_install"
+				}
+			],
+			"externalConsole": false,
+			"MIMode": "gdb",
+			"setupCommands": [
+				{
+					"description": "Enable pretty-printing for gdb",
+					"text": "-enable-pretty-printing",
+					"ignoreFailures": true
+				}
+			],
+			"preLaunchTask": "build-dbg"
+		},
+		{
 			"name": "(gdb) busy",
 			"type": "cppdbg",
 			"request": "launch",
