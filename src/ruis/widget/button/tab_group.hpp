@@ -31,11 +31,16 @@ class tab_group :
 	virtual public widget, //
 	public choice_group
 {
-	std::shared_ptr<res::image> filler;
+	std::shared_ptr<res::image> filler; // TODO: ref to const?
 	std::shared_ptr<const res::image::texture> filler_texture;
 
 public:
 	tab_group(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
+
+	tab_group(
+		utki::shared_ref<ruis::context> context, //
+		choice_group::all_parameters params // TODO: make own all_parameters struct
+	);
 
 	tab_group(const tab_group&) = delete;
 	tab_group& operator=(const tab_group&) = delete;
@@ -53,5 +58,18 @@ public:
 
 	void render(const ruis::matrix4& matrix) const override;
 };
+
+namespace make {
+inline utki::shared_ref<ruis::tab_group> tab_group(
+	utki::shared_ref<ruis::context> context,
+	choice_group::all_parameters params
+)
+{
+	return utki::make_shared<ruis::tab_group>(
+		std::move(context), //
+		std::move(params)
+	);
+}
+} // namespace make
 
 } // namespace ruis

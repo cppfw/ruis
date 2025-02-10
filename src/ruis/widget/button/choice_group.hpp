@@ -43,6 +43,17 @@ class choice_group : public container
 public:
 	choice_group(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 
+	struct all_parameters {
+		layout_parameters layout_params;
+		widget::parameters widget_params;
+		container::parameters container_params;
+	};
+
+	choice_group(
+		utki::shared_ref<ruis::context> context, //
+		all_parameters params
+	);
+
 	choice_group(const choice_group&) = delete;
 	choice_group& operator=(const choice_group&) = delete;
 
@@ -61,5 +72,18 @@ public:
 private:
 	void set_active_choice_button(std::weak_ptr<choice_button> rb);
 };
+
+namespace make {
+inline utki::shared_ref<ruis::choice_group> choice_group(
+	utki::shared_ref<ruis::context> context, //
+	ruis::choice_group::all_parameters params
+)
+{
+	return utki::make_shared<ruis::choice_group>(
+		std::move(context), //
+		std::move(params)
+	);
+}
+} // namespace make
 
 } // namespace ruis

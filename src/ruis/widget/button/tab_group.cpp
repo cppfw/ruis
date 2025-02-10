@@ -27,6 +27,19 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
+tab_group::tab_group(
+	utki::shared_ref<ruis::context> context, //
+	choice_group::all_parameters params
+) :
+	widget(std::move(context), std::move(params.layout_params), std::move(params.widget_params)),
+	choice_group(this->context, std::move(params))
+{
+	// TODO: allow setting filler from params
+	if (!this->filler) {
+		this->set_filler(this->context.get().loader.load<res::image>("ruis_img_tabs_filler").to_shared_ptr());
+	}
+}
+
 tab_group::tab_group(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 	widget(c, desc),
 	choice_group(this->context, desc)

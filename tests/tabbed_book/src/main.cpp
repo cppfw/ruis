@@ -9,33 +9,67 @@
 
 #include "sample_page.hpp"
 
+using namespace std::string_literals;
+
+namespace m{
+using namespace ruis::make;
+}
+
 utki::shared_ref<ruis::tab> inflate_tab(ruis::tabbed_book& tb, const std::string& name){
-	auto t = tb.context.get().inflater.inflate_as<ruis::tab>(R"(
-		@tab{
-			@row{
-				@text{
-					id{text}
-					text{cube}
-				}
-				@push_button{
-					id{activate_button}
-					@text{
-						text{A}
-					}
-				}
-				@push_button{
-					id{close_button}
-					@image{
-						lp{
-							dx { 8dp }
-							dy { 8dp }
+	auto& c = tb.context;
+
+	// clang-format off
+	auto t = m::tab(c,
+		{},
+		{
+			m::row(c,
+				{},
+				{
+					m::text(c,
+						{
+							.widget_params{
+								.id = "text"s
+							}
 						}
-						image{ruis_img_close}
-					}
+					),
+					m::push_button(c,
+						{
+							.widget_params{
+								.id = "activate_button"s
+							}
+						},
+						{
+							m::text(c, {}, U"A"s)
+						}
+					),
+					m::push_button(c,
+						{
+							.widget_params{
+								.id = "close_button"s
+							}
+						},
+						{
+							m::image(c,
+								{
+									.layout_params{
+										.dims{
+											ruis::length::make_pp(8),
+											ruis::length::make_pp(8)
+										}
+									},
+									.image_params{
+										.img = c.get().loader.load<ruis::res::image>("ruis_img_close")
+									}
+								}
+							)
+						}
+					)
 				}
-			}
+			)
 		}
-	)");
+	);
+	// clang-format on
+
 	t.get().get_widget_as<ruis::text>("text").set_text(name);
 
 	auto& close_btn = t.get().get_widget_as<ruis::push_button>("close_button");
@@ -58,6 +92,47 @@ utki::shared_ref<ruis::tab> inflate_tab(ruis::tabbed_book& tb, const std::string
 	return t;
 }
 
+namespace{
+utki::shared_ref<ruis::widget> make_root_widget(utki::shared_ref<ruis::context> c){
+	// clang-format off
+	return m::column(c,
+		{},
+		{
+			m::row(c,
+				{},
+				{
+					m::push_button(c,
+						{
+							.widget_params{
+								.id = "add_button"s
+							}
+						},
+						{
+							m::text(c,
+								{},
+								U"add"s
+							)
+						}
+					)
+				}
+			),
+			m::tabbed_book(c,
+				{
+					.layout_params{
+						.dims{ruis::dim::fill, ruis::dim::max},
+						.weight = 1
+					},
+					.widget_params{
+						.id = "book"s
+					}
+				}
+			)
+		}
+	);
+	// clang-format on
+}
+}
+
 class application : public ruisapp::application{
 public:
 	application() :
@@ -72,11 +147,7 @@ public:
 	{
 		this->gui.init_standard_widgets(*this->get_res_file("../../res/ruis_res/"));
 
-		// this->gui.context->loader.mount_res_pack(*this->get_res_file("res/"));
-
-		auto c = this->gui.context.get().inflater.inflate(
-				*this->get_res_file("res/test.gui")
-			);
+		auto c = make_root_widget(this->gui.context);
 		this->gui.set_root(c);
 
 		auto& book = c.get().get_widget_as<ruis::tabbed_book>("book");

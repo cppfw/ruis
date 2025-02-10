@@ -70,4 +70,19 @@ protected:
 	void on_pressed_change() override;
 };
 
+namespace make {
+inline utki::shared_ref<ruis::tab> tab(
+	utki::shared_ref<ruis::context> context, //
+	ruis::tab::all_parameters params,
+	utki::span<const utki::shared_ref<ruis::widget>> children
+)
+{
+	return utki::make_shared<ruis::tab>(
+		std::move(context), //
+		std::move(params),
+		children
+	);
+}
+
+} // namespace make
 } // namespace ruis

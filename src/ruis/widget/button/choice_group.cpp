@@ -25,6 +25,23 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
+choice_group::choice_group(
+	utki::shared_ref<ruis::context> context, //
+	all_parameters params
+) :
+	widget(std::move(context), std::move(params.layout_params), std::move(params.widget_params)),
+	// clang-format off
+	container(this->context,
+		{
+			.container_params{
+				.layout = layout::pile
+			}
+		},
+		{}
+	)
+// clang-format on
+{}
+
 choice_group::choice_group(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 	widget(c, desc),
 	container(this->context, desc, layout::pile)

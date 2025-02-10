@@ -22,8 +22,81 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "tabbed_book.hpp"
 
 #include "../button/tab.hpp"
+#include "../button/tab_group.hpp"
+
+using namespace std::string_literals;
 
 using namespace ruis;
+
+namespace m {
+using namespace ruis::make;
+} // namespace m
+
+tabbed_book::tabbed_book(
+	utki::shared_ref<ruis::context> context, //
+	all_parameters params
+) :
+	widget(
+		std::move(context), //
+		std::move(params.layout_params),
+		std::move(params.widget_params)
+	),
+	// clang-format off
+	container(this->context,
+		{
+			.container_params{
+				.layout = ruis::layout::column
+			}
+		},
+		{
+			m::tab_group(this->context,
+				{
+					.layout_params{
+						.dims{ruis::dim::fill, ruis::dim::min}
+					},
+					.widget_params{
+						.id = "ruis_tab_group"s
+					}
+				}
+			),
+			m::book(this->context,
+				{
+					.layout_params{
+						.dims{ruis::dim::fill, ruis::dim::max},
+						.weight = 1
+					},
+					.widget_params{
+						.id = "ruis_book"s
+					}
+				}
+			)
+		}
+	),
+	// clang-format on
+	tab_group(this->get_widget_as<ruis::tab_group>("ruis_tab_group")),
+	book(this->get_widget_as<ruis::book>("ruis_book"))
+{
+	// on page tear out, remove corresponding tab
+	this->book.pages_change_handler = [this](ruis::book& b, const page& p) {
+		auto i = this->find_pair(p);
+		if (i != this->tab_page_pairs.end()) {
+			ASSERT(i->tab)
+			this->activate_another_tab(*i->tab);
+			i->tab->remove_from_parent();
+			this->tab_page_pairs.erase(i);
+		}
+	};
+
+	// on page programmatic activate we need to activate the corresponding tab as well
+	this->book.active_page_change_handler = [this](ruis::book& b) {
+		ASSERT(b.get_active_page())
+		auto i = this->find_pair(*b.get_active_page());
+		if (i != this->tab_page_pairs.end()) {
+			ASSERT(i->tab)
+			i->tab->activate();
+		}
+	};
+}
 
 tabbed_book::tabbed_book(const utki::shared_ref<ruis::context>& context, const tml::forest& desc) :
 	ruis::widget(context, desc),

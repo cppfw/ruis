@@ -53,6 +53,16 @@ class tabbed_book :
 public:
 	tabbed_book(const utki::shared_ref<ruis::context>& context, const tml::forest& desc);
 
+	struct all_parameters {
+		layout_parameters layout_params;
+		widget::parameters widget_params;
+	};
+
+	tabbed_book(
+		utki::shared_ref<ruis::context> context, //
+		all_parameters params
+	);
+
 	void add(const utki::shared_ref<tab>& tab, const utki::shared_ref<ruis::page>& page);
 
 	const ruis::book& get_book() const noexcept
@@ -74,5 +84,18 @@ public:
 	using ruis::container::measure;
 	using ruis::container::on_enabled_change;
 };
+
+namespace make {
+inline utki::shared_ref<ruis::tabbed_book> tabbed_book(
+	utki::shared_ref<ruis::context> context, //
+	ruis::tabbed_book::all_parameters params
+)
+{
+	return utki::make_shared<ruis::tabbed_book>(
+		std::move(context), //
+		std::move(params)
+	);
+}
+} // namespace make
 
 } // namespace ruis
