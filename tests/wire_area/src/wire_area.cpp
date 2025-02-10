@@ -5,10 +5,30 @@
 #include <ruis/util/util.hpp>
 #include <ruis/layout/pile_layout.hpp>
 
+using namespace ruis;
+
 namespace{
 const ruis::real antialias_width = ruis::real(0.55f);
 const ruis::real spline_control_length = ruis::real(100);
 }
+
+wire_area::wire_area(
+	utki::shared_ref<ruis::context> context, //
+	all_parameters params,
+	utki::span<const utki::shared_ref<ruis::widget>> children
+) :
+	ruis::widget(std::move(context), std::move(params.layout_params), std::move(params.widget_params)),
+	// clang-format off
+	ruis::container(this->context,
+		{
+			.container_params{
+				.layout = ruis::layout::trivial
+			}
+		},
+		children
+	)
+	// clang-format on
+{}
 
 wire_area::wire_area(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 		widget(c, desc),

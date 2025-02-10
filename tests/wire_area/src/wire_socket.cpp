@@ -4,6 +4,16 @@
 
 #include <ruis/util/util.hpp>
 
+using namespace ruis;
+
+wire_socket::wire_socket(
+	utki::shared_ref<ruis::context> context,
+	all_parameters params
+) :
+	ruis::widget(std::move(context), std::move(params.layout_params), std::move(params.widget_params)),
+	params(std::move(params.wire_socket_params))
+{}
+
 wire_socket::wire_socket(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 		ruis::widget(c, desc)
 {
@@ -15,13 +25,13 @@ wire_socket::wire_socket(const utki::shared_ref<ruis::context>& c, const tml::fo
 		if(p.value == "outlet"){
 			auto v = ruis::get_property_value(p);
 			if(v == "left"){
-				this->outlet_orientation = orientation::left;
+				this->params.outlet_orientation = orientation::left;
 			}else if(v == "right"){
-				this->outlet_orientation = orientation::right;
+				this->params.outlet_orientation = orientation::right;
 			}else if(v == "top"){
-				this->outlet_orientation = orientation::top;
+				this->params.outlet_orientation = orientation::top;
 			}else if(v == "bottom"){
-				this->outlet_orientation = orientation::bottom;
+				this->params.outlet_orientation = orientation::bottom;
 			}
 		}
 	}
@@ -61,7 +71,7 @@ void wire_socket::disconnect(){
 std::array<ruis::vector2, 2> wire_socket::outlet_pos() const noexcept{
 	ruis::vector2 dir;
 	ruis::vector2 pos;
-	switch(this->outlet_orientation){
+	switch(this->params.outlet_orientation){
 		default:
 			ASSERT(false)
 		case orientation::bottom:

@@ -2,6 +2,8 @@
 
 #include "wire_socket.hpp"
 
+namespace ruis{
+
 class wire_area : public ruis::container{
 	friend class wire_socket;
 	
@@ -13,6 +15,19 @@ class wire_area : public ruis::container{
 	uint32_t wire_color = default_wire_color;
 	uint32_t grabbed_color = default_grabbed_color;
 public:
+	wire_area(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
+
+	struct all_parameters{
+		ruis::layout_parameters layout_params;
+		ruis::widget::parameters widget_params;
+	};
+
+	wire_area(
+		utki::shared_ref<ruis::context> context, //
+		all_parameters params,
+		utki::span<const utki::shared_ref<ruis::widget>> children
+	);
+
 	wire_area(const wire_area&) = delete;
 	wire_area& operator=(const wire_area&) = delete;
 
@@ -20,8 +35,6 @@ public:
 	wire_area& operator=(wire_area&&) = delete;
 
 	~wire_area() override = default;
-	
-	wire_area(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 	
 	void render(const ruis::matrix4& matrix)const override;
 
@@ -37,3 +50,20 @@ private:
 	
 	std::vector<utki::shared_ref<wire_socket>> sockets;
 };
+
+namespace make{
+inline utki::shared_ref<ruis::wire_area> wire_area(
+	utki::shared_ref<ruis::context> context, //
+	ruis::wire_area::all_parameters params,
+	utki::span<const utki::shared_ref<ruis::widget>> children
+)
+{
+	return utki::make_shared<ruis::wire_area>(
+		std::move(context), //
+		std::move(params),
+		children
+	);
+}
+}
+
+}

@@ -2,10 +2,11 @@
 
 #include <ruis/widget/widget.hpp>
 
+namespace ruis{
+
 class wire_socket : virtual public ruis::widget{
 	friend class wire_area;
 
-	unsigned groupId = 0;
 public:
 	enum class orientation{
 		left,
@@ -15,8 +16,12 @@ public:
 
 		enum_size
 	};
+
+	struct parameters{
+		orientation outlet_orientation = orientation::bottom;
+	};
 private:
-	orientation outlet_orientation = orientation::bottom;
+	parameters params;
 
 	std::weak_ptr<wire_socket> primary;
 	std::shared_ptr<wire_socket> slave;
@@ -31,6 +36,17 @@ public:
 	~wire_socket() override = default;
 
 public:
+	struct all_parameters{
+		ruis::layout_parameters layout_params;
+		ruis::widget::parameters widget_params;
+		parameters wire_socket_params;
+	};
+
+	wire_socket(
+		utki::shared_ref<ruis::context> context, //
+		all_parameters params
+	);
+
 	wire_socket(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 	
 protected:
@@ -41,11 +57,11 @@ public:
 	 * @brief Alignment of wire out.
 	 */
 	orientation get_orientation()const noexcept{
-		return this->outlet_orientation;
+		return this->params.outlet_orientation;
 	}
 
 	void set_orientation(orientation o){
-		this->outlet_orientation = o;
+		this->params.outlet_orientation = o;
 	}
 
 	/**
@@ -76,3 +92,18 @@ public:
 	 */
 	virtual void on_disconnected(wire_socket& from){}
 };
+
+namespace make{
+inline utki::shared_ref<ruis::wire_socket> wire_socket(
+	utki::shared_ref<ruis::context> context, //
+	ruis::wire_socket::all_parameters params
+)
+{
+	return utki::make_shared<ruis::wire_socket>(
+		std::move(context), //
+		std::move(params)
+	);
+}
+}
+
+}
