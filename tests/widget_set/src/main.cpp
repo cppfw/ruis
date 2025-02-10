@@ -7,7 +7,85 @@
 #include <ruis/widget/container.hpp>
 #include <ruis/widget/button/push_button.hpp>
 #include <ruis/widget/label/busy.hpp>
+#include <ruis/widget/label/text.hpp>
 #include <ruis/util/weak_widget_set.hpp>
+
+using namespace std::string_literals;
+
+namespace{
+
+namespace m{
+using namespace ruis::make;
+}
+
+utki::shared_ref<ruis::widget> make_root_widget(utki::shared_ref<ruis::context> c){
+	// clang-format off
+	return m::pile(c,
+		{},
+		{
+			m::column(c,
+				{},
+				{
+					m::column(c,
+						{
+							.widget_params{
+								.id = "enable_group"s
+							}
+						},
+						{
+							m::push_button(c,
+								{
+									.widget_params{
+										.id = "button1"s
+									}
+								},
+								{
+									m::text(c, {}, U"Button 1"s)
+								}
+							),
+							m::push_button(c,
+								{},
+								{
+									m::text(c, {}, U"Button 2"s)
+								}
+							),
+							m::pile(c,
+								{},
+								{
+									m::push_button(c,
+										{},
+										{
+											m::text(c, {}, U"Button 3"s)
+										}
+									)
+								}
+							)
+						}
+					),
+					m::push_button(c,
+						{
+							.widget_params{
+								.id = "busy_toggle_button"s
+							}
+						},
+						{
+							m::text(c, {}, U"toggle busy spinner"s)
+						}
+					)
+				}
+			),
+			m::busy(c,
+				{
+					.widget_params{
+						.id = "busy_spinner"s
+					}
+				}
+			)
+		}
+	);
+	// clang-format on
+}
+}
 
 class application : public ruisapp::application{
 public:
@@ -21,9 +99,7 @@ public:
 	{
 		this->gui.init_standard_widgets(*this->get_res_file("../../res/ruis_res/"));
 
-		auto c = this->gui.context.get().inflater.inflate_as<ruis::container>(
-				*this->get_res_file("res/test.gui")
-			);
+		auto c = make_root_widget(this->gui.context);
 		this->gui.set_root(c);
 
 		auto spinner = utki::make_weak(
