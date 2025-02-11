@@ -28,7 +28,10 @@ using namespace std::string_view_literals;
 
 using namespace ruis;
 
-check_box::check_box(utki::shared_ref<ruis::context> context, all_parameters params) :
+check_box::check_box(
+	utki::shared_ref<ruis::context> context, //
+	all_parameters params
+) :
 	widget( //
 		context,
 		std::move(params.layout_params),

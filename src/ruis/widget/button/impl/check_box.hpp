@@ -53,7 +53,10 @@ public:
 		image::parameters image_params;
 	};
 
-	check_box(utki::shared_ref<ruis::context> context, all_parameters params);
+	check_box(
+		utki::shared_ref<ruis::context> context, //
+		all_parameters params
+	);
 
 	check_box(const check_box&) = delete;
 	check_box& operator=(const check_box&) = delete;

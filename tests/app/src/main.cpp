@@ -29,6 +29,8 @@
 #include <ruis/widget/button/selection_box.hpp>
 #include <ruis/layout/linear_layout.hpp>
 
+#include "window0.hpp"
+
 #ifdef assert
 #	undef assert
 #endif
@@ -493,6 +495,8 @@ public:
 				*this->get_res_file("res/test.gui")
 			);
 		this->gui.set_root(c);
+
+		c.get().get_widget("window0").replace_by(make_window0(this->gui.context));
 
 		utki::dynamic_reference_cast<ruis::key_proxy>(c).get().key_handler = [this](ruis::key_proxy&, const ruis::key_event& e) -> bool {
 			if(e.is_down){
