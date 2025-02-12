@@ -29,19 +29,15 @@ using namespace std::string_view_literals;
 
 using namespace ruis;
 
-selection_box::provider::provider(utki::shared_ref<ruis::context> context) :
-	context(std::move(context))
-{}
-
 namespace {
 // TODO: remove?
-class static_provider : public selection_box::provider
+class static_provider : public list_provider
 {
 	std::vector<tml::tree> widgets;
 
 public:
 	static_provider(utki::shared_ref<ruis::context> context) :
-		provider(std::move(context))
+		list_provider(std::move(context))
 	{}
 
 	size_t count() const noexcept override
@@ -70,12 +66,12 @@ public:
 selection_box::selection_box(
 	utki::shared_ref<ruis::context> context,
 	container& selection_container,
-	parameters params
+	list_providable::parameters providable_params
 ) :
 	widget(std::move(context), {}, {}),
 	selection_container(selection_container)
 {
-	this->set_provider(params.provider);
+	this->set_provider(providable_params.provider);
 }
 
 selection_box::selection_box(
@@ -99,40 +95,26 @@ selection_box::selection_box(
 	this->set_provider(std::move(pr));
 }
 
-void selection_box::set_provider(std::shared_ptr<provider> item_provider)
-{
-	this->item_provider = std::move(item_provider);
-	this->handle_data_set_changed();
-}
-
-// TODO:
-// void selection_box::provider::notify_data_set_changed()
-// {
-// 	if (this->owner) {
-// 		this->owner->handle_data_set_changed();
-// 	}
-// }
-
-void selection_box::handle_data_set_changed()
+void selection_box::handle_model_change()
 {
 	this->selection_container.clear();
 
-	if (!this->item_provider) {
+	if (!this->get_provider()) {
 		return;
 	}
 
-	if (this->get_selection() >= this->item_provider->count()) {
+	if (this->get_selection() >= this->get_provider()->count()) {
 		return;
 	}
 
-	this->selection_container.push_back(this->item_provider->get_widget(this->get_selection()));
+	this->selection_container.push_back(this->get_provider()->get_widget(this->get_selection()));
 }
 
 void selection_box::set_selection(size_t i)
 {
 	this->selected_index = i;
 
-	this->handle_data_set_changed();
+	this->handle_model_change();
 }
 
 utki::shared_ref<ruis::selection_box> ruis::make::selection_box(
@@ -151,14 +133,14 @@ utki::shared_ref<ruis::selection_box> ruis::make::selection_box(
 				.unpressed_nine_patch = c.loader.load<res::nine_patch>("ruis_npt_button_normal"sv),
 				.pressed_nine_patch = c.loader.load<res::nine_patch>("ruis_npt_button_pressed"sv)
 			},
-			.selection_params = std::move(params.selection_params)
+			.providable_params = std::move(params.providable_params)
 		} // clang-format on
 	);
 }
 
 void selection_box::on_reload()
 {
-	if (this->item_provider) {
-		this->item_provider->on_reload();
+	if (this->get_provider()) {
+		this->get_provider()->on_reload();
 	}
 }

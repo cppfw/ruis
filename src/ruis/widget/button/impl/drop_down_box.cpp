@@ -198,7 +198,7 @@ drop_down_box::drop_down_box(utki::shared_ref<ruis::context> context, all_parame
 	selection_box(
 		this->context, //
 		this->get_widget_as<ruis::container>("ruis_dropdown_selection"),
-		std::move(params.selection_params)
+		std::move(params.providable_params)
 	)
 {
 	this->pressed_change_handler = [this](button& b) {

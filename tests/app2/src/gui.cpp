@@ -181,12 +181,16 @@ utki::shared_ref<ruis::window> make_image_window(utki::shared_ref<ruis::context>
 } // namespace
 
 namespace {
-class selection_box_provider : public ruis::selection_box::provider
+class selection_box_provider : public ruis::list_provider
 {
 	std::vector<std::string> items;
 
 public:
-	selection_box_provider(std::vector<std::string> items) :
+	selection_box_provider(
+		utki::shared_ref<ruis::context> context, //
+		std::vector<std::string> items
+	) :
+		list_provider(std::move(context)),
 		items(std::move(items))
 	{}
 
@@ -199,9 +203,8 @@ public:
 	{
 		auto i = utki::next(this->items.begin(), index);
 		ASSERT(i < this->items.end())
-		ASSERT(this->get_selection_box())
 		return m::text(
-			this->get_selection_box()->context, //
+			this->context, //
 			{},
 			utki::to_utf32(*i)
 		);
@@ -220,9 +223,13 @@ constexpr const std::array<std::pair<std::string_view, std::u32string_view>, 3> 
 } // namespace
 
 namespace {
-class language_selection_provider : public ruis::selection_box::provider
+class language_selection_provider : public ruis::list_provider
 {
 public:
+	language_selection_provider(utki::shared_ref<ruis::context> context) :
+		list_provider(std::move(context))
+	{}
+
 	size_t count() const noexcept override
 	{
 		return language_id_to_name_mapping.size();
@@ -230,9 +237,8 @@ public:
 
 	utki::shared_ref<ruis::widget> get_widget(size_t index) override
 	{
-		ASSERT(this->get_selection_box())
 		return m::text(
-			this->get_selection_box()->context, //
+			this->context, //
 			{},
 			std::u32string(language_id_to_name_mapping.at(index).second)
 		);
@@ -252,8 +258,8 @@ utki::shared_ref<ruis::window> make_selection_box_window(
 			.layout_params{
 				.dims = {ruis::dim::max, ruis::dim::min}
 			},
-			.selection_params{
-				.provider = std::make_shared<language_selection_provider>()
+			.providable_params{
+				.provider = std::make_shared<language_selection_provider>(c)
 			}
 		}
 	);
@@ -294,11 +300,13 @@ utki::shared_ref<ruis::window> make_selection_box_window(
 					.layout_params = {
 						.dims = {ruis::dim::max, ruis::dim::min}
 					},
-					.selection_params = {
-						.provider = std::make_shared<selection_box_provider>(std::vector<std::string>{
-							"Hello"s,
-							"World!"s
-						})
+					.providable_params = {
+						.provider = std::make_shared<selection_box_provider>(c,
+							std::vector<std::string>{
+								"Hello"s,
+								"World!"s
+							}
+						)
 					}
 				}
 			),

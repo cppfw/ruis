@@ -21,6 +21,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
+#include "../base/list_providable.hpp"
 #include "../container.hpp"
 #include "../widget.hpp"
 
@@ -31,94 +32,28 @@ namespace ruis {
  * This is a base class for drop down box widgets.
  * Drop down box widget allows selection of an item from list of items.
  */
-class selection_box : virtual public widget
+class selection_box : virtual public widget, public list_providable
 {
 	container& selection_container;
 
 public:
-	/**
-	 * @brief Item provider class.
-	 * User should subclass this class to provide items to a drop down box.
-	 */
-	class provider : virtual public utki::shared
-	{
-		// TODO: remove?
-		// friend class selection_box;
-
-	protected:
-		provider(utki::shared_ref<ruis::context> context);
-
-	public:
-		const utki::shared_ref<ruis::context> context;
-
-		/**
-		 * @brief Get number of items.
-		 * Override this method to propvide total number of items to choose from.
-		 * @return Number of items in the choice list.
-		 */
-		virtual size_t count() const noexcept = 0;
-
-		/**
-		 * @brief Get widget for item.
-		 * Override this method to provide a widget for requested item.
-		 * @param index - index of the item to provide widget for.
-		 * @return Widget for requested item.
-		 */
-		virtual utki::shared_ref<widget> get_widget(size_t index) = 0;
-
-		/**
-		 * @brief Recycle item widget.
-		 * Override this method to recycle item widgets to use them for another items for optimization.
-		 * @param index - index of item to recycle widget for.
-		 * @param w - item widget to recycle.
-		 */
-		virtual void recycle(
-			size_t index, //
-			std::shared_ptr<widget> w
-		)
-		{}
-
-		/**
-		 * @brief Reload callback.
-		 * Called from owner selection_box's on_reload().
-		 */
-		virtual void on_reload() {}
-
-		/**
-		 * @brief Notify about change of items model.
-		 * The user is supposed to invoke this function when items model change.
-		 */
-		// TODO:
-		// void notify_data_set_changed();
-	};
-
-	struct parameters {
-		std::shared_ptr<selection_box::provider> provider;
-	};
-
 	struct all_parameters {
 		layout_parameters layout_params;
 		widget::parameters widget_params;
-		parameters selection_params;
+		list_providable::parameters providable_params;
 	};
 
 private:
-	std::shared_ptr<provider> item_provider;
-
 	size_t selected_index = 0;
-
-public:
-	void set_provider(std::shared_ptr<provider> item_provider = nullptr);
-
-	provider* get_provider()
-	{
-		return this->item_provider.get();
-	}
 
 protected:
 	selection_box(const utki::shared_ref<ruis::context>& c, const tml::forest& desc, container& selection_container);
 
-	selection_box(utki::shared_ref<ruis::context> context, container& selection_container, parameters params);
+	selection_box(
+		utki::shared_ref<ruis::context> context, //
+		container& selection_container,
+		list_providable::parameters providable_params
+	);
 
 public:
 	selection_box(const selection_box&) = delete;
@@ -149,7 +84,7 @@ public:
 	void on_reload() override;
 
 private:
-	void handle_data_set_changed();
+	void handle_model_change() override;
 };
 
 namespace make {

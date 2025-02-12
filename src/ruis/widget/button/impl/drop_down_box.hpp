@@ -42,7 +42,7 @@ public:
 		ruis::layout_parameters layout_params;
 		ruis::widget::parameters widget_params;
 		nine_patch_button::parameters nine_patch_button_params;
-		selection_box::parameters selection_params;
+		list_providable::parameters providable_params;
 	};
 
 	drop_down_box(utki::shared_ref<ruis::context> context, all_parameters params);
