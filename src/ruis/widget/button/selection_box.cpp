@@ -29,6 +29,10 @@ using namespace std::string_view_literals;
 
 using namespace ruis;
 
+selection_box::provider::provider(utki::shared_ref<ruis::context> context) :
+	context(std::move(context))
+{}
+
 namespace {
 // TODO: remove?
 class static_provider : public selection_box::provider
@@ -36,6 +40,10 @@ class static_provider : public selection_box::provider
 	std::vector<tml::tree> widgets;
 
 public:
+	static_provider(utki::shared_ref<ruis::context> context) :
+		provider(std::move(context))
+	{}
+
 	size_t count() const noexcept override
 	{
 		return this->widgets.size();
@@ -44,8 +52,7 @@ public:
 	utki::shared_ref<widget> get_widget(size_t index) override
 	{
 		auto i = utki::next(this->widgets.begin(), index);
-		ASSERT(this->get_selection_box())
-		return this->get_selection_box()->context.get().inflater.inflate(i, i + 1);
+		return this->context.get().inflater.inflate(i, i + 1);
 	}
 
 	void recycle(size_t index, std::shared_ptr<widget> w) override
@@ -79,7 +86,7 @@ selection_box::selection_box(
 	widget(c, desc),
 	selection_container(selection_container)
 {
-	std::shared_ptr<static_provider> pr = std::make_shared<static_provider>();
+	std::shared_ptr<static_provider> pr = std::make_shared<static_provider>(c);
 
 	for (const auto& p : desc) {
 		if (is_property(p)) {
@@ -94,28 +101,17 @@ selection_box::selection_box(
 
 void selection_box::set_provider(std::shared_ptr<provider> item_provider)
 {
-	if (item_provider && item_provider->owner) {
-		throw std::invalid_argument(
-			"selection_box::setItemsProvider(): given provider is already set to some selection_box"
-		);
-	}
-
-	if (this->item_provider) {
-		this->item_provider->owner = nullptr;
-	}
 	this->item_provider = std::move(item_provider);
-	if (this->item_provider) {
-		this->item_provider->owner = this;
-	}
 	this->handle_data_set_changed();
 }
 
-void selection_box::provider::notify_data_set_changed()
-{
-	if (this->owner) {
-		this->owner->handle_data_set_changed();
-	}
-}
+// TODO:
+// void selection_box::provider::notify_data_set_changed()
+// {
+// 	if (this->owner) {
+// 		this->owner->handle_data_set_changed();
+// 	}
+// }
 
 void selection_box::handle_data_set_changed()
 {

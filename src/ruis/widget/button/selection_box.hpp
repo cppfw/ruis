@@ -42,23 +42,14 @@ public:
 	 */
 	class provider : virtual public utki::shared
 	{
-		friend class selection_box;
-
-		selection_box* owner = nullptr;
+		// TODO: remove?
+		// friend class selection_box;
 
 	protected:
-		provider() = default;
+		provider(utki::shared_ref<ruis::context> context);
 
 	public:
-		/**
-		 * @brief Get drop down box widget to which this provider is set.
-		 * @return pointer to a drop down box widget.
-		 * @return nullptr if this provider is not set to any drop down box.
-		 */
-		selection_box* get_selection_box()
-		{
-			return this->owner;
-		}
+		const utki::shared_ref<ruis::context> context;
 
 		/**
 		 * @brief Get number of items.
@@ -81,7 +72,11 @@ public:
 		 * @param index - index of item to recycle widget for.
 		 * @param w - item widget to recycle.
 		 */
-		virtual void recycle(size_t index, std::shared_ptr<widget> w) {}
+		virtual void recycle(
+			size_t index, //
+			std::shared_ptr<widget> w
+		)
+		{}
 
 		/**
 		 * @brief Reload callback.
@@ -93,7 +88,8 @@ public:
 		 * @brief Notify about change of items model.
 		 * The user is supposed to invoke this function when items model change.
 		 */
-		void notify_data_set_changed();
+		// TODO:
+		// void notify_data_set_changed();
 	};
 
 	struct parameters {
