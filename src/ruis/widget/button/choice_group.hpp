@@ -51,7 +51,8 @@ public:
 
 	choice_group(
 		utki::shared_ref<ruis::context> context, //
-		all_parameters params
+		all_parameters params,
+		utki::span<const utki::shared_ref<ruis::widget>> children
 	);
 
 	choice_group(const choice_group&) = delete;
@@ -74,16 +75,18 @@ private:
 };
 
 namespace make {
-inline utki::shared_ref<ruis::choice_group> choice_group(
+/**
+ * @brief Construct 'choice_group' widget.
+ * Default layout is column.
+ * @param context - ruis context.
+ * @param params - 'choice_group' widget parameters.
+ * @param children - children of the constructed 'choice_group' widget.
+ */
+utki::shared_ref<ruis::choice_group> choice_group(
 	utki::shared_ref<ruis::context> context, //
-	ruis::choice_group::all_parameters params
-)
-{
-	return utki::make_shared<ruis::choice_group>(
-		std::move(context), //
-		std::move(params)
-	);
-}
+	ruis::choice_group::all_parameters params,
+	utki::span<const utki::shared_ref<ruis::widget>> children
+);
 } // namespace make
 
 } // namespace ruis

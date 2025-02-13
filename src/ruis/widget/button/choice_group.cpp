@@ -27,17 +27,20 @@ using namespace ruis;
 
 choice_group::choice_group(
 	utki::shared_ref<ruis::context> context, //
-	all_parameters params
+	all_parameters params,
+	utki::span<const utki::shared_ref<ruis::widget>> children
 ) :
-	widget(std::move(context), std::move(params.layout_params), std::move(params.widget_params)),
+	widget(
+		std::move(context), //
+		std::move(params.layout_params),
+		std::move(params.widget_params)
+	),
 	// clang-format off
 	container(this->context,
 		{
-			.container_params{
-				.layout = layout::pile
-			}
+			.container_params = std::move(params.container_params)
 		},
-		{}
+		children
 	)
 // clang-format on
 {}
@@ -66,4 +69,21 @@ void choice_group::set_active_choice_button(std::weak_ptr<choice_button> cb)
 	if (oldactive) {
 		oldactive->set_pressed(false);
 	}
+}
+
+utki::shared_ref<ruis::choice_group> ruis::make::choice_group(
+	utki::shared_ref<ruis::context> context, //
+	ruis::choice_group::all_parameters params,
+	utki::span<const utki::shared_ref<ruis::widget>> children
+)
+{
+	if (!params.container_params.layout) {
+		params.container_params.layout = ruis::layout::column;
+	}
+
+	return utki::make_shared<ruis::choice_group>(
+		std::move(context), //
+		std::move(params),
+		children
+	);
 }

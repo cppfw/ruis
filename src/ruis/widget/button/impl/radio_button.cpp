@@ -22,9 +22,16 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "radio_button.hpp"
 
 #include "../../../context.hpp"
+#include "../../label/image.hpp"
 #include "../choice_group.hpp"
 
+using namespace std::string_view_literals;
+
 using namespace ruis;
+
+namespace m {
+using namespace ruis::make;
+} // namespace m
 
 namespace {
 
@@ -51,6 +58,52 @@ radio_button::radio_button(const utki::shared_ref<ruis::context>& c, const tml::
 {
 	this->check_widget.get().set_visible(this->is_pressed());
 }
+
+radio_button::radio_button(
+	utki::shared_ref<ruis::context> context, //
+	all_parameters params
+) :
+	widget(
+		std::move(context), //
+		std::move(params.layout_params),
+		std::move(params.widget_params)
+	),
+	button(
+		this->context, //
+		std::move(params.button_params)
+	),
+	toggle_button(this->context),
+	choice_button(this->context),
+	// clang-format off
+	container(this->context,
+		{
+			.container_params{
+				.layout = layout::pile
+			}
+		},
+		{
+			m::image(this->context,
+				{
+					.image_params{
+						.img = this->context.get().loader.load<res::image>("ruis_img_radiobutton_bg"sv)
+					}
+				}
+			),
+			m::image(this->context,
+				{
+					.widget_params{
+						.visible = this->is_pressed()
+					},
+					.image_params{
+						.img = this->context.get().loader.load<res::image>("ruis_img_radiobutton_tick")
+					}
+				}
+			)
+		}
+	),
+	// clang-format on
+	check_widget(*this->children().rbegin())
+{}
 
 void radio_button::on_pressed_change()
 {

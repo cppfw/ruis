@@ -32,7 +32,7 @@ tab_group::tab_group(
 	choice_group::all_parameters params
 ) :
 	widget(std::move(context), std::move(params.layout_params), std::move(params.widget_params)),
-	choice_group(this->context, std::move(params))
+	choice_group(this->context, std::move(params), {})
 {
 	// TODO: allow setting filler from params
 	if (!this->filler) {

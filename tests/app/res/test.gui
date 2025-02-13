@@ -43,6 +43,7 @@ cursor{crs_arrow}
 		dx{max} dy{max}
 	}
 
+	/*
 	@window{
 		x{0} y{0}
 		dx{300pp} dy{200pp}
@@ -157,6 +158,7 @@ cursor{crs_arrow}
 		}
 
 	}
+	*/
 
 	@widget{
 		id{window0}

@@ -42,6 +42,17 @@ class radio_button :
 public:
 	radio_button(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 
+	struct all_parameters {
+		layout_parameters layout_params;
+		widget::parameters widget_params;
+		button::parameters button_params;
+	};
+
+	radio_button(
+		utki::shared_ref<ruis::context> context, //
+		all_parameters params
+	);
+
 	radio_button(const radio_button&) = delete;
 	radio_button& operator=(const radio_button&) = delete;
 
@@ -64,5 +75,18 @@ public:
 
 private:
 };
+
+namespace make {
+inline utki::shared_ref<ruis::radio_button> radio_button(
+	utki::shared_ref<ruis::context> context, //
+	ruis::radio_button::all_parameters params
+)
+{
+	return utki::make_shared<ruis::radio_button>(
+		std::move(context), //
+		std::move(params)
+	);
+}
+} // namespace make
 
 } // namespace ruis

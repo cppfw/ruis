@@ -102,3 +102,20 @@ void margins::on_borders_change()
 	this->right.get_layout_params().dims.x() = b.right();
 	this->bottom.get_layout_params().dims.y() = b.bottom();
 }
+
+utki::shared_ref<ruis::margins> ruis::make::margins(
+	utki::shared_ref<context> context, //
+	margins::all_parameters params,
+	utki::span<const utki::shared_ref<ruis::widget>> children
+)
+{
+	if (!params.container_params.layout) {
+		params.container_params.layout = ruis::layout::pile;
+	}
+
+	return utki::make_shared<ruis::margins>(
+		std::move(context), //
+		std::move(params),
+		children
+	);
+}
