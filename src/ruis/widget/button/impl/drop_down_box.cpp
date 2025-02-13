@@ -184,14 +184,35 @@ std::vector<utki::shared_ref<widget>> make_drop_down_box_widget_structure(utki::
 }
 } // namespace
 
-drop_down_box::drop_down_box(utki::shared_ref<ruis::context> context, all_parameters params) :
-	widget(std::move(context), std::move(params.layout_params), std::move(params.widget_params)),
-	button(this->context, button::parameters{}),
+drop_down_box::drop_down_box(
+	utki::shared_ref<ruis::context> context, //
+	all_parameters params
+) :
+	widget(
+		std::move(context), //
+		std::move(params.layout_params),
+		std::move(params.widget_params)
+	),
+	button(
+		this->context, //
+		button::parameters{}
+	),
 	nine_patch_push_button(
 		this->context, //
 		{
 			.container_params = {.layout = ruis::layout::row},
-			.nine_patch_button_params = std::move(params.nine_patch_button_params) //
+			.nine_patch_button_params =
+				[&c = this->context.get(), &params]() {
+					if (!params.nine_patch_button_params.pressed_nine_patch) {
+						params.nine_patch_button_params.pressed_nine_patch =
+							c.loader.load<res::nine_patch>("ruis_npt_button_pressed"sv);
+					}
+					if (!params.nine_patch_button_params.unpressed_nine_patch) {
+						params.nine_patch_button_params.unpressed_nine_patch =
+							c.loader.load<res::nine_patch>("ruis_npt_button_normal"sv);
+					}
+					return std::move(params.nine_patch_button_params);
+				}() //
 		},
 		make_drop_down_box_widget_structure(this->context)
 	),

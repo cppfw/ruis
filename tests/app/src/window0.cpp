@@ -75,14 +75,47 @@ utki::shared_ref<ruis::window> make_window0(utki::shared_ref<ruis::context> c){
                             )
                         }
                     ),
-                    // m::drop_down_box(c,
-                    //     {
-                    //         .layout_params{
-                    //             .dims{ruis::dim::max, ruis::dim::min}
-                    //         }
-                    //     },
-                    //     {}
-                    // )
+                    m::drop_down_box(c,
+                        {
+                            .layout_params{
+                                .dims{ruis::dim::max, ruis::dim::min}
+                            },
+                            .providable_params{
+                                .provider = [&]() -> std::shared_ptr<ruis::list_provider>{
+                                    class the_provider : public ruis::list_provider
+                                    {
+                                        std::vector<std::u32string> items;
+                                    public:
+                                        the_provider(utki::shared_ref<ruis::context> context) :
+                                            list_provider(std::move(context)),
+                                            items{
+                                                U"item0"s,
+                                                U"item1"s,
+                                                U"item2"s,
+                                                U"item3"s,
+                                                U"item4"s,
+                                                U"item5"s,
+                                                U"item6"s,
+                                                U"item7"s,
+                                                U"item8"s,
+                                                U"item9"s,
+                                                U"item10"s
+                                            }
+                                        {}
+
+                                        size_t count()const noexcept override{
+                                            return this->items.size();
+                                        }
+
+                                        utki::shared_ref<ruis::widget> get_widget(size_t index)override{
+                                            return m::text(this->context, {}, this->items.at(index));
+                                        }
+                                    };
+                                    return std::make_shared<the_provider>(c);
+                                }()
+                            }
+                        }
+                    )
                 }
             )
         }
