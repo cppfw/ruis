@@ -68,7 +68,7 @@ public:
 	 */
 	virtual void recycle(
 		size_t index, //
-		std::shared_ptr<widget> w
+		utki::shared_ref<widget> w
 	)
 	{}
 
@@ -114,6 +114,11 @@ public:
 	void set_provider(std::shared_ptr<list_provider> provider);
 
 	list_provider* get_provider()
+	{
+		return this->params.provider.get();
+	}
+
+	const list_provider* get_provider() const
 	{
 		return this->params.provider.get();
 	}

@@ -22,6 +22,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #pragma once
 
 #include "../../util/oriented.hpp"
+#include "../base/list_providable.hpp"
 #include "../container.hpp"
 #include "../widget.hpp"
 
@@ -37,7 +38,8 @@ class list :
 	//       http://stackoverflow.com/questions/42427145/clang-cannot-cast-to-private-base-while-there-is-a-public-virtual-inheritance
 	virtual public widget,
 	public container, // TODO: does it have to be public container? can be changed to private?
-	public oriented
+	public oriented,
+	public list_providable
 {
 	// index of the first item added to container as child
 	size_t added_index = size_t(-1);
@@ -76,69 +78,6 @@ public:
 	list& operator=(list&&) = delete;
 
 	~list() override = default;
-
-	/**
-	 * @brief list items provider.
-	 * User should subclass this class to provide items to the list.
-	 */
-	class provider : virtual public utki::shared
-	{
-		friend class list;
-
-		list* parent_list = nullptr;
-
-	protected:
-		provider() = default;
-
-	public:
-		provider(const provider&) = delete;
-		provider& operator=(const provider&) = delete;
-
-		provider(provider&&) = delete;
-		provider& operator=(provider&&) = delete;
-
-		~provider() override = default;
-
-		/**
-		 * @brief Get parent list widget.
-		 * @return list widget which owns the provider, in case the provider is set to some list widget.
-		 * @return nullptr in case the provider is not set to any list widget.
-		 */
-		list* get_list() noexcept
-		{
-			return this->parent_list;
-		}
-
-		/**
-		 * @brief Get total number of items in the list.
-		 * @return Number of items in the list.
-		 */
-		virtual size_t count() const noexcept = 0;
-
-		/**
-		 * @brief Get widget for item.
-		 * @param index - index of item to get widget for.
-		 * @return widget for the requested item.
-		 */
-		virtual utki::shared_ref<widget> get_widget(size_t index) = 0;
-
-		/**
-		 * @brief Recycle widget of item.
-		 * @param index - index of item to recycle widget of.
-		 * @param w - widget to recycle.
-		 */
-		virtual void recycle(size_t index, const utki::shared_ref<widget>& w) {}
-
-		/**
-		 * @brief Reload callback.
-		 * Called from owner list's on_reload().
-		 */
-		virtual void on_reload() {}
-
-		void notify_data_set_change();
-	};
-
-	void set_provider(std::shared_ptr<provider> item_provider = nullptr);
 
 	void on_lay_out() override;
 
@@ -192,10 +131,10 @@ public:
 	void on_reload() override;
 
 	/**
-	 * @brief Data set changed signal.
+	 * @brief Model change signal.
 	 * Emitted when list widget contents have actually been updated due to change in provider's model data set.
 	 */
-	std::function<void(list&)> data_set_change_handler;
+	std::function<void(list&)> model_change_handler;
 
 	/**
 	 * @brief Scroll position changed signal.
@@ -204,8 +143,6 @@ public:
 	std::function<void(list&)> scroll_change_handler;
 
 private:
-	std::shared_ptr<provider> item_provider;
-
 	void update_children_list();
 
 	// returns true if it was the last visible widget
@@ -219,7 +156,7 @@ private:
 
 	void update_tail_items_info();
 
-	void handle_data_set_changed();
+	void handle_model_change() override;
 
 	void notify_scroll_pos_changed();
 	void notify_scroll_pos_changed(size_t old_index, real old_offset);

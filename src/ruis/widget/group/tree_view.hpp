@@ -60,11 +60,11 @@ public:
 	// NOLINTNEXTLINE(bugprone-incorrect-enable-shared-from-this, "std::shared_from_this is public via utki::shared")
 	class provider :
 		public virtual utki::shared, //
-		private list::provider
+		private list_provider
 	{
 		friend class tree_view;
 
-		void recycle(size_t index, const utki::shared_ref<widget>& w) override;
+		void recycle(size_t index, utki::shared_ref<widget> w) override;
 
 		utki::shared_ref<widget> get_widget(size_t index) override;
 
@@ -90,10 +90,11 @@ public:
 		void remove_children(decltype(iter) from);
 		void set_children(decltype(iter) i, size_t num_children);
 
-	protected:
-		provider() = default;
-
 	public:
+		provider(utki::shared_ref<ruis::context> context) :
+			list_provider(std::move(context))
+		{}
+
 		virtual utki::shared_ref<widget> get_widget(
 			utki::span<const size_t> index, //
 			bool is_collapsed
@@ -116,25 +117,25 @@ public:
 		void uncollapse(utki::span<const size_t> index);
 		void collapse(utki::span<const size_t> index);
 
-		void notify_data_set_changed();
+		void notify_model_change();
 
-		void notify_item_changed()
+		void notify_item_change()
 		{
-			this->list::provider::notify_data_set_change();
+			this->list_provider::notify_model_change();
 		}
 
 		/**
 		 * @brief Notify that an item has been removed.
 		 * @param index - index path of the removed item.
 		 */
-		void notify_item_removed(utki::span<const size_t> index);
+		void notify_item_remove(utki::span<const size_t> index);
 
 		/**
 		 * @brief Notify that a new item has been added.
 		 * @param index - index path to a newly added item. Essentially, it is a path
 		 *                to an item before which a new item has been added.
 		 */
-		void notify_item_added(utki::span<const size_t> index);
+		void notify_item_add(utki::span<const size_t> index);
 
 	private:
 	};

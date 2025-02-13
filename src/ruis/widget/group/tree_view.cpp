@@ -55,7 +55,7 @@ tree_view::tree_view( //
 {
 	this->push_back(this->item_list);
 
-	this->item_list.get().data_set_change_handler = [this](list&) {
+	this->item_list.get().model_change_handler = [this](list&) {
 		this->notify_view_change();
 	};
 
@@ -80,7 +80,7 @@ tree_view::tree_view(const utki::shared_ref<ruis::context>& c, const tml::forest
 	lp.dims.y() = dim::max;
 	lp.dims.x() = dim::min;
 
-	this->item_list.get().data_set_change_handler = [this](list&) {
+	this->item_list.get().model_change_handler = [this](list&) {
 		this->notify_view_change();
 	};
 
@@ -102,17 +102,17 @@ void tree_view::notify_view_change()
 
 void tree_view::set_provider(std::shared_ptr<provider> item_provider)
 {
-	item_provider->notify_data_set_changed();
+	item_provider->notify_model_change();
 	this->item_list.get().set_provider(
 		// use aliasing shared_ptr constructor becasue list::provider
 		// is a private base of tree_view::provider, so not possible
 		// to use std::static_pointer_cast() because it does not see the
 		// private base class
-		std::shared_ptr<list::provider>(item_provider, item_provider.get())
+		std::shared_ptr<list_provider>(item_provider, item_provider.get())
 	);
 }
 
-void tree_view::provider::notify_data_set_changed()
+void tree_view::provider::notify_model_change()
 {
 	auto size = this->count({});
 	this->visible_tree.children.clear();
@@ -120,7 +120,7 @@ void tree_view::provider::notify_data_set_changed()
 	this->visible_tree.value.subtree_size = size;
 	this->iter = this->traversal().begin();
 	this->iter_index = 0;
-	this->list::provider::notify_data_set_change();
+	this->list_provider::notify_model_change();
 }
 
 size_t tree_view::provider::count() const noexcept
@@ -217,11 +217,7 @@ utki::shared_ref<widget> tree_view::provider::get_widget(size_t index)
 		list = &n->children;
 	}
 
-	ASSERT(this->get_list(), [&](auto& o) {
-		o << "provider is not set to a list_widget";
-	})
-
-	auto ret = utki::make_shared<ruis::container>(this->get_list()->context, tml::forest(), layout::row);
+	auto ret = utki::make_shared<ruis::container>(this->context, tml::forest(), layout::row);
 
 	ASSERT(is_last_item_in_parent.size() == path.size())
 
@@ -230,21 +226,19 @@ utki::shared_ref<widget> tree_view::provider::get_widget(size_t index)
 	}
 
 	{
-		auto widget = this->get_list()->context.get().inflater.inflate_as<ruis::container>(
+		auto widget = this->context.get().inflater.inflate_as<ruis::container>(
 			is_last_item_in_parent.back() ? line_end_layout : line_middle_layout
 		);
 
 		if (this->count(utki::make_span(path)) != 0) {
-			auto w = this->get_list()->context.get().inflater.inflate(plus_minus_layout);
+			auto w = this->context.get().inflater.inflate(plus_minus_layout);
 
 			auto plusminus = w.get().try_get_widget_as<ruis::image>("plusminus");
 			ASSERT(plusminus)
-			plusminus->set_image(
-				(is_collapsed
-					 ? this->get_list()->context.get().loader.load<ruis::res::image>("ruis_img_treeview_plus")
-					 : this->get_list()->context.get().loader.load<ruis::res::image>("ruis_img_treeview_minus"))
-					.to_shared_ptr()
-			);
+			plusminus->set_image((is_collapsed
+									  ? this->context.get().loader.load<ruis::res::image>("ruis_img_treeview_plus")
+									  : this->context.get().loader.load<ruis::res::image>("ruis_img_treeview_minus"))
+									 .to_shared_ptr());
 
 			auto plusminus_mouse_proxy = w.get().try_get_widget_as<ruis::mouse_proxy>("plusminus_mouseproxy");
 			ASSERT(plusminus_mouse_proxy)
@@ -287,7 +281,7 @@ utki::shared_ref<widget> tree_view::provider::get_widget(size_t index)
 	return ret;
 }
 
-void tree_view::provider::recycle(size_t index, const utki::shared_ref<widget>& w)
+void tree_view::provider::recycle(size_t index, utki::shared_ref<widget> w)
 {
 	auto& i = this->iter_for(index);
 
@@ -355,7 +349,7 @@ void tree_view::provider::collapse(utki::span<const size_t> index)
 	ASSERT(this->traversal().is_valid(ii))
 	this->iter = this->traversal().make_iterator(ii);
 
-	this->list::provider::notify_data_set_change();
+	this->list_provider::notify_model_change();
 }
 
 void tree_view::provider::set_children(decltype(iter) i, size_t num_children)
@@ -402,10 +396,10 @@ void tree_view::provider::uncollapse(utki::span<const size_t> index)
 
 	this->iter = this->traversal().make_iterator(ii);
 
-	this->list::provider::notify_data_set_change();
+	this->list_provider::notify_model_change();
 }
 
-void tree_view::provider::notify_item_added(utki::span<const size_t> index)
+void tree_view::provider::notify_item_add(utki::span<const size_t> index)
 {
 	if (index.empty()) {
 		throw std::invalid_argument("passed in index is empty");
@@ -425,7 +419,7 @@ void tree_view::provider::notify_item_added(utki::span<const size_t> index)
 
 	if (parent_list->empty()) {
 		// item was added to a collapsed subtree
-		this->list::provider::notify_data_set_change();
+		this->list_provider::notify_model_change();
 		return;
 	}
 
@@ -471,10 +465,10 @@ void tree_view::provider::notify_item_added(utki::span<const size_t> index)
 	}
 	this->iter = this->traversal().make_iterator(old_iter_index);
 
-	this->list::provider::notify_data_set_change();
+	this->list_provider::notify_model_change();
 }
 
-void tree_view::provider::notify_item_removed(utki::span<const size_t> index)
+void tree_view::provider::notify_item_remove(utki::span<const size_t> index)
 {
 	if (index.empty()) {
 		throw std::invalid_argument("passed in index is empty");
@@ -482,7 +476,7 @@ void tree_view::provider::notify_item_removed(utki::span<const size_t> index)
 
 	if (!this->traversal().is_valid(index)) {
 		// the removed item was probably in collapsed part of the tree
-		this->list::provider::notify_data_set_change();
+		this->list_provider::notify_model_change();
 		return;
 	}
 
@@ -558,5 +552,5 @@ void tree_view::provider::notify_item_removed(utki::span<const size_t> index)
 	}
 	this->iter = this->traversal().make_iterator(cur_iter_index);
 
-	this->list::provider::notify_data_set_change();
+	this->list_provider::notify_model_change();
 }

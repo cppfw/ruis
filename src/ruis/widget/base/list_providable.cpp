@@ -29,7 +29,9 @@ list_provider::list_provider(utki::shared_ref<ruis::context> context) :
 
 void list_provider::notify_model_change()
 {
-	this->model_change_signal.emit();
+	this->context.get().post_to_ui_thread([this]() {
+		this->model_change_signal.emit();
+	});
 }
 
 void list_providable::set_provider(std::shared_ptr<list_provider> provider)

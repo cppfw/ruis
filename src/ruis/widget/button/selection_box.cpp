@@ -51,7 +51,7 @@ public:
 		return this->context.get().inflater.inflate(i, i + 1);
 	}
 
-	void recycle(size_t index, std::shared_ptr<widget> w) override
+	void recycle(size_t index, utki::shared_ref<widget> w) override
 	{
 		//		TRACE(<< "static_provider::recycle(): index = " << index << std::endl)
 	}

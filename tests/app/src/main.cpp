@@ -247,6 +247,7 @@ public:
 
 	// NOLINTNEXTLINE(modernize-pass-by-value)
 	tree_view_items_provider(const utki::shared_ref<ruis::context>& c) :
+			provider(c),
 			context(c)
 	{
 		this->root = tml::read(R"qwertyuiop(
@@ -319,7 +320,7 @@ public:
 
 		parent_list->insert(utki::next(parent_list->begin(), this->selected_item.back()), tml::leaf(this->generate_new_item_value()));
 
-		this->notify_item_added(utki::make_span(this->selected_item));
+		this->notify_item_add(utki::make_span(this->selected_item));
 		++this->selected_item.back();
 	}
 
@@ -343,7 +344,7 @@ public:
 		parent_list->insert(utki::next(parent_list->begin(), this->selected_item.back() + 1), tml::leaf(this->generate_new_item_value()));
 
 		++this->selected_item.back();
-		this->notify_item_added(utki::make_span(this->selected_item));
+		this->notify_item_add(utki::make_span(this->selected_item));
 		--this->selected_item.back();
 	}
 
@@ -361,7 +362,7 @@ public:
 		list->emplace_back(this->generate_new_item_value());
 
 		this->selected_item.push_back(list->size() - 1);
-		this->notify_item_added(utki::make_span(this->selected_item));
+		this->notify_item_add(utki::make_span(this->selected_item));
 		this->selected_item.pop_back();
 	}
 
@@ -429,7 +430,7 @@ public:
 					}
 					LOG([](auto&o){o << std::endl;})
 #endif
-					this->notify_item_changed();
+					this->notify_item_change();
 
 					return true;
 				};
@@ -452,7 +453,7 @@ public:
 			b.get().click_handler = [this, path = utki::make_vector(path), parent_list](ruis::push_button& button){
 				ASSERT(parent_list)
 				parent_list->erase(utki::next(parent_list->begin(), path.back()));
-				this->notify_item_removed(utki::make_span(path));
+				this->notify_item_remove(utki::make_span(path));
 			};
 			ret.get().push_back(b);
 		}
