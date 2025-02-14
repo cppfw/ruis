@@ -32,6 +32,7 @@
 #include "window0.hpp"
 #include "window1.hpp"
 #include "tree_view_window.hpp"
+#include "sliders_window.hpp"
 
 #ifdef assert
 #	undef assert
@@ -519,6 +520,13 @@ public:
 			make_tree_view_window(
 				this->gui.context, //
 				{300_pp, 250_pp}
+			)
+		);
+
+		c.get().get_widget("window3").replace_by(
+			make_sliders_window(
+				this->gui.context, //
+				{0_pp, 250_pp}
 			)
 		);
 
