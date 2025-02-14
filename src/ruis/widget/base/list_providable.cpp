@@ -34,6 +34,11 @@ void list_provider::notify_model_change()
 	});
 }
 
+list_providable::list_providable(parameters params)
+{
+	this->set_provider(params.provider);
+}
+
 void list_providable::set_provider(std::shared_ptr<list_provider> provider)
 {
 	if (this->params.provider) {

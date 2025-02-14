@@ -164,7 +164,7 @@ cursor{crs_arrow}
 		id{window0}
 	}
 
-
+/*
 	@window{
 		dx{300pp} dy{200pp}
 		x{300pp} y{10pp}
@@ -302,6 +302,10 @@ cursor{crs_arrow}
 
 		}//~Column
 	}//~Window
+*/
+	@widget{
+		id{window1}
+	}
 
 	@window{
 		dx{300pp} dy{200pp}

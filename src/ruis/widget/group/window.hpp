@@ -150,14 +150,19 @@ public:
 };
 
 namespace make {
-inline utki::shared_ref<window> window(
+/**
+ * @brief Construct 'window' widget.
+ * Default content layout is pile.
+ * @param context - ruis context.
+ * @param params - 'window' widget parameters.
+ * @param contents - contents of the 'window' widget.
+ * @return newly constructed 'window' widget.
+ */
+utki::shared_ref<ruis::window> window(
 	utki::shared_ref<context> context,
 	window::all_parameters params,
-	utki::span<const utki::shared_ref<ruis::widget>> children
-)
-{
-	return utki::make_shared<ruis::window>(std::move(context), std::move(params), children);
-}
+	utki::span<const utki::shared_ref<ruis::widget>> contents
+);
 } // namespace make
 
 } // namespace ruis

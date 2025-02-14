@@ -69,9 +69,10 @@ selection_box::selection_box(
 	list_providable::parameters providable_params
 ) :
 	widget(std::move(context), {}, {}),
+	list_providable(std::move(providable_params)),
 	selection_container(selection_container)
 {
-	this->set_provider(providable_params.provider);
+	this->handle_model_change();
 }
 
 selection_box::selection_box(
@@ -80,6 +81,7 @@ selection_box::selection_box(
 	container& selection_container
 ) :
 	widget(c, desc),
+	list_providable({}),
 	selection_container(selection_container)
 {
 	std::shared_ptr<static_provider> pr = std::make_shared<static_provider>(c);

@@ -27,14 +27,18 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
-list::list(utki::shared_ref<ruis::context> context, all_parameters params) :
+list::list(
+	utki::shared_ref<ruis::context> context, //
+	all_parameters params
+) :
 	widget( //
 		std::move(context),
 		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
 	ruis::container(this->context, {.container_params = {.layout = layout::trivial}}, {}),
-	oriented(std::move(params.oriented_params))
+	oriented(std::move(params.oriented_params)),
+	list_providable(std::move(params.providable_params))
 {}
 
 namespace {
@@ -74,7 +78,8 @@ public:
 list::list(const utki::shared_ref<ruis::context>& c, const tml::forest& desc, bool vertical) :
 	widget(c, desc),
 	container(this->context, tml::forest()),
-	oriented({.vertical = vertical})
+	oriented({.vertical = vertical}),
+	list_providable({})
 {
 	std::shared_ptr<static_provider> pr = std::make_shared<static_provider>(this->context);
 

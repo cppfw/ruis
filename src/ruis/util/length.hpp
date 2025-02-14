@@ -99,6 +99,8 @@ public:
 	friend std::ostream& ruis::operator<<(std::ostream& o, const length& l);
 };
 
+using vec2_length = r4::vector2<length>;
+
 namespace length_literals {
 
 inline constexpr length operator""_px(unsigned long long value)

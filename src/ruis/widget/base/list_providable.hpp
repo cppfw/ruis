@@ -100,7 +100,7 @@ private:
 	parameters params;
 
 protected:
-	list_providable() = default;
+	list_providable(parameters params);
 
 public:
 	list_providable(const list_providable&) = delete;

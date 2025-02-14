@@ -63,9 +63,13 @@ public:
 		layout_parameters layout_params;
 		widget::parameters widget_params;
 		oriented::parameters oriented_params;
+		list_providable::parameters providable_params;
 	};
 
-	list(utki::shared_ref<ruis::context> context, all_parameters params);
+	list(
+		utki::shared_ref<ruis::context> context, //
+		all_parameters params
+	);
 
 	list(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 		list(c, desc, true)

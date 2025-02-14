@@ -30,10 +30,13 @@
 #include <ruis/layout/linear_layout.hpp>
 
 #include "window0.hpp"
+#include "window1.hpp"
 
 #ifdef assert
 #	undef assert
 #endif
+
+using namespace ruis::length_literals;
 
 class simple_widget :
 		virtual public ruis::widget,
@@ -497,7 +500,19 @@ public:
 			);
 		this->gui.set_root(c);
 
-		c.get().get_widget("window0").replace_by(make_window0(this->gui.context));
+		c.get().get_widget("window0").replace_by(
+			make_window0(
+				this->gui.context, //
+				{0, 0}
+			)
+		);
+
+		c.get().get_widget("window1").replace_by(
+			make_window1(
+				this->gui.context, //
+				{300_pp, 10_pp}
+			)
+		);
 
 		utki::dynamic_reference_cast<ruis::key_proxy>(c).get().key_handler = [this](ruis::key_proxy&, const ruis::key_event& e) -> bool {
 			if(e.is_down){

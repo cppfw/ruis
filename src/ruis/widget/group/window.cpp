@@ -775,3 +775,15 @@ void window::on_lay_out()
 	this->update_topmost();
 	this->container::on_lay_out();
 }
+
+utki::shared_ref<window> ruis::make::window(
+	utki::shared_ref<context> context,
+	window::all_parameters params,
+	utki::span<const utki::shared_ref<ruis::widget>> children
+)
+{
+	if (!params.container_params.layout) {
+		params.container_params.layout = ruis::layout::pile;
+	}
+	return utki::make_shared<ruis::window>(std::move(context), std::move(params), children);
+}

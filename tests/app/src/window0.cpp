@@ -43,16 +43,26 @@ utki::shared_ref<ruis::widget> make_radio_button(
 }
 }
 
-utki::shared_ref<ruis::window> make_window0(utki::shared_ref<ruis::context> c){
+utki::shared_ref<ruis::window> make_window0(
+    utki::shared_ref<ruis::context> c, //
+    ruis::vec2_length pos
+)
+{
     // clang-format off
     return m::window(c,
         {
             .widget_params{
-                .rectangle{{0, 0}, {ruis::length::make_pp(300).get(c.get()), ruis::length::make_pp(200).get(c.get())}},
+                .rectangle{
+                    {
+                        pos.x().get(c.get()),
+                        pos.y().get(c.get())
+                    },
+                    {
+                        ruis::length::make_pp(300).get(c.get()),
+                        ruis::length::make_pp(200).get(c.get())
+                    }
+                },
                 .cache = true
-            },
-            .container_params{
-                .layout = ruis::layout::pile
             },
             .title = U"cached"s
         },
