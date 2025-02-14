@@ -38,6 +38,18 @@ class collapse_area :
 public:
 	collapse_area(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 
+	struct all_parameters {
+		layout_parameters layout_params;
+		widget::parameters widget_params;
+		container::parameters container_params;
+	};
+
+	collapse_area(
+		utki::shared_ref<ruis::context> context,
+		all_parameters params,
+		utki::span<const utki::shared_ref<widget>> contents
+	);
+
 	container& content() noexcept
 	{
 		return this->content_area;
@@ -48,5 +60,13 @@ public:
 		return this->title_v;
 	}
 };
+
+namespace make {
+utki::shared_ref<ruis::collapse_area> collapse_area(
+	utki::shared_ref<ruis::context> context, //
+	ruis::collapse_area::all_parameters params,
+	utki::span<const utki::shared_ref<ruis::widget>> contents
+);
+} // namespace make
 
 } // namespace ruis

@@ -36,6 +36,7 @@
 #include "tree_view_window.hpp"
 #include "sliders_window.hpp"
 #include "spinning_cube_window.hpp"
+#include "text_input_window.hpp"
 
 #ifdef assert
 #	undef assert
@@ -439,6 +440,13 @@ public:
 			make_spinning_cube_window(
 				this->gui.context, //
 				{10_pp, 500_pp}
+			)
+		);
+
+		c.get().get_widget("window5").replace_by(
+			make_text_input_window(
+				this->gui.context, //
+				{310_pp, 500_pp}
 			)
 		);
 

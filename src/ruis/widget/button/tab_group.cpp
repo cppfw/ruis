@@ -29,10 +29,23 @@ using namespace ruis;
 
 tab_group::tab_group(
 	utki::shared_ref<ruis::context> context, //
-	choice_group::all_parameters params
+	all_parameters params,
+	utki::span<const utki::shared_ref<ruis::widget>> tabs
 ) :
-	widget(std::move(context), std::move(params.layout_params), std::move(params.widget_params)),
-	choice_group(this->context, std::move(params), {})
+	widget(
+		std::move(context), //
+		std::move(params.layout_params),
+		std::move(params.widget_params)
+	),
+	// clang-format off
+	choice_group(
+		this->context, //
+		{
+			.container_params = std::move(params.container_params)
+		},
+		tabs
+	)
+// clang-format on
 {
 	// TODO: allow setting filler from params
 	if (!this->filler) {

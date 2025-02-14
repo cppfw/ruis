@@ -24,8 +24,84 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../../context.hpp"
 #include "../../util/util.hpp"
 #include "../button/toggle_button.hpp"
+#include "../../default_style.hpp"
+#include "../label/rectangle.hpp"
+#include "../label/margins.hpp"
 
 using namespace ruis;
+using namespace ruis::length_literals;
+
+namespace m{
+using namespace ruis::make;
+}
+
+collapse_area::collapse_area(
+	utki::shared_ref<ruis::context> context,
+	all_parameters params,
+	utki::span<const utki::shared_ref<widget>> contents
+) :
+	widget(
+		std::move(context), //
+		std::move(params.layout_params),
+		std::move(params.widget_params)
+	),
+	// clang-format off
+	container(
+		this->context,
+		{
+			.container_params{
+				.layout = ruis::layout::column
+			}
+		},
+		{
+			m::pile(this->context,
+				{
+					.layout_params{
+						.dims{ruis::dim::max, ruis::dim::min}
+					}
+				},
+				{
+					m::rectangle(this->context,
+						{
+							.layout_params{
+								.dims{ruis::dim::fill, ruis::dim::fill}
+							},
+							.color_params{
+								.color = ruis::style::color_middleground
+							}
+						}
+					),
+					m::margins(this->context,
+						{
+							.layout_params{
+								.dims{ruis::dim::max, ruis::dim::min}
+							},
+							.container_params{
+								.layout = ruis::layout::row
+							},
+							.frame_params{
+								.borders{
+									4_pp,
+									1_pp,
+									4_pp,
+									1_pp
+								}
+							}
+						},
+						{
+							// TODO:
+						}
+					)
+				}
+			)
+		}
+	),
+	// clang-format on
+	content_area(this->get_widget_as<container>("ruis_content")),
+	title_v(this->get_widget_as<container>("ruis_title"))
+{
+	// TODO:
+}
 
 namespace {
 const auto layout_c = tml::read(R"qwertyuiop(
@@ -103,4 +179,17 @@ collapse_area::collapse_area(const utki::shared_ref<ruis::context>& c, const tml
 			}
 		};
 	}
+}
+
+utki::shared_ref<ruis::collapse_area> ruis::make::collapse_area(
+	utki::shared_ref<ruis::context> context, //
+	ruis::collapse_area::all_parameters params,
+	utki::span<const utki::shared_ref<ruis::widget>> contents
+)
+{
+	return utki::make_shared<ruis::collapse_area>(
+		std::move(context), //
+		std::move(params),
+		contents
+	);
 }

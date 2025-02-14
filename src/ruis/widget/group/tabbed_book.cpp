@@ -57,7 +57,8 @@ tabbed_book::tabbed_book(
 					.widget_params{
 						.id = "ruis_tab_group"s
 					}
-				}
+				},
+				{}
 			),
 			m::book(this->context,
 				{
