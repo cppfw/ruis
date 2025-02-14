@@ -785,5 +785,9 @@ utki::shared_ref<window> ruis::make::window(
 	if (!params.container_params.layout) {
 		params.container_params.layout = ruis::layout::pile;
 	}
-	return utki::make_shared<ruis::window>(std::move(context), std::move(params), children);
+	return utki::make_shared<ruis::window>(
+		std::move(context), //
+		std::move(params),
+		children
+	);
 }

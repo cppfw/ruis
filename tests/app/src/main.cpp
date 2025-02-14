@@ -31,6 +31,7 @@
 
 #include "window0.hpp"
 #include "window1.hpp"
+#include "tree_view_window.hpp"
 
 #ifdef assert
 #	undef assert
@@ -514,6 +515,13 @@ public:
 			)
 		);
 
+		c.get().get_widget("window2").replace_by(
+			make_tree_view_window(
+				this->gui.context, //
+				{300_pp, 250_pp}
+			)
+		);
+
 		utki::dynamic_reference_cast<ruis::key_proxy>(c).get().key_handler = [this](ruis::key_proxy&, const ruis::key_event& e) -> bool {
 			if(e.is_down){
 				if(e.combo.key == ruis::key::escape){
@@ -761,28 +769,27 @@ public:
 			treeview.get().set_provider(provider);
 			auto tv = utki::make_weak(treeview);
 
-			auto vertical_slider = c.get().try_get_widget_as<ruis::vertical_scroll_bar>("treeview_vertical_slider");
-			auto vs = utki::make_weak(vertical_slider);
+			auto& vertical_slider = c.get().get_widget_as<ruis::fraction_band_widget>("treeview_vertical_slider");
+			auto vs = utki::make_weak_from(vertical_slider);
 
-			vertical_slider->fraction_change_handler = [tv](ruis::fraction_widget& slider){
+			vertical_slider.fraction_change_handler = [tv](ruis::fraction_widget& slider){
 				if(auto t = tv.lock()){
 					t->set_vertical_scroll_factor(slider.get_fraction());
 				}
 			};
 
-			auto horizontal_slider = c.get().try_get_widget_as<ruis::horizontal_scroll_bar>("treeview_horizontal_slider");
-			ASSERT(horizontal_slider)
-			auto hs = utki::make_weak(horizontal_slider);
+			auto& horizontal_slider = c.get().get_widget_as<ruis::fraction_band_widget>("treeview_horizontal_slider");
+			auto hs = utki::make_weak_from(horizontal_slider);
 
-			horizontal_slider->fraction_change_handler = [tv](ruis::fraction_widget& slider){
+			horizontal_slider.fraction_change_handler = [tv](ruis::fraction_widget& slider){
 				if(auto t = tv.lock()){
 					t->set_horizontal_scroll_factor(slider.get_fraction());
 				}
 			};
 
 			treeview.get().scroll_change_handler = [
-					hs = utki::make_weak(horizontal_slider),
-					vs = utki::make_weak(vertical_slider)
+					hs = utki::make_weak_from(horizontal_slider),
+					vs = utki::make_weak_from(vertical_slider)
 				](ruis::tree_view& tw)
 			{
 				auto f = tw.get_scroll_factor();
