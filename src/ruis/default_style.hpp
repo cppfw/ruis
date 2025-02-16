@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cstdint>
+
 namespace ruis::style {
 
 constexpr uint32_t color_background = 0xff353535;

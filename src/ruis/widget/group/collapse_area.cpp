@@ -239,7 +239,7 @@ utki::shared_ref<ruis::collapse_area> ruis::make::collapse_area(
 	utki::span<const utki::shared_ref<ruis::widget>> contents
 )
 {
-	if(!params.container_params.layout){
+	if (!params.container_params.layout) {
 		params.container_params.layout = ruis::layout::column;
 	}
 
