@@ -66,7 +66,7 @@ public:
 
 		void recycle(size_t index, utki::shared_ref<widget> w) override;
 
-		utki::shared_ref<widget> get_widget(size_t index)override;
+		utki::shared_ref<widget> get_widget(size_t index) override;
 
 		size_t count() const noexcept override;
 
