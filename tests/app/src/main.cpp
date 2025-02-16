@@ -39,6 +39,7 @@
 #include "text_input_window.hpp"
 #include "scroll_area_window.hpp"
 #include "gradient_window.hpp"
+#include "vertical_list_window.hpp"
 
 #ifdef assert
 #	undef assert
@@ -466,6 +467,13 @@ public:
 			)
 		);
 
+		c.get().get_widget("window8").replace_by(
+			make_vertical_list_window(
+				this->gui.context, //
+				{620_pp, 0_pp}
+			)
+		);
+
 		utki::dynamic_reference_cast<ruis::key_proxy>(c).get().key_handler = [this](ruis::key_proxy&, const ruis::key_event& e) -> bool {
 			if(e.is_down){
 				if(e.combo.key == ruis::key::escape){
@@ -559,10 +567,10 @@ public:
 			auto vertical_list = c.get().try_get_widget_as<ruis::list>("list");
 			auto vl = utki::make_weak(vertical_list);
 
-			auto vertical_slider = c.get().try_get_widget_as<ruis::vertical_scroll_bar>("vertical_list_slider");
-			auto vs = utki::make_weak(vertical_slider);
+			auto& vertical_slider = c.get().get_widget_as<ruis::fraction_band_widget>("vertical_list_slider");
+			auto vs = utki::make_weak_from(vertical_slider);
 
-			vertical_slider->fraction_change_handler = [vl](ruis::fraction_widget& slider){
+			vertical_slider.fraction_change_handler = [vl](ruis::fraction_widget& slider){
 				if(auto l = vl.lock()){
 					l->set_scroll_factor(slider.get_fraction());
 				}

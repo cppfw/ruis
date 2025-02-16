@@ -710,7 +710,7 @@ cursor{crs_arrow}
 	@widget{
 		id{window7}
 	}
-
+/*
 	@window{
 		dx{300pp} dy{200pp}
 		x{620pp} y{0}
@@ -878,7 +878,11 @@ cursor{crs_arrow}
 			}
 		}
 	}
+	*/
 
+	@widget{
+		id{window8}
+	}
 }
 } // ~overlay
 
