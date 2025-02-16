@@ -42,6 +42,7 @@ public:
 		layout_parameters layout_params;
 		widget::parameters widget_params;
 		container::parameters container_params;
+		string title;
 	};
 
 	collapse_area(
@@ -62,6 +63,14 @@ public:
 };
 
 namespace make {
+/**
+ * @brief Create collapse_area widget.
+ * Default layout is column.
+ * @param context - ruis context.
+ * @param params - collapse_area widget parameters.
+ * @param contents - collapse area contents.
+ * @return newly created 'collapse_area' widget.
+ */
 utki::shared_ref<ruis::collapse_area> collapse_area(
 	utki::shared_ref<ruis::context> context, //
 	ruis::collapse_area::all_parameters params,

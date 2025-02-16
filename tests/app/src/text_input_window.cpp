@@ -3,6 +3,10 @@
 #include <ruis/widget/button/tab_group.hpp>
 #include <ruis/widget/button/tab.hpp>
 #include <ruis/widget/group/collapse_area.hpp>
+#include <ruis/widget/button/impl/image_push_button.hpp>
+#include <ruis/widget/label/gap.hpp>
+#include <ruis/widget/input/text_input_line.hpp>
+#include <ruis/default_style.hpp>
 
 using namespace std::string_literals;
 using namespace std::string_view_literals;
@@ -11,6 +15,31 @@ using namespace ruis::length_literals;
 
 namespace m{
 using namespace ruis::make;
+}
+
+namespace{
+utki::shared_ref<ruis::push_button> make_push_button(
+    utki::shared_ref<ruis::context> c, //
+    std::u32string text
+)
+{
+    // clang-format off
+    return m::push_button(c,
+        {
+            .layout_params{
+                .dims{ruis::dim::min, ruis::dim::fill},
+                .weight = 1
+            }
+        },
+        {
+            m::text(c,
+                {},
+                std::move(text)
+            )
+        }
+    );
+    // clang-format on
+}
 }
 
 utki::shared_ref<ruis::window> make_text_input_window(
@@ -72,13 +101,74 @@ utki::shared_ref<ruis::window> make_text_input_window(
                 },
                 {
                     m::collapse_area(c,
-                        {},
                         {
-                            // TODO:
+                            .layout_params{
+                                .dims{ruis::dim::max, ruis::dim::min}
+                            },
+                            .title = U"Hi!"s
+                        },
+                        {
+                            m::text(c, {}, U"Hello!"s),
+                            m::row(c,
+                                {},
+                                {
+                                    m::push_button(c,
+                                        {},
+                                        {
+                                            m::text(c, {}, U"button!!!"s)
+                                        }
+                                    ),
+                                    m::image_push_button(c,
+                                        {
+                                            .layout_params{
+                                                .dims{50_pp, 50_pp}
+                                            },
+                                            .widget_params{
+                                                .id = "image_push_button"s
+                                            },
+                                            .image_button_params{
+                                                .unpressed_image = c.get().loader.load<ruis::res::image>("img_button_unpressed"sv),
+                                                .pressed_image = c.get().loader.load<ruis::res::image>("img_button_pressed"sv)
+                                            }
+                                        }
+                                    )
+                                }
+                            )
                         }
                     )
                 }
-            )
+            ),
+            m::gap(c,
+                {
+                    .layout_params{
+                        .dims{0_pp, 5_pp}
+                    }
+                }
+            ),
+            m::text_input_line(c,
+                {
+                    .layout_params{
+                        .dims{ruis::dim::max, ruis::dim::min}
+                    },
+                    .widget_params{
+                        .id = "text_input"s
+                    },
+                    .color_params{
+                        .color = ruis::style::color_text_normal
+                    }
+                },
+                U"Hello Wrodl!!!"s
+            ),
+            make_push_button(c, U"button!!!"s),
+            make_push_button(c, U"button!!!"s),
+            make_push_button(c, U"button!!!"s),
+            make_push_button(c, U"button!!!"s),
+            make_push_button(c, U"button!!!"s),
+            make_push_button(c, U"button!!!"s),
+            make_push_button(c, U"button!!!"s),
+            make_push_button(c, U"button!!!"s),
+            make_push_button(c, U"button!!!"s),
+            make_push_button(c, U"button!!!"s)
         }
     );
     // clang-format on

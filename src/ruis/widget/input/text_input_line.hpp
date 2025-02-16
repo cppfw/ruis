@@ -66,6 +66,19 @@ public:
 
 	text_input_line(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 
+	struct all_parameters {
+		layout_parameters layout_params;
+		widget::parameters widget_params;
+		text_widget::parameters text_widget_params;
+		color_widget::parameters color_params;
+	};
+
+	text_input_line(
+		utki::shared_ref<ruis::context> context, //
+		all_parameters params,
+		string text
+	);
+
 	~text_input_line() override = default;
 
 	vector2 measure(const ruis::vector2& quotum) const noexcept override;
@@ -105,5 +118,13 @@ private:
 	// returns new cursor index
 	size_t delete_selection();
 };
+
+namespace make {
+utki::shared_ref<ruis::text_input_line> text_input_line(
+	utki::shared_ref<ruis::context> context, //
+	ruis::text_input_line::all_parameters params,
+	ruis::string text
+);
+} // namespace make
 
 } // namespace ruis

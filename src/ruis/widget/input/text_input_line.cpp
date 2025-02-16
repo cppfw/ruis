@@ -48,6 +48,30 @@ text_input_line::text_input_line(const utki::shared_ref<ruis::context>& c, const
 	this->set_clip(true);
 }
 
+text_input_line::text_input_line(
+	utki::shared_ref<ruis::context> context, //
+	all_parameters params,
+	string text
+) :
+	widget(
+		std::move(context), //
+		std::move(params.layout_params),
+		std::move(params.widget_params)
+	),
+	text_string_widget(
+		this->context, //
+		std::move(params.text_widget_params),
+		std::move(text)
+	),
+	character_input_widget(this->context),
+	color_widget(
+		this->context, //
+		std::move(params.color_params)
+	)
+{
+	this->set_clip(true);
+}
+
 void text_input_line::render(const ruis::matrix4& matrix) const
 {
 	// render selection
@@ -438,4 +462,17 @@ size_t text_input_line::delete_selection()
 	this->set_text(std::move(t));
 
 	return start;
+}
+
+utki::shared_ref<ruis::text_input_line> ruis::make::text_input_line(
+	utki::shared_ref<ruis::context> context, //
+	ruis::text_input_line::all_parameters params,
+	ruis::string text
+)
+{
+	return utki::make_shared<ruis::text_input_line>(
+		std::move(context), //
+		std::move(params),
+		std::move(text)
+	);
 }

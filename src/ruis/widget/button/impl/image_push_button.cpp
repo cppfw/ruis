@@ -60,3 +60,14 @@ image_push_button::image_push_button(const utki::shared_ref<ruis::context>& c, c
 	push_button(this->context, desc),
 	image_button(this->context, desc)
 {}
+
+utki::shared_ref<ruis::image_push_button> ruis::make::image_push_button(
+	utki::shared_ref<ruis::context> context, //
+	ruis::image_push_button::all_parameters params
+)
+{
+	return utki::make_shared<ruis::image_push_button>(
+		std::move(context), //
+		std::move(params)
+	);
+}

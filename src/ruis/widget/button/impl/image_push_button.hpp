@@ -49,4 +49,11 @@ public:
 
 	image_push_button(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 };
+
+namespace make {
+utki::shared_ref<ruis::image_push_button> image_push_button(
+	utki::shared_ref<ruis::context> context, //
+	ruis::image_push_button::all_parameters params
+);
+} // namespace make
 } // namespace ruis

@@ -33,6 +33,20 @@ class image_toggle :
 public:
 	image_toggle(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 
+	struct all_parameters {
+		layout_parameters layout_params;
+		widget::parameters widget_params;
+		button::parameters button_params;
+		blending_widget::parameters blending_params;
+		image::parameters image_params;
+		image_button::parameters image_button_params;
+	};
+
+	image_toggle(
+		utki::shared_ref<ruis::context> context, //
+		all_parameters params
+	);
+
 	image_toggle(const image_toggle&) = delete;
 	image_toggle& operator=(const image_toggle&) = delete;
 
@@ -41,5 +55,12 @@ public:
 
 	~image_toggle() override = default;
 };
+
+namespace make {
+utki::shared_ref<ruis::image_toggle> image_toggle(
+	utki::shared_ref<ruis::context> context, //
+	ruis::image_toggle::all_parameters params
+);
+} // namespace make
 
 } // namespace ruis

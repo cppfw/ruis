@@ -33,8 +33,8 @@ namespace ruis {
 class character_input_widget : virtual public widget
 {
 protected:
-	character_input_widget(const utki::shared_ref<ruis::context>& c) :
-		widget(c, tml::forest())
+	character_input_widget(utki::shared_ref<ruis::context> context) :
+		widget(std::move(context), {}, {})
 	{}
 
 public:

@@ -482,20 +482,12 @@ cursor{crs_arrow}
 	@widget{
 		id{window4}
 	}
-
+/*
 	@window{
 		dx{300pp} dy{200pp}
 		x{310pp} y{500pp}
 
 		title{"TextInput"}
-
-		/*@color{
-			color{ ${ruis_color_bg} }
-
-			lp{
-				dx{max} dy{max}
-			}
-		}*/
 
 		@column{
 			lp{dx{max}dy{max}}
@@ -571,7 +563,7 @@ cursor{crs_arrow}
 
 		}
 	}
-
+*/
 	@widget{
 		id{window5}
 	}

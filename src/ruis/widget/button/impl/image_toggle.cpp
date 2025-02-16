@@ -32,3 +32,36 @@ image_toggle::image_toggle(const utki::shared_ref<ruis::context>& c, const tml::
 	toggle_button(this->context, desc),
 	image_button(this->context, desc)
 {}
+
+image_toggle::image_toggle(
+	utki::shared_ref<ruis::context> context, //
+	all_parameters params
+) :
+	widget(
+		std::move(context), //
+		std::move(params.layout_params),
+		std::move(params.widget_params)
+	),
+	button(
+		this->context, //
+		std::move(params.button_params)
+	),
+	toggle_button(this->context),
+	image_button(
+		this->context,
+		std::move(params.blending_params), //
+		std::move(params.image_params),
+		std::move(params.image_button_params)
+	)
+{}
+
+utki::shared_ref<ruis::image_toggle> ruis::make::image_toggle(
+	utki::shared_ref<ruis::context> context, //
+	ruis::image_toggle::all_parameters params
+)
+{
+	return utki::make_shared<ruis::image_toggle>(
+		std::move(context), //
+		std::move(params)
+	);
+}

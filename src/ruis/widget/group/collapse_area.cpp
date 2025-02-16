@@ -22,18 +22,24 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "collapse_area.hpp"
 
 #include "../../context.hpp"
-#include "../../util/util.hpp"
-#include "../button/toggle_button.hpp"
 #include "../../default_style.hpp"
-#include "../label/rectangle.hpp"
+#include "../../util/util.hpp"
+#include "../button/impl/image_toggle.hpp"
+#include "../button/toggle_button.hpp"
+#include "../label/gap.hpp"
 #include "../label/margins.hpp"
+#include "../label/rectangle.hpp"
+#include "../label/text.hpp"
+
+using namespace std::string_literals;
+using namespace std::string_view_literals;
 
 using namespace ruis;
 using namespace ruis::length_literals;
 
-namespace m{
+namespace m {
 using namespace ruis::make;
-}
+} // namespace m
 
 collapse_area::collapse_area(
 	utki::shared_ref<ruis::context> context,
@@ -89,18 +95,64 @@ collapse_area::collapse_area(
 							}
 						},
 						{
-							// TODO:
+							m::image_toggle(this->context,
+								{
+									.widget_params{
+										.id = "ruis_switch"s
+									},
+									.image_button_params{
+										.unpressed_image = this->context.get().loader.load<res::image>("ruis_img_dropdown_arrow"sv),
+										.pressed_image = this->context.get().loader.load<res::image>("ruis_img_dropright_arrow"sv)
+									}
+								}
+							),
+							m::gap(this->context,
+								{
+									.layout_params{
+										.dims{4_pp, 0_px}
+									}
+								}
+							),
+							m::pile(this->context,
+								{
+									.widget_params{
+										.id = "ruis_title"s
+									}
+								},
+								{
+									m::text(this->context, {}, std::move(params.title))
+								}
+							)
 						}
 					)
 				}
+			),
+			m::container(this->context,
+				{
+					.widget_params{
+						.id = "ruis_content"s
+					},
+					.container_params = std::move(params.container_params)
+				},
+				contents
 			)
 		}
 	),
 	// clang-format on
-	content_area(this->get_widget_as<container>("ruis_content")),
-	title_v(this->get_widget_as<container>("ruis_title"))
+	content_area(this->get_widget_as<container>("ruis_content")), title_v(this->get_widget_as<container>("ruis_title"))
 {
-	// TODO:
+	{
+		auto& sw = this->get_widget_as<toggle_button>("ruis_switch");
+		sw.pressed_change_handler = [this](button& tb) {
+			auto& lp = this->content_area.get_layout_params();
+			if (tb.is_pressed()) {
+				using namespace length_literals;
+				lp.dims.y() = 0_px;
+			} else {
+				lp.dims.y() = dim::min;
+			}
+		};
+	}
 }
 
 namespace {
@@ -187,6 +239,10 @@ utki::shared_ref<ruis::collapse_area> ruis::make::collapse_area(
 	utki::span<const utki::shared_ref<ruis::widget>> contents
 )
 {
+	if(!params.container_params.layout){
+		params.container_params.layout = ruis::layout::column;
+	}
+
 	return utki::make_shared<ruis::collapse_area>(
 		std::move(context), //
 		std::move(params),
