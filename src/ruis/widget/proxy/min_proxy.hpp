@@ -32,7 +32,7 @@ class min_proxy : virtual public ruis::widget
 public:
 	struct parameters {
 		std::string root_id;
-		std::vector<std::string> target_id;
+		std::vector<std::string> target_id_path;
 	};
 
 	struct all_parameters {
@@ -45,7 +45,10 @@ private:
 	mutable parameters params;
 
 public:
-	min_proxy(utki::shared_ref<ruis::context> context, all_parameters params);
+	min_proxy(
+		utki::shared_ref<ruis::context> context, //
+		all_parameters params
+	);
 
 	min_proxy(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 
@@ -58,7 +61,10 @@ inline utki::shared_ref<ruis::min_proxy> min_proxy( //
 	min_proxy::all_parameters params
 )
 {
-	return utki::make_shared<ruis::min_proxy>(std::move(context), std::move(params));
+	return utki::make_shared<ruis::min_proxy>(
+		std::move(context), //
+		std::move(params)
+	);
 }
 
 } // namespace make

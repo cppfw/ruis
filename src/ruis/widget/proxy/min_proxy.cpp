@@ -50,7 +50,7 @@ min_proxy::min_proxy(const utki::shared_ref<ruis::context>& c, const tml::forest
 				this->params.root_id = get_property_value(p).string;
 			} else if (p.value == "target") {
 				for (const auto& id : p.children) {
-					this->params.target_id.push_back(id.value.string);
+					this->params.target_id_path.push_back(id.value.string);
 				}
 			}
 		} catch (std::invalid_argument&) {
@@ -66,7 +66,7 @@ ruis::vector2 min_proxy::measure(const vector2& quotum) const
 {
 	auto t = this->target.lock();
 	if (!t) {
-		if (this->params.target_id.empty()) {
+		if (this->params.target_id_path.empty()) {
 			return {0, 0};
 		}
 
@@ -78,11 +78,11 @@ ruis::vector2 min_proxy::measure(const vector2& quotum) const
 			}
 		}();
 		ASSERT(root)
-		for (const auto& id : this->params.target_id) {
+		for (const auto& id : this->params.target_id_path) {
 			root = &root->get_widget(id, false);
 		}
 		this->params.root_id.clear();
-		this->params.target_id.clear();
+		this->params.target_id_path.clear();
 		ASSERT(root)
 		this->target = utki::make_weak_from(*root);
 		t = this->target.lock();

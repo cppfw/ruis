@@ -37,6 +37,7 @@
 #include "sliders_window.hpp"
 #include "spinning_cube_window.hpp"
 #include "text_input_window.hpp"
+#include "scroll_area_window.hpp"
 
 #ifdef assert
 #	undef assert
@@ -447,6 +448,13 @@ public:
 			make_text_input_window(
 				this->gui.context, //
 				{310_pp, 500_pp}
+			)
+		);
+
+		c.get().get_widget("window6").replace_by(
+			make_scroll_area_window(
+				this->gui.context, //
+				{620_pp, 500_pp}
 			)
 		);
 
