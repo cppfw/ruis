@@ -53,5 +53,8 @@ void list_providable::set_provider(std::shared_ptr<list_provider> provider)
 				}
 			);
 	}
+	// set_provider is called from constructor in order to connect
+	// model change observer
+	// NOLINTNEXTLINE(clang-analyzer-optin.cplusplus.VirtualCall)
 	this->handle_model_change();
 }
