@@ -678,7 +678,7 @@ cursor{crs_arrow}
 	@widget{
 		id{window6}
 	}
-
+/*
 	@window{
 		dx{300pp} dy{200pp}
 		x{620pp} y{250pp}
@@ -705,6 +705,10 @@ cursor{crs_arrow}
 			}
 		}
 
+	}
+*/
+	@widget{
+		id{window7}
 	}
 
 	@window{

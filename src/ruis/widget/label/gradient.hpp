@@ -50,7 +50,10 @@ private:
 	parameters params;
 
 public:
-	gradient(utki::shared_ref<ruis::context> context, all_parameters params);
+	gradient(
+		utki::shared_ref<ruis::context> context, //
+		all_parameters params
+	);
 
 	gradient(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 
