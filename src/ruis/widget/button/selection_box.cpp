@@ -72,6 +72,7 @@ selection_box::selection_box(
 	list_providable(std::move(providable_params)),
 	selection_container(selection_container)
 {
+	// NOLINTNEXTLINE(clang-analyzer-optin.cplusplus.VirtualCall, "bypass virtual dispatch")
 	this->handle_model_change();
 }
 
