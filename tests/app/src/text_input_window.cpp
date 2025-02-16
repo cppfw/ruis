@@ -145,7 +145,7 @@ utki::shared_ref<ruis::window> make_text_input_window(
                     }
                 }
             ),
-            m::text_input_line(c,
+            m::nine_patch(c,
                 {
                     .layout_params{
                         .dims{ruis::dim::max, ruis::dim::min}
@@ -153,11 +153,23 @@ utki::shared_ref<ruis::window> make_text_input_window(
                     .widget_params{
                         .id = "text_input"s
                     },
-                    .color_params{
-                        .color = ruis::style::color_text_normal
+                    .nine_patch_params{
+                        .nine_patch = c.get().loader.load<ruis::res::nine_patch>("ruis_npt_textfield_background"sv)
                     }
                 },
-                U"Hello Wrodl!!!"s
+                {
+                    m::text_input_line(c,
+                        {
+                            .layout_params{
+                                .dims{ruis::dim::fill, ruis::dim::max}
+                            },
+                            .color_params{
+                                .color = ruis::style::color_text_normal
+                            }
+                        },
+                        U"Hello Wrodl!!!"s
+                    )
+                }
             ),
             make_push_button(c, U"button!!!"s),
             make_push_button(c, U"button!!!"s),
