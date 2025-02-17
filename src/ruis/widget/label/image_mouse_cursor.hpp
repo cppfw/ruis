@@ -35,14 +35,31 @@ namespace ruis {
  */
 class image_mouse_cursor : public widget
 {
-	std::shared_ptr<const res::cursor> cursor;
+public:
+	struct parameters {
+		std::shared_ptr<const res::cursor> cursor;
+	};
 
-	std::shared_ptr<const res::image::texture> quad_tex;
+private:
+	parameters params;
 
-	vector2 cursorPos;
+	mutable std::shared_ptr<const res::image::texture> quad_tex;
+
+	vector2 cursor_pos;
 
 public:
 	image_mouse_cursor(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
+
+	struct all_parameters {
+		layout_parameters layout_params;
+		widget::parameters widget_params;
+		parameters mouse_cursor_params;
+	};
+
+	image_mouse_cursor(
+		utki::shared_ref<ruis::context> context, //
+		all_parameters params
+	);
 
 	image_mouse_cursor(const image_mouse_cursor&) = delete;
 	image_mouse_cursor& operator=(const image_mouse_cursor&) = delete;
@@ -58,5 +75,18 @@ public:
 
 	void render(const ruis::matrix4& matrix) const override;
 };
+
+namespace make {
+inline utki::shared_ref<ruis::image_mouse_cursor> image_mouse_cursor(
+	utki::shared_ref<ruis::context> context, //
+	ruis::image_mouse_cursor::all_parameters params
+)
+{
+	return utki::make_shared<ruis::image_mouse_cursor>(
+		std::move(context), //
+		std::move(params)
+	);
+}
+} // namespace make
 
 } // namespace ruis

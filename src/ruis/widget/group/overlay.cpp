@@ -52,11 +52,17 @@ overlay::overlay(
 		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
+	// clang-format off
 	container( //
 		this->context,
-		{.container_params = {.layout = layout::pile}},
+		{
+			.container_params{
+				.layout = layout::pile
+			}
+		},
 		children
 	)
+	// clang-format off
 {}
 
 overlay::overlay(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :

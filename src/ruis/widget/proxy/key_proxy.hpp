@@ -68,14 +68,19 @@ public:
 };
 
 namespace make {
-inline utki::shared_ref<ruis::key_proxy> key_proxy(
-	utki::shared_ref<ruis::context> context,
+/**
+ * @brief Construct 'key_proxy' widget.
+ * Default layout for children is pile.
+ * @param context - ruis context.
+ * @param params - 'key_proxy' widget parameters.
+ * @param children - children of the 'key_proxy' widget.
+ * @return newly created 'key_proxy' widget.
+ */
+utki::shared_ref<ruis::key_proxy> key_proxy(
+	utki::shared_ref<ruis::context> context, //
 	key_proxy::all_parameters params,
 	utki::span<const utki::shared_ref<ruis::widget>> children
-)
-{
-	return utki::make_shared<ruis::key_proxy>(std::move(context), std::move(params), children);
-}
+);
 } // namespace make
 
 } // namespace ruis

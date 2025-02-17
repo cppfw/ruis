@@ -27,6 +27,18 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
+image_mouse_cursor::image_mouse_cursor(
+	utki::shared_ref<ruis::context> context, //
+	all_parameters params
+) :
+	widget(
+		std::move(context), //
+		std::move(params.layout_params),
+		std::move(params.widget_params)
+	),
+	params(std::move(params.mouse_cursor_params))
+{}
+
 image_mouse_cursor::image_mouse_cursor(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
 	widget(c, desc)
 {
@@ -43,15 +55,15 @@ image_mouse_cursor::image_mouse_cursor(const utki::shared_ref<ruis::context>& c,
 
 void image_mouse_cursor::set_cursor(const utki::shared_ref<const res::cursor>& cursor)
 {
-	this->cursor = cursor.to_shared_ptr();
-	ASSERT(this->cursor)
-	this->quad_tex = this->cursor->image().get().to_shared_ptr();
+	this->params.cursor = cursor.to_shared_ptr();
+	ASSERT(this->params.cursor)
+	this->quad_tex.reset();
 }
 
 bool image_mouse_cursor::on_mouse_move(const mouse_move_event& e)
 {
 	if (e.pointer_id == 0) {
-		this->cursorPos = e.pos;
+		this->cursor_pos = e.pos;
 	}
 	return this->widget::on_mouse_move(e);
 }
@@ -60,18 +72,24 @@ void image_mouse_cursor::render(const ruis::matrix4& matrix) const
 {
 	this->widget::render(matrix);
 
-	if (!this->cursor) {
+	if (!this->params.cursor) {
 		return;
 	}
+
 	if (!this->is_hovered(0)) {
 		return;
+	}
+
+	if (!this->quad_tex) {
+		ASSERT(this->params.cursor)
+		this->quad_tex = this->params.cursor->image().get().to_shared_ptr();
 	}
 
 	ASSERT(this->quad_tex)
 
 	matrix4 matr(matrix);
-	matr.translate(this->cursorPos);
-	matr.translate(-this->cursor->hotspot());
+	matr.translate(this->cursor_pos);
+	matr.translate(-this->params.cursor->hotspot());
 	matr.scale(this->quad_tex->dims().to<real>());
 
 	//	TRACE(<< "image_mouse_cursor::render(): this->cursorPos = " << this->cursorPos << " this->quadTex->dim() = " <<

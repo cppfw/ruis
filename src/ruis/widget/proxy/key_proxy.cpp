@@ -47,3 +47,20 @@ bool key_proxy::on_key(const ruis::key_event& e)
 	}
 	return false;
 }
+
+utki::shared_ref<ruis::key_proxy> ruis::make::key_proxy(
+	utki::shared_ref<ruis::context> context, //
+	key_proxy::all_parameters params,
+	utki::span<const utki::shared_ref<ruis::widget>> children
+)
+{
+	if (!params.container_params.layout) {
+		params.container_params.layout = ruis::layout::pile;
+	}
+
+	return utki::make_shared<ruis::key_proxy>(
+		std::move(context), //
+		std::move(params),
+		children
+	);
+}

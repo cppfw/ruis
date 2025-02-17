@@ -29,6 +29,7 @@
 #include <ruis/widget/button/selection_box.hpp>
 #include <ruis/layout/linear_layout.hpp>
 
+#include "root_widget.hpp"
 #include "cube_widget.hpp"
 
 #include "window0.hpp"
@@ -46,112 +47,6 @@
 #endif
 
 using namespace ruis::length_literals;
-
-class simple_widget :
-		virtual public ruis::widget,
-		public ruis::updateable,
-		public ruis::character_input_widget
-{
-	utki::shared_ref<const ruis::res::texture_2d> tex;
-
-public:
-	simple_widget(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
-			ruis::widget(c, desc),
-			ruis::character_input_widget(this->context),
-			tex(this->context.get().loader.load<ruis::res::texture_2d>("tex_sample"))
-	{}
-
-	uint32_t timer = 0;
-	uint32_t cnt = 0;
-
-	void update(uint32_t dt) override{
-		this->timer += dt;
-		++this->cnt;
-
-		if(this->timer > std::milli::den){
-			this->timer -= std::milli::den;
-
-			LOG([this](auto&o){o << "Update(): UPS = " << this->cnt << std::endl;})
-
-			this->cnt = 0;
-		}
-	}
-
-	bool on_mouse_button(const ruis::mouse_button_event& e)override{
-		LOG([&](auto&o){o << "OnMouseButton(): isDown = " << e.is_down << ", pos = " << e.pos << ", button = " << unsigned(e.button) << ", pointer_id = " << e.pointer_id << std::endl;})
-		if(!e.is_down){
-			return false;
-		}
-
-		if(this->is_updating()){
-			this->context.get().updater.get().stop(*this);
-		}else{
-			this->context.get().updater.get().start(
-					utki::make_shared_from(*this), //
-					0
-				);
-		}
-		this->focus();
-		return true;
-	}
-
-	bool on_key(const ruis::key_event& e)override{
-		if(e.is_down){
-			LOG([&](auto&o){o << "simple_widget::OnKey(): down, keyCode = " << unsigned(e.combo.key) << std::endl;})
-			switch(e.combo.key){
-				case ruis::key::arrow_left:
-					utki::log([](auto&o){o << "simple_widget::OnKeyDown(): LEFT key caught" << std::endl;});
-					return true;
-				case ruis::key::a:
-					utki::log([](auto&o){o << "simple_widget::OnKeyUp(): A key caught" << std::endl;});
-					return true;
-				default:
-					break;
-			}
-		}else{
-			LOG([&](auto&o){o << "simple_widget::OnKey(): up, keyCode = " << unsigned(e.combo.key) << std::endl;})
-			switch(e.combo.key){
-				case ruis::key::arrow_left:
-					utki::log([](auto&o){o << "simple_widget::OnKeyUp(): LEFT key caught" << std::endl;});
-					return true;
-				case ruis::key::a:
-					utki::log([](auto&o){o << "simple_widget::OnKeyUp(): A key caught" << std::endl;});
-					return true;
-				default:
-					break;
-			}
-		}
-		return false;
-	}
-
-	void on_character_input(const ruis::character_input_event& e)override{
-		if(e.string.empty()){
-			return;
-		}
-
-		LOG([&](auto&o){o << "simple_widget::on_character_input(): string = " << uint32_t(e.string[0]) << std::endl;})
-	}
-
-	void render(const ruis::matrix4& matrix)const override{
-		{
-			ruis::matrix4 matr(matrix);
-			matr.scale(this->rect().d);
-
-			auto& r = this->context.get().renderer.get();
-
-			r.shader->pos_tex->render(matr, r.pos_tex_quad_01_vao.get(), this->tex.get().tex());
-		}
-
-//		this->fnt->Fnt().RenderTex(s , matrix);
-
-//		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-//		glEnable(GL_BLEND);
-//		ruis::SimpleTexturingShader &s = ruis::gui::inst().shaders.simpleTexturing;
-//		ruis::matrix4 m(matrix);
-//		m.translate(200, 200);
-//		this->fnt->Fnt().RenderString(s, m, "Hello World!");
-	}
-};
 
 class tree_view_items_provider : public ruis::tree_view::provider{
 	tml::forest root;
@@ -403,76 +298,8 @@ public:
 		this->gui.context.get().loader.mount_res_pack(*this->get_res_file("res/"));
 //		this->ResMan().MountResPack(ruis::ZipFile::New(papki::FSFile::New("res.zip")));
 
-		this->gui.context.get().inflater.register_widget<simple_widget>("U_SimpleWidget");
-		this->gui.context.get().inflater.register_widget<cube_widget>("cube_widget");
-
-		auto c = this->gui.context.get().inflater.inflate(
-				*this->get_res_file("res/test.gui")
-			);
+		auto c = make_root_widget(this->gui.context);
 		this->gui.set_root(c);
-
-		c.get().get_widget("window0").replace_by(
-			make_window0(
-				this->gui.context, //
-				{0, 0}
-			)
-		);
-
-		c.get().get_widget("window1").replace_by(
-			make_window1(
-				this->gui.context, //
-				{300_pp, 10_pp}
-			)
-		);
-
-		c.get().get_widget("window2").replace_by(
-			make_tree_view_window(
-				this->gui.context, //
-				{300_pp, 250_pp}
-			)
-		);
-
-		c.get().get_widget("window3").replace_by(
-			make_sliders_window(
-				this->gui.context, //
-				{0_pp, 250_pp}
-			)
-		);
-
-		c.get().get_widget("window4").replace_by(
-			make_spinning_cube_window(
-				this->gui.context, //
-				{10_pp, 500_pp}
-			)
-		);
-
-		c.get().get_widget("window5").replace_by(
-			make_text_input_window(
-				this->gui.context, //
-				{310_pp, 500_pp}
-			)
-		);
-
-		c.get().get_widget("window6").replace_by(
-			make_scroll_area_window(
-				this->gui.context, //
-				{620_pp, 500_pp}
-			)
-		);
-
-		c.get().get_widget("window7").replace_by(
-			make_gradient_window(
-				this->gui.context, //
-				{620_pp, 250_pp}
-			)
-		);
-
-		c.get().get_widget("window8").replace_by(
-			make_vertical_list_window(
-				this->gui.context, //
-				{620_pp, 0_pp}
-			)
-		);
 
 		utki::dynamic_reference_cast<ruis::key_proxy>(c).get().key_handler = [this](ruis::key_proxy&, const ruis::key_event& e) -> bool {
 			if(e.is_down){
