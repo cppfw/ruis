@@ -28,8 +28,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace ruis;
 
 image_mouse_cursor::image_mouse_cursor(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
-	widget(c, desc),
-	container(this->context, desc, layout::pile)
+	widget(c, desc)
 {
 	for (const auto& p : desc) {
 		if (!is_property(p)) {
@@ -54,12 +53,12 @@ bool image_mouse_cursor::on_mouse_move(const mouse_move_event& e)
 	if (e.pointer_id == 0) {
 		this->cursorPos = e.pos;
 	}
-	return this->container::on_mouse_move(e);
+	return this->widget::on_mouse_move(e);
 }
 
 void image_mouse_cursor::render(const ruis::matrix4& matrix) const
 {
-	this->container::render(matrix);
+	this->widget::render(matrix);
 
 	if (!this->cursor) {
 		return;

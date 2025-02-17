@@ -22,7 +22,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #pragma once
 
 #include "../../res/cursor.hpp"
-#include "../container.hpp"
+#include "../widget.hpp"
 
 namespace ruis {
 
@@ -33,7 +33,7 @@ namespace ruis {
  *
  * @param cursor - reference to cursor resource.
  */
-class image_mouse_cursor : public container
+class image_mouse_cursor : public widget
 {
 	std::shared_ptr<const res::cursor> cursor;
 

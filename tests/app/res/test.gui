@@ -1,11 +1,5 @@
 @key_proxy{
 
-@image_mouse_cursor{
-lp{
-	dx{fill} dy{fill}
-}
-cursor{crs_arrow}
-
 @overlay{
 	id {overlay}
 	lp{
@@ -55,6 +49,11 @@ cursor{crs_arrow}
 }
 } // ~overlay
 
+@image_mouse_cursor{
+	lp{
+		dx{fill} dy{fill}
+	}
+	cursor{crs_arrow}
 } // ~image_mouse_cursor
 
 } // ~key_proxy
