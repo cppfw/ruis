@@ -129,7 +129,7 @@ size_t tree_view::provider::count() const noexcept
 }
 
 namespace {
-	// TODO: modernize
+// TODO: modernize
 const tml::forest plus_minus_layout = tml::read(R"qwertyuiop(
 		@pile{
 			@image{
@@ -144,7 +144,7 @@ const tml::forest plus_minus_layout = tml::read(R"qwertyuiop(
 		}
 	)qwertyuiop");
 
-	// TODO: modernize
+// TODO: modernize
 const tml::forest vert_line_layout = tml::read(R"qwertyuiop(
 		@pile{
 			lp{dx{${ruis_tree_view_indent}} dy{fill}}
@@ -155,7 +155,7 @@ const tml::forest vert_line_layout = tml::read(R"qwertyuiop(
 		}
 	)qwertyuiop");
 
-	// TODO: modernize
+// TODO: modernize
 const tml::forest line_end_layout = tml::read(R"qwertyuiop(
 		@pile{
 			lp{dx{${ruis_tree_view_indent}} dy{max}}
@@ -178,7 +178,7 @@ const tml::forest line_end_layout = tml::read(R"qwertyuiop(
 		}
 	)qwertyuiop");
 
-	// TODO: modernize
+// TODO: modernize
 const tml::forest line_middle_layout = tml::read(R"qwertyuiop(
 		@pile{
 			lp{dx{${ruis_tree_view_indent}} dy{max}}
@@ -197,7 +197,7 @@ const tml::forest line_middle_layout = tml::read(R"qwertyuiop(
 		}
 	)qwertyuiop");
 
-	// TODO: modernize
+// TODO: modernize
 const tml::forest empty_layout = tml::read(R"qwertyuiop(
 		@widget{lp{dx{${ruis_tree_view_indent}}dy{0}}}
 	)qwertyuiop");

@@ -64,7 +64,7 @@ const auto drop_down_box_layout = tml::read(R"qwertyuiop(
 } // namespace
 
 namespace {
-	// TODO: modernize
+// TODO: modernize
 const auto item_layout = tml::read(R"qwertyuiop(
 		@pile{
 			lp{
@@ -89,7 +89,7 @@ const auto item_layout = tml::read(R"qwertyuiop(
 } // namespace
 
 namespace {
-	// TODO: modernize
+// TODO: modernize
 const auto drop_down_menu_layout = tml::read(R"qwertyuiop(
 		@pile{
 			@widget{

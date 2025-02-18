@@ -35,10 +35,39 @@ namespace {
 class popup_wrapper : public container
 {
 public:
-	popup_wrapper(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
-		widget(c, desc),
-		container(this->context, desc, layout::size)
+	popup_wrapper(
+		utki::shared_ref<ruis::context> context, //
+		utki::span<const utki::shared_ref<ruis::widget>> children
+	) :
+		// clang-format off
+		widget(
+			std::move(context),
+			{
+				.dims{ruis::dim::fill, ruis::dim::fill}
+			},
+			{}
+		),
+		container(this->context,
+			{
+				.container_params{
+					.layout = ruis::layout::size
+				}
+			},
+			children
+		)
+	// clang-format on
 	{}
+
+	static utki::shared_ref<popup_wrapper> make(
+		utki::shared_ref<ruis::context> context, //
+		utki::span<const utki::shared_ref<ruis::widget>> children
+	)
+	{
+		return utki::make_shared<popup_wrapper>(
+			std::move(context), //
+			children
+		);
+	}
 };
 } // namespace
 
@@ -72,23 +101,29 @@ overlay::overlay(const utki::shared_ref<ruis::context>& c, const tml::forest& de
 
 utki::shared_ref<widget> overlay::show_popup(const utki::shared_ref<widget>& w, vector2 anchor)
 {
-	// TODO: modernize
-	auto c = utki::make_shared<popup_wrapper>(this->context, tml::read(R"qwertyuiop(
-		lp{
-			dx{fill} dy{fill}
+	// clang-format off
+	auto c = popup_wrapper::make(this->context,
+		{
+			ruis::make::mouse_proxy(this->context,
+				{
+					.layout_params{
+						.dims{ruis::dim::fill, ruis::dim::fill}
+					},
+					.widget_params{
+						.rectangle{
+							{0, 0}, // set left top corner
+							{1, 1} // dimensions do not matter
+						}
+					}
+				}
+			)
 		}
-		@mouse_proxy{
-			lp{
-				dx{fill} dy{fill}
-			}
-			x{0} y{0}
-		}
-	)qwertyuiop"));
+	);
+	// clang-format on
 
-	// TODO: rewrite using utki::dynamic_reference_cast()
-	auto& mp = *std::dynamic_pointer_cast<mouse_proxy>(c.get().children().back().to_shared_ptr());
+	auto mp = utki::dynamic_reference_cast<mouse_proxy>(c.get().children().back());
 
-	mp.mouse_button_handler = [cntr{utki::make_weak(c)}](mouse_proxy& w, const mouse_button_event& e) -> bool {
+	mp.get().mouse_button_handler = [cntr{utki::make_weak(c)}](mouse_proxy& w, const mouse_button_event& e) -> bool {
 		if (auto c = cntr.lock()) {
 			c->context.get().post_to_ui_thread([c]() {
 				c->remove_from_parent();
