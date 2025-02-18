@@ -6,6 +6,8 @@
 
 #include "../../harness/util/dummy_context.hpp"
 
+// TODO: modernize
+
 namespace{
 const tst::set set("finding_widgets", [](tst::suite& suite){
     suite.add("get_all_widgets_function", []{

@@ -192,6 +192,7 @@ public:
 		auto ret = utki::make_shared<ruis::container>(this->context, tml::forest(), ruis::layout::row);
 
 		{
+			// TODO: modernize
 			auto v = this->context.get().inflater.inflate(
 					R"qwertyuiop(
 							@pile{
@@ -249,6 +250,7 @@ public:
 		}
 
 		{
+			// TODO: modernize
 			auto b = this->context.get().inflater.inflate_as<ruis::push_button>(
 					R"qwertyuiop(
 							@push_button{

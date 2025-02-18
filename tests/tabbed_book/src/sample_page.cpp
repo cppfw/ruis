@@ -6,6 +6,7 @@
 sample_page::sample_page(const utki::shared_ref<ruis::context>& c, const std::string& text) :
         ruis::widget(c, tml::forest()),
         ruis::page(this->context, tml::forest()),
+        // TODO: modernize
         ruis::container(this->context, tml::read(R"qwer(
                 layout{row}
                 

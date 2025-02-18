@@ -98,6 +98,7 @@ r4::vector4<float> ruis::color_to_vec4f(uint32_t color)
 	return rasterimage::to<float>(rasterimage::from_32bit_pixel(color));
 }
 
+// TODO: remove
 bool ruis::is_leaf_property(const tml::leaf& l)
 {
 	return l.empty() || l[0] != '@';

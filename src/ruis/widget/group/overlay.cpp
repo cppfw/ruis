@@ -72,6 +72,7 @@ overlay::overlay(const utki::shared_ref<ruis::context>& c, const tml::forest& de
 
 utki::shared_ref<widget> overlay::show_popup(const utki::shared_ref<widget>& w, vector2 anchor)
 {
+	// TODO: modernize
 	auto c = utki::make_shared<popup_wrapper>(this->context, tml::read(R"qwertyuiop(
 		lp{
 			dx{fill} dy{fill}
