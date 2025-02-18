@@ -23,9 +23,11 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <utki/debug.hpp>
 
+#include "../../../default_style.hpp"
 #include "../../group/overlay.hpp"
 #include "../../label/color.hpp"
 #include "../../label/gap.hpp"
+#include "../../label/rectangle.hpp"
 #include "../../proxy/mouse_proxy.hpp"
 
 using namespace std::string_literals;
@@ -61,60 +63,6 @@ const auto drop_down_box_layout = tml::read(R"qwertyuiop(
 		}
 	}
 )qwertyuiop");
-} // namespace
-
-namespace {
-// TODO: modernize
-const auto item_layout = tml::read(R"qwertyuiop(
-		@pile{
-			lp{
-				dx{max}
-			}
-			@mouse_proxy{
-				id{ruis_dropdown_mouseproxy}
-				lp{
-					dx{fill} dy{fill}
-				}
-			}
-			@color{
-				id{ruis_dropdown_color}
-				color{${ruis_color_highlight}}
-				visible{false}
-				lp{
-					dx{fill} dy{fill}
-				}
-			}
-		}
-	)qwertyuiop");
-} // namespace
-
-namespace {
-// TODO: modernize
-const auto drop_down_menu_layout = tml::read(R"qwertyuiop(
-		@pile{
-			@widget{
-				id{ruis_min_size_forcer}
-			}
-			@mouse_proxy{
-				lp{
-					dx{fill} dy{fill}
-				}
-				id{ruis_drop_down_menu_mouse_proxy}
-			}
-			@nine_patch{
-				lp{
-					dx{max}
-				}
-				image{ruis_npt_contextmenu_bg}
-				@column{
-					lp{
-						dx{max}
-					}
-					id{ruis_contextmenu_content}
-				}
-			}
-		}
-	)qwertyuiop");
 } // namespace
 
 drop_down_box::drop_down_box(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
@@ -280,23 +228,59 @@ void drop_down_box::show_drop_down_menu()
 		throw std::logic_error("drop_down_box: no overlay parent found");
 	}
 
-	auto np = this->context.get().inflater.inflate(drop_down_menu_layout);
+	// clang-format off
+	auto np = ruis::make::pile(this->context,
+		{},
+		{
+			ruis::make::gap(this->context,
+				{
+					.widget_params{
+						.id = "ruis_min_size_forcer"s
+					}
+				}
+			),
+			ruis::make::mouse_proxy(this->context,
+				{
+					.layout_params{
+						.dims{ruis::dim::fill, ruis::dim::fill}
+					},
+					.widget_params{
+						.id = "ruis_drop_down_menu_mouse_proxy"s
+					}
+				}
+			),
+			ruis::make::nine_patch(this->context,
+				{
+					.layout_params{
+						.dims{ruis::dim::max, ruis::dim::min}
+					},
+					.widget_params{
+						.id = "ruis_contextmenu_content"s
+					},
+					.container_params{
+						.layout = ruis::layout::column
+					},
+					.nine_patch_params{
+						.nine_patch = this->context.get().loader.load<ruis::res::nine_patch>("ruis_npt_contextmenu_bg"sv)
+					}
+				}
+			)
+		}
+	);
+	// clang-format on
 
 	// force minimum horizontal size of the drop down menu to be the same as the drop down box horizontal size
 	{
-		// TODO: use get_widget()
-		auto min_size_forcer = np.get().try_get_widget("ruis_min_size_forcer");
+		auto& min_size_forcer = np.get().get_widget("ruis_min_size_forcer"sv);
 
-		auto& lp = min_size_forcer->get_layout_params();
+		auto& lp = min_size_forcer.get_layout_params();
 		lp.dims.x() = length::make_px(this->rect().d.x());
 	}
 
-	// TODO: use get_widget_as()
-	auto va = np.get().try_get_widget_as<ruis::container>("ruis_contextmenu_content");
-	ASSERT(va)
+	auto& va = np.get().get_widget_as<ruis::nine_patch>("ruis_contextmenu_content").content();
 
 	for (size_t i = 0; i != this->get_provider()->count(); ++i) {
-		va->push_back(this->wrap_item(this->get_provider()->get_widget(i), i));
+		va.push_back(this->wrap_item(this->get_provider()->get_widget(i), i));
 	}
 
 	this->hovered_index = -1;
@@ -342,14 +326,51 @@ void drop_down_box::handle_mouse_button_up(bool is_first_button_up_event)
 	});
 }
 
-utki::shared_ref<widget> drop_down_box::wrap_item(const utki::shared_ref<widget>& w, size_t index)
+utki::shared_ref<widget> drop_down_box::wrap_item(
+	const utki::shared_ref<widget>& w, //
+	size_t index
+)
 {
-	auto wd = this->context.get().inflater.inflate_as<ruis::container>(item_layout);
+	// clang-format off
+	auto wd = ruis::make::pile(this->context,
+		{
+			.layout_params{
+				.dims{ruis::dim::max, ruis::dim::min}
+			}
+		},
+		{
+			ruis::make::mouse_proxy(this->context,
+				{
+					.layout_params{
+						.dims{ruis::dim::fill, ruis::dim::fill}
+					},
+					.widget_params{
+						.id = "ruis_dropdown_mouseproxy"s
+					}
+				}
+			),
+			ruis::make::rectangle(this->context,
+				{
+					.layout_params{
+						.dims{ruis::dim::fill, ruis::dim::fill}
+					},
+					.widget_params{
+						.id = "ruis_dropdown_color"s,
+						.visible = false
+					},
+					.color_params{
+						.color = ruis::style::color_highlight
+					}
+				}
+			)
+		}
+	);
+	// clang-format on
 
 	auto mp = wd.get().try_get_widget_as<mouse_proxy>("ruis_dropdown_mouseproxy");
 	ASSERT(mp)
 
-	auto cl = wd.get().try_get_widget_as<color>("ruis_dropdown_color");
+	auto cl = wd.get().try_get_widget_as<rectangle>("ruis_dropdown_color");
 	ASSERT(cl)
 	auto cl_weak = utki::make_weak(cl);
 

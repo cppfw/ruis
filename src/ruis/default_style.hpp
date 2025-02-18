@@ -31,4 +31,6 @@ constexpr uint32_t color_foreground = 0xff505050;
 
 constexpr uint32_t color_text_normal = 0xffffffff;
 
+constexpr uint32_t color_highlight = 0xffad9869;
+
 } // namespace ruis::style
