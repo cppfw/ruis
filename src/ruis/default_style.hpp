@@ -23,6 +23,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <cstdint>
 
+#include "util/length.hpp"
+
 namespace ruis::style {
 
 constexpr uint32_t color_background = 0xff353535;
@@ -32,5 +34,7 @@ constexpr uint32_t color_foreground = 0xff505050;
 constexpr uint32_t color_text_normal = 0xffffffff;
 
 constexpr uint32_t color_highlight = 0xffad9869;
+
+constexpr ruis::length indent_tree_view_item = ruis::length::make_pp(17);
 
 } // namespace ruis::style

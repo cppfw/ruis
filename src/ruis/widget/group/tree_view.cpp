@@ -22,9 +22,14 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "tree_view.hpp"
 
 #include "../../context.hpp"
+#include "../../default_style.hpp"
 #include "../../layout/linear_layout.hpp"
+#include "../label/gap.hpp"
 #include "../label/image.hpp"
+#include "../label/rectangle.hpp"
 #include "../proxy/mouse_proxy.hpp"
+
+using namespace std::string_literals;
 
 using namespace ruis;
 
@@ -129,78 +134,164 @@ size_t tree_view::provider::count() const noexcept
 }
 
 namespace {
-// TODO: modernize
-const tml::forest plus_minus_layout = tml::read(R"qwertyuiop(
-		@pile{
-			@image{
-				id{plusminus}
+utki::shared_ref<ruis::container> make_line_end_indent(utki::shared_ref<ruis::context> c)
+{
+	// clang-format
+	return ruis::make::pile(
+		c,
+		{
+			.layout_params{.dims{ruis::style::indent_tree_view_item, ruis::dim::max}}
+    },
+		{ruis::make::column(
+			 c,
+			 {.layout_params{.dims{ruis::dim::max, ruis::dim::max}}},
+			 {ruis::make::rectangle(
+				  c,
+				  {.layout_params{.dims{ruis::length::make_pp(1), ruis::dim::fill}, .weight = 1},
+				   .color_params{.color = ruis::style::color_highlight}}
+			  ),
+			  ruis::make::gap(c, {.layout_params{.dims{ruis::dim::max, ruis::dim::fill}, .weight = 1}})}
+		 ),
+		 ruis::make::row(
+			 c,
+			 {.layout_params{.dims{ruis::dim::max, ruis::dim::max}}},
+			 {ruis::make::gap(c, {.layout_params{.dims{ruis::dim::fill, ruis::dim::max}, .weight = 1}}),
+			  ruis::make::rectangle(
+				  c,
+				  {.layout_params{.dims{ruis::dim::fill, ruis::length::make_pp(1)}, .weight = 1},
+				   .color_params{.color = ruis::style::color_highlight}}
+			  )}
+		 )}
+	);
+	// clang-format
+}
+} // namespace
+
+namespace {
+utki::shared_ref<ruis::container> make_line_middle_indent(utki::shared_ref<ruis::context> c)
+{
+	// clang-format off
+	return ruis::make::pile(c,
+		{
+			.layout_params{
+				.dims{ruis::style::indent_tree_view_item, ruis::dim::max}
 			}
-			@mouse_proxy{
-				lp{
-					dx{fill} dy{fill}
+		},
+		{
+			ruis::make::rectangle(c,
+				{
+					.layout_params{
+						.dims{ruis::length::make_pp(1), ruis::dim::max}
+					},
+					.color_params{
+						.color = ruis::style::color_highlight
+					}
 				}
-				id{plusminus_mouseproxy}
+			),
+			ruis::make::row(c,
+				{
+					.layout_params{
+						.dims{ruis::dim::max, ruis::dim::max}
+					}
+				},
+				{
+					ruis::make::gap(c,
+						{
+							.layout_params{
+								.dims{ruis::dim::fill, ruis::dim::max},
+								.weight = 1
+							}
+						}
+					),
+					ruis::make::rectangle(c,
+						{
+							.layout_params{
+								.dims{ruis::dim::fill, ruis::length::make_pp(1)},
+								.weight = 1
+							},
+							.color_params{
+								.color = ruis::style::color_highlight
+							}
+						}
+					)
+				}
+			)
+		}
+	);
+	// clang-format on
+}
+} // namespace
+
+namespace {
+utki::shared_ref<ruis::widget> make_plus_minus_widget(utki::shared_ref<ruis::context> c)
+{
+	// clang-format off
+	return ruis::make::pile(c,
+		{},
+		{
+			ruis::make::image(c,
+				{
+					.widget_params{
+						.id = "plusminus"s
+					}
+				}
+			),
+			ruis::make::mouse_proxy(c,
+				{
+					.layout_params{
+						.dims{ruis::dim::fill, ruis::dim::fill}
+					},
+					.widget_params{
+						.id = "plusminus_mouseproxy"s
+					}
+				}
+			)
+		}
+	);
+	// clang-format on
+}
+} // namespace
+
+namespace {
+utki::shared_ref<ruis::widget> make_vertical_line_indent(utki::shared_ref<ruis::context> c)
+{
+	// clang-format off
+	return ruis::make::pile(c,
+		{
+			.layout_params{
+				.dims{ruis::style::indent_tree_view_item, ruis::dim::fill}
+			}
+		},
+		{
+			ruis::make::rectangle(c,
+				{
+					.layout_params{
+						.dims{ruis::length::make_pp(1), ruis::dim::fill}
+					},
+					.color_params{
+						.color = ruis::style::color_highlight
+					}
+				}
+			)
+		}
+	);
+	// clang-format on
+}
+} // namespace
+
+namespace {
+utki::shared_ref<ruis::widget> make_empty_space_indent(utki::shared_ref<ruis::context> c)
+{
+	// clang-format off
+	return ruis::make::gap(c,
+		{
+			.layout_params{
+				.dims{ruis::style::indent_tree_view_item, ruis::length::make_px(0)}
 			}
 		}
-	)qwertyuiop");
-
-// TODO: modernize
-const tml::forest vert_line_layout = tml::read(R"qwertyuiop(
-		@pile{
-			lp{dx{${ruis_tree_view_indent}} dy{fill}}
-			@color{
-				lp{dx{1pp}dy{fill}}
-				color{${ruis_color_highlight}}
-			}
-		}
-	)qwertyuiop");
-
-// TODO: modernize
-const tml::forest line_end_layout = tml::read(R"qwertyuiop(
-		@pile{
-			lp{dx{${ruis_tree_view_indent}} dy{max}}
-			@column{
-				lp{dx{max}dy{max}}
-				@color{
-					lp{dx{1pp}dy{fill}weight{1}}
-					color{${ruis_color_highlight}}
-				}
-				@widget{lp{dx{max}dy{fill}weight{1}}}
-			}
-			@row{
-				lp{dx{max}dy{max}}
-				@widget{lp{dx{fill}dy{max}weight{1}}}
-				@color{
-					lp{dx{fill}dy{1pp}weight{1}}
-					color{${ruis_color_highlight}}
-				}
-			}
-		}
-	)qwertyuiop");
-
-// TODO: modernize
-const tml::forest line_middle_layout = tml::read(R"qwertyuiop(
-		@pile{
-			lp{dx{${ruis_tree_view_indent}} dy{max}}
-			@color{
-				lp{dx{1pp}dy{max}}
-				color{${ruis_color_highlight}}
-			}
-			@row{
-				lp{dx{max}dy{max}}
-				@widget{lp{dx{fill}dy{max}weight{1}}}
-				@color{
-					lp{dx{fill}dy{1pp}weight{1}}
-					color{${ruis_color_highlight}}
-				}
-			}
-		}
-	)qwertyuiop");
-
-// TODO: modernize
-const tml::forest empty_layout = tml::read(R"qwertyuiop(
-		@widget{lp{dx{${ruis_tree_view_indent}}dy{0}}}
-	)qwertyuiop");
+	);
+	// clang-format on
+}
 } // namespace
 
 utki::shared_ref<widget> tree_view::provider::get_widget(size_t index)
@@ -227,23 +318,30 @@ utki::shared_ref<widget> tree_view::provider::get_widget(size_t index)
 	ASSERT(is_last_item_in_parent.size() == path.size())
 
 	for (unsigned i = 0; i != path.size() - 1; ++i) {
-		ret.get().push_back_inflate(is_last_item_in_parent[i] ? empty_layout : vert_line_layout);
+		if (is_last_item_in_parent[i]) {
+			ret.get().push_back(make_empty_space_indent(this->context));
+		} else {
+			ret.get().push_back(make_vertical_line_indent(this->context));
+		}
 	}
 
 	{
-		auto widget = this->context.get().inflater.inflate_as<ruis::container>(
-			is_last_item_in_parent.back() ? line_end_layout : line_middle_layout
-		);
+		auto widget = [&]() {
+			if (is_last_item_in_parent.back()) {
+				return make_line_end_indent(this->context);
+			} else {
+				return make_line_middle_indent(this->context);
+			}
+		}();
 
 		if (this->count(utki::make_span(path)) != 0) {
-			auto w = this->context.get().inflater.inflate(plus_minus_layout);
+			auto w = make_plus_minus_widget(this->context);
 
-			auto plusminus = w.get().try_get_widget_as<ruis::image>("plusminus");
-			ASSERT(plusminus)
-			plusminus->set_image((is_collapsed
-									  ? this->context.get().loader.load<ruis::res::image>("ruis_img_treeview_plus")
-									  : this->context.get().loader.load<ruis::res::image>("ruis_img_treeview_minus"))
-									 .to_shared_ptr());
+			auto& plusminus = w.get().get_widget_as<ruis::image>("plusminus");
+			plusminus.set_image((is_collapsed
+									 ? this->context.get().loader.load<ruis::res::image>("ruis_img_treeview_plus")
+									 : this->context.get().loader.load<ruis::res::image>("ruis_img_treeview_minus"))
+									.to_shared_ptr());
 
 			auto plusminus_mouse_proxy = w.get().try_get_widget_as<ruis::mouse_proxy>("plusminus_mouseproxy");
 			ASSERT(plusminus_mouse_proxy)
