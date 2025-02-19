@@ -28,6 +28,7 @@
 #include <ruis/widget/input/text_input_line.hpp>
 #include <ruis/widget/button/selection_box.hpp>
 #include <ruis/layout/linear_layout.hpp>
+#include <ruis/default_style.hpp>
 
 #include "root_widget.hpp"
 #include "cube_widget.hpp"
@@ -46,7 +47,13 @@
 #	undef assert
 #endif
 
+using namespace std::string_literals;
+
 using namespace ruis::length_literals;
+
+namespace m{
+using namespace ruis::make;
+}
 
 class tree_view_items_provider : public ruis::tree_view::provider{
 	tml::forest root;
@@ -192,26 +199,44 @@ public:
 		auto ret = utki::make_shared<ruis::container>(this->context, tml::forest(), ruis::layout::row);
 
 		{
-			// TODO: modernize
-			auto v = this->context.get().inflater.inflate(
-					R"qwertyuiop(
-							@pile{
-								@color{
-									id{selection}
-									lp{dx{fill}dy{fill}}
-									color{${ruis_color_highlight}}
-									visible{false}
-								}
-								@text{
-									id{value}
-								}
-								@mouse_proxy{
-									id{mouse_proxy}
-									lp{dx{fill}dy{fill}}
-								}
+			// clang-format off
+			auto v = m::pile(this->context,
+				{},
+				{
+					m::rectangle(this->context,
+						{
+							.layout_params{
+								.dims{ruis::dim::fill, ruis::dim::fill}
+							},
+							.widget_params{
+								.id = "selection"s,
+								.visible = false
+							},
+							.color_params{
+								.color = ruis::style::color_highlight
 							}
-						)qwertyuiop"
-				);
+						}
+					),
+					m::text(this->context,
+						{
+							.widget_params{
+								.id = "value"s
+							}
+						}
+					),
+					m::mouse_proxy(this->context,
+						{
+							.layout_params{
+								.dims{ruis::dim::fill, ruis::dim::fill}
+							},
+							.widget_params{
+								.id = "mouse_proxy"s
+							}
+						}
+					)
+				}
+			);
+			// clang-format on
 
 			{
 				auto value = v.get().try_get_widget_as<ruis::text>("value");
@@ -221,9 +246,9 @@ public:
 					);
 			}
 			{
-				auto color_label = v.get().try_get_widget_as<ruis::color>("selection");
+				auto& color_label = v.get().get_widget_as<ruis::rectangle>("selection");
 
-				color_label->set_visible(utki::deep_equals(path, utki::make_span(this->selected_item)));
+				color_label.set_visible(utki::deep_equals(path, utki::make_span(this->selected_item)));
 
 				auto mp = v.get().try_get_widget_as<ruis::mouse_proxy>("mouse_proxy");
 				ASSERT(mp)
@@ -250,17 +275,24 @@ public:
 		}
 
 		{
-			// TODO: modernize
-			auto b = this->context.get().inflater.inflate_as<ruis::push_button>(
-					R"qwertyuiop(
-							@push_button{
-								@color{
-									color{0xff0000ff}
-									lp{dx{2mm}dy{0.5mm}}
-								}
+			// clang-format off
+			auto b = m::push_button(this->context,
+				{},
+				{
+					m::rectangle(this->context,
+						{
+							.layout_params{
+								.dims{ruis::length::make_pp(5), ruis::length::make_pp(2)}
+							},
+							.color_params{
+								.color = 0xff0000ff
 							}
-						)qwertyuiop"
-				);
+						}
+					)
+				}
+			);
+			// clang-format on
+
 			b.get().click_handler = [this, path = utki::make_vector(path), parent_list](ruis::push_button& button){
 				ASSERT(parent_list)
 				parent_list->erase(utki::next(parent_list->begin(), path.back()));
