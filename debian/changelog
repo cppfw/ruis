@@ -1,3 +1,9 @@
+libruis (0.5.257) unstable; urgency=medium
+
+  * modernize UI creation
+
+ -- Ivan Gagis <igagis@gmail.com>  Wed, 19 Feb 2025 17:21:51 +0200
+
 libruis (0.5.256) unstable; urgency=medium
 
   * conan
