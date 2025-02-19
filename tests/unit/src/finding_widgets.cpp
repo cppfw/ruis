@@ -3,52 +3,102 @@
 
 #include <ruis/gui.hpp>
 #include <ruis/widget/group/scroll_area.hpp>
+#include <ruis/widget/label/gap.hpp>
 
 #include "../../harness/util/dummy_context.hpp"
 
-// TODO: modernize
+using namespace std::string_literals;
+
+namespace m{
+using namespace ruis::make;
+}
 
 namespace{
 const tst::set set("finding_widgets", [](tst::suite& suite){
     suite.add("get_all_widgets_function", []{
-		ruis::gui m(make_dummy_context());
-		auto w = m.context.get().inflater.inflate(tml::read(R"qwertyuiop(
-			@container{
-				@scroll_area{
-					id{1}
-				}
+		ruis::gui gui(make_dummy_context());
+		auto& c = gui.context;
 
-				@scroll_area{
-					id{2}
-
-					@scroll_area{
-						id{3}
+		// clang-format off
+		auto w = m::container(c,
+			{},
+			{
+				m::scroll_area(c,
+					{
+						.widget_params{
+							.id = "1"s
+						}
 					}
-					@row{
-						id{4}
-
-						@pile{
-							id{8}
-
-							@scroll_area{
-								id{9}
+				),
+				m::scroll_area(c,
+					{
+						.widget_params{
+							.id = "2"s
+						}
+					},
+					{
+						m::scroll_area(c,
+							{
+								.widget_params{
+									.id = "3"s
+								}
 							}
-						}
+						),
+						m::row(c,
+							{
+								.widget_params{
+									.id = "4"s
+								}
+							},
+							{
+								m::pile(c,
+									{
+										.widget_params{
+											.id = "8"s
+										}
+									},
+									{
+										m::scroll_area(c,
+											{
+												.widget_params{
+													.id = "9"s
+												}
+											}
+										)
+									}
+								)
+							}
+						)
 					}
-				}
-
-				@pile{
-					id{5}
-
-					@scroll_area{
-						id{6}
-						@row{
-							id{7}
+				),
+				m::pile(c,
+					{
+						.widget_params{
+							.id = "5"s
 						}
+					},
+					{
+						m::scroll_area(c,
+							{
+								.widget_params{
+									.id = "6"s
+								}
+							},
+							{
+								m::row(c,
+									{
+										.widget_params{
+											.id = "7"s
+										}
+									}
+								)
+							}
+						)
 					}
-				}
+				)
 			}
-		)qwertyuiop"));
+		);
+		// clang-format on
 
 		std::vector<std::string> expected_ids = {{
 			"1", "2", "3", "6", "9"
@@ -70,39 +120,75 @@ const tst::set set("finding_widgets", [](tst::suite& suite){
 	});
 
 	suite.add("chaining_get_widget", [](){
-		ruis::gui m(make_dummy_context());
-		auto w = m.context.get().inflater.inflate(tml::read(R"qwertyuiop(
-			@container{
-				id{root}
+		ruis::gui gui(make_dummy_context());
 
-				@container{
-					@container{
-						id{child} // should not find this
-						x{1} y{1}
+		auto& c = gui.context;
 
-						@widget
-					}
+		// clang-format off
+		auto w = m::container(c,
+			{
+				.widget_params{
+					.id = "root"s
 				}
-
-				@container{
-					id{child} // should find this
-					@container{
-						id{child2}
-						x{1} y{2}
+			},
+			{
+				m::container(c,
+					{},
+					{
+						m::container(c,
+							{
+								.widget_params{
+									.id = "child"s, // should not find this
+									.rectangle = {{1, 1}, {10, 10}}
+								}
+							},
+							{
+								m::gap(c, {})
+							}
+						)
 					}
-				}
-
-				@container{
-					id{child3}
-
-					@container{
-						@container{
-							id{child1}
+				),
+				m::container(c,
+					{
+						.widget_params{
+							.id = "child"s // should find this
 						}
+					},
+					{
+						m::container(c,
+							{
+								.widget_params{
+									.id = "child2"s,
+									.rectangle = {{1, 2}, {10, 10}}
+								}
+							}
+						)
 					}
-				}
+				),
+				m::container(c,
+					{
+						.widget_params{
+							.id = "child3"s
+						}
+					},
+					{
+						m::container(c,
+							{},
+							{
+								m::container(c,
+									{
+										.widget_params{
+											.id = "child1"s
+										}
+									}
+								)
+							}
+						)
+					}
+				)
 			}
-		)qwertyuiop"));
+		);
+		// clang-format on
 
 		auto& found = w.get().get_widget("child").get_widget("child2");
 		tst::check_eq(found.rect().p, ruis::vector2{1, 2}, SL);
