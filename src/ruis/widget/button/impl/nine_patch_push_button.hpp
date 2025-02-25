@@ -31,8 +31,6 @@ class nine_patch_push_button :
 	public nine_patch_button
 {
 public:
-	nine_patch_push_button(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
-
 	struct all_parameters {
 		layout_parameters layout_params;
 		ruis::widget::parameters widget_params;
@@ -43,8 +41,8 @@ public:
 		nine_patch_button::parameters nine_patch_button_params;
 	};
 
-	nine_patch_push_button( //
-		utki::shared_ref<ruis::context> context,
+	nine_patch_push_button(
+		utki::shared_ref<ruis::context> context, //
 		all_parameters params,
 		utki::span<const utki::shared_ref<ruis::widget>> children
 	);
@@ -65,13 +63,13 @@ protected:
 
 namespace make {
 inline utki::shared_ref<ruis::nine_patch_push_button> nine_patch_push_button(
-	utki::shared_ref<ruis::context> context,
+	utki::shared_ref<ruis::context> context, //
 	nine_patch_push_button::all_parameters params,
 	utki::span<const utki::shared_ref<ruis::widget>> children
 )
 {
-	return utki::make_shared<ruis::nine_patch_push_button>( //
-		std::move(context),
+	return utki::make_shared<ruis::nine_patch_push_button>(
+		std::move(context), //
 		std::move(params),
 		children
 	);

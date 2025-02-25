@@ -54,10 +54,3 @@ nine_patch_toggle::nine_patch_toggle(
 		children
 	)
 {}
-
-nine_patch_toggle::nine_patch_toggle(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
-	widget(c, desc),
-	button(this->context, desc),
-	toggle_button(this->context, desc),
-	nine_patch_button(this->context, desc)
-{}

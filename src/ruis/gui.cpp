@@ -232,10 +232,6 @@ gui::gui(const utki::shared_ref<ruis::context>& context) :
 	this->context.get().inflater.register_widget<color>("color");
 	this->context.get().inflater.register_widget<gradient>("gradient");
 	this->context.get().inflater.register_widget<image>("image");
-	this->context.get().inflater.register_widget<nine_patch>("nine_patch");
-
-	// button
-	this->context.get().inflater.register_widget<nine_patch_push_button>("nine_patch_push_button");
 
 	this->context.get().inflater.push_defs(default_defs);
 
@@ -312,7 +308,6 @@ void gui::init_standard_widgets(papki::file& fi)
 
 	this->context.get().inflater.register_widget<check_box>("check_box");
 	this->context.get().inflater.register_widget<tree_view>("tree_view");
-	this->context.get().inflater.register_widget<drop_down_box>("drop_down_box");
 	this->context.get().inflater.register_widget<radio_button>("radio_button");
 	this->context.get().inflater.register_widget<choice_group>("choice_group");
 	this->context.get().inflater.register_widget<image_mouse_cursor>("image_mouse_cursor");
@@ -320,7 +315,6 @@ void gui::init_standard_widgets(papki::file& fi)
 	this->context.get().inflater.register_widget<image_toggle>("image_toggle");
 	this->context.get().inflater.register_widget<image_push_button>("image_push_button");
 	this->context.get().inflater.register_widget<tab_group>("tab_group");
-	this->context.get().inflater.register_widget<tab>("tab");
 	this->context.get().inflater.register_widget<text_input_line>("text_input_line");
 	this->context.get().inflater.register_widget<tabbed_book>("tabbed_book");
 

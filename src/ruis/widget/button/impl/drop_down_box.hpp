@@ -45,9 +45,10 @@ public:
 		list_providable::parameters providable_params;
 	};
 
-	drop_down_box(utki::shared_ref<ruis::context> context, all_parameters params);
-
-	drop_down_box(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
+	drop_down_box(
+		utki::shared_ref<ruis::context> context, //
+		all_parameters params
+	);
 
 	drop_down_box(const drop_down_box&) = delete;
 	drop_down_box& operator=(const drop_down_box&) = delete;

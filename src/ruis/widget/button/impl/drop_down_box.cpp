@@ -38,49 +38,6 @@ using namespace ruis::length_literals;
 using namespace ruis;
 
 namespace {
-const auto drop_down_box_layout = tml::read(R"qwertyuiop(
-	lp{dx{max} dy{max}}
-
-	look{
-		pressed {ruis_npt_button_pressed}
-		unpressed {ruis_npt_button_normal}
-	}
-
-	@row{
-		lp{dx{max}}
-		@pile{
-			id{ruis_dropdown_selection}
-			lp{dx{max}dy{max} weight{1}}
-		}
-		@widget{lp{dx{3dp}}}
-		@image{
-			image{ruis_img_divider_vert}
-			lp{dy{fill}}
-		}
-		@widget{lp{dx{3dp}}}
-		@image{
-			image{ruis_img_dropdown_arrow}
-		}
-	}
-)qwertyuiop");
-} // namespace
-
-drop_down_box::drop_down_box(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
-	widget(c, desc),
-	button(this->context, drop_down_box_layout),
-	nine_patch_push_button(this->context, drop_down_box_layout),
-	selection_box(this->context, desc, this->get_widget_as<ruis::container>("ruis_dropdown_selection"))
-{
-	this->pressed_change_handler = [this](button& b) {
-		if (!b.is_pressed()) {
-			return;
-		}
-
-		this->show_drop_down_menu();
-	};
-}
-
-namespace {
 std::vector<utki::shared_ref<widget>> make_drop_down_box_widget_structure(utki::shared_ref<ruis::context> c)
 {
 	namespace m = make;

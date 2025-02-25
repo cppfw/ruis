@@ -32,7 +32,7 @@ class nine_patch_toggle :
 {
 protected:
 	nine_patch_toggle(//
-		utki::shared_ref<ruis::context> context,
+		utki::shared_ref<ruis::context> context, //
 		container::parameters container_params,
 		button::parameters button_params,
 		blending_widget::parameters blending_params,
@@ -40,8 +40,6 @@ protected:
 		nine_patch_button::parameters nine_patch_button_params,
 		utki::span<const utki::shared_ref<ruis::widget>> children
 	);
-
-	nine_patch_toggle(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 
 protected:
 	void on_pressed_change() override;
