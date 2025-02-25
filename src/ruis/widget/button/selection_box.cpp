@@ -29,40 +29,6 @@ using namespace std::string_view_literals;
 
 using namespace ruis;
 
-namespace {
-// TODO: remove?
-class static_provider : public list_provider
-{
-	std::vector<tml::tree> widgets;
-
-public:
-	static_provider(utki::shared_ref<ruis::context> context) :
-		list_provider(std::move(context))
-	{}
-
-	size_t count() const noexcept override
-	{
-		return this->widgets.size();
-	}
-
-	utki::shared_ref<widget> get_widget(size_t index) override
-	{
-		auto i = utki::next(this->widgets.begin(), index);
-		return this->context.get().inflater.inflate(i, i + 1);
-	}
-
-	void recycle(size_t index, utki::shared_ref<widget> w) override
-	{
-		//		TRACE(<< "static_provider::recycle(): index = " << index << std::endl)
-	}
-
-	void add(tml::tree w)
-	{
-		this->widgets.emplace_back(std::move(w));
-	}
-};
-} // namespace
-
 selection_box::selection_box(
 	utki::shared_ref<ruis::context> context,
 	container& selection_container,
@@ -74,28 +40,6 @@ selection_box::selection_box(
 {
 	// NOLINTNEXTLINE(clang-analyzer-optin.cplusplus.VirtualCall, "bypass virtual dispatch")
 	this->handle_model_change();
-}
-
-selection_box::selection_box(
-	const utki::shared_ref<ruis::context>& c,
-	const tml::forest& desc,
-	container& selection_container
-) :
-	widget(c, desc),
-	list_providable({}),
-	selection_container(selection_container)
-{
-	std::shared_ptr<static_provider> pr = std::make_shared<static_provider>(c);
-
-	for (const auto& p : desc) {
-		if (is_property(p)) {
-			continue;
-		}
-
-		pr->add(tml::tree(p));
-	}
-
-	this->set_provider(std::move(pr));
 }
 
 void selection_box::handle_model_change()
