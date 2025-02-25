@@ -5,8 +5,11 @@
 
 using namespace std::string_literals;
 
-sample_page::sample_page(const utki::shared_ref<ruis::context>& c, const std::string& text) :
-	ruis::widget(c, tml::forest()),
+sample_page::sample_page(
+	utki::shared_ref<ruis::context> context, //
+	std::string_view text
+) :
+	ruis::widget(std::move( context), {}, {}),
 	ruis::page(this->context, {}),
 	// clang-format off
 	ruis::container(

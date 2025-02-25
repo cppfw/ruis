@@ -7,7 +7,10 @@ class sample_page :
         public ruis::container
 {
 public:
-    sample_page(const utki::shared_ref<ruis::context>& c, const std::string& text);
+    sample_page(
+        utki::shared_ref<ruis::context> context, //
+        std::string_view text
+    );
 
     sample_page(const sample_page&) = delete;
     sample_page& operator=(const sample_page&) = delete;
