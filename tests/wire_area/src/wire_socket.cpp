@@ -14,29 +14,6 @@ wire_socket::wire_socket(
 	params(std::move(params.wire_socket_params))
 {}
 
-wire_socket::wire_socket(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
-		ruis::widget(c, desc)
-{
-	for(const auto& p : desc){
-		if(!ruis::is_property(p)){
-			continue;
-		}
-
-		if(p.value == "outlet"){
-			auto v = ruis::get_property_value(p);
-			if(v == "left"){
-				this->params.outlet_orientation = orientation::left;
-			}else if(v == "right"){
-				this->params.outlet_orientation = orientation::right;
-			}else if(v == "top"){
-				this->params.outlet_orientation = orientation::top;
-			}else if(v == "bottom"){
-				this->params.outlet_orientation = orientation::bottom;
-			}
-		}
-	}
-}
-
 void wire_socket::connect(const std::shared_ptr<wire_socket>& o){
 	// disconnect existing connection
 	this->disconnect();

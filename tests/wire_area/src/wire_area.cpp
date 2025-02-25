@@ -30,25 +30,6 @@ wire_area::wire_area(
 	// clang-format on
 {}
 
-wire_area::wire_area(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
-		widget(c, desc),
-		container(this->context, desc, ruis::layout::trivial)
-{
-	for(const auto& p : desc){
-		if(!ruis::is_property(p)){
-			continue;
-		}
-
-		if(p.value == "wire_width"){
-			this->wire_half_width = ruis::get_property_value(p).to_float() / 2;
-		}else if(p.value == "wire_color"){
-			this->wire_color = ruis::get_property_value(p).to_uint32();
-		}else if(p.value == "grabbed_color"){
-			this->grabbed_color = ruis::get_property_value(p).to_uint32();
-		}
-	}
-}
-
 void wire_area::render(const ruis::matrix4& matrix)const{
 	this->container::render(matrix);
 	

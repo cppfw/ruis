@@ -15,8 +15,6 @@ class wire_area : public ruis::container{
 	uint32_t wire_color = default_wire_color;
 	uint32_t grabbed_color = default_grabbed_color;
 public:
-	wire_area(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
-
 	struct all_parameters{
 		ruis::layout_parameters layout_params;
 		ruis::widget::parameters widget_params;
