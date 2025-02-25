@@ -1,3 +1,9 @@
+libruis (0.5.258) unstable; urgency=medium
+
+  * remove inflater
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 25 Feb 2025 23:19:30 +0200
+
 libruis (0.5.257) unstable; urgency=medium
 
   * modernize UI creation
