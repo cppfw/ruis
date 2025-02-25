@@ -223,7 +223,6 @@ gui::gui(const utki::shared_ref<ruis::context>& context) :
 	this->context.get().inflater.register_widget<container>("container");
 
 	// proxy
-	this->context.get().inflater.register_widget<mouse_proxy>("mouse_proxy");
 	this->context.get().inflater.register_widget<click_proxy>("click_proxy");
 	this->context.get().inflater.register_widget<aspect_ratio_proxy>("aspect_ratio_proxy");
 	this->context.get().inflater.register_widget<key_proxy>("key_proxy");
