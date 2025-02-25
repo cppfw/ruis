@@ -318,8 +318,6 @@ void gui::init_standard_widgets(papki::file& fi)
 	}
 
 	// add standard widgets to inflater
-	this->context.get().inflater.register_widget<vertical_scroll_bar>("vertical_scroll_bar");
-	this->context.get().inflater.register_widget<horizontal_scroll_bar>("horizontal_scroll_bar");
 	this->context.get().inflater.register_widget<window>("window");
 
 	this->context.get().inflater.register_widget<check_box>("check_box");

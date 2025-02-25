@@ -61,8 +61,6 @@ private:
 	void on_band_change() override;
 
 public:
-	scroll_bar(const utki::shared_ref<ruis::context>& c, const tml::forest& desc, bool vertical);
-
 	struct all_parameters {
 		layout_parameters layout_params;
 		widget::parameters widget_params;
@@ -88,46 +86,16 @@ private:
 };
 
 namespace make {
-inline utki::shared_ref<scroll_bar> scroll_bar(utki::shared_ref<context> context, scroll_bar::all_parameters params)
+inline utki::shared_ref<ruis::scroll_bar> scroll_bar(
+	utki::shared_ref<context> context, //
+	ruis::scroll_bar::all_parameters params
+)
 {
-	return utki::make_shared<ruis::scroll_bar>(std::move(context), std::move(params));
+	return utki::make_shared<ruis::scroll_bar>(
+		std::move(context), //
+		std::move(params)
+	);
 }
 } // namespace make
-
-// TODO: deprecated
-class vertical_scroll_bar : public scroll_bar
-{
-public:
-	vertical_scroll_bar(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
-		widget(c, desc),
-		scroll_bar(this->context, desc, true)
-	{}
-
-	vertical_scroll_bar(const vertical_scroll_bar&) = delete;
-	vertical_scroll_bar& operator=(const vertical_scroll_bar&) = delete;
-
-	vertical_scroll_bar(vertical_scroll_bar&&) = delete;
-	vertical_scroll_bar& operator=(vertical_scroll_bar&&) = delete;
-
-	~vertical_scroll_bar() override = default;
-};
-
-// TODO: deprecated
-class horizontal_scroll_bar : public scroll_bar
-{
-public:
-	horizontal_scroll_bar(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
-		widget(c, desc),
-		scroll_bar(this->context, desc, false)
-	{}
-
-	horizontal_scroll_bar(const horizontal_scroll_bar&) = delete;
-	horizontal_scroll_bar& operator=(const horizontal_scroll_bar&) = delete;
-
-	horizontal_scroll_bar(horizontal_scroll_bar&&) = delete;
-	horizontal_scroll_bar& operator=(horizontal_scroll_bar&&) = delete;
-
-	~horizontal_scroll_bar() override = default;
-};
 
 } // namespace ruis
