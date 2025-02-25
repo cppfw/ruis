@@ -336,12 +336,12 @@ void ruis::window::set_background(utki::shared_ref<widget> w)
 }
 
 window::window(
-	utki::shared_ref<ruis::context> c,
+	utki::shared_ref<ruis::context> context,
 	all_parameters params,
 	utki::span<const utki::shared_ref<ruis::widget>> children
 ) :
 	widget( //
-		std::move(c),
+		std::move(context),
 		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
@@ -398,62 +398,6 @@ window::window(
 	this->empty_min_dim = this->measure(vector2(-1));
 
 	this->content_area->push_back(children);
-}
-
-ruis::window::window(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
-	widget(c, desc),
-	container(
-		this->context,
-		{.container_params = {.layout = ruis::layout::pile}},
-		make_children(
-			this->context, //
-			{.layout = ruis::layout::pile},
-			{}
-		)
-	)
-{
-	this->setup_widgets();
-
-	constexpr static const auto default_border_size_pp = length::make_pp(5);
-	sides<length> borders(default_border_size_pp);
-
-	for (const auto& p : desc) {
-		if (!is_property(p)) {
-			continue;
-		}
-
-		if (p.value == "title") {
-			this->set_title(get_property_value(p).string);
-		} else if (p.value == "look") {
-			for (const auto& pp : p.children) {
-				if (!is_property(pp)) {
-					continue;
-				}
-
-				if (pp.value == "title_color_active") {
-					this->title_bg_color_topmost = get_property_value(pp).to_uint32();
-				} else if (pp.value == "title_color_inactive") {
-					this->title_bg_color_non_topmost = get_property_value(pp).to_uint32();
-				} else if (pp.value == "background") {
-					this->set_background(this->context.get().inflater.inflate(pp.children));
-				} else if (pp.value == "left") {
-					borders.left() = parse_dimension_value(get_property_value(pp), this->context.get().units);
-				} else if (pp.value == "top") {
-					borders.top() = parse_dimension_value(get_property_value(pp), this->context.get().units);
-				} else if (pp.value == "right") {
-					borders.right() = parse_dimension_value(get_property_value(pp), this->context.get().units);
-				} else if (pp.value == "bottom") {
-					borders.bottom() = parse_dimension_value(get_property_value(pp), this->context.get().units);
-				}
-			}
-		}
-	}
-	this->set_borders(borders);
-
-	// this should go after initializing borders
-	this->empty_min_dim = this->measure(vector2(-1));
-
-	this->content_area->push_back_inflate(desc);
 }
 
 void ruis::window::setup_widgets()

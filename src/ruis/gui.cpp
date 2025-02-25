@@ -302,9 +302,6 @@ void gui::init_standard_widgets(papki::file& fi)
 		throw std::runtime_error("gui::init_standard_widgets(): could not mount default resource pack");
 	}
 
-	// add standard widgets to inflater
-	this->context.get().inflater.register_widget<window>("window");
-
 	this->context.get().inflater.register_widget<check_box>("check_box");
 	this->context.get().inflater.register_widget<radio_button>("radio_button");
 	this->context.get().inflater.register_widget<choice_group>("choice_group");

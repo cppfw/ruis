@@ -93,12 +93,10 @@ public:
 	};
 
 	window(
-		utki::shared_ref<ruis::context> c,
+		utki::shared_ref<ruis::context> context, //
 		all_parameters params,
 		utki::span<const utki::shared_ref<ruis::widget>> children
 	);
-
-	window(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 
 	window(const window&) = delete;
 	window& operator=(const window&) = delete;
@@ -159,7 +157,7 @@ namespace make {
  * @return newly constructed 'window' widget.
  */
 utki::shared_ref<ruis::window> window(
-	utki::shared_ref<context> context,
+	utki::shared_ref<context> context, //
 	window::all_parameters params,
 	utki::span<const utki::shared_ref<ruis::widget>> contents
 );
