@@ -29,11 +29,6 @@ using namespace std::string_view_literals;
 
 using namespace ruis;
 
-spinner::spinner(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
-	widget(c, desc),
-	image(this->context, desc)
-{}
-
 spinner::spinner( //
 	utki::shared_ref<ruis::context> context,
 	all_parameters params

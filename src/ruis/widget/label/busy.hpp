@@ -32,8 +32,6 @@ namespace ruis {
 class busy : public spinner
 {
 public:
-	busy(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
-
 	struct all_parameters {
 		layout_parameters layout_params;
 		widget::parameters widget_params;
