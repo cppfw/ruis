@@ -230,7 +230,6 @@ gui::gui(const utki::shared_ref<ruis::context>& context) :
 
 	// label
 	this->context.get().inflater.register_widget<color>("color");
-	this->context.get().inflater.register_widget<gradient>("gradient");
 	this->context.get().inflater.register_widget<image>("image");
 
 	this->context.get().inflater.push_defs(default_defs);

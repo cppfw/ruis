@@ -38,21 +38,6 @@ gradient::gradient( //
 	params(std::move(params.gradient_params))
 {}
 
-gradient::gradient(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
-	widget(c, desc)
-{
-	for (const auto& p : desc) {
-		if (!is_property(p)) {
-			continue;
-		}
-
-		if (p.value == "gradient") {
-			this->params.gradient =
-				this->context.get().loader.load<res::gradient>(get_property_value(p).string).to_shared_ptr();
-		}
-	}
-}
-
 void gradient::render(const matrix4& matrix) const
 {
 	this->context.get().renderer.get().set_simple_alpha_blending();
