@@ -43,7 +43,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "widget/group/window.hpp"
 #include "widget/input/text_input_line.hpp"
 #include "widget/label/busy.hpp"
-#include "widget/label/color.hpp"
 #include "widget/label/gradient.hpp"
 #include "widget/label/image_mouse_cursor.hpp"
 #include "widget/label/spinner.hpp"
@@ -221,10 +220,6 @@ gui::gui(const utki::shared_ref<ruis::context>& context) :
 	// register basic widgets
 	this->context.get().inflater.register_widget<widget>("widget");
 	this->context.get().inflater.register_widget<container>("container");
-
-	// label
-	this->context.get().inflater.register_widget<color>("color");
-	this->context.get().inflater.register_widget<image>("image");
 
 	this->context.get().inflater.push_defs(default_defs);
 

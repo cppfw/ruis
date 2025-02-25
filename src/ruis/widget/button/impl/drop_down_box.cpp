@@ -25,7 +25,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../../../default_style.hpp"
 #include "../../group/overlay.hpp"
-#include "../../label/color.hpp"
 #include "../../label/gap.hpp"
 #include "../../label/rectangle.hpp"
 #include "../../proxy/mouse_proxy.hpp"

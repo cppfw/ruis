@@ -23,7 +23,6 @@
 #include <ruis/widget/group/tree_view.hpp>
 #include <ruis/widget/proxy/resize_proxy.hpp>
 #include <ruis/widget/proxy/click_proxy.hpp>
-#include <ruis/widget/label/color.hpp>
 #include <ruis/widget/label/image.hpp>
 #include <ruis/widget/input/text_input_line.hpp>
 #include <ruis/widget/button/selection_box.hpp>
