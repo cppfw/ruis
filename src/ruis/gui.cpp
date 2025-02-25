@@ -296,8 +296,6 @@ void gui::init_standard_widgets(papki::file& fi)
 		throw std::runtime_error("gui::init_standard_widgets(): could not mount default resource pack");
 	}
 
-	this->context.get().inflater.register_widget<choice_group>("choice_group");
-
 	auto t = this->context.get().loader.load<res::tml>("ruis_gui_defs");
 
 	this->context.get().inflater.push_defs(t.get().forest());
