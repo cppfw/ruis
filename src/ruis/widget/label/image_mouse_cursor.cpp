@@ -39,20 +39,6 @@ image_mouse_cursor::image_mouse_cursor(
 	params(std::move(params.mouse_cursor_params))
 {}
 
-image_mouse_cursor::image_mouse_cursor(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
-	widget(c, desc)
-{
-	for (const auto& p : desc) {
-		if (!is_property(p)) {
-			continue;
-		}
-
-		if (p.value == "cursor") {
-			this->set_cursor(this->context.get().loader.load<res::cursor>(get_property_value(p).string));
-		}
-	}
-}
-
 void image_mouse_cursor::set_cursor(const utki::shared_ref<const res::cursor>& cursor)
 {
 	this->params.cursor = cursor.to_shared_ptr();
