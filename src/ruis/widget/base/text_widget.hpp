@@ -50,7 +50,10 @@ private:
 	std::array<utki::shared_ref<const ruis::font>, size_t(res::font::style::enum_size)> fonts;
 
 protected:
-	text_widget(utki::shared_ref<ruis::context> context, parameters params);
+	text_widget(
+		utki::shared_ref<ruis::context> context, //
+		parameters params
+	);
 
 public:
 	text_widget(const text_widget&) = delete;
@@ -99,9 +102,6 @@ public:
 	}
 
 	std::function<void(text_widget& w)> text_change_handler;
-
-protected:
-	text_widget(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 
 private:
 };
