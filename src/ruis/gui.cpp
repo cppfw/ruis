@@ -306,7 +306,6 @@ void gui::init_standard_widgets(papki::file& fi)
 	this->context.get().inflater.register_widget<window>("window");
 
 	this->context.get().inflater.register_widget<check_box>("check_box");
-	this->context.get().inflater.register_widget<tree_view>("tree_view");
 	this->context.get().inflater.register_widget<radio_button>("radio_button");
 	this->context.get().inflater.register_widget<choice_group>("choice_group");
 	this->context.get().inflater.register_widget<collapse_area>("collapse_area");
