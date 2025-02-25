@@ -33,8 +33,6 @@ class page : public virtual widget
 	friend class book;
 
 protected:
-	page(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
-
 	page(
 		utki::shared_ref<ruis::context> context, //
 		ruis::widget::parameters widget_params
@@ -95,8 +93,6 @@ public:
 		utki::shared_ref<ruis::context> context, //
 		all_parameters params
 	);
-
-	book(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 
 	book(const book&) = delete;
 	book& operator=(const book&) = delete;
