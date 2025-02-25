@@ -31,12 +31,6 @@ choice_button::choice_button(utki::shared_ref<ruis::context> context) :
 	toggle_button(this->context)
 {}
 
-choice_button::choice_button(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
-	widget(c, desc),
-	button(this->context, desc),
-	toggle_button(this->context, desc)
-{}
-
 void choice_button::on_pressed_change()
 {
 	this->toggle_button::on_pressed_change();
