@@ -51,8 +51,6 @@ class tabbed_book :
 	void activate_another_tab(tab& t);
 
 public:
-	tabbed_book(const utki::shared_ref<ruis::context>& context, const tml::forest& desc);
-
 	struct all_parameters {
 		layout_parameters layout_params;
 		widget::parameters widget_params;
@@ -63,6 +61,7 @@ public:
 		all_parameters params
 	);
 
+	// TODO: pass shared refs by value
 	void add(const utki::shared_ref<tab>& tab, const utki::shared_ref<ruis::page>& page);
 
 	const ruis::book& get_book() const noexcept

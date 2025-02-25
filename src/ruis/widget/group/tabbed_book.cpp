@@ -99,51 +99,6 @@ tabbed_book::tabbed_book(
 	};
 }
 
-tabbed_book::tabbed_book(const utki::shared_ref<ruis::context>& context, const tml::forest& desc) :
-	ruis::widget(context, desc),
-	ruis::container(this->context, tml::read(R"(
-					layout{column}
-					
-					@tab_group{
-						id { ruis_tab_group }
-						lp{
-							dx { fill }
-						}
-					}
-					@book{
-						id { ruis_book }
-						lp {
-							dx { fill }
-							dy { max }
-							weight { 1 }
-						}
-					}
-				)")),
-	tab_group(this->get_widget_as<ruis::tab_group>("ruis_tab_group")),
-	book(this->get_widget_as<ruis::book>("ruis_book"))
-{
-	// on page tear out, remove corresponding tab
-	this->book.pages_change_handler = [this](ruis::book& b, const page& p) {
-		auto i = this->find_pair(p);
-		if (i != this->tab_page_pairs.end()) {
-			ASSERT(i->tab)
-			this->activate_another_tab(*i->tab);
-			i->tab->remove_from_parent();
-			this->tab_page_pairs.erase(i);
-		}
-	};
-
-	// on page programmatic activate we need to activate the corresponding tab as well
-	this->book.active_page_change_handler = [this](ruis::book& b) {
-		ASSERT(b.get_active_page())
-		auto i = this->find_pair(*b.get_active_page());
-		if (i != this->tab_page_pairs.end()) {
-			ASSERT(i->tab)
-			i->tab->activate();
-		}
-	};
-}
-
 void tabbed_book::add(const utki::shared_ref<tab>& tab, const utki::shared_ref<ruis::page>& page)
 {
 	this->tab_group.push_back(tab);
