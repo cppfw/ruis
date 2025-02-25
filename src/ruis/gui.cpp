@@ -229,7 +229,6 @@ gui::gui(const utki::shared_ref<ruis::context>& context) :
 	this->context.get().inflater.register_widget<book>("book");
 
 	// label
-	this->context.get().inflater.register_widget<text>("text");
 	this->context.get().inflater.register_widget<color>("color");
 	this->context.get().inflater.register_widget<gradient>("gradient");
 	this->context.get().inflater.register_widget<image>("image");
