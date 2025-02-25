@@ -75,9 +75,10 @@ private:
 	parameters params;
 
 protected:
-	blending_widget(utki::shared_ref<ruis::context> context, parameters params);
-
-	blending_widget(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
+	blending_widget(
+		utki::shared_ref<ruis::context> context, //
+		parameters params
+	);
 
 public:
 	blending_widget(const blending_widget&) = delete;

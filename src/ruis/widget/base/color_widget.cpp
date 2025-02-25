@@ -30,22 +30,6 @@ color_widget::color_widget(utki::shared_ref<ruis::context> context, parameters p
 	params(std::move(params))
 {}
 
-color_widget::color_widget(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
-	widget(c, desc)
-{
-	for (const auto& p : desc) {
-		if (!is_property(p)) {
-			continue;
-		}
-
-		if (p.value == "color") {
-			this->params.color = get_property_value(p).to_uint32();
-		} else if (p.value == "disabled_color") {
-			this->params.disabled_color = get_property_value(p).to_uint32();
-		}
-	}
-}
-
 void color_widget::set_color(uint32_t color)
 {
 	if (this->params.color == color) {
