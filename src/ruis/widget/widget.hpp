@@ -463,17 +463,9 @@ public:
 		return this->params;
 	}
 
-	/**
-	 * @brief Constructor.
-	 * @param c - context to which this widget belongs.
-	 * @param desc - widget description.
-	 */
-	// TODO: remove
-	widget(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
-
 protected:
-	widget( //
-		utki::shared_ref<ruis::context> context,
+	widget(
+		utki::shared_ref<ruis::context> context, //
 		layout_parameters layout_params,
 		parameters params
 	);

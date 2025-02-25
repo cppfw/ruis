@@ -13,9 +13,9 @@ namespace{
 class container_which_invalidates_its_layout_during_layouting : public ruis::container{
 public:
     container_which_invalidates_its_layout_during_layouting(
-                const utki::shared_ref<ruis::context>& c
+                utki::shared_ref<ruis::context> c
         ) :
-            ruis::widget(c, tml::forest()),
+            ruis::widget(std::move(c), {}, {}),
             ruis::container(this->context, {}, {})
     {}
 

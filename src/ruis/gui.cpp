@@ -26,33 +26,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "layout/size_layout.hpp"
 #include "layout/trivial_layout.hpp"
 #include "res/tml.hpp"
-#include "widget/button/choice_group.hpp"
-#include "widget/button/impl/check_box.hpp"
-#include "widget/button/impl/drop_down_box.hpp"
-#include "widget/button/impl/image_push_button.hpp"
-#include "widget/button/impl/image_toggle.hpp"
-#include "widget/button/impl/nine_patch_push_button.hpp"
-#include "widget/button/impl/radio_button.hpp"
-#include "widget/button/tab.hpp"
-#include "widget/button/tab_group.hpp"
-#include "widget/group/book.hpp"
-#include "widget/group/collapse_area.hpp"
-#include "widget/group/overlay.hpp"
-#include "widget/group/tabbed_book.hpp"
-#include "widget/group/tree_view.hpp"
-#include "widget/group/window.hpp"
-#include "widget/input/text_input_line.hpp"
-#include "widget/label/busy.hpp"
-#include "widget/label/gradient.hpp"
-#include "widget/label/image_mouse_cursor.hpp"
-#include "widget/label/spinner.hpp"
-#include "widget/label/text.hpp"
-#include "widget/proxy/aspect_ratio_proxy.hpp"
-#include "widget/proxy/click_proxy.hpp"
-#include "widget/proxy/key_proxy.hpp"
-#include "widget/proxy/min_proxy.hpp"
-#include "widget/proxy/resize_proxy.hpp"
-#include "widget/slider/scroll_bar.hpp"
+#include "widget/input/character_input_widget.hpp"
+#include "widget/label/gap.hpp"
 
 using namespace ruis;
 
@@ -215,11 +190,8 @@ defs{
 // NOLINTNEXTLINE(modernize-pass-by-value)
 gui::gui(const utki::shared_ref<ruis::context>& context) :
 	context(context),
-	root_widget(utki::make_shared<ruis::widget>(this->context, tml::forest()))
+	root_widget(ruis::make::gap(this->context, {}))
 {
-	// register basic widgets
-	this->context.get().inflater.register_widget<widget>("widget");
-
 	this->context.get().inflater.push_defs(default_defs);
 
 	// register basic layouts
