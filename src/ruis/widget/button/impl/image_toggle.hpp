@@ -31,8 +31,6 @@ class image_toggle :
 	public image_button
 {
 public:
-	image_toggle(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
-
 	struct all_parameters {
 		layout_parameters layout_params;
 		widget::parameters widget_params;
