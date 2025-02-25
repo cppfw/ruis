@@ -42,22 +42,6 @@ text_string_widget::text_string_widget(
 	this->recompute_bounding_box();
 }
 
-text_string_widget::text_string_widget(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
-	widget(c, desc),
-	text_widget(this->context, desc)
-{
-	for (const auto& p : desc) {
-		if (!is_property(p)) {
-			continue;
-		}
-
-		if (p.value == "text") {
-			this->text_string = utki::to_utf32(get_property_value(p).string);
-			this->recompute_bounding_box();
-		}
-	}
-}
-
 void text_string_widget::recompute_bounding_box()
 {
 	this->bb = this->get_font().get_bounding_box(this->get_string());

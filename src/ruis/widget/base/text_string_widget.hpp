@@ -36,10 +36,8 @@ class text_string_widget : public text_widget
 protected:
 	vector2 measure(const ruis::vector2& quotum) const noexcept override;
 
-	text_string_widget(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
-
 	text_string_widget(
-		utki::shared_ref<ruis::context> context,
+		utki::shared_ref<ruis::context> context, //
 		text_widget::parameters text_widget_params,
 		string text
 	);
