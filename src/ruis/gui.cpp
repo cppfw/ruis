@@ -222,9 +222,6 @@ gui::gui(const utki::shared_ref<ruis::context>& context) :
 	this->context.get().inflater.register_widget<widget>("widget");
 	this->context.get().inflater.register_widget<container>("container");
 
-	// proxy
-	this->context.get().inflater.register_widget<aspect_ratio_proxy>("aspect_ratio_proxy");
-
 	this->context.get().inflater.register_widget<scroll_area>("scroll_area");
 	this->context.get().inflater.register_widget<overlay>("overlay");
 	this->context.get().inflater.register_widget<pan_list>("pan_list");

@@ -23,20 +23,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
-aspect_ratio_proxy::aspect_ratio_proxy(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
-	ruis::widget(c, desc)
-{
-	for (const auto& p : desc) {
-		if (!is_property(p)) {
-			continue;
-		}
-
-		if (p.value == "ratio") {
-			this->params.x_above_y = get_property_value(p).to_float();
-		}
-	}
-}
-
 aspect_ratio_proxy::aspect_ratio_proxy(
 	utki::shared_ref<ruis::context> context, //
 	aspect_ratio_proxy::all_parameters params
