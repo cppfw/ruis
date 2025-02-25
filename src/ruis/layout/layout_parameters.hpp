@@ -53,8 +53,6 @@ struct layout_parameters {
 	 * Horizontal and vertical alignment.
 	 */
 	r4::vector2<ruis::align> align = {ruis::align::undefined, ruis::align::undefined};
-
-	static layout_parameters make(const tml::forest& desc, const ruis::units& units);
 };
 
 }; // namespace ruis
