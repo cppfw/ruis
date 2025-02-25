@@ -75,25 +75,6 @@ public:
 };
 } // namespace
 
-list::list(const utki::shared_ref<ruis::context>& c, const tml::forest& desc, bool vertical) :
-	widget(c, desc),
-	container(this->context, tml::forest()),
-	oriented({.vertical = vertical}),
-	list_providable({})
-{
-	std::shared_ptr<static_provider> pr = std::make_shared<static_provider>(this->context);
-
-	for (const auto& p : desc) {
-		if (is_property(p)) {
-			continue;
-		}
-
-		pr->add(tml::tree(p));
-	}
-
-	this->set_provider(std::move(pr));
-}
-
 void list::on_lay_out()
 {
 	//	TRACE(<< "list::on_lay_out(): invoked" << std::endl)

@@ -222,8 +222,6 @@ gui::gui(const utki::shared_ref<ruis::context>& context) :
 	this->context.get().inflater.register_widget<widget>("widget");
 	this->context.get().inflater.register_widget<container>("container");
 
-	this->context.get().inflater.register_widget<pan_list>("pan_list");
-	this->context.get().inflater.register_widget<list>("list");
 	this->context.get().inflater.register_widget<book>("book");
 
 	// label
