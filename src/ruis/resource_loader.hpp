@@ -27,6 +27,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <papki/file.hpp>
 #include <tml/tree.hpp>
 #include <utki/shared.hpp>
+#include <utki/util.hpp>
 
 namespace ruis {
 
@@ -180,25 +181,25 @@ public:
 template <class resource_type>
 utki::shared_ref<resource_type> resource_loader::load(std::string_view id)
 {
-	for (auto i = this->res_packs.rbegin(); i != this->res_packs.rend(); ++i) {
-		if (auto r = i->find_resource_in_res_map(id)) {
+	for (auto& res_pack : utki::views::reverse(this->res_packs)) {
+		if (auto r = res_pack.find_resource_in_res_map(id)) {
 			return utki::shared_ref<resource_type>(std::dynamic_pointer_cast<resource_type>(r));
 		}
 
-		auto desc = i->find_resource_in_script(id);
+		auto desc = res_pack.find_resource_in_script(id);
 		if (!desc) {
 			continue;
 		}
 
 		try {
-			ASSERT(i->fi)
-			auto resource = resource_type::load(utki::make_shared_from(this->ctx), *desc, *i->fi);
+			ASSERT(res_pack.fi)
+			auto resource = resource_type::load(utki::make_shared_from(this->ctx), *desc, *res_pack.fi);
 
 			// resource need to know its id so that it would be possible to reload the resource
 			// using the id in case mounted resource packs change
 			resource.get().id = id;
 
-			i->add_resource_to_res_map(resource, id);
+			res_pack.add_resource_to_res_map(resource, id);
 
 			return resource;
 		} catch (...) {
