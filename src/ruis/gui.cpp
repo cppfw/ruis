@@ -82,10 +82,6 @@ void gui::init_standard_widgets(papki::file& fi)
 	if (!mounted) {
 		throw std::runtime_error("gui::init_standard_widgets(): could not mount default resource pack");
 	}
-
-	auto t = this->context.get().loader.load<res::tml>("ruis_gui_defs");
-
-	this->context.get().inflater.push_defs(t.get().forest());
 }
 
 void gui::set_viewport(const ruis::vector2& size)

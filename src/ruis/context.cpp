@@ -38,7 +38,6 @@ context::context(
 	post_to_ui_thread(std::move(post_to_ui_thread_function)),
 	cursor_manager(std::move(set_mouse_cursor_function)),
 	loader(*this),
-	inflater(*this),
 	units(dots_per_inch, dots_per_pp)
 {
 	if (!this->post_to_ui_thread) {
