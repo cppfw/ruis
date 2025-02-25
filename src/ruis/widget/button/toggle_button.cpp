@@ -30,11 +30,6 @@ toggle_button::toggle_button(utki::shared_ref<ruis::context> context) :
 	button(this->context, button::parameters{})
 {}
 
-toggle_button::toggle_button(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
-	widget(c, desc),
-	button(this->context, desc)
-{}
-
 bool toggle_button::on_mouse_button(const mouse_button_event& e)
 {
 	if (e.button == mouse_button::left) {

@@ -36,8 +36,6 @@ class toggle_button : virtual public button
 protected:
 	bool on_mouse_button(const mouse_button_event& event) override;
 
-	toggle_button(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
-
 	toggle_button(utki::shared_ref<ruis::context> context);
 
 public:
