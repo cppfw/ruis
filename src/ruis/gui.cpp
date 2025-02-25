@@ -222,8 +222,6 @@ gui::gui(const utki::shared_ref<ruis::context>& context) :
 	this->context.get().inflater.register_widget<widget>("widget");
 	this->context.get().inflater.register_widget<container>("container");
 
-	this->context.get().inflater.register_widget<scroll_area>("scroll_area");
-	this->context.get().inflater.register_widget<overlay>("overlay");
 	this->context.get().inflater.register_widget<pan_list>("pan_list");
 	this->context.get().inflater.register_widget<list>("list");
 	this->context.get().inflater.register_widget<book>("book");
@@ -307,7 +305,6 @@ void gui::init_standard_widgets(papki::file& fi)
 	this->context.get().inflater.register_widget<choice_group>("choice_group");
 	this->context.get().inflater.register_widget<collapse_area>("collapse_area");
 	this->context.get().inflater.register_widget<tab_group>("tab_group");
-	this->context.get().inflater.register_widget<text_input_line>("text_input_line");
 	this->context.get().inflater.register_widget<tabbed_book>("tabbed_book");
 
 	auto t = this->context.get().loader.load<res::tml>("ruis_gui_defs");

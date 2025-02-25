@@ -64,8 +64,6 @@ public:
 	text_input_line(text_input_line&&) = delete;
 	text_input_line& operator=(text_input_line&&) = delete;
 
-	text_input_line(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
-
 	struct all_parameters {
 		layout_parameters layout_params;
 		widget::parameters widget_params;

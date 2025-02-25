@@ -94,11 +94,6 @@ overlay::overlay(
 	// clang-format off
 {}
 
-overlay::overlay(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
-	widget(c, desc),
-	container(this->context, desc, layout::pile)
-{}
-
 utki::shared_ref<widget> overlay::show_popup(const utki::shared_ref<widget>& w, vector2 anchor)
 {
 	// clang-format off

@@ -63,8 +63,6 @@ public:
 		utki::span<const utki::shared_ref<widget>> children
 	);
 
-	scroll_area(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
-
 	scroll_area(const scroll_area&) = delete;
 	scroll_area& operator=(const scroll_area&) = delete;
 

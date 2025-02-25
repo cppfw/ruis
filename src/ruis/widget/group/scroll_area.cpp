@@ -43,11 +43,6 @@ scroll_area::scroll_area(
 	)
 {}
 
-scroll_area::scroll_area(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
-	widget(c, desc),
-	container(this->context, desc)
-{}
-
 bool scroll_area::on_mouse_button(const mouse_button_event& e)
 {
 	vector2 d = -this->cur_scroll_pos;
