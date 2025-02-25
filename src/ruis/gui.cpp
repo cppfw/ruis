@@ -313,7 +313,6 @@ void gui::init_standard_widgets(papki::file& fi)
 	this->context.get().inflater.register_widget<image_mouse_cursor>("image_mouse_cursor");
 	this->context.get().inflater.register_widget<collapse_area>("collapse_area");
 	this->context.get().inflater.register_widget<image_toggle>("image_toggle");
-	this->context.get().inflater.register_widget<image_push_button>("image_push_button");
 	this->context.get().inflater.register_widget<tab_group>("tab_group");
 	this->context.get().inflater.register_widget<text_input_line>("text_input_line");
 	this->context.get().inflater.register_widget<tabbed_book>("tabbed_book");
