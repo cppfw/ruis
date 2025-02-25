@@ -26,27 +26,13 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
-button::button( //
-	utki::shared_ref<ruis::context> context,
+button::button(
+	utki::shared_ref<ruis::context> context, //
 	parameters params
 ) :
 	widget(std::move(context), {}, {}),
 	params(std::move(params))
 {}
-
-button::button(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
-	widget(c, desc)
-{
-	for (const auto& p : desc) {
-		if (!is_property(p)) {
-			continue;
-		}
-
-		if (p.value == "pressed") {
-			this->params.pressed = get_property_value(p).to_bool();
-		}
-	}
-}
 
 void button::set_pressed(bool pressed)
 {
