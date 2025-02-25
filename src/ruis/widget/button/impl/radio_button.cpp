@@ -33,32 +33,6 @@ namespace m {
 using namespace ruis::make;
 } // namespace m
 
-namespace {
-
-const auto radio_button_layout = tml::read(R"qwertyuiop(
-		layout{pile}
-
-		@image{
-			image{ruis_img_radiobutton_bg}
-		}
-		@image{
-			image{ruis_img_radiobutton_tick}
-		}
-	)qwertyuiop");
-
-} // namespace
-
-radio_button::radio_button(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
-	widget(c, desc),
-	button(this->context, desc),
-	toggle_button(this->context, desc),
-	choice_button(this->context, desc),
-	container(this->context, radio_button_layout),
-	check_widget(*this->children().rbegin())
-{
-	this->check_widget.get().set_visible(this->is_pressed());
-}
-
 radio_button::radio_button(
 	utki::shared_ref<ruis::context> context, //
 	all_parameters params

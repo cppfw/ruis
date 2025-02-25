@@ -40,8 +40,6 @@ class radio_button :
 	const utki::shared_ref<widget> check_widget;
 
 public:
-	radio_button(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
-
 	struct all_parameters {
 		layout_parameters layout_params;
 		widget::parameters widget_params;
