@@ -136,22 +136,9 @@ private:
 
 public:
 	container(
-		utki::shared_ref<ruis::context> context,
+		utki::shared_ref<ruis::context> context, //
 		all_parameters params,
 		utki::span<const utki::shared_ref<widget>> children
-	);
-
-	/**
-	 * @brief Constructor.
-	 * @param c - context to which this widget belongs.
-	 * @param desc - description of the widget.
-	 */
-	container(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
-
-	container(
-		const utki::shared_ref<ruis::context>& c,
-		const tml::forest& desc,
-		const utki::shared_ref<ruis::layout>& layout
 	);
 
 	const ruis::layout& get_layout() const
@@ -219,13 +206,6 @@ public:
 			this->push_back(w);
 		}
 	}
-
-	/**
-	 * @brief Add child widgets inflating them from GUI description.
-	 * This function invalidates iterators which were obtained before calling to it.
-	 * @param desc - GUI description of the widgets to add.
-	 */
-	void push_back_inflate(const tml::forest& desc);
 
 	/**
 	 * @brief Remove last child.
@@ -504,67 +484,30 @@ std::vector<utki::shared_ref<widget_type>> widget::get_all_widgets(bool allow_it
 }
 
 namespace make {
-inline utki::shared_ref<ruis::container> container(
-	utki::shared_ref<ruis::context> context,
+utki::shared_ref<ruis::container> container(
+	utki::shared_ref<ruis::context> context, //
 	container::all_parameters params,
 	utki::span<const utki::shared_ref<ruis::widget>> children = {}
-)
-{
-	return utki::make_shared<ruis::container>(std::move(context), std::move(params), children);
-}
+);
 
-inline utki::shared_ref<ruis::container> pile(
-	utki::shared_ref<ruis::context> context,
+utki::shared_ref<ruis::container> pile(
+	utki::shared_ref<ruis::context> context, //
 	widget::all_parameters params,
 	utki::span<const utki::shared_ref<ruis::widget>> children = {}
-)
-{
-	return make::container(
-		std::move(context),
-		{//
-		 .layout_params = std::move(params.layout_params),
-		 .widget_params = std::move(params.widget_params),
-		 .container_params = {.layout = layout::pile}
-		},
-		children
-	);
-}
+);
 
-inline utki::shared_ref<ruis::container> column(
-	utki::shared_ref<ruis::context> context,
+utki::shared_ref<ruis::container> column(
+	utki::shared_ref<ruis::context> context, //
 	widget::all_parameters params,
 	utki::span<const utki::shared_ref<ruis::widget>> children = {}
-)
-{
-	return make::container(
-		std::move(context),
-		{//
-		 .layout_params = std::move(params.layout_params),
-		 .widget_params = std::move(params.widget_params),
-		 .container_params = {.layout = layout::column}
-		},
-		children
-	);
-}
+);
 
-inline utki::shared_ref<ruis::container> row(
-	utki::shared_ref<ruis::context> context,
+utki::shared_ref<ruis::container> row(
+	utki::shared_ref<ruis::context> context, //
 	widget::all_parameters params,
 	utki::span<const utki::shared_ref<ruis::widget>> children = {}
-)
-{
-	return make::container(
-		std::move(context),
-		{//
-		 .layout_params = std::move(params.layout_params),
-		 .widget_params = std::move(params.widget_params),
-		 .container_params = {.layout = layout::row}
-		},
-		children
-	);
-}
+);
 } // namespace make
-
 } // namespace ruis
 
 // include definitions for forward declared classes

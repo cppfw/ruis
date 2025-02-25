@@ -288,7 +288,7 @@ utki::shared_ref<widget> tree_view::provider::get_widget(size_t index)
 		list = &n->children;
 	}
 
-	auto ret = utki::make_shared<ruis::container>(this->context, tml::forest(), layout::row);
+	auto ret = ruis::make::row(this->context, {});
 
 	ASSERT(is_last_item_in_parent.size() == path.size())
 

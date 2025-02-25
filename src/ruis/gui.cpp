@@ -219,7 +219,6 @@ gui::gui(const utki::shared_ref<ruis::context>& context) :
 {
 	// register basic widgets
 	this->context.get().inflater.register_widget<widget>("widget");
-	this->context.get().inflater.register_widget<container>("container");
 
 	this->context.get().inflater.push_defs(default_defs);
 

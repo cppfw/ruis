@@ -195,7 +195,7 @@ public:
 			list = &n->children;
 		}
 
-		auto ret = utki::make_shared<ruis::container>(this->context, tml::forest(), ruis::layout::row);
+		auto ret = ruis::make::row(this->context, {});
 
 		{
 			// clang-format off
