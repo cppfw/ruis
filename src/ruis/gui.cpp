@@ -297,7 +297,6 @@ void gui::init_standard_widgets(papki::file& fi)
 	}
 
 	this->context.get().inflater.register_widget<choice_group>("choice_group");
-	this->context.get().inflater.register_widget<tab_group>("tab_group");
 
 	auto t = this->context.get().loader.load<res::tml>("ruis_gui_defs");
 

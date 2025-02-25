@@ -53,35 +53,6 @@ tab_group::tab_group(
 	}
 }
 
-tab_group::tab_group(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
-	widget(c, desc),
-	choice_group(this->context, desc)
-{
-	for (const auto& p : desc) {
-		if (!is_property(p)) {
-			continue;
-		}
-
-		if (p.value == "look") {
-			for (const auto& pp : p.children) {
-				if (!is_property(pp)) {
-					continue;
-				}
-
-				if (p.value == "filler") {
-					this->set_filler(
-						this->context.get().loader.load<res::image>(get_property_value(pp).string).to_shared_ptr()
-					);
-				}
-			}
-		}
-	}
-
-	if (!this->filler) {
-		this->set_filler(this->context.get().loader.load<res::image>("ruis_img_tabs_filler").to_shared_ptr());
-	}
-}
-
 void tab_group::set_filler(std::shared_ptr<res::image> filler)
 {
 	this->filler = std::move(filler);
