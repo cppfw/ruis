@@ -43,8 +43,6 @@ class check_box :
 	image& tick_widget;
 
 public:
-	check_box(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
-
 	struct all_parameters {
 		layout_parameters layout_params;
 		widget::parameters widget_params;

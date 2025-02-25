@@ -37,8 +37,6 @@ class text :
 	public color_widget
 {
 public:
-	text(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
-
 	struct all_parameters {
 		layout_parameters layout_params;
 		widget::parameters widget_params;
@@ -66,7 +64,7 @@ public:
 
 namespace make {
 inline utki::shared_ref<ruis::text> text(
-	utki::shared_ref<ruis::context> context,
+	utki::shared_ref<ruis::context> context, //
 	text::all_parameters params,
 	string text = {}
 )

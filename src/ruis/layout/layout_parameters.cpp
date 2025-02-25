@@ -24,29 +24,3 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../util/util.hpp"
 
 using namespace ruis;
-
-layout_parameters layout_parameters::make(const tml::forest& desc, const ruis::units& units)
-{
-	layout_parameters ret;
-	for (const auto& p : desc) {
-		if (!is_property(p)) {
-			continue;
-		}
-
-		try {
-			if (p.value == "dx") {
-				ret.dims.x() = parse_layout_dimension_value(get_property_value(p), units);
-			} else if (p.value == "dy") {
-				ret.dims.y() = parse_layout_dimension_value(get_property_value(p), units);
-			} else if (p.value == "weight") {
-				ret.weight = get_property_value(p).to_float();
-			}
-		} catch (std::invalid_argument&) {
-			LOG([&](auto& o) {
-				o << "could not parse value of " << tml::to_string(p) << std::endl;
-			})
-			throw;
-		}
-	}
-	return ret;
-}

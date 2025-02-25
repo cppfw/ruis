@@ -36,8 +36,6 @@ class collapse_area :
 	container& title_v;
 
 public:
-	collapse_area(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
-
 	struct all_parameters {
 		layout_parameters layout_params;
 		widget::parameters widget_params;
@@ -46,7 +44,7 @@ public:
 	};
 
 	collapse_area(
-		utki::shared_ref<ruis::context> context,
+		utki::shared_ref<ruis::context> context, //
 		all_parameters params,
 		utki::span<const utki::shared_ref<widget>> contents
 	);

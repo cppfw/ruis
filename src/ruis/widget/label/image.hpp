@@ -63,15 +63,16 @@ public:
 		image::parameters image_params;
 	};
 
-	image(utki::shared_ref<ruis::context> context, all_parameters params);
+	image(
+		utki::shared_ref<ruis::context> context, //
+		all_parameters params
+	);
 
 	image(const image&) = delete;
 	image& operator=(const image&) = delete;
 
 	image(image&&) = delete;
 	image& operator=(image&&) = delete;
-
-	image(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 
 	~image() override = default;
 
@@ -116,9 +117,15 @@ public:
 };
 
 namespace make {
-inline utki::shared_ref<ruis::image> image(utki::shared_ref<ruis::context> context, image::all_parameters params)
+inline utki::shared_ref<ruis::image> image(
+	utki::shared_ref<ruis::context> context, //
+	image::all_parameters params
+)
 {
-	return utki::make_shared<ruis::image>(std::move(context), std::move(params));
+	return utki::make_shared<ruis::image>(
+		std::move(context), //
+		std::move(params)
+	);
 }
 
 } // namespace make

@@ -57,59 +57,10 @@ void text_widget::set_font_size(length size)
 	this->on_font_change();
 }
 
-text_widget::text_widget(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
-	widget(c, desc),
-	// clang-format off
-	params(
-		{
-			.font_size = [&desc, this]() {
-				for (const auto& p : desc) {
-					if (!is_property(p)) {
-						continue;
-					}
-
-					if (p.value == "font_size") {
-						return parse_dimension_value(get_property_value(p), this->context.get().units)
-							.get(this->context);
-					}
-				}
-
-				return this->context.get().units.pp_to_px(default_font_size_pp);
-			}(),
-		 	.font_face = [&desc, this]() {
-				for (const auto& p : desc) {
-					if (!is_property(p)) {
-						continue;
-					}
-
-					if (p.value == "font") {
-						return this->context.get()
-							.loader.load<ruis::res::font>(get_property_value(p).string.c_str())
-							.to_shared_ptr();
-					}
-				}
-
-				// load default font
-				return this->context.get().loader.load<res::font>("ruis_fnt_text").to_shared_ptr();
-			}()
-		}
-	),
-	// clang-format on
-	fonts{
-		this->params.font_face->get(this->params.font_size.get(this->context), res::font::style::normal),
-		this->params.font_face->get(this->params.font_size.get(this->context), res::font::style::bold),
-		this->params.font_face->get(this->params.font_size.get(this->context), res::font::style::italic),
-		this->params.font_face->get(this->params.font_size.get(this->context), res::font::style::bold_italic)
-	}
-{
-	for (const auto& p : desc) {
-		if (!is_property(p)) {
-			continue;
-		}
-	}
-}
-
-text_widget::text_widget(utki::shared_ref<ruis::context> context, parameters params) :
+text_widget::text_widget(
+	utki::shared_ref<ruis::context> context, //
+	parameters params
+) :
 	widget(std::move(context), {}, {}),
 	params([this, &params]() {
 		auto p = std::move(params);

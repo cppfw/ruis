@@ -23,11 +23,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
-busy::busy(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
-	widget(c, desc),
-	spinner(this->context, desc)
-{}
-
 busy::busy(
 	utki::shared_ref<ruis::context> context, //
 	all_parameters params

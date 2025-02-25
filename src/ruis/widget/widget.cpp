@@ -28,65 +28,11 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
-// NOLINTNEXTLINE(modernize-pass-by-value)
-widget::widget(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
-	context(c)
-{
-	for (const auto& p : desc) {
-		if (!is_property(p)) {
-			continue;
-		}
-
-		try {
-			if (p.value == "lp") {
-				this->layout_params = layout_parameters::make(p.children, this->context.get().units);
-			} else if (p.value == "x") {
-				this->params.rectangle.p.x() =
-					parse_dimension_value(get_property_value(p), this->context.get().units).get(this->context);
-			} else if (p.value == "y") {
-				this->params.rectangle.p.y() =
-					parse_dimension_value(get_property_value(p), this->context.get().units).get(this->context);
-			} else if (p.value == "dx") {
-				this->params.rectangle.d.x() =
-					parse_dimension_value(get_property_value(p), this->context.get().units).get(this->context);
-			} else if (p.value == "dy") {
-				this->params.rectangle.d.y() =
-					parse_dimension_value(get_property_value(p), this->context.get().units).get(this->context);
-			} else if (p.value == "id") {
-				this->params.id = get_property_value(p).string;
-				// TRACE(<< "inflating '" << this->id << "'" << std::endl)
-			} else if (p.value == "clip") {
-				this->params.clip = get_property_value(p).to_bool();
-			} else if (p.value == "cache") {
-				this->params.cache = get_property_value(p).to_bool();
-			} else if (p.value == "visible") {
-				this->params.visible = get_property_value(p).to_bool();
-			} else if (p.value == "enabled") {
-				this->params.enabled = get_property_value(p).to_bool();
-			} else if (p.value == "depth") {
-				this->params.depth = get_property_value(p).to_bool();
-			}
-		} catch (std::invalid_argument&) {
-			LOG([&](auto& o) {
-				o << "could not parse value of " << tml::to_string(p) << std::endl;
-			})
-			throw;
-		}
-	}
-
-	for (auto& d : this->layout_params.dims) {
-		if (d.is_undefined()) {
-			d = dim::min;
-		}
-	}
-
-	if (this->layout_params.weight < 0) {
-		// use default weight of 0
-		this->layout_params.weight = 0;
-	}
-}
-
-widget::widget(utki::shared_ref<ruis::context> context, layout_parameters layout_params, parameters params) :
+widget::widget(
+	utki::shared_ref<ruis::context> context, //
+	layout_parameters layout_params,
+	parameters params
+) :
 	context(std::move(context)),
 	layout_params(std::move(layout_params)),
 	params(std::move(params))

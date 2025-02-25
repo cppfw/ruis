@@ -33,9 +33,6 @@ namespace ruis {
  */
 class color_widget : public virtual widget
 {
-protected:
-	color_widget(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
-
 public:
 	struct parameters {
 		constexpr static auto default_color = 0xffffffff;

@@ -48,14 +48,12 @@ private:
 protected:
 	void on_pressed_change() override;
 
-	image_button( //
-		utki::shared_ref<ruis::context> context,
+	image_button(
+		utki::shared_ref<ruis::context> context, //
 		blending_widget::parameters blending_params,
 		image::parameters image_params,
 		parameters params
 	);
-
-	image_button(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 
 public:
 	void set_pressed_image(std::shared_ptr<const res::image> image);

@@ -50,61 +50,6 @@ container::container(
 	}
 }
 
-container::container(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
-	container(c, desc, layout::trivial)
-{}
-
-container::container(
-	const utki::shared_ref<ruis::context>& c,
-	const tml::forest& desc,
-	// NOLINTNEXTLINE(modernize-pass-by-value)
-	const utki::shared_ref<ruis::layout>& layout
-) :
-	widget(c, desc),
-	layout(layout)
-{
-	for (const auto& p : desc) {
-		if (!is_property(p)) {
-			continue;
-		}
-
-		try {
-			if (p.value == "layout") {
-				if (p.children.size() != 1) {
-					throw std::invalid_argument("layout parameter has zero or more than 1 child");
-				}
-				this->layout = this->context.get().layout_factory.create(
-					p.children.front().value.string,
-					p.children.front().children
-				);
-			}
-		} catch (std::invalid_argument&) {
-			LOG([&](auto& o) {
-				o << "could not parse value of " << tml::to_string(p) << std::endl;
-			})
-			throw;
-		}
-	}
-
-	this->push_back_inflate(desc);
-}
-
-void container::push_back_inflate(const tml::forest& desc)
-{
-	for (auto i = desc.begin(); i != desc.end(); ++i) {
-		if (is_leaf_property(i->value)) {
-			continue;
-		}
-		this->push_back(this->context.get().inflater.inflate(i, i + 1));
-	}
-
-	// in case this widget is initially disabled, as specified in gui script
-	// we need to update enabled state of children
-	if (!this->is_enabled()) {
-		this->container::on_enabled_change();
-	}
-}
-
 void container::render_child(const matrix4& matrix, const widget& c) const
 {
 	if (!c.is_visible()) {
@@ -458,4 +403,80 @@ void container::on_reload()
 	for (auto& c : this->children()) {
 		c.get().reload();
 	}
+}
+
+utki::shared_ref<ruis::container> ruis::make::container(
+	utki::shared_ref<ruis::context> context, //
+	container::all_parameters params,
+	utki::span<const utki::shared_ref<ruis::widget>> children
+)
+{
+	return utki::make_shared<ruis::container>(
+		std::move(context), //
+		std::move(params),
+		children
+	);
+}
+
+utki::shared_ref<ruis::container> ruis::make::pile(
+	utki::shared_ref<ruis::context> context, //
+	widget::all_parameters params,
+	utki::span<const utki::shared_ref<ruis::widget>> children
+)
+{
+	// clang-format off
+	return make::container(
+		std::move(context),
+		{
+		 	.layout_params = std::move(params.layout_params),
+		 	.widget_params = std::move(params.widget_params),
+		 	.container_params{
+				.layout = layout::pile
+			}
+		},
+		children
+	);
+	// clang-format on
+}
+
+utki::shared_ref<ruis::container> ruis::make::column(
+	utki::shared_ref<ruis::context> context, //
+	widget::all_parameters params,
+	utki::span<const utki::shared_ref<ruis::widget>> children
+)
+{
+	// clang-format off
+	return make::container(
+		std::move(context),
+		{
+		 	.layout_params = std::move(params.layout_params),
+		 	.widget_params = std::move(params.widget_params),
+		 	.container_params{
+				.layout = layout::column
+			}
+		},
+		children
+	);
+	// clang-format on
+}
+
+utki::shared_ref<ruis::container> ruis::make::row(
+	utki::shared_ref<ruis::context> context, //
+	widget::all_parameters params,
+	utki::span<const utki::shared_ref<ruis::widget>> children
+)
+{
+	// clang-format off
+	return make::container(
+		std::move(context),
+		{
+		 	.layout_params = std::move(params.layout_params),
+		 	.widget_params = std::move(params.widget_params),
+		 	.container_params{
+				.layout = layout::row
+			}
+		},
+		children
+	);
+	// clang-format on
 }

@@ -73,31 +73,6 @@ tree_view::tree_view( //
 	};
 }
 
-tree_view::tree_view(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
-	widget(c, desc),
-	scroll_area(this->context, tml::forest()),
-	item_list(utki::make_shared<ruis::list>(this->context, tml::forest()))
-{
-	this->push_back(this->item_list);
-
-	auto& lp = this->item_list.get().get_layout_params();
-
-	lp.dims.y() = dim::max;
-	lp.dims.x() = dim::min;
-
-	this->item_list.get().model_change_handler = [this](list&) {
-		this->notify_view_change();
-	};
-
-	this->item_list.get().scroll_change_handler = [this](list&) {
-		this->notify_view_change();
-	};
-
-	this->scroll_area::scroll_change_handler = [this](scroll_area& sa) {
-		this->notify_view_change();
-	};
-}
-
 void tree_view::notify_view_change()
 {
 	if (this->scroll_change_handler) {
@@ -313,7 +288,7 @@ utki::shared_ref<widget> tree_view::provider::get_widget(size_t index)
 		list = &n->children;
 	}
 
-	auto ret = utki::make_shared<ruis::container>(this->context, tml::forest(), layout::row);
+	auto ret = ruis::make::row(this->context, {});
 
 	ASSERT(is_last_item_in_parent.size() == path.size())
 

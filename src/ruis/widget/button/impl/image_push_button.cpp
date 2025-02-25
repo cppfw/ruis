@@ -54,13 +54,6 @@ image_push_button::image_push_button( //
 	)
 {}
 
-image_push_button::image_push_button(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
-	widget(c, desc),
-	button(this->context, desc),
-	push_button(this->context, desc),
-	image_button(this->context, desc)
-{}
-
 utki::shared_ref<ruis::image_push_button> ruis::make::image_push_button(
 	utki::shared_ref<ruis::context> context, //
 	ruis::image_push_button::all_parameters params

@@ -28,12 +28,12 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "util/mouse_cursor_manager.hpp"
 #include "util/units.hpp"
 
-#include "inflater.hpp"
-#include "layout_factory.hpp"
 #include "resource_loader.hpp"
 #include "updateable.hpp"
 
 namespace ruis {
+
+class widget;
 
 class context : public std::enable_shared_from_this<context>
 {
@@ -52,9 +52,6 @@ public:
 
 	const std::function<void(std::function<void()>)> post_to_ui_thread;
 
-	// TODO: deprecated, remove
-	decltype(post_to_ui_thread)& run_from_ui_thread = post_to_ui_thread;
-
 	mouse_cursor_manager cursor_manager;
 
 	/**
@@ -67,16 +64,6 @@ public:
 	 * Vocabulary of localized strings.
 	 */
 	ruis::localization localization;
-
-	/**
-	 * @brief Instantiation of the GUI inflater.
-	 */
-	ruis::inflater inflater;
-
-	/**
-	 * @brief Instance of layout factory.
-	 */
-	ruis::layout_factory layout_factory;
 
 	/**
 	 * @brief Unit values.

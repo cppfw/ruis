@@ -47,10 +47,8 @@ private:
 	parameters params;
 
 protected:
-	nine_patch_button(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
-
-	nine_patch_button( //
-		utki::shared_ref<ruis::context> context,
+	nine_patch_button(
+		utki::shared_ref<ruis::context> context, //
 		container::parameters container_params,
 		button::parameters button_params,
 		blending_widget::parameters blending_params,

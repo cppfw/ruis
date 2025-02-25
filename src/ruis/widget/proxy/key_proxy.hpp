@@ -40,15 +40,10 @@ public:
 	};
 
 	key_proxy(
-		utki::shared_ref<ruis::context> context,
+		utki::shared_ref<ruis::context> context, //
 		all_parameters params,
 		utki::span<const utki::shared_ref<widget>> children
 	);
-
-	key_proxy(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
-		widget(c, desc),
-		container(this->context, desc, layout::pile)
-	{}
 
 	key_proxy(const key_proxy&) = delete;
 	key_proxy& operator=(const key_proxy&) = delete;

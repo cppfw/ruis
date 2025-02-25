@@ -50,8 +50,6 @@ public:
 		all_parameters params
 	);
 
-	min_proxy(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
-
 	vector2 measure(const vector2& quotum) const override;
 };
 

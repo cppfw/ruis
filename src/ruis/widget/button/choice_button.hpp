@@ -42,8 +42,6 @@ protected:
 
 	bool on_mouse_button(const mouse_button_event& event) override;
 
-	choice_button(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
-
 	choice_button(utki::shared_ref<ruis::context> context);
 
 public:

@@ -26,58 +26,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
-namespace {
-const std::map<std::string, render::renderer::blend_factor> blend_factor_names = {
-	{					"zero",					 render::renderer::blend_factor::zero},
-	{					 "one",					  render::renderer::blend_factor::one},
-	{			   "src_color",                render::renderer::blend_factor::src_color},
-	{	 "one_minus_src_color",      render::renderer::blend_factor::one_minus_src_color},
-	{			   "dst_color",                render::renderer::blend_factor::dst_color},
-	{	 "one_minus_dst_color",      render::renderer::blend_factor::one_minus_dst_color},
-	{			   "src_alpha",                render::renderer::blend_factor::src_alpha},
-	{	 "one_minus_src_alpha",      render::renderer::blend_factor::one_minus_src_alpha},
-	{			   "dst_alpha",                render::renderer::blend_factor::dst_alpha},
-	{	 "one_minus_dst_alpha",      render::renderer::blend_factor::one_minus_dst_alpha},
-	{		  "constant_color",           render::renderer::blend_factor::constant_color},
-	{"one_minus_constant_color", render::renderer::blend_factor::one_minus_constant_color},
-	{		  "constant_alpha",           render::renderer::blend_factor::constant_alpha},
-	{"one_minus_constant_alpha", render::renderer::blend_factor::one_minus_constant_alpha},
-	{	  "src_alpha_saturate",       render::renderer::blend_factor::src_alpha_saturate}
-};
-
-render::renderer::blend_factor blend_factor_from_string(const std::string& s)
-{
-	auto i = blend_factor_names.find(s);
-	if (i == blend_factor_names.end()) {
-		return render::renderer::blend_factor::one;
-	}
-	return i->second;
-}
-} // namespace
-
-blending_widget::blending_widget(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
-	widget(c, desc)
-{
-	for (const auto& p : desc) {
-		if (!is_property(p)) {
-			continue;
-		}
-
-		if (p.value == "blend") {
-			this->params.enabled = get_property_value(p).to_bool();
-		} else if (p.value == "blend_src") {
-			this->params.factors.src = blend_factor_from_string(get_property_value(p).string);
-		} else if (p.value == "blend_dst") {
-			this->params.factors.dst = blend_factor_from_string(get_property_value(p).string);
-		} else if (p.value == "blend_src_alpha") {
-			this->params.factors.src_alpha = blend_factor_from_string(get_property_value(p).string);
-		} else if (p.value == "blend_dst_alpha") {
-			this->params.factors.dst_alpha = blend_factor_from_string(get_property_value(p).string);
-		}
-	}
-}
-
-blending_widget::blending_widget(utki::shared_ref<ruis::context> context, parameters params) :
+blending_widget::blending_widget(
+	utki::shared_ref<ruis::context> context, //
+	parameters params
+) :
 	widget(std::move(context), {}, {}),
 	params(std::move(params))
 {}

@@ -79,25 +79,6 @@ check_box::check_box(
 	this->tick_widget.set_visible(this->is_pressed());
 }
 
-check_box::check_box(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
-	widget(c, desc),
-	button(this->context, desc),
-	toggle_button(this->context, desc),
-	nine_patch(
-		this->context,
-		{.container_params = {.layout = layout::pile}},
-		{make::image(
-			this->context,
-			{.widget_params = {.id = "ruis_checkbox_check"s},
-			 .image_params = {.img = this->context.get().loader.load<res::image>("ruis_img_checkbox_tick"sv)}}
-		)}
-	),
-	tick_widget(this->content().get_widget_as<image>("ruis_checkbox_check"sv))
-{
-	this->tick_widget.set_visible(this->is_pressed());
-	this->set_nine_patch(this->context.get().loader.load<res::nine_patch>("ruis_npt_checkbox_bg").to_shared_ptr());
-}
-
 void check_box::on_pressed_change()
 {
 	this->tick_widget.set_visible(this->is_pressed());

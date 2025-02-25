@@ -39,8 +39,6 @@ class spinner :
 	real angle = 0;
 
 public:
-	spinner(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
-
 	struct all_parameters {
 		layout_parameters layout_params;
 		widget::parameters widget_params;
@@ -48,7 +46,10 @@ public:
 		blending_widget::parameters blending_params;
 	};
 
-	spinner(utki::shared_ref<ruis::context> context, all_parameters params);
+	spinner(
+		utki::shared_ref<ruis::context> context, //
+		all_parameters params
+	);
 
 	void set_active(bool active);
 
@@ -64,7 +65,10 @@ inline utki::shared_ref<ruis::spinner> spinner(
 	spinner::all_parameters params
 )
 {
-	return utki::make_shared<ruis::spinner>(std::move(context), std::move(params));
+	return utki::make_shared<ruis::spinner>(
+		std::move(context), //
+		std::move(params)
+	);
 }
 
 utki::shared_ref<ruis::spinner> refresh(

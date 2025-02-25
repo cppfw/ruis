@@ -50,10 +50,8 @@ protected:
 	 */
 	virtual void on_pressed_change();
 
-	button(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
-
-	button( //
-		utki::shared_ref<ruis::context> context,
+	button(
+		utki::shared_ref<ruis::context> context, //
 		parameters params
 	);
 

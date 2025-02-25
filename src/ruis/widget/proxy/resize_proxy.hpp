@@ -37,11 +37,10 @@ public:
 		widget::parameters widget_params;
 	};
 
-	resize_proxy(utki::shared_ref<ruis::context> context, all_parameters params);
-
-	resize_proxy(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
-		widget(c, desc)
-	{}
+	resize_proxy(
+		utki::shared_ref<ruis::context> context, //
+		all_parameters params
+	);
 
 	resize_proxy(const resize_proxy&) = delete;
 	resize_proxy& operator=(const resize_proxy&) = delete;
@@ -61,12 +60,15 @@ public:
 };
 
 namespace make {
-inline utki::shared_ref<ruis::resize_proxy> resize_proxy( //
-	utki::shared_ref<ruis::context> context,
+inline utki::shared_ref<ruis::resize_proxy> resize_proxy(
+	utki::shared_ref<ruis::context> context, //
 	resize_proxy::all_parameters params
 )
 {
-	return utki::make_shared<ruis::resize_proxy>(std::move(context), std::move(params));
+	return utki::make_shared<ruis::resize_proxy>(
+		std::move(context), //
+		std::move(params)
+	);
 }
 } // namespace make
 

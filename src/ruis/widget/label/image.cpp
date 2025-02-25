@@ -43,32 +43,6 @@ image::image( //
 	vao(this->context.get().renderer.get().empty_vertex_array)
 {}
 
-image::image(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
-	widget(c, desc),
-	blending_widget(this->context, desc),
-	vao(this->context.get().renderer.get().empty_vertex_array)
-{
-	for (const auto& p : desc) {
-		if (!is_property(p)) {
-			continue;
-		}
-
-		if (p.value == "image") {
-			this->params.img =
-				this->context.get().loader.load<res::image>(get_property_value(p).string).to_shared_ptr();
-		} else if (p.value == "disabled_image") {
-			this->params.disabled_img =
-				this->context.get().loader.load<res::image>(get_property_value(p).string).to_shared_ptr();
-		} else if (p.value == "keep_aspect_ratio") {
-			this->params.keep_aspect_ratio = get_property_value(p).to_bool();
-		} else if (p.value == "repeat_x") {
-			this->params.repeat_v.x() = get_property_value(p).to_bool();
-		} else if (p.value == "repeat_y") {
-			this->params.repeat_v.y() = get_property_value(p).to_bool();
-		}
-	}
-}
-
 namespace {
 const std::array<r4::vector2<float>, 4> quad_fan_tex_coords = {
 	{r4::vector2<float>(0, 0), r4::vector2<float>(1, 0), r4::vector2<float>(1, 1), r4::vector2<float>(0, 1)}

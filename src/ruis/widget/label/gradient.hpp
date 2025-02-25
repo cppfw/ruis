@@ -55,8 +55,6 @@ public:
 		all_parameters params
 	);
 
-	gradient(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
-
 	gradient(const gradient&) = delete;
 	gradient& operator=(const gradient&) = delete;
 
@@ -70,11 +68,14 @@ public:
 
 namespace make {
 inline utki::shared_ref<ruis::gradient> gradient(
-	utki::shared_ref<ruis::context> context,
+	utki::shared_ref<ruis::context> context, //
 	gradient::all_parameters params
 )
 {
-	return utki::make_shared<ruis::gradient>(std::move(context), std::move(params));
+	return utki::make_shared<ruis::gradient>(
+		std::move(context), //
+		std::move(params)
+	);
 }
 
 } // namespace make

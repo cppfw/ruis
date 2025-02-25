@@ -58,35 +58,6 @@ image_button::image_button( //
 	this->update_image();
 }
 
-image_button::image_button(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
-	widget(c, desc),
-	button(this->context, desc),
-	image(this->context, desc)
-{
-	for (const auto& p : desc) {
-		if (!is_property(p)) {
-			continue;
-		}
-
-		if (p.value == "look") {
-			for (const auto& pp : p.children) {
-				if (!is_property(pp)) {
-					continue;
-				}
-
-				if (pp.value == "pressed") {
-					this->params.pressed_image =
-						this->context.get().loader.load<res::image>(get_property_value(pp).string).to_shared_ptr();
-				} else if (pp.value == "unpressed") {
-					this->params.unpressed_image =
-						this->context.get().loader.load<res::image>(get_property_value(pp).string).to_shared_ptr();
-				}
-				this->update_image();
-			}
-		}
-	}
-}
-
 void image_button::set_pressed_image(std::shared_ptr<const res::image> image)
 {
 	this->params.pressed_image = std::move(image);

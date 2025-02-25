@@ -55,9 +55,6 @@ class list :
 	real first_tail_item_offset = real(0);
 	real first_tail_item_dim = real(0);
 
-protected:
-	list(const utki::shared_ref<ruis::context>& c, const tml::forest& desc, bool vertical);
-
 public:
 	struct all_parameters {
 		layout_parameters layout_params;
@@ -70,10 +67,6 @@ public:
 		utki::shared_ref<ruis::context> context, //
 		all_parameters params
 	);
-
-	list(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
-		list(c, desc, true)
-	{}
 
 	list(const list&) = delete;
 	list& operator=(const list&) = delete;
@@ -166,29 +159,6 @@ private:
 	void notify_scroll_pos_changed(size_t old_index, real old_offset);
 
 	real calc_num_visible_items() const noexcept;
-};
-
-/**
- * @brief Horizontal list widget.
- * Panorama list widget.
- * From GUI script it can be instantiated as "pan_list".
- */
-// TODO: remove?
-class pan_list : public list
-{
-public:
-	pan_list(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
-		widget(c, desc),
-		list(this->context, desc, false)
-	{}
-
-	pan_list(const pan_list&) = delete;
-	pan_list& operator=(const pan_list&) = delete;
-
-	pan_list(pan_list&&) = delete;
-	pan_list& operator=(pan_list&&) = delete;
-
-	~pan_list() override = default;
 };
 
 namespace make {

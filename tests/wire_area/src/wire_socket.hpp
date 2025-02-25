@@ -46,8 +46,6 @@ public:
 		utki::shared_ref<ruis::context> context, //
 		all_parameters params
 	);
-
-	wire_socket(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
 	
 protected:
 	std::shared_ptr<wire_socket> get_remote();

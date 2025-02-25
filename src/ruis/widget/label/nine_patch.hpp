@@ -70,7 +70,7 @@ public:
 	};
 
 	nine_patch(
-		utki::shared_ref<ruis::context> context,
+		utki::shared_ref<ruis::context> context, //
 		all_parameters params,
 		utki::span<const utki::shared_ref<widget>> children
 	);
@@ -83,11 +83,9 @@ public:
 
 	~nine_patch() override = default;
 
-	nine_patch(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
-
 private:
 	nine_patch(
-		utki::shared_ref<ruis::context> context,
+		utki::shared_ref<ruis::context> context, //
 		all_parameters params,
 		utki::span<const utki::shared_ref<widget>> children,
 		std::array<std::array<utki::shared_ref<ruis::image>, 3>, 3> image_widgets_matrix
@@ -119,12 +117,16 @@ private:
 
 namespace make {
 inline utki::shared_ref<ruis::nine_patch> nine_patch(
-	utki::shared_ref<ruis::context> context,
+	utki::shared_ref<ruis::context> context, //
 	nine_patch::all_parameters params,
 	utki::span<const utki::shared_ref<ruis::widget>> children = {}
 )
 {
-	return utki::make_shared<ruis::nine_patch>(std::move(context), std::move(params), children);
+	return utki::make_shared<ruis::nine_patch>(
+		std::move(context), //
+		std::move(params),
+		children
+	);
 }
 
 } // namespace make

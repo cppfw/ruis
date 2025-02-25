@@ -44,8 +44,6 @@ public:
 		utki::span<const utki::shared_ref<widget>> children
 	);
 
-	overlay(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
-
 	overlay(const overlay&) = delete;
 	overlay& operator=(const overlay&) = delete;
 

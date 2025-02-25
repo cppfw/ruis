@@ -47,8 +47,6 @@ private:
 	size_t selected_index = 0;
 
 protected:
-	selection_box(const utki::shared_ref<ruis::context>& c, const tml::forest& desc, container& selection_container);
-
 	selection_box(
 		utki::shared_ref<ruis::context> context, //
 		container& selection_container,

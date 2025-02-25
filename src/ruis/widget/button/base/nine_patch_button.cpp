@@ -49,37 +49,6 @@ nine_patch_button::nine_patch_button( //
 	this->nine_patch_button::on_pressed_change();
 }
 
-nine_patch_button::nine_patch_button(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
-	widget(c, desc),
-	button(this->context, desc),
-	nine_patch(this->context, desc)
-{
-	for (const auto& p : desc) {
-		if (!is_property(p)) {
-			continue;
-		}
-
-		if (p.value == "look") {
-			for (const auto& pp : p.children) {
-				if (!is_property(pp)) {
-					continue;
-				}
-
-				if (pp.value == "unpressed") {
-					this->set_unpressed_nine_patch(
-						this->context.get().loader.load<res::nine_patch>(get_property_value(pp).string).to_shared_ptr()
-					);
-				} else if (pp.value == "pressed") {
-					this->set_pressed_nine_patch(
-						this->context.get().loader.load<res::nine_patch>(get_property_value(pp).string).to_shared_ptr()
-					);
-				}
-			}
-		}
-	}
-	this->nine_patch_button::on_pressed_change();
-}
-
 void nine_patch_button::on_pressed_change()
 {
 	this->set_nine_patch(this->is_pressed() ? this->params.pressed_nine_patch : this->params.unpressed_nine_patch);

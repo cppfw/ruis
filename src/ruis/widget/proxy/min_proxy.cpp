@@ -37,31 +37,6 @@ min_proxy::min_proxy( //
 	params(std::move(params.min_proxy_params))
 {}
 
-min_proxy::min_proxy(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
-	ruis::widget(c, desc)
-{
-	for (const auto& p : desc) {
-		if (!is_property(p)) {
-			continue;
-		}
-
-		try {
-			if (p.value == "root") {
-				this->params.root_id = get_property_value(p).string;
-			} else if (p.value == "target") {
-				for (const auto& id : p.children) {
-					this->params.target_id_path.push_back(id.value.string);
-				}
-			}
-		} catch (std::invalid_argument&) {
-			LOG([&](auto& o) {
-				o << "could not parse value of " << tml::to_string(p) << std::endl;
-			})
-			throw;
-		}
-	}
-}
-
 ruis::vector2 min_proxy::measure(const vector2& quotum) const
 {
 	auto t = this->target.lock();

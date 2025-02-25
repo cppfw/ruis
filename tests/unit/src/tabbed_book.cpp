@@ -13,8 +13,8 @@
 namespace{
 const tst::set set("tabbed_book", [](tst::suite& suite){
 
-	// This test checks that tabbed_book class convey's virtual methods
-	// from it's parent class, even though it is inherited via private inheritance.
+	// This test checks that tabbed_book class conveys virtual methods
+	// from its parent class, even though it is inherited via private inheritance.
 	suite.add("tabbed_book_has_access_to_base_class_render_method", []{
 		auto c = make_dummy_context();
 
@@ -22,18 +22,19 @@ const tst::set set("tabbed_book", [](tst::suite& suite){
 
 		// make initializations needed by ruis::tabbed_book
 		c.get().loader.mount_res_pack(papki::fs_file("../../res/ruis_res/main.res"));
-		c.get().inflater.register_widget<ruis::tab_group>("tab_group");
 
 		class sub_tabbed_book : public ruis::tabbed_book{
 		public:
-			sub_tabbed_book(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
-					ruis::widget(c, desc),
-					tabbed_book(this->context, desc)
+			sub_tabbed_book(utki::shared_ref<ruis::context> context) :
+				ruis::widget(std::move(context), {}, {}),
+				tabbed_book(this->context, ruis::tabbed_book::all_parameters{})
 			{}
-		} stb(c, tml::forest());
+		};
+
+		auto book = utki::make_shared<sub_tabbed_book>(c);
 
 		ruis::matrix4 m;
-		stb.render(m);
+		book.get().render(m);
 		// TODO: call other methods like on_key(), on_mouse_move(), etc.
 	});
 });

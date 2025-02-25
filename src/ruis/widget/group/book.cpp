@@ -42,11 +42,6 @@ book::book(utki::shared_ref<ruis::context> context, //
 	)
 {}
 
-book::book(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
-	widget(c, desc),
-	container(this->context, tml::forest(), layout::pile)
-{}
-
 void book::push(const utki::shared_ref<page>& pg)
 {
 	if (pg.get().parent_book) {
@@ -191,10 +186,6 @@ const page* book::get_active_page() const
 	}
 	return nullptr;
 }
-
-page::page(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
-	widget(c, desc)
-{}
 
 page::page(
 	utki::shared_ref<ruis::context> context, //

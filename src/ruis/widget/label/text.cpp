@@ -26,12 +26,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
-text::text(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
-	widget(c, desc),
-	text_string_widget(this->context, desc),
-	color_widget(this->context, desc)
-{}
-
 text::text(
 	utki::shared_ref<ruis::context> context, //
 	all_parameters params,

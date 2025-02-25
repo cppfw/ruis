@@ -14,8 +14,6 @@ class cube_widget :
 public:
 	std::shared_ptr<ruis::render::vertex_array> cubeVAO;
 
-	cube_widget(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
-
     struct all_parameters{
         ruis::layout_parameters layout_params;
         ruis::widget::parameters widget_params;

@@ -45,11 +45,6 @@ choice_group::choice_group(
 // clang-format on
 {}
 
-choice_group::choice_group(const utki::shared_ref<ruis::context>& c, const tml::forest& desc) :
-	widget(c, desc),
-	container(this->context, desc, layout::pile)
-{}
-
 bool choice_group::is_active(const widget& w) const noexcept
 {
 	widget* aw = this->active_choice_button.lock().get();

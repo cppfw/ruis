@@ -224,7 +224,7 @@
 			"type": "cppdbg",
 			"request": "launch",
 			"program": "${workspaceFolder}/tests/unit/out/dbg/tests",
-			"args": ["--suite=timer", "--test=basic"],
+			"args": ["--suite=tabbed_book", "--test=tabbed_book_has_access_to_base_class_render_method"],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}/tests/unit",
 			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/out/dbg:../harness/modules/ruis-render-null/src/out/rel_no_install"}],

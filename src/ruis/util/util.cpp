@@ -97,25 +97,3 @@ r4::vector4<float> ruis::color_to_vec4f(uint32_t color)
 {
 	return rasterimage::to<float>(rasterimage::from_32bit_pixel(color));
 }
-
-// TODO: remove
-bool ruis::is_leaf_property(const tml::leaf& l)
-{
-	return l.empty() || l[0] != '@';
-}
-
-bool ruis::is_property(const tml::tree& t)
-{
-	return is_leaf_property(t.value) && t.children.size() != 0;
-}
-
-// TODO: rename to is_leaf_widget
-bool ruis::is_leaf_child(const tml::leaf& l)
-{
-	return !is_leaf_property(l);
-}
-
-bool ruis::is_variable(const tml::tree& t)
-{
-	return t.value == "$" && t.children.size() == 1 && t.children.front().children.empty();
-}

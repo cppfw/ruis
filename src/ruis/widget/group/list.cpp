@@ -41,59 +41,6 @@ list::list(
 	list_providable(std::move(params.providable_params))
 {}
 
-namespace {
-class static_provider : public list_provider
-{
-	std::vector<tml::tree> widgets;
-
-public:
-	static_provider(utki::shared_ref<ruis::context> context) :
-		list_provider(std::move(context))
-	{}
-
-	size_t count() const noexcept override
-	{
-		return this->widgets.size();
-	}
-
-	utki::shared_ref<widget> get_widget(size_t index) override
-	{
-		//		TRACE(<< "static_provider::getWidget(): index = " << index << std::endl)
-		auto i = utki::next(this->widgets.begin(), index);
-		return this->context.get().inflater.inflate(i, i + 1);
-	}
-
-	void recycle(size_t index, utki::shared_ref<widget> w) override
-	{
-		//		TRACE(<< "static_provider::recycle(): index = " << index << std::endl)
-	}
-
-	void add(tml::tree w)
-	{
-		this->widgets.emplace_back(std::move(w));
-	}
-};
-} // namespace
-
-list::list(const utki::shared_ref<ruis::context>& c, const tml::forest& desc, bool vertical) :
-	widget(c, desc),
-	container(this->context, tml::forest()),
-	oriented({.vertical = vertical}),
-	list_providable({})
-{
-	std::shared_ptr<static_provider> pr = std::make_shared<static_provider>(this->context);
-
-	for (const auto& p : desc) {
-		if (is_property(p)) {
-			continue;
-		}
-
-		pr->add(tml::tree(p));
-	}
-
-	this->set_provider(std::move(pr));
-}
-
 void list::on_lay_out()
 {
 	//	TRACE(<< "list::on_lay_out(): invoked" << std::endl)

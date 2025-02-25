@@ -36,8 +36,6 @@ class tab :
 	bool mask_overlaps(vector2 pos);
 
 public:
-	tab(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
-
 	struct all_parameters {
 		ruis::layout_parameters layout_params;
 		ruis::widget::parameters widget_params;
@@ -48,11 +46,9 @@ public:
 		nine_patch_button::parameters nine_patch_button_params;
 	};
 
-	tab( //
-		utki::shared_ref<ruis::context> context,
+	tab(utki::shared_ref<ruis::context> context, //
 		all_parameters params,
-		utki::span<const utki::shared_ref<ruis::widget>> children
-	);
+		utki::span<const utki::shared_ref<ruis::widget>> children);
 
 	tab(const tab&) = delete;
 	tab& operator=(const tab&) = delete;

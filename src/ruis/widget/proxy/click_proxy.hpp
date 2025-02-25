@@ -36,9 +36,10 @@ public:
 		widget::parameters widget_params;
 	};
 
-	click_proxy(utki::shared_ref<ruis::context> context, all_parameters params);
-
-	click_proxy(const utki::shared_ref<ruis::context>& c, const tml::forest& desc);
+	click_proxy(
+		utki::shared_ref<ruis::context> context, //
+		all_parameters params
+	);
 
 	click_proxy(const click_proxy&) = delete;
 	click_proxy& operator=(const click_proxy&) = delete;
@@ -69,11 +70,14 @@ public:
 
 namespace make {
 inline utki::shared_ref<ruis::click_proxy> click_proxy(
-	utki::shared_ref<ruis::context> context,
+	utki::shared_ref<ruis::context> context, //
 	ruis::click_proxy::all_parameters params
 )
 {
-	return utki::make_shared<ruis::click_proxy>(std::move(context), std::move(params));
+	return utki::make_shared<ruis::click_proxy>(
+		std::move(context), //
+		std::move(params)
+	);
 }
 } // namespace make
 
