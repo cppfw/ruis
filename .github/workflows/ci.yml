@@ -118,8 +118,8 @@ jobs:
           # - {os: debian, codename: bullseye, image_owner: , package_type: deb, labels: [arm64,docker]}
           - {os: debian, codename: bookworm, image_owner: , package_type: deb}
           # - {os: debian, codename: bookworm, image_owner: , package_type: deb, labels: [i386,docker]}
-          - {os: debian, codename: bookworm, image_owner: , package_type: deb, labels: [arm32,docker]}
-          - {os: debian, codename: bookworm, image_owner: , package_type: deb, labels: [arm64,docker]}
+          - {os: debian, codename: bookworm, image_owner: arm32v7/, package_type: deb, labels: [ubuntu-24.04-arm]}
+          - {os: debian, codename: bookworm, image_owner: arm64v8/, package_type: deb, labels: [ubuntu-24.04-arm]}
           # - {os: ubuntu, codename: focal, image_owner: , package_type: deb}
           # - {os: ubuntu, codename: jammy, image_owner: , package_type: deb}
           - {os: ubuntu, codename: noble, image_owner: , package_type: deb}
