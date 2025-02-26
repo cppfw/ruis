@@ -17,7 +17,7 @@ Get-ChildItem "." -Filter *.in | Foreach-Object{
     ($content -replace '\$\(version\)',"$ver") | Set-Content ($_.BaseName)
 }
 
-"%VS142COMNTOOLS%\VsMSBuildCmd.bat"
+"%VS143COMNTOOLS%\VsMSBuildCmd.bat"
 
 # msbuild /m ../msvs_solution/msvs_solution.sln /t:Rebuild /p:Configuration=v140_Debug /p:Platform=x86 /v:minimal /nologo
 # If(!$?){exit 1}
