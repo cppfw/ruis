@@ -28,6 +28,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
+// TODO: rename to mouse_cursor_stack
 class mouse_cursor_manager
 {
 	std::list<mouse_cursor> cursor_stack = {mouse_cursor::arrow};

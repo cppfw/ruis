@@ -57,6 +57,7 @@ public:
 	/**
 	 * @brief Instantiation of the resource loader.
 	 */
+	// TODO: make shared_ref, dependency inject renderer (for textures loading)
 	resource_loader loader;
 
 	/**
