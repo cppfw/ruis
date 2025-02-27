@@ -26,18 +26,20 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace ruis;
 
 context::context(
-	utki::shared_ref<ruis::render::renderer> r,
-	utki::shared_ref<ruis::updater> u,
+	utki::shared_ref<ruis::render::renderer> renderer,
+	utki::shared_ref<ruis::updater> updater,
 	std::function<void(std::function<void()>)> post_to_ui_thread_function,
 	std::function<void(ruis::mouse_cursor)> set_mouse_cursor_function,
 	real dots_per_inch,
-	real dots_per_pp
+	real dots_per_pp,
+	utki::shared_ref<ruis::localization> localization
 ) :
-	renderer(std::move(r)),
-	updater(std::move(u)),
+	renderer(std::move(renderer)),
+	updater(std::move(updater)),
 	post_to_ui_thread(std::move(post_to_ui_thread_function)),
 	cursor_manager(std::move(set_mouse_cursor_function)),
 	loader(*this),
+	localization(std::move(localization)),
 	units(dots_per_inch, dots_per_pp)
 {
 	if (!this->post_to_ui_thread) {

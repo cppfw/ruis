@@ -63,8 +63,7 @@ public:
 	 * @brief current localization.
 	 * Vocabulary of localized strings.
 	 */
-	// TODO: localization could be shared between contexts, so make it shared_ref?
-	ruis::localization localization;
+	utki::shared_ref<ruis::localization> localization;
 
 	/**
 	 * @brief Unit values.
@@ -76,20 +75,22 @@ public:
 
 	/**
 	 * @brief Constructor.
-	 * @param r - renderer implementation.
-	 * @param u - updater to use along with this context.
+	 * @param renderer - renderer implementation.
+	 * @param updater - updater to use along with this context.
 	 * @param post_to_ui_thread_function - function for posting an action to UI thread.
 	 * @param set_mouse_cursor_function - function for setting the mouse cursor.
 	 * @param dots_per_inch - DPI of your display.
 	 * @param dots_per_pp - desired dots per perception pixel.
+	 * @param localization - localization instance.
 	 */
 	context(
-		utki::shared_ref<ruis::render::renderer> r,
-		utki::shared_ref<ruis::updater> u,
+		utki::shared_ref<ruis::render::renderer> renderer,
+		utki::shared_ref<ruis::updater> updater,
 		std::function<void(std::function<void()>)> post_to_ui_thread_function,
 		std::function<void(ruis::mouse_cursor)> set_mouse_cursor_function,
 		real dots_per_inch = default_dots_per_inch,
-		real dots_per_pp = default_dots_per_pp
+		real dots_per_pp = default_dots_per_pp,
+		utki::shared_ref<ruis::localization> localization = utki::make_shared<ruis::localization>()
 	);
 
 	context(const context&) = delete;

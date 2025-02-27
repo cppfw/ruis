@@ -110,7 +110,7 @@ void text_string_widget::on_reload()
 {
 	if (std::holds_alternative<wording>(this->text_string)) {
 		auto& w = this->get_wording();
-		auto new_wording = this->context.get().localization.reload(std::move(w));
+		auto new_wording = this->context.get().localization.get().reload(std::move(w));
 		this->set_wording(std::move(new_wording));
 	}
 }

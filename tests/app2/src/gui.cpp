@@ -33,7 +33,7 @@ utki::shared_ref<ruis::window> make_sliders_window(utki::shared_ref<ruis::contex
 			.container_params = {
 				.layout = ruis::layout::column
 			},
-			.title = c.get().localization.get("sliders"sv)
+			.title = c.get().localization.get().get("sliders"sv)
 		},
 		{
 			m::margins(c,
@@ -80,7 +80,7 @@ utki::shared_ref<ruis::window> make_sliders_window(utki::shared_ref<ruis::contex
 				{
 					m::text(c,
 						{},
-						c.get().localization.get("hello_world"sv)
+						c.get().localization.get().get("hello_world"sv)
 					)
 				}
 			),
@@ -117,7 +117,7 @@ utki::shared_ref<ruis::window> make_sliders_window(utki::shared_ref<ruis::contex
 					),
 					m::text(c,
 						{},
-						c.get().localization.get("some_checkbox"sv)
+						c.get().localization.get().get("some_checkbox"sv)
 					)
 				}
 			)
@@ -139,7 +139,7 @@ utki::shared_ref<ruis::window> make_image_window(utki::shared_ref<ruis::context>
 			.container_params = {
 				.layout = ruis::layout::pile
 			},
-			.title = c.get().localization.get("image"sv)
+			.title = c.get().localization.get().get("image"sv)
 		},
 		{
 			m::image(c,
@@ -277,7 +277,7 @@ utki::shared_ref<ruis::window> make_selection_box_window(
 
 			// std::cout << "new localization = " << lng << std::endl;
 
-			app.gui.context.get().localization =
+			app.gui.context.get().localization.get() =
 				ruis::localization(tml::read(*app.get_res_file(utki::cat("res/localization/", lng, ".tml"))));
 			app.gui.get_root().reload();
 		});
@@ -292,7 +292,7 @@ utki::shared_ref<ruis::window> make_selection_box_window(
 			.container_params = {
 				.layout = ruis::layout::column
 			},
-			.title = c.get().localization.get("selection_box"sv)
+			.title = c.get().localization.get().get("selection_box"sv)
 		},
 		{
 			m::selection_box(c,
@@ -316,12 +316,12 @@ utki::shared_ref<ruis::window> make_selection_box_window(
 						.align = {ruis::align::front, ruis::align::center}
 					}
 				},
-				c.get().localization.get("language"sv)
+				c.get().localization.get().get("language"sv)
 			),
 			std::move(lang_sel_box),
 			m::text(c,
 				{},
-				c.get().localization.get("formatted_str"sv).format({U"world"s, U"Hello"s})
+				c.get().localization.get().get("formatted_str"sv).format({U"world"s, U"Hello"s})
 			)
 		}
 	);
