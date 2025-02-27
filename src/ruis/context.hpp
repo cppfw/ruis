@@ -63,6 +63,7 @@ public:
 	 * @brief current localization.
 	 * Vocabulary of localized strings.
 	 */
+	// TODO: localization could be shared between contexts, so make it shared_ref?
 	ruis::localization localization;
 
 	/**
