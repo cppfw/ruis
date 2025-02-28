@@ -426,7 +426,7 @@ void ruis::window::setup_widgets()
 					this->capture_point = e.pos;
 				} else {
 					if (!mp.is_hovered()) {
-						this->context.get().cursor_manager.pop(iter);
+						this->context.get().cursor_stack.pop(iter);
 					}
 				}
 				return true;
@@ -442,9 +442,9 @@ void ruis::window::setup_widgets()
 					return;
 				}
 				if (mp.is_hovered()) {
-					iter = this->context.get().cursor_manager.push(cursor);
+					iter = this->context.get().cursor_stack.push(cursor);
 				} else {
-					this->context.get().cursor_manager.pop(iter);
+					this->context.get().cursor_stack.pop(iter);
 				}
 			};
 		};

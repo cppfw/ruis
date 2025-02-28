@@ -25,7 +25,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "util/events.hpp"
 #include "util/localization.hpp"
 #include "util/mouse_cursor.hpp"
-#include "util/mouse_cursor_manager.hpp"
+#include "util/mouse_cursor_stack.hpp"
 #include "util/units.hpp"
 
 #include "resource_loader.hpp"
@@ -68,10 +68,10 @@ public:
 	const utki::shared_ref<ruis::updater> updater;
 
 	/**
-	 * @brief Mouse cursor manager.
+	 * @brief Mouse cursor stack.
 	 * It allows changing shape of the mouse cursor.
 	 */
-	mouse_cursor_manager cursor_manager;
+	mouse_cursor_stack cursor_stack;
 
 	/**
 	 * @brief Resource loader.

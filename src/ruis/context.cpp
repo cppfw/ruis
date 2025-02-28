@@ -33,7 +33,7 @@ context::context(
 	post_to_ui_thread_function(std::move(params.post_to_ui_thread_function)),
 	renderer(std::move(renderer)),
 	updater(std::move(updater)),
-	cursor_manager(std::move(params.set_mouse_cursor_function)),
+	cursor_stack(std::move(params.set_mouse_cursor_function)),
 	loader(*this),
 	localization(std::move(params.localization)),
 	units(std::move(params.units))

@@ -28,8 +28,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
-// TODO: rename to mouse_cursor_stack
-class mouse_cursor_manager
+class mouse_cursor_stack
 {
 	std::list<mouse_cursor> cursor_stack = {mouse_cursor::arrow};
 
@@ -38,9 +37,7 @@ class mouse_cursor_manager
 public:
 	using iterator = decltype(cursor_stack)::iterator;
 
-	mouse_cursor_manager(std::function<void(ruis::mouse_cursor)> set_mouse_cursor) :
-		set_mouse_cursor(std::move(set_mouse_cursor))
-	{}
+	mouse_cursor_stack(std::function<void(ruis::mouse_cursor)> set_mouse_cursor);
 
 	iterator push(mouse_cursor cursor);
 

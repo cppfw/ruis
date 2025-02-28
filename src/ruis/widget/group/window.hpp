@@ -64,7 +64,7 @@ class window :
 	std::shared_ptr<widget> lb_border;
 	std::shared_ptr<widget> rb_border;
 
-	using cursor_iter = decltype(std::declval<mouse_cursor_manager>().push(mouse_cursor::arrow));
+	using cursor_iter = decltype(std::declval<mouse_cursor_stack>().push(mouse_cursor::arrow));
 	cursor_iter caption_cursor_iter;
 	cursor_iter lt_border_cursor_iter;
 	cursor_iter rt_border_cursor_iter;
