@@ -28,19 +28,15 @@ using namespace ruis;
 context::context(
 	utki::shared_ref<ruis::render::renderer> renderer,
 	utki::shared_ref<ruis::updater> updater,
-	std::function<void(std::function<void()>)> post_to_ui_thread_function,
-	std::function<void(ruis::mouse_cursor)> set_mouse_cursor_function,
-	real dots_per_inch,
-	real dots_per_pp,
-	utki::shared_ref<ruis::localization> localization
+	parameters params
 ) :
-	post_to_ui_thread_function(std::move(post_to_ui_thread_function)),
+	post_to_ui_thread_function(std::move(params.post_to_ui_thread_function)),
 	renderer(std::move(renderer)),
 	updater(std::move(updater)),
-	cursor_manager(std::move(set_mouse_cursor_function)),
+	cursor_manager(std::move(params.set_mouse_cursor_function)),
 	loader(*this),
-	localization(std::move(localization)),
-	units(dots_per_inch, dots_per_pp)
+	localization(std::move(params.localization)),
+	units(std::move(params.units))
 {
 	if (!this->post_to_ui_thread_function) {
 		throw std::invalid_argument("context::context(): no post to UI thread function provided");

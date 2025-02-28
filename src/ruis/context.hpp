@@ -91,27 +91,23 @@ public:
 	 */
 	ruis::units units;
 
-	constexpr static const auto default_dots_per_inch = 96;
-	constexpr static const auto default_dots_per_pp = 1;
+	struct parameters {
+		std::function<void(std::function<void()>)> post_to_ui_thread_function;
+		std::function<void(ruis::mouse_cursor)> set_mouse_cursor_function;
+		ruis::units units;
+		utki::shared_ref<ruis::localization> localization = utki::make_shared<ruis::localization>();
+	};
 
 	/**
 	 * @brief Constructor.
 	 * @param renderer - renderer implementation.
 	 * @param updater - updater to use along with this context.
-	 * @param post_to_ui_thread_function - function for posting an action to UI thread.
-	 * @param set_mouse_cursor_function - function for setting the mouse cursor.
-	 * @param dots_per_inch - DPI of your display.
-	 * @param dots_per_pp - desired dots per perception pixel.
-	 * @param localization - localization instance.
+	 * @param params - context parameters.
 	 */
 	context(
 		utki::shared_ref<ruis::render::renderer> renderer,
 		utki::shared_ref<ruis::updater> updater,
-		std::function<void(std::function<void()>)> post_to_ui_thread_function,
-		std::function<void(ruis::mouse_cursor)> set_mouse_cursor_function,
-		real dots_per_inch = default_dots_per_inch,
-		real dots_per_pp = default_dots_per_pp,
-		utki::shared_ref<ruis::localization> localization = utki::make_shared<ruis::localization>()
+		parameters params
 	);
 
 	context(const context&) = delete;

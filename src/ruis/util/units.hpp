@@ -53,12 +53,18 @@ class units
 	real dots_per_fp_v; // TODO: is needed?
 
 public:
+	constexpr static const auto default_dots_per_inch = 96;
+	constexpr static const auto default_dots_per_pp = 1;
+
 	/**
 	 * @brief Constructor.
 	 * @param dots_per_inch - dots per inch.
 	 * @param dots_per_pp - dots per perception pixel.
 	 */
-	units(real dots_per_inch, real dots_per_pp) :
+	units(
+		real dots_per_inch = default_dots_per_inch, //
+		real dots_per_pp = default_dots_per_pp
+	) :
 		dots_per_inch_v(dots_per_inch),
 		dots_per_pp_v(dots_per_pp),
 		dots_per_fp_v(dots_per_pp) // TODO: for now same as pp
