@@ -34,17 +34,23 @@ context::context(
 	real dots_per_pp,
 	utki::shared_ref<ruis::localization> localization
 ) :
+	post_to_ui_thread_function(std::move(post_to_ui_thread_function)),
 	renderer(std::move(renderer)),
 	updater(std::move(updater)),
-	post_to_ui_thread(std::move(post_to_ui_thread_function)),
 	cursor_manager(std::move(set_mouse_cursor_function)),
 	loader(*this),
 	localization(std::move(localization)),
 	units(dots_per_inch, dots_per_pp)
 {
-	if (!this->post_to_ui_thread) {
+	if (!this->post_to_ui_thread_function) {
 		throw std::invalid_argument("context::context(): no post to UI thread function provided");
 	}
+}
+
+void context::post_to_ui_thread(std::function<void()> proc)
+{
+	ASSERT(this->post_to_ui_thread_function)
+	this->post_to_ui_thread_function(std::move(proc));
 }
 
 void context::set_focused_widget(const std::shared_ptr<widget>& w)

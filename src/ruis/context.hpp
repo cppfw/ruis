@@ -44,20 +44,40 @@ class context : public std::enable_shared_from_this<context>
 
 	void set_focused_widget(const std::shared_ptr<widget>& w);
 
+	const std::function<void(std::function<void()>)> post_to_ui_thread_function;
+
 public:
+	/**
+	 * @brief Post procedure to UI thread.
+	 * Posts a procedure to UI thread to be run later. The procedure will be run
+	 * within this or next cycle of the UI main loop.
+	 * @param proc - procedure to post to the UI thread.
+	 */
+	void post_to_ui_thread(std::function<void()> proc);
+
+	/**
+	 * @brief Renderer used for drawing in this GUI context.
+	 */
 	const utki::shared_ref<ruis::render::renderer> renderer;
 
+	/**
+	 * @brief Updater which updates updatables from within UI thread.
+	 * The updater calls active updatables periodically from the UI thread.
+	 */
 	// potentially, updater can be shared between contexts, this is why it is shared_ref
 	const utki::shared_ref<ruis::updater> updater;
 
-	const std::function<void(std::function<void()>)> post_to_ui_thread;
-
+	/**
+	 * @brief Mouse cursor manager.
+	 * It allows changing shape of the mouse cursor.
+	 */
 	mouse_cursor_manager cursor_manager;
 
 	/**
-	 * @brief Instantiation of the resource loader.
+	 * @brief Resource loader.
+	 * Allows loading and managing life time of resources.
 	 */
-	// TODO: make shared_ref, dependency inject renderer (for textures loading)
+	// TODO: make shared_ref, dependency inject renderer (for textures loading)?
 	resource_loader loader;
 
 	/**
