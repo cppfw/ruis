@@ -76,7 +76,7 @@ void freetype_face::set_size(unsigned font_size) const
 	);
 
 	if (error != 0) {
-		throw std::runtime_error("texture_font::texture_font(): unable to set char size");
+		throw std::runtime_error("texture_font::set_size(): unable to set char size");
 	}
 }
 

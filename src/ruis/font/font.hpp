@@ -33,7 +33,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 namespace ruis {
 
 /**
- * @brief Basic class representing a font.
+ * @brief Abstract font.
  */
 class font
 {
