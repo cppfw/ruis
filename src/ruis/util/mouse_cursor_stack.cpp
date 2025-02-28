@@ -28,8 +28,10 @@ using namespace ruis;
 mouse_cursor_stack::mouse_cursor_stack(std::function<void(ruis::mouse_cursor)> set_mouse_cursor) :
 	set_mouse_cursor(std::move(set_mouse_cursor))
 {
-	if(!this->set_mouse_cursor){
-		throw std::invalid_argument("mouse_cursor_stack::mouse_cursor_stack(): set_mouse_cursor function cannot be null");
+	if (!this->set_mouse_cursor) {
+		throw std::invalid_argument(
+			"mouse_cursor_stack::mouse_cursor_stack(): set_mouse_cursor function cannot be null"
+		);
 	}
 }
 
