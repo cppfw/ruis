@@ -135,13 +135,13 @@ class texture_font : public font
 public:
 	/**
 	 * @brief Constructor.
-	 * @param c - context to which this font belongs.
+	 * @param renderer - ruis renderer.
 	 * @param face - freetype font.
 	 * @param font_size - size of the font in pixels.
 	 * @param max_cached - maximum number of glyphs to cache.
 	 */
 	texture_font(
-		const utki::shared_ref<ruis::context>& c,
+		utki::shared_ref<ruis::render::renderer> renderer,
 		const utki::shared_ref<const freetype_face>& face,
 		unsigned font_size,
 		unsigned max_cached

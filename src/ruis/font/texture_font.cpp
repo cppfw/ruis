@@ -195,13 +195,13 @@ texture_font::glyph texture_font::load_glyph(char32_t c) const
 }
 
 texture_font::texture_font(
-	const utki::shared_ref<ruis::context>& c,
+	utki::shared_ref<ruis::render::renderer> renderer,
 	// NOLINTNEXTLINE(modernize-pass-by-value)
 	const utki::shared_ref<const freetype_face>& face,
 	unsigned font_size,
 	unsigned max_cached
 ) :
-	renderer(c.get().renderer),
+	renderer(std::move(renderer)),
 	font_size(font_size),
 	face(face),
 	max_cached(max_cached)

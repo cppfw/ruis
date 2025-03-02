@@ -28,12 +28,14 @@ namespace ruis {
 
 class texture_font_provider : public font_provider
 {
+	const utki::shared_ref<ruis::render::renderer> renderer;
+
 	const utki::shared_ref<const freetype_face> face;
 	const unsigned max_cached;
 
 public:
 	texture_font_provider(
-		const utki::shared_ref<ruis::context>& context,
+		utki::shared_ref<ruis::render::renderer> renderer,
 		const utki::shared_ref<const freetype_face>& face,
 		unsigned max_cached
 	);
