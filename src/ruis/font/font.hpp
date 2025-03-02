@@ -37,9 +37,6 @@ namespace ruis {
  */
 class font
 {
-public:
-	const utki::shared_ref<ruis::context> context;
-
 protected:
 	/**
 	 * @brief Distance between baselines.
@@ -50,10 +47,7 @@ protected:
 
 	real ascender = 0;
 
-	// NOLINTNEXTLINE(modernize-pass-by-value)
-	font(const utki::shared_ref<ruis::context>& context) :
-		context(context)
-	{}
+	font() = default;
 
 public:
 	font(const font&) = delete;
@@ -94,7 +88,7 @@ protected:
 	 * rendering.
 	 */
 	virtual render_result render_internal(
-		const ruis::matrix4& matrix,
+		const ruis::matrix4& matrix, //
 		r4::vector4<float> color,
 		const std::u32string_view str,
 		unsigned tab_size,
@@ -107,7 +101,10 @@ protected:
 	 * @param tab_size - tabulation size in widths of space character.
 	 * @return Advance of the text string.
 	 */
-	virtual real get_advance_internal(std::u32string_view str, unsigned tab_size) const = 0;
+	virtual real get_advance_internal(
+		std::u32string_view str, //
+		unsigned tab_size
+	) const = 0;
 
 	/**
 	 * @brief Get bounding box of the string.
@@ -115,7 +112,10 @@ protected:
 	 * @param tab_size - tabulation size in widths of space character.
 	 * @return Bounding box of the text string.
 	 */
-	virtual ruis::rect get_bounding_box_internal(std::u32string_view str, unsigned tab_size) const = 0;
+	virtual ruis::rect get_bounding_box_internal(
+		std::u32string_view str, //
+		unsigned tab_size
+	) const = 0;
 
 public:
 	virtual ~font() = default;
@@ -132,7 +132,7 @@ public:
 	 * @return Render result.
 	 */
 	render_result render(
-		const ruis::matrix4& matrix,
+		const ruis::matrix4& matrix, //
 		r4::vector4<float> color,
 		const std::u32string_view str,
 		unsigned tab_size = 4,
@@ -154,7 +154,7 @@ public:
 	 * @return Render result.
 	 */
 	render_result render(
-		const ruis::matrix4& matrix,
+		const ruis::matrix4& matrix, //
 		r4::vector4<float> color,
 		utki::utf8_iterator str,
 		unsigned tab_size = 4,
@@ -176,7 +176,7 @@ public:
 	 * @return Render result.
 	 */
 	render_result render(
-		const ruis::matrix4& matrix,
+		const ruis::matrix4& matrix, //
 		r4::vector4<float> color,
 		const char* str,
 		unsigned tab_size = 4,
@@ -198,7 +198,7 @@ public:
 	 * @return Redner result.
 	 */
 	render_result render(
-		const ruis::matrix4& matrix,
+		const ruis::matrix4& matrix, //
 		r4::vector4<float> color,
 		const std::string& str,
 		unsigned tab_size = 4,
@@ -214,7 +214,10 @@ public:
 	 * @param tab_size - tabulation size in widths of space character.
 	 * @return Advance of the string of text.
 	 */
-	real get_advance(utki::utf8_iterator str, unsigned tab_size = 4) const
+	real get_advance(
+		utki::utf8_iterator str, //
+		unsigned tab_size = 4
+	) const
 	{
 		return this->get_advance_internal(utki::to_utf32(str), tab_size);
 	}
@@ -225,7 +228,10 @@ public:
 	 * @param tab_size - tabulation size in widths of space character.
 	 * @return Advance of the string of text.
 	 */
-	real get_advance(const std::u32string& str, unsigned tab_size = 4) const
+	real get_advance(
+		const std::u32string& str, //
+		unsigned tab_size = 4
+	) const
 	{
 		return this->get_advance_internal(str, tab_size);
 	}
@@ -236,7 +242,10 @@ public:
 	 * @param tab_size - tabulation size in widths of space character.
 	 * @return Advance of the string of text.
 	 */
-	real get_advance(const char* str, unsigned tab_size = 4) const
+	real get_advance(
+		const char* str, //
+		unsigned tab_size = 4
+	) const
 	{
 		return this->get_advance(utki::utf8_iterator(str), tab_size);
 	}
@@ -247,7 +256,10 @@ public:
 	 * @param tab_size - tabulation size in widths of space character.
 	 * @return Advance of the string of text.
 	 */
-	real get_advance(const std::string& str, unsigned tab_size = 4) const
+	real get_advance(
+		const std::string& str, //
+		unsigned tab_size = 4
+	) const
 	{
 		return this->get_advance(str.c_str(), tab_size);
 	}
@@ -258,7 +270,10 @@ public:
 	 * @param tab_size - tabulation size in widths of space character.
 	 * @return Advance of the character.
 	 */
-	virtual real get_advance(char32_t c, unsigned tab_size = 4) const = 0;
+	virtual real get_advance(
+		char32_t c, //
+		unsigned tab_size = 4
+	) const = 0;
 
 	/**
 	 * @brief Get bounding box of the string.
@@ -266,7 +281,10 @@ public:
 	 * @param tab_size - tabulation size in widths of space character.
 	 * @return Bounding box of the text string.
 	 */
-	ruis::rect get_bounding_box(utki::utf8_iterator str, unsigned tab_size = 4) const
+	ruis::rect get_bounding_box(
+		utki::utf8_iterator str, //
+		unsigned tab_size = 4
+	) const
 	{
 		return this->get_bounding_box_internal(utki::to_utf32(str), tab_size);
 	}
@@ -277,7 +295,10 @@ public:
 	 * @param tab_size - tabulation size in widths of space character.
 	 * @return Bounding box of the text string.
 	 */
-	ruis::rect get_bounding_box(const std::u32string& str, unsigned tab_size = 4) const
+	ruis::rect get_bounding_box(
+		const std::u32string& str, //
+		unsigned tab_size = 4
+	) const
 	{
 		return this->get_bounding_box_internal(str, tab_size);
 	}
@@ -288,7 +309,10 @@ public:
 	 * @param tab_size - tabulation size in widths of space character.
 	 * @return Bounding box of the text string.
 	 */
-	ruis::rect get_bounding_box(const char* str, unsigned tab_size = 4) const
+	ruis::rect get_bounding_box(
+		const char* str, //
+		unsigned tab_size = 4
+	) const
 	{
 		return this->get_bounding_box(utki::utf8_iterator(str), tab_size);
 	}
@@ -299,7 +323,10 @@ public:
 	 * @param tab_size - tabulation size in widths of space character.
 	 * @return Bounding box of the text string.
 	 */
-	ruis::rect get_bounding_box(const std::string& str, unsigned tab_size = 4) const
+	ruis::rect get_bounding_box(
+		const std::string& str, //
+		unsigned tab_size = 4
+	) const
 	{
 		return this->get_bounding_box(str.c_str(), tab_size);
 	}

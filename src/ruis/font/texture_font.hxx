@@ -103,6 +103,8 @@ public:
  */
 class texture_font : public font
 {
+	const utki::shared_ref<ruis::render::renderer> renderer;
+
 	const unsigned font_size;
 
 	const utki::shared_ref<const freetype_face> face;

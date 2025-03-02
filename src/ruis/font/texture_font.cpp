@@ -173,17 +173,15 @@ texture_font::glyph texture_font::load_glyph(char32_t c) const
 	g.top_left = ftg.vertices[0];
 	g.bottom_right = ftg.vertices[2];
 
-	auto& r = this->context.get().renderer.get();
+	auto& r = this->renderer.get();
 	g.vao = r.factory
 				->create_vertex_array(
-					{r.factory->create_vertex_buffer(utki::make_span(ftg.vertices)),
-					 this->context.get().renderer.get().quad_01_vbo},
-					this->context.get().renderer.get().quad_indices,
+					{r.factory->create_vertex_buffer(utki::make_span(ftg.vertices)), this->renderer.get().quad_01_vbo},
+					this->renderer.get().quad_indices,
 					render::vertex_array::mode::triangle_fan
 				)
 				.to_shared_ptr();
-	g.tex = this->context.get()
-				.renderer.get()
+	g.tex = this->renderer.get()
 				.factory
 				->create_texture_2d(
 					std::move(ftg.image),
@@ -203,7 +201,7 @@ texture_font::texture_font(
 	unsigned font_size,
 	unsigned max_cached
 ) :
-	font(c),
+	renderer(c.get().renderer),
 	font_size(font_size),
 	face(face),
 	max_cached(max_cached)
@@ -257,7 +255,12 @@ real texture_font::render_glyph_internal(const ruis::matrix4& matrix, r4::vector
 	// texture can be null for glyph of empty characters, like space, tab etc...
 	if (g.tex) {
 		ASSERT(g.vao)
-		this->context.get().renderer.get().shader->color_pos_tex_alpha->render(matrix, *g.vao, color, *g.tex);
+		this->renderer.get().shader->color_pos_tex_alpha->render(
+			matrix, //
+			*g.vao,
+			color,
+			*g.tex
+		);
 	}
 
 	return g.advance;
@@ -351,7 +354,7 @@ font::render_result texture_font::render_internal(
 		return ret;
 	}
 
-	this->context.get().renderer.get().set_simple_alpha_blending();
+	this->renderer.get().set_simple_alpha_blending();
 
 	ruis::matrix4 matr(matrix);
 
