@@ -45,7 +45,7 @@ public:
 private:
 	units value_units = units::px;
 
-	real get_internal(const context& ctx) const noexcept;
+	real get_internal(const ruis::units& units) const noexcept;
 
 public:
 	constexpr length() = default;
@@ -72,8 +72,13 @@ public:
 
 	real get(const context& ctx) const noexcept
 	{
+		return this->get(ctx.units);
+	}
+
+	real get(const ruis::units& units) const noexcept
+	{
 		ASSERT(!this->is_undefined())
-		return this->get_internal(ctx);
+		return this->get_internal(units);
 	}
 
 	constexpr bool operator==(const length& l) const noexcept

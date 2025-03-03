@@ -23,7 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
-real length::get_internal(const context& ctx) const noexcept
+real length::get_internal(const ruis::units& units) const noexcept
 {
 	switch (this->value_units) {
 		default:
@@ -32,9 +32,9 @@ real length::get_internal(const context& ctx) const noexcept
 		case units::px:
 			return this->value;
 		case units::pp:
-			return ctx.units.pp_to_px(this->value);
+			return units.pp_to_px(this->value);
 		case units::mm:
-			return ctx.units.mm_to_px(this->value);
+			return units.mm_to_px(this->value);
 	}
 }
 
