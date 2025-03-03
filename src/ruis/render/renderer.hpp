@@ -45,13 +45,16 @@ public:
 	const utki::shared_ref<const texture_2d> white_texture;
 
 protected:
-	struct params {
+	struct parameters {
 		constexpr static auto default_max_texture_size = 2048;
 		unsigned max_texture_size = default_max_texture_size;
 		r4::matrix4<float> initial_matrix;
 	};
 
-	renderer(std::unique_ptr<ruis::render::factory> factory, const params& params);
+	renderer(
+		std::unique_ptr<ruis::render::factory> factory, //
+		const parameters& params
+	);
 
 private:
 	std::shared_ptr<frame_buffer> cur_fb;
