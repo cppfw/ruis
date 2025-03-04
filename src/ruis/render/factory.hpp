@@ -55,7 +55,9 @@ class factory
 protected:
 	std::shared_ptr<renderer> get_renderer()
 	{
-		return this->renderer_v.lock();
+		auto r = this->renderer_v.lock();
+		ASSERT(r)
+		return r;
 	}
 
 	factory() = default;
