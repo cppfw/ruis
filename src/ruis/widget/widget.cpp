@@ -259,9 +259,9 @@ utki::shared_ref<render::frame_buffer> widget::render_to_texture(std::shared_ptr
 	}();
 
 	utki::scope_exit framebuffer_scope_exit([old_framebuffer = r.get_framebuffer(), &r]() {
-		r.set_framebuffer(std::move(old_framebuffer));
+		r.set_framebuffer(old_framebuffer.get());
 	});
-	r.set_framebuffer(fb.to_shared_ptr());
+	r.set_framebuffer(&fb.get());
 
 	utki::scope_exit viewport_scope_exit([old_viewport = r.get_viewport(), &r]() {
 		r.set_viewport(old_viewport);

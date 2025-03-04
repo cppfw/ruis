@@ -76,10 +76,14 @@ renderer::renderer(
 	max_texture_size(params.max_texture_size), initial_matrix(params.initial_matrix)
 {}
 
-void renderer::set_framebuffer(std::shared_ptr<frame_buffer> fb)
+void renderer::set_framebuffer(frame_buffer* fb)
 {
-	this->set_framebuffer_internal(fb.get());
-	this->cur_fb = std::move(fb);
+	this->set_framebuffer_internal(fb);
+	if(fb){
+		this->cur_fb = fb->weak_from_this();
+	}else{
+		this->cur_fb.reset();
+	}
 }
 
 void renderer::set_simple_alpha_blending()

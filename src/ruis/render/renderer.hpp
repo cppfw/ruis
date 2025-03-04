@@ -25,7 +25,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis::render {
 
-class renderer
+class renderer : public std::enable_shared_from_this<renderer>
 {
 public:
 	const std::unique_ptr<ruis::render::factory> factory;
@@ -57,7 +57,7 @@ protected:
 	);
 
 private:
-	std::shared_ptr<frame_buffer> cur_fb;
+	std::weak_ptr<frame_buffer> cur_fb;
 
 public:
 	virtual ~renderer() = default;
@@ -79,18 +79,18 @@ public:
 
 	/**
 	 * @brief Set current frame buffer.
-	 * @param fb - frame buffer to set as the current one. If 'nullptr' then screen buffer is set as current frame
-	 * buffer.
+	 * @param fb - frame buffer to set as the current one.
+	 *             If 'nullptr' then screen buffer is set as current frame buffer.
 	 */
-	void set_framebuffer(std::shared_ptr<frame_buffer> fb);
+	void set_framebuffer(frame_buffer* fb);
 
 	/**
 	 * @brief Get current frame buffer.
 	 * @return Current frame buffer. If nullptr, then it is a screen buffer.
 	 */
-	const std::shared_ptr<frame_buffer>& get_framebuffer()
+	std::shared_ptr<frame_buffer> get_framebuffer()
 	{
-		return this->cur_fb;
+		return this->cur_fb.lock();
 	}
 
 	/**

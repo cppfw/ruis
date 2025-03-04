@@ -30,7 +30,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis::render {
 
-class frame_buffer : public rasterimage::dimensioned
+class frame_buffer :
+	public rasterimage::dimensioned, //
+	public std::enable_shared_from_this<frame_buffer>
 {
 protected:
 	frame_buffer( //

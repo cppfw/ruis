@@ -43,9 +43,16 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis::render {
 
+class renderer;
+
 class factory
 {
+	std::weak_ptr<renderer> renderer_v;
 protected:
+	std::shared_ptr<renderer> get_renderer(){
+		return this->renderer_v.lock();
+	}
+
 	factory() = default;
 
 public:
