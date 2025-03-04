@@ -47,9 +47,14 @@ class renderer;
 
 class factory
 {
+	friend class renderer;
+
+	// this variable is initialized by the renderer which owns the factory
 	std::weak_ptr<renderer> renderer_v;
+
 protected:
-	std::shared_ptr<renderer> get_renderer(){
+	std::shared_ptr<renderer> get_renderer()
+	{
 		return this->renderer_v.lock();
 	}
 

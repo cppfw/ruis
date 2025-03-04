@@ -29,12 +29,13 @@ renderer::renderer(
 	std::unique_ptr<ruis::render::factory> factory, //
 	const renderer::parameters& params
 ) :
-	factory(std::move(factory)),
+	factory([&]() -> std::unique_ptr<ruis::render::factory> {
+		factory->renderer_v = this->weak_from_this();
+		return std::move(factory);
+}()),
 	shader(this->factory->create_shaders()),
 	empty_vertex_array(this->factory->create_vertex_array(
-		{
-			this->factory->create_vertex_buffer(utki::span<const r4::vector2<float>>())
-},
+		{this->factory->create_vertex_buffer(utki::span<const r4::vector2<float>>())},
 		this->factory->create_index_buffer(utki::span<const uint16_t>()),
 		ruis::render::vertex_array::mode::triangle_strip
 	)),
@@ -79,9 +80,9 @@ renderer::renderer(
 void renderer::set_framebuffer(frame_buffer* fb)
 {
 	this->set_framebuffer_internal(fb);
-	if(fb){
+	if (fb) {
 		this->cur_fb = fb->weak_from_this();
-	}else{
+	} else {
 		this->cur_fb.reset();
 	}
 }
