@@ -22,17 +22,26 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #pragma once
 
 #include <rasterimage/dimensioned.hpp>
+#include <utki/shared_ref.hpp>
 
 namespace ruis::render {
+
+class renderer;
 
 class texture_stencil : public rasterimage::dimensioned
 {
 protected:
-	texture_stencil(r4::vector2<uint32_t> dims) :
-		rasterimage::dimensioned(dims)
+	texture_stencil(
+		utki::shared_ref<ruis::render::renderer> renderer, //
+		r4::vector2<uint32_t> dims
+	) :
+		rasterimage::dimensioned(dims),
+		renderer(std::move(renderer))
 	{}
 
 public:
+	utki::shared_ref<ruis::render::renderer> renderer;
+
 	texture_stencil(const texture_stencil&) = delete;
 	texture_stencil& operator=(const texture_stencil&) = delete;
 
