@@ -22,17 +22,26 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #pragma once
 
 #include <rasterimage/dimensioned.hpp>
+#include <utki/shared_ref.hpp>
 
 namespace ruis::render {
+
+class renderer;
 
 class texture_depth : public rasterimage::dimensioned
 {
 protected:
-	texture_depth(r4::vector2<uint32_t> dims) :
-		rasterimage::dimensioned(dims)
+	texture_depth(
+		utki::shared_ref<ruis::render::renderer> renderer, //
+		r4::vector2<uint32_t> dims
+	) :
+		rasterimage::dimensioned(dims),
+		renderer(std::move(renderer))
 	{}
 
 public:
+	utki::shared_ref<ruis::render::renderer> renderer;
+
 	texture_depth(const texture_depth&) = delete;
 	texture_depth& operator=(const texture_depth&) = delete;
 
