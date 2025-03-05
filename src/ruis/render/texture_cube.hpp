@@ -21,14 +21,22 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
+#include <utki/shared_ref.hpp>
+
 namespace ruis::render {
+
+class renderer;
 
 class texture_cube
 {
 protected:
-	texture_cube() = default;
+	texture_cube(utki::shared_ref<ruis::render::renderer> renderer) :
+		renderer(std::move(renderer))
+	{}
 
 public:
+	utki::shared_ref<ruis::render::renderer> renderer;
+
 	texture_cube(const texture_cube&) = delete;
 	texture_cube& operator=(const texture_cube&) = delete;
 
