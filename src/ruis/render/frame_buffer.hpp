@@ -30,18 +30,23 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis::render {
 
+class renderer;
+
 class frame_buffer :
 	public rasterimage::dimensioned, //
 	public std::enable_shared_from_this<frame_buffer>
 {
 protected:
 	frame_buffer( //
+		utki::shared_ref<ruis::render::renderer> renderer,
 		std::shared_ptr<texture_2d> color,
 		std::shared_ptr<texture_depth> depth,
 		std::shared_ptr<texture_stencil> stencil
 	);
 
 public:
+	utki::shared_ref<ruis::render::renderer> renderer;
+
 	const std::shared_ptr<texture_2d> color;
 	const std::shared_ptr<texture_depth> depth;
 	const std::shared_ptr<texture_stencil> stencil;

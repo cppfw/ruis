@@ -53,11 +53,11 @@ class factory
 	std::weak_ptr<renderer> renderer_v;
 
 protected:
-	std::shared_ptr<renderer> get_renderer()
+	utki::shared_ref<renderer> get_renderer()
 	{
 		auto r = this->renderer_v.lock();
 		ASSERT(r)
-		return r;
+		return utki::shared_ref<renderer>(std::move(r));
 	}
 
 	factory() = default;
