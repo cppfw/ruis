@@ -21,14 +21,22 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
+#include <utki/shared_ref.hpp>
+
 namespace ruis::render {
+
+class renderer;
 
 class index_buffer
 {
 protected:
-	index_buffer() = default;
+	index_buffer(utki::shared_ref<ruis::render::renderer> renderer) :
+		renderer(std::move(renderer))
+	{}
 
 public:
+	utki::shared_ref<ruis::render::renderer> renderer;
+
 	index_buffer(const index_buffer&) = delete;
 	index_buffer& operator=(const index_buffer&) = delete;
 
