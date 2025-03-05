@@ -22,10 +22,13 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #pragma once
 
 #include <rasterimage/dimensioned.hpp>
+#include <utki/shared_ref.hpp>
 
 #include "../config.hpp"
 
 namespace ruis::render {
+
+class renderer;
 
 class texture_2d : public rasterimage::dimensioned
 {
@@ -41,9 +44,15 @@ public:
 		linear
 	};
 
+	utki::shared_ref<ruis::render::renderer> renderer;
+
 protected:
-	texture_2d(r4::vector2<uint32_t> dims) :
-		rasterimage::dimensioned(dims)
+	texture_2d(
+		utki::shared_ref<ruis::render::renderer> renderer, //
+		r4::vector2<uint32_t> dims
+	) :
+		rasterimage::dimensioned(dims),
+		renderer(std::move(renderer))
 	{}
 
 public:
