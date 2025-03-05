@@ -40,7 +40,7 @@ protected:
 	{}
 
 public:
-	utki::shared_ref<ruis::render::renderer> renderer;
+	const utki::shared_ref<ruis::render::renderer> renderer;
 
 	texture_depth(const texture_depth&) = delete;
 	texture_depth& operator=(const texture_depth&) = delete;

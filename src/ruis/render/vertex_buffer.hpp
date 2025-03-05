@@ -23,15 +23,25 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <cstddef>
 
+#include <utki/shared_ref.hpp>
+
 namespace ruis::render {
+
+class renderer;
 
 class vertex_buffer
 {
 public:
+	const utki::shared_ref<ruis::render::renderer> renderer;
+
 	const size_t size;
 
 protected:
-	vertex_buffer(size_t size) :
+	vertex_buffer(
+		utki::shared_ref<ruis::render::renderer> renderer, //
+		size_t size
+	) :
+		renderer(std::move(renderer)),
 		size(size)
 	{}
 

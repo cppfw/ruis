@@ -40,7 +40,7 @@ protected:
 	{}
 
 public:
-	utki::shared_ref<ruis::render::renderer> renderer;
+	const utki::shared_ref<ruis::render::renderer> renderer;
 
 	texture_stencil(const texture_stencil&) = delete;
 	texture_stencil& operator=(const texture_stencil&) = delete;

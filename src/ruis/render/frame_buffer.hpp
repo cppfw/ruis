@@ -45,7 +45,7 @@ protected:
 	);
 
 public:
-	utki::shared_ref<ruis::render::renderer> renderer;
+	const utki::shared_ref<ruis::render::renderer> renderer;
 
 	const std::shared_ptr<texture_2d> color;
 	const std::shared_ptr<texture_depth> depth;

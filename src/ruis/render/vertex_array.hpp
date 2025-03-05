@@ -31,9 +31,13 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis::render {
 
+class renderer;
+
 class vertex_array
 {
 public:
+	const utki::shared_ref<ruis::render::renderer> renderer;
+
 	using buffers_type = std::vector<utki::shared_ref<const vertex_buffer>>;
 
 	const buffers_type buffers;
@@ -59,7 +63,8 @@ public:
 
 protected:
 	vertex_array(
-		buffers_type buffers, //
+		utki::shared_ref<ruis::render::renderer> renderer, //
+		buffers_type buffers,
 		utki::shared_ref<const index_buffer> indices,
 		mode rendering_mode
 	);

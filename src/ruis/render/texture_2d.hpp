@@ -44,7 +44,7 @@ public:
 		linear
 	};
 
-	utki::shared_ref<ruis::render::renderer> renderer;
+	const utki::shared_ref<ruis::render::renderer> renderer;
 
 protected:
 	texture_2d(

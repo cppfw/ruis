@@ -35,7 +35,7 @@ protected:
 	{}
 
 public:
-	utki::shared_ref<ruis::render::renderer> renderer;
+	const utki::shared_ref<ruis::render::renderer> renderer;
 
 	texture_cube(const texture_cube&) = delete;
 	texture_cube& operator=(const texture_cube&) = delete;
