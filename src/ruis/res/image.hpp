@@ -94,7 +94,7 @@ public:
 		}
 
 		/**
-		 * @brief Render a quad with this texture.
+		 * @brief Render a VAO with this texture.
 		 * @param matrix - transformation matrix to use for rendering.
 		 * @param vao - vertex array to use for rendering.
 		 */
