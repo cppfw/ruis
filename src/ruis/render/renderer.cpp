@@ -74,7 +74,7 @@ renderer::renderer(
 		}(),
 		{}
 	)),
-	max_texture_size(params.max_texture_size), initial_matrix(params.initial_matrix)
+	initial_matrix(params.initial_matrix)
 {}
 
 void renderer::set_framebuffer(frame_buffer* fb)

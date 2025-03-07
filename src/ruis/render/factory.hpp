@@ -30,6 +30,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "coloring_shader.hpp"
 #include "coloring_texturing_shader.hpp"
+#include "context.hpp"
 #include "frame_buffer.hpp"
 #include "index_buffer.hpp"
 #include "shader.hpp"
@@ -60,9 +61,13 @@ protected:
 		return utki::shared_ref<renderer>(std::move(r));
 	}
 
-	factory() = default;
+	factory(utki::shared_ref<ruis::render::context> render_context) :
+		render_context(std::move(render_context))
+	{}
 
 public:
+	const utki::shared_ref<ruis::render::context> render_context;
+
 	factory(const factory&) = delete;
 	factory& operator=(const factory&) = delete;
 

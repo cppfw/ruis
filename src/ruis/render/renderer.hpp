@@ -46,8 +46,6 @@ public:
 
 protected:
 	struct parameters {
-		constexpr static auto default_max_texture_size = 2048;
-		unsigned max_texture_size = default_max_texture_size;
 		r4::matrix4<float> initial_matrix;
 	};
 
@@ -67,8 +65,6 @@ public:
 
 	renderer(renderer&&) = delete;
 	renderer& operator=(renderer&&) = delete;
-
-	const unsigned max_texture_size;
 
 	/**
 	 * @brief Initial matrix to use for rendering.
