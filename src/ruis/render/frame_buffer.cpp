@@ -26,7 +26,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace ruis::render;
 
 frame_buffer::frame_buffer( //
-	utki::shared_ref<ruis::render::renderer> renderer,
+	utki::shared_ref<ruis::render::context> render_context,
 	std::shared_ptr<texture_2d> color,
 	std::shared_ptr<texture_depth> depth,
 	std::shared_ptr<texture_stencil> stencil
@@ -58,7 +58,7 @@ frame_buffer::frame_buffer( //
 
 		return cur_tex->dims();
 	}()),
-	renderer(std::move(renderer)),
+	render_context(std::move(render_context)),
 	color(std::move(color)),
 	depth(std::move(depth)),
 	stencil(std::move(stencil))

@@ -27,7 +27,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "texturing_shader.hpp"
 
 namespace ruis::render {
-class context
+class context : public std::enable_shared_from_this<context>
 {
 public:
 	context() = default;

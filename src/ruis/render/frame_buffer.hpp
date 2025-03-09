@@ -24,6 +24,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <rasterimage/dimensioned.hpp>
 #include <utki/shared_ref.hpp>
 
+#include "context.hpp"
 #include "texture_2d.hpp"
 #include "texture_depth.hpp"
 #include "texture_stencil.hpp"
@@ -38,14 +39,14 @@ class frame_buffer :
 {
 protected:
 	frame_buffer( //
-		utki::shared_ref<ruis::render::renderer> renderer,
+		utki::shared_ref<ruis::render::context> render_context,
 		std::shared_ptr<texture_2d> color,
 		std::shared_ptr<texture_depth> depth,
 		std::shared_ptr<texture_stencil> stencil
 	);
 
 public:
-	const utki::shared_ref<ruis::render::renderer> renderer;
+	const utki::shared_ref<ruis::render::context> render_context;
 
 	const std::shared_ptr<texture_2d> color;
 	const std::shared_ptr<texture_depth> depth;
