@@ -21,14 +21,22 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "coloring_shader.hpp"
-#include "coloring_texturing_shader.hpp"
-#include "shader.hpp"
-#include "texturing_shader.hpp"
+#include <utki/shared.hpp>
+
+#include "shaders/coloring_shader.hpp"
+#include "shaders/coloring_texturing_shader.hpp"
+#include "shaders/shader.hpp"
+#include "shaders/texturing_shader.hpp"
 
 namespace ruis::render {
 class context : public std::enable_shared_from_this<context>
 {
+protected:
+	utki::shared_ref<context> get_shared_ref()
+	{
+		return utki::make_shared_from(*this);
+	}
+
 public:
 	context() = default;
 

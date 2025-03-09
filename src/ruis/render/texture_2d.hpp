@@ -28,7 +28,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis::render {
 
-class renderer;
+class context;
 
 class texture_2d : public rasterimage::dimensioned
 {
@@ -44,15 +44,15 @@ public:
 		linear
 	};
 
-	const utki::shared_ref<ruis::render::renderer> renderer;
+	const utki::shared_ref<ruis::render::context> render_context;
 
 protected:
 	texture_2d(
-		utki::shared_ref<ruis::render::renderer> renderer, //
+		utki::shared_ref<ruis::render::context> render_context, //
 		r4::vector2<uint32_t> dims
 	) :
 		rasterimage::dimensioned(dims),
-		renderer(std::move(renderer))
+		render_context(std::move(render_context))
 	{}
 
 public:

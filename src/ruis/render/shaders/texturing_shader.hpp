@@ -21,33 +21,38 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include <r4/matrix.hpp>
-#include <rasterimage/operations.hpp>
-
-#include "vertex_array.hpp"
+#include "../texture_2d.hpp"
+#include "../vertex_array.hpp"
 
 namespace ruis::render {
 
-class coloring_shader
+class context;
+
+class texturing_shader
 {
 protected:
-	coloring_shader() = default;
+	texturing_shader(utki::shared_ref<ruis::render::context> render_context) :
+		render_context(std::move(render_context))
+	{}
 
 public:
-	coloring_shader(const coloring_shader&) = delete;
-	coloring_shader& operator=(const coloring_shader&) = delete;
+	const utki::shared_ref<ruis::render::context> render_context;
 
-	coloring_shader(coloring_shader&&) = delete;
-	coloring_shader& operator=(coloring_shader&&) = delete;
+	texturing_shader(const texturing_shader&) = delete;
+	texturing_shader& operator=(const texturing_shader&) = delete;
 
-	virtual ~coloring_shader() = default;
+	texturing_shader(texturing_shader&&) = delete;
+	texturing_shader& operator=(texturing_shader&&) = delete;
 
-	virtual void render(const r4::matrix4<float>& m, const vertex_array& va, r4::vector4<float> color) const = 0;
+	virtual ~texturing_shader() = default;
 
-	void render(const r4::matrix4<float>& m, const vertex_array& va, uint32_t color) const
-	{
-		this->render(m, va, rasterimage::to_float(rasterimage::from_32bit_pixel(color)));
-	}
+	virtual void render(
+		const r4::matrix4<float>& m, //
+		const ruis::render::vertex_array& va,
+		const texture_2d& tex
+	) const = 0;
+
+private:
 };
 
 } // namespace ruis::render

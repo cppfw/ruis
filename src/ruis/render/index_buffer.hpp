@@ -25,17 +25,17 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis::render {
 
-class renderer;
+class context;
 
 class index_buffer
 {
 protected:
-	index_buffer(utki::shared_ref<ruis::render::renderer> renderer) :
-		renderer(std::move(renderer))
+	index_buffer(utki::shared_ref<ruis::render::context> render_context) :
+		render_context(std::move(render_context))
 	{}
 
 public:
-	const utki::shared_ref<ruis::render::renderer> renderer;
+	const utki::shared_ref<ruis::render::context> render_context;
 
 	index_buffer(const index_buffer&) = delete;
 	index_buffer& operator=(const index_buffer&) = delete;

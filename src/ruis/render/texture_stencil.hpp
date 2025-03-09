@@ -26,21 +26,21 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis::render {
 
-class renderer;
+class context;
 
 class texture_stencil : public rasterimage::dimensioned
 {
 protected:
 	texture_stencil(
-		utki::shared_ref<ruis::render::renderer> renderer, //
+		utki::shared_ref<ruis::render::context> render_context, //
 		r4::vector2<uint32_t> dims
 	) :
 		rasterimage::dimensioned(dims),
-		renderer(std::move(renderer))
+		render_context(std::move(render_context))
 	{}
 
 public:
-	const utki::shared_ref<ruis::render::renderer> renderer;
+	const utki::shared_ref<ruis::render::context> render_context;
 
 	texture_stencil(const texture_stencil&) = delete;
 	texture_stencil& operator=(const texture_stencil&) = delete;

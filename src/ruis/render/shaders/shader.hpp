@@ -23,16 +23,22 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <r4/matrix.hpp>
 
-#include "vertex_array.hpp"
+#include "../vertex_array.hpp"
 
 namespace ruis::render {
+
+class context;
 
 class shader
 {
 protected:
-	shader() = default;
+	shader(utki::shared_ref<ruis::render::context> render_context) :
+		render_context(std::move(render_context))
+	{}
 
 public:
+	const utki::shared_ref<ruis::render::context> render_context;
+
 	shader(const shader&) = delete;
 	shader& operator=(const shader&) = delete;
 
@@ -41,7 +47,10 @@ public:
 
 	virtual ~shader() = default;
 
-	virtual void render(const r4::matrix4<float>& m, const vertex_array& va) const = 0;
+	virtual void render(
+		const r4::matrix4<float>& m, //
+		const vertex_array& va
+	) const = 0;
 };
 
 } // namespace ruis::render

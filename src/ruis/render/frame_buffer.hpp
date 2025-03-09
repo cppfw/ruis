@@ -24,14 +24,13 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <rasterimage/dimensioned.hpp>
 #include <utki/shared_ref.hpp>
 
-#include "context.hpp"
 #include "texture_2d.hpp"
 #include "texture_depth.hpp"
 #include "texture_stencil.hpp"
 
 namespace ruis::render {
 
-class renderer;
+class context;
 
 class frame_buffer :
 	public rasterimage::dimensioned, //
