@@ -28,17 +28,13 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <utki/shared_ref.hpp>
 #include <utki/span.hpp>
 
-#include "coloring_shader.hpp"
-#include "coloring_texturing_shader.hpp"
 #include "context.hpp"
 #include "frame_buffer.hpp"
 #include "index_buffer.hpp"
-#include "shader.hpp"
 #include "texture_2d.hpp"
 #include "texture_cube.hpp"
 #include "texture_depth.hpp"
 #include "texture_stencil.hpp"
-#include "texturing_shader.hpp"
 #include "vertex_array.hpp"
 #include "vertex_buffer.hpp"
 
@@ -126,17 +122,6 @@ public:
 		utki::shared_ref<const ruis::render::index_buffer> indices,
 		vertex_array::mode rendering_mode
 	) = 0;
-
-	struct shaders {
-		std::unique_ptr<texturing_shader> pos_tex;
-		std::unique_ptr<coloring_shader> color_pos;
-		std::unique_ptr<coloring_shader> color_pos_lum;
-		std::unique_ptr<shader> pos_clr;
-		std::unique_ptr<coloring_texturing_shader> color_pos_tex;
-		std::unique_ptr<coloring_texturing_shader> color_pos_tex_alpha;
-	};
-
-	virtual utki::shared_ref<shaders> create_shaders() = 0;
 
 	virtual utki::shared_ref<frame_buffer> create_framebuffer( //
 		std::shared_ptr<texture_2d> color,

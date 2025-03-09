@@ -30,7 +30,7 @@ class renderer : public std::enable_shared_from_this<renderer>
 public:
 	const std::unique_ptr<ruis::render::factory> factory;
 
-	const utki::shared_ref<ruis::render::factory::shaders> shaders;
+	const utki::shared_ref<ruis::render::context::shaders> shaders;
 
 public:
 	const utki::shared_ref<const vertex_array> empty_vertex_array;

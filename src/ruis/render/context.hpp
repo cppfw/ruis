@@ -21,9 +21,34 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
+#include "coloring_shader.hpp"
+#include "coloring_texturing_shader.hpp"
+#include "shader.hpp"
+#include "texturing_shader.hpp"
+
 namespace ruis::render {
 class context
 {
 public:
+	context() = default;
+
+	context(const context&) = delete;
+	context& operator=(const context&) = delete;
+
+	context(context&&) = delete;
+	context& operator=(context&&) = delete;
+
+	virtual ~context() = default;
+
+	struct shaders {
+		std::unique_ptr<texturing_shader> pos_tex;
+		std::unique_ptr<coloring_shader> color_pos;
+		std::unique_ptr<coloring_shader> color_pos_lum;
+		std::unique_ptr<shader> pos_clr;
+		std::unique_ptr<coloring_texturing_shader> color_pos_tex;
+		std::unique_ptr<coloring_texturing_shader> color_pos_tex_alpha;
+	};
+
+	virtual utki::shared_ref<shaders> create_shaders() = 0;
 };
 } // namespace ruis::render

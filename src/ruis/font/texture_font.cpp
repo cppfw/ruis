@@ -255,7 +255,7 @@ real texture_font::render_glyph_internal(const ruis::matrix4& matrix, r4::vector
 	// texture can be null for glyph of empty characters, like space, tab etc...
 	if (g.tex) {
 		ASSERT(g.vao)
-		this->renderer.get().shader.get().color_pos_tex_alpha->render(
+		this->renderer.get().shaders.get().color_pos_tex_alpha->render(
 			matrix, //
 			*g.vao,
 			color,
