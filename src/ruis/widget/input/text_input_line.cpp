@@ -76,7 +76,7 @@ void text_input_line::render(const ruis::matrix4& matrix) const
 
 		auto& r = this->context.get().renderer.get();
 		// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers)
-		r.shader->color_pos->render(matr, r.pos_quad_01_vao.get(), 0xff804040);
+		r.shaders.get().color_pos->render(matr, r.pos_quad_01_vao.get(), 0xff804040);
 	}
 
 	{
@@ -106,7 +106,11 @@ void text_input_line::render(const ruis::matrix4& matrix) const
 		matr.scale(vector2(cursor_width * this->context.get().units.dots_per_fp(), this->rect().d.y()));
 
 		auto& r = this->context.get().renderer.get();
-		r.shader->color_pos->render(matr, r.pos_quad_01_vao.get(), this->get_current_color());
+		r.shaders.get().color_pos->render(
+			matr,
+			r.pos_quad_01_vao.get(), //
+			this->get_current_color()
+		);
 	}
 }
 

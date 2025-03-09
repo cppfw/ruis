@@ -59,5 +59,5 @@ void frame_vao::set(vector2 dims, vector2 thickness)
 
 void frame_vao::render(const matrix4& matrix, uint32_t color) const
 {
-	this->renderer.get().shader->color_pos->render(matrix, this->vao.get(), color);
+	this->renderer.get().shaders.get().color_pos->render(matrix, this->vao.get(), color);
 }

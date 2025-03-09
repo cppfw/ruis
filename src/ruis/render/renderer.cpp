@@ -33,7 +33,7 @@ renderer::renderer(
 		factory->renderer_v = this->weak_from_this();
 		return std::move(factory);
 }()),
-	shader(this->factory->create_shaders()),
+	shaders(this->factory->create_shaders()),
 	empty_vertex_array(this->factory->create_vertex_array(
 		{this->factory->create_vertex_buffer(utki::span<const r4::vector2<float>>())},
 		this->factory->create_index_buffer(utki::span<const uint16_t>()),

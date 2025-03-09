@@ -115,5 +115,5 @@ utki::shared_ref<gradient> gradient::load(
 
 void gradient::render(const ruis::matrix4& m) const
 {
-	this->context.get().renderer.get().shader->pos_clr->render(m, this->vao.get());
+	this->context.get().renderer.get().shaders.get().pos_clr->render(m, this->vao.get());
 }

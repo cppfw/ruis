@@ -91,5 +91,5 @@ void cube_widget::render(const ruis::matrix4& matrix)const{
 
     // glDisable(GL_CULL_FACE);
 
-    this->context.get().renderer.get().shader->pos_tex->render(matr, *this->cubeVAO, this->tex->tex());
+    this->context.get().renderer.get().shaders.get().pos_tex->render(matr, *this->cubeVAO, this->tex->tex());
 }

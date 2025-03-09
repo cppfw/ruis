@@ -49,5 +49,9 @@ void rectangle::render(const ruis::matrix4& matrix) const
 	ruis::matrix4 matr(matrix);
 	matr.scale(this->rect().d);
 
-	r.shader->color_pos->render(matr, r.pos_quad_01_vao.get(), this->get_current_color());
+	r.shaders.get().color_pos->render(
+		matr, //
+		r.pos_quad_01_vao.get(),
+		this->get_current_color()
+	);
 }

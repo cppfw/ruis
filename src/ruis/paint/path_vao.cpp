@@ -51,9 +51,20 @@ void path_vao::set(const path::vertices& path)
 	);
 }
 
-void path_vao::render(const ruis::matrix4& matrix, uint32_t color) const
+void path_vao::render(
+	const ruis::matrix4& matrix, //
+	uint32_t color
+) const
 {
-	this->renderer.get().shader->color_pos->render(matrix, this->core.get(), color);
+	this->renderer.get().shaders.get().color_pos->render(
+		matrix, //
+		this->core.get(),
+		color
+	);
 
-	this->renderer.get().shader->color_pos_lum->render(matrix, this->border.get(), color);
+	this->renderer.get().shaders.get().color_pos_lum->render(
+		matrix, //
+		this->border.get(),
+		color
+	);
 }

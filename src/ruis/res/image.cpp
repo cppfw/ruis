@@ -103,7 +103,7 @@ utki::shared_ref<atlas_image> atlas_image::load(
 
 void atlas_image::render(const matrix4& matrix, const render::vertex_array& vao) const
 {
-	this->context.get().renderer.get().shader->pos_tex->render(matrix, this->vao.get(), this->tex.get().tex());
+	this->context.get().renderer.get().shaders.get().pos_tex->render(matrix, this->vao.get(), this->tex.get().tex());
 }
 
 utki::shared_ref<const image::texture> atlas_image::get(vector2 for_dims) const
@@ -125,7 +125,7 @@ protected:
 public:
 	void render(const matrix4& matrix, const render::vertex_array& vao) const override
 	{
-		this->renderer.get().shader->pos_tex->render(matrix, vao, this->tex_2d.get());
+		this->renderer.get().shaders.get().pos_tex->render(matrix, vao, this->tex_2d.get());
 	}
 };
 

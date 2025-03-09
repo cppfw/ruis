@@ -136,7 +136,7 @@ public:
 		std::unique_ptr<coloring_texturing_shader> color_pos_tex_alpha;
 	};
 
-	virtual std::unique_ptr<shaders> create_shaders() = 0;
+	virtual utki::shared_ref<shaders> create_shaders() = 0;
 
 	virtual utki::shared_ref<frame_buffer> create_framebuffer( //
 		std::shared_ptr<texture_2d> color,
