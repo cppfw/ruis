@@ -58,6 +58,7 @@ class freetype_face
 	} freetype;
 
 	struct freetype_face_wrapper {
+		// NOLINTNEXTLINE(clang-analyzer-webkit.NoUncountedMemberChecker, "false-positive")
 		FT_Face f = nullptr;
 		std::vector<std::uint8_t> font_file; // the buffer should be alive as long as the Face is alive!!!
 

@@ -73,6 +73,8 @@ public:
 	const utki::shared_ref<ruis::context> context;
 
 private:
+	// TODO: make weak_ptr?
+	// NOLINTNEXTLINE(clang-analyzer-webkit.NoUncountedMemberChecker, "false-positive")
 	container* parent_container = nullptr;
 
 	std::set<unsigned> hovered;

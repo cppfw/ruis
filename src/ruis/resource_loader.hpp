@@ -100,6 +100,7 @@ class resource_loader
 	std::list<res_pack_entry> res_packs;
 
 private:
+	// NOLINTNEXTLINE(clang-analyzer-webkit.NoUncountedMemberChecker, "fasle-positive")
 	context& ctx;
 
 	resource_loader(context& ctx) :
