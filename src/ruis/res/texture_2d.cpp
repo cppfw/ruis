@@ -73,7 +73,7 @@ utki::shared_ref<texture_2d> texture_2d::load(
 	const papki::file& fi
 )
 {
-	ruis::render::factory::texture_2d_parameters params{
+	ruis::render::context::texture_2d_parameters params{
 		.min_filter = render::texture_2d::filter::linear,
 		.mag_filter = render::texture_2d::filter::linear,
 		.mipmap = render::texture_2d::mipmap::nearest
@@ -91,7 +91,7 @@ utki::shared_ref<texture_2d> texture_2d::load(
 		}
 	}
 
-	auto tex = ctx.get().renderer.get().factory->create_texture_2d( //
+	auto tex = ctx.get().renderer.get().render_context.get().create_texture_2d( //
 		rasterimage::read(fi),
 		std::move(params)
 	);

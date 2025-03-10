@@ -33,13 +33,14 @@ renderer::renderer(
 		factory->renderer_v = this->weak_from_this();
 		return std::move(factory);
 }()),
-	shaders(this->factory->render_context.get().create_shaders()),
-	empty_vertex_array(this->factory->create_vertex_array(
-		{this->factory->create_vertex_buffer(utki::span<const r4::vector2<float>>())},
-		this->factory->create_index_buffer(utki::span<const uint16_t>()),
+	render_context(this->factory->render_context),
+	shaders(this->render_context.get().create_shaders()),
+	empty_vertex_array(this->render_context.get().create_vertex_array(
+		{this->render_context.get().create_vertex_buffer(utki::span<const r4::vector2<float>>())},
+		this->render_context.get().create_index_buffer(utki::span<const uint16_t>()),
 		ruis::render::vertex_array::mode::triangle_strip
 	)),
-	quad_01_vbo(this->factory->create_vertex_buffer(
+	quad_01_vbo(this->render_context.get().create_vertex_buffer(
 		utki::make_span(
 			std::array<r4::vector2<float>, 4>(
 				{{r4::vector2<float>(0, 0),
@@ -49,16 +50,20 @@ renderer::renderer(
 			)
 		)
 	)),
-	quad_indices(this->factory->create_index_buffer(utki::make_span(std::array<uint16_t, 4>({{0, 1, 2, 3}})))),
-	pos_quad_01_vao(
-		this->factory->create_vertex_array({this->quad_01_vbo}, this->quad_indices, vertex_array::mode::triangle_fan)
+	quad_indices(
+		this->render_context.get().create_index_buffer(utki::make_span(std::array<uint16_t, 4>({{0, 1, 2, 3}})))
 	),
-	pos_tex_quad_01_vao(this->factory->create_vertex_array(
+	pos_quad_01_vao(this->render_context.get().create_vertex_array(
+		{this->quad_01_vbo},
+		this->quad_indices,
+		vertex_array::mode::triangle_fan
+	)),
+	pos_tex_quad_01_vao(this->render_context.get().create_vertex_array(
 		{this->quad_01_vbo, this->quad_01_vbo},
 		this->quad_indices,
 		vertex_array::mode::triangle_fan
 	)),
-	white_texture(this->factory->create_texture_2d(
+	white_texture(this->render_context.get().create_texture_2d(
 		[]() {
 			// raster image 1 by 1 pixel
 			rasterimage::image_variant imvar(

@@ -48,11 +48,11 @@ void frame_vao::set(vector2 dims, vector2 thickness)
 	// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers)
 	std::array<uint16_t, 10> indices = {0, 4, 1, 5, 2, 6, 3, 7, 0, 4};
 
-	this->vao = this->renderer.get().factory->create_vertex_array(
+	this->vao = this->renderer.get().render_context.get().create_vertex_array(
 		{
-			this->renderer.get().factory->create_vertex_buffer(vertices),
+			this->renderer.get().render_context.get().create_vertex_buffer(vertices),
 		},
-		this->renderer.get().factory->create_index_buffer(indices),
+		this->renderer.get().render_context.get().create_index_buffer(indices),
 		ruis::render::vertex_array::mode::triangle_strip
 	);
 }

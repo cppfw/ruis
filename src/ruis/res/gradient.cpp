@@ -69,12 +69,17 @@ void gradient::set(std::vector<std::tuple<real, uint32_t>>& stops, bool vertical
 	}
 
 	auto& r = this->context.get().renderer.get();
-	this->vao = r.factory->create_vertex_array(
-		{r.factory->create_vertex_buffer(utki::make_span(vertices)),
-		 r.factory->create_vertex_buffer(utki::make_span(colors))},
-		r.factory->create_index_buffer(utki::make_span(indices)),
+
+	// clang-format off
+	this->vao = r.render_context.get().create_vertex_array(
+		{
+			r.render_context.get().create_vertex_buffer(utki::make_span(vertices)),
+		 	r.render_context.get().create_vertex_buffer(utki::make_span(colors))
+		},
+		r.render_context.get().create_index_buffer(utki::make_span(indices)),
 		render::vertex_array::mode::triangle_strip
 	);
+	// clang-format on
 }
 
 utki::shared_ref<gradient> gradient::load(

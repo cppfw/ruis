@@ -84,11 +84,16 @@ void image::render(const ruis::matrix4& matrix) const
 			for (; dst != tex_coords.end(); ++src, ++dst) {
 				*dst = src->comp_mul(scale);
 			}
-			this->vao = r.factory->create_vertex_array(
-				{r.quad_01_vbo, r.factory->create_vertex_buffer(utki::make_span(tex_coords))},
+			// clang-format off
+			this->vao = r.render_context.get().create_vertex_array(
+				{
+					r.quad_01_vbo,
+					r.render_context.get().create_vertex_buffer(utki::make_span(tex_coords))
+				},
 				r.quad_indices,
 				render::vertex_array::mode::triangle_fan
 			);
+			// clang-format on
 		} else {
 			this->vao = this->context.get().renderer.get().pos_tex_quad_01_vao;
 		}

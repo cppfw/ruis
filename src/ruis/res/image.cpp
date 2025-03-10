@@ -162,7 +162,7 @@ public:
 	{
 		return utki::make_shared<res_raster_image>(
 			std::move(ctx),
-			ctx.get().renderer.get().factory->create_texture_2d(
+			ctx.get().renderer.get().render_context.get().create_texture_2d(
 				rasterimage::read(fi),
 				{
 					// TODO: what about params?
@@ -266,16 +266,20 @@ public:
 
 		auto dims = im.dims();
 
+		// clang-format off
 		auto img = utki::make_shared<svg_texture>(
 			this->context.get().renderer,
 			utki::make_shared_from(*this),
-			this->context.get().renderer.get().factory->create_texture_2d(
+			this->context.get().renderer.get().render_context.get().create_texture_2d(
 				std::move(im),
-				{.min_filter = render::texture_2d::filter::nearest,
-				 .mag_filter = render::texture_2d::filter::nearest,
-				 .mipmap = render::texture_2d::mipmap::none}
+				{
+					.min_filter = render::texture_2d::filter::nearest,
+					.mag_filter = render::texture_2d::filter::nearest,
+					.mipmap = render::texture_2d::mipmap::none
+				}
 			)
 		);
+		// clang-format on
 
 		this->cache[dims] = img.to_shared_ptr();
 

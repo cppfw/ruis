@@ -72,11 +72,17 @@ public:
 			// " << tex_coords[3] << ")" << std::endl)
 
 			const auto& r = this->context.get().renderer.get();
-			return r.factory->create_vertex_array(
-				{r.quad_01_vbo, r.factory->create_vertex_buffer(tex_coords)},
+
+			// clang-format off
+			return r.render_context.get().create_vertex_array(
+				{
+					r.quad_01_vbo,
+					r.render_context.get().create_vertex_buffer(tex_coords)
+				},
 				r.quad_indices,
 				render::vertex_array::mode::triangle_fan
 			);
+			// clang-format on
 		}())
 	{}
 

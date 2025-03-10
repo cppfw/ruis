@@ -174,22 +174,26 @@ texture_font::glyph texture_font::load_glyph(char32_t c) const
 	g.bottom_right = ftg.vertices[2];
 
 	auto& r = this->renderer.get();
-	g.vao = r.factory
-				->create_vertex_array(
-					{r.factory->create_vertex_buffer(utki::make_span(ftg.vertices)), this->renderer.get().quad_01_vbo},
-					this->renderer.get().quad_indices,
-					render::vertex_array::mode::triangle_fan
-				)
-				.to_shared_ptr();
-	g.tex = this->renderer.get()
-				.factory
-				->create_texture_2d(
-					std::move(ftg.image),
-					{.min_filter = render::texture_2d::filter::nearest,
-					 .mag_filter = render::texture_2d::filter::nearest,
-					 .mipmap = render::texture_2d::mipmap::none}
-				)
-				.to_shared_ptr();
+
+	// clang-format off
+	g.vao = r.render_context.get().create_vertex_array(
+		{
+			r.render_context.get().create_vertex_buffer(utki::make_span(ftg.vertices)),
+			this->renderer.get().quad_01_vbo
+		},
+		this->renderer.get().quad_indices,
+		render::vertex_array::mode::triangle_fan
+	).to_shared_ptr();
+
+	g.tex = this->renderer.get().render_context.get().create_texture_2d(
+		std::move(ftg.image),
+		{
+			.min_filter = render::texture_2d::filter::nearest,
+			.mag_filter = render::texture_2d::filter::nearest,
+			.mipmap = render::texture_2d::mipmap::none
+		}
+	).to_shared_ptr();
+	// clang-format on
 
 	return g;
 }
