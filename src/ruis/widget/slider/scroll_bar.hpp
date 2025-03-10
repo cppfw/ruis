@@ -42,6 +42,8 @@ class scroll_bar :
 	protected oriented,
 	private container
 {
+	// TODO: use shared_ref
+	// NOLINTNEXTLINE(clang-analyzer-webkit.NoUncountedMemberChecker, "false-positive")
 	widget& handle;
 
 	bool is_grabbed = false;

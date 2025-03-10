@@ -38,6 +38,8 @@ public:
 private:
 	parameters params;
 
+	// TODO: use shared_ref?
+	// NOLINTNEXTLINE(clang-analyzer-webkit.NoUncountedMemberChecker, "false-positive")
 	container& inner_content;
 
 protected:

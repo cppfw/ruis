@@ -39,7 +39,7 @@ class check_box :
 	private nine_patch
 {
 	// TODO: refactor to use utki::shared_ref
-	// std::shared_ptr<widget> check_widget;
+	// NOLINTNEXTLINE(clang-analyzer-webkit.NoUncountedMemberChecker, "false-positive")
 	image& tick_widget;
 
 public:

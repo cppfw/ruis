@@ -34,6 +34,8 @@ namespace ruis {
  */
 class selection_box : virtual public widget, public list_providable
 {
+	// TODO: use shared_ref
+	// NOLINTNEXTLINE(clang-analyzer-webkit.NoUncountedMemberChecker, "false-positivie")
 	container& selection_container;
 
 public:

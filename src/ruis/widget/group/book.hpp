@@ -38,6 +38,8 @@ protected:
 		ruis::widget::parameters widget_params
 	);
 
+	// TODO: make weak_ptr?
+	// NOLINTNEXTLINE(clang-analyzer-webkit.NoUncountedMemberChecker, "false-positive")
 	book* parent_book = nullptr;
 
 public:

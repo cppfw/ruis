@@ -27,9 +27,17 @@ namespace ruis {
 
 class margins : public frame_widget
 {
+	// TODO: use shared_ref
+	// NOLINTNEXTLINE(clang-analyzer-webkit.NoUncountedMemberChecker, "false-positive")
 	widget& left;
+	// TODO: use shared_ref
+	// NOLINTNEXTLINE(clang-analyzer-webkit.NoUncountedMemberChecker, "false-positive")
 	widget& top;
+	// TODO: use shared_ref
+	// NOLINTNEXTLINE(clang-analyzer-webkit.NoUncountedMemberChecker, "false-positive")
 	widget& right;
+	// TODO: use shared_ref
+	// NOLINTNEXTLINE(clang-analyzer-webkit.NoUncountedMemberChecker, "false-positive")
 	widget& bottom;
 
 public:

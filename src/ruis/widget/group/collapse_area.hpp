@@ -32,7 +32,11 @@ class collapse_area :
 	virtual public widget, //
 	private container
 {
+	// TODO: use shared_ref
+	// NOLINTNEXTLINE(clang-analyzer-webkit.NoUncountedMemberChecker, "false-positive")
 	container& content_area;
+	// TODO: use shared_ref
+	// NOLINTNEXTLINE(clang-analyzer-webkit.NoUncountedMemberChecker, "false-positive")
 	container& title_v;
 
 public:
