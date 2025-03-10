@@ -12,7 +12,7 @@
 using namespace std::string_literals;
 
 namespace m{
-    using namespace ruis::make;
+using namespace ruis::make;
 }
 
 namespace{

@@ -26,17 +26,15 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace ruis::render;
 
 renderer::renderer(
-	std::unique_ptr<ruis::render::factory> factory, //
+	utki::shared_ref<ruis::render::context> render_context, //
 	const renderer::parameters& params
 ) :
-	factory([&]() -> std::unique_ptr<ruis::render::factory> {
-		factory->renderer_v = this->weak_from_this();
-		return std::move(factory);
-}()),
-	render_context(this->factory->render_context),
+	render_context(std::move(render_context)),
 	shaders(this->render_context.get().create_shaders()),
 	empty_vertex_array(this->render_context.get().create_vertex_array(
-		{this->render_context.get().create_vertex_buffer(utki::span<const r4::vector2<float>>())},
+		{
+			this->render_context.get().create_vertex_buffer(utki::span<const r4::vector2<float>>())
+},
 		this->render_context.get().create_index_buffer(utki::span<const uint16_t>()),
 		ruis::render::vertex_array::mode::triangle_strip
 	)),

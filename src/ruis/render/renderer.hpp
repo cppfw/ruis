@@ -21,15 +21,13 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "factory.hpp"
+#include "context.hpp"
 
 namespace ruis::render {
 
 class renderer : public std::enable_shared_from_this<renderer>
 {
 public:
-	const std::unique_ptr<ruis::render::factory> factory;
-
 	const utki::shared_ref<ruis::render::context> render_context;
 	const utki::shared_ref<ruis::render::context::shaders> shaders;
 
@@ -51,7 +49,7 @@ protected:
 	};
 
 	renderer(
-		std::unique_ptr<ruis::render::factory> factory, //
+		utki::shared_ref<ruis::render::context> render_context, //
 		const parameters& params
 	);
 
