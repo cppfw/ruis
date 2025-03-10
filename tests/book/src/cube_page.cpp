@@ -111,7 +111,7 @@ public:
 		matr.translate(0, 0, -4);
 		matr.rotate(this->rot);
 		
-		this->context.get().renderer.get().shaders.get().pos_tex->render(matr, *this->cube_vao, this->tex->tex());
+		this->context.get().renderer.get().shaders().pos_tex->render(matr, *this->cube_vao, this->tex->tex());
 	}
 };
 }

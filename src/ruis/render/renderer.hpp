@@ -30,29 +30,43 @@ class renderer : public std::enable_shared_from_this<renderer>
 public:
 	const utki::shared_ref<ruis::render::context> render_context;
 
-	const utki::shared_ref<ruis::render::context::shaders> shaders;
+	struct objects {
+		const utki::shared_ref<const ruis::render::context::shaders> shaders;
 
-	const utki::shared_ref<const vertex_array> empty_vertex_array;
+		const utki::shared_ref<const vertex_array> empty_vertex_array;
 
-	const utki::shared_ref<const vertex_buffer> quad_01_vbo;
-	const utki::shared_ref<const index_buffer> quad_indices;
+		const utki::shared_ref<const vertex_buffer> quad_01_vbo;
 
-	const utki::shared_ref<const vertex_array> pos_quad_01_vao;
+		const utki::shared_ref<const index_buffer> quad_indices;
 
-	const utki::shared_ref<const vertex_array> pos_tex_quad_01_vao;
+		const utki::shared_ref<const vertex_array> pos_quad_01_vao;
 
-	const utki::shared_ref<const texture_2d> white_texture;
+		const utki::shared_ref<const vertex_array> pos_tex_quad_01_vao;
 
-public:
+		const utki::shared_ref<const texture_2d> white_texture;
+	};
+
+	const utki::shared_ref<const objects> common_objects;
+
+	const objects& obj() const noexcept
+	{
+		return this->common_objects.get();
+	}
+
+	const ruis::render::context::shaders& shaders() const noexcept
+	{
+		return this->common_objects.get().shaders.get();
+	}
+
 	renderer(utki::shared_ref<ruis::render::context> render_context);
-
-	virtual ~renderer() = default;
 
 	renderer(const renderer&) = delete;
 	renderer& operator=(const renderer&) = delete;
 
 	renderer(renderer&&) = delete;
 	renderer& operator=(renderer&&) = delete;
+
+	virtual ~renderer() = default;
 };
 
 } // namespace ruis::render

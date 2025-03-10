@@ -26,7 +26,7 @@ using namespace ruis;
 // NOLINTNEXTLINE(modernize-pass-by-value)
 frame_vao::frame_vao(const utki::shared_ref<const ruis::render::renderer>& r) :
 	renderer(r),
-	vao(this->renderer.get().empty_vertex_array)
+	vao(this->renderer.get().obj().empty_vertex_array)
 {}
 
 void frame_vao::set(vector2 dims, vector2 thickness)
@@ -59,5 +59,5 @@ void frame_vao::set(vector2 dims, vector2 thickness)
 
 void frame_vao::render(const matrix4& matrix, uint32_t color) const
 {
-	this->renderer.get().shaders.get().color_pos->render(matrix, this->vao.get(), color);
+	this->renderer.get().shaders().color_pos->render(matrix, this->vao.get(), color);
 }

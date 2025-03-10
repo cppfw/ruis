@@ -76,10 +76,10 @@ public:
 			// clang-format off
 			return r.render_context.get().create_vertex_array(
 				{
-					r.quad_01_vbo,
+					r.obj().quad_01_vbo,
 					r.render_context.get().create_vertex_buffer(tex_coords)
 				},
-				r.quad_indices,
+				r.obj().quad_indices,
 				render::vertex_array::mode::triangle_fan
 			);
 			// clang-format on

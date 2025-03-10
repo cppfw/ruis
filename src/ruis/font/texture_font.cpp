@@ -179,9 +179,9 @@ texture_font::glyph texture_font::load_glyph(char32_t c) const
 	g.vao = r.render_context.get().create_vertex_array(
 		{
 			r.render_context.get().create_vertex_buffer(utki::make_span(ftg.vertices)),
-			this->renderer.get().quad_01_vbo
+			this->renderer.get().obj().quad_01_vbo
 		},
-		this->renderer.get().quad_indices,
+		this->renderer.get().obj().quad_indices,
 		render::vertex_array::mode::triangle_fan
 	).to_shared_ptr();
 
@@ -259,7 +259,7 @@ real texture_font::render_glyph_internal(const ruis::matrix4& matrix, r4::vector
 	// texture can be null for glyph of empty characters, like space, tab etc...
 	if (g.tex) {
 		ASSERT(g.vao)
-		this->renderer.get().shaders.get().color_pos_tex_alpha->render(
+		this->renderer.get().shaders().color_pos_tex_alpha->render(
 			matrix, //
 			*g.vao,
 			color,

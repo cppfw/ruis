@@ -90,7 +90,7 @@ public:
 
 		void render(const matrix4& matrix) const
 		{
-			this->render(matrix, this->renderer.get().pos_tex_quad_01_vao.get());
+			this->render(matrix, this->renderer.get().obj().pos_tex_quad_01_vao.get());
 		}
 
 		/**

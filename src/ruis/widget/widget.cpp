@@ -294,9 +294,9 @@ void widget::render_from_cache(const r4::matrix4<float>& matrix) const
 	auto& r = this->context.get().renderer.get();
 	ASSERT(this->cache_frame_buffer)
 	ASSERT(this->cache_frame_buffer->color)
-	r.shaders.get().pos_tex->render(
+	r.shaders().pos_tex->render(
 		matr, //
-		r.pos_tex_quad_01_vao.get(),
+		r.obj().pos_tex_quad_01_vao.get(),
 		*this->cache_frame_buffer->color
 	);
 }

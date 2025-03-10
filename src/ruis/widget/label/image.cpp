@@ -40,7 +40,7 @@ image::image( //
 		std::move(params.blending_params)
 	),
 	params(std::move(params.image_params)),
-	vao(this->context.get().renderer.get().empty_vertex_array)
+	vao(this->context.get().renderer.get().obj().empty_vertex_array)
 {}
 
 namespace {
@@ -87,15 +87,15 @@ void image::render(const ruis::matrix4& matrix) const
 			// clang-format off
 			this->vao = r.render_context.get().create_vertex_array(
 				{
-					r.quad_01_vbo,
+					r.obj().quad_01_vbo,
 					r.render_context.get().create_vertex_buffer(utki::make_span(tex_coords))
 				},
-				r.quad_indices,
+				r.obj().quad_indices,
 				render::vertex_array::mode::triangle_fan
 			);
 			// clang-format on
 		} else {
-			this->vao = this->context.get().renderer.get().pos_tex_quad_01_vao;
+			this->vao = this->context.get().renderer.get().obj().pos_tex_quad_01_vao;
 		}
 	}
 	ASSERT(this->texture)

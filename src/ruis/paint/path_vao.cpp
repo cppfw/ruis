@@ -26,8 +26,8 @@ using namespace ruis;
 // NOLINTNEXTLINE(modernize-pass-by-value)
 path_vao::path_vao(const utki::shared_ref<const ruis::render::renderer>& r) :
 	renderer(r),
-	core(this->renderer.get().empty_vertex_array),
-	border(this->renderer.get().empty_vertex_array)
+	core(this->renderer.get().obj().empty_vertex_array),
+	border(this->renderer.get().obj().empty_vertex_array)
 {}
 
 void path_vao::set(const path::vertices& path)
@@ -56,13 +56,13 @@ void path_vao::render(
 	uint32_t color
 ) const
 {
-	this->renderer.get().shaders.get().color_pos->render(
+	this->renderer.get().shaders().color_pos->render(
 		matrix, //
 		this->core.get(),
 		color
 	);
 
-	this->renderer.get().shaders.get().color_pos_lum->render(
+	this->renderer.get().shaders().color_pos_lum->render(
 		matrix, //
 		this->border.get(),
 		color

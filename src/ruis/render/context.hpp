@@ -71,12 +71,12 @@ public:
 	// ====== factory functions ======
 
 	struct shaders {
-		std::unique_ptr<texturing_shader> pos_tex;
-		std::unique_ptr<coloring_shader> color_pos;
-		std::unique_ptr<coloring_shader> color_pos_lum;
-		std::unique_ptr<shader> pos_clr;
-		std::unique_ptr<coloring_texturing_shader> color_pos_tex;
-		std::unique_ptr<coloring_texturing_shader> color_pos_tex_alpha;
+		std::unique_ptr<const texturing_shader> pos_tex;
+		std::unique_ptr<const coloring_shader> color_pos;
+		std::unique_ptr<const coloring_shader> color_pos_lum;
+		std::unique_ptr<const shader> pos_clr;
+		std::unique_ptr<const coloring_texturing_shader> color_pos_tex;
+		std::unique_ptr<const coloring_texturing_shader> color_pos_tex_alpha;
 	};
 
 	virtual utki::shared_ref<shaders> create_shaders() = 0;

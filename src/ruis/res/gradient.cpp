@@ -31,7 +31,7 @@ using namespace ruis::res;
 
 ruis::res::gradient::gradient(utki::shared_ref<ruis::context> c) :
 	resource(std::move(c)),
-	vao(this->context.get().renderer.get().empty_vertex_array)
+	vao(this->context.get().renderer.get().obj().empty_vertex_array)
 {}
 
 void gradient::set(std::vector<std::tuple<real, uint32_t>>& stops, bool vertical)
@@ -120,5 +120,5 @@ utki::shared_ref<gradient> gradient::load(
 
 void gradient::render(const ruis::matrix4& m) const
 {
-	this->context.get().renderer.get().shaders.get().pos_clr->render(m, this->vao.get());
+	this->context.get().renderer.get().shaders().pos_clr->render(m, this->vao.get());
 }
