@@ -61,6 +61,15 @@ public:
 	const utki::shared_ref<ruis::render::renderer> renderer;
 
 	/**
+	 * @brief Shorthand alias for renderer.
+	 * @return this->renderer.get().
+	 */
+	ruis::render::renderer& ren() noexcept
+	{
+		return this->renderer.get();
+	}
+
+	/**
 	 * @brief Updater which updates updatables from within UI thread.
 	 * The updater calls active updatables periodically from the UI thread.
 	 */
