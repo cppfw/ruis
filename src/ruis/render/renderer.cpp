@@ -25,10 +25,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis::render;
 
-renderer::renderer(
-	utki::shared_ref<ruis::render::context> render_context, //
-	const renderer::parameters& params
-) :
+renderer::renderer(utki::shared_ref<ruis::render::context> render_context) :
 	render_context(std::move(render_context)),
 	shaders(this->render_context.get().create_shaders()),
 	empty_vertex_array(this->render_context.get().create_vertex_array(
@@ -76,27 +73,5 @@ renderer::renderer(
 			return imvar;
 		}(),
 		{}
-	)),
-	initial_matrix(params.initial_matrix)
+	))
 {}
-
-void renderer::set_framebuffer(frame_buffer* fb)
-{
-	this->set_framebuffer_internal(fb);
-	if (fb) {
-		this->cur_fb = fb->weak_from_this();
-	} else {
-		this->cur_fb.reset();
-	}
-}
-
-void renderer::set_simple_alpha_blending()
-{
-	this->enable_blend(true);
-	this->set_blend_func(
-		renderer::blend_factor::src_alpha,
-		renderer::blend_factor::one_minus_src_alpha,
-		renderer::blend_factor::one,
-		renderer::blend_factor::one_minus_src_alpha
-	);
-}

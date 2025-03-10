@@ -169,10 +169,12 @@ void widget::render_internal(const ruis::matrix4& matrix) const
 
 	if (this->params.cache) {
 		if (this->cache_dirty) {
-			utki::scope_exit scissor_test_enabled_scope_exit([&r, scissor_test_was_enabled = r.is_scissor_enabled()]() {
-				r.enable_scissor(scissor_test_was_enabled);
-			});
-			r.enable_scissor(false);
+			utki::scope_exit scissor_test_enabled_scope_exit(
+				[&r, scissor_test_was_enabled = r.render_context.get().is_scissor_enabled()]() {
+					r.render_context.get().enable_scissor(scissor_test_was_enabled);
+				}
+			);
+			r.render_context.get().enable_scissor(false);
 
 			this->cache_frame_buffer = this->render_to_texture(std::move(this->cache_frame_buffer)).to_shared_ptr();
 
@@ -180,41 +182,41 @@ void widget::render_internal(const ruis::matrix4& matrix) const
 		}
 
 		// after rendering to texture it is most likely there will be transparent areas, so enable simple blending
-		this->context.get().renderer.get().set_simple_alpha_blending();
+		this->context.get().renderer.get().render_context.get().set_simple_alpha_blending();
 
 		this->render_from_cache(matrix);
 	} else {
 		if (this->params.depth) {
-			r.enable_depth(true);
-			r.clear_framebuffer_depth();
+			r.render_context.get().enable_depth(true);
+			r.render_context.get().clear_framebuffer_depth();
 		}
 
 		if (this->params.clip) {
 			r4::rectangle<uint32_t> scissor = this->compute_viewport_rect(matrix);
 
 			r4::rectangle<uint32_t> old_scissor{};
-			bool scissor_test_was_enabled = r.is_scissor_enabled();
+			bool scissor_test_was_enabled = r.render_context.get().is_scissor_enabled();
 			if (scissor_test_was_enabled) {
-				old_scissor = r.get_scissor();
+				old_scissor = r.render_context.get().get_scissor();
 				scissor.intersect(old_scissor);
 			} else {
-				r.enable_scissor(true);
+				r.render_context.get().enable_scissor(true);
 			}
 
-			r.set_scissor(scissor);
+			r.render_context.get().set_scissor(scissor);
 
 			this->render(matrix);
 
 			if (scissor_test_was_enabled) {
-				r.set_scissor(old_scissor);
+				r.render_context.get().set_scissor(old_scissor);
 			} else {
-				r.enable_scissor(false);
+				r.render_context.get().enable_scissor(false);
 			}
 		} else {
 			this->render(matrix);
 		}
 
-		r.enable_depth(false);
+		r.render_context.get().enable_depth(false);
 	}
 
 	// render border
@@ -258,28 +260,28 @@ utki::shared_ref<render::frame_buffer> widget::render_to_texture(std::shared_ptr
 		);
 	}();
 
-	utki::scope_exit framebuffer_scope_exit([old_framebuffer = r.get_framebuffer(), &r]() {
-		r.set_framebuffer(old_framebuffer.get());
+	utki::scope_exit framebuffer_scope_exit([old_framebuffer = r.render_context.get().get_framebuffer(), &r]() {
+		r.render_context.get().set_framebuffer(old_framebuffer.get());
 	});
-	r.set_framebuffer(&fb.get());
+	r.render_context.get().set_framebuffer(&fb.get());
 
-	utki::scope_exit viewport_scope_exit([old_viewport = r.get_viewport(), &r]() {
-		r.set_viewport(old_viewport);
+	utki::scope_exit viewport_scope_exit([old_viewport = r.render_context.get().get_viewport(), &r]() {
+		r.render_context.get().set_viewport(old_viewport);
 	});
-	r.set_viewport(r4::rectangle<uint32_t>(0, this->rect().d.to<uint32_t>()));
+	r.render_context.get().set_viewport(r4::rectangle<uint32_t>(0, this->rect().d.to<uint32_t>()));
 
-	r.clear_framebuffer_color();
+	r.render_context.get().clear_framebuffer_color();
 
-	utki::scope_exit depth_scope_exit([old_depth = r.is_depth_enabled(), &r]() {
-		r.enable_depth(old_depth);
+	utki::scope_exit depth_scope_exit([old_depth = r.render_context.get().is_depth_enabled(), &r]() {
+		r.render_context.get().enable_depth(old_depth);
 	});
-	r.enable_depth(this->params.depth);
+	r.render_context.get().enable_depth(this->params.depth);
 
 	if (this->params.depth) {
-		r.clear_framebuffer_depth();
+		r.render_context.get().clear_framebuffer_depth();
 	}
 
-	this->render(make_viewport_matrix(r.initial_matrix, this->rect().d));
+	this->render(make_viewport_matrix(r.render_context.get().initial_matrix, this->rect().d));
 
 	return fb;
 }
@@ -349,8 +351,8 @@ r4::rectangle<uint32_t> widget::compute_viewport_rect(const matrix4& matrix) con
 	using std::round;
 
 	r4::rectangle<uint32_t> ret{
-		{this->context.get().renderer.get().to_window_coords(matrix * vector2(0, 0)),
-		 this->context.get().renderer.get().to_window_coords(matrix * this->rect().d)}
+		{this->context.get().renderer.get().render_context.get().to_window_coords(matrix * vector2(0, 0)),
+		 this->context.get().renderer.get().render_context.get().to_window_coords(matrix * this->rect().d)}
 	};
 	return ret;
 }

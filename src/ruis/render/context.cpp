@@ -19,39 +19,31 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 /* ================ LICENSE END ================ */
 
-#include "rectangle.hpp"
+#include "context.hpp"
 
-#include "../../context.hpp"
-#include "../../util/util.hpp"
+using namespace ruis::render;
 
-using namespace ruis;
-
-rectangle::rectangle( //
-	utki::shared_ref<ruis::context> context,
-	all_parameters params
-) :
-	widget( //
-		std::move(context),
-		std::move(params.layout_params),
-		std::move(params.widget_params)
-	),
-	color_widget( //
-		this->context,
-		std::move(params.color_params)
-	)
+context::context(parameters params) :
+	initial_matrix(std::move(params.initial_matrix))
 {}
 
-void rectangle::render(const ruis::matrix4& matrix) const
+void context::set_framebuffer(frame_buffer* fb)
 {
-	auto& r = this->context.get().renderer.get();
-	r.render_context.get().set_simple_alpha_blending();
+	this->set_framebuffer_internal(fb);
+	if (fb) {
+		this->cur_fb = fb->weak_from_this();
+	} else {
+		this->cur_fb.reset();
+	}
+}
 
-	ruis::matrix4 matr(matrix);
-	matr.scale(this->rect().d);
-
-	r.shaders.get().color_pos->render(
-		matr, //
-		r.pos_quad_01_vao.get(),
-		this->get_current_color()
+void context::set_simple_alpha_blending()
+{
+	this->enable_blend(true);
+	this->set_blend_func(
+		context::blend_factor::src_alpha,
+		context::blend_factor::one_minus_src_alpha,
+		context::blend_factor::one,
+		context::blend_factor::one_minus_src_alpha
 	);
 }

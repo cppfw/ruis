@@ -29,9 +29,9 @@ class renderer : public std::enable_shared_from_this<renderer>
 {
 public:
 	const utki::shared_ref<ruis::render::context> render_context;
+
 	const utki::shared_ref<ruis::render::context::shaders> shaders;
 
-public:
 	const utki::shared_ref<const vertex_array> empty_vertex_array;
 
 	const utki::shared_ref<const vertex_buffer> quad_01_vbo;
@@ -43,20 +43,9 @@ public:
 
 	const utki::shared_ref<const texture_2d> white_texture;
 
-protected:
-	struct parameters {
-		r4::matrix4<float> initial_matrix;
-	};
-
-	renderer(
-		utki::shared_ref<ruis::render::context> render_context, //
-		const parameters& params
-	);
-
-private:
-	std::weak_ptr<frame_buffer> cur_fb;
-
 public:
+	renderer(utki::shared_ref<ruis::render::context> render_context);
+
 	virtual ~renderer() = default;
 
 	renderer(const renderer&) = delete;
@@ -64,173 +53,6 @@ public:
 
 	renderer(renderer&&) = delete;
 	renderer& operator=(renderer&&) = delete;
-
-	/**
-	 * @brief Initial matrix to use for rendering.
-	 * The initial coordinate system is right-handed.
-	 * The initial matrix makes viewport edges to be: left = 0, right = 1, top = 0, bottom = 1.
-	 */
-	const r4::matrix4<float> initial_matrix;
-
-	/**
-	 * @brief Set current frame buffer.
-	 * @param fb - frame buffer to set as the current one.
-	 *             If 'nullptr' then screen buffer is set as current frame buffer.
-	 */
-	void set_framebuffer(frame_buffer* fb);
-
-	/**
-	 * @brief Get current frame buffer.
-	 * @return Current frame buffer. If nullptr, then it is a screen buffer.
-	 */
-	std::shared_ptr<frame_buffer> get_framebuffer()
-	{
-		return this->cur_fb.lock();
-	}
-
-	/**
-	 * @brief Clear color buffer of the current framebuffer.
-	 * The color buffer is filled with (0, 0, 0, 0) color values.
-	 */
-	virtual void clear_framebuffer_color() = 0;
-
-	/**
-	 * @brief Clear depth buffer of the current framebuffer.
-	 * The depth buffer is filled with values of 1.
-	 */
-	virtual void clear_framebuffer_depth() = 0;
-
-	/**
-	 * @brief Clear stencil buffer of the current framebuffer.
-	 * The stencil buffer is filled with values of 0.
-	 */
-	virtual void clear_framebuffer_stencil() = 0;
-
-	/**
-	 * @brief Get window coordinates of a point in renderer's clipping coordinates.
-	 * Renderer's clipping coordinates of a point are coordinates after all matrix transformations
-	 * and perspective division.
-	 * The window coordinate system is renderer-specific. It can be top-bottom or bottom-top.
-	 * For example, OpenGL/ES renderer has bottom-top coordinate system, i.e. origin is
-	 * at the bottom left corner of the window and y-axis goes up. So, the resulting position of a point
-	 * should be interpreted in context of the specific renderer.
-	 * @return Window coordinates of the point.
-	 */
-	virtual r4::vector2<uint32_t> to_window_coords(ruis::vec2 point) const = 0;
-
-	/**
-	 * @brief Check if scissor test is enabled.
-	 * @return true if scissor test is enabled.
-	 * @return false otherwise.
-	 */
-	virtual bool is_scissor_enabled() const noexcept = 0;
-
-	/**
-	 * @brief Enable/disable scissor test.
-	 * @param enable - if true the scissor test will be enabled. Otherwise, it will be disabled.
-	 */
-	virtual void enable_scissor(bool enable) = 0;
-
-	/**
-	 * @brief Get scissor rectangle.
-	 * Get scissor rectangle in application window coordinates.
-	 * TODO:
-	 *
-	 * @return Current scissor rectangle.
-	 */
-	virtual r4::rectangle<uint32_t> get_scissor() const = 0;
-
-	/**
-	 * @brief Set scissor rectangle.
-	 * Set scissor rectangle in application window coordinates.
-	 * TODO:
-	 * @param r - new scissor rectangle.
-	 */
-	virtual void set_scissor(r4::rectangle<uint32_t> r) = 0;
-
-	/**
-	 * @brief Get current rendering viewport within application window.
-	 * Get the rendering viewport rectangle in application window coordinates.
-	 * The window coordinate system is renderer-specific. It can be top-bottom or bottom-top.
-	 * For example, OpenGL/ES renderer has bottom-top coordinate system, i.e. origin is
-	 * at the bottom left corner of the window and y-axis goes up. So, the viewport's position
-	 * should be interpreted in context of the specific renderer.
-	 * The viewport's dimensions are renderer-agnostic.
-	 * @return Current rendering viewport rectangle.
-	 */
-	// TODO: int -> unsigned?
-	virtual r4::rectangle<uint32_t> get_viewport() const = 0;
-
-	/**
-	 * @brief Set rendering viewport within application window.
-	 * Since application window's coordinate system is renderer-specific
-	 * (see description of get_viewport() for details), the meaning of the viewport rectangle's
-	 * position is also renderer-specific. Though, the position of (0, 0) in combination with
-	 * framebuffer's dimensions can safely be used regardless of the renderer to set the viewport
-	 * covering the whole framebuffer.
-	 * @param r - new viewport rectangle.
-	 */
-	virtual void set_viewport(r4::rectangle<uint32_t> r) = 0;
-
-	virtual void enable_blend(bool enable) = 0;
-
-	/**
-	 * @brief Blending factor type.
-	 * Enumeration defines possible blending factor types.
-	 */
-	enum class blend_factor {
-		// WARNING: do not change order
-
-		zero,
-		one,
-		src_color,
-		one_minus_src_color,
-		dst_color,
-		one_minus_dst_color,
-		src_alpha,
-		one_minus_src_alpha,
-		dst_alpha,
-		one_minus_dst_alpha,
-		constant_color,
-		one_minus_constant_color,
-		constant_alpha,
-		one_minus_constant_alpha,
-		src_alpha_saturate,
-
-		enum_size
-	};
-
-	virtual void set_blend_func(
-		blend_factor src_color,
-		blend_factor dst_color,
-		blend_factor src_alpha,
-		blend_factor dst_alpha
-	) = 0;
-
-	/**
-	 * @brief Set simple alpha blending.
-	 * Enables and set simple alpha blending on the rendering context.
-	 * Blend factors are SRC_ALPHA and ONE_MINUS_SRC_ALPHA for source and destination RGB color components respectively.
-	 * And, ONE and ONE_MINUS_SRC_ALPHA for source and destination alpha components respectively.
-	 */
-	void set_simple_alpha_blending();
-
-	/**
-	 * @brief Check if depth test is enabled.
-	 * @return true if depth test is enabled.
-	 * @return false otherwise.
-	 */
-	virtual bool is_depth_enabled() const noexcept = 0;
-
-	/**
-	 * @brief Enable/disable depth test.
-	 *
-	 * @param enable - if true the depth test will be enabled. Otherwise, it will be disabled.
-	 */
-	virtual void enable_depth(bool enable) = 0;
-
-protected:
-	virtual void set_framebuffer_internal(frame_buffer* fb) = 0;
 };
 
 } // namespace ruis::render

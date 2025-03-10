@@ -45,10 +45,10 @@ public:
 	 * @brief Structure holding blending parameters.
 	 */
 	struct blending_factors {
-		ruis::render::renderer::blend_factor src;
-		ruis::render::renderer::blend_factor dst;
-		ruis::render::renderer::blend_factor src_alpha;
-		ruis::render::renderer::blend_factor dst_alpha;
+		ruis::render::context::blend_factor src;
+		ruis::render::context::blend_factor dst;
+		ruis::render::context::blend_factor src_alpha;
+		ruis::render::context::blend_factor dst_alpha;
 
 		bool operator==(const blending_factors& b)
 		{
@@ -64,10 +64,10 @@ public:
 	struct parameters {
 		bool enabled = true;
 		blending_factors factors = {
-			ruis::render::renderer::blend_factor::src_alpha,
-			ruis::render::renderer::blend_factor::one_minus_src_alpha,
-			ruis::render::renderer::blend_factor::one,
-			ruis::render::renderer::blend_factor::one_minus_src_alpha
+			ruis::render::context::blend_factor::src_alpha,
+			ruis::render::context::blend_factor::one_minus_src_alpha,
+			ruis::render::context::blend_factor::one,
+			ruis::render::context::blend_factor::one_minus_src_alpha
 		};
 	};
 
