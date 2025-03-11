@@ -26,6 +26,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <papki/file.hpp>
 #include <tml/tree.hpp>
+#include <utki/exception.hpp>
 #include <utki/shared.hpp>
 #include <utki/util.hpp>
 
@@ -203,11 +204,10 @@ utki::shared_ref<resource_type> resource_loader::load(std::string_view id)
 			res_pack.add_resource_to_res_map(resource, id);
 
 			return resource;
+		} catch (std::logic_error&) {
+			utki::throw_with_nested(std::invalid_argument(utki::cat("could not load resource: ", id)));
 		} catch (...) {
-			utki::log([&](auto& o) {
-				o << "could not load resource, id = " << id << std::endl;
-			});
-			throw;
+			utki::throw_with_nested(std::runtime_error(utki::cat("could not load resource: ", id)));
 		}
 	}
 

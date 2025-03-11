@@ -42,75 +42,6 @@ image::image(utki::shared_ref<ruis::context> c) :
 	resource(std::move(c))
 {}
 
-// atlas_image::atlas_image(
-// 	const utki::shared_ref<ruis::context>& c,
-// 	const utki::shared_ref<res::texture>& tex,
-// 	const rectangle& rect
-// ) :
-// 		image(c),
-// 		image::texture(this->context.get().renderer, abs(rect.d)),
-// 		tex(tex)
-// {
-// //	this->texCoords[3] = vector2(rect.left(), this->tex->tex().dim().y -
-// rect.bottom()).compDivBy(this->tex->tex().dim());
-// //	this->texCoords[2] = vector2(rect.right(), this->tex->tex().dim().y -
-// rect.bottom()).compDivBy(this->tex->tex().dim());
-// //	this->texCoords[1] = vector2(rect.right(), this->tex->tex().dim().y -
-// rect.top()).compDivBy(this->tex->tex().dim());
-// //	this->texCoords[0] = vector2(rect.left(), this->tex->tex().dim().y -
-// rect.top()).compDivBy(this->tex->tex().dim());
-// 	//TODO:
-// 	ASSERT(false)
-// }
-
-atlas_image::atlas_image(utki::shared_ref<ruis::context> c, utki::shared_ref<res::texture_2d> tex) :
-	image(std::move(c)),
-	image::texture(this->context.get().renderer, tex.get().tex().dims()),
-	tex(std::move(tex)),
-	vao(this->context.get().renderer.get().obj().pos_tex_quad_01_vao)
-{}
-
-utki::shared_ref<atlas_image> atlas_image::load(
-	utki::shared_ref<ruis::context> ctx,
-	const tml::forest& desc,
-	const papki::file& fi
-)
-{
-	std::shared_ptr<res::texture_2d> tex;
-	ruis::rect rect(-1, -1);
-
-	for (auto& p : desc) {
-		if (p.value == "tex") {
-			tex = ctx.get()
-					  .loader.load<res::texture_2d>(get_property_value(p).string)
-					  .to_shared_ptr(); // TODO: do not use to_shared_ptr() here
-		} else if (p.value == "rect") {
-			rect = parse_rect(p.children);
-		}
-	}
-
-	if (!tex) {
-		throw std::runtime_error("atlas_image::load(): could not load texture");
-	}
-
-	// TODO:
-	// if(rect.p.x() >= 0){
-	// 	return utki::make_shared<atlas_image>(ctx, utki::shared_ref(std::move(tex)), rect);
-	// }else{
-	return utki::make_shared<atlas_image>(ctx, utki::shared_ref(std::move(tex)));
-	// }
-}
-
-void atlas_image::render(const matrix4& matrix, const render::vertex_array& vao) const
-{
-	this->context.get().renderer.get().shaders().pos_tex->render(matrix, this->vao.get(), this->tex.get().tex());
-}
-
-utki::shared_ref<const image::texture> atlas_image::get(vector2 for_dims) const
-{
-	return utki::make_shared_from(*this);
-}
-
 namespace {
 class fixed_texture : public image::texture
 {
@@ -313,7 +244,7 @@ utki::shared_ref<image> image::load( //
 		}
 	}
 
-	return atlas_image::load(std::move(ctx), desc, fi);
+	throw std::invalid_argument("image::load(): no 'file' property found in resource description");
 }
 
 utki::shared_ref<image> image::load( //
