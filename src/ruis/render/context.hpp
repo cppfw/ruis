@@ -67,6 +67,12 @@ public:
 
 	virtual ~context() = default;
 
+	bool is_current() const noexcept
+	{
+		// TODO: actually check that the context is current
+		return true;
+	}
+
 	// ===============================
 	// ====== factory functions ======
 
