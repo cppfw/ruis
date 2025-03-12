@@ -27,6 +27,16 @@ context::context(parameters params) :
 	initial_matrix(std::move(params.initial_matrix))
 {}
 
+void context::apply(std::function<void()> func)
+{
+	if (this->is_current()) {
+		func();
+		return;
+	}
+
+	throw std::logic_error("context::apply(): the context is non-current, switching context is not yet implemented");
+}
+
 void context::set_framebuffer(frame_buffer* fb)
 {
 	this->set_framebuffer_internal(fb);

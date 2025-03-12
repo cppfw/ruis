@@ -75,6 +75,8 @@ public:
 		return true;
 	}
 
+	void apply(std::function<void()> func);
+
 	// ===============================
 	// ====== factory functions ======
 
