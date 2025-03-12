@@ -118,7 +118,7 @@ public:
 
 	/**
 	 * @brief Constructor.
-	 * @param resource_loader - resource loader to use for this context.
+	 * @param res_loader - resource loader to use for this context.
 	 * @param updater - updater to use along with this context.
 	 * @param params - context parameters.
 	 */
