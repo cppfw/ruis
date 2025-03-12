@@ -66,7 +66,7 @@ void image::render(const ruis::matrix4& matrix) const
 	auto& r = this->context.get().renderer.get();
 
 	if (!this->texture) {
-		this->texture = img->get(this->rect().d).to_shared_ptr();
+		this->texture = img->get(this->context.get().units, this->rect().d).to_shared_ptr();
 
 		// TODO: remove repeat feature
 		if (this->params.repeat_v.x() || this->params.repeat_v.y()) {
@@ -74,7 +74,7 @@ void image::render(const ruis::matrix4& matrix) const
 			ASSERT(quad_fan_tex_coords.size() == tex_coords.size())
 			auto src = quad_fan_tex_coords.cbegin();
 			auto dst = tex_coords.begin();
-			auto scale = this->rect().d.comp_div(img->dims().to<real>());
+			auto scale = this->rect().d.comp_div(img->dims(this->context.get().units).to<real>());
 			if (!this->params.repeat_v.x()) {
 				scale.x() = 1;
 			}
@@ -118,7 +118,7 @@ ruis::vector2 image::measure(const ruis::vector2& quotum) const
 		return {0, 0};
 	}
 
-	vector2 img_dims = img->dims().to<real>();
+	vector2 img_dims = img->dims(this->context.get().units).to<real>();
 
 	ASSERT(img_dims.is_positive_or_zero(), [&](auto& o) {
 		o << "img_dims = " << img_dims << " widget id = " << this->id();
@@ -179,7 +179,8 @@ ruis::vector2 image::measure(const ruis::vector2& quotum) const
 
 void image::set_image(std::shared_ptr<const res::image> image)
 {
-	if (this->params.img && image && this->params.img->dims() == image->dims()) {
+	auto& c = this->context.get();
+	if (this->params.img && image && this->params.img->dims(c.units) == image->dims(c.units)) {
 	} else {
 		this->invalidate_layout();
 	}
@@ -190,7 +191,8 @@ void image::set_image(std::shared_ptr<const res::image> image)
 
 void image::set_disabled_image(std::shared_ptr<const res::image> image)
 {
-	if (this->params.disabled_img && image && this->params.disabled_img->dims() == image->dims()) {
+	auto& c = this->context.get();
+	if (this->params.disabled_img && image && this->params.disabled_img->dims(c.units) == image->dims(c.units)) {
 	} else {
 		if (!this->is_enabled()) {
 			this->invalidate_layout();
@@ -218,8 +220,10 @@ void image::on_enabled_change()
 	this->clear_cache();
 
 	if (this->params.img) {
+		auto& c = this->context.get();
+
 		// if dimension of active image change then need to re-layout
-		if (this->params.disabled_img->dims() != this->params.img->dims()) {
+		if (this->params.disabled_img->dims(c.units) != this->params.img->dims(c.units)) {
 			this->invalidate_layout();
 		}
 	} else {

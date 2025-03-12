@@ -56,7 +56,7 @@ tab_group::tab_group(
 void tab_group::set_filler(std::shared_ptr<res::image> filler)
 {
 	this->filler = std::move(filler);
-	this->filler_texture = this->filler->get().to_shared_ptr();
+	this->filler_texture = this->filler->get(this->context.get().units).to_shared_ptr();
 }
 
 ruis::vector2 tab_group::measure(const ruis::vector2& quotum) const

@@ -90,7 +90,10 @@ public:
 
 		void render(const matrix4& matrix) const
 		{
-			this->render(matrix, this->renderer.get().obj().pos_tex_quad_01_vao.get());
+			this->render(
+				matrix, //
+				this->renderer.get().obj().pos_tex_quad_01_vao.get()
+			);
 		}
 
 		/**
@@ -98,22 +101,30 @@ public:
 		 * @param matrix - transformation matrix to use for rendering.
 		 * @param vao - vertex array to use for rendering.
 		 */
-		virtual void render(const matrix4& matrix, const render::vertex_array& vao) const = 0;
+		virtual void render(
+			const matrix4& matrix, //
+			const render::vertex_array& vao
+		) const = 0;
 	};
 
 	/**
 	 * @brief Get dimensions of this image in pixels.
+	 * @param units - units to use for dimensions calculation. Used for scalable vector images.
 	 * @return Dimensions of the image in pixels.
 	 */
-	virtual r4::vector2<uint32_t> dims() const noexcept = 0;
+	virtual r4::vector2<uint32_t> dims(const ruis::units& units) const noexcept = 0;
 
 	/**
 	 * @brief Get raster texture of given dimensions.
+	 * @param units - units to use for dimensions calculation. Used for scalable vector images.
 	 * @param for_dims - dimensions request for raster texture.
 	 *        If any of the dimensions is 0 then it will be adjusted to preserve aspect ratio.
 	 *        If both dimensions are zero, then dimensions which are natural for the particular image will be used.
 	 */
-	virtual utki::shared_ref<const texture> get(vector2 for_dims = 0) const = 0;
+	virtual utki::shared_ref<const texture> get(
+		const ruis::units& units, //
+		vector2 for_dims = 0
+	) const = 0;
 
 private:
 	static utki::shared_ref<image> load(

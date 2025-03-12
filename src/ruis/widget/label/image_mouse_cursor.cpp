@@ -68,7 +68,7 @@ void image_mouse_cursor::render(const ruis::matrix4& matrix) const
 
 	if (!this->quad_tex) {
 		ASSERT(this->params.cursor)
-		this->quad_tex = this->params.cursor->image().get().to_shared_ptr();
+		this->quad_tex = this->params.cursor->image().get(this->context.get().units).to_shared_ptr();
 	}
 
 	ASSERT(this->quad_tex)

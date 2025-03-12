@@ -94,17 +94,23 @@ public:
 
 	~res_subimage() override = default;
 
-	r4::vector2<uint32_t> dims() const noexcept override
+	r4::vector2<uint32_t> dims(const ruis::units& units) const noexcept override
 	{
 		return this->res::image::texture::dims();
 	}
 
-	utki::shared_ref<const res::image::texture> get(vector2 for_dims) const override
+	utki::shared_ref<const res::image::texture> get(
+		const ruis::units& units, //
+		vector2 for_dims
+	) const override
 	{
 		return utki::make_shared_from(*this);
 	}
 
-	void render(const matrix4& matrix, const render::vertex_array& vao) const override
+	void render(
+		const matrix4& matrix, //
+		const render::vertex_array& vao
+	) const override
 	{
 		this->tex.get().render(matrix, this->vao.get());
 	}
@@ -138,7 +144,8 @@ utki::shared_ref<nine_patch> nine_patch::load(
 
 	auto image = res::image::load(ctx, fi);
 
-	auto dims = image.get().dims().to<real>();
+	// TODO: store borders as fractions?
+	auto dims = image.get().dims(ctx.get().units).to<real>();
 
 	using std::round;
 
@@ -205,11 +212,15 @@ std::shared_ptr<nine_patch::image_matrix> nine_patch::get(sides<length> borders)
 	}
 
 	using std::round;
-	auto quad_tex = this->image.get().get(round(this->image.get().dims().to<real>() * mul));
+	auto quad_tex = this->image.get().get(
+		this->context.get().units, //
+		round(this->image.get().dims(this->context.get().units).to<real>() * mul)
+	);
 
 	// std::cout << "quad_tex dims = " << quad_tex.get().dims << std::endl;
 
-	vector2 act_mul = quad_tex.get().dims().to<real>().comp_div(this->image.get().dims().to<real>());
+	vector2 act_mul =
+		quad_tex.get().dims().to<real>().comp_div(this->image.get().dims(this->context.get().units).to<real>());
 
 	sides<real> scaled_borders(this->borders);
 	scaled_borders.left() *= act_mul.x();

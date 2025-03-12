@@ -76,12 +76,15 @@ public:
 		)
 	{}
 
-	utki::shared_ref<const image::texture> get(vector2 for_dims) const override
+	utki::shared_ref<const image::texture> get(
+		const ruis::units& units, //
+		vector2 for_dims
+	) const override
 	{
 		return utki::make_shared_from(*this);
 	}
 
-	r4::vector2<uint32_t> dims() const noexcept override
+	r4::vector2<uint32_t> dims(const ruis::units& units) const noexcept override
 	{
 		return this->tex_2d.get().dims();
 	}
@@ -116,12 +119,11 @@ public:
 		dom(std::move(dom))
 	{}
 
-	r4::vector2<uint32_t> dims() const noexcept override
+	r4::vector2<uint32_t> dims(const ruis::units& units) const noexcept override
 	{
-		auto& ctx = this->context.get();
-		ASSERT(ctx.units.dots_per_pp() > 0)
-		auto wh = this->dom->get_dimensions(ctx.units.dots_per_inch() / ctx.units.dots_per_pp());
-		wh *= ctx.units.dots_per_pp();
+		ASSERT(units.dots_per_pp() > 0)
+		auto wh = this->dom->get_dimensions(units.dots_per_inch() / units.dots_per_pp());
+		wh *= units.dots_per_pp();
 		using std::ceil;
 		return ceil(wh).to<uint32_t>();
 	}
@@ -156,7 +158,10 @@ public:
 		}
 	};
 
-	utki::shared_ref<const texture> get(vector2 for_dims) const override
+	utki::shared_ref<const texture> get(
+		const ruis::units& units, //
+		vector2 for_dims
+	) const override
 	{
 		//		TRACE(<< "forDim = " << forDim << std::endl)
 
@@ -171,12 +176,10 @@ public:
 		}
 		//		TRACE(<< "not in cache" << std::endl)
 
-		auto& ctx = this->context.get();
-
 		ASSERT(this->dom)
 
 		// in ruis, SVG dimensions are in pp, this is why we cannot use 0 to use native dimension of SVG.
-		auto svg_dims = this->dims().to<real>();
+		auto svg_dims = this->dims(units).to<real>();
 		for (unsigned i = 0; i != 2; ++i) {
 			if (for_dims[i] == 0) {
 				for_dims[i] = svg_dims[i];
@@ -184,7 +187,7 @@ public:
 		}
 
 		svgren::parameters svg_params;
-		svg_params.dpi = unsigned(ctx.units.dots_per_inch());
+		svg_params.dpi = unsigned(units.dots_per_inch());
 		svg_params.dims_request = for_dims.to<unsigned>();
 
 		auto im = svgren::rasterize(*this->dom, svg_params);
