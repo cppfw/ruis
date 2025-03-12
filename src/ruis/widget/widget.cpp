@@ -260,28 +260,20 @@ utki::shared_ref<render::frame_buffer> widget::render_to_texture(std::shared_ptr
 		);
 	}();
 
-	utki::scope_exit framebuffer_scope_exit([old_framebuffer = r.render_context.get().get_framebuffer(), &r]() {
-		r.render_context.get().set_framebuffer(old_framebuffer.get());
+	fb.get().apply([&]() {
+		r.render_context.get().clear_framebuffer_color();
+
+		utki::scope_exit depth_scope_exit([old_depth = r.render_context.get().is_depth_enabled(), &r]() {
+			r.render_context.get().enable_depth(old_depth);
+		});
+		r.render_context.get().enable_depth(this->params.depth);
+
+		if (this->params.depth) {
+			r.render_context.get().clear_framebuffer_depth();
+		}
+
+		this->render(make_viewport_matrix(r.render_context.get().initial_matrix, this->rect().d));
 	});
-	r.render_context.get().set_framebuffer(&fb.get());
-
-	utki::scope_exit viewport_scope_exit([old_viewport = r.render_context.get().get_viewport(), &r]() {
-		r.render_context.get().set_viewport(old_viewport);
-	});
-	r.render_context.get().set_viewport(r4::rectangle<uint32_t>(0, this->rect().d.to<uint32_t>()));
-
-	r.render_context.get().clear_framebuffer_color();
-
-	utki::scope_exit depth_scope_exit([old_depth = r.render_context.get().is_depth_enabled(), &r]() {
-		r.render_context.get().enable_depth(old_depth);
-	});
-	r.render_context.get().enable_depth(this->params.depth);
-
-	if (this->params.depth) {
-		r.render_context.get().clear_framebuffer_depth();
-	}
-
-	this->render(make_viewport_matrix(r.render_context.get().initial_matrix, this->rect().d));
 
 	return fb;
 }

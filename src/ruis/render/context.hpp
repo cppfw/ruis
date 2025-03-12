@@ -36,6 +36,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 namespace ruis::render {
 class context : public std::enable_shared_from_this<context>
 {
+	friend class frame_buffer;
+
 protected:
 	utki::shared_ref<context> get_shared_ref()
 	{
@@ -147,6 +149,7 @@ public:
 	// =====================================
 	// ====== state control functions ======
 
+private:
 	/**
 	 * @brief Set current frame buffer.
 	 * @param fb - frame buffer to set as the current one.
@@ -163,6 +166,7 @@ public:
 		return this->cur_fb.lock();
 	}
 
+public:
 	/**
 	 * @brief Clear color buffer of the current framebuffer.
 	 * The color buffer is filled with (0, 0, 0, 0) color values.

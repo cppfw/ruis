@@ -59,6 +59,8 @@ public:
 
 	virtual ~frame_buffer() = default;
 
+	void apply(std::function<void()> func);
+
 private:
 };
 

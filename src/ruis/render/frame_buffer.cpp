@@ -23,6 +23,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <utki/string.hpp>
 
+#include "context.hpp"
+
 using namespace ruis::render;
 
 frame_buffer::frame_buffer( //
@@ -63,3 +65,23 @@ frame_buffer::frame_buffer( //
 	depth(std::move(depth)),
 	stencil(std::move(stencil))
 {}
+
+void frame_buffer::apply(std::function<void()> func)
+{
+	auto& rc = this->render_context.get();
+	if (!rc.is_current()) {
+		throw std::logic_error("framebuffer::apply(): the framebuffer's render_context is not current");
+	}
+
+	utki::scope_exit framebuffer_scope_exit([old_framebuffer = rc.get_framebuffer(), &rc]() {
+		rc.set_framebuffer(old_framebuffer.get());
+	});
+	rc.set_framebuffer(this);
+
+	utki::scope_exit viewport_scope_exit([old_viewport = rc.get_viewport(), &rc]() {
+		rc.set_viewport(old_viewport);
+	});
+	rc.set_viewport(r4::rectangle<uint32_t>(0, this->dims()));
+
+	func();
+}
