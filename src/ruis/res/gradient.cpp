@@ -86,7 +86,7 @@ void gradient::set(
 }
 
 utki::shared_ref<gradient> gradient::load(
-	utki::shared_ref<ruis::context> ctx, //
+	ruis::resource_loader& loader, //
 	const tml::forest& desc,
 	const papki::file& fi
 )
@@ -114,7 +114,7 @@ utki::shared_ref<gradient> gradient::load(
 		}
 	}
 
-	auto ret = utki::make_shared<gradient>(ctx.get().renderer);
+	auto ret = utki::make_shared<gradient>(loader.renderer);
 
 	ret.get().set(stops, vertical);
 

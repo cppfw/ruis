@@ -56,7 +56,23 @@ public:
 	void post_to_ui_thread(std::function<void()> proc);
 
 	/**
+	 * @brief Resource loader.
+	 * Allows loading and managing life time of resources.
+	 */
+	const utki::shared_ref<resource_loader> res_loader;
+
+	/**
+	 * @brief Shorthand alias for resource loader.
+	 * @return this->res_loader.get().
+	 */
+	resource_loader& loader() noexcept
+	{
+		return this->res_loader.get();
+	}
+
+	/**
 	 * @brief Renderer used for drawing in this GUI context.
+	 * This is the same renderer as in the supplied resource loader.
 	 */
 	const utki::shared_ref<ruis::render::renderer> renderer;
 
@@ -83,18 +99,6 @@ public:
 	mouse_cursor_stack cursor_stack;
 
 	/**
-	 * @brief Resource loader.
-	 * Allows loading and managing life time of resources.
-	 */
-	// TODO: make shared_ref, dependency inject renderer (for textures loading)?
-	resource_loader res_loader;
-
-	resource_loader& loader() noexcept
-	{
-		return this->res_loader;
-	}
-
-	/**
 	 * @brief current localization.
 	 * Vocabulary of localized strings.
 	 */
@@ -114,12 +118,12 @@ public:
 
 	/**
 	 * @brief Constructor.
-	 * @param renderer - renderer implementation.
+	 * @param resource_loader - resource loader to use for this context.
 	 * @param updater - updater to use along with this context.
 	 * @param params - context parameters.
 	 */
 	context(
-		utki::shared_ref<ruis::render::renderer> renderer,
+		utki::shared_ref<ruis::resource_loader> res_loader,
 		utki::shared_ref<ruis::updater> updater,
 		parameters params
 	);

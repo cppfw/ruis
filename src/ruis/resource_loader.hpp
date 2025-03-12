@@ -30,10 +30,11 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <utki/shared.hpp>
 #include <utki/util.hpp>
 
+#include "render/renderer.hpp"
+
 namespace ruis {
 
 class resource;
-class context;
 
 /**
  * @brief Resource loader.
@@ -63,9 +64,12 @@ class context;
  */
 class resource_loader
 {
-	friend class context;
 	friend class resource;
 
+public:
+	const utki::shared_ref<ruis::render::renderer> renderer;
+
+private:
 	class res_pack_entry
 	{
 	public:
@@ -100,12 +104,9 @@ class resource_loader
 	// use std::list to be able to use iterator as resource pack id
 	std::list<res_pack_entry> res_packs;
 
-private:
-	// NOLINTNEXTLINE(clang-analyzer-webkit.NoUncountedMemberChecker, "fasle-positive")
-	context& ctx;
-
-	resource_loader(context& ctx) :
-		ctx(ctx)
+public:
+	resource_loader(utki::shared_ref<ruis::render::renderer> renderer) :
+		renderer(std::move(renderer))
 	{}
 
 public:
@@ -190,7 +191,11 @@ utki::shared_ref<resource_type> resource_loader::load(std::string_view id)
 
 		try {
 			ASSERT(res_pack.fi)
-			auto resource = resource_type::load(utki::make_shared_from(this->ctx), *desc, *res_pack.fi);
+			auto resource = resource_type::load(
+				*this, //
+				*desc,
+				*res_pack.fi
+			);
 
 			// resource need to know its id so that it would be possible to reload the resource
 			// using the id in case mounted resource packs change

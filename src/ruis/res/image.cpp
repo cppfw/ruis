@@ -62,11 +62,11 @@ class res_raster_image :
 {
 public:
 	res_raster_image( //
-		utki::shared_ref<ruis::context> c,
+		utki::shared_ref<ruis::render::renderer> renderer,
 		utki::shared_ref<const render::texture_2d> tex
 	) :
 		fixed_texture( //
-			c.get().renderer,
+			std::move(renderer),
 			std::move(tex)
 		)
 	{}
@@ -85,13 +85,13 @@ public:
 	}
 
 	static utki::shared_ref<res_raster_image> load( //
-		utki::shared_ref<ruis::context> ctx,
+		ruis::resource_loader& loader,
 		const papki::file& fi
 	)
 	{
 		return utki::make_shared<res_raster_image>(
-			std::move(ctx),
-			ctx.get().renderer.get().render_context.get().create_texture_2d(
+			loader.renderer,
+			loader.renderer.get().render_context.get().create_texture_2d(
 				rasterimage::read(fi),
 				{
 					// TODO: what about params?
@@ -222,14 +222,14 @@ public:
 	mutable std::map<r4::vector2<unsigned>, std::weak_ptr<texture>> cache;
 
 	static utki::shared_ref<res_svg_image> load( //
-		utki::shared_ref<ruis::context> ctx,
+		ruis::resource_loader& loader,
 		const papki::file& fi
 	)
 	{
 		auto dom = svgdom::load(fi);
 		ASSERT(dom)
 		return utki::make_shared<res_svg_image>(
-			ctx.get().renderer, //
+			loader.renderer, //
 			std::move(dom)
 		);
 	}
@@ -237,7 +237,7 @@ public:
 } // namespace
 
 utki::shared_ref<image> image::load( //
-	utki::shared_ref<ruis::context> ctx,
+	ruis::resource_loader& loader,
 	const tml::forest& desc,
 	const papki::file& fi
 )
@@ -245,7 +245,10 @@ utki::shared_ref<image> image::load( //
 	for (auto& p : desc) {
 		if (p.value == "file") {
 			fi.set_path(get_property_value(p).string);
-			return image::load(std::move(ctx), fi);
+			return image::load(
+				loader, //
+				fi
+			);
 		}
 	}
 
@@ -253,13 +256,13 @@ utki::shared_ref<image> image::load( //
 }
 
 utki::shared_ref<image> image::load( //
-	utki::shared_ref<ruis::context> ctx,
+	ruis::resource_loader& loader,
 	const papki::file& fi
 )
 {
 	if (fi.suffix().compare("svg") == 0) {
-		return res_svg_image::load(std::move(ctx), fi);
+		return res_svg_image::load(loader, fi);
 	} else {
-		return res_raster_image::load(std::move(ctx), fi);
+		return res_raster_image::load(loader, fi);
 	}
 }

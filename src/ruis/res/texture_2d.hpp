@@ -58,13 +58,9 @@ class texture_2d : public ruis::resource
 public:
 	/**
 	 * @brief Create 2d texture resource.
-	 * @param c - ruis context.
 	 * @param tex - 2d texture object to initialize this resource with.
 	 */
-	texture_2d( //
-		utki::shared_ref<ruis::context> c,
-		utki::shared_ref<const render::texture_2d> tex
-	);
+	texture_2d(utki::shared_ref<const render::texture_2d> tex);
 
 	texture_2d(const texture_2d&) = delete;
 	texture_2d& operator=(const texture_2d&) = delete;
@@ -85,7 +81,7 @@ public:
 
 private:
 	static utki::shared_ref<texture_2d> load( //
-		utki::shared_ref<ruis::context> ctx,
+		ruis::resource_loader& loader,
 		const ::tml::forest& desc,
 		const papki::file& fi
 	);

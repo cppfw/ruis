@@ -54,6 +54,11 @@ public:
 
 	renderer(utki::shared_ref<ruis::render::context> render_context);
 
+	renderer(
+		utki::shared_ref<ruis::render::context> render_context, //
+		utki::shared_ref<objects> common_objects
+	);
+
 	renderer(const renderer&) = delete;
 	renderer& operator=(const renderer&) = delete;
 

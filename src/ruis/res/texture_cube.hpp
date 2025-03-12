@@ -67,10 +67,7 @@ class texture_cube : public ruis::resource
 	const utki::shared_ref<const render::texture_cube> tex_cube;
 
 public:
-	texture_cube( //
-		utki::shared_ref<ruis::context> ctx,
-		utki::shared_ref<const render::texture_cube> tex
-	);
+	texture_cube(utki::shared_ref<const render::texture_cube> tex);
 
 	texture_cube(const texture_cube&) = delete;
 	texture_cube& operator=(const texture_cube&) = delete;
@@ -91,7 +88,7 @@ public:
 
 private:
 	static utki::shared_ref<texture_cube> load( //
-		utki::shared_ref<ruis::context> ctx,
+		ruis::resource_loader& loader,
 		const ::tml::forest& desc,
 		const papki::file& fi
 	);

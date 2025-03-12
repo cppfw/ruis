@@ -5,8 +5,10 @@
 
 utki::shared_ref<ruis::context> make_dummy_context(){
     return utki::make_shared<ruis::context>(
-        utki::make_shared<ruis::render::renderer>(
-            utki::make_shared<ruis::render::null::context>()
+        utki::make_shared<ruis::resource_loader>(
+            utki::make_shared<ruis::render::renderer>(
+                utki::make_shared<ruis::render::null::context>()
+            )
         ),
         utki::make_shared<ruis::updater>(),
         ruis::context::parameters{

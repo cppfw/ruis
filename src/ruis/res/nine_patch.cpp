@@ -118,7 +118,7 @@ public:
 } // namespace
 
 utki::shared_ref<nine_patch> nine_patch::load(
-	utki::shared_ref<ruis::context> ctx,
+	ruis::resource_loader& loader,
 	const tml::forest& desc,
 	const papki::file& fi
 )
@@ -141,10 +141,13 @@ utki::shared_ref<nine_patch> nine_patch::load(
 		}
 	}
 
-	auto image = res::image::load(ctx, fi);
+	auto image = res::image::load(
+		loader, //
+		fi
+	);
 
-	// TODO: store borders as fractions?
-	auto dims = image.get().dims(ctx.get().units).to<real>();
+	// TODO: store borders as fractions and get units from context?
+	auto dims = image.get().dims(ruis::units()).to<real>();
 
 	using std::round;
 
@@ -158,7 +161,7 @@ utki::shared_ref<nine_patch> nine_patch::load(
 	}
 
 	return utki::make_shared<nine_patch>( //
-		ctx.get().renderer,
+		loader.renderer,
 		std::move(image),
 		borders
 	);

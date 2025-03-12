@@ -26,15 +26,15 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace ruis;
 
 context::context(
-	utki::shared_ref<ruis::render::renderer> renderer,
+	utki::shared_ref<ruis::resource_loader> res_loader,
 	utki::shared_ref<ruis::updater> updater,
 	parameters params
 ) :
 	post_to_ui_thread_function(std::move(params.post_to_ui_thread_function)),
-	renderer(std::move(renderer)),
+	res_loader(std::move(res_loader)),
+	renderer(this->res_loader.get().renderer),
 	updater(std::move(updater)),
 	cursor_stack(std::move(params.set_mouse_cursor_function)),
-	res_loader(*this),
 	localization(std::move(params.localization)),
 	units(std::move(params.units))
 {

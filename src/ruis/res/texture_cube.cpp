@@ -27,10 +27,7 @@ using namespace std::string_view_literals;
 
 using namespace ruis::res;
 
-texture_cube::texture_cube( //
-	utki::shared_ref<ruis::context> ctx,
-	utki::shared_ref<const render::texture_cube> tex
-) :
+texture_cube::texture_cube(utki::shared_ref<const render::texture_cube> tex) :
 	tex_cube(std::move(tex))
 {}
 
@@ -56,7 +53,7 @@ constexpr auto file_nz_param = "file_nz"sv;
 } // namespace
 
 utki::shared_ref<texture_cube> texture_cube::load(
-	utki::shared_ref<ruis::context> ctx,
+	ruis::resource_loader& loader,
 	const tml::forest& desc,
 	const papki::file& fi
 )
@@ -84,7 +81,7 @@ utki::shared_ref<texture_cube> texture_cube::load(
 		}
 	}
 
-	auto tex = ctx.get().renderer.get().render_context.get().create_texture_cube( //
+	auto tex = loader.renderer.get().render_context.get().create_texture_cube( //
 		rasterimage::read(fi.set_path(check_not_empty(file_px, file_px_param))),
 		rasterimage::read(fi.set_path(check_not_empty(file_nx, file_nx_param))),
 		rasterimage::read(fi.set_path(check_not_empty(file_py, file_py_param))),
@@ -93,8 +90,5 @@ utki::shared_ref<texture_cube> texture_cube::load(
 		rasterimage::read(fi.set_path(check_not_empty(file_nz, file_nz_param)))
 	);
 
-	return utki::make_shared<texture_cube>( //
-		std::move(ctx),
-		std::move(tex)
-	);
+	return utki::make_shared<texture_cube>(std::move(tex));
 }

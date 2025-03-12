@@ -98,7 +98,7 @@ public:
 
 private:
 	static utki::shared_ref<gradient> load(
-		utki::shared_ref<ruis::context> ctx,
+		ruis::resource_loader& loader,
 		const ::tml::forest& desc,
 		const papki::file& fi
 	);

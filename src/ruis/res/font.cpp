@@ -33,34 +33,27 @@ using namespace ruis;
 using namespace ruis::res;
 
 res::font::font(
-	utki::shared_ref<ruis::context> context,
+	utki::shared_ref<ruis::render::renderer> renderer, //
 	const papki::file& file_normal,
 	std::unique_ptr<const papki::file> file_bold,
 	std::unique_ptr<const papki::file> file_italic,
 	std::unique_ptr<const papki::file> file_bold_italic,
-	unsigned font_size, // TODO: font size is not used anymore, remove
 	unsigned max_cached
 )
 {
 	// NOLINTNEXTLINE(bugprone-unused-return-value, "false positive")
-	this->fonts[unsigned(style::normal)] = std::make_unique<texture_font_provider>(
-		context.get().renderer,
-		utki::make_shared<freetype_face>(file_normal),
-		max_cached
-	);
+	this->fonts[unsigned(style::normal)] =
+		std::make_unique<texture_font_provider>(renderer, utki::make_shared<freetype_face>(file_normal), max_cached);
 
 	if (file_bold) {
 		// NOLINTNEXTLINE(bugprone-unused-return-value, "false positive")
-		this->fonts[unsigned(style::bold)] = std::make_unique<texture_font_provider>(
-			context.get().renderer,
-			utki::make_shared<freetype_face>(*file_bold),
-			max_cached
-		);
+		this->fonts[unsigned(style::bold)] =
+			std::make_unique<texture_font_provider>(renderer, utki::make_shared<freetype_face>(*file_bold), max_cached);
 	}
 	if (file_italic) {
 		// NOLINTNEXTLINE(bugprone-unused-return-value, "false positive")
 		this->fonts[unsigned(style::italic)] = std::make_unique<texture_font_provider>(
-			context.get().renderer,
+			renderer,
 			utki::make_shared<freetype_face>(*file_italic),
 			max_cached
 		);
@@ -68,7 +61,7 @@ res::font::font(
 	if (file_bold_italic) {
 		// NOLINTNEXTLINE(bugprone-unused-return-value, "false positive")
 		this->fonts[unsigned(style::bold_italic)] = std::make_unique<texture_font_provider>(
-			context.get().renderer,
+			std::move(renderer),
 			utki::make_shared<freetype_face>(*file_bold_italic),
 			max_cached
 		);
@@ -76,13 +69,11 @@ res::font::font(
 }
 
 utki::shared_ref<res::font> res::font::load(
-	utki::shared_ref<ruis::context> ctx,
+	ruis::resource_loader& loader, //
 	const tml::forest& desc,
 	const papki::file& fi
 )
 {
-	constexpr auto default_font_size = 13;
-	unsigned font_size = default_font_size;
 	unsigned max_cached = std::numeric_limits<unsigned>::max();
 
 	std::unique_ptr<const papki::file> file_bold;
@@ -90,9 +81,7 @@ utki::shared_ref<res::font> res::font::load(
 	std::unique_ptr<const papki::file> file_bold_italic;
 
 	for (auto& p : desc) {
-		if (p.value == "size") {
-			font_size = unsigned(parse_dimension_value(get_property_value(p), ctx.get().units).get(ctx));
-		} else if (p.value == "max_cached") {
+		if (p.value == "max_cached") {
 			max_cached = unsigned(get_property_value(p).to_uint32());
 		} else if (p.value == "normal") {
 			fi.set_path(get_property_value(p).string);
@@ -109,12 +98,11 @@ utki::shared_ref<res::font> res::font::load(
 	}
 
 	return utki::make_shared<font>(
-		std::move(ctx),
+		loader.renderer,
 		fi,
 		std::move(file_bold),
 		std::move(file_italic),
 		std::move(file_bold_italic),
-		font_size,
 		max_cached
 	);
 }
