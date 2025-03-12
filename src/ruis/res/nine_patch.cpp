@@ -45,13 +45,12 @@ class res_subimage :
 public:
 	// rect is a rectangle on the texture, Y axis down.
 	res_subimage( //
-		utki::shared_ref<ruis::context> c,
+		utki::shared_ref<ruis::render::renderer> renderer,
 		decltype(tex) tex,
 		const ruis::rect& rect // TODO: uint32_t rect?
 	) :
-		res::image(std::move(c)),
 		res::image::texture(
-			this->context.get().renderer,
+			std::move(renderer),
 			[&]() {
 				ASSERT(rect.d.is_positive_or_zero(), [&](auto& o) {
 					o << "rect.d = " << rect.d;
@@ -71,7 +70,7 @@ public:
 			// TRACE(<< "this->tex_coords = (" << tex_coords[0] << ", " << tex_coords[1] << ", " << tex_coords[2] << ",
 			// " << tex_coords[3] << ")" << std::endl)
 
-			const auto& r = this->context.get().renderer.get();
+			const auto& r = this->renderer.get();
 
 			// clang-format off
 			return r.render_context.get().create_vertex_array(
@@ -159,7 +158,7 @@ utki::shared_ref<nine_patch> nine_patch::load(
 	}
 
 	return utki::make_shared<nine_patch>( //
-		std::move(ctx),
+		ctx.get().renderer,
 		std::move(image),
 		borders
 	);
@@ -183,7 +182,10 @@ nine_patch::image_matrix::~image_matrix()
 	}
 }
 
-std::shared_ptr<nine_patch::image_matrix> nine_patch::get(sides<length> borders) const
+std::shared_ptr<nine_patch::image_matrix> nine_patch::get(
+	const ruis::units& units, //
+	sides<length> borders
+) const
 {
 	real mul = 1;
 	{
@@ -193,7 +195,7 @@ std::shared_ptr<nine_patch::image_matrix> nine_patch::get(sides<length> borders)
 				continue;
 			}
 
-			auto req_px = req->get(this->context);
+			auto req_px = req->get(units);
 
 			if (req_px > (*orig) * mul) {
 				ASSERT(*orig > 0)
@@ -213,14 +215,13 @@ std::shared_ptr<nine_patch::image_matrix> nine_patch::get(sides<length> borders)
 
 	using std::round;
 	auto quad_tex = this->image.get().get(
-		this->context.get().units, //
-		round(this->image.get().dims(this->context.get().units).to<real>() * mul)
+		units, //
+		round(this->image.get().dims(units).to<real>() * mul)
 	);
 
 	// std::cout << "quad_tex dims = " << quad_tex.get().dims << std::endl;
 
-	vector2 act_mul =
-		quad_tex.get().dims().to<real>().comp_div(this->image.get().dims(this->context.get().units).to<real>());
+	vector2 act_mul = quad_tex.get().dims().to<real>().comp_div(this->image.get().dims(units).to<real>());
 
 	sides<real> scaled_borders(this->borders);
 	scaled_borders.left() *= act_mul.x();
@@ -235,7 +236,7 @@ std::shared_ptr<nine_patch::image_matrix> nine_patch::get(sides<length> borders)
 		std::array<std::array<utki::shared_ref<const res::image>, 3>, 3>{
 			{{{
 				 utki::make_shared<res_subimage>(
-					 this->context,
+					 this->renderer,
 					 quad_tex,
 					 ruis::rect(
 						 0,
@@ -245,7 +246,7 @@ std::shared_ptr<nine_patch::image_matrix> nine_patch::get(sides<length> borders)
 					 )
 				 ), // left top
 				 utki::make_shared<res_subimage>(
-					 this->context,
+					 this->renderer,
 					 quad_tex,
 					 ruis::rect(
 						 scaled_borders.left(),
@@ -255,7 +256,7 @@ std::shared_ptr<nine_patch::image_matrix> nine_patch::get(sides<length> borders)
 					 )
 				 ), // top
 				 utki::make_shared<res_subimage>(
-					 this->context,
+					 this->renderer,
 					 quad_tex,
 					 ruis::rect(
 						 round(real(quad_tex.get().dims().x()) - scaled_borders.right()),
@@ -267,7 +268,7 @@ std::shared_ptr<nine_patch::image_matrix> nine_patch::get(sides<length> borders)
 			 }},
 			 {{
 				 utki::make_shared<res_subimage>(
-					 this->context,
+					 this->renderer,
 					 quad_tex,
 					 ruis::rect(
 						 0,
@@ -277,7 +278,7 @@ std::shared_ptr<nine_patch::image_matrix> nine_patch::get(sides<length> borders)
 					 )
 				 ), // left
 				 utki::make_shared<res_subimage>(
-					 this->context,
+					 this->renderer,
 					 quad_tex,
 					 ruis::rect(
 						 scaled_borders.left(),
@@ -287,7 +288,7 @@ std::shared_ptr<nine_patch::image_matrix> nine_patch::get(sides<length> borders)
 					 )
 				 ), // middle
 				 utki::make_shared<res_subimage>(
-					 this->context,
+					 this->renderer,
 					 quad_tex,
 					 ruis::rect(
 						 round(real(quad_tex.get().dims().x()) - scaled_borders.right()),
@@ -299,7 +300,7 @@ std::shared_ptr<nine_patch::image_matrix> nine_patch::get(sides<length> borders)
 			 }},
 			 {{
 				 utki::make_shared<res_subimage>(
-					 this->context,
+					 this->renderer,
 					 quad_tex,
 					 ruis::rect(
 						 0,
@@ -309,7 +310,7 @@ std::shared_ptr<nine_patch::image_matrix> nine_patch::get(sides<length> borders)
 					 )
 				 ), // left bottom
 				 utki::make_shared<res_subimage>(
-					 this->context,
+					 this->renderer,
 					 quad_tex,
 					 ruis::rect(
 						 scaled_borders.left(),
@@ -319,7 +320,7 @@ std::shared_ptr<nine_patch::image_matrix> nine_patch::get(sides<length> borders)
 					 )
 				 ), // bottom
 				 utki::make_shared<res_subimage>(
-					 this->context,
+					 this->renderer,
 					 quad_tex,
 					 ruis::rect(
 						 round(real(quad_tex.get().dims().x()) - scaled_borders.right()),

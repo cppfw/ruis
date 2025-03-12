@@ -29,12 +29,15 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis::res;
 
-ruis::res::gradient::gradient(utki::shared_ref<ruis::context> c) :
-	resource(std::move(c)),
-	vao(this->context.get().ren().obj().empty_vertex_array)
+ruis::res::gradient::gradient(utki::shared_ref<ruis::render::renderer> renderer) :
+	renderer(std::move(renderer)),
+	vao(this->renderer.get().obj().empty_vertex_array)
 {}
 
-void gradient::set(std::vector<std::tuple<real, uint32_t>>& stops, bool vertical)
+void gradient::set(
+	std::vector<std::tuple<real, uint32_t>>& stops, //
+	bool vertical
+)
 {
 	std::vector<r4::vector2<float>> vertices;
 	//	std::vector<uint32_t> colors;
@@ -68,7 +71,7 @@ void gradient::set(std::vector<std::tuple<real, uint32_t>>& stops, bool vertical
 		indices.push_back(uint16_t(i));
 	}
 
-	auto& r = this->context.get().renderer.get();
+	auto& r = this->renderer.get();
 
 	// clang-format off
 	this->vao = r.render_context.get().create_vertex_array(
@@ -83,7 +86,7 @@ void gradient::set(std::vector<std::tuple<real, uint32_t>>& stops, bool vertical
 }
 
 utki::shared_ref<gradient> gradient::load(
-	utki::shared_ref<ruis::context> ctx,
+	utki::shared_ref<ruis::context> ctx, //
 	const tml::forest& desc,
 	const papki::file& fi
 )
@@ -111,7 +114,7 @@ utki::shared_ref<gradient> gradient::load(
 		}
 	}
 
-	auto ret = utki::make_shared<gradient>(std::move(ctx));
+	auto ret = utki::make_shared<gradient>(ctx.get().renderer);
 
 	ret.get().set(stops, vertical);
 
@@ -120,5 +123,8 @@ utki::shared_ref<gradient> gradient::load(
 
 void gradient::render(const ruis::matrix4& m) const
 {
-	this->context.get().renderer.get().shaders().pos_clr->render(m, this->vao.get());
+	this->renderer.get().shaders().pos_clr->render(
+		m, //
+		this->vao.get()
+	);
 }

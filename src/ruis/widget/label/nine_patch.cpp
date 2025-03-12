@@ -384,7 +384,10 @@ void nine_patch::apply_images()
 	}
 	//		TRACE(<< "this->borders = " << this->borders << std::endl)
 
-	this->img_res_matrix = np->get(this->get_borders());
+	this->img_res_matrix = np->get(
+		this->context.get().units, //
+		this->get_borders()
+	);
 
 	for (unsigned i = 0; i != 3; ++i) {
 		for (unsigned j = 0; j != 3; ++j) {

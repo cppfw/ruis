@@ -30,7 +30,6 @@ ruis::res::tml::tml(
 	utki::shared_ref<ruis::context> c, //
 	::tml::forest forest
 ) :
-	resource(std::move(c)),
 	s(std::move(forest))
 {}
 

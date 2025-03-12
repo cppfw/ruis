@@ -31,7 +31,6 @@ ruis::res::cursor::cursor(
 	utki::shared_ref<ruis::res::image> image,
 	const vector2& hotspot
 ) :
-	resource(std::move(c)),
 	image_v(std::move(image)),
 	hotspot_v(hotspot)
 {}

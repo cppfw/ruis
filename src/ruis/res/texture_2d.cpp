@@ -63,7 +63,6 @@ texture_2d::texture_2d( //
 	utki::shared_ref<ruis::context> c,
 	utki::shared_ref<const render::texture_2d> tex
 ) :
-	resource(std::move(c)),
 	tex2d(std::move(tex))
 {}
 

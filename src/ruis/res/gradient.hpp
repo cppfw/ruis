@@ -58,6 +58,10 @@ class gradient : public resource
 {
 	friend class ruis::resource_loader;
 
+public:
+	const utki::shared_ref<ruis::render::renderer> renderer;
+
+private:
 	utki::shared_ref<const render::vertex_array> vao;
 
 public:
@@ -66,9 +70,9 @@ public:
 	 * A gradient stop is a pair of values. First one is a floating point value
 	 * from [0:1] defining the position of the gradient stop. The second value
 	 * defines the color of the stop.
-	 * @param c - context.
+	 * @param renderer - ruis renderer.
 	 */
-	gradient(utki::shared_ref<ruis::context> c);
+	gradient(utki::shared_ref<ruis::render::renderer> renderer);
 
 	gradient(const gradient&) = delete;
 	gradient& operator=(const gradient&) = delete;

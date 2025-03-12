@@ -52,7 +52,7 @@ class image : public resource
 	friend class ruis::resource_loader;
 
 protected:
-	image(utki::shared_ref<ruis::context> c);
+	image() = default;
 
 public:
 	image(const image&) = delete;

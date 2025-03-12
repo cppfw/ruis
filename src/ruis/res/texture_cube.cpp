@@ -31,12 +31,14 @@ texture_cube::texture_cube( //
 	utki::shared_ref<ruis::context> ctx,
 	utki::shared_ref<const render::texture_cube> tex
 ) :
-	resource(std::move(ctx)),
 	tex_cube(std::move(tex))
 {}
 
 namespace {
-std::string_view check_not_empty(std::string_view v, std::string_view field_name)
+std::string_view check_not_empty(
+	std::string_view v, //
+	std::string_view field_name
+)
 {
 	if (!v.empty()) {
 		return v;

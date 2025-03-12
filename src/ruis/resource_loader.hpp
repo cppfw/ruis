@@ -158,12 +158,7 @@ class resource : virtual public utki::shared
 	std::string id;
 
 protected:
-	const utki::shared_ref<ruis::context> context;
-
-	// NOLINTNEXTLINE(modernize-pass-by-value)
-	resource(utki::shared_ref<ruis::context> c) :
-		context(std::move(c))
-	{}
+	resource() = default;
 
 public:
 	resource(const resource&) = delete;

@@ -38,10 +38,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace ruis;
 using namespace ruis::res;
 
-image::image(utki::shared_ref<ruis::context> c) :
-	resource(std::move(c))
-{}
-
 namespace {
 class fixed_texture : public image::texture
 {
@@ -69,9 +65,8 @@ public:
 		utki::shared_ref<ruis::context> c,
 		utki::shared_ref<const render::texture_2d> tex
 	) :
-		image(std::move(c)),
 		fixed_texture( //
-			this->context.get().renderer,
+			c.get().renderer,
 			std::move(tex)
 		)
 	{}
@@ -108,14 +103,18 @@ public:
 
 class res_svg_image : public image
 {
+public:
+	const utki::shared_ref<ruis::render::renderer> renderer;
+
+private:
 	std::unique_ptr<svgdom::svg_element> dom;
 
 public:
 	res_svg_image( //
-		utki::shared_ref<ruis::context> c,
+		utki::shared_ref<ruis::render::renderer> renderer,
 		decltype(dom) dom
 	) :
-		image(std::move(c)),
+		renderer(std::move(renderer)),
 		dom(std::move(dom))
 	{}
 
@@ -202,9 +201,9 @@ public:
 
 		// clang-format off
 		auto img = utki::make_shared<svg_texture>(
-			this->context.get().renderer,
+			this->renderer,
 			utki::make_shared_from(*this),
-			this->context.get().renderer.get().render_context.get().create_texture_2d(
+			this->renderer.get().render_context.get().create_texture_2d(
 				std::move(im),
 				{
 					.min_filter = render::texture_2d::filter::nearest,
@@ -229,7 +228,10 @@ public:
 	{
 		auto dom = svgdom::load(fi);
 		ASSERT(dom)
-		return utki::make_shared<res_svg_image>(std::move(ctx), std::move(dom));
+		return utki::make_shared<res_svg_image>(
+			ctx.get().renderer, //
+			std::move(dom)
+		);
 	}
 };
 } // namespace

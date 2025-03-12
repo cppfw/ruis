@@ -50,6 +50,10 @@ class nine_patch : public resource
 {
 	friend class ruis::resource_loader;
 
+public:
+	const utki::shared_ref<ruis::render::renderer> renderer;
+
+private:
 	const utki::shared_ref<const res::image> image;
 
 	sides<real> borders;
@@ -64,12 +68,12 @@ public:
 	~nine_patch() override = default;
 
 	nine_patch(
-		utki::shared_ref<ruis::context> c,
+		utki::shared_ref<ruis::render::renderer> renderer,
 		// NOLINTNEXTLINE(modernize-pass-by-value)
 		utki::shared_ref<const res::image> image,
 		sides<real> borders // TODO: uint32_t sides?
 	) :
-		resource(std::move(c)),
+		renderer(std::move(renderer)),
 		image(std::move(image)),
 		borders(borders)
 	{}
@@ -104,7 +108,10 @@ public:
 		~image_matrix();
 	};
 
-	std::shared_ptr<image_matrix> get(sides<length> borders) const;
+	std::shared_ptr<image_matrix> get(
+		const ruis::units& units, //
+		sides<length> borders
+	) const;
 
 	const decltype(borders)& get_borders() const noexcept
 	{

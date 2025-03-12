@@ -40,12 +40,11 @@ res::font::font(
 	std::unique_ptr<const papki::file> file_bold_italic,
 	unsigned font_size, // TODO: font size is not used anymore, remove
 	unsigned max_cached
-) :
-	resource(std::move(context))
+)
 {
 	// NOLINTNEXTLINE(bugprone-unused-return-value, "false positive")
 	this->fonts[unsigned(style::normal)] = std::make_unique<texture_font_provider>(
-		this->context.get().renderer,
+		context.get().renderer,
 		utki::make_shared<freetype_face>(file_normal),
 		max_cached
 	);
@@ -53,7 +52,7 @@ res::font::font(
 	if (file_bold) {
 		// NOLINTNEXTLINE(bugprone-unused-return-value, "false positive")
 		this->fonts[unsigned(style::bold)] = std::make_unique<texture_font_provider>(
-			this->context.get().renderer,
+			context.get().renderer,
 			utki::make_shared<freetype_face>(*file_bold),
 			max_cached
 		);
@@ -61,7 +60,7 @@ res::font::font(
 	if (file_italic) {
 		// NOLINTNEXTLINE(bugprone-unused-return-value, "false positive")
 		this->fonts[unsigned(style::italic)] = std::make_unique<texture_font_provider>(
-			this->context.get().renderer,
+			context.get().renderer,
 			utki::make_shared<freetype_face>(*file_italic),
 			max_cached
 		);
@@ -69,7 +68,7 @@ res::font::font(
 	if (file_bold_italic) {
 		// NOLINTNEXTLINE(bugprone-unused-return-value, "false positive")
 		this->fonts[unsigned(style::bold_italic)] = std::make_unique<texture_font_provider>(
-			this->context.get().renderer,
+			context.get().renderer,
 			utki::make_shared<freetype_face>(*file_bold_italic),
 			max_cached
 		);
