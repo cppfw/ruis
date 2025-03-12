@@ -45,7 +45,7 @@ utki::shared_ref<ruis::window> make_gradient_window(
                         .dims{ruis::dim::max, ruis::dim::max}
                     },
                     .gradient_params{
-                        .gradient = c.get().loader.load<ruis::res::gradient>("grd_sample"sv)
+                        .gradient = c.get().loader().load<ruis::res::gradient>("grd_sample"sv)
                     }
                 }
             ),

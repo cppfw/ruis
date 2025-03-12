@@ -87,14 +87,14 @@ utki::shared_ref<ruis::window> make_sliders_window(utki::shared_ref<ruis::contex
 			m::nine_patch(c,
 				{
 					.nine_patch_params{
-						.nine_patch = c.get().loader.load<ruis::res::nine_patch>("ruis_npt_window_bg")
+						.nine_patch = c.get().loader().load<ruis::res::nine_patch>("ruis_npt_window_bg")
 					}
 				},
 				{
 					m::nine_patch(c,
 						{
 							.nine_patch_params{
-								.nine_patch = c.get().loader.load<ruis::res::nine_patch>("ruis_npt_button_normal")
+								.nine_patch = c.get().loader().load<ruis::res::nine_patch>("ruis_npt_button_normal")
 							}
 						},
 						{
@@ -151,7 +151,7 @@ utki::shared_ref<ruis::window> make_image_window(utki::shared_ref<ruis::context>
 						.id = "image"s
 					},
 					.image_params = {
-						.img = c.get().loader.load<ruis::res::image>("img_home"sv),
+						.img = c.get().loader().load<ruis::res::image>("img_home"sv),
 						.keep_aspect_ratio = true
 					}
 				}

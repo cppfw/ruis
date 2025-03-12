@@ -72,7 +72,7 @@ utki::shared_ref<ruis::window> make_scroll_area_window(
                                         .dims{ruis::dim::min, ruis::dim::max}
                                     },
                                     .image_params{
-                                        .img = c.get().loader.load<ruis::res::image>("img_sample"sv)
+                                        .img = c.get().loader().load<ruis::res::image>("img_sample"sv)
                                     }
                                 }
                             ),

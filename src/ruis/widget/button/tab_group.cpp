@@ -49,7 +49,7 @@ tab_group::tab_group(
 {
 	// TODO: allow setting filler from params
 	if (!this->filler) {
-		this->set_filler(this->context.get().loader.load<res::image>("ruis_img_tabs_filler").to_shared_ptr());
+		this->set_filler(this->context.get().loader().load<res::image>("ruis_img_tabs_filler").to_shared_ptr());
 	}
 }
 

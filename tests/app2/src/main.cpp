@@ -18,7 +18,7 @@ public:
 		this->gui.context.get().localization.get() =
 			ruis::localization(tml::read(*this->get_res_file("res/localization/en.tml")));
 
-		this->gui.context.get().loader.mount_res_pack(*this->get_res_file("res/"));
+		this->gui.context.get().loader().mount_res_pack(*this->get_res_file("res/"));
 
 		// clang-format off
 		auto kp = ruis::make::key_proxy(

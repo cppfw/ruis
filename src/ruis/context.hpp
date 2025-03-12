@@ -87,7 +87,12 @@ public:
 	 * Allows loading and managing life time of resources.
 	 */
 	// TODO: make shared_ref, dependency inject renderer (for textures loading)?
-	resource_loader loader;
+	resource_loader res_loader;
+
+	resource_loader& loader() noexcept
+	{
+		return this->res_loader;
+	}
 
 	/**
 	 * @brief current localization.

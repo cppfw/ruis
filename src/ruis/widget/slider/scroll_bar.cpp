@@ -120,10 +120,10 @@ scroll_bar::scroll_bar( //
 	params([&]() {
 		auto& sbp = params.scroll_bar_params;
 		if (!sbp.background) {
-			sbp.background = this->context.get().loader.load<res::nine_patch>("ruis_npt_slider_bg").to_shared_ptr();
+			sbp.background = this->context.get().loader().load<res::nine_patch>("ruis_npt_slider_bg").to_shared_ptr();
 		}
 		if (!sbp.handle) {
-			sbp.handle = this->context.get().loader.load<res::nine_patch>("ruis_npt_slider_handle").to_shared_ptr();
+			sbp.handle = this->context.get().loader().load<res::nine_patch>("ruis_npt_slider_handle").to_shared_ptr();
 		}
 		return params.scroll_bar_params;
 	}())

@@ -58,7 +58,7 @@ utki::shared_ref<ruis::tab> inflate_tab(ruis::tabbed_book& tb, const std::string
 										}
 									},
 									.image_params{
-										.img = c.get().loader.load<ruis::res::image>("ruis_img_close")
+										.img = c.get().loader().load<ruis::res::image>("ruis_img_close")
 									}
 								}
 							)

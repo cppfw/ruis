@@ -96,7 +96,7 @@ utki::shared_ref<ruis::window> make_text_input_window(
                         .dims{ruis::dim::max, ruis::dim::min}
                     },
                     .nine_patch_params{
-                        .nine_patch = c.get().loader.load<ruis::res::nine_patch>("ruis_npt_frame"s)
+                        .nine_patch = c.get().loader().load<ruis::res::nine_patch>("ruis_npt_frame"s)
                     }
                 },
                 {
@@ -127,8 +127,8 @@ utki::shared_ref<ruis::window> make_text_input_window(
                                                 .id = "image_push_button"s
                                             },
                                             .image_button_params{
-                                                .unpressed_image = c.get().loader.load<ruis::res::image>("img_button_unpressed"sv),
-                                                .pressed_image = c.get().loader.load<ruis::res::image>("img_button_pressed"sv)
+                                                .unpressed_image = c.get().loader().load<ruis::res::image>("img_button_unpressed"sv),
+                                                .pressed_image = c.get().loader().load<ruis::res::image>("img_button_pressed"sv)
                                             }
                                         }
                                     )
@@ -154,7 +154,7 @@ utki::shared_ref<ruis::window> make_text_input_window(
                         .id = "text_input"s
                     },
                     .nine_patch_params{
-                        .nine_patch = c.get().loader.load<ruis::res::nine_patch>("ruis_npt_textfield_background"sv)
+                        .nine_patch = c.get().loader().load<ruis::res::nine_patch>("ruis_npt_textfield_background"sv)
                     }
                 },
                 {

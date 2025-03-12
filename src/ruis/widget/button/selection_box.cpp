@@ -77,8 +77,8 @@ utki::shared_ref<ruis::selection_box> ruis::make::selection_box(
 			.layout_params = std::move(params.layout_params), //
 			.widget_params = std::move(params.widget_params),
 			.nine_patch_button_params = {
-				.unpressed_nine_patch = c.loader.load<res::nine_patch>("ruis_npt_button_normal"sv),
-				.pressed_nine_patch = c.loader.load<res::nine_patch>("ruis_npt_button_pressed"sv)
+				.unpressed_nine_patch = c.loader().load<res::nine_patch>("ruis_npt_button_normal"sv),
+				.pressed_nine_patch = c.loader().load<res::nine_patch>("ruis_npt_button_pressed"sv)
 			},
 			.providable_params = std::move(params.providable_params)
 		} // clang-format on

@@ -750,11 +750,11 @@ void ruis::widget::reload(std::shared_ptr<resource_type>& p)
 	if (!p) {
 		return;
 	}
-	p = this->context.get().loader.load<resource_type>(p->get_id());
+	p = this->context.get().loader().load<resource_type>(p->get_id());
 }
 
 template <typename resource_type>
 void ruis::widget::reload(utki::shared_ref<resource_type>& p)
 {
-	p = this->context.get().loader.load<resource_type>(p->get_id());
+	p = this->context.get().loader().load<resource_type>(p->get_id());
 }

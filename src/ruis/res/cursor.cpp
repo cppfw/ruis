@@ -62,7 +62,7 @@ utki::shared_ref<cursor> cursor::load(
 		throw std::logic_error("cursor::load(): resource description does not contain 'hotspot' property");
 	}
 
-	auto cursor_im = ctx.get().loader.load<res::image>(image_res_id->string);
+	auto cursor_im = ctx.get().loader().load<res::image>(image_res_id->string);
 	return utki::make_shared<cursor>( //
 		std::move(ctx),
 		std::move(cursor_im),

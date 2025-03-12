@@ -43,7 +43,7 @@ busy::busy(
 	)
 {
 	if (!this->get_image()) {
-		this->set_image(this->context.get().loader.load<ruis::res::image>("ruis_img_busy"));
+		this->set_image(this->context.get().loader().load<ruis::res::image>("ruis_img_busy"));
 	}
 }
 

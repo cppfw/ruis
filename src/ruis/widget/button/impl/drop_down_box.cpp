@@ -67,7 +67,7 @@ std::vector<utki::shared_ref<widget>> make_drop_down_box_widget_structure(utki::
 					.dims = {ruis::dim::min, ruis::dim::fill}
 				},
 				.image_params = {
-					.img = c.get().loader.load<ruis::res::image>("ruis_img_divider_vert"sv)
+					.img = c.get().loader().load<ruis::res::image>("ruis_img_divider_vert"sv)
 				}
 			}
 		),
@@ -81,7 +81,7 @@ std::vector<utki::shared_ref<widget>> make_drop_down_box_widget_structure(utki::
 		m::image(c,
 			{
 				.image_params = {
-					.img = c.get().loader.load<ruis::res::image>("ruis_img_dropdown_arrow"sv)
+					.img = c.get().loader().load<ruis::res::image>("ruis_img_dropdown_arrow"sv)
 				}
 			}
 		)
@@ -111,11 +111,11 @@ drop_down_box::drop_down_box(
 				[&c = this->context.get(), &params]() {
 					if (!params.nine_patch_button_params.pressed_nine_patch) {
 						params.nine_patch_button_params.pressed_nine_patch =
-							c.loader.load<res::nine_patch>("ruis_npt_button_pressed"sv);
+							c.loader().load<res::nine_patch>("ruis_npt_button_pressed"sv);
 					}
 					if (!params.nine_patch_button_params.unpressed_nine_patch) {
 						params.nine_patch_button_params.unpressed_nine_patch =
-							c.loader.load<res::nine_patch>("ruis_npt_button_normal"sv);
+							c.loader().load<res::nine_patch>("ruis_npt_button_normal"sv);
 					}
 					return std::move(params.nine_patch_button_params);
 				}() //
@@ -217,7 +217,7 @@ void drop_down_box::show_drop_down_menu()
 						.layout = ruis::layout::column
 					},
 					.nine_patch_params{
-						.nine_patch = this->context.get().loader.load<ruis::res::nine_patch>("ruis_npt_contextmenu_bg"sv)
+						.nine_patch = this->context.get().loader().load<ruis::res::nine_patch>("ruis_npt_contextmenu_bg"sv)
 					}
 				}
 			)

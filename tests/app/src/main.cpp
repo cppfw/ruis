@@ -328,7 +328,7 @@ public:
 	{
 		this->gui.init_standard_widgets(*this->get_res_file("../../res/ruis_res/"));
 
-		this->gui.context.get().loader.mount_res_pack(*this->get_res_file("res/"));
+		this->gui.context.get().loader().mount_res_pack(*this->get_res_file("res/"));
 //		this->ResMan().MountResPack(ruis::ZipFile::New(papki::FSFile::New("res.zip")));
 
 		auto c = make_root_widget(this->gui.context);

@@ -34,7 +34,7 @@ public:
 	{
 		this->gui.init_standard_widgets(*this->get_res_file("../../res/ruis_res/"));
 
-		this->gui.context.get().loader.mount_res_pack(*this->get_res_file("res/"));
+		this->gui.context.get().loader().mount_res_pack(*this->get_res_file("res/"));
 
 		// clang-format off
 		auto c = m::column(this->gui.context,

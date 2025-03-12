@@ -60,7 +60,7 @@ cube_widget::cube_widget(
         ruis::render::vertex_array::mode::triangles
     ).to_shared_ptr();
 
-    this->tex = this->context.get().loader.load<ruis::res::texture_2d>("tex_sample").to_shared_ptr();
+    this->tex = this->context.get().loader().load<ruis::res::texture_2d>("tex_sample").to_shared_ptr();
     this->rot.set_identity();
 }
 

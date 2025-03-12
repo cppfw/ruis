@@ -314,8 +314,8 @@ utki::shared_ref<widget> tree_view::provider::get_widget(size_t index)
 
 			auto& plusminus = w.get().get_widget_as<ruis::image>("plusminus");
 			plusminus.set_image((is_collapsed
-									 ? this->context.get().loader.load<ruis::res::image>("ruis_img_treeview_plus")
-									 : this->context.get().loader.load<ruis::res::image>("ruis_img_treeview_minus"))
+									 ? this->context.get().loader().load<ruis::res::image>("ruis_img_treeview_plus")
+									 : this->context.get().loader().load<ruis::res::image>("ruis_img_treeview_minus"))
 									.to_shared_ptr());
 
 			auto plusminus_mouse_proxy = w.get().try_get_widget_as<ruis::mouse_proxy>("plusminus_mouseproxy");

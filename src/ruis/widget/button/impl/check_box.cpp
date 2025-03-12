@@ -51,7 +51,7 @@ check_box::check_box(
 			.nine_patch_params = [&](){
 				auto p = std::move(params.nine_patch_params);
 				if(!p.nine_patch){
-					p.nine_patch = context.get().loader.load<res::nine_patch>("ruis_npt_checkbox_bg"sv);
+					p.nine_patch = context.get().loader().load<res::nine_patch>("ruis_npt_checkbox_bg"sv);
 				}
 				return p;
 			}()
@@ -65,7 +65,7 @@ check_box::check_box(
 					.image_params = [&](){
 						auto p = std::move(params.image_params);
 						if(!p.img){
-							p.img = context.get().loader.load<res::image>("ruis_img_checkbox_tick"sv);
+							p.img = context.get().loader().load<res::image>("ruis_img_checkbox_tick"sv);
 						}
 						return p;
 					}()

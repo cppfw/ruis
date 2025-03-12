@@ -70,7 +70,7 @@ void gui::init_standard_widgets(papki::file& fi)
 			//			TRACE(<< "s = " << s << std::endl)
 			fi.set_path(s);
 			//			TRACE(<< "fi.path() = " << fi.path() << std::endl)
-			this->context.get().loader.mount_res_pack(fi);
+			this->context.get().loader().mount_res_pack(fi);
 		} catch (std::runtime_error&) {
 			//			TRACE(<< "could not mount " << s << std::endl)
 			continue;

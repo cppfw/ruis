@@ -65,7 +65,7 @@ text_widget::text_widget(
 	params([this, &params]() {
 		auto p = std::move(params);
 		if (!p.font_face) {
-			p.font_face = this->context.get().loader.load<res::font>("ruis_fnt_text");
+			p.font_face = this->context.get().loader().load<res::font>("ruis_fnt_text");
 		}
 		if (p.font_size.is_undefined()) {
 			p.font_size = this->context.get().units.pp_to_px(default_font_size_pp);

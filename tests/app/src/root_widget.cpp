@@ -67,7 +67,7 @@ utki::shared_ref<ruis::widget> make_root_widget(utki::shared_ref<ruis::context> 
                         .dims{ruis::dim::fill, ruis::dim::fill}
                     },
                     .mouse_cursor_params{
-                        .cursor = c.get().loader.load<ruis::res::cursor>("crs_arrow"sv)
+                        .cursor = c.get().loader().load<ruis::res::cursor>("crs_arrow"sv)
                     }
                 }
             )
