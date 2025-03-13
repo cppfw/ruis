@@ -56,7 +56,7 @@ public:
 private:
 	const utki::shared_ref<const res::image> image;
 
-	sides<real> borders;
+	sides<real> fraction_borders;
 
 public:
 	nine_patch(const nine_patch&) = delete;
@@ -70,7 +70,7 @@ public:
 	nine_patch(
 		utki::shared_ref<ruis::render::renderer> renderer,
 		utki::shared_ref<const res::image> image,
-		sides<real> borders
+		sides<real> fraction_borders
 	);
 
 	class image_matrix
@@ -108,10 +108,7 @@ public:
 		sides<length> borders
 	) const;
 
-	const decltype(borders)& get_borders() const noexcept
-	{
-		return this->borders;
-	}
+	sides<real> get_borders(const ruis::units& units) const noexcept;
 
 private:
 	mutable std::map<real, std::weak_ptr<image_matrix>> cache;

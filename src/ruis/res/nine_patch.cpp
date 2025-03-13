@@ -123,19 +123,19 @@ utki::shared_ref<nine_patch> nine_patch::load(
 	const papki::file& fi
 )
 {
-	sides<real> borders(-1);
+	sides<real> fraction_borders(-1);
 	for (auto& p : desc) {
 		if (p.value == "borders") {
-			borders = parse_sides(p.children);
+			fraction_borders = parse_sides(p.children);
 		} else if (p.value == "file") {
 			fi.set_path(get_property_value(p).string);
 		}
 	}
-	if (borders.left() < 0) {
+	if (fraction_borders.left() < 0) {
 		throw std::invalid_argument("nine_patch::load(): could not read borders");
 	}
 
-	for (const auto& b : borders) {
+	for (const auto& b : fraction_borders) {
 		if (b < 0 || 1 < b) {
 			throw std::invalid_argument("nine_patch::load(): one of the borders is out of [0:1] range");
 		}
@@ -146,24 +146,15 @@ utki::shared_ref<nine_patch> nine_patch::load(
 		fi
 	);
 
-	// TODO: store borders as fractions and get units from context?
-	auto dims = image.get().dims(ruis::units()).to<real>();
-
-	using std::round;
-
-	borders.left() = round(borders.left() * dims.x());
-	borders.right() = round(borders.right() * dims.x());
-	borders.top() = round(borders.top() * dims.y());
-	borders.bottom() = round(borders.bottom() * dims.y());
-
-	if (borders.left() + borders.right() > dims.x() || borders.top() + borders.bottom() > dims.y()) {
+	// TODO: is this check needed?
+	if (fraction_borders.left() + fraction_borders.right() > ruis::real(1) || fraction_borders.top() + fraction_borders.bottom() > ruis::real(1)) {
 		throw std::invalid_argument("nine_patch::load(): borders are bigger than image dimensions");
 	}
 
 	return utki::make_shared<nine_patch>( //
 		loader.renderer,
 		std::move(image),
-		borders
+		fraction_borders
 	);
 }
 
@@ -188,20 +179,35 @@ nine_patch::image_matrix::~image_matrix()
 nine_patch::nine_patch(
 	utki::shared_ref<ruis::render::renderer> renderer,
 	utki::shared_ref<const res::image> image,
-	sides<real> borders
+	sides<real> fraction_borders
 ) :
 	renderer(std::move(renderer)),
 	image(std::move(image)),
-	borders(borders)
+	fraction_borders(fraction_borders)
 {}
+
+sides<real> nine_patch::get_borders(const ruis::units& units) const noexcept{
+	auto dims = this->image.get().dims(units).to<real>();
+
+	using std::round;
+
+	return {
+		round(this->fraction_borders.left() * dims.x()),
+		round(this->fraction_borders.top() * dims.y()),
+		round(this->fraction_borders.right() * dims.x()),
+		round(this->fraction_borders.bottom() * dims.y())
+	};
+}
 
 std::shared_ptr<nine_patch::image_matrix> nine_patch::get(
 	const ruis::units& units, //
-	sides<length> borders
+	sides<length> requested_borders
 ) const
 {
+	auto actual_borders = this->get_borders(units);
+
 	real mul = 1;
-	for (auto [orig, req] : utki::views::zip(this->borders, borders)) {
+	for (auto [orig, req] : utki::views::zip(actual_borders, requested_borders)) {
 		if (orig <= 0 || req.is_undefined()) {
 			continue;
 		}
@@ -233,7 +239,7 @@ std::shared_ptr<nine_patch::image_matrix> nine_patch::get(
 
 	vector2 act_mul = quad_tex.get().dims().to<real>().comp_div(this->image.get().dims(units).to<real>());
 
-	sides<real> scaled_borders(this->borders);
+	sides<real> scaled_borders(actual_borders);
 	scaled_borders.left() *= act_mul.x();
 	scaled_borders.right() *= act_mul.x();
 	scaled_borders.top() *= act_mul.y();

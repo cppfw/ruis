@@ -296,7 +296,7 @@ sides<real> nine_patch::get_actual_borders() const noexcept
 		} else if (!np) {
 			ret[i] = 0;
 		} else {
-			ret[i] = np->get_borders()[i];
+			ret[i] = np->get_borders(this->context.get().units)[i];
 		}
 	}
 
@@ -321,7 +321,7 @@ void nine_patch::apply_images()
 	}
 
 	ASSERT(np)
-	auto& min_borders = np->get_borders();
+	auto min_borders = np->get_borders(this->context.get().units);
 
 	{
 		// non-const call to get_layout_params requests re-layout which is not necessarily needed, so try to avoid it if
