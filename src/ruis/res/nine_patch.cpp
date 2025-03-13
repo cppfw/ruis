@@ -147,7 +147,9 @@ utki::shared_ref<nine_patch> nine_patch::load(
 	);
 
 	// TODO: is this check needed?
-	if (fraction_borders.left() + fraction_borders.right() > ruis::real(1) || fraction_borders.top() + fraction_borders.bottom() > ruis::real(1)) {
+	if (fraction_borders.left() + fraction_borders.right() > ruis::real(1) ||
+		fraction_borders.top() + fraction_borders.bottom() > ruis::real(1))
+	{
 		throw std::invalid_argument("nine_patch::load(): borders are bigger than image dimensions");
 	}
 
@@ -186,7 +188,8 @@ nine_patch::nine_patch(
 	fraction_borders(fraction_borders)
 {}
 
-sides<real> nine_patch::get_borders(const ruis::units& units) const noexcept{
+sides<real> nine_patch::get_borders(const ruis::units& units) const noexcept
+{
 	auto dims = this->image.get().dims(units).to<real>();
 
 	using std::round;
@@ -204,6 +207,8 @@ std::shared_ptr<nine_patch::image_matrix> nine_patch::get(
 	sides<length> requested_borders
 ) const
 {
+	// TODO: refactor calculation of the scaled_borders?
+
 	auto actual_borders = this->get_borders(units);
 
 	real mul = 1;
