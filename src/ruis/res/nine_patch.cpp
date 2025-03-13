@@ -226,6 +226,7 @@ std::shared_ptr<nine_patch::image_matrix> nine_patch::get(
 	}
 
 	{
+		// TODO: ignore svg dpi, store cache by actual borders
 		auto i = this->cache.find(mul);
 		if (i != this->cache.end()) {
 			if (auto r = i->second.lock()) {
