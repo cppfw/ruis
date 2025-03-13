@@ -69,14 +69,9 @@ public:
 
 	nine_patch(
 		utki::shared_ref<ruis::render::renderer> renderer,
-		// NOLINTNEXTLINE(modernize-pass-by-value)
 		utki::shared_ref<const res::image> image,
-		sides<real> borders // TODO: uint32_t sides?
-	) :
-		renderer(std::move(renderer)),
-		image(std::move(image)),
-		borders(borders)
-	{}
+		sides<real> borders
+	);
 
 	class image_matrix
 	{

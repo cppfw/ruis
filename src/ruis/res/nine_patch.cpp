@@ -185,25 +185,32 @@ nine_patch::image_matrix::~image_matrix()
 	}
 }
 
+nine_patch::nine_patch(
+	utki::shared_ref<ruis::render::renderer> renderer,
+	utki::shared_ref<const res::image> image,
+	sides<real> borders
+) :
+	renderer(std::move(renderer)),
+	image(std::move(image)),
+	borders(borders)
+{}
+
 std::shared_ptr<nine_patch::image_matrix> nine_patch::get(
 	const ruis::units& units, //
 	sides<length> borders
 ) const
 {
 	real mul = 1;
-	{
-		auto req = borders.begin();
-		for (auto orig = this->borders.begin(); orig != this->borders.end(); ++orig, ++req) {
-			if (*orig <= 0 || req->is_undefined()) {
-				continue;
-			}
+	for (auto [orig, req] : utki::views::zip(this->borders, borders)) {
+		if (orig <= 0 || req.is_undefined()) {
+			continue;
+		}
 
-			auto req_px = req->get(units);
+		auto req_px = req.get(units);
 
-			if (req_px > (*orig) * mul) {
-				ASSERT(*orig > 0)
-				mul = req_px / *orig;
-			}
+		if (req_px > orig * mul) {
+			ASSERT(orig > 0)
+			mul = req_px / orig;
 		}
 	}
 
