@@ -75,7 +75,7 @@ jobs:
           - {os: debian, codename: bookworm, image_owner: arm64v8/, package_type: deb, labels: [ubuntu-24.04-arm]}
     runs-on: ${{ (matrix.labels == '' && 'ubuntu-latest') || matrix.labels }}
     container: ${{ matrix.image_owner }}${{ matrix.os }}:${{ matrix.codename }}
-    name: sanitizer - ${{ matrix.image_owner }}${{ matrix.os }}:${{ matrix.codename }} - ${{ matrix.labels[0] }}
+    name: sanitizer - ${{ matrix.image_owner }}${{ matrix.os }}:${{ matrix.codename }}
     steps:
       - name: add llvm repo (for clang-format)
         uses: myci-actions/add-deb-repo@main
@@ -378,7 +378,7 @@ jobs:
           - {os: debian, codename: bookworm, image_owner: arm64v8/, labels: [ubuntu-24.04-arm]}
     runs-on: ${{ (matrix.labels == '' && 'ubuntu-latest') || matrix.labels }}
     container: ${{ matrix.image_owner }}${{ matrix.os }}:${{ matrix.codename }}
-    name: conan - linux | ${{ matrix.labels[0] }}
+    name: conan - linux | ${{ matrix.image_owner }}
     steps:
       - name: add llvm repo (for clang-format)
         uses: myci-actions/add-deb-repo@main
@@ -485,7 +485,7 @@ jobs:
           # - {os: debian, codename: bookworm, image_owner: , labels: [arm64,docker]}
     runs-on: ${{ (matrix.labels == '' && 'ubuntu-latest') || matrix.labels }}
     container: ${{ matrix.image_owner }}${{ matrix.os }}:${{ matrix.codename }}
-    name: conan - emscripten | ${{ matrix.labels[0] }}
+    name: conan - emscripten
     steps:
       - name: add cppfw deb repo
         uses: myci-actions/add-deb-repo@main
