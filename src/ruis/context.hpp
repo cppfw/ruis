@@ -105,6 +105,15 @@ public:
 	utki::shared_ref<ruis::localization> localization;
 
 	/**
+	 * @brief Shorthand alias for localization.
+	 * @return this->localization.get().
+	 */
+	const ruis::localization& loc() const noexcept
+	{
+		return this->localization.get();
+	}
+
+	/**
 	 * @brief Unit values.
 	 */
 	ruis::units units;
