@@ -30,6 +30,15 @@ class renderer : public std::enable_shared_from_this<renderer>
 public:
 	const utki::shared_ref<ruis::render::context> render_context;
 
+	/**
+	 * @brief Shorthand alias for render context.
+	 * @return this->render_context.get().
+	 */
+	ruis::render::context& ctx() noexcept
+	{
+		return this->render_context.get();
+	}
+
 	struct objects {
 		utki::shared_ref<const ruis::render::context::shaders> shaders;
 		utki::shared_ref<const vertex_array> empty_vertex_array;
