@@ -92,6 +92,11 @@ public:
 		void set_children(decltype(iter) i, size_t num_children);
 
 	public:
+		const utki::shared_ref<ruis::context>& get_context() noexcept
+		{
+			return this->context;
+		}
+
 		provider(utki::shared_ref<ruis::context> context) :
 			list_provider(std::move(context))
 		{}
