@@ -111,34 +111,73 @@ size_t tree_view::provider::count() const noexcept
 namespace {
 utki::shared_ref<ruis::container> make_line_end_indent(utki::shared_ref<ruis::context> c)
 {
-	// clang-format
-	return ruis::make::pile(
-		c,
+	// clang-format off
+	return ruis::make::pile(c,
 		{
-			.layout_params{.dims{ruis::style::indent_tree_view_item, ruis::dim::max}}
-    },
-		{ruis::make::column(
-			 c,
-			 {.layout_params{.dims{ruis::dim::max, ruis::dim::max}}},
-			 {ruis::make::rectangle(
-				  c,
-				  {.layout_params{.dims{ruis::length::make_pp(1), ruis::dim::fill}, .weight = 1},
-				   .color_params{.color = ruis::style::color_highlight}}
-			  ),
-			  ruis::make::gap(c, {.layout_params{.dims{ruis::dim::max, ruis::dim::fill}, .weight = 1}})}
-		 ),
-		 ruis::make::row(
-			 c,
-			 {.layout_params{.dims{ruis::dim::max, ruis::dim::max}}},
-			 {ruis::make::gap(c, {.layout_params{.dims{ruis::dim::fill, ruis::dim::max}, .weight = 1}}),
-			  ruis::make::rectangle(
-				  c,
-				  {.layout_params{.dims{ruis::dim::fill, ruis::length::make_pp(1)}, .weight = 1},
-				   .color_params{.color = ruis::style::color_highlight}}
-			  )}
-		 )}
+			.layout_params{
+				.dims{ruis::style::indent_tree_view_item, ruis::dim::max}
+			}
+    	},
+		{
+			ruis::make::column(c,
+			 	{
+					.layout_params{
+						.dims{ruis::dim::max, ruis::dim::max}
+					}
+				},
+			 	{
+					ruis::make::rectangle(c,
+				  		{
+							.layout_params{
+								.dims{ruis::length::make_pp(1), ruis::dim::fill},
+								.weight = 1
+							},
+				   			.color_params{
+								.color = ruis::style::color_highlight
+							}
+						}
+			  		),
+			  		ruis::make::gap(c,
+						{
+							.layout_params{
+								.dims{ruis::dim::max, ruis::dim::fill},
+								.weight = 1
+							}
+						}
+					)
+				}
+		 	),
+		 	ruis::make::row(c,
+			 	{
+					.layout_params{
+						.dims{ruis::dim::max, ruis::dim::max}
+					}
+				},
+			 	{
+					ruis::make::gap(c,
+						{
+							.layout_params{
+								.dims{ruis::dim::fill, ruis::dim::max},
+								.weight = 1
+							}
+						}
+					),
+			  		ruis::make::rectangle(c,
+				  		{
+							.layout_params{
+								.dims{ruis::dim::fill, ruis::length::make_pp(1)},
+								.weight = 1
+							},
+				   			.color_params{
+								.color = ruis::style::color_highlight
+							}
+						}
+			  		)
+				}
+		 	)
+		}
 	);
-	// clang-format
+	// clang-format on
 }
 } // namespace
 
