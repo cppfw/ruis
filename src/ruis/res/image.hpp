@@ -137,7 +137,7 @@ public:
 	/**
 	 * @brief Load image resource from image file.
 	 * Files supported are PNG, JPG, SVG.
-	 * @param ctx - context.
+	 * @param loader - resource loader.
 	 * @param fi - image file.
 	 * @return Loaded resource.
 	 */

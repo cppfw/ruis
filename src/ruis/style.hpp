@@ -11,36 +11,34 @@ class style_value_base
 {
 	utki::shared_ref<style_sheet> owner_sheet;
 
+protected:
+	virtual void reload(const tml::forest& desc) = 0;
+
 public:
 	virtual ~style_value_base() = default;
-
-	virtual void reload(const tml::forest& desc) = 0;
-};
-
-class style_sheet
-{
-	std::shared_ptr<style_value_base> get(std::string_view style_name);
-
-	// TODO: weak_ptr cache and reload cached values
-
-public:
-	template <typename value_type>
-	utki::shared_ref<value_type> get(
-		std::string_view style_name, //
-		const value_type& default_value
-	)
-	{
-		// TODO:
-	}
 };
 
 template <typename value_type>
-class style_value : public style_value_base{
+class style_value : public style_value_base
+{
 	value_type value;
+
+	void reload(const tml::forest& desc) override
+	{
+		this->value = parse(desc);
+	}
+
 public:
-	const value_type& get_value()const noexcept{
+	style_value(const tml::forest& desc) :
+		value(parse(desc))
+	{}
+
+	const value_type& get_value() const noexcept
+	{
 		return this->value;
 	}
+
+	static value_type parse(const tml::forest& desc);
 };
 
 template <typename value_type>
@@ -73,6 +71,23 @@ public:
 			},
 			this->value
 		);
+	}
+};
+
+class style_sheet
+{
+	std::shared_ptr<style_value_base> get(std::string_view style_name);
+
+	// TODO: weak_ptr cache and reload cached values
+
+public:
+	template <typename value_type>
+	styled<value_type> get(
+		std::string_view style_name, //
+		const value_type& default_value
+	)
+	{
+		// TODO:
 	}
 };
 
