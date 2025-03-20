@@ -1,13 +1,16 @@
 #pragma once
 
-#include <utki/shared_ref.hpp>
 #include <tml/tree.hpp>
+#include <utki/shared_ref.hpp>
 
 namespace ruis {
+
+class style_sheet;
 
 class style_value_base
 {
 	utki::shared_ref<style_sheet> owner_sheet;
+
 public:
 	virtual ~style_value_base() = default;
 
@@ -32,20 +35,44 @@ public:
 };
 
 template <typename value_type>
+class style_value : public style_value_base{
+	value_type value;
+public:
+	const value_type& get_value()const noexcept{
+		return this->value;
+	}
+};
+
+template <typename value_type>
 class styled
 {
+	using style_value_ref_type = utki::shared_ref<style_value<value_type>>;
+
 	std::variant<
-	utki::shared_ref<style_value>,
-	value_type> value;
+		style_value_ref_type, //
+		value_type //
+		>
+		value;
 
 public:
 	styled(value_type value) :
 		value(std::move(value))
 	{}
 
-	const value_type& get()const noexcept
+	const value_type& get() const noexcept
 	{
-		// TODO:
+		return std::visit(
+			[](const auto& v) -> const value_type& {
+				using stored_type = utki::remove_const_reference_t<decltype(v)>;
+				if constexpr (std::is_same_v<stored_type, value_type>) {
+					return v;
+				} else {
+					static_assert(std::is_same_v<stored_type, style_value_ref_type>);
+					return v.get().get_value();
+				}
+			},
+			this->value
+		);
 	}
 };
 
