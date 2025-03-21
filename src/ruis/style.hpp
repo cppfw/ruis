@@ -74,11 +74,24 @@ public:
 
 class style_sheet
 {
+public:
+};
+
+class style
+{
 	std::shared_ptr<style_value_base> get(std::string_view style_name);
 
 	// TODO: weak_ptr cache and reload cached values
 
 public:
+	void set(style_sheet ss);
+
+	template <typename value_type>
+	styled<value_type> get(std::string_view style_name)
+	{
+		// TODO:
+	}
+
 	template <typename value_type>
 	styled<value_type> get(
 		std::string_view style_name, //
