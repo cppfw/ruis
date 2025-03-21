@@ -74,10 +74,17 @@ public:
 
 class style_sheet
 {
+	std::map<std::string, tml::forest, std::less<>> name_to_description_map;
+
 public:
+	style_sheet(tml::forest desc);
+
+	const tml::forest& get(std::string_view style_name);
+
+	static style_sheet load(const papki::file& fi);
 };
 
-class style
+class style_provider
 {
 	std::shared_ptr<style_value_base> get(std::string_view style_name);
 
