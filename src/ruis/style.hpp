@@ -9,8 +9,6 @@ class style_sheet;
 
 class style_value_base
 {
-	utki::shared_ref<style_sheet> owner_sheet;
-
 protected:
 	virtual void reload(const tml::forest& desc) = 0;
 

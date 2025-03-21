@@ -66,7 +66,11 @@ public:
 	};
 
 private:
-	std::array<std::unique_ptr<const ruis::font_provider>, size_t(style::enum_size)> fonts;
+	std::array<
+		std::unique_ptr<const ruis::font_provider>, //
+		size_t(style::enum_size) //
+		>
+		fonts;
 
 public:
 	font(
@@ -90,7 +94,10 @@ public:
 	 * @brief Get font object held by this resource.
 	 * @return Font object.
 	 */
-	utki::shared_ref<const ruis::font> get(real size, style font_style = style::normal) const noexcept
+	utki::shared_ref<const ruis::font> get(
+		real size, //
+		style font_style = style::normal
+	) const noexcept
 	{
 		ASSERT(this->fonts[unsigned(style::normal)])
 		// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-constant-array-index)
