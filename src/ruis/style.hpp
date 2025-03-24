@@ -120,6 +120,8 @@ class style_sheet
 	static std::map<std::string, tml::forest, std::less<>> parse(tml::forest desc);
 
 public:
+	style_sheet() = default;
+
 	style_sheet(tml::forest desc);
 
 	const tml::forest& get(std::string_view style_name);
