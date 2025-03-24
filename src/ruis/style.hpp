@@ -95,9 +95,29 @@ public:
 	}
 };
 
+/**
+ * @brief Style sheet.
+ * TODO: write more description
+ * File format:
+ * @verbatim
+ * version{<version-number>}
+ * ruis{
+ *     // ruis standard style values
+ *     <style-name>{<style-value>}
+ *     ...
+ * }
+ * user{
+ *     // user defined style values
+ *     <style-name>{<style-value>}
+ *     ...
+ * }
+ * @endverbatim
+ */
 class style_sheet
 {
 	std::map<std::string, tml::forest, std::less<>> name_to_description_map;
+
+	static std::map<std::string, tml::forest, std::less<>> parse(tml::forest desc);
 
 public:
 	style_sheet(tml::forest desc);
