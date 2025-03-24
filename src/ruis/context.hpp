@@ -29,8 +29,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "util/units.hpp"
 
 #include "resource_loader.hpp"
-#include "updateable.hpp"
 #include "style.hpp"
+#include "updateable.hpp"
 
 namespace ruis {
 

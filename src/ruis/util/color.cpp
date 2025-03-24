@@ -19,22 +19,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 /* ================ LICENSE END ================ */
 
-#pragma once
+#include "color.hpp"
 
-#include <cstdint>
-
-#include "util/length.hpp"
-
-namespace ruis::default_style {
-
-constexpr uint32_t color_background = 0xff353535;
-constexpr uint32_t color_middleground = 0xff424242;
-constexpr uint32_t color_foreground = 0xff505050;
-
-constexpr uint32_t color_text_normal = 0xffffffff;
-
-constexpr uint32_t color_highlight = 0xffad9869;
-
-constexpr ruis::length indent_tree_view_item = ruis::length::make_pp(17);
-
-} // namespace ruis::default_style
+using namespace ruis;

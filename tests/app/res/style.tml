@@ -1,9 +1,13 @@
-color_background{0xff353535}
-color_middleground{0xff424242}
-color_foreground{0xff505050}
+version{1}
+ruis{
+    color_background{0xff353535}
+    color_middleground{0xff424242}
+    color_foreground{0xff505050}
 
-color_text_normal{0xffffffff}
+    color_text_normal{0xffffffff}
 
-color_highlight{0xffad9869}
+    color_highlight{0xffad9869}
 
-length_tree_view_item_indent{17pp}
+    length_tree_view_item_indent{17pp}
+}
+user{}
