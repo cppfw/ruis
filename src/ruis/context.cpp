@@ -36,6 +36,7 @@ context::context(
 	updater(std::move(updater)),
 	cursor_stack(std::move(params.set_mouse_cursor_function)),
 	localization(std::move(params.localization)),
+	style(this->res_loader),
 	units(std::move(params.units))
 {
 	if (!this->post_to_ui_thread_function) {

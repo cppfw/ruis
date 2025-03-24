@@ -25,7 +25,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "util/length.hpp"
 
-namespace ruis::style {
+namespace ruis::default_style {
 
 constexpr uint32_t color_background = 0xff353535;
 constexpr uint32_t color_middleground = 0xff424242;

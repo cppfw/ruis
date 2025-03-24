@@ -169,7 +169,7 @@ public:
                                 .visible = false
                             },
                             .color_params{
-                                .color = ruis::style::color_highlight
+                                .color = ruis::default_style::color_highlight
                             }
                         }
                     ),

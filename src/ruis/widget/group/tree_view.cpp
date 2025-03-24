@@ -115,7 +115,7 @@ utki::shared_ref<ruis::container> make_line_end_indent(utki::shared_ref<ruis::co
 	return ruis::make::pile(c,
 		{
 			.layout_params{
-				.dims{ruis::style::indent_tree_view_item, ruis::dim::max}
+				.dims{ruis::default_style::indent_tree_view_item, ruis::dim::max}
 			}
     	},
 		{
@@ -133,7 +133,7 @@ utki::shared_ref<ruis::container> make_line_end_indent(utki::shared_ref<ruis::co
 								.weight = 1
 							},
 				   			.color_params{
-								.color = ruis::style::color_highlight
+								.color = ruis::default_style::color_highlight
 							}
 						}
 			  		),
@@ -169,7 +169,7 @@ utki::shared_ref<ruis::container> make_line_end_indent(utki::shared_ref<ruis::co
 								.weight = 1
 							},
 				   			.color_params{
-								.color = ruis::style::color_highlight
+								.color = ruis::default_style::color_highlight
 							}
 						}
 			  		)
@@ -188,7 +188,7 @@ utki::shared_ref<ruis::container> make_line_middle_indent(utki::shared_ref<ruis:
 	return ruis::make::pile(c,
 		{
 			.layout_params{
-				.dims{ruis::style::indent_tree_view_item, ruis::dim::max}
+				.dims{ruis::default_style::indent_tree_view_item, ruis::dim::max}
 			}
 		},
 		{
@@ -198,7 +198,7 @@ utki::shared_ref<ruis::container> make_line_middle_indent(utki::shared_ref<ruis:
 						.dims{ruis::length::make_pp(1), ruis::dim::max}
 					},
 					.color_params{
-						.color = ruis::style::color_highlight
+						.color = ruis::default_style::color_highlight
 					}
 				}
 			),
@@ -224,7 +224,7 @@ utki::shared_ref<ruis::container> make_line_middle_indent(utki::shared_ref<ruis:
 								.weight = 1
 							},
 							.color_params{
-								.color = ruis::style::color_highlight
+								.color = ruis::default_style::color_highlight
 							}
 						}
 					)
@@ -273,7 +273,7 @@ utki::shared_ref<ruis::widget> make_vertical_line_indent(utki::shared_ref<ruis::
 	return ruis::make::pile(c,
 		{
 			.layout_params{
-				.dims{ruis::style::indent_tree_view_item, ruis::dim::fill}
+				.dims{ruis::default_style::indent_tree_view_item, ruis::dim::fill}
 			}
 		},
 		{
@@ -283,7 +283,7 @@ utki::shared_ref<ruis::widget> make_vertical_line_indent(utki::shared_ref<ruis::
 						.dims{ruis::length::make_pp(1), ruis::dim::fill}
 					},
 					.color_params{
-						.color = ruis::style::color_highlight
+						.color = ruis::default_style::color_highlight
 					}
 				}
 			)
@@ -300,7 +300,7 @@ utki::shared_ref<ruis::widget> make_empty_space_indent(utki::shared_ref<ruis::co
 	return ruis::make::gap(c,
 		{
 			.layout_params{
-				.dims{ruis::style::indent_tree_view_item, ruis::length::make_px(0)}
+				.dims{ruis::default_style::indent_tree_view_item, ruis::length::make_px(0)}
 			}
 		}
 	);
