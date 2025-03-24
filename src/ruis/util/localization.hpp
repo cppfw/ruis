@@ -70,6 +70,7 @@ public:
 
 	const std::string& id() const
 	{
+		// TODO: make empty static string and return it in case of empty()?
 		ASSERT(!this->empty())
 		return this->iter->first;
 	}
