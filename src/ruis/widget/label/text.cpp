@@ -62,7 +62,7 @@ void text::render(const ruis::matrix4& matrix) const
 
 	font.render(
 		matr, //
-		ruis::color_to_vec4f(this->get_current_color()),
+		this->get_current_color().to_vec4f(),
 		this->get_string()
 	);
 }

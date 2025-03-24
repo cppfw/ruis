@@ -27,7 +27,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../config.hpp"
 #include "../render/vertex_array.hpp"
 #include "../resource_loader.hpp"
-#include "../util/util.hpp"
+#include "../util/color.hpp"
 
 namespace ruis::res {
 
@@ -87,7 +87,10 @@ public:
 	 * @param stops - array of gradient stops.
 	 * @param vertical - if true, the gradient is vertical. If false, the gradient is horizontal.
 	 */
-	void set(std::vector<std::tuple<real, uint32_t>>& stops, bool vertical);
+	void set(
+		std::vector<std::tuple<real, color>>& stops, //
+		bool vertical
+	);
 
 	/**
 	 * @brief render gradient.

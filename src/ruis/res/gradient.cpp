@@ -35,7 +35,7 @@ ruis::res::gradient::gradient(utki::shared_ref<ruis::render::renderer> renderer)
 {}
 
 void gradient::set(
-	std::vector<std::tuple<real, uint32_t>>& stops, //
+	std::vector<std::tuple<real, color>>& stops, //
 	bool vertical
 )
 {
@@ -46,7 +46,7 @@ void gradient::set(
 		{
 			auto c = std::get<1>(s);
 			// TODO: implement some utility function for converting color from uint32_t
-			auto clr = color_to_vec4f(c);
+			auto clr = c.to_vec4f();
 
 			colors.push_back(clr);
 			colors.push_back(clr);
@@ -93,7 +93,7 @@ utki::shared_ref<gradient> gradient::load(
 {
 	bool vertical = false;
 
-	std::vector<std::tuple<real, uint32_t>> stops;
+	std::vector<std::tuple<real, color>> stops;
 
 	const char* stop_c = "stop";
 
@@ -102,12 +102,12 @@ utki::shared_ref<gradient> gradient::load(
 			vertical = get_property_value(p).to_bool();
 		} else if (p.value == stop_c) {
 			real pos = 0;
-			uint32_t color = std::numeric_limits<uint32_t>::max(); // white by default
+			auto color = color::default_value();
 			for (auto& pp : p.children) {
 				if (pp.value == "pos") {
 					pos = get_property_value(pp).to_float();
 				} else if (pp.value == "color") {
-					color = get_property_value(pp).to_uint32();
+					color = color::parse_style_value({get_property_value(pp)});
 				}
 			}
 			stops.emplace_back(pos, color);
@@ -116,7 +116,10 @@ utki::shared_ref<gradient> gradient::load(
 
 	auto ret = utki::make_shared<gradient>(loader.renderer);
 
-	ret.get().set(stops, vertical);
+	ret.get().set(
+		stops, //
+		vertical
+	);
 
 	return ret;
 }

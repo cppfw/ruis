@@ -92,8 +92,3 @@ dimension ruis::parse_layout_dimension_value(const tml::leaf& l, const ruis::uni
 	}
 	return parse_dimension_value(l, units);
 }
-
-r4::vector4<float> ruis::color_to_vec4f(uint32_t color)
-{
-	return rasterimage::to<float>(rasterimage::from_32bit_pixel(color));
-}

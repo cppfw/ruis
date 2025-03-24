@@ -23,8 +23,12 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <cstdint>
 
+#include <rasterimage/operations.hpp>
+#include <tml/tree.hpp>
+
 namespace ruis {
 
+// TODO: inherit from r4::vector4<uint8_t>?
 class color
 {
 	uint32_t rgba;
@@ -37,6 +41,24 @@ public:
 	uint32_t to_uint32_t() const noexcept
 	{
 		return this->rgba;
+	}
+
+	r4::vector4<float> to_vec4f() const noexcept
+	{
+		return rasterimage::to<float>(rasterimage::from_32bit_pixel(this->rgba));
+	}
+
+	bool operator==(const color& c) const noexcept
+	{
+		return this->rgba == c.rgba;
+	}
+
+	static color parse_style_value(const tml::forest& desc);
+
+	static color default_value() noexcept
+	{
+		constexpr auto default_color_value = 0xffffffff;
+		return default_color_value;
 	}
 };
 

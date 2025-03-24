@@ -94,7 +94,7 @@ void text_input_line::render(const ruis::matrix4& matrix) const
 		ASSERT(this->first_visible_char_index <= this->get_string().size())
 		font.render(
 			matr,
-			ruis::color_to_vec4f(this->get_current_color()),
+			this->get_current_color().to_vec4f(),
 			this->get_string()
 				.substr(this->first_visible_char_index, this->get_string().size() - this->first_visible_char_index)
 		);
@@ -109,7 +109,7 @@ void text_input_line::render(const ruis::matrix4& matrix) const
 		r.shaders().color_pos->render(
 			matr,
 			r.obj().pos_quad_01_vao.get(), //
-			this->get_current_color()
+			this->get_current_color().to_vec4f()
 		);
 	}
 }

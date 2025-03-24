@@ -107,8 +107,6 @@ length parse_dimension_value(const tml::leaf& l, const ruis::units& units);
  */
 ruis::dimension parse_layout_dimension_value(const tml::leaf& l, const ruis::units& units);
 
-r4::vector4<float> color_to_vec4f(uint32_t color);
-
 inline const tml::leaf& get_property_value(const tml::tree& p)
 {
 	if (p.children.size() != 1) {

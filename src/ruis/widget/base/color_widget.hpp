@@ -21,6 +21,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
+#include "../../util/color.hpp"
 #include "../widget.hpp"
 
 namespace ruis {
@@ -36,10 +37,10 @@ class color_widget : public virtual widget
 public:
 	struct parameters {
 		constexpr static auto default_color = 0xffffffff;
-		uint32_t color = default_color;
+		ruis::color color = default_color;
 
 		constexpr static auto default_disabled_color = 0xff808080;
-		uint32_t disabled_color = default_disabled_color;
+		ruis::color disabled_color = default_disabled_color;
 	};
 
 private:
@@ -57,16 +58,16 @@ public:
 
 	~color_widget() override = default;
 
-	void set_color(uint32_t color);
+	void set_color(ruis::color color);
 
-	uint32_t get_color() const noexcept
+	color get_color() const noexcept
 	{
 		return this->params.color;
 	}
 
-	void set_disabled_color(uint32_t color);
+	void set_disabled_color(ruis::color color);
 
-	uint32_t get_disabled_color() const noexcept
+	color get_disabled_color() const noexcept
 	{
 		return this->params.disabled_color;
 	}
@@ -75,7 +76,7 @@ public:
 	 * @brief Get color for current enabled/disabled state.
 	 * @return color for the current enabled/disabled state.
 	 */
-	uint32_t get_current_color() const noexcept;
+	color get_current_color() const noexcept;
 
 	/**
 	 * @brief Color change callback.
