@@ -71,11 +71,9 @@ const tst::set set("style", [](tst::suite& suite){
         s.set(std::move(ss));
 
         auto color_bg = s.get<ruis::color>("color_background"sv);
-
         tst::check_eq(color_bg.get(), ruis::color(0xff353535), SL);
 
         auto length_ident = s.get<ruis::length>("length_tree_view_item_indent"sv);
-
         tst::check_eq(length_ident.get(), ruis::length::make_pp(17), SL);
     });
 
