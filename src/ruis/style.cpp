@@ -86,14 +86,41 @@ const tml::forest* style_sheet::get(std::string_view style_id) const noexcept
 }
 
 style::style(utki::shared_ref<ruis::resource_loader> loader) :
-	loader(std::move(loader))
+	loader(std::move(loader)),
+	cur_style_sheet(utki::make_shared<style_sheet>())
 {}
 
-void style::set(style_sheet ss)
+void style::set(utki::shared_ref<style_sheet> ss)
 {
 	this->cur_style_sheet = std::move(ss);
 
-	// TODO: reload cache
+	std::vector<std::string_view> keys_to_remove;
+
+	// reload cache
+	for (auto& pair : this->cache) {
+		auto sv = pair.second.lock();
+		if (!sv) {
+			// the weak reference has expired
+			keys_to_remove.emplace_back(pair.first);
+			continue;
+		}
+
+		const auto* desc = this->cur_style_sheet.get().get(pair.first);
+		if (!desc) {
+			// there is no such style value id in the new style sheet
+			keys_to_remove.emplace_back(pair.first);
+			sv->reload({}); // this will set the default value
+			continue;
+		}
+
+		sv->reload(*desc);
+	}
+
+	// remove unused cache entries
+	for (const auto& k : keys_to_remove) {
+		auto i = this->cache.find(k);
+		this->cache.erase(i);
+	}
 }
 
 std::shared_ptr<style_value_base> style::get_from_cache(std::string_view id)

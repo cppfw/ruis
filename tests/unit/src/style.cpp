@@ -62,7 +62,7 @@ const tst::set set("style", [](tst::suite& suite){
             user{}
         )qwertyuiop"s);
 
-        ruis::style_sheet ss(std::move(desc));
+        auto ss = utki::make_shared<ruis::style_sheet>(std::move(desc));
 
         auto c = make_dummy_context();
 
@@ -77,6 +77,60 @@ const tst::set set("style", [](tst::suite& suite){
         tst::check_eq(length_ident.get(), ruis::length::make_pp(17), SL);
     });
 
-    // TODO: test that style values are updated when style sheet is changed
+    // test that style values are updated when style sheet is changed
+    suite.add("style__values_are_updated_when_sheet_changes", [](){
+        auto c = make_dummy_context();
+
+        ruis::style s(c.get().res_loader);
+
+        auto ss1 = utki::make_shared<ruis::style_sheet>(
+            tml::read(
+                R"qwertyuiop(
+                    version{1}
+                    ruis{
+                        color_background{0xff353535}
+                        length_tree_view_item_indent{17pp}
+                    }
+                )qwertyuiop"s
+            )
+        );
+
+        s.set(ss1);
+
+        auto color_bg = s.get<ruis::color>("color_background"sv);
+        tst::check_eq(color_bg.get(), ruis::color(0xff353535), SL);
+
+        auto length_ident = s.get<ruis::length>("length_tree_view_item_indent"sv);
+        tst::check_eq(length_ident.get(), ruis::length::make_pp(17), SL);
+
+        auto ss2 = utki::make_shared<ruis::style_sheet>(
+            tml::read(
+                R"qwertyuiop(
+                    version{1}
+                    ruis{
+                        color_background{0xff00ff00}
+                        length_tree_view_item_indent{13pp}
+                    }
+                )qwertyuiop"s
+            )
+        );
+
+        s.set(ss2);
+
+        tst::check_eq(color_bg.get(), ruis::color(0xff00ff00), SL);
+        tst::check_eq(length_ident.get(), ruis::length::make_pp(13), SL);
+
+        {
+            auto color_bg = s.get<ruis::color>("color_background"sv);
+            tst::check_eq(color_bg.get(), ruis::color(0xff00ff00), SL);
+        }
+
+        {
+            auto length_ident = s.get<ruis::length>("length_tree_view_item_indent"sv);
+            tst::check_eq(length_ident.get(), ruis::length::make_pp(13), SL);
+        }
+    });
+
+    // TODO: test resource type style values
 });
 }

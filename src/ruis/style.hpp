@@ -32,6 +32,8 @@ class style_sheet;
 
 class style_value_base
 {
+	friend class style;
+
 protected:
 	virtual void reload(const tml::forest& desc) = 0;
 
@@ -152,7 +154,7 @@ class style
 {
 	utki::shared_ref<ruis::resource_loader> loader;
 
-	ruis::style_sheet cur_style_sheet;
+	utki::shared_ref<ruis::style_sheet> cur_style_sheet;
 
 	std::map<std::string, std::weak_ptr<style_value_base>, std::less<>> cache;
 
@@ -166,7 +168,7 @@ class style
 public:
 	style(utki::shared_ref<ruis::resource_loader> loader);
 
-	void set(style_sheet ss);
+	void set(utki::shared_ref<style_sheet> ss);
 
 	template <typename value_type>
 	styled<value_type> get(std::string_view id)
@@ -181,7 +183,7 @@ public:
 			return {utki::shared_ref<const style_value<value_type>>(std::move(sv))};
 		}
 
-		const auto* desc = this->cur_style_sheet.get(id);
+		const auto* desc = this->cur_style_sheet.get().get(id);
 		if (!desc) {
 			return value_type::default_value();
 		}
