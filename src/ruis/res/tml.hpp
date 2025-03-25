@@ -46,18 +46,14 @@ class tml : public resource
 {
 	friend class ruis::resource_loader;
 
-	::tml::forest s;
+	::tml::forest tml_forest;
 
 public:
 	/**
 	 * @brief Create tml resource.
-	 * @param c - context.
-	 * @param s - tml forest to initialize the resource with.
+	 * @param tml_forest - tml forest to initialize the resource with.
 	 */
-	tml( //
-		utki::shared_ref<ruis::context> c,
-		::tml::forest s
-	);
+	tml(::tml::forest tml_forest);
 
 	tml(const tml&) = delete;
 	tml& operator=(const tml&) = delete;
@@ -69,12 +65,12 @@ public:
 
 	const ::tml::forest& forest() const noexcept
 	{
-		return this->s;
+		return this->tml_forest;
 	}
 
 private:
 	static utki::shared_ref<tml> load( //
-		utki::shared_ref<ruis::context> ctx,
+		ruis::resource_loader& loader,
 		const ::tml::forest& desc,
 		const papki::file& fi
 	);

@@ -1,6 +1,8 @@
 #include <tst/set.hpp>
 #include <tst/check.hpp>
 
+#include <papki/span_file.hpp>
+
 #include <ruis/style.hpp>
 #include <ruis/util/color.hpp>
 #include <ruis/util/length.hpp>
@@ -131,6 +133,34 @@ const tst::set set("style", [](tst::suite& suite){
         }
     });
 
-    // TODO: test resource type style values
+    // test resource type style values
+    suite.add("style__resource_values", [](){
+        auto c = make_dummy_context();
+
+        auto res_pack_desc = R"qwertyuiop(
+            tml_resource{
+                forest{Hello world!}
+            }
+        )qwertyuiop"s;
+
+        c.get().loader().mount_res_pack(papki::span_file(utki::make_span(res_pack_desc)));
+
+        ruis::style s(c.get().res_loader);
+
+        auto ss1 = utki::make_shared<ruis::style_sheet>(
+            tml::read(
+                R"qwertyuiop(
+                    version{1}
+                    ruis{
+                        tml_style_value{tml_resource}
+                    }
+                )qwertyuiop"s
+            )
+        );
+
+        s.set(ss1);
+
+        // TODO:
+    });
 });
 }

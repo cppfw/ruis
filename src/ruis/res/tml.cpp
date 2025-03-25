@@ -24,29 +24,27 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../context.hpp"
 #include "../resource_loader.hpp"
 
+using namespace std::string_view_literals;
+
 using namespace ruis::res;
 
-ruis::res::tml::tml(
-	utki::shared_ref<ruis::context> c, //
-	::tml::forest forest
-) :
-	s(std::move(forest))
+ruis::res::tml::tml(::tml::forest tml_forest) :
+	tml_forest(std::move(tml_forest))
 {}
 
 utki::shared_ref<ruis::res::tml> ruis::res::tml::load( //
-	utki::shared_ref<ruis::context> ctx,
+	ruis::resource_loader& loader,
 	const ::tml::forest& desc,
 	const papki::file& fi
 )
 {
 	for (auto& p : desc) {
-		if (p.value == "file") {
+		if (p.value == "file"sv) {
 			fi.set_path(get_property_value(p).string);
+		} else if (p.value == "forest"sv) {
+			return utki::make_shared<tml>(p.children);
 		}
 	}
 
-	return utki::make_shared<tml>( //
-		std::move(ctx),
-		::tml::read(fi)
-	);
+	return utki::make_shared<tml>(::tml::read(fi));
 }
