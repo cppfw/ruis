@@ -2,6 +2,7 @@
 #include <tst/check.hpp>
 
 #include <ruis/style.hpp>
+#include <ruis/util/color.hpp>
 
 #include "../../harness/util/dummy_context.hpp"
 
@@ -10,6 +11,7 @@ using namespace std::string_view_literals;
 
 namespace{
 const tst::set set("style", [](tst::suite& suite){
+    // test style_sheet loading and getting style value descriptions
     suite.add("style_sheet__basic", [](){
         auto desc = tml::read(R"qwertyuiop(
                 version{1}
@@ -41,6 +43,7 @@ const tst::set set("style", [](tst::suite& suite){
         tst::check(!non_existent, SL);
     });
 
+    // test that style values can be obtained from style
     suite.add("style__basic", [](){
         auto desc = tml::read(R"qwertyuiop(
             version{1}
@@ -66,7 +69,9 @@ const tst::set set("style", [](tst::suite& suite){
 
         s.set(std::move(ss));
 
-        // TODO:
+        auto color_bg = s.get<ruis::color>("color_background"sv);
+
+        tst::check_eq(color_bg.get(), ruis::color(0xff353535), SL);
     });
 });
 }

@@ -72,7 +72,7 @@ std::map<std::string, tml::forest, std::less<>> style_sheet::parse(tml::forest d
 
 style_sheet style_sheet::load(const papki::file& fi)
 {
-	return style_sheet(tml::read(fi));
+	return {tml::read(fi)};
 }
 
 const tml::forest* style_sheet::get(std::string_view style_id) const noexcept
@@ -113,15 +113,15 @@ std::shared_ptr<style_value_base> style::get_from_cache(std::string_view id)
 
 void style::store_to_cache(
 	std::string_view id, //
-	utki::shared_ref<style_value_base> v
+	std::weak_ptr<style_value_base> v
 )
 {
 	ASSERT(!utki::contains(this->cache, id))
 
-	auto res = this->cache.insert(
+	[[maybe_unused]] auto res = this->cache.insert(
 		std::make_pair(
 			std::string(id), //
-			utki::make_weak(v.to_shared_ptr())
+			std::move(v)
 		)
 	);
 

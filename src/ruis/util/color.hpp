@@ -28,29 +28,21 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
-// TODO: inherit from r4::vector4<uint8_t>?
-class color
+class color : public r4::vector4<uint8_t>
 {
-	uint32_t rgba;
-
 public:
 	color(uint32_t rgba) :
-		rgba(rgba)
+		r4::vector4<uint8_t>(rasterimage::from_32bit_pixel(rgba))
 	{}
 
 	uint32_t to_uint32_t() const noexcept
 	{
-		return this->rgba;
+		return rasterimage::to_32bit_pixel(*this);
 	}
 
 	r4::vector4<float> to_vec4f() const noexcept
 	{
-		return rasterimage::to<float>(rasterimage::from_32bit_pixel(this->rgba));
-	}
-
-	bool operator==(const color& c) const noexcept
-	{
-		return this->rgba == c.rgba;
+		return rasterimage::to<float>(*this);
 	}
 
 	static color parse_style_value(const tml::forest& desc);

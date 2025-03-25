@@ -35,10 +35,19 @@ class style_value_base
 protected:
 	virtual void reload(const tml::forest& desc) = 0;
 
+	style_value_base() = default;
+
 public:
+	style_value_base(const style_value_base&) = delete;
+	style_value_base& operator=(const style_value_base&) = delete;
+
+	style_value_base(style_value_base&&) = delete;
+	style_value_base& operator=(style_value_base&&) = delete;
+
 	virtual ~style_value_base() = default;
 };
 
+// TODO: make a concept which requires value_type::default_value() and value_type::parse_style_value(tml::forest)
 template <typename value_type>
 class style_value : public style_value_base
 {
@@ -46,25 +55,25 @@ class style_value : public style_value_base
 
 	void reload(const tml::forest& desc) override
 	{
-		this->value = parse(desc);
+		this->value = value_type::parse_style_value(desc);
 	}
 
 public:
 	style_value(const tml::forest& desc) :
-		value(parse(desc))
+		value(value_type::parse_style_value(desc))
 	{}
 
 	const value_type& get_value() const noexcept
 	{
 		return this->value;
 	}
-
-	static value_type parse(const tml::forest& desc);
 };
 
 template <typename value_type>
 class styled
 {
+	friend class style;
+
 	using style_value_ref_type = utki::shared_ref<const style_value<value_type>>;
 
 	std::variant<
@@ -72,6 +81,10 @@ class styled
 		value_type //
 		>
 		value;
+
+	styled(style_value_ref_type sv) :
+		value(std::move(sv))
+	{}
 
 public:
 	styled(value_type value) :
@@ -147,7 +160,7 @@ class style
 
 	void store_to_cache(
 		std::string_view id, //
-		utki::shared_ref<style_value_base> v
+		std::weak_ptr<style_value_base> v
 	);
 
 public:
@@ -156,15 +169,29 @@ public:
 	void set(style_sheet ss);
 
 	template <typename value_type>
-	styled<value_type> get(std::string_view style_name)
+	styled<value_type> get(std::string_view id)
 	{
-		// TODO:
-	}
+		if (auto svb = this->get_from_cache(id)) {
+			auto sv = std::dynamic_pointer_cast<style_value<value_type>>(svb);
+			if (!sv) {
+				throw std::invalid_argument(
+					"style::get(id): requested value_type does not match the one stored in cache"
+				);
+			}
+			return {utki::shared_ref<const style_value<value_type>>(std::move(sv))};
+		}
 
-	template <typename resource_type>
-	styled<std::shared_ptr<resource_type>> get_res(std::string_view style_name)
-	{
-		// TODO:
+		const auto* desc = this->cur_style_sheet.get(id);
+		if (!desc) {
+			return value_type::default_value();
+		}
+
+		auto ret = utki::make_shared<style_value<value_type>>(*desc);
+		this->store_to_cache(
+			id, //
+			ret.to_shared_ptr()
+		);
+		return {ret};
 	}
 };
 

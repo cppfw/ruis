@@ -29,5 +29,5 @@ color color::parse_style_value(const tml::forest& desc)
 		return color::default_value();
 	}
 
-	return color(desc.front().value.to_uint32());
+	return {desc.front().value.to_uint32()};
 }
