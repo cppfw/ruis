@@ -21,6 +21,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
+#include <tml/tree.hpp>
+
 #include "../context.hpp"
 
 namespace ruis {
@@ -100,6 +102,13 @@ public:
 	{
 		return {value, units::mm};
 	}
+
+	constexpr static length default_value()
+	{
+		return length::make_pp(1);
+	}
+
+	static length parse_style_value(const tml::forest& desc);
 
 	friend std::ostream& ruis::operator<<(std::ostream& o, const length& l);
 };

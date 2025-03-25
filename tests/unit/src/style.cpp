@@ -3,6 +3,7 @@
 
 #include <ruis/style.hpp>
 #include <ruis/util/color.hpp>
+#include <ruis/util/length.hpp>
 
 #include "../../harness/util/dummy_context.hpp"
 
@@ -72,6 +73,12 @@ const tst::set set("style", [](tst::suite& suite){
         auto color_bg = s.get<ruis::color>("color_background"sv);
 
         tst::check_eq(color_bg.get(), ruis::color(0xff353535), SL);
+
+        auto length_ident = s.get<ruis::length>("length_tree_view_item_indent"sv);
+
+        tst::check_eq(length_ident.get(), ruis::length::make_pp(17), SL);
     });
+
+    // TODO: test that style values are updated when style sheet is changed
 });
 }

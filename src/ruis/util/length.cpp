@@ -21,6 +21,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "length.hpp"
 
+using namespace std::string_view_literals;
+
 using namespace ruis;
 
 real length::get_internal(const ruis::units& units) const noexcept
@@ -56,4 +58,28 @@ std::ostream& ruis::operator<<(std::ostream& o, const ruis::length& l)
 	}
 
 	return o;
+}
+
+length length::parse_style_value(const tml::forest& desc)
+{
+	if (desc.empty()) {
+		return length::default_value();
+	}
+
+	utki::string_parser parser(desc.front().value.string);
+
+	auto num = parser.read_number<ruis::real>();
+
+	if (parser.empty()) {
+		return length::make_px(num);
+	}
+
+	auto unit = parser.read_chars(std::numeric_limits<size_t>::max());
+
+	if (unit == "pp"sv) {
+		return length::make_pp(num);
+	} else if (unit == "mm"sv) {
+		return length::make_mm(num);
+	}
+	throw std::invalid_argument(utki::cat("length::parse_style_value(desc): unknown units: ", unit));
 }
