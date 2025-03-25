@@ -35,7 +35,13 @@ class style_value_base
 protected:
 	virtual void reload(const tml::forest& desc) = 0;
 
+	style_value_base(std::string id) :
+		id(std::move(id))
+	{}
+
 public:
+	const std::string id;
+
 	virtual ~style_value_base() = default;
 };
 
@@ -50,7 +56,11 @@ class style_value : public style_value_base
 	}
 
 public:
-	style_value(const tml::forest& desc) :
+	style_value(
+		std::string id, //
+		const tml::forest& desc
+	) :
+		style_value_base(std::move(id)),
 		value(parse(desc))
 	{}
 
@@ -149,13 +159,7 @@ public:
 	}
 
 	template <typename resource_type>
-	styled<utki::shared_ref<resource_type>> get_res(std::string_view style_name)
-	{
-		// TODO:
-	}
-
-	template <typename resource_type>
-	styled<std::shared_ptr<resource_type>> try_get_res(std::string_view style_name)
+	styled<std::shared_ptr<resource_type>> get_res(std::string_view style_name)
 	{
 		// TODO:
 	}

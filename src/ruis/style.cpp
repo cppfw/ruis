@@ -24,10 +24,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace std::string_view_literals;
 using namespace ruis;
 
-// TODO: remove
-styled<uint32_t> s(32);
-uint32_t v = s.get();
-
 style::style(utki::shared_ref<ruis::resource_loader> loader) :
 	loader(std::move(loader))
 {}
