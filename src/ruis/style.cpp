@@ -29,7 +29,7 @@ style::style(utki::shared_ref<ruis::resource_loader> loader) :
 {}
 
 style_sheet::style_sheet(tml::forest desc) :
-	name_to_description_map(parse(std::move(desc)))
+	id_to_description_map(parse(std::move(desc)))
 {}
 
 std::map<std::string, tml::forest, std::less<>> style_sheet::parse(tml::forest desc)
@@ -77,4 +77,14 @@ std::map<std::string, tml::forest, std::less<>> style_sheet::parse(tml::forest d
 style_sheet style_sheet::load(const papki::file& fi)
 {
 	return style_sheet(tml::read(fi));
+}
+
+const tml::forest* style_sheet::get(std::string_view style_id) const noexcept
+{
+	auto i = this->id_to_description_map.find(style_id);
+	if (i == this->id_to_description_map.end()) {
+		return nullptr;
+	}
+
+	return &i->second;
 }

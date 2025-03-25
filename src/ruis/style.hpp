@@ -125,7 +125,7 @@ public:
  */
 class style_sheet
 {
-	std::map<std::string, tml::forest, std::less<>> name_to_description_map;
+	std::map<std::string, tml::forest, std::less<>> id_to_description_map;
 
 	static std::map<std::string, tml::forest, std::less<>> parse(tml::forest desc);
 
@@ -134,7 +134,13 @@ public:
 
 	style_sheet(tml::forest desc);
 
-	const tml::forest& get(std::string_view style_name);
+	/**
+	 * @brief Get style value description.
+	 * @param style_id - id of the style value.
+	 * @return pointer to the style value description if present in the style sheet.
+	 * @return nullptr in case the style id is not present in the style sheet.
+	 */
+	const tml::forest* get(std::string_view style_id) const noexcept;
 
 	static style_sheet load(const papki::file& fi);
 };
