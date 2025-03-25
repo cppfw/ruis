@@ -35,13 +35,7 @@ class style_value_base
 protected:
 	virtual void reload(const tml::forest& desc) = 0;
 
-	style_value_base(std::string id) :
-		id(std::move(id))
-	{}
-
 public:
-	const std::string id;
-
 	virtual ~style_value_base() = default;
 };
 
@@ -56,11 +50,7 @@ class style_value : public style_value_base
 	}
 
 public:
-	style_value(
-		std::string id, //
-		const tml::forest& desc
-	) :
-		style_value_base(std::move(id)),
+	style_value(const tml::forest& desc) :
 		value(parse(desc))
 	{}
 
@@ -75,7 +65,7 @@ public:
 template <typename value_type>
 class styled
 {
-	using style_value_ref_type = utki::shared_ref<style_value<value_type>>;
+	using style_value_ref_type = utki::shared_ref<const style_value<value_type>>;
 
 	std::variant<
 		style_value_ref_type, //
@@ -149,9 +139,16 @@ class style
 {
 	utki::shared_ref<ruis::resource_loader> loader;
 
-	std::shared_ptr<style_value_base> get(std::string_view style_name);
+	ruis::style_sheet cur_style_sheet;
 
-	// TODO: weak_ptr cache and reload cached values
+	std::map<std::string, std::weak_ptr<style_value_base>, std::less<>> cache;
+
+	std::shared_ptr<style_value_base> get_from_cache(std::string_view id);
+
+	void store_to_cache(
+		std::string_view id, //
+		utki::shared_ref<style_value_base> v
+	);
 
 public:
 	style(utki::shared_ref<ruis::resource_loader> loader);

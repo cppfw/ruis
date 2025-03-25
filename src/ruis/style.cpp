@@ -24,10 +24,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace std::string_view_literals;
 using namespace ruis;
 
-style::style(utki::shared_ref<ruis::resource_loader> loader) :
-	loader(std::move(loader))
-{}
-
 style_sheet::style_sheet(tml::forest desc) :
 	id_to_description_map(parse(std::move(desc)))
 {}
@@ -87,4 +83,47 @@ const tml::forest* style_sheet::get(std::string_view style_id) const noexcept
 	}
 
 	return &i->second;
+}
+
+style::style(utki::shared_ref<ruis::resource_loader> loader) :
+	loader(std::move(loader))
+{}
+
+void style::set(style_sheet ss)
+{
+	this->cur_style_sheet = std::move(ss);
+
+	// TODO: reload cache
+}
+
+std::shared_ptr<style_value_base> style::get_from_cache(std::string_view id)
+{
+	auto i = this->cache.find(id);
+	if (i == this->cache.end()) {
+		return nullptr;
+	}
+
+	auto p = i->second.lock();
+	if (!p) {
+		this->cache.erase(i);
+	}
+
+	return p;
+}
+
+void style::store_to_cache(
+	std::string_view id, //
+	utki::shared_ref<style_value_base> v
+)
+{
+	ASSERT(!utki::contains(this->cache, id))
+
+	auto res = this->cache.insert(
+		std::make_pair(
+			std::string(id), //
+			utki::make_weak(v.to_shared_ptr())
+		)
+	);
+
+	ASSERT(res.second) // insert took place
 }
