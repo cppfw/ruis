@@ -84,14 +84,7 @@ void resource_loader::res_pack_entry::add_resource_to_res_map(
 {
 	ASSERT(!utki::contains(this->cache, id))
 
-	// add the resource to the resources map of ResMan
 	this->cache.insert(std::make_pair(id, utki::make_weak(res)));
-
-	// #ifdef DEBUG
-	//	for(T_ResMap::iterator i = this->res_map->rm.begin(); i != this->res_map->rm.end(); ++i){
-	//		TRACE(<< "\t" << *(*i).first << std::endl)
-	//	}
-	// #endif
 }
 
 std::shared_ptr<resource> resource_loader::res_pack_entry::find_resource_in_res_map(std::string_view id) const
