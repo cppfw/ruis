@@ -110,7 +110,7 @@ public:
 
 private:
 	static utki::shared_ref<font> load(
-		ruis::resource_loader& loader, //
+		const ruis::resource_loader& loader, //
 		const ::tml::forest& desc,
 		const papki::file& fi
 	);

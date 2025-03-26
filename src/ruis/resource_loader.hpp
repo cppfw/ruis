@@ -94,10 +94,14 @@ private:
 		// keep loaded resources map in res_pack_entry, so that unmounted
 		// resource pack removes it's loaded resources map
 		// TODO: use std::unordered_map?
-		std::map<const std::string, std::weak_ptr<resource>, std::less<>> res_map;
+		// mutable because this map is essencially a cache
+		mutable std::map<const std::string, std::weak_ptr<resource>, std::less<>> res_map;
 
-		void add_resource_to_res_map(const utki::shared_ref<resource>& res, std::string_view id);
-		std::shared_ptr<resource> find_resource_in_res_map(std::string_view id);
+		void add_resource_to_res_map(
+			const utki::shared_ref<resource>& res, //
+			std::string_view id
+		) const;
+		std::shared_ptr<resource> find_resource_in_res_map(std::string_view id) const;
 		const tml::forest* find_resource_in_script(std::string_view id) const;
 	};
 
@@ -144,7 +148,7 @@ public:
 	 * @throw TODO:
 	 */
 	template <class resource_type>
-	utki::shared_ref<resource_type> load(std::string_view id);
+	utki::shared_ref<resource_type> load(std::string_view id) const;
 
 private:
 };
@@ -177,7 +181,7 @@ public:
 };
 
 template <class resource_type>
-utki::shared_ref<resource_type> resource_loader::load(std::string_view id)
+utki::shared_ref<resource_type> resource_loader::load(std::string_view id) const
 {
 	for (auto& res_pack : utki::views::reverse(this->res_packs)) {
 		if (auto r = res_pack.find_resource_in_res_map(id)) {

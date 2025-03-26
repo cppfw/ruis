@@ -128,7 +128,7 @@ public:
 
 private:
 	static utki::shared_ref<image> load(
-		ruis::resource_loader& loader,
+		const ruis::resource_loader& loader,
 		const ::tml::forest& desc,
 		const papki::file& fi
 	);
@@ -142,7 +142,7 @@ public:
 	 * @return Loaded resource.
 	 */
 	static utki::shared_ref<image> load( //
-		ruis::resource_loader& loader,
+		const ruis::resource_loader& loader,
 		const papki::file& fi
 	);
 };

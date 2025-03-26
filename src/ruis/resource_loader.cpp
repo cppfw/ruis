@@ -78,9 +78,9 @@ void resource_loader::unmount_res_pack(decltype(res_packs)::const_iterator id)
 }
 
 void resource_loader::res_pack_entry::add_resource_to_res_map(
-	const utki::shared_ref<resource>& res,
+	const utki::shared_ref<resource>& res, //
 	std::string_view id
-)
+) const
 {
 	ASSERT(this->res_map.find(id) == this->res_map.end())
 
@@ -94,7 +94,7 @@ void resource_loader::res_pack_entry::add_resource_to_res_map(
 	// #endif
 }
 
-std::shared_ptr<resource> resource_loader::res_pack_entry::find_resource_in_res_map(std::string_view id)
+std::shared_ptr<resource> resource_loader::res_pack_entry::find_resource_in_res_map(std::string_view id) const
 {
 	auto i = this->res_map.find(id);
 	if (i != this->res_map.end()) {

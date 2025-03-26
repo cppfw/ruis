@@ -114,7 +114,7 @@ private:
 	mutable std::map<real, std::weak_ptr<image_matrix>> cache;
 
 	static utki::shared_ref<nine_patch> load(
-		ruis::resource_loader& loader,
+		const ruis::resource_loader& loader,
 		const ::tml::forest& desc,
 		const papki::file& fi
 	);

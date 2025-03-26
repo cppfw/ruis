@@ -85,7 +85,7 @@ public:
 	}
 
 	static utki::shared_ref<res_raster_image> load( //
-		ruis::resource_loader& loader,
+		const ruis::resource_loader& loader,
 		const papki::file& fi
 	)
 	{
@@ -222,7 +222,7 @@ public:
 	mutable std::map<r4::vector2<unsigned>, std::weak_ptr<texture>> cache;
 
 	static utki::shared_ref<res_svg_image> load( //
-		ruis::resource_loader& loader,
+		const ruis::resource_loader& loader,
 		const papki::file& fi
 	)
 	{
@@ -237,7 +237,7 @@ public:
 } // namespace
 
 utki::shared_ref<image> image::load( //
-	ruis::resource_loader& loader,
+	const ruis::resource_loader& loader,
 	const tml::forest& desc,
 	const papki::file& fi
 )
@@ -256,7 +256,7 @@ utki::shared_ref<image> image::load( //
 }
 
 utki::shared_ref<image> image::load( //
-	ruis::resource_loader& loader,
+	const ruis::resource_loader& loader,
 	const papki::file& fi
 )
 {

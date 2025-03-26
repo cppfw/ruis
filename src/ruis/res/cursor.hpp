@@ -72,7 +72,7 @@ private:
 	friend class ruis::resource_loader;
 
 	static utki::shared_ref<cursor> load(
-		ruis::resource_loader& loader,
+		const ruis::resource_loader& loader,
 		const ::tml::forest& desc,
 		const papki::file& fi
 	);

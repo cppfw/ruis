@@ -69,7 +69,18 @@ class style_value : public style_value_base
 		const ruis::resource_loader& loader
 	)
 	{
-		return value_type::parse_style_value(desc);
+		if constexpr (utki::is_specialization_of_v<std::shared_ptr, value_type>) {
+			static_assert(
+				std::is_base_of_v<ruis::resource, typename value_type::element_type>,
+				"shared_ptr must point to a ruis::resource"
+			);
+			if (desc.empty()) {
+				return nullptr;
+			}
+			return loader.load<typename value_type::element_type>(desc.front().value.string);
+		} else {
+			return value_type::parse_style_value(desc);
+		}
 	}
 
 public:

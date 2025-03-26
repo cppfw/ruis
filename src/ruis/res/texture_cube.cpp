@@ -53,7 +53,7 @@ constexpr auto file_nz_param = "file_nz"sv;
 } // namespace
 
 utki::shared_ref<texture_cube> texture_cube::load(
-	ruis::resource_loader& loader,
+	const ruis::resource_loader& loader,
 	const tml::forest& desc,
 	const papki::file& fi
 )

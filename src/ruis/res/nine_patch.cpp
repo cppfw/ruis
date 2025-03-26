@@ -118,7 +118,7 @@ public:
 } // namespace
 
 utki::shared_ref<nine_patch> nine_patch::load(
-	ruis::resource_loader& loader,
+	const ruis::resource_loader& loader,
 	const tml::forest& desc,
 	const papki::file& fi
 )

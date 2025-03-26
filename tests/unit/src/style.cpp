@@ -164,32 +164,30 @@ const tst::set set("style", [](tst::suite& suite){
 
         s.set(ss1);
 
-        // TODO:
-         
-        // auto tml_sv = s.get<ruis::res::tml>("tml_style_value"sv);
-        // tst::check(tml_sv.get(), SL);
-        // tst::check_eq(tml_sv.get()->forest(), tml::read("Hello world!"s), SL);
+        auto tml_sv = s.get<ruis::res::tml>("tml_style_value"sv);
+        tst::check(tml_sv.get(), SL);
+        tst::check_eq(tml_sv.get()->forest(), tml::read("Hello world!"s), SL);
 
-        // auto ss2 = utki::make_shared<ruis::style_sheet>(
-        //     tml::read(
-        //         R"qwertyuiop(
-        //             version{1}
-        //             ruis{
-        //                 tml_style_value{tml_resource2}
-        //             }
-        //         )qwertyuiop"s
-        //     )
-        // );
+        auto ss2 = utki::make_shared<ruis::style_sheet>(
+            tml::read(
+                R"qwertyuiop(
+                    version{1}
+                    ruis{
+                        tml_style_value{tml_resource2}
+                    }
+                )qwertyuiop"s
+            )
+        );
 
-        // s.set(ss2);
+        s.set(ss2);
 
-        // tst::check_eq(tml_sv.get()->forest(), tml::read("World, hello!"s), SL);
+        tst::check_eq(tml_sv.get()->forest(), tml::read("World, hello!"s), SL);
 
-        // {
-        //     auto tml_sv = s.get<ruis::res::tml>("tml_style_value"sv);
-        //     tst::check(tml_sv.get(), SL);
-        //     tst::check_eq(tml_sv.get()->forest(), tml::read("World, hello!"s), SL);
-        // }
+        {
+            auto tml_sv = s.get<ruis::res::tml>("tml_style_value"sv);
+            tst::check(tml_sv.get(), SL);
+            tst::check_eq(tml_sv.get()->forest(), tml::read("World, hello!"s), SL);
+        }
     });
 });
 }

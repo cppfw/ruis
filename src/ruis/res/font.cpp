@@ -69,7 +69,7 @@ res::font::font(
 }
 
 utki::shared_ref<res::font> res::font::load(
-	ruis::resource_loader& loader, //
+	const ruis::resource_loader& loader, //
 	const tml::forest& desc,
 	const papki::file& fi
 )

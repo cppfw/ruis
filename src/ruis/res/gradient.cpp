@@ -86,7 +86,7 @@ void gradient::set(
 }
 
 utki::shared_ref<gradient> gradient::load(
-	ruis::resource_loader& loader, //
+	const ruis::resource_loader& loader, //
 	const tml::forest& desc,
 	const papki::file& fi
 )
