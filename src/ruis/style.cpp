@@ -109,11 +109,17 @@ void style::set(utki::shared_ref<style_sheet> ss)
 		if (!desc) {
 			// there is no such style value id in the new style sheet
 			keys_to_remove.emplace_back(pair.first);
-			sv->reload({}); // this will set the default value
+			sv->reload(
+				{}, // this will set the default value
+				this->loader.get()
+			);
 			continue;
 		}
 
-		sv->reload(*desc);
+		sv->reload(
+			*desc, //
+			this->loader.get()
+		);
 	}
 
 	// remove unused cache entries

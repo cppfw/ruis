@@ -33,7 +33,10 @@ class style_value_base
 	friend class style;
 
 protected:
-	virtual void reload(const tml::forest& desc) = 0;
+	virtual void reload(
+		const tml::forest& desc, //
+		const ruis::resource_loader& loader
+	) = 0;
 
 	style_value_base() = default;
 
@@ -53,14 +56,28 @@ class style_value : public style_value_base
 {
 	value_type value;
 
-	void reload(const tml::forest& desc) override
+	void reload(
+		const tml::forest& desc, //
+		const ruis::resource_loader& loader
+	) override
 	{
-		this->value = value_type::parse_style_value(desc);
+		this->value = load(desc, loader);
+	}
+
+	static value_type load(
+		const tml::forest& desc, //
+		const ruis::resource_loader& loader
+	)
+	{
+		return value_type::parse_style_value(desc);
 	}
 
 public:
-	style_value(const tml::forest& desc) :
-		value(value_type::parse_style_value(desc))
+	style_value(
+		const tml::forest& desc, //
+		const ruis::resource_loader& loader
+	) :
+		value(load(desc, loader))
 	{}
 
 	const value_type& get_value() const noexcept
@@ -201,7 +218,10 @@ public:
 			}
 		}
 
-		auto ret = utki::make_shared<style_value<actual_value_type>>(*desc);
+		auto ret = utki::make_shared<style_value<actual_value_type>>(
+			*desc, //
+			this->loader.get()
+		);
 		this->store_to_cache(
 			id, //
 			ret.to_shared_ptr()
