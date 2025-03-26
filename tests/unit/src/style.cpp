@@ -165,7 +165,7 @@ const tst::set set("style", [](tst::suite& suite){
         s.set(ss1);
 
         // TODO:
-        
+         
         // auto tml_sv = s.get<ruis::res::tml>("tml_style_value"sv);
         // tst::check(tml_sv.get(), SL);
         // tst::check_eq(tml_sv.get()->forest(), tml::read("Hello world!"s), SL);
