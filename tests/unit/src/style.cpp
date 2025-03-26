@@ -6,6 +6,7 @@
 #include <ruis/style.hpp>
 #include <ruis/util/color.hpp>
 #include <ruis/util/length.hpp>
+#include <ruis/res/tml.hpp>
 
 #include "../../harness/util/dummy_context.hpp"
 
@@ -138,8 +139,11 @@ const tst::set set("style", [](tst::suite& suite){
         auto c = make_dummy_context();
 
         auto res_pack_desc = R"qwertyuiop(
-            tml_resource{
+            tml_resource1{
                 forest{Hello world!}
+            }
+            tml_resource2{
+                forest{World, hello!}
             }
         )qwertyuiop"s;
 
@@ -152,7 +156,7 @@ const tst::set set("style", [](tst::suite& suite){
                 R"qwertyuiop(
                     version{1}
                     ruis{
-                        tml_style_value{tml_resource}
+                        tml_style_value{tml_resource1}
                     }
                 )qwertyuiop"s
             )
@@ -160,7 +164,28 @@ const tst::set set("style", [](tst::suite& suite){
 
         s.set(ss1);
 
-        // TODO:
+        auto tml_sv = s.get<ruis::res::tml>("tml_style_value"sv);
+        tst::check_eq(tml_sv.get().forest(), tml::read("Hello world!"s), SL);
+
+        auto ss2 = utki::make_shared<ruis::style_sheet>(
+            tml::read(
+                R"qwertyuiop(
+                    version{1}
+                    ruis{
+                        tml_style_value{tml_resource2}
+                    }
+                )qwertyuiop"s
+            )
+        );
+
+        s.set(ss2);
+
+        tst::check_eq(tml_sv.get().forest(), tml::read("World, hello!"s), SL);
+
+        {
+            auto tml_sv = s.get<ruis::res::tml>("tml_style_value"sv);
+            tst::check_eq(tml_sv.get().forest(), tml::read("World, hello!"s), SL);
+        }
     });
 });
 }
