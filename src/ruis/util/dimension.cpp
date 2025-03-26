@@ -19,39 +19,26 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 /* ================ LICENSE END ================ */
 
-#pragma once
+#include "dimension.hpp"
 
-#include <cstdint>
+using namespace std::string_view_literals;
 
-#include <rasterimage/operations.hpp>
-#include <tml/tree.hpp>
+using namespace ruis;
 
-namespace ruis {
-
-class color : public r4::vector4<uint8_t>
+dimension dimension::parse_value(const tml::forest& desc)
 {
-public:
-	color(uint32_t rgba) :
-		r4::vector4<uint8_t>(rasterimage::from_32bit_pixel(rgba))
-	{}
-
-	uint32_t to_uint32_t() const noexcept
-	{
-		return rasterimage::to_32bit_pixel(*this);
+	if (desc.empty()) {
+		return dimension::default_value();
 	}
 
-	r4::vector4<float> to_vec4f() const noexcept
-	{
-		return rasterimage::to<float>(*this);
+	const auto& s = desc.front().value.string;
+	if (s == "min"sv) {
+		return dim::min;
+	} else if (s == "fill"sv) {
+		return dim::fill;
+	} else if ((s == "max"sv)) {
+		return dim::max;
 	}
 
-	static color parse_value(const tml::forest& desc);
-
-	static color default_value() noexcept
-	{
-		constexpr auto default_color_value = 0xffffffff;
-		return default_color_value;
-	}
-};
-
-} // namespace ruis
+	return length::parse_value(desc);
+}

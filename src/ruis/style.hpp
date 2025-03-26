@@ -50,7 +50,7 @@ public:
 	virtual ~style_value_base() = default;
 };
 
-// TODO: make a concept which requires value_type::default_value() and value_type::parse_style_value(tml::forest)
+// TODO: make a concept which requires value_type::default_value() and value_type::parse_value(tml::forest)
 template <typename value_type>
 class style_value : public style_value_base
 {
@@ -79,7 +79,7 @@ class style_value : public style_value_base
 			}
 			return loader.load<typename value_type::element_type>(desc.front().value.string);
 		} else {
-			return value_type::parse_style_value(desc);
+			return value_type::parse_value(desc);
 		}
 	}
 

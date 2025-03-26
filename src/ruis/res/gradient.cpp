@@ -107,7 +107,7 @@ utki::shared_ref<gradient> gradient::load(
 				if (pp.value == "pos") {
 					pos = get_property_value(pp).to_float();
 				} else if (pp.value == "color") {
-					color = color::parse_style_value({get_property_value(pp)});
+					color = color::parse_value({get_property_value(pp)});
 				}
 			}
 			stops.emplace_back(pos, color);

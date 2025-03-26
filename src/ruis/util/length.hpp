@@ -108,7 +108,7 @@ public:
 		return length::make_pp(1);
 	}
 
-	static length parse_style_value(const tml::forest& desc);
+	static length parse_value(const tml::forest& desc);
 
 	friend std::ostream& ruis::operator<<(std::ostream& o, const length& l);
 };
