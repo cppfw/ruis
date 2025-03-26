@@ -84,7 +84,10 @@ private:
 		// TODO: use std::map/std::unordered_map?
 		tml::forest script;
 
-		res_pack_entry(decltype(fi) fi, decltype(script) script) :
+		res_pack_entry(
+			decltype(fi) fi, //
+			decltype(script) script
+		) :
 			fi(std::move(fi)),
 			script(std::move(script))
 		{}
@@ -93,9 +96,8 @@ private:
 
 		// keep loaded resources map in res_pack_entry, so that unmounted
 		// resource pack removes it's loaded resources map
-		// TODO: use std::unordered_map?
-		// mutable because this map is essencially a cache
-		mutable std::map<const std::string, std::weak_ptr<resource>, std::less<>> res_map;
+		// TODO: optimization: use string_view as key referencing string in the res script?
+		mutable std::map<const std::string, std::weak_ptr<resource>, std::less<>> cache;
 
 		void add_resource_to_res_map(
 			const utki::shared_ref<resource>& res, //

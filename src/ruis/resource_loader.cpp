@@ -82,10 +82,10 @@ void resource_loader::res_pack_entry::add_resource_to_res_map(
 	std::string_view id
 ) const
 {
-	ASSERT(this->res_map.find(id) == this->res_map.end())
+	ASSERT(!utki::contains(this->cache, id))
 
 	// add the resource to the resources map of ResMan
-	this->res_map.insert(std::make_pair(id, utki::make_weak(res)));
+	this->cache.insert(std::make_pair(id, utki::make_weak(res)));
 
 	// #ifdef DEBUG
 	//	for(T_ResMap::iterator i = this->res_map->rm.begin(); i != this->res_map->rm.end(); ++i){
@@ -96,12 +96,12 @@ void resource_loader::res_pack_entry::add_resource_to_res_map(
 
 std::shared_ptr<resource> resource_loader::res_pack_entry::find_resource_in_res_map(std::string_view id) const
 {
-	auto i = this->res_map.find(id);
-	if (i != this->res_map.end()) {
+	auto i = this->cache.find(id);
+	if (i != this->cache.end()) {
 		if (auto r = i->second.lock()) {
 			return r;
 		}
-		this->res_map.erase(i);
+		this->cache.erase(i);
 	}
 	return nullptr; // no resource found with given id, return invalid reference
 }
