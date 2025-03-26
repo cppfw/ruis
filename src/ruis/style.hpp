@@ -28,8 +28,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
-class style_sheet;
-
 class style_value_base
 {
 	friend class style;
@@ -171,24 +169,39 @@ public:
 	void set(utki::shared_ref<style_sheet> ss);
 
 	template <typename value_type>
-	styled<value_type> get(std::string_view id)
+	styled<std::conditional_t<
+		std::is_base_of_v<ruis::resource, value_type>, //
+		std::shared_ptr<value_type>,
+		value_type //
+		>> //
+	get(std::string_view id)
 	{
+		using actual_value_type = std::conditional_t<
+			std::is_base_of_v<ruis::resource, value_type>, //
+			std::shared_ptr<value_type>,
+			value_type //
+			>;
+
 		if (auto svb = this->get_from_cache(id)) {
-			auto sv = std::dynamic_pointer_cast<style_value<value_type>>(svb);
+			auto sv = std::dynamic_pointer_cast<style_value<actual_value_type>>(svb);
 			if (!sv) {
 				throw std::invalid_argument(
 					"style::get(id): requested value_type does not match the one stored in cache"
 				);
 			}
-			return {utki::shared_ref<const style_value<value_type>>(std::move(sv))};
+			return {utki::shared_ref<const style_value<actual_value_type>>(std::move(sv))};
 		}
 
 		const auto* desc = this->cur_style_sheet.get().get(id);
 		if (!desc) {
-			return value_type::default_value();
+			if constexpr (std::is_base_of_v<ruis::resource, value_type>) {
+				return std::shared_ptr<value_type>();
+			} else {
+				return value_type::default_value();
+			}
 		}
 
-		auto ret = utki::make_shared<style_value<value_type>>(*desc);
+		auto ret = utki::make_shared<style_value<actual_value_type>>(*desc);
 		this->store_to_cache(
 			id, //
 			ret.to_shared_ptr()
