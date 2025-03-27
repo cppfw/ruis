@@ -25,6 +25,10 @@ using namespace std::string_view_literals;
 
 using namespace ruis;
 
+dimension dimension::min(dimension::type::min);
+dimension dimension::max(dimension::type::max);
+dimension dimension::fill(dimension::type::fill);
+
 dimension dimension::make_from(const tml::forest& desc)
 {
 	if (desc.empty()) {
@@ -41,4 +45,26 @@ dimension dimension::make_from(const tml::forest& desc)
 	}
 
 	return length::make_from(desc);
+}
+
+std::ostream& ruis::operator<<(std::ostream& o, const dimension& d)
+{
+	switch (d.get_type()) {
+		case dimension::type::fill:
+			o << "fill"sv;
+			break;
+		case dimension::type::min:
+			o << "min"sv;
+			break;
+		case dimension::type::max:
+			o << "max"sv;
+			break;
+		case dimension::type::length:
+			o << d.get_length();
+			break;
+		case dimension::type::undefined:
+			o << "undefined"sv;
+			break;
+	}
+	return o;
 }

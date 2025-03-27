@@ -26,74 +26,76 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 namespace ruis {
 
 /**
- * @brief Layout dimension policy type.
- */
-enum class dim {
-	/**
-	 * @brief The dimension policy is undefined.
-	 * Most of the layouts will default to 'min' dimension policy in this case.
-	 */
-	undefined,
-
-	/**
-	 * @brief Requests minimal dimensions of the widget.
-	 * The widget will always be given minimal space it needs to properly draw.
-	 */
-	min,
-
-	/**
-	 * @brief Requests minimal or bigger dimensions of widget.
-	 * The widget will be given at least minimal space it needs to properly draw.
-	 * 'max' behaves the same way as 'min' during measure, but during layouting
-	 * the widget will be given same size as parent.
-	 */
-	max,
-
-	/**
-	 * @brief Requests widget to be same size as its parent.
-	 * Minimal size of the widget is assumed to be 0.
-	 */
-	fill,
-
-	/**
-	 * @brief Requests an exact specified length.
-	 * The widget size will be set to the specified length.
-	 */
-	length
-};
-
-/**
  * @brief Layout dimension request.
  * Can represent exact length value or one of [undefined, min, max, fill].
  */
 class dimension
 {
-	dim type;
+public:
+	/**
+	 * @brief Layout dimension policy type.
+	 */
+	enum class type {
+		/**
+		 * @brief The dimension policy is undefined.
+		 * Most of the layouts will default to 'min' dimension policy in this case.
+		 */
+		undefined,
+
+		/**
+		 * @brief Requests minimal dimensions of the widget.
+		 * The widget will always be given minimal space it needs to properly draw.
+		 */
+		min,
+
+		/**
+		 * @brief Requests minimal or bigger dimensions of widget.
+		 * The widget will be given at least minimal space it needs to properly draw.
+		 * 'max' behaves the same way as 'min' during measure, but during layouting
+		 * the widget will be given same size as parent.
+		 */
+		max,
+
+		/**
+		 * @brief Requests widget to be same size as its parent.
+		 * Minimal size of the widget is assumed to be 0.
+		 */
+		fill,
+
+		/**
+		 * @brief Requests an exact specified length.
+		 * The widget size will be set to the specified length.
+		 */
+		length
+	};
+
+private:
+	type type_v;
 	length value;
 
 public:
+	constexpr dimension(type t = type::undefined) :
+		type_v(t)
+	{}
+
 	/**
 	 * @brief Construct a new dimension policy object.
 	 * @param len - the exact length, undefined length value is equivalent to 'min'.
 	 */
 	constexpr dimension(length len) :
-		type([&]() constexpr {
+		type_v([&]() constexpr {
 			if (len.is_undefined()) {
-				return dim::min;
+				return type::min;
 			} else {
-				return dim::length;
+				return type::length;
 			}
 		}()),
 		value(len)
 	{}
 
-	constexpr dimension(dim t = dim::undefined) :
-		type(t)
-	{}
-
-	constexpr dim get_type() const noexcept
+	constexpr type get_type() const noexcept
 	{
-		return this->type;
+		return this->type_v;
 	}
 
 	constexpr auto get_length() const noexcept
@@ -103,15 +105,32 @@ public:
 
 	constexpr bool is_undefined() const noexcept
 	{
-		return this->get_type() == dim::undefined;
+		return this->get_type() == type::undefined;
+	}
+
+	bool operator==(const dimension& d) const
+	{
+		if (this->get_type() != d.get_type()) {
+			return false;
+		}
+
+		switch (this->get_type()) {
+			case type::min:
+			case type::max:
+			case type::fill:
+			case type::undefined:
+				return true;
+			case type::length:
+				return this->get_length() == d.get_length();
+		}
 	}
 
 	bool operator==(const length& d) const
 	{
 		switch (this->get_type()) {
-			case dim::length:
+			case type::length:
 				return this->value == d;
-			case dim::min:
+			case type::min:
 				return d.is_undefined();
 			default:
 				return false;
@@ -124,6 +143,16 @@ public:
 	}
 
 	static dimension make_from(const tml::forest& desc);
+
+	static dimension min;
+	static dimension max;
+	static dimension fill;
+
+	friend std::ostream& operator<<(std::ostream& o, const dimension& d);
 };
+
+std::ostream& operator<<(std::ostream& o, const dimension& d);
+
+using dim = dimension;
 
 } // namespace ruis

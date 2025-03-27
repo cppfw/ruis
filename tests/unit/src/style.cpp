@@ -190,7 +190,7 @@ const tst::set set("style", [](tst::suite& suite){
         }
     });
 
-    suite.add("styled__value_default_constructor", [](){
+    suite.add("styled__default_constructor", [](){
         ruis::styled<ruis::color> c;
         tst::check(c.get().is_undefined(), SL);
 
@@ -202,6 +202,21 @@ const tst::set set("style", [](tst::suite& suite){
 
         ruis::styled<ruis::res::tml> tml;
         tst::check(tml.get() == nullptr, SL);
+    });
+
+    suite.add("styled__value_constructor", [](){
+        ruis::styled<ruis::color> c = 0xff00ff00;
+        tst::check_eq(c.get().to_uint32_t(), uint32_t(0xff00ff00), SL);
+
+        ruis::styled<ruis::length> l = ruis::length::make_pp(10);
+        tst::check_eq(l.get(), ruis::length::make_pp(10), SL);
+
+        ruis::styled<ruis::dimension> d = ruis::length::make_pp(10);
+        tst::check_eq(d.get(), ruis::dimension(ruis::length::make_pp(10)), SL);
+
+        ruis::styled<ruis::res::tml> tml = std::make_shared<ruis::res::tml>(tml::read("Hello{world!}"));
+        tst::check(tml.get() != nullptr, SL);
+        tst::check_eq(tml.get()->forest(), tml::read("Hello{world!}"), SL);
     });
 });
 }

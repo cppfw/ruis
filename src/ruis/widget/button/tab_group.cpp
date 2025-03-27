@@ -83,16 +83,16 @@ ruis::vector2 tab_group::measure(const ruis::vector2& quotum) const
 
 		for (unsigned j = 0; j != d.size(); ++j) {
 			switch (lp.dims[j].get_type()) {
-				case dim::fill:
+				case dim::type::fill:
 					[[fallthrough]];
-				case dim::max:
+				case dim::type::max:
 					throw std::logic_error("'max' or 'fill' encountered in layout parameters for tab_group container");
-				case dim::undefined:
+				case dim::type::undefined:
 					[[fallthrough]];
-				case dim::min:
+				case dim::type::min:
 					d[j] = -1;
 					break;
-				case dim::length:
+				case dim::type::length:
 					d[j] = lp.dims[j].get_length().get(this->context);
 					break;
 			}

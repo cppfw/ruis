@@ -58,34 +58,34 @@ void linear_layout::lay_out(const vector2& dims, semiconst_widget_list& widgets)
 
 			vector2 d;
 			switch (lp.dims[trans_index].get_type()) {
-				case dim::max:
+				case dim::type::max:
 					[[fallthrough]];
-				case dim::fill:
+				case dim::type::fill:
 					d[trans_index] = dims[trans_index];
 					break;
-				case dim::undefined:
+				case dim::type::undefined:
 					[[fallthrough]];
-				case dim::min:
+				case dim::type::min:
 					d[trans_index] = -1; // will be updated below
 					break;
-				case dim::length:
+				case dim::type::length:
 					d[trans_index] = lp.dims[trans_index].get_length().get(w.get().context);
 					break;
 			}
 
 			switch (lp.dims[long_index].get_type()) {
-				case dim::fill:
+				case dim::type::fill:
 					d[long_index] = 0;
 					break;
 				// NOLINTNEXTLINE(bugprone-branch-clone, "false positive")
-				case dim::undefined:
+				case dim::type::undefined:
 					[[fallthrough]];
-				case dim::min:
+				case dim::type::min:
 					[[fallthrough]];
-				case dim::max:
+				case dim::type::max:
 					d[long_index] = -1; // will be updated below
 					break;
-				case dim::length:
+				case dim::type::length:
 					d[long_index] = lp.dims[long_index].get_length().get(w.get().context);
 					break;
 			}
@@ -140,43 +140,43 @@ void linear_layout::lay_out(const vector2& dims, semiconst_widget_list& widgets)
 				}
 
 				switch (lp.dims[long_index].get_type()) {
-					case dim::fill:
+					case dim::type::fill:
 						[[fallthrough]];
-					case dim::max:
+					case dim::type::max:
 						d[long_index] = long_room;
 						break;
 					// NOLINTNEXTLINE(bugprone-branch-clone, "false positive")
-					case dim::undefined:
+					case dim::type::undefined:
 						[[fallthrough]];
-					case dim::min:
+					case dim::type::min:
 						[[fallthrough]];
-					case dim::length:
+					case dim::type::length:
 						d[long_index] = info->measured_dims[long_index];
 						break;
 				}
 
 				switch (lp.dims[trans_index].get_type()) {
-					case dim::max:
+					case dim::type::max:
 						[[fallthrough]];
-					case dim::fill:
+					case dim::type::fill:
 						d[trans_index] = dims[trans_index];
 						break;
-					case dim::undefined:
+					case dim::type::undefined:
 						[[fallthrough]];
-					case dim::min:
+					case dim::type::min:
 						d[trans_index] = -1;
 						break;
-					case dim::length:
+					case dim::type::length:
 						d[trans_index] = lp.dims[trans_index].get_length().get(w.get().context);
 						break;
 				}
 				switch (lp.dims[trans_index].get_type()) {
 					// NOLINTNEXTLINE(bugprone-branch-clone, "false positive")
-					case dim::undefined:
+					case dim::type::undefined:
 						[[fallthrough]];
-					case dim::min:
+					case dim::type::min:
 						[[fallthrough]];
-					case dim::length:
+					case dim::type::length:
 						if (d.x() < 0 || d.y() < 0) {
 							vector2 md = w.get().measure(d);
 							for (unsigned i = 0; i != md.size(); ++i) {
@@ -186,9 +186,9 @@ void linear_layout::lay_out(const vector2& dims, semiconst_widget_list& widgets)
 							}
 						}
 						break;
-					case dim::max:
+					case dim::type::max:
 						[[fallthrough]];
-					case dim::fill:
+					case dim::type::fill:
 						break;
 				}
 
@@ -261,43 +261,43 @@ vector2 linear_layout::measure(const vector2& quotum, const_widget_list& widgets
 			vector2 child_quotum;
 
 			switch (lp.dims[trans_index].get_type()) {
-				case dim::max:
+				case dim::type::max:
 					if (quotum[trans_index] >= 0) {
 						child_quotum[trans_index] = quotum[trans_index];
 					} else {
 						child_quotum[trans_index] = -1;
 					}
 					break;
-				case dim::undefined:
+				case dim::type::undefined:
 					[[fallthrough]];
-				case dim::min:
+				case dim::type::min:
 					child_quotum[trans_index] = -1;
 					break;
-				case dim::fill:
+				case dim::type::fill:
 					if (quotum[trans_index] >= 0) {
 						child_quotum[trans_index] = quotum[trans_index];
 					} else {
 						child_quotum[trans_index] = 0;
 					}
 					break;
-				case dim::length:
+				case dim::type::length:
 					child_quotum[trans_index] = lp.dims[trans_index].get_length().get(w.get().context);
 					break;
 			}
 
 			switch (lp.dims[long_index].get_type()) {
 				// NOLINTNEXTLINE(bugprone-branch-clone, "false positive")
-				case dim::undefined:
+				case dim::type::undefined:
 					[[fallthrough]];
-				case dim::min:
+				case dim::type::min:
 					[[fallthrough]];
-				case dim::max:
+				case dim::type::max:
 					child_quotum[long_index] = -1;
 					break;
-				case dim::fill:
+				case dim::type::fill:
 					child_quotum[long_index] = 0;
 					break;
-				case dim::length:
+				case dim::type::length:
 					child_quotum[long_index] = lp.dims[long_index].get_length().get(w.get().context);
 					break;
 			}
@@ -374,26 +374,26 @@ vector2 linear_layout::measure(const vector2& quotum, const_widget_list& widgets
 			}
 
 			switch (lp.dims[trans_index].get_type()) {
-				case dim::max:
+				case dim::type::max:
 					if (quotum[trans_index] >= 0) {
 						d[trans_index] = quotum[trans_index];
 					} else {
 						d[trans_index] = -1;
 					}
 					break;
-				case dim::undefined:
+				case dim::type::undefined:
 					[[fallthrough]];
-				case dim::min:
+				case dim::type::min:
 					d[trans_index] = -1;
 					break;
-				case dim::fill:
+				case dim::type::fill:
 					if (quotum[trans_index] >= 0) {
 						d[trans_index] = quotum[trans_index];
 					} else {
 						d[trans_index] = 0;
 					}
 					break;
-				case dim::length:
+				case dim::type::length:
 					d[trans_index] = lp.dims[trans_index].get_length().get(w.get().context);
 					break;
 			}

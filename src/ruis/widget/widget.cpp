@@ -469,17 +469,17 @@ vector2 ruis::dims_for_widget(const widget& w, const vector2& parent_dims)
 	vector2 d;
 	for (unsigned i = 0; i != 2; ++i) {
 		switch (lp.dims[i].get_type()) {
-			case dim::max:
+			case dim::type::max:
 				[[fallthrough]];
-			case dim::fill:
+			case dim::type::fill:
 				d[i] = parent_dims[i];
 				break;
-			case dim::undefined:
+			case dim::type::undefined:
 				[[fallthrough]];
-			case dim::min:
+			case dim::type::min:
 				d[i] = -1; // will be updated below
 				break;
-			case dim::length:
+			case dim::type::length:
 				d[i] = lp.dims[i].get_length().get(w.context);
 				break;
 		}

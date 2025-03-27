@@ -199,6 +199,11 @@ public:
 		value(std::move(value))
 	{}
 
+	template <typename convertible_type>
+	styled(convertible_type conv) :
+		value(conv)
+	{}
+
 	const actual_value_type& get() const noexcept
 	{
 		return std::visit(
