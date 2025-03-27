@@ -126,14 +126,25 @@ public:
 };
 
 // TODO: make a concept which requires value_type::default_value() and value_type::parse_value(tml::forest)
+// Or value type can be derived from ruis::resource
 template <typename value_type>
 class styled
 {
 	friend class style;
 
+public:
+	constexpr static const bool is_resource = std::is_base_of_v<ruis::resource, value_type>;
+
+	using actual_value_type = std::conditional_t<
+		is_resource, //
+		std::shared_ptr<value_type>,
+		value_type //
+		>;
+
+private:
 	class style_value : public style::style_value_base
 	{
-		value_type value;
+		actual_value_type value;
 
 		void reload(
 			const tml::forest& desc, //
@@ -143,20 +154,20 @@ class styled
 			this->value = load(desc, loader);
 		}
 
-		static value_type load(
+		static actual_value_type load(
 			const tml::forest& desc, //
 			const ruis::resource_loader& loader
 		)
 		{
-			if constexpr (utki::is_specialization_of_v<std::shared_ptr, value_type>) {
+			if constexpr (utki::is_specialization_of_v<std::shared_ptr, actual_value_type>) {
 				static_assert(
-					std::is_base_of_v<ruis::resource, typename value_type::element_type>,
+					std::is_base_of_v<ruis::resource, typename actual_value_type::element_type>,
 					"shared_ptr must point to a ruis::resource"
 				);
 				if (desc.empty()) {
 					return nullptr;
 				}
-				return loader.load<typename value_type::element_type>(desc.front().value.string);
+				return loader.load<typename actual_value_type::element_type>(desc.front().value.string);
 			} else {
 				return value_type::parse_value(desc);
 			}
@@ -170,7 +181,7 @@ class styled
 			value(load(desc, loader))
 		{}
 
-		const value_type& get_value() const noexcept
+		const actual_value_type& get_value() const noexcept
 		{
 			return this->value;
 		}
