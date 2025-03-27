@@ -35,7 +35,10 @@ private:
 	parameters params;
 
 protected:
-	fraction_widget(utki::shared_ref<ruis::context> c, parameters params) :
+	fraction_widget(
+		utki::shared_ref<ruis::context> c, //
+		parameters params
+	) :
 		widget(std::move(c), {}, {}),
 		params(std::move(params))
 	{}

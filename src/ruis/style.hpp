@@ -28,114 +28,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
-class style_value_base
-{
-	friend class style;
-
-protected:
-	virtual void reload(
-		const tml::forest& desc, //
-		const ruis::resource_loader& loader
-	) = 0;
-
-	style_value_base() = default;
-
-public:
-	style_value_base(const style_value_base&) = delete;
-	style_value_base& operator=(const style_value_base&) = delete;
-
-	style_value_base(style_value_base&&) = delete;
-	style_value_base& operator=(style_value_base&&) = delete;
-
-	virtual ~style_value_base() = default;
-};
-
-// TODO: make a concept which requires value_type::default_value() and value_type::parse_value(tml::forest)
-template <typename value_type>
-class style_value : public style_value_base
-{
-	value_type value;
-
-	void reload(
-		const tml::forest& desc, //
-		const ruis::resource_loader& loader
-	) override
-	{
-		this->value = load(desc, loader);
-	}
-
-	static value_type load(
-		const tml::forest& desc, //
-		const ruis::resource_loader& loader
-	)
-	{
-		if constexpr (utki::is_specialization_of_v<std::shared_ptr, value_type>) {
-			static_assert(
-				std::is_base_of_v<ruis::resource, typename value_type::element_type>,
-				"shared_ptr must point to a ruis::resource"
-			);
-			if (desc.empty()) {
-				return nullptr;
-			}
-			return loader.load<typename value_type::element_type>(desc.front().value.string);
-		} else {
-			return value_type::parse_value(desc);
-		}
-	}
-
-public:
-	style_value(
-		const tml::forest& desc, //
-		const ruis::resource_loader& loader
-	) :
-		value(load(desc, loader))
-	{}
-
-	const value_type& get_value() const noexcept
-	{
-		return this->value;
-	}
-};
-
-template <typename value_type>
-class styled
-{
-	friend class style;
-
-	using style_value_ref_type = utki::shared_ref<const style_value<value_type>>;
-
-	std::variant<
-		style_value_ref_type, //
-		value_type //
-		>
-		value;
-
-	styled(style_value_ref_type sv) :
-		value(std::move(sv))
-	{}
-
-public:
-	styled(value_type value) :
-		value(std::move(value))
-	{}
-
-	const value_type& get() const noexcept
-	{
-		return std::visit(
-			[](const auto& v) -> const value_type& {
-				using stored_type = utki::remove_const_reference_t<decltype(v)>;
-				if constexpr (std::is_same_v<stored_type, value_type>) {
-					return v;
-				} else {
-					static_assert(std::is_same_v<stored_type, style_value_ref_type>);
-					return v.get().get_value();
-				}
-			},
-			this->value
-		);
-	}
-};
-
 /**
  * @brief Style sheet.
  * TODO: write more description
@@ -176,11 +68,39 @@ public:
 	static style_sheet load(const papki::file& fi);
 };
 
+template <typename styled_value_type>
+class styled;
+
 class style
 {
+	template <typename styled_value_type>
+	friend class styled;
+
 	utki::shared_ref<ruis::resource_loader> loader;
 
 	utki::shared_ref<ruis::style_sheet> cur_style_sheet;
+
+	class style_value_base
+	{
+		friend class style;
+
+	protected:
+		virtual void reload(
+			const tml::forest& desc, //
+			const ruis::resource_loader& loader
+		) = 0;
+
+		style_value_base() = default;
+
+	public:
+		style_value_base(const style_value_base&) = delete;
+		style_value_base& operator=(const style_value_base&) = delete;
+
+		style_value_base(style_value_base&&) = delete;
+		style_value_base& operator=(style_value_base&&) = delete;
+
+		virtual ~style_value_base() = default;
+	};
 
 	std::map<std::string, std::weak_ptr<style_value_base>, std::less<>> cache;
 
@@ -202,43 +122,134 @@ public:
 		std::shared_ptr<value_type>,
 		value_type //
 		>> //
-	get(std::string_view id)
+	get(std::string_view id);
+};
+
+// TODO: make a concept which requires value_type::default_value() and value_type::parse_value(tml::forest)
+template <typename value_type>
+class styled
+{
+	friend class style;
+
+	class style_value : public style::style_value_base
 	{
-		using actual_value_type = std::conditional_t<
-			std::is_base_of_v<ruis::resource, value_type>, //
-			std::shared_ptr<value_type>,
-			value_type //
-			>;
+		value_type value;
 
-		if (auto svb = this->get_from_cache(id)) {
-			auto sv = std::dynamic_pointer_cast<style_value<actual_value_type>>(svb);
-			if (!sv) {
-				throw std::invalid_argument(
-					"style::get(id): requested value_type does not match the one stored in cache"
+		void reload(
+			const tml::forest& desc, //
+			const ruis::resource_loader& loader
+		) override
+		{
+			this->value = load(desc, loader);
+		}
+
+		static value_type load(
+			const tml::forest& desc, //
+			const ruis::resource_loader& loader
+		)
+		{
+			if constexpr (utki::is_specialization_of_v<std::shared_ptr, value_type>) {
+				static_assert(
+					std::is_base_of_v<ruis::resource, typename value_type::element_type>,
+					"shared_ptr must point to a ruis::resource"
 				);
-			}
-			return {utki::shared_ref<const style_value<actual_value_type>>(std::move(sv))};
-		}
-
-		const auto* desc = this->cur_style_sheet.get().get(id);
-		if (!desc) {
-			if constexpr (std::is_base_of_v<ruis::resource, value_type>) {
-				return std::shared_ptr<value_type>();
+				if (desc.empty()) {
+					return nullptr;
+				}
+				return loader.load<typename value_type::element_type>(desc.front().value.string);
 			} else {
-				return value_type::default_value();
+				return value_type::parse_value(desc);
 			}
 		}
 
-		auto ret = utki::make_shared<style_value<actual_value_type>>(
-			*desc, //
-			this->loader.get()
+	public:
+		style_value(
+			const tml::forest& desc, //
+			const ruis::resource_loader& loader
+		) :
+			value(load(desc, loader))
+		{}
+
+		const value_type& get_value() const noexcept
+		{
+			return this->value;
+		}
+	};
+
+	using style_value_ref_type = utki::shared_ref<const style_value>;
+
+	std::variant<
+		style_value_ref_type, //
+		value_type //
+		>
+		value;
+
+	styled(style_value_ref_type sv) :
+		value(std::move(sv))
+	{}
+
+public:
+	styled(value_type value) :
+		value(std::move(value))
+	{}
+
+	const value_type& get() const noexcept
+	{
+		return std::visit(
+			[](const auto& v) -> const value_type& {
+				using stored_type = utki::remove_const_reference_t<decltype(v)>;
+				if constexpr (std::is_same_v<stored_type, value_type>) {
+					return v;
+				} else {
+					static_assert(std::is_same_v<stored_type, style_value_ref_type>);
+					return v.get().get_value();
+				}
+			},
+			this->value
 		);
-		this->store_to_cache(
-			id, //
-			ret.to_shared_ptr()
-		);
-		return {ret};
 	}
 };
+
+template <typename value_type>
+styled<std::conditional_t<
+	std::is_base_of_v<ruis::resource, value_type>, //
+	std::shared_ptr<value_type>,
+	value_type //
+	>> //
+style::get(std::string_view id)
+{
+	using actual_value_type = std::conditional_t<
+		std::is_base_of_v<ruis::resource, value_type>, //
+		std::shared_ptr<value_type>,
+		value_type //
+		>;
+
+	if (auto svb = this->get_from_cache(id)) {
+		auto sv = std::dynamic_pointer_cast<typename styled<actual_value_type>::style_value>(svb);
+		if (!sv) {
+			throw std::invalid_argument("style::get(id): requested value_type does not match the one stored in cache");
+		}
+		return {utki::shared_ref<const typename styled<actual_value_type>::style_value>(std::move(sv))};
+	}
+
+	const auto* desc = this->cur_style_sheet.get().get(id);
+	if (!desc) {
+		if constexpr (std::is_base_of_v<ruis::resource, value_type>) {
+			return std::shared_ptr<value_type>();
+		} else {
+			return value_type::default_value();
+		}
+	}
+
+	auto ret = utki::make_shared<typename styled<actual_value_type>::style_value>(
+		*desc, //
+		this->loader.get()
+	);
+	this->store_to_cache(
+		id, //
+		ret.to_shared_ptr()
+	);
+	return {ret};
+}
 
 } // namespace ruis

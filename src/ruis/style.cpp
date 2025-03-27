@@ -129,7 +129,7 @@ void style::set(utki::shared_ref<style_sheet> ss)
 	}
 }
 
-std::shared_ptr<style_value_base> style::get_from_cache(std::string_view id)
+std::shared_ptr<style::style_value_base> style::get_from_cache(std::string_view id)
 {
 	auto i = this->cache.find(id);
 	if (i == this->cache.end()) {

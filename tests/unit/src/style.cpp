@@ -189,5 +189,11 @@ const tst::set set("style", [](tst::suite& suite){
             tst::check_eq(tml_sv.get()->forest(), tml::read("World, hello!"s), SL);
         }
     });
+
+    // suite.add("styled__dimension_value_default_constructor", [](){
+    //     ruis::styled<ruis::dimension> d;
+
+    //     tst::check(d.get().is_undefined(), SL);
+    // });
 });
 }
