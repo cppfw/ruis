@@ -27,6 +27,15 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "resource_loader.hpp"
 
+// TODO: remove
+template <class... Ts>
+struct overloaded : Ts... {
+	using Ts::operator()...;
+};
+// explicit deduction guide (not needed as of C++20)
+template <class... Ts>
+overloaded(Ts...) -> overloaded<Ts...>;
+
 namespace ruis {
 
 /**
@@ -222,12 +231,17 @@ public:
 
 	const actual_value_type& get() const noexcept
 	{
-		if (this->is_from_style()) {
-			return std::get<style_value_ref_type>(this->value).get().get_value();
-		} else {
-			ASSERT(std::holds_alternative<actual_value_type>(this->value))
-			return std::get<actual_value_type>(this->value);
-		}
+		return std::visit(
+			overloaded{
+				[](const actual_value_type& v) -> const actual_value_type& {
+					return v;
+				},
+				[](const style_value_ref_type& r) -> const actual_value_type& {
+					return r.get().get_value();
+				}
+			},
+			this->value
+		);
 	}
 };
 
