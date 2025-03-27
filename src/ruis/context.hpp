@@ -29,7 +29,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "util/units.hpp"
 
 #include "resource_loader.hpp"
-// #include "style.hpp"
+#include "style.hpp"
 #include "updateable.hpp"
 
 namespace ruis {
@@ -114,8 +114,10 @@ public:
 		return this->localization.get();
 	}
 
-	// TODO:
-	// ruis::style style;
+	/**
+	 * @brief Default style to be used for this context.
+	 */
+	ruis::style style;
 
 	/**
 	 * @brief Unit values.
