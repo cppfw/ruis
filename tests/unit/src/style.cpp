@@ -199,6 +199,9 @@ const tst::set set("style", [](tst::suite& suite){
 
         ruis::styled<ruis::dimension> d;
         tst::check(d.get().is_undefined(), SL);
+
+        ruis::styled<ruis::res::tml> tml;
+        tst::check(tml.get() == nullptr, SL);
     });
 });
 }
