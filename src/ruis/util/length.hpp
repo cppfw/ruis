@@ -103,12 +103,7 @@ public:
 		return {value, units::mm};
 	}
 
-	constexpr static length default_value()
-	{
-		return length::make_pp(1);
-	}
-
-	static length parse_value(const tml::forest& desc);
+	static length make_from(const tml::forest& desc);
 
 	friend std::ostream& ruis::operator<<(std::ostream& o, const length& l);
 };

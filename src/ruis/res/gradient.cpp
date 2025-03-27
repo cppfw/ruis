@@ -102,12 +102,12 @@ utki::shared_ref<gradient> gradient::load(
 			vertical = get_property_value(p).to_bool();
 		} else if (p.value == stop_c) {
 			real pos = 0;
-			auto color = color::default_value();
+			ruis::color color{};
 			for (auto& pp : p.children) {
 				if (pp.value == "pos") {
 					pos = get_property_value(pp).to_float();
 				} else if (pp.value == "color") {
-					color = color::parse_value({get_property_value(pp)});
+					color = color::make_from({get_property_value(pp)});
 				}
 			}
 			stops.emplace_back(pos, color);

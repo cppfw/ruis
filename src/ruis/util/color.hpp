@@ -31,7 +31,7 @@ namespace ruis {
 class color : public r4::vector4<uint8_t>
 {
 public:
-	color(uint32_t rgba) :
+	color(uint32_t rgba = 0x00000000) :
 		r4::vector4<uint8_t>(rasterimage::from_32bit_pixel(rgba))
 	{}
 
@@ -45,13 +45,7 @@ public:
 		return rasterimage::to<float>(*this);
 	}
 
-	static color parse_value(const tml::forest& desc);
-
-	static color default_value() noexcept
-	{
-		constexpr auto default_color_value = 0xffffffff;
-		return default_color_value;
-	}
+	static color make_from(const tml::forest& desc);
 };
 
 } // namespace ruis

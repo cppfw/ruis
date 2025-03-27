@@ -23,10 +23,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
-color color::parse_value(const tml::forest& desc)
+color color::make_from(const tml::forest& desc)
 {
 	if (desc.empty()) {
-		return color::default_value();
+		return {};
 	}
 
 	return {desc.front().value.to_uint32()};

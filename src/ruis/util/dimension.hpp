@@ -123,12 +123,7 @@ public:
 		return !this->operator==(d);
 	}
 
-	constexpr static dimension default_value()
-	{
-		return dim::min;
-	}
-
-	static dimension parse_value(const tml::forest& desc);
+	static dimension make_from(const tml::forest& desc);
 };
 
 } // namespace ruis

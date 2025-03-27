@@ -25,10 +25,10 @@ using namespace std::string_view_literals;
 
 using namespace ruis;
 
-dimension dimension::parse_value(const tml::forest& desc)
+dimension dimension::make_from(const tml::forest& desc)
 {
 	if (desc.empty()) {
-		return dimension::default_value();
+		return {};
 	}
 
 	const auto& s = desc.front().value.string;
@@ -40,5 +40,5 @@ dimension dimension::parse_value(const tml::forest& desc)
 		return dim::max;
 	}
 
-	return length::parse_value(desc);
+	return length::make_from(desc);
 }

@@ -190,10 +190,10 @@ const tst::set set("style", [](tst::suite& suite){
         }
     });
 
-    // suite.add("styled__dimension_value_default_constructor", [](){
-    //     ruis::styled<ruis::dimension> d;
+    suite.add("styled__dimension_default_constructor", [](){
+        ruis::styled<ruis::dimension> d;
 
-    //     tst::check(d.get().is_undefined(), SL);
-    // });
+        tst::check(d.get().is_undefined(), SL);
+    });
 });
 }

@@ -120,7 +120,7 @@ public:
 	styled<value_type> get(std::string_view id);
 };
 
-// TODO: make a concept which requires value_type::default_value() and value_type::parse_value(tml::forest)
+// TODO: make a concept which requires value_type::parse_value(tml::forest)
 // Or value type can be derived from ruis::resource
 template <typename value_type>
 class styled
@@ -164,7 +164,7 @@ private:
 				}
 				return loader.load<typename actual_value_type::element_type>(desc.front().value.string);
 			} else {
-				return value_type::parse_value(desc);
+				return value_type::make_from(desc);
 			}
 		}
 
@@ -195,7 +195,7 @@ private:
 	{}
 
 public:
-	styled(actual_value_type value) :
+	styled(actual_value_type value = actual_value_type()) :
 		value(std::move(value))
 	{}
 
@@ -229,11 +229,7 @@ styled<value_type> style::get(std::string_view id)
 
 	const auto* desc = this->cur_style_sheet.get().get(id);
 	if (!desc) {
-		if constexpr (styled<value_type>::is_resource) {
-			return std::shared_ptr<value_type>(nullptr);
-		} else {
-			return value_type::default_value();
-		}
+		return typename styled<value_type>::actual_value_type();
 	}
 
 	auto ret = utki::make_shared<typename styled<value_type>::style_value>(

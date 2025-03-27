@@ -60,10 +60,10 @@ std::ostream& ruis::operator<<(std::ostream& o, const ruis::length& l)
 	return o;
 }
 
-length length::parse_value(const tml::forest& desc)
+length length::make_from(const tml::forest& desc)
 {
 	if (desc.empty()) {
-		return length::default_value();
+		return {};
 	}
 
 	utki::string_parser parser(desc.front().value.string);
