@@ -215,6 +215,11 @@ public:
 		value(actual_value_type(conv))
 	{}
 
+	bool is_from_style() const noexcept
+	{
+		return !std::holds_alternative<actual_value_type>(this->value);
+	}
+
 	const actual_value_type& get() const noexcept
 	{
 		return std::visit(

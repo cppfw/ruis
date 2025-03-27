@@ -44,13 +44,13 @@ struct layout_parameters {
 	 * Default weight is 0, which means that the widget will not occupy extra space.
 	 * Value less than 0 is invalid, default weight will be assumed.
 	 */
-	real weight = -1;
+	styled<real> weight = -1;
 
 	/**
 	 * @brief Alignment of the widget within its parent.
 	 * Horizontal and vertical alignment.
 	 */
-	r4::vector2<ruis::align> align = {ruis::align::undefined, ruis::align::undefined};
+	r4::vector2<styled<ruis::align>> align = {ruis::align::undefined, ruis::align::undefined};
 };
 
 }; // namespace ruis

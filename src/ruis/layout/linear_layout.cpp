@@ -55,7 +55,7 @@ void linear_layout::lay_out(const vector2& dims, semiconst_widget_list& widgets)
 			const auto& lp = w.get().get_layout_params_const();
 
 			using std::max;
-			real weight = max(real(0), lp.weight); // clamp bottom
+			real weight = max(real(0), lp.weight.get()); // clamp bottom
 
 			net_weight += weight;
 
@@ -129,7 +129,7 @@ void linear_layout::lay_out(const vector2& dims, semiconst_widget_list& widgets)
 			auto& lp = w.get().get_layout_params_const();
 
 			using std::max;
-			real weight = max(real(0), lp.weight); // clamp bottom
+			real weight = max(real(0), lp.weight.get()); // clamp bottom
 
 			auto long_room = info->measured_dims[long_index];
 
@@ -220,15 +220,16 @@ void linear_layout::lay_out(const vector2& dims, semiconst_widget_list& widgets)
 			new_pos[trans_index] = 0;
 
 			for (unsigned i = 0; i != 2; ++i) {
-				switch (lp.align[i]) {
-					case align::front:
+				const auto& align = lp.align[i].get();
+				switch (align) {
+					case ruis::align::front:
 						break;
-					case align::undefined:
+					case ruis::align::undefined:
 						[[fallthrough]];
-					case align::center:
+					case ruis::align::center:
 						new_pos[i] += round((room[i] - w.get().rect().d[i]) / 2);
 						break;
-					case align::back:
+					case ruis::align::back:
 						new_pos[i] += room[i] - w.get().rect().d[i];
 						break;
 				}
@@ -271,7 +272,7 @@ vector2 linear_layout::measure(const vector2& quotum, const_widget_list& widgets
 			auto& lp = w.get().get_layout_params_const();
 
 			using std::max;
-			real weight = max(real(0), lp.weight); // clamp bottom
+			real weight = max(real(0), lp.weight.get()); // clamp bottom
 
 			net_weight += weight;
 
@@ -360,9 +361,9 @@ vector2 linear_layout::measure(const vector2& quotum, const_widget_list& widgets
 		auto info = info_array.begin();
 		for (const auto& w : widgets) {
 			auto& lp = w.get().get_layout_params_const();
-			
+
 			using std::max;
-			real weight = max(real(0), lp.weight); // clamp bottom
+			real weight = max(real(0), lp.weight.get()); // clamp bottom
 
 			if (weight == 0) {
 				continue;

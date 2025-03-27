@@ -36,17 +36,17 @@ void pile_layout::lay_out(const vector2& dims, semiconst_widget_list& widgets) c
 		for (unsigned i = 0; i != 2; ++i) {
 			const auto& lp = w.get_layout_params_const();
 
-			auto align = lp.align[i];
-			switch (align) {
-				case align::front:
+			const auto& align = lp.align[i];
+			switch (align.get()) {
+				case ruis::align::front:
 					pos[i] = 0;
 					break;
-				case align::undefined:
+				case ruis::align::undefined:
 					[[fallthrough]];
-				case align::center:
+				case ruis::align::center:
 					pos[i] = (dims[i] - w.rect().d[i]) / 2;
 					break;
-				case align::back:
+				case ruis::align::back:
 					pos[i] = dims[i] - w.rect().d[i];
 					break;
 			}
