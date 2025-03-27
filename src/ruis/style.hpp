@@ -23,6 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <tml/tree.hpp>
 #include <utki/shared_ref.hpp>
+#include <utki/string.hpp>
 
 #include "resource_loader.hpp"
 
@@ -166,7 +167,7 @@ private:
 			} else {
 				if constexpr (std::is_arithmetic_v<value_type>) {
 					if (desc.empty()) {
-						return value_type();
+						return 0;
 					}
 					return utki::string_parser(desc.front().value.string).read_number<value_type>();
 				} else {
