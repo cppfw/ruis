@@ -36,20 +36,7 @@ widget::widget(
 	context(std::move(context)),
 	layout_params(std::move(layout_params)),
 	params(std::move(params))
-{
-	// TODO: why?
-	for (auto& d : this->layout_params.dims) {
-		if (d.get().is_undefined()) {
-			d = dim::min;
-		}
-	}
-
-	// TODO: why?
-	if (this->layout_params.weight < 0) {
-		// use default weight of 0
-		this->layout_params.weight = 0;
-	}
-}
+{}
 
 std::shared_ptr<widget> widget::try_get_widget(std::string_view id, bool allow_itself) noexcept
 {

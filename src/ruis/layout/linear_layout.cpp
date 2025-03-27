@@ -54,7 +54,10 @@ void linear_layout::lay_out(const vector2& dims, semiconst_widget_list& widgets)
 		for (const auto& w : widgets) {
 			const auto& lp = w.get().get_layout_params_const();
 
-			net_weight += lp.weight;
+			using std::max;
+			real weight = max(real(0), lp.weight); // clamp bottom
+
+			net_weight += weight;
 
 			const auto& trans_dim = lp.dims[trans_index].get();
 
@@ -125,14 +128,17 @@ void linear_layout::lay_out(const vector2& dims, semiconst_widget_list& widgets)
 		for (const auto& w : widgets) {
 			auto& lp = w.get().get_layout_params_const();
 
+			using std::max;
+			real weight = max(real(0), lp.weight); // clamp bottom
+
 			auto long_room = info->measured_dims[long_index];
 
-			if (lp.weight != 0) {
-				ASSERT(lp.weight > 0)
+			if (weight != 0) {
+				ASSERT(weight > 0)
 				vector2 d;
 				if (flexible > 0) {
 					ASSERT(net_weight > 0)
-					real dl = flexible * lp.weight / net_weight;
+					real dl = flexible * weight / net_weight;
 					real floored = std::floor(dl);
 					ASSERT(dl >= floored)
 					long_room += floored;
@@ -264,7 +270,10 @@ vector2 linear_layout::measure(const vector2& quotum, const_widget_list& widgets
 		for (const auto& w : widgets) {
 			auto& lp = w.get().get_layout_params_const();
 
-			net_weight += lp.weight;
+			using std::max;
+			real weight = max(real(0), lp.weight); // clamp bottom
+
+			net_weight += weight;
 
 			vector2 child_quotum;
 
@@ -318,7 +327,7 @@ vector2 linear_layout::measure(const vector2& quotum, const_widget_list& widgets
 
 			rigid_length += info->measured_dims[long_index];
 
-			if (lp.weight == 0) {
+			if (weight == 0) {
 				if (quotum[trans_index] < 0) {
 					using std::max;
 					height = max(height, info->measured_dims[trans_index]);
@@ -351,10 +360,11 @@ vector2 linear_layout::measure(const vector2& quotum, const_widget_list& widgets
 		auto info = info_array.begin();
 		for (const auto& w : widgets) {
 			auto& lp = w.get().get_layout_params_const();
-			ASSERT(lp.weight >= 0, [&](auto& o) {
-				o << "lp.weight = " << lp.weight << ", id = " << w.get().id();
-			})
-			if (lp.weight == 0) {
+			
+			using std::max;
+			real weight = max(real(0), lp.weight); // clamp bottom
+
+			if (weight == 0) {
 				continue;
 			}
 
@@ -366,7 +376,7 @@ vector2 linear_layout::measure(const vector2& quotum, const_widget_list& widgets
 
 				ASSERT(net_weight > 0)
 
-				real dl = flex_len * lp.weight / net_weight;
+				real dl = flex_len * weight / net_weight;
 				real floored = floor(dl);
 				ASSERT(dl >= floored)
 				d[long_index] += floored;
