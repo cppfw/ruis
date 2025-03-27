@@ -222,18 +222,12 @@ public:
 
 	const actual_value_type& get() const noexcept
 	{
-		return std::visit(
-			[](const auto& v) -> const actual_value_type& {
-				using stored_type = utki::remove_const_reference_t<decltype(v)>;
-				if constexpr (std::is_same_v<stored_type, actual_value_type>) {
-					return v;
-				} else {
-					static_assert(std::is_same_v<stored_type, style_value_ref_type>);
-					return v.get().get_value();
-				}
-			},
-			this->value
-		);
+		if (this->is_from_style()) {
+			return std::get<style_value_ref_type>(this->value).get().get_value();
+		} else {
+			ASSERT(std::holds_alternative<actual_value_type>(this->value))
+			return std::get<actual_value_type>(this->value);
+		}
 	}
 };
 
