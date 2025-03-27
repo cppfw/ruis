@@ -199,9 +199,12 @@ public:
 		value(std::move(value))
 	{}
 
-	template <typename convertible_type>
+	template <
+		typename convertible_type, //
+		std::enable_if_t<std::is_convertible_v<convertible_type, actual_value_type>, bool> = true //
+		>
 	styled(convertible_type conv) :
-		value(conv)
+		value(actual_value_type(conv))
 	{}
 
 	const actual_value_type& get() const noexcept

@@ -191,6 +191,9 @@ const tst::set set("style", [](tst::suite& suite){
     });
 
     suite.add("styled__default_constructor", [](){
+        ruis::styled<ruis::real> r;
+        tst::check_eq(r.get(), ruis::real(0), SL);
+
         ruis::styled<ruis::color> c;
         tst::check(c.get().is_undefined(), SL);
 
@@ -205,6 +208,9 @@ const tst::set set("style", [](tst::suite& suite){
     });
 
     suite.add("styled__value_constructor", [](){
+        ruis::styled<ruis::real> r = 13;
+        tst::check_eq(r.get(), ruis::real(13), SL);
+
         ruis::styled<ruis::color> c = 0xff00ff00;
         tst::check_eq(c.get().to_uint32_t(), uint32_t(0xff00ff00), SL);
 
