@@ -164,7 +164,14 @@ private:
 				}
 				return loader.load<typename actual_value_type::element_type>(desc.front().value.string);
 			} else {
-				return value_type::make_from(desc);
+				if constexpr (std::is_arithmetic_v<value_type>) {
+					if (desc.empty()) {
+						return value_type();
+					}
+					return utki::string_parser(desc.front().value.string).read_number<value_type>();
+				} else {
+					return value_type::make_from(desc);
+				}
 			}
 		}
 
