@@ -120,7 +120,7 @@ public:
 	styled<value_type> get(std::string_view id);
 };
 
-// TODO: make a concept which requires value_type::parse_value(tml::forest)
+// TODO: make a concept which requires value_type::make_from(tml::forest)
 // Or value type can be derived from ruis::resource
 template <typename value_type>
 class styled
