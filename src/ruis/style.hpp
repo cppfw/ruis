@@ -24,17 +24,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <tml/tree.hpp>
 #include <utki/shared_ref.hpp>
 #include <utki/string.hpp>
+#include <utki/variant.hpp>
 
 #include "resource_loader.hpp"
-
-// TODO: remove
-template <class... Ts>
-struct overloaded : Ts... {
-	using Ts::operator()...;
-};
-// explicit deduction guide (not needed as of C++20)
-template <class... Ts>
-overloaded(Ts...) -> overloaded<Ts...>;
 
 namespace ruis {
 
@@ -232,7 +224,7 @@ public:
 	const actual_value_type& get() const noexcept
 	{
 		return std::visit(
-			overloaded{
+			utki::overloaded{
 				[](const actual_value_type& v) -> const actual_value_type& {
 					return v;
 				},
