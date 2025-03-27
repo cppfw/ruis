@@ -31,7 +31,7 @@ namespace ruis {
 class color : public r4::vector4<uint8_t>
 {
 public:
-	color(uint32_t rgba = 0x00000000) :
+	color(uint32_t rgba = 0) :
 		r4::vector4<uint8_t>(rasterimage::from_32bit_pixel(rgba))
 	{}
 
@@ -43,6 +43,19 @@ public:
 	r4::vector4<float> to_vec4f() const noexcept
 	{
 		return rasterimage::to<float>(*this);
+	}
+
+	/**
+	 * @brief Check if the color value is undefined.
+	 * The color value is undefined when all 4 color components are set to 0.
+	 * Though it is still a valid color, this particular value is thought of as undefined color
+	 * for styling purposes.
+	 * @return true if color value is undefined.
+	 * @return false oterwise.
+	 */
+	bool is_undefined() const noexcept
+	{
+		return this->to_uint32_t() == 0;
 	}
 
 	static color make_from(const tml::forest& desc);

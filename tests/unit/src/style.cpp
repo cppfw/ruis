@@ -190,9 +190,14 @@ const tst::set set("style", [](tst::suite& suite){
         }
     });
 
-    suite.add("styled__dimension_default_constructor", [](){
-        ruis::styled<ruis::dimension> d;
+    suite.add("styled__value_default_constructor", [](){
+        ruis::styled<ruis::color> c;
+        tst::check(c.get().is_undefined(), SL);
 
+        ruis::styled<ruis::length> l;
+        tst::check(l.get().is_undefined(), SL);
+
+        ruis::styled<ruis::dimension> d;
         tst::check(d.get().is_undefined(), SL);
     });
 });
