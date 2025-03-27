@@ -61,6 +61,8 @@ const tst::set set("style", [](tst::suite& suite){
                 color_highlight{0xffad9869}
 
                 length_tree_view_item_indent{17pp}
+
+                real_style_value{13}
             }
             user{}
         )qwertyuiop"s);
@@ -78,6 +80,24 @@ const tst::set set("style", [](tst::suite& suite){
 
         auto length_ident = s.get<ruis::length>("length_tree_view_item_indent"sv);
         tst::check_eq(length_ident.get(), ruis::length::make_pp(17), SL);
+    });
+
+    // test that ruis::real values can be obtained from style
+    suite.add("style__basic__real", [](){
+        auto ss_desc = tml::read(R"qwertyuiop(
+            version{1}
+            ruis{
+                real_style_value{13}
+            }
+        )qwertyuiop"s);
+
+        auto c = make_dummy_context();
+        ruis::style s(c.get().res_loader);
+
+        s.set(utki::make_shared<ruis::style_sheet>(std::move(ss_desc)));
+
+        auto real_val = s.get<ruis::real>("real_style_value"sv);
+        tst::check_eq(real_val.get(), ruis::real(13), SL);
     });
 
     // test that style values are updated when style sheet is changed
