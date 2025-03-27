@@ -37,12 +37,14 @@ widget::widget(
 	layout_params(std::move(layout_params)),
 	params(std::move(params))
 {
+	// TODO: why?
 	for (auto& d : this->layout_params.dims) {
-		if (d.is_undefined()) {
+		if (d.get().is_undefined()) {
 			d = dim::min;
 		}
 	}
 
+	// TODO: why?
 	if (this->layout_params.weight < 0) {
 		// use default weight of 0
 		this->layout_params.weight = 0;
@@ -468,19 +470,20 @@ vector2 ruis::dims_for_widget(const widget& w, const vector2& parent_dims)
 	const layout_parameters& lp = w.get_layout_params_const();
 	vector2 d;
 	for (unsigned i = 0; i != 2; ++i) {
-		switch (lp.dims[i].get_type()) {
-			case dim::type::max:
+		const auto& dim = lp.dims[i].get();
+		switch (dim.get_type()) {
+			case ruis::dim::type::max:
 				[[fallthrough]];
-			case dim::type::fill:
+			case ruis::dim::type::fill:
 				d[i] = parent_dims[i];
 				break;
-			case dim::type::undefined:
+			case ruis::dim::type::undefined:
 				[[fallthrough]];
-			case dim::type::min:
+			case ruis::dim::type::min:
 				d[i] = -1; // will be updated below
 				break;
-			case dim::type::length:
-				d[i] = lp.dims[i].get_length().get(w.context);
+			case ruis::dim::type::length:
+				d[i] = dim.get_length().get(w.context);
 				break;
 		}
 	}

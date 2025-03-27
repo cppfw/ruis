@@ -56,8 +56,10 @@ void linear_layout::lay_out(const vector2& dims, semiconst_widget_list& widgets)
 
 			net_weight += lp.weight;
 
+			const auto& trans_dim = lp.dims[trans_index].get();
+
 			vector2 d;
-			switch (lp.dims[trans_index].get_type()) {
+			switch (trans_dim.get_type()) {
 				case dim::type::max:
 					[[fallthrough]];
 				case dim::type::fill:
@@ -69,11 +71,13 @@ void linear_layout::lay_out(const vector2& dims, semiconst_widget_list& widgets)
 					d[trans_index] = -1; // will be updated below
 					break;
 				case dim::type::length:
-					d[trans_index] = lp.dims[trans_index].get_length().get(w.get().context);
+					d[trans_index] = trans_dim.get_length().get(w.get().context);
 					break;
 			}
 
-			switch (lp.dims[long_index].get_type()) {
+			const auto& long_dim = lp.dims[long_index].get();
+
+			switch (long_dim.get_type()) {
 				case dim::type::fill:
 					d[long_index] = 0;
 					break;
@@ -86,7 +90,7 @@ void linear_layout::lay_out(const vector2& dims, semiconst_widget_list& widgets)
 					d[long_index] = -1; // will be updated below
 					break;
 				case dim::type::length:
-					d[long_index] = lp.dims[long_index].get_length().get(w.get().context);
+					d[long_index] = long_dim.get_length().get(w.get().context);
 					break;
 			}
 
@@ -139,7 +143,9 @@ void linear_layout::lay_out(const vector2& dims, semiconst_widget_list& widgets)
 					}
 				}
 
-				switch (lp.dims[long_index].get_type()) {
+				const auto& long_dim = lp.dims[long_index].get();
+
+				switch (long_dim.get_type()) {
 					case dim::type::fill:
 						[[fallthrough]];
 					case dim::type::max:
@@ -155,7 +161,9 @@ void linear_layout::lay_out(const vector2& dims, semiconst_widget_list& widgets)
 						break;
 				}
 
-				switch (lp.dims[trans_index].get_type()) {
+				const auto& trans_dim = lp.dims[trans_index].get();
+
+				switch (trans_dim.get_type()) {
 					case dim::type::max:
 						[[fallthrough]];
 					case dim::type::fill:
@@ -167,10 +175,10 @@ void linear_layout::lay_out(const vector2& dims, semiconst_widget_list& widgets)
 						d[trans_index] = -1;
 						break;
 					case dim::type::length:
-						d[trans_index] = lp.dims[trans_index].get_length().get(w.get().context);
+						d[trans_index] = trans_dim.get_length().get(w.get().context);
 						break;
 				}
-				switch (lp.dims[trans_index].get_type()) {
+				switch (trans_dim.get_type()) {
 					// NOLINTNEXTLINE(bugprone-branch-clone, "false positive")
 					case dim::type::undefined:
 						[[fallthrough]];
@@ -260,7 +268,9 @@ vector2 linear_layout::measure(const vector2& quotum, const_widget_list& widgets
 
 			vector2 child_quotum;
 
-			switch (lp.dims[trans_index].get_type()) {
+			const auto& trans_dim = lp.dims[trans_index].get();
+
+			switch (trans_dim.get_type()) {
 				case dim::type::max:
 					if (quotum[trans_index] >= 0) {
 						child_quotum[trans_index] = quotum[trans_index];
@@ -281,11 +291,13 @@ vector2 linear_layout::measure(const vector2& quotum, const_widget_list& widgets
 					}
 					break;
 				case dim::type::length:
-					child_quotum[trans_index] = lp.dims[trans_index].get_length().get(w.get().context);
+					child_quotum[trans_index] = trans_dim.get_length().get(w.get().context);
 					break;
 			}
 
-			switch (lp.dims[long_index].get_type()) {
+			const auto& long_dim = lp.dims[long_index].get();
+
+			switch (long_dim.get_type()) {
 				// NOLINTNEXTLINE(bugprone-branch-clone, "false positive")
 				case dim::type::undefined:
 					[[fallthrough]];
@@ -298,7 +310,7 @@ vector2 linear_layout::measure(const vector2& quotum, const_widget_list& widgets
 					child_quotum[long_index] = 0;
 					break;
 				case dim::type::length:
-					child_quotum[long_index] = lp.dims[long_index].get_length().get(w.get().context);
+					child_quotum[long_index] = long_dim.get_length().get(w.get().context);
 					break;
 			}
 
@@ -373,7 +385,9 @@ vector2 linear_layout::measure(const vector2& quotum, const_widget_list& widgets
 				}
 			}
 
-			switch (lp.dims[trans_index].get_type()) {
+			const auto& trans_dim = lp.dims[trans_index].get();
+
+			switch (trans_dim.get_type()) {
 				case dim::type::max:
 					if (quotum[trans_index] >= 0) {
 						d[trans_index] = quotum[trans_index];
@@ -394,7 +408,7 @@ vector2 linear_layout::measure(const vector2& quotum, const_widget_list& widgets
 					}
 					break;
 				case dim::type::length:
-					d[trans_index] = lp.dims[trans_index].get_length().get(w.get().context);
+					d[trans_index] = trans_dim.get_length().get(w.get().context);
 					break;
 			}
 

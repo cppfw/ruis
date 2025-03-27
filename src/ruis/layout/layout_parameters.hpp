@@ -22,6 +22,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #pragma once
 
 #include "../config.hpp"
+#include "../style.hpp"
 #include "../util/align.hpp"
 
 #include "dimension.hpp"
@@ -35,7 +36,7 @@ struct layout_parameters {
 	/**
 	 * @brief desired dimensions.
 	 */
-	r4::vector2<dimension> dims;
+	r4::vector2<styled<dimension>> dims;
 
 	/**
 	 * @brief Weight of the widget.
