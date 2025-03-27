@@ -226,6 +226,7 @@ public:
 		return std::visit(
 			utki::overloaded{
 				[](const actual_value_type& v) -> const actual_value_type& {
+					// NOLINTNEXTLINE(bugprone-return-const-ref-from-parameter, "false-positive")
 					return v;
 				},
 				[](const style_value_ref_type& r) -> const actual_value_type& {
