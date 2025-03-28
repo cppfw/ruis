@@ -223,18 +223,14 @@ public:
 
 	const actual_value_type& get() const noexcept
 	{
-		return std::visit(
-			utki::overloaded{
-				[](const actual_value_type& v) -> const actual_value_type& {
-					// NOLINTNEXTLINE(bugprone-return-const-ref-from-parameter, "false-positive")
-					return v;
-				},
-				[](const style_value_ref_type& r) -> const actual_value_type& {
-					return r.get().get_value();
-				}
-			},
-			this->value
-		);
+		// use std::get_if() to avoid throwing exceptions
+		ASSERT(!this->value.valueless_by_exception())
+		if (const auto* v = std::get_if<actual_value_type>(&this->value)) {
+			return *v;
+		}
+		const auto* r = std::get_if<style_value_ref_type>(&this->value);
+		ASSERT(r)
+		return r->get().get_value();
 	}
 };
 
