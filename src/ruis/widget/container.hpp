@@ -57,15 +57,21 @@ class container : virtual public widget
 private:
 	// NOTE: according to C++11 standard it is undefined behaviour to read the inactive union member,
 	//       but we rely on compiler implementing it the right way.
+	//       See https://en.cppreference.com/w/cpp/language/union for details about reading inactive members of a union.
 	union children_union {
 		widget_list variable;
-		semiconst_widget_list semiconstant; // this member never becomes active one, but we will read it when we need
-											// semiconstant list of children
-		const_widget_list constant; // this member never becomes active one, but we will read it when we need constant
-									// list of children
+
+		// this member never becomes active one, but we will read it when we need
+		// semiconstant list of children
+		semiconst_widget_list semiconstant;
+
+		// this member never becomes active one, but we will read it when we need
+		// constant list of children
+		const_widget_list constant;
 
 		children_union() :
-			variable() // this sets the 'variable' member of the union as an active one
+			// this sets the 'variable' member of the union as an active one
+			variable()
 		{}
 
 		children_union(const children_union&) = delete;

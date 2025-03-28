@@ -50,18 +50,50 @@ enum class mouse_button {
 };
 
 struct mouse_button_event {
-	bool is_down; /// was the button pressed (true) or released (false)
-	vector2 pos; /// position of the mouse cursor at the moment when the button event has occurred, in widget local
-				 /// coordinates
-	mouse_button button; /// mouse button
-	unsigned pointer_id; /// id of the mouse pointer on systems with multiple mouse pointers, like multitouch screens
+	/**
+	 * @brief Button pressed state.
+	 * Was the button pressed (true) or released (false).
+	 */
+	bool is_down;
+
+	/**
+	 * @brief Mouse pointer position.
+	 * Position of the mouse cursor at the moment when the button event has occurred,
+	 * in widget local coordinates.
+	 */
+	vector2 pos;
+
+	/**
+	 * @brief Mouse button id.
+	 */
+	mouse_button button;
+
+	/**
+	 * @brief Mouse pointer id.
+	 * An id of the mouse pointer on systems with multiple mouse pointers, like multitouch screens.
+	 */
+	unsigned pointer_id;
 };
 
 struct mouse_move_event {
-	vector2 pos; /// position of the mouse cursor at the moment when the button event has occurred, in widget local
-				 /// coordinates
-	unsigned pointer_id; /// id of the mouse pointer on systems with multiple mouse pointers, like multitouch screens
-	bool ignore_mouse_capture; /// ignore mouse capturing and distribute mouse move event to all child widgets
+	/**
+	 * @brief Mouse pointer position.
+	 * Position of the mouse cursor at the moment when the button event has occurred,
+	 * in widget local coordinates.
+	 */
+	vector2 pos;
+
+	/**
+	 * @brief Mouse pointer id.
+	 * An id of the mouse pointer on systems with multiple mouse pointers, like multitouch screens.
+	 */
+	unsigned pointer_id;
+
+	/**
+	 * @brief Ignore mouse capture flag.
+	 * Ignore mouse capturing and distribute mouse move event to all child widgets.
+	 */
+	bool ignore_mouse_capture;
 };
 
 struct key_event {
