@@ -144,9 +144,9 @@ public:
 
 	static dimension make_from(const tml::forest& desc);
 
-	static dimension min;
-	static dimension max;
-	static dimension fill;
+	static const dimension min;
+	static const dimension max;
+	static const dimension fill;
 
 	friend std::ostream& operator<<(std::ostream& o, const dimension& d);
 };

@@ -25,9 +25,9 @@ using namespace std::string_view_literals;
 
 using namespace ruis;
 
-dimension dimension::min(dimension::type::min);
-dimension dimension::max(dimension::type::max);
-dimension dimension::fill(dimension::type::fill);
+const dimension dimension::min(dimension::type::min);
+const dimension dimension::max(dimension::type::max);
+const dimension dimension::fill(dimension::type::fill);
 
 dimension dimension::make_from(const tml::forest& desc)
 {
