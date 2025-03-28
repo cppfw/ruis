@@ -141,12 +141,14 @@ public:
 private:
 	class style_value : public style::style_value_base
 	{
-		template <typename type, typename = void>
+		template <typename checked_type, typename = void>
 		struct has_static_member_make_from : public std::false_type {};
 
-		template <typename type>
-		struct has_static_member_make_from<type, std::void_t<decltype(type::make_from(tml::forest()))>> :
-			public std::true_type {};
+		template <typename checked_type>
+		struct has_static_member_make_from<
+			checked_type,
+			std::void_t<decltype(checked_type::make_from(tml::forest()))> //
+			> : public std::true_type {};
 
 		actual_value_type value;
 
