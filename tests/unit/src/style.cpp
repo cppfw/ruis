@@ -100,24 +100,23 @@ const tst::set set("style", [](tst::suite& suite){
         tst::check_eq(real_val.get(), ruis::real(13), SL);
     });
 
-    // TODO:
     // test that ruis::align values can be obtained from style
-    // suite.add("style__basic__align", [](){
-    //     auto ss_desc = tml::read(R"qwertyuiop(
-    //         version{1}
-    //         ruis{
-    //             align_value{back
-    //         }
-    //     )qwertyuiop"s);
+    suite.add("style__basic__align", [](){
+        auto ss_desc = tml::read(R"qwertyuiop(
+            version{1}
+            ruis{
+                align_value{back}
+            }
+        )qwertyuiop"s);
 
-    //     auto c = make_dummy_context();
-    //     ruis::style s(c.get().res_loader);
+        auto c = make_dummy_context();
+        ruis::style s(c.get().res_loader);
 
-    //     s.set(utki::make_shared<ruis::style_sheet>(std::move(ss_desc)));
+        s.set(utki::make_shared<ruis::style_sheet>(std::move(ss_desc)));
 
-    //     auto val = s.get<ruis::align>("align_value"sv);
-    //     tst::check(val.get() == ruis::align::back, SL);
-    // });
+        auto val = s.get<ruis::align>("align_value"sv);
+        tst::check(val.get() == ruis::align::back, SL);
+    });
 
     // test that style values are updated when style sheet is changed
     suite.add("style__values_are_updated_when_sheet_changes", [](){

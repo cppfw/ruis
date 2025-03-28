@@ -19,41 +19,26 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 /* ================ LICENSE END ================ */
 
-#pragma once
+#include "align.hpp"
 
-#include <tml/tree.hpp>
+using namespace std::string_view_literals;
 
-namespace ruis {
+using namespace ruis;
 
-/**
- * @brief Alignment parameter values.
- */
-enum class align {
-	/**
-	 * @brief Undefined alignment.
-	 * In case alignemnt is undefined the default center alignment is assumed.
-	 */
-	undefined,
+align ruis::make_from(const tml::forest& desc, const align& adl)
+{
+	if (desc.empty()) {
+		return align::undefined;
+	}
 
-	/**
-	 * @brief Left or top alignment.
-	 */
-	front,
+	const auto& s = desc.front().value.string;
 
-	/**
-	 * @brief Center lignment.
-	 */
-	center,
-
-	/**
-	 * @brief Right or bottom alignment.
-	 */
-	back
-};
-
-/**
- * TODO:
- */
-align make_from(const tml::forest& desc, const align& adl);
-
-} // namespace ruis
+	if (s == "front"sv) {
+		return align::front;
+	} else if (s == "center"sv) {
+		return align::center;
+	} else if (s == "back"sv) {
+		return align::back;
+	}
+	return align::undefined;
+}

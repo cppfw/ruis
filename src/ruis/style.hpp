@@ -141,6 +141,13 @@ public:
 private:
 	class style_value : public style::style_value_base
 	{
+		template <typename type, typename = void>
+		struct has_static_member_make_from : public std::false_type {};
+
+		template <typename type>
+		struct has_static_member_make_from<type, std::void_t<decltype(type::make_from(tml::forest()))>> :
+			public std::true_type {};
+
 		actual_value_type value;
 
 		void reload(
@@ -172,7 +179,12 @@ private:
 					}
 					return utki::string_parser(desc.front().value.string).read_number<value_type>();
 				} else {
-					return value_type::make_from(desc);
+					if constexpr (has_static_member_make_from<value_type>::value) {
+						return value_type::make_from(desc);
+					} else {
+						// use free function using ADL overload resolution
+						return make_from(desc, value_type{});
+					}
 				}
 			}
 		}
