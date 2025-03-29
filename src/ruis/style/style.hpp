@@ -67,14 +67,14 @@ class style
 		virtual ~style_value_base() = default;
 	};
 
-	std::map<std::string, std::weak_ptr<style_value_base>, std::less<>> cache;
+	mutable std::map<std::string, std::weak_ptr<style_value_base>, std::less<>> cache;
 
-	std::shared_ptr<style_value_base> get_from_cache(std::string_view id);
+	std::shared_ptr<const style_value_base> get_from_cache(std::string_view id) const;
 
 	void store_to_cache(
 		std::string_view id, //
 		std::weak_ptr<style_value_base> v
-	);
+	) const;
 
 public:
 	style(utki::shared_ref<ruis::resource_loader> loader);
@@ -82,7 +82,7 @@ public:
 	void set(utki::shared_ref<style_sheet> ss);
 
 	template <typename value_type>
-	styled<value_type> get(std::string_view id);
+	styled<value_type> get(std::string_view id) const;
 
 	// ===================================
 	// ====== standard style values ======
@@ -99,10 +99,10 @@ public:
 namespace ruis {
 
 template <typename value_type>
-styled<value_type> style::get(std::string_view id)
+styled<value_type> style::get(std::string_view id) const
 {
 	if (auto svb = this->get_from_cache(id)) {
-		auto sv = std::dynamic_pointer_cast<typename styled<value_type>::style_value>(svb);
+		auto sv = std::dynamic_pointer_cast<const typename styled<value_type>::style_value>(svb);
 		if (!sv) {
 			throw std::invalid_argument("style::get(id): requested value_type does not match the one stored in cache");
 		}

@@ -68,7 +68,7 @@ void style::set(utki::shared_ref<style_sheet> ss)
 	}
 }
 
-std::shared_ptr<style::style_value_base> style::get_from_cache(std::string_view id)
+std::shared_ptr<const style::style_value_base> style::get_from_cache(std::string_view id) const
 {
 	auto i = this->cache.find(id);
 	if (i == this->cache.end()) {
@@ -86,7 +86,7 @@ std::shared_ptr<style::style_value_base> style::get_from_cache(std::string_view 
 void style::store_to_cache(
 	std::string_view id, //
 	std::weak_ptr<style_value_base> v
-)
+) const
 {
 	ASSERT(!utki::contains(this->cache, id))
 
@@ -100,17 +100,17 @@ void style::store_to_cache(
 	ASSERT(res.second) // insert took place
 }
 
-// styled<color> style::get_color_background() const
-// {
-// 	return this->get<color>("color_background"sv);
-// }
+styled<color> style::get_color_background() const
+{
+	return this->get<color>("color_background"sv);
+}
 
-// styled<color> style::get_color_middleground() const
-// {
-// 	return this->get<color>("color_middleground"sv);
-// }
+styled<color> style::get_color_middleground() const
+{
+	return this->get<color>("color_middleground"sv);
+}
 
-// styled<color> style::get_color_foreground() const
-// {
-// 	return this->get<color>("color_foreground"sv);
-// }
+styled<color> style::get_color_foreground() const
+{
+	return this->get<color>("color_foreground"sv);
+}
