@@ -36,7 +36,7 @@ void color_widget::set_color(styled<ruis::color> color)
 		return;
 	}
 
-	this->params.color = color;
+	this->params.color = std::move(color);
 	this->clear_cache();
 	this->on_color_change();
 }
@@ -47,7 +47,7 @@ void color_widget::set_disabled_color(styled<ruis::color> color)
 		return;
 	}
 
-	this->params.disabled_color = color;
+	this->params.disabled_color = std::move(color);
 	this->clear_cache();
 	this->on_color_change();
 }

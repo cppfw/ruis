@@ -158,7 +158,7 @@ public:
 		return !std::holds_alternative<actual_value_type>(this->value);
 	}
 
-	bool operator==(const styled& s)
+	bool operator==(const styled& s) const noexcept
 	{
 		if (this->is_from_style() && s.is_from_style()) {
 			return this->get_ref().to_shared_ptr() == s.get_ref().to_shared_ptr();

@@ -71,7 +71,7 @@ void timer::start(uint32_t timeout_ms)
 	try {
 		this->updater.get().start( //
 			utki::make_shared_from(static_cast<ruis::updateable&>(*this)),
-			std::min(timeout_ms, uint32_t(std::numeric_limits<uint16_t>::max()))
+			uint16_t(std::min(timeout_ms, uint32_t(std::numeric_limits<uint16_t>::max())))
 		);
 
 		this->timeout_ms = timeout_ms;
