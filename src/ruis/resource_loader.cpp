@@ -77,7 +77,7 @@ void resource_loader::unmount_res_pack(decltype(res_packs)::const_iterator id)
 	this->res_packs.erase(id);
 }
 
-void resource_loader::res_pack_entry::add_resource_to_res_map(
+void resource_loader::res_pack_entry::add_to_cache(
 	const utki::shared_ref<resource>& res, //
 	std::string_view id
 ) const
@@ -87,7 +87,7 @@ void resource_loader::res_pack_entry::add_resource_to_res_map(
 	this->cache.insert(std::make_pair(id, utki::make_weak(res)));
 }
 
-std::shared_ptr<resource> resource_loader::res_pack_entry::find_resource_in_res_map(std::string_view id) const
+std::shared_ptr<resource> resource_loader::res_pack_entry::find_in_cache(std::string_view id) const
 {
 	auto i = this->cache.find(id);
 	if (i != this->cache.end()) {

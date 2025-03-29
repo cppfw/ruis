@@ -27,7 +27,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace ruis::res;
 
 ruis::res::cursor::cursor(
-	utki::shared_ref<ruis::res::image> image, //
+	utki::shared_ref<const ruis::res::image> image, //
 	const vector2& hotspot
 ) :
 	image_v(std::move(image)),

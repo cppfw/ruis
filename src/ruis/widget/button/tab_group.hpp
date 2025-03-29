@@ -31,7 +31,7 @@ class tab_group :
 	virtual public widget, //
 	public choice_group
 {
-	std::shared_ptr<res::image> filler; // TODO: ref to const?
+	std::shared_ptr<const res::image> filler;
 	std::shared_ptr<const res::image::texture> filler_texture;
 
 public:
@@ -55,7 +55,7 @@ public:
 
 	~tab_group() override = default;
 
-	void set_filler(std::shared_ptr<res::image> filler);
+	void set_filler(std::shared_ptr<const res::image> filler);
 
 	ruis::vector2 measure(const ruis::vector2& quotum) const override;
 

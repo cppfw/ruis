@@ -37,7 +37,7 @@ public:
 
 	using actual_value_type = std::conditional_t<
 		is_resource, //
-		std::shared_ptr<value_type>,
+		std::shared_ptr<const value_type>,
 		value_type //
 		>;
 

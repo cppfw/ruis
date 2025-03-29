@@ -99,11 +99,11 @@ private:
 		// TODO: optimization: use string_view as key referencing string in the res script?
 		mutable std::map<const std::string, std::weak_ptr<resource>, std::less<>> cache;
 
-		void add_resource_to_res_map(
+		void add_to_cache(
 			const utki::shared_ref<resource>& res, //
 			std::string_view id
 		) const;
-		std::shared_ptr<resource> find_resource_in_res_map(std::string_view id) const;
+		std::shared_ptr<resource> find_in_cache(std::string_view id) const;
 		const tml::forest* find_resource_in_script(std::string_view id) const;
 	};
 
@@ -150,7 +150,7 @@ public:
 	 * @throw TODO:
 	 */
 	template <class resource_type>
-	utki::shared_ref<resource_type> load(std::string_view id) const;
+	utki::shared_ref<const resource_type> load(std::string_view id) const;
 
 private:
 };
@@ -183,10 +183,10 @@ public:
 };
 
 template <class resource_type>
-utki::shared_ref<resource_type> resource_loader::load(std::string_view id) const
+utki::shared_ref<const resource_type> resource_loader::load(std::string_view id) const
 {
 	for (auto& res_pack : utki::views::reverse(this->res_packs)) {
-		if (auto r = res_pack.find_resource_in_res_map(id)) {
+		if (auto r = res_pack.find_in_cache(id)) {
 			return utki::shared_ref<resource_type>(std::dynamic_pointer_cast<resource_type>(r));
 		}
 
@@ -207,7 +207,7 @@ utki::shared_ref<resource_type> resource_loader::load(std::string_view id) const
 			// using the id in case mounted resource packs change
 			resource.get().id = id;
 
-			res_pack.add_resource_to_res_map(resource, id);
+			res_pack.add_to_cache(resource, id);
 
 			return resource;
 		} catch (std::logic_error&) {

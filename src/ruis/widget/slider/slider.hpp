@@ -50,8 +50,8 @@ class slider :
 
 public:
 	struct parameters {
-		std::shared_ptr<res::nine_patch> background;
-		std::shared_ptr<res::nine_patch> handle;
+		std::shared_ptr<const res::nine_patch> background;
+		std::shared_ptr<const res::nine_patch> handle;
 	};
 
 private:

@@ -37,7 +37,7 @@ class gradient : public widget
 {
 public:
 	struct parameters {
-		std::shared_ptr<res::gradient> gradient;
+		std::shared_ptr<const res::gradient> gradient;
 	};
 
 	struct all_parameters {

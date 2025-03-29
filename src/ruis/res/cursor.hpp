@@ -46,7 +46,7 @@ class cursor : public resource
 
 public:
 	cursor(
-		utki::shared_ref<ruis::res::image> image, //
+		utki::shared_ref<const ruis::res::image> image, //
 		const vector2& hotspot
 	);
 

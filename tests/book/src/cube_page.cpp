@@ -18,7 +18,7 @@ using namespace ruis::make;
 namespace{
 
 class cube_widget : public ruis::widget, public ruis::updateable{
-	std::shared_ptr<ruis::res::texture_2d> tex;
+	std::shared_ptr<const ruis::res::texture_2d> tex;
 	
 	ruis::quaternion rot = ruis::quaternion().set_identity();
 public:
