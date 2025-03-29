@@ -34,22 +34,37 @@ constexpr auto default_font_size_pp = 12;
 
 void text_widget::set_font_face(const utki::shared_ref<const res::font>& font_res)
 {
+	if (this->params.font_face == font_res.to_shared_ptr()) {
+		return;
+	}
+
 	this->params.font_face = font_res.to_shared_ptr();
 
-	this->set_font_size(this->params.font_size);
+	this->update_fonts();
 }
 
-void text_widget::set_font_size(length size)
+void text_widget::set_font_size(styled<length> size)
 {
-	// do not exit early if requested size is same as the current one,
-	// because set_font_size() is called from within set_font_face() to
-	// create fonts for all font styles
+	if (this->params.font_size == size) {
+		return;
+	}
 
-	this->params.font_size = size;
+	this->params.font_size = std::move(size);
 
+	this->update_fonts();
+}
+
+void text_widget::update_fonts()
+{
 	for (size_t i = 0; i != size_t(res::font::style::enum_size); ++i) {
-		ASSERT(this->params.font_face) // always set in constructor to at least default font
-		this->fonts[i] = this->params.font_face->get(this->params.font_size.get(this->context), res::font::style(i));
+		// TODO: allow leaving it null
+		// always set in constructor to at least default font
+		ASSERT(this->params.font_face.get())
+
+		this->fonts[i] = this->params.font_face.get()->get(
+			this->params.font_size.get().get(this->context), //
+			res::font::style(i)
+		);
 	}
 
 	this->invalidate_layout();
@@ -64,18 +79,31 @@ text_widget::text_widget(
 	widget(std::move(context), {}, {}),
 	params([this, &params]() {
 		auto p = std::move(params);
-		if (!p.font_face) {
+		if (!p.font_face.get()) {
+			// TODO: allow null font face
 			p.font_face = this->context.get().loader().load<res::font>("ruis_fnt_text");
 		}
-		if (p.font_size.is_undefined()) {
+		if (p.font_size.get().is_undefined()) {
 			p.font_size = this->context.get().units.pp_to_px(default_font_size_pp);
 		}
 		return p;
 	}()),
 	fonts{
-		this->params.font_face->get(this->params.font_size.get(this->context), res::font::style::normal),
-		this->params.font_face->get(this->params.font_size.get(this->context), res::font::style::bold),
-		this->params.font_face->get(this->params.font_size.get(this->context), res::font::style::italic),
-		this->params.font_face->get(this->params.font_size.get(this->context), res::font::style::bold_italic)
+		this->params.font_face.get()->get(
+			this->params.font_size.get().get(this->context), //
+			res::font::style::normal
+		),
+		this->params.font_face.get()->get(
+			this->params.font_size.get().get(this->context), //
+			res::font::style::bold
+		),
+		this->params.font_face.get()->get(
+			this->params.font_size.get().get(this->context), //
+			res::font::style::italic
+		),
+		this->params.font_face.get()->get(
+			this->params.font_size.get().get(this->context), //
+			res::font::style::bold_italic
+		)
 	}
 {}

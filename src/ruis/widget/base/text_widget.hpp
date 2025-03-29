@@ -40,14 +40,16 @@ class text_widget : virtual public widget
 {
 public:
 	struct parameters {
-		length font_size;
-		std::shared_ptr<const res::font> font_face;
+		styled<length> font_size;
+		styled<res::font> font_face;
 	};
 
 private:
 	parameters params;
 
 	std::array<utki::shared_ref<const ruis::font>, size_t(res::font::style::enum_size)> fonts;
+
+	void update_fonts();
 
 protected:
 	text_widget(
@@ -71,11 +73,11 @@ public:
 		return this->fonts[size_t(style)].get();
 	}
 
-	void set_font_size(length size);
+	void set_font_size(styled<length> size);
 
 	const length& get_font_size() const noexcept
 	{
-		return this->params.font_size;
+		return this->params.font_size.get();
 	}
 
 	void set_text(std::string_view text)
