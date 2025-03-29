@@ -164,7 +164,7 @@ utki::shared_ref<ruis::window> make_text_input_window(
                                 .dims{ruis::dim::fill, ruis::dim::max}
                             },
                             .color_params{
-                                .color = ruis::default_style::color_text_normal
+                                .color = c.get().style.get_color_text_normal()
                             }
                         },
                         U"Hello Wrodl!!!"s

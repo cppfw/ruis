@@ -30,7 +30,7 @@ color_widget::color_widget(utki::shared_ref<ruis::context> context, parameters p
 	params(std::move(params))
 {}
 
-void color_widget::set_color(ruis::color color)
+void color_widget::set_color(styled<ruis::color> color)
 {
 	if (this->params.color == color) {
 		return;
@@ -41,7 +41,7 @@ void color_widget::set_color(ruis::color color)
 	this->on_color_change();
 }
 
-void color_widget::set_disabled_color(ruis::color color)
+void color_widget::set_disabled_color(styled<ruis::color> color)
 {
 	if (this->params.disabled_color == color) {
 		return;

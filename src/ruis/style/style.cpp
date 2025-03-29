@@ -114,3 +114,18 @@ styled<color> style::get_color_foreground() const
 {
 	return this->get<color>("color_foreground"sv);
 }
+
+styled<color> style::get_color_text_normal() const
+{
+	return this->get<color>("color_text_normal"sv);
+}
+
+styled<color> style::get_color_highlight() const
+{
+	return this->get<color>("color_highlight"sv);
+}
+
+styled<dimension> style::get_dim_indent_tree_view_item() const
+{
+	return this->get<dimension>("dim_tree_view_item_indent"sv);
+}

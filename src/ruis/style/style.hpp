@@ -26,8 +26,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <utki/string.hpp>
 #include <utki/variant.hpp>
 
+#include "../layout/dimension.hpp"
 #include "../resource_loader.hpp"
 #include "../util/color.hpp"
+#include "../util/length.hpp"
 
 #include "style_sheet.hpp"
 
@@ -90,6 +92,10 @@ public:
 	styled<color> get_color_background() const;
 	styled<color> get_color_middleground() const;
 	styled<color> get_color_foreground() const;
+	styled<color> get_color_text_normal() const;
+	styled<color> get_color_highlight() const;
+
+	styled<dimension> get_dim_indent_tree_view_item() const;
 };
 
 } // namespace ruis

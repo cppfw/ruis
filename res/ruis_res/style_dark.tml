@@ -8,6 +8,6 @@ ruis{
 
     color_highlight{0xffad9869}
 
-    length_tree_view_item_indent{17pp}
+    dim_tree_view_item_indent{17pp}
 }
 user{}

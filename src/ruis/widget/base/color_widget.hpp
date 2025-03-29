@@ -37,10 +37,10 @@ class color_widget : public virtual widget
 public:
 	struct parameters {
 		constexpr static auto default_color = 0xffffffff;
-		ruis::color color = default_color;
+		styled<ruis::color> color = default_color;
 
 		constexpr static auto default_disabled_color = 0xff808080;
-		ruis::color disabled_color = default_disabled_color;
+		styled<ruis::color> disabled_color = default_disabled_color;
 	};
 
 private:
@@ -58,18 +58,18 @@ public:
 
 	~color_widget() override = default;
 
-	void set_color(ruis::color color);
+	void set_color(styled<ruis::color> color);
 
-	color get_color() const noexcept
+	const color& get_color() const noexcept
 	{
-		return this->params.color;
+		return this->params.color.get();
 	}
 
-	void set_disabled_color(ruis::color color);
+	void set_disabled_color(styled<ruis::color> color);
 
-	color get_disabled_color() const noexcept
+	const color& get_disabled_color() const noexcept
 	{
-		return this->params.disabled_color;
+		return this->params.disabled_color.get();
 	}
 
 	/**

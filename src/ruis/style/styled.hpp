@@ -120,6 +120,26 @@ private:
 		value(std::move(sv))
 	{}
 
+	const style_value_ref_type& get_ref() const noexcept
+	{
+		ASSERT(!this->value.valueless_by_exception())
+		ASSERT(this->is_from_style())
+		// use std::get_if() to avoid throwing exceptions
+		const auto* r = std::get_if<style_value_ref_type>(&this->value);
+		ASSERT(r)
+		return *r;
+	}
+
+	const actual_value_type& get_value() const noexcept
+	{
+		ASSERT(!this->value.valueless_by_exception())
+		ASSERT(!this->is_from_style())
+		// use std::get_if() to avoid throwing exceptions
+		const auto* v = std::get_if<actual_value_type>(&this->value);
+		ASSERT(v)
+		return *v;
+	}
+
 public:
 	styled(actual_value_type value = actual_value_type()) :
 		value(std::move(value))
@@ -138,16 +158,26 @@ public:
 		return !std::holds_alternative<actual_value_type>(this->value);
 	}
 
+	bool operator==(const styled& s)
+	{
+		if (this->is_from_style() && s.is_from_style()) {
+			return this->get_ref().to_shared_ptr() == s.get_ref().to_shared_ptr();
+		}
+
+		if (!this->is_from_style() && !s.is_from_style()) {
+			return this->get_value() == s.get_value();
+		}
+
+		return false;
+	}
+
 	const actual_value_type& get() const noexcept
 	{
-		// use std::get_if() to avoid throwing exceptions
-		ASSERT(!this->value.valueless_by_exception())
-		if (const auto* v = std::get_if<actual_value_type>(&this->value)) {
-			return *v;
+		if (this->is_from_style()) {
+			return this->get_ref().get().get_value();
+		} else {
+			return this->get_value();
 		}
-		const auto* r = std::get_if<style_value_ref_type>(&this->value);
-		ASSERT(r)
-		return r->get().get_value();
 	}
 };
 

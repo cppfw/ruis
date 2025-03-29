@@ -152,14 +152,16 @@ public:
             list = &n->children;
         }
 
-        auto ret = ruis::make::row(this->get_context(), {});
+        auto& c = this->get_context();
+
+        auto ret = ruis::make::row(c, {});
 
         {
             // clang-format off
-            auto v = m::pile(this->get_context(),
+            auto v = m::pile(c,
                 {},
                 {
-                    m::rectangle(this->get_context(),
+                    m::rectangle(c,
                         {
                             .layout_params{
                                 .dims{ruis::dim::fill, ruis::dim::fill}
@@ -169,18 +171,18 @@ public:
                                 .visible = false
                             },
                             .color_params{
-                                .color = ruis::default_style::color_highlight
+                                .color = c.get().style.get_color_highlight()
                             }
                         }
                     ),
-                    m::text(this->get_context(),
+                    m::text(c,
                         {
                             .widget_params{
                                 .id = "value"s
                             }
                         }
                     ),
-                    m::mouse_proxy(this->get_context(),
+                    m::mouse_proxy(c,
                         {
                             .layout_params{
                                 .dims{ruis::dim::fill, ruis::dim::fill}
@@ -232,10 +234,10 @@ public:
 
         {
             // clang-format off
-            auto b = m::push_button(this->get_context(),
+            auto b = m::push_button(c,
                 {},
                 {
-                    m::rectangle(this->get_context(),
+                    m::rectangle(c,
                         {
                             .layout_params{
                                 .dims{ruis::length::make_pp(5), ruis::length::make_pp(2)}

@@ -22,16 +22,13 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #pragma once
 
 #include <tml/tree.hpp>
+#include <utki/shared_ref.hpp>
 
-#include "../context.hpp"
+#include "units.hpp"
 
 namespace ruis {
 
 class context;
-
-class length;
-
-std::ostream& operator<<(std::ostream& o, const length& l);
 
 class length
 {
@@ -66,16 +63,9 @@ public:
 		return this->value < real(0);
 	}
 
-	real get(const utki::shared_ref<const context>& ctx) const noexcept
-	{
-		ASSERT(!this->is_undefined())
-		return this->get(ctx.get());
-	}
+	real get(const utki::shared_ref<const context>& ctx) const noexcept;
 
-	real get(const context& ctx) const noexcept
-	{
-		return this->get(ctx.units);
-	}
+	real get(const context& ctx) const noexcept;
 
 	real get(const ruis::units& units) const noexcept
 	{
@@ -105,8 +95,10 @@ public:
 
 	static length make_from(const tml::forest& desc);
 
-	friend std::ostream& ruis::operator<<(std::ostream& o, const length& l);
+	friend std::ostream& operator<<(std::ostream& o, const length& l);
 };
+
+std::ostream& operator<<(std::ostream& o, const length& l);
 
 using vec2_length = r4::vector2<length>;
 
