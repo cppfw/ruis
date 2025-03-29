@@ -26,12 +26,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
-namespace {
-
-constexpr auto default_font_size_pp = 12;
-
-} // namespace
-
 void text_widget::set_font_face(const utki::shared_ref<const res::font>& font_res)
 {
 	if (this->params.font_face == font_res.to_shared_ptr()) {
@@ -83,8 +77,9 @@ text_widget::text_widget(
 			// TODO: allow null font face
 			p.font_face = this->context.get().loader().load<res::font>("ruis_fnt_text");
 		}
+		// TODO: allow size to be undefined
 		if (p.font_size.get().is_undefined()) {
-			p.font_size = this->context.get().units.pp_to_px(default_font_size_pp);
+			p.font_size = this->context.get().units.pp_to_px(parameters::default_font_size_pp);
 		}
 		return p;
 	}()),

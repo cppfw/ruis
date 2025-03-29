@@ -40,7 +40,9 @@ class text_widget : virtual public widget
 {
 public:
 	struct parameters {
-		styled<length> font_size;
+		constexpr static const auto default_font_size_pp = 12;
+
+		styled<length> font_size = length::make_pp(default_font_size_pp);
 		styled<res::font> font_face;
 	};
 
