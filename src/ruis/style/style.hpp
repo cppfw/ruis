@@ -1,0 +1,128 @@
+/*
+ruis - GUI framework
+
+Copyright (C) 2012-2025  Ivan Gagis <igagis@gmail.com>
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program. If not, see <http://www.gnu.org/licenses/>.
+*/
+
+/* ================ LICENSE END ================ */
+
+#pragma once
+
+#include <tml/tree.hpp>
+#include <utki/shared_ref.hpp>
+#include <utki/string.hpp>
+#include <utki/variant.hpp>
+
+#include "../resource_loader.hpp"
+#include "../util/color.hpp"
+
+#include "style_sheet.hpp"
+
+namespace ruis {
+
+template <typename styled_value_type>
+class styled;
+
+class style
+{
+	template <typename styled_value_type>
+	friend class styled;
+
+	utki::shared_ref<ruis::resource_loader> loader;
+
+	utki::shared_ref<ruis::style_sheet> cur_style_sheet;
+
+	class style_value_base
+	{
+		friend class style;
+
+	protected:
+		virtual void reload(
+			const tml::forest& desc, //
+			const ruis::resource_loader& loader
+		) = 0;
+
+		style_value_base() = default;
+
+	public:
+		style_value_base(const style_value_base&) = delete;
+		style_value_base& operator=(const style_value_base&) = delete;
+
+		style_value_base(style_value_base&&) = delete;
+		style_value_base& operator=(style_value_base&&) = delete;
+
+		virtual ~style_value_base() = default;
+	};
+
+	std::map<std::string, std::weak_ptr<style_value_base>, std::less<>> cache;
+
+	std::shared_ptr<style_value_base> get_from_cache(std::string_view id);
+
+	void store_to_cache(
+		std::string_view id, //
+		std::weak_ptr<style_value_base> v
+	);
+
+public:
+	style(utki::shared_ref<ruis::resource_loader> loader);
+
+	void set(utki::shared_ref<style_sheet> ss);
+
+	template <typename value_type>
+	styled<value_type> get(std::string_view id);
+
+	// ===================================
+	// ====== standard style values ======
+
+	styled<color> get_color_background() const;
+	styled<color> get_color_middleground() const;
+	styled<color> get_color_foreground() const;
+};
+
+} // namespace ruis
+
+#include "styled.hpp"
+
+namespace ruis {
+
+template <typename value_type>
+styled<value_type> style::get(std::string_view id)
+{
+	if (auto svb = this->get_from_cache(id)) {
+		auto sv = std::dynamic_pointer_cast<typename styled<value_type>::style_value>(svb);
+		if (!sv) {
+			throw std::invalid_argument("style::get(id): requested value_type does not match the one stored in cache");
+		}
+		return {utki::shared_ref<const typename styled<value_type>::style_value>(std::move(sv))};
+	}
+
+	const auto* desc = this->cur_style_sheet.get().get(id);
+	if (!desc) {
+		return typename styled<value_type>::actual_value_type();
+	}
+
+	auto ret = utki::make_shared<typename styled<value_type>::style_value>(
+		*desc, //
+		this->loader.get()
+	);
+	this->store_to_cache(
+		id, //
+		ret.to_shared_ptr()
+	);
+	return {ret};
+}
+
+} // namespace ruis

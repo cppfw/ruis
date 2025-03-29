@@ -24,67 +24,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace std::string_view_literals;
 using namespace ruis;
 
-style_sheet::style_sheet(tml::forest desc) :
-	id_to_description_map(parse(std::move(desc)))
-{}
-
-std::map<std::string, tml::forest, std::less<>> style_sheet::parse(tml::forest desc)
-{
-	if (desc.empty()) {
-		throw std::invalid_argument("style_sheet::parse(desc): empty style sheet description supplied");
-	}
-
-	const auto& version_node = desc.front();
-	if (version_node.value.string != "version"sv) {
-		throw std::invalid_argument("style_sheet::parse(desc): 'version' expected as a first entry");
-	}
-
-	if (version_node.children.empty()) {
-		throw std::invalid_argument("style_sheet::parse(desc): 'version' field is empty");
-	}
-
-	auto version = version_node.children.front().value.to_uint32();
-
-	if (version != 1) {
-		throw std::invalid_argument(
-			utki::cat(
-				"style_sheet::parse(desc): unsupported file format version. expected 1, got: ", //
-				version
-			)
-		);
-	}
-
-	std::map<std::string, tml::forest, std::less<>> ret;
-
-	for (auto& d : utki::skip_front<1>(desc)) {
-		if (d.value.string == "ruis"sv || d.value.string == "user"sv) {
-			for (auto& s : d.children) {
-				ret.insert_or_assign(
-					std::move(s.value.string), //
-					std::move(s.children)
-				);
-			}
-		}
-	}
-
-	return ret;
-}
-
-style_sheet style_sheet::load(const papki::file& fi)
-{
-	return {tml::read(fi)};
-}
-
-const tml::forest* style_sheet::get(std::string_view style_id) const noexcept
-{
-	auto i = this->id_to_description_map.find(style_id);
-	if (i == this->id_to_description_map.end()) {
-		return nullptr;
-	}
-
-	return &i->second;
-}
-
 style::style(utki::shared_ref<ruis::resource_loader> loader) :
 	loader(std::move(loader)),
 	cur_style_sheet(utki::make_shared<style_sheet>())
@@ -160,3 +99,18 @@ void style::store_to_cache(
 
 	ASSERT(res.second) // insert took place
 }
+
+// styled<color> style::get_color_background() const
+// {
+// 	return this->get<color>("color_background"sv);
+// }
+
+// styled<color> style::get_color_middleground() const
+// {
+// 	return this->get<color>("color_middleground"sv);
+// }
+
+// styled<color> style::get_color_foreground() const
+// {
+// 	return this->get<color>("color_foreground"sv);
+// }

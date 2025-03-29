@@ -21,106 +21,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include <tml/tree.hpp>
-#include <utki/shared_ref.hpp>
-#include <utki/string.hpp>
-#include <utki/variant.hpp>
-
-#include "resource_loader.hpp"
+#include "style.hpp"
 
 namespace ruis {
-
-/**
- * @brief Style sheet.
- * TODO: write more description
- * File format:
- * @verbatim
- * version{<version-number>}
- * ruis{
- *     // ruis standard style values
- *     <style-name>{<style-value>}
- *     ...
- * }
- * user{
- *     // user defined style values
- *     <style-name>{<style-value>}
- *     ...
- * }
- * @endverbatim
- */
-class style_sheet
-{
-	std::map<std::string, tml::forest, std::less<>> id_to_description_map;
-
-	static std::map<std::string, tml::forest, std::less<>> parse(tml::forest desc);
-
-public:
-	style_sheet() = default;
-
-	style_sheet(tml::forest desc);
-
-	/**
-	 * @brief Get style value description.
-	 * @param style_id - id of the style value.
-	 * @return pointer to the style value description if present in the style sheet.
-	 * @return nullptr in case the style id is not present in the style sheet.
-	 */
-	const tml::forest* get(std::string_view style_id) const noexcept;
-
-	static style_sheet load(const papki::file& fi);
-};
-
-template <typename styled_value_type>
-class styled;
-
-class style
-{
-	template <typename styled_value_type>
-	friend class styled;
-
-	utki::shared_ref<ruis::resource_loader> loader;
-
-	utki::shared_ref<ruis::style_sheet> cur_style_sheet;
-
-	class style_value_base
-	{
-		friend class style;
-
-	protected:
-		virtual void reload(
-			const tml::forest& desc, //
-			const ruis::resource_loader& loader
-		) = 0;
-
-		style_value_base() = default;
-
-	public:
-		style_value_base(const style_value_base&) = delete;
-		style_value_base& operator=(const style_value_base&) = delete;
-
-		style_value_base(style_value_base&&) = delete;
-		style_value_base& operator=(style_value_base&&) = delete;
-
-		virtual ~style_value_base() = default;
-	};
-
-	std::map<std::string, std::weak_ptr<style_value_base>, std::less<>> cache;
-
-	std::shared_ptr<style_value_base> get_from_cache(std::string_view id);
-
-	void store_to_cache(
-		std::string_view id, //
-		std::weak_ptr<style_value_base> v
-	);
-
-public:
-	style(utki::shared_ref<ruis::resource_loader> loader);
-
-	void set(utki::shared_ref<style_sheet> ss);
-
-	template <typename value_type>
-	styled<value_type> get(std::string_view id);
-};
 
 // TODO: make a concept which requires value_type::make_from(tml::forest)
 // Or value type can be derived from ruis::resource
@@ -247,32 +150,5 @@ public:
 		return r->get().get_value();
 	}
 };
-
-template <typename value_type>
-styled<value_type> style::get(std::string_view id)
-{
-	if (auto svb = this->get_from_cache(id)) {
-		auto sv = std::dynamic_pointer_cast<typename styled<value_type>::style_value>(svb);
-		if (!sv) {
-			throw std::invalid_argument("style::get(id): requested value_type does not match the one stored in cache");
-		}
-		return {utki::shared_ref<const typename styled<value_type>::style_value>(std::move(sv))};
-	}
-
-	const auto* desc = this->cur_style_sheet.get().get(id);
-	if (!desc) {
-		return typename styled<value_type>::actual_value_type();
-	}
-
-	auto ret = utki::make_shared<typename styled<value_type>::style_value>(
-		*desc, //
-		this->loader.get()
-	);
-	this->store_to_cache(
-		id, //
-		ret.to_shared_ptr()
-	);
-	return {ret};
-}
 
 } // namespace ruis

@@ -3,7 +3,7 @@
 
 #include <papki/span_file.hpp>
 
-#include <ruis/style.hpp>
+#include <ruis/style/style.hpp>
 #include <ruis/util/color.hpp>
 #include <ruis/util/length.hpp>
 #include <ruis/res/tml.hpp>

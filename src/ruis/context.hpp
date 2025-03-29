@@ -22,6 +22,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #pragma once
 
 #include "render/renderer.hpp"
+#include "style/style.hpp"
 #include "util/events.hpp"
 #include "util/localization.hpp"
 #include "util/mouse_cursor.hpp"
@@ -29,7 +30,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "util/units.hpp"
 
 #include "resource_loader.hpp"
-#include "style.hpp"
 #include "updateable.hpp"
 
 namespace ruis {

@@ -75,6 +75,10 @@ void gui::init_standard_widgets(papki::file& fi)
 			//			TRACE(<< "could not mount " << s << std::endl)
 			continue;
 		}
+
+		fi.set_path(utki::cat(s, "style_dark.tml"));
+		this->context.get().style.set(utki::make_shared<style_sheet>(tml::read(fi)));
+
 		mounted = true;
 		break;
 	}

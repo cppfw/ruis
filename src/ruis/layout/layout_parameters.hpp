@@ -22,7 +22,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #pragma once
 
 #include "../config.hpp"
-#include "../style.hpp"
+#include "../style/styled.hpp"
 #include "../util/align.hpp"
 
 #include "dimension.hpp"
