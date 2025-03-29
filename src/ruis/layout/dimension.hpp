@@ -123,6 +123,8 @@ public:
 			case type::length:
 				return this->get_length() == d.get_length();
 		}
+
+		return false;
 	}
 
 	bool operator==(const length& d) const
