@@ -53,6 +53,7 @@ private:
 	utki::enum_array<std::shared_ptr<const ruis::font>, res::font::style> fonts;
 
 	void update_fonts();
+	void update_fonts_and_notify();
 
 protected:
 	/**

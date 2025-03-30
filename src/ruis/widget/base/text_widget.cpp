@@ -34,7 +34,7 @@ void text_widget::set_font_face(styled<res::font> font_face)
 
 	this->params.font_face = std::move(font_face);
 
-	this->update_fonts();
+	this->update_fonts_and_notify();
 }
 
 void text_widget::set_font_size(styled<length> size)
@@ -45,7 +45,7 @@ void text_widget::set_font_size(styled<length> size)
 
 	this->params.font_size = std::move(size);
 
-	this->update_fonts();
+	this->update_fonts_and_notify();
 }
 
 const ruis::font& text_widget::get_font(res::font::style style) const
@@ -81,9 +81,12 @@ void text_widget::update_fonts()
 			e
 		);
 	}
+}
 
+void text_widget::update_fonts_and_notify()
+{
+	this->update_fonts();
 	this->invalidate_layout();
-
 	this->on_font_change();
 }
 
