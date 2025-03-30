@@ -172,6 +172,7 @@ struct key_name_key_pair {
 };
 
 constexpr auto key_name_to_key_ordered_mapping = []() constexpr {
+	// TODO: refactor to avoid listing key names again
 	utki::enum_array<key_name_key_pair, ruis::key> arr = {{{
 		{"space"sv, ruis::key::space},
 		{"enter"sv, ruis::key::enter},
