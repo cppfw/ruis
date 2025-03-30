@@ -52,7 +52,7 @@ public:
 	virtual void render(
 		const r4::matrix4<float>& m, //
 		const ruis::render::vertex_array& va,
-		r4::vector4<float> color,
+		const r4::vector4<float>& color,
 		const ruis::render::texture_2d& tex
 	) const = 0;
 };
