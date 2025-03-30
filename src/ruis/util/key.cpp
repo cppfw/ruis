@@ -161,8 +161,8 @@ std::string_view ruis::to_string(ruis::key key)
 	if (key >= ruis::key::enum_size) {
 		return "unknown"sv;
 	}
-	// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-constant-array-index)
-	return key_names[size_t(key)];
+
+	return key_names[key];
 }
 
 namespace {
