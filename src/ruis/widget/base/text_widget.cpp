@@ -50,14 +50,14 @@ void text_widget::set_font_size(styled<length> size)
 
 void text_widget::update_fonts()
 {
-	for (size_t i = 0; i != size_t(res::font::style::enum_size); ++i) {
-		// TODO: allow leaving it null
-		// always set in constructor to at least default font
-		ASSERT(this->params.font_face.get())
+	// TODO: allow leaving it null
+	// always set in constructor to at least default font
+	ASSERT(this->params.font_face.get())
 
-		this->fonts[i] = this->params.font_face.get()->get(
+	for (auto [v, e] : this->fonts.zip_with_enum()) {
+		v = this->params.font_face.get()->get(
 			this->params.font_size.get().get(this->context), //
-			res::font::style(i)
+			e
 		);
 	}
 

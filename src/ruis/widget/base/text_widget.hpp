@@ -25,6 +25,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <vector>
 
 #include <r4/rectangle.hpp>
+#include <utki/enum_array.hpp>
 
 #include "../../res/font.hpp"
 #include "../widget.hpp"
@@ -49,7 +50,7 @@ public:
 private:
 	parameters params;
 
-	std::array<utki::shared_ref<const ruis::font>, size_t(res::font::style::enum_size)> fonts;
+	utki::enum_array<utki::shared_ref<const ruis::font>, res::font::style> fonts;
 
 	void update_fonts();
 
