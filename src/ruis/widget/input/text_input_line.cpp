@@ -76,7 +76,11 @@ void text_input_line::render(const ruis::matrix4& matrix) const
 
 		auto& r = this->context.get().renderer.get();
 		// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers)
-		r.shaders().color_pos->render(matr, r.obj().pos_quad_01_vao.get(), 0xff804040);
+		r.shaders().color_pos->render(
+			matr, //
+			r.obj().pos_quad_01_vao.get(),
+			ruis::color(0xff804040)
+		);
 	}
 
 	{

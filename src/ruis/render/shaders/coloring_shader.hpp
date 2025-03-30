@@ -24,6 +24,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <r4/matrix.hpp>
 #include <rasterimage/operations.hpp>
 
+#include "../../util/color.hpp"
 #include "../vertex_array.hpp"
 
 namespace ruis::render {
@@ -51,19 +52,19 @@ public:
 	virtual void render(
 		const r4::matrix4<float>& m, //
 		const vertex_array& va,
-		r4::vector4<float> color
+		const r4::vector4<float>& color
 	) const = 0;
 
 	void render(
 		const r4::matrix4<float>& m, //
 		const vertex_array& va,
-		uint32_t color
+		const ruis::color& color
 	) const
 	{
 		this->render(
 			m, //
 			va,
-			rasterimage::to_float(rasterimage::from_32bit_pixel(color))
+			color.to_vec4f()
 		);
 	}
 };

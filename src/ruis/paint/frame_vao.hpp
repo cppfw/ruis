@@ -44,7 +44,10 @@ public:
 
 	void set(vector2 dims, vector2 thickness);
 
-	void render(const matrix4& matrix, uint32_t color) const;
+	void render(
+		const matrix4& matrix, //
+		ruis::color color
+	) const;
 };
 
 } // namespace ruis

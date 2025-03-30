@@ -22,6 +22,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #pragma once
 
 #include "../render/renderer.hpp"
+#include "../util/color.hpp"
 
 #include "path.hpp"
 
@@ -47,7 +48,7 @@ public:
 
 	void set(const path::vertices& path);
 
-	void render(const ruis::matrix4& matrix, uint32_t color) const;
+	void render(const ruis::matrix4& matrix, ruis::color color) const;
 };
 
 } // namespace ruis

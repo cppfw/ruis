@@ -53,7 +53,7 @@ void path_vao::set(const path::vertices& path)
 
 void path_vao::render(
 	const ruis::matrix4& matrix, //
-	uint32_t color
+	ruis::color color
 ) const
 {
 	this->renderer.get().shaders().color_pos->render(
