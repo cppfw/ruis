@@ -9,5 +9,8 @@ ruis{
     color_highlight{0xffad9869}
 
     dim_tree_view_item_indent{17pp}
+
+    font_size_normal{12pp}
+    font_face_normal{ruis_fnt_normal}
 }
 user{}

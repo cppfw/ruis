@@ -50,11 +50,20 @@ public:
 private:
 	parameters params;
 
-	utki::enum_array<utki::shared_ref<const ruis::font>, res::font::style> fonts;
+	utki::enum_array<std::shared_ptr<const ruis::font>, res::font::style> fonts;
 
 	void update_fonts();
 
 protected:
+	/**
+	 * @brief Constructor.
+	 * If font face in parameters is not set, then tries to set it to 'font_face_normal'
+	 * from current default style of the ruis context.
+	 * If font size in parameters is undefined, then tries to set it to 'font_size_normal'
+	 * from current default style of the ruis context.
+	 * @param context - ruis context.
+	 * @param params - text widget parameters.
+	 */
 	text_widget(
 		utki::shared_ref<ruis::context> context, //
 		parameters params
@@ -69,12 +78,7 @@ public:
 
 	~text_widget() override = default;
 
-	void set_font_face(const utki::shared_ref<const res::font>& font_res);
-
-	const ruis::font& get_font(res::font::style style = res::font::style::normal) const
-	{
-		return this->fonts[size_t(style)].get();
-	}
+	void set_font_face(styled<res::font> font_face);
 
 	void set_font_size(styled<length> size);
 
@@ -82,6 +86,13 @@ public:
 	{
 		return this->params.font_size.get();
 	}
+
+	/**
+	 * @brief Get font for drawing.
+	 * @return Font for drawing.
+	 * @throw std::logic_error in case there is no font face currently set.
+	 */
+	const ruis::font& get_font(res::font::style style = res::font::style::normal) const;
 
 	void set_text(std::string_view text)
 	{

@@ -35,6 +35,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
+namespace res {
+class font;
+} // namespace res
+
 template <typename styled_value_type>
 class styled;
 
@@ -96,6 +100,9 @@ public:
 	styled<color> get_color_highlight() const;
 
 	styled<dimension> get_dim_indent_tree_view_item() const;
+
+	styled<length> get_font_size_normal() const;
+	styled<res::font> get_font_face_normal() const;
 };
 
 } // namespace ruis

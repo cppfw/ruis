@@ -21,6 +21,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "style.hpp"
 
+#include "../res/font.hpp"
+
 using namespace std::string_view_literals;
 using namespace ruis;
 
@@ -128,4 +130,14 @@ styled<color> style::get_color_highlight() const
 styled<dimension> style::get_dim_indent_tree_view_item() const
 {
 	return this->get<dimension>("dim_tree_view_item_indent"sv);
+}
+
+styled<length> style::get_font_size_normal() const
+{
+	return this->get<length>("font_size_normal"sv);
+}
+
+styled<res::font> style::get_font_face_normal() const
+{
+	return this->get<res::font>("font_face_normal"sv);
 }

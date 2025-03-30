@@ -1,4 +1,4 @@
-ruis_fnt_text{
+ruis_fnt_normal{
 //	normal {Vera.ttf}
 //	bold {VeraBd.ttf}
 //	italic {VeraIt.ttf}
@@ -9,6 +9,6 @@ ruis_fnt_text{
 	italic{DejaVuSans-Oblique.ttf}
 	bold_italic{DejaVuSans-BoldOblique.ttf}
 
-	size {13pp}
+	size {13pp} // obsolete ?
 	max_cached{100}
 }

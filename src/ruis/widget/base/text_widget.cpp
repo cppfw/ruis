@@ -26,13 +26,13 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
-void text_widget::set_font_face(const utki::shared_ref<const res::font>& font_res)
+void text_widget::set_font_face(styled<res::font> font_face)
 {
-	if (this->params.font_face == font_res.to_shared_ptr()) {
+	if (this->params.font_face == font_face) {
 		return;
 	}
 
-	this->params.font_face = font_res.to_shared_ptr();
+	this->params.font_face = std::move(font_face);
 
 	this->update_fonts();
 }
@@ -48,15 +48,36 @@ void text_widget::set_font_size(styled<length> size)
 	this->update_fonts();
 }
 
+const ruis::font& text_widget::get_font(res::font::style style) const
+{
+	const auto& f = this->fonts[style];
+	if (!f) {
+		throw std::logic_error("text_widget::get_font(): font face is not set");
+	}
+
+	return *f;
+}
+
 void text_widget::update_fonts()
 {
-	// TODO: allow leaving it null
-	// always set in constructor to at least default font
-	ASSERT(this->params.font_face.get())
+	if (!this->params.font_face.get()) {
+		// font face is not set
+		for (auto& f : this->fonts) {
+			f.reset();
+		}
+		return;
+	}
+
+	real font_size = [&]() -> real {
+		if (this->params.font_size.get().is_undefined()) {
+			return length::make_pp(parameters::default_font_size_pp).get(this->context);
+		}
+		return this->params.font_size.get().get(this->context);
+	}();
 
 	for (auto [v, e] : this->fonts.zip_with_enum()) {
 		v = this->params.font_face.get()->get(
-			this->params.font_size.get().get(this->context), //
+			font_size, //
 			e
 		);
 	}
@@ -71,34 +92,15 @@ text_widget::text_widget(
 	parameters params
 ) :
 	widget(std::move(context), {}, {}),
-	params([this, &params]() {
-		auto p = std::move(params);
-		if (!p.font_face.get()) {
-			// TODO: allow null font face
-			p.font_face = this->context.get().loader().load<res::font>("ruis_fnt_text");
+	params([&]() {
+		if (!params.font_face.get() && !params.font_face.is_from_style()) {
+			params.font_face = this->context.get().style.get_font_face_normal();
 		}
-		// TODO: allow size to be undefined
-		if (p.font_size.get().is_undefined()) {
-			p.font_size = this->context.get().units.pp_to_px(parameters::default_font_size_pp);
+		if (params.font_size.get().is_undefined() && !params.font_size.is_from_style()) {
+			params.font_size = this->context.get().style.get_font_size_normal();
 		}
-		return p;
-	}()),
-	fonts{
-		this->params.font_face.get()->get(
-			this->params.font_size.get().get(this->context), //
-			res::font::style::normal
-		),
-		this->params.font_face.get()->get(
-			this->params.font_size.get().get(this->context), //
-			res::font::style::bold
-		),
-		this->params.font_face.get()->get(
-			this->params.font_size.get().get(this->context), //
-			res::font::style::italic
-		),
-		this->params.font_face.get()->get(
-			this->params.font_size.get().get(this->context), //
-			res::font::style::bold_italic
-		)
-	}
-{}
+		return std::move(params);
+	}())
+{
+	this->update_fonts();
+}
