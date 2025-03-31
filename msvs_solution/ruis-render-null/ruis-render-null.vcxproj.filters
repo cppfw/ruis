@@ -15,31 +15,28 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\tests\harness\modules\ruis-render-null\src\ruis\render\null\factory.cpp">
+    <ClCompile Include="..\..\tests\harness\modules\ruis-render-null\src\**\*.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\tests\harness\modules\ruis-render-null\src\ruis\render\null\frame_buffer.cpp">
+    <ClCompile Include="..\..\tests\harness\modules\ruis-render-null\src\**\*.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\tests\harness\modules\ruis-render-null\src\ruis\render\null\index_buffer.cpp">
+    <ClCompile Include="..\..\tests\harness\modules\ruis-render-null\src\**\*.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\tests\harness\modules\ruis-render-null\src\ruis\render\null\renderer.cpp">
+    <ClCompile Include="..\..\tests\harness\modules\ruis-render-null\src\**\*.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\tests\harness\modules\ruis-render-null\src\ruis\render\null\texture_2d.cpp">
+    <ClCompile Include="..\..\tests\harness\modules\ruis-render-null\src\**\*.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\tests\harness\modules\ruis-render-null\src\ruis\render\null\texture_cube.cpp">
+    <ClCompile Include="..\..\tests\harness\modules\ruis-render-null\src\**\*.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\tests\harness\modules\ruis-render-null\src\ruis\render\null\texture_depth.cpp">
+    <ClCompile Include="..\..\tests\harness\modules\ruis-render-null\src\**\*.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\tests\harness\modules\ruis-render-null\src\ruis\render\null\vertex_array.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\tests\harness\modules\ruis-render-null\src\ruis\render\null\vertex_buffer.cpp">
+    <ClCompile Include="..\..\tests\harness\modules\ruis-render-null\src\**\*.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
