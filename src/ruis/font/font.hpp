@@ -89,7 +89,7 @@ protected:
 	 */
 	virtual render_result render_internal(
 		const ruis::matrix4& matrix, //
-		r4::vector4<float> color,
+		const ruis::color& color,
 		const std::u32string_view str,
 		unsigned tab_size,
 		size_t offset
@@ -133,13 +133,19 @@ public:
 	 */
 	render_result render(
 		const ruis::matrix4& matrix, //
-		r4::vector4<float> color,
+		const ruis::color& color,
 		const std::u32string_view str,
 		unsigned tab_size = 4,
 		size_t offset = std::numeric_limits<size_t>::max()
 	) const
 	{
-		return this->render_internal(matrix, color, str, tab_size, offset);
+		return this->render_internal(
+			matrix, //
+			color,
+			str,
+			tab_size,
+			offset
+		);
 	}
 
 	/**
@@ -155,13 +161,19 @@ public:
 	 */
 	render_result render(
 		const ruis::matrix4& matrix, //
-		r4::vector4<float> color,
+		const ruis::color& color,
 		utki::utf8_iterator str,
 		unsigned tab_size = 4,
 		size_t offset = std::numeric_limits<size_t>::max()
 	) const
 	{
-		return this->render(matrix, color, utki::to_utf32(str), tab_size, offset);
+		return this->render(
+			matrix, //
+			color,
+			utki::to_utf32(str),
+			tab_size,
+			offset
+		);
 	}
 
 	/**
@@ -177,13 +189,17 @@ public:
 	 */
 	render_result render(
 		const ruis::matrix4& matrix, //
-		r4::vector4<float> color,
+		const ruis::color& color,
 		const char* str,
 		unsigned tab_size = 4,
 		size_t offset = std::numeric_limits<size_t>::max()
 	) const
 	{
-		return this->render(matrix, color, utki::utf8_iterator(str));
+		return this->render(
+			matrix, //
+			color,
+			utki::utf8_iterator(str)
+		);
 	}
 
 	/**
@@ -199,13 +215,19 @@ public:
 	 */
 	render_result render(
 		const ruis::matrix4& matrix, //
-		r4::vector4<float> color,
+		const ruis::color& color,
 		const std::string& str,
 		unsigned tab_size = 4,
 		size_t offset = std::numeric_limits<size_t>::max()
 	) const
 	{
-		return this->render(matrix, color, str.c_str(), tab_size, offset);
+		return this->render(
+			matrix, //
+			color,
+			str.c_str(),
+			tab_size,
+			offset
+		);
 	}
 
 	/**

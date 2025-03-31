@@ -45,6 +45,9 @@ public:
 
 		styled<length> font_size = length::make_pp(default_font_size_pp);
 		styled<res::font> font_face;
+
+		constexpr static const auto default_selection_color = 0xff804040;
+		styled<ruis::color> selection_color = default_selection_color;
 	};
 
 private:
@@ -69,6 +72,11 @@ protected:
 		utki::shared_ref<ruis::context> context, //
 		parameters params
 	);
+
+	const parameters& get_params() const noexcept
+	{
+		return this->params;
+	}
 
 public:
 	text_widget(const text_widget&) = delete;

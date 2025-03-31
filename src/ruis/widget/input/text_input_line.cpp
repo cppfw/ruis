@@ -72,14 +72,19 @@ void text_input_line::render(const ruis::matrix4& matrix) const
 			this->selection_start_index < this->cursor_index ? this->selection_start_pos : this->cursor_pos,
 			0
 		);
-		matr.scale(vector2(std::abs(this->cursor_pos - this->selection_start_pos), this->rect().d.y()));
+
+		using std::abs;
+		matr.scale(vector2(
+			abs(this->cursor_pos - this->selection_start_pos), //
+			this->rect().d.y()
+		));
 
 		auto& r = this->context.get().renderer.get();
-		// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers)
+
 		r.shaders().color_pos->render(
 			matr, //
 			r.obj().pos_quad_01_vao.get(),
-			ruis::color(0xff804040)
+			this->text_widget::get_params().selection_color.get()
 		);
 	}
 
@@ -98,9 +103,11 @@ void text_input_line::render(const ruis::matrix4& matrix) const
 		ASSERT(this->first_visible_char_index <= this->get_string().size())
 		font.render(
 			matr,
-			this->get_current_color().to_vec4f(),
-			this->get_string()
-				.substr(this->first_visible_char_index, this->get_string().size() - this->first_visible_char_index)
+			this->get_current_color(),
+			this->get_string().substr(
+				this->first_visible_char_index, //
+				this->get_string().size() - this->first_visible_char_index
+			)
 		);
 	}
 
@@ -111,9 +118,9 @@ void text_input_line::render(const ruis::matrix4& matrix) const
 
 		auto& r = this->context.get().renderer.get();
 		r.shaders().color_pos->render(
-			matr,
-			r.obj().pos_quad_01_vao.get(), //
-			this->get_current_color().to_vec4f()
+			matr, //
+			r.obj().pos_quad_01_vao.get(),
+			this->get_current_color()
 		);
 	}
 }

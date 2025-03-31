@@ -152,19 +152,29 @@ public:
 
 protected:
 	render_result render_internal(
-		const ruis::matrix4& matrix,
-		r4::vector4<float> color,
+		const ruis::matrix4& matrix, //
+		const ruis::color& color,
 		const std::u32string_view str,
 		unsigned tab_size,
 		size_t offset
 	) const override;
 
-	real get_advance_internal(std::u32string_view str, unsigned tab_size) const override;
+	real get_advance_internal(
+		std::u32string_view str, //
+		unsigned tab_size
+	) const override;
 
-	ruis::rect get_bounding_box_internal(std::u32string_view str, unsigned tab_size) const override;
+	ruis::rect get_bounding_box_internal(
+		std::u32string_view str, //
+		unsigned tab_size
+	) const override;
 
 private:
-	real render_glyph_internal(const ruis::matrix4& matrix, r4::vector4<float> color, char32_t ch) const;
+	real render_glyph_internal(
+		const ruis::matrix4& matrix, //
+		const ruis::color& color,
+		char32_t ch
+	) const;
 
 	const glyph& get_glyph(char32_t c) const;
 };

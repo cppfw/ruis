@@ -24,6 +24,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <r4/matrix.hpp>
 #include <r4/vector.hpp>
 
+#include "../../util/color.hpp"
 #include "../texture_2d.hpp"
 #include "../vertex_array.hpp"
 
@@ -55,6 +56,21 @@ public:
 		const r4::vector4<float>& color,
 		const ruis::render::texture_2d& tex
 	) const = 0;
+
+	void render(
+		const r4::matrix4<float>& m, //
+		const ruis::render::vertex_array& va,
+		const ruis::color& color,
+		const ruis::render::texture_2d& tex
+	) const
+	{
+		this->render(
+			m, //
+			va,
+			color.to_vec4f(),
+			tex
+		);
+	}
 };
 
 } // namespace ruis::render

@@ -252,7 +252,11 @@ const texture_font::glyph& texture_font::get_glyph(char32_t c) const
 	return i->second;
 }
 
-real texture_font::render_glyph_internal(const ruis::matrix4& matrix, r4::vector4<float> color, char32_t ch) const
+real texture_font::render_glyph_internal(
+	const ruis::matrix4& matrix, //
+	const ruis::color& color,
+	char32_t ch
+) const
 {
 	const glyph& g = this->get_glyph(ch);
 
@@ -346,7 +350,7 @@ ruis::rect texture_font::get_bounding_box_internal(std::u32string_view str, unsi
 
 font::render_result texture_font::render_internal(
 	const ruis::matrix4& matrix,
-	r4::vector4<float> color,
+	const ruis::color& color,
 	const std::u32string_view str,
 	unsigned tab_size,
 	size_t offset
