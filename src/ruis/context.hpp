@@ -22,7 +22,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #pragma once
 
 #include "render/renderer.hpp"
-#include "style/style.hpp"
+#include "style/style_provider.hpp"
 #include "util/events.hpp"
 #include "util/localization.hpp"
 #include "util/mouse_cursor.hpp"
@@ -55,6 +55,20 @@ public:
 	 * @param proc - procedure to post to the UI thread.
 	 */
 	void post_to_ui_thread(std::function<void()> proc);
+
+	/**
+	 * @brief Default style to be used for this context.
+	 */
+	const utki::shared_ref<ruis::style_provider> style_provider;
+
+	/**
+	 * @brief Shorthand alias for style_provider.
+	 * @return this->style_provider.get().
+	 */
+	const ruis::style_provider& style() const noexcept
+	{
+		return this->style_provider.get();
+	}
 
 	/**
 	 * @brief Resource loader.
@@ -115,11 +129,6 @@ public:
 	}
 
 	/**
-	 * @brief Default style to be used for this context.
-	 */
-	ruis::style style;
-
-	/**
 	 * @brief Unit values.
 	 */
 	ruis::units units;
@@ -133,12 +142,12 @@ public:
 
 	/**
 	 * @brief Constructor.
-	 * @param res_loader - resource loader to use for this context.
+	 * @param style_provider - style provider to use for this context.
 	 * @param updater - updater to use along with this context.
 	 * @param params - context parameters.
 	 */
 	context(
-		utki::shared_ref<ruis::resource_loader> res_loader,
+		utki::shared_ref<ruis::style_provider> style_provider,
 		utki::shared_ref<ruis::updater> updater,
 		parameters params
 	);
@@ -153,6 +162,3 @@ public:
 };
 
 } // namespace ruis
-
-// TODO:?
-// #include "widget.hpp"

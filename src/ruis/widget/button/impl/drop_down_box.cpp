@@ -315,7 +315,7 @@ utki::shared_ref<widget> drop_down_box::wrap_item(
 						.visible = false
 					},
 					.color_params{
-						.color = this->context.get().style.get_color_highlight()
+						.color = this->context.get().style().get_color_highlight()
 					}
 				}
 			)

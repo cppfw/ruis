@@ -31,16 +31,16 @@ namespace ruis {
 class color : public r4::vector4<uint8_t>
 {
 public:
-	color(uint32_t rgba = 0) :
+	constexpr color(uint32_t rgba = 0) :
 		r4::vector4<uint8_t>(rasterimage::from_32bit_pixel(rgba))
 	{}
 
-	uint32_t to_uint32_t() const noexcept
+	constexpr uint32_t to_uint32_t() const noexcept
 	{
 		return rasterimage::to_32bit_pixel(*this);
 	}
 
-	r4::vector4<float> to_vec4f() const noexcept
+	constexpr r4::vector4<float> to_vec4f() const noexcept
 	{
 		return rasterimage::to<float>(*this);
 	}
@@ -53,7 +53,7 @@ public:
 	 * @return true if color value is undefined.
 	 * @return false oterwise.
 	 */
-	bool is_undefined() const noexcept
+	constexpr bool is_undefined() const noexcept
 	{
 		return this->to_uint32_t() == 0;
 	}

@@ -97,10 +97,10 @@ text_widget::text_widget(
 	widget(std::move(context), {}, {}),
 	params([&]() {
 		if (!params.font_face.get() && !params.font_face.is_from_style()) {
-			params.font_face = this->context.get().style.get_font_face_normal();
+			params.font_face = this->context.get().style().get_font_face_normal();
 		}
 		if (params.font_size.get().is_undefined() && !params.font_size.is_from_style()) {
-			params.font_size = this->context.get().style.get_font_size_normal();
+			params.font_size = this->context.get().style().get_font_size_normal();
 		}
 		return std::move(params);
 	}())

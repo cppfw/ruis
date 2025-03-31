@@ -73,7 +73,7 @@ collapse_area::collapse_area(
 								.dims{ruis::dim::fill, ruis::dim::fill}
 							},
 							.color_params{
-								.color = this->context.get().style.get<ruis::color>("color_middleground")
+								.color = this->context.get().style().get_color_middleground()
 							}
 						}
 					),

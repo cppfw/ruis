@@ -3,7 +3,7 @@
 
 #include <papki/span_file.hpp>
 
-#include <ruis/style/style.hpp>
+#include <ruis/style/style_provider.hpp>
 #include <ruis/util/color.hpp>
 #include <ruis/util/length.hpp>
 #include <ruis/res/tml.hpp>
@@ -71,7 +71,7 @@ const tst::set set("style", [](tst::suite& suite){
 
         auto c = make_dummy_context();
 
-        ruis::style s(c.get().res_loader);
+        ruis::style_provider s(c.get().res_loader);
 
         s.set(std::move(ss));
 
@@ -92,7 +92,7 @@ const tst::set set("style", [](tst::suite& suite){
         )qwertyuiop"s);
 
         auto c = make_dummy_context();
-        ruis::style s(c.get().res_loader);
+        ruis::style_provider s(c.get().res_loader);
 
         s.set(utki::make_shared<ruis::style_sheet>(std::move(ss_desc)));
 
@@ -110,7 +110,7 @@ const tst::set set("style", [](tst::suite& suite){
         )qwertyuiop"s);
 
         auto c = make_dummy_context();
-        ruis::style s(c.get().res_loader);
+        ruis::style_provider s(c.get().res_loader);
 
         s.set(utki::make_shared<ruis::style_sheet>(std::move(ss_desc)));
 
@@ -122,7 +122,7 @@ const tst::set set("style", [](tst::suite& suite){
     suite.add("style__values_are_updated_when_sheet_changes", [](){
         auto c = make_dummy_context();
 
-        ruis::style s(c.get().res_loader);
+        ruis::style_provider s(c.get().res_loader);
 
         auto ss1 = utki::make_shared<ruis::style_sheet>(
             tml::read(
@@ -187,7 +187,7 @@ const tst::set set("style", [](tst::suite& suite){
 
         c.get().loader().mount_res_pack(papki::span_file(utki::make_span(res_pack_desc)));
 
-        ruis::style s(c.get().res_loader);
+        ruis::style_provider s(c.get().res_loader);
 
         auto ss1 = utki::make_shared<ruis::style_sheet>(
             tml::read(

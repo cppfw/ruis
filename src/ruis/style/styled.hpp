@@ -21,7 +21,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "style.hpp"
+#include "style_provider.hpp"
 
 namespace ruis {
 
@@ -30,7 +30,7 @@ namespace ruis {
 template <typename value_type>
 class styled
 {
-	friend class style;
+	friend class style_provider;
 
 public:
 	constexpr static const bool is_resource = std::is_base_of_v<ruis::resource, value_type>;
@@ -42,7 +42,7 @@ public:
 		>;
 
 private:
-	class style_value : public style::style_value_base
+	class style_value : public style_provider::style_value_base
 	{
 		template <typename checked_type, typename = void>
 		struct has_static_member_make_from : public std::false_type {};

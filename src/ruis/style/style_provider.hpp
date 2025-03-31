@@ -42,18 +42,14 @@ class font;
 template <typename styled_value_type>
 class styled;
 
-class style
+class style_provider
 {
 	template <typename styled_value_type>
 	friend class styled;
 
-	utki::shared_ref<ruis::resource_loader> loader;
-
-	utki::shared_ref<ruis::style_sheet> cur_style_sheet;
-
 	class style_value_base
 	{
-		friend class style;
+		friend class style_provider;
 
 	protected:
 		virtual void reload(
@@ -83,7 +79,13 @@ class style
 	) const;
 
 public:
-	style(utki::shared_ref<ruis::resource_loader> loader);
+	const utki::shared_ref<ruis::resource_loader> res_loader;
+
+private:
+	utki::shared_ref<ruis::style_sheet> cur_style_sheet;
+
+public:
+	style_provider(utki::shared_ref<ruis::resource_loader> loader);
 
 	void set(utki::shared_ref<style_sheet> ss);
 
@@ -112,7 +114,7 @@ public:
 namespace ruis {
 
 template <typename value_type>
-styled<value_type> style::get(std::string_view id) const
+styled<value_type> style_provider::get(std::string_view id) const
 {
 	if (auto svb = this->get_from_cache(id)) {
 		auto sv = std::dynamic_pointer_cast<const typename styled<value_type>::style_value>(svb);
@@ -129,7 +131,7 @@ styled<value_type> style::get(std::string_view id) const
 
 	auto ret = utki::make_shared<typename styled<value_type>::style_value>(
 		*desc, //
-		this->loader.get()
+		this->res_loader.get()
 	);
 	this->store_to_cache(
 		id, //

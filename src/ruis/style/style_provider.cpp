@@ -19,19 +19,19 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 /* ================ LICENSE END ================ */
 
-#include "style.hpp"
+#include "style_provider.hpp"
 
 #include "../res/font.hpp"
 
 using namespace std::string_view_literals;
 using namespace ruis;
 
-style::style(utki::shared_ref<ruis::resource_loader> loader) :
-	loader(std::move(loader)),
+style_provider::style_provider(utki::shared_ref<ruis::resource_loader> loader) :
+	res_loader(std::move(loader)),
 	cur_style_sheet(utki::make_shared<style_sheet>())
 {}
 
-void style::set(utki::shared_ref<style_sheet> ss)
+void style_provider::set(utki::shared_ref<style_sheet> ss)
 {
 	this->cur_style_sheet = std::move(ss);
 
@@ -52,14 +52,14 @@ void style::set(utki::shared_ref<style_sheet> ss)
 			keys_to_remove.emplace_back(pair.first);
 			sv->reload(
 				{}, // this will set the default value
-				this->loader.get()
+				this->res_loader.get()
 			);
 			continue;
 		}
 
 		sv->reload(
 			*desc, //
-			this->loader.get()
+			this->res_loader.get()
 		);
 	}
 
@@ -70,7 +70,7 @@ void style::set(utki::shared_ref<style_sheet> ss)
 	}
 }
 
-std::shared_ptr<const style::style_value_base> style::get_from_cache(std::string_view id) const
+std::shared_ptr<const style_provider::style_value_base> style_provider::get_from_cache(std::string_view id) const
 {
 	auto i = this->cache.find(id);
 	if (i == this->cache.end()) {
@@ -85,7 +85,7 @@ std::shared_ptr<const style::style_value_base> style::get_from_cache(std::string
 	return p;
 }
 
-void style::store_to_cache(
+void style_provider::store_to_cache(
 	std::string_view id, //
 	std::weak_ptr<style_value_base> v
 ) const
@@ -102,42 +102,42 @@ void style::store_to_cache(
 	ASSERT(res.second) // insert took place
 }
 
-styled<color> style::get_color_background() const
+styled<color> style_provider::get_color_background() const
 {
 	return this->get<color>("color_background"sv);
 }
 
-styled<color> style::get_color_middleground() const
+styled<color> style_provider::get_color_middleground() const
 {
 	return this->get<color>("color_middleground"sv);
 }
 
-styled<color> style::get_color_foreground() const
+styled<color> style_provider::get_color_foreground() const
 {
 	return this->get<color>("color_foreground"sv);
 }
 
-styled<color> style::get_color_text_normal() const
+styled<color> style_provider::get_color_text_normal() const
 {
 	return this->get<color>("color_text_normal"sv);
 }
 
-styled<color> style::get_color_highlight() const
+styled<color> style_provider::get_color_highlight() const
 {
 	return this->get<color>("color_highlight"sv);
 }
 
-styled<dimension> style::get_dim_indent_tree_view_item() const
+styled<dimension> style_provider::get_dim_indent_tree_view_item() const
 {
 	return this->get<dimension>("dim_tree_view_item_indent"sv);
 }
 
-styled<length> style::get_font_size_normal() const
+styled<length> style_provider::get_font_size_normal() const
 {
 	return this->get<length>("font_size_normal"sv);
 }
 
-styled<res::font> style::get_font_face_normal() const
+styled<res::font> style_provider::get_font_face_normal() const
 {
 	return this->get<res::font>("font_face_normal"sv);
 }

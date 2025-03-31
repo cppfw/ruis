@@ -171,7 +171,7 @@ public:
                                 .visible = false
                             },
                             .color_params{
-                                .color = c.get().style.get_color_highlight()
+                                .color = c.get().style().get_color_highlight()
                             }
                         }
                     ),
