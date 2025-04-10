@@ -161,7 +161,7 @@ public:
 	bool operator==(const styled& s) const noexcept
 	{
 		if (this->is_from_style() && s.is_from_style()) {
-			return this->get_ref() == s.get_ref();
+			return this->get_ref().to_shared_ptr() == s.get_ref().to_shared_ptr();
 		}
 
 		if (!this->is_from_style() && !s.is_from_style()) {

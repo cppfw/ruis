@@ -86,12 +86,6 @@ length length::make_from(const tml::forest& desc)
 	throw std::invalid_argument(utki::cat("length::parse_style_value(desc): unknown units: ", unit));
 }
 
-real length::get(const utki::shared_ref<const context>& ctx) const noexcept
-{
-	ASSERT(!this->is_undefined())
-	return this->get(ctx.get());
-}
-
 real length::get(const context& ctx) const noexcept
 {
 	return this->get(ctx.units);

@@ -63,8 +63,6 @@ public:
 		return this->value < real(0);
 	}
 
-	real get(const utki::shared_ref<const context>& ctx) const noexcept;
-
 	real get(const context& ctx) const noexcept;
 
 	real get(const ruis::units& units) const noexcept
