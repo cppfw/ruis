@@ -188,7 +188,10 @@ public:
 	 * @param before - iterator within this container before which the widget will be inserted.
 	 * @return iterator pointing to the newly inserted widget.
 	 */
-	widget_list::const_iterator insert(const utki::shared_ref<widget>& w, widget_list::const_iterator before);
+	widget_list::const_iterator insert(
+		utki::shared_ref<widget> w, //
+		widget_list::const_iterator before
+	);
 
 	/**
 	 * @brief Insert a widget to the end of children list of the container.
@@ -196,33 +199,19 @@ public:
 	 * @param w - widget to insert.
 	 * @return iterator pointing to the newly inserted widget.
 	 */
-	widget_list::const_iterator push_back(const utki::shared_ref<widget>& w)
-	{
-		return this->insert(w, this->children().end());
-	}
+	widget_list::const_iterator push_back(utki::shared_ref<widget> w);
 
 	/**
 	 * @brief Insert widgets to the end of children list of the container.
 	 * This function invalidates iterators which were obtained before calling to it.
 	 * @param ww - span of widgets to insert.
 	 */
-	void push_back(utki::span<const utki::shared_ref<widget>> ww)
-	{
-		for (const auto& w : ww) {
-			this->push_back(w);
-		}
-	}
+	void push_back(utki::span<const utki::shared_ref<widget>> ww);
 
 	/**
 	 * @brief Remove last child.
 	 */
-	void pop_back()
-	{
-		if (this->children().empty()) {
-			return;
-		}
-		this->erase(--this->children().end());
-	}
+	void pop_back();
 
 	/**
 	 * @brief Remove child from container.
@@ -238,12 +227,7 @@ public:
 	 * @param child - reverse iterator of the child to remove.
 	 * @return reverse iterator pointing to the previous child after removed one.
 	 */
-	widget_list::const_reverse_iterator erase(widget_list::const_reverse_iterator child)
-	{
-		return widget_list::const_reverse_iterator(
-			this->erase(--child.base())
-		); // the base iterator points to the next element to the one the reverse iterator points, so use decrement
-	}
+	widget_list::const_reverse_iterator erase(widget_list::const_reverse_iterator child);
 
 	/**
 	 * @brief Remove all child widgets.
@@ -259,7 +243,10 @@ public:
 	 * @return pointer to widget with given id if found.
 	 * @return nullptr if there is no widget with given id found.
 	 */
-	std::shared_ptr<widget> try_get_widget(std::string_view id, bool allow_itself = true) noexcept final;
+	std::shared_ptr<widget> try_get_widget(
+		std::string_view id, //
+		bool allow_itself = true
+	) noexcept final;
 
 	/**
 	 * @brief Get list of child widgets.

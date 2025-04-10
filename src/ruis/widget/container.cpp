@@ -233,7 +233,10 @@ void container::on_lay_out()
 	this->get_layout().lay_out(this->rect().d, this->children());
 }
 
-widget_list::const_iterator container::insert(const utki::shared_ref<widget>& w, widget_list::const_iterator before)
+widget_list::const_iterator container::insert(
+	utki::shared_ref<widget> w, //
+	widget_list::const_iterator before
+)
 {
 	if (w.get().parent()) {
 		throw std::invalid_argument("container::insert(): given widget is already added to some container");
@@ -250,7 +253,7 @@ widget_list::const_iterator container::insert(const utki::shared_ref<widget>& w,
 	widget& ww = w.get();
 
 	// NOLINTNEXTLINE(cppcoreguidelines-pro-type-union-access)
-	auto ret = this->children_list.variable.emplace(before, w);
+	auto ret = this->children_list.variable.emplace(before, std::move(w));
 
 	ww.parent_container = this;
 	ww.on_parent_change();
@@ -259,6 +262,21 @@ widget_list::const_iterator container::insert(const utki::shared_ref<widget>& w,
 
 	ASSERT(!ww.is_hovered())
 	return ret;
+}
+
+widget_list::const_iterator container::push_back(utki::shared_ref<widget> w)
+{
+	return this->insert(
+		std::move(w), //
+		this->children().end()
+	);
+}
+
+void container::push_back(utki::span<const utki::shared_ref<widget>> ww)
+{
+	for (const auto& w : ww) {
+		this->push_back(w);
+	}
 }
 
 widget_list::const_iterator container::erase(widget_list::const_iterator child)
@@ -287,6 +305,24 @@ widget_list::const_iterator container::erase(widget_list::const_iterator child)
 	this->on_children_change();
 
 	return ret;
+}
+
+widget_list::const_reverse_iterator container::erase(widget_list::const_reverse_iterator child)
+{
+	return widget_list::const_reverse_iterator( //
+		this->erase(
+			// the base iterator points to the next element to the one the reverse iterator points, so use std::prev()
+			std::prev(child.base())
+		)
+	);
+}
+
+void container::pop_back()
+{
+	if (this->children().empty()) {
+		return;
+	}
+	this->erase(std::prev(this->children().end()));
 }
 
 void container::clear()

@@ -68,8 +68,10 @@ public:
 		all_parameters params
 	);
 
-	// TODO: pass shared refs by value
-	void add(const utki::shared_ref<tab>& tab, const utki::shared_ref<ruis::page>& page);
+	void add(
+		utki::shared_ref<tab> tab, //
+		utki::shared_ref<ruis::page> page
+	);
 
 	const ruis::book& get_book() const noexcept
 	{

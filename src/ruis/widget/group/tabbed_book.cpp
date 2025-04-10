@@ -99,8 +99,12 @@ tabbed_book::tabbed_book(
 	};
 }
 
-void tabbed_book::add(const utki::shared_ref<tab>& tab, const utki::shared_ref<ruis::page>& page)
+void tabbed_book::add(
+	utki::shared_ref<tab> tab, //
+	utki::shared_ref<ruis::page> page
+)
 {
+	// TODO: move tab and page
 	this->tab_group.push_back(tab);
 	this->book.push(page);
 

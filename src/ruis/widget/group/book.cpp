@@ -42,7 +42,7 @@ book::book(utki::shared_ref<ruis::context> context, //
 	)
 {}
 
-void book::push(const utki::shared_ref<page>& pg)
+void book::push(utki::shared_ref<page> pg)
 {
 	if (pg.get().parent_book) {
 		if (pg.get().parent_book == this) {
@@ -55,6 +55,7 @@ void book::push(const utki::shared_ref<page>& pg)
 	lp.dims.set(dim::fill);
 
 	pg.get().parent_book = this;
+	// TODO: move pg
 	this->pages.push_back(pg);
 
 	this->notify_pages_change(pg.get());
