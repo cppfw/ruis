@@ -81,9 +81,9 @@ class book :
 {
 	friend class page;
 
-	size_t active_page_index = std::numeric_limits<size_t>::max(); // invalid index
-
 	std::vector<utki::shared_ref<page>> pages;
+
+	size_t active_page_index;
 
 public:
 	struct all_parameters {

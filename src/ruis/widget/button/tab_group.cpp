@@ -145,7 +145,10 @@ void tab_group::on_lay_out()
 		using std::round;
 
 		pos -= min(prev_borders.right(), borders.left());
-		c.get().move_to(vector2(pos, round((this->rect().d.y() - c.get().rect().d.y()) / 2)));
+		c.get().move_to(vector2(
+			pos, //
+			round((this->rect().d.y() - c.get().rect().d.y()) / 2)
+		));
 		pos += dim.x();
 
 		prev_borders = borders;

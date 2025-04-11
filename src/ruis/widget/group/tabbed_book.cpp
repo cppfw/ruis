@@ -34,7 +34,14 @@ using namespace ruis::make;
 
 tabbed_book::tabbed_book(
 	utki::shared_ref<ruis::context> context, //
-	all_parameters params
+	all_parameters params,
+	std::vector< //
+		std::pair<
+			utki::shared_ref<tab>, //
+			utki::shared_ref<page> //
+			> //
+		> //
+		pages
 ) :
 	widget(
 		std::move(context), //
@@ -58,7 +65,14 @@ tabbed_book::tabbed_book(
 						.id = "ruis_tab_group"s
 					}
 				},
-				{}
+				[&](){
+					std::vector<utki::shared_ref<widget>> children;
+					children.reserve(pages.size());
+					for(const auto& p : pages){
+						children.push_back(p.first);
+					}
+					return children;
+				}()
 			),
 			m::book(this->context,
 				{
@@ -69,14 +83,27 @@ tabbed_book::tabbed_book(
 					.widget_params{
 						.id = "ruis_book"s
 					}
-				}
+				},
+				[&](){
+					std::vector<utki::shared_ref<page>> children;
+					children.reserve(pages.size());
+					for(const auto& p : pages){
+						children.push_back(p.second);
+					}
+					return children;
+				}()
 			)
 		}
 	),
 	// clang-format on
 	tab_group(this->get_widget_as<ruis::tab_group>("ruis_tab_group")),
-	book(this->get_widget_as<ruis::book>("ruis_book"))
+	book(this->get_widget_as<ruis::book>("ruis_book")), //
+	tab_page_pairs(std::move(pages))
 {
+	for (auto& pair : this->tab_page_pairs) {
+		this->set_tab_pressed_change_handler(pair);
+	}
+
 	// on page tear out, remove corresponding tab
 	this->book.pages_change_handler = [this](ruis::book& b, const page& p) {
 		auto i = this->find_pair(p);
@@ -97,6 +124,10 @@ tabbed_book::tabbed_book(
 			tab.get().activate();
 		}
 	};
+
+	if (!this->tab_page_pairs.empty()) {
+		this->tab_page_pairs.back().first.get().activate();
+	}
 }
 
 void tabbed_book::add(
@@ -107,13 +138,8 @@ void tabbed_book::add(
 	this->tab_group.push_back(tab);
 	this->book.push(page);
 
+	// make the tab active
 	tab.get().set_pressed(true);
-
-	tab.get().pressed_change_handler = [page](ruis::button& btn) {
-		if (btn.is_pressed()) {
-			page.get().activate();
-		}
-	};
 
 	this->tab_page_pairs.push_back(
 		std::make_pair(
@@ -121,6 +147,19 @@ void tabbed_book::add(
 			std::move(page)
 		)
 	);
+
+	this->set_tab_pressed_change_handler(this->tab_page_pairs.back());
+}
+
+void tabbed_book::set_tab_pressed_change_handler(typename decltype(tab_page_pairs)::value_type& pair)
+{
+	auto& [tab, page] = pair;
+
+	tab.get().pressed_change_handler = [page](ruis::button& btn) {
+		if (btn.is_pressed()) {
+			page.get().activate();
+		}
+	};
 }
 
 void tabbed_book::activate_another_tab(tab& t)

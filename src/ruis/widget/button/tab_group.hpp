@@ -44,6 +44,7 @@ public:
 	tab_group(
 		utki::shared_ref<ruis::context> context, //
 		all_parameters params,
+		// TODO: add only tabs?
 		widget_list tabs
 	);
 

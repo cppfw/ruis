@@ -56,16 +56,24 @@ class tabbed_book :
 
 	void activate_another_tab(tab& t);
 
+	void set_tab_pressed_change_handler(typename decltype(tab_page_pairs)::value_type& pair);
+
 public:
 	struct all_parameters {
 		layout_parameters layout_params;
 		widget::parameters widget_params;
 	};
 
-	// TODO: add third argument as list of std::pair<utki::shared_ref<tab>, utki::shared_ref<page>> as list of children
 	tabbed_book(
 		utki::shared_ref<ruis::context> context, //
-		all_parameters params
+		all_parameters params,
+		std::vector< //
+			std::pair<
+				utki::shared_ref<tab>, //
+				utki::shared_ref<page> //
+				> //
+			> //
+			pages
 	);
 
 	void add(
@@ -96,12 +104,20 @@ public:
 namespace make {
 inline utki::shared_ref<ruis::tabbed_book> tabbed_book(
 	utki::shared_ref<ruis::context> context, //
-	ruis::tabbed_book::all_parameters params
+	ruis::tabbed_book::all_parameters params,
+	std::vector< //
+		std::pair<
+			utki::shared_ref<ruis::tab>, //
+			utki::shared_ref<ruis::page> //
+			> //
+		> //
+		pages = {}
 )
 {
 	return utki::make_shared<ruis::tabbed_book>(
 		std::move(context), //
-		std::move(params)
+		std::move(params),
+		std::move(pages)
 	);
 }
 } // namespace make

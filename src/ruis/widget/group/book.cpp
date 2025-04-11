@@ -46,16 +46,29 @@ book::book( //
 				.layout = layout::pile
 			}
 		},
-		{}
+		// last page will be initially active, add it to the container
+		[&]() -> widget_list{
+			if(pages.empty()){
+				return {};
+			}
+			return {pages.back()};
+		}()
 	),
 	// clang-format off
-	pages(std::move(pages))
+	pages(std::move(pages)),
+	active_page_index([&](){
+		if(this->pages.empty()){
+			// set invalid index
+			return std::numeric_limits<size_t>::max();
+		}
+		return this->pages.size() - 1;
+	}())
 {
 	for(auto& p : this->pages){
 		this->set_page_parent_book(p);
 	}
 	if(!this->pages.empty()){
-		this->activate_last_page();
+		this->pages.back().get().on_show();
 	}
 }
 

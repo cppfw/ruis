@@ -125,6 +125,26 @@ utki::shared_ref<ruis::widget> make_root_widget(utki::shared_ref<ruis::context> 
 					.widget_params{
 						.id = "book"s
 					}
+				},
+				{
+					{
+						m::tab(c,
+							{},
+							{
+								m::text(c, {}, U"tab1"s)
+							}
+						),
+						utki::make_shared<sample_page>(c, "initial page 1"s)
+					},
+					{
+						m::tab(c,
+							{},
+							{
+								m::text(c, {}, U"tab2"s)
+							}
+						),
+						utki::make_shared<sample_page>(c, "initial page 2"s)
+					}
 				}
 			)
 		}
