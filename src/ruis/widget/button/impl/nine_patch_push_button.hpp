@@ -44,7 +44,7 @@ public:
 	nine_patch_push_button(
 		utki::shared_ref<ruis::context> context, //
 		all_parameters params,
-		utki::span<const utki::shared_ref<ruis::widget>> children
+		widget_list children
 	);
 
 protected:
@@ -65,13 +65,13 @@ namespace make {
 inline utki::shared_ref<ruis::nine_patch_push_button> nine_patch_push_button(
 	utki::shared_ref<ruis::context> context, //
 	nine_patch_push_button::all_parameters params,
-	utki::span<const utki::shared_ref<ruis::widget>> children
+	widget_list children
 )
 {
 	return utki::make_shared<ruis::nine_patch_push_button>(
 		std::move(context), //
 		std::move(params),
-		children
+		std::move(children)
 	);
 }
 

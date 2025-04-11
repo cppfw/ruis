@@ -33,17 +33,21 @@ nine_patch_button::nine_patch_button( //
 	blending_widget::parameters blending_params,
 	nine_patch::parameters nine_patch_params,
 	parameters params,
-	utki::span<const utki::shared_ref<ruis::widget>> children
+	widget_list children
 ) :
 	widget(std::move(context), {}, {}),
 	button(this->context, std::move(button_params)),
+	// clang-format off
 	nine_patch(
 		this->context,
-		{.container_params = std::move(container_params),
-		 .blending_params = std::move(blending_params),
-		 .nine_patch_params = std::move(nine_patch_params)},
-		children
+		{
+			.container_params = std::move(container_params),
+			.blending_params = std::move(blending_params),
+			.nine_patch_params = std::move(nine_patch_params)
+		},
+		std::move(children)
 	),
+	// clang-format on
 	params(std::move(params))
 {
 	this->nine_patch_button::on_pressed_change();

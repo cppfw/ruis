@@ -72,7 +72,7 @@ public:
 	nine_patch(
 		utki::shared_ref<ruis::context> context, //
 		all_parameters params,
-		utki::span<const utki::shared_ref<widget>> children
+		widget_list children
 	);
 
 	nine_patch(const nine_patch&) = delete;
@@ -87,7 +87,7 @@ private:
 	nine_patch(
 		utki::shared_ref<ruis::context> context, //
 		all_parameters params,
-		utki::span<const utki::shared_ref<widget>> children,
+		widget_list children,
 		std::array<std::array<utki::shared_ref<ruis::image>, 3>, 3> image_widgets_matrix
 	);
 
@@ -119,13 +119,13 @@ namespace make {
 inline utki::shared_ref<ruis::nine_patch> nine_patch(
 	utki::shared_ref<ruis::context> context, //
 	nine_patch::all_parameters params,
-	utki::span<const utki::shared_ref<ruis::widget>> children = {}
+	widget_list children = {}
 )
 {
 	return utki::make_shared<ruis::nine_patch>(
 		std::move(context), //
 		std::move(params),
-		children
+		std::move(children)
 	);
 }
 

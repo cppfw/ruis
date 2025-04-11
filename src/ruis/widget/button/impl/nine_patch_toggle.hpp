@@ -38,7 +38,7 @@ protected:
 		blending_widget::parameters blending_params,
 		nine_patch::parameters nine_patch_params,
 		nine_patch_button::parameters nine_patch_button_params,
-		utki::span<const utki::shared_ref<ruis::widget>> children
+		widget_list children
 	);
 
 protected:

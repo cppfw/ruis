@@ -35,7 +35,7 @@ using namespace ruis::make;
 margins::margins(
 	utki::shared_ref<ruis::context> context,
 	all_parameters params,
-	utki::span<const utki::shared_ref<ruis::widget>> children
+	widget_list children
 ) :
 	widget( //
 		std::move(context),
@@ -74,14 +74,13 @@ margins::margins(
 					   },
 				   .container_params = std::move(params.container_params)
 				  },
-				  {}
+				  std::move(children)
 			  ),
 			  m::gap(this->context, {.widget_params = {.id = "ruis_bottom"s}})
 			 }
 		 ),
 		 m::gap(this->context, {.widget_params = {.id = "ruis_right"s}})
-		},
-		children
+		}
 	),
 	left(this->get_widget("ruis_left"sv)), //
 	top(this->get_widget("ruis_top"sv)), //
@@ -106,7 +105,7 @@ void margins::on_borders_change()
 utki::shared_ref<ruis::margins> ruis::make::margins(
 	utki::shared_ref<context> context, //
 	margins::all_parameters params,
-	utki::span<const utki::shared_ref<ruis::widget>> children
+	widget_list children
 )
 {
 	if (!params.container_params.layout) {
@@ -116,6 +115,6 @@ utki::shared_ref<ruis::margins> ruis::make::margins(
 	return utki::make_shared<ruis::margins>(
 		std::move(context), //
 		std::move(params),
-		children
+		std::move(children)
 	);
 }

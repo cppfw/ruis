@@ -97,7 +97,7 @@ void push_button::on_click()
 utki::shared_ref<ruis::push_button> ruis::make::push_button( //
 	utki::shared_ref<ruis::context> context,
 	container::all_parameters params,
-	utki::span<const utki::shared_ref<ruis::widget>> children
+	widget_list children
 )
 {
 	if (!params.container_params.layout) {
@@ -119,6 +119,6 @@ utki::shared_ref<ruis::push_button> ruis::make::push_button( //
 			}
         },
 		// clang-format on
-		children
+		std::move(children)
 	);
 }

@@ -47,8 +47,7 @@ protected:
 		utki::shared_ref<ruis::context> context,
 		container::parameters container_params,
 		parameters frame_params,
-		widget_list frame_layout,
-		utki::span<const utki::shared_ref<widget>> children
+		widget_list frame_layout
 	);
 
 public:

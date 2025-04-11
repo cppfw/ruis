@@ -29,9 +29,7 @@ frame_widget::frame_widget(
 	utki::shared_ref<ruis::context> context,
 	container::parameters container_params,
 	parameters frame_params,
-	widget_list frame_layout,
-	// TODO: make widget_list?
-	utki::span<const utki::shared_ref<widget>> children
+	widget_list frame_layout
 ) :
 	widget(std::move(context), {}, {}),
 	container(//
@@ -43,12 +41,11 @@ frame_widget::frame_widget(
 	),
 	params(std::move(frame_params)),
 	inner_content(this->get_widget_as<container>("ruis_content"sv))
-{
-	this->inner_content.push_back(children);
-}
+{}
 
 void frame_widget::set_borders(sides<length> borders)
 {
+	// TODO: check if borders are same, then do nothing
 	this->params.borders = borders;
 	this->on_borders_change();
 }

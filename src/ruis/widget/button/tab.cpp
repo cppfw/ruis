@@ -88,7 +88,7 @@ void tab::on_pressed_change()
 tab::tab(
 	utki::shared_ref<ruis::context> context, //
 	all_parameters params,
-	utki::span<const utki::shared_ref<ruis::widget>> children
+	widget_list children
 ) :
 	widget(
 		std::move(context), //
@@ -105,7 +105,7 @@ tab::tab(
 		std::move(params.blending_params),
 		std::move(params.nine_patch_params),
 		std::move(params.nine_patch_button_params),
-		children
+		std::move(children)
 	)
 {
 	if (!this->get_pressed_nine_patch()) {

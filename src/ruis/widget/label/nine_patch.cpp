@@ -43,7 +43,8 @@ namespace {
 std::vector<utki::shared_ref<ruis::widget>> make_widget_structure(
 	utki::shared_ref<ruis::context> c,
 	container::parameters container_params,
-	std::array<std::array<utki::shared_ref<ruis::image>, 3>, 3> image_widgets_matrix
+	std::array<std::array<utki::shared_ref<ruis::image>, 3>, 3> image_widgets_matrix,
+	widget_list children
 )
 {
 	// clang-format off
@@ -93,7 +94,8 @@ std::vector<utki::shared_ref<ruis::widget>> make_widget_structure(
 									.id = "ruis_content"s
 								},
 								.container_params = std::move(container_params)
-							}
+							},
+							std::move(children)
 						)
 					}
 				),
@@ -123,12 +125,12 @@ std::vector<utki::shared_ref<ruis::widget>> make_widget_structure(
 nine_patch::nine_patch( //
 	utki::shared_ref<ruis::context> context,
 	all_parameters params,
-	utki::span<const utki::shared_ref<widget>> children
+	widget_list children
 ) :
 	nine_patch(
 		context,
 		std::move(params),
-		children,
+		std::move(children),
 		// clang-format off
 		{{
 			{{
@@ -194,7 +196,7 @@ nine_patch::nine_patch( //
 nine_patch::nine_patch( //
 	utki::shared_ref<ruis::context> context,
 	all_parameters params,
-	utki::span<const utki::shared_ref<widget>> children,
+	widget_list children,
 	std::array<std::array<utki::shared_ref<ruis::image>, 3>, 3> image_widgets_matrix
 ) :
 	widget( //
@@ -220,9 +222,9 @@ nine_patch::nine_patch( //
 				}
 				return ret;
 			}(),
-			image_widgets_matrix
-		),
-		children
+			image_widgets_matrix,
+			std::move(children)
+		)
 	),
 	img_widgets_matrix(
 		// clang-format off

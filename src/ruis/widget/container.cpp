@@ -46,7 +46,7 @@ container::container(
 		return utki::shared_ref(params.container_params.layout);
 	}())
 {
-	for (auto& w : this->children_list.variable) {
+	for (auto& w : this->children()) {
 		if (w.get().parent()) {
 			throw std::invalid_argument(
 				"container::container(): one of the supplied child widgets is already added to some other container"

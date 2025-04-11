@@ -48,11 +48,7 @@ public:
 		frame_widget::parameters frame_params;
 	};
 
-	margins(
-		utki::shared_ref<ruis::context> context,
-		all_parameters params,
-		utki::span<const utki::shared_ref<ruis::widget>> children
-	);
+	margins(utki::shared_ref<ruis::context> context, all_parameters params, widget_list children);
 
 	void on_borders_change() override;
 };
@@ -69,7 +65,7 @@ namespace make {
 utki::shared_ref<ruis::margins> margins(
 	utki::shared_ref<context> context, //
 	margins::all_parameters params,
-	utki::span<const utki::shared_ref<ruis::widget>> children
+	widget_list children
 );
 } // namespace make
 

@@ -54,7 +54,7 @@ protected:
 		blending_widget::parameters blending_params,
 		nine_patch::parameters nine_patch_params,
 		parameters params,
-		utki::span<const utki::shared_ref<ruis::widget>> children
+		widget_list children
 	);
 
 	void on_pressed_change() override;

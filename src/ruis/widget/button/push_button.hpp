@@ -75,7 +75,7 @@ namespace make {
 utki::shared_ref<ruis::push_button> push_button( //
 	utki::shared_ref<ruis::context> context,
 	container::all_parameters params,
-	utki::span<const utki::shared_ref<ruis::widget>> children
+	widget_list children
 );
 
 } // namespace make

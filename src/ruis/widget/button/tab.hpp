@@ -46,9 +46,11 @@ public:
 		nine_patch_button::parameters nine_patch_button_params;
 	};
 
-	tab(utki::shared_ref<ruis::context> context, //
+	tab( //
+		utki::shared_ref<ruis::context> context, //
 		all_parameters params,
-		utki::span<const utki::shared_ref<ruis::widget>> children);
+		widget_list children
+	);
 
 	tab(const tab&) = delete;
 	tab& operator=(const tab&) = delete;
@@ -70,13 +72,13 @@ namespace make {
 inline utki::shared_ref<ruis::tab> tab(
 	utki::shared_ref<ruis::context> context, //
 	ruis::tab::all_parameters params,
-	utki::span<const utki::shared_ref<ruis::widget>> children
+	widget_list children
 )
 {
 	return utki::make_shared<ruis::tab>(
 		std::move(context), //
 		std::move(params),
-		children
+		std::move(children)
 	);
 }
 

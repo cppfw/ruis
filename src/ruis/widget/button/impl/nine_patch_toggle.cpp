@@ -36,7 +36,7 @@ nine_patch_toggle::nine_patch_toggle(
 	blending_widget::parameters blending_params,
 	nine_patch::parameters nine_patch_params,
 	nine_patch_button::parameters nine_patch_button_params,
-	utki::span<const utki::shared_ref<ruis::widget>> children
+	widget_list children
 ) :
 	widget(std::move(context), {}, {}),
 	button(
@@ -51,6 +51,6 @@ nine_patch_toggle::nine_patch_toggle(
 		std::move(blending_params),
 		std::move(nine_patch_params),
 		std::move(nine_patch_button_params),
-		children
+		std::move(children)
 	)
 {}
