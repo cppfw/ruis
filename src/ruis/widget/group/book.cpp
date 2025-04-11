@@ -44,25 +44,31 @@ book::book(utki::shared_ref<ruis::context> context, //
 
 void book::push(utki::shared_ref<page> pg)
 {
-	if (pg.get().parent_book) {
-		if (pg.get().parent_book == this) {
+	auto& p = pg.get();
+
+	if (p.parent_book) {
+		if (p.parent_book == this) {
 			throw std::logic_error("book::push(): the page is already in this book");
 		}
 		throw std::logic_error("book::push(): the page is already in some book");
 	}
 
-	auto& lp = pg.get().get_layout_params();
+	auto& lp = p.get_layout_params();
 	lp.dims.set(dim::fill);
 
-	pg.get().parent_book = this;
-	// TODO: move pg
-	this->pages.push_back(pg);
+	p.parent_book = this;
+	this->pages.push_back(std::move(pg));
 
-	this->notify_pages_change(pg.get());
+	this->notify_pages_change(p);
 
-	this->context.get().post_to_ui_thread([bk = utki::make_shared_from(*this), index = this->pages.size() - 1]() {
-		bk.get().activate(index);
-	});
+	this->context.get().post_to_ui_thread( //
+		[ //
+			bk = utki::make_shared_from(*this), //
+			index = this->pages.size() - 1 //
+	]() {
+			bk.get().activate(index);
+		}
+	);
 }
 
 utki::shared_ref<page> book::tear_out(page& pg)
@@ -121,7 +127,10 @@ utki::shared_ref<page> book::tear_out(page& pg)
 void book::notify_pages_change(const page& p)
 {
 	if (this->pages_change_handler) {
-		this->pages_change_handler(*this, p);
+		this->pages_change_handler(
+			*this, //
+			p
+		);
 	}
 }
 

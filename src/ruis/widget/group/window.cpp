@@ -365,7 +365,7 @@ window::window(
 			std::move(children)
 		)
 	)
-	// clang-format on
+// clang-format on
 {
 	this->setup_widgets();
 
