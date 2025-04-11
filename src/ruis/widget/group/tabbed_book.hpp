@@ -63,6 +63,7 @@ public:
 		widget::parameters widget_params;
 	};
 
+	// TODO: add third argument as list of std::pair<utki::shared_ref<tab>, utki::shared_ref<page>> as list of children
 	tabbed_book(
 		utki::shared_ref<ruis::context> context, //
 		all_parameters params
