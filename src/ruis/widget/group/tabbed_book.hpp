@@ -43,14 +43,13 @@ class tabbed_book :
 	// NOLINTNEXTLINE(clang-analyzer-webkit.NoUncountedMemberChecker, "false-positive")
 	ruis::book& book;
 
-	struct tab_page_pair {
-		// NOLINTNEXTLINE(clang-analyzer-webkit.NoUncountedMemberChecker, "false-positive")
-		ruis::tab* tab;
-		// NOLINTNEXTLINE(clang-analyzer-webkit.NoUncountedMemberChecker, "false-positive")
-		ruis::page* page;
-	};
-
-	std::vector<tab_page_pair> tab_page_pairs;
+	std::vector< //
+		std::pair<
+			utki::shared_ref<tab>, //
+			utki::shared_ref<page> //
+			> //
+		>
+		tab_page_pairs;
 
 	decltype(tab_page_pairs)::iterator find_pair(const ruis::tab& t);
 	decltype(tab_page_pairs)::iterator find_pair(const ruis::page& p);

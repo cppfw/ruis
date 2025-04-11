@@ -81,9 +81,9 @@ tabbed_book::tabbed_book(
 	this->book.pages_change_handler = [this](ruis::book& b, const page& p) {
 		auto i = this->find_pair(p);
 		if (i != this->tab_page_pairs.end()) {
-			ASSERT(i->tab)
-			this->activate_another_tab(*i->tab);
-			i->tab->remove_from_parent();
+			auto& [tab, page] = *i;
+			this->activate_another_tab(tab);
+			tab.get().remove_from_parent();
 			this->tab_page_pairs.erase(i);
 		}
 	};
@@ -93,8 +93,8 @@ tabbed_book::tabbed_book(
 		ASSERT(b.get_active_page())
 		auto i = this->find_pair(*b.get_active_page());
 		if (i != this->tab_page_pairs.end()) {
-			ASSERT(i->tab)
-			i->tab->activate();
+			auto& [tab, page] = *i;
+			tab.get().activate();
 		}
 	};
 }
@@ -104,6 +104,8 @@ void tabbed_book::add(
 	utki::shared_ref<ruis::page> page
 )
 {
+	auto pair = std::make_pair(tab, page);
+
 	// TODO: move tab and page
 	this->tab_group.push_back(tab);
 	this->book.push(page);
@@ -116,7 +118,7 @@ void tabbed_book::add(
 		}
 	};
 
-	this->tab_page_pairs.push_back(tab_page_pair{&tab.get(), &page.get()});
+	this->tab_page_pairs.push_back(pair);
 }
 
 void tabbed_book::activate_another_tab(tab& t)
@@ -153,8 +155,7 @@ utki::shared_ref<page> tabbed_book::tear_out(tab& t)
 		throw std::logic_error("tabbed_book::tear_out(): tab not found");
 	}
 
-	ASSERT(i->page)
-	auto pg = utki::make_shared_from(*i->page);
+	auto page = i->second;
 
 	this->tab_page_pairs.erase(i);
 
@@ -164,22 +165,30 @@ utki::shared_ref<page> tabbed_book::tear_out(tab& t)
 
 	t.remove_from_parent();
 
-	ASSERT(!pg.get().is_active() || this->book.size() == 1)
-	pg.get().tear_out();
+	ASSERT(!page.get().is_active() || this->book.size() == 1)
+	page.get().tear_out();
 
-	return pg;
+	return page;
 }
 
 auto tabbed_book::find_pair(const ruis::tab& t) -> decltype(tab_page_pairs)::iterator
 {
-	return std::find_if(this->tab_page_pairs.begin(), this->tab_page_pairs.end(), [&t](const auto& e) {
-		return &t == e.tab;
-	});
+	return std::find_if(
+		this->tab_page_pairs.begin(), //
+		this->tab_page_pairs.end(),
+		[&t](const auto& pair) {
+			return &t == &pair.first.get();
+		}
+	);
 }
 
 auto tabbed_book::find_pair(const ruis::page& p) -> decltype(tab_page_pairs)::iterator
 {
-	return std::find_if(this->tab_page_pairs.begin(), this->tab_page_pairs.end(), [&p](const auto& e) {
-		return &p == e.page;
-	});
+	return std::find_if(
+		this->tab_page_pairs.begin(), //
+		this->tab_page_pairs.end(),
+		[&p](const auto& pair) {
+			return &p == &pair.second.get();
+		}
+	);
 }
