@@ -91,6 +91,7 @@ public:
 		widget::parameters widget_params;
 	};
 
+	// TODO: add third argument, list of utki::shared_ref<page> as children list
 	book(
 		utki::shared_ref<ruis::context> context, //
 		all_parameters params
