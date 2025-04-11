@@ -28,19 +28,36 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
-book::book(utki::shared_ref<ruis::context> context, //
-	all_parameters params) :
+book::book( //
+	utki::shared_ref<ruis::context> context, //
+	all_parameters params,
+	std::vector<utki::shared_ref<page>> pages
+) :
 	widget( //
 		std::move(context),
 		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
+	// clang-format off
 	container(
 		this->context,
-		{.container_params = {.layout = layout::pile}},
+		{
+			.container_params{
+				.layout = layout::pile
+			}
+		},
 		{}
-	)
-{}
+	),
+	// clang-format off
+	pages(std::move(pages))
+{
+	for(auto& p : this->pages){
+		this->set_page_parent_book(p);
+	}
+	if(!this->pages.empty()){
+		this->activate_last_page();
+	}
+}
 
 void book::push(utki::shared_ref<page> pg)
 {
@@ -53,19 +70,31 @@ void book::push(utki::shared_ref<page> pg)
 		throw std::logic_error("book::push(): the page is already in some book");
 	}
 
+	this->pages.push_back(std::move(pg));
+
+	this->set_page_parent_book(p);
+
+	this->notify_pages_change(p);
+
+	this->activate_last_page();
+}
+
+void book::set_page_parent_book(page& p)
+{
 	auto& lp = p.get_layout_params();
 	lp.dims.set(dim::fill);
 
 	p.parent_book = this;
-	this->pages.push_back(std::move(pg));
+}
 
-	this->notify_pages_change(p);
-
+void book::activate_last_page()
+{
 	this->context.get().post_to_ui_thread( //
 		[ //
 			bk = utki::make_shared_from(*this), //
 			index = this->pages.size() - 1 //
-	]() {
+	] //
+		() {
 			bk.get().activate(index);
 		}
 	);
@@ -140,9 +169,13 @@ void book::activate(const page& p)
 		throw std::logic_error("book::activate(): requested page is not in this book");
 	}
 
-	auto i = std::find_if(this->pages.begin(), this->pages.end(), [&p](const auto& pg) {
-		return &pg.get() == &p;
-	});
+	auto i = std::find_if(
+		this->pages.begin(), //
+		this->pages.end(),
+		[&p](const auto& pg) {
+			return &pg.get() == &p;
+		}
+	);
 	ASSERT(i != this->pages.end())
 
 	this->activate(std::distance(this->pages.begin(), i));

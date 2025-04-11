@@ -91,10 +91,10 @@ public:
 		widget::parameters widget_params;
 	};
 
-	// TODO: add third argument, list of utki::shared_ref<page> as children list
 	book(
 		utki::shared_ref<ruis::context> context, //
-		all_parameters params
+		all_parameters params,
+		std::vector<utki::shared_ref<page>> pages
 	);
 
 	book(const book&) = delete;
@@ -131,17 +131,23 @@ private:
 	utki::shared_ref<page> tear_out(page& page);
 
 	void notify_pages_change(const page& p);
+
+	void activate_last_page();
+
+	void set_page_parent_book(page& p);
 };
 
 namespace make {
 inline utki::shared_ref<ruis::book> book(
 	utki::shared_ref<ruis::context> context, //
-	ruis::book::all_parameters params
+	ruis::book::all_parameters params,
+	std::vector<utki::shared_ref<page>> pages = {}
 )
 {
 	return utki::make_shared<ruis::book>(
 		std::move(context), //
-		std::move(params)
+		std::move(params),
+		std::move(pages)
 	);
 }
 } // namespace make
