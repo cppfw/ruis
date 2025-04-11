@@ -95,7 +95,7 @@ public:
 	window(
 		utki::shared_ref<ruis::context> context, //
 		all_parameters params,
-		utki::span<const utki::shared_ref<ruis::widget>> children
+		widget_list children
 	);
 
 	window(const window&) = delete;
@@ -159,7 +159,7 @@ namespace make {
 utki::shared_ref<ruis::window> window(
 	utki::shared_ref<context> context, //
 	window::all_parameters params,
-	utki::span<const utki::shared_ref<ruis::widget>> contents
+	widget_list contents
 );
 } // namespace make
 

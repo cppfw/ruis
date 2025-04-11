@@ -208,7 +208,8 @@ utki::shared_ref<container> make_caption(
 utki::shared_ref<container> make_middle(
 	utki::shared_ref<context> c, //
 	container::parameters container_params,
-	string title
+	string title,
+	widget_list children
 )
 {
 	// clang-format off
@@ -238,7 +239,7 @@ utki::shared_ref<container> make_middle(
 					},
 					.container_params = std::move(container_params)
 				},
-				{}
+				std::move(children)
 			)
 		}
 	);
@@ -248,7 +249,8 @@ utki::shared_ref<container> make_middle(
 utki::shared_ref<container> make_middle_row(
 	utki::shared_ref<context> c, //
 	container::parameters container_params,
-	string title
+	string title,
+	widget_list children
 )
 {
 	// clang-format off
@@ -275,7 +277,8 @@ utki::shared_ref<container> make_middle_row(
 			),
 			make_middle(c,
 				std::move(container_params),
-				std::move(title)
+				std::move(title),
+				std::move(children)
 			),
 			m::mouse_proxy(c,
 				{
@@ -295,7 +298,8 @@ utki::shared_ref<container> make_middle_row(
 std::vector<utki::shared_ref<widget>> make_children(
 	utki::shared_ref<context> c, //
 	container::parameters container_params,
-	string title
+	string title,
+	widget_list children
 )
 {
 	// clang-format off
@@ -313,7 +317,8 @@ std::vector<utki::shared_ref<widget>> make_children(
 				make_top_row(c),
 				make_middle_row(c,
 					std::move(container_params),
-					std::move(title)
+					std::move(title),
+					std::move(children)
 				),
 				make_bottom_row(c)
 			}
@@ -338,22 +343,29 @@ void ruis::window::set_background(utki::shared_ref<widget> w)
 window::window(
 	utki::shared_ref<ruis::context> context,
 	all_parameters params,
-	utki::span<const utki::shared_ref<ruis::widget>> children
+	widget_list children
 ) :
 	widget( //
 		std::move(context),
 		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
+	// clang-format off
 	container( //
 		this->context,
-		{.container_params = {.layout = ruis::layout::pile}},
+		{
+			.container_params = {
+				.layout = ruis::layout::pile
+			}
+		},
 		make_children(
 			this->context, //
 			std::move(params.container_params),
-			std::move(params.title)
+			std::move(params.title),
+			std::move(children)
 		)
 	)
+	// clang-format on
 {
 	this->setup_widgets();
 
@@ -396,8 +408,6 @@ window::window(
 
 	// this should go after initializing borders
 	this->empty_min_dim = this->measure(vector2(-1));
-
-	this->content_area->push_back(children);
 }
 
 void ruis::window::setup_widgets()
@@ -723,7 +733,7 @@ void window::on_lay_out()
 utki::shared_ref<window> ruis::make::window(
 	utki::shared_ref<context> context,
 	window::all_parameters params,
-	utki::span<const utki::shared_ref<ruis::widget>> children
+	widget_list children
 )
 {
 	if (!params.container_params.layout) {
@@ -732,6 +742,6 @@ utki::shared_ref<window> ruis::make::window(
 	return utki::make_shared<ruis::window>(
 		std::move(context), //
 		std::move(params),
-		children
+		std::move(children)
 	);
 }
