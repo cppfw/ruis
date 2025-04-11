@@ -60,7 +60,7 @@ public:
 	scroll_area(
 		utki::shared_ref<ruis::context> context, //
 		all_parameters params,
-		utki::span<const utki::shared_ref<widget>> children
+		widget_list children
 	);
 
 	scroll_area(const scroll_area&) = delete;
@@ -138,13 +138,13 @@ namespace make {
 inline utki::shared_ref<ruis::scroll_area> scroll_area(
 	utki::shared_ref<ruis::context> context, //
 	scroll_area::all_parameters params,
-	utki::span<const utki::shared_ref<ruis::widget>> children = {}
+	widget_list children = {}
 )
 {
 	return utki::make_shared<ruis::scroll_area>(
 		std::move(context), //
 		std::move(params),
-		children
+		std::move(children)
 	);
 }
 

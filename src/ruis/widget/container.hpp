@@ -69,9 +69,9 @@ private:
 		// constant list of children
 		const_widget_list constant;
 
-		children_union() :
+		children_union(widget_list wl) :
 			// this sets the 'variable' member of the union as an active one
-			variable()
+			variable(std::move(wl))
 		{}
 
 		children_union(const children_union&) = delete;
@@ -148,7 +148,7 @@ public:
 	container(
 		utki::shared_ref<ruis::context> context, //
 		all_parameters params,
-		utki::span<const utki::shared_ref<widget>> children
+		widget_list children
 	);
 
 	const ruis::layout& get_layout() const
@@ -191,6 +191,8 @@ private:
 		utki::shared_ref<widget> w, //
 		widget_list::const_iterator before
 	);
+
+	void set_widget_parent(widget& w);
 
 public:
 	/**
@@ -497,25 +499,25 @@ namespace make {
 utki::shared_ref<ruis::container> container(
 	utki::shared_ref<ruis::context> context, //
 	container::all_parameters params,
-	utki::span<const utki::shared_ref<ruis::widget>> children = {}
+	widget_list children = {}
 );
 
 utki::shared_ref<ruis::container> pile(
 	utki::shared_ref<ruis::context> context, //
 	widget::all_parameters params,
-	utki::span<const utki::shared_ref<ruis::widget>> children = {}
+	widget_list children = {}
 );
 
 utki::shared_ref<ruis::container> column(
 	utki::shared_ref<ruis::context> context, //
 	widget::all_parameters params,
-	utki::span<const utki::shared_ref<ruis::widget>> children = {}
+	widget_list children = {}
 );
 
 utki::shared_ref<ruis::container> row(
 	utki::shared_ref<ruis::context> context, //
 	widget::all_parameters params,
-	utki::span<const utki::shared_ref<ruis::widget>> children = {}
+	widget_list children = {}
 );
 } // namespace make
 } // namespace ruis

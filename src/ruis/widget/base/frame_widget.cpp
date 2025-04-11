@@ -29,7 +29,8 @@ frame_widget::frame_widget(
 	utki::shared_ref<ruis::context> context,
 	container::parameters container_params,
 	parameters frame_params,
-	utki::span<const utki::shared_ref<widget>> frame_layout,
+	widget_list frame_layout,
+	// TODO: make widget_list?
 	utki::span<const utki::shared_ref<widget>> children
 ) :
 	widget(std::move(context), {}, {}),
@@ -38,7 +39,7 @@ frame_widget::frame_widget(
 		{
 			.container_params = std::move(container_params)
 		},
-		frame_layout
+		std::move(frame_layout)
 	),
 	params(std::move(frame_params)),
 	inner_content(this->get_widget_as<container>("ruis_content"sv))

@@ -41,7 +41,7 @@ public:
 	overlay(
 		utki::shared_ref<ruis::context> context, //
 		all_parameters params,
-		utki::span<const utki::shared_ref<widget>> children
+		widget_list children
 	);
 
 	overlay(const overlay&) = delete;
@@ -75,13 +75,13 @@ namespace make {
 inline utki::shared_ref<ruis::overlay> overlay(
 	utki::shared_ref<ruis::context> context, //
 	ruis::overlay::all_parameters params,
-	utki::span<const utki::shared_ref<ruis::widget>> children
+	widget_list children
 )
 {
 	return utki::make_shared<ruis::overlay>(
 		std::move(context), //
 		std::move(params),
-		children
+		std::move(children)
 	);
 }
 } // namespace make

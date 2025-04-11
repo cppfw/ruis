@@ -50,7 +50,7 @@ public:
 	choice_group(
 		utki::shared_ref<ruis::context> context, //
 		all_parameters params,
-		utki::span<const utki::shared_ref<ruis::widget>> children
+		widget_list children
 	);
 
 	choice_group(const choice_group&) = delete;
@@ -83,7 +83,7 @@ namespace make {
 utki::shared_ref<ruis::choice_group> choice_group(
 	utki::shared_ref<ruis::context> context, //
 	ruis::choice_group::all_parameters params,
-	utki::span<const utki::shared_ref<ruis::widget>> children
+	widget_list children
 );
 } // namespace make
 

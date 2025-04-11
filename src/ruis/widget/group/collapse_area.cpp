@@ -44,7 +44,7 @@ using namespace ruis::make;
 collapse_area::collapse_area(
 	utki::shared_ref<ruis::context> context,
 	all_parameters params,
-	utki::span<const utki::shared_ref<widget>> contents
+	widget_list contents
 ) :
 	widget(
 		std::move(context), //
@@ -134,12 +134,13 @@ collapse_area::collapse_area(
 					},
 					.container_params = std::move(params.container_params)
 				},
-				contents
+				std::move(contents)
 			)
 		}
 	),
 	// clang-format on
-	content_area(this->get_widget_as<container>("ruis_content")), title_v(this->get_widget_as<container>("ruis_title"))
+	content_area(this->get_widget_as<container>("ruis_content")), //
+	title_v(this->get_widget_as<container>("ruis_title"))
 {
 	{
 		auto& sw = this->get_widget_as<toggle_button>("ruis_switch");
@@ -158,7 +159,7 @@ collapse_area::collapse_area(
 utki::shared_ref<ruis::collapse_area> ruis::make::collapse_area(
 	utki::shared_ref<ruis::context> context, //
 	ruis::collapse_area::all_parameters params,
-	utki::span<const utki::shared_ref<ruis::widget>> contents
+	widget_list contents
 )
 {
 	if (!params.container_params.layout) {
@@ -168,6 +169,6 @@ utki::shared_ref<ruis::collapse_area> ruis::make::collapse_area(
 	return utki::make_shared<ruis::collapse_area>(
 		std::move(context), //
 		std::move(params),
-		contents
+		std::move(contents)
 	);
 }

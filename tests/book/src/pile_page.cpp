@@ -5,7 +5,7 @@
 pile_page::pile_page(
 	utki::shared_ref<ruis::context> context, //
 	ruis::widget::parameters widget_params,
-	utki::span<const utki::shared_ref<ruis::widget>> contents
+	ruis::widget_list contents
 ) :
 	widget(std::move(context), {}, std::move(widget_params)),
 	page(this->context, ruis::widget::parameters{}),
@@ -16,6 +16,6 @@ pile_page::pile_page(
 				.layout = ruis::layout::pile
 			}
 		},
-		contents
+		std::move(contents)
 	)
 {}

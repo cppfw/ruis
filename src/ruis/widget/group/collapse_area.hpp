@@ -50,7 +50,7 @@ public:
 	collapse_area(
 		utki::shared_ref<ruis::context> context, //
 		all_parameters params,
-		utki::span<const utki::shared_ref<widget>> contents
+		widget_list contents
 	);
 
 	container& content() noexcept
@@ -76,7 +76,7 @@ namespace make {
 utki::shared_ref<ruis::collapse_area> collapse_area(
 	utki::shared_ref<ruis::context> context, //
 	ruis::collapse_area::all_parameters params,
-	utki::span<const utki::shared_ref<ruis::widget>> contents
+	widget_list contents
 );
 } // namespace make
 

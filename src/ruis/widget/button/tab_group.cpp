@@ -30,7 +30,7 @@ using namespace ruis;
 tab_group::tab_group(
 	utki::shared_ref<ruis::context> context, //
 	all_parameters params,
-	utki::span<const utki::shared_ref<ruis::widget>> tabs
+	widget_list tabs
 ) :
 	widget(
 		std::move(context), //
@@ -43,7 +43,7 @@ tab_group::tab_group(
 		{
 			.container_params = std::move(params.container_params)
 		},
-		tabs
+		std::move(tabs)
 	)
 // clang-format on
 {

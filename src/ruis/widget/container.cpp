@@ -31,13 +31,14 @@ using namespace ruis;
 container::container(
 	utki::shared_ref<ruis::context> context,//
 	all_parameters params,
-	utki::span<const utki::shared_ref<widget>> children
+	widget_list children
 ) :
 	widget( //
 		std::move(context),
 		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
+	children_list(std::move(children)),
 	layout([&](){
 		if(!params.container_params.layout){
 			return ruis::layout::trivial;
@@ -45,7 +46,14 @@ container::container(
 		return utki::shared_ref(params.container_params.layout);
 	}())
 {
-	this->push_back_internal(children);
+	for (auto& w : this->children_list.variable) {
+		if (w.get().parent()) {
+			throw std::invalid_argument(
+				"container::container(): one of the supplied child widgets is already added to some other container"
+			);
+		}
+		this->set_widget_parent(w.get());
+	}
 }
 
 void container::render_child(
@@ -234,15 +242,17 @@ void container::on_lay_out()
 	this->get_layout().lay_out(this->rect().d, this->children());
 }
 
+void container::set_widget_parent(widget& w)
+{
+	w.parent_container = this;
+	w.on_parent_change();
+}
+
 widget_list::const_iterator container::insert_internal(
 	utki::shared_ref<widget> w, //
 	widget_list::const_iterator before
 )
 {
-	if (w.get().parent()) {
-		throw std::invalid_argument("container::insert(): given widget is already added to some container");
-	}
-
 	if (this->is_blocked) {
 		throw std::logic_error("container::insert(): children list is locked");
 	}
@@ -253,14 +263,17 @@ widget_list::const_iterator container::insert_internal(
 
 	widget& ww = w.get();
 
+	if (ww.parent_container) {
+		throw std::invalid_argument("container::insert(): the widget is already added to some other container");
+	}
+
 	// NOLINTNEXTLINE(cppcoreguidelines-pro-type-union-access)
 	auto ret = this->children_list.variable.emplace(
 		before, //
 		std::move(w)
 	);
 
-	ww.parent_container = this;
-	ww.on_parent_change();
+	this->set_widget_parent(ww);
 
 	ASSERT(!ww.is_hovered())
 	return ret;
@@ -472,20 +485,20 @@ void container::on_reload()
 utki::shared_ref<ruis::container> ruis::make::container(
 	utki::shared_ref<ruis::context> context, //
 	container::all_parameters params,
-	utki::span<const utki::shared_ref<ruis::widget>> children
+	widget_list children
 )
 {
 	return utki::make_shared<ruis::container>(
 		std::move(context), //
 		std::move(params),
-		children
+		std::move(children)
 	);
 }
 
 utki::shared_ref<ruis::container> ruis::make::pile(
 	utki::shared_ref<ruis::context> context, //
 	widget::all_parameters params,
-	utki::span<const utki::shared_ref<ruis::widget>> children
+	widget_list children
 )
 {
 	// clang-format off
@@ -498,7 +511,7 @@ utki::shared_ref<ruis::container> ruis::make::pile(
 				.layout = layout::pile
 			}
 		},
-		children
+		std::move(children)
 	);
 	// clang-format on
 }
@@ -506,7 +519,7 @@ utki::shared_ref<ruis::container> ruis::make::pile(
 utki::shared_ref<ruis::container> ruis::make::column(
 	utki::shared_ref<ruis::context> context, //
 	widget::all_parameters params,
-	utki::span<const utki::shared_ref<ruis::widget>> children
+	widget_list children
 )
 {
 	// clang-format off
@@ -519,7 +532,7 @@ utki::shared_ref<ruis::container> ruis::make::column(
 				.layout = layout::column
 			}
 		},
-		children
+		std::move(children)
 	);
 	// clang-format on
 }
@@ -527,7 +540,7 @@ utki::shared_ref<ruis::container> ruis::make::column(
 utki::shared_ref<ruis::container> ruis::make::row(
 	utki::shared_ref<ruis::context> context, //
 	widget::all_parameters params,
-	utki::span<const utki::shared_ref<ruis::widget>> children
+	widget_list children
 )
 {
 	// clang-format off
@@ -540,7 +553,7 @@ utki::shared_ref<ruis::container> ruis::make::row(
 				.layout = layout::row
 			}
 		},
-		children
+		std::move(children)
 	);
 	// clang-format on
 }

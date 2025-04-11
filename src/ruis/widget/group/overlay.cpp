@@ -37,7 +37,7 @@ class popup_wrapper : public container
 public:
 	popup_wrapper(
 		utki::shared_ref<ruis::context> context, //
-		utki::span<const utki::shared_ref<ruis::widget>> children
+		widget_list children
 	) :
 		// clang-format off
 		widget(
@@ -53,19 +53,19 @@ public:
 					.layout = ruis::layout::size
 				}
 			},
-			children
+			std::move(children)
 		)
 	// clang-format on
 	{}
 
 	static utki::shared_ref<popup_wrapper> make(
 		utki::shared_ref<ruis::context> context, //
-		utki::span<const utki::shared_ref<ruis::widget>> children
+		widget_list children
 	)
 	{
 		return utki::make_shared<popup_wrapper>(
 			std::move(context), //
-			children
+			std::move(children)
 		);
 	}
 };
@@ -74,7 +74,7 @@ public:
 overlay::overlay(
 	utki::shared_ref<ruis::context> context,
 	all_parameters params,
-	utki::span<const utki::shared_ref<widget>> children
+	widget_list children
 ) :
 	widget( //
 		std::move(context),
@@ -89,7 +89,7 @@ overlay::overlay(
 				.layout = layout::pile
 			}
 		},
-		children
+		std::move(children)
 	)
 	// clang-format off
 {}

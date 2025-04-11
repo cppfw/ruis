@@ -28,7 +28,7 @@ using namespace ruis;
 choice_group::choice_group(
 	utki::shared_ref<ruis::context> context, //
 	all_parameters params,
-	utki::span<const utki::shared_ref<ruis::widget>> children
+	widget_list children
 ) :
 	widget(
 		std::move(context), //
@@ -40,7 +40,7 @@ choice_group::choice_group(
 		{
 			.container_params = std::move(params.container_params)
 		},
-		children
+		std::move(children)
 	)
 // clang-format on
 {}
@@ -69,7 +69,7 @@ void choice_group::set_active_choice_button(std::weak_ptr<choice_button> cb)
 utki::shared_ref<ruis::choice_group> ruis::make::choice_group(
 	utki::shared_ref<ruis::context> context, //
 	ruis::choice_group::all_parameters params,
-	utki::span<const utki::shared_ref<ruis::widget>> children
+	widget_list children
 )
 {
 	if (!params.container_params.layout) {
@@ -79,6 +79,6 @@ utki::shared_ref<ruis::choice_group> ruis::make::choice_group(
 	return utki::make_shared<ruis::choice_group>(
 		std::move(context), //
 		std::move(params),
-		children
+		std::move(children)
 	);
 }
