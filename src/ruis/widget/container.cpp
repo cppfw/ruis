@@ -291,7 +291,7 @@ widget_list::const_iterator container::push_back(utki::shared_ref<widget> w)
 void container::push_back_internal(utki::span<const utki::shared_ref<widget>> ww)
 {
 	for (const auto& w : ww) {
-		this->insert(
+		this->insert_internal(
 			w, //
 			this->children().end()
 		);
