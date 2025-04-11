@@ -35,11 +35,9 @@ class tabbed_book :
 	virtual public ruis::widget, //
 	private ruis::container
 {
-	// TODO: use shared_ref
 	// NOLINTNEXTLINE(clang-analyzer-webkit.NoUncountedMemberChecker, "false-positive")
 	ruis::tab_group& tab_group;
 
-	// TODO: use shared_ref
 	// NOLINTNEXTLINE(clang-analyzer-webkit.NoUncountedMemberChecker, "false-positive")
 	ruis::book& book;
 
