@@ -104,9 +104,6 @@ void tabbed_book::add(
 	utki::shared_ref<ruis::page> page
 )
 {
-	auto pair = std::make_pair(tab, page);
-
-	// TODO: move tab and page
 	this->tab_group.push_back(tab);
 	this->book.push(page);
 
@@ -118,7 +115,12 @@ void tabbed_book::add(
 		}
 	};
 
-	this->tab_page_pairs.push_back(pair);
+	this->tab_page_pairs.push_back(
+		std::make_pair(
+			std::move(tab), //
+			std::move(page)
+		)
+	);
 }
 
 void tabbed_book::activate_another_tab(tab& t)
