@@ -29,7 +29,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace ruis;
 
 container::container(
-	utki::shared_ref<ruis::context> context,
+	utki::shared_ref<ruis::context> context,//
 	all_parameters params,
 	utki::span<const utki::shared_ref<widget>> children
 ) :
@@ -45,12 +45,13 @@ container::container(
 		return utki::shared_ref(params.container_params.layout);
 	}())
 {
-	for (const auto& c : children) {
-		this->push_back(c);
-	}
+	this->push_back_internal(children);
 }
 
-void container::render_child(const matrix4& matrix, const widget& c) const
+void container::render_child(
+	const matrix4& matrix, //
+	const widget& c
+) const
 {
 	if (!c.is_visible()) {
 		return;
@@ -233,7 +234,7 @@ void container::on_lay_out()
 	this->get_layout().lay_out(this->rect().d, this->children());
 }
 
-widget_list::const_iterator container::insert(
+widget_list::const_iterator container::insert_internal(
 	utki::shared_ref<widget> w, //
 	widget_list::const_iterator before
 )
@@ -253,14 +254,29 @@ widget_list::const_iterator container::insert(
 	widget& ww = w.get();
 
 	// NOLINTNEXTLINE(cppcoreguidelines-pro-type-union-access)
-	auto ret = this->children_list.variable.emplace(before, std::move(w));
+	auto ret = this->children_list.variable.emplace(
+		before, //
+		std::move(w)
+	);
 
 	ww.parent_container = this;
 	ww.on_parent_change();
 
-	this->on_children_change();
-
 	ASSERT(!ww.is_hovered())
+	return ret;
+}
+
+widget_list::const_iterator container::insert(
+	utki::shared_ref<widget> w, //
+	widget_list::const_iterator before
+)
+{
+	auto ret = this->insert_internal(
+		std::move(w), //
+		before
+	);
+
+	this->on_children_change();
 	return ret;
 }
 
@@ -272,11 +288,20 @@ widget_list::const_iterator container::push_back(utki::shared_ref<widget> w)
 	);
 }
 
-void container::push_back(utki::span<const utki::shared_ref<widget>> ww)
+void container::push_back_internal(utki::span<const utki::shared_ref<widget>> ww)
 {
 	for (const auto& w : ww) {
-		this->push_back(w);
+		this->insert(
+			w, //
+			this->children().end()
+		);
 	}
+}
+
+void container::push_back(utki::span<const utki::shared_ref<widget>> ww)
+{
+	this->push_back_internal(ww);
+	this->on_children_change();
 }
 
 widget_list::const_iterator container::erase(widget_list::const_iterator child)
@@ -331,7 +356,10 @@ void container::clear()
 	}
 }
 
-std::shared_ptr<widget> container::try_get_widget(std::string_view id, bool allow_itself) noexcept
+std::shared_ptr<widget> container::try_get_widget(
+	std::string_view id, //
+	bool allow_itself
+) noexcept
 {
 	if (auto r = this->widget::try_get_widget(id, allow_itself)) {
 		return r;
@@ -351,7 +379,7 @@ std::shared_ptr<widget> container::try_get_widget(std::string_view id, bool allo
 }
 
 widget_list::const_iterator container::change_child_z_position(
-	widget_list::const_iterator child,
+	widget_list::const_iterator child, //
 	widget_list::const_iterator before
 )
 {

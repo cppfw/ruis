@@ -93,7 +93,11 @@ private:
 	};
 
 	// map which maps pointer ID to a pair holding reference to capturing widget and number of mouse capture clicks
-	std::map<unsigned, mouse_capture_info> mouse_capture_map;
+	std::map<
+		unsigned, //
+		mouse_capture_info //
+		>
+		mouse_capture_map;
 
 private:
 	// flag indicating that modifications to children list are blocked
@@ -177,10 +181,18 @@ public:
 	 * @return new child iterator.
 	 */
 	widget_list::const_iterator change_child_z_position(
-		widget_list::const_iterator child,
+		widget_list::const_iterator child, //
 		widget_list::const_iterator before
 	);
 
+private:
+	// same as insert() but does not call on_children_change()
+	widget_list::const_iterator insert_internal(
+		utki::shared_ref<widget> w, //
+		widget_list::const_iterator before
+	);
+
+public:
 	/**
 	 * @brief Insert a widget to the container.
 	 * This function invalidates iterators which were obtained before calling to it.
@@ -201,6 +213,11 @@ public:
 	 */
 	widget_list::const_iterator push_back(utki::shared_ref<widget> w);
 
+private:
+	// same as push_back(span) but does not call on_children_change()
+	void push_back_internal(utki::span<const utki::shared_ref<widget>> ww);
+
+public:
 	/**
 	 * @brief Insert widgets to the end of children list of the container.
 	 * This function invalidates iterators which were obtained before calling to it.
