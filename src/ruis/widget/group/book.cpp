@@ -83,6 +83,8 @@ void book::push(utki::shared_ref<page> pg)
 		throw std::logic_error("book::push(): the page is already in some book");
 	}
 
+	// TODO: what if exception is thrown on any step below?
+
 	this->pages.push_back(std::move(pg));
 
 	this->set_page_parent_book(p);

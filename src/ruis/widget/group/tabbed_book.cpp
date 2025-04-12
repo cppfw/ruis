@@ -135,6 +135,8 @@ void tabbed_book::add(
 	utki::shared_ref<ruis::page> page
 )
 {
+	// TODO: what if exception is thrown on any step below?
+
 	this->tab_group.push_back(tab);
 	this->book.push(page);
 
