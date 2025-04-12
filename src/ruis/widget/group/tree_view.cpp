@@ -103,6 +103,11 @@ void tree_view::provider::notify_model_change()
 	this->list_provider::notify_model_change();
 }
 
+void tree_view::provider::notify_item_change()
+{
+	this->list_provider::notify_model_change();
+}
+
 size_t tree_view::provider::count() const noexcept
 {
 	return this->visible_tree.value.subtree_size;

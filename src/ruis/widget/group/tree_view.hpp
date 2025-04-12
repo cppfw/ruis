@@ -125,10 +125,7 @@ public:
 
 		void notify_model_change();
 
-		void notify_item_change()
-		{
-			this->list_provider::notify_model_change();
-		}
+		void notify_item_change();
 
 		/**
 		 * @brief Notify that an item has been removed.
