@@ -144,10 +144,8 @@ void tabbed_book::add(
 	tab.get().set_pressed(true);
 
 	this->tab_page_pairs.emplace_back(
-		std::make_pair(
-			std::move(tab), //
-			std::move(page)
-		)
+		std::move(tab), //
+		std::move(page)
 	);
 
 	this->set_tab_pressed_change_handler(this->tab_page_pairs.back());
