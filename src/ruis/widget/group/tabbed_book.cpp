@@ -69,7 +69,7 @@ tabbed_book::tabbed_book(
 					std::vector<utki::shared_ref<widget>> children;
 					children.reserve(pages.size());
 					for(const auto& p : pages){
-						children.push_back(p.first);
+						children.emplace_back(p.first);
 					}
 					return children;
 				}()
@@ -141,7 +141,7 @@ void tabbed_book::add(
 	// make the tab active
 	tab.get().set_pressed(true);
 
-	this->tab_page_pairs.push_back(
+	this->tab_page_pairs.emplace_back(
 		std::make_pair(
 			std::move(tab), //
 			std::move(page)
@@ -155,9 +155,9 @@ void tabbed_book::set_tab_pressed_change_handler(typename decltype(tab_page_pair
 {
 	auto& [tab, page] = pair;
 
-	tab.get().pressed_change_handler = [page](ruis::button& btn) {
+	tab.get().pressed_change_handler = [p = page](ruis::button& btn) {
 		if (btn.is_pressed()) {
-			page.get().activate();
+			p.get().activate();
 		}
 	};
 }

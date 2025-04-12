@@ -147,7 +147,8 @@ void tab_group::on_lay_out()
 		pos -= min(prev_borders.right(), borders.left());
 		c.get().move_to(vector2(
 			pos, //
-			round((this->rect().d.y() - c.get().rect().d.y()) / 2)
+			// align bottom
+			round(this->rect().d.y() - c.get().rect().d.y())
 		));
 		pos += dim.x();
 
