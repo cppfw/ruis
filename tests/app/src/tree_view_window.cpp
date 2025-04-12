@@ -138,7 +138,10 @@ public:
         this->selected_item.pop_back();
     }
 
-    utki::shared_ref<ruis::widget> get_widget(utki::span<const size_t> path, bool is_collapsed)override{
+    utki::shared_ref<ruis::widget> get_widget(
+        utki::span<const size_t> path, //
+        bool is_collapsed
+    )override{
         ASSERT(!path.empty())
 
         auto list = &this->root;
