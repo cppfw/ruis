@@ -53,9 +53,12 @@ wording& wording::format(std::vector<std::u32string> args)
 	return *this;
 }
 
-wording localization::get(std::string_view id)
+wording localization::get(std::string_view id) const
 {
-	return {this->vocabulary.to_shared_ptr(), id};
+	return {
+		this->vocabulary.to_shared_ptr(), //
+		id
+	};
 }
 
 namespace {
@@ -95,7 +98,7 @@ localization::localization(const tml::forest& desc) :
 {}
 
 // NOLINTNEXTLINE(cppcoreguidelines-rvalue-reference-param-not-moved, "w is not moved, but w.format_args is moved")
-wording localization::reload(wording&& w)
+wording localization::reload(wording&& w) const
 {
 	auto ret = this->get(w.id());
 

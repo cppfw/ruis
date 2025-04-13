@@ -104,9 +104,9 @@ public:
 
 	localization(const tml::forest& desc);
 
-	wording get(std::string_view id);
+	wording get(std::string_view id) const;
 
-	wording reload(wording&& w);
+	wording reload(wording&& w) const;
 };
 
 /**
