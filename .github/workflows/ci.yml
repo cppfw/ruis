@@ -125,7 +125,7 @@ jobs:
           - {os: ubuntu, codename: noble, image_owner: , package_type: deb}
           # - {os: raspbian, codename: buster, image_owner: igagis/, package_type: deb, labels: [arm32,docker]}
           # - {os: raspbian, codename: bullseye, image_owner: igagis/, package_type: deb, labels: [arm32,docker]}
-          - {os: raspbian, codename: bookworm, image_owner: igagis/, package_type: deb, labels: [ubuntu-24.04-arm]}
+          # - {os: raspbian, codename: bookworm, image_owner: igagis/, package_type: deb, labels: [ubuntu-24.04-arm]}
     runs-on: ${{ (matrix.labels == '' && 'ubuntu-latest') || matrix.labels }}
     container: ${{ matrix.image_owner }}${{ matrix.os }}:${{ matrix.codename }}
     name: linux - ${{ matrix.image_owner }}${{ matrix.os }}:${{ matrix.codename }}
