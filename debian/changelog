@@ -1,3 +1,9 @@
+libruis (0.5.264) unstable; urgency=medium
+
+  * loc const
+
+ -- Ivan Gagis <igagis@gmail.com>  Sun, 13 Apr 2025 21:10:20 +0300
+
 libruis (0.5.263) unstable; urgency=medium
 
   * refactoring
