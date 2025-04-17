@@ -110,14 +110,38 @@ sides<real> margins::get_actual_borders() const
 
 vec2 margins::measure(const vec2& quotum) const
 {
+	if (quotum.is_positive_or_zero()) {
+		return quotum;
+	}
+
 	auto actual_borders = this->get_actual_borders();
 
 	auto borders_left_top = utki::make_span(actual_borders).subspan(0, 2);
 	auto borders_right_bottom = utki::make_span(actual_borders).subspan(2, 2);
 
+	vec2 borderless_quotum;
+	// clang-format off
+	for(auto [q, bq, blt, brb] :
+		utki::views::zip(
+			quotum,
+			borderless_quotum,
+			borders_left_top,
+			borders_right_bottom
+		)
+	)
+	// clang-format on
+	{
+		if (q < 0) {
+			bq = q;
+		} else {
+			using std::max;
+			bq = max(real(0), q - blt - brb);
+		}
+	}
+
 	vec2 ret = quotum;
 	{
-		auto content_min_dims = this->content().measure({-1, -1});
+		auto content_min_dims = this->content().measure(borderless_quotum);
 		// clang-format off
 		for(auto [r, m, blt, brb] :
 			utki::views::zip(
