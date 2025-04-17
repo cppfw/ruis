@@ -69,12 +69,13 @@ margins::margins(
 	)
 // clang-format on
 {
+	// TODO: not needed?
 	this->margins::on_borders_change();
 } // NOLINT(clang-analyzer-cplusplus.NewDeleteLeaks, "false positive")
 
 void margins::on_borders_change()
 {
-	// invalidate layout?
+	this->invalidate_layout();
 }
 
 sides<real> margins::get_min_borders() const
