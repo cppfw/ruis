@@ -114,10 +114,10 @@ vec2 margins::measure(const vec2& quotum) const
 		return quotum;
 	}
 
-	auto actual_borders = this->get_actual_borders();
+	auto borders = this->get_actual_borders();
 
-	auto borders_left_top = utki::make_span(actual_borders).subspan(0, 2);
-	auto borders_right_bottom = utki::make_span(actual_borders).subspan(2, 2);
+	auto borders_left_top = borders.left_top();
+	auto borders_right_bottom = borders.right_bottom();
 
 	vec2 borderless_quotum;
 	// clang-format off
@@ -164,18 +164,13 @@ vec2 margins::measure(const vec2& quotum) const
 
 void margins::on_lay_out()
 {
-	auto actual_borders = this->get_actual_borders();
+	auto borders = this->get_actual_borders();
 
-	vec2 border_dims(
-		actual_borders.left() + actual_borders.right(), //
-		actual_borders.top() + actual_borders.bottom()
-	);
-
-	vec2 content_dims = max(real(0), this->rect().d - border_dims);
+	vec2 content_dims = max(real(0), this->rect().d - borders.dims());
 
 	auto& c = this->content();
 
-	c.move_to(vec2(actual_borders.left(), actual_borders.top()));
+	c.move_to(borders.left_top());
 	c.resize(content_dims);
 }
 

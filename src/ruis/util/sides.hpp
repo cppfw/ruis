@@ -24,6 +24,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <array>
 #include <ostream>
 
+#include <r4/vector.hpp>
+
 namespace ruis {
 
 /**
@@ -85,6 +87,31 @@ public:
 	const component_type& bottom() const noexcept
 	{
 		return this->operator[](3);
+	}
+
+	component_type left_right() const noexcept
+	{
+		return this->left() + this->right();
+	}
+
+	component_type top_bottom() const noexcept
+	{
+		return this->top() + this->bottom();
+	}
+
+	r4::vector2<component_type> left_top() const noexcept
+	{
+		return {this->left(), this->top()};
+	}
+
+	r4::vector2<component_type> right_bottom() const noexcept
+	{
+		return {this->right(), this->bottom()};
+	}
+
+	r4::vector2<component_type> dims() const noexcept
+	{
+		return {this->left_right(), this->top_bottom()};
 	}
 
 	friend std::ostream& operator<<(std::ostream& stream, const sides<component_type>& s)
