@@ -48,7 +48,11 @@ public:
 		frame_widget::parameters frame_params;
 	};
 
-	margins(utki::shared_ref<ruis::context> context, all_parameters params, widget_list children);
+	margins(
+		utki::shared_ref<ruis::context> context, //
+		all_parameters params,
+		widget_list children
+	);
 
 	void on_borders_change() override;
 };

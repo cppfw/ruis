@@ -32,14 +32,6 @@ namespace ruis {
 /**
  * @brief Nine patch widget.
  * Nine patch widget displays a nine-patch and can hold child widgets in its central area.
- * From GUI script it can be instantiated as "nine_patch".
- *
- * @param left - width of left border, in length units.
- * @param right - width of right border, in length units.
- * @param top - height of top border, in length units.
- * @param bottom - height of bottom border, in length units.
- * @param center_visible - whether the central part of nine-patch image is visible (true) or not (false).
- * @param image - reference to a nine-patch resource.
  */
 class nine_patch :
 	public virtual widget, //

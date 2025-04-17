@@ -33,7 +33,7 @@ using namespace ruis::make;
 } // namespace m
 
 margins::margins(
-	utki::shared_ref<ruis::context> context,
+	utki::shared_ref<ruis::context> context, //
 	all_parameters params,
 	widget_list children
 ) :
@@ -42,46 +42,71 @@ margins::margins(
 		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
+	// clang-format off
 	frame_widget(
 		this->context,
-		{.layout = layout::row},
+		{
+			.layout = layout::row
+		},
 		std::move(params.frame_params),
-		{//
-		 m::gap(this->context, {.widget_params = {.id = "ruis_left"s}}),
-		 m::container(
-			 this->context,
-			 {//
-			  .layout_params =
-				  {//
-				   .dims = {dim::max, dim::max},
-				   .weight = 1
-				  },
-			  .container_params = {.layout = layout::column}
-			 },
-			 {//
-			  m::gap(this->context, {.widget_params = {.id = "ruis_top"s}}),
-			  m::container(
-				  this->context,
-				  {//
-				   .layout_params =
-					   {//
+		{
+			m::gap(this->context,
+				{
+					.widget_params{
+						.id = "ruis_left"s
+					}
+				}
+			),
+			m::container(this->context,
+				{
+					.layout_params{
 						.dims = {dim::max, dim::max},
 						.weight = 1
-					   },
-				   .widget_params =
-					   {//
-						.id = "ruis_content"s
-					   },
-				   .container_params = std::move(params.container_params)
-				  },
-				  std::move(children)
-			  ),
-			  m::gap(this->context, {.widget_params = {.id = "ruis_bottom"s}})
-			 }
-		 ),
-		 m::gap(this->context, {.widget_params = {.id = "ruis_right"s}})
+					},
+					.container_params{
+						.layout = layout::column
+					}
+				},
+				{
+					m::gap(this->context,
+						{
+							.widget_params{
+								.id = "ruis_top"s
+							}
+						}
+					),
+					m::container(this->context,
+						{
+							.layout_params{
+								.dims = {dim::max, dim::max},
+								.weight = 1
+							},
+							.widget_params{
+								.id = "ruis_content"s
+							},
+							.container_params = std::move(params.container_params)
+						},
+						std::move(children)
+					),
+					m::gap(this->context,
+						{
+							.widget_params{
+								.id = "ruis_bottom"s
+							}
+						}
+					)
+				}
+			),
+			m::gap(this->context,
+				{
+					.widget_params{
+						.id = "ruis_right"s
+					}
+				}
+			)
 		}
 	),
+	// clang-format on
 	left(this->get_widget("ruis_left"sv)), //
 	top(this->get_widget("ruis_top"sv)), //
 	right(this->get_widget("ruis_right"sv)), //
