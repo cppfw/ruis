@@ -27,18 +27,8 @@ namespace ruis {
 
 class margins : public frame_widget
 {
-	// TODO: use shared_ref
-	// NOLINTNEXTLINE(clang-analyzer-webkit.NoUncountedMemberChecker, "false-positive")
-	widget& left;
-	// TODO: use shared_ref
-	// NOLINTNEXTLINE(clang-analyzer-webkit.NoUncountedMemberChecker, "false-positive")
-	widget& top;
-	// TODO: use shared_ref
-	// NOLINTNEXTLINE(clang-analyzer-webkit.NoUncountedMemberChecker, "false-positive")
-	widget& right;
-	// TODO: use shared_ref
-	// NOLINTNEXTLINE(clang-analyzer-webkit.NoUncountedMemberChecker, "false-positive")
-	widget& bottom;
+protected:
+	virtual sides<real> get_min_borders() const;
 
 public:
 	struct all_parameters {
@@ -55,6 +45,12 @@ public:
 	);
 
 	void on_borders_change() override;
+
+	vec2 measure(const vec2& quotum) const override;
+	void on_lay_out() override;
+
+private:
+	sides<real> get_actual_borders() const;
 };
 
 namespace make {

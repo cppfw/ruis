@@ -60,19 +60,22 @@ public:
 		return this->inner_content;
 	}
 
+	const container& content() const
+	{
+		return this->inner_content;
+	}
+
 	/**
 	 * @brief Set border settings.
-	 * Border values are in pixels or -1 for minimal size.
 	 * @param borders - border values to set.
 	 */
 	void set_borders(sides<length> borders);
 
 	/**
 	 * @brief Get current border settings.
-	 * Border values are in pixels or min_c.
 	 * @return Current borders.
 	 */
-	decltype(params.borders) get_borders() const noexcept
+	const decltype(params.borders)& get_borders() const noexcept
 	{
 		return this->params.borders;
 	}
