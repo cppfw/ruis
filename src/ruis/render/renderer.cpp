@@ -45,17 +45,17 @@ renderer::renderer(utki::shared_ref<ruis::render::context> render_context) :
 					)
 				)
 			),
-			.quad_indices = this->render_context.get().create_index_buffer(
+			.quad_fan_indices = this->render_context.get().create_index_buffer(
 				utki::make_span(std::array<uint16_t, 4>({{0, 1, 2, 3}}
                   ))
 			),
 			.pos_quad_01_vao =
 				this->render_context.get()
 					.create_vertex_array({self.quad_01_vbo},
-                  self.quad_indices, vertex_array::mode::triangle_fan),
+                  self.quad_fan_indices, vertex_array::mode::triangle_fan),
 			.pos_tex_quad_01_vao = this->render_context.get().create_vertex_array(
 				{self.quad_01_vbo, self.quad_01_vbo},
-				self.quad_indices,
+				self.quad_fan_indices,
 				vertex_array::mode::triangle_fan
 			),
 			.white_texture = this->render_context.get().create_texture_2d(

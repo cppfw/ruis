@@ -181,7 +181,7 @@ texture_font::glyph texture_font::load_glyph(char32_t c) const
 			r.render_context.get().create_vertex_buffer(utki::make_span(ftg.vertices)),
 			this->renderer.get().obj().quad_01_vbo
 		},
-		this->renderer.get().obj().quad_indices,
+		this->renderer.get().obj().quad_fan_indices,
 		render::vertex_array::mode::triangle_fan
 	).to_shared_ptr();
 

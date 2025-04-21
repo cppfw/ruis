@@ -43,7 +43,7 @@ public:
 		utki::shared_ref<const ruis::render::context::shaders> shaders;
 		utki::shared_ref<const vertex_array> empty_vertex_array;
 		utki::shared_ref<const vertex_buffer> quad_01_vbo;
-		utki::shared_ref<const index_buffer> quad_indices;
+		utki::shared_ref<const index_buffer> quad_fan_indices;
 		utki::shared_ref<const vertex_array> pos_quad_01_vao;
 		utki::shared_ref<const vertex_array> pos_tex_quad_01_vao;
 		utki::shared_ref<const texture_2d> white_texture;

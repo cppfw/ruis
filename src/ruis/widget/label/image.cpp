@@ -90,7 +90,7 @@ void image::render(const ruis::matrix4& matrix) const
 					r.obj().quad_01_vbo,
 					r.render_context.get().create_vertex_buffer(utki::make_span(tex_coords))
 				},
-				r.obj().quad_indices,
+				r.obj().quad_fan_indices,
 				render::vertex_array::mode::triangle_fan
 			);
 			// clang-format on
