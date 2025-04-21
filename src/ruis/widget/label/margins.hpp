@@ -44,8 +44,6 @@ public:
 		widget_list children
 	);
 
-	void on_borders_change() override;
-
 	vec2 measure(const vec2& quotum) const override;
 	void on_lay_out() override;
 

@@ -75,3 +75,8 @@ sides<real> frame_widget::get_actual_borders() const
 
 	return actual_borders;
 }
+
+void frame_widget::on_borders_change()
+{
+	this->invalidate_layout();
+}

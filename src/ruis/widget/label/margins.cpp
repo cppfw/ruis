@@ -73,11 +73,6 @@ margins::margins(
 	this->margins::on_borders_change();
 } // NOLINT(clang-analyzer-cplusplus.NewDeleteLeaks, "false positive")
 
-void margins::on_borders_change()
-{
-	this->invalidate_layout();
-}
-
 sides<real> margins::get_min_borders() const
 {
 	return {0, 0, 0, 0};

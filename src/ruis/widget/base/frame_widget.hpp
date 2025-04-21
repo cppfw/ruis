@@ -80,7 +80,7 @@ public:
 		return this->params.borders;
 	}
 
-	virtual void on_borders_change() {}
+	virtual void on_borders_change();
 
 protected:
 	virtual sides<real> get_min_borders() const = 0;
