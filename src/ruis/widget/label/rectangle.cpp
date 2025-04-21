@@ -54,16 +54,26 @@ rectangle::rectangle( //
 void rectangle::render(const ruis::matrix4& matrix) const
 {
 	auto& r = this->context.get().renderer.get();
-	r.render_context.get().set_simple_alpha_blending();
 
-	ruis::matrix4 matr(matrix);
-	matr.scale(this->rect().d);
+	if (!this->nine_patch_tex) {
+		r.render_context.get().set_simple_alpha_blending();
 
-	r.shaders().color_pos->render(
-		matr, //
-		r.obj().pos_quad_01_vao.get(),
-		this->get_current_color().to_vec4f()
-	);
+		ruis::matrix4 matr(matrix);
+		matr.scale(this->rect().d);
+
+		r.shaders().color_pos->render(
+			matr, //
+			r.obj().pos_quad_01_vao.get(),
+			this->get_current_color().to_vec4f()
+		);
+	} else {
+		// TODO:
+	}
 
 	this->margins::render(matrix);
+}
+
+void rectangle::update_nine_patch_text()
+{
+	// TODO:
 }

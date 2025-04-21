@@ -68,6 +68,17 @@ public:
 	~rectangle() override = default;
 
 	void render(const ruis::matrix4& matrix) const override;
+
+private:
+	struct nine_patch_texture {
+		sides<real> borders_px;
+		utki::shared_ref<const render::texture_2d> tex;
+		std::array<std::array<utki::shared_ref<const render::vertex_array>, 3>, 3> vaos;
+	};
+
+	std::shared_ptr<nine_patch_texture> nine_patch_tex;
+
+	void update_nine_patch_text();
 };
 
 namespace make {
