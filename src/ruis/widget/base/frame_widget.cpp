@@ -49,3 +49,29 @@ void frame_widget::set_borders(sides<length> borders)
 	this->params.borders = borders;
 	this->on_borders_change();
 }
+
+sides<real> frame_widget::get_actual_borders() const
+{
+	auto min_borders = this->get_min_borders();
+	const auto& borders = this->get_borders();
+
+	sides<real> actual_borders;
+	// clang-format off
+	for (auto [m, b, a] :
+		utki::views::zip(
+			min_borders,
+			borders,
+			actual_borders
+		)
+	)
+	// clang-format on
+	{
+		if (b.is_undefined()) {
+			a = m;
+		} else {
+			a = b.get(this->context);
+		}
+	}
+
+	return actual_borders;
+}

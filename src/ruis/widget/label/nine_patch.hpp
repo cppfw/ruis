@@ -40,7 +40,7 @@ class nine_patch :
 {
 	std::shared_ptr<res::nine_patch::image_matrix> img_res_matrix;
 
-	const std::array<std::array<std::reference_wrapper<image>, 3>, 3> img_widgets_matrix;
+	const std::array<std::array<utki::shared_ref<image>, 3>, 3> img_widgets_matrix;
 
 public:
 	struct parameters {
@@ -75,6 +75,8 @@ public:
 
 	~nine_patch() override = default;
 
+	void render(const mat4& matrix) const override;
+
 private:
 	nine_patch(
 		utki::shared_ref<ruis::context> context, //
@@ -105,6 +107,9 @@ public:
 private:
 	void apply_images();
 	void update_images();
+
+protected:
+	sides<real> get_min_borders() const override;
 };
 
 namespace make {

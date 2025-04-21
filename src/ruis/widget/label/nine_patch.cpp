@@ -135,7 +135,12 @@ nine_patch::nine_patch( //
 		{{
 			{{
 				m::image(context,
-					{}
+					{
+						// TODO:
+						.widget_params{
+							.visible = false
+						}
+					}
 				),
 				m::image(context,
 					{
@@ -226,27 +231,7 @@ nine_patch::nine_patch( //
 			std::move(children)
 		)
 	),
-	img_widgets_matrix(
-		// clang-format off
-		{{
-			{
-				image_widgets_matrix[0][0].get(),
-				image_widgets_matrix[0][1].get(),
-				image_widgets_matrix[0][2].get()
-			},
-			{
-				image_widgets_matrix[1][0].get(),
-				image_widgets_matrix[1][1].get(),
-				image_widgets_matrix[1][2].get()
-			},
-			{
-				image_widgets_matrix[2][0].get(),
-				image_widgets_matrix[2][1].get(),
-				image_widgets_matrix[2][2].get()
-			}
-		}}
-		// clang-format on
-	),
+	img_widgets_matrix(image_widgets_matrix),
 	params(std::move(params.nine_patch_params))
 {
 	this->nine_patch::on_blending_change();
@@ -303,6 +288,27 @@ sides<real> nine_patch::get_actual_borders() const noexcept
 	}
 
 	return ret;
+}
+
+sides<real> nine_patch::get_min_borders() const
+{
+	auto* np = this->params.nine_patch.get();
+
+	if (!this->is_enabled() && this->params.disabled_nine_patch) {
+		np = this->params.disabled_nine_patch.get();
+	}
+
+	if (!np) {
+		for (auto& i : this->img_widgets_matrix) {
+			for (auto& j : i) {
+				j.get().set_image(nullptr);
+			}
+		}
+		return {0, 0, 0, 0};
+	}
+
+	ASSERT(np)
+	return np->get_borders(this->context.get().units);
 }
 
 void nine_patch::apply_images()
@@ -437,4 +443,9 @@ void nine_patch::on_borders_change()
 {
 	this->apply_images();
 	this->invalidate_layout();
+}
+
+void nine_patch::render(const mat4& matrix) const
+{
+	this->frame_widget::render(matrix);
 }

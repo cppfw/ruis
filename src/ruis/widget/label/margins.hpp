@@ -28,7 +28,7 @@ namespace ruis {
 class margins : public frame_widget
 {
 protected:
-	virtual sides<real> get_min_borders() const;
+	sides<real> get_min_borders() const override;
 
 public:
 	struct all_parameters {
@@ -50,7 +50,6 @@ public:
 	void on_lay_out() override;
 
 private:
-	sides<real> get_actual_borders() const;
 };
 
 namespace make {

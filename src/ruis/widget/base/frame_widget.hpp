@@ -81,6 +81,10 @@ public:
 	}
 
 	virtual void on_borders_change() {}
+
+protected:
+	virtual sides<real> get_min_borders() const = 0;
+	sides<real> get_actual_borders() const;
 };
 
 } // namespace ruis
