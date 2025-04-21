@@ -28,12 +28,21 @@ using namespace ruis;
 
 rectangle::rectangle( //
 	utki::shared_ref<ruis::context> context,
-	all_parameters params
+	all_parameters params,
+	widget_list children
 ) :
 	widget( //
 		std::move(context),
 		std::move(params.layout_params),
 		std::move(params.widget_params)
+	),
+	margins(//
+		this->context,
+		{
+			.container_params = std::move(params.container_params),
+			.frame_params = std::move(params.frame_params)
+		},
+		std::move(children)
 	),
 	color_widget( //
 		this->context,

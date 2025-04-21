@@ -23,22 +23,32 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../base/color_widget.hpp"
 
+#include "margins.hpp"
+
 namespace ruis {
 
 /**
  * @brief Rectangle widget.
  * This is a widget which can display a rectangle of a single color.
  */
-class rectangle : public color_widget
+class rectangle :
+	public margins, //
+	public color_widget
 {
 public:
 	struct all_parameters {
 		layout_parameters layout_params;
 		widget::parameters widget_params;
+		container::parameters container_params;
+		frame_widget::parameters frame_params;
 		color_widget::parameters color_params;
 	};
 
-	rectangle(utki::shared_ref<ruis::context> context, all_parameters params);
+	rectangle(
+		utki::shared_ref<ruis::context> context, //
+		all_parameters params,
+		widget_list children
+	);
 
 	rectangle(const rectangle&) = delete;
 	rectangle& operator=(const rectangle&) = delete;
@@ -54,10 +64,15 @@ public:
 namespace make {
 inline utki::shared_ref<ruis::rectangle> rectangle(
 	utki::shared_ref<ruis::context> context,
-	rectangle::all_parameters params
+	rectangle::all_parameters params,
+	widget_list children = {}
 )
 {
-	return utki::make_shared<ruis::rectangle>(std::move(context), std::move(params));
+	return utki::make_shared<ruis::rectangle>(
+		std::move(context), //
+		std::move(params),
+		std::move(children)
+	);
 }
 
 } // namespace make
