@@ -56,7 +56,7 @@ public:
 private:
 	const utki::shared_ref<const res::image> image;
 
-	sides<real> fraction_borders;
+	const sides<real> fraction_borders;
 
 public:
 	nine_patch(const nine_patch&) = delete;
@@ -107,6 +107,11 @@ public:
 		const ruis::units& units, //
 		sides<length> borders
 	) const;
+
+	const sides<real>& get_fraction_borders() const noexcept
+	{
+		return this->fraction_borders;
+	}
 
 	sides<real> get_borders(const ruis::units& units) const noexcept;
 
