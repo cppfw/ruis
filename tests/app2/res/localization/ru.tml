@@ -20,4 +20,7 @@ vocabulary{
     formatted_str{
         str{"Форматированный {1} {0}!"}
     }
+    rectangles{
+        str{прямоугольники}
+    }
 }

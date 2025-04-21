@@ -61,7 +61,13 @@ margins::margins(
 					.widget_params{
 						.id = "ruis_content"s
 					},
-					.container_params = std::move(params.container_params)
+					.container_params = [&](){
+						// pile layout by default
+						if(!params.container_params.layout){
+							params.container_params.layout = layout::pile;
+						}
+						return std::move(params.container_params);
+					}()
 				},
 				std::move(children)
 			)

@@ -63,4 +63,6 @@ void rectangle::render(const ruis::matrix4& matrix) const
 		r.obj().pos_quad_01_vao.get(),
 		this->get_current_color().to_vec4f()
 	);
+
+	this->margins::render(matrix);
 }
