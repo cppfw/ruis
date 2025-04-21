@@ -135,12 +135,7 @@ nine_patch::nine_patch( //
 		{{
 			{{
 				m::image(context,
-					{
-						// TODO:
-						.widget_params{
-							.visible = false
-						}
-					}
+					{}
 				),
 				m::image(context,
 					{

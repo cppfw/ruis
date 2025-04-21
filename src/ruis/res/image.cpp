@@ -44,15 +44,28 @@ class fixed_texture : public image::texture
 protected:
 	const utki::shared_ref<const render::texture_2d> tex_2d;
 
-	fixed_texture(utki::shared_ref<const ruis::render::renderer> r, utki::shared_ref<const render::texture_2d> tex) :
-		image::texture(std::move(r), tex.get().dims()),
+	fixed_texture(
+		utki::shared_ref<const ruis::render::renderer> r, //
+		utki::shared_ref<const render::texture_2d> tex
+	) :
+		image::texture(
+			std::move(r), //
+			tex.get().dims()
+		),
 		tex_2d(std::move(tex))
 	{}
 
 public:
-	void render(const matrix4& matrix, const render::vertex_array& vao) const override
+	void render(
+		const matrix4& matrix, //
+		const render::vertex_array& vao
+	) const override
 	{
-		this->renderer.get().shaders().pos_tex->render(matrix, vao, this->tex_2d.get());
+		this->renderer.get().shaders().pos_tex->render(
+			matrix, //
+			vao,
+			this->tex_2d.get()
+		);
 	}
 };
 

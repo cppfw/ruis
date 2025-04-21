@@ -74,7 +74,10 @@ public:
 		const utki::shared_ref<const ruis::render::renderer> renderer;
 
 		// NOLINTNEXTLINE(modernize-pass-by-value)
-		texture(utki::shared_ref<const ruis::render::renderer> r, r4::vector2<uint32_t> dims) :
+		texture(
+			utki::shared_ref<const ruis::render::renderer> r, //
+			r4::vector2<uint32_t> dims
+		) :
 			rasterimage::dimensioned(dims),
 			renderer(std::move(r))
 		{}
