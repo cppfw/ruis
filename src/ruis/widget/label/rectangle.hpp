@@ -36,12 +36,21 @@ class rectangle :
 	public color_widget
 {
 public:
+	struct parameters {
+		sides<bool> rounded_corners = {false, false, false, false};
+	};
+
+private:
+	parameters params;
+
+public:
 	struct all_parameters {
 		layout_parameters layout_params;
 		widget::parameters widget_params;
 		container::parameters container_params;
 		frame_widget::parameters frame_params;
 		color_widget::parameters color_params;
+		parameters rect_params;
 	};
 
 	rectangle(

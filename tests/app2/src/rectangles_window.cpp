@@ -1,9 +1,9 @@
 #include "rectangles_window.hpp"
 
 #include <ruis/widget/group/window.hpp>
+#include <ruis/widget/label/gap.hpp>
 #include <ruis/widget/label/rectangle.hpp>
 #include <ruis/widget/label/text.hpp>
-#include <ruis/widget/label/gap.hpp>
 
 using namespace std::string_literals;
 using namespace std::string_view_literals;

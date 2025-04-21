@@ -47,7 +47,8 @@ rectangle::rectangle( //
 	color_widget( //
 		this->context,
 		std::move(params.color_params)
-	)
+	),
+	params(std::move(params.rect_params))
 {}
 
 void rectangle::render(const ruis::matrix4& matrix) const
