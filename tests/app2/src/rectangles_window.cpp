@@ -52,8 +52,8 @@ utki::shared_ref<ruis::widget> make_rectangles_window(
                         .borders{
                             5_pp, // left
                             10_pp, // top
-                            20_pp, // right
-                            40_pp // bottom
+                            15_pp, // right
+                            20_pp // bottom
                         }
                     },
                     .color_params{
@@ -70,7 +70,25 @@ utki::shared_ref<ruis::widget> make_rectangles_window(
                         .dims = {0_px, 5_pp}
                     }
                 }
-            )
+            ),
+            m::rectangle(c,
+                {
+                    .frame_params{
+                        .borders{
+                            5_pp, // left
+                            10_pp, // top
+                            15_pp, // right
+                            20_pp // bottom
+                        }
+                    },
+                    .color_params{
+                        .color = 0xff800000
+                    }
+                },
+                {
+                    m::text(c, {}, U"rounded corners"s)
+                }
+            ),
         }
     );
 	// clang-format on

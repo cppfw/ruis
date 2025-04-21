@@ -355,7 +355,7 @@ utki::shared_ref<ruis::widget> make_root_widgets_structure(utki::shared_ref<ruis
 					make_image_window(c, {310, 20, 300, 200}),
 					make_selection_box_window(c, {630, 20, 300, 200}),
 
-					make_rectangles_window(c, {10, 210, 300, 200})
+					make_rectangles_window(c, {10, 230, 300, 200})
 				}
 			)
 		}
