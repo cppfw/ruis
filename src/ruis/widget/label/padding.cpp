@@ -19,7 +19,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 /* ================ LICENSE END ================ */
 
-#include "margins.hpp"
+#include "padding.hpp"
 
 #include <utki/views.hpp>
 
@@ -34,7 +34,7 @@ namespace m {
 using namespace ruis::make;
 } // namespace m
 
-margins::margins(
+padding::padding(
 	utki::shared_ref<ruis::context> context, //
 	all_parameters params,
 	widget_list children
@@ -50,7 +50,7 @@ margins::margins(
 		{
 			.layout = layout::row
 		},
-		std::move(params.frame_params),
+		std::move(params.padding_params),
 		{
 			m::container(this->context,
 				{
@@ -76,12 +76,12 @@ margins::margins(
 // clang-format on
 {}
 
-sides<real> margins::get_min_borders() const
+sides<real> padding::get_min_borders() const
 {
 	return {0, 0, 0, 0};
 }
 
-vec2 margins::measure(const vec2& quotum) const
+vec2 padding::measure(const vec2& quotum) const
 {
 	if (quotum.is_positive_or_zero()) {
 		return quotum;
@@ -135,7 +135,7 @@ vec2 margins::measure(const vec2& quotum) const
 	return ret;
 }
 
-void margins::on_lay_out()
+void padding::on_lay_out()
 {
 	auto borders = this->get_actual_borders();
 
@@ -147,9 +147,9 @@ void margins::on_lay_out()
 	c.resize(content_dims);
 }
 
-utki::shared_ref<ruis::margins> ruis::make::margins(
+utki::shared_ref<ruis::padding> ruis::make::padding(
 	utki::shared_ref<context> context, //
-	margins::all_parameters params,
+	padding::all_parameters params,
 	widget_list children
 )
 {
@@ -157,7 +157,7 @@ utki::shared_ref<ruis::margins> ruis::make::margins(
 		params.container_params.layout = ruis::layout::pile;
 	}
 
-	return utki::make_shared<ruis::margins>(
+	return utki::make_shared<ruis::padding>(
 		std::move(context), //
 		std::move(params),
 		std::move(children)

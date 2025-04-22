@@ -1,6 +1,6 @@
 #include "window0.hpp"
 
-#include <ruis/widget/label/margins.hpp>
+#include <ruis/widget/label/padding.hpp>
 #include <ruis/widget/button/impl/check_box.hpp>
 #include <ruis/widget/button/impl/drop_down_box.hpp>
 #include <ruis/widget/button/choice_group.hpp>
@@ -26,9 +26,9 @@ utki::shared_ref<ruis::widget> make_radio_button(
     return m::row(c,
         {},
         {
-            m::margins(c,
+            m::padding(c,
                 {
-                    .frame_params{
+                    .padding_params{
                         .borders{5_pp, 5_pp, 5_pp, 5_pp}
                     }
                 },
@@ -81,12 +81,12 @@ utki::shared_ref<ruis::window> make_window0(
                             }
                         },
                         {
-                            m::margins(c,
+                            m::padding(c,
                                 {
                                     .container_params{
                                         .layout = ruis::layout::pile
                                     },
-                                    .frame_params{
+                                    .padding_params{
                                         .borders{
                                             ruis::length::make_pp(5),
                                             ruis::length::make_pp(5),

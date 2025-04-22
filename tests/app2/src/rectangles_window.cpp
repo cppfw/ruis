@@ -48,7 +48,7 @@ utki::shared_ref<ruis::widget> make_rectangles_window(
             ),
             m::rectangle(c,
                 {
-                    .frame_params{
+                    .padding_params{
                         .borders{
                             5_pp, // left
                             10_pp, // top
@@ -73,7 +73,7 @@ utki::shared_ref<ruis::widget> make_rectangles_window(
             ),
             m::rectangle(c,
                 {
-                    .frame_params{
+                    .padding_params{
                         .borders{
                             5_pp, // left
                             10_pp, // top
@@ -84,7 +84,7 @@ utki::shared_ref<ruis::widget> make_rectangles_window(
                     .color_params{
                         .color = 0xff800000
                     },
-                    .rect_params{
+                    .rectangle_params{
                         .rounded_corners = true
                     }
                 },
@@ -101,7 +101,7 @@ utki::shared_ref<ruis::widget> make_rectangles_window(
             ),
             m::rectangle(c,
                 {
-                    .frame_params{
+                    .padding_params{
                         .borders{
                             5_pp, // left
                             10_pp, // top
@@ -112,7 +112,7 @@ utki::shared_ref<ruis::widget> make_rectangles_window(
                     .color_params{
                         .color = 0xff000080
                     },
-                    .rect_params{
+                    .rectangle_params{
                         .rounded_corners = true
                     }
                 },

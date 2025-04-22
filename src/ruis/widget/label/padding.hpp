@@ -25,7 +25,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
-class margins : public frame_widget
+class padding : public frame_widget
 {
 protected:
 	sides<real> get_min_borders() const override;
@@ -35,10 +35,10 @@ public:
 		layout_parameters layout_params;
 		widget::parameters widget_params;
 		container::parameters container_params;
-		frame_widget::parameters frame_params;
+		frame_widget::parameters padding_params;
 	};
 
-	margins(
+	padding(
 		utki::shared_ref<ruis::context> context, //
 		all_parameters params,
 		widget_list children
@@ -52,16 +52,16 @@ private:
 
 namespace make {
 /**
- * @brief Construct 'margins' widget.
+ * @brief Construct 'padding' widget.
  * Default layout is pile.
  * @param context - ruis context.
- * @param params - 'margins' widget parameters.
- * @param children - children of the constructed 'margins' widget.
- * @return newly constructed 'margins' widget.
+ * @param params - 'padding' widget parameters.
+ * @param children - children of the constructed 'padding' widget.
+ * @return newly constructed 'padding' widget.
  */
-utki::shared_ref<ruis::margins> margins(
+utki::shared_ref<ruis::padding> padding(
 	utki::shared_ref<context> context, //
-	margins::all_parameters params,
+	padding::all_parameters params,
 	widget_list children
 );
 } // namespace make

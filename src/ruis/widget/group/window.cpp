@@ -23,8 +23,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../../context.hpp"
 #include "../../util/util.hpp"
-#include "../label/margins.hpp"
 #include "../label/nine_patch.hpp"
+#include "../label/padding.hpp"
 
 using namespace std::string_literals;
 using namespace ruis::length_literals;
@@ -170,7 +170,7 @@ utki::shared_ref<container> make_caption(
 					}
 				},
 				{
-					m::margins(c,
+					m::padding(c,
 						{
 							.layout_params = {
 								.dims = {ruis::dim::fill, ruis::dim::min},
@@ -179,7 +179,7 @@ utki::shared_ref<container> make_caption(
 							.container_params = {
 								.layout = layout::pile
 							},
-							.frame_params = {
+							.padding_params = {
 								.borders = {3_pp, 2_pp, 0_pp, 2_pp}
 							}
 						},

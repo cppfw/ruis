@@ -46,11 +46,11 @@ rectangle::rectangle( //
 		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
-	margins(//
+	padding(//
 		this->context,
 		{
 			.container_params = std::move(params.container_params),
-			.frame_params = std::move(params.frame_params)
+			.padding_params = std::move(params.padding_params)
 		},
 		std::move(children)
 	),
@@ -58,7 +58,7 @@ rectangle::rectangle( //
 		this->context,
 		std::move(params.color_params)
 	),
-	params(std::move(params.rect_params))
+	params(std::move(params.rectangle_params))
 {
 	this->update_nine_patch_text();
 }
@@ -82,7 +82,7 @@ void rectangle::render(const ruis::matrix4& matrix) const
 		this->render_rounder_corners(matrix);
 	}
 
-	this->margins::render(matrix);
+	this->padding::render(matrix);
 }
 
 void rectangle::render_rounder_corners(const mat4& matrix) const

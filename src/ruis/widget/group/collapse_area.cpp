@@ -27,7 +27,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../button/impl/image_toggle.hpp"
 #include "../button/toggle_button.hpp"
 #include "../label/gap.hpp"
-#include "../label/margins.hpp"
+#include "../label/padding.hpp"
 #include "../label/rectangle.hpp"
 #include "../label/text.hpp"
 
@@ -77,7 +77,7 @@ collapse_area::collapse_area(
 							}
 						}
 					),
-					m::margins(this->context,
+					m::padding(this->context,
 						{
 							.layout_params{
 								.dims{ruis::dim::max, ruis::dim::min}
@@ -85,7 +85,7 @@ collapse_area::collapse_area(
 							.container_params{
 								.layout = ruis::layout::row
 							},
-							.frame_params{
+							.padding_params{
 								.borders{
 									4_pp,
 									1_pp,

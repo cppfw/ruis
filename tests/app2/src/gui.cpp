@@ -7,7 +7,7 @@
 #include <ruis/widget/group/overlay.hpp>
 #include <ruis/widget/group/window.hpp>
 #include <ruis/widget/label/gap.hpp>
-#include <ruis/widget/label/margins.hpp>
+#include <ruis/widget/label/padding.hpp>
 #include <ruis/widget/proxy/key_proxy.hpp>
 #include <ruis/widget/proxy/resize_proxy.hpp>
 #include <ruis/widget/slider/scroll_bar.hpp>
@@ -38,7 +38,7 @@ utki::shared_ref<ruis::window> make_sliders_window(utki::shared_ref<ruis::contex
 			.title = c.get().localization.get().get("sliders"sv)
 		},
 		{
-			m::margins(c,
+			m::padding(c,
 				{
 					.layout_params = {
 						.dims = {ruis::dim::fill, ruis::dim::min}
@@ -46,7 +46,7 @@ utki::shared_ref<ruis::window> make_sliders_window(utki::shared_ref<ruis::contex
 					.container_params = {
 						.layout = ruis::layout::column
 					},
-					.frame_params = {
+					.padding_params = {
 						.borders = {10_pp, 20_pp, 30_pp, 40_pp}
 					}
 				},

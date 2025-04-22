@@ -23,7 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../base/color_widget.hpp"
 
-#include "margins.hpp"
+#include "padding.hpp"
 
 namespace ruis {
 
@@ -32,7 +32,7 @@ namespace ruis {
  * This is a widget which can display a rectangle of a single color.
  */
 class rectangle :
-	public margins, //
+	public padding, //
 	public color_widget
 {
 public:
@@ -48,9 +48,9 @@ public:
 		layout_parameters layout_params;
 		widget::parameters widget_params;
 		container::parameters container_params;
-		frame_widget::parameters frame_params;
+		frame_widget::parameters padding_params;
 		color_widget::parameters color_params;
-		parameters rect_params;
+		parameters rectangle_params;
 	};
 
 	rectangle(

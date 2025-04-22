@@ -5,7 +5,7 @@
 #include <ruis/widget/widget.hpp>
 #include <ruis/paint/path_vao.hpp>
 #include <ruis/paint/frame_vao.hpp>
-#include <ruis/widget/label/margins.hpp>
+#include <ruis/widget/label/padding.hpp>
 #include <ruis/widget/slider/scroll_bar.hpp>
 #include <ruis/widget/button/push_button.hpp>
 #include <ruis/widget/label/text.hpp>
@@ -115,7 +115,7 @@ utki::shared_ref<ruis::widget> make_root_widget(utki::shared_ref<ruis::context> 
 					}
 				}
 			),
-			m::margins(c,
+			m::padding(c,
 				{
 					.layout_params{
 						.dims = {ruis::dim::fill, ruis::dim::fill}
@@ -123,7 +123,7 @@ utki::shared_ref<ruis::widget> make_root_widget(utki::shared_ref<ruis::context> 
 					.container_params{
 						.layout = ruis::layout::pile
 					},
-					.frame_params{
+					.padding_params{
 						.borders = {
 							ruis::length::make_pp(5),
 							ruis::length::make_pp(5),

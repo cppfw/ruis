@@ -5,7 +5,7 @@
 #include <ruis/widget/button/push_button.hpp>
 #include <ruis/widget/container.hpp>
 #include <ruis/widget/group/window.hpp>
-#include <ruis/widget/label/margins.hpp>
+#include <ruis/widget/label/padding.hpp>
 #include <ruis/widget/proxy/key_proxy.hpp>
 #include <ruis/widget/slider/scroll_bar.hpp>
 #include <ruis/widget/slider/slider.hpp>
@@ -29,7 +29,7 @@ utki::shared_ref<ruis::widget> make_eased_animation_sample( //
 )
 {
 	// clang-format off
-	auto ret = m::margins(c,
+	auto ret = m::padding(c,
 		{
 			.layout_params = {
 				.dims = {ruis::dim::fill, ruis::dim::min}
@@ -37,7 +37,7 @@ utki::shared_ref<ruis::widget> make_eased_animation_sample( //
 			.container_params = {
 				.layout = ruis::layout::column
 			},
-			.frame_params = {
+			.padding_params = {
 				.borders = {10_pp, 5_pp, 30_pp, 2_pp}
 			}
 		},
