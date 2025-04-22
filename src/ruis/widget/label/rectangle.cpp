@@ -254,13 +254,13 @@ void rectangle::render_rounder_corners(const mat4& matrix) const
 }
 
 namespace {
+// approximate 90 degree arc with bezier curve which matches the arc at 45 degree point
+// and has the same tangent as an arc at 45 degree point
+using std::sqrt;
+const real arc_bezier_param = real(4 * (sqrt(2) - 1) / 3);
+
 auto make_rounded_corners_texture_image(const sides<real>& borders)
 {
-	// approximate 90 degree arc with bezier curve which matches the arc at 45 degree point
-	// and has the same tangent as an arc at 45 degree point
-	using std::sqrt;
-	constexpr const real arc_bezier_param = real(4 * (sqrt(2) - 1) / 3);
-
 	veg::canvas canvas(borders.dims().to<uint32_t>());
 
 	canvas.move_abs({0, borders.top()});
