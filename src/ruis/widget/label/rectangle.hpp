@@ -85,6 +85,7 @@ private:
 	private:
 	};
 
+	// TODO: make cache of these
 	std::shared_ptr<nine_patch_texture> nine_patch_tex;
 
 	void update_nine_patch_text();
