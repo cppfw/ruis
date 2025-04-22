@@ -70,24 +70,19 @@ public:
 	void render(const ruis::matrix4& matrix) const override;
 
 private:
+	void render_rounder_corners(const mat4& matrix) const;
+
 	struct nine_patch_texture {
-		sides<real> borders_px;
 		utki::shared_ref<const render::texture_2d> tex;
 		std::array<std::array<utki::shared_ref<const render::vertex_array>, 2>, 2> vaos;
 
 		nine_patch_texture(
 			ruis::render::renderer& r, //
 			utki::shared_ref<const render::texture_2d> tex,
-			const sides<real>& borders_px
+			vec2 middle
 		);
 
 	private:
-		nine_patch_texture(
-			ruis::render::renderer& r, //
-			utki::shared_ref<const render::texture_2d> tex,
-			const sides<real>& borders_px,
-			vec2 middle
-		);
 	};
 
 	std::shared_ptr<nine_patch_texture> nine_patch_tex;

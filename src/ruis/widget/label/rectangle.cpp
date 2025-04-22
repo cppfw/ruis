@@ -71,60 +71,173 @@ void rectangle::render(const ruis::matrix4& matrix) const
 			this->get_current_color().to_vec4f()
 		);
 	} else {
-		ASSERT(this->nine_patch_tex)
-		const auto& t = *this->nine_patch_tex;
-
-		// left-top
-		{
-			ruis::mat4 matr(matrix);
-			matr.scale(t.borders_px.left_top());
-
-			r.shaders().pos_tex->render(
-				matr, //
-				t.vaos[0][0],
-				t.tex
-			);
-		}
-
-		// top
-		{
-			ruis::mat4 matr(matrix);
-			matr.translate(
-				t.borders_px.left(), //
-				0
-			);
-			matr.scale(
-				this->content().rect().d.x(), //
-				t.borders_px.top()
-			);
-
-			r.shaders().color_pos->render(
-				matr, //
-				r.obj().pos_quad_01_vao.get(),
-				this->get_current_color().to_vec4f()
-			);
-		}
-
-		// right-top
-		{
-			ruis::mat4 matr(matrix);
-			matr.translate(
-				this->rect().d.x() - t.borders_px.right(), //
-				0
-			);
-			matr.scale(t.borders_px.right_top());
-
-			r.shaders().pos_tex->render(
-				matr, //
-				t.vaos[0][1],
-				t.tex
-			);
-		}
-
-		// TODO:
+		this->render_rounder_corners(matrix);
 	}
 
 	this->margins::render(matrix);
+}
+
+void rectangle::render_rounder_corners(const mat4& matrix) const
+{
+	auto& r = this->context.get().renderer.get();
+
+	ASSERT(this->nine_patch_tex)
+	const auto& t = *this->nine_patch_tex;
+
+	// left-top
+	{
+		ruis::mat4 matr(matrix);
+		matr.scale(this->content().rect().p);
+
+		r.shaders().pos_tex->render(
+			matr, //
+			t.vaos[0][0],
+			t.tex
+		);
+	}
+
+	// top
+	{
+		ruis::mat4 matr(matrix);
+		matr.translate(
+			this->content().rect().p.x(), //
+			0
+		);
+		matr.scale(
+			this->content().rect().d.x(), //
+			this->content().rect().p.y()
+		);
+
+		r.shaders().color_pos->render(
+			matr, //
+			r.obj().pos_quad_01_vao.get(),
+			this->get_current_color().to_vec4f()
+		);
+	}
+
+	// right-top
+	{
+		ruis::mat4 matr(matrix);
+		matr.translate(
+			this->content().rect().x2(), //
+			0
+		);
+		matr.scale(
+			this->rect().d.x() - this->content().rect().x2(), //
+			this->content().rect().p.y()
+		);
+
+		r.shaders().pos_tex->render(
+			matr, //
+			t.vaos[0][1],
+			t.tex
+		);
+	}
+
+	// left
+	{
+		ruis::mat4 matr(matrix);
+		matr.translate(
+			0, //
+			this->content().rect().p.y()
+		);
+		matr.scale(
+			this->content().rect().p.x(), //
+			this->content().rect().d.y()
+		);
+
+		r.shaders().color_pos->render(
+			matr, //
+			r.obj().pos_quad_01_vao.get(),
+			this->get_current_color().to_vec4f()
+		);
+	}
+
+	// center
+	{
+		ruis::mat4 matr(matrix);
+		matr.translate(this->content().rect().p);
+		matr.scale(this->content().rect().d);
+
+		r.shaders().color_pos->render(
+			matr, //
+			r.obj().pos_quad_01_vao.get(),
+			this->get_current_color().to_vec4f()
+		);
+	}
+
+	// right
+	{
+		ruis::mat4 matr(matrix);
+		matr.translate(
+			this->content().rect().x2(), //
+			this->content().rect().p.y()
+		);
+		matr.scale(
+			this->rect().d.x() - this->content().rect().x2(), //
+			this->content().rect().d.y()
+		);
+
+		r.shaders().color_pos->render(
+			matr, //
+			r.obj().pos_quad_01_vao.get(),
+			this->get_current_color().to_vec4f()
+		);
+	}
+
+	// left-bottom
+	{
+		ruis::mat4 matr(matrix);
+		matr.translate(
+			0, //
+			this->content().rect().y2()
+		);
+		matr.scale(
+			this->content().rect().p.x(), //
+			this->rect().d.y() - this->content().rect().y2()
+		);
+
+		r.shaders().pos_tex->render(
+			matr, //
+			t.vaos[1][0],
+			t.tex
+		);
+	}
+
+	// bottom
+	{
+		ruis::mat4 matr(matrix);
+		matr.translate(
+			this->content().rect().p.x(), //
+			this->content().rect().y2()
+		);
+		matr.scale(
+			this->content().rect().d.x(), //
+			this->rect().d.y() - this->content().rect().y2()
+		);
+
+		r.shaders().color_pos->render(
+			matr, //
+			r.obj().pos_quad_01_vao.get(),
+			this->get_current_color().to_vec4f()
+		);
+	}
+
+	// right-bottom
+	{
+		ruis::mat4 matr(matrix);
+
+		auto content_x2_y2 = this->content().rect().x2_y2();
+
+		matr.translate(content_x2_y2);
+		matr.scale(this->rect().d - content_x2_y2);
+
+		r.shaders().pos_tex->render(
+			matr, //
+			t.vaos[1][1],
+			t.tex
+		);
+	}
 }
 
 namespace {
@@ -176,23 +289,8 @@ utki::shared_ref<const ruis::render::vertex_array> make_quad_vao(
 rectangle::nine_patch_texture::nine_patch_texture(
 	ruis::render::renderer& r, //
 	utki::shared_ref<const render::texture_2d> tex,
-	const sides<real>& borders_px
-) :
-	nine_patch_texture(
-		r, //
-		std::move(tex),
-		borders_px,
-		borders_px.left_top().comp_div(tex.get().dims().to<real>())
-	)
-{}
-
-rectangle::nine_patch_texture::nine_patch_texture(
-	ruis::render::renderer& r, //
-	utki::shared_ref<const render::texture_2d> tex,
-	const sides<real>& borders_px,
 	vec2 middle
 ) :
-	borders_px(borders_px),
 	tex(std::move(tex)),
 	// clang-format off
 	vaos{{
@@ -232,10 +330,7 @@ rectangle::nine_patch_texture::nine_patch_texture(
 			make_quad_vao(r,
 				{
 					middle,
-					{
-						1,
-						1
-					}
+					{1, 1}
 				}
 			)
 		}
@@ -256,9 +351,13 @@ void rectangle::update_nine_patch_text()
 
 	// TODO: convert to greyscale image
 
+	auto tex = this->context.get().ren().ctx().create_texture_2d(std::move(raster_image), {});
+
+	auto middle = borders.left_top().comp_div(tex.get().dims().to<real>());
+
 	this->nine_patch_tex = std::make_shared<nine_patch_texture>(
 		this->context.get().ren(), //
-		this->context.get().ren().ctx().create_texture_2d(std::move(raster_image), {}),
-		borders
+		std::move(tex),
+		middle
 	);
 }
