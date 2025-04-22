@@ -33,6 +33,7 @@ std::map<
 	std::weak_ptr<rectangle::nine_patch_texture>,
 	sides<real>::comparator //
 	>
+	// NOLINTNEXTLINE(cppcoreguidelines-avoid-non-const-global-variables, "false-positive")
 	rectangle::cache;
 
 rectangle::rectangle( //
