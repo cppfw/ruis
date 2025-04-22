@@ -39,7 +39,7 @@ renderer::renderer(utki::shared_ref<ruis::render::context> render_context) :
 				ruis::render::vertex_array::mode::triangle_strip
 			),
 			.quad_01_vbo = this->render_context.get().create_vertex_buffer(
-				utki::make_span({
+				utki::make_span(std::array<vec2, 4>{
 					vec2(0, 0),
 					vec2(0, 1),
 					vec2(1, 1),
@@ -47,7 +47,7 @@ renderer::renderer(utki::shared_ref<ruis::render::context> render_context) :
 				})
 			),
 			.quad_fan_indices = this->render_context.get().create_index_buffer(
-				utki::make_span<uint16_t>({0, 1, 2, 3})
+				utki::make_span(std::array<uint16_t, 4>{0, 1, 2, 3})
 			),
 			.pos_quad_01_vao = this->render_context.get().create_vertex_array(
 				{self.quad_01_vbo},
