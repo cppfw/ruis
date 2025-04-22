@@ -74,6 +74,8 @@ private:
 
 	struct nine_patch_texture {
 		utki::shared_ref<const render::texture_2d> tex;
+
+		// vaos for corners
 		std::array<std::array<utki::shared_ref<const render::vertex_array>, 2>, 2> vaos;
 
 		nine_patch_texture(

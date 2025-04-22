@@ -247,21 +247,45 @@ void rectangle::render_rounder_corners(const mat4& matrix) const
 }
 
 namespace {
-auto fill_rounded_corners_rect(const sides<real>& borders)
+auto make_rounded_corners_texture_image(const sides<real>& borders)
 {
+	// approximate 90 degree arc with bezier curve which matches the arc at 45 degree point
+	// and has the same tangent as an arc at 45 degree point
+	using std::sqrt;
+	constexpr const real arc_bezier_param = real(4 * (sqrt(2) - 1) / 3);
+
 	veg::canvas canvas(borders.dims().to<uint32_t>());
 
-	// TODO:
-	canvas.rectangle(
-		{
-			{0, 0},
-			canvas.dims.to<veg::real>()
-    }, //
-		{borders.left(), borders.top()}
+	canvas.move_abs({0, borders.top()});
+
+	canvas.cubic_curve_rel(
+		{0, -arc_bezier_param * borders.top()},
+		{borders.left() * (1 - arc_bezier_param), -borders.top()},
+		{borders.left(), -borders.top()}
 	);
 
+	canvas.cubic_curve_rel(
+		{arc_bezier_param * borders.right(), 0},
+		{borders.right(), borders.top() * (1 - arc_bezier_param)},
+		{borders.right(), borders.top()}
+	);
+
+	canvas.cubic_curve_rel(
+		{0, arc_bezier_param * borders.bottom()},
+		{-borders.right() * (1 - arc_bezier_param), borders.bottom()},
+		{-borders.right(), borders.bottom()}
+	);
+
+	canvas.cubic_curve_rel(
+		{-arc_bezier_param * borders.left(), 0},
+		{-borders.left(), -borders.bottom() * (1 - arc_bezier_param)},
+		{-borders.left(), -borders.bottom()}
+	);
+
+	canvas.close_path();
+
 	// white
-	canvas.set_source({1, 1, 0, 1}); // TODO:
+	canvas.set_source({1, 1, 1, 1});
 
 	canvas.fill();
 
@@ -355,7 +379,7 @@ void rectangle::update_nine_patch_text()
 
 	auto borders = this->get_actual_borders();
 
-	auto raster_image = fill_rounded_corners_rect(borders);
+	auto raster_image = make_rounded_corners_texture_image(borders);
 
 	// TODO: convert to greyscale image
 
