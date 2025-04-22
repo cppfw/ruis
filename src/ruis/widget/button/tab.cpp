@@ -36,8 +36,8 @@ bool tab::mask_overlaps(vector2 pos)
 			}
 		}
 
-		if (this->parent() && &this->parent()->children().front().get() != this)
-		{ // if this is not the first widget in the parent
+		if (this->parent() &&
+			&this->parent()->children().front().get() != this) { // if this is not the first widget in the parent
 			auto prev_iter = this->parent()->find(*this);
 			ASSERT(prev_iter != this->parent()->children().end())
 			--prev_iter;

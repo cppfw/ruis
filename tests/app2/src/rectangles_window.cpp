@@ -85,7 +85,7 @@ utki::shared_ref<ruis::widget> make_rectangles_window(
                         .color = 0xff800000
                     },
                     .rect_params{
-                        .rounded_corners = {true, true, true, true}
+                        .rounded_corners = true
                     }
                 },
                 {

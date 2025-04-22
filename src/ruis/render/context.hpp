@@ -75,7 +75,11 @@ public:
 		return true;
 	}
 
-	void apply(std::function<void()> func);
+	/**
+	 * @brief Execute procedure with this context made current.
+	 * @param proc - procedure to execute.
+	 */
+	void apply(std::function<void()> proc);
 
 	// ===============================
 	// ====== factory functions ======

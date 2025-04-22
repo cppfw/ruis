@@ -104,9 +104,19 @@ public:
 		return {this->left(), this->top()};
 	}
 
+	r4::vector2<component_type> right_top() const noexcept
+	{
+		return {this->right(), this->top()};
+	}
+
 	r4::vector2<component_type> right_bottom() const noexcept
 	{
 		return {this->right(), this->bottom()};
+	}
+
+	r4::vector2<component_type> left_bottom() const noexcept
+	{
+		return {this->left(), this->bottom()};
 	}
 
 	r4::vector2<component_type> dims() const noexcept

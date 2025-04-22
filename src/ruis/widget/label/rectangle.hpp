@@ -37,7 +37,7 @@ class rectangle :
 {
 public:
 	struct parameters {
-		sides<bool> rounded_corners = {false, false, false, false};
+		bool rounded_corners = false;
 	};
 
 private:
@@ -74,6 +74,20 @@ private:
 		sides<real> borders_px;
 		utki::shared_ref<const render::texture_2d> tex;
 		std::array<std::array<utki::shared_ref<const render::vertex_array>, 3>, 3> vaos;
+
+		nine_patch_texture(
+			ruis::render::renderer& r, //
+			utki::shared_ref<const render::texture_2d> tex,
+			const sides<real>& borders_px
+		);
+
+	private:
+		nine_patch_texture(
+			ruis::render::renderer& r, //
+			utki::shared_ref<const render::texture_2d> tex,
+			const sides<real>& borders_px,
+			vec2 middle
+		);
 	};
 
 	std::shared_ptr<nine_patch_texture> nine_patch_tex;
