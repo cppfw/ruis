@@ -87,27 +87,10 @@ private:
 	private:
 	};
 
-	// TODO: make generic for sides template
-	struct borders_comparator {
-		bool operator()(const sides<real>& lhs, const sides<real>& rhs) const
-		{
-			if (lhs.left() == rhs.left()) {
-				if (lhs.top() == rhs.top()) {
-					if (lhs.right() == rhs.right()) {
-						return lhs.bottom() < rhs.bottom();
-					}
-					return lhs.right() < rhs.right();
-				}
-				return lhs.top() < rhs.top();
-			}
-			return lhs.left() < rhs.left();
-		}
-	};
-
 	static std::map<
 		sides<real>, //
 		std::weak_ptr<nine_patch_texture>,
-		borders_comparator //
+		sides<real>::comparator //
 		>
 		cache;
 

@@ -31,7 +31,7 @@ using namespace ruis;
 std::map<
 	sides<real>, //
 	std::weak_ptr<rectangle::nine_patch_texture>,
-	rectangle::borders_comparator //
+	sides<real>::comparator //
 	>
 	rectangle::cache;
 

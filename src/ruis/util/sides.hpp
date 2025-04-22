@@ -129,6 +129,30 @@ public:
 		stream << "(" << s.left() << ", " << s.top() << ", " << s.right() << ", " << s.bottom() << ")";
 		return stream;
 	}
+
+	/**
+	 * @brief Comparator functor.
+	 * Implements operation < for sides.
+	 * For use with std::map, etc.
+	 */
+	struct comparator {
+		bool operator()(
+			const sides& lhs, //
+			const sides& rhs
+		) const
+		{
+			if (lhs.left() == rhs.left()) {
+				if (lhs.top() == rhs.top()) {
+					if (lhs.right() == rhs.right()) {
+						return lhs.bottom() < rhs.bottom();
+					}
+					return lhs.right() < rhs.right();
+				}
+				return lhs.top() < rhs.top();
+			}
+			return lhs.left() < rhs.left();
+		}
+	};
 };
 
 } // namespace ruis
