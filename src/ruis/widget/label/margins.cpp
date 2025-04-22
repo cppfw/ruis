@@ -74,10 +74,7 @@ margins::margins(
 		}
 	)
 // clang-format on
-{
-	// TODO: not needed?
-	this->margins::on_borders_change();
-} // NOLINT(clang-analyzer-cplusplus.NewDeleteLeaks, "false positive")
+{}
 
 sides<real> margins::get_min_borders() const
 {
