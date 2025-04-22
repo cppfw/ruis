@@ -92,6 +92,7 @@ private:
 		std::weak_ptr<nine_patch_texture>,
 		sides<real>::comparator //
 		>
+		// NOLINTNEXTLINE(cppcoreguidelines-avoid-non-const-global-variables, "false-positive")
 		cache;
 
 	std::shared_ptr<nine_patch_texture> nine_patch_tex;
