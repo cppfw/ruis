@@ -81,6 +81,8 @@ void rectangle::render_rounder_corners(const mat4& matrix) const
 {
 	auto& r = this->context.get().renderer.get();
 
+	color clr = this->get_current_color();
+
 	ASSERT(this->nine_patch_tex)
 	const auto& t = *this->nine_patch_tex;
 
@@ -89,9 +91,10 @@ void rectangle::render_rounder_corners(const mat4& matrix) const
 		ruis::mat4 matr(matrix);
 		matr.scale(this->content().rect().p);
 
-		r.shaders().pos_tex->render(
+		r.shaders().color_pos_tex->render(
 			matr, //
 			t.vaos[0][0],
+			clr,
 			t.tex
 		);
 	}
@@ -111,7 +114,7 @@ void rectangle::render_rounder_corners(const mat4& matrix) const
 		r.shaders().color_pos->render(
 			matr, //
 			r.obj().pos_quad_01_vao.get(),
-			this->get_current_color().to_vec4f()
+			clr
 		);
 	}
 
@@ -127,9 +130,10 @@ void rectangle::render_rounder_corners(const mat4& matrix) const
 			this->content().rect().p.y()
 		);
 
-		r.shaders().pos_tex->render(
+		r.shaders().color_pos_tex->render(
 			matr, //
 			t.vaos[0][1],
+			clr,
 			t.tex
 		);
 	}
@@ -149,7 +153,7 @@ void rectangle::render_rounder_corners(const mat4& matrix) const
 		r.shaders().color_pos->render(
 			matr, //
 			r.obj().pos_quad_01_vao.get(),
-			this->get_current_color().to_vec4f()
+			clr
 		);
 	}
 
@@ -162,7 +166,7 @@ void rectangle::render_rounder_corners(const mat4& matrix) const
 		r.shaders().color_pos->render(
 			matr, //
 			r.obj().pos_quad_01_vao.get(),
-			this->get_current_color().to_vec4f()
+			clr
 		);
 	}
 
@@ -181,7 +185,7 @@ void rectangle::render_rounder_corners(const mat4& matrix) const
 		r.shaders().color_pos->render(
 			matr, //
 			r.obj().pos_quad_01_vao.get(),
-			this->get_current_color().to_vec4f()
+			clr
 		);
 	}
 
@@ -197,9 +201,10 @@ void rectangle::render_rounder_corners(const mat4& matrix) const
 			this->rect().d.y() - this->content().rect().y2()
 		);
 
-		r.shaders().pos_tex->render(
+		r.shaders().color_pos_tex->render(
 			matr, //
 			t.vaos[1][0],
+			clr,
 			t.tex
 		);
 	}
@@ -219,7 +224,7 @@ void rectangle::render_rounder_corners(const mat4& matrix) const
 		r.shaders().color_pos->render(
 			matr, //
 			r.obj().pos_quad_01_vao.get(),
-			this->get_current_color().to_vec4f()
+			clr
 		);
 	}
 
@@ -232,9 +237,10 @@ void rectangle::render_rounder_corners(const mat4& matrix) const
 		matr.translate(content_x2_y2);
 		matr.scale(this->rect().d - content_x2_y2);
 
-		r.shaders().pos_tex->render(
+		r.shaders().color_pos_tex->render(
 			matr, //
 			t.vaos[1][1],
+			clr,
 			t.tex
 		);
 	}
@@ -254,7 +260,9 @@ auto fill_rounded_corners_rect(const sides<real>& borders)
 		{borders.left(), borders.top()}
 	);
 
-	canvas.set_source({1, 0, 0, 1}); // TODO: white
+	// white
+	canvas.set_source({1, 1, 0, 1}); // TODO:
+
 	canvas.fill();
 
 	return canvas.release();
@@ -272,16 +280,16 @@ utki::shared_ref<const ruis::render::vertex_array> make_quad_vao(
 		tex_coords.x2_y1()
 	};
 
-	// clang-format off
 	return ren.ctx().create_vertex_array(
+		// clang-format off
 		{
 			ren.obj().quad_01_vbo,
 			ren.ctx().create_vertex_buffer(tex_coords_array)
 		},
+		// clang-format on
 		ren.obj().quad_fan_indices,
 		ruis::render::vertex_array::mode::triangle_fan
 	);
-	// clang-format on
 }
 
 } // namespace
