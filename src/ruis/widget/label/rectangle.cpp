@@ -28,6 +28,13 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
+std::map<
+	sides<real>, //
+	std::weak_ptr<rectangle::nine_patch_texture>,
+	rectangle::borders_comparator //
+	>
+	rectangle::cache;
+
 rectangle::rectangle( //
 	utki::shared_ref<ruis::context> context,
 	all_parameters params,
@@ -379,6 +386,19 @@ void rectangle::update_nine_patch_text()
 
 	auto borders = this->get_actual_borders();
 
+	// lookup in cache
+	{
+		auto i = this->cache.find(borders);
+		if (i != this->cache.end()) {
+			if (auto t = i->second.lock()) {
+				this->nine_patch_tex = std::move(t);
+				return;
+			} else {
+				this->cache.erase(i);
+			}
+		}
+	}
+
 	auto raster_image = make_rounded_corners_texture_image(borders);
 
 	// TODO: convert to greyscale image
@@ -391,5 +411,13 @@ void rectangle::update_nine_patch_text()
 		this->context.get().ren(), //
 		std::move(tex),
 		middle
+	);
+
+	// add to cache
+	this->cache.insert(
+		std::make_pair(
+			borders, //
+			utki::make_weak(this->nine_patch_tex)
+		)
 	);
 }
