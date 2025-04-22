@@ -63,7 +63,10 @@ public:
 	 * @return the final widget added to the overlay. This widget can be used to later close the particular popup
 	 * by just removing the widget from its parent.
 	 */
-	utki::shared_ref<widget> show_popup(const utki::shared_ref<widget>& popup, vector2 pos);
+	utki::shared_ref<widget> show_popup(
+		utki::shared_ref<widget> popup, //
+		vector2 pos
+	);
 
 	/**
 	 * @brief Close all popups.

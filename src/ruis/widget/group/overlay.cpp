@@ -91,10 +91,13 @@ overlay::overlay(
 		},
 		std::move(children)
 	)
-	// clang-format off
+// clang-format on
 {}
 
-utki::shared_ref<widget> overlay::show_popup(const utki::shared_ref<widget>& w, vector2 anchor)
+utki::shared_ref<widget> overlay::show_popup(
+	utki::shared_ref<widget> popup, //
+	vector2 anchor
+)
 {
 	// clang-format off
 	auto c = popup_wrapper::make(this->context,
@@ -118,7 +121,12 @@ utki::shared_ref<widget> overlay::show_popup(const utki::shared_ref<widget>& w, 
 
 	auto mp = utki::dynamic_reference_cast<mouse_proxy>(c.get().children().back());
 
-	mp.get().mouse_button_handler = [cntr{utki::make_weak(c)}](mouse_proxy& w, const mouse_button_event& e) -> bool {
+	mp.get().mouse_button_handler = //
+		[cntr{utki::make_weak(c)}](
+			mouse_proxy& w, //
+			const mouse_button_event& e
+		) -> bool //
+	{
 		if (auto c = cntr.lock()) {
 			c->context.get().post_to_ui_thread([c]() {
 				c->remove_from_parent();
@@ -127,21 +135,26 @@ utki::shared_ref<widget> overlay::show_popup(const utki::shared_ref<widget>& w, 
 		return false;
 	};
 
-	c.get().push_back(w);
+	auto& w = popup.get();
 
-	vector2 dim = dims_for_widget(w.get(), this->rect().d);
+	c.get().push_back(std::move(popup));
+
+	vector2 dim = dims_for_widget(
+		w, //
+		this->rect().d
+	);
 
 	using std::min;
 	using std::max;
 
 	dim = min(dim, this->rect().d); // clamp top
 
-	w.get().resize(dim);
+	w.resize(dim);
 
 	anchor = max(anchor, 0); // clamp bottom
-	anchor = min(anchor, this->rect().d - w.get().rect().d); // clamp top
+	anchor = min(anchor, this->rect().d - w.rect().d); // clamp top
 
-	w.get().move_to(anchor);
+	w.move_to(anchor);
 
 	auto sp = utki::make_shared_from(*this);
 	this->context.get().post_to_ui_thread([c, sp]() {
