@@ -73,7 +73,7 @@ private:
 	struct nine_patch_texture {
 		sides<real> borders_px;
 		utki::shared_ref<const render::texture_2d> tex;
-		std::array<std::array<utki::shared_ref<const render::vertex_array>, 3>, 3> vaos;
+		std::array<std::array<utki::shared_ref<const render::vertex_array>, 2>, 2> vaos;
 
 		nine_patch_texture(
 			ruis::render::renderer& r, //

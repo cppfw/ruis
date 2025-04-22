@@ -28,33 +28,37 @@ using namespace ruis::render;
 renderer::renderer(utki::shared_ref<ruis::render::context> render_context) :
 	render_context(std::move(render_context)),
 	common_objects(utki::make_shared<objects>([this]() -> objects {
+		// clang-format off
 		objects self{
 			.shaders = this->render_context.get().create_shaders(),
 			.empty_vertex_array = this->render_context.get().create_vertex_array(
-				{this->render_context.get().create_vertex_buffer(utki::span<const r4::vector2<float>>())},
+				{
+					this->render_context.get().create_vertex_buffer(utki::span<const r4::vector2<float>>())
+				},
 				this->render_context.get().create_index_buffer(utki::span<const uint16_t>()),
 				ruis::render::vertex_array::mode::triangle_strip
 			),
 			.quad_01_vbo = this->render_context.get().create_vertex_buffer(
-				utki::make_span(
-					std::array<r4::vector2<float>, 4>(
-						{{r4::vector2<float>(0, 0),
-						  r4::vector2<float>(0, 1),
-						  r4::vector2<float>(1, 1),
-						  r4::vector2<float>(1, 0)}}
-					)
-				)
+				utki::make_span({
+					vec2(0, 0),
+					vec2(0, 1),
+					vec2(1, 1),
+					vec2(1, 0)
+				})
 			),
 			.quad_fan_indices = this->render_context.get().create_index_buffer(
-				utki::make_span(std::array<uint16_t, 4>({{0, 1, 2, 3}}
-                  ))
+				utki::make_span<uint16_t>({0, 1, 2, 3})
 			),
-			.pos_quad_01_vao =
-				this->render_context.get()
-					.create_vertex_array({self.quad_01_vbo},
-                  self.quad_fan_indices, vertex_array::mode::triangle_fan),
+			.pos_quad_01_vao = this->render_context.get().create_vertex_array(
+				{self.quad_01_vbo},
+                self.quad_fan_indices,
+				vertex_array::mode::triangle_fan
+			),
 			.pos_tex_quad_01_vao = this->render_context.get().create_vertex_array(
-				{self.quad_01_vbo, self.quad_01_vbo},
+				{
+					self.quad_01_vbo,
+					self.quad_01_vbo
+				},
 				self.quad_fan_indices,
 				vertex_array::mode::triangle_fan
 			),
@@ -72,11 +76,11 @@ renderer::renderer(utki::shared_ref<ruis::render::context> render_context) :
 						std::remove_reference_t<decltype(im)>::pixel_type{0xff, 0xff, 0xff, 0xff};
 					im[0][0] = opaque_white;
 					return imvar;
-																					 }
-				  (),
+				}(),
 				{}
 			)
 		};
+		// clang-format on
 		return self;
 	}()))
 {}

@@ -116,7 +116,7 @@ void rectangle::render(const ruis::matrix4& matrix) const
 
 			r.shaders().pos_tex->render(
 				matr, //
-				t.vaos[0][2],
+				t.vaos[0][1],
 				t.tex
 			);
 		}
@@ -149,21 +149,21 @@ auto fill_rounded_corners_rect(const sides<real>& borders)
 
 utki::shared_ref<const ruis::render::vertex_array> make_quad_vao(
 	ruis::render::renderer& ren, //
-	const rect& tex_coords
+	const r4::segment2<real>& tex_coords
 )
 {
 	std::array<vec2, 4> tex_coords_array = {
-		tex_coords.p, //
-		tex_coords.x2_y1(),
-		tex_coords.x2_y2(),
-		tex_coords.x1_y2()
+		tex_coords.p1, //
+		tex_coords.x1_y2(),
+		tex_coords.p2,
+		tex_coords.x2_y1()
 	};
 
 	// clang-format off
 	return ren.ctx().create_vertex_array(
 		{
 			ren.obj().quad_01_vbo,
-		 	ren.ctx().create_vertex_buffer(tex_coords_array)
+			ren.ctx().create_vertex_buffer(tex_coords_array)
 		},
 		ren.obj().quad_fan_indices,
 		ruis::render::vertex_array::mode::triangle_fan
@@ -178,6 +178,20 @@ rectangle::nine_patch_texture::nine_patch_texture(
 	utki::shared_ref<const render::texture_2d> tex,
 	const sides<real>& borders_px
 ) :
+	nine_patch_texture(
+		r, //
+		std::move(tex),
+		borders_px,
+		borders_px.left_top().comp_div(tex.get().dims().to<real>())
+	)
+{}
+
+rectangle::nine_patch_texture::nine_patch_texture(
+	ruis::render::renderer& r, //
+	utki::shared_ref<const render::texture_2d> tex,
+	const sides<real>& borders_px,
+	vec2 middle
+) :
 	borders_px(borders_px),
 	tex(std::move(tex)),
 	// clang-format off
@@ -186,59 +200,42 @@ rectangle::nine_patch_texture::nine_patch_texture(
 			make_quad_vao(r,
 				{
 					{0, 0},
-					this->borders_px.left_top().comp_div(this->tex.get().dims().to<real>())
+					middle
 				}
 			),
 			make_quad_vao(r,
 				{
-					{0, 0},
-					this->borders_px.left_top().comp_div(this->tex.get().dims().to<real>())
-				}
-			),
-			make_quad_vao(r,
-				{
-					{0, 0},
-					this->borders_px.left_top().comp_div(this->tex.get().dims().to<real>())
+					{
+						middle.x(),
+						0
+					},
+					{
+						1,
+						middle.y()
+					}
 				}
 			)
 		},
 		{
 			make_quad_vao(r,
 				{
-					{0, 0},
-					this->borders_px.left_top().comp_div(this->tex.get().dims().to<real>())
+					{
+						0,
+						middle.y()
+					},
+					{
+						middle.x(),
+						1
+					}
 				}
 			),
 			make_quad_vao(r,
 				{
-					{0, 0},
-					this->borders_px.left_top().comp_div(this->tex.get().dims().to<real>())
-				}
-			),
-			make_quad_vao(r,
-				{
-					{0, 0},
-					this->borders_px.left_top().comp_div(this->tex.get().dims().to<real>())
-				}
-			)
-		},
-		{
-			make_quad_vao(r,
-				{
-					{0, 0},
-					this->borders_px.left_top().comp_div(this->tex.get().dims().to<real>())
-				}
-			),
-			make_quad_vao(r,
-				{
-					{0, 0},
-					this->borders_px.left_top().comp_div(this->tex.get().dims().to<real>())
-				}
-			),
-			make_quad_vao(r,
-				{
-					{0, 0},
-					this->borders_px.left_top().comp_div(this->tex.get().dims().to<real>())
+					middle,
+					{
+						1,
+						1
+					}
 				}
 			)
 		}
