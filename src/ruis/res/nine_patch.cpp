@@ -126,7 +126,7 @@ utki::shared_ref<nine_patch> nine_patch::load(
 	sides<real> fraction_borders(-1);
 	for (auto& p : desc) {
 		if (p.value == "borders") {
-			fraction_borders = parse_sides(p.children);
+			fraction_borders = make_sides(p.children);
 		} else if (p.value == "file") {
 			fi.set_path(get_property_value(p).string);
 		}

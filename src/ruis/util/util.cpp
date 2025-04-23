@@ -57,7 +57,7 @@ ruis::rect ruis::parse_rect(const tml::forest& desc)
 	return {p, d};
 }
 
-ruis::sides<real> ruis::parse_sides(const tml::forest& desc)
+ruis::sides<real> ruis::make_sides(const tml::forest& desc)
 {
 	using std::min;
 	vector2 p = parse_vec2(desc.begin(), desc.end());

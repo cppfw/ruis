@@ -86,7 +86,7 @@ ruis::rect parse_rect(const tml::forest& desc);
  *               If zero pointer is passed the resulting sides<real> will be filled with zeros.
  * @return parsed sides<real>.
  */
-ruis::sides<real> parse_sides(const tml::forest& desc);
+ruis::sides<real> make_sides(const tml::forest& desc);
 
 /**
  * @brief Parse dimension value.
