@@ -105,7 +105,7 @@ public:
 
 	std::shared_ptr<image_matrix> get(
 		const ruis::units& units, //
-		sides<length> borders
+		sides<length> borders // TODO: remove borders request
 	) const;
 
 	const sides<real>& get_fraction_borders() const noexcept

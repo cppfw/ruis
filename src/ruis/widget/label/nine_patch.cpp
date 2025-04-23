@@ -210,8 +210,10 @@ nine_patch::nine_patch( //
 	),
 	frame_widget( //
 		this->context,
-		{.layout = layout::column},
-		std::move(params.frame_params),
+		{
+			.layout = layout::column
+		},
+		{}, // frame parameters
 		make_widget_structure( //
 			this->context,
 			[&](){
