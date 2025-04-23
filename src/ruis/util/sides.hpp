@@ -43,7 +43,12 @@ public:
 		sides(b, b, b, b)
 	{}
 
-	sides(component_type l, component_type t, component_type r, component_type b) :
+	sides(
+		component_type l, //
+		component_type t,
+		component_type r,
+		component_type b
+	) :
 		std::array<component_type, 4>({
 			{l, t, r, b}
     })
@@ -124,7 +129,10 @@ public:
 		return {this->left_right(), this->top_bottom()};
 	}
 
-	friend std::ostream& operator<<(std::ostream& stream, const sides<component_type>& s)
+	friend std::ostream& operator<<(
+		std::ostream& stream, //
+		const sides<component_type>& s
+	)
 	{
 		stream << "(" << s.left() << ", " << s.top() << ", " << s.right() << ", " << s.bottom() << ")";
 		return stream;

@@ -111,14 +111,17 @@ public:
 		const render::vertex_array& vao
 	) const override
 	{
-		this->tex.get().render(matrix, this->vao.get());
+		this->tex.get().render(
+			matrix, //
+			this->vao.get()
+		);
 	}
 };
 
 } // namespace
 
 utki::shared_ref<nine_patch> nine_patch::load(
-	const ruis::resource_loader& loader,
+	const ruis::resource_loader& loader, //
 	const tml::forest& desc,
 	const papki::file& fi
 )
@@ -179,7 +182,7 @@ nine_patch::image_matrix::~image_matrix()
 }
 
 nine_patch::nine_patch(
-	utki::shared_ref<ruis::render::renderer> renderer,
+	utki::shared_ref<ruis::render::renderer> renderer, //
 	utki::shared_ref<const res::image> image,
 	sides<real> fraction_borders
 ) :
