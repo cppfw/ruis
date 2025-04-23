@@ -76,7 +76,7 @@ padding::padding(
 // clang-format on
 {}
 
-sides<real> padding::get_min_borders() const
+sides<real> padding::get_min_borders() const noexcept
 {
 	return {0, 0, 0, 0};
 }

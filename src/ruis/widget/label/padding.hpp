@@ -28,7 +28,7 @@ namespace ruis {
 class padding : public frame_widget
 {
 protected:
-	sides<real> get_min_borders() const override;
+	sides<real> get_min_borders() const noexcept override;
 
 public:
 	struct all_parameters {

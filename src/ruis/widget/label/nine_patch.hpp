@@ -108,7 +108,7 @@ private:
 	void update_images();
 
 protected:
-	sides<real> get_min_borders() const override;
+	sides<real> get_min_borders() const noexcept override;
 };
 
 namespace make {

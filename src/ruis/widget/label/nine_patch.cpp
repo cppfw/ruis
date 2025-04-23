@@ -266,28 +266,10 @@ void nine_patch::set_disabled_nine_patch(std::shared_ptr<const res::nine_patch> 
 
 sides<real> nine_patch::get_actual_borders() const noexcept
 {
-	auto* np = this->params.nine_patch.get();
-
-	if (!this->is_enabled() && this->params.disabled_nine_patch) {
-		np = this->params.disabled_nine_patch.get();
-	}
-
-	sides<real> ret;
-
-	for (size_t i = 0; i != ret.size(); ++i) {
-		if (!this->get_borders()[i].is_undefined()) {
-			ret[i] = this->get_borders()[i].get(this->context);
-		} else if (!np) {
-			ret[i] = 0;
-		} else {
-			ret[i] = np->get_borders(this->context.get().units)[i];
-		}
-	}
-
-	return ret;
+	return this->get_min_borders();
 }
 
-sides<real> nine_patch::get_min_borders() const
+sides<real> nine_patch::get_min_borders() const noexcept
 {
 	auto* np = this->params.nine_patch.get();
 
@@ -333,6 +315,7 @@ void nine_patch::apply_images()
 		// possible
 		auto& tl_lp = this->img_widgets_matrix[0][0].get().get_layout_params_const();
 
+		// TODO: all this is not needed
 		if (this->get_borders().left().is_undefined()) { // min
 			if (tl_lp.dims.x().get() != min_borders.left()) {
 				auto& lp = this->img_widgets_matrix[0][0].get().get_layout_params();
@@ -390,8 +373,7 @@ void nine_patch::apply_images()
 	//		TRACE(<< "this->borders = " << this->borders << std::endl)
 
 	this->img_res_matrix = np->get(
-		this->context.get().units, //
-		this->get_borders()
+		this->context.get().units
 	);
 
 	for (unsigned i = 0; i != 3; ++i) {
@@ -438,7 +420,7 @@ void nine_patch::update_images()
 
 void nine_patch::on_borders_change()
 {
-	this->apply_images();
+	this->apply_images(); // TODO: is needed?
 	this->invalidate_layout();
 }
 

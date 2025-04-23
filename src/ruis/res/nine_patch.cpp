@@ -206,8 +206,7 @@ sides<real> nine_patch::get_borders(const ruis::units& units) const noexcept
 }
 
 std::shared_ptr<nine_patch::image_matrix> nine_patch::get(
-	const ruis::units& units, //
-	sides<length> requested_borders
+	const ruis::units& units
 ) const
 {
 	// TODO: refactor calculation of the scaled_borders?
@@ -215,18 +214,6 @@ std::shared_ptr<nine_patch::image_matrix> nine_patch::get(
 	auto actual_borders = this->get_borders(units);
 
 	real mul = 1;
-	for (auto [orig, req] : utki::views::zip(actual_borders, requested_borders)) {
-		if (orig <= 0 || req.is_undefined()) {
-			continue;
-		}
-
-		auto req_px = req.get(units);
-
-		if (req_px > orig * mul) {
-			ASSERT(orig > 0)
-			mul = req_px / orig;
-		}
-	}
 
 	{
 		// TODO: ignore svg dpi, store cache by actual borders

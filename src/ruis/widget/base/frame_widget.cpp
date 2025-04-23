@@ -50,7 +50,7 @@ void frame_widget::set_borders(sides<length> borders)
 	this->on_borders_change();
 }
 
-sides<real> frame_widget::get_actual_borders() const
+sides<real> frame_widget::get_actual_borders() const noexcept
 {
 	auto min_borders = this->get_min_borders();
 	const auto& borders = this->get_borders();
