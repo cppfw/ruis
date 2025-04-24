@@ -104,7 +104,7 @@ public:
 	{
 		return utki::make_shared<res_raster_image>(
 			loader.renderer,
-			loader.renderer.get().render_context.get().create_texture_2d(
+			loader.renderer.get().render_context.get().make_texture_2d(
 				rasterimage::read(fi),
 				{
 					// TODO: what about params?
@@ -216,7 +216,7 @@ public:
 		auto img = utki::make_shared<svg_texture>(
 			this->renderer,
 			utki::make_shared_from(*this),
-			this->renderer.get().render_context.get().create_texture_2d(
+			this->renderer.get().render_context.get().make_texture_2d(
 				std::move(im),
 				{
 					.min_filter = render::texture_2d::filter::nearest,

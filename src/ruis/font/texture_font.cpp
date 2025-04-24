@@ -176,16 +176,16 @@ texture_font::glyph texture_font::load_glyph(char32_t c) const
 	auto& r = this->renderer.get();
 
 	// clang-format off
-	g.vao = r.render_context.get().create_vertex_array(
+	g.vao = r.render_context.get().make_vertex_array(
 		{
-			r.render_context.get().create_vertex_buffer(utki::make_span(ftg.vertices)),
+			r.render_context.get().make_vertex_buffer(utki::make_span(ftg.vertices)),
 			this->renderer.get().obj().quad_01_vbo
 		},
 		this->renderer.get().obj().quad_fan_indices,
 		render::vertex_array::mode::triangle_fan
 	).to_shared_ptr();
 
-	g.tex = this->renderer.get().render_context.get().create_texture_2d(
+	g.tex = this->renderer.get().render_context.get().make_texture_2d(
 		std::move(ftg.image),
 		{
 			.min_filter = render::texture_2d::filter::nearest,

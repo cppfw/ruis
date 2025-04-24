@@ -103,7 +103,7 @@ public:
 		~image_matrix();
 	};
 
-	struct nine_patch_texture{
+	struct nine_patch_texture {
 		// TODO:
 	};
 

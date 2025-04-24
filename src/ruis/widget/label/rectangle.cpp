@@ -312,11 +312,11 @@ utki::shared_ref<const ruis::render::vertex_array> make_quad_vao(
 		tex_coords.x2_y1()
 	};
 
-	return ren.ctx().create_vertex_array(
+	return ren.ctx().make_vertex_array(
 		// clang-format off
 		{
 			ren.obj().quad_01_vbo,
-			ren.ctx().create_vertex_buffer(tex_coords_array)
+			ren.ctx().make_vertex_buffer(tex_coords_array)
 		},
 		// clang-format on
 		ren.obj().quad_fan_indices,
@@ -404,7 +404,7 @@ void rectangle::update_rounded_corners_texture()
 
 	// TODO: convert to greyscale image
 
-	auto tex = this->context.get().ren().ctx().create_texture_2d(std::move(raster_image), {});
+	auto tex = this->context.get().ren().ctx().make_texture_2d(std::move(raster_image), {});
 
 	auto middle = borders.left_top().comp_div(tex.get().dims().to<real>());
 

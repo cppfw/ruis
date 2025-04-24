@@ -87,7 +87,7 @@ utki::shared_ref<texture_2d> texture_2d::load(
 		}
 	}
 
-	auto tex = loader.renderer.get().render_context.get().create_texture_2d( //
+	auto tex = loader.renderer.get().render_context.get().make_texture_2d( //
 		rasterimage::read(fi),
 		std::move(params)
 	);

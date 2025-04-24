@@ -74,12 +74,12 @@ void gradient::set(
 	auto& r = this->renderer.get();
 
 	// clang-format off
-	this->vao = r.render_context.get().create_vertex_array(
+	this->vao = r.render_context.get().make_vertex_array(
 		{
-			r.render_context.get().create_vertex_buffer(utki::make_span(vertices)),
-		 	r.render_context.get().create_vertex_buffer(utki::make_span(colors))
+			r.render_context.get().make_vertex_buffer(utki::make_span(vertices)),
+		 	r.render_context.get().make_vertex_buffer(utki::make_span(colors))
 		},
-		r.render_context.get().create_index_buffer(utki::make_span(indices)),
+		r.render_context.get().make_index_buffer(utki::make_span(indices)),
 		render::vertex_array::mode::triangle_strip
 	);
 	// clang-format on

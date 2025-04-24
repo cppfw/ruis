@@ -73,10 +73,10 @@ public:
 			const auto& r = this->renderer.get();
 
 			// clang-format off
-			return r.render_context.get().create_vertex_array(
+			return r.render_context.get().make_vertex_array(
 				{
 					r.obj().quad_01_vbo,
-					r.render_context.get().create_vertex_buffer(tex_coords)
+					r.render_context.get().make_vertex_buffer(tex_coords)
 				},
 				r.obj().quad_fan_indices,
 				render::vertex_array::mode::triangle_fan

@@ -30,15 +30,15 @@ renderer::renderer(utki::shared_ref<ruis::render::context> render_context) :
 	common_objects(utki::make_shared<objects>([this]() -> objects {
 		// clang-format off
 		objects self{
-			.shaders = this->render_context.get().create_shaders(),
-			.empty_vertex_array = this->render_context.get().create_vertex_array(
+			.shaders = this->render_context.get().make_shaders(),
+			.empty_vertex_array = this->render_context.get().make_vertex_array(
 				{
-					this->render_context.get().create_vertex_buffer(utki::span<const r4::vector2<float>>())
+					this->render_context.get().make_vertex_buffer(utki::span<const r4::vector2<float>>())
 				},
-				this->render_context.get().create_index_buffer(utki::span<const uint16_t>()),
+				this->render_context.get().make_index_buffer(utki::span<const uint16_t>()),
 				ruis::render::vertex_array::mode::triangle_strip
 			),
-			.quad_01_vbo = this->render_context.get().create_vertex_buffer(
+			.quad_01_vbo = this->render_context.get().make_vertex_buffer(
 				utki::make_span(std::array<vec2, 4>{
 					vec2(0, 0),
 					vec2(0, 1),
@@ -46,15 +46,15 @@ renderer::renderer(utki::shared_ref<ruis::render::context> render_context) :
 					vec2(1, 0)
 				})
 			),
-			.quad_fan_indices = this->render_context.get().create_index_buffer(
+			.quad_fan_indices = this->render_context.get().make_index_buffer(
 				utki::make_span(std::array<uint16_t, 4>{0, 1, 2, 3})
 			),
-			.pos_quad_01_vao = this->render_context.get().create_vertex_array(
+			.pos_quad_01_vao = this->render_context.get().make_vertex_array(
 				{self.quad_01_vbo},
                 self.quad_fan_indices,
 				vertex_array::mode::triangle_fan
 			),
-			.pos_tex_quad_01_vao = this->render_context.get().create_vertex_array(
+			.pos_tex_quad_01_vao = this->render_context.get().make_vertex_array(
 				{
 					self.quad_01_vbo,
 					self.quad_01_vbo
@@ -62,7 +62,7 @@ renderer::renderer(utki::shared_ref<ruis::render::context> render_context) :
 				self.quad_fan_indices,
 				vertex_array::mode::triangle_fan
 			),
-			.white_texture = this->render_context.get().create_texture_2d(
+			.white_texture = this->render_context.get().make_texture_2d(
 				[]() {
 					// raster image 1 by 1 pixel
 					rasterimage::image_variant imvar(

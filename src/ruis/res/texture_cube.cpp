@@ -81,7 +81,7 @@ utki::shared_ref<texture_cube> texture_cube::load(
 		}
 	}
 
-	auto tex = loader.renderer.get().render_context.get().create_texture_cube( //
+	auto tex = loader.renderer.get().render_context.get().make_texture_cube( //
 		rasterimage::read(fi.set_path(check_not_empty(file_px, file_px_param))),
 		rasterimage::read(fi.set_path(check_not_empty(file_nx, file_nx_param))),
 		rasterimage::read(fi.set_path(check_not_empty(file_py, file_py_param))),

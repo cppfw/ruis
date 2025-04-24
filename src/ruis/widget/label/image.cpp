@@ -85,10 +85,10 @@ void image::render(const ruis::matrix4& matrix) const
 				*dst = src->comp_mul(scale);
 			}
 			// clang-format off
-			this->vao = r.render_context.get().create_vertex_array(
+			this->vao = r.render_context.get().make_vertex_array(
 				{
 					r.obj().quad_01_vbo,
-					r.render_context.get().create_vertex_buffer(utki::make_span(tex_coords))
+					r.render_context.get().make_vertex_buffer(utki::make_span(tex_coords))
 				},
 				r.obj().quad_fan_indices,
 				render::vertex_array::mode::triangle_fan
