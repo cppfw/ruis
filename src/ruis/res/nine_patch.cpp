@@ -205,9 +205,7 @@ sides<real> nine_patch::get_borders(const ruis::units& units) const noexcept
 	};
 }
 
-std::shared_ptr<nine_patch::image_matrix> nine_patch::get(
-	const ruis::units& units
-) const
+std::shared_ptr<nine_patch::image_matrix> nine_patch::get(const ruis::units& units) const
 {
 	// TODO: refactor calculation of the scaled_borders?
 

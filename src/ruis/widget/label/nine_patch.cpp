@@ -308,73 +308,7 @@ void nine_patch::apply_images()
 	}
 
 	ASSERT(np)
-	auto min_borders = np->get_borders(this->context.get().units);
-
-	{
-		// non-const call to get_layout_params requests re-layout which is not necessarily needed, so try to avoid it if
-		// possible
-		auto& tl_lp = this->img_widgets_matrix[0][0].get().get_layout_params_const();
-
-		// TODO: all this is not needed
-		if (this->get_borders().left().is_undefined()) { // min
-			if (tl_lp.dims.x().get() != min_borders.left()) {
-				auto& lp = this->img_widgets_matrix[0][0].get().get_layout_params();
-				lp.dims.x() = length::make_px(min_borders.left());
-			}
-		} else {
-			if (tl_lp.dims.x().get() != this->get_borders().left()) {
-				auto& lp = this->img_widgets_matrix[0][0].get().get_layout_params();
-				lp.dims.x() = this->get_borders().left();
-			}
-		}
-
-		if (this->get_borders().top().is_undefined()) { // min
-			if (tl_lp.dims.y().get() != min_borders.top()) {
-				auto& lp = this->img_widgets_matrix[0][0].get().get_layout_params();
-				lp.dims.y() = length::make_px(min_borders.top());
-			}
-		} else {
-			if (tl_lp.dims.y().get() != this->get_borders().top()) {
-				auto& lp = this->img_widgets_matrix[0][0].get().get_layout_params();
-				lp.dims.y() = this->get_borders().top();
-			}
-		}
-	}
-	{
-		// non-const call to get_layout_params requests relayout which is not necessarily needed, so try to avoid it if
-		// possible
-		auto& br_lp = this->img_widgets_matrix[2][2].get().get_layout_params_const();
-
-		if (this->get_borders().right().is_undefined()) { // min
-			if (br_lp.dims.x().get() != min_borders.right()) {
-				auto& lp = this->img_widgets_matrix[2][2].get().get_layout_params();
-				lp.dims.x() = length::make_px(min_borders.right());
-			}
-		} else {
-			if (br_lp.dims.x().get() != this->get_borders().right()) {
-				auto& lp = this->img_widgets_matrix[2][2].get().get_layout_params();
-				lp.dims.x() = this->get_borders().right();
-			}
-		}
-
-		if (this->get_borders().bottom().is_undefined()) { // min
-			if (br_lp.dims.y().get() != min_borders.bottom()) {
-				auto& lp = this->img_widgets_matrix[2][2].get().get_layout_params();
-				lp.dims.y() = length::make_px(min_borders.bottom());
-			}
-		} else {
-			if (br_lp.dims.y().get() != this->get_borders().bottom()) {
-				auto& lp = this->img_widgets_matrix[2][2].get().get_layout_params();
-				lp.dims.y() = this->get_borders().bottom();
-			}
-		}
-		//			TRACE(<< "lp.dim = " << lp.dim << std::endl)
-	}
-	//		TRACE(<< "this->borders = " << this->borders << std::endl)
-
-	this->img_res_matrix = np->get(
-		this->context.get().units
-	);
+	this->img_res_matrix = np->get(this->context.get().units);
 
 	for (unsigned i = 0; i != 3; ++i) {
 		for (unsigned j = 0; j != 3; ++j) {
