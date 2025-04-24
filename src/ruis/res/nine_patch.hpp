@@ -103,6 +103,10 @@ public:
 		~image_matrix();
 	};
 
+	struct nine_patch_texture{
+		// TODO:
+	};
+
 	std::shared_ptr<image_matrix> get(const ruis::units& units) const;
 
 	const sides<real>& get_fraction_borders() const noexcept

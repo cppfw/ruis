@@ -72,13 +72,13 @@ public:
 private:
 	void render_rounder_corners(const mat4& matrix) const;
 
-	struct nine_patch_texture {
+	struct rounded_corners_texture {
 		utki::shared_ref<const render::texture_2d> tex;
 
 		// vaos for corners
 		std::array<std::array<utki::shared_ref<const render::vertex_array>, 2>, 2> vaos;
 
-		nine_patch_texture(
+		rounded_corners_texture(
 			ruis::render::renderer& r, //
 			utki::shared_ref<const render::texture_2d> tex,
 			vec2 middle
@@ -89,15 +89,15 @@ private:
 
 	static std::map<
 		sides<real>, //
-		std::weak_ptr<nine_patch_texture>,
+		std::weak_ptr<rounded_corners_texture>,
 		sides<real>::comparator //
 		>
 		// NOLINTNEXTLINE(cppcoreguidelines-avoid-non-const-global-variables, "false-positive")
 		cache;
 
-	std::shared_ptr<nine_patch_texture> nine_patch_tex;
+	std::shared_ptr<rounded_corners_texture> rounded_corners_tex;
 
-	void update_nine_patch_text();
+	void update_rounded_corners_texture();
 };
 
 namespace make {

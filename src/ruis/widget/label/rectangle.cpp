@@ -30,7 +30,7 @@ using namespace ruis;
 
 std::map<
 	sides<real>, //
-	std::weak_ptr<rectangle::nine_patch_texture>,
+	std::weak_ptr<rectangle::rounded_corners_texture>,
 	sides<real>::comparator //
 	>
 	// NOLINTNEXTLINE(cppcoreguidelines-avoid-non-const-global-variables, "false-positive")
@@ -60,7 +60,7 @@ rectangle::rectangle( //
 	),
 	params(std::move(params.rectangle_params))
 {
-	this->update_nine_patch_text();
+	this->update_rounded_corners_texture();
 }
 
 void rectangle::render(const ruis::matrix4& matrix) const
@@ -69,7 +69,7 @@ void rectangle::render(const ruis::matrix4& matrix) const
 
 	r.render_context.get().set_simple_alpha_blending();
 
-	if (!this->nine_patch_tex) {
+	if (!this->rounded_corners_tex) {
 		ruis::matrix4 matr(matrix);
 		matr.scale(this->rect().d);
 
@@ -91,8 +91,8 @@ void rectangle::render_rounder_corners(const mat4& matrix) const
 
 	color clr = this->get_current_color();
 
-	ASSERT(this->nine_patch_tex)
-	const auto& t = *this->nine_patch_tex;
+	ASSERT(this->rounded_corners_tex)
+	const auto& t = *this->rounded_corners_tex;
 
 	// left-top
 	{
@@ -326,7 +326,7 @@ utki::shared_ref<const ruis::render::vertex_array> make_quad_vao(
 
 } // namespace
 
-rectangle::nine_patch_texture::nine_patch_texture(
+rectangle::rounded_corners_texture::rounded_corners_texture(
 	ruis::render::renderer& r, //
 	utki::shared_ref<const render::texture_2d> tex,
 	vec2 middle
@@ -378,10 +378,10 @@ rectangle::nine_patch_texture::nine_patch_texture(
 // clang-format on
 {}
 
-void rectangle::update_nine_patch_text()
+void rectangle::update_rounded_corners_texture()
 {
 	if (!this->params.rounded_corners) {
-		this->nine_patch_tex.reset();
+		this->rounded_corners_tex.reset();
 		return;
 	}
 
@@ -392,7 +392,7 @@ void rectangle::update_nine_patch_text()
 		auto i = this->cache.find(borders);
 		if (i != this->cache.end()) {
 			if (auto t = i->second.lock()) {
-				this->nine_patch_tex = std::move(t);
+				this->rounded_corners_tex = std::move(t);
 				return;
 			} else {
 				this->cache.erase(i);
@@ -408,7 +408,7 @@ void rectangle::update_nine_patch_text()
 
 	auto middle = borders.left_top().comp_div(tex.get().dims().to<real>());
 
-	this->nine_patch_tex = std::make_shared<nine_patch_texture>(
+	this->rounded_corners_tex = std::make_shared<rounded_corners_texture>(
 		this->context.get().ren(), //
 		std::move(tex),
 		middle
@@ -418,7 +418,7 @@ void rectangle::update_nine_patch_text()
 	this->cache.insert(
 		std::make_pair(
 			borders, //
-			utki::make_weak(this->nine_patch_tex)
+			utki::make_weak(this->rounded_corners_tex)
 		)
 	);
 }
