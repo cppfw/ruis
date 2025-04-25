@@ -53,6 +53,11 @@ class nine_patch : public resource
 public:
 	const utki::shared_ref<ruis::render::renderer> renderer;
 
+	/**
+	 * @brief Nine-patch vertex_array objects in row-column order.
+	 */
+	const std::array<std::array<utki::shared_ref<const ruis::render::vertex_array>, 3>, 3> vaos;
+
 private:
 	const utki::shared_ref<const res::image> image;
 
@@ -101,10 +106,6 @@ public:
 
 		// NOLINTNEXTLINE(bugprone-exception-escape, "false positive")
 		~image_matrix();
-	};
-
-	struct nine_patch_texture {
-		// TODO:
 	};
 
 	std::shared_ptr<image_matrix> get(const ruis::units& units) const;

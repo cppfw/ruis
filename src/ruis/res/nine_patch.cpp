@@ -181,14 +181,96 @@ nine_patch::image_matrix::~image_matrix()
 	}
 }
 
+namespace {
+utki::shared_ref<const ruis::render::vertex_array> make_quad_vao(
+	ruis::render::renderer& r, //
+	utki::span<const vec2> quad_tex_coords
+)
+{
+	return r.ctx().make_vertex_array(
+		// clang-format off
+		{
+			r.obj().quad_01_vbo,
+			r.ctx().make_vertex_buffer(quad_tex_coords)
+		},
+		// clang-format on
+		r.obj().quad_fan_indices,
+		ruis::render::vertex_array::mode::triangle_fan
+	);
+}
+} // namespace
+
 nine_patch::nine_patch(
 	utki::shared_ref<ruis::render::renderer> renderer, //
 	utki::shared_ref<const res::image> image,
 	sides<real> fraction_borders
 ) :
 	renderer(std::move(renderer)),
-	image(std::move(image)),
-	fraction_borders(fraction_borders)
+	// clang-format off
+	vaos{{
+		{
+			make_quad_vao(this->renderer, utki::span<const vec2>({
+				vec2(0, 0),
+				vec2(0, fraction_borders.top()),
+				fraction_borders.left_top(),
+				vec2(fraction_borders.left(), 0)
+			})),
+			make_quad_vao(this->renderer, utki::span<const vec2>({
+				vec2(fraction_borders.left(), 0),
+				fraction_borders.left_top(),
+				vec2(real(1) - fraction_borders.right(), fraction_borders.top()),
+				vec2(real(1) - fraction_borders.right(), 0)
+			})),
+			make_quad_vao(this->renderer, utki::span<const vec2>({
+				vec2(real(1) - fraction_borders.right(), 0),
+				vec2(real(1) - fraction_borders.right(), fraction_borders.top()),
+				vec2(real(1), fraction_borders.top()),
+				vec2(real(1), 0)
+			}))
+		},
+		{
+			make_quad_vao(this->renderer, utki::span<const vec2>({
+				vec2(0, fraction_borders.top()),
+				vec2(0, real(1) - fraction_borders.bottom()),
+				vec2(fraction_borders.left(), real(1) - fraction_borders.bottom()),
+				vec2(fraction_borders.left(), fraction_borders.top()),
+			})),
+			make_quad_vao(this->renderer, utki::span<const vec2>({
+				fraction_borders.left_top(),
+				vec2(fraction_borders.left(), real(1) - fraction_borders.bottom()),
+				vec2(real(1) - fraction_borders.right(), real(1) - fraction_borders.bottom()),
+				vec2(real(1) - fraction_borders.right(), fraction_borders.top())
+			})),
+			make_quad_vao(this->renderer, utki::span<const vec2>({
+				vec2(real(1) - fraction_borders.right(), fraction_borders.top()),
+				vec2(real(1) - fraction_borders.right(), real(1) - fraction_borders.bottom()),
+				vec2(real(1), real(1) - fraction_borders.bottom()),
+				vec2(real(1), fraction_borders.top()),
+			}))
+		},
+		{
+			make_quad_vao(this->renderer, utki::span<const vec2>({
+				vec2(0, real(1) - fraction_borders.bottom()),
+				vec2(0, real(1)),
+				vec2(fraction_borders.left(), real(1)),
+				vec2(fraction_borders.left(), real(1) - fraction_borders.bottom()),
+			})),
+			make_quad_vao(this->renderer, utki::span<const vec2>({
+				vec2(fraction_borders.left(), real(1) - fraction_borders.bottom()),
+				vec2(fraction_borders.left(), real(1)),
+				vec2(real(1) - fraction_borders.right(), real(1)),
+				vec2(real(1) - fraction_borders.right(), real(1) - fraction_borders.bottom()),
+			})),
+			make_quad_vao(this->renderer, utki::span<const vec2>({
+				vec2(real(1) - fraction_borders.right(), real(1) - fraction_borders.bottom()),
+				vec2(real(1), real(1) - fraction_borders.bottom()),
+				vec2(1, 1),
+				vec2(1, real(1) - fraction_borders.bottom())
+			}))
+		}
+	}},
+	// clang-format on
+	image(std::move(image)), fraction_borders(fraction_borders)
 {}
 
 sides<real> nine_patch::get_borders(const ruis::units& units) const noexcept
