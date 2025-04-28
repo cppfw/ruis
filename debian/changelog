@@ -1,3 +1,9 @@
+libruis (0.5.265) unstable; urgency=medium
+
+  * rename factory functions to make_
+
+ -- Ivan Gagis <igagis@gmail.com>  Mon, 28 Apr 2025 13:54:51 +0300
+
 libruis (0.5.264) unstable; urgency=medium
 
   * loc const
