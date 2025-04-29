@@ -4,7 +4,7 @@ set(CMAKE_TOOLCHAIN_FILE $ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake)
 
 project(test)
 
-# TODO: EDIT dependency packages list
+# TODO: are these needed here explicitly?
 find_package(utki CONFIG REQUIRED)
 find_package(papki CONFIG REQUIRED)
 find_package(ZLIB REQUIRED)

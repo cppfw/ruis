@@ -1,6 +1,6 @@
 ruis provides CMake targets:
 
-# TODO: EDIT library dependency packages list
+# TODO: are these needed here explicitly?
 find_package(utki CONFIG REQUIRED)
 find_package(papki CONFIG REQUIRED)
 find_package(ZLIB REQUIRED)
