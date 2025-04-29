@@ -1,0 +1,10 @@
+ruis provides CMake targets:
+
+# TODO: EDIT library dependency packages list
+find_package(utki CONFIG REQUIRED)
+find_package(papki CONFIG REQUIRED)
+find_package(ZLIB REQUIRED)
+
+find_package(ruis CONFIG REQUIRED)
+
+target_link_libraries(main PRIVATE ruis::ruis)
