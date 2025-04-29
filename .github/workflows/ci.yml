@@ -403,7 +403,7 @@ jobs:
           myci-vcpkg-prepare.sh --vcpkg-dir build/vcpkg --git-ref ${{ github.sha }}
       - name: test vcpkg port
         run: |
-          cd vcpkg/test
+          cd build/vcpkg/test
           cmake .
           make
           ./test
