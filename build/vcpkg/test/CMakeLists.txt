@@ -8,6 +8,7 @@ project(test)
 find_package(utki CONFIG REQUIRED)
 find_package(papki CONFIG REQUIRED)
 find_package(ZLIB REQUIRED)
+find_package(Freetype CONFIG REQUIRED)
 
 find_package(ruis CONFIG REQUIRED)
 

@@ -400,7 +400,7 @@ jobs:
         with: {name: PATH, value: "$PATH:$VCPKG_ROOT"}
       - name: prepare vcpkg port
         run: |
-          myci-vcpkg-prepare.sh --git-ref ${{ github.sha }}
+          myci-vcpkg-prepare.sh --vcpkg-dir build/vcpkg --git-ref ${{ github.sha }}
       - name: test vcpkg port
         run: |
           cd vcpkg/test
@@ -412,7 +412,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: vcpkg_logs
-          path: vcpkg-installation/buildtrees/${{ env.PACKAGE_NAME }}/
+          path: |
+            vcpkg-installation/buildtrees/${{ env.PACKAGE_NAME }}/
+            build/vcpkg/**/*.log
       - name: deploy vcpkg port
         run: |
           myci-deploy-vcpkg.sh --repo cppfw/vcpkg-repo --port-dir vcpkg/overlay/${PACKAGE_NAME}
