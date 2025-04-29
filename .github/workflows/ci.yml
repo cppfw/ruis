@@ -417,7 +417,7 @@ jobs:
             build/vcpkg/**/*.log
       - name: deploy vcpkg port
         run: |
-          myci-deploy-vcpkg.sh --repo cppfw/vcpkg-repo --port-dir vcpkg/overlay/${PACKAGE_NAME}
+          myci-deploy-vcpkg.sh --repo cppfw/vcpkg-repo --port-dir build/vcpkg/overlay/${PACKAGE_NAME}
         if: startsWith(github.ref, 'refs/tags/')
 ##### conan - linux #####
   conan-linux:
