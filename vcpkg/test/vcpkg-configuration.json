@@ -10,7 +10,15 @@
         "repository": "https://github.com/cppfw/vcpkg-repo/",
         "baseline": "72c7398f45661f3acb7dcb7cee24b4aa8f3c4b4c",
         "reference": "main",
-        "packages": [ "utki", "papki" ]
+        "packages": [
+          "utki",
+          "papki",
+          "r4",
+          "svgren",
+          "tml",
+          "rasterimage",
+          "veg"
+        ]
       }
     ],
     "overlay-ports": [
