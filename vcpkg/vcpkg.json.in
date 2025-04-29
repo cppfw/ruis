@@ -13,7 +13,7 @@
         "name" : "vcpkg-cmake-config",
         "host" : true
       },
-      "Freetype",
+      "freetype",
       "utki",
       "papki",
       "r4",
