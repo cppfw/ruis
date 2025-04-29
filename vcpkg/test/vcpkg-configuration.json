@@ -10,7 +10,6 @@
         "repository": "https://github.com/cppfw/vcpkg-repo/",
         "baseline": "72c7398f45661f3acb7dcb7cee24b4aa8f3c4b4c",
         "reference": "main",
-        // TODO: list packages to be installed from this repo
         "packages": [ "utki", "papki" ]
       }
     ],
