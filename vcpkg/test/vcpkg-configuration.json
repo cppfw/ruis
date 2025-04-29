@@ -17,6 +17,8 @@
           "agg",
           "svgren",
           "svgdom",
+          "cssom",
+          "mikroxml",
           "tml",
           "rasterimage",
           "veg"
