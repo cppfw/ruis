@@ -1,3 +1,9 @@
+libruis (0.5.266) unstable; urgency=medium
+
+  * vcpkg
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 29 Apr 2025 14:09:44 +0300
+
 libruis (0.5.265) unstable; urgency=medium
 
   * rename factory functions to make_
