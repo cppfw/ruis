@@ -35,14 +35,13 @@ namespace ruis::res {
  * %resource description:
  *
  * @param file - name of the image file, can be raster image or SVG.
- *
- * @param borders - widths of borders in pixels in the left-top-right-bottom order.
+ * @param borders - fraction widths of borders in the left-top-right-bottom order.
  *
  * Example:
  * @code
  * ruis_npt_rightbutton_pressed{
  *     file{rightbutton_pressed.svg}
- *     borders{5 5 5 6}
+ *     borders{0.4167 0.1613 0.4167 0.1935}
  * }
  * @endcode
  */
@@ -58,7 +57,6 @@ public:
 	 */
 	const std::array<std::array<utki::shared_ref<const ruis::render::vertex_array>, 3>, 3> vaos;
 
-private:
 	const utki::shared_ref<const res::image> image;
 
 	const sides<real> fraction_borders;
@@ -109,11 +107,6 @@ public:
 	};
 
 	std::shared_ptr<image_matrix> get(const ruis::units& units) const;
-
-	const sides<real>& get_fraction_borders() const noexcept
-	{
-		return this->fraction_borders;
-	}
 
 	sides<real> get_borders(const ruis::units& units) const noexcept;
 
