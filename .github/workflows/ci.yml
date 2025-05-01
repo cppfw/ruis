@@ -65,7 +65,7 @@ jobs:
           fail_ci_if_error: true # optional (default = false)
           verbose: true # optional (default = false)
       - name: upload test report to codecov.io
-        if: ${{ !cancelled() }}
+        if: always() # even if previous steps fail, this one needs to be run
         uses: codecov/test-results-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
