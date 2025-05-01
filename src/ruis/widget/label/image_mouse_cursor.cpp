@@ -83,6 +83,6 @@ void image_mouse_cursor::render(const ruis::matrix4& matrix) const
 
 	this->context.get().ren().render(
 		matr, //
-		this->quad_tex->tex_2d
+		*this->quad_tex
 	);
 }

@@ -43,7 +43,7 @@ public:
 private:
 	parameters params;
 
-	mutable std::shared_ptr<const res::image::texture> quad_tex;
+	mutable std::shared_ptr<const render::texture_2d> quad_tex;
 
 	vector2 cursor_pos;
 

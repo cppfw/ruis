@@ -153,7 +153,7 @@ void nine_patch::render_nine_patch(const mat4& matrix) const
 
 		r.render(
 			matr, //
-			this->image_texture->tex_2d,
+			*this->image_texture,
 			np.vaos[0][0]
 		);
 	}
@@ -172,7 +172,7 @@ void nine_patch::render_nine_patch(const mat4& matrix) const
 
 		r.render(
 			matr, //
-			this->image_texture->tex_2d,
+			*this->image_texture,
 			np.vaos[0][1]
 		);
 	}
@@ -191,7 +191,7 @@ void nine_patch::render_nine_patch(const mat4& matrix) const
 
 		r.render(
 			matr, //
-			this->image_texture->tex_2d,
+			*this->image_texture,
 			np.vaos[0][2]
 		);
 	}
@@ -210,7 +210,7 @@ void nine_patch::render_nine_patch(const mat4& matrix) const
 
 		r.render(
 			matr, //
-			this->image_texture->tex_2d,
+			*this->image_texture,
 			np.vaos[1][0]
 		);
 	}
@@ -223,7 +223,7 @@ void nine_patch::render_nine_patch(const mat4& matrix) const
 
 		r.render(
 			matr, //
-			this->image_texture->tex_2d,
+			*this->image_texture,
 			np.vaos[1][1]
 		);
 	}
@@ -242,7 +242,7 @@ void nine_patch::render_nine_patch(const mat4& matrix) const
 
 		r.render(
 			matr, //
-			this->image_texture->tex_2d,
+			*this->image_texture,
 			np.vaos[1][2]
 		);
 	}
@@ -261,7 +261,7 @@ void nine_patch::render_nine_patch(const mat4& matrix) const
 
 		r.render(
 			matr, //
-			this->image_texture->tex_2d,
+			*this->image_texture,
 			np.vaos[2][0]
 		);
 	}
@@ -280,7 +280,7 @@ void nine_patch::render_nine_patch(const mat4& matrix) const
 
 		r.render(
 			matr, //
-			this->image_texture->tex_2d,
+			*this->image_texture,
 			np.vaos[2][1]
 		);
 	}
@@ -296,7 +296,7 @@ void nine_patch::render_nine_patch(const mat4& matrix) const
 
 		r.render(
 			matr, //
-			this->image_texture->tex_2d,
+			*this->image_texture,
 			np.vaos[2][2]
 		);
 	}

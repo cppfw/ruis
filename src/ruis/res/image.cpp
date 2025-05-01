@@ -41,29 +41,26 @@ using namespace ruis::res;
 namespace {
 class res_raster_image : public image
 {
-	utki::shared_ref<const image::texture> tex;
+	utki::shared_ref<const render::texture_2d> tex_2d;
 
 public:
 	res_raster_image( //
-		utki::shared_ref<ruis::render::renderer> renderer,
-		utki::shared_ref<const render::texture_2d> tex
+		utki::shared_ref<const render::texture_2d> tex_2d
 	) :
-		tex(utki::make_shared<image::texture>( //
-			std::move(tex)
-		))
+		tex_2d(std::move(tex_2d))
 	{}
 
-	utki::shared_ref<const image::texture> get(
+	utki::shared_ref<const render::texture_2d> get(
 		const ruis::units& units, //
 		vector2 for_dims
 	) const override
 	{
-		return this->tex;
+		return this->tex_2d;
 	}
 
 	r4::vector2<uint32_t> dims(const ruis::units& units) const noexcept override
 	{
-		return this->tex.get().dims();
+		return this->tex_2d.get().dims();
 	}
 
 	static utki::shared_ref<res_raster_image> load( //
@@ -71,15 +68,12 @@ public:
 		const papki::file& fi
 	)
 	{
-		return utki::make_shared<res_raster_image>(
-			loader.renderer,
-			loader.renderer.get().render_context.get().make_texture_2d(
-				rasterimage::read(fi),
-				{
-					// TODO: what about params?
-				}
-			)
-		);
+		return utki::make_shared<res_raster_image>(loader.renderer.get().render_context.get().make_texture_2d(
+			rasterimage::read(fi),
+			{
+				// TODO: what about params?
+			}
+		));
 	}
 };
 
@@ -109,7 +103,7 @@ public:
 		return ceil(wh).to<uint32_t>();
 	}
 
-	utki::shared_ref<const texture> get(
+	utki::shared_ref<const render::texture_2d> get(
 		const ruis::units& units, //
 		vector2 for_dims
 	) const override
@@ -122,7 +116,7 @@ public:
 				if (auto p = i->second.lock()) {
 					ASSERT(p)
 					return utki::shared_ref(std::move(p));
-				}else{
+				} else {
 					this->cache.erase(i);
 				}
 			}
@@ -161,24 +155,26 @@ public:
 		auto dims = im.dims();
 
 		// clang-format off
-		auto img = utki::make_shared<texture>(
-			this->renderer.get().render_context.get().make_texture_2d(
-				std::move(im),
-				{
-					.min_filter = render::texture_2d::filter::nearest,
-					.mag_filter = render::texture_2d::filter::nearest,
-					.mipmap = render::texture_2d::mipmap::none
-				}
-			)
+		auto tex_2d = this->renderer.get().render_context.get().make_texture_2d(
+			std::move(im),
+			{
+				.min_filter = render::texture_2d::filter::nearest,
+				.mag_filter = render::texture_2d::filter::nearest,
+				.mipmap = render::texture_2d::mipmap::none
+			}
 		);
 		// clang-format on
 
-		this->cache[dims] = img.to_shared_ptr();
+		this->cache[dims] = tex_2d.to_shared_ptr();
 
-		return img;
+		return tex_2d;
 	}
 
-	mutable std::map<r4::vector2<unsigned>, std::weak_ptr<texture>> cache;
+	mutable std::map<
+		r4::vector2<unsigned>, //
+		std::weak_ptr<render::texture_2d> //
+		>
+		cache;
 
 	static utki::shared_ref<res_svg_image> load( //
 		const ruis::resource_loader& loader,

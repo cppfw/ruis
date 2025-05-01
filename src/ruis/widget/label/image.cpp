@@ -105,7 +105,7 @@ void image::render(const ruis::matrix4& matrix) const
 
 	r.render(
 		matr, //
-		this->texture->tex_2d,
+		*this->texture,
 		this->vao
 	);
 }

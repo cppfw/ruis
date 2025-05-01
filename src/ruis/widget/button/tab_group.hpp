@@ -32,7 +32,7 @@ class tab_group :
 	public choice_group
 {
 	std::shared_ptr<const res::image> filler;
-	std::shared_ptr<const res::image::texture> filler_texture;
+	std::shared_ptr<const render::texture_2d> filler_texture;
 
 public:
 	struct all_parameters {

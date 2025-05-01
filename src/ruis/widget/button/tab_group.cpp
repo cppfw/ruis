@@ -180,7 +180,7 @@ void tab_group::render(const ruis::matrix4& matrix) const
 			m.scale(l, real(this->filler_texture->dims().y()));
 			this->context.get().ren().render(
 				m, //
-				this->filler_texture->tex_2d
+				*this->filler_texture
 			);
 		}
 	}

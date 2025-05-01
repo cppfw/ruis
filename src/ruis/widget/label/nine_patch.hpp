@@ -39,7 +39,7 @@ class nine_patch :
 	public padding
 {
 	std::shared_ptr<const res::nine_patch> cur_nine_patch;
-	std::shared_ptr<const res::image::texture> image_texture;
+	std::shared_ptr<const render::texture_2d> image_texture;
 
 public:
 	struct parameters {

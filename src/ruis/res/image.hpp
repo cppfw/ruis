@@ -64,31 +64,6 @@ public:
 	~image() override = default;
 
 	/**
-	 * @brief Texture created from the image resource.
-	 * The texture which was created from an image resource.
-	 * This texture is to be used on a quad to render the image.
-	 */
-	class texture : public rasterimage::dimensioned
-	{
-	public:
-		const utki::shared_ref<const render::texture_2d> tex_2d;
-
-		// NOLINTNEXTLINE(modernize-pass-by-value)
-		texture(utki::shared_ref<const render::texture_2d> tex_2d) :
-			rasterimage::dimensioned(tex_2d.get().dims()),
-			tex_2d(std::move(tex_2d))
-		{}
-
-		texture(const texture&) = delete;
-		texture& operator=(const texture&) = delete;
-
-		texture(texture&&) = delete;
-		texture& operator=(texture&&) = delete;
-
-		virtual ~texture() = default;
-	};
-
-	/**
 	 * @brief Get dimensions of this image in pixels.
 	 * @param units - units to use for dimensions calculation. Used for scalable vector images.
 	 * @return Dimensions of the image in pixels.
@@ -102,7 +77,7 @@ public:
 	 *        If any of the dimensions is 0 then it will be adjusted to preserve aspect ratio.
 	 *        If both dimensions are zero, then dimensions which are natural for the particular image will be used.
 	 */
-	virtual utki::shared_ref<const texture> get(
+	virtual utki::shared_ref<const render::texture_2d> get(
 		const ruis::units& units, //
 		vector2 for_dims = 0
 	) const = 0;
