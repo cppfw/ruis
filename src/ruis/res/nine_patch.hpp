@@ -76,43 +76,9 @@ public:
 		sides<real> fraction_borders
 	);
 
-	class image_matrix
-	{
-		const std::array<std::array<utki::shared_ref<const res::image>, 3>, 3> img_matrix;
-
-		std::weak_ptr<const nine_patch> parent;
-
-		real mul; // for erasing from the cache
-
-	public:
-		decltype(img_matrix)& images() const noexcept
-		{
-			return this->img_matrix;
-		}
-
-		image_matrix(
-			std::array<std::array<utki::shared_ref<const res::image>, 3>, 3> l,
-			std::weak_ptr<const nine_patch> parent,
-			real mul
-		);
-
-		image_matrix(const image_matrix&) = delete;
-		image_matrix& operator=(const image_matrix&) = delete;
-
-		image_matrix(image_matrix&&) = delete;
-		image_matrix& operator=(image_matrix&&) = delete;
-
-		// NOLINTNEXTLINE(bugprone-exception-escape, "false positive")
-		~image_matrix();
-	};
-
-	std::shared_ptr<image_matrix> get(const ruis::units& units) const;
-
 	sides<real> get_borders(const ruis::units& units) const noexcept;
 
 private:
-	mutable std::map<real, std::weak_ptr<image_matrix>> cache;
-
 	static utki::shared_ref<nine_patch> load(
 		const ruis::resource_loader& loader,
 		const ::tml::forest& desc,
