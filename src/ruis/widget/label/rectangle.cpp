@@ -387,16 +387,13 @@ void rectangle::update_rounded_corners_texture()
 
 	auto borders = this->get_actual_borders();
 
-	// lookup in cache
-	{
-		auto i = this->cache.find(borders);
-		if (i != this->cache.end()) {
-			if (auto t = i->second.lock()) {
-				this->rounded_corners_tex = std::move(t);
-				return;
-			} else {
-				this->cache.erase(i);
-			}
+	// TODO: develop algorithm to go through cache from time to time and drop zombie textures
+	if (auto i = this->cache.find(borders); i != this->cache.end()) {
+		if (auto t = i->second.lock()) {
+			this->rounded_corners_tex = std::move(t);
+			return;
+		} else {
+			this->cache.erase(i);
 		}
 	}
 

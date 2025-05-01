@@ -108,20 +108,15 @@ public:
 		vector2 for_dims
 	) const override
 	{
-		//		TRACE(<< "forDim = " << forDim << std::endl)
-
-		{ // check if in cache
-			auto i = this->cache.find(for_dims.to<unsigned>());
-			if (i != this->cache.end()) {
-				if (auto p = i->second.lock()) {
-					ASSERT(p)
-					return utki::shared_ref(std::move(p));
-				} else {
-					this->cache.erase(i);
-				}
+		// TODO: develop algorithm to go through cache from time to time and drop zombie textures
+		if (auto i = this->cache.find(for_dims.to<unsigned>()); i != this->cache.end()) {
+			if (auto p = i->second.lock()) {
+				ASSERT(p)
+				return utki::shared_ref(std::move(p));
+			} else {
+				this->cache.erase(i);
 			}
 		}
-		//		TRACE(<< "not in cache" << std::endl)
 
 		ASSERT(this->dom)
 
