@@ -25,6 +25,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
+// Even though container is inherited privately, the std::shared_from_this base is still accessable via
+// public inheritance of widget. So, the linter complaint is false-positive, suppress it.
+// NOLINTNEXTLINE(bugprone-incorrect-enable-shared-from-this, "false-positive")
 class padding :
 	public virtual widget, //
 	protected container
