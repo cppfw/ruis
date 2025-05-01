@@ -55,7 +55,7 @@ public:
 		layout_parameters layout_params;
 		widget::parameters widget_params;
 		container::parameters container_params;
-		frame_widget::parameters padding_params;
+		padding::parameters padding_params;
 		blending_widget::parameters blending_params;
 		nine_patch::parameters nine_patch_params;
 	};

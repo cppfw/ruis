@@ -26,7 +26,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
-// TODO: derive from frame_widget?
+// TODO: derive from padding?
 // NOLINTNEXTLINE(bugprone-incorrect-enable-shared-from-this, "std::shared_from_this is public via widget")
 class collapse_area :
 	virtual public widget, //

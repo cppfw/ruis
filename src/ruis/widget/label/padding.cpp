@@ -39,41 +39,49 @@ padding::padding(
 	all_parameters params,
 	widget_list children
 ) :
-	widget( //
-		std::move(context),
+	padding(
+		// clang-format off
+		m::container(std::move(context),
+			{
+				.container_params = [&](){
+					// pile layout by default
+					if(!params.container_params.layout){
+						params.container_params.layout = layout::pile;
+					}
+					return std::move(params.container_params);
+				}()
+			},
+			std::move(children)
+		),
+		// clang-format on
 		std::move(params.layout_params),
-		std::move(params.widget_params)
+		std::move(params.widget_params),
+		std::move(params.padding_params)
+	)
+{}
+
+padding::padding(
+	utki::shared_ref<container> content_container,
+	layout_parameters layout_params,
+	widget::parameters widget_params,
+	parameters padding_params
+):
+	widget( //
+		content_container.get().context,
+		std::move(layout_params),
+		std::move(widget_params)
 	),
 	// clang-format off
-	frame_widget(
+	container(
 		this->context,
+		{},
 		{
-			.layout = layout::row
-		},
-		std::move(params.padding_params),
-		{
-			m::container(this->context,
-				{
-					.layout_params{
-						.dims = {dim::max, dim::max},
-						.weight = 1
-					},
-					.widget_params{
-						.id = "ruis_content"s
-					},
-					.container_params = [&](){
-						// pile layout by default
-						if(!params.container_params.layout){
-							params.container_params.layout = layout::pile;
-						}
-						return std::move(params.container_params);
-					}()
-				},
-				std::move(children)
-			)
+			content_container
 		}
-	)
-// clang-format on
+	),
+	// clang-format on
+	params(std::move(padding_params)),
+	inner_content(content_container.get())
 {}
 
 sides<real> padding::get_min_borders() const noexcept
@@ -162,4 +170,45 @@ utki::shared_ref<ruis::padding> ruis::make::padding(
 		std::move(params),
 		std::move(children)
 	);
+}
+
+void padding::set_borders(sides<length> borders)
+{
+	if (this->params.borders == borders) {
+		return;
+	}
+
+	this->params.borders = borders;
+	this->on_borders_change();
+}
+
+sides<real> padding::get_actual_borders() const noexcept
+{
+	auto min_borders = this->get_min_borders();
+	const auto& borders = this->get_borders();
+
+	sides<real> actual_borders;
+	// clang-format off
+	for (auto [m, b, a] :
+		utki::views::zip(
+			min_borders,
+			borders,
+			actual_borders
+		)
+	)
+	// clang-format on
+	{
+		if (b.is_undefined()) {
+			a = m;
+		} else {
+			a = b.get(this->context);
+		}
+	}
+
+	return actual_borders;
+}
+
+void padding::on_borders_change()
+{
+	this->invalidate_layout();
 }

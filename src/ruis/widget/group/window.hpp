@@ -37,7 +37,7 @@ namespace ruis {
  * @param title - text of the window title.
  * @param look - style settings.
  */
-// TODO: derive from frame_widget
+// TODO: derive from padding
 // NOLINTNEXTLINE(bugprone-incorrect-enable-shared-from-this, "std::shared_from_this is public via widget")
 class window :
 	virtual public widget, //

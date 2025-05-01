@@ -48,7 +48,7 @@ public:
 		layout_parameters layout_params;
 		widget::parameters widget_params;
 		container::parameters container_params;
-		frame_widget::parameters padding_params;
+		padding::parameters padding_params;
 		color_widget::parameters color_params;
 		parameters rectangle_params;
 	};

@@ -21,21 +21,32 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "../base/frame_widget.hpp"
+#include "../container.hpp"
 
 namespace ruis {
 
-class padding : public frame_widget
+class padding :
+	public virtual widget, //
+	protected container
 {
-protected:
-	sides<real> get_min_borders() const noexcept override;
+public:
+	struct parameters {
+		sides<length> borders;
+	};
+
+private:
+	parameters params;
+
+	// TODO: use shared_ref?
+	// NOLINTNEXTLINE(clang-analyzer-webkit.NoUncountedMemberChecker, "false-positive")
+	container& inner_content;
 
 public:
 	struct all_parameters {
 		layout_parameters layout_params;
 		widget::parameters widget_params;
 		container::parameters container_params;
-		frame_widget::parameters padding_params;
+		parameters padding_params;
 	};
 
 	padding(
@@ -44,10 +55,53 @@ public:
 		widget_list children
 	);
 
+private:
+	padding(
+		utki::shared_ref<container> content_container,
+		layout_parameters layout_params,
+		widget::parameters widget_params,
+		parameters padding_params
+	);
+
+public:
 	vec2 measure(const vec2& quotum) const override;
 	void on_lay_out() override;
 
-private:
+	/**
+	 * @brief Get content container.
+	 * @return The content container. This is where the child widgets are stored.
+	 */
+	container& content()
+	{
+		return this->inner_content;
+	}
+
+	const container& content() const
+	{
+		return this->inner_content;
+	}
+
+	/**
+	 * @brief Set border settings.
+	 * @param borders - border values to set.
+	 */
+	void set_borders(sides<length> borders);
+
+	/**
+	 * @brief Get current border settings.
+	 * @return Current borders.
+	 */
+	const decltype(params.borders)& get_borders() const noexcept
+	{
+		return this->params.borders;
+	}
+
+	sides<real> get_actual_borders() const noexcept;
+
+	virtual void on_borders_change();
+
+protected:
+	virtual sides<real> get_min_borders() const noexcept;
 };
 
 namespace make {

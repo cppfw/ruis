@@ -120,12 +120,7 @@ void nine_patch::update_cur_nine_patch()
 
 void nine_patch::on_enabled_change()
 {
-	this->frame_widget::on_enabled_change();
-
-	if (!this->params.disabled_nine_patch) {
-		// there is no disabled nine patch, so nothing changes
-		return;
-	}
+	this->padding::on_enabled_change();
 
 	this->update_cur_nine_patch();
 }
