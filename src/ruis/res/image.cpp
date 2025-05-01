@@ -109,32 +109,6 @@ public:
 		return ceil(wh).to<uint32_t>();
 	}
 
-	class svg_texture : public image::texture
-	{
-		std::weak_ptr<const res_svg_image> parent;
-
-	public:
-		svg_texture(utki::shared_ref<const res_svg_image> parent, utki::shared_ref<const render::texture_2d> tex) :
-			image::texture(std::move(tex)),
-			parent(parent.to_shared_ptr())
-		{}
-
-		svg_texture(const svg_texture&) = delete;
-		svg_texture& operator=(const svg_texture&) = delete;
-
-		svg_texture(svg_texture&&) = delete;
-		svg_texture& operator=(svg_texture&&) = delete;
-
-		// NOLINTNEXTLINE(bugprone-exception-escape, "false positive")
-		~svg_texture() override
-		{
-			if (auto p = this->parent.lock()) {
-				r4::vector2<unsigned> d = this->tex_2d.get().dims().to<unsigned>();
-				p->cache.erase(d);
-			}
-		}
-	};
-
 	utki::shared_ref<const texture> get(
 		const ruis::units& units, //
 		vector2 for_dims
@@ -148,6 +122,8 @@ public:
 				if (auto p = i->second.lock()) {
 					ASSERT(p)
 					return utki::shared_ref(std::move(p));
+				}else{
+					this->cache.erase(i);
 				}
 			}
 		}
@@ -156,6 +132,7 @@ public:
 		ASSERT(this->dom)
 
 		// in ruis, SVG dimensions are in pp, this is why we cannot use 0 to use native dimension of SVG.
+		// TODO: why can't we use 0?
 		auto svg_dims = this->dims(units).to<real>();
 		for (unsigned i = 0; i != 2; ++i) {
 			if (for_dims[i] == 0) {
@@ -184,8 +161,7 @@ public:
 		auto dims = im.dims();
 
 		// clang-format off
-		auto img = utki::make_shared<svg_texture>(
-			utki::make_shared_from(*this),
+		auto img = utki::make_shared<texture>(
 			this->renderer.get().render_context.get().make_texture_2d(
 				std::move(im),
 				{
