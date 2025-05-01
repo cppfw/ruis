@@ -263,7 +263,7 @@ nine_patch::nine_patch(
 			})),
 			make_quad_vao(this->renderer, utki::span<const vec2>({
 				vec2(real(1) - fraction_borders.right(), real(1) - fraction_borders.bottom()),
-				vec2(real(1), real(1) - fraction_borders.bottom()),
+				vec2(real(1) - fraction_borders.right(), real(1)),
 				vec2(1, 1),
 				vec2(1, real(1) - fraction_borders.bottom())
 			}))

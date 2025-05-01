@@ -39,165 +39,10 @@ using namespace ruis::make;
 } // namespace m
 } // namespace
 
-namespace {
-std::vector<utki::shared_ref<ruis::widget>> make_widget_structure(
-	utki::shared_ref<ruis::context> c,
-	container::parameters container_params,
-	std::array<std::array<utki::shared_ref<ruis::image>, 3>, 3> image_widgets_matrix,
-	widget_list children
-)
-{
-	// clang-format off
-	return {
-		m::container(c,
-			{
-				.layout_params = {
-					.dims = {dim::fill, dim::min}
-				},
-				.container_params = {
-					.layout = layout::row
-				}
-			},
-			{
-				std::move(image_widgets_matrix[0][0]),
-				std::move(image_widgets_matrix[0][1]),
-				std::move(image_widgets_matrix[0][2])
-			}
-		),
-		m::container(c,
-			{
-				.layout_params = {
-					.dims = {dim::max, dim::max},
-					.weight = 1
-				},
-				.container_params = {
-					.layout = layout::row
-				}
-			},
-			{
-				std::move(image_widgets_matrix[1][0]),
-				m::pile(c,
-					{
-						.layout_params = {
-							.dims = {dim::max, dim::max},
-							.weight = 1
-						}
-					},
-					{
-						std::move(image_widgets_matrix[1][1]),
-						m::container(c,
-							{
-								.layout_params = {
-									.dims = {dim::max, dim::max}
-								},
-								.widget_params = {
-									.id = "ruis_content"s
-								},
-								.container_params = std::move(container_params)
-							},
-							std::move(children)
-						)
-					}
-				),
-				std::move(image_widgets_matrix[1][2]),
-			}
-		),
-		m::container(c,
-			{
-				.layout_params = {
-					.dims = {dim::fill, dim::min}
-				},
-				.container_params = {
-					.layout = layout::row
-				}
-			},
-			{
-				std::move(image_widgets_matrix[2][0]),
-				std::move(image_widgets_matrix[2][1]),
-				std::move(image_widgets_matrix[2][2])
-			}
-		)
-	};
-	// clang-format on
-}
-} // namespace
-
 nine_patch::nine_patch( //
 	utki::shared_ref<ruis::context> context,
 	all_parameters params,
 	widget_list children
-) :
-	nine_patch(
-		context,
-		std::move(params),
-		std::move(children),
-		// clang-format off
-		{{
-			{{
-				m::image(context,
-					{}
-				),
-				m::image(context,
-					{
-						.layout_params = {
-							.dims = {dim::fill, dim::min},
-							.weight = 1
-						}
-					}
-				),
-				m::image(context,
-					{}
-				)
-			}},
-			{{
-				m::image(context,
-					{
-						.layout_params = {
-							.dims = {dim::min, dim::fill}
-						}
-					}
-				),
-				m::image(context,
-					{
-						.layout_params = {
-							.dims = {dim::fill, dim::fill}
-						}
-					}
-				),
-				m::image(context,
-					{
-						.layout_params = {
-							.dims = {dim::min, dim::fill}
-						}
-					}
-				)
-			}},
-			{{
-				m::image(context,
-					{}
-				),
-				m::image(context,
-					{
-						.layout_params = {
-							.dims = {dim::fill, dim::min},
-							.weight = 1
-						}
-					}
-				),
-				m::image(context,
-					{}
-				)
-			}}
-		}}
-		// clang-format on
-	)
-{}
-
-nine_patch::nine_patch( //
-	utki::shared_ref<ruis::context> context,
-	all_parameters params,
-	widget_list children,
-	std::array<std::array<utki::shared_ref<ruis::image>, 3>, 3> image_widgets_matrix
 ) :
 	widget( //
 		std::move(context),
@@ -208,38 +53,19 @@ nine_patch::nine_patch( //
 		this->context,
 		std::move(params.blending_params)
 	),
-	frame_widget( //
-		this->context,
+	padding(
+		this->context, //
+		// clang-format off
 		{
-			.layout = layout::column
+			.container_params = std::move(params.container_params),
+			.padding_params = std::move(params.padding_params)
 		},
-		{}, // frame parameters
-		make_widget_structure( //
-			this->context,
-			[&](){
-				auto ret = std::move(params.container_params);
-				if(!ret.layout){
-					// pile layout by default
-					ret.layout = ruis::layout::pile;
-				}
-				return ret;
-			}(),
-			image_widgets_matrix,
-			std::move(children)
-		)
+		// clang-format on
+		std::move(children)
 	),
-	img_widgets_matrix(image_widgets_matrix),
 	params(std::move(params.nine_patch_params))
 {
-	this->nine_patch::on_blending_change();
-
-	// this should go after setting up border widgets
-	if (this->params.nine_patch) {
-		this->set_nine_patch(this->params.nine_patch);
-	}
-	if (this->params.disabled_nine_patch) {
-		this->set_disabled_nine_patch(this->params.disabled_nine_patch);
-	}
+	this->update_cur_nine_patch();
 }
 
 void nine_patch::set_nine_patch(std::shared_ptr<const res::nine_patch> np)
@@ -250,7 +76,7 @@ void nine_patch::set_nine_patch(std::shared_ptr<const res::nine_patch> np)
 		return;
 	}
 
-	this->update_images();
+	this->update_cur_nine_patch();
 }
 
 void nine_patch::set_disabled_nine_patch(std::shared_ptr<const res::nine_patch> np)
@@ -261,76 +87,35 @@ void nine_patch::set_disabled_nine_patch(std::shared_ptr<const res::nine_patch> 
 		return;
 	}
 
-	this->update_images();
-}
-
-sides<real> nine_patch::get_actual_borders() const noexcept
-{
-	return this->get_min_borders();
+	this->update_cur_nine_patch();
 }
 
 sides<real> nine_patch::get_min_borders() const noexcept
 {
-	auto* np = this->params.nine_patch.get();
-
-	if (!this->is_enabled() && this->params.disabled_nine_patch) {
-		np = this->params.disabled_nine_patch.get();
+	if (!this->cur_nine_patch) {
+		return {0};
 	}
 
-	if (!np) {
-		for (auto& i : this->img_widgets_matrix) {
-			for (auto& j : i) {
-				j.get().set_image(nullptr);
-			}
-		}
-		return {0, 0, 0, 0};
-	}
-
-	ASSERT(np)
-	return np->get_borders(this->context.get().units);
+	return this->cur_nine_patch->get_borders(this->context.get().units);
 }
 
-void nine_patch::apply_images()
+void nine_patch::update_cur_nine_patch()
 {
-	auto* np = this->params.nine_patch.get();
+	this->cur_nine_patch = this->params.nine_patch;
 
 	if (!this->is_enabled() && this->params.disabled_nine_patch) {
-		np = this->params.disabled_nine_patch.get();
+		this->cur_nine_patch = this->params.disabled_nine_patch;
 	}
 
-	if (!np) {
-		for (auto& i : this->img_widgets_matrix) {
-			for (auto& j : i) {
-				j.get().set_image(nullptr);
-			}
-		}
+	if (!this->cur_nine_patch) {
+		this->image_texture.reset();
 		return;
 	}
 
-	ASSERT(np)
-	this->img_res_matrix = np->get(this->context.get().units);
+	ASSERT(this->cur_nine_patch)
+	this->image_texture = this->cur_nine_patch->image.get().get(this->context.get().units);
 
-	for (unsigned i = 0; i != 3; ++i) {
-		for (unsigned j = 0; j != 3; ++j) {
-			// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-constant-array-index)
-			this->img_widgets_matrix[i][j].get().set_image(this->img_res_matrix->images()[i][j].to_shared_ptr());
-		}
-	}
-}
-
-void nine_patch::set_center_visible(bool visible)
-{
-	this->img_widgets_matrix[1][1].get().set_visible(visible);
-}
-
-void nine_patch::on_blending_change()
-{
-	for (unsigned i = 0; i != 3; ++i) {
-		for (unsigned j = 0; j != 3; ++j) {
-			// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-constant-array-index)
-			this->img_widgets_matrix[i][j].get().set_blending_factors(this->get_blending_factors());
-		}
-	}
+	this->clear_cache();
 }
 
 void nine_patch::on_enabled_change()
@@ -342,23 +127,173 @@ void nine_patch::on_enabled_change()
 		return;
 	}
 
-	this->update_images();
-}
-
-void nine_patch::update_images()
-{
-	this->img_res_matrix.reset();
-	this->apply_images();
-	this->clear_cache();
-}
-
-void nine_patch::on_borders_change()
-{
-	this->apply_images(); // TODO: is needed?
-	this->invalidate_layout();
+	this->update_cur_nine_patch();
 }
 
 void nine_patch::render(const mat4& matrix) const
 {
-	this->frame_widget::render(matrix);
+	this->set_blending_to_renderer();
+
+	this->render_nine_patch(matrix);
+	this->padding::render(matrix);
+}
+
+void nine_patch::render_nine_patch(const mat4& matrix) const
+{
+	if (!this->cur_nine_patch) {
+		return;
+	}
+
+	// if there is current nine patch, there should be an image texture
+	ASSERT(this->image_texture)
+
+	// auto& r = this->context.get().renderer.get();
+
+	const auto& np = *this->cur_nine_patch;
+
+	// left-top
+	{
+		ruis::mat4 matr(matrix);
+		matr.scale(this->content().rect().p);
+
+		this->image_texture->render(
+			matr, //
+			np.vaos[0][0]
+		);
+	}
+
+	// top
+	{
+		ruis::mat4 matr(matrix);
+		matr.translate(
+			this->content().rect().p.x(), //
+			0
+		);
+		matr.scale(
+			this->content().rect().d.x(), //
+			this->content().rect().p.y()
+		);
+
+		this->image_texture->render(
+			matr, //
+			np.vaos[0][1]
+		);
+	}
+
+	// right-top
+	{
+		ruis::mat4 matr(matrix);
+		matr.translate(
+			this->content().rect().x2(), //
+			0
+		);
+		matr.scale(
+			this->rect().d.x() - this->content().rect().x2(), //
+			this->content().rect().p.y()
+		);
+
+		this->image_texture->render(
+			matr, //
+			np.vaos[0][2]
+		);
+	}
+
+	// left
+	{
+		ruis::mat4 matr(matrix);
+		matr.translate(
+			0, //
+			this->content().rect().p.y()
+		);
+		matr.scale(
+			this->content().rect().p.x(), //
+			this->content().rect().d.y()
+		);
+
+		this->image_texture->render(
+			matr, //
+			np.vaos[1][0]
+		);
+	}
+
+	// center
+	{
+		ruis::mat4 matr(matrix);
+		matr.translate(this->content().rect().p);
+		matr.scale(this->content().rect().d);
+
+		this->image_texture->render(
+			matr, //
+			np.vaos[1][1]
+		);
+	}
+
+	// right
+	{
+		ruis::mat4 matr(matrix);
+		matr.translate(
+			this->content().rect().x2(), //
+			this->content().rect().p.y()
+		);
+		matr.scale(
+			this->rect().d.x() - this->content().rect().x2(), //
+			this->content().rect().d.y()
+		);
+
+		this->image_texture->render(
+			matr, //
+			np.vaos[1][2]
+		);
+	}
+
+	// left-bottom
+	{
+		ruis::mat4 matr(matrix);
+		matr.translate(
+			0, //
+			this->content().rect().y2()
+		);
+		matr.scale(
+			this->content().rect().p.x(), //
+			this->rect().d.y() - this->content().rect().y2()
+		);
+
+		this->image_texture->render(
+			matr, //
+			np.vaos[2][0]
+		);
+	}
+
+	// bottom
+	{
+		ruis::mat4 matr(matrix);
+		matr.translate(
+			this->content().rect().p.x(), //
+			this->content().rect().y2()
+		);
+		matr.scale(
+			this->content().rect().d.x(), //
+			this->rect().d.y() - this->content().rect().y2()
+		);
+
+		this->image_texture->render(
+			matr, //
+			np.vaos[2][1]
+		);
+	}
+
+	// right-bottom
+	{
+		ruis::mat4 matr(matrix);
+
+		auto content_x2_y2 = this->content().rect().x2_y2();
+
+		matr.translate(content_x2_y2);
+		matr.scale(this->rect().d - content_x2_y2);
+
+		this->image_texture->render(
+			matr, //
+			np.vaos[2][2]
+		);
+	}
 }

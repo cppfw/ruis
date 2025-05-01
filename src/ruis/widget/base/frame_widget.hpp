@@ -80,11 +80,12 @@ public:
 		return this->params.borders;
 	}
 
+	sides<real> get_actual_borders() const noexcept;
+
 	virtual void on_borders_change();
 
 protected:
 	virtual sides<real> get_min_borders() const noexcept = 0;
-	sides<real> get_actual_borders() const noexcept;
 };
 
 } // namespace ruis

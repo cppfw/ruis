@@ -23,9 +23,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../../res/nine_patch.hpp"
 #include "../base/blending_widget.hpp"
-#include "../base/frame_widget.hpp"
 
 #include "image.hpp"
+#include "padding.hpp"
 
 namespace ruis {
 
@@ -36,11 +36,10 @@ namespace ruis {
 class nine_patch :
 	public virtual widget, //
 	public blending_widget,
-	public frame_widget
+	public padding
 {
-	std::shared_ptr<res::nine_patch::image_matrix> img_res_matrix;
-
-	const std::array<std::array<utki::shared_ref<image>, 3>, 3> img_widgets_matrix;
+	std::shared_ptr<const res::nine_patch> cur_nine_patch;
+	std::shared_ptr<const res::image::texture> image_texture;
 
 public:
 	struct parameters {
@@ -56,6 +55,7 @@ public:
 		layout_parameters layout_params;
 		widget::parameters widget_params;
 		container::parameters container_params;
+		frame_widget::parameters padding_params;
 		blending_widget::parameters blending_params;
 		nine_patch::parameters nine_patch_params;
 	};
@@ -76,36 +76,16 @@ public:
 
 	void render(const mat4& matrix) const override;
 
-private:
-	nine_patch(
-		utki::shared_ref<ruis::context> context, //
-		all_parameters params,
-		widget_list children,
-		std::array<std::array<utki::shared_ref<ruis::image>, 3>, 3> image_widgets_matrix
-	);
-
-public:
 	void set_nine_patch(std::shared_ptr<const res::nine_patch> np);
 
 	void set_disabled_nine_patch(std::shared_ptr<const res::nine_patch> np);
 
-	/**
-	 * @brief Show/hide central part of nine-patch.
-	 * @param visible - show (true) or hide (false) central part of the nine-patch.
-	 */
-	void set_center_visible(bool visible);
-
-	sides<real> get_actual_borders() const noexcept;
-
-	void on_blending_change() override;
-
 	void on_enabled_change() override;
 
-	void on_borders_change() override;
-
 private:
-	void apply_images();
-	void update_images();
+	void update_cur_nine_patch();
+
+	void render_nine_patch(const mat4& matrix) const;
 
 protected:
 	sides<real> get_min_borders() const noexcept override;
