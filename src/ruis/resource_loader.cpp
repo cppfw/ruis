@@ -64,7 +64,13 @@ decltype(resource_loader::res_packs)::const_iterator resource_loader::mount_res_
 		}
 	}
 
-	this->res_packs.emplace_back(papki::root_dir::make(fi.spawn(), dir), std::move(script));
+	this->res_packs.emplace_back(
+		papki::root_dir::make(
+			fi.spawn(), //
+			dir
+		),
+		std::move(script)
+	);
 
 	ASSERT(this->res_packs.back().fi)
 	ASSERT(!this->res_packs.back().script.empty())
@@ -84,12 +90,18 @@ void resource_loader::res_pack_entry::add_to_cache(
 {
 	ASSERT(!utki::contains(this->cache, id))
 
-	this->cache.insert(std::make_pair(id, utki::make_weak(res)));
+	this->cache.insert(
+		std::make_pair(
+			id, //
+			utki::make_weak(res)
+		)
+	);
 }
 
 std::shared_ptr<resource> resource_loader::res_pack_entry::find_in_cache(std::string_view id) const
 {
 	auto i = this->cache.find(id);
+
 	if (i != this->cache.end()) {
 		if (auto r = i->second.lock()) {
 			return r;
@@ -101,7 +113,11 @@ std::shared_ptr<resource> resource_loader::res_pack_entry::find_in_cache(std::st
 
 const tml::forest* resource_loader::res_pack_entry::find_resource_in_script(std::string_view id) const
 {
-	auto j = std::find(this->script.begin(), this->script.end(), id);
+	auto j = std::find(
+		this->script.begin(), //
+		this->script.end(),
+		id
+	);
 	if (j != this->script.end()) {
 		ASSERT(j->value.string == id)
 		return &j->children;
