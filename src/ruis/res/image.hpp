@@ -73,16 +73,19 @@ public:
 	protected:
 		const utki::shared_ref<const ruis::render::renderer> renderer;
 
+		const utki::shared_ref<const render::texture_2d> tex_2d;
+
+	public:
 		// NOLINTNEXTLINE(modernize-pass-by-value)
 		texture(
 			utki::shared_ref<const ruis::render::renderer> r, //
-			r4::vector2<uint32_t> dims
+			utki::shared_ref<const render::texture_2d> tex_2d
 		) :
-			rasterimage::dimensioned(dims),
-			renderer(std::move(r))
+			rasterimage::dimensioned(tex_2d.get().dims()),
+			renderer(std::move(r)),
+			tex_2d(std::move(tex_2d))
 		{}
 
-	public:
 		texture(const texture&) = delete;
 		texture& operator=(const texture&) = delete;
 
@@ -107,7 +110,14 @@ public:
 		virtual void render(
 			const matrix4& matrix, //
 			const render::vertex_array& vao
-		) const = 0;
+		) const
+		{
+			this->renderer.get().shaders().pos_tex->render(
+				matrix, //
+				vao,
+				this->tex_2d.get()
+			);
+		}
 	};
 
 	/**

@@ -39,49 +39,19 @@ using namespace ruis;
 using namespace ruis::res;
 
 namespace {
-class fixed_texture : public image::texture
+class res_raster_image : public image
 {
-protected:
-	const utki::shared_ref<const render::texture_2d> tex_2d;
+	utki::shared_ref<const image::texture> tex;
 
-	fixed_texture(
-		utki::shared_ref<const ruis::render::renderer> r, //
-		utki::shared_ref<const render::texture_2d> tex
-	) :
-		image::texture(
-			std::move(r), //
-			tex.get().dims()
-		),
-		tex_2d(std::move(tex))
-	{}
-
-public:
-	void render(
-		const matrix4& matrix, //
-		const render::vertex_array& vao
-	) const override
-	{
-		this->renderer.get().shaders().pos_tex->render(
-			matrix, //
-			vao,
-			this->tex_2d.get()
-		);
-	}
-};
-
-class res_raster_image :
-	public image, //
-	public fixed_texture
-{
 public:
 	res_raster_image( //
 		utki::shared_ref<ruis::render::renderer> renderer,
 		utki::shared_ref<const render::texture_2d> tex
 	) :
-		fixed_texture( //
+		tex(utki::make_shared<image::texture>( //
 			std::move(renderer),
 			std::move(tex)
-		)
+		))
 	{}
 
 	utki::shared_ref<const image::texture> get(
@@ -89,12 +59,12 @@ public:
 		vector2 for_dims
 	) const override
 	{
-		return utki::make_shared_from(*this);
+		return this->tex;
 	}
 
 	r4::vector2<uint32_t> dims(const ruis::units& units) const noexcept override
 	{
-		return this->tex_2d.get().dims();
+		return this->tex.get().dims();
 	}
 
 	static utki::shared_ref<res_raster_image> load( //
@@ -140,7 +110,7 @@ public:
 		return ceil(wh).to<uint32_t>();
 	}
 
-	class svg_texture : public fixed_texture
+	class svg_texture : public image::texture
 	{
 		std::weak_ptr<const res_svg_image> parent;
 
@@ -150,7 +120,10 @@ public:
 			utki::shared_ref<const res_svg_image> parent,
 			utki::shared_ref<const render::texture_2d> tex
 		) :
-			fixed_texture(std::move(r), std::move(tex)),
+			image::texture(
+				std::move(r), //
+				std::move(tex)
+			),
 			parent(parent.to_shared_ptr())
 		{}
 
