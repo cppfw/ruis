@@ -74,6 +74,7 @@ ifeq ($(this__is_interactive),true)
     this_test_ld_path += $(dir $(this__libruisapp))
     $(eval $(prorab-run))
 else
+    this_test_cmd += --junit-out=out/$(c)/junit.xml
     $(eval $(prorab-test))
 endif
 

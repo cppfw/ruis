@@ -64,6 +64,17 @@ jobs:
           name: codecov-umbrella # optional
           fail_ci_if_error: true # optional (default = false)
           verbose: true # optional (default = false)
+      - name: upload test report to codecov.io
+        if: ${{ !cancelled() }}
+        uses: codecov/test-results-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          # do not search for coverage files automatically, upload only specified files
+          disable_search: true
+          files: tests/unit/out/gcov/junit.xml
+          name: codecov-umbrella # optional
+          fail_ci_if_error: true # optional (default = false)
+          verbose: true # optional (default = false)
 ##### sanitizer #####
   sanitizer:
     strategy:
