@@ -103,7 +103,11 @@ void image::render(const ruis::matrix4& matrix) const
 	ruis::matrix4 matr(matrix);
 	matr.scale(this->rect().d);
 
-	this->texture->render(matr, this->vao.get());
+	r.render(
+		matr, //
+		this->texture->tex_2d,
+		this->vao
+	);
 }
 
 ruis::vector2 image::measure(const ruis::vector2& quotum) const

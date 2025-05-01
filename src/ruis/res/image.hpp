@@ -70,19 +70,12 @@ public:
 	 */
 	class texture : public rasterimage::dimensioned
 	{
-	protected:
-		const utki::shared_ref<const ruis::render::renderer> renderer;
-
+	public:
 		const utki::shared_ref<const render::texture_2d> tex_2d;
 
-	public:
 		// NOLINTNEXTLINE(modernize-pass-by-value)
-		texture(
-			utki::shared_ref<const ruis::render::renderer> r, //
-			utki::shared_ref<const render::texture_2d> tex_2d
-		) :
+		texture(utki::shared_ref<const render::texture_2d> tex_2d) :
 			rasterimage::dimensioned(tex_2d.get().dims()),
-			renderer(std::move(r)),
 			tex_2d(std::move(tex_2d))
 		{}
 
@@ -93,31 +86,6 @@ public:
 		texture& operator=(texture&&) = delete;
 
 		virtual ~texture() = default;
-
-		void render(const matrix4& matrix) const
-		{
-			this->render(
-				matrix, //
-				this->renderer.get().obj().pos_tex_quad_01_vao.get()
-			);
-		}
-
-		/**
-		 * @brief Render a VAO with this texture.
-		 * @param matrix - transformation matrix to use for rendering.
-		 * @param vao - vertex array to use for rendering.
-		 */
-		virtual void render(
-			const matrix4& matrix, //
-			const render::vertex_array& vao
-		) const
-		{
-			this->renderer.get().shaders().pos_tex->render(
-				matrix, //
-				vao,
-				this->tex_2d.get()
-			);
-		}
 	};
 
 	/**

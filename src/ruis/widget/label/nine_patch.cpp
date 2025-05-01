@@ -142,7 +142,7 @@ void nine_patch::render_nine_patch(const mat4& matrix) const
 	// if there is current nine patch, there should be an image texture
 	ASSERT(this->image_texture)
 
-	// auto& r = this->context.get().renderer.get();
+	auto& r = this->context.get().renderer.get();
 
 	const auto& np = *this->cur_nine_patch;
 
@@ -151,8 +151,9 @@ void nine_patch::render_nine_patch(const mat4& matrix) const
 		ruis::mat4 matr(matrix);
 		matr.scale(this->content().rect().p);
 
-		this->image_texture->render(
+		r.render(
 			matr, //
+			this->image_texture->tex_2d,
 			np.vaos[0][0]
 		);
 	}
@@ -169,8 +170,9 @@ void nine_patch::render_nine_patch(const mat4& matrix) const
 			this->content().rect().p.y()
 		);
 
-		this->image_texture->render(
+		r.render(
 			matr, //
+			this->image_texture->tex_2d,
 			np.vaos[0][1]
 		);
 	}
@@ -187,8 +189,9 @@ void nine_patch::render_nine_patch(const mat4& matrix) const
 			this->content().rect().p.y()
 		);
 
-		this->image_texture->render(
+		r.render(
 			matr, //
+			this->image_texture->tex_2d,
 			np.vaos[0][2]
 		);
 	}
@@ -205,8 +208,9 @@ void nine_patch::render_nine_patch(const mat4& matrix) const
 			this->content().rect().d.y()
 		);
 
-		this->image_texture->render(
+		r.render(
 			matr, //
+			this->image_texture->tex_2d,
 			np.vaos[1][0]
 		);
 	}
@@ -217,8 +221,9 @@ void nine_patch::render_nine_patch(const mat4& matrix) const
 		matr.translate(this->content().rect().p);
 		matr.scale(this->content().rect().d);
 
-		this->image_texture->render(
+		r.render(
 			matr, //
+			this->image_texture->tex_2d,
 			np.vaos[1][1]
 		);
 	}
@@ -235,8 +240,9 @@ void nine_patch::render_nine_patch(const mat4& matrix) const
 			this->content().rect().d.y()
 		);
 
-		this->image_texture->render(
+		r.render(
 			matr, //
+			this->image_texture->tex_2d,
 			np.vaos[1][2]
 		);
 	}
@@ -253,8 +259,9 @@ void nine_patch::render_nine_patch(const mat4& matrix) const
 			this->rect().d.y() - this->content().rect().y2()
 		);
 
-		this->image_texture->render(
+		r.render(
 			matr, //
+			this->image_texture->tex_2d,
 			np.vaos[2][0]
 		);
 	}
@@ -271,8 +278,9 @@ void nine_patch::render_nine_patch(const mat4& matrix) const
 			this->rect().d.y() - this->content().rect().y2()
 		);
 
-		this->image_texture->render(
+		r.render(
 			matr, //
+			this->image_texture->tex_2d,
 			np.vaos[2][1]
 		);
 	}
@@ -286,8 +294,9 @@ void nine_patch::render_nine_patch(const mat4& matrix) const
 		matr.translate(content_x2_y2);
 		matr.scale(this->rect().d - content_x2_y2);
 
-		this->image_texture->render(
+		r.render(
 			matr, //
+			this->image_texture->tex_2d,
 			np.vaos[2][2]
 		);
 	}

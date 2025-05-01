@@ -81,5 +81,8 @@ void image_mouse_cursor::render(const ruis::matrix4& matrix) const
 	//	TRACE(<< "image_mouse_cursor::render(): this->cursorPos = " << this->cursorPos << " this->quadTex->dim() = " <<
 	// this->quadTex->dim() << std::endl)
 
-	this->quad_tex->render(matr, this->context.get().renderer.get().obj().pos_tex_quad_01_vao.get());
+	this->context.get().ren().render(
+		matr, //
+		this->quad_tex->tex_2d
+	);
 }

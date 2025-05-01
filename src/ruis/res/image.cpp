@@ -49,7 +49,6 @@ public:
 		utki::shared_ref<const render::texture_2d> tex
 	) :
 		tex(utki::make_shared<image::texture>( //
-			std::move(renderer),
 			std::move(tex)
 		))
 	{}
@@ -115,15 +114,8 @@ public:
 		std::weak_ptr<const res_svg_image> parent;
 
 	public:
-		svg_texture(
-			utki::shared_ref<const ruis::render::renderer> r,
-			utki::shared_ref<const res_svg_image> parent,
-			utki::shared_ref<const render::texture_2d> tex
-		) :
-			image::texture(
-				std::move(r), //
-				std::move(tex)
-			),
+		svg_texture(utki::shared_ref<const res_svg_image> parent, utki::shared_ref<const render::texture_2d> tex) :
+			image::texture(std::move(tex)),
 			parent(parent.to_shared_ptr())
 		{}
 
@@ -175,19 +167,24 @@ public:
 		svg_params.dpi = unsigned(units.dots_per_inch());
 		svg_params.dims_request = for_dims.to<unsigned>();
 
-		auto im = svgren::rasterize(*this->dom, svg_params);
+		auto im = svgren::rasterize(
+			*this->dom, //
+			svg_params
+		);
 
 		ASSERT(im.dims().x() != 0)
 		ASSERT(im.dims().y() != 0)
-		ASSERT(im.dims().x() * im.dims().y() == im.pixels().size(), [&](auto& o) {
-			o << "im.dims = " << im.dims() << " pixels.size() = " << im.pixels().size();
-		})
+		ASSERT(
+			im.dims().x() * im.dims().y() == im.pixels().size(), //
+			[&](auto& o) {
+				o << "im.dims = " << im.dims() << " pixels.size() = " << im.pixels().size();
+			}
+		)
 
 		auto dims = im.dims();
 
 		// clang-format off
 		auto img = utki::make_shared<svg_texture>(
-			this->renderer,
 			utki::make_shared_from(*this),
 			this->renderer.get().render_context.get().make_texture_2d(
 				std::move(im),
