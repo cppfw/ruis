@@ -59,13 +59,6 @@ utki::shared_ref<nine_patch> nine_patch::load(
 		fi
 	);
 
-	// TODO: is this check needed?
-	if (fraction_borders.left() + fraction_borders.right() > ruis::real(1) ||
-		fraction_borders.top() + fraction_borders.bottom() > ruis::real(1))
-	{
-		throw std::invalid_argument("nine_patch::load(): borders are bigger than image dimensions");
-	}
-
 	return utki::make_shared<nine_patch>( //
 		loader.renderer,
 		std::move(image),
