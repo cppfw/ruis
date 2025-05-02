@@ -1,3 +1,9 @@
+libruis (0.5.267) unstable; urgency=medium
+
+  * add rectangle_button
+
+ -- Ivan Gagis <igagis@gmail.com>  Sat, 03 May 2025 01:51:47 +0300
+
 libruis (0.5.266) unstable; urgency=medium
 
   * vcpkg
