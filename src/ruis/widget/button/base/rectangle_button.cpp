@@ -26,7 +26,6 @@ using namespace ruis;
 void rectangle_button::render(const matrix4& matrix) const
 {
 	this->rectangle::render(matrix);
-	this->padding::render(matrix);
 }
 
 void rectangle_button::on_pressed_change()
