@@ -1,5 +1,6 @@
 #include "rectangles_window.hpp"
 
+#include <ruis/widget/button/impl/rectangle_push_button.hpp>
 #include <ruis/widget/group/window.hpp>
 #include <ruis/widget/label/gap.hpp>
 #include <ruis/widget/label/rectangle.hpp>
@@ -99,7 +100,7 @@ utki::shared_ref<ruis::widget> make_rectangles_window(
                     }
                 }
             ),
-            m::rectangle(c,
+            m::rectangle_push_button(c,
                 {
                     .padding_params{
                         .borders{
@@ -109,15 +110,15 @@ utki::shared_ref<ruis::widget> make_rectangles_window(
                             20_pp // bottom
                         }
                     },
-                    .color_params{
-                        .color = 0xff000080
-                    },
                     .rectangle_params{
                         .rounded_corners = true
+                    },
+                    .rectangle_button_params{
+                        // TODO:
                     }
                 },
                 {
-                    m::text(c, {}, U"rounded corners 2"s)
+                    m::text(c, {}, U"rounded corners button"s)
                 }
             )
         }
