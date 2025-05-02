@@ -48,7 +48,7 @@ utki::shared_ref<cursor> cursor::load(
 		if (p.value == "image") {
 			image_res_id = &get_property_value(p);
 		} else if (p.value == "hotspot") {
-			hotspot = parse_vec2(p.children);
+			hotspot = make_vec2(p.children);
 			hotspot_set = true;
 		}
 	}

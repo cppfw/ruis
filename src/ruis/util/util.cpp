@@ -31,7 +31,10 @@ using namespace std::string_literals;
 
 using namespace ruis;
 
-ruis::vector2 ruis::parse_vec2(tml::forest::const_iterator begin, tml::forest::const_iterator end)
+ruis::vector2 ruis::make_vec2(
+	tml::forest::const_iterator begin, //
+	tml::forest::const_iterator end
+)
 {
 	ruis::vector2 ret;
 
@@ -49,46 +52,49 @@ ruis::vector2 ruis::parse_vec2(tml::forest::const_iterator begin, tml::forest::c
 	return ret;
 }
 
-ruis::rect ruis::parse_rect(const tml::forest& desc)
+ruis::rect ruis::make_rect(const tml::forest& desc)
 {
 	using std::min;
-	vector2 p = parse_vec2(desc.begin(), desc.end());
-	vector2 d = parse_vec2(utki::next(desc.begin(), min(size_t(2), desc.size())), desc.end());
+	vector2 p = make_vec2(
+		desc.begin(), //
+		desc.end()
+	);
+	vector2 d = make_vec2(
+		utki::next(
+			desc.begin(), //
+			min(size_t(2), desc.size())
+		),
+		desc.end()
+	);
 	return {p, d};
 }
 
 ruis::sides<real> ruis::make_sides(const tml::forest& desc)
 {
 	using std::min;
-	vector2 p = parse_vec2(desc.begin(), desc.end());
-	vector2 d = parse_vec2(utki::next(desc.begin(), min(size_t(2), desc.size())), desc.end());
-	return {p.x(), p.y(), d.x(), d.y()};
+	vector2 p = make_vec2(
+		desc.begin(), //
+		desc.end()
+	);
+	vector2 d = make_vec2(
+		utki::next(
+			desc.begin(), //
+			min(size_t(2), desc.size())
+		),
+		desc.end()
+	);
+	return {
+		p.x(), //
+		p.y(),
+		d.x(),
+		d.y()
+	};
 }
 
-length ruis::parse_dimension_value(const tml::leaf& l, const ruis::units& units)
+const tml::leaf& ruis::get_property_value(const tml::tree& p)
 {
-	// check if millimeters
-	if (l.length() >= 2 && l[l.length() - 1] == 'm' && l[l.length() - 2] == 'm') {
-		return length::make_mm(l.to_float());
-	} else if (l.length() >= 2 && l[l.length() - 1] == 'p' && l[l.length() - 2] == 'p') { // if in perception pixels
-		return length::make_pp(l.to_float());
+	if (p.children.size() != 1) {
+		throw std::invalid_argument("get_property_value(): property has no value");
 	}
-
-	if (l.empty()) {
-		return length::make_px(0);
-	}
-
-	return length::make_px(l.to_float());
-}
-
-dimension ruis::parse_layout_dimension_value(const tml::leaf& l, const ruis::units& units)
-{
-	if (l == "min") {
-		return dim::min;
-	} else if (l == "fill") {
-		return dim::fill;
-	} else if (l == "max") {
-		return dim::max;
-	}
-	return parse_dimension_value(l, units);
+	return p.children.front().value;
 }

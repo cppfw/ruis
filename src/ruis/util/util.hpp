@@ -44,7 +44,10 @@ namespace ruis {
  * @param viewport_dim - dimensions of the viewport.
  * @return Viewport matrix.
  */
-inline ruis::matrix4 make_viewport_matrix(const ruis::matrix4& initial, ruis::vector2 viewport_dim)
+inline ruis::matrix4 make_viewport_matrix(
+	const ruis::matrix4& initial, //
+	ruis::vector2 viewport_dim
+)
 {
 	ruis::matrix4 m(initial);
 
@@ -54,7 +57,10 @@ inline ruis::matrix4 make_viewport_matrix(const ruis::matrix4& initial, ruis::ve
 	return m;
 }
 
-ruis::vector2 parse_vec2(tml::forest::const_iterator begin, tml::forest::const_iterator end);
+ruis::vector2 make_vec2(
+	tml::forest::const_iterator begin, //
+	tml::forest::const_iterator end
+);
 
 /**
  * @brief Parse 2 values from tml as vector2.
@@ -63,20 +69,23 @@ ruis::vector2 parse_vec2(tml::forest::const_iterator begin, tml::forest::const_i
  *                vector components will be filled with latest parsed value.
  * @return parsed vector2.
  */
-inline ruis::vector2 parse_vec2(const tml::forest& desc)
+inline ruis::vector2 make_vec2(const tml::forest& desc)
 {
-	return parse_vec2(desc.begin(), desc.end());
+	return make_vec2(
+		desc.begin(), //
+		desc.end()
+	);
 }
 
 /**
- * @brief Parse chain of 4 tml nodes as rectangle.
+ * @brief Parse chain of 4 tml tree nodes as rectangle.
  * @param desc - chain of at least four nodes holding rectangle values.
  *               If there are less than 4 nodes in the chain then the rest of
  *               rectangle components will be filled with latest parsed value.
  *               If zero pointer is passed the resulting rectangle will be filled with zeros.
  * @return parsed rectangle.
  */
-ruis::rect parse_rect(const tml::forest& desc);
+ruis::rect make_rect(const tml::forest& desc);
 
 /**
  * @brief Parse chain of 4 tml nodes as sides.
@@ -89,30 +98,18 @@ ruis::rect parse_rect(const tml::forest& desc);
 ruis::sides<real> make_sides(const tml::forest& desc);
 
 /**
- * @brief Parse dimension value.
- * Parses value of dimension property from tml leaf.
- * In case the value is given in millimeters or points it will do the conversion.
- * @param l - tml leaf holding the value.
- * @param units - information about units. Can be obtained from context.
- * @return Parsed value in pixels.
+ * @brief Get TML property value.
+ * 
+ * TML property is just a subtree with one child:
+ * 
+ * @code
+ * property_name{property_value}
+ * @endcode
+ * 
+ * @param p - property TML tree.
+ * @return Property value TML leaf.
+ * @throw std::invalid_argument if property subtree's number of children is not 1.
  */
-length parse_dimension_value(const tml::leaf& l, const ruis::units& units);
-
-/**
- * @brief Parse layout dimension value.
- * Parses value of dimension value of layout parameters from tml.
- * @param l - tml leaf holding the value.
- * @param units - information about units. Can be obtained from context.
- * @return Parsed value.
- */
-ruis::dimension parse_layout_dimension_value(const tml::leaf& l, const ruis::units& units);
-
-inline const tml::leaf& get_property_value(const tml::tree& p)
-{
-	if (p.children.size() != 1) {
-		throw std::invalid_argument("get_property_value(): property has no value");
-	}
-	return p.children.front().value;
-}
+const tml::leaf& get_property_value(const tml::tree& p);
 
 } // namespace ruis
