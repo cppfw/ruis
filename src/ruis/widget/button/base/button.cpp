@@ -40,12 +40,18 @@ void button::set_pressed(bool pressed)
 		return;
 	}
 	this->params.pressed = pressed;
+
 	this->is_pressed_changed_notified = false;
 	this->on_pressed_change();
 }
 
 void button::on_pressed_change()
 {
+	// The button::on_pressed_change() can be called several times in a row because
+	// button multiple inheritance hierarchy can be quite complex, and each derived class can call
+	// button::on_pressed_change() from its own on_pressed_change() overridden method.
+	// To avoid invoking this->pressed_change_handler many times without reason we use the
+	// this->is_pressed_changed_notified flag.
 	if (this->is_pressed_changed_notified) {
 		return;
 	}
