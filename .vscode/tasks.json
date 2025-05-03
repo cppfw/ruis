@@ -150,6 +150,13 @@
             "group": "build"
         },
         {
+            "label": "run-tabbed_book",
+            "type": "shell",
+            "command": "make run-tabbed_book",
+            "problemMatcher": [],
+            "group": "build"
+        },
+        {
             "label": "run-tabbed_book-dbg",
             "type": "shell",
             "command": "make run-tabbed_book config=dbg",
