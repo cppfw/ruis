@@ -39,6 +39,16 @@ public:
 		return this->render_context.get();
 	}
 
+	/**
+	 * @brief Shorthand alias for render context.
+	 * @return this->render_context.get().
+	 */
+	// TODO: return const ref?
+	ruis::render::context& ctx() const noexcept
+	{
+		return this->render_context.get();
+	}
+
 	struct objects {
 		utki::shared_ref<const ruis::render::context::shaders> shaders;
 		utki::shared_ref<const vertex_array> empty_vertex_array;

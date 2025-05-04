@@ -36,10 +36,10 @@ blending_widget::blending_widget(
 
 void blending_widget::set_blending_to_renderer() const
 {
-	auto& r = this->context.get().renderer.get();
-	r.render_context.get().enable_blend(this->is_blending_enabled());
+	const auto& r = this->ctx().ren();
+	r.ctx().enable_blend(this->is_blending_enabled());
 	if (this->is_blending_enabled()) {
-		r.render_context.get().set_blend_func(
+		r.ctx().set_blend_func(
 			this->params.factors.src,
 			this->params.factors.dst,
 			this->params.factors.src_alpha,
