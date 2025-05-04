@@ -142,7 +142,7 @@ void nine_patch::render_nine_patch(const mat4& matrix) const
 	// if there is current nine patch, there should be an image texture
 	ASSERT(this->image_texture)
 
-	auto& r = this->context.get().ren();
+	const auto& r = this->ctx().ren();
 
 	const auto& np = *this->cur_nine_patch;
 
@@ -151,7 +151,7 @@ void nine_patch::render_nine_patch(const mat4& matrix) const
 		ruis::mat4 matr(matrix);
 		matr.scale(this->content().rect().p);
 
-		r.render(
+		this->ctx().ren().render(
 			matr, //
 			*this->image_texture,
 			np.vaos[0][0]

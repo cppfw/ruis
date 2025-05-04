@@ -101,6 +101,15 @@ public:
 	}
 
 	/**
+	 * @brief Shorthand alias for renderer.
+	 * @return this->renderer.get().
+	 */
+	const ruis::render::renderer& ren() const noexcept
+	{
+		return this->renderer.get();
+	}
+
+	/**
 	 * @brief Updater which updates updatables from within UI thread.
 	 * The updater calls active updatables periodically from the UI thread.
 	 */

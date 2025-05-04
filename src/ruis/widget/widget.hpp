@@ -45,22 +45,7 @@ class context;
 class container;
 
 /**
- * @brief Basic widget class.
- * From GUI script it can be instantiated as "widget".
- * It can have the following parameters:
- * @li @c lp - layout parameters description. See layout_params for details.
- * @li @c x - horizontal position within parent widget.
- * @li @c y - vertical position within parent widget.
- * @li @c dx - width of the widget.
- * @li @c dy - height of the widget.
- * @li @c id - id assigned to widget.
- * @li @c clip - enable (true) or disable (false) the scissor test for this widget boundaries when rendering. Default
- * value is false.
- * @li @c cache - enable (true) or disable (false) pre-rendering this widget to texture and render from texture for
- * faster rendering.
- * @li @c visible - should the widget be initially visible (true) or hidden (false). Default value is true.
- * @li @c enabled - should the widget be initially enabled (true) or disabled (false). Default value is true. Disabled
- * widgets do not get any input from keyboard or mouse.
+ * @brief Base widget class.
  */
 class widget : virtual public utki::shared
 {
@@ -71,6 +56,24 @@ class widget : virtual public utki::shared
 
 public:
 	const utki::shared_ref<ruis::context> context;
+
+	/**
+	 * @brief Shorthand alias for this->context.
+	 * @return Reference to the context of this widget.
+	 */
+	ruis::context& ctx() noexcept
+	{
+		return this->context;
+	}
+
+	/**
+	 * @brief Shorthand alias for this->context.
+	 * @return Constant reference to the context of this widget.
+	 */
+	const ruis::context& ctx() const noexcept
+	{
+		return this->context;
+	}
 
 private:
 	// TODO: make weak_ptr?
