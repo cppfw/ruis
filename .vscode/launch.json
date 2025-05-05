@@ -27,20 +27,20 @@
 					"ignoreFailures": true
 				}
 			],
-			"preLaunchTask": "build-dbg"
+			"preLaunchTask": "build-dev"
 		},
 		{
 			"name": "(gdb) app2",
 			"type": "cppdbg",
 			"request": "launch",
-			"program": "${workspaceFolder}/tests/app2/out/dbg/tests",
+			"program": "${workspaceFolder}/tests/app2/out/dev/tests",
 			"args": [],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}/tests/app2",
 			"environment": [
 				{
 					"name": "LD_LIBRARY_PATH",
-					"value": "../../src/out/dbg:../harness/modules/ruisapp/src/out/rel_no_install:../harness/modules/ruis-render-opengl/src/out/rel_no_install"
+					"value": "../../src/out/dev:../harness/modules/ruisapp/src/out/rel_no_install:../harness/modules/ruis-render-opengl/src/out/rel_no_install"
 				}
 			],
 			"externalConsole": false,
@@ -52,20 +52,20 @@
 					"ignoreFailures": true
 				}
 			],
-			"preLaunchTask": "build-dbg"
+			"preLaunchTask": "build-dev"
 		},
 		{
 			"name": "(gdb) aspect_ratio_proxy",
 			"type": "cppdbg",
 			"request": "launch",
-			"program": "${workspaceFolder}/tests/aspect_ratio_proxy/out/dbg/tests",
+			"program": "${workspaceFolder}/tests/aspect_ratio_proxy/out/dev/tests",
 			"args": [],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}/tests/aspect_ratio_proxy",
 			"environment": [
 				{
 					"name": "LD_LIBRARY_PATH",
-					"value": "../../src/out/dbg:../harness/modules/ruisapp/src/out/rel_no_install:../harness/modules/ruis-render-opengl/src/out/rel_no_install"
+					"value": "../../src/out/dev:../harness/modules/ruisapp/src/out/rel_no_install:../harness/modules/ruis-render-opengl/src/out/rel_no_install"
 				}
 			],
 			"externalConsole": false,
@@ -77,17 +77,17 @@
 					"ignoreFailures": true
 				}
 			],
-			"preLaunchTask": "build-dbg"
+			"preLaunchTask": "build-dev"
 		},
 		{
 			"name": "(gdb) busy",
 			"type": "cppdbg",
 			"request": "launch",
-			"program": "${workspaceFolder}/tests/busy/out/dbg/tests",
+			"program": "${workspaceFolder}/tests/busy/out/dev/tests",
 			"args": [],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}/tests/busy",
-			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/out/dbg:../../tests/harness/modules/ruisapp/src/out/rel_no_install"}],
+			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/out/dev:../../tests/harness/modules/ruisapp/src/out/rel_no_install"}],
 			"externalConsole": false,
 			"MIMode": "gdb",
 			"setupCommands": [
@@ -97,7 +97,7 @@
 					"ignoreFailures": true
 				}
 			],
-			"preLaunchTask": "build-dbg"
+			"preLaunchTask": "build-dev"
 		},
 		{
 			"name": "(gdb) book",
@@ -107,7 +107,7 @@
 			"args": [],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}/tests/book",
-			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/out/dbg:../harness/ruisapp/build"}],
+			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/out/dev:../harness/ruisapp/build"}],
 			"externalConsole": false,
 			"MIMode": "gdb",
 			"setupCommands": [
@@ -123,11 +123,11 @@
 			"name": "(gdb) tabbed_book",
 			"type": "cppdbg",
 			"request": "launch",
-			"program": "${workspaceFolder}/tests/tabbed_book/out/dbg/tests",
+			"program": "${workspaceFolder}/tests/tabbed_book/out/dev/tests",
 			"args": [],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}/tests/tabbed_book",
-			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/out/dbg:../harness/ruisapp/out/dbg"}],
+			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/out/dev:../harness/ruisapp/out/dev"}],
 			"externalConsole": false,
 			"MIMode": "gdb",
 			"setupCommands": [
@@ -147,7 +147,7 @@
 			"args": [],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}/tests/paint",
-			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/out/dbg:../harness/ruisapp/build"}],
+			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/out/dev:../harness/ruisapp/build"}],
 			"externalConsole": false,
 			"MIMode": "gdb",
 			"setupCommands": [
@@ -157,7 +157,7 @@
 					"ignoreFailures": true
 				}
 			],
-			"preLaunchTask": "build-dbg"
+			"preLaunchTask": "build-dev"
 		},
 		{
 			"name": "(gdb) widget_set",
@@ -167,7 +167,7 @@
 			"args": [],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}/tests/widget_set",
-			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/out/dbg:../harness/ruisapp/build"}],
+			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/out/dev:../harness/ruisapp/build"}],
 			"externalConsole": false,
 			"MIMode": "gdb",
 			"setupCommands": [
@@ -177,7 +177,7 @@
 					"ignoreFailures": true
 				}
 			],
-			"preLaunchTask": "build-dbg"
+			"preLaunchTask": "build-dev"
 		},
 		{
 			"name": "(gdb) get_all_widgets",
@@ -187,7 +187,7 @@
 			"args": [],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}/tests/get_all_widgets",
-			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/out/dbg:../harness/ruisapp/build"}],
+			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/out/dev:../harness/ruisapp/build"}],
 			"externalConsole": false,
 			"MIMode": "gdb",
 			"setupCommands": [
@@ -197,17 +197,17 @@
 					"ignoreFailures": true
 				}
 			],
-			"preLaunchTask": "build-dbg"
+			"preLaunchTask": "build-dev"
 		},
 		{
 			"name": "(gdb) unit inflating",
 			"type": "cppdbg",
 			"request": "launch",
-			"program": "${workspaceFolder}/tests/unit/out/dbg/tests",
+			"program": "${workspaceFolder}/tests/unit/out/dev/tests",
 			"args": ["--suite=inflating", "--test=inflating_left_alignment"],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}/tests/unit",
-			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/out/dbg:../harness/ruisapp/build"}],
+			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/out/dev:../harness/ruisapp/build"}],
 			"externalConsole": false,
 			"MIMode": "gdb",
 			"setupCommands": [
@@ -217,17 +217,17 @@
 					"ignoreFailures": true
 				}
 			],
-			"preLaunchTask": "build-dbg"
+			"preLaunchTask": "build-dev"
 		},
 		{
 			"name": "(gdb) unit",
 			"type": "cppdbg",
 			"request": "launch",
-			"program": "${workspaceFolder}/tests/unit/out/dbg/tests",
+			"program": "${workspaceFolder}/tests/unit/out/dev/tests",
 			"args": ["--suite=tabbed_book", "--test=tabbed_book_has_access_to_base_class_render_method"],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}/tests/unit",
-			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/out/dbg:../harness/modules/ruis-render-null/src/out/rel_no_install"}],
+			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/out/dev:../harness/modules/ruis-render-null/src/out/rel_no_install"}],
 			"externalConsole": false,
 			"MIMode": "gdb",
 			"setupCommands": [
@@ -237,7 +237,7 @@
 					"ignoreFailures": true
 				}
 			],
-			"preLaunchTask": "build-dbg"
+			"preLaunchTask": "build-dev"
 		}
 	]
 }

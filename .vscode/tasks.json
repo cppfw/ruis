@@ -22,9 +22,9 @@
             "group": "build"
         },
         {
-            "label": "build-dbg",
+            "label": "build-dev",
             "type": "shell",
-            "command": "make config=dbg",
+            "command": "make config=dev",
             "problemMatcher": [
                 "$gcc"
             ],
@@ -73,9 +73,9 @@
             "group": "build"
 		},
 		{
-            "label": "run-busy-dbg",
+            "label": "run-busy-dev",
             "type": "shell",
-            "command": "make run-busy config=dbg",
+            "command": "make run-busy config=dev",
             "problemMatcher": [],
             "group": "build"
 		},
@@ -87,9 +87,9 @@
             "group": "build"
 		},
 		{
-            "label": "run-align-dbg",
+            "label": "run-align-dev",
             "type": "shell",
-            "command": "make run-align config=dbg",
+            "command": "make run-align config=dev",
             "problemMatcher": [],
             "group": "build"
 		},
@@ -101,9 +101,9 @@
             "group": "build"
 		},
 		{
-            "label": "run-aspect_ratio_proxy-dbg",
+            "label": "run-aspect_ratio_proxy-dev",
             "type": "shell",
-            "command": "make run-aspect_ratio_proxy config=dbg",
+            "command": "make run-aspect_ratio_proxy config=dev",
             "problemMatcher": [],
             "group": "build"
         },
@@ -115,23 +115,23 @@
             "group": "build"
 		},
 		{
-            "label": "run-paint-dbg",
+            "label": "run-paint-dev",
             "type": "shell",
-            "command": "make run-paint config=dbg",
+            "command": "make run-paint config=dev",
             "problemMatcher": [],
             "group": "build"
 		},
 		{
-            "label": "run-paint-dbg-gles2",
+            "label": "run-paint-dev-gles2",
             "type": "shell",
-            "command": "make run-paint config=dbg ren=gles2",
+            "command": "make run-paint config=dev ren=gles2",
             "problemMatcher": [],
             "group": "build"
 		},
 		{
-            "label": "run-widget_set-dbg",
+            "label": "run-widget_set-dev",
             "type": "shell",
-            "command": "make run-widget_set config=dbg",
+            "command": "make run-widget_set config=dev",
             "problemMatcher": [],
             "group": "build"
 		},
@@ -143,9 +143,9 @@
             "group": "build"
 		},
 		{
-            "label": "run-book-dbg",
+            "label": "run-book-dev",
             "type": "shell",
-            "command": "make run-book config=dbg",
+            "command": "make run-book config=dev",
             "problemMatcher": [],
             "group": "build"
         },
@@ -157,9 +157,9 @@
             "group": "build"
         },
         {
-            "label": "run-tabbed_book-dbg",
+            "label": "run-tabbed_book-dev",
             "type": "shell",
-            "command": "make run-tabbed_book config=dbg",
+            "command": "make run-tabbed_book config=dev",
             "problemMatcher": [],
             "group": "build"
         },
@@ -171,9 +171,9 @@
             "group": "build"
 		},
 		{
-            "label": "test-dbg",
+            "label": "test-dev",
             "type": "shell",
-            "command": "make test config=dbg",
+            "command": "make test config=dev",
             "problemMatcher": [],
             "group": "build"
 		},
@@ -185,23 +185,23 @@
             "group": "build"
         },
         {
-            "label": "run-app-gles2-dbg",
+            "label": "run-app-gles2-dev",
             "type": "shell",
-            "command": "make run-app ren=gles2 config=dbg",
+            "command": "make run-app ren=gles2 config=dev",
             "problemMatcher": [],
             "group": "build"
         },
         {
-            "label": "run-app-gles2-wayland-dbg",
+            "label": "run-app-gles2-wayland-dev",
             "type": "shell",
-            "command": "make run-app ren=gles2 win=wayland config=dbg",
+            "command": "make run-app ren=gles2 win=wayland config=dev",
             "problemMatcher": [],
             "group": "build"
         },
         {
-            "label": "run-app-dbg",
+            "label": "run-app-dev",
             "type": "shell",
-            "command": "make run-app config=dbg",
+            "command": "make run-app config=dev",
             "problemMatcher": [],
             "group": "build"
         },
@@ -213,23 +213,23 @@
             "group": "build"
         },
         {
-            "label": "run-app2-dbg",
+            "label": "run-app2-dev",
             "type": "shell",
-            "command": "make run-app2 config=dbg",
+            "command": "make run-app2 config=dev",
             "problemMatcher": [],
             "group": "build"
         },
         {
-            "label": "run-easing-dbg",
+            "label": "run-easing-dev",
             "type": "shell",
-            "command": "make run-easing config=dbg",
+            "command": "make run-easing config=dev",
             "problemMatcher": [],
             "group": "build"
         },
         {
-            "label": "run-wire_area-dbg",
+            "label": "run-wire_area-dev",
             "type": "shell",
-            "command": "make run-wire_area config=dbg",
+            "command": "make run-wire_area config=dev",
             "problemMatcher": [],
             "group": "build"
         },

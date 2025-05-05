@@ -3,11 +3,13 @@ include prorab-license.mk
 include prorab-install-dbgsrc.mk
 include prorab-clang-format.mk
 
-this_name := ruis
+this__src_dir := ruis
+
+this_name := $(this__src_dir)$(this_dbg)
 
 this_soname := $(shell cat $(d)soname.txt)
 
-this_srcs += $(call prorab-src-dir, .)
+this_srcs += $(call prorab-src-dir, $(this__src_dir))
 
 $(eval $(call prorab-config, ../config))
 
@@ -26,20 +28,22 @@ endif
 
 this_ldlibs += $(shell pkg-config --libs freetype2)
 
+# TODO: add linking to dbg versions of all libs
 this_ldlibs += -l papki
 this_ldlibs += -l tml
 this_ldlibs += -l svgdom
 this_ldlibs += -l svgren
-this_ldlibs += -l utki
-this_ldlibs += -l m
+this_ldlibs += -l utki$(this_dbg)
 this_ldlibs += -l rasterimage
 this_ldlibs += -l veg
+
+this_ldlibs += -l m
 
 $(eval $(prorab-build-lib))
 
 $(eval $(prorab-clang-format))
 
-this_src_dir := $(this_name)
+this_src_dir := $(this__src_dir)
 this_license_file := ../LICENSE
 $(eval $(prorab-license))
 
