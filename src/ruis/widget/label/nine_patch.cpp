@@ -151,7 +151,7 @@ void nine_patch::render_nine_patch(const mat4& matrix) const
 		ruis::mat4 matr(matrix);
 		matr.scale(this->content().rect().p);
 
-		this->ctx().ren().render(
+		r.render(
 			matr, //
 			*this->image_texture,
 			np.vaos[0][0]
