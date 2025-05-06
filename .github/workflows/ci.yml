@@ -40,7 +40,9 @@ jobs:
       - name: prepare debian package
         run: myci-deb-prepare.sh
       - name: install deps
-        run: myci-deb-install-build-deps.sh
+        run: |
+          cd build
+          myci-deb-install-build-deps.sh
       - name: build
         run: make config=gcov
       - name: test
@@ -109,7 +111,9 @@ jobs:
       - name: prepare debian package
         run: myci-deb-prepare.sh
       - name: install deps
-        run: myci-deb-install-build-deps.sh
+        run: |
+          cd build
+          myci-deb-install-build-deps.sh
       - name: build
         run: make config=asan
       - name: test
