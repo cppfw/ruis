@@ -2,3 +2,5 @@ usr/include/ruis
 usr/lib/pkgconfig/ruis.pc
 usr/lib/libruis.so
 usr/lib/libruis.a
+usr/lib/libruis-dbg.so
+usr/lib/libruis-dbg.a

@@ -32,14 +32,27 @@ Package: libruis$(soname)
 Architecture: any
 Priority: extra
 Section: libs
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends:
+	${shlibs:Depends},
+	${misc:Depends}
 Description: GUI framework
  Cross platform GUI framework written in C++.
+
+Package: libruis-dbg$(soname)
+Architecture: any
+Priority: extra
+Section: libs
+Depends:
+	${shlibs:Depends},
+	${misc:Depends}
+Description: GUI framework
+ Debug version of libruis.
 
 Package: libruis-dev
 Architecture: any
 Depends:
 	libruis$(soname) (= ${binary:Version}),
+	libruis-dbg$(soname) (= ${binary:Version}),
 	${misc:Depends},
 	libutki-dev,
 	libpapki-dev,
@@ -56,8 +69,10 @@ Description: GUI framework development files
 Package: libruis$(soname)-dbgsrc
 Section: debug
 Architecture: all
+Priority: extra
 Depends:
 	libruis$(soname)-dbgsym (= ${binary:Version}),
+	libruis-dbg$(soname)-dbgsym (= ${binary:Version}),
 	${misc:Depends}
 Description: debugging sources for libruis$(soname) package.
 
