@@ -1,3 +1,9 @@
+libruis (0.5.269) unstable; urgency=medium
+
+  * debian: add dbg binary package
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 06 May 2025 13:13:58 +0300
+
 libruis (0.5.268) unstable; urgency=medium
 
   * O0
