@@ -8,14 +8,14 @@
 			"name": "(gdb) app",
 			"type": "cppdbg",
 			"request": "launch",
-			"program": "${workspaceFolder}/tests/app/out/dbg/tests",
+			"program": "${workspaceFolder}/tests/app/out/dev/tests",
 			"args": [],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}/tests/app",
 			"environment": [
 				{
 					"name": "LD_LIBRARY_PATH",
-					"value": "../../src/out/dbg:../harness/modules/ruisapp/src/out/rel_no_install:../harness/modules/ruis-render-opengl/src/out/rel_no_install"
+					"value": "../../src/out/dev:../harness/modules/ruisapp/src/out/rel_no_install/opengl-xorg:../harness/modules/ruis-render-opengl/src/out/rel_no_install"
 				}
 			],
 			"externalConsole": false,
@@ -40,7 +40,7 @@
 			"environment": [
 				{
 					"name": "LD_LIBRARY_PATH",
-					"value": "../../src/out/dev:../harness/modules/ruisapp/src/out/rel_no_install:../harness/modules/ruis-render-opengl/src/out/rel_no_install"
+					"value": "../../src/out/dev:../harness/modules/ruisapp/src/out/rel_no_install/opengl-xorg:../harness/modules/ruis-render-opengl/src/out/rel_no_install"
 				}
 			],
 			"externalConsole": false,
