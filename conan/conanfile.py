@@ -26,10 +26,11 @@ class RuisConan(ConanFile):
 		self.requires("freetype/[>=0.0.0]", transitive_headers=False, transitive_libs=True)
 
 	def build_requirements(self):
-		if self.settings.os != "Emscripten":
-			self.requires("tst/[>=0.3.29]@cppfw/main", visible=False)
 		self.tool_requires("prorab/[>=2.0.27]@cppfw/main")
 		self.tool_requires("prorab-extra/[>=0.2.57]@cppfw/main")
+
+		if self.settings.os != "Emscripten":
+			self.requires("tst/[>=0.3.29]@cppfw/main", visible=False)
 
 	def config_options(self):
 		if self.settings.os == "Windows":
@@ -56,14 +57,14 @@ class RuisConan(ConanFile):
 
 	def build(self):
 		if self.settings.os == "Emscripten":
-			self.run("make $MAKE_INCLUDE_DIRS_ARG config=wasm --directory=src")
+			self.run("make $MAKE_INCLUDE_DIRS_ARG config=emsc --directory=src")
 		else:
 			self.run("make $MAKE_INCLUDE_DIRS_ARG lint=off --directory=src")
 			# self.run("make $MAKE_INCLUDE_DIRS_ARG lint=off test")
 
 	def package(self):
 		if self.settings.os == "Emscripten":
-			src_rel_dir = os.path.join(self.build_folder, "src/out/wasm")
+			src_rel_dir = os.path.join(self.build_folder, "src/out/emsc")
 		else:
 			src_rel_dir = os.path.join(self.build_folder, "src/out/rel")
 
