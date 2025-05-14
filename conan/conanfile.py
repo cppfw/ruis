@@ -23,7 +23,11 @@ class RuisConan(ConanFile):
 		self.requires("svgren/[>=0.0.0]@cppfw/main", transitive_headers=False, transitive_libs=True)
 		self.requires("rasterimage/[>=0.1.3]@cppfw/main", transitive_headers=True, transitive_libs=True)
 		self.requires("tml/[>=0.0.0]@cppfw/main", transitive_headers=True, transitive_libs=True)
-		self.requires("freetype/[>=0.0.0]", transitive_headers=False, transitive_libs=True)
+
+		if self.settings.os == "Emscripten":
+			self.requires("freetype/[>=0.0.0]@cppfw/main", transitive_headers=False, transitive_libs=True)
+		else:
+			self.requires("freetype/[>=0.0.0]", transitive_headers=False, transitive_libs=True)
 
 	def build_requirements(self):
 		self.tool_requires("prorab/[>=2.0.27]@cppfw/main")
