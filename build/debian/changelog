@@ -1,3 +1,9 @@
+libruis (0.5.273) unstable; urgency=medium
+
+  * emsc: embed resources to executable 2
+
+ -- Ivan Gagis <igagis@gmail.com>  Thu, 15 May 2025 23:47:09 +0300
+
 libruis (0.5.272) unstable; urgency=medium
 
   * emsc: embed resources to executable
