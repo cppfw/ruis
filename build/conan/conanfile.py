@@ -66,11 +66,17 @@ class RuisConan(ConanFile):
 			self.run("make $MAKE_INCLUDE_DIRS_ARG lint=off --directory=src")
 			# self.run("make $MAKE_INCLUDE_DIRS_ARG lint=off test")
 
+	def deploy(self):
+		copy(self, "*", src=os.path.join(self.package_folder, "ruis_res"), dst=os.path.join(self.deploy_folder, "ruis_res"))
+
 	def package(self):
 		if self.settings.os == "Emscripten":
 			src_rel_dir = os.path.join(self.build_folder, "src/out/emsc")
 		else:
 			src_rel_dir = os.path.join(self.build_folder, "src/out/rel")
+
+		# copy resources
+		copy(conanfile=self, pattern="*", dst=os.path.join(self.package_folder, "ruis_res"), src=os.path.join(self.build_folder, "res/ruis_res"), keep_path=True)
 
 		src_dir = os.path.join(self.build_folder, "src")
 		dst_include_dir = os.path.join(self.package_folder, "include")

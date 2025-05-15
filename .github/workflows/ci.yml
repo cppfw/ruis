@@ -584,7 +584,7 @@ jobs:
         run: |
           conan remote add cppfw $MYCI_CONAN_REMOTE
           # NOTE: specifying empty test folder to skip the test stage
-          conan create conan --profile:build default --profile:host emscripten/conan.profile --build=missing --user $MYCI_CONAN_USER --channel main --version $PACKAGE_VERSION --test-folder ""
+          conan create build/conan --profile:build default --profile:host build/emscripten/conan.profile --build=missing --user $MYCI_CONAN_USER --channel main --version $PACKAGE_VERSION --test-folder ""
       - name: deploy conan package
         run: |
           conan remote login --password $MYCI_CONAN_PASSWORD cppfw $MYCI_CONAN_USER
