@@ -67,7 +67,7 @@ class RuisConan(ConanFile):
 			# self.run("make $MAKE_INCLUDE_DIRS_ARG lint=off test")
 
 	def deploy(self):
-		copy(self, "*", src=os.path.join(self.package_folder, "ruis_res"), dst=os.path.join(self.deploy_folder, "ruis_res"))
+		copy(conanfile=self, pattern="*", src=os.path.join(self.package_folder, "ruis_res"), dst=os.path.join(self.deploy_folder, "ruis_res"), keep_path=True)
 
 	def package(self):
 		if self.settings.os == "Emscripten":
