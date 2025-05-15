@@ -1,3 +1,9 @@
+libruis (0.5.272) unstable; urgency=medium
+
+  * emsc: embed resources to executable
+
+ -- Ivan Gagis <igagis@gmail.com>  Thu, 15 May 2025 23:29:44 +0300
+
 libruis (0.5.271) unstable; urgency=medium
 
   * emsc: use custom freetype
