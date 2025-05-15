@@ -98,6 +98,10 @@ class RuisConan(ConanFile):
 	def package_info(self):
 		self.cpp_info.libs = [self.name]
 
+		# for emscripten, embed the resources to the linked executable
+		if self.settings.os == "Emscripten":
+			self.cpp_info.exelinkflags = ['--embed-file', "@".join(os.path.join(self.package_folder, "ruis_res"), "ruis_res")]
+
 	def package_id(self):
 		# change package id only when minor or major version changes, i.e. when ABI breaks
 		self.info.requires.minor_mode()
