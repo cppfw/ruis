@@ -34,7 +34,9 @@ myci_declare_library(${name}
         papki
         tml
         utki
+        agg
         veg
         svgren
         Freetype
+        JPEG
 )
