@@ -4,12 +4,6 @@ set(CMAKE_TOOLCHAIN_FILE $ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake)
 
 project(test)
 
-get_cmake_property(_variableNames VARIABLES)
-list (SORT _variableNames)
-foreach (_variableName ${_variableNames})
-    message(STATUS "${_variableName}=${${_variableName}}")
-endforeach()
-
 find_package(utki CONFIG REQUIRED)
 find_package(papki CONFIG REQUIRED)
 find_package(rasterimage CONFIG REQUIRED)
