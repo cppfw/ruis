@@ -38,6 +38,8 @@ myci_declare_library(${name}
         agg
         veg
         mikroxml
+        cssom
+        svgdom
         svgren
         Freetype
     EXTERNAL_DEPENDENCIES
