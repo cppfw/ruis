@@ -4,10 +4,25 @@ set(CMAKE_TOOLCHAIN_FILE $ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake)
 
 project(test)
 
-# TODO: are these needed here explicitly?
+get_cmake_property(_variableNames VARIABLES)
+list (SORT _variableNames)
+foreach (_variableName ${_variableNames})
+    message(STATUS "${_variableName}=${${_variableName}}")
+endforeach()
+
 find_package(utki CONFIG REQUIRED)
 find_package(papki CONFIG REQUIRED)
+find_package(rasterimage CONFIG REQUIRED)
+find_package(r4 CONFIG REQUIRED)
+find_package(tml CONFIG REQUIRED)
+find_package(agg CONFIG REQUIRED)
+find_package(veg CONFIG REQUIRED)
+find_package(mikroxml CONFIG REQUIRED)
+find_package(cssom CONFIG REQUIRED)
+find_package(svgdom CONFIG REQUIRED)
+find_package(svgren CONFIG REQUIRED)
 find_package(ZLIB REQUIRED)
+find_package(JPEG REQUIRED)
 find_package(Freetype CONFIG REQUIRED)
 
 find_package(ruis CONFIG REQUIRED)
