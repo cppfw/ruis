@@ -15,8 +15,9 @@ myci_add_source_files(srcs
 )
 
 set(rsrs)
-myci_add_resource_directory(rsrs
-    "${CMAKE_CURRENT_SOURCE_DIR}/../../res/ruis_res"
+myci_add_resource_files(rsrs
+    DIRECTORY
+        ../../res/ruis_res
 )
 
 myci_declare_library(${name}
@@ -38,5 +39,6 @@ myci_declare_library(${name}
         veg
         svgren
         Freetype
+    EXTERNAL_DEPENDENCIES
         JPEG
 )
