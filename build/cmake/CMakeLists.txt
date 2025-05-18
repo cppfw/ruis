@@ -37,6 +37,7 @@ myci_declare_library(${name}
         utki
         agg
         veg
+        mikroxml
         svgren
         Freetype
     EXTERNAL_DEPENDENCIES
