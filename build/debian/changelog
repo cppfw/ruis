@@ -1,3 +1,9 @@
+libruis (0.5.275) unstable; urgency=medium
+
+  * cmake: ext deps
+
+ -- Ivan Gagis <igagis@gmail.com>  Wed, 21 May 2025 00:25:26 +0300
+
 libruis (0.5.274) unstable; urgency=medium
 
   * cmake: myci
