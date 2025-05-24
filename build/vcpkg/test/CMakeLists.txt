@@ -16,6 +16,7 @@ find_package(cssom CONFIG REQUIRED)
 find_package(svgdom CONFIG REQUIRED)
 find_package(svgren CONFIG REQUIRED)
 find_package(ZLIB REQUIRED)
+find_package(PNG REQUIRED)
 find_package(JPEG REQUIRED)
 find_package(Freetype CONFIG REQUIRED)
 

@@ -448,7 +448,6 @@ jobs:
     steps:
     - name: git clone
       uses: actions/checkout@v4
-      with: {submodules: true}
     - name: get myci scripts
       uses: actions/checkout@v4
       with:
