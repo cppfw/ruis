@@ -462,7 +462,7 @@ jobs:
       uses: myci-actions/export-env-var-powershell@main
       with: {name: VCPKG_ROOT, value: "$VCPKG_INSTALLATION_ROOT"}
     - name: prepare vcpkg port
-      run: myci-vcpkg-prepare.sh --git-ref ${{ github.sha }}
+      run: myci-vcpkg-prepare.ps1 -gitref ${{ github.sha }}
     - name: test vcpkg port
       run: |
         cd build/vcpkg/test
