@@ -458,9 +458,9 @@ jobs:
     - name: add myci to PATH
       uses: myci-actions/export-env-var-powershell@main
       with: {name: PATH, value: "$env:Path;myci/src/powershell"}
-    - name: set VCPKG_ROOT
-      uses: myci-actions/export-env-var-powershell@main
-      with: {name: VCPKG_ROOT, value: "$VCPKG_INSTALLATION_ROOT"}
+    # - name: set VCPKG_ROOT
+    #   uses: myci-actions/export-env-var-powershell@main
+    #   with: {name: VCPKG_ROOT, value: "$VCPKG_INSTALLATION_ROOT"}
     - name: prepare vcpkg port
       run: myci-vcpkg-prepare.ps1 -gitref ${{ github.sha }}
     - name: test vcpkg port
