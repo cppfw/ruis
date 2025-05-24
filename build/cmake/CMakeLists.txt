@@ -8,6 +8,7 @@ project(${name})
 find_package(myci CONFIG REQUIRED)
 
 find_package(JPEG REQUIRED)
+find_package(PNG REQUIRED)
 find_package(Freetype REQUIRED CONFIG)
 
 set(srcs)
@@ -46,5 +47,6 @@ myci_declare_library(${name}
         svgren
     EXTERNAL_DEPENDENCIES
         JPEG::JPEG
+        PNG::PNG
         Freetype::Freetype
 )
