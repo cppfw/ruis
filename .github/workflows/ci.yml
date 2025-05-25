@@ -468,7 +468,7 @@ jobs:
       run: |
         cd build/vcpkg/test
         cmake .
-        cmake --build .
+        cmake --build . --parallel
         ./Debug/test.exe
     - name: upload vcpkg logs to artifacts
       if: always() # even if previous steps fail, this one needs to be run
