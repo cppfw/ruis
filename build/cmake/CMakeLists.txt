@@ -18,17 +18,11 @@ myci_add_source_files(srcs
     RECURSIVE
 )
 
-set(rsrs)
-myci_add_resource_files(rsrs
-    DIRECTORY
-        ../../res/ruis_res
-)
-
 myci_declare_library(${name}
     SOURCES
         ${srcs}
-    RESOURCES
-        ${rsrs}
+    RESOURCE_DIRECTORY
+        ../../res/ruis_res
     PUBLIC_INCLUDE_DIRECTORIES
         ../../src
     INSTALL_INCLUDE_DIRECTORIES
