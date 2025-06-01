@@ -1,3 +1,9 @@
+libruis (0.5.277) unstable; urgency=medium
+
+  * cmake: copy resources
+
+ -- Ivan Gagis <igagis@gmail.com>  Sun, 01 Jun 2025 17:38:42 +0300
+
 libruis (0.5.276) unstable; urgency=medium
 
   * cmake: add PNG dep
