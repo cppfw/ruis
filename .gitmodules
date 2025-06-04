@@ -12,7 +12,7 @@
 	branch = main
 [submodule "tool-configs"]
 	path = tool-configs
-	url = ../../cppfw/tool-configs
+	url = ../tool-configs
 	branch = main
 [submodule "tests/harness/modules/ruis-render-null"]
 	path = tests/harness/modules/ruis-render-null
