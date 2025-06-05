@@ -42,6 +42,8 @@ ifeq ($(os),linux)
     $(eval $(call this__modules_deps,opengles,xorg))
     $(eval $(call this__modules_deps,opengl,wayland))
     $(eval $(call this__modules_deps,opengles,wayland))
+    $(eval $(call this__modules_deps,opengl,sdl))
+    $(eval $(call this__modules_deps,opengles,sdl))
 else
     $(eval $(call this__modules_deps,opengl,))
 endif
