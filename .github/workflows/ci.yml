@@ -44,10 +44,7 @@ jobs:
           cd build
           myci-deb-install-build-deps.sh
       - name: build
-        run: |
-          ulimit -n 65000
-          ulimit -a
-          make config=gcov
+        run: make config=gcov
       - name: test
         run: make config=gcov test
       - name: generate coverage report
