@@ -1,5 +1,5 @@
 class Libruis < Formula
-  desc "C++ cross-platform OpenGL based GUI library."
+  desc "C++ cross-platform GUI library."
   homepage "https://github.com/cppfw/ruis"
   url "https://github.com/cppfw/ruis/archive/$(version).tar.gz"
   sha256 "$(sha256)"
