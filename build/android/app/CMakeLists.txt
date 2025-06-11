@@ -11,9 +11,9 @@ cmake_minimum_required(VERSION 3.4.1)
 # automatically packages shared libraries with your APK.
 
 file(GLOB_RECURSE srcs
-        "../../tests/app/src/*.cpp"
-        "../../tests/harness/ruisapp/*.cpp"
-        "../../tests/harness/opengles2/*.cpp"
+        "../../../tests/app/src/*.cpp"
+        "../../../tests/harness/modules/ruisapp/src/*.cpp"
+        "../../../tests/harness/modules/ruis-render-opengles/src/*.cpp"
     )
 
 include (${ANDROID_GRADLE_NATIVE_BUNDLE_PLUGIN_MK})
@@ -36,7 +36,7 @@ add_library(
 include_directories(
         ../../src/
         ../../tests/harness/modules/ruisapp/src
-        ../../tests/harness/modules/ruis-render-opengles2/src
+        ../../tests/harness/modules/ruis-render-opengles/src
 )
 
 message(LINK = ${ANDROID_GRADLE_NATIVE_MODULES})
