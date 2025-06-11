@@ -295,12 +295,12 @@ jobs:
       with: {name: PACKAGE_VERSION, value: $(myci-deb-version.sh)}
     - name: build
       run: |
-        cd android
+        cd build/android
         ./gradlew copy_aar --warning-mode all
         myci-apply-version.sh --version $PACKAGE_VERSION *.pom.in
         myci-apply-version.sh --version $PACKAGE_VERSION *.aar.in --filename-only
     - name: deploy
-      run: myci-deploy-maven-nexus.sh --base-url https://gagis.hopto.org/nexus --repo android android/$PACKAGE_NAME-$PACKAGE_VERSION.aar
+      run: myci-deploy-maven-nexus.sh --base-url https://gagis.hopto.org/nexus --repo android build/android/$PACKAGE_NAME-$PACKAGE_VERSION.aar
       if: startsWith(github.ref, 'refs/tags/')
 ##### msys2 #####
   msys2:
