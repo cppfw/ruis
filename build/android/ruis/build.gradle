@@ -19,7 +19,7 @@ android {
     }
 
     nativeBundleExport {
-        headerDir = "${project.projectDir}/../../src"
+        headerDir = "${project.projectDir}/../../../src"
         bundleStatic = true
         includeHeaderFilter.add("**/*.hpp")
     }
@@ -70,7 +70,7 @@ task copy_aar(type: Zip) {
     from zipTree("build/outputs/aar/" + aarName + "-static-release.aar")
 
     // pack ruis resource files to AAR
-    from("../../res/ruis_res"){
+    from("../../../res/ruis_res"){
         into('assets/ruis_res')
     }
 }
