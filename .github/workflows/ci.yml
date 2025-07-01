@@ -46,7 +46,8 @@ jobs:
       - name: test
         run: make config=gcov test
       - name: generate coverage report
-        run: pipx run gcovr --gcov-ignore-parse-errors --exclude-throw-branches --filter src/ --cobertura > cobertura.xml
+        # due to some bug in gcov, we need to use --gcov-ignore-parse-errors=negative_hits.warn
+        run: pipx run gcovr --gcov-ignore-parse-errors=negative_hits.warn --exclude-throw-branches --filter src/ --cobertura > cobertura.xml
       - name: upload coverage report to artifacts
         uses: actions/upload-artifact@v4
         with:
