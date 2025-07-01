@@ -48,7 +48,7 @@ jobs:
       - name: test
         run: make config=gcov test
       - name: generate coverage report
-        run: pipx run gcovr --exclude-throw-branches --filter src/ --cobertura > cobertura.xml
+        run: pipx run gcovr --gcov-ignore-parse-errors --exclude-throw-branches --filter src/ --cobertura > cobertura.xml
       - name: upload coverage report to artifacts
         uses: actions/upload-artifact@v4
         with:
