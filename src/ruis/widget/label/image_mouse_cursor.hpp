@@ -22,7 +22,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #pragma once
 
 #include "../../res/cursor.hpp"
-#include "../widget.hpp"
+#include "../container.hpp"
 
 namespace ruis {
 
@@ -33,7 +33,9 @@ namespace ruis {
  *
  * @param cursor - reference to cursor resource.
  */
-class image_mouse_cursor : public widget
+// The mouse_cursor_widget is a container in order to still get mouse move events
+// when some child widget has captured the mouse when mouse button is pressed.
+class image_mouse_cursor : public container
 {
 public:
 	struct parameters {
@@ -51,12 +53,14 @@ public:
 	struct all_parameters {
 		layout_parameters layout_params;
 		widget::parameters widget_params;
+		container::parameters container_params;
 		parameters mouse_cursor_params;
 	};
 
 	image_mouse_cursor(
 		utki::shared_ref<ruis::context> context, //
-		all_parameters params
+		all_parameters params,
+		widget_list children
 	);
 
 	image_mouse_cursor(const image_mouse_cursor&) = delete;
@@ -75,16 +79,19 @@ public:
 };
 
 namespace make {
-inline utki::shared_ref<ruis::image_mouse_cursor> image_mouse_cursor(
+/**
+ * @brief Construct 'image_mouse_cursor' widget.
+ * Default layout for children is pile.
+ * @param context - ruis context.
+ * @param params - 'image_mouse_cursor' widget parameters.
+ * @param children - children of the 'image_mouse_cursor' widget.
+ * @return newly created 'image_mouse_cursor' widget.
+ */
+utki::shared_ref<ruis::image_mouse_cursor> image_mouse_cursor(
 	utki::shared_ref<ruis::context> context, //
-	ruis::image_mouse_cursor::all_parameters params
-)
-{
-	return utki::make_shared<ruis::image_mouse_cursor>(
-		std::move(context), //
-		std::move(params)
-	);
-}
+	ruis::image_mouse_cursor::all_parameters params,
+	ruis::widget_list children = {}
+);
 } // namespace make
 
 } // namespace ruis

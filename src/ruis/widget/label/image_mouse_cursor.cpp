@@ -29,13 +29,23 @@ using namespace ruis;
 
 image_mouse_cursor::image_mouse_cursor(
 	utki::shared_ref<ruis::context> context, //
-	all_parameters params
+	all_parameters params,
+	widget_list children
 ) :
 	widget(
 		std::move(context), //
 		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
+	// clang-format off
+	container(
+		std::move(this->context), //
+		{
+			.container_params = std::move(params.container_params)
+		},
+		std::move(children)
+	),
+	// clang-format on
 	params(std::move(params.mouse_cursor_params))
 {}
 
@@ -51,12 +61,12 @@ bool image_mouse_cursor::on_mouse_move(const mouse_move_event& e)
 	if (e.pointer_id == 0) {
 		this->cursor_pos = e.pos;
 	}
-	return this->widget::on_mouse_move(e);
+	return this->container::on_mouse_move(e);
 }
 
 void image_mouse_cursor::render(const ruis::matrix4& matrix) const
 {
-	this->widget::render(matrix);
+	this->container::render(matrix);
 
 	if (!this->params.cursor) {
 		return;
@@ -78,11 +88,25 @@ void image_mouse_cursor::render(const ruis::matrix4& matrix) const
 	matr.translate(-this->params.cursor->hotspot());
 	matr.scale(this->quad_tex->dims().to<real>());
 
-	//	TRACE(<< "image_mouse_cursor::render(): this->cursorPos = " << this->cursorPos << " this->quadTex->dim() = " <<
-	// this->quadTex->dim() << std::endl)
-
 	this->context.get().ren().render(
 		matr, //
 		*this->quad_tex
+	);
+}
+
+utki::shared_ref<ruis::image_mouse_cursor> ruis::make::image_mouse_cursor(
+	utki::shared_ref<ruis::context> context, //
+	ruis::image_mouse_cursor::all_parameters params,
+	ruis::widget_list children
+)
+{
+	if (!params.container_params.layout) {
+		params.container_params.layout = ruis::layout::pile;
+	}
+
+	return utki::make_shared<ruis::image_mouse_cursor>(
+		std::move(context), //
+		std::move(params),
+		std::move(children)
 	);
 }
