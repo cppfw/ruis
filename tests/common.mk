@@ -10,15 +10,24 @@ this_cxxflags += -isystem ../../src
 this_cxxflags += -isystem ../harness/modules/ruisapp/src
 
 this__libruis_dir := ../../src/out/$(c)/
-this__libruis := $(this__libruis_dir)libruis$(dot_so)
+this__libruis := $(this__libruis_dir)libruis$(this_dbg)$(dot_so)
 
 ifeq ($(os),windows)
-    this_ldlibs += -lmingw32 -mwindows # these should go first, otherwise linker will complain about undefined reference to WinMain
-    this_ldlibs += -lglew32 -lopengl32 -lz -lfreetype
+     # these should go first, otherwise linker will complain about undefined reference to WinMain
+    this_ldlibs += -l mingw32
+    this_ldlibs += -mwindows
+
+    this_ldlibs += -l glew32
+    this_ldlibs += -l opengl32
+    this_ldlibs += -l z
+    this_ldlibs += -l freetype
 else ifeq ($(os),macosx)
-    this_ldlibs += -framework OpenGL -framework Cocoa
+    this_ldlibs += -framework OpenGL
+    this_ldlibs += -framework Cocoa
     this_ldlibs += $(shell pkg-config --libs freetype2)
-    this_cxxflags += -stdlib=libc++ # this is needed to be able to use c++11 std lib
+
+    # this is needed to be able to use c++11 std lib
+    this_cxxflags += -stdlib=libc++
 
     this_ldflags += -rdynamic
 else ifeq ($(os),linux)
@@ -59,7 +68,12 @@ ifeq ($(this__is_interactive),true)
     this_ldlibs += $(this__libruis_render)
 endif
 
-this_ldlibs += $(this__libruis) -lpapki -ltml -lutki -lm
+this_ldlibs += $(this__libruis)
+
+this_ldlibs += -l papki$(this_dbg)
+this_ldlibs += -l tml$(this_dbg)
+this_ldlibs += -l utki$(this_dbg)
+this_ldlibs += -l m
 
 this_no_install := true
 
