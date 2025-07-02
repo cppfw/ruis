@@ -1,3 +1,9 @@
+libruis (0.5.279) unstable; urgency=medium
+
+  * debian: use dbg packages
+
+ -- Ivan Gagis <igagis@gmail.com>  Wed, 02 Jul 2025 23:11:38 +0300
+
 libruis (0.5.278) unstable; urgency=medium
 
   * cmake: config transient deps
