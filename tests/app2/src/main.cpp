@@ -11,7 +11,7 @@ public:
 			"ruis-tests",
 			{
 				.dims = {1024, 800}
-			}
+    }
 		)
 	{
 		this->gui.init_standard_widgets(*this->get_res_file("../../res/ruis_res/"));

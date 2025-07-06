@@ -298,45 +298,33 @@ real texture_font::get_advance_internal(std::u32string_view str, unsigned tab_si
 
 ruis::rect texture_font::get_bounding_box_internal(std::u32string_view str, unsigned tab_size) const
 {
-	ruis::rect ret;
-
-	if (str.empty()) {
-		ret.p.set(0);
-		ret.d.set(0);
-		return ret;
-	}
-
-	ASSERT(!str.empty())
-	auto s = str.begin();
-
-	// init with bounding box of the first glyph
-	auto [cur_advance, left, right, top, bottom] = [&]() {
-		const glyph& g = this->get_glyph(*s);
-		++s;
-
-		return std::make_tuple(g.advance, g.top_left.x(), g.bottom_right.x(), g.top_left.y(), g.bottom_right.y());
-	}();
+	real advance = 0;
+	real left = 0;
+	real right = 0;
+	real top = 0;
+	real bottom = 0;
 
 	real space_advance = this->get_glyph(U' ').advance;
 
-	for (; s != str.end(); ++s) {
-		if (*s == U'\t') {
-			cur_advance += space_advance * real(tab_size);
+	for (auto c : str) {
+		if (c == U'\t') {
+			advance += space_advance * real(tab_size);
 		} else {
-			const glyph& g = this->get_glyph(*s);
+			const glyph& g = this->get_glyph(c);
 
 			using std::min;
 			using std::max;
 
 			top = min(g.top_left.y(), top);
 			bottom = max(g.bottom_right.y(), bottom);
-			left = min(cur_advance + g.top_left.x(), left);
-			right = max(cur_advance + g.bottom_right.x(), right);
+			left = min(advance + g.top_left.x(), left);
+			right = max(advance + g.bottom_right.x(), right);
 
-			cur_advance += g.advance;
+			advance += g.advance;
 		}
 	}
 
+	ruis::rect ret;
 	ret.p.x() = left;
 	ret.p.y() = top;
 	ret.d.x() = right - left;
@@ -344,7 +332,7 @@ ruis::rect texture_font::get_bounding_box_internal(std::u32string_view str, unsi
 
 	ASSERT(ret.d.x() >= 0)
 	ASSERT(ret.d.y() >= 0)
-	// TRACE(<< "texture_font::get_bounding_box_internal(): ret = " << ret << std::endl)
+
 	return ret;
 }
 
