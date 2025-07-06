@@ -57,13 +57,13 @@ using namespace ruis::make;
 class application : public ruisapp::application{
 public:
 	application() :
-			ruisapp::application("ruis-tests", [](){
-				// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers)
-				ruisapp::window_params wp(r4::vector2<unsigned>(1024, 800));
-				wp.buffers.set(ruisapp::window_params::buffer::depth);
-
-		return wp;
-			}())
+			ruisapp::application(
+				"ruis-tests",
+				{
+					.dims = {1024, 800},
+					.buffers = {ruisapp::buffer::depth}
+				}
+			)
 	{
 		this->gui.init_standard_widgets(*this->get_res_file("../../res/ruis_res/"));
 

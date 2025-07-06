@@ -16,11 +16,12 @@ using namespace ruis::make;
 class application : public ruisapp::application{
 public:
 	application() :
-			ruisapp::application("ruis-tests", [](){
-				ruisapp::window_params wp(r4::vector2<unsigned>(1024, 800));
-
-				return wp;
-			}())
+			ruisapp::application(
+				"ruis-tests",
+				{
+					.dims = {1024, 800}
+				}
+			)
 	{
 		this->gui.init_standard_widgets(*this->get_res_file("../../res/ruis_res/"));
 

@@ -26,11 +26,12 @@ namespace m{
 class application : public ruisapp::application{
 public:
 	application() :
-			ruisapp::application("ruis-tests", [](){
-				ruisapp::window_params wp(r4::vector2<unsigned>(640, 480));
-
-				return wp;
-			}())
+			ruisapp::application(
+				"ruis-tests",
+				{
+					.dims = {640, 480}
+				}
+			)
 	{
 		this->gui.init_standard_widgets(*this->get_res_file("../../res/ruis_res/"));
 
