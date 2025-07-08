@@ -34,12 +34,16 @@ std::tuple<unsigned, std::u32string_view::const_iterator> read_number(
 	std::u32string_view::const_iterator end
 )
 {
+	// TODO: use std::inplace_vector when switch to C++26
 	std::array<char, 4> number_chars{};
+
 	auto number_i = number_chars.begin();
 
 	auto i = begin;
+	// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic, "TODO: resolve when std::inplace_vector is available")
 	for (; i != end; ++i, ++number_i) {
 		if (*i == U'}') {
+			// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-pointer-arithmetic, "TODO: resolve when std::inplace_vector is available")
 			++i;
 			break;
 		}
@@ -86,7 +90,7 @@ std::vector<format_chunk> ruis::parse_format(std::u32string_view fmt)
 
 	for (auto pos = fmt.cbegin(); pos != fmt.cend();) {
 		auto c = *pos;
-		++pos;
+		pos = std::next(pos);
 		if (c == U'{') {
 			auto [number, new_pos] = read_number(pos, fmt.cend());
 			pos = new_pos;
