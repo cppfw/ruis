@@ -580,9 +580,9 @@ void tree_view::provider::notify_item_add(utki::span<const size_t> index)
 
 	auto i = old_iter_index.begin();
 	auto j = index.begin();
-	for (; i != old_iter_index.end() && j != index.end(); ++i, ++j) {
+	for (; i != old_iter_index.end() && j != index.end(); i = std::next(i), j = std::next(j)) {
 		if (*i != *j) {
-			if (j != index.end() - 1) {
+			if (j != std::prev(index.end())) {
 				break; // items are in different branches, no correction needed
 			}
 
@@ -591,7 +591,7 @@ void tree_view::provider::notify_item_add(utki::span<const size_t> index)
 			}
 			break;
 		} else {
-			if (j == index.end() - 1) {
+			if (j == std::prev(index.end())) {
 				++(*i);
 				break;
 			}
