@@ -649,9 +649,9 @@ void tree_view::provider::notify_item_remove(utki::span<const size_t> index)
 	{
 		auto i = cur_iter_index.begin();
 		auto j = index.begin();
-		for (; i != cur_iter_index.end() && j != index.end(); ++i, ++j) {
+		for (; i != cur_iter_index.end() && j != index.end(); i = std::next(i), j = std::next(j)) {
 			if (*i != *j) {
-				if (j != index.end() - 1) {
+				if (j != std::prev(index.end())) {
 					break; // items are in different branches, no correction is needed
 				}
 
@@ -660,7 +660,7 @@ void tree_view::provider::notify_item_remove(utki::span<const size_t> index)
 				}
 				break;
 			} else {
-				if (j == index.end() - 1) {
+				if (j == std::prev(index.end())) {
 					cur_iter_index = utki::make_vector(index);
 					break;
 				}
