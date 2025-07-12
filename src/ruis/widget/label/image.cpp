@@ -67,36 +67,7 @@ void image::render(const ruis::matrix4& matrix) const
 
 	if (!this->texture) {
 		this->texture = img->get(this->context.get().units, this->rect().d).to_shared_ptr();
-
-		// TODO: remove repeat feature
-		if (this->params.repeat_v.x() || this->params.repeat_v.y()) {
-			std::array<r4::vector2<float>, 4> tex_coords{};
-			ASSERT(quad_fan_tex_coords.size() == tex_coords.size())
-			auto src = quad_fan_tex_coords.cbegin();
-			auto dst = tex_coords.begin();
-			auto scale = this->rect().d.comp_div(img->dims(this->context.get().units).to<real>());
-			if (!this->params.repeat_v.x()) {
-				scale.x() = 1;
-			}
-			if (!this->params.repeat_v.y()) {
-				scale.y() = 1;
-			}
-			for (; dst != tex_coords.end(); ++src, ++dst) {
-				*dst = src->comp_mul(scale);
-			}
-			// clang-format off
-			this->vao = r.render_context.get().make_vertex_array(
-				{
-					r.obj().quad_01_vbo,
-					r.render_context.get().make_vertex_buffer(utki::make_span(tex_coords))
-				},
-				r.obj().quad_fan_indices,
-				render::vertex_array::mode::triangle_fan
-			);
-			// clang-format on
-		} else {
-			this->vao = this->context.get().renderer.get().obj().pos_tex_quad_01_vao;
-		}
+		this->vao = this->context.get().renderer.get().obj().pos_tex_quad_01_vao;
 	}
 	ASSERT(this->texture)
 

@@ -46,7 +46,6 @@ public:
 		std::shared_ptr<const ruis::res::image> img;
 		std::shared_ptr<const ruis::res::image> disabled_img; // image for disabled state
 		bool keep_aspect_ratio = false;
-		r4::vector2<bool> repeat_v = r4::vector2<bool>(false); // TODO: deprecate?
 	};
 
 private:
@@ -95,17 +94,6 @@ public:
 	}
 
 	void on_resize() override;
-
-	const decltype(params.repeat_v)& repeat() const noexcept
-	{
-		return this->params.repeat_v;
-	}
-
-	void set_repeat(decltype(params.repeat_v) r)
-	{
-		this->params.repeat_v = r;
-		this->texture.reset();
-	}
 
 	void set_keep_aspect_ratio(bool keep_aspect_ratio)
 	{
