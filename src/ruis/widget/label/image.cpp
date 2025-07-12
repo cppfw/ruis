@@ -43,12 +43,6 @@ image::image( //
 	vao(this->context.get().renderer.get().obj().empty_vertex_array)
 {}
 
-namespace {
-const std::array<r4::vector2<float>, 4> quad_fan_tex_coords = {
-	{r4::vector2<float>(0, 0), r4::vector2<float>(1, 0), r4::vector2<float>(1, 1), r4::vector2<float>(0, 1)}
-};
-} // namespace
-
 void image::render(const ruis::matrix4& matrix) const
 {
 	auto img = this->params.img.get();
