@@ -76,7 +76,7 @@ public:
 	}
 
 	/**
-	 * @brief Aply formatting to this wording.
+	 * @brief Apply formatting to this wording.
 	 * @param args - replacement strings.
 	 * @return Reference to this instance.
 	 */

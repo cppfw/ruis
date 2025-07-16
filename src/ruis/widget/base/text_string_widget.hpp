@@ -49,6 +49,11 @@ protected:
 
 	void recompute_bounding_box();
 
+	/**
+	 * @brief Set text.
+	 * Public interface allows setting either explicit UTF-32 string or
+	 * localized wording. This is why this function is not public.
+	 */
 	void set_text(string text);
 
 public:
