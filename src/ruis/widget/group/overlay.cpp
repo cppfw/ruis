@@ -100,26 +100,26 @@ utki::shared_ref<widget> overlay::show_popup(
 )
 {
 	// clang-format off
+	auto mp = ruis::make::mouse_proxy(this->context,
+		{
+			.layout_params{
+				.dims{ruis::dim::fill, ruis::dim::fill}
+			},
+			.widget_params{
+				.rectangle{
+					{0, 0}, // set left top corner
+					{1, 1} // dimensions do not matter
+				}
+			}
+		}
+	);
+
 	auto c = popup_wrapper::make(this->context,
 		{
-			ruis::make::mouse_proxy(this->context,
-				{
-					.layout_params{
-						.dims{ruis::dim::fill, ruis::dim::fill}
-					},
-					.widget_params{
-						.rectangle{
-							{0, 0}, // set left top corner
-							{1, 1} // dimensions do not matter
-						}
-					}
-				}
-			)
+			mp
 		}
 	);
 	// clang-format on
-
-	auto mp = utki::dynamic_reference_cast<mouse_proxy>(c.get().children().back());
 
 	mp.get().mouse_button_handler = //
 		[cntr{utki::make_weak(c)}](

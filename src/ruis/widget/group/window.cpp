@@ -412,7 +412,7 @@ window::window(
 
 void ruis::window::setup_widgets()
 {
-	// TODO: use get_widget_as()
+	// TODO: refactor to avoid widget lookup by id.
 	this->content_area = this->try_get_widget_as<container>("ruis_content");
 	ASSERT(this->content_area)
 
@@ -422,42 +422,39 @@ void ruis::window::setup_widgets()
 	this->title_bg = this->try_get_widget_as<rectangle>("ruis_window_title_bg");
 	ASSERT(this->title_bg);
 
-	std::function<decltype(mouse_proxy::mouse_button_handler)(cursor_iter&)> make_mouse_button_handler =
-		[this](cursor_iter& iter) {
-			return decltype(mouse_proxy::mouse_button_handler)([this,
-																&iter](mouse_proxy& mp, const mouse_button_event& e) {
-				if (e.button != mouse_button::left) {
-					return false;
-				}
+	auto make_mouse_button_handler = [this](cursor_iter& iter) {
+		return decltype(mouse_proxy::mouse_button_handler)([this, &iter](mouse_proxy& mp, const mouse_button_event& e) {
+			if (e.button != mouse_button::left) {
+				return false;
+			}
 
-				this->mouse_captured = e.is_down;
+			this->mouse_captured = e.is_down;
 
-				if (e.is_down) {
-					this->capture_point = e.pos;
-				} else {
-					if (!mp.is_hovered()) {
-						this->context.get().cursor_stack.pop(iter);
-					}
-				}
-				return true;
-			});
-		};
-
-	std::function<decltype(ruis::mouse_proxy::hovered_change_handler)(ruis::mouse_cursor, cursor_iter&)>
-		make_hovered_change_handler = [this](ruis::mouse_cursor cursor, cursor_iter& iter) {
-			return [this, cursor, &iter](mouse_proxy& mp, unsigned pointer_id) {
-				// LOG("hover = " << mp.is_hovered() << std::endl)
-				// LOG("this->mouse_captured = " << this->mouse_captured << std::endl)
-				if (this->mouse_captured) {
-					return;
-				}
-				if (mp.is_hovered()) {
-					iter = this->context.get().cursor_stack.push(cursor);
-				} else {
+			if (e.is_down) {
+				this->capture_point = e.pos;
+			} else {
+				if (!mp.is_hovered()) {
 					this->context.get().cursor_stack.pop(iter);
 				}
-			};
+			}
+			return true;
+		});
+	};
+
+	auto make_hovered_change_handler = [this](ruis::mouse_cursor cursor, cursor_iter& iter) {
+		return [this, cursor, &iter](mouse_proxy& mp, unsigned pointer_id) {
+			// LOG("hover = " << mp.is_hovered() << std::endl)
+			// LOG("this->mouse_captured = " << this->mouse_captured << std::endl)
+			if (this->mouse_captured) {
+				return;
+			}
+			if (mp.is_hovered()) {
+				iter = this->context.get().cursor_stack.push(cursor);
+			} else {
+				this->context.get().cursor_stack.pop(iter);
+			}
 		};
+	};
 
 	{
 		auto caption = this->try_get_widget_as<mouse_proxy>("ruis_caption_proxy");
