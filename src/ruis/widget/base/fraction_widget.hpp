@@ -58,6 +58,9 @@ public:
 	 * @param fraction - the fraction value to set, must be from [0:1].
 	 * @param notify_change - whether to call the fraction_change_handler or not.
 	 */
-	void set_fraction(real fraction, bool notify_change = true);
+	void set_fraction(
+		real fraction, //
+		bool notify_change = true
+	);
 };
 } // namespace ruis

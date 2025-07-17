@@ -133,7 +133,10 @@ real list::get_scroll_factor() const noexcept
 		(real(real(length) + this->first_tail_item_offset / this->first_tail_item_dim) * average_item_dim);
 }
 
-void list::set_scroll_factor(real factor)
+void list::set_scroll_factor(
+	real factor, //
+	bool notify_scroll_change
+)
 {
 	if (!this->get_provider() || this->get_provider()->count() == 0) {
 		return;
@@ -173,7 +176,9 @@ void list::set_scroll_factor(real factor)
 
 	this->update_children_list();
 
-	this->notify_scroll_pos_changed(old_index, old_offset);
+	if (notify_scroll_change) {
+		this->notify_scroll_pos_changed(old_index, old_offset);
+	}
 }
 
 // TODO: refactor

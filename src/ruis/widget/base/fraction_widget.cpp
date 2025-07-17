@@ -48,7 +48,10 @@ void fraction_widget::set_fraction(real fraction, bool notify_change)
 	if (notify_change) {
 		this->on_fraction_change();
 	} else {
+		// We still need to call the on_fraction_change() callback, so to make sure the handler
+		// is not invoked by default implementation of the callback, unset it for the time of calling the callback.
 		auto f = std::move(this->fraction_change_handler);
+		ASSERT(!this->fraction_change_handler)
 		this->on_fraction_change();
 		this->fraction_change_handler = std::move(f);
 	}

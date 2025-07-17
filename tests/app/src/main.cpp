@@ -171,13 +171,19 @@ public:
 
 			vertical_slider.fraction_change_handler = [vl](ruis::fraction_widget& slider){
 				if(auto l = vl.lock()){
-					l->set_scroll_factor(slider.get_fraction());
+					l->set_scroll_factor(
+						slider.get_fraction(), //
+						false
+					);
 				}
 			};
 
 			vertical_list->scroll_change_handler = [vs](ruis::list& l){
 				if(auto s = vs.lock()){
-					s->set_fraction(l.get_scroll_factor(), false);
+					s->set_fraction(
+						l.get_scroll_factor(), //
+						false
+					);
                     s->set_band_fraction(l.get_scroll_band());
 				}
 			};
@@ -237,7 +243,10 @@ public:
 
 			pan_list->scroll_change_handler = [hs](ruis::list& l){
 				if(auto h = hs.lock()){
-					h->set_fraction(l.get_scroll_factor(), false);
+					h->set_fraction(
+						l.get_scroll_factor(), //
+						false // do not notify
+					);
 					h->set_band_fraction(l.get_scroll_band());
 				}
 			};
@@ -245,7 +254,10 @@ public:
 			horizontal_slider->fraction_change_handler = [hl](ruis::fraction_widget& slider){
 //				TRACE(<< "horizontal slider factor = " << slider.factor() << std::endl)
 				if(auto l = hl.lock()){
-					l->set_scroll_factor(slider.get_fraction());
+					l->set_scroll_factor(
+						slider.get_fraction(), //
+						false // do not notify
+					);
 				}
 			};
 
