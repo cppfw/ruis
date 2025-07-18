@@ -251,8 +251,10 @@ void drop_down_box::show_drop_down_menu()
 		return true;
 	};
 
-	this->current_drop_down_menu =
-		olay->show_popup(np, this->pos_in_ancestor(vector2(0), olay) + vector2(0, this->rect().d.y())).to_shared_ptr();
+	this->current_drop_down_menu = olay->show_popup(
+		np, //
+		this->pos_in_ancestor(vector2(0), olay) + vector2(0, this->rect().d.y())
+	);
 }
 
 void drop_down_box::handle_mouse_button_up(bool is_first_button_up_event)
