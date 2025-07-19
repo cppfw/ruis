@@ -103,6 +103,12 @@ public:
 
 		virtual utki::shared_ref<widget> get_widget(
 			utki::span<const size_t> index, //
+			bool is_collapsed,
+			widget_list prefix_widgets
+		);
+
+		virtual utki::shared_ref<widget> get_widget(
+			utki::span<const size_t> index, //
 			bool is_collapsed
 		) = 0;
 

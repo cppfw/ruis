@@ -344,15 +344,16 @@ utki::shared_ref<widget> tree_view::provider::get_widget(size_t index)
 		list = &n->children;
 	}
 
-	auto ret = ruis::make::row(this->context, {});
+	widget_list prefix_widgets;
+	// auto ret = ruis::make::row(this->context, {});
 
 	ASSERT(is_last_item_in_parent.size() == path.size())
 
 	for (unsigned i = 0; i != path.size() - 1; ++i) {
 		if (is_last_item_in_parent[i]) {
-			ret.get().push_back(make_empty_space_indent(this->context));
+			prefix_widgets.push_back(make_empty_space_indent(this->context));
 		} else {
-			ret.get().push_back(make_vertical_line_indent(this->context));
+			prefix_widgets.push_back(make_vertical_line_indent(this->context));
 		}
 	}
 
@@ -407,12 +408,31 @@ utki::shared_ref<widget> tree_view::provider::get_widget(size_t index)
 			};
 			widget.get().push_back(w);
 		}
-		ret.get().push_back(widget);
+		prefix_widgets.push_back(widget);
 	}
 
-	ret.get().push_back(this->get_widget(utki::make_span(path), is_collapsed));
+	// ret.get().push_back(this->get_widget(utki::make_span(path), is_collapsed));
 
-	return ret;
+	return this->get_widget(
+		utki::make_span(path), //
+		is_collapsed,
+		std::move(prefix_widgets)
+	);
+}
+
+utki::shared_ref<widget> tree_view::provider::get_widget(
+	utki::span<const size_t> index, //
+	bool is_collapsed,
+	widget_list prefix_widgets
+)
+{
+	prefix_widgets.push_back(this->get_widget(index, is_collapsed));
+
+	return make::row(
+		this->context, //
+		{},
+		std::move(prefix_widgets)
+	);
 }
 
 void tree_view::provider::recycle(size_t index, utki::shared_ref<widget> w)
