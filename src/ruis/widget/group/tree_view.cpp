@@ -345,7 +345,6 @@ utki::shared_ref<widget> tree_view::provider::get_widget(size_t index)
 	}
 
 	widget_list prefix_widgets;
-	// auto ret = ruis::make::row(this->context, {});
 
 	ASSERT(is_last_item_in_parent.size() == path.size())
 
@@ -408,10 +407,8 @@ utki::shared_ref<widget> tree_view::provider::get_widget(size_t index)
 			};
 			widget.get().push_back(w);
 		}
-		prefix_widgets.push_back(widget);
+		prefix_widgets.emplace_back(std::move(widget));
 	}
-
-	// ret.get().push_back(this->get_widget(utki::make_span(path), is_collapsed));
 
 	return this->get_widget(
 		utki::make_span(path), //
