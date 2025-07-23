@@ -88,7 +88,10 @@ void tree_view::set_provider(std::shared_ptr<provider> item_provider)
 		// is a private base of tree_view::provider, so not possible
 		// to use std::static_pointer_cast() because it does not see the
 		// private base class
-		std::shared_ptr<list_provider>(item_provider, item_provider.get())
+		std::shared_ptr<list_provider>(
+			item_provider, //
+			item_provider.get()
+		)
 	);
 }
 
@@ -386,7 +389,7 @@ utki::shared_ref<widget> tree_view::provider::get_widget(size_t index)
 				}
 
 				if (is_collapsed) {
-					this->uncollapse(utki::make_span(path));
+					this->expand(utki::make_span(path));
 				} else {
 					this->collapse(utki::make_span(path));
 				}
@@ -423,7 +426,7 @@ utki::shared_ref<widget> tree_view::provider::get_widget(
 	widget_list prefix_widgets
 )
 {
-	prefix_widgets.push_back(this->get_widget(index, is_collapsed));
+	prefix_widgets.emplace_back(this->get_widget(index, is_collapsed));
 
 	return make::row(
 		this->context, //
@@ -524,10 +527,9 @@ void tree_view::provider::set_children(decltype(iter) i, size_t num_children)
 	i->value.subtree_size = num_children;
 }
 
-void tree_view::provider::uncollapse(utki::span<const size_t> index)
+void tree_view::provider::expand(utki::span<const size_t> index)
 {
 	auto num_children = this->count(index);
-	//	TRACE(<< "tree_view::provider::uncollapse(): s = " << s << std::endl)
 	if (num_children == 0) {
 		return;
 	}

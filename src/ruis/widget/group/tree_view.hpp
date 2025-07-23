@@ -58,6 +58,11 @@ public:
 
 	~tree_view() override = default;
 
+	/**
+	 * @brief tree_view item provider base class.
+	 * User subclasses this class to provide tree_view an access to the tree data model
+	 * and provide a way to represent the data as widgets.
+	 */
 	// NOLINTNEXTLINE(bugprone-incorrect-enable-shared-from-this, "std::shared_from_this is public via utki::shared")
 	class provider :
 		public virtual utki::shared, //
@@ -92,45 +97,95 @@ public:
 		void set_children(decltype(iter) i, size_t num_children);
 
 	public:
+		/**
+		 * @brief Get stored ruis context.
+		 * @return The stored ruis context.
+		 */
 		const utki::shared_ref<ruis::context>& get_context() noexcept
 		{
 			return this->context;
 		}
 
+		/**
+		 * @brief Construct tree_view items provider.
+		 * @param context - ruis context to store. The context can be obtained using the get_context() member function.
+		 */
 		provider(utki::shared_ref<ruis::context> context) :
 			list_provider(std::move(context))
 		{}
 
+		/**
+		 * @brief Create item widget.
+		 * The tree_view will call this function when it needs an item widget for the given index.
+		 * @param index - index into the data model to create an item widget for.
+		 * @param is_collapsed - whether the item is collapsed or not.
+		 * @param prefix_widgets - a list of tree_view specific widgets, i.e. colapse/expande button and path indicators.
+		 *                         To be placed inside of a row.
+		 * @return The item widget.
+		 */
 		virtual utki::shared_ref<widget> get_widget(
 			utki::span<const size_t> index, //
 			bool is_collapsed,
 			widget_list prefix_widgets
 		);
 
+		/**
+		 * @brief Create item widget.
+		 * This function is called by the get_widghet(index, is_collapsed, prefix_widgets) overload.
+		 * @param index - index into the data model to create an item widget for.
+		 * @param is_collapsed - whether the item is collapsed or not.
+		 * @return The item widget.
+		 */
 		virtual utki::shared_ref<widget> get_widget(
 			utki::span<const size_t> index, //
-			bool is_collapsed
+			bool is_collapsed // TODO: is this argument needed?
 		) = 0;
 
+		/**
+		 * @brief Recycle item widget.
+		 * The tree_view will call this function when it no longer needs the item widget.
+		 * This happens when the item widget goes beyond the tree_view bounds due to scrolling.
+		 * @param index - index into the data model for which the widget is to be recycled.
+		 * @param w - the widget to be recycled.
+		 */
 		virtual void recycle(
 			utki::span<const size_t> index, //
 			const utki::shared_ref<widget>& w
 		)
 		{}
 
+		/**
+		 * @brief Get number of tree node's children.
+		 * The tree_view will call this function when it needs to know the number of
+		 * children of a tree node.
+		 * @param index - index of the tree node to gen number of children for.
+		 */
 		virtual size_t count(utki::span<const size_t> index) const noexcept = 0;
 
 		/**
 		 * @brief Reload callback.
-		 * Called from owner tree_view's on_reload().
+		 * Called by owner tree_view's on_reload().
 		 */
 		void on_reload() override {}
 
-		void uncollapse(utki::span<const size_t> index);
+		void expand(utki::span<const size_t> index);
 		void collapse(utki::span<const size_t> index);
 
+		/**
+		 * @brief Notify about any model change.
+		 * Calling this function will cause the tree_view to re-create and
+		 * re-layout it's contents.
+		 */
 		void notify_model_change();
 
+		/**
+		 * @brief Notify about tree item contents change.
+		 * Use this function to notify about changes to the tree data which do not involve
+		 * adding new items or removing items. I.e. when tree topology does not chnage.
+		 * Calling this function will cause the tree_view to re-create and
+		 * re-layout it's contents.
+		 * This operation should be faster than notify_model_change().
+		 */
 		void notify_item_change();
 
 		/**
@@ -145,37 +200,62 @@ public:
 		 *                to an item before which a new item has been added.
 		 */
 		void notify_item_add(utki::span<const size_t> index);
-
-	private:
 	};
 
-public:
 	/**
 	 * @brief Scroll position changed signal.
-	 * Emitted when list's scroll position has changed.
+	 * Emitted when tree_view's vertical or horizontal scroll position has changed.
 	 */
 	std::function<void(tree_view&)> scroll_change_handler;
 
+	/**
+	 * @brief Set items provider.
+	 * @param provider - items provider.
+	 */
 	void set_provider(std::shared_ptr<provider> provider = nullptr);
 
+	/**
+	 * @brief Set vertical scroll position by factor.
+	 * @param factor - new scroll position specified by factor from [0:1].
+	 */
 	void set_vertical_scroll_factor(real factor)
 	{
 		this->item_list.get().set_scroll_factor(factor);
 	}
 
+	/**
+	 * @brief Set horizontal scroll position by factor.
+	 * @param factor - new scroll position specified by factor from [0:1].
+	 */
 	void set_horizontal_scroll_factor(real factor)
 	{
 		this->set_scroll_factor(vector2(factor, 0));
 	}
 
+	/**
+	 * @brief Get scroll position.
+	 * @return Vector of (horizontal scroll factor, vertical scroll factor).
+	 */
 	vector2 get_scroll_factor() const
 	{
-		return vector2(this->scroll_area::get_scroll_factor().x(), this->item_list.get().get_scroll_factor());
+		return vector2(
+			this->scroll_area::get_scroll_factor().x(), //
+			this->item_list.get().get_scroll_factor()
+		);
 	}
 
+	/**
+	 * @brief Get scroll band.
+	 * Get scroll band size.
+	 * The scroll band size is a fraction of [0:1] interval.
+	 * @return Vector of (horizontal scroll band, vertical scroll band).
+	 */
 	vector2 get_scroll_band() const noexcept
 	{
-		return vector2(this->scroll_area::get_visible_area_fraction().x(), this->item_list.get().get_scroll_band());
+		return vector2(
+			this->scroll_area::get_visible_area_fraction().x(), //
+			this->item_list.get().get_scroll_band()
+		);
 	}
 
 private:
@@ -183,7 +263,7 @@ private:
 };
 
 namespace make {
-inline utki::shared_ref<tree_view> tree_view(
+inline utki::shared_ref<ruis::tree_view> tree_view(
 	utki::shared_ref<ruis::context> context, //
 	ruis::tree_view::all_parameters params
 )
