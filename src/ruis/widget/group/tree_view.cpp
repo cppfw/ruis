@@ -415,18 +415,16 @@ utki::shared_ref<widget> tree_view::provider::get_widget(size_t index)
 
 	return this->get_widget(
 		utki::make_span(path), //
-		is_collapsed,
 		std::move(prefix_widgets)
 	);
 }
 
 utki::shared_ref<widget> tree_view::provider::get_widget(
 	utki::span<const size_t> index, //
-	bool is_collapsed,
 	widget_list prefix_widgets
 )
 {
-	prefix_widgets.emplace_back(this->get_widget(index, is_collapsed));
+	prefix_widgets.emplace_back(this->get_widget(index));
 
 	return make::row(
 		this->context, //

@@ -118,28 +118,22 @@ public:
 		 * @brief Create item widget.
 		 * The tree_view will call this function when it needs an item widget for the given index.
 		 * @param index - index into the data model to create an item widget for.
-		 * @param is_collapsed - whether the item is collapsed or not.
 		 * @param prefix_widgets - a list of tree_view specific widgets, i.e. colapse/expande button and path indicators.
 		 *                         To be placed inside of a row.
 		 * @return The item widget.
 		 */
 		virtual utki::shared_ref<widget> get_widget(
 			utki::span<const size_t> index, //
-			bool is_collapsed,
 			widget_list prefix_widgets
 		);
 
 		/**
 		 * @brief Create item widget.
-		 * This function is called by the get_widghet(index, is_collapsed, prefix_widgets) overload.
+		 * This function is called by the get_widghet(index, prefix_widgets) overload.
 		 * @param index - index into the data model to create an item widget for.
-		 * @param is_collapsed - whether the item is collapsed or not.
 		 * @return The item widget.
 		 */
-		virtual utki::shared_ref<widget> get_widget(
-			utki::span<const size_t> index, //
-			bool is_collapsed // TODO: is this argument needed?
-		) = 0;
+		virtual utki::shared_ref<widget> get_widget(utki::span<const size_t> index) = 0;
 
 		/**
 		 * @brief Recycle item widget.
