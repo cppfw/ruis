@@ -23,6 +23,36 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
-gap::gap(utki::shared_ref<ruis::context> context, all_parameters params) :
-	widget(std::move(context), std::move(params.layout_params), std::move(params.widget_params))
+gap::gap(
+	utki::shared_ref<ruis::context> context,
+	all_parameters params //
+) :
+	widget(
+		std::move(context),
+		std::move(params.layout_params),
+		std::move(params.widget_params) //
+	),
+	color_widget(
+		this->context,
+		std::move(params.color_params) //
+	)
 {}
+
+void gap::render(const mat4& matrix) const
+{
+	if (this->get_current_color().is_undefined()) {
+		return;
+	}
+
+	// draw rectangle
+	auto& r = this->context.get().renderer.get();
+
+	ruis::matrix4 matr(matrix);
+	matr.scale(this->rect().d);
+
+	r.shaders().color_pos->render(
+		matr, //
+		r.obj().pos_quad_01_vao.get(),
+		this->get_current_color().to_vec4f()
+	);
+}

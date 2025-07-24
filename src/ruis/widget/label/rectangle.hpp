@@ -37,7 +37,8 @@ class rectangle :
 {
 public:
 	struct parameters {
-		bool rounded_corners = false;
+		// TODO: comment
+		sides<styled<length>> corner_radius;
 	};
 
 private:

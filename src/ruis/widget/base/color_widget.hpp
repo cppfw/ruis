@@ -47,7 +47,10 @@ private:
 	parameters params;
 
 protected:
-	color_widget(utki::shared_ref<ruis::context> context, parameters params);
+	color_widget(
+		utki::shared_ref<ruis::context> context,
+		parameters params //
+	);
 
 public:
 	color_widget(const color_widget&) = delete;

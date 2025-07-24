@@ -21,23 +21,35 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "../widget.hpp"
+#include "../base/color_widget.hpp"
 
 namespace ruis {
 
-class gap : virtual public widget
+class gap : public color_widget
 {
 public:
 	struct all_parameters {
 		layout_parameters layout_params;
 		widget::parameters widget_params;
+		color_widget::parameters color_params = {
+			.color = {},
+			.disabled_color = {} //
+		};
 	};
 
-	gap(utki::shared_ref<ruis::context> context, all_parameters params);
+	gap(
+		utki::shared_ref<ruis::context> context,
+		all_parameters params //
+	);
+
+	void render(const mat4& matrix) const override;
 };
 
 namespace make {
-inline utki::shared_ref<ruis::gap> gap(utki::shared_ref<ruis::context> context, ruis::gap::all_parameters params)
+inline utki::shared_ref<ruis::gap> gap(
+	utki::shared_ref<ruis::context> context, //
+	ruis::gap::all_parameters params
+)
 {
 	return utki::make_shared<ruis::gap>( //
 		std::move(context),

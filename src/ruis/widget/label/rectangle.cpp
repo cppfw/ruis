@@ -380,10 +380,30 @@ rectangle::rounded_corners_texture::rounded_corners_texture(
 
 void rectangle::update_rounded_corners_texture()
 {
-	if (!this->params.rounded_corners) {
+	if (std::find_if(
+			this->params.corner_radius.begin(),
+			this->params.corner_radius.end(),
+			[](const auto& e) {
+				return !e.get().is_undefined();
+			}
+		) == this->params.corner_radius.end())
+	{
 		this->rounded_corners_tex.reset();
 		return;
 	}
+
+	// std::array<real, 4> actual_corner_radius;
+	// std::transform(
+	// 	this->params.corner_radius.begin(),
+	// 	this->params.corner_radius.end(),
+	// 	actual_corner_radius.begin(),
+	// 	[this](const auto& r) -> real {
+	// 		if (r.get().is_undefined()) {
+	// 			return 0;
+	// 		}
+	// 		return r.get().get(this->context);
+	// 	} //
+	// );
 
 	auto borders = this->get_actual_borders();
 
