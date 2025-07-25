@@ -23,6 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../../context.hpp"
 #include "../../util/util.hpp"
+#include "../label/gap.hpp"
 #include "../label/nine_patch.hpp"
 #include "../label/padding.hpp"
 
@@ -150,7 +151,7 @@ utki::shared_ref<container> make_caption(
 					}
 				}
 			),
-			m::rectangle(c,
+			m::gap(c,
 				{
 					.layout_params = {
 						.dims = {ruis::dim::max, ruis::dim::max}
@@ -419,7 +420,7 @@ void ruis::window::setup_widgets()
 	this->title = this->try_get_widget_as<text>("ruis_title");
 	ASSERT(this->title)
 
-	this->title_bg = this->try_get_widget_as<rectangle>("ruis_window_title_bg");
+	this->title_bg = this->try_get_widget_as<color_widget>("ruis_window_title_bg");
 	ASSERT(this->title_bg);
 
 	auto make_mouse_button_handler = [this](cursor_iter& iter) {

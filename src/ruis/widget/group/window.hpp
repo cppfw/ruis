@@ -45,7 +45,7 @@ class window :
 {
 	ruis::vector2 empty_min_dim; // minimal dimension of empty window
 
-	std::shared_ptr<rectangle> title_bg;
+	std::shared_ptr<color_widget> title_bg;
 	constexpr static auto default_title_bg_color_topmost = 0xffad9869;
 	uint32_t title_bg_color_topmost = default_title_bg_color_topmost;
 	constexpr static auto default_title_bg_color_non_topmost = 0xff505050;

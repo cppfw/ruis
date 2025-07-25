@@ -86,7 +86,7 @@ utki::shared_ref<ruis::widget> make_rectangles_window(
                         .color = 0xff800000
                     },
                     .rectangle_params{
-                        .corner_radius = {0, 3_pp, 5_pp, 10_pp}
+                        .corner_radii = {0, 5_pp, 10_pp, 15_pp}
                     }
                 },
                 {
@@ -111,7 +111,7 @@ utki::shared_ref<ruis::widget> make_rectangles_window(
                         }
                     },
                     .rectangle_params{
-                        .corner_radius = {3_pp}
+                        .corner_radii = {5_pp}
                     },
                     .rectangle_button_params{
                         // TODO:

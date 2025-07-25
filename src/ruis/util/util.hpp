@@ -57,6 +57,7 @@ inline ruis::matrix4 make_viewport_matrix(
 	return m;
 }
 
+// TODO: docygen comment
 ruis::vector2 make_vec2(
 	tml::forest::const_iterator begin, //
 	tml::forest::const_iterator end
@@ -111,5 +112,13 @@ ruis::sides<real> make_sides(const tml::forest& desc);
  * @throw std::invalid_argument if property subtree's number of children is not 1.
  */
 const tml::leaf& get_property_value(const tml::tree& p);
+
+/**
+ * @brief Check if all the sides elements are undefined.
+ * @param s - sides to check for being all undefined.
+ * @return true if all elements of the sides container are undefined.
+ * @return false otherwise.
+ */
+bool is_all_undefined(const sides<styled<length>>& s);
 
 } // namespace ruis

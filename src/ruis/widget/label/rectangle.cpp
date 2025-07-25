@@ -94,10 +94,16 @@ void rectangle::render_rounder_corners(const mat4& matrix) const
 	ASSERT(this->rounded_corners_tex)
 	const auto& t = *this->rounded_corners_tex;
 
+	const auto& tex_middle = t.middle_px;
+	auto tex_dims = t.tex.get().dims().to<real>();
+	auto tex_tail = tex_dims - tex_middle;
+	auto center_size = this->rect().d - tex_dims;
+	auto tail_pos = this->rect().d - tex_tail;
+
 	// left-top
 	{
 		ruis::mat4 matr(matrix);
-		matr.scale(this->content().rect().p);
+		matr.scale(tex_middle);
 
 		r.shaders().color_pos_tex->render(
 			matr, //
@@ -111,12 +117,12 @@ void rectangle::render_rounder_corners(const mat4& matrix) const
 	{
 		ruis::mat4 matr(matrix);
 		matr.translate(
-			this->content().rect().p.x(), //
+			tex_middle.x(), //
 			0
 		);
 		matr.scale(
-			this->content().rect().d.x(), //
-			this->content().rect().p.y()
+			center_size.x(), //
+			tex_middle.y()
 		);
 
 		r.shaders().color_pos->render(
@@ -130,12 +136,12 @@ void rectangle::render_rounder_corners(const mat4& matrix) const
 	{
 		ruis::mat4 matr(matrix);
 		matr.translate(
-			this->content().rect().x2(), //
+			tail_pos.x(), //
 			0
 		);
 		matr.scale(
-			this->rect().d.x() - this->content().rect().x2(), //
-			this->content().rect().p.y()
+			tex_tail.x(), //
+			tex_middle.y()
 		);
 
 		r.shaders().color_pos_tex->render(
@@ -151,11 +157,11 @@ void rectangle::render_rounder_corners(const mat4& matrix) const
 		ruis::mat4 matr(matrix);
 		matr.translate(
 			0, //
-			this->content().rect().p.y()
+			tex_middle.y()
 		);
 		matr.scale(
-			this->content().rect().p.x(), //
-			this->content().rect().d.y()
+			tex_middle.x(), //
+			center_size.y()
 		);
 
 		r.shaders().color_pos->render(
@@ -168,8 +174,8 @@ void rectangle::render_rounder_corners(const mat4& matrix) const
 	// center
 	{
 		ruis::mat4 matr(matrix);
-		matr.translate(this->content().rect().p);
-		matr.scale(this->content().rect().d);
+		matr.translate(tex_middle);
+		matr.scale(center_size);
 
 		r.shaders().color_pos->render(
 			matr, //
@@ -182,12 +188,12 @@ void rectangle::render_rounder_corners(const mat4& matrix) const
 	{
 		ruis::mat4 matr(matrix);
 		matr.translate(
-			this->content().rect().x2(), //
-			this->content().rect().p.y()
+			tail_pos.x(), //
+			tex_middle.y()
 		);
 		matr.scale(
-			this->rect().d.x() - this->content().rect().x2(), //
-			this->content().rect().d.y()
+			tex_tail.x(), //
+			center_size.y()
 		);
 
 		r.shaders().color_pos->render(
@@ -202,11 +208,11 @@ void rectangle::render_rounder_corners(const mat4& matrix) const
 		ruis::mat4 matr(matrix);
 		matr.translate(
 			0, //
-			this->content().rect().y2()
+			tail_pos.y()
 		);
 		matr.scale(
-			this->content().rect().p.x(), //
-			this->rect().d.y() - this->content().rect().y2()
+			tex_middle.x(), //
+			tex_tail.y()
 		);
 
 		r.shaders().color_pos_tex->render(
@@ -221,12 +227,12 @@ void rectangle::render_rounder_corners(const mat4& matrix) const
 	{
 		ruis::mat4 matr(matrix);
 		matr.translate(
-			this->content().rect().p.x(), //
-			this->content().rect().y2()
+			tex_middle.x(), //
+			tail_pos.y()
 		);
 		matr.scale(
-			this->content().rect().d.x(), //
-			this->rect().d.y() - this->content().rect().y2()
+			center_size.x(), //
+			tex_tail.y()
 		);
 
 		r.shaders().color_pos->render(
@@ -240,10 +246,8 @@ void rectangle::render_rounder_corners(const mat4& matrix) const
 	{
 		ruis::mat4 matr(matrix);
 
-		auto content_x2_y2 = this->content().rect().x2_y2();
-
-		matr.translate(content_x2_y2);
-		matr.scale(this->rect().d - content_x2_y2);
+		matr.translate(tail_pos);
+		matr.scale(tex_tail);
 
 		r.shaders().color_pos_tex->render(
 			matr, //
@@ -260,34 +264,65 @@ namespace {
 using std::sqrt;
 const real arc_bezier_param = real(4 * (sqrt(2) - 1) / 3);
 
-auto make_rounded_corners_texture_image(const sides<real>& borders)
+auto make_rounded_corners_texture_image(const sides<real>& radii)
 {
-	veg::canvas canvas(borders.dims().to<uint32_t>());
+	const auto& left_top = radii[0];
+	const auto& right_top = radii[1];
+	const auto& right_bottom = radii[2];
+	const auto& left_bottom = radii[3];
 
-	canvas.move_abs({0, borders.top()});
+	using std::max;
+	auto canvas_size = vec2(
+		max(left_top, left_bottom) + max(right_top, right_bottom), //
+		max(left_top, right_top) + max(left_bottom, right_bottom)
+	);
 
-	canvas.cubic_curve_rel(
-		{0, -arc_bezier_param * borders.top()},
-		{borders.left() * (1 - arc_bezier_param), -borders.top()},
-		{borders.left(), -borders.top()}
+	veg::canvas canvas(canvas_size.to<uint32_t>());
+
+	canvas.move_abs(
+		vec2{
+			0, //
+			left_top
+		}
 	);
 
 	canvas.cubic_curve_rel(
-		{arc_bezier_param * borders.right(), 0},
-		{borders.right(), borders.top() * (1 - arc_bezier_param)},
-		{borders.right(), borders.top()}
+		{0, -arc_bezier_param * left_top}, //
+		{left_top * (1 - arc_bezier_param), -left_top},
+		{left_top, -left_top}
 	);
 
-	canvas.cubic_curve_rel(
-		{0, arc_bezier_param * borders.bottom()},
-		{-borders.right() * (1 - arc_bezier_param), borders.bottom()},
-		{-borders.right(), borders.bottom()}
-	);
+	canvas.line_abs(vec2(
+		canvas_size.x() - right_top, //
+		0
+	));
 
 	canvas.cubic_curve_rel(
-		{-arc_bezier_param * borders.left(), 0},
-		{-borders.left(), -borders.bottom() * (1 - arc_bezier_param)},
-		{-borders.left(), -borders.bottom()}
+		{arc_bezier_param * right_top, 0}, //
+		{right_top, right_top * (1 - arc_bezier_param)},
+		{right_top, right_top}
+	);
+
+	canvas.line_abs(vec2(
+		canvas_size.x(), //
+		canvas_size.y() - right_bottom
+	));
+
+	canvas.cubic_curve_rel(
+		{0, arc_bezier_param * right_bottom}, //
+		{-right_bottom * (1 - arc_bezier_param), right_bottom},
+		{-right_bottom, right_bottom}
+	);
+
+	canvas.line_abs(vec2(
+		left_bottom, //
+		canvas_size.y()
+	));
+
+	canvas.cubic_curve_rel(
+		{-arc_bezier_param * left_bottom, 0}, //
+		{-left_bottom, -left_bottom * (1 - arc_bezier_param)},
+		{-left_bottom, -left_bottom}
 	);
 
 	canvas.close_path();
@@ -329,9 +364,27 @@ utki::shared_ref<const ruis::render::vertex_array> make_quad_vao(
 rectangle::rounded_corners_texture::rounded_corners_texture(
 	ruis::render::renderer& r, //
 	utki::shared_ref<const render::texture_2d> tex,
-	vec2 middle
+	vec2 middle_px
+) :
+	rounded_corners_texture(
+		r, //
+		middle_px.comp_div(tex.get().dims().to<real>()),
+		// Arguments evaluation order is unspecified, so we cannot do std::move(tex) here,
+		// because we also use it in another argument.
+		// So, we pass it by reference to avoid unneded shared_ref copying.
+		tex,
+		middle_px
+	)
+{}
+
+rectangle::rounded_corners_texture::rounded_corners_texture(
+	ruis::render::renderer& r, //
+	vec2 middle,
+	utki::shared_ref<const render::texture_2d>& tex,
+	vec2 middle_px
 ) :
 	tex(std::move(tex)),
+	middle_px(middle_px),
 	// clang-format off
 	vaos{{
 		{
@@ -380,35 +433,26 @@ rectangle::rounded_corners_texture::rounded_corners_texture(
 
 void rectangle::update_rounded_corners_texture()
 {
-	if (std::find_if(
-			this->params.corner_radius.begin(),
-			this->params.corner_radius.end(),
-			[](const auto& e) {
-				return !e.get().is_undefined();
-			}
-		) == this->params.corner_radius.end())
-	{
+	if (is_all_undefined(this->params.corner_radii)) {
 		this->rounded_corners_tex.reset();
 		return;
 	}
 
-	// std::array<real, 4> actual_corner_radius;
-	// std::transform(
-	// 	this->params.corner_radius.begin(),
-	// 	this->params.corner_radius.end(),
-	// 	actual_corner_radius.begin(),
-	// 	[this](const auto& r) -> real {
-	// 		if (r.get().is_undefined()) {
-	// 			return 0;
-	// 		}
-	// 		return r.get().get(this->context);
-	// 	} //
-	// );
-
-	auto borders = this->get_actual_borders();
+	sides<real> radii;
+	std::transform(
+		this->params.corner_radii.begin(),
+		this->params.corner_radii.end(),
+		radii.begin(),
+		[this](const auto& r) -> real {
+			if (r.get().is_undefined()) {
+				return 0;
+			}
+			return r.get().get(this->context);
+		} //
+	);
 
 	// TODO: develop algorithm to go through cache from time to time and drop zombie textures
-	if (auto i = this->cache.find(borders); i != this->cache.end()) {
+	if (auto i = this->cache.find(radii); i != this->cache.end()) {
 		if (auto t = i->second.lock()) {
 			this->rounded_corners_tex = std::move(t);
 			return;
@@ -417,24 +461,28 @@ void rectangle::update_rounded_corners_texture()
 		}
 	}
 
-	auto raster_image = make_rounded_corners_texture_image(borders);
+	auto raster_image = make_rounded_corners_texture_image(radii);
 
 	// TODO: convert to greyscale image
 
 	auto tex = this->context.get().ren().ctx().make_texture_2d(std::move(raster_image), {});
 
-	auto middle = borders.left_top().comp_div(tex.get().dims().to<real>());
+	using std::max;
+	auto middle_px = vec2(
+		max(radii[0], radii[3]),
+		max(radii[0], radii[1]) //
+	);
 
 	this->rounded_corners_tex = std::make_shared<rounded_corners_texture>(
 		this->context.get().ren(), //
 		std::move(tex),
-		middle
+		middle_px
 	);
 
 	// add to cache
 	this->cache.insert(
 		std::make_pair(
-			borders, //
+			radii, //
 			utki::make_weak(this->rounded_corners_tex)
 		)
 	);

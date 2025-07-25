@@ -38,7 +38,7 @@ class rectangle :
 public:
 	struct parameters {
 		// TODO: comment
-		sides<styled<length>> corner_radius;
+		sides<styled<length>> corner_radii;
 	};
 
 private:
@@ -76,16 +76,25 @@ private:
 	struct rounded_corners_texture {
 		utki::shared_ref<const render::texture_2d> tex;
 
+		// texture middle point
+		vec2 middle_px;
+
 		// vaos for corners
 		std::array<std::array<utki::shared_ref<const render::vertex_array>, 2>, 2> vaos;
 
 		rounded_corners_texture(
 			ruis::render::renderer& r, //
 			utki::shared_ref<const render::texture_2d> tex,
-			vec2 middle
+			vec2 middle_px
 		);
 
 	private:
+		rounded_corners_texture(
+			ruis::render::renderer& r, //
+			vec2 middle,
+			utki::shared_ref<const render::texture_2d>& tex,
+			vec2 middle_px
+		);
 	};
 
 	static std::map<
