@@ -68,7 +68,10 @@ table_tree_view::table_tree_view(
                     .layout_params{
                         .dims = {ruis::dim::fill, ruis::dim::fill},
                         .weight = 1
-                    }
+                    },
+                    // .tree_view_params{
+                    //     .provider = // TODO: make provider
+                    // }
                 }
             )
         }

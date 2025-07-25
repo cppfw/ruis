@@ -21,8 +21,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include <ruis/widget/container.hpp>
-#include <ruis/widget/group/tree_view.hpp>
+#include "../container.hpp"
+
+#include "tree_view.hpp"
 
 namespace ruis {
 
@@ -31,12 +32,35 @@ class table_tree_view :
 	private ruis::container
 {
 public:
+	/**
+	 * @brief A class for accessing the tree data model.
+	 * This class provides access to the tree data model and constructs
+	 * widgets representing the tree items.
+	 */
+	class provider : private tree_view::provider
+	{
+	public:
+		provider(utki::shared_ref<ruis::context> context);
+
+		/**
+		 * @brief Create a table_tree_view item widget.
+		 * The table_tree_view will call this mthod when it needs a widget for the given
+		 * tree view item.
+		 * The widget has to be a container and is supposed to have a row layout.
+		 * Each child widget of the container widget will represent a cell in the table row.
+		 * @param index - index of the item into the tree data to create widget for.
+		 * @return A container widget with row layout containing table row cell widgets.
+		 */
+		virtual utki::shared_ref<ruis::container> get_container(utki::span<const size_t> index) = 0;
+	};
+
 	struct parameters {
 		/**
 		 * @brief Column header widgets.
-		 * These widgets will be put inside of a ruis::container with row layout.
+		 * These widgets will be put inside of a ruis::container and arranged in a row.
 		 */
 		ruis::widget_list column_headers = {};
+		std::shared_ptr<table_tree_view::provider> provider;
 	};
 
 	struct all_parameters {
@@ -49,23 +73,6 @@ public:
 		utki::shared_ref<ruis::context> context, //
 		all_parameters params
 	);
-
-	class provider : protected ruis::tree_view::provider
-	{
-	public:
-		provider(utki::shared_ref<ruis::context> context);
-
-		/**
-		 * @brief Create a tree_view item widget.
-		 * The table_tree_view will call this mthod when it needs a widget for the given
-		 * tree view item.
-		 * The widget has to be a container and is supposed to have a row layout.
-		 * Each child widget of the container widget will represent a cell in the table row.
-		 * @param index - index of the item into the tree data to create widget for.
-		 * @return A container widget with row layout containing table row cell widgets.
-		 */
-		virtual ruis::container get_widget(utki::span<const size_t> index) = 0;
-	};
 };
 
 namespace make {

@@ -40,24 +40,6 @@ class tree_view :
 	utki::shared_ref<list> item_list;
 
 public:
-	struct all_parameters {
-		layout_parameters layout_params;
-		widget::parameters widget_params;
-	};
-
-	tree_view(
-		utki::shared_ref<ruis::context> context, //
-		all_parameters params
-	);
-
-	tree_view(const tree_view&) = delete;
-	tree_view& operator=(const tree_view&) = delete;
-
-	tree_view(tree_view&&) = delete;
-	tree_view& operator=(tree_view&&) = delete;
-
-	~tree_view() override = default;
-
 	/**
 	 * @brief tree_view item provider base class.
 	 * User subclasses this class to provide tree_view an access to the tree data model
@@ -195,6 +177,29 @@ public:
 		 */
 		void notify_item_add(utki::span<const size_t> index);
 	};
+
+	struct parameters {
+		std::shared_ptr<tree_view::provider> provider;
+	};
+
+	struct all_parameters {
+		layout_parameters layout_params;
+		widget::parameters widget_params;
+		parameters tree_view_params;
+	};
+
+	tree_view(
+		utki::shared_ref<ruis::context> context, //
+		all_parameters params
+	);
+
+	tree_view(const tree_view&) = delete;
+	tree_view& operator=(const tree_view&) = delete;
+
+	tree_view(tree_view&&) = delete;
+	tree_view& operator=(tree_view&&) = delete;
+
+	~tree_view() override = default;
 
 	/**
 	 * @brief Scroll position changed signal.

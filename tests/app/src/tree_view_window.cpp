@@ -280,6 +280,8 @@ utki::shared_ref<ruis::window> make_tree_view_window(
     ruis::vec2_length pos
 )
 {
+    auto tv_provider = std::make_shared<tree_view_items_provider>(c);
+
     // clang-format off
     auto w = m::window(c,
         {
@@ -325,6 +327,9 @@ utki::shared_ref<ruis::window> make_tree_view_window(
                                     .widget_params{
                                         .id = "treeview_widget"s,
                                         .clip = true
+                                    },
+                                    .tree_view_params{
+                                        .provider = tv_provider
                                     }
                                 }
                             )
@@ -404,8 +409,10 @@ utki::shared_ref<ruis::window> make_tree_view_window(
 
     auto& treeview = w.get().get_widget_as<ruis::tree_view>("treeview_widget");
 
-    auto provider = std::make_shared<tree_view_items_provider>(w.get().context);
-    treeview.set_provider(provider);
+    // TODO: remove
+    // auto provider = std::make_shared<tree_view_items_provider>(w.get().context);
+    // treeview.set_provider(provider);
+
     auto tv = utki::make_weak_from(treeview);
 
     auto& vertical_slider = w.get().get_widget_as<ruis::fraction_band_widget>("treeview_vertical_slider");
@@ -447,7 +454,7 @@ utki::shared_ref<ruis::window> make_tree_view_window(
     auto insert_after_button = w.get().try_get_widget_as<ruis::push_button>("insert_after");
     auto insert_child = w.get().try_get_widget_as<ruis::push_button>("insert_child");
 
-    auto prvdr = utki::make_weak(provider);
+    auto prvdr = utki::make_weak(tv_provider);
     insert_before_button->click_handler = [prvdr](ruis::push_button& b){
         if(auto p = prvdr.lock()){
             p->insert_before();

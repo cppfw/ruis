@@ -71,6 +71,8 @@ tree_view::tree_view( //
 	this->scroll_area::scroll_change_handler = [this](scroll_area& sa) {
 		this->notify_view_change();
 	};
+
+	this->set_provider(std::move(params.tree_view_params.provider));
 }
 
 void tree_view::notify_view_change()
@@ -82,7 +84,14 @@ void tree_view::notify_view_change()
 
 void tree_view::set_provider(std::shared_ptr<provider> item_provider)
 {
+	if (!item_provider) {
+		this->item_list.get().set_provider(nullptr);
+		return;
+	}
+
+	// TODO: why do we need to do the notification here?
 	item_provider->notify_model_change();
+
 	this->item_list.get().set_provider(
 		// use aliasing shared_ptr constructor becasue list::provider
 		// is a private base of tree_view::provider, so not possible
