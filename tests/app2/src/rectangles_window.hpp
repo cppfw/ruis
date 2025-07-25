@@ -4,5 +4,5 @@
 
 utki::shared_ref<ruis::widget> make_rectangles_window(
 	const utki::shared_ref<ruis::context>& c, //
-	ruis::rect rect
+	ruis::vec2_length pos
 );

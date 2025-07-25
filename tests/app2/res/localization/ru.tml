@@ -23,4 +23,7 @@ vocabulary{
     rectangles{
         str{прямоугольники}
     }
+    table_tree_view{
+        str{"табличный вид дерева"}
+    }
 }

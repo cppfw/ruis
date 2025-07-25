@@ -15,6 +15,7 @@
 #include <ruisapp/application.hpp>
 
 #include "rectangles_window.hpp"
+#include "table_tree_view_window.hpp"
 
 using namespace std::string_literals;
 using namespace std::string_view_literals;
@@ -24,13 +25,25 @@ using namespace ruis::length_literals;
 namespace m = ruis::make;
 
 namespace {
-utki::shared_ref<ruis::window> make_sliders_window(utki::shared_ref<ruis::context> c, ruis::rect rect)
+utki::shared_ref<ruis::window> make_sliders_window(
+	utki::shared_ref<ruis::context> c, //
+	ruis::vec2_length pos
+)
 {
 	// clang-format off
 	return m::window(c,
 		{
 			.widget_params = {
-				.rectangle = rect
+				.rectangle = {
+					{
+						pos.x().get(c),
+						pos.y().get(c)
+					},
+					{
+						ruis::length::make_pp(300).get(c),
+						ruis::length::make_pp(200).get(c)
+					}
+				}
 			},
 			.container_params = {
 				.layout = ruis::layout::column
@@ -130,13 +143,25 @@ utki::shared_ref<ruis::window> make_sliders_window(utki::shared_ref<ruis::contex
 } // namespace
 
 namespace {
-utki::shared_ref<ruis::window> make_image_window(utki::shared_ref<ruis::context> c, ruis::rect rect)
+utki::shared_ref<ruis::window> make_image_window(
+	utki::shared_ref<ruis::context> c, //
+	ruis::vec2_length pos
+)
 {
 	// clang-format off
 	auto ret = m::window(c,
 		{
 			.widget_params = {
-				.rectangle = rect
+				.rectangle = {
+					{
+						pos.x().get(c),
+						pos.y().get(c)
+					},
+					{
+						ruis::length::make_pp(300).get(c),
+						ruis::length::make_pp(200).get(c)
+					}
+				}
 			},
 			.container_params = {
 				.layout = ruis::layout::pile
@@ -251,7 +276,7 @@ public:
 namespace {
 utki::shared_ref<ruis::window> make_selection_box_window(
 	utki::shared_ref<ruis::context> c, //
-	ruis::rect rect
+	ruis::vec2_length pos
 )
 {
 	// clang-format off
@@ -289,7 +314,16 @@ utki::shared_ref<ruis::window> make_selection_box_window(
 	return m::window(c,
 		{
 			.widget_params = {
-				.rectangle = rect
+				.rectangle = {
+					{
+						pos.x().get(c),
+						pos.y().get(c)
+					},
+					{
+						ruis::length::make_pp(300).get(c),
+						ruis::length::make_pp(200).get(c)
+					}
+				}
 			},
 			.container_params = {
 				.layout = ruis::layout::column
@@ -351,11 +385,12 @@ utki::shared_ref<ruis::widget> make_root_widgets_structure(utki::shared_ref<ruis
 					}
 				},
 				{
-					make_sliders_window(c, {10, 20, 300, 200}),
-					make_image_window(c, {310, 20, 300, 200}),
-					make_selection_box_window(c, {630, 20, 300, 200}),
+					make_sliders_window(c, {10_pp, 20_pp}),
+					make_image_window(c, {310_pp, 20_pp}),
+					make_selection_box_window(c, {630_pp, 20_pp}),
 
-					make_rectangles_window(c, {10, 230, 300, 200})
+					make_rectangles_window(c, {10_pp, 230_pp}),
+					make_table_tree_view_window(c, {310_pp, 230_pp})
 				}
 			)
 		}
