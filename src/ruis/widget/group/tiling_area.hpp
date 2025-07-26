@@ -1,0 +1,88 @@
+/*
+ruis - GUI framework
+
+Copyright (C) 2012-2025  Ivan Gagis <igagis@gmail.com>
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program. If not, see <http://www.gnu.org/licenses/>.
+*/
+
+/* ================ LICENSE END ================ */
+
+#pragma once
+
+#include "../../util/oriented.hpp"
+#include "../container.hpp"
+
+namespace ruis {
+
+/*
+The tile_area arranges tiles either vertially or horizontally.
+The tiles are stored in the content container which is the first container child of the tile_area.
+The rest of the children are dragger widgets for dragging tile borders within tile_area with mouse.
+*/
+class tiling_area :
+	virtual public widget, //
+	public ruis::oriented,
+	private ruis::container
+{
+	utki::shared_ref<ruis::container> content_container;
+
+public:
+	const ruis::real min_tile_size;
+	const ruis::real dragger_size;
+
+	struct all_parameters {
+		ruis::layout_parameters layout_params;
+		ruis::widget::parameters widget_params;
+	};
+
+	tiling_area(
+		utki::shared_ref<ruis::context> context, //
+		all_parameters params,
+		ruis::widget_list children
+	);
+
+	ruis::container& content()
+	{
+		return this->content_container.get();
+	}
+
+	const ruis::container& content() const
+	{
+		return this->content_container.get();
+	}
+
+	void on_lay_out() override;
+
+	ruis::vector2 measure(const ruis::vector2& quotum) const override;
+
+	// override in order to avoid invalidation of layout when children list changes,
+	// because default implementation of this method invalidates layout
+	void on_children_change() override
+	{
+		// do nothing
+	}
+
+private:
+};
+
+namespace make {
+utki::shared_ref<ruis::tiling_area> tiling_area(
+	utki::shared_ref<ruis::context> context, //
+	ruis::tiling_area::all_parameters params,
+	ruis::widget_list children
+);
+} // namespace make
+
+} // namespace ruis
