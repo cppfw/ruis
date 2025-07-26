@@ -21,18 +21,17 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "tiling_area.hpp"
 
-#include "../label/rectangle.hpp"
+#include "../label/gap.hpp"
 
 using namespace ruis;
 
 namespace {
 const ruis::real minimal_tile_size_pp = 100;
 const ruis::real dragger_size_pp = 5;
-const uint32_t dragger_color = 0xffff8080;
 } // namespace
 
 namespace {
-class dragger : public ruis::rectangle // TODO: use gap
+class dragger : public ruis::gap
 {
 	bool grabbed = false;
 	ruis::vector2 grab_point;
@@ -45,13 +44,23 @@ public:
 	std::shared_ptr<ruis::widget> prev_widget;
 	std::shared_ptr<ruis::widget> next_widget;
 
-	dragger(const utki::shared_ref<ruis::context>& c, tiling_area& owner) :
+	dragger(
+		utki::shared_ref<ruis::context> c, //
+		tiling_area& owner,
+		styled<color> color
+	) :
 		ruis::widget(std::move(c), {}, {}),
-		ruis::rectangle(this->context, {}, {}),
+		// clang-format off
+		ruis::gap(this->context,
+			{
+				.color_params{
+					.color = std::move(color)
+				}
+			}
+		),
+		// clang-format on
 		owner(owner)
-	{
-		this->set_color(dragger_color);
-	}
+	{}
 
 	bool on_mouse_button(const ruis::mouse_button_event& e) override
 	{
@@ -129,7 +138,7 @@ public:
 	void render(const ruis::matrix4& matrix) const override
 	{
 		if (this->is_hovered() || this->grabbed) {
-			this->ruis::rectangle::render(matrix);
+			this->ruis::gap::render(matrix);
 		}
 	}
 };
@@ -155,7 +164,15 @@ tiling_area::tiling_area(
 		)
 	),
 	min_tile_size(this->context.get().units.pp_to_px(minimal_tile_size_pp)),
-	dragger_size(this->context.get().units.pp_to_px(dragger_size_pp))
+	dragger_size(this->context.get().units.pp_to_px(dragger_size_pp)),
+	params([&]() {
+		constexpr uint32_t default_dragger_color = 0xffff8080;
+
+		if (params.tiling_area_params.dragger_color.get().is_undefined()) {
+			params.tiling_area_params.dragger_color = default_dragger_color;
+		}
+		return std::move(params.tiling_area_params);
+	}())
 {
 	this->ruis::container::push_back(this->content_container);
 	this->content_container.get().move_to({0, 0});
@@ -245,7 +262,13 @@ void tiling_area::on_lay_out()
 
 	// add missing draggers
 	while (this->size() - 1 < num_draggers) {
-		this->push_back(utki::make_shared<dragger>(this->context, *this));
+		this->push_back(
+			utki::make_shared<dragger>(
+				this->context, //
+				*this,
+				this->params.dragger_color
+			)
+		);
 	}
 
 	ruis::vector2 dragger_dims;
@@ -298,6 +321,10 @@ utki::shared_ref<ruis::tiling_area> make::tiling_area(
 	ruis::widget_list children
 )
 {
+	if (params.tiling_area_params.dragger_color.get().is_undefined()) {
+		params.tiling_area_params.dragger_color = context.get().style().get_color_highlight();
+	}
+
 	return utki::make_shared<ruis::tiling_area>(
 		std::move(context), //
 		std::move(params),

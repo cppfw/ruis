@@ -42,9 +42,18 @@ public:
 	const ruis::real min_tile_size;
 	const ruis::real dragger_size;
 
+	struct parameters {
+		styled<color> dragger_color;
+	};
+
+private:
+	parameters params;
+
+public:
 	struct all_parameters {
 		ruis::layout_parameters layout_params;
 		ruis::widget::parameters widget_params;
+		parameters tiling_area_params;
 	};
 
 	tiling_area(
