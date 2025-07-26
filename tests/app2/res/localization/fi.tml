@@ -23,6 +23,9 @@ vocabulary{
     rectangles{
         str{neliot}
     }
+    table_list{
+        str{"taululista"}
+    }
     table_tree_view{
         str{taulupuunäkymä}
     }

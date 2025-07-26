@@ -27,15 +27,15 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 namespace ruis {
 
 /*
-The tile_area arranges tiles either vertially or horizontally.
-The tiles are stored in the content container which is the first container child of the tile_area.
-The rest of the children are dragger widgets for dragging tile borders within tile_area with mouse.
+The tile_area arranges its content widgets (tiles) either vertially or horizontally.
+Common borders of the contained tiles are draggable with mouse pointer.
 */
 class tiling_area :
 	virtual public widget, //
 	public ruis::oriented,
 	private ruis::container
 {
+	// TODO: refactor: e.g. padding also has content container. Add some 'content_wrapping_widget' base class.
 	utki::shared_ref<ruis::container> content_container;
 
 public:

@@ -15,6 +15,7 @@
 #include <ruisapp/application.hpp>
 
 #include "rectangles_window.hpp"
+#include "table_list_window.hpp"
 #include "table_tree_view_window.hpp"
 
 using namespace std::string_literals;
@@ -390,7 +391,8 @@ utki::shared_ref<ruis::widget> make_root_widgets_structure(utki::shared_ref<ruis
 					make_selection_box_window(c, {630_pp, 20_pp}),
 
 					make_rectangles_window(c, {10_pp, 230_pp}),
-					make_table_tree_view_window(c, {310_pp, 230_pp})
+					make_table_list_window(c, {310_pp, 230_pp}),
+					make_table_tree_view_window(c, {630_pp, 230_pp})
 				}
 			)
 		}

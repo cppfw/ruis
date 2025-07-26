@@ -23,6 +23,9 @@ vocabulary{
     rectangles{
         str{rectangles}
     }
+    table_list{
+        str{"table list"}
+    }
     table_tree_view{
         str{"table tree view"}
     }
