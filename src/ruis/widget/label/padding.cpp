@@ -81,7 +81,7 @@ padding::padding(
 	),
 	// clang-format on
 	params(std::move(padding_params)),
-	inner_content(content_container.get())
+	inner_content(std::move(content_container))
 {}
 
 sides<real> padding::get_min_borders() const noexcept

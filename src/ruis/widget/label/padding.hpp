@@ -40,9 +40,7 @@ public:
 private:
 	parameters params;
 
-	// TODO: use shared_ref?
-	// NOLINTNEXTLINE(clang-analyzer-webkit.NoUncountedMemberChecker, "false-positive")
-	container& inner_content;
+	utki::shared_ref<container> inner_content;
 
 public:
 	struct all_parameters {
@@ -76,12 +74,12 @@ public:
 	 */
 	container& content()
 	{
-		return this->inner_content;
+		return this->inner_content.get();
 	}
 
 	const container& content() const
 	{
-		return this->inner_content;
+		return this->inner_content.get();
 	}
 
 	/**
