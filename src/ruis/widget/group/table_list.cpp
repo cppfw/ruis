@@ -21,17 +21,19 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "table_list.hpp"
 
+#include "tiling_area.hpp"
+
 using namespace ruis;
 
 namespace {
 // TODO: make tiling_area
-utki::shared_ref<ruis::container> make_headers_widget(
+utki::shared_ref<ruis::tiling_area> make_headers_widget(
 	const utki::shared_ref<ruis::context>& c, //
 	ruis::widget_list column_headers
 )
 {
 	// clang-format off
-    return ruis::make::row(c,
+    return ruis::make::tiling_area(c,
         {
             .layout_params{
                 .dims = {ruis::dim::fill, ruis::dim::max}

@@ -140,10 +140,20 @@ tiling_area::tiling_area(
 	all_parameters params,
 	ruis::widget_list children
 ) :
-	ruis::widget(std::move(context), {}, {}),
+	ruis::widget(
+		std::move(context),
+		std::move(params.layout_params),
+		std::move(params.widget_params) //
+	),
 	ruis::oriented({.vertical = false}),
 	ruis::container(this->context, {}, {}),
-	content_container(ruis::make::container(this->context, {}, std::move(children))),
+	content_container(
+		ruis::make::container(
+			this->context,
+			{},
+			std::move(children) //
+		)
+	),
 	min_tile_size(this->context.get().units.pp_to_px(minimal_tile_size_pp)),
 	dragger_size(this->context.get().units.pp_to_px(dragger_size_pp))
 {
