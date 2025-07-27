@@ -30,7 +30,7 @@ const ruis::real minimal_tile_size_pp = 30;
 const ruis::real dragger_size_pp = 5;
 } // namespace
 
-namespace {
+namespace ruis::internal {
 class dragger : public ruis::gap
 {
 	bool grabbed = false;
@@ -126,6 +126,8 @@ public:
 		this->next_widget->resize_by(-delta_vec);
 		this->next_widget->move_by(delta_vec);
 
+		this->owner.notify_tiles_resized();
+
 		return true;
 	}
 
@@ -136,8 +138,14 @@ public:
 		}
 
 		if (this->is_hovered() || grabbed) {
-			this->arrows_cursor_iter = this->context.get().cursor_stack.push(
-				this->owner.is_vertical() ? ruis::mouse_cursor::up_down_arrow : ruis::mouse_cursor::left_right_arrow
+			this->arrows_cursor_iter = this->context.get().cursor_stack.push( //
+				[&]() {
+					if (this->owner.is_vertical()) {
+						return ruis::mouse_cursor::up_down_arrow;
+					} else {
+						return ruis::mouse_cursor::left_right_arrow;
+					}
+				}()
 			);
 		} else {
 			this->context.get().cursor_stack.pop(this->arrows_cursor_iter);
@@ -151,7 +159,7 @@ public:
 		}
 	}
 };
-} // namespace
+} // namespace ruis::internal
 
 tiling_area::tiling_area(
 	utki::shared_ref<ruis::context> context, //
@@ -283,7 +291,7 @@ void tiling_area::on_lay_out()
 	// add missing draggers
 	while (this->size() - 1 < num_draggers) {
 		this->push_back(
-			utki::make_shared<dragger>(
+			utki::make_shared<internal::dragger>(
 				this->context, //
 				*this,
 				this->params.dragger_color
@@ -300,7 +308,7 @@ void tiling_area::on_lay_out()
 
 		ASSERT(index < this->content().size())
 
-		auto& dragger = dynamic_cast<::dragger&>(i->get());
+		auto& dragger = dynamic_cast<internal::dragger&>(i->get());
 
 		dragger.prev_widget = this->content().children()[index].to_shared_ptr();
 		dragger.next_widget = this->content().children()[index + 1].to_shared_ptr();
@@ -312,6 +320,8 @@ void tiling_area::on_lay_out()
 		dragger_pos[long_index] = round(dragger.next_widget->rect().p[long_index] - this->dragger_size / 2);
 		dragger.move_to(dragger_pos);
 	}
+
+	this->notify_tiles_resized();
 }
 
 ruis::vector2 tiling_area::measure(const ruis::vector2& quotum) const
@@ -345,6 +355,13 @@ ruis::vector2 tiling_area::measure(const ruis::vector2& quotum) const
 	}
 
 	return ret;
+}
+
+void tiling_area::notify_tiles_resized()
+{
+	if (this->tiles_resized_handler) {
+		this->tiles_resized_handler(*this);
+	}
 }
 
 utki::shared_ref<ruis::tiling_area> make::tiling_area(

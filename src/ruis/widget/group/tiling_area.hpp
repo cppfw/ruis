@@ -27,6 +27,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
+namespace internal {
+class dragger;
+} // namespace internal
+
 /**
  * @brief Tiling area.
  * The tile_area arranges its content widgets (tiles) either vertially or horizontally.
@@ -39,6 +43,8 @@ class tiling_area :
 	public content_wrapping,
 	private ruis::container
 {
+	friend class ruis::internal::dragger;
+
 public:
 	/**
 	 * @brief Minimal size of a tile in logitudinal direction of the tiling_area.
@@ -78,7 +84,14 @@ public:
 		// do nothing
 	}
 
+	/**
+	 * @brief Tiles resized handler.
+	 * Invoked when tiles of the tile area have changed their sizes.
+	 */
+	std::function<void(tiling_area&)> tiles_resized_handler;
+
 private:
+	void notify_tiles_resized();
 };
 
 namespace make {
