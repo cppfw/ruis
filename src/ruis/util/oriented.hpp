@@ -21,6 +21,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
+#include <tuple>
 #include <utility>
 
 namespace ruis {
@@ -44,6 +45,15 @@ public:
 	unsigned get_trans_index() const noexcept
 	{
 		return this->params.vertical ? 0 : 1;
+	}
+
+	std::tuple<unsigned, unsigned> get_long_trans_indices() const noexcept
+	{
+		if (this->params.vertical) {
+			return {1, 0};
+		} else {
+			return {0, 1};
+		}
 	}
 
 	oriented(parameters params) :

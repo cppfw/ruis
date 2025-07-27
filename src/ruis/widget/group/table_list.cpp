@@ -26,7 +26,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace ruis;
 
 namespace {
-// TODO: make tiling_area
 utki::shared_ref<ruis::tiling_area> make_headers_widget(
 	const utki::shared_ref<ruis::context>& c, //
 	ruis::widget_list column_headers
@@ -36,7 +35,7 @@ utki::shared_ref<ruis::tiling_area> make_headers_widget(
     return ruis::make::tiling_area(c,
         {
             .layout_params{
-                .dims = {ruis::dim::fill, ruis::dim::max}
+                .dims = {ruis::dim::fill, ruis::dim::min}
             }
         },
         std::move(column_headers)

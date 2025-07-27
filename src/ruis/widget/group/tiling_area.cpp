@@ -26,7 +26,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace ruis;
 
 namespace {
-const ruis::real minimal_tile_size_pp = 100;
+const ruis::real minimal_tile_size_pp = 30;
 const ruis::real dragger_size_pp = 5;
 } // namespace
 
@@ -87,36 +87,44 @@ public:
 			return false;
 		}
 
-		auto delta = e.pos - this->grab_point;
+		auto [long_index, trans_index] = this->owner.get_long_trans_indices();
 
-		auto trans_index = this->owner.get_trans_index();
-		auto long_index = this->owner.get_long_index();
+		auto delta = (e.pos - this->grab_point)[long_index];
 
-		delta[trans_index] = ruis::real(0);
+		// delta[trans_index] = ruis::real(0);
 
 		ASSERT(this->prev_widget)
 		ASSERT(this->next_widget)
-		auto new_prev_dims = this->prev_widget->rect().d + delta;
-		auto new_next_dims = this->next_widget->rect().d - delta;
+
+		auto old_prev_dim = this->prev_widget->rect().d[long_index];
+		auto old_next_dim = this->next_widget->rect().d[long_index];
+
+		auto new_prev_dim = old_prev_dim + delta;
+		auto new_next_dim = old_next_dim - delta;
 
 		using std::max;
+		using std::min;
 
 		// clamp new tile dimensions to minimum tile size
-		new_prev_dims = max(new_prev_dims, ruis::vector2(this->owner.min_tile_size));
-		new_next_dims = max(new_next_dims, ruis::vector2(this->owner.min_tile_size));
+		new_prev_dim = max(new_prev_dim, this->owner.min_tile_size);
+		new_next_dim = max(new_next_dim, this->owner.min_tile_size);
 
-		if (delta[long_index] >= 0) {
-			delta = min(delta, this->next_widget->rect().d - new_next_dims);
+		if (delta >= 0) {
+			delta = min(delta, old_next_dim - new_next_dim);
 		} else {
-			delta = max(delta, new_prev_dims - this->prev_widget->rect().d);
+			delta = max(delta, new_prev_dim - old_prev_dim);
 		}
 
-		this->move_by(delta);
+		vec2 delta_vec;
+		delta_vec[long_index] = delta;
+		delta_vec[trans_index] = 0;
 
-		this->prev_widget->resize_by(delta);
+		this->move_by(delta_vec);
 
-		this->next_widget->resize_by(-delta);
-		this->next_widget->move_by(delta);
+		this->prev_widget->resize_by(delta_vec);
+
+		this->next_widget->resize_by(-delta_vec);
+		this->next_widget->move_by(delta_vec);
 
 		return true;
 	}
@@ -187,15 +195,14 @@ tiling_area::tiling_area(
 
 void tiling_area::on_lay_out()
 {
-	auto long_index = this->get_long_index();
-	auto trans_index = this->get_trans_index();
+	auto [long_index, trans_index] = this->get_long_trans_indices();
 
 	using std::max;
 
 	// calculate current length of all tiles
 	ruis::real tiles_length = 0;
 
-	for (const auto& t : this->content_container.get()) {
+	for (const auto& t : this->content()) {
 		tiles_length +=
 			max( //
 				t.get().rect().d[long_index],
@@ -210,7 +217,7 @@ void tiling_area::on_lay_out()
 	// arrange tiles
 	if (content_dims[long_index] >= tiles_length) {
 		ruis::vector2 pos{0, 0};
-		for (auto& t : this->content_container.get()) {
+		for (auto& t : this->content()) {
 			ruis::real tile_length =
 				max( //
 					t.get().rect().d[long_index],
@@ -232,7 +239,7 @@ void tiling_area::on_lay_out()
 
 		ruis::vector2 pos{0, 0};
 
-		for (auto& t : this->content_container.get()) {
+		for (auto& t : this->content()) {
 			ruis::real tile_length = max(t.get().rect().d[long_index], this->min_tile_size);
 
 			ASSERT(tiles_length > 0)
@@ -253,14 +260,20 @@ void tiling_area::on_lay_out()
 		}
 	}
 
-	this->content_container.get().resize(content_dims);
+	this->content().resize(content_dims);
 
 	// ====================
 	// = lay out draggers =
 
 	ASSERT(this->size() >= 1)
 
-	auto num_draggers = this->content_container.get().size() == 0 ? 0 : this->content_container.get().size() - 1;
+	auto num_draggers = [&]() -> size_t {
+		if (this->content().empty()) {
+			return 0;
+		} else {
+			return this->content().size() - 1;
+		}
+	}();
 
 	// remove redundant draggers
 	while (this->size() - 1 > num_draggers) {
@@ -303,20 +316,32 @@ void tiling_area::on_lay_out()
 
 ruis::vector2 tiling_area::measure(const ruis::vector2& quotum) const
 {
-	auto long_index = this->get_long_index();
+	auto [long_index, trans_index] = this->get_long_trans_indices();
 
 	ruis::vector2 ret;
 
-	for (size_t i = 0; i != quotum.size(); ++i) {
-		if (quotum[i] < 0) {
-			ret[i] = this->min_tile_size;
+	// longitudinal index
+	if (quotum[long_index] < 0) {
+		ret[long_index] = this->min_tile_size * real(this->content().size());
+	} else {
+		ret[long_index] = quotum[long_index];
+	}
 
-			if (i == long_index) {
-				ret[i] *= ruis::real(this->content_container.get().size());
-			}
-		} else {
-			ret[i] = quotum[i];
+	// transverse index
+	if (quotum[trans_index] < 0) {
+		vec2 tile_quotum;
+		tile_quotum[long_index] = this->min_tile_size;
+		tile_quotum[trans_index] = -1;
+
+		real d = 0;
+		for (const auto& w : this->content()) {
+			auto measured = w.get().measure(tile_quotum);
+			using std::max;
+			d = max(d, measured[trans_index]);
 		}
+		ret[trans_index] = d;
+	} else {
+		ret[trans_index] = quotum[trans_index];
 	}
 
 	return ret;

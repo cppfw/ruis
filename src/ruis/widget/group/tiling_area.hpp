@@ -40,7 +40,11 @@ class tiling_area :
 	private ruis::container
 {
 public:
+	/**
+	 * @brief Minimal size of a tile in logitudinal direction of the tiling_area.
+	 */
 	const ruis::real min_tile_size;
+
 	const ruis::real dragger_size;
 
 	struct parameters {
