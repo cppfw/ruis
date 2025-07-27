@@ -208,9 +208,8 @@ utki::shared_ref<container> make_caption(
 
 utki::shared_ref<container> make_middle(
 	utki::shared_ref<context> c, //
-	container::parameters container_params,
-	string title,
-	widget_list children
+	utki::shared_ref<container> content_conatiner,
+	string title
 )
 {
 	// clang-format off
@@ -228,20 +227,7 @@ utki::shared_ref<container> make_middle(
 			make_caption(c,
 				std::move(title)
 			),
-			m::container(c,
-				{
-					.layout_params = {
-						.dims = {ruis::dim::fill, ruis::dim::fill},
-						.weight = 1
-					},
-					.widget_params = {
-						.id = "ruis_content"s,
-						.clip = true
-					},
-					.container_params = std::move(container_params)
-				},
-				std::move(children)
-			)
+			std::move(content_conatiner)
 		}
 	);
 	// clang-format on
@@ -249,9 +235,8 @@ utki::shared_ref<container> make_middle(
 
 utki::shared_ref<container> make_middle_row(
 	utki::shared_ref<context> c, //
-	container::parameters container_params,
-	string title,
-	widget_list children
+	utki::shared_ref<container> content_container,
+	string title
 )
 {
 	// clang-format off
@@ -277,9 +262,8 @@ utki::shared_ref<container> make_middle_row(
 				}
 			),
 			make_middle(c,
-				std::move(container_params),
-				std::move(title),
-				std::move(children)
+				std::move(content_container),
+				std::move(title)
 			),
 			m::mouse_proxy(c,
 				{
@@ -298,9 +282,8 @@ utki::shared_ref<container> make_middle_row(
 
 std::vector<utki::shared_ref<widget>> make_children(
 	utki::shared_ref<context> c, //
-	container::parameters container_params,
-	string title,
-	widget_list children
+	utki::shared_ref<container> content_container,
+	string title
 )
 {
 	// clang-format off
@@ -317,9 +300,8 @@ std::vector<utki::shared_ref<widget>> make_children(
 			{
 				make_top_row(c),
 				make_middle_row(c,
-					std::move(container_params),
-					std::move(title),
-					std::move(children)
+					std::move(content_container),
+					std::move(title)
 				),
 				make_bottom_row(c)
 			}
@@ -351,6 +333,23 @@ window::window(
 		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
+	content_wrapping(
+		m::container(this->context,
+			// clang-format off
+			{
+				.layout_params = {
+					.dims = {ruis::dim::fill, ruis::dim::fill},
+					.weight = 1
+				},
+				.widget_params = {
+					.clip = true
+				},
+				.container_params = std::move(params.container_params)
+			},
+			// clang-format on
+			std::move(children)
+		)
+	),
 	// clang-format off
 	container( //
 		this->context,
@@ -361,9 +360,8 @@ window::window(
 		},
 		make_children(
 			this->context, //
-			std::move(params.container_params),
-			std::move(params.title),
-			std::move(children)
+			this->content_container,
+			std::move(params.title)
 		)
 	)
 // clang-format on
@@ -414,9 +412,6 @@ window::window(
 void ruis::window::setup_widgets()
 {
 	// TODO: refactor to avoid widget lookup by id.
-	this->content_area = this->try_get_widget_as<container>("ruis_content");
-	ASSERT(this->content_area)
-
 	this->title = this->try_get_widget_as<text>("ruis_title");
 	ASSERT(this->title)
 

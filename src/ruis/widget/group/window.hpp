@@ -21,6 +21,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
+#include "../../util/content_wrapping.hpp"
 #include "../../util/length.hpp"
 #include "../label/rectangle.hpp"
 #include "../label/text.hpp"
@@ -37,10 +38,10 @@ namespace ruis {
  * @param title - text of the window title.
  * @param look - style settings.
  */
-// TODO: derive from padding
 // NOLINTNEXTLINE(bugprone-incorrect-enable-shared-from-this, "std::shared_from_this is public via widget")
 class window :
 	virtual public widget, //
+	public content_wrapping,
 	private container
 {
 	ruis::vector2 empty_min_dim; // minimal dimension of empty window
@@ -52,8 +53,6 @@ class window :
 	uint32_t title_bg_color_non_topmost = default_title_bg_color_non_topmost;
 
 	std::shared_ptr<text> title;
-
-	std::shared_ptr<container> content_area;
 
 	std::shared_ptr<widget> lt_border;
 	std::shared_ptr<widget> rt_border;
@@ -109,16 +108,6 @@ public:
 	void set_title(const std::string& str);
 
 	void set_title(std::u32string str);
-
-	/**
-	 * @brief Get window content area.
-	 * This is where child widgets are stored.
-	 * @return Window content area.
-	 */
-	container& content()
-	{
-		return *this->content_area;
-	}
 
 	/**
 	 * @brief Move the window to the Z order top within its parent.
