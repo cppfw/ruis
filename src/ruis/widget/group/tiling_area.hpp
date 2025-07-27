@@ -21,6 +21,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
+#include "../../util/content_wrapping.hpp"
 #include "../../util/oriented.hpp"
 #include "../container.hpp"
 
@@ -33,11 +34,9 @@ Common borders of the contained tiles are draggable with mouse pointer.
 class tiling_area :
 	virtual public widget, //
 	public ruis::oriented,
+	public content_wrapping,
 	private ruis::container
 {
-	// TODO: refactor: e.g. padding also has content container. Add some 'content_wrapping_widget' base class.
-	utki::shared_ref<ruis::container> content_container;
-
 public:
 	const ruis::real min_tile_size;
 	const ruis::real dragger_size;
@@ -61,16 +60,6 @@ public:
 		all_parameters params,
 		ruis::widget_list children
 	);
-
-	ruis::container& content()
-	{
-		return this->content_container.get();
-	}
-
-	const ruis::container& content() const
-	{
-		return this->content_container.get();
-	}
 
 	void on_lay_out() override;
 

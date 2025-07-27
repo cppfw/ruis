@@ -155,14 +155,21 @@ tiling_area::tiling_area(
 		std::move(params.widget_params) //
 	),
 	ruis::oriented({.vertical = false}),
-	ruis::container(this->context, {}, {}),
-	content_container(
+	ruis::content_wrapping(
 		ruis::make::container(
 			this->context,
 			{},
 			std::move(children) //
 		)
 	),
+	// clang-format off
+	ruis::container(this->context,
+		{},
+		{
+			this->content_container
+		}
+	),
+	// clang-format on
 	min_tile_size(this->context.get().units.pp_to_px(minimal_tile_size_pp)),
 	dragger_size(this->context.get().units.pp_to_px(dragger_size_pp)),
 	params([&]() {
@@ -174,8 +181,7 @@ tiling_area::tiling_area(
 		return std::move(params.tiling_area_params);
 	}())
 {
-	this->ruis::container::push_back(this->content_container);
-	this->content_container.get().move_to({0, 0});
+	this->content().move_to({0, 0});
 }
 
 void tiling_area::on_lay_out()

@@ -39,9 +39,14 @@ padding::padding(
 	all_parameters params,
 	widget_list children
 ) :
-	padding(
-		// clang-format off
-		m::container(std::move(context),
+	widget( //
+		std::move(context),
+		std::move(params.layout_params),
+		std::move(params.widget_params)
+	),
+	content_wrapping(
+		m::container(this->context,
+			// clang-format off
 			{
 				.container_params = [&](){
 					// pile layout by default
@@ -51,37 +56,20 @@ padding::padding(
 					return std::move(params.container_params);
 				}()
 			},
+			// clang-format on
 			std::move(children)
-		),
-		// clang-format on
-		std::move(params.layout_params),
-		std::move(params.widget_params),
-		std::move(params.padding_params)
-	)
-{}
-
-padding::padding(
-	utki::shared_ref<container> content_container,
-	layout_parameters layout_params,
-	widget::parameters widget_params,
-	parameters padding_params
-):
-	widget( //
-		content_container.get().context,
-		std::move(layout_params),
-		std::move(widget_params)
+		)
 	),
 	// clang-format off
 	container(
 		this->context,
 		{},
 		{
-			content_container
+			this->content_container
 		}
 	),
 	// clang-format on
-	params(std::move(padding_params)),
-	inner_content(std::move(content_container))
+	params(std::move(params.padding_params))
 {}
 
 sides<real> padding::get_min_borders() const noexcept

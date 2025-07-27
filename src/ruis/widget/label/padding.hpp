@@ -21,6 +21,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
+#include "../../util/content_wrapping.hpp"
 #include "../container.hpp"
 
 namespace ruis {
@@ -30,6 +31,7 @@ namespace ruis {
 // NOLINTNEXTLINE(bugprone-incorrect-enable-shared-from-this, "false-positive")
 class padding :
 	public virtual widget, //
+	public content_wrapping,
 	protected container
 {
 public:
@@ -39,8 +41,6 @@ public:
 
 private:
 	parameters params;
-
-	utki::shared_ref<container> inner_content;
 
 public:
 	struct all_parameters {
@@ -56,31 +56,9 @@ public:
 		widget_list children
 	);
 
-private:
-	padding(
-		utki::shared_ref<container> content_container,
-		layout_parameters layout_params,
-		widget::parameters widget_params,
-		parameters padding_params
-	);
-
 public:
 	vec2 measure(const vec2& quotum) const override;
 	void on_lay_out() override;
-
-	/**
-	 * @brief Get content container.
-	 * @return The content container. This is where the child widgets are stored.
-	 */
-	container& content()
-	{
-		return this->inner_content.get();
-	}
-
-	const container& content() const
-	{
-		return this->inner_content.get();
-	}
 
 	/**
 	 * @brief Set border settings.

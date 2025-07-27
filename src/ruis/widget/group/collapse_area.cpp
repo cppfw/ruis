@@ -51,6 +51,17 @@ collapse_area::collapse_area(
 		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
+	content_wrapping(
+		m::container(
+			this->context,
+			// clang-format off
+			{
+				.container_params = std::move(params.container_params)
+			},
+			// clang-format on
+			std::move(contents)
+		)
+	),
 	// clang-format off
 	container(
 		this->context,
@@ -127,25 +138,16 @@ collapse_area::collapse_area(
 					)
 				}
 			),
-			m::container(this->context,
-				{
-					.widget_params{
-						.id = "ruis_content"s
-					},
-					.container_params = std::move(params.container_params)
-				},
-				std::move(contents)
-			)
+			this->content_container
 		}
 	),
 	// clang-format on
-	content_area(this->get_widget_as<container>("ruis_content")), //
 	title_v(this->get_widget_as<container>("ruis_title"))
 {
 	{
 		auto& sw = this->get_widget_as<toggle_button>("ruis_switch");
 		sw.pressed_change_handler = [this](button& tb) {
-			auto& lp = this->content_area.get_layout_params();
+			auto& lp = this->content().get_layout_params();
 			if (tb.is_pressed()) {
 				using namespace length_literals;
 				lp.dims.y() = 0_px;

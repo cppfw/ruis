@@ -41,7 +41,7 @@ class scroll_area : public container
 	// offset from top left corner
 	vector2 cur_scroll_pos = vector2(0);
 
-	// cached dimensions of the invisible contnets part, which goes beyond right and bottom edge of the scroll_area
+	// cached dimensions of the invisible contents part, which goes beyond right and bottom edge of the scroll_area
 	vector2 invisible_dims;
 
 	// cached scroll factor

@@ -21,20 +21,17 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
+#include "../../util/content_wrapping.hpp"
 #include "../container.hpp"
-#include "../widget.hpp"
 
 namespace ruis {
 
-// TODO: derive from padding?
 // NOLINTNEXTLINE(bugprone-incorrect-enable-shared-from-this, "std::shared_from_this is public via widget")
 class collapse_area :
 	virtual public widget, //
+	public content_wrapping,
 	private container
 {
-	// TODO: use shared_ref
-	// NOLINTNEXTLINE(clang-analyzer-webkit.NoUncountedMemberChecker, "false-positive")
-	container& content_area;
 	// TODO: use shared_ref
 	// NOLINTNEXTLINE(clang-analyzer-webkit.NoUncountedMemberChecker, "false-positive")
 	container& title_v;
@@ -52,11 +49,6 @@ public:
 		all_parameters params,
 		widget_list contents
 	);
-
-	container& content() noexcept
-	{
-		return this->content_area;
-	}
 
 	container& title() noexcept
 	{
