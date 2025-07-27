@@ -27,10 +27,12 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
-/*
-The tile_area arranges its content widgets (tiles) either vertially or horizontally.
-Common borders of the contained tiles are draggable with mouse pointer.
-*/
+/**
+ * @brief Tiling area.
+ * The tile_area arranges its content widgets (tiles) either vertially or horizontally.
+ * Common borders of the adjacent contained tiles are draggable with mouse pointer.
+ */
+// NOLINTNEXTLINE(bugprone-incorrect-enable-shared-from-this, "std::enable_shared_from_this is public via widget inheritance")
 class tiling_area :
 	virtual public widget, //
 	public ruis::oriented,

@@ -45,10 +45,7 @@ public:
 	 * User subclasses this class to provide tree_view an access to the tree data model
 	 * and provide a way to represent the data as widgets.
 	 */
-	// NOLINTNEXTLINE(bugprone-incorrect-enable-shared-from-this, "std::shared_from_this is public via utki::shared")
-	class provider :
-		public virtual utki::shared, //
-		private list_provider
+	class provider : private list_provider
 	{
 		friend class tree_view;
 

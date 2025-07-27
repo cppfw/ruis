@@ -41,6 +41,7 @@ class dragger : public ruis::gap
 	ruis::mouse_cursor_stack::iterator arrows_cursor_iter;
 
 public:
+	// TODO: use shared_ref?
 	std::shared_ptr<ruis::widget> prev_widget;
 	std::shared_ptr<ruis::widget> next_widget;
 

@@ -33,7 +33,7 @@ class list_providable;
  * @brief Item widgets provider class.
  * User should subclass this class to provide item widgets to a list_providable.
  */
-class list_provider : virtual public utki::shared
+class list_provider
 {
 	friend class list_providable;
 
@@ -43,6 +43,14 @@ protected:
 	list_provider(utki::shared_ref<ruis::context> context);
 
 public:
+	list_provider(const list_provider&) = delete;
+	list_provider& operator=(const list_provider&) = delete;
+
+	list_provider(list_provider&&) = delete;
+	list_provider& operator=(list_provider&&) = delete;
+
+	virtual ~list_provider() = default;
+
 	const utki::shared_ref<ruis::context> context;
 
 	/**
