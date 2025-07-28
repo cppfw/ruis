@@ -38,20 +38,34 @@ public:
 	 * This class provides access to the tree data model and constructs
 	 * widgets representing the tree items.
 	 */
-	class provider : private list_provider
+	class provider
 	{
 	public:
-		provider(utki::shared_ref<ruis::context> context);
+		const utki::shared_ref<ruis::context> context;
+
+		provider(utki::shared_ref<ruis::context> context) :
+			context(std::move(context))
+		{}
+
+		provider(const provider&) = delete;
+		provider& operator=(const provider&) = delete;
+
+		provider(provider&&) = delete;
+		provider& operator=(provider&&) = delete;
+
+		virtual ~provider() = default;
+
+		virtual size_t count() const noexcept = 0;
 
 		/**
-		 * @brief Create a list item widget.
-		 * The table_list will call this mthod when it needs a widget for the given list data item.
-		 * The widget has to be a container.
-		 * Each child widget of the container widget will represent a cell in the table row.
-		 * @param index - index of the item into the list data to create widget for.
-		 * @return A container widget containing table row cell widgets.
+		 * @brief Create table row cell widgets for an item.
+		 * The table_list will call this mthod when it needs widgets for the given list data item.
+		 * A list of widgets is to be created.
+		 * Each child widget will represent a cell in the table row.
+		 * @param index - index of the item into the list data to create widgets for.
+		 * @return A list of widgets for table row cell.
 		 */
-		virtual utki::shared_ref<ruis::container> get_container(size_t index) = 0;
+		virtual widget_list get_row_widgets(size_t index) = 0;
 	};
 
 	struct parameters {
@@ -60,7 +74,7 @@ public:
 		 * These widgets will be put inside of a horizontal ruis::tiling_area.
 		 */
 		ruis::widget_list column_headers = {};
-		std::shared_ptr<table_list::provider> provider;
+		utki::shared_ref<table_list::provider> provider;
 	};
 
 	struct all_parameters {
@@ -73,6 +87,8 @@ public:
 		utki::shared_ref<ruis::context> context, //
 		all_parameters params
 	);
+
+private:
 };
 
 namespace make {

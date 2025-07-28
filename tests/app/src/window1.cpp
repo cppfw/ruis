@@ -153,7 +153,7 @@ utki::shared_ref<ruis::window> make_window1(
                             .oriented_params{
                                 .vertical = false
                             },
-                            .providable_params{
+                            .list_providable_params{
                                 .provider = [&c](){
                                     class the_provider : public ruis::list_provider{
                                         std::vector<std::u32string> items;

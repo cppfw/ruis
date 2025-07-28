@@ -23,9 +23,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <utki/config.hpp>
 
-#include "../../context.hpp"
-#include "../../layout/pile_layout.hpp"
-#include "../../layout/size_layout.hpp"
 #include "../container.hpp"
 #include "../proxy/mouse_proxy.hpp"
 

@@ -26,11 +26,21 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
-void size_layout::lay_out(const vector2& dims, semiconst_widget_list& widgets) const
+void size_layout::lay_out(
+	const vector2& dims, //
+	semiconst_widget_list& widgets
+) const
 {
 	for (const auto& w : widgets) {
 		if (w.get().is_layout_dirty()) {
-			auto d = dims_for_widget(w.get(), dims);
+			using std::max;
+			auto d = dims_for_widget(
+				w.get(), //
+				max(
+					dims - w.get().rect().p,
+					{0, 0} //
+				)
+			);
 			w.get().resize(d);
 		}
 	}

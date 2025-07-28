@@ -119,8 +119,6 @@ public:
 
 	virtual ~list_providable() = default;
 
-	void set_provider(std::shared_ptr<list_provider> provider);
-
 	list_provider* get_provider()
 	{
 		return this->params.provider.get();
@@ -132,6 +130,11 @@ public:
 	}
 
 	virtual void handle_model_change() {}
+
+	// TODO: make private?
+	void set_provider(std::shared_ptr<list_provider> provider);
+
+private:
 };
 
 } // namespace ruis

@@ -38,7 +38,7 @@ list::list(
 	),
 	ruis::container(this->context, {.container_params = {.layout = layout::trivial}}, {}),
 	oriented(std::move(params.oriented_params)),
-	list_providable(std::move(params.providable_params))
+	list_providable(std::move(params.list_providable_params))
 {}
 
 void list::on_lay_out()

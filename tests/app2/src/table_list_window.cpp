@@ -79,7 +79,28 @@ utki::shared_ref<ruis::widget> make_table_list_window(
 							make_table_list_header(c, U"col 1"s),
 							make_table_list_header(c, U"col 2"s),
 							make_table_list_header(c, U"col 3"s)
-						}
+						},
+						.provider = [&](){
+							class provider : public ruis::table_list::provider{
+							public:
+								provider(utki::shared_ref<ruis::context> context) :
+									ruis::table_list::provider(std::move(context))
+								{}
+
+								size_t count() const noexcept override{
+									return 1;
+								}
+
+								ruis::widget_list get_row_widgets(size_t index) override{
+									return {
+										m::text(this->context, {}, U"Hi!"s),
+										m::text(this->context, {}, U"How are you?"s),
+										m::text(this->context, {}, U"Fine!"s)
+									};
+								}
+							};
+							return utki::make_shared<provider>(c);
+						}()
 					}
 				}
 			)

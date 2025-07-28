@@ -28,7 +28,10 @@ namespace ruis {
 class size_layout : public trivial_layout
 {
 public:
-	void lay_out(const vector2& dims, semiconst_widget_list& widgets) const override;
+	void lay_out(
+		const vector2& dims, //
+		semiconst_widget_list& widgets
+	) const override;
 };
 
 } // namespace ruis

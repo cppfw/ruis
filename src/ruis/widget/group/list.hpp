@@ -60,7 +60,7 @@ public:
 		layout_parameters layout_params;
 		widget::parameters widget_params;
 		oriented::parameters oriented_params;
-		list_providable::parameters providable_params;
+		list_providable::parameters list_providable_params;
 	};
 
 	list(

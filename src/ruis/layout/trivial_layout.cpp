@@ -25,12 +25,42 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
-vector2 trivial_layout::measure(const vector2& quotum, const_widget_list& widgets) const
+vector2 trivial_layout::measure(
+	const vector2& quotum, //
+	const_widget_list& widgets
+) const
 {
-	return max(quotum, 0);
+	if (quotum.is_positive_or_zero()) {
+		return quotum;
+	}
+
+	vec2 max_extent(0, 0);
+
+	for (const auto& widget : widgets) {
+		const auto& w = widget.get();
+
+		auto extent = w.rect().x2_y2();
+
+		using std::max;
+		max_extent = max(extent, max_extent);
+	}
+
+	vec2 ret;
+	for (auto [r, q, me] : utki::views::zip(ret, quotum, max_extent)) {
+		if (q < 0) {
+			r = me;
+		} else {
+			r = q;
+		}
+	}
+
+	return ret;
 }
 
-void trivial_layout::lay_out(const vector2& dims, semiconst_widget_list& widgets) const
+void trivial_layout::lay_out(
+	const vector2& dims, //
+	semiconst_widget_list& widgets
+) const
 {
 	for (auto& w : widgets) {
 		auto& ww = w.get();

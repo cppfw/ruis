@@ -26,20 +26,62 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace ruis;
 
 namespace {
+class provider : public list_provider
+{
+public:
+	table_list& owner;
+
+	const utki::shared_ref<table_list::provider> table_list_provider;
+
+	provider(table_list& owner, utki::shared_ref<table_list::provider> table_list_provider) :
+		list_provider(table_list_provider.get().context),
+		owner(owner),
+		table_list_provider(std::move(table_list_provider))
+	{}
+
+	size_t count() const noexcept override
+	{
+		return this->table_list_provider.get().count();
+	}
+
+	utki::shared_ref<ruis::widget> get_widget(size_t index) override
+	{
+		auto cells = this->table_list_provider.get().get_row_widgets(index);
+
+		// TODO: size cells
+
+		// clang-format off
+		return make::container(this->context,
+			{
+				.layout_params{
+					.dims = {ruis::dim::max, ruis::dim::min}
+				},
+				.container_params{
+					.layout = ruis::layout::trivial
+				}
+			},
+			std::move(cells)
+		);
+		// clang-format on
+	}
+};
+} // namespace
+
+namespace {
 utki::shared_ref<ruis::tiling_area> make_headers_widget(
 	const utki::shared_ref<ruis::context>& c, //
 	ruis::widget_list column_headers
 )
 {
 	// clang-format off
-    return ruis::make::tiling_area(c,
-        {
-            .layout_params{
-                .dims = {ruis::dim::fill, ruis::dim::min}
-            }
-        },
-        std::move(column_headers)
-    );
+	return ruis::make::tiling_area(c,
+		{
+			.layout_params{
+				.dims = {ruis::dim::fill, ruis::dim::min}
+			}
+		},
+		std::move(column_headers)
+	);
 	// clang-format on
 }
 } // namespace
@@ -54,30 +96,35 @@ table_list::table_list(
 		std::move(params.widget_params)
 	),
 	// clang-format off
-    ruis::container(
-        this->context,
-        {
-            .container_params{
-                .layout = ruis::layout::column
-            }
-        },
-        {
-            make_headers_widget(this->context,
-                std::move(params.table_list_params.column_headers)
-            ),
-            ruis::make::list(this->context,
-                {
-                    .layout_params{
-                        .dims = {ruis::dim::fill, ruis::dim::fill},
-                        .weight = 1
-                    },
-                    // .list_params{
-                    //     .provider = // TODO: make provider
-                    // }
-                }
-            )
-        }
-    )
+	ruis::container(
+		this->context,
+		{
+			.container_params{
+				.layout = ruis::layout::column
+			}
+		},
+		{
+			make_headers_widget(this->context,
+				std::move(params.table_list_params.column_headers)
+			),
+			ruis::make::list(this->context,
+				{
+					.layout_params{
+						.dims = {ruis::dim::fill, ruis::dim::fill},
+						.weight = 1
+					},
+					.list_providable_params{
+						.provider = [&]() -> utki::shared_ref<list_provider> {
+							return utki::make_shared<::provider>(
+								*this,
+								std::move(params.table_list_params.provider)
+							);
+						}()
+					}
+				}
+			)
+		}
+	)
 // clang-format on
 {}
 
