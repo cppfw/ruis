@@ -36,8 +36,10 @@ class list :
 	// NOTE: order of virtual public and private declarations here matters for clang due to some bug,
 	//       see
 	//       http://stackoverflow.com/questions/42427145/clang-cannot-cast-to-private-base-while-there-is-a-public-virtual-inheritance
+	// UPDATE 2025-07-29: private container inheritance changed to be public.
 	virtual public widget,
-	public container, // TODO: does it have to be public container? can be changed to private?
+	// inherit container publicly because sometimes it is needed to access current visible child widgets of the list
+	public container,
 	public oriented,
 	public list_providable
 {

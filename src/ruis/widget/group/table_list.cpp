@@ -25,7 +25,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
-namespace {
+namespace ruis::internal {
 class provider : public list_provider
 {
 public:
@@ -48,7 +48,7 @@ public:
 	{
 		auto cells = this->table_list_provider.get().get_row_widgets(index);
 
-		// TODO: size cells
+		this->owner.arrange_list_item_cells(cells);
 
 		// clang-format off
 		return make::container(this->context,
@@ -65,7 +65,7 @@ public:
 		// clang-format on
 	}
 };
-} // namespace
+} // namespace ruis::internal
 
 namespace {
 utki::shared_ref<ruis::tiling_area> make_headers_widget(
@@ -90,8 +90,40 @@ table_list::table_list(
 	utki::shared_ref<ruis::context> context, //
 	all_parameters params
 ) :
+	table_list(
+		make_headers_widget(
+			context, //
+			std::move(params.table_list_params.column_headers)
+		),
+		// clang-format off
+		ruis::make::list(context,
+			{
+				.layout_params{
+					.dims = {ruis::dim::fill, ruis::dim::fill},
+					.weight = 1
+				},
+				.list_providable_params{
+					.provider = [&]() -> utki::shared_ref<list_provider> {
+						return utki::make_shared<internal::provider>(
+							*this,
+							std::move(params.table_list_params.provider)
+						);
+					}()
+				}
+			}
+		),
+		// clang-format on
+		params
+	)
+{}
+
+table_list::table_list(
+	utki::shared_ref<tiling_area> headers, //
+	utki::shared_ref<list> rows_list,
+	all_parameters& params
+) :
 	ruis::widget(
-		std::move(context), //
+		headers.get().context, //
 		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
@@ -104,29 +136,39 @@ table_list::table_list(
 			}
 		},
 		{
-			make_headers_widget(this->context,
-				std::move(params.table_list_params.column_headers)
-			),
-			ruis::make::list(this->context,
-				{
-					.layout_params{
-						.dims = {ruis::dim::fill, ruis::dim::fill},
-						.weight = 1
-					},
-					.list_providable_params{
-						.provider = [&]() -> utki::shared_ref<list_provider> {
-							return utki::make_shared<::provider>(
-								*this,
-								std::move(params.table_list_params.provider)
-							);
-						}()
-					}
-				}
-			)
+			headers,
+			rows_list
 		}
-	)
-// clang-format on
-{}
+	),
+	// clang-format on
+	headers_tiling_area(std::move(headers)),
+	table_rows_list(std::move(rows_list))
+{
+	this->headers_tiling_area.get().tiles_resized_handler = [this](auto& ta) {
+		for (auto& child : this->table_rows_list.get().children()) {
+			auto* c = dynamic_cast<ruis::container*>(&child.get());
+			ASSERT(c)
+			this->arrange_list_item_cells(c->children());
+		}
+	};
+}
+
+void table_list::arrange_list_item_cells(ruis::semiconst_widget_list& cells)
+{
+	real pos = 0;
+	for (auto [c, h] : utki::views::zip(cells, this->headers_tiling_area.get().content().children())) {
+		auto md = c.get().measure({
+			h.get().rect().d.x(),
+			-1 //
+		});
+		c.get().resize(md);
+		c.get().move_to({
+			pos,
+			0 //
+		});
+		pos += md.x();
+	}
+}
 
 utki::shared_ref<ruis::table_list> make::table_list(
 	utki::shared_ref<ruis::context> context, //

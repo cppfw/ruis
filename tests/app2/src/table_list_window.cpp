@@ -94,7 +94,7 @@ utki::shared_ref<ruis::widget> make_table_list_window(
 								ruis::widget_list get_row_widgets(size_t index) override{
 									return {
 										m::text(this->context, {}, U"Hi!"s),
-										m::text(this->context, {}, U"How are you?"s),
+										m::text(this->context, {.widget_params{.clip = true}}, U"How are you?"s),
 										m::text(this->context, {}, U"Fine!"s)
 									};
 								}

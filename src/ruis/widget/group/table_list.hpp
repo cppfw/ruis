@@ -24,14 +24,21 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../container.hpp"
 
 #include "list.hpp"
+#include "tiling_area.hpp"
 
 namespace ruis {
+
+namespace internal {
+class provider;
+} // namespace internal
 
 // NOLINTNEXTLINE(bugprone-incorrect-enable-shared-from-this, "std::enable_shared_from_this is public via widget inheritance")
 class table_list :
 	virtual public widget, //
 	private container
 {
+	friend class ruis::internal::provider;
+
 public:
 	/**
 	 * @brief A class for accessing the tree data model.
@@ -89,6 +96,16 @@ public:
 	);
 
 private:
+	table_list(
+		utki::shared_ref<tiling_area> ta, //
+		utki::shared_ref<list> l,
+		all_parameters& params
+	);
+
+	void arrange_list_item_cells(ruis::semiconst_widget_list& cells);
+
+	utki::shared_ref<tiling_area> headers_tiling_area;
+	utki::shared_ref<list> table_rows_list;
 };
 
 namespace make {
