@@ -14,6 +14,32 @@ using namespace ruis::length_literals;
 namespace m = ruis::make;
 
 namespace {
+const tml::forest list_data = tml::read(R"qwertyuiop(
+		""{"row 0" "0123" "321sadf0"}
+		""{"row 1" "12345" "54321asdfas"}
+		""{"row 2" "2345" "54321asdf"}
+		""{"row 3" "3452434" "5432sdfas1"}
+		""{"row 4" "4512124" "5432asdf1"}
+		""{"row 5" "54123" "5432dff1"}
+		""{"row 6" "6 324123" "54asdf321"}
+		""{"row 7" "7 546 45" "543sdafas21"}
+		""{"row 8" "8 3453" "5432asdf1"}
+		""{"row 9" "9 3453245" "543asdf21"}
+		""{"row 10" "10 345222345" "543gfgsdf21"}
+		""{"row 11" "11 35432345" "5432sgdfgsdfgs1"}
+		""{"row 12" "12 35324345" "sdfgsdfg54321"}
+		""{"row 13" "13 35432445" "5432sdfg1"}
+		""{"row 14" "14 345 345" "5432gsfd1"}
+		""{"row 15" "15 3 45234" "543sdsdf21"}
+		""{"row 16" "16 543345" "5432gsdf1"}
+		""{"row 17" "17 5234 23534" "5432dfg1"}
+		""{"row 18" "18 4534 5324" "543dfg21"}
+		""{"row 19" "19 3453 45 " "5432sgdfsdfg1"}
+		""{"row 20" "20 45 2345 342" "543sdfg21"}
+	)qwertyuiop");
+} // namespace
+
+namespace {
 utki::shared_ref<ruis::widget> make_table_list_header(
 	const utki::shared_ref<ruis::context>& c, //
 	std::u32string text
@@ -88,15 +114,22 @@ utki::shared_ref<ruis::widget> make_table_list_window(
 								{}
 
 								size_t count() const noexcept override{
-									return 1;
+									return list_data.size();
 								}
 
 								ruis::widget_list get_row_widgets(size_t index) override{
-									return {
-										m::text(this->context, {}, U"Hi!"s),
-										m::text(this->context, {.widget_params{.clip = true}}, U"How are you?"s),
-										m::text(this->context, {}, U"Fine!"s)
-									};
+									ruis::widget_list ret;
+
+									for(auto i = 0; i != 3; ++i){
+										ret.emplace_back(
+											m::text(
+												this->context,//
+												{.widget_params{.clip = true}},
+												utki::to_utf32(list_data[index].children[i].value.string)
+											)
+										);
+									}
+									return ret;
 								}
 							};
 							return utki::make_shared<provider>(c);
