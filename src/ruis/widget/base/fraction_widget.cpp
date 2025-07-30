@@ -23,7 +23,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
-void fraction_widget::set_fraction(real fraction, bool notify_change)
+void fraction_widget::set_fraction(
+	real fraction, //
+	bool notify_change
+)
 {
 	using std::min;
 	using std::max;

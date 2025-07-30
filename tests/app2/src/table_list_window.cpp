@@ -3,6 +3,7 @@
 #include <ruis/widget/group/table_list.hpp>
 #include <ruis/widget/group/window.hpp>
 #include <ruis/widget/label/rectangle.hpp>
+#include <ruis/widget/slider/scroll_bar.hpp>
 
 #include "table_tree_view_window.hpp"
 
@@ -75,6 +76,83 @@ utki::shared_ref<ruis::widget> make_table_list_window(
 )
 {
 	// clang-format off
+	auto table_list = m::table_list(c,
+		{
+			.layout_params{
+				.dims = {ruis::dim::fill, ruis::dim::fill},
+				.weight = 1
+			},
+			.table_list_params{
+				.column_headers = {
+					make_table_list_header(c, U"col 1"s),
+					make_table_list_header(c, U"col 2"s),
+					make_table_list_header(c, U"col 3"s)
+				},
+				.provider = [&](){
+					class provider : public ruis::table_list::provider{
+					public:
+						provider(utki::shared_ref<ruis::context> context) :
+							ruis::table_list::provider(std::move(context))
+						{}
+
+						size_t count() const noexcept override{
+							return list_data.size();
+						}
+
+						ruis::widget_list get_row_widgets(size_t index) override{
+							ruis::widget_list ret;
+
+							for(auto i = 0; i != 3; ++i){
+								ret.emplace_back(
+									m::text(
+										this->context,//
+										{.widget_params{.clip = true}},
+										utki::to_utf32(list_data[index].children[i].value.string)
+									)
+								);
+							}
+							return ret;
+						}
+					};
+					return utki::make_shared<provider>(c);
+				}()
+			}
+		}
+	);
+
+	auto scroll_bar = m::scroll_bar(c,
+		{
+			.layout_params{
+				.dims = {ruis::dim::min, ruis::dim::fill}
+			}
+		}
+	);
+
+	scroll_bar.get().fraction_change_handler =
+		[table_list_weak = utki::make_weak(table_list)]
+		(ruis::fraction_widget& sb)
+	{
+		if(auto l = table_list_weak.lock()){
+			l->set_scroll_factor(
+				sb.get_fraction(),
+				false // no notify
+			);
+		}
+	};
+
+	table_list.get().scroll_change_handler =
+		[scroll_bar_weak = utki::make_weak(scroll_bar)]
+		(ruis::table_list& tl)
+	{
+		if(auto sb = scroll_bar_weak.lock()){
+			sb->set_fraction(
+				tl.get_scroll_factor(),
+				false // no notify
+			);
+			sb->set_band_fraction(tl.get_scroll_band());
+		}
+	};
+ 
 	return m::window(c,
 		{
 			.widget_params = {
@@ -90,53 +168,13 @@ utki::shared_ref<ruis::widget> make_table_list_window(
 				}
 			},
 			.container_params = {
-				.layout = ruis::layout::pile
+				.layout = ruis::layout::row
 			},
 			.title = c.get().localization.get().get("table_list"sv)
 		},
 		{
-			m::table_list(c,
-				{
-					.layout_params{
-						.dims = {ruis::dim::fill, ruis::dim::fill}
-					},
-					.table_list_params{
-						.column_headers = {
-							make_table_list_header(c, U"col 1"s),
-							make_table_list_header(c, U"col 2"s),
-							make_table_list_header(c, U"col 3"s)
-						},
-						.provider = [&](){
-							class provider : public ruis::table_list::provider{
-							public:
-								provider(utki::shared_ref<ruis::context> context) :
-									ruis::table_list::provider(std::move(context))
-								{}
-
-								size_t count() const noexcept override{
-									return list_data.size();
-								}
-
-								ruis::widget_list get_row_widgets(size_t index) override{
-									ruis::widget_list ret;
-
-									for(auto i = 0; i != 3; ++i){
-										ret.emplace_back(
-											m::text(
-												this->context,//
-												{.widget_params{.clip = true}},
-												utki::to_utf32(list_data[index].children[i].value.string)
-											)
-										);
-									}
-									return ret;
-								}
-							};
-							return utki::make_shared<provider>(c);
-						}()
-					}
-				}
-			)
+			std::move(table_list),
+			std::move(scroll_bar)
 		}
 	);
 	// clang-format on

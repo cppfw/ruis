@@ -95,6 +95,82 @@ public:
 		all_parameters params
 	);
 
+	/**
+	 * @brief Set scroll position as factor from [0:1].
+	 * @param factor - factor of the scroll position to set.
+	 * @param notify_change - whether to invoke the scroll change handler.
+	 */
+	void set_scroll_factor(
+		real factor, //
+		bool notify_scroll_change = true
+	)
+	{
+		this->table_rows_list.get().set_scroll_factor(
+			factor, //
+			notify_scroll_change
+		);
+	}
+
+	/**
+	 * @brief Get scroll factor.
+	 * @return Current scroll position as factor from [0:1].
+	 */
+	real get_scroll_factor() const noexcept
+	{
+		return this->table_rows_list.get().get_scroll_factor();
+	}
+
+	/**
+	 * @brief Get scroll band.
+	 * Returns scroll band as a fraction of 1. This is basically the number of visible elements divided by total number
+	 * of elements in the list.
+	 * @return scroll band.
+	 */
+	real get_scroll_band() const noexcept
+	{
+		return this->table_rows_list.get().get_scroll_band();
+	}
+
+	/**
+	 * @brief Get index of the first visible item.
+	 * @return index of the first visible item.
+	 */
+	size_t get_pos_index() const noexcept
+	{
+		return this->table_rows_list.get().get_pos_index();
+	}
+
+	/**
+	 * @brief Get offset of the first visible item.
+	 * The value is positive, though the item coordinate is <= 0.
+	 * @return offset in pixels of the first visible item.
+	 */
+	real get_pos_offset() const noexcept
+	{
+		return this->table_rows_list.get().get_pos_offset();
+	}
+
+	/**
+	 * @brief Scroll the list by given number of pixels.
+	 * @param delta - number of pixels to scroll, can be positive or negative.
+	 */
+	void scroll_by(real delta)
+	{
+		this->table_rows_list.get().scroll_by(delta);
+	}
+
+	/**
+	 * @brief Model change signal.
+	 * Emitted when list widget contents have actually been updated due to change in provider's model data set.
+	 */
+	std::function<void(table_list&)> model_change_handler;
+
+	/**
+	 * @brief Scroll position changed signal.
+	 * Emitted when list's scroll position has changed.
+	 */
+	std::function<void(table_list&)> scroll_change_handler;
+
 private:
 	table_list(
 		utki::shared_ref<tiling_area> ta, //
@@ -103,6 +179,10 @@ private:
 	);
 
 	void arrange_list_item_cells(ruis::semiconst_widget_list& cells);
+
+	void notify_model_changed();
+
+	void notify_scroll_changed();
 
 	utki::shared_ref<tiling_area> headers_tiling_area;
 	utki::shared_ref<list> table_rows_list;

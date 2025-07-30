@@ -82,6 +82,8 @@ public:
 
 	ruis::vector2 measure(const ruis::vector2& quotum) const override;
 
+	void on_reload() override;
+
 	/**
 	 * @brief Set scroll position as factor from [0:1].
 	 * @param factor - factor of the scroll position to set.
@@ -130,8 +132,6 @@ public:
 	 * @param delta - number of pixels to scroll, can be positive or negative.
 	 */
 	void scroll_by(real delta);
-
-	void on_reload() override;
 
 	/**
 	 * @brief Model change signal.

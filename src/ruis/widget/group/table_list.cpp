@@ -102,6 +102,9 @@ table_list::table_list(
 					.dims = {ruis::dim::fill, ruis::dim::fill},
 					.weight = 1
 				},
+				.widget_params{
+					.clip = true
+				},
 				.list_providable_params{
 					.provider = [&]() -> utki::shared_ref<list_provider> {
 						return utki::make_shared<internal::provider>(
@@ -151,6 +154,28 @@ table_list::table_list(
 			this->arrange_list_item_cells(c->children());
 		}
 	};
+
+	this->table_rows_list.get().model_change_handler = [this](auto& l) {
+		this->notify_model_changed();
+	};
+
+	this->table_rows_list.get().scroll_change_handler = [this](auto& l) {
+		this->notify_scroll_changed();
+	};
+}
+
+void table_list::notify_model_changed()
+{
+	if (this->model_change_handler) {
+		this->model_change_handler(*this);
+	}
+}
+
+void table_list::notify_scroll_changed()
+{
+	if (this->scroll_change_handler) {
+		this->scroll_change_handler(*this);
+	}
 }
 
 void table_list::arrange_list_item_cells(ruis::semiconst_widget_list& cells)
