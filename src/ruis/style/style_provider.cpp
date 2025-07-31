@@ -127,6 +127,11 @@ styled<color> style_provider::get_color_highlight() const
 	return this->get<color>("color_highlight"sv);
 }
 
+styled<color> style_provider::get_color_cursor() const
+{
+	return this->get<color>("color_cursor"sv);
+}
+
 styled<dimension> style_provider::get_dim_indent_tree_view_item() const
 {
 	return this->get<dimension>("dim_tree_view_item_indent"sv);

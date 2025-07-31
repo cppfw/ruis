@@ -100,6 +100,7 @@ public:
 	styled<color> get_color_foreground() const;
 	styled<color> get_color_text_normal() const;
 	styled<color> get_color_highlight() const;
+	styled<color> get_color_cursor() const;
 
 	styled<dimension> get_dim_indent_tree_view_item() const;
 

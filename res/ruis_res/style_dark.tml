@@ -9,6 +9,8 @@ ruis{
 
     color_highlight{0xffad9869}
 
+    color_cursor{0xffff8080}
+
     dim_tree_view_item_indent{17pp}
 
     font_size_normal{12pp}

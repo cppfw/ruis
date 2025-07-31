@@ -371,7 +371,7 @@ utki::shared_ref<ruis::tiling_area> make::tiling_area(
 )
 {
 	if (params.tiling_area_params.dragger_color.get().is_undefined()) {
-		params.tiling_area_params.dragger_color = context.get().style().get_color_highlight();
+		params.tiling_area_params.dragger_color = context.get().style().get_color_cursor();
 	}
 
 	return utki::make_shared<ruis::tiling_area>(
