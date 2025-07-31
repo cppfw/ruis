@@ -33,11 +33,18 @@ public:
 
 	const utki::shared_ref<table_list::provider> table_list_provider;
 
-	provider(table_list& owner, utki::shared_ref<table_list::provider> table_list_provider) :
+	provider(
+		table_list& owner, //
+		utki::shared_ref<table_list::provider> table_list_provider
+	) :
 		list_provider(table_list_provider.get().context),
 		owner(owner),
 		table_list_provider(std::move(table_list_provider))
-	{}
+	{
+		this->table_list_provider.get().model_change_signal.connect([this]() {
+			this->notify_model_change();
+		});
+	}
 
 	size_t count() const noexcept override
 	{
@@ -193,6 +200,13 @@ void table_list::arrange_list_item_cells(ruis::semiconst_widget_list& cells)
 		});
 		pos += md.x();
 	}
+}
+
+void table_list::provider::notify_model_change()
+{
+	this->context.get().post_to_ui_thread([this]() {
+		this->model_change_signal.emit();
+	});
 }
 
 utki::shared_ref<ruis::table_list> make::table_list(

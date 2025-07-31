@@ -47,6 +47,10 @@ public:
 	 */
 	class provider
 	{
+		friend class ruis::internal::provider;
+
+		utki::signal<> model_change_signal;
+
 	public:
 		const utki::shared_ref<ruis::context> context;
 
@@ -73,6 +77,12 @@ public:
 		 * @return A list of widgets for table row cell.
 		 */
 		virtual widget_list get_row_widgets(size_t index) = 0;
+
+		/**
+		 * @brief Notify about change of items model.
+		 * The user is supposed to invoke this function when items model change.
+		 */
+		void notify_model_change();
 	};
 
 	struct parameters {
