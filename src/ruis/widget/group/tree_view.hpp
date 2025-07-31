@@ -28,17 +28,14 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../widget.hpp"
 
 #include "list.hpp"
-#include "scroll_area.hpp"
 
 namespace ruis {
 
 // NOLINTNEXTLINE(bugprone-incorrect-enable-shared-from-this, "std::shared_from_this is public via widget")
 class tree_view :
 	virtual public widget, //
-	private scroll_area
+	private list
 {
-	utki::shared_ref<list> item_list;
-
 public:
 	/**
 	 * @brief tree_view item provider base class.
@@ -49,7 +46,10 @@ public:
 	{
 		friend class tree_view;
 
-		void recycle(size_t index, utki::shared_ref<widget> w) override;
+		void recycle(
+			size_t index, //
+			utki::shared_ref<widget> w
+		) override;
 
 		utki::shared_ref<widget> get_widget(size_t index) override;
 
@@ -214,45 +214,21 @@ public:
 	 * @brief Set vertical scroll position by factor.
 	 * @param factor - new scroll position specified by factor from [0:1].
 	 */
-	void set_vertical_scroll_factor(real factor)
-	{
-		this->item_list.get().set_scroll_factor(factor);
-	}
-
-	/**
-	 * @brief Set horizontal scroll position by factor.
-	 * @param factor - new scroll position specified by factor from [0:1].
-	 */
-	void set_horizontal_scroll_factor(real factor)
-	{
-		this->set_scroll_factor(vector2(factor, 0));
-	}
+	using list::set_scroll_factor;
 
 	/**
 	 * @brief Get scroll position.
-	 * @return Vector of (horizontal scroll factor, vertical scroll factor).
+	 * @return Scroll factor.
 	 */
-	vector2 get_scroll_factor() const
-	{
-		return vector2(
-			this->scroll_area::get_scroll_factor().x(), //
-			this->item_list.get().get_scroll_factor()
-		);
-	}
+	using list::get_scroll_factor;
 
 	/**
 	 * @brief Get scroll band.
 	 * Get scroll band size.
 	 * The scroll band size is a fraction of [0:1] interval.
-	 * @return Vector of (horizontal scroll band, vertical scroll band).
+	 * @return Vertical scroll band.
 	 */
-	vector2 get_scroll_band() const noexcept
-	{
-		return vector2(
-			this->scroll_area::get_visible_area_fraction().x(), //
-			this->item_list.get().get_scroll_band()
-		);
-	}
+	using list::get_scroll_band;
 
 private:
 	void notify_view_change();

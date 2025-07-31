@@ -42,33 +42,19 @@ tree_view::tree_view( //
 		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
-	scroll_area(this->context, {}, {}),
-	item_list(
-		// clang-format off
-		ruis::make::list(this->context,
-			{
-				.layout_params = {
-					.dims = {ruis::dim::min, ruis::dim::max}
-				},
-				.oriented_params = {
-					.vertical = true
-				}
+	list(this->context,
+		{
+			.oriented_params{
+				.vertical = true
 			}
-		)
-		// clang-format on
+		}
 	)
 {
-	this->push_back(this->item_list);
-
-	this->item_list.get().model_change_handler = [this](list&) {
+	this->list::model_change_handler = [this](list&) {
 		this->notify_view_change();
 	};
 
-	this->item_list.get().scroll_change_handler = [this](list&) {
-		this->notify_view_change();
-	};
-
-	this->scroll_area::scroll_change_handler = [this](scroll_area& sa) {
+	this->list::scroll_change_handler = [this](list&) {
 		this->notify_view_change();
 	};
 
@@ -85,14 +71,14 @@ void tree_view::notify_view_change()
 void tree_view::set_provider(std::shared_ptr<provider> item_provider)
 {
 	if (!item_provider) {
-		this->item_list.get().set_provider(nullptr);
+		this->list::set_provider(nullptr);
 		return;
 	}
 
 	// TODO: why do we need to do the notification here?
 	item_provider->notify_model_change();
 
-	this->item_list.get().set_provider(
+	this->list::set_provider(
 		// use aliasing shared_ptr constructor becasue list::provider
 		// is a private base of tree_view::provider, so not possible
 		// to use std::static_pointer_cast() because it does not see the

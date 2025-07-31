@@ -3,9 +3,11 @@
 #include <ruis/widget/group/tree_view.hpp>
 #include <ruis/widget/slider/scroll_bar.hpp>
 #include <ruis/widget/button/push_button.hpp>
+#include <ruis/widget/group/scroll_area.hpp>
 #include <ruis/default_style.hpp>
 
 using namespace std::string_literals;
+using namespace std::string_view_literals;
 
 using namespace ruis::length_literals;
 
@@ -311,18 +313,21 @@ utki::shared_ref<ruis::window> make_tree_view_window(
                     }
                 },
                 {
-                    m::pile(c,
+                    m::scroll_area(c,
                         {
                             .layout_params{
-                                .dims{ruis::dim::fill, ruis::dim::max},
+                                .dims{ruis::dim::fill, ruis::dim::fill},
                                 .weight = 1
+                            },
+                            .widget_params{
+                                .id = "tree_view_scroll_area"s
                             }
                         },
                         {
                             m::tree_view(c,
                                 {
                                     .layout_params{
-                                        .dims{ruis::dim::fill, ruis::dim::fill}
+                                        .dims{ruis::dim::min, ruis::dim::fill}
                                     },
                                     .widget_params{
                                         .id = "treeview_widget"s,
@@ -409,10 +414,6 @@ utki::shared_ref<ruis::window> make_tree_view_window(
 
     auto& treeview = w.get().get_widget_as<ruis::tree_view>("treeview_widget");
 
-    // TODO: remove
-    // auto provider = std::make_shared<tree_view_items_provider>(w.get().context);
-    // treeview.set_provider(provider);
-
     auto tv = utki::make_weak_from(treeview);
 
     auto& vertical_slider = w.get().get_widget_as<ruis::fraction_band_widget>("treeview_vertical_slider");
@@ -420,33 +421,40 @@ utki::shared_ref<ruis::window> make_tree_view_window(
 
     vertical_slider.fraction_change_handler = [tv](ruis::fraction_widget& slider){
         if(auto t = tv.lock()){
-            t->set_vertical_scroll_factor(slider.get_fraction());
+            t->set_scroll_factor(slider.get_fraction());
         }
     };
+
+    auto& tvsa = w.get().get_widget_as<ruis::scroll_area>("tree_view_scroll_area"sv);
 
     auto& horizontal_slider = w.get().get_widget_as<ruis::fraction_band_widget>("treeview_horizontal_slider");
     auto hs = utki::make_weak_from(horizontal_slider);
 
-    horizontal_slider.fraction_change_handler = [tv](ruis::fraction_widget& slider){
-        if(auto t = tv.lock()){
-            t->set_horizontal_scroll_factor(slider.get_fraction());
+    horizontal_slider.fraction_change_handler = [tvsa = utki::make_weak_from(tvsa)](ruis::fraction_widget& slider){
+        if(auto sa = tvsa.lock()){
+            sa->set_scroll_factor({
+                slider.get_fraction(),
+                0
+            });
+        }
+    };
+
+    tvsa.scroll_change_handler = [hs = utki::make_weak_from(horizontal_slider)](ruis::scroll_area& sa){
+        if(auto h = hs.lock()){
+            h->set_band_fraction(sa.get_visible_area_fraction().x());
+            h->set_fraction(sa.get_scroll_factor().x(), false);
         }
     };
 
     treeview.scroll_change_handler = [
-            hs = utki::make_weak_from(horizontal_slider),
             vs = utki::make_weak_from(vertical_slider)
         ](ruis::tree_view& tw)
     {
         auto f = tw.get_scroll_factor();
         auto b = tw.get_scroll_band();
-        if(auto h = hs.lock()){
-            h->set_band_fraction(b.x());
-            h->set_fraction(f.x(), false);
-        }
         if(auto v = vs.lock()){
-            v->set_band_fraction(b.y());
-            v->set_fraction(f.y(), false);
+            v->set_band_fraction(b);
+            v->set_fraction(f, false);
         }
     };
 
