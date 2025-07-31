@@ -57,6 +57,7 @@ std::map<std::string, tml::forest, std::less<>> style_sheet::parse(tml::forest d
 	std::map<std::string, tml::forest, std::less<>> ret;
 
 	for (auto& d : utki::skip_front<1>(desc)) {
+		// TODO: why "ruis" and "user" are stored into same place?
 		if (d.value.string == "ruis"sv || d.value.string == "user"sv) {
 			for (auto& s : d.children) {
 				ret.insert_or_assign(
