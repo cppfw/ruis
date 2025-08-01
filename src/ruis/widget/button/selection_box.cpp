@@ -46,15 +46,11 @@ void selection_box::handle_model_change()
 {
 	this->selection_container.clear();
 
-	if (!this->get_provider()) {
+	if (this->get_selection() >= this->get_provider().count()) {
 		return;
 	}
 
-	if (this->get_selection() >= this->get_provider()->count()) {
-		return;
-	}
-
-	this->selection_container.push_back(this->get_provider()->get_widget(this->get_selection()));
+	this->selection_container.push_back(this->get_provider().get_widget(this->get_selection()));
 }
 
 void selection_box::set_selection(size_t i)
@@ -87,7 +83,5 @@ utki::shared_ref<ruis::selection_box> ruis::make::selection_box(
 
 void selection_box::on_reload()
 {
-	if (this->get_provider()) {
-		this->get_provider()->on_reload();
-	}
+	this->get_provider().on_reload();
 }

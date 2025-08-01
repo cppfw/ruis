@@ -125,7 +125,7 @@ utki::shared_ref<ruis::window> make_window0(
                                 .id = "dropdownselector"s
                             },
                             .providable_params{
-                                .provider = [&]() -> std::shared_ptr<ruis::list_provider>{
+                                .provider = [&](){
                                     class the_provider : public ruis::list_provider
                                     {
                                         std::vector<std::u32string> items;
@@ -155,7 +155,7 @@ utki::shared_ref<ruis::window> make_window0(
                                             return m::text(this->context, {}, this->items.at(index));
                                         }
                                     };
-                                    return std::make_shared<the_provider>(c);
+                                    return utki::make_shared<the_provider>(c);
                                 }()
                             }
                         }

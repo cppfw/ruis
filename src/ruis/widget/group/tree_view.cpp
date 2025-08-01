@@ -38,7 +38,7 @@ tree_view::tree_view( //
 	all_parameters params
 ) :
 	widget( //
-		std::move(context),
+		context,
 		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
@@ -46,6 +46,27 @@ tree_view::tree_view( //
 		{
 			.oriented_params{
 				.vertical = true
+			},
+			.list_providable_params{
+				.provider = [&](){
+					class provider : public list_provider{
+					public:
+						provider(utki::shared_ref<ruis::context> context) :
+							list_provider(std::move(context))
+						{}
+
+						size_t count() const noexcept override
+						{
+							return 0;
+						}
+
+						utki::shared_ref<ruis::widget> get_widget(size_t index) override
+						{
+							return make::gap(this->context, {});
+						}
+					};
+					return utki::make_shared<provider>(context);
+				}()
 			}
 		}
 	)
@@ -68,24 +89,23 @@ void tree_view::notify_view_change()
 	}
 }
 
-void tree_view::set_provider(std::shared_ptr<provider> item_provider)
+void tree_view::set_provider(utki::shared_ref<provider> item_provider)
 {
-	if (!item_provider) {
-		this->list::set_provider(nullptr);
-		return;
-	}
-
 	// TODO: why do we need to do the notification here?
-	item_provider->notify_model_change();
+	item_provider.get().notify_model_change();
+
+	auto p = item_provider.to_shared_ptr();
 
 	this->list::set_provider(
 		// use aliasing shared_ptr constructor becasue list::provider
 		// is a private base of tree_view::provider, so not possible
 		// to use std::static_pointer_cast() because it does not see the
 		// private base class
-		std::shared_ptr<list_provider>(
-			item_provider, //
-			item_provider.get()
+		utki::shared_ref<list_provider>(
+			std::shared_ptr<list_provider>(
+				p, //
+				p.get()
+			)
 		)
 	);
 }

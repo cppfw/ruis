@@ -287,7 +287,7 @@ utki::shared_ref<ruis::window> make_selection_box_window(
 				.dims = {ruis::dim::max, ruis::dim::min}
 			},
 			.providable_params{
-				.provider = std::make_shared<language_selection_provider>(c)
+				.provider = utki::make_shared<language_selection_provider>(c)
 			}
 		}
 	);
@@ -338,7 +338,7 @@ utki::shared_ref<ruis::window> make_selection_box_window(
 						.dims = {ruis::dim::max, ruis::dim::min}
 					},
 					.providable_params = {
-						.provider = std::make_shared<selection_box_provider>(c,
+						.provider = utki::make_shared<selection_box_provider>(c,
 							std::vector<std::string>{
 								"Hello"s,
 								"World!"s

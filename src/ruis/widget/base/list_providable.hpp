@@ -99,7 +99,7 @@ class list_providable
 
 public:
 	struct parameters {
-		std::shared_ptr<list_provider> provider;
+		utki::shared_ref<list_provider> provider;
 	};
 
 	decltype(list_provider::model_change_signal)::connection provider_signal_connection;
@@ -117,14 +117,14 @@ public:
 	list_providable(list_providable&&) = delete;
 	list_providable& operator=(list_providable&&) = delete;
 
-	virtual ~list_providable() = default;
+	virtual ~list_providable();
 
-	list_provider* get_provider()
+	list_provider& get_provider()
 	{
 		return this->params.provider.get();
 	}
 
-	const list_provider* get_provider() const
+	const list_provider& get_provider() const
 	{
 		return this->params.provider.get();
 	}
@@ -132,7 +132,7 @@ public:
 	virtual void handle_model_change() {}
 
 	// TODO: make private?
-	void set_provider(std::shared_ptr<list_provider> provider);
+	void set_provider(utki::shared_ref<list_provider> provider);
 
 private:
 };

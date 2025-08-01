@@ -175,10 +175,6 @@ bool drop_down_box::on_mouse_move(const mouse_move_event& e)
 
 void drop_down_box::show_drop_down_menu()
 {
-	if (!this->get_provider()) {
-		return;
-	}
-
 	auto olay = this->try_get_ancestor<overlay>();
 	if (!olay) {
 		throw std::logic_error("drop_down_box: no overlay parent found");
@@ -235,8 +231,8 @@ void drop_down_box::show_drop_down_menu()
 
 	auto& va = np.get().get_widget_as<ruis::nine_patch>("ruis_contextmenu_content").content();
 
-	for (size_t i = 0; i != this->get_provider()->count(); ++i) {
-		va.push_back(this->wrap_item(this->get_provider()->get_widget(i), i));
+	for (size_t i = 0; i != this->get_provider().count(); ++i) {
+		va.push_back(this->wrap_item(this->get_provider().get_widget(i), i));
 	}
 
 	this->hovered_index = -1;

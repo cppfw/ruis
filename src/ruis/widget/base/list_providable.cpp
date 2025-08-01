@@ -34,27 +34,33 @@ void list_provider::notify_model_change()
 	});
 }
 
-list_providable::list_providable(parameters params)
+list_providable::list_providable(parameters params) :
+	params(std::move(params))
 {
-	this->set_provider(params.provider);
+	this->provider_signal_connection = //
+		this->params.provider.get().model_change_signal.connect( //
+			[this]() {
+				this->handle_model_change();
+			}
+		);
 }
 
-void list_providable::set_provider(std::shared_ptr<list_provider> provider)
+list_providable::~list_providable(){
+	this->params.provider.get().model_change_signal.disconnect(this->provider_signal_connection);
+}
+
+void list_providable::set_provider(utki::shared_ref<list_provider> provider)
 {
-	if (this->params.provider) {
-		this->params.provider->model_change_signal.disconnect(this->provider_signal_connection);
-	}
+	this->params.provider.get().model_change_signal.disconnect(this->provider_signal_connection);
+
 	this->params.provider = std::move(provider);
-	if (this->params.provider) {
-		this->provider_signal_connection = //
-			this->params.provider->model_change_signal.connect( //
-				[this]() {
-					this->handle_model_change();
-				}
-			);
-	}
-	// set_provider is called from constructor in order to connect
-	// model change observer
-	// NOLINTNEXTLINE(clang-analyzer-optin.cplusplus.VirtualCall)
+
+	this->provider_signal_connection = //
+		this->params.provider.get().model_change_signal.connect( //
+			[this]() {
+				this->handle_model_change();
+			}
+		);
+
 	this->handle_model_change();
 }

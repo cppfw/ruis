@@ -42,6 +42,7 @@ public:
 	 * User subclasses this class to provide tree_view an access to the tree data model
 	 * and provide a way to represent the data as widgets.
 	 */
+	// TODO: do not inherit list_provider
 	class provider : private list_provider
 	{
 		friend class tree_view;
@@ -76,6 +77,8 @@ public:
 		void set_children(decltype(iter) i, size_t num_children);
 
 	public:
+		using list_provider::context;
+
 		/**
 		 * @brief Get stored ruis context.
 		 * @return The stored ruis context.
@@ -176,7 +179,7 @@ public:
 	};
 
 	struct parameters {
-		std::shared_ptr<tree_view::provider> provider;
+		utki::shared_ref<tree_view::provider> provider;
 	};
 
 	struct all_parameters {
@@ -208,7 +211,8 @@ public:
 	 * @brief Set items provider.
 	 * @param provider - items provider.
 	 */
-	void set_provider(std::shared_ptr<provider> provider = nullptr);
+	// TODO: make private
+	void set_provider(utki::shared_ref<provider> provider);
 
 	/**
 	 * @brief Set vertical scroll position by factor.

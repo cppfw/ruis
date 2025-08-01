@@ -47,7 +47,7 @@ table_tree_view::table_tree_view(
 	all_parameters params
 ) :
 	ruis::widget(
-		std::move(context), //
+		context, //
 		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
@@ -69,9 +69,27 @@ table_tree_view::table_tree_view(
                         .dims = {ruis::dim::fill, ruis::dim::fill},
                         .weight = 1
                     },
-                    // .tree_view_params{
-                    //     .provider = // TODO: make provider
-                    // }
+                    .tree_view_params{
+                        .provider = [&](){
+                            class provider :  public tree_view::provider{
+                            public:
+                                provider(utki::shared_ref<ruis::context> context) :
+                                    tree_view::provider(std::move(context))
+                                {}
+
+                                size_t count(utki::span<const size_t> index) const noexcept override
+                                {
+                                    return 0;
+                                };
+
+                                utki::shared_ref<widget> get_widget(utki::span<const size_t> index) override
+                                {
+                                    return make::container(this->context, {});
+                                }
+                            };
+                            return utki::make_shared<provider>(context);
+                        }()
+                    }
                 }
             )
         }

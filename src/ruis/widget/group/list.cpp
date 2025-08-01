@@ -86,18 +86,18 @@ real list::calc_num_visible_items() const noexcept
 
 real list::get_scroll_band() const noexcept
 {
-	if (!this->get_provider() || this->get_provider()->count() == 0) {
+	if (this->get_provider().count() == 0) {
 		return 0;
 	}
 
 	auto items_num = this->calc_num_visible_items();
 
-	return items_num / ruis::real(this->get_provider()->count());
+	return items_num / ruis::real(this->get_provider().count());
 }
 
 real list::get_scroll_factor() const noexcept
 {
-	if (!this->get_provider() || this->get_provider()->count() == 0) {
+	if (this->get_provider().count() == 0) {
 		return 0;
 	}
 
@@ -105,9 +105,9 @@ real list::get_scroll_factor() const noexcept
 		return 0;
 	}
 
-	ASSERT(this->get_provider()->count() >= this->num_tail_items)
+	ASSERT(this->get_provider().count() >= this->num_tail_items)
 
-	size_t length = this->get_provider()->count() - this->num_tail_items;
+	size_t length = this->get_provider().count() - this->num_tail_items;
 
 	if (length == 0) {
 		return 0;
@@ -138,7 +138,7 @@ void list::set_scroll_factor(
 	bool notify_scroll_change
 )
 {
-	if (!this->get_provider() || this->get_provider()->count() == 0) {
+	if (this->get_provider().count() == 0) {
 		return;
 	}
 
@@ -149,21 +149,21 @@ void list::set_scroll_factor(
 	size_t old_index = this->pos_index;
 	real old_offset = this->pos_offset;
 
-	this->pos_index = size_t(factor * real(this->get_provider()->count() - this->num_tail_items));
+	this->pos_index = size_t(factor * real(this->get_provider().count() - this->num_tail_items));
 
 	//	TRACE(<< "list::setScrollPosAsFactor(): this->pos_index = " << this->pos_index << std::endl)
 
 	using std::round;
 
-	if (this->get_provider()->count() != this->num_tail_items) {
-		real int_factor = real(this->pos_index) / real(this->get_provider()->count() - this->num_tail_items);
+	if (this->get_provider().count() != this->num_tail_items) {
+		real int_factor = real(this->pos_index) / real(this->get_provider().count() - this->num_tail_items);
 
 		if (this->children().size() != 0) {
 			real d = this->rect().d[this->get_long_index()];
 			d = (d + this->first_tail_item_offset) / real(this->num_tail_items);
 
 			this->pos_offset = round(
-				d * (factor - int_factor) * real(this->get_provider()->count() - this->num_tail_items) +
+				d * (factor - int_factor) * real(this->get_provider().count() - this->num_tail_items) +
 				factor * this->first_tail_item_offset
 			);
 		} else {
@@ -218,14 +218,10 @@ bool list::arrange_widget(
 		this->pos_offset -= w.get().rect().d[long_index];
 		if (added) {
 			insert_before = this->erase(insert_before);
-			if (this->get_provider()) {
-				this->get_provider()->recycle(index, w);
-			}
+			this->get_provider().recycle(index, w);
 			++this->added_index;
 		} else {
-			if (this->get_provider()) {
-				this->get_provider()->recycle(index, w);
-			}
+			this->get_provider().recycle(index, w);
 		}
 	}
 
@@ -239,15 +235,6 @@ bool list::arrange_widget(
 // TODO: refactor
 void list::update_children_list()
 {
-	if (!this->get_provider()) {
-		this->pos_index = 0;
-		this->pos_offset = 0;
-
-		this->clear();
-		this->added_index = size_t(-1);
-		return;
-	}
-
 	if (this->num_tail_items == 0) {
 		this->update_tail_items_info();
 	}
@@ -271,16 +258,14 @@ void list::update_children_list()
 		auto i = this->children().begin();
 		auto w = *i;
 		this->erase(i);
-		if (this->get_provider()) {
-			this->get_provider()->recycle(this->added_index, w);
-		}
+		this->get_provider().recycle(this->added_index, w);
 	}
 
 	auto iter = this->children().begin();
 	size_t iter_index = this->added_index;
 	const size_t iter_end_index = iter_index + this->children().size();
 	size_t index = this->pos_index;
-	for (bool is_last = false; index < this->get_provider()->count() && !is_last;) {
+	for (bool is_last = false; index < this->get_provider().count() && !is_last;) {
 		// std::shared_ptr<widget> w;
 		bool is_added = false;
 		auto w = [&]() {
@@ -290,7 +275,7 @@ void list::update_children_list()
 				return *iter;
 			} else {
 				is_added = false;
-				return this->get_provider()->get_widget(index);
+				return this->get_provider().get_widget(index);
 			}
 		}();
 
@@ -304,9 +289,7 @@ void list::update_children_list()
 		for (; iter != this->children().end(); ++iter_index) {
 			auto w = *iter;
 			iter = this->erase(iter);
-			if (this->get_provider()) {
-				this->get_provider()->recycle(iter_index, w);
-			}
+			this->get_provider().recycle(iter_index, w);
 		}
 	}
 }
@@ -315,7 +298,7 @@ void list::update_tail_items_info()
 {
 	this->num_tail_items = 0;
 
-	if (!this->get_provider() || this->get_provider()->count() == 0) {
+	if (this->get_provider().count() == 0) {
 		return;
 	}
 
@@ -323,13 +306,12 @@ void list::update_tail_items_info()
 
 	real dim = this->rect().d[long_index];
 
-	ASSERT(this->get_provider())
-	ASSERT(this->get_provider()->count() > 0)
+	ASSERT(this->get_provider().count() > 0)
 
-	for (size_t i = this->get_provider()->count(); i != 0 && dim > 0; --i) {
+	for (size_t i = this->get_provider().count(); i != 0 && dim > 0; --i) {
 		++this->num_tail_items;
 
-		auto w = this->get_provider()->get_widget(i - 1);
+		auto w = this->get_provider().get_widget(i - 1);
 
 		vector2 d = dims_for_widget(w.get(), this->rect().d);
 
@@ -338,7 +320,7 @@ void list::update_tail_items_info()
 		this->first_tail_item_dim = item_dim;
 	}
 
-	this->first_tail_item_index = this->get_provider()->count() - this->num_tail_items;
+	this->first_tail_item_index = this->get_provider().count() - this->num_tail_items;
 
 	if (dim > 0) {
 		this->first_tail_item_offset = -1;
@@ -367,10 +349,6 @@ void list::notify_scroll_pos_changed(size_t old_index, real old_offset)
 
 void list::scroll_by(real delta)
 {
-	if (!this->get_provider()) {
-		return;
-	}
-
 	size_t old_index = this->pos_index;
 	real old_offset = this->pos_offset;
 
@@ -398,7 +376,7 @@ void list::scroll_by(real delta)
 				  << " this->children().size() = " << this->children().size();
 			})
 			for (; this->pos_index < this->first_tail_item_index;) {
-				auto w = this->get_provider()->get_widget(this->pos_index);
+				auto w = this->get_provider().get_widget(this->pos_index);
 				vector2 d = dims_for_widget(w.get(), this->rect().d);
 				this->push_back(w); // this is just optimization, to avoid creating same widget twice
 				if (d[long_index] > delta) {
@@ -421,7 +399,7 @@ void list::scroll_by(real delta)
 			for (; this->pos_index > 0;) {
 				ASSERT(this->added_index == this->pos_index)
 				--this->pos_index;
-				auto w = this->get_provider()->get_widget(this->pos_index);
+				auto w = this->get_provider().get_widget(this->pos_index);
 				vector2 d = dims_for_widget(w.get(), this->rect().d);
 				this->insert(
 					w,
@@ -483,7 +461,5 @@ void list::on_reload()
 {
 	this->container::on_reload();
 
-	if (this->get_provider()) {
-		this->get_provider()->on_reload();
-	}
+	this->get_provider().on_reload();
 }

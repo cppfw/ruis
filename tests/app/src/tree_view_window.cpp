@@ -282,7 +282,7 @@ utki::shared_ref<ruis::window> make_tree_view_window(
     ruis::vec2_length pos
 )
 {
-    auto tv_provider = std::make_shared<tree_view_items_provider>(c);
+    auto tv_provider = utki::make_shared<tree_view_items_provider>(c);
 
     // clang-format off
     auto w = m::window(c,
