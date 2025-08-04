@@ -122,7 +122,7 @@ public:
 	list_widget(list_widget&&) = delete;
 	list_widget& operator=(list_widget&&) = delete;
 
-	virtual ~list_widget();
+	~list_widget() override;
 
 	list_provider& get_provider()
 	{
