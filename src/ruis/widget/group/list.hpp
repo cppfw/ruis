@@ -87,7 +87,7 @@ public:
 	/**
 	 * @brief Set scroll position as factor from [0:1].
 	 * @param factor - factor of the scroll position to set.
-	 * @param notify_change - whether to invoke the scroll change handler.
+	 * @param notify_scroll_change - whether to invoke the scroll change handler.
 	 */
 	void set_scroll_factor(
 		real factor, //

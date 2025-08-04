@@ -217,6 +217,7 @@ public:
 	/**
 	 * @brief Set vertical scroll position by factor.
 	 * @param factor - new scroll position specified by factor from [0:1].
+	 * @param notify_scroll_change - whether to invoke the scroll change handler.
 	 */
 	using list::set_scroll_factor;
 
