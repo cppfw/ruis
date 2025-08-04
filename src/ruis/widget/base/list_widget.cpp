@@ -29,8 +29,14 @@ list_provider::list_provider(utki::shared_ref<ruis::context> context) :
 
 void list_provider::notify_model_change()
 {
-	this->context.get().post_to_ui_thread([this]() {
-		this->model_change_signal.emit();
+	if (!this->owner) {
+		return;
+	}
+
+	this->context.get().post_to_ui_thread([owner = utki::make_weak_from(*this->owner)]() {
+		if (auto o = owner.lock()) {
+			o->handle_model_change();
+		}
 	});
 }
 
@@ -41,31 +47,16 @@ list_widget::list_widget(
 	widget(std::move(context), {}, {}),
 	params(std::move(params))
 {
-	this->provider_signal_connection = //
-		this->params.provider.get().model_change_signal.connect( //
-			[this]() {
-				this->handle_model_change();
-			}
-		);
-}
-
-list_widget::~list_widget()
-{
-	this->params.provider.get().model_change_signal.disconnect(this->provider_signal_connection);
+	this->params.provider.get().owner = this;
 }
 
 void list_widget::set_provider(utki::shared_ref<list_provider> provider)
 {
-	this->params.provider.get().model_change_signal.disconnect(this->provider_signal_connection);
+	this->params.provider.get().owner = nullptr;
 
 	this->params.provider = std::move(provider);
 
-	this->provider_signal_connection = //
-		this->params.provider.get().model_change_signal.connect( //
-			[this]() {
-				this->handle_model_change();
-			}
-		);
+	this->params.provider.get().owner = this;
 
 	this->handle_model_change();
 }

@@ -37,7 +37,7 @@ class list_provider
 {
 	friend class list_widget;
 
-	utki::signal<> model_change_signal;
+	list_widget* owner = nullptr;
 
 protected:
 	list_provider(utki::shared_ref<ruis::context> context);
@@ -102,8 +102,6 @@ public:
 		utki::shared_ref<list_provider> provider;
 	};
 
-	decltype(list_provider::model_change_signal)::connection provider_signal_connection;
-
 private:
 	parameters params;
 
@@ -122,7 +120,7 @@ public:
 	list_widget(list_widget&&) = delete;
 	list_widget& operator=(list_widget&&) = delete;
 
-	~list_widget() override;
+	~list_widget() override = default;
 
 	list_provider& get_provider()
 	{
