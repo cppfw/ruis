@@ -21,7 +21,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "../base/list_providable.hpp"
+#include "../base/list_widget.hpp"
 #include "../container.hpp"
 #include "../widget.hpp"
 
@@ -32,7 +32,9 @@ namespace ruis {
  * This is a base class for drop down box widgets.
  * Drop down box widget allows selection of an item from list of items.
  */
-class selection_box : virtual public widget, public list_providable
+class selection_box :
+	virtual public widget, //
+	public list_providable
 {
 	// TODO: use shared_ref
 	// NOLINTNEXTLINE(clang-analyzer-webkit.NoUncountedMemberChecker, "false-positivie")

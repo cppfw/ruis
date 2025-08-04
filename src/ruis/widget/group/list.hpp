@@ -22,7 +22,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #pragma once
 
 #include "../../util/oriented.hpp"
-#include "../base/list_providable.hpp"
+#include "../base/list_widget.hpp"
 #include "../container.hpp"
 #include "../widget.hpp"
 
