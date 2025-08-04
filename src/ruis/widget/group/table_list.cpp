@@ -112,7 +112,7 @@ table_list::table_list(
 				.widget_params{
 					.clip = true
 				},
-				.list_providable_params{
+				.list_params{
 					.provider = [&]() -> utki::shared_ref<list_provider> {
 						return utki::make_shared<internal::provider>(
 							*this,

@@ -125,7 +125,7 @@ drop_down_box::drop_down_box(
 	selection_box(
 		this->context, //
 		this->get_widget_as<ruis::container>("ruis_dropdown_selection"),
-		std::move(params.providable_params)
+		std::move(params.list_params)
 	)
 {
 	this->pressed_change_handler = [this](button& b) {

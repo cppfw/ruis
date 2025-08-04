@@ -41,7 +41,7 @@ class list :
 	// inherit container publicly because sometimes it is needed to access current visible child widgets of the list
 	public container,
 	public oriented,
-	public list_providable
+	public list_widget
 {
 	// index of the first item added to container as child
 	size_t added_index = size_t(-1);
@@ -62,7 +62,7 @@ public:
 		layout_parameters layout_params;
 		widget::parameters widget_params;
 		oriented::parameters oriented_params;
-		list_providable::parameters list_providable_params;
+		list_widget::parameters list_params;
 	};
 
 	list(

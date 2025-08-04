@@ -27,15 +27,15 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
-class list_providable;
+class list_widget;
 
 /**
  * @brief Item widgets provider class.
- * User should subclass this class to provide item widgets to a list_providable.
+ * User should subclass this class to provide item widgets to a list_widget.
  */
 class list_provider
 {
-	friend class list_providable;
+	friend class list_widget;
 
 	utki::signal<> model_change_signal;
 
@@ -93,7 +93,7 @@ public:
 	void notify_model_change();
 };
 
-class list_providable : virtual public widget
+class list_widget : virtual public widget
 {
 	friend class list_provider;
 
@@ -108,7 +108,7 @@ private:
 	parameters params;
 
 protected:
-	list_providable(
+	list_widget(
 		utki::shared_ref<ruis::context> context, //
 		parameters params
 	);
@@ -116,13 +116,13 @@ protected:
 	virtual void handle_model_change() {}
 
 public:
-	list_providable(const list_providable&) = delete;
-	list_providable& operator=(const list_providable&) = delete;
+	list_widget(const list_widget&) = delete;
+	list_widget& operator=(const list_widget&) = delete;
 
-	list_providable(list_providable&&) = delete;
-	list_providable& operator=(list_providable&&) = delete;
+	list_widget(list_widget&&) = delete;
+	list_widget& operator=(list_widget&&) = delete;
 
-	virtual ~list_providable();
+	virtual ~list_widget();
 
 	list_provider& get_provider()
 	{

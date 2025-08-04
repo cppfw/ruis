@@ -32,12 +32,12 @@ using namespace ruis;
 selection_box::selection_box(
 	utki::shared_ref<ruis::context> context,
 	container& selection_container,
-	list_providable::parameters providable_params
+	list_widget::parameters list_widget_params
 ) :
 	widget(std::move(context), {}, {}),
-	list_providable(
+	list_widget(
 		this->context, //
-		std::move(providable_params)
+		std::move(list_widget_params)
 	),
 	selection_container(selection_container)
 {
@@ -79,7 +79,7 @@ utki::shared_ref<ruis::selection_box> ruis::make::selection_box(
 				.unpressed_nine_patch = c.loader().load<res::nine_patch>("ruis_npt_button_normal"sv),
 				.pressed_nine_patch = c.loader().load<res::nine_patch>("ruis_npt_button_pressed"sv)
 			},
-			.providable_params = std::move(params.providable_params)
+			.list_params = std::move(params.list_params)
 		}
 	);
 	// clang-format on

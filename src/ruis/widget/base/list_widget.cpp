@@ -34,7 +34,7 @@ void list_provider::notify_model_change()
 	});
 }
 
-list_providable::list_providable(
+list_widget::list_widget(
 	utki::shared_ref<ruis::context> context, //
 	parameters params
 ) :
@@ -49,12 +49,12 @@ list_providable::list_providable(
 		);
 }
 
-list_providable::~list_providable()
+list_widget::~list_widget()
 {
 	this->params.provider.get().model_change_signal.disconnect(this->provider_signal_connection);
 }
 
-void list_providable::set_provider(utki::shared_ref<list_provider> provider)
+void list_widget::set_provider(utki::shared_ref<list_provider> provider)
 {
 	this->params.provider.get().model_change_signal.disconnect(this->provider_signal_connection);
 

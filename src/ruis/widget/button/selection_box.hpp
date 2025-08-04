@@ -34,7 +34,7 @@ namespace ruis {
  */
 class selection_box :
 	virtual public widget, //
-	public list_providable
+	public list_widget
 {
 	// TODO: use shared_ref
 	// NOLINTNEXTLINE(clang-analyzer-webkit.NoUncountedMemberChecker, "false-positivie")
@@ -44,7 +44,7 @@ public:
 	struct all_parameters {
 		layout_parameters layout_params;
 		widget::parameters widget_params;
-		list_providable::parameters providable_params;
+		list_widget::parameters list_params;
 	};
 
 private:
@@ -54,7 +54,7 @@ protected:
 	selection_box(
 		utki::shared_ref<ruis::context> context, //
 		container& selection_container,
-		list_providable::parameters providable_params
+		list_widget::parameters list_params
 	);
 
 public:

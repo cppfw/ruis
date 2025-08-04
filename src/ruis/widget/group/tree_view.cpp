@@ -47,7 +47,7 @@ tree_view::tree_view( //
 			.oriented_params{
 				.vertical = true
 			},
-			.list_providable_params{
+			.list_params{
 				.provider = [&](){
 					class provider : public list_provider{
 					public:

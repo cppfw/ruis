@@ -124,7 +124,7 @@ utki::shared_ref<ruis::window> make_window0(
                             .widget_params{
                                 .id = "dropdownselector"s
                             },
-                            .providable_params{
+                            .list_params{
                                 .provider = [&](){
                                     class the_provider : public ruis::list_provider
                                     {

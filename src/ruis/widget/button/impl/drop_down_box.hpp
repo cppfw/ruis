@@ -42,7 +42,7 @@ public:
 		ruis::layout_parameters layout_params;
 		ruis::widget::parameters widget_params;
 		nine_patch_button::parameters nine_patch_button_params;
-		list_providable::parameters providable_params;
+		list_widget::parameters list_params;
 	};
 
 	drop_down_box(
