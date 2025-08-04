@@ -34,7 +34,11 @@ void list_provider::notify_model_change()
 	});
 }
 
-list_providable::list_providable(parameters params) :
+list_providable::list_providable(
+	utki::shared_ref<ruis::context> context, //
+	parameters params
+) :
+	widget(std::move(context), {}, {}),
 	params(std::move(params))
 {
 	this->provider_signal_connection = //
@@ -45,7 +49,8 @@ list_providable::list_providable(parameters params) :
 		);
 }
 
-list_providable::~list_providable(){
+list_providable::~list_providable()
+{
 	this->params.provider.get().model_change_signal.disconnect(this->provider_signal_connection);
 }
 

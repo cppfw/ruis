@@ -36,9 +36,20 @@ list::list(
 		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
-	ruis::container(this->context, {.container_params = {.layout = layout::trivial}}, {}),
+	// clang-format off
+	ruis::container(
+		this->context,
+		{
+			.container_params{
+				.layout = layout::trivial
+			}
+		},
+		{}
+	),
+	// clang-format on
 	oriented(std::move(params.oriented_params)),
-	list_providable(std::move(params.list_providable_params))
+	list_providable(this->context, //
+		std::move(params.list_providable_params))
 {}
 
 void list::on_lay_out()

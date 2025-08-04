@@ -101,12 +101,10 @@ void tree_view::set_provider(utki::shared_ref<provider> item_provider)
 		// is a private base of tree_view::provider, so not possible
 		// to use std::static_pointer_cast() because it does not see the
 		// private base class
-		utki::shared_ref<list_provider>(
-			std::shared_ptr<list_provider>(
-				p, //
-				p.get()
-			)
-		)
+		utki::shared_ref<list_provider>(std::shared_ptr<list_provider>(
+			p, //
+			p.get()
+		))
 	);
 }
 

@@ -93,7 +93,7 @@ public:
 	void notify_model_change();
 };
 
-class list_providable
+class list_providable : virtual public widget
 {
 	friend class list_provider;
 
@@ -108,7 +108,12 @@ private:
 	parameters params;
 
 protected:
-	list_providable(parameters params);
+	list_providable(
+		utki::shared_ref<ruis::context> context, //
+		parameters params
+	);
+
+	virtual void handle_model_change() {}
 
 public:
 	list_providable(const list_providable&) = delete;
@@ -128,8 +133,6 @@ public:
 	{
 		return this->params.provider.get();
 	}
-
-	virtual void handle_model_change() {}
 
 	// TODO: make private?
 	void set_provider(utki::shared_ref<list_provider> provider);

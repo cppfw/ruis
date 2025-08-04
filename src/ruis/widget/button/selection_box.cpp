@@ -35,7 +35,10 @@ selection_box::selection_box(
 	list_providable::parameters providable_params
 ) :
 	widget(std::move(context), {}, {}),
-	list_providable(std::move(providable_params)),
+	list_providable(
+		this->context, //
+		std::move(providable_params)
+	),
 	selection_container(selection_container)
 {
 	// NOLINTNEXTLINE(clang-analyzer-optin.cplusplus.VirtualCall, "bypass virtual dispatch")
@@ -66,9 +69,9 @@ utki::shared_ref<ruis::selection_box> ruis::make::selection_box(
 )
 {
 	auto& c = context.get();
+	// clang-format off
 	return utki::make_shared<ruis::drop_down_box>(
 		std::move(context), //
-		// clang-format off
 		ruis::drop_down_box::all_parameters{
 			.layout_params = std::move(params.layout_params), //
 			.widget_params = std::move(params.widget_params),
@@ -77,8 +80,9 @@ utki::shared_ref<ruis::selection_box> ruis::make::selection_box(
 				.pressed_nine_patch = c.loader().load<res::nine_patch>("ruis_npt_button_pressed"sv)
 			},
 			.providable_params = std::move(params.providable_params)
-		} // clang-format on
+		}
 	);
+	// clang-format on
 }
 
 void selection_box::on_reload()
