@@ -133,9 +133,6 @@ public:
 		return this->params.provider.get();
 	}
 
-	// TODO: make private?
-	void set_provider(utki::shared_ref<list_provider> provider);
-
 private:
 };
 

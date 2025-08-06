@@ -239,7 +239,10 @@ vector2 container::measure(const vector2& quotum) const
 
 void container::on_lay_out()
 {
-	this->get_layout().lay_out(this->rect().d, this->children());
+	this->get_layout().lay_out(
+		this->rect().d, //
+		this->children()
+	);
 }
 
 void container::set_widget_parent(widget& w)

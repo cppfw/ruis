@@ -49,14 +49,3 @@ list_widget::list_widget(
 {
 	this->params.provider.get().owner = this;
 }
-
-void list_widget::set_provider(utki::shared_ref<list_provider> provider)
-{
-	this->params.provider.get().owner = nullptr;
-
-	this->params.provider = std::move(provider);
-
-	this->params.provider.get().owner = this;
-
-	this->handle_model_change();
-}

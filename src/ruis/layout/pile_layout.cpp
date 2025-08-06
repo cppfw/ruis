@@ -26,7 +26,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
-void pile_layout::lay_out(const vector2& dims, semiconst_widget_list& widgets) const
+void pile_layout::lay_out(
+	const vector2& dims, //
+	semiconst_widget_list& widgets
+) const
 {
 	for (const auto& widget : widgets) {
 		auto& w = widget.get();
@@ -59,7 +62,10 @@ void pile_layout::lay_out(const vector2& dims, semiconst_widget_list& widgets) c
 	}
 }
 
-vector2 pile_layout::measure(const vector2& quotum, const_widget_list& widgets) const
+vector2 pile_layout::measure(
+	const vector2& quotum, //
+	const_widget_list& widgets
+) const
 {
 	vector2 ret(quotum);
 	using std::max;

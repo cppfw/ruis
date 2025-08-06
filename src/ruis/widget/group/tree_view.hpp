@@ -31,6 +31,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
+namespace internal {
+class tree_view_list_provider;
+} // namespace internal
+
 // NOLINTNEXTLINE(bugprone-incorrect-enable-shared-from-this, "std::shared_from_this is public via widget")
 class tree_view :
 	virtual public widget, //
@@ -42,59 +46,30 @@ public:
 	 * User subclasses this class to provide tree_view an access to the tree data model
 	 * and provide a way to represent the data as widgets.
 	 */
-	// TODO: do not inherit list_provider
-	class provider : private list_provider
+	class provider
 	{
-		friend class tree_view;
+		friend class internal::tree_view_list_provider;
 
-		void recycle(
-			size_t index, //
-			utki::shared_ref<widget> w
-		) override;
-
-		utki::shared_ref<widget> get_widget(size_t index) override;
-
-		size_t count() const noexcept override;
-
-		struct node {
-			size_t subtree_size = 0; // size of the visible subtree
-		};
-
-		mutable utki::tree<node> visible_tree;
-
-		utki::traversal<decltype(visible_tree.children)> traversal() const noexcept
-		{
-			return utki::make_traversal(this->visible_tree.children);
-		}
-
-		// cached values for faster lookup by index
-		mutable size_t iter_index = 0;
-		mutable utki::traversal<decltype(visible_tree)::container_type>::iterator iter = this->traversal().begin();
-
-		const decltype(iter)& iter_for(size_t index) const;
-
-		void remove_children(decltype(iter) from);
-		void set_children(decltype(iter) i, size_t num_children);
+		internal::tree_view_list_provider* list_provider = nullptr;
 
 	public:
-		using list_provider::context;
-
-		/**
-		 * @brief Get stored ruis context.
-		 * @return The stored ruis context.
-		 */
-		const utki::shared_ref<ruis::context>& get_context() noexcept
-		{
-			return this->context;
-		}
+		const utki::shared_ref<ruis::context> context;
 
 		/**
 		 * @brief Construct tree_view items provider.
-		 * @param context - ruis context to store. The context can be obtained using the get_context() member function.
+		 * @param context - ruis context to store.
 		 */
 		provider(utki::shared_ref<ruis::context> context) :
-			list_provider(std::move(context))
+			context(std::move(context))
 		{}
+
+		provider(const provider&) = delete;
+		provider& operator=(const provider&) = delete;
+
+		provider(provider&&) = delete;
+		provider& operator=(provider&&) = delete;
+
+		virtual ~provider() = default;
 
 		/**
 		 * @brief Create item widget.
@@ -142,10 +117,11 @@ public:
 		 * @brief Reload callback.
 		 * Called by owner tree_view's on_reload().
 		 */
-		void on_reload() override {}
+		virtual void on_reload() {}
 
-		void expand(utki::span<const size_t> index);
-		void collapse(utki::span<const size_t> index);
+		// TODO:
+		// void expand(utki::span<const size_t> index);
+		// void collapse(utki::span<const size_t> index);
 
 		/**
 		 * @brief Notify about any model change.
@@ -179,6 +155,7 @@ public:
 	};
 
 	struct parameters {
+		// TODO: make utki::unique_ref
 		utki::shared_ref<tree_view::provider> provider;
 	};
 
@@ -202,17 +179,10 @@ public:
 	~tree_view() override = default;
 
 	/**
-	 * @brief Scroll position changed signal.
-	 * Emitted when tree_view's vertical or horizontal scroll position has changed.
+	 * @brief Scroll position changed handler.
+	 * Invoked when tree_view's scroll position has changed.
 	 */
 	std::function<void(tree_view&)> scroll_change_handler;
-
-	/**
-	 * @brief Set items provider.
-	 * @param provider - items provider.
-	 */
-	// TODO: make private
-	void set_provider(utki::shared_ref<provider> provider);
 
 	/**
 	 * @brief Set vertical scroll position by factor.

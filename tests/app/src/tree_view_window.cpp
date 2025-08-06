@@ -154,7 +154,7 @@ public:
             list = &n->children;
         }
 
-        auto& c = this->get_context();
+        auto& c = this->context;
 
         auto ret = ruis::make::row(c, {});
 
