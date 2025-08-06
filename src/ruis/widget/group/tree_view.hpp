@@ -151,8 +151,18 @@ public:
 		 */
 		virtual void on_reload() {}
 
-		// TODO: doxygen
+		/**
+		 * @brief Expand item.
+		 * Expands the tree item if it has children.
+		 * @param index - index of the item to expand.
+		 */
 		void expand(utki::span<const size_t> index);
+
+		/**
+		 * @brief Collapse item.
+		 * Collapse tree item if it was expanded.
+		 * @param index - index of the item to collapse.
+		 */
 		void collapse(utki::span<const size_t> index);
 
 		/**
