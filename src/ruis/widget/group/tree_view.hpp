@@ -50,7 +50,41 @@ public:
 	{
 		friend class internal::tree_view_list_provider;
 
-		internal::tree_view_list_provider* list_provider = nullptr;
+		ruis::list_provider* list_provider = nullptr;
+
+		struct node {
+			size_t subtree_size = 0; // size of the visible subtree
+		};
+
+		mutable utki::tree<node> visible_tree;
+
+		utki::traversal<decltype(visible_tree.children)> traversal() const noexcept
+		{
+			return utki::make_traversal(this->visible_tree.children);
+		}
+
+		// cached values for faster lookup by index
+		mutable size_t iter_index = 0;
+		mutable utki::traversal<decltype(visible_tree)::container_type>::iterator iter = this->traversal().begin();
+
+		void init();
+
+		const decltype(iter)& iter_for(size_t index) const;
+
+		void remove_children(decltype(iter) from);
+		void set_children(
+			decltype(iter) i, //
+			size_t num_children
+		);
+
+		size_t list_count() const noexcept;
+
+		void list_recycle(
+			size_t index, //
+			utki::shared_ref<widget> w
+		);
+
+		utki::shared_ref<widget> list_get_widget(size_t index);
 
 	public:
 		const utki::shared_ref<ruis::context> context;
@@ -59,9 +93,7 @@ public:
 		 * @brief Construct tree_view items provider.
 		 * @param context - ruis context to store.
 		 */
-		provider(utki::shared_ref<ruis::context> context) :
-			context(std::move(context))
-		{}
+		provider(utki::shared_ref<ruis::context> context);
 
 		provider(const provider&) = delete;
 		provider& operator=(const provider&) = delete;
@@ -119,9 +151,9 @@ public:
 		 */
 		virtual void on_reload() {}
 
-		// TODO:
-		// void expand(utki::span<const size_t> index);
-		// void collapse(utki::span<const size_t> index);
+		// TODO: doxygen
+		void expand(utki::span<const size_t> index);
+		void collapse(utki::span<const size_t> index);
 
 		/**
 		 * @brief Notify about any model change.

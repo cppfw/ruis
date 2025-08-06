@@ -29,6 +29,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 namespace ruis {
 
 namespace internal {
+// TODO: rename/remove
 class provider;
 } // namespace internal
 
@@ -49,6 +50,7 @@ public:
 	{
 		friend class ruis::internal::provider;
 
+		// TODO: remove
 		utki::signal<> model_change_signal;
 
 	public:
