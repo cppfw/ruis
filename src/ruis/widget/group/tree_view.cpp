@@ -34,12 +34,12 @@ using namespace std::string_literals;
 using namespace ruis;
 
 namespace ruis::internal {
-class tree_view_list_provider : public list_provider
+class list_provider_for_tree_view : public list_provider
 {
 	utki::shared_ref<tree_view::provider> tree_view_provider;
 
 public:
-	tree_view_list_provider(utki::shared_ref<tree_view::provider> tree_view_provider) :
+	list_provider_for_tree_view(utki::shared_ref<tree_view::provider> tree_view_provider) :
 		list_provider(tree_view_provider.get().context),
 		tree_view_provider(std::move(tree_view_provider))
 	{
@@ -90,7 +90,7 @@ tree_view::tree_view( //
 				.vertical = true
 			},
 			.list_params{
-				.provider = utki::make_shared<internal::tree_view_list_provider>(std::move(params.tree_view_params.provider))
+				.provider = utki::make_shared<internal::list_provider_for_tree_view>(std::move(params.tree_view_params.provider))
 			}
 		}
 	)
@@ -533,8 +533,9 @@ void tree_view::provider::collapse(utki::span<const size_t> index)
 	ASSERT(this->traversal().is_valid(ii))
 	this->iter = this->traversal().make_iterator(ii);
 
-	ASSERT(this->list_provider)
-	this->list_provider->notify_model_change();
+	if (this->list_provider) {
+		this->list_provider->notify_model_change();
+	}
 }
 
 void tree_view::provider::expand(utki::span<const size_t> index)
@@ -559,16 +560,18 @@ void tree_view::provider::expand(utki::span<const size_t> index)
 
 	this->iter = this->traversal().make_iterator(ii);
 
-	ASSERT(this->list_provider)
-	this->list_provider->notify_model_change();
+	if (this->list_provider) {
+		this->list_provider->notify_model_change();
+	}
 }
 
 void tree_view::provider::notify_model_change()
 {
 	this->init();
 
-	ASSERT(this->list_provider)
-	this->list_provider->notify_model_change();
+	if (this->list_provider) {
+		this->list_provider->notify_model_change();
+	}
 }
 
 void tree_view::provider::notify_item_change()
@@ -611,8 +614,9 @@ void tree_view::provider::notify_item_add(utki::span<const size_t> index)
 
 	if (parent_list->empty()) {
 		// item was added to a collapsed subtree
-		ASSERT(this->list_provider)
-		this->list_provider->notify_model_change();
+		if (this->list_provider) {
+			this->list_provider->notify_model_change();
+		}
 		return;
 	}
 
@@ -654,8 +658,9 @@ void tree_view::provider::notify_item_add(utki::span<const size_t> index)
 	}
 	this->iter = this->traversal().make_iterator(old_iter_index);
 
-	ASSERT(this->list_provider)
-	this->list_provider->notify_model_change();
+	if (this->list_provider) {
+		this->list_provider->notify_model_change();
+	}
 }
 
 void tree_view::provider::notify_item_remove(utki::span<const size_t> index)
@@ -666,8 +671,9 @@ void tree_view::provider::notify_item_remove(utki::span<const size_t> index)
 
 	if (!this->traversal().is_valid(index)) {
 		// the removed item was probably in collapsed part of the tree
-		ASSERT(this->list_provider)
-		this->list_provider->notify_model_change();
+		if (this->list_provider) {
+			this->list_provider->notify_model_change();
+		}
 		return;
 	}
 
@@ -743,6 +749,7 @@ void tree_view::provider::notify_item_remove(utki::span<const size_t> index)
 	}
 	this->iter = this->traversal().make_iterator(cur_iter_index);
 
-	ASSERT(this->list_provider)
-	this->list_provider->notify_model_change();
+	if (this->list_provider) {
+		this->list_provider->notify_model_change();
+	}
 }

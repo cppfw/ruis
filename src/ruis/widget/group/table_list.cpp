@@ -26,14 +26,14 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace ruis;
 
 namespace ruis::internal {
-class provider : public list_provider
+class list_provider_for_table_list : public list_provider
 {
 public:
 	table_list& owner;
 
 	const utki::shared_ref<table_list::provider> table_list_provider;
 
-	provider(
+	list_provider_for_table_list(
 		table_list& owner, //
 		utki::shared_ref<table_list::provider> table_list_provider
 	) :
@@ -41,9 +41,7 @@ public:
 		owner(owner),
 		table_list_provider(std::move(table_list_provider))
 	{
-		this->table_list_provider.get().model_change_signal.connect([this]() {
-			this->notify_model_change();
-		});
+		this->table_list_provider.get().list_provider = this;
 	}
 
 	size_t count() const noexcept override
@@ -114,7 +112,7 @@ table_list::table_list(
 				},
 				.list_params{
 					.provider = [&]() -> utki::shared_ref<list_provider> {
-						return utki::make_shared<internal::provider>(
+						return utki::make_shared<internal::list_provider_for_table_list>(
 							*this,
 							std::move(params.table_list_params.provider)
 						);
@@ -204,9 +202,11 @@ void table_list::arrange_list_item_cells(ruis::semiconst_widget_list& cells)
 
 void table_list::provider::notify_model_change()
 {
-	this->context.get().post_to_ui_thread([this]() {
-		this->model_change_signal.emit();
-	});
+	if (!this->list_provider) {
+		return;
+	}
+
+	this->list_provider->notify_model_change();
 }
 
 utki::shared_ref<ruis::table_list> make::table_list(

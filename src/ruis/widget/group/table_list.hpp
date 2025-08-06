@@ -29,8 +29,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 namespace ruis {
 
 namespace internal {
-// TODO: rename/remove
-class provider;
+class list_provider_for_table_list;
 } // namespace internal
 
 // NOLINTNEXTLINE(bugprone-incorrect-enable-shared-from-this, "std::enable_shared_from_this is public via widget inheritance")
@@ -38,7 +37,7 @@ class table_list :
 	virtual public widget, //
 	private container
 {
-	friend class ruis::internal::provider;
+	friend class ruis::internal::list_provider_for_table_list;
 
 public:
 	/**
@@ -48,10 +47,9 @@ public:
 	 */
 	class provider
 	{
-		friend class ruis::internal::provider;
+		friend class ruis::internal::list_provider_for_table_list;
 
-		// TODO: remove
-		utki::signal<> model_change_signal;
+		ruis::list_provider* list_provider = nullptr;
 
 	public:
 		const utki::shared_ref<ruis::context> context;
@@ -93,6 +91,8 @@ public:
 		 * These widgets will be put inside of a horizontal ruis::tiling_area.
 		 */
 		ruis::widget_list column_headers = {};
+
+		// TODO: change to unique_ref
 		utki::shared_ref<table_list::provider> provider;
 	};
 

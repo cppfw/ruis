@@ -32,7 +32,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 namespace ruis {
 
 namespace internal {
-class tree_view_list_provider;
+class list_provider_for_tree_view;
 } // namespace internal
 
 // NOLINTNEXTLINE(bugprone-incorrect-enable-shared-from-this, "std::shared_from_this is public via widget")
@@ -48,7 +48,7 @@ public:
 	 */
 	class provider
 	{
-		friend class internal::tree_view_list_provider;
+		friend class internal::list_provider_for_tree_view;
 
 		ruis::list_provider* list_provider = nullptr;
 
