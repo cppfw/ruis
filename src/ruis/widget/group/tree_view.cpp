@@ -439,6 +439,7 @@ utki::shared_ref<widget> tree_view::provider::list_get_widget(size_t index)
 					this->collapse(utki::make_span(path));
 				}
 
+				// TODO: comment logging
 				utki::log([](auto& o) {
 					o << "plusminus clicked:";
 				});

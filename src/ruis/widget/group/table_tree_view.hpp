@@ -38,6 +38,7 @@ public:
 	 * This class provides access to the tree data model and constructs
 	 * widgets representing the tree items.
 	 */
+	// TODO: no inherit from tree_view::provider
 	class provider : private tree_view::provider
 	{
 	public:
