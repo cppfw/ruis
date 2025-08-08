@@ -41,17 +41,8 @@ class tree_view :
 	private list
 {
 public:
-	/**
-	 * @brief tree_view item provider base class.
-	 * User subclasses this class to provide tree_view an access to the tree data model
-	 * and provide a way to represent the data as widgets.
-	 */
-	class provider
+	class provider_base
 	{
-		friend class internal::list_provider_for_tree_view;
-
-		ruis::list_provider* list_provider = nullptr;
-
 		struct node {
 			size_t subtree_size = 0; // size of the visible subtree
 		};
@@ -67,8 +58,6 @@ public:
 		mutable size_t iter_index = 0;
 		mutable utki::traversal<decltype(visible_tree)::container_type>::iterator iter = this->traversal().begin();
 
-		void init();
-
 		const decltype(iter)& iter_for(size_t index) const;
 
 		void remove_children(decltype(iter) from);
@@ -77,6 +66,7 @@ public:
 			size_t num_children
 		);
 
+	protected:
 		size_t list_count() const noexcept;
 
 		void list_recycle(
@@ -86,22 +76,32 @@ public:
 
 		utki::shared_ref<widget> list_get_widget(size_t index);
 
+		virtual void on_model_changed() = 0;
+
 	public:
 		const utki::shared_ref<ruis::context> context;
 
+		provider_base(utki::shared_ref<ruis::context> context) :
+			context(std::move(context))
+		{}
+
+		provider_base(const provider_base&) = delete;
+		provider_base& operator=(const provider_base&) = delete;
+
+		provider_base(provider_base&&) = delete;
+		provider_base& operator=(provider_base&&) = delete;
+
+		virtual ~provider_base() = default;
+
+		void init();
+
 		/**
-		 * @brief Construct tree_view items provider.
-		 * @param context - ruis context to store.
+		 * @brief Get number of tree node's children.
+		 * The tree_view will call this function when it needs to know the number of
+		 * children of a tree node.
+		 * @param index - index of the tree node to gen number of children for.
 		 */
-		provider(utki::shared_ref<ruis::context> context);
-
-		provider(const provider&) = delete;
-		provider& operator=(const provider&) = delete;
-
-		provider(provider&&) = delete;
-		provider& operator=(provider&&) = delete;
-
-		virtual ~provider() = default;
+		virtual size_t count(utki::span<const size_t> index) const noexcept = 0;
 
 		/**
 		 * @brief Create item widget.
@@ -114,15 +114,7 @@ public:
 		virtual utki::shared_ref<widget> get_widget(
 			utki::span<const size_t> index, //
 			widget_list prefix_widgets
-		);
-
-		/**
-		 * @brief Create item widget.
-		 * This function is called by the get_widghet(index, prefix_widgets) overload.
-		 * @param index - index into the data model to create an item widget for.
-		 * @return The item widget.
-		 */
-		virtual utki::shared_ref<widget> get_widget(utki::span<const size_t> index) = 0;
+		) = 0;
 
 		/**
 		 * @brief Recycle item widget.
@@ -136,14 +128,6 @@ public:
 			const utki::shared_ref<widget>& w
 		)
 		{}
-
-		/**
-		 * @brief Get number of tree node's children.
-		 * The tree_view will call this function when it needs to know the number of
-		 * children of a tree node.
-		 * @param index - index of the tree node to gen number of children for.
-		 */
-		virtual size_t count(utki::span<const size_t> index) const noexcept = 0;
 
 		/**
 		 * @brief Reload callback.
@@ -166,11 +150,17 @@ public:
 		void collapse(utki::span<const size_t> index);
 
 		/**
-		 * @brief Notify about any model change.
-		 * Calling this function will cause the tree_view to re-create and
-		 * re-layout it's contents.
+		 * @brief Notify that an item has been removed.
+		 * @param index - index path of the removed item.
 		 */
-		void notify_model_change();
+		void notify_item_removed(utki::span<const size_t> index);
+
+		/**
+		 * @brief Notify that a new item has been added.
+		 * @param index - index path to a newly added item. Essentially, it is a path
+		 *                to an item before which a new item has been added.
+		 */
+		void notify_item_added(utki::span<const size_t> index);
 
 		/**
 		 * @brief Notify about tree item contents change.
@@ -180,20 +170,57 @@ public:
 		 * re-layout it's contents.
 		 * This operation should be faster than notify_model_change().
 		 */
-		void notify_item_change();
+		void notify_item_changed();
 
 		/**
-		 * @brief Notify that an item has been removed.
-		 * @param index - index path of the removed item.
+		 * @brief Notify about any model change.
+		 * Calling this function will cause the tree_view to re-create and
+		 * re-layout it's contents.
 		 */
-		void notify_item_remove(utki::span<const size_t> index);
+		void notify_model_changed();
+	};
+
+	/**
+	 * @brief tree_view item provider base class.
+	 * User subclasses this class to provide tree_view an access to the tree data model
+	 * and provide a way to represent the data as widgets.
+	 */
+	class provider : public provider_base
+	{
+		friend class internal::list_provider_for_tree_view;
+
+		ruis::list_provider* list_provider = nullptr;
+
+	public:
+		/**
+		 * @brief Construct tree_view items provider.
+		 * @param context - ruis context to store.
+		 */
+		provider(utki::shared_ref<ruis::context> context);
+
+		provider(const provider&) = delete;
+		provider& operator=(const provider&) = delete;
+
+		provider(provider&&) = delete;
+		provider& operator=(provider&&) = delete;
+
+		~provider() override = default;
+
+		utki::shared_ref<widget> get_widget(
+			utki::span<const size_t> index, //
+			widget_list prefix_widgets
+		) override;
 
 		/**
-		 * @brief Notify that a new item has been added.
-		 * @param index - index path to a newly added item. Essentially, it is a path
-		 *                to an item before which a new item has been added.
+		 * @brief Create item widget.
+		 * This function is called by the get_widghet(index, prefix_widgets) overload.
+		 * @param index - index into the data model to create an item widget for.
+		 * @return The item widget.
 		 */
-		void notify_item_add(utki::span<const size_t> index);
+		virtual utki::shared_ref<widget> get_widget(utki::span<const size_t> index) = 0;
+
+	protected:
+		void on_model_changed() override;
 	};
 
 	struct parameters {
