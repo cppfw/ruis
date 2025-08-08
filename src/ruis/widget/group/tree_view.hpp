@@ -213,7 +213,7 @@ public:
 
 		/**
 		 * @brief Create item widget.
-		 * This function is called by the get_widghet(index, prefix_widgets) overload.
+		 * This function is called by the provider_base::get_widget(index, prefix_widgets).
 		 * @param index - index into the data model to create an item widget for.
 		 * @return The item widget.
 		 */
