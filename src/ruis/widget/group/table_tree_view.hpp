@@ -21,8 +21,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "../container.hpp"
-
+#include "table_list.hpp"
 #include "tree_view.hpp"
 
 namespace ruis {
@@ -30,7 +29,7 @@ namespace ruis {
 // NOLINTNEXTLINE(bugprone-incorrect-enable-shared-from-this, "std::enable_shared_from_this is public via widget inheritance")
 class table_tree_view :
 	virtual public ruis::widget, //
-	private ruis::container
+	private container // TODO: inherit from table_list
 {
 public:
 	/**
@@ -38,28 +37,34 @@ public:
 	 * This class provides access to the tree data model and constructs
 	 * widgets representing the tree items.
 	 */
-	// TODO: no inherit from tree_view::provider
-	class provider : private tree_view::provider
+	class provider : private tree_view::provider_base
 	{
+		table_list::provider* list_provider = nullptr;
+
 	public:
 		provider(utki::shared_ref<ruis::context> context);
 
 		/**
-		 * @brief Create a table_tree_view item widget.
-		 * The table_tree_view will call this mthod when it needs a widget for the given
-		 * tree view item.
-		 * The widget has to be a container and is supposed to have a row layout.
-		 * Each child widget of the container widget will represent a cell in the table row.
-		 * @param index - index of the item into the tree data to create widget for.
-		 * @return A container widget with row layout containing table row cell widgets.
+		 * @brief Create table row cell widgets for an item.
+		 * The table_list will call this mthod when it needs widgets for the given list data item.
+		 * A list of widgets is to be created.
+		 * Each child widget will represent a cell in the table row.
+		 * @param prefix_widgets - a list of tree_view specific widgets, i.e. colapse/expande button and path indicators.
+		 *                         To be placed inside of a row.
+		 * @return A list of widgets for table row cells.
 		 */
-		virtual utki::shared_ref<ruis::container> get_container(utki::span<const size_t> index) = 0;
+		virtual widget_list get_row_widgets(
+			utki::span<const size_t> index, //
+			widget_list prefix_widgets
+		) = 0;
+
+		// TODO:
 	};
 
 	struct parameters {
 		/**
 		 * @brief Column header widgets.
-		 * These widgets will be put inside of a ruis::container and arranged in a row.
+		 * These widgets will be put inside of a horizontal ruis::tiling_area.
 		 */
 		ruis::widget_list column_headers = {};
 		std::shared_ptr<table_tree_view::provider> provider;

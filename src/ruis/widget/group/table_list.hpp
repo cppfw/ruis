@@ -74,7 +74,7 @@ public:
 		 * A list of widgets is to be created.
 		 * Each child widget will represent a cell in the table row.
 		 * @param index - index of the item into the list data to create widgets for.
-		 * @return A list of widgets for table row cell.
+		 * @return A list of widgets for table row cells.
 		 */
 		virtual widget_list get_row_widgets(size_t index) = 0;
 
