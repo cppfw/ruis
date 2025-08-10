@@ -1,3 +1,9 @@
+libruis (0.5.280) unstable; urgency=medium
+
+  * debian trixie build
+
+ -- Ivan Gagis <igagis@gmail.com>  Sun, 10 Aug 2025 18:22:38 +0300
+
 libruis (0.5.279) unstable; urgency=medium
 
   * debian: use dbg packages
