@@ -5,8 +5,6 @@ include $(config_dir)base/base.mk
 #       have't tried it with clang++. Need to restore -O3 when GCC is fixed.
 this_cxxflags += -O1
 
-this_lint_cmd = $(prorab_lint_cmd_clang_tidy)
-
 # WORKAROUND: on ubuntu jammy dpkg-buildpackage passes -ffat-lto-objects compilation flag
 # which is not supported by clang and clang-tidy complains about it:
 # error: optimization flag '-ffat-lto-objects' is not supported [clang-diagnostic-ignored-optimization-argument]

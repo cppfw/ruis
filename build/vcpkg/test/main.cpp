@@ -1,5 +1,7 @@
 #include <ruis/util/length.hpp>
 
+#include <iostream>
+
 int main(int argc, const char** argv){
     auto l = ruis::length::make_pp(13);
 

@@ -8,3 +8,5 @@ this_cxxflags += -std=c++17
 this_cxxflags += -fPIC # generate position independent code
 
 this_ldlibs += -lstdc++
+
+this_no_format_test := true

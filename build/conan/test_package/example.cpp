@@ -1,5 +1,7 @@
 #include <ruis/util/length.hpp>
 
+#include <iostream>
+
 int main(int argc, const char** argv){
 	ruis::length len(13);
 
