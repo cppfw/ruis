@@ -56,11 +56,11 @@ protected:
 
 	rectangle_button( //
 		utki::shared_ref<ruis::context> context,
-        container::parameters container_params,
+		container::parameters container_params,
 		padding::parameters padding_params,
 		rectangle::parameters rectangle_params,
 		parameters params,
-        widget_list contents
+		widget_list contents //
 	);
 };
 

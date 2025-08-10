@@ -46,7 +46,8 @@ rectangle::rectangle( //
 		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
-	padding(//
+	// clang-format off
+	padding( //
 		this->context,
 		{
 			.container_params = std::move(params.container_params),
@@ -54,6 +55,7 @@ rectangle::rectangle( //
 		},
 		std::move(children)
 	),
+	// clang-format on
 	color_widget( //
 		this->context,
 		std::move(params.color_params)
@@ -279,12 +281,10 @@ auto make_rounded_corners_texture_image(const sides<real>& radii)
 
 	veg::canvas canvas(canvas_size.to<uint32_t>());
 
-	canvas.move_abs(
-		vec2{
-			0, //
-			left_top
-		}
-	);
+	canvas.move_abs(vec2{
+		0, //
+		left_top
+	});
 
 	canvas.cubic_curve_rel(
 		{0, -arc_bezier_param * left_top}, //
@@ -480,10 +480,8 @@ void rectangle::update_rounded_corners_texture()
 	);
 
 	// add to cache
-	this->cache.insert(
-		std::make_pair(
-			radii, //
-			utki::make_weak(this->rounded_corners_tex)
-		)
-	);
+	this->cache.insert(std::make_pair(
+		radii, //
+		utki::make_weak(this->rounded_corners_tex)
+	));
 }

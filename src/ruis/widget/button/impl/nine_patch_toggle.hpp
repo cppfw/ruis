@@ -31,7 +31,7 @@ class nine_patch_toggle :
 	public nine_patch_button
 {
 protected:
-	nine_patch_toggle(//
+	nine_patch_toggle( //
 		utki::shared_ref<ruis::context> context, //
 		container::parameters container_params,
 		button::parameters button_params,

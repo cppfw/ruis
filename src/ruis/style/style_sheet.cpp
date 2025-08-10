@@ -46,12 +46,10 @@ std::map<std::string, tml::forest, std::less<>> style_sheet::parse(tml::forest d
 	auto version = version_node.children.front().value.to_uint32();
 
 	if (version != 1) {
-		throw std::invalid_argument(
-			utki::cat(
-				"style_sheet::parse(desc): unsupported file format version. expected 1, got: ", //
-				version
-			)
-		);
+		throw std::invalid_argument(utki::cat(
+			"style_sheet::parse(desc): unsupported file format version. expected 1, got: ", //
+			version
+		));
 	}
 
 	std::map<std::string, tml::forest, std::less<>> ret;

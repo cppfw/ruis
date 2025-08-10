@@ -84,16 +84,17 @@ tree_view::tree_view( //
 		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
-	list(this->context,
+	// clang-format off
+	list(
+		this->context,
 		{
-			.oriented_params{
-				.vertical = true
-			},
-			.list_params{
+			.oriented_params{.vertical = true},
+		 	.list_params{
 				.provider = utki::make_shared<internal::list_provider_for_tree_view>(std::move(params.tree_view_params.provider))
-			}
+		 	}
 		}
 	)
+// clang-format on
 {
 	this->list::model_change_handler = [this](list&) {
 		this->notify_view_change();

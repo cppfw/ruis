@@ -51,17 +51,15 @@ collapse_area::collapse_area(
 		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
-	content_wrapping(
-		m::container(
-			this->context,
-			// clang-format off
+	content_wrapping(m::container(
+		this->context,
+		// clang-format off
 			{
 				.container_params = std::move(params.container_params)
 			},
-			// clang-format on
-			std::move(contents)
-		)
-	),
+		// clang-format on
+		std::move(contents)
+	)),
 	// clang-format off
 	container(
 		this->context,

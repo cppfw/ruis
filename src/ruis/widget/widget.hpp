@@ -131,7 +131,7 @@ public:
 	 *                of the widget then new texture will be allocated.
 	 * @return Texture containing rendered widget.
 	 */
-	utki::shared_ref<render::frame_buffer> render_to_texture(
+	utki::shared_ref<render::frame_buffer> render_to_texture( //
 		std::shared_ptr<render::frame_buffer> reuse = nullptr
 	) const;
 

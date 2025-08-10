@@ -119,7 +119,9 @@ utki::shared_ref<widget> overlay::show_popup(
 	// clang-format on
 
 	mp.get().mouse_button_handler = //
-		[cntr{utki::make_weak(c)}](
+		[ //
+			cntr{utki::make_weak(c)} //
+	]( //
 			mouse_proxy& w, //
 			const mouse_button_event& e
 		) -> bool //

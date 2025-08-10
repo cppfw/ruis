@@ -90,12 +90,10 @@ void resource_loader::res_pack_entry::add_to_cache(
 {
 	ASSERT(!utki::contains(this->cache, id))
 
-	this->cache.insert(
-		std::make_pair(
-			id, //
-			utki::make_weak(res)
-		)
-	);
+	this->cache.insert(std::make_pair(
+		id, //
+		utki::make_weak(res)
+	));
 }
 
 std::shared_ptr<resource> resource_loader::res_pack_entry::find_in_cache(std::string_view id) const

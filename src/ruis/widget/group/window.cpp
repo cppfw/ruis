@@ -333,9 +333,9 @@ window::window(
 		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
-	content_wrapping(
-		m::container(this->context,
-			// clang-format off
+	content_wrapping(m::container(
+		this->context,
+		// clang-format off
 			{
 				.layout_params = {
 					.dims = {ruis::dim::fill, ruis::dim::fill},
@@ -346,10 +346,9 @@ window::window(
 				},
 				.container_params = std::move(params.container_params)
 			},
-			// clang-format on
-			std::move(children)
-		)
-	),
+		// clang-format on
+		std::move(children)
+	)),
 	// clang-format off
 	container( //
 		this->context,
@@ -380,24 +379,23 @@ window::window(
 		this->set_background(utki::make_shared_from(*params.background));
 	} else {
 		this->set_background(
+			// clang-format off
 			ruis::make::nine_patch(
 				this->context,
-				{//
-				 .layout_params =
-					 {
-						 .dims = {ruis::dim::fill, ruis::dim::fill} //
-					 },
-				 .container_params =
-					 {
-						 .layout = layout::pile //
-					 },
-				 .nine_patch_params =
-					 {
-						 .nine_patch = this->context.get().loader().load<ruis::res::nine_patch>("ruis_npt_window_bg") //
-					 }
+				{
+					.layout_params{
+						.dims = {ruis::dim::fill, ruis::dim::fill}
+					},
+					.container_params{
+						.layout = layout::pile
+					},
+					.nine_patch_params{
+						.nine_patch = this->context.get().loader().load<ruis::res::nine_patch>("ruis_npt_window_bg")
+					}
 				},
 				{}
 			)
+			// clang-format on
 		);
 	}
 

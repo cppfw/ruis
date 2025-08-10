@@ -31,6 +31,15 @@
             "group": "build"
         },
         {
+            "label": "lint",
+            "type": "shell",
+            "command": "make config=lint && make config=lint test",
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": "build"
+        },
+        {
             "label": "clean",
             "type": "shell",
             "command": "make clean",

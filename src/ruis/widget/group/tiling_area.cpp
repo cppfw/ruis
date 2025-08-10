@@ -172,13 +172,11 @@ tiling_area::tiling_area(
 		std::move(params.widget_params) //
 	),
 	ruis::oriented({.vertical = false}),
-	ruis::content_wrapping(
-		ruis::make::container(
-			this->context,
-			{},
-			std::move(children) //
-		)
-	),
+	ruis::content_wrapping(ruis::make::container(
+		this->context,
+		{},
+		std::move(children) //
+	)),
 	// clang-format off
 	ruis::container(this->context,
 		{},
@@ -211,11 +209,10 @@ void tiling_area::on_lay_out()
 	ruis::real tiles_length = 0;
 
 	for (const auto& t : this->content()) {
-		tiles_length +=
-			max( //
-				t.get().rect().d[long_index],
-				this->min_tile_size
-			);
+		tiles_length += max( //
+			t.get().rect().d[long_index],
+			this->min_tile_size
+		);
 	}
 
 	const auto& content_dims = this->rect().d;
@@ -226,11 +223,10 @@ void tiling_area::on_lay_out()
 	if (content_dims[long_index] >= tiles_length) {
 		ruis::vector2 pos{0, 0};
 		for (auto& t : this->content()) {
-			ruis::real tile_length =
-				max( //
-					t.get().rect().d[long_index],
-					this->min_tile_size
-				);
+			ruis::real tile_length = max( //
+				t.get().rect().d[long_index],
+				this->min_tile_size
+			);
 
 			ASSERT(tiles_length > 0)
 
@@ -290,13 +286,11 @@ void tiling_area::on_lay_out()
 
 	// add missing draggers
 	while (this->size() - 1 < num_draggers) {
-		this->push_back(
-			utki::make_shared<internal::dragger>(
-				this->context, //
-				*this,
-				this->params.dragger_color
-			)
-		);
+		this->push_back(utki::make_shared<internal::dragger>(
+			this->context, //
+			*this,
+			this->params.dragger_color
+		));
 	}
 
 	ruis::vector2 dragger_dims;

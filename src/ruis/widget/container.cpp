@@ -29,7 +29,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace ruis;
 
 container::container(
-	utki::shared_ref<ruis::context> context,//
+	utki::shared_ref<ruis::context> context, //
 	all_parameters params,
 	widget_list children
 ) :
@@ -39,8 +39,8 @@ container::container(
 		std::move(params.widget_params)
 	),
 	children_list(std::move(children)),
-	layout([&](){
-		if(!params.container_params.layout){
+	layout([&]() {
+		if (!params.container_params.layout) {
 			return ruis::layout::trivial;
 		}
 		return utki::shared_ref(params.container_params.layout);

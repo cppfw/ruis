@@ -37,7 +37,7 @@ public:
 		};
 	};
 
-	gap(
+	gap( //
 		utki::shared_ref<ruis::context> context,
 		all_parameters params //
 	);

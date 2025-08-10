@@ -29,7 +29,7 @@ mouse_cursor_stack::mouse_cursor_stack(std::function<void(ruis::mouse_cursor)> s
 	set_mouse_cursor(std::move(set_mouse_cursor))
 {
 	if (!this->set_mouse_cursor) {
-		throw std::invalid_argument(
+		throw std::invalid_argument( //
 			"mouse_cursor_stack::mouse_cursor_stack(): set_mouse_cursor function cannot be null"
 		);
 	}

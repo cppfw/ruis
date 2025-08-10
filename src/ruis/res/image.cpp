@@ -118,7 +118,7 @@ public:
 			}
 		}
 
-		ASSERT(this->dom)
+		utki::assert(this->dom, SL);
 
 		// in ruis, SVG dimensions are in pp, this is why we cannot use 0 to use native dimension of SVG.
 		// TODO: why can't we use 0?
@@ -138,14 +138,15 @@ public:
 			svg_params
 		);
 
-		ASSERT(im.dims().x() != 0)
-		ASSERT(im.dims().y() != 0)
-		ASSERT(
-			im.dims().x() * im.dims().y() == im.pixels().size(), //
+		utki::assert(im.dims().x() != 0, SL);
+		utki::assert(im.dims().y() != 0, SL);
+		utki::assert(
+			size_t(im.dims().x()) * size_t(im.dims().y()) == im.pixels().size(), //
 			[&](auto& o) {
 				o << "im.dims = " << im.dims() << " pixels.size() = " << im.pixels().size();
-			}
-		)
+			},
+			SL
+		);
 
 		auto dims = im.dims();
 

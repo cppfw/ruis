@@ -422,7 +422,8 @@ void widget::set_visible(bool visible)
 void widget::set_unhovered()
 {
 	auto hover_set = std::move(this->hovered);
-	ASSERT(this->hovered.size() == 0)
+	this->hovered = {};
+	utki::assert(this->hovered.size() == 0, SL);
 	for (auto h : hover_set) {
 		this->on_hovered_change(h);
 	}

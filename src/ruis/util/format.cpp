@@ -63,15 +63,13 @@ std::tuple<unsigned, std::u32string_view::const_iterator> read_number(
 	);
 
 	if (res.ec != std::errc()) {
-		throw std::invalid_argument(
-			utki::cat(
-				"could not parse format replacement field id: ",
-				std::string_view(
-					&*number_chars.begin(), //
-					std::distance(number_chars.begin(), number_i)
-				)
+		throw std::invalid_argument(utki::cat(
+			"could not parse format replacement field id: ",
+			std::string_view(
+				&*number_chars.begin(), //
+				std::distance(number_chars.begin(), number_i)
 			)
-		);
+		));
 	}
 
 	return std::make_tuple(value, i);
@@ -82,11 +80,13 @@ std::vector<format_chunk> ruis::parse_format(std::u32string_view fmt)
 {
 	std::vector<format_chunk> ret;
 
+	// clang-format off
 	format_chunk cur_chunk{
 		// NOLINTNEXTLINE(bugprone-suspicious-stringview-data-usage, "false positive")
 		.chunk = std::u32string_view(fmt.data(), 0), //
 		.replacement_id = std::numeric_limits<unsigned>::max()
 	};
+	// clang-format on
 
 	for (auto pos = fmt.cbegin(); pos != fmt.cend();) {
 		auto c = *pos;
@@ -96,11 +96,14 @@ std::vector<format_chunk> ruis::parse_format(std::u32string_view fmt)
 			pos = new_pos;
 			cur_chunk.replacement_id = number;
 			ret.push_back(std::move(cur_chunk));
+
+			// clang-format off
 			cur_chunk = {
 				// NOLINTNEXTLINE(bugprone-string-constructor, "false positive")
 				.chunk = std::u32string_view(&*pos, 0), //
 				.replacement_id = std::numeric_limits<unsigned>::max()
 			};
+			// clang-format off
 		} else {
 			cur_chunk.chunk = std::u32string_view(cur_chunk.chunk.data(), cur_chunk.chunk.size() + 1);
 		}

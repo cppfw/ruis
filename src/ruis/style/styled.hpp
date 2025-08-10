@@ -147,7 +147,11 @@ public:
 
 	template <
 		typename convertible_type, //
-		std::enable_if_t<std::is_convertible_v<convertible_type, actual_value_type>, bool> = true //
+		std::enable_if_t< //
+			// NOLINTNEXTLINE(modernize-type-traits, "false-positive")
+			std::is_convertible_v<convertible_type, actual_value_type>, //
+			bool //
+			> = true //
 		>
 	styled(convertible_type conv) :
 		value(actual_value_type(conv))

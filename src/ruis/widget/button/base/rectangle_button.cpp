@@ -44,14 +44,14 @@ void rectangle_button::update_color()
 }
 
 rectangle_button::rectangle_button( //
-		utki::shared_ref<ruis::context> context,
-        container::parameters container_params,
-		padding::parameters padding_params,
-		rectangle::parameters rectangle_params,
-		parameters params,
-        widget_list contents
-	) :
-    widget(std::move(context), {}, {}),
+	utki::shared_ref<ruis::context> context,
+	container::parameters container_params,
+	padding::parameters padding_params,
+	rectangle::parameters rectangle_params,
+	parameters params,
+	widget_list contents //
+) :
+	widget(std::move(context), {}, {}),
 	button(this->context, button::parameters{}),
 	rectangle(
 		this->context,
@@ -62,8 +62,8 @@ rectangle_button::rectangle_button( //
 			.rectangle_params = std::move(rectangle_params)
 		},
 		// clang-format on
-        std::move(contents)
-    ),
+		std::move(contents)
+	),
 	params(std::move(params))
 {
 	this->update_color();

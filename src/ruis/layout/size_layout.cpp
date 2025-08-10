@@ -36,7 +36,7 @@ void size_layout::lay_out(
 			using std::max;
 			auto d = dims_for_widget(
 				w.get(), //
-				max(
+				max( //
 					dims - w.get().rect().p,
 					{0, 0} //
 				)

@@ -30,14 +30,14 @@ void rectangle_push_button::on_pressed_change()
 }
 
 rectangle_push_button::rectangle_push_button(
-		utki::shared_ref<ruis::context> context, //
-		all_parameters params,
-		ruis::widget_list contents
-	) :
-    widget( //
+	utki::shared_ref<ruis::context> context, //
+	all_parameters params,
+	ruis::widget_list contents
+) :
+	widget( //
 		std::move(context),
 		std::move(params.layout_params),
-		std::move(params.widget_params)
+		std::move(params.widget_params) //
 	),
 	button(this->context, {}),
 	push_button(this->context, {}),
@@ -47,6 +47,6 @@ rectangle_push_button::rectangle_push_button(
 		std::move(params.padding_params),
 		std::move(params.rectangle_params),
 		std::move(params.rectangle_button_params),
-		std::move(contents)
+		std::move(contents) //
 	)
 {}

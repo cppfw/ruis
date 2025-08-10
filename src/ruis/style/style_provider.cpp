@@ -92,12 +92,10 @@ void style_provider::store_to_cache(
 {
 	ASSERT(!utki::contains(this->cache, id))
 
-	[[maybe_unused]] auto res = this->cache.insert(
-		std::make_pair(
-			std::string(id), //
-			std::move(v)
-		)
-	);
+	[[maybe_unused]] auto res = this->cache.insert(std::make_pair(
+		std::string(id), //
+		std::move(v)
+	));
 
 	ASSERT(res.second) // insert took place
 }
