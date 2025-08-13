@@ -224,7 +224,6 @@ public:
 	};
 
 	struct parameters {
-		// TODO: make utki::unique_ref
 		utki::shared_ref<tree_view::provider> provider;
 	};
 

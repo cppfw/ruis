@@ -41,6 +41,10 @@ public:
 		owner(owner),
 		table_list_provider(std::move(table_list_provider))
 	{
+		if (this->table_list_provider.get().list_provider) {
+			throw std::logic_error("table_list::table_list(): passed in provider is already set to another table_list");
+		}
+
 		this->table_list_provider.get().list_provider = this;
 	}
 

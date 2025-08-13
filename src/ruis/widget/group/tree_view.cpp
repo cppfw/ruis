@@ -43,6 +43,9 @@ public:
 		list_provider(tree_view_provider.get().context),
 		tree_view_provider(std::move(tree_view_provider))
 	{
+		if (this->tree_view_provider.get().list_provider) {
+			throw std::logic_error("tree_view::tree_view(): passed in provider is already set to another tree_view");
+		}
 		this->tree_view_provider.get().list_provider = this;
 		this->tree_view_provider.get().init();
 	}

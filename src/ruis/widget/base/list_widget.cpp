@@ -47,5 +47,11 @@ list_widget::list_widget(
 	widget(std::move(context), {}, {}),
 	params(std::move(params))
 {
+	if (this->params.provider.get().owner) {
+		throw std::logic_error( //
+			"list_widget::list_widget(): passed in provider is already set to another list_widget"
+		);
+	}
+
 	this->params.provider.get().owner = this;
 }

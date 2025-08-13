@@ -92,7 +92,6 @@ public:
 		 */
 		ruis::widget_list column_headers = {};
 
-		// TODO: change to unique_ref
 		utki::shared_ref<table_list::provider> provider;
 	};
 
