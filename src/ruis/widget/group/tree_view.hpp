@@ -72,6 +72,8 @@ public:
 
 		virtual void on_list_model_changed() = 0;
 
+		void init();
+
 	public:
 		const utki::shared_ref<ruis::context> context;
 
@@ -86,8 +88,6 @@ public:
 		provider_base& operator=(provider_base&&) = delete;
 
 		virtual ~provider_base() = default;
-
-		void init();
 
 		/**
 		 * @brief Get number of tree node's children.
