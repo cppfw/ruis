@@ -341,19 +341,24 @@ void tree_view::provider_base::init()
 	this->iter_index = 0;
 }
 
-const decltype(tree_view::provider::iter)& tree_view::provider_base::iter_for(size_t index) const
+void tree_view::provider_base::set_iter_to(size_t index) const
 {
 	if (index != this->iter_index) {
 		if (index > this->iter_index) {
-			this->iter = utki::next(this->iter, index - this->iter_index);
+			this->iter = utki::next(
+				this->iter, //
+				index - this->iter_index
+			);
 		} else {
-			ASSERT(index < this->iter_index)
-			this->iter = utki::prev(this->iter, this->iter_index - index);
+			utki::assert(index < this->iter_index, SL);
+			this->iter = utki::prev(
+				this->iter, //
+				this->iter_index - index
+			);
 		}
 		this->iter_index = index;
+		this->iter_path = this->iter.index();
 	}
-
-	return this->iter;
 }
 
 size_t tree_view::provider_base::list_count() const noexcept
@@ -367,11 +372,10 @@ void tree_view::provider_base::list_recycle(
 )
 {
 	// std::cout << "recycle()" << std::endl;
-	auto& i = this->iter_for(index);
+	this->set_iter_to(index);
 
-	auto path = i.index();
 	this->recycle(
-		utki::make_span(path), //
+		utki::make_span(this->iter_path), //
 		w
 	);
 }
@@ -379,10 +383,9 @@ void tree_view::provider_base::list_recycle(
 utki::shared_ref<widget> tree_view::provider_base::list_get_widget(size_t index)
 {
 	// std::cout << "get_widget()" << std::endl;
-	auto& i = this->iter_for(index);
+	this->set_iter_to(index);
 
-	auto path = i.index();
-	bool is_collapsed = i->value.subtree_size == 0;
+	bool is_collapsed = this->iter->value.subtree_size == 0;
 
 	auto list = &this->visible_tree.children;
 
@@ -390,7 +393,7 @@ utki::shared_ref<widget> tree_view::provider_base::list_get_widget(size_t index)
 
 	decltype(this->visible_tree)* n = nullptr;
 
-	for (const auto& i : path) {
+	for (const auto& i : this->iter_path) {
 		is_last_item_in_parent.push_back(i + 1 == list->size());
 		n = &(*list)[i];
 		list = &n->children;
@@ -398,9 +401,9 @@ utki::shared_ref<widget> tree_view::provider_base::list_get_widget(size_t index)
 
 	widget_list prefix_widgets;
 
-	ASSERT(is_last_item_in_parent.size() == path.size())
+	utki::assert(is_last_item_in_parent.size() == this->iter_path.size(), SL);
 
-	for (unsigned i = 0; i != path.size() - 1; ++i) {
+	for (unsigned i = 0; i != this->iter_path.size() - 1; ++i) {
 		if (is_last_item_in_parent[i]) {
 			prefix_widgets.push_back(make_empty_space_indent(this->context));
 		} else {
@@ -417,7 +420,7 @@ utki::shared_ref<widget> tree_view::provider_base::list_get_widget(size_t index)
 			}
 		}();
 
-		if (this->count(utki::make_span(path)) != 0) {
+		if (this->count(this->iter_path) != 0) {
 			auto w = make_plus_minus_widget(this->context);
 
 			auto& plusminus = w.get().get_widget_as<ruis::image>("plusminus");
@@ -429,7 +432,9 @@ utki::shared_ref<widget> tree_view::provider_base::list_get_widget(size_t index)
 			auto plusminus_mouse_proxy = w.get().try_get_widget_as<ruis::mouse_proxy>("plusminus_mouseproxy");
 			ASSERT(plusminus_mouse_proxy)
 			plusminus_mouse_proxy->mouse_button_handler =
-				[this, path, is_collapsed](ruis::mouse_proxy&, const ruis::mouse_button_event& e) -> bool {
+				[this,
+				 path = this->iter_path,
+				 is_collapsed](ruis::mouse_proxy&, const ruis::mouse_button_event& e) -> bool {
 				if (e.button != ruis::mouse_button::left) {
 					return false;
 				}
@@ -464,7 +469,7 @@ utki::shared_ref<widget> tree_view::provider_base::list_get_widget(size_t index)
 	}
 
 	return this->get_widget(
-		utki::make_span(path), //
+		utki::make_span(this->iter_path), //
 		std::move(prefix_widgets)
 	);
 }
@@ -635,7 +640,7 @@ void tree_view::provider_base::notify_item_added(utki::span<const size_t> index)
 		p = &p->children[k];
 	}
 
-	ASSERT(p->value.subtree_size == 0)
+	utki::assert(p->value.subtree_size == 0, SL);
 
 	// correct current iterator after insertion
 
@@ -684,7 +689,7 @@ void tree_view::provider_base::notify_item_removed(utki::span<const size_t> inde
 
 		if (cur_iter_index < next_index) {
 			while (this->iter != ri) {
-				ASSERT(this->iter_index != 0)
+				utki::assert(this->iter_index != 0, SL);
 				--this->iter;
 				--this->iter_index;
 			}
@@ -733,7 +738,7 @@ void tree_view::provider_base::notify_item_removed(utki::span<const size_t> inde
 	// to reproduce, try to unfold all items and then remove some item
 	ASSERT(this->traversal().is_valid(cur_iter_index))
 
-	ASSERT(cur_iter_index.size() != 0)
+	utki::assert(cur_iter_index.size() != 0, SL);
 	while (cur_iter_index.size() != 1) {
 		auto parent_iter_span = utki::make_span(cur_iter_index.data(), cur_iter_index.size() - 1);
 		ASSERT(this->traversal().is_valid(parent_iter_span));
