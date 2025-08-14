@@ -543,7 +543,7 @@ void tree_view::provider_base::collapse(utki::span<const size_t> index)
 	ASSERT(this->traversal().is_valid(ii))
 	this->iter = this->traversal().make_iterator(ii);
 
-	this->on_model_changed();
+	this->on_list_model_changed();
 }
 
 void tree_view::provider_base::expand(utki::span<const size_t> index)
@@ -568,10 +568,10 @@ void tree_view::provider_base::expand(utki::span<const size_t> index)
 
 	this->iter = this->traversal().make_iterator(ii);
 
-	this->on_model_changed();
+	this->on_list_model_changed();
 }
 
-void tree_view::provider::on_model_changed()
+void tree_view::provider::on_list_model_changed()
 {
 	if (this->list_provider) {
 		this->list_provider->notify_model_change();
@@ -581,12 +581,12 @@ void tree_view::provider::on_model_changed()
 void tree_view::provider_base::notify_model_changed()
 {
 	this->init();
-	this->on_model_changed();
+	this->on_list_model_changed();
 }
 
 void tree_view::provider_base::notify_item_changed()
 {
-	this->on_model_changed();
+	this->on_list_model_changed();
 }
 
 utki::shared_ref<widget> tree_view::provider::get_widget(
@@ -623,7 +623,7 @@ void tree_view::provider_base::notify_item_added(utki::span<const size_t> index)
 
 	if (parent_list->empty()) {
 		// item was added to a collapsed subtree
-		this->on_model_changed();
+		this->on_list_model_changed();
 		return;
 	}
 
@@ -665,7 +665,7 @@ void tree_view::provider_base::notify_item_added(utki::span<const size_t> index)
 	}
 	this->iter = this->traversal().make_iterator(old_iter_index);
 
-	this->on_model_changed();
+	this->on_list_model_changed();
 }
 
 void tree_view::provider_base::notify_item_removed(utki::span<const size_t> index)
@@ -676,7 +676,7 @@ void tree_view::provider_base::notify_item_removed(utki::span<const size_t> inde
 
 	if (!this->traversal().is_valid(index)) {
 		// the removed item was probably in collapsed part of the tree
-		this->on_model_changed();
+		this->on_list_model_changed();
 		return;
 	}
 
@@ -752,5 +752,5 @@ void tree_view::provider_base::notify_item_removed(utki::span<const size_t> inde
 	}
 	this->iter = this->traversal().make_iterator(cur_iter_index);
 
-	this->on_model_changed();
+	this->on_list_model_changed();
 }

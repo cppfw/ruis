@@ -77,7 +77,7 @@ public:
 
 		utki::shared_ref<widget> list_get_widget(size_t index);
 
-		virtual void on_model_changed() = 0;
+		virtual void on_list_model_changed() = 0;
 
 	public:
 		const utki::shared_ref<ruis::context> context;
@@ -221,7 +221,7 @@ public:
 		virtual utki::shared_ref<widget> get_widget(utki::span<const size_t> index) = 0;
 
 	protected:
-		void on_model_changed() override;
+		void on_list_model_changed() override;
 	};
 
 	struct parameters {
