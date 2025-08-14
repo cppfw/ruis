@@ -28,16 +28,12 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
-namespace internal {
-class list_provider_for_table_list;
-} // namespace internal
-
 // NOLINTNEXTLINE(bugprone-incorrect-enable-shared-from-this, "std::enable_shared_from_this is public via widget inheritance")
 class table_list :
 	virtual public widget, //
 	private container
 {
-	friend class ruis::internal::list_provider_for_table_list;
+	class list_provider_for_table_list;
 
 public:
 	/**
@@ -47,7 +43,7 @@ public:
 	 */
 	class provider
 	{
-		friend class ruis::internal::list_provider_for_table_list;
+		friend class list_provider_for_table_list;
 
 		ruis::list_provider* list_provider = nullptr;
 

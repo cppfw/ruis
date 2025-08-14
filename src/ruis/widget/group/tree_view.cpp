@@ -33,8 +33,7 @@ using namespace std::string_literals;
 
 using namespace ruis;
 
-namespace ruis::internal {
-class list_provider_for_tree_view : public list_provider
+class tree_view::list_provider_for_tree_view : public list_provider
 {
 	utki::shared_ref<tree_view::provider> tree_view_provider;
 
@@ -76,7 +75,6 @@ public:
 		return this->tree_view_provider.get().list_get_widget(index);
 	}
 };
-} // namespace ruis::internal
 
 tree_view::tree_view( //
 	utki::shared_ref<ruis::context> context,
@@ -93,7 +91,7 @@ tree_view::tree_view( //
 		{
 			.oriented_params{.vertical = true},
 		 	.list_params{
-				.provider = utki::make_shared<internal::list_provider_for_tree_view>(std::move(params.tree_view_params.provider))
+				.provider = utki::make_shared<tree_view::list_provider_for_tree_view>(std::move(params.tree_view_params.provider))
 		 	}
 		}
 	)

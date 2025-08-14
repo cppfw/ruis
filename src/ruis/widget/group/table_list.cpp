@@ -25,8 +25,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
-namespace ruis::internal {
-class list_provider_for_table_list : public list_provider
+class table_list::list_provider_for_table_list : public list_provider
 {
 public:
 	table_list& owner;
@@ -74,7 +73,6 @@ public:
 		// clang-format on
 	}
 };
-} // namespace ruis::internal
 
 namespace {
 utki::shared_ref<ruis::tiling_area> make_headers_widget(
@@ -116,7 +114,7 @@ table_list::table_list(
 				},
 				.list_params{
 					.provider = [&]() -> utki::shared_ref<list_provider> {
-						return utki::make_shared<internal::list_provider_for_table_list>(
+						return utki::make_shared<table_list::list_provider_for_table_list>(
 							*this,
 							std::move(params.table_list_params.provider)
 						);

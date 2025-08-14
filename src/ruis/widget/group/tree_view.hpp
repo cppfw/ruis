@@ -31,15 +31,13 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
-namespace internal {
-class list_provider_for_tree_view;
-} // namespace internal
-
 // NOLINTNEXTLINE(bugprone-incorrect-enable-shared-from-this, "std::shared_from_this is public via widget")
 class tree_view :
 	virtual public widget, //
 	private list
 {
+	class list_provider_for_tree_view;
+
 public:
 	class provider_base
 	{
@@ -188,7 +186,7 @@ public:
 	 */
 	class provider : public provider_base
 	{
-		friend class internal::list_provider_for_tree_view;
+		friend class list_provider_for_tree_view;
 
 		ruis::list_provider* list_provider = nullptr;
 
