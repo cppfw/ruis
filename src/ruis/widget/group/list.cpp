@@ -231,10 +231,7 @@ bool list::arrange_widget(
 		this->pos_offset -= w.get().rect().d[long_index];
 		if (added) {
 			insert_before = this->erase(insert_before);
-			this->get_provider().recycle(index, w);
 			++this->added_index;
-		} else {
-			this->get_provider().recycle(index, w);
 		}
 	}
 
@@ -269,9 +266,7 @@ void list::update_children_list()
 	// remove widgets from top
 	for (; this->children().size() != 0 && this->added_index < this->pos_index; ++this->added_index) {
 		auto i = this->children().begin();
-		auto w = *i;
 		this->erase(i);
-		this->get_provider().recycle(this->added_index, w);
 	}
 
 	auto iter = this->children().begin();
@@ -300,9 +295,7 @@ void list::update_children_list()
 	if (iter_index < iter_end_index) {
 		ASSERT(iter != this->children().end())
 		for (; iter != this->children().end(); ++iter_index) {
-			auto w = *iter;
 			iter = this->erase(iter);
-			this->get_provider().recycle(iter_index, w);
 		}
 	}
 }
@@ -468,11 +461,4 @@ void list::handle_model_change()
 	if (this->model_change_handler) {
 		this->model_change_handler(*this);
 	}
-}
-
-void list::on_reload()
-{
-	this->container::on_reload();
-
-	this->get_provider().on_reload();
 }

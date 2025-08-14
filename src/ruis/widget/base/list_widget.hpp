@@ -69,24 +69,6 @@ public:
 	virtual utki::shared_ref<widget> get_widget(size_t index) = 0;
 
 	/**
-	 * @brief Recycle item widget.
-	 * Override this method to recycle item widgets to use them for another items for optimization.
-	 * @param index - index of item to recycle widget for.
-	 * @param w - item widget to recycle.
-	 */
-	virtual void recycle(
-		size_t index, //
-		utki::shared_ref<widget> w
-	)
-	{}
-
-	/**
-	 * @brief Reload callback.
-	 * Called from owner selection_box's on_reload().
-	 */
-	virtual void on_reload() {}
-
-	/**
 	 * @brief Notify about change of items model.
 	 * The user is supposed to invoke this function when items model change.
 	 */

@@ -84,8 +84,3 @@ utki::shared_ref<ruis::selection_box> ruis::make::selection_box(
 	);
 	// clang-format on
 }
-
-void selection_box::on_reload()
-{
-	this->get_provider().on_reload();
-}

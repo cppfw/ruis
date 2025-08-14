@@ -49,25 +49,9 @@ public:
 		this->tree_view_provider.get().init();
 	}
 
-	void on_reload() override
-	{
-		this->tree_view_provider.get().on_reload();
-	}
-
 	size_t count() const noexcept override
 	{
 		return this->tree_view_provider.get().list_count();
-	}
-
-	void recycle(
-		size_t index, //
-		utki::shared_ref<widget> w
-	) override
-	{
-		this->tree_view_provider.get().list_recycle(
-			index, //
-			std::move(w)
-		);
 	}
 
 	utki::shared_ref<widget> get_widget(size_t index) override
@@ -362,20 +346,6 @@ void tree_view::provider_base::set_iter_to(size_t index) const
 size_t tree_view::provider_base::list_count() const noexcept
 {
 	return this->visible_tree.value.subtree_size;
-}
-
-void tree_view::provider_base::list_recycle(
-	size_t index, //
-	utki::shared_ref<widget> w
-)
-{
-	// std::cout << "recycle()" << std::endl;
-	this->set_iter_to(index);
-
-	this->recycle(
-		utki::make_span(this->iter_path), //
-		w
-	);
 }
 
 utki::shared_ref<widget> tree_view::provider_base::list_get_widget(size_t index)

@@ -83,8 +83,6 @@ public:
 
 	std::function<void(selection_box& sb)> selection_handler;
 
-	void on_reload() override;
-
 private:
 	void handle_model_change() override;
 };

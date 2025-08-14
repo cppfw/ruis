@@ -68,11 +68,6 @@ public:
 	protected:
 		size_t list_count() const noexcept;
 
-		void list_recycle(
-			size_t index, //
-			utki::shared_ref<widget> w
-		);
-
 		utki::shared_ref<widget> list_get_widget(size_t index);
 
 		virtual void on_list_model_changed() = 0;
@@ -114,25 +109,6 @@ public:
 			utki::span<const size_t> index, //
 			widget_list prefix_widgets
 		) = 0;
-
-		/**
-		 * @brief Recycle item widget.
-		 * The tree_view will call this function when it no longer needs the item widget.
-		 * This happens when the item widget goes beyond the tree_view bounds due to scrolling.
-		 * @param index - index into the data model for which the widget is to be recycled.
-		 * @param w - the widget to be recycled.
-		 */
-		virtual void recycle(
-			utki::span<const size_t> index, //
-			const utki::shared_ref<widget>& w
-		)
-		{}
-
-		/**
-		 * @brief Reload callback.
-		 * Called by owner tree_view's on_reload().
-		 */
-		virtual void on_reload() {}
 
 		/**
 		 * @brief Expand item.

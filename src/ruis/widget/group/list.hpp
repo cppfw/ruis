@@ -82,8 +82,6 @@ public:
 
 	ruis::vector2 measure(const ruis::vector2& quotum) const override;
 
-	void on_reload() override;
-
 	/**
 	 * @brief Set scroll position as factor from [0:1].
 	 * @param factor - factor of the scroll position to set.
