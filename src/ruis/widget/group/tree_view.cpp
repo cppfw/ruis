@@ -339,7 +339,6 @@ void tree_view::provider_base::set_iter_to(size_t index) const
 			);
 		}
 		this->iter_index = index;
-		this->iter_path = this->iter.index();
 	}
 }
 
@@ -353,6 +352,8 @@ utki::shared_ref<widget> tree_view::provider_base::list_get_widget(size_t index)
 	// std::cout << "get_widget()" << std::endl;
 	this->set_iter_to(index);
 
+	auto iter_path = this->iter.index();
+
 	bool is_collapsed = this->iter->value.subtree_size == 0;
 
 	auto list = &this->visible_tree.children;
@@ -361,7 +362,7 @@ utki::shared_ref<widget> tree_view::provider_base::list_get_widget(size_t index)
 
 	decltype(this->visible_tree)* n = nullptr;
 
-	for (const auto& i : this->iter_path) {
+	for (const auto& i : iter_path) {
 		is_last_item_in_parent.push_back(i + 1 == list->size());
 		n = &(*list)[i];
 		list = &n->children;
@@ -369,9 +370,9 @@ utki::shared_ref<widget> tree_view::provider_base::list_get_widget(size_t index)
 
 	widget_list prefix_widgets;
 
-	utki::assert(is_last_item_in_parent.size() == this->iter_path.size(), SL);
+	utki::assert(is_last_item_in_parent.size() == iter_path.size(), SL);
 
-	for (unsigned i = 0; i != this->iter_path.size() - 1; ++i) {
+	for (unsigned i = 0; i != iter_path.size() - 1; ++i) {
 		if (is_last_item_in_parent[i]) {
 			prefix_widgets.push_back(make_empty_space_indent(this->context));
 		} else {
@@ -388,7 +389,7 @@ utki::shared_ref<widget> tree_view::provider_base::list_get_widget(size_t index)
 			}
 		}();
 
-		if (this->count(this->iter_path) != 0) {
+		if (this->count(iter_path) != 0) {
 			auto w = make_plus_minus_widget(this->context);
 
 			auto& plusminus = w.get().get_widget_as<ruis::image>("plusminus");
@@ -401,7 +402,7 @@ utki::shared_ref<widget> tree_view::provider_base::list_get_widget(size_t index)
 			ASSERT(plusminus_mouse_proxy)
 			plusminus_mouse_proxy->mouse_button_handler =
 				[this,
-				 path = this->iter_path,
+				 path = iter_path,
 				 is_collapsed](ruis::mouse_proxy&, const ruis::mouse_button_event& e) -> bool {
 				if (e.button != ruis::mouse_button::left) {
 					return false;
@@ -437,7 +438,7 @@ utki::shared_ref<widget> tree_view::provider_base::list_get_widget(size_t index)
 	}
 
 	return this->get_widget(
-		utki::make_span(this->iter_path), //
+		utki::make_span(iter_path), //
 		std::move(prefix_widgets)
 	);
 }
