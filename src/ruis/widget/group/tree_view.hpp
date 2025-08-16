@@ -55,7 +55,6 @@ public:
 		// cached values for faster lookup by index
 		mutable size_t iter_index = 0;
 		mutable utki::traversal<decltype(visible_tree)::container_type>::iterator iter = this->traversal().begin();
-		mutable std::vector<size_t> iter_path;
 
 		void set_iter_to(size_t index) const;
 
@@ -68,11 +67,16 @@ public:
 	protected:
 		size_t list_count() const noexcept;
 
-		utki::shared_ref<widget> list_get_widget(size_t index);
-
 		virtual void on_list_model_changed() = 0;
 
 		void init();
+
+		struct tree_item_widget_parts {
+			ruis::widget_list prefix_widgets;
+			std::vector<size_t> index;
+		};
+
+		tree_item_widget_parts get_item_widget_parts(size_t index);
 
 	public:
 		const utki::shared_ref<ruis::context> context;
@@ -96,19 +100,6 @@ public:
 		 * @param index - index of the tree node to gen number of children for.
 		 */
 		virtual size_t count(utki::span<const size_t> index) const noexcept = 0;
-
-		/**
-		 * @brief Create item widget.
-		 * The tree_view will call this function when it needs an item widget for the given index.
-		 * @param index - index into the data model to create an item widget for.
-		 * @param prefix_widgets - a list of tree_view specific widgets, i.e. colapse/expande button and path indicators.
-		 *                         To be placed inside of a row.
-		 * @return The item widget.
-		 */
-		virtual utki::shared_ref<widget> get_widget(
-			utki::span<const size_t> index, //
-			widget_list prefix_widgets
-		) = 0;
 
 		/**
 		 * @brief Expand item.
@@ -166,6 +157,8 @@ public:
 
 		ruis::list_provider* list_provider = nullptr;
 
+		utki::shared_ref<widget> list_get_widget(size_t index);
+
 	public:
 		/**
 		 * @brief Construct tree_view items provider.
@@ -180,11 +173,6 @@ public:
 		provider& operator=(provider&&) = delete;
 
 		~provider() override = default;
-
-		utki::shared_ref<widget> get_widget(
-			utki::span<const size_t> index, //
-			widget_list prefix_widgets
-		) override;
 
 		/**
 		 * @brief Create item widget.

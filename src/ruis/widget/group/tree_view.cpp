@@ -347,9 +347,8 @@ size_t tree_view::provider_base::list_count() const noexcept
 	return this->visible_tree.value.subtree_size;
 }
 
-utki::shared_ref<widget> tree_view::provider_base::list_get_widget(size_t index)
+tree_view::provider_base::tree_item_widget_parts tree_view::provider_base::get_item_widget_parts(size_t index)
 {
-	// std::cout << "get_widget()" << std::endl;
 	this->set_iter_to(index);
 
 	auto iter_path = this->iter.index();
@@ -401,9 +400,7 @@ utki::shared_ref<widget> tree_view::provider_base::list_get_widget(size_t index)
 			auto plusminus_mouse_proxy = w.get().try_get_widget_as<ruis::mouse_proxy>("plusminus_mouseproxy");
 			ASSERT(plusminus_mouse_proxy)
 			plusminus_mouse_proxy->mouse_button_handler =
-				[this,
-				 path = iter_path,
-				 is_collapsed](ruis::mouse_proxy&, const ruis::mouse_button_event& e) -> bool {
+				[this, path = iter_path, is_collapsed](ruis::mouse_proxy&, const ruis::mouse_button_event& e) -> bool {
 				if (e.button != ruis::mouse_button::left) {
 					return false;
 				}
@@ -437,9 +434,23 @@ utki::shared_ref<widget> tree_view::provider_base::list_get_widget(size_t index)
 		prefix_widgets.emplace_back(std::move(widget));
 	}
 
-	return this->get_widget(
-		utki::make_span(iter_path), //
-		std::move(prefix_widgets)
+	return {
+		.prefix_widgets = std::move(prefix_widgets), //
+		.index = std::move(iter_path)
+	};
+}
+
+utki::shared_ref<widget> tree_view::provider::list_get_widget(size_t index)
+{
+	// std::cout << "get_widget()" << std::endl;
+	auto parts = this->get_item_widget_parts(index);
+
+	parts.prefix_widgets.emplace_back(this->get_widget(parts.index));
+
+	return make::row(
+		this->context, //
+		{},
+		std::move(parts.prefix_widgets)
 	);
 }
 
@@ -556,20 +567,6 @@ void tree_view::provider_base::notify_model_changed()
 void tree_view::provider_base::notify_item_changed()
 {
 	this->on_list_model_changed();
-}
-
-utki::shared_ref<widget> tree_view::provider::get_widget(
-	utki::span<const size_t> index, //
-	widget_list prefix_widgets
-)
-{
-	prefix_widgets.emplace_back(this->get_widget(index));
-
-	return make::row(
-		this->context, //
-		{},
-		std::move(prefix_widgets)
-	);
 }
 
 void tree_view::provider_base::notify_item_added(utki::span<const size_t> index)
