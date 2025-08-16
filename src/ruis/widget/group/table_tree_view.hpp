@@ -29,17 +29,23 @@ namespace ruis {
 // NOLINTNEXTLINE(bugprone-incorrect-enable-shared-from-this, "std::enable_shared_from_this is public via widget inheritance")
 class table_tree_view :
 	virtual public ruis::widget, //
-	private container // TODO: inherit from table_list
+	private table_list
 {
+	class table_list_provider_for_table_tree_view;
+
 public:
 	/**
 	 * @brief A class for accessing the tree data model.
 	 * This class provides access to the tree data model and constructs
 	 * widgets representing the tree items.
 	 */
-	class provider : private tree_view::provider_base
+	class provider : public tree_view::provider_base
 	{
+		friend class table_list_provider_for_table_tree_view;
+
 		table_list::provider* list_provider = nullptr;
+
+		ruis::widget_list list_get_row_widgets(size_t index);
 
 	public:
 		provider(utki::shared_ref<ruis::context> context);
@@ -49,16 +55,15 @@ public:
 		 * The table_list will call this mthod when it needs widgets for the given list data item.
 		 * A list of widgets is to be created.
 		 * Each child widget will represent a cell in the table row.
-		 * @param prefix_widgets - a list of tree_view specific widgets, i.e. colapse/expande button and path indicators.
-		 *                         To be placed inside of a row.
+		 * @param index - index path of the item to get row widgets for.
 		 * @return A list of widgets for table row cells.
 		 */
-		virtual widget_list get_row_widgets(
-			utki::span<const size_t> index, //
-			widget_list prefix_widgets
-		) = 0;
+		virtual widget_list get_row_widgets(utki::span<const size_t> index) = 0;
 
 		// TODO:
+
+	private:
+		void on_list_model_changed() override;
 	};
 
 	struct parameters {
@@ -67,7 +72,7 @@ public:
 		 * These widgets will be put inside of a horizontal ruis::tiling_area.
 		 */
 		ruis::widget_list column_headers = {};
-		std::shared_ptr<table_tree_view::provider> provider;
+		utki::shared_ref<table_tree_view::provider> provider;
 	};
 
 	struct all_parameters {
@@ -80,6 +85,15 @@ public:
 		utki::shared_ref<ruis::context> context, //
 		all_parameters params
 	);
+
+	using table_list::set_scroll_factor;
+	using table_list::get_scroll_factor;
+	using table_list::get_scroll_band;
+	using table_list::get_pos_index;
+	using table_list::get_pos_offset;
+	using table_list::scroll_by;
+	using table_list::model_change_handler;
+	using table_list::scroll_change_handler;
 };
 
 namespace make {

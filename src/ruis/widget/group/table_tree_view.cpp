@@ -23,24 +23,68 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
-namespace {
-utki::shared_ref<ruis::container> make_headers_widget(
-	const utki::shared_ref<ruis::context>& c, //
-	ruis::widget_list column_headers
-)
+class table_tree_view::table_list_provider_for_table_tree_view : public table_list::provider
 {
-	// clang-format off
-    return ruis::make::row(c,
-        {
-            .layout_params{
-                .dims = {ruis::dim::fill, ruis::dim::max}
-            }
-        },
-        std::move(column_headers)
-    );
-	// clang-format on
+	utki::shared_ref<table_tree_view::provider> provider;
+
+public:
+	table_list_provider_for_table_tree_view(
+		utki::shared_ref<ruis::context> context, //
+		utki::shared_ref<table_tree_view::provider> provider
+	) :
+		table_list::provider(std::move(context)),
+		provider(std::move(provider))
+	{
+		if (this->provider.get().list_provider) {
+			throw std::invalid_argument(
+				"table_tree_view::table_tree_view(): the passed in provider is already added to another table_tree_view"
+			);
+		}
+		this->provider.get().list_provider = this;
+		this->provider.get().init();
+	}
+
+	size_t count() const noexcept override
+	{
+		return this->provider.get().list_count();
+	}
+
+	widget_list get_row_widgets(size_t index) override
+	{
+		return this->provider.get().list_get_row_widgets(index);
+	}
+};
+
+table_tree_view::provider::provider(utki::shared_ref<ruis::context> context) :
+	provider_base(std::move(context))
+{}
+
+void table_tree_view::provider::on_list_model_changed()
+{
+	if (this->list_provider) {
+		this->list_provider->notify_model_change();
+	}
 }
-} // namespace
+
+ruis::widget_list table_tree_view::provider::list_get_row_widgets(size_t index)
+{
+	auto parts = this->get_item_widget_parts(index);
+
+	auto wl = this->get_row_widgets(parts.index);
+
+	if (wl.empty()) {
+		return wl;
+	}
+
+	parts.prefix_widgets.push_back(wl.front());
+
+	wl.front() = ruis::make::row(
+		this->context, //
+		{.widget_params{.clip = true}},
+		std::move(parts.prefix_widgets)
+	);
+	return wl;
+}
 
 table_tree_view::table_tree_view(
 	utki::shared_ref<ruis::context> context, //
@@ -52,46 +96,16 @@ table_tree_view::table_tree_view(
 		std::move(params.widget_params)
 	),
 	// clang-format off
-    ruis::container(
+    ruis::table_list(
         this->context,
         {
-            .container_params{
-                .layout = ruis::layout::column
+            .table_list_params{
+                .column_headers = std::move(params.table_tree_view_params.column_headers),
+                .provider = utki::make_shared<table_tree_view::table_list_provider_for_table_tree_view>(
+                    this->context,
+                    std::move(params.table_tree_view_params.provider)
+                )
             }
-        },
-        {
-            make_headers_widget(this->context,
-                std::move(params.table_tree_view_params.column_headers)
-            ),
-            ruis::make::tree_view(this->context,
-                {
-                    .layout_params{
-                        .dims = {ruis::dim::fill, ruis::dim::fill},
-                        .weight = 1
-                    },
-                    .tree_view_params{
-                        .provider = [&](){
-                            class provider :  public tree_view::provider{
-                            public:
-                                provider(utki::shared_ref<ruis::context> context) :
-                                    tree_view::provider(std::move(context))
-                                {}
-
-                                size_t count(utki::span<const size_t> index) const noexcept override
-                                {
-                                    return 0;
-                                };
-
-                                utki::shared_ref<widget> get_widget(utki::span<const size_t> index) override
-                                {
-                                    return make::container(this->context, {});
-                                }
-                            };
-                            return utki::make_shared<provider>(context);
-                        }()
-                    }
-                }
-            )
         }
     )
 // clang-format on
