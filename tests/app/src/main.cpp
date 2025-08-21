@@ -58,10 +58,14 @@ class application : public ruisapp::application{
 public:
 	application() :
 			ruisapp::application(
-				"ruis-tests",
 				{
-					.dims = {1024, 800},
-					.buffers = {ruisapp::buffer::depth}
+					.name = "ruis-tests"s,
+					.windows = {
+						{
+							.dims = {1024, 800},
+							.buffers = {ruisapp::buffer::depth}
+						}
+					}
 				}
 			)
 	{
