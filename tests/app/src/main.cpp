@@ -340,12 +340,12 @@ public:
 
 		// mouse cursor
 		{
-			auto b = c.get().try_get_widget_as<ruis::push_button>("showhide_mousecursor_button");
+			auto& b = c.get().get_widget_as<ruis::push_button>("showhide_mousecursor_button");
 			bool visible = true;
-			this->set_mouse_cursor_visible(visible);
-			b->click_handler = [visible, this](ruis::push_button&) mutable{
+			b.context.get().window().set_mouse_cursor_visible(visible);
+			b.click_handler = [visible, this](ruis::push_button& b) mutable{
 				visible = !visible;
-				this->set_mouse_cursor_visible(visible);
+				b.context.get().window().set_mouse_cursor_visible(visible);
 			};
 		}
 

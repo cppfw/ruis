@@ -63,16 +63,15 @@ class window :
 	std::shared_ptr<widget> lb_border;
 	std::shared_ptr<widget> rb_border;
 
-	using cursor_iter = decltype(std::declval<mouse_cursor_stack>().push(mouse_cursor::arrow));
-	cursor_iter caption_cursor_iter;
-	cursor_iter lt_border_cursor_iter;
-	cursor_iter rt_border_cursor_iter;
-	cursor_iter t_border_cursor_iter;
-	cursor_iter l_border_cursor_iter;
-	cursor_iter r_border_cursor_iter;
-	cursor_iter b_border_cursor_iter;
-	cursor_iter lb_border_cursor_iter;
-	cursor_iter rb_border_cursor_iter;
+	native_window::cursor_id caption_cursor_iter;
+	native_window::cursor_id lt_border_cursor_iter;
+	native_window::cursor_id rt_border_cursor_iter;
+	native_window::cursor_id t_border_cursor_iter;
+	native_window::cursor_id l_border_cursor_iter;
+	native_window::cursor_id r_border_cursor_iter;
+	native_window::cursor_id b_border_cursor_iter;
+	native_window::cursor_id lb_border_cursor_iter;
+	native_window::cursor_id rb_border_cursor_iter;
 
 	bool mouse_captured = false;
 	ruis::vector2 capture_point;

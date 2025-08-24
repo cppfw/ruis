@@ -23,7 +23,11 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis::render;
 
-context::context(parameters params) :
+context::context(
+	utki::shared_ref<ruis::native_window> native_window, //
+	parameters params
+) :
+	native_window(std::move(native_window)),
 	initial_matrix(std::move(params.initial_matrix))
 {}
 

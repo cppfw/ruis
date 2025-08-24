@@ -35,7 +35,6 @@ context::context(
 	res_loader(this->style_provider.get().res_loader),
 	renderer(this->res_loader.get().renderer),
 	updater(std::move(updater)),
-	cursor_stack(std::move(params.set_mouse_cursor_function)),
 	localization(std::move(params.localization)),
 	units(std::move(params.units))
 {

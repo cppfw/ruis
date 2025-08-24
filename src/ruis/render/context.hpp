@@ -30,6 +30,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "shaders/texturing_shader.hpp"
 
 #include "frame_buffer.hpp"
+#include "native_window.hpp"
 #include "texture_cube.hpp"
 #include "texture_depth.hpp"
 
@@ -48,6 +49,8 @@ private:
 	std::weak_ptr<frame_buffer> cur_fb;
 
 public:
+	const utki::shared_ref<ruis::native_window> native_window;
+
 	struct parameters {
 		r4::matrix4<float> initial_matrix;
 	};
@@ -59,7 +62,10 @@ public:
 	 */
 	const r4::matrix4<float> initial_matrix;
 
-	context(parameters params);
+	context(
+		utki::shared_ref<ruis::native_window>, //
+		parameters params
+	);
 
 	context(const context&) = delete;
 	context& operator=(const context&) = delete;
