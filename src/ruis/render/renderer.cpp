@@ -25,6 +25,14 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis::render;
 
+renderer::renderer(
+	utki::shared_ref<ruis::render::context> render_context, //
+	utki::shared_ref<objects> common_objects
+) :
+	render_context(std::move(render_context)),
+	common_objects(std::move(common_objects))
+{}
+
 renderer::renderer(utki::shared_ref<ruis::render::context> render_context) :
 	render_context(std::move(render_context)),
 	common_objects(utki::make_shared<objects>([this]() -> objects {

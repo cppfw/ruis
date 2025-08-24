@@ -27,7 +27,7 @@
 					"ignoreFailures": true
 				}
 			],
-			"preLaunchTask": "build-dev"
+			// "preLaunchTask": "build-dev"
 		},
 		{
 			"name": "(gdb) app2",
