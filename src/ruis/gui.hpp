@@ -38,7 +38,7 @@ public:
 	 * @brief Constructor.
 	 * @param context - ruis context to use for this gui instance.
 	 */
-	gui(const utki::shared_ref<ruis::context>& context);
+	gui(utki::shared_ref<ruis::context> context);
 
 	gui(const gui&) = delete;
 	gui& operator=(const gui&) = delete;
@@ -108,17 +108,8 @@ public:
 	 * widgets to be used by application.
 	 * @param fi - file interface to use for resource loading.
 	 */
+	// TODO: make free function taking context as argument
 	void init_standard_widgets(papki::file& fi);
-
-	/**
-	 * @brief Update GUI.
-	 * Call this function from main loop of the program.
-	 * @return number of milliseconds to sleep before next call.
-	 */
-	uint32_t update()
-	{
-		return this->context.get().updater.get().update();
-	}
 
 	/**
 	 * @brief Feed in the mouse move event to GUI.
