@@ -38,7 +38,7 @@ class dragger : public ruis::gap
 
 	tiling_area& owner;
 
-	ruis::native_window::cursor_id arrows_cursor_iter;
+	ruis::render::native_window::cursor_id arrows_cursor_iter;
 
 public:
 	// TODO: use shared_ref?

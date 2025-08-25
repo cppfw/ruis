@@ -39,6 +39,8 @@ class context : public std::enable_shared_from_this<context>
 {
 	friend class frame_buffer;
 
+	static const context* cur_context;
+
 protected:
 	utki::shared_ref<context> get_shared_ref()
 	{
@@ -49,7 +51,7 @@ private:
 	std::weak_ptr<frame_buffer> cur_fb;
 
 public:
-	const utki::shared_ref<ruis::native_window> native_window;
+	const utki::shared_ref<ruis::render::native_window> native_window;
 
 	struct parameters {
 		r4::matrix4<float> initial_matrix;
@@ -63,7 +65,7 @@ public:
 	const r4::matrix4<float> initial_matrix;
 
 	context(
-		utki::shared_ref<ruis::native_window>, //
+		utki::shared_ref<ruis::render::native_window>, //
 		parameters params
 	);
 
@@ -73,12 +75,11 @@ public:
 	context(context&&) = delete;
 	context& operator=(context&&) = delete;
 
-	virtual ~context() = default;
+	virtual ~context();
 
 	bool is_current() const noexcept
 	{
-		// TODO: actually check that the context is current
-		return true;
+		return cur_context == this;
 	}
 
 	/**

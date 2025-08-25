@@ -416,7 +416,7 @@ void ruis::window::setup_widgets()
 	this->title_bg = this->try_get_widget_as<color_widget>("ruis_window_title_bg");
 	ASSERT(this->title_bg);
 
-	auto make_mouse_button_handler = [this](native_window::cursor_id& iter) {
+	auto make_mouse_button_handler = [this](ruis::render::native_window::cursor_id& iter) {
 		return decltype(mouse_proxy::mouse_button_handler)([this, &iter](mouse_proxy& mp, const mouse_button_event& e) {
 			if (e.button != mouse_button::left) {
 				return false;
@@ -435,7 +435,7 @@ void ruis::window::setup_widgets()
 		});
 	};
 
-	auto make_hovered_change_handler = [this](ruis::mouse_cursor cursor, native_window::cursor_id& iter) {
+	auto make_hovered_change_handler = [this](ruis::mouse_cursor cursor, render::native_window::cursor_id& iter) {
 		return [this, cursor, &iter](mouse_proxy& mp, unsigned pointer_id) {
 			// LOG("hover = " << mp.is_hovered() << std::endl)
 			// LOG("this->mouse_captured = " << this->mouse_captured << std::endl)

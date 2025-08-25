@@ -4,10 +4,14 @@
 
 #include "../util/mouse_cursor.hpp"
 
-namespace ruis {
+namespace ruis::render {
+class context;
+
 // TODO: doxygen
 class native_window
 {
+	friend class ruis::render::context;
+
 	bool is_fullscreen_v = false;
 
 	virtual void bind_render_context() = 0;
@@ -41,4 +45,4 @@ public:
 
 	virtual void set_mouse_cursor_visible(bool visible) {}
 };
-} // namespace ruis
+} // namespace ruis::render

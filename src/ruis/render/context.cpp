@@ -23,22 +23,49 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis::render;
 
+const ruis::render::context* ruis::render::context::cur_context = nullptr;
+
 context::context(
-	utki::shared_ref<ruis::native_window> native_window, //
+	utki::shared_ref<ruis::render::native_window> native_window, //
 	parameters params
 ) :
 	native_window(std::move(native_window)),
 	initial_matrix(std::move(params.initial_matrix))
 {}
 
-void context::apply(std::function<void()> func)
+context::~context()
 {
 	if (this->is_current()) {
+		cur_context = nullptr;
+	}
+}
+
+void context::apply(std::function<void()> func)
+{
+	utki::assert(func, SL);
+
+	if (this->is_current()) {
+		// this context is already current
 		func();
 		return;
 	}
 
-	throw std::logic_error("context::apply(): the context is non-current, switching context is not yet implemented");
+	auto old_cc = cur_context;
+	utki::scope_exit restore_old_cc_scope_exit([&]() {
+		if (!old_cc) {
+			// There was no current context, leave current one bound.
+			return;
+		}
+		old_cc->native_window.get().bind_render_context();
+		cur_context = old_cc;
+	});
+
+	cur_context = this;
+	this->native_window.get().bind_render_context();
+
+	utki::assert(this->is_current(), SL);
+
+	func();
 }
 
 void context::set_framebuffer(frame_buffer* fb)

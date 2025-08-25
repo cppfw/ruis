@@ -112,7 +112,7 @@ public:
 	 * @brief Shorthand alias for native_window.
 	 * @return The native window of this GUI context.
 	 */
-	ruis::native_window& window() noexcept
+	ruis::render::native_window& window() noexcept
 	{
 		return this->ren().ctx().native_window;
 	}

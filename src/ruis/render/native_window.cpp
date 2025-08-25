@@ -2,7 +2,7 @@
 
 #include <utki/debug.hpp>
 
-using namespace ruis;
+using namespace ruis::render;
 
 void native_window::set_fullscreen(bool enable)
 {
