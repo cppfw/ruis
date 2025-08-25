@@ -51,6 +51,7 @@ public:
 
 	struct objects {
 		utki::shared_ref<const ruis::render::context::shaders> shaders;
+
 		utki::shared_ref<const vertex_array> empty_vertex_array;
 
 		/**

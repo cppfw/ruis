@@ -48,6 +48,20 @@ utki::shared_ref<ruis::window> make_text_input_window(
 )
 {
     // clang-format off
+    auto new_native_window_button = m::push_button(c,
+        {},
+        {
+            m::text(c, {}, U"new native window"s)
+        }
+    );
+    // clang-format on
+
+    new_native_window_button.get().click_handler = [](ruis::push_button& b){
+        utki::logcat("new native window button clicked", '\n');
+        // TODO:
+    };
+
+    // clang-format off
     return m::window(c,
         {
             .widget_params{
@@ -131,7 +145,8 @@ utki::shared_ref<ruis::window> make_text_input_window(
                                                 .pressed_image = c.get().loader().load<ruis::res::image>("img_button_pressed"sv)
                                             }
                                         }
-                                    )
+                                    ),
+                                    std::move(new_native_window_button)
                                 }
                             )
                         }

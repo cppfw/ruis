@@ -55,7 +55,7 @@ using namespace ruis::make;
 }
 
 class application : public ruisapp::application{
-	utki::shared_ref<ruisapp::window> window;
+	ruisapp::window& window;
 public:
 	application() :
 			ruisapp::application(
@@ -68,7 +68,7 @@ public:
 							.buffers = {ruisapp::buffer::depth}
 						}))
 	{
-		auto& gui = this->window.get().gui;
+		auto& gui = this->window.gui;
 
 		gui.init_standard_widgets(*this->get_res_file("../../res/ruis_res/"));
 

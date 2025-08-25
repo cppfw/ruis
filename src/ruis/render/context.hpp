@@ -91,6 +91,7 @@ public:
 	// ====== factory functions ======
 
 	struct shaders {
+		// TODO: make unique_ref
 		std::unique_ptr<const texturing_shader> pos_tex;
 		std::unique_ptr<const coloring_shader> color_pos;
 		std::unique_ptr<const coloring_shader> color_pos_lum;
