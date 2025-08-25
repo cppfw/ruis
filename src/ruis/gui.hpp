@@ -188,7 +188,10 @@ public:
 	 * @param string_provider - input string provider.
 	 * @param key_code - key code associated with character input, can be unknown.
 	 */
-	void send_character_input(const input_string_provider& string_provider, ruis::key key_code);
+	void send_character_input(
+		const input_string_provider& string_provider, //
+		ruis::key key_code
+	);
 };
 
 } // namespace ruis

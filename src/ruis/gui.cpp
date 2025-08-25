@@ -172,13 +172,13 @@ void gui::send_key(bool is_down, key key_code)
 void gui::send_character_input(const input_string_provider& string_provider, key key_code)
 {
 	if (auto w = this->context.get().focused_widget.lock()) {
-		character_input_event e;
-		auto str = string_provider.get();
-		e.string = str;
-		e.combo.key = key_code;
-		e.combo.modifiers = this->key_modifiers;
-
 		if (auto c = dynamic_cast<character_input_widget*>(w.get())) {
+			character_input_event e;
+			auto str = string_provider.get();
+			e.string = str;
+			e.combo.key = key_code;
+			e.combo.modifiers = this->key_modifiers;
+
 			c->on_character_input(e);
 		}
 	}
