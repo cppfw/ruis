@@ -43,6 +43,7 @@ class context : public std::enable_shared_from_this<context>
 
 	// Context destruction is rare, so removing from the middle of stack is rare, ok to use std::vector.
 	static std::vector<const context*> cur_context_stack;
+	static std::vector<const context*> existing_contexts_list;
 
 protected:
 	utki::shared_ref<context> get_shared_ref()

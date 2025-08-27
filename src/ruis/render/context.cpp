@@ -24,6 +24,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace ruis::render;
 
 std::vector<const ruis::render::context*> ruis::render::context::cur_context_stack;
+std::vector<const ruis::render::context*> ruis::render::context::existing_contexts_list;
 
 context::context(
 	utki::shared_ref<ruis::render::native_window> native_window, //
@@ -32,6 +33,8 @@ context::context(
 	native_window(std::move(native_window)),
 	initial_matrix(std::move(params.initial_matrix))
 {
+	this->existing_contexts_list.push_back(this);
+
 	// TODO: document this behaviour in doxygen that first created context becomes bound by default
 	if (cur_context_stack.empty()) {
 		// this created context is the only one existing context at the moment, bind it just to have some context always bound
@@ -42,10 +45,22 @@ context::context(
 
 context::~context()
 {
-	// if the context is bound during destruction then it is the last context
+	// remove this context from list of existing contexts
+	auto i = std::find(existing_contexts_list.begin(), existing_contexts_list.end(), this);
+	utki::assert(i != existing_contexts_list.end(), SL);
+	existing_contexts_list.erase(i);
+
 	if (this->is_current()) {
 		cur_context_stack.pop_back();
-		if (!cur_context_stack.empty()) {
+		if (cur_context_stack.empty()) {
+			if (!existing_contexts_list.empty()) {
+				// there are no contexts in bound contexts stack, but
+				// there are still some contexts existing, bind first one of them
+				auto c = existing_contexts_list.front();
+				c->native_window.get().bind_rendering_context();
+				cur_context_stack.push_back(c);
+			}
+		} else {
 			// bind the previous context
 			cur_context_stack.back()->native_window.get().bind_rendering_context();
 		}
@@ -58,6 +73,8 @@ context::~context()
 		if (i != cur_context_stack.end()) {
 			cur_context_stack.erase(i);
 		}
+		// this context was not the current one, so the cur_context_stack should still be not empty
+		utki::assert(!cur_context_stack.empty(), SL);
 	}
 }
 
