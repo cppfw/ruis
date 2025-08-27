@@ -68,6 +68,10 @@ public:
 							.buffers = {ruisapp::buffer::depth}
 						}))
 	{
+		this->window.close_request_hander = [this](ruisapp::window&){
+			this->quit();
+		};
+
 		auto& gui = this->window.gui;
 
 		gui.init_standard_widgets(*this->get_res_file("../../res/ruis_res/"));
