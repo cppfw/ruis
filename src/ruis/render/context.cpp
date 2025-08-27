@@ -35,7 +35,7 @@ context::context(
 {
 	this->existing_contexts_list.push_back(this);
 
-	// TODO: document this behaviour in doxygen that first created context becomes bound by default
+	// TODO: document this behaviour in doxygen that first created context becomes bound by default?
 	if (cur_context_stack.empty()) {
 		// this created context is the only one existing context at the moment, bind it just to have some context always bound
 		this->native_window.get().bind_rendering_context();
@@ -50,6 +50,8 @@ context::~context()
 	utki::assert(i != existing_contexts_list.end(), SL);
 	existing_contexts_list.erase(i);
 
+	// TODO: document this behaviour in doxygen that when context is destroyed it will
+	// bind another existing one?
 	if (this->is_current()) {
 		cur_context_stack.pop_back();
 		if (cur_context_stack.empty()) {
