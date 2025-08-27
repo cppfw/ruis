@@ -31,10 +31,17 @@ context::context(
 ) :
 	native_window(std::move(native_window)),
 	initial_matrix(std::move(params.initial_matrix))
-{}
+{
+	if (!cur_context) {
+		// this created context is the only one existing context at the moment, bind it just to have some context always bound
+		this->native_window.get().bind_rendering_context();
+		cur_context = this;
+	}
+}
 
 context::~context()
 {
+	// if the context is bound during destruction then it is the last context
 	if (this->is_current()) {
 		cur_context = nullptr;
 	}
@@ -60,8 +67,8 @@ void context::apply(std::function<void()> func)
 		cur_context = old_cc;
 	});
 
-	cur_context = this;
 	this->native_window.get().bind_rendering_context();
+	cur_context = this;
 
 	utki::assert(this->is_current(), SL);
 

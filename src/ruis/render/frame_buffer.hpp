@@ -36,11 +36,11 @@ class frame_buffer :
 	public rasterimage::dimensioned, //
 	public std::enable_shared_from_this<frame_buffer>
 {
+protected:
 	// in OpneGL framebuffer  objects are not shred between contexts,
 	// so the reference stored here is for non-const context object which owns the framebuffer
 	const utki::shared_ref<ruis::render::context> rendering_context;
 
-protected:
 	frame_buffer( //
 		utki::shared_ref<ruis::render::context> rendering_context,
 		std::shared_ptr<texture_2d> color,
