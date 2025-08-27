@@ -68,7 +68,7 @@ public:
 							.buffers = {ruisapp::buffer::depth}
 						}))
 	{
-		this->window.close_request_hander = [this](ruisapp::window&){
+		this->window.close_hander = [this](ruisapp::window&){
 			this->quit();
 		};
 
