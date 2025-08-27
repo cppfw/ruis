@@ -28,7 +28,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace ruis::render;
 
 frame_buffer::frame_buffer( //
-	utki::shared_ref<ruis::render::context> render_context,
+	utki::shared_ref<ruis::render::context> rendering_context,
 	std::shared_ptr<texture_2d> color,
 	std::shared_ptr<texture_depth> depth,
 	std::shared_ptr<texture_stencil> stencil
@@ -60,7 +60,7 @@ frame_buffer::frame_buffer( //
 
 		return cur_tex->dims();
 	}()),
-	render_context(std::move(render_context)),
+	rendering_context(std::move(rendering_context)),
 	color(std::move(color)),
 	depth(std::move(depth)),
 	stencil(std::move(stencil))
@@ -68,9 +68,9 @@ frame_buffer::frame_buffer( //
 
 void frame_buffer::apply(std::function<void()> func)
 {
-	auto& rc = this->render_context.get();
+	auto& rc = this->rendering_context.get();
 	if (!rc.is_current()) {
-		throw std::logic_error("framebuffer::apply(): the framebuffer's render_context is not current");
+		throw std::logic_error("framebuffer::apply(): the framebuffer's rendering_context is not current");
 	}
 
 	utki::scope_exit framebuffer_scope_exit([old_framebuffer = rc.get_framebuffer(), &rc]() {

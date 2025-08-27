@@ -173,19 +173,19 @@ texture_font::glyph texture_font::load_glyph(char32_t c) const
 	g.top_left = ftg.vertices[0];
 	g.bottom_right = ftg.vertices[2];
 
-	auto& r = this->renderer.get();
+	auto& rc = this->rendering_context.get();
 
 	// clang-format off
-	g.vao = r.render_context.get().make_vertex_array(
+	g.vao = rc.make_vertex_array(
 		{
-			r.render_context.get().make_vertex_buffer(utki::make_span(ftg.vertices)),
-			this->renderer.get().obj().quad_01_vbo
+			rc.make_vertex_buffer(utki::make_span(ftg.vertices)),
+			this->common_rendering_objects.get().quad_01_vbo
 		},
-		this->renderer.get().obj().quad_fan_indices,
+		this->common_rendering_objects.get().quad_fan_indices,
 		render::vertex_array::mode::triangle_fan
 	).to_shared_ptr();
 
-	g.tex = this->renderer.get().render_context.get().make_texture_2d(
+	g.tex = rc.make_texture_2d(
 		std::move(ftg.image),
 		{
 			.min_filter = render::texture_2d::filter::nearest,
@@ -199,15 +199,16 @@ texture_font::glyph texture_font::load_glyph(char32_t c) const
 }
 
 texture_font::texture_font(
-	utki::shared_ref<ruis::render::renderer> renderer,
-	// NOLINTNEXTLINE(modernize-pass-by-value)
-	const utki::shared_ref<const freetype_face>& face,
+	utki::shared_ref<const ruis::render::context> rendering_context, //
+	utki::shared_ref<const ruis::render::renderer::objects> common_rendering_objects,
+	utki::shared_ref<const freetype_face> face,
 	unsigned font_size,
 	unsigned max_cached
 ) :
-	renderer(std::move(renderer)),
+	rendering_context(std::move(rendering_context)),
+	common_rendering_objects(std::move(common_rendering_objects)),
 	font_size(font_size),
-	face(face),
+	face(std::move(face)),
 	max_cached(max_cached)
 {
 	//	TRACE(<< "texture_font::Load(): enter" << std::endl)
@@ -253,7 +254,8 @@ const texture_font::glyph& texture_font::get_glyph(char32_t c) const
 }
 
 real texture_font::render_glyph_internal(
-	const ruis::matrix4& matrix, //
+	render::renderer& renderer, //
+	const ruis::matrix4& matrix,
 	const ruis::color& color,
 	char32_t ch
 ) const
@@ -263,7 +265,7 @@ real texture_font::render_glyph_internal(
 	// texture can be null for glyph of empty characters, like space, tab etc...
 	if (g.tex) {
 		ASSERT(g.vao)
-		this->renderer.get().shaders().color_pos_tex_alpha->render(
+		renderer.shaders().color_pos_tex_alpha->render(
 			matrix, //
 			*g.vao,
 			color,
@@ -337,6 +339,7 @@ ruis::rect texture_font::get_bounding_box_internal(std::u32string_view str, unsi
 }
 
 font::render_result texture_font::render_internal(
+	render::renderer& renderer, //
 	const ruis::matrix4& matrix,
 	const ruis::color& color,
 	const std::u32string_view str,
@@ -350,7 +353,7 @@ font::render_result texture_font::render_internal(
 		return ret;
 	}
 
-	this->renderer.get().render_context.get().set_simple_alpha_blending();
+	renderer.rendering_context.get().set_simple_alpha_blending();
 
 	ruis::matrix4 matr(matrix);
 
@@ -374,7 +377,12 @@ font::render_result texture_font::render_internal(
 					cur_offset += actual_tab_size;
 					return advance;
 				} else { // all other characters
-					auto advance = this->render_glyph_internal(matr, color, c);
+					auto advance = this->render_glyph_internal(
+						renderer, //
+						matr,
+						color,
+						c
+					);
 					++ret.length;
 					++cur_offset;
 					return advance;

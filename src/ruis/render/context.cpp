@@ -56,12 +56,12 @@ void context::apply(std::function<void()> func)
 			// There was no current context, leave current one bound.
 			return;
 		}
-		old_cc->native_window.get().bind_render_context();
+		old_cc->native_window.get().bind_rendering_context();
 		cur_context = old_cc;
 	});
 
 	cur_context = this;
-	this->native_window.get().bind_render_context();
+	this->native_window.get().bind_rendering_context();
 
 	utki::assert(this->is_current(), SL);
 

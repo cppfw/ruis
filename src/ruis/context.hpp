@@ -103,7 +103,7 @@ public:
 	 * @brief Shorthand alias for renderer.
 	 * @return this->renderer.get().
 	 */
-	const ruis::render::renderer& ren() const noexcept
+	ruis::render::renderer& ren() const noexcept
 	{
 		return this->renderer.get();
 	}
@@ -154,11 +154,13 @@ public:
 	/**
 	 * @brief Constructor.
 	 * @param style_provider - style provider to use for this context.
+	 * @param renderer - ruis  renderer for this context.
 	 * @param updater - updater to use along with this context.
 	 * @param params - context parameters.
 	 */
 	context(
 		utki::shared_ref<ruis::style_provider> style_provider,
+		utki::shared_ref<ruis::render::renderer> renderer,
 		utki::shared_ref<ruis::updater> updater,
 		parameters params
 	);

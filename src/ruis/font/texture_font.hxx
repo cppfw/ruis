@@ -104,7 +104,8 @@ public:
  */
 class texture_font : public font
 {
-	const utki::shared_ref<ruis::render::renderer> renderer;
+	const utki::shared_ref<const ruis::render::context> rendering_context;
+	const utki::shared_ref<const ruis::render::renderer::objects> common_rendering_objects;
 
 	const unsigned font_size;
 
@@ -142,17 +143,22 @@ public:
 	 * @param max_cached - maximum number of glyphs to cache.
 	 */
 	texture_font(
-		utki::shared_ref<ruis::render::renderer> renderer,
-		const utki::shared_ref<const freetype_face>& face,
+		utki::shared_ref<const ruis::render::context> rendering_context, //
+		utki::shared_ref<const ruis::render::renderer::objects> common_rendering_objects,
+		utki::shared_ref<const freetype_face> face,
 		unsigned font_size,
 		unsigned max_cached
 	);
 
-	real get_advance(char32_t c, unsigned tab_size) const override;
+	real get_advance(
+		char32_t c, //
+		unsigned tab_size
+	) const override;
 
 protected:
 	render_result render_internal(
-		const ruis::matrix4& matrix, //
+		render::renderer& renderer, //
+		const ruis::matrix4& matrix,
 		const ruis::color& color,
 		const std::u32string_view str,
 		unsigned tab_size,
@@ -171,7 +177,8 @@ protected:
 
 private:
 	real render_glyph_internal(
-		const ruis::matrix4& matrix, //
+		render::renderer& renderer, //
+		const ruis::matrix4& matrix,
 		const ruis::color& color,
 		char32_t ch
 	) const;

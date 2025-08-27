@@ -27,13 +27,14 @@ using namespace ruis;
 
 context::context(
 	utki::shared_ref<ruis::style_provider> style_provider,
+	utki::shared_ref<ruis::render::renderer> renderer,
 	utki::shared_ref<ruis::updater> updater,
 	parameters params
 ) :
 	post_to_ui_thread_function(std::move(params.post_to_ui_thread_function)),
 	style_provider(std::move(style_provider)),
 	res_loader(this->style_provider.get().res_loader),
-	renderer(this->res_loader.get().renderer),
+	renderer(std::move(renderer)),
 	updater(std::move(updater)),
 	localization(std::move(params.localization)),
 	units(std::move(params.units))

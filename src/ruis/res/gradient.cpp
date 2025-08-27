@@ -29,18 +29,25 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis::res;
 
-ruis::res::gradient::gradient(utki::shared_ref<ruis::render::renderer> renderer) :
-	renderer(std::move(renderer)),
-	vao(this->renderer.get().obj().empty_vertex_array)
+ruis::res::gradient::gradient(
+	const ruis::render::context& rendering_context, //
+	utki::span<const std::tuple<real, color>> stops,
+	bool vertical
+) :
+	vao(make_vao(
+		rendering_context, //
+		stops,
+		vertical
+	))
 {}
 
-void gradient::set(
-	std::vector<std::tuple<real, color>>& stops, //
+utki::shared_ref<const ruis::render::vertex_array> gradient::make_vao(
+	const ruis::render::context& rendering_context, //
+	utki::span<const std::tuple<real, color>> stops,
 	bool vertical
 )
 {
 	std::vector<r4::vector2<float>> vertices;
-	//	std::vector<uint32_t> colors;
 	std::vector<r4::vector4<float>> colors;
 	for (auto& s : stops) {
 		{
@@ -71,15 +78,13 @@ void gradient::set(
 		indices.push_back(uint16_t(i));
 	}
 
-	auto& r = this->renderer.get();
-
 	// clang-format off
-	this->vao = r.render_context.get().make_vertex_array(
+	return rendering_context.make_vertex_array(
 		{
-			r.render_context.get().make_vertex_buffer(utki::make_span(vertices)),
-		 	r.render_context.get().make_vertex_buffer(utki::make_span(colors))
+			rendering_context.make_vertex_buffer(utki::make_span(vertices)),
+		 	rendering_context.make_vertex_buffer(utki::make_span(colors))
 		},
-		r.render_context.get().make_index_buffer(utki::make_span(indices)),
+		rendering_context.make_index_buffer(utki::make_span(indices)),
 		render::vertex_array::mode::triangle_strip
 	);
 	// clang-format on
@@ -114,9 +119,8 @@ utki::shared_ref<gradient> gradient::load(
 		}
 	}
 
-	auto ret = utki::make_shared<gradient>(loader.renderer);
-
-	ret.get().set(
+	auto ret = utki::make_shared<gradient>(
+		loader.rendering_context,
 		stops, //
 		vertical
 	);
@@ -124,9 +128,12 @@ utki::shared_ref<gradient> gradient::load(
 	return ret;
 }
 
-void gradient::render(const ruis::matrix4& m) const
+void gradient::render(
+	ruis::render::renderer& renderer, //
+	const ruis::matrix4& m
+) const
 {
-	this->renderer.get().shaders().pos_clr->render(
+	renderer.shaders().pos_clr->render(
 		m, //
 		this->vao.get()
 	);

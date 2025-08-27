@@ -61,7 +61,8 @@ void text::render(const ruis::matrix4& matrix) const
 	);
 
 	font.render(
-		matr, //
+		this->ctx().ren(), //
+		matr,
 		this->get_current_color(),
 		this->get_string()
 	);

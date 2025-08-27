@@ -74,7 +74,8 @@ private:
 
 public:
 	font(
-		utki::shared_ref<ruis::render::renderer> renderer, //
+		utki::shared_ref<const ruis::render::context> rendering_context, //
+		utki::shared_ref<const ruis::render::renderer::objects> common_rendering_objects,
 		const papki::file& file_normal,
 		std::unique_ptr<const papki::file> file_bold,
 		std::unique_ptr<const papki::file> file_italic,

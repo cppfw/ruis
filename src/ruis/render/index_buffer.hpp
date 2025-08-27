@@ -29,14 +29,14 @@ class context;
 
 class index_buffer
 {
+	const utki::shared_ref<const ruis::render::context> rendering_context;
+
 protected:
-	index_buffer(utki::shared_ref<ruis::render::context> render_context) :
-		render_context(std::move(render_context))
+	index_buffer(utki::shared_ref<const ruis::render::context> rendering_context) :
+		rendering_context(std::move(rendering_context))
 	{}
 
 public:
-	const utki::shared_ref<ruis::render::context> render_context;
-
 	index_buffer(const index_buffer&) = delete;
 	index_buffer& operator=(const index_buffer&) = delete;
 

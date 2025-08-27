@@ -35,9 +35,9 @@ class context;
 
 class vertex_array
 {
-public:
-	const utki::shared_ref<ruis::render::context> render_context;
+	const utki::shared_ref<const ruis::render::context> rendering_context;
 
+public:
 	using buffers_type = std::vector<utki::shared_ref<const vertex_buffer>>;
 
 	const buffers_type buffers;
@@ -63,7 +63,7 @@ public:
 
 protected:
 	vertex_array(
-		utki::shared_ref<ruis::render::context> render_context, //
+		utki::shared_ref<const ruis::render::context> rendering_context, //
 		buffers_type buffers,
 		utki::shared_ref<const index_buffer> indices,
 		mode rendering_mode

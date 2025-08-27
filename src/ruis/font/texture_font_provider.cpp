@@ -24,20 +24,22 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace ruis;
 
 texture_font_provider::texture_font_provider(
-	utki::shared_ref<ruis::render::renderer> renderer,
-	// NOLINTNEXTLINE(modernize-pass-by-value)
-	const utki::shared_ref<const freetype_face>& face,
+	utki::shared_ref<const ruis::render::context> rendering_context, //
+	utki::shared_ref<const ruis::render::renderer::objects> common_rendering_objects,
+	utki::shared_ref<const freetype_face> face,
 	unsigned max_cached
 ) :
-	renderer(std::move(renderer)),
-	face(face),
+	rendering_context(std::move(rendering_context)),
+	common_rendering_objects(std::move(common_rendering_objects)),
+	face(std::move(face)),
 	max_cached(max_cached)
 {}
 
 utki::shared_ref<const font> texture_font_provider::create(real size) const
 {
 	return utki::make_shared<texture_font>(
-		this->renderer, //
+		this->rendering_context, //
+		this->common_rendering_objects,
 		this->face,
 		unsigned(size),
 		max_cached

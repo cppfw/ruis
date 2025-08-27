@@ -14,7 +14,7 @@ class native_window
 
 	bool is_fullscreen_v = false;
 
-	virtual void bind_render_context() = 0;
+	virtual void bind_rendering_context() = 0;
 
 	virtual void set_fullscreen_internal(bool enable) {}
 

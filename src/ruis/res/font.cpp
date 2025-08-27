@@ -33,7 +33,8 @@ using namespace ruis;
 using namespace ruis::res;
 
 res::font::font(
-	utki::shared_ref<ruis::render::renderer> renderer, //
+	utki::shared_ref<const ruis::render::context> rendering_context, //
+	utki::shared_ref<const ruis::render::renderer::objects> common_rendering_objects,
 	const papki::file& file_normal,
 	std::unique_ptr<const papki::file> file_bold,
 	std::unique_ptr<const papki::file> file_italic,
@@ -42,18 +43,27 @@ res::font::font(
 )
 {
 	// NOLINTNEXTLINE(bugprone-unused-return-value, "false positive")
-	this->fonts[unsigned(style::normal)] =
-		std::make_unique<texture_font_provider>(renderer, utki::make_shared<freetype_face>(file_normal), max_cached);
+	this->fonts[unsigned(style::normal)] = std::make_unique<texture_font_provider>(
+		rendering_context, //
+		common_rendering_objects,
+		utki::make_shared<freetype_face>(file_normal),
+		max_cached
+	);
 
 	if (file_bold) {
 		// NOLINTNEXTLINE(bugprone-unused-return-value, "false positive")
-		this->fonts[unsigned(style::bold)] =
-			std::make_unique<texture_font_provider>(renderer, utki::make_shared<freetype_face>(*file_bold), max_cached);
+		this->fonts[unsigned(style::bold)] = std::make_unique<texture_font_provider>(
+			rendering_context, //
+			common_rendering_objects,
+			utki::make_shared<freetype_face>(*file_bold),
+			max_cached
+		);
 	}
 	if (file_italic) {
 		// NOLINTNEXTLINE(bugprone-unused-return-value, "false positive")
 		this->fonts[unsigned(style::italic)] = std::make_unique<texture_font_provider>(
-			renderer,
+			rendering_context, //
+			common_rendering_objects,
 			utki::make_shared<freetype_face>(*file_italic),
 			max_cached
 		);
@@ -61,7 +71,8 @@ res::font::font(
 	if (file_bold_italic) {
 		// NOLINTNEXTLINE(bugprone-unused-return-value, "false positive")
 		this->fonts[unsigned(style::bold_italic)] = std::make_unique<texture_font_provider>(
-			std::move(renderer),
+			std::move(rendering_context), //
+			std::move(common_rendering_objects),
 			utki::make_shared<freetype_face>(*file_bold_italic),
 			max_cached
 		);
@@ -98,7 +109,8 @@ utki::shared_ref<res::font> res::font::load(
 	}
 
 	return utki::make_shared<font>(
-		loader.renderer,
+		loader.rendering_context,
+		loader.common_rendering_objects,
 		fi,
 		std::move(file_bold),
 		std::move(file_italic),

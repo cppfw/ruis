@@ -31,17 +31,17 @@ class context;
 
 class vertex_buffer
 {
-public:
-	const utki::shared_ref<ruis::render::context> render_context;
+	const utki::shared_ref<const ruis::render::context> rendering_context;
 
+public:
 	const size_t size;
 
 protected:
 	vertex_buffer(
-		utki::shared_ref<ruis::render::context> render_context, //
+		utki::shared_ref<const ruis::render::context> rendering_context, //
 		size_t size
 	) :
-		render_context(std::move(render_context)),
+		rendering_context(std::move(rendering_context)),
 		size(size)
 	{}
 

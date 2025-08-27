@@ -69,7 +69,7 @@ void rectangle::render(const ruis::matrix4& matrix) const
 {
 	auto& r = this->context.get().renderer.get();
 
-	r.render_context.get().set_simple_alpha_blending();
+	r.rendering_context.get().set_simple_alpha_blending();
 
 	if (!this->rounded_corners_tex) {
 		ruis::matrix4 matr(matrix);
