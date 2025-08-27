@@ -23,7 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis::render;
 
-const ruis::render::context* ruis::render::context::cur_context = nullptr;
+std::vector<const ruis::render::context*> ruis::render::context::cur_context_stack;
 
 context::context(
 	utki::shared_ref<ruis::render::native_window> native_window, //
@@ -32,10 +32,11 @@ context::context(
 	native_window(std::move(native_window)),
 	initial_matrix(std::move(params.initial_matrix))
 {
-	if (!cur_context) {
+	// TODO: document this behaviour in doxygen that first created context becomes bound by default
+	if (cur_context_stack.empty()) {
 		// this created context is the only one existing context at the moment, bind it just to have some context always bound
 		this->native_window.get().bind_rendering_context();
-		cur_context = this;
+		cur_context_stack.push_back(this);
 	}
 }
 
@@ -43,7 +44,18 @@ context::~context()
 {
 	// if the context is bound during destruction then it is the last context
 	if (this->is_current()) {
-		cur_context = nullptr;
+		utki::assert(cur_context_stack.back() == this, SL);
+		cur_context_stack.pop_back();
+		if (!cur_context_stack.empty()) {
+			// bind the previous context
+			cur_context_stack.back()->native_window.get().bind_rendering_context();
+		}
+	}else{
+		auto i = std::find(cur_context_stack.begin(), //
+		cur_context_stack.end(), this);
+		if(i != cur_context_stack.end()){
+			cur_context_stack.erase(i);
+		}
 	}
 }
 
@@ -57,18 +69,16 @@ void context::apply(std::function<void()> func)
 		return;
 	}
 
-	auto old_cc = cur_context;
 	utki::scope_exit restore_old_cc_scope_exit([&]() {
-		if (!old_cc) {
-			// There was no current context, leave current one bound.
-			return;
+		utki::assert(this->is_current(), SL);
+		cur_context_stack.pop_back();
+		if (!cur_context_stack.empty()) {
+			cur_context_stack.back()->native_window.get().bind_rendering_context();
 		}
-		old_cc->native_window.get().bind_rendering_context();
-		cur_context = old_cc;
 	});
 
+	cur_context_stack.push_back(this);
 	this->native_window.get().bind_rendering_context();
-	cur_context = this;
 
 	utki::assert(this->is_current(), SL);
 

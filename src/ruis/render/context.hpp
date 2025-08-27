@@ -21,6 +21,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
+#include <vector>
+
 #include <rasterimage/image_variant.hpp>
 #include <utki/shared.hpp>
 
@@ -39,7 +41,8 @@ class context : public std::enable_shared_from_this<context>
 {
 	friend class frame_buffer;
 
-	static const context* cur_context;
+	// Context destruction is rare, so removing from the middle of stack is rare, ok to use std::vector.
+	static std::vector<const context*> cur_context_stack;
 
 protected:
 	utki::shared_ref<context> get_shared_ref()
@@ -84,7 +87,9 @@ public:
 
 	bool is_current() const noexcept
 	{
-		return cur_context == this;
+		// if at least one context exists then the cur_context_stack is not empty
+		utki::assert(!cur_context_stack.empty(), SL);
+		return cur_context_stack.back() == this;
 	}
 
 	/**
