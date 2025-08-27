@@ -24,7 +24,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace ruis::render;
 
 std::vector<const ruis::render::context*> ruis::render::context::cur_context_stack;
-std::vector<const ruis::render::context*> ruis::render::context::existing_contexts_list;
 
 context::context(
 	utki::shared_ref<ruis::render::native_window> native_window, //
@@ -33,50 +32,34 @@ context::context(
 	native_window(std::move(native_window)),
 	initial_matrix(std::move(params.initial_matrix))
 {
-	this->existing_contexts_list.push_back(this);
+	// insert this context to the bottom of the current contexts stack
+	cur_context_stack.insert(cur_context_stack.begin(), this);
 
-	// TODO: document this behaviour in doxygen that first created context becomes bound by default?
-	if (cur_context_stack.empty()) {
-		// this created context is the only one existing context at the moment, bind it just to have some context always bound
+	if (this->is_current()) {
+		// this context is the first one created, so it should become current
 		this->native_window.get().bind_rendering_context();
-		cur_context_stack.push_back(this);
 	}
 }
 
 context::~context()
 {
-	// remove this context from list of existing contexts
-	auto i = std::find(existing_contexts_list.begin(), existing_contexts_list.end(), this);
-	utki::assert(i != existing_contexts_list.end(), SL);
-	existing_contexts_list.erase(i);
-
-	// TODO: document this behaviour in doxygen that when context is destroyed it will
-	// bind another existing one?
 	if (this->is_current()) {
 		cur_context_stack.pop_back();
-		if (cur_context_stack.empty()) {
-			if (!existing_contexts_list.empty()) {
-				// there are no contexts in bound contexts stack, but
-				// there are still some contexts existing, bind first one of them
-				auto c = existing_contexts_list.front();
-				c->native_window.get().bind_rendering_context();
-				cur_context_stack.push_back(c);
-			}
-		} else {
-			// bind the previous context
-			cur_context_stack.back()->native_window.get().bind_rendering_context();
-		}
-	} else {
-		auto i = std::find(
+	}
+
+	// remove all occurrencies of this context from current contexts stack,
+	// because there can be several of them
+	cur_context_stack.erase(
+		std::remove(
 			cur_context_stack.begin(), //
 			cur_context_stack.end(),
 			this
-		);
-		if (i != cur_context_stack.end()) {
-			cur_context_stack.erase(i);
-		}
-		// this context was not the current one, so the cur_context_stack should still be not empty
-		utki::assert(!cur_context_stack.empty(), SL);
+		),
+		cur_context_stack.end()
+	);
+
+	if (!cur_context_stack.empty()) {
+		cur_context_stack.back()->native_window.get().bind_rendering_context();
 	}
 }
 
@@ -90,7 +73,9 @@ void context::apply(std::function<void()> func)
 		return;
 	}
 
-	utki::scope_exit restore_old_cc_scope_exit([&]() {
+	cur_context_stack.push_back(this);
+
+	utki::scope_exit restore_old_current_context_scope_exit([&]() {
 		utki::assert(this->is_current(), SL);
 		cur_context_stack.pop_back();
 		if (!cur_context_stack.empty()) {
@@ -99,7 +84,6 @@ void context::apply(std::function<void()> func)
 		}
 	});
 
-	cur_context_stack.push_back(this);
 	this->native_window.get().bind_rendering_context();
 
 	utki::assert(this->is_current(), SL);
