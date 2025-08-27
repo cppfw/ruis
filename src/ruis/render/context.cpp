@@ -44,16 +44,18 @@ context::~context()
 {
 	// if the context is bound during destruction then it is the last context
 	if (this->is_current()) {
-		utki::assert(cur_context_stack.back() == this, SL);
 		cur_context_stack.pop_back();
 		if (!cur_context_stack.empty()) {
 			// bind the previous context
 			cur_context_stack.back()->native_window.get().bind_rendering_context();
 		}
-	}else{
-		auto i = std::find(cur_context_stack.begin(), //
-		cur_context_stack.end(), this);
-		if(i != cur_context_stack.end()){
+	} else {
+		auto i = std::find(
+			cur_context_stack.begin(), //
+			cur_context_stack.end(),
+			this
+		);
+		if (i != cur_context_stack.end()) {
 			cur_context_stack.erase(i);
 		}
 	}
@@ -73,6 +75,7 @@ void context::apply(std::function<void()> func)
 		utki::assert(this->is_current(), SL);
 		cur_context_stack.pop_back();
 		if (!cur_context_stack.empty()) {
+			// bind the previous context
 			cur_context_stack.back()->native_window.get().bind_rendering_context();
 		}
 	});
