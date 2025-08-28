@@ -1,7 +1,7 @@
 #pragma once
 
-#include <list>
 #include <functional>
+#include <list>
 
 #include "../util/mouse_cursor.hpp"
 
@@ -35,6 +35,10 @@ public:
 	{
 		return this->is_fullscreen_v;
 	}
+
+	// TODO: add set_maximized(bool) & is_maximized()
+	// TODO: add set_minimized(bool) & is_minimized()
+	// TODO: add set_hidden(bool) & is_hidden()
 
 	/**
 	 * @brief Handler of window close event.

@@ -64,7 +64,8 @@ utki::shared_ref<ruis::window> make_text_input_window(
 
         auto& nw = ruisapp::inst().make_window(
             {
-                .title = "new native_window"s
+                .title = "new native_window"s,
+                .taskbar = false
             }
         );
 
