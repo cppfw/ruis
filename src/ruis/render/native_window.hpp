@@ -1,6 +1,7 @@
 #pragma once
 
 #include <list>
+#include <functional>
 
 #include "../util/mouse_cursor.hpp"
 
@@ -34,6 +35,12 @@ public:
 	{
 		return this->is_fullscreen_v;
 	}
+
+	/**
+	 * @brief Handler of window close event.
+	 * Invoked when user tries to close the window, e.g. by clicking the window's close button.
+	 */
+	std::function<void()> close_handler;
 
 	// ================
 	// = mouse cursor =

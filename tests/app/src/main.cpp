@@ -68,7 +68,7 @@ public:
 							.buffers = {ruisapp::buffer::depth}
 						}))
 	{
-		this->window.close_handler = [this](ruisapp::window&){
+		this->window.gui.context.get().window().close_handler = [this](){
 			this->quit();
 		};
 

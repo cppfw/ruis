@@ -71,9 +71,9 @@ utki::shared_ref<ruis::window> make_text_input_window(
         auto c = make_new_native_window_root_widget(nw.gui.context);
         nw.gui.set_root(c);
 
-        nw.close_handler = [](ruisapp::window& w){
+        nw.gui.context.get().window().close_handler = [&nw](){
             utki::logcat("native window close handler called", '\n');
-            ruisapp::inst().destroy_window(w);
+            ruisapp::inst().destroy_window(nw);
         };
     };
 
