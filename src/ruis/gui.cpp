@@ -88,11 +88,23 @@ void gui::init_standard_widgets(papki::file& fi)
 	}
 }
 
-void gui::set_viewport(const ruis::vector2& size)
+void gui::set_viewport(const ruis::rect& rect)
 {
-	this->viewport_size = size;
+	if (this->viewport_rect == rect) {
+		return;
+	}
 
-	this->root_widget.get().resize(this->viewport_size);
+	this->context.get().ren().ctx().apply([&]() {
+		this->viewport_rect = rect;
+
+		utki::log_debug([&](auto& o) {
+			o << "gui::set_viewport(): new viewport retangle = " << this->viewport_rect << std::endl;
+		});
+
+		this->context.get().ren().ctx().set_viewport(this->viewport_rect.to<uint32_t>());
+
+		this->root_widget.get().resize(this->viewport_rect.d);
+	});
 }
 
 void gui::set_root(utki::shared_ref<ruis::widget> w)
@@ -104,7 +116,7 @@ void gui::set_root(utki::shared_ref<ruis::widget> w)
 	this->root_widget = std::move(w);
 
 	this->root_widget.get().move_to(ruis::vector2(0));
-	this->root_widget.get().resize(this->viewport_size);
+	this->root_widget.get().resize(this->viewport_rect.d);
 }
 
 void gui::render(const matrix4& matrix) const
@@ -117,12 +129,18 @@ void gui::render(const matrix4& matrix) const
 		this->root_widget.get().lay_out();
 	}
 
-	ruis::matrix4 m = make_viewport_matrix(matrix, this->viewport_size);
+	ruis::matrix4 m = make_viewport_matrix(
+		matrix, //
+		this->viewport_rect.d
+	);
 
 	this->get_root().render_internal(m);
 }
 
-void gui::send_mouse_move(const vector2& pos, unsigned id)
+void gui::send_mouse_move(
+	const vector2& pos, //
+	unsigned id
+)
 {
 	auto& rw = this->get_root();
 	if (rw.is_interactive()) {
@@ -131,7 +149,12 @@ void gui::send_mouse_move(const vector2& pos, unsigned id)
 	}
 }
 
-void gui::send_mouse_button(bool is_down, const vector2& pos, mouse_button button, unsigned id)
+void gui::send_mouse_button(
+	bool is_down, //
+	const vector2& pos,
+	mouse_button button,
+	unsigned id
+)
 {
 	auto& rw = this->get_root();
 	if (rw.is_interactive()) {
@@ -140,12 +163,18 @@ void gui::send_mouse_button(bool is_down, const vector2& pos, mouse_button butto
 	}
 }
 
-void gui::send_mouse_hover(bool is_hovered, unsigned pointer_id)
+void gui::send_mouse_hover(
+	bool is_hovered, //
+	unsigned pointer_id
+)
 {
 	this->get_root().set_hovered(is_hovered, pointer_id);
 }
 
-void gui::send_key(bool is_down, key key_code)
+void gui::send_key(
+	bool is_down, //
+	key key_code
+)
 {
 	//		TRACE(<< "HandleKeyEvent(): is_down = " << is_down << " is_char_input_only = " << is_char_input_only << "
 	// keyCode = " << unsigned(keyCode) << std::endl)
@@ -169,7 +198,10 @@ void gui::send_key(bool is_down, key key_code)
 	}
 }
 
-void gui::send_character_input(const input_string_provider& string_provider, key key_code)
+void gui::send_character_input(
+	const input_string_provider& string_provider, //
+	key key_code
+)
 {
 	if (auto w = this->context.get().focused_widget.lock()) {
 		if (auto c = dynamic_cast<character_input_widget*>(w.get())) {

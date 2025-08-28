@@ -81,15 +81,15 @@ public:
 	}
 
 private:
-	vector2 viewport_size{0, 0};
+	ruis::rect viewport_rect = {0, 0, 0, 0};
 
 public:
 	/**
-	 * @brief Set viewport size for GUI.
-	 * Set the dimensions of the rectangular area where GUI will be rendered.
-	 * @param size - dimensions of the viewport, in pixels.
+	 * @brief Set viewport rectangle.
+	 * Set the rectangular area within the native window where GUI will be rendered.
+	 * @param rect - viewport rectangle within the native window, in pixels.
 	 */
-	void set_viewport(const ruis::vector2& size);
+	void set_viewport(const ruis::rect& rect);
 
 	/**
 	 * @brief Render GUI.
