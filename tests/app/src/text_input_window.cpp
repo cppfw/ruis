@@ -7,6 +7,9 @@
 #include <ruis/widget/label/gap.hpp>
 #include <ruis/widget/input/text_input_line.hpp>
 #include <ruis/default_style.hpp>
+#include <ruisapp/application.hpp>
+
+#include "new_native_window.hpp"
 
 using namespace std::string_literals;
 using namespace std::string_view_literals;
@@ -58,7 +61,20 @@ utki::shared_ref<ruis::window> make_text_input_window(
 
     new_native_window_button.get().click_handler = [](ruis::push_button& b){
         utki::logcat("new native window button clicked", '\n');
-        // TODO:
+
+        auto& nw = ruisapp::inst().make_window(
+            {
+                .title = "new native_window"s
+            }
+        );
+
+        auto c = make_new_native_window_root_widget(nw.gui.context);
+        nw.gui.set_root(c);
+
+        nw.close_handler = [](ruisapp::window& w){
+            utki::logcat("native window close handler called", '\n');
+            ruisapp::inst().destroy_window(w);
+        };
     };
 
     // clang-format off

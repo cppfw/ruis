@@ -33,7 +33,6 @@ context::context(
 ) :
 	post_to_ui_thread_function(std::move(params.post_to_ui_thread_function)),
 	style_provider(std::move(style_provider)),
-	res_loader(this->style_provider.get().res_loader),
 	renderer(std::move(renderer)),
 	updater(std::move(updater)),
 	localization(std::move(params.localization)),

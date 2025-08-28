@@ -70,18 +70,12 @@ public:
 	}
 
 	/**
-	 * @brief Resource loader.
-	 * Allows loading and managing life time of resources.
-	 */
-	const utki::shared_ref<resource_loader> res_loader;
-
-	/**
 	 * @brief Shorthand alias for resource loader.
 	 * @return this->res_loader.get().
 	 */
 	resource_loader& loader() noexcept
 	{
-		return this->res_loader.get();
+		return this->style().res_loader.get();
 	}
 
 	/**
