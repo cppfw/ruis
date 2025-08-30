@@ -25,16 +25,11 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
-context::context(
-	utki::shared_ref<ruis::style_provider> style_provider,
-	utki::shared_ref<ruis::render::renderer> renderer,
-	utki::shared_ref<ruis::updater> updater,
-	parameters params
-) :
+context::context(parameters params) :
 	post_to_ui_thread_function(std::move(params.post_to_ui_thread_function)),
-	style_provider(std::move(style_provider)),
-	renderer(std::move(renderer)),
-	updater(std::move(updater)),
+	style_provider(std::move(params.style_provider)),
+	renderer(std::move(params.renderer)),
+	updater(std::move(params.updater)),
 	localization(std::move(params.localization)),
 	units(std::move(params.units))
 {

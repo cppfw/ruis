@@ -140,24 +140,18 @@ public:
 
 	struct parameters {
 		std::function<void(std::function<void()>)> post_to_ui_thread_function;
-		ruis::units units;
+		utki::shared_ref<ruis::updater> updater;
+		utki::shared_ref<ruis::render::renderer> renderer;
+		utki::shared_ref<ruis::style_provider> style_provider;
 		utki::shared_ref<ruis::localization> localization = utki::make_shared<ruis::localization>();
-		// TODO: add style_provider field
+		ruis::units units;
 	};
 
 	/**
 	 * @brief Constructor.
-	 * @param style_provider - style provider to use for this context.
-	 * @param renderer - ruis  renderer for this context.
-	 * @param updater - updater to use along with this context.
 	 * @param params - context parameters.
 	 */
-	context(
-		utki::shared_ref<ruis::style_provider> style_provider,
-		utki::shared_ref<ruis::render::renderer> renderer,
-		utki::shared_ref<ruis::updater> updater,
-		parameters params
-	);
+	context(parameters params);
 
 	context(const context&) = delete;
 	context& operator=(const context&) = delete;
