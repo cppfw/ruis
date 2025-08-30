@@ -7,11 +7,21 @@
 #include <ruis/util/color.hpp>
 #include <ruis/util/length.hpp>
 #include <ruis/res/tml.hpp>
-
-#include "../../harness/util/dummy_context.hpp"
+#include <ruis/render/null/context.hpp>
 
 using namespace std::string_literals;
 using namespace std::string_view_literals;
+
+namespace{
+utki::shared_ref<ruis::style_provider> make_style_provider(){
+    auto ren_ctx = utki::make_shared<ruis::render::null::context>();
+        auto res_loader = utki::make_shared<ruis::resource_loader>(
+            ren_ctx, //
+            utki::make_shared<ruis::render::renderer::objects>(ren_ctx)
+        );
+    return utki::make_shared<ruis::style_provider>(res_loader);
+}
+}
 
 namespace{
 const tst::set set("style", [](tst::suite& suite){
@@ -69,9 +79,8 @@ const tst::set set("style", [](tst::suite& suite){
 
         auto ss = utki::make_shared<ruis::style_sheet>(std::move(desc));
 
-        auto c = make_dummy_context();
-
-        ruis::style_provider s(c.get().res_loader);
+        auto style_provider = make_style_provider();
+        auto& s = style_provider.get();
 
         s.set(std::move(ss));
 
@@ -91,8 +100,12 @@ const tst::set set("style", [](tst::suite& suite){
             }
         )qwertyuiop"s);
 
-        auto c = make_dummy_context();
-        ruis::style_provider s(c.get().res_loader);
+        auto ren_ctx = utki::make_shared<ruis::render::null::context>();
+        auto res_loader = utki::make_shared<ruis::resource_loader>(
+            ren_ctx, //
+            utki::make_shared<ruis::render::renderer::objects>(ren_ctx)
+        );
+        ruis::style_provider s(res_loader);
 
         s.set(utki::make_shared<ruis::style_sheet>(std::move(ss_desc)));
 
@@ -109,8 +122,8 @@ const tst::set set("style", [](tst::suite& suite){
             }
         )qwertyuiop"s);
 
-        auto c = make_dummy_context();
-        ruis::style_provider s(c.get().res_loader);
+        auto style_provider = make_style_provider();
+        auto& s = style_provider.get();
 
         s.set(utki::make_shared<ruis::style_sheet>(std::move(ss_desc)));
 
@@ -120,9 +133,8 @@ const tst::set set("style", [](tst::suite& suite){
 
     // test that style values are updated when style sheet is changed
     suite.add("style__values_are_updated_when_sheet_changes", [](){
-        auto c = make_dummy_context();
-
-        ruis::style_provider s(c.get().res_loader);
+        auto style_provider = make_style_provider();
+        auto& s = style_provider.get();
 
         auto ss1 = utki::make_shared<ruis::style_sheet>(
             tml::read(
@@ -174,8 +186,6 @@ const tst::set set("style", [](tst::suite& suite){
 
     // test resource type style values
     suite.add("style__resource_values", [](){
-        auto c = make_dummy_context();
-
         auto res_pack_desc = R"qwertyuiop(
             tml_resource1{
                 forest{Hello world!}
@@ -185,9 +195,9 @@ const tst::set set("style", [](tst::suite& suite){
             }
         )qwertyuiop"s;
 
-        c.get().loader().mount_res_pack(papki::span_file(utki::make_span(res_pack_desc)));
-
-        ruis::style_provider s(c.get().res_loader);
+        auto style_provider = make_style_provider();
+        auto& s = style_provider.get();
+        s.res_loader.get().mount_res_pack(papki::span_file(utki::make_span(res_pack_desc)));
 
         auto ss1 = utki::make_shared<ruis::style_sheet>(
             tml::read(
