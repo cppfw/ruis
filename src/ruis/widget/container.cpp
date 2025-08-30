@@ -270,6 +270,10 @@ widget_list::const_iterator container::insert_internal(
 		throw std::invalid_argument("container::insert(): the widget is already added to some other container");
 	}
 
+	if (ww.context.to_shared_ptr() != this->context.to_shared_ptr()) {
+		throw std::invalid_argument("container::insert(): cannot insert widget from another GUI context");
+	}
+
 	// NOLINTNEXTLINE(cppcoreguidelines-pro-type-union-access)
 	auto ret = this->children_list.variable.emplace(
 		before, //

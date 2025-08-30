@@ -113,6 +113,10 @@ void gui::set_root(utki::shared_ref<ruis::widget> w)
 		throw std::invalid_argument("given widget is already added to some container");
 	}
 
+	if (w.get().context.to_shared_ptr() != this->context.to_shared_ptr()) {
+		throw std::invalid_argument("cannot set root widget from another GUI context");
+	}
+
 	this->root_widget = std::move(w);
 
 	this->root_widget.get().move_to(ruis::vector2(0));
