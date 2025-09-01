@@ -349,7 +349,7 @@ public:
 			auto& b = c.get().get_widget_as<ruis::push_button>("showhide_mousecursor_button");
 			bool visible = true;
 			b.context.get().window().set_mouse_cursor_visible(visible);
-			b.click_handler = [visible, this](ruis::push_button& b) mutable{
+			b.click_handler = [visible](ruis::push_button& b) mutable{
 				visible = !visible;
 				b.context.get().window().set_mouse_cursor_visible(visible);
 			};
