@@ -69,7 +69,8 @@ utki::shared_ref<ruis::window> make_text_input_window(
             }
         );
 
-        auto c = make_new_native_window_root_widget(nw.gui.context);
+        auto c = make_new_native_window_root_widget(nw.gui.context, //
+            nw);
         nw.gui.set_root(c);
 
         nw.gui.context.get().window().close_handler = [&nw](){
