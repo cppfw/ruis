@@ -205,7 +205,9 @@ public:
 			renderer, //
 			matrix,
 			color,
-			utki::utf8_iterator(str)
+			utki::utf8_iterator(str),
+			tab_size,
+			offset
 		);
 	}
 
@@ -221,17 +223,19 @@ public:
 	 * @return Redner result.
 	 */
 	render_result render(
+		render::renderer& renderer, //
 		const ruis::matrix4& matrix, //
 		const ruis::color& color,
-		const std::string& str,
+		std::string_view str,
 		unsigned tab_size = 4,
 		size_t offset = std::numeric_limits<size_t>::max()
 	) const
 	{
 		return this->render(
-			matrix, //
+			renderer, //
+			matrix,
 			color,
-			str.c_str(),
+			utki::utf8_iterator(str),
 			tab_size,
 			offset
 		);
