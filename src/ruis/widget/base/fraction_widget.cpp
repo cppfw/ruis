@@ -54,7 +54,11 @@ void fraction_widget::set_fraction(
 		// We still need to call the on_fraction_change() callback, so to make sure the handler
 		// is not invoked by default implementation of the callback, unset it for the time of calling the callback.
 		auto f = std::move(this->fraction_change_handler);
-		ASSERT(!this->fraction_change_handler)
+
+		// Moving-from does not guarantee it will be nulled out, so set to nullptr explicitly.
+		// For example it is needed on Macos (clang + libc++).
+		this->fraction_change_handler = nullptr;
+
 		this->on_fraction_change();
 		this->fraction_change_handler = std::move(f);
 	}

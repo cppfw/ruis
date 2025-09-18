@@ -1,2 +1,2 @@
-module_cfg := rel_no_install
-# module_cfg := dbg
+# module_cfg := rel_no_install
+module_cfg := dev
