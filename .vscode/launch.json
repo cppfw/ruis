@@ -16,6 +16,10 @@
 				{
 					"name": "LD_LIBRARY_PATH",
 					"value": "../../src/out/dev:../harness/modules/ruisapp/src/out/rel_no_install/opengl-xorg:../harness/modules/ruis-render-opengl/src/out/rel_no_install"
+				},
+				{
+					"name": "DYLD_LIBRARY_PATH",
+					"value": "../../src/out/dev:../harness/modules/ruisapp/src/out/dev/opengl:../harness/modules/ruis-render-opengl/src/out/dev"
 				}
 			],
 			"externalConsole": false,
