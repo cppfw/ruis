@@ -208,6 +208,13 @@
             "group": "build"
         },
         {
+            "label": "run-app-gl-sdl-dev",
+            "type": "shell",
+            "command": "make run-app win=sdl config=dev",
+            "problemMatcher": [],
+            "group": "build"
+        },
+        {
             "label": "run-app-dev",
             "type": "shell",
             "command": "make run-app config=dev",
