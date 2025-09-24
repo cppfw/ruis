@@ -15,7 +15,7 @@
 			"environment": [
 				{
 					"name": "LD_LIBRARY_PATH",
-					"value": "../../src/out/dev:../harness/modules/ruisapp/src/out/rel_no_install/opengl-xorg:../harness/modules/ruis-render-opengl/src/out/rel_no_install"
+					"value": "../../src/out/dev:../harness/modules/ruisapp/src/out/dev/opengl-xorg:../harness/modules/ruis-render-opengl/src/out/dev"
 				},
 				{
 					"name": "DYLD_LIBRARY_PATH",
@@ -45,6 +45,31 @@
 				{
 					"name": "LD_LIBRARY_PATH",
 					"value": "../../src/out/dev:../harness/modules/ruisapp/src/out/dev/opengles-wayland:../harness/modules/ruis-render-opengles/src/out/dev"
+				}
+			],
+			"externalConsole": false,
+			"MIMode": "gdb",
+			"setupCommands": [
+				{
+					"description": "Enable pretty-printing for gdb",
+					"text": "-enable-pretty-printing",
+					"ignoreFailures": true
+				}
+			],
+			// "preLaunchTask": "build-dev"
+		},
+		{
+			"name": "(gdb) app-sdl",
+			"type": "cppdbg",
+			"request": "launch",
+			"program": "${workspaceFolder}/tests/app/out/dev/tests",
+			"args": [],
+			"stopAtEntry": false,
+			"cwd": "${workspaceFolder}/tests/app",
+			"environment": [
+				{
+					"name": "LD_LIBRARY_PATH",
+					"value": "../../src/out/dev:../harness/modules/ruisapp/src/out/dev/opengl-sdl:../harness/modules/ruis-render-opengl/src/out/dev"
 				}
 			],
 			"externalConsole": false,
