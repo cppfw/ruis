@@ -5,6 +5,7 @@ project(${name})
 
 file(GLOB_RECURSE srcs
         "../../../tests/app/src/*.cpp"
+        "../../../src/*.cpp"
         "../../../tests/harness/modules/ruisapp/src/*.cpp"
         "../../../tests/harness/modules/ruis-render-opengles/src/*.cpp"
     )
@@ -13,7 +14,13 @@ include (${ANDROID_GRADLE_NATIVE_BUNDLE_PLUGIN_MK})
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
 
-link_directories( ../ruis/build/intermediates/cmake/release/obj/${ANDROID_ABI} )
+include_directories(
+    ../../../src
+    ../../../tests/harness/modules/ruisapp/src
+    ../../../tests/harness/modules/ruis-render-opengles/src
+)
+#link_directories(../ruis/build/intermediates/cmake/release/obj/${ANDROID_ABI})
+#link_directories(../ruis/.cxx/Debug/4x66344r/arm64-v8a)
 
 add_library(
         # Specifies the name of the library.
@@ -36,5 +43,5 @@ message(LINK = ${ANDROID_GRADLE_NATIVE_MODULES})
 
 target_link_libraries(
         ${name}
-        ruis android log EGL z GLESv2 ${ANDROID_GRADLE_NATIVE_MODULES}
+        android log EGL z GLESv2 ${ANDROID_GRADLE_NATIVE_MODULES}
     )
