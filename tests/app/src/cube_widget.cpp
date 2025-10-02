@@ -70,7 +70,9 @@ void cube_widget::update(uint32_t dt){
     // NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers)
     this->rot *= ruis::quaternion().set_rotation(r4::vector3<float>(1, 2, 1).normalize(), 1.5f * (float(dt) / std::milli::den));
     if(this->fpsSecCounter >= std::milli::den){
-        std::cout << "fps = " << std::dec << fps << std::endl;
+        utki::log([&](auto&o){
+            o << "fps = " << std::dec << fps << std::endl;
+        });
         this->fpsSecCounter = 0;
         this->fps = 0;
     }
