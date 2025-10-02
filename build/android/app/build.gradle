@@ -55,7 +55,7 @@ dependencies {
 //    implementation 'io.github.cppfw:png:+'
 //    implementation 'io.github.cppfw:jpeg:+'
     implementation 'io.github.cppfw:freetype:+'
-//    implementation project(path: ':ruis')
+    // implementation project(path: ':ruis')
 }
 
 task copyResToAssets {

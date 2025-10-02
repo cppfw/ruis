@@ -39,10 +39,10 @@ public class RuisappActivity extends NativeActivity {
 				return 0;//could not load char map, thus could not resolve character
 			}
 		}
-		
+
 		return this.curCharMap.get(keyCode, metaState);
 	}
-	
+
 	public float getDotsPerInch(){
 		Display d = ((WindowManager)getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
 		DisplayMetrics m = new DisplayMetrics();
@@ -50,9 +50,18 @@ public class RuisappActivity extends NativeActivity {
 		Log.d(LOGTAG, "getDotsPerInch(): xdpi = " + m.xdpi + " ydpi = " + m.ydpi + " density = " + m.density);
 		return (m.xdpi + m.ydpi) / 2.0f;
 	}
-	
+
+	public int[] getScreenDims(){
+		DisplayMetrics metrics = new DisplayMetrics();
+		getWindowManager().getDefaultDisplay().getRealMetrics(metrics);
+		int width = metrics.widthPixels;
+		int height = metrics.heightPixels;
+		Log.d(LOGTAG, "getScreenDims(): width = " + width + ", height = " + height);
+		return new int[] {width, height};
+	}
+
 	private static native void handleCharacterStringInput(String str);
-	
+
 	@Override
 	public boolean dispatchKeyEvent(KeyEvent event) {
 		Log.d(LOGTAG, "dispatchKeyEvent(): invoked");
@@ -66,28 +75,28 @@ public class RuisappActivity extends NativeActivity {
 		return super.dispatchKeyEvent(event);
 	}
 
-	//Override the Back button handler to prevent activity from automatically closing by Back key.
+	// Override the Back button handler to prevent activity from automatically closing by Back key.
 	@Override
 	public void onBackPressed() {
 	}
-	
+
 	private InputMethodManager imm;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 
 		this.imm = (InputMethodManager)this.getSystemService(Service.INPUT_METHOD_SERVICE);
 	}
-	
-	
+
+
 	public void showVirtualKeyboard(){
 		this.imm.showSoftInput(this.getWindow().getDecorView(), InputMethodManager.SHOW_FORCED);
 		Rect r = new Rect();
 		this.getWindow().getDecorView().getWindowVisibleDisplayFrame(r);
 		Log.d(LOGTAG, "showVirtualKeyboard(): visible rect = " + r.left + ", " + r.right + ", " + r.top + ", " + r.bottom);
 	}
-	
+
 	public void hideVirtualKeyboard(){
 		this.imm.hideSoftInputFromWindow(this.getWindow().getDecorView().getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY);
 	}
@@ -110,7 +119,7 @@ public class RuisappActivity extends NativeActivity {
 		}
 		return null;
 	}
-	
+
 	public String getStorageDir(){
 		return this.getFilesDir().getPath();
 	}

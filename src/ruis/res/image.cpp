@@ -96,7 +96,13 @@ public:
 
 	r4::vector2<uint32_t> dims(const ruis::units& units) const noexcept override
 	{
-		ASSERT(units.dots_per_pp() > 0)
+		utki::assert(
+			units.dots_per_pp() > 0,
+			[&](auto& o) {
+				o << "units.dots_per_pp() = " << units.dots_per_pp();
+			},
+			SL
+		);
 		auto wh = this->dom->get_dimensions(units.dots_per_inch() / units.dots_per_pp());
 		wh *= units.dots_per_pp();
 		using std::ceil;
