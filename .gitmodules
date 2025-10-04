@@ -10,11 +10,11 @@
 	path = tests/harness/modules/ruis-render-opengles
 	url = ../ruis-render-opengles
 	branch = multiwindow # main
-[submodule "tool-configs"]
-	path = tool-configs
-	url = ../tool-configs
-	branch = main
 [submodule "tests/harness/modules/ruis-render-null"]
 	path = tests/harness/modules/ruis-render-null
 	url = ../ruis-render-null
 	branch = multiwindow # main
+[submodule "tool-configs"]
+	path = tool-configs
+	url = ../tool-configs
+	branch = main
