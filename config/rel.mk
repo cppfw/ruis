@@ -5,6 +5,7 @@ this_cxxflags += -O3
 # TODO: compilation with -O3 currently fails with unjustified "maybe used uninitialized" error
 #       when building with "g++ (Debian 12.2.0-14) 12.2.0",
 #       have't tried it with clang++. Need to remove this warning suppression when GCC is fixed.
+$(info this_cxx = $(this_cxx))
 ifeq ($(this_cxx),g++)
     this_cxxflags += -Wno-maybe-uninitialized
 endif
