@@ -603,7 +603,6 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
       - name: build
         run: |
-          echo CXX=$CXX
           conan remote add cppfw $MYCI_CONAN_REMOTE
           conan create build/conan --build=missing --user $MYCI_CONAN_USER --channel main --version $PACKAGE_VERSION
       - name: deploy conan package
