@@ -45,6 +45,14 @@ class native_window
 	virtual void set_mouse_cursor(ruis::mouse_cursor c) {}
 
 public:
+	native_window() = default;
+
+	native_window(const native_window&) = delete;
+	native_window& operator=(const native_window&) = delete;
+
+	native_window(native_window&&) = delete;
+	native_window& operator=(native_window&&) = delete;
+
 	virtual ~native_window() = default;
 
 	// TODO: make private somehow?
