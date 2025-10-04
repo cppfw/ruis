@@ -14,26 +14,33 @@ using namespace ruis::make;
 }
 
 class application : public ruisapp::application{
+	ruisapp::window& window;
 public:
 	application() :
-			ruisapp::application(
-				"ruis-tests",
-				{
+			ruisapp::application({
+				.name = "ruis-tests"}
+			),
+			window(this->make_window({
 					.dims = {1024, 800}
-				}
-			)
+				}))
 	{
-		this->gui.init_standard_widgets(*this->get_res_file("../../res/ruis_res/"));
+		this->window.gui.context.get().window().close_handler = [this](){
+			this->quit();
+		};
+
+		this->window.gui.init_standard_widgets(*this->get_res_file("../../res/ruis_res/"));
+
+		auto ctx = this->window.gui.context;
 
 		// clang-format off
-		auto c = m::container(this->gui.context,
+		auto c = m::container(ctx,
 			{
 				.container_params{
 					.layout = ruis::layout::trivial
 				}
 			},
 			{
-				m::window(this->gui.context,
+				m::window(ctx,
 					{
 						.widget_params{
 							.rectangle = {{200, 200}, {200, 100}}
@@ -44,14 +51,14 @@ public:
 						.title = U"aspect ratio proxy"s
 					},
 					{
-						m::pile(this->gui.context,
+						m::pile(ctx,
 							{
 								.layout_params{
 									.dims = {ruis::dim::min, ruis::dim::fill}
 								}
 							},
 							{
-								m::aspect_ratio_proxy(this->gui.context,
+								m::aspect_ratio_proxy(ctx,
 									{
 										.layout_params{
 											.dims = {ruis::dim::min, ruis::dim::fill}
@@ -61,7 +68,7 @@ public:
 										}
 									}
 								),
-								m::rectangle(this->gui.context,
+								m::rectangle(ctx,
 									{
 										.layout_params{
 											.dims = {ruis::dim::fill, ruis::dim::fill}
@@ -71,7 +78,7 @@ public:
 										}
 									}
 								),
-								m::text(this->gui.context,
+								m::text(ctx,
 									{},
 									U"1:2"s
 								)
@@ -83,7 +90,7 @@ public:
 		);
 		// clang-format on
 
-		this->gui.set_root(c);
+		this->window.gui.set_root(c);
 	}
 };
 

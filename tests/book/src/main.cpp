@@ -24,24 +24,33 @@ namespace m{
 }
 
 class application : public ruisapp::application{
+	ruisapp::window& window;
 public:
 	application() :
-			ruisapp::application(
-				"ruis-tests",
+			ruisapp::application({
+				.name = "ruis-tests"
+			}),
+			window(this->make_window(
 				{
 					.dims = {640, 480}
 				}
-			)
+			))
 	{
-		this->gui.init_standard_widgets(*this->get_res_file("../../res/ruis_res/"));
+		this->window.gui.context.get().window().close_handler = [this](){
+			this->quit();
+		};
 
-		this->gui.context.get().loader().mount_res_pack(*this->get_res_file("res/"));
+		this->window.gui.init_standard_widgets(*this->get_res_file("../../res/ruis_res/"));
+
+		this->window.gui.context.get().loader().mount_res_pack(*this->get_res_file("res/"));
+
+		auto& ctx = this->window.gui.context;
 
 		// clang-format off
-		auto c = m::column(this->gui.context,
+		auto c = m::column(ctx,
 			{},
 			{
-				m::book(this->gui.context,
+				m::book(ctx,
 					{
 						.layout_params{
 							.dims = {ruis::dim::fill, ruis::dim::max},
@@ -56,12 +65,12 @@ public:
 		);
 		// clang-format on
 
-		this->gui.set_root(c);
+		this->window.gui.set_root(c);
 
 		auto& book = c.get().get_widget_as<ruis::book>("book");
 
 		{
-			auto mp = make_main_page(this->gui.context);
+			auto mp = make_main_page(ctx);
 					
 			mp.get().get_widget_as<ruis::push_button>("cube_button").click_handler = [&mp = mp.get()](ruis::push_button& b){
 				mp.get_parent_book()->push(utki::make_shared<cube_page>(mp.context));

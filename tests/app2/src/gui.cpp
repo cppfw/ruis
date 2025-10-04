@@ -14,6 +14,7 @@
 #include <ruis/widget/slider/slider.hpp>
 #include <ruisapp/application.hpp>
 
+#include "application.hpp"
 #include "rectangles_window.hpp"
 #include "table_list_window.hpp"
 #include "table_tree_view_window.hpp"
@@ -301,13 +302,13 @@ utki::shared_ref<ruis::window> make_selection_box_window(
 		ASSERT(sel < language_id_to_name_mapping.size())
 
 		sb.context.get().post_to_ui_thread([lng = language_id_to_name_mapping.at(sel).first]() {
-			auto& app = ruisapp::inst();
+			auto& app = application::inst();
 
 			// std::cout << "new localization = " << lng << std::endl;
 
-			app.gui.context.get().localization.get() =
+			app.window.gui.context.get().localization.get() =
 				ruis::localization(tml::read(*app.get_res_file(utki::cat("res/localization/", lng, ".tml"))));
-			app.gui.get_root().reload();
+			app.window.gui.get_root().reload();
 		});
 	};
 

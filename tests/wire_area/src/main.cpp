@@ -111,20 +111,25 @@ utki::shared_ref<ruis::widget> make_root_widget(utki::shared_ref<ruis::context> 
 }
 
 class application : public ruisapp::application{
+	ruisapp::window& window;
 public:
 	application() :
-			ruisapp::application(
-				"ruis-tests",
-				{
+			ruisapp::application({
+				.name = "ruis-tests"}
+			),
+			window(this->make_window({
 					.dims = {640, 480}
-				}
-			)
+				}))
 	{
-		this->gui.init_standard_widgets(*this->get_res_file("../../res/ruis_res/"));
+		this->window.gui.context.get().window().close_handler = [this](){
+			this->quit();
+		};
 
-		auto c = make_root_widget(this->gui.context);
+		this->window.gui.init_standard_widgets(*this->get_res_file("../../res/ruis_res/"));
 
-		this->gui.set_root(c);
+		auto c = make_root_widget(this->window.gui.context);
+
+		this->window.gui.set_root(c);
 	}
 };
 
