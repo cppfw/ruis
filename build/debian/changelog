@@ -1,8 +1,8 @@
-libruis (0.6.0) UNRELEASED; urgency=medium
+libruis (0.6.0) unstable; urgency=medium
 
   * multiwindow support
 
- -- Ivan Gagis <igagis@gmail.com>  Sun, 05 Oct 2025 18:02:52 +0300
+ -- Ivan Gagis <igagis@gmail.com>  Sun, 05 Oct 2025 18:06:02 +0300
 
 libruis (0.5.280) unstable; urgency=medium
 
