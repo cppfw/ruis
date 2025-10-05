@@ -7,6 +7,9 @@
 #include <ruis/widget/label/gap.hpp>
 #include <ruis/widget/input/text_input_line.hpp>
 #include <ruis/default_style.hpp>
+#include <ruisapp/application.hpp>
+
+#include "new_native_window.hpp"
 
 using namespace std::string_literals;
 using namespace std::string_view_literals;
@@ -47,6 +50,35 @@ utki::shared_ref<ruis::window> make_text_input_window(
     ruis::vec2_length pos
 )
 {
+    // clang-format off
+    auto new_native_window_button = m::push_button(c,
+        {},
+        {
+            m::text(c, {}, U"new native window"s)
+        }
+    );
+    // clang-format on
+
+    new_native_window_button.get().click_handler = [](ruis::push_button& b){
+        utki::logcat("new native window button clicked", '\n');
+
+        auto& nw = ruisapp::inst().make_window(
+            {
+                .title = "new native_window"s,
+                .taskbar = false
+            }
+        );
+
+        auto c = make_new_native_window_root_widget(nw.gui.context, //
+            nw);
+        nw.gui.set_root(c);
+
+        nw.gui.context.get().window().close_handler = [&nw](){
+            utki::logcat("native window close handler called", '\n');
+            ruisapp::inst().destroy_window(nw);
+        };
+    };
+
     // clang-format off
     return m::window(c,
         {
@@ -131,7 +163,8 @@ utki::shared_ref<ruis::window> make_text_input_window(
                                                 .pressed_image = c.get().loader().load<ruis::res::image>("img_button_pressed"sv)
                                             }
                                         }
-                                    )
+                                    ),
+                                    std::move(new_native_window_button)
                                 }
                             )
                         }

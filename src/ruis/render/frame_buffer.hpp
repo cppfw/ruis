@@ -37,16 +37,18 @@ class frame_buffer :
 	public std::enable_shared_from_this<frame_buffer>
 {
 protected:
+	// in OpneGL framebuffer objects are not shared between contexts,
+	// so the reference stored here is for non-const context object which owns the framebuffer
+	const utki::shared_ref<ruis::render::context> rendering_context;
+
 	frame_buffer( //
-		utki::shared_ref<ruis::render::context> render_context,
+		utki::shared_ref<ruis::render::context> rendering_context,
 		std::shared_ptr<texture_2d> color,
 		std::shared_ptr<texture_depth> depth,
 		std::shared_ptr<texture_stencil> stencil
 	);
 
 public:
-	const utki::shared_ref<ruis::render::context> render_context;
-
 	const std::shared_ptr<texture_2d> color;
 	const std::shared_ptr<texture_depth> depth;
 	const std::shared_ptr<texture_stencil> stencil;

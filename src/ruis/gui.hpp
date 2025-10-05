@@ -38,7 +38,7 @@ public:
 	 * @brief Constructor.
 	 * @param context - ruis context to use for this gui instance.
 	 */
-	gui(const utki::shared_ref<ruis::context>& context);
+	gui(utki::shared_ref<ruis::context> context);
 
 	gui(const gui&) = delete;
 	gui& operator=(const gui&) = delete;
@@ -81,15 +81,15 @@ public:
 	}
 
 private:
-	vector2 viewport_size{0, 0};
+	ruis::rect viewport_rect = {0, 0, 0, 0};
 
 public:
 	/**
-	 * @brief Set viewport size for GUI.
-	 * Set the dimensions of the rectangular area where GUI will be rendered.
-	 * @param size - dimensions of the viewport, in pixels.
+	 * @brief Set viewport rectangle.
+	 * Set the rectangular area within the native window where GUI will be rendered.
+	 * @param rect - viewport rectangle within the native window, in pixels.
 	 */
-	void set_viewport(const ruis::vector2& size);
+	void set_viewport(const ruis::rect& rect);
 
 	/**
 	 * @brief Render GUI.
@@ -108,17 +108,8 @@ public:
 	 * widgets to be used by application.
 	 * @param fi - file interface to use for resource loading.
 	 */
+	// TODO: make free function taking context as argument
 	void init_standard_widgets(papki::file& fi);
-
-	/**
-	 * @brief Update GUI.
-	 * Call this function from main loop of the program.
-	 * @return number of milliseconds to sleep before next call.
-	 */
-	uint32_t update()
-	{
-		return this->context.get().updater.get().update();
-	}
 
 	/**
 	 * @brief Feed in the mouse move event to GUI.
@@ -188,7 +179,10 @@ public:
 	 * @param string_provider - input string provider.
 	 * @param key_code - key code associated with character input, can be unknown.
 	 */
-	void send_character_input(const input_string_provider& string_provider, ruis::key key_code);
+	void send_character_input(
+		const input_string_provider& string_provider, //
+		ruis::key key_code
+	);
 };
 
 } // namespace ruis

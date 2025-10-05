@@ -40,13 +40,16 @@ gradient::gradient( //
 
 void gradient::render(const matrix4& matrix) const
 {
-	this->context.get().renderer.get().render_context.get().set_simple_alpha_blending();
+	this->context.get().renderer.get().rendering_context.get().set_simple_alpha_blending();
 
 	ruis::matrix4 matr(matrix);
 	matr.scale(this->rect().d);
 
 	if (this->params.gradient) {
 		//		TRACE(<< "this->rect().d = " << this->rect().d << std::endl)
-		this->params.gradient->render(matr);
+		this->params.gradient->render(
+			this->ctx().ren(), //
+			matr
+		);
 	}
 }

@@ -312,18 +312,27 @@ utki::shared_ref<ruis::container> make_layout(utki::shared_ref<ruis::context> c)
 }
 
 class application : public ruisapp::application{
+	ruisapp::window& window;
 public:
 	application() :
 			ruisapp::application(
-				"ruis-tests",
+				{
+					.name = "ruis-tests"
+				}
+			),
+			window(this->make_window(
 				{
 					.dims = {1024, 800}
 				}
-			)
+			))
 	{
-		this->gui.init_standard_widgets(*this->get_res_file("../../res/ruis_res/"));
+		this->window.gui.init_standard_widgets(*this->get_res_file("../../res/ruis_res/"));
 
-		this->gui.set_root(make_layout(this->gui.context));
+		this->window.gui.set_root(make_layout(this->window.gui.context));
+
+		this->window.gui.context.get().window().close_handler = [this](){
+			this->quit();
+		};
 	}
 };
 

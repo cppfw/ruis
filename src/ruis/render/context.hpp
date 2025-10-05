@@ -21,6 +21,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
+#include <vector>
+
 #include <rasterimage/image_variant.hpp>
 #include <utki/shared.hpp>
 
@@ -30,6 +32,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "shaders/texturing_shader.hpp"
 
 #include "frame_buffer.hpp"
+#include "native_window.hpp"
 #include "texture_cube.hpp"
 #include "texture_depth.hpp"
 
@@ -38,16 +41,26 @@ class context : public std::enable_shared_from_this<context>
 {
 	friend class frame_buffer;
 
+	// Context destruction is rare, so removing from the middle of stack is rare, ok to use std::vector.
+	static std::vector<const context*> cur_context_stack;
+
 protected:
 	utki::shared_ref<context> get_shared_ref()
 	{
-		return utki::make_shared_from(*this);
+		return utki::shared_ref(this->shared_from_this());
+	}
+
+	utki::shared_ref<const context> get_shared_ref() const
+	{
+		return utki::shared_ref<const ruis::render::context>(this->shared_from_this());
 	}
 
 private:
 	std::weak_ptr<frame_buffer> cur_fb;
 
 public:
+	const utki::shared_ref<ruis::render::native_window> native_window;
+
 	struct parameters {
 		r4::matrix4<float> initial_matrix;
 	};
@@ -59,7 +72,10 @@ public:
 	 */
 	const r4::matrix4<float> initial_matrix;
 
-	context(parameters params);
+	context(
+		utki::shared_ref<ruis::render::native_window>, //
+		parameters params
+	);
 
 	context(const context&) = delete;
 	context& operator=(const context&) = delete;
@@ -67,24 +83,28 @@ public:
 	context(context&&) = delete;
 	context& operator=(context&&) = delete;
 
-	virtual ~context() = default;
+	virtual ~context();
 
 	bool is_current() const noexcept
 	{
-		// TODO: actually check that the context is current
-		return true;
+		// if at least one context exists then the cur_context_stack is not empty
+		utki::assert(!cur_context_stack.empty(), SL);
+		return cur_context_stack.back() == this;
 	}
 
 	/**
 	 * @brief Execute procedure with this context made current.
+	 * Previous context will be restored to be current after procedure execution.
 	 * @param proc - procedure to execute.
 	 */
+	// TODO: make argument generic callable instead of std::function? i.e. template method for compiler optimizations?
 	void apply(std::function<void()> proc);
 
 	// ===============================
 	// ====== factory functions ======
 
 	struct shaders {
+		// TODO: make unique_ref
 		std::unique_ptr<const texturing_shader> pos_tex;
 		std::unique_ptr<const coloring_shader> color_pos;
 		std::unique_ptr<const coloring_shader> color_pos_lum;
@@ -93,7 +113,7 @@ public:
 		std::unique_ptr<const coloring_texturing_shader> color_pos_tex_alpha;
 	};
 
-	virtual utki::shared_ref<shaders> make_shaders() = 0;
+	virtual utki::shared_ref<shaders> make_shaders() const = 0;
 
 	struct texture_2d_parameters {
 		texture_2d::filter min_filter = texture_2d::filter::nearest;
@@ -105,19 +125,20 @@ public:
 		rasterimage::format format,
 		rasterimage::dimensioned::dimensions_type dims,
 		texture_2d_parameters params
-	) = 0;
+	) const = 0;
 
 	virtual utki::shared_ref<texture_2d> make_texture_2d(
 		const rasterimage::image_variant& imvar,
 		texture_2d_parameters params
-	) = 0;
+	) const = 0;
 
 	virtual utki::shared_ref<texture_2d> make_texture_2d(
 		rasterimage::image_variant&& imvar,
 		texture_2d_parameters params
-	) = 0;
+	) const = 0;
 
-	virtual utki::shared_ref<texture_depth> make_texture_depth(rasterimage::dimensioned::dimensions_type dims) = 0;
+	virtual utki::shared_ref<texture_depth> make_texture_depth(rasterimage::dimensioned::dimensions_type dims
+	) const = 0;
 
 	virtual utki::shared_ref<texture_cube> make_texture_cube(
 		rasterimage::image_variant&& positive_x,
@@ -126,25 +147,21 @@ public:
 		rasterimage::image_variant&& negative_y,
 		rasterimage::image_variant&& positive_z,
 		rasterimage::image_variant&& negative_z
-	) = 0;
+	) const = 0;
 
-	virtual utki::shared_ref<vertex_buffer> make_vertex_buffer(utki::span<const r4::vector4<float>> vertices) = 0;
+	virtual utki::shared_ref<vertex_buffer> make_vertex_buffer(utki::span<const r4::vector4<float>> vertices) const = 0;
+	virtual utki::shared_ref<vertex_buffer> make_vertex_buffer(utki::span<const r4::vector3<float>> vertices) const = 0;
+	virtual utki::shared_ref<vertex_buffer> make_vertex_buffer(utki::span<const r4::vector2<float>> vertices) const = 0;
+	virtual utki::shared_ref<vertex_buffer> make_vertex_buffer(utki::span<const float> vertices) const = 0;
 
-	virtual utki::shared_ref<vertex_buffer> make_vertex_buffer(utki::span<const r4::vector3<float>> vertices) = 0;
-
-	virtual utki::shared_ref<vertex_buffer> make_vertex_buffer(utki::span<const r4::vector2<float>> vertices) = 0;
-
-	virtual utki::shared_ref<vertex_buffer> make_vertex_buffer(utki::span<const float> vertices) = 0;
-
-	virtual utki::shared_ref<index_buffer> make_index_buffer(utki::span<const uint16_t> indices) = 0;
-
-	virtual utki::shared_ref<index_buffer> make_index_buffer(utki::span<const uint32_t> indices) = 0;
+	virtual utki::shared_ref<index_buffer> make_index_buffer(utki::span<const uint16_t> indices) const = 0;
+	virtual utki::shared_ref<index_buffer> make_index_buffer(utki::span<const uint32_t> indices) const = 0;
 
 	virtual utki::shared_ref<vertex_array> make_vertex_array(
 		std::vector<utki::shared_ref<const ruis::render::vertex_buffer>> buffers,
 		utki::shared_ref<const ruis::render::index_buffer> indices,
 		vertex_array::mode rendering_mode
-	) = 0;
+	) const = 0;
 
 	virtual utki::shared_ref<frame_buffer> make_framebuffer( //
 		std::shared_ptr<texture_2d> color,
@@ -167,7 +184,7 @@ private:
 	 * @brief Get current frame buffer.
 	 * @return Current frame buffer. If nullptr, then it is a screen buffer.
 	 */
-	std::shared_ptr<frame_buffer> get_framebuffer()
+	std::shared_ptr<frame_buffer> get_framebuffer() const
 	{
 		return this->cur_fb.lock();
 	}
@@ -201,7 +218,7 @@ public:
 	 * should be interpreted in context of the specific renderer.
 	 * @return Window coordinates of the point.
 	 */
-	virtual r4::vector2<uint32_t> to_window_coords(ruis::vec2 point) const = 0;
+	virtual r4::vector2<uint32_t> to_window_coords(const ruis::vec2& point) const = 0;
 
 	/**
 	 * @brief Check if scissor test is enabled.
@@ -231,7 +248,7 @@ public:
 	 * TODO:
 	 * @param r - new scissor rectangle.
 	 */
-	virtual void set_scissor(r4::rectangle<uint32_t> r) = 0;
+	virtual void set_scissor(const r4::rectangle<uint32_t>& r) = 0;
 
 	/**
 	 * @brief Get current rendering viewport within application window.
@@ -255,7 +272,7 @@ public:
 	 * covering the whole framebuffer.
 	 * @param r - new viewport rectangle.
 	 */
-	virtual void set_viewport(r4::rectangle<uint32_t> r) = 0;
+	virtual void set_viewport(const r4::rectangle<uint32_t>& r) = 0;
 
 	virtual void enable_blend(bool enable) = 0;
 

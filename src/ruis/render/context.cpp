@@ -23,18 +23,72 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis::render;
 
-context::context(parameters params) :
+std::vector<const ruis::render::context*> ruis::render::context::cur_context_stack;
+
+context::context(
+	utki::shared_ref<ruis::render::native_window> native_window, //
+	parameters params
+) :
+	native_window(std::move(native_window)),
 	initial_matrix(std::move(params.initial_matrix))
-{}
+{
+	// insert this context to the bottom of the current contexts stack
+	cur_context_stack.insert(cur_context_stack.begin(), this);
+
+	if (this->is_current()) {
+		// this context is the first one created, so it should become current
+		this->native_window.get().bind_rendering_context();
+	}
+}
+
+context::~context()
+{
+	if (this->is_current()) {
+		cur_context_stack.pop_back();
+	}
+
+	// remove all occurrencies of this context from current contexts stack,
+	// because there can be several of them
+	cur_context_stack.erase(
+		std::remove(
+			cur_context_stack.begin(), //
+			cur_context_stack.end(),
+			this
+		),
+		cur_context_stack.end()
+	);
+
+	if (!cur_context_stack.empty()) {
+		cur_context_stack.back()->native_window.get().bind_rendering_context();
+	}
+}
 
 void context::apply(std::function<void()> func)
 {
+	utki::assert(func, SL);
+
 	if (this->is_current()) {
+		// this context is already current
 		func();
 		return;
 	}
 
-	throw std::logic_error("context::apply(): the context is non-current, switching context is not yet implemented");
+	cur_context_stack.push_back(this);
+
+	utki::scope_exit restore_old_current_context_scope_exit([&]() {
+		utki::assert(this->is_current(), SL);
+		cur_context_stack.pop_back();
+		if (!cur_context_stack.empty()) {
+			// bind the previous context
+			cur_context_stack.back()->native_window.get().bind_rendering_context();
+		}
+	});
+
+	this->native_window.get().bind_rendering_context();
+
+	utki::assert(this->is_current(), SL);
+
+	func();
 }
 
 void context::set_framebuffer(frame_buffer* fb)

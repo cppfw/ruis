@@ -26,7 +26,7 @@ cube_widget::cube_widget(
         ruis::vector3(-1, -1,  1), ruis::vector3( 1, -1, -1), ruis::vector3( 1, -1,  1)
     }};
 
-    auto pos_vbo = this->context.get().renderer.get().render_context.get().make_vertex_buffer(utki::make_span(cube_pos));
+    auto pos_vbo = this->context.get().renderer.get().rendering_context.get().make_vertex_buffer(utki::make_span(cube_pos));
 
     // NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers)
     std::array<ruis::vector2, 36> cube_tex = {{
@@ -44,7 +44,7 @@ cube_widget::cube_widget(
         ruis::vector2(1, 0), ruis::vector2(1, 1), ruis::vector2(0, 1)
     }};
 
-    auto tex_vbo = this->context.get().renderer.get().render_context.get().make_vertex_buffer(utki::make_span(cube_tex));
+    auto tex_vbo = this->context.get().renderer.get().rendering_context.get().make_vertex_buffer(utki::make_span(cube_tex));
 
     // NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers)
     std::array<uint16_t, 36> indices = {{
@@ -52,9 +52,9 @@ cube_widget::cube_widget(
         0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35
     }};
 
-    auto cube_indices = this->context.get().renderer.get().render_context.get().make_index_buffer(utki::make_span(indices));
+    auto cube_indices = this->context.get().renderer.get().rendering_context.get().make_index_buffer(utki::make_span(indices));
 
-    this->cubeVAO = this->context.get().renderer.get().render_context.get().make_vertex_array(
+    this->cubeVAO = this->context.get().renderer.get().rendering_context.get().make_vertex_array(
         {pos_vbo, tex_vbo},
         cube_indices,
         ruis::render::vertex_array::mode::triangles
@@ -70,7 +70,9 @@ void cube_widget::update(uint32_t dt){
     // NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers)
     this->rot *= ruis::quaternion().set_rotation(r4::vector3<float>(1, 2, 1).normalize(), 1.5f * (float(dt) / std::milli::den));
     if(this->fpsSecCounter >= std::milli::den){
-        std::cout << "fps = " << std::dec << fps << std::endl;
+        utki::log([&](auto&o){
+            o << "fps = " << std::dec << fps << std::endl;
+        });
         this->fpsSecCounter = 0;
         this->fps = 0;
     }
@@ -91,5 +93,5 @@ void cube_widget::render(const ruis::matrix4& matrix)const{
 
     // glDisable(GL_CULL_FACE);
 
-    this->context.get().renderer.get().obj().shaders.get().pos_tex->render(matr, *this->cubeVAO, this->tex->tex());
+    this->context.get().renderer.get().shaders().pos_tex->render(matr, *this->cubeVAO, this->tex->tex());
 }

@@ -58,11 +58,14 @@ class gradient : public resource
 {
 	friend class ruis::resource_loader;
 
-public:
-	const utki::shared_ref<ruis::render::renderer> renderer;
-
 private:
 	utki::shared_ref<const render::vertex_array> vao;
+
+	static utki::shared_ref<const render::vertex_array> make_vao(
+		const ruis::render::context& rendering_context, //
+		utki::span<const std::tuple<real, color>> stops,
+		bool vertical
+	);
 
 public:
 	/**
@@ -70,9 +73,13 @@ public:
 	 * A gradient stop is a pair of values. First one is a floating point value
 	 * from [0:1] defining the position of the gradient stop. The second value
 	 * defines the color of the stop.
-	 * @param renderer - ruis renderer.
+	 * @param rendering_context - ruis rendering context.
 	 */
-	gradient(utki::shared_ref<ruis::render::renderer> renderer);
+	gradient(
+		const ruis::render::context& rendering_context, //
+		utki::span<const std::tuple<real, color>> stops,
+		bool vertical
+	);
 
 	gradient(const gradient&) = delete;
 	gradient& operator=(const gradient&) = delete;
@@ -83,25 +90,18 @@ public:
 	~gradient() override = default;
 
 	/**
-	 * @brief Set gradient.
-	 * @param stops - array of gradient stops.
-	 * @param vertical - if true, the gradient is vertical. If false, the gradient is horizontal.
-	 */
-	void set(
-		std::vector<std::tuple<real, color>>& stops, //
-		bool vertical
-	);
-
-	/**
 	 * @brief render gradient.
 	 * Renders the gradient as a rectangle ((0,0),(1,1)).
 	 * @param m - transformation matrix.
 	 */
-	void render(const ruis::matrix4& m) const;
+	void render(
+		ruis::render::renderer& renderer, //
+		const ruis::matrix4& m
+	) const;
 
 private:
 	static utki::shared_ref<gradient> load(
-		const ruis::resource_loader& loader,
+		const ruis::resource_loader& loader, //
 		const ::tml::forest& desc,
 		const papki::file& fi
 	);

@@ -28,29 +28,31 @@ namespace ruis::render {
 class renderer : public std::enable_shared_from_this<renderer>
 {
 public:
-	const utki::shared_ref<ruis::render::context> render_context;
+	const utki::shared_ref<ruis::render::context> rendering_context;
 
 	/**
 	 * @brief Shorthand alias for render context.
-	 * @return this->render_context.get().
+	 * @return this->rendering_context.get().
 	 */
 	ruis::render::context& ctx() noexcept
 	{
-		return this->render_context.get();
+		return this->rendering_context.get();
 	}
 
 	/**
 	 * @brief Shorthand alias for render context.
-	 * @return this->render_context.get().
+	 * @return this->rendering_context.get().
 	 */
-	// TODO: return const ref?
 	ruis::render::context& ctx() const noexcept
 	{
-		return this->render_context.get();
+		return this->rendering_context.get();
 	}
 
+	const utki::shared_ref<const ruis::render::context::shaders> common_shaders;
+
 	struct objects {
-		utki::shared_ref<const ruis::render::context::shaders> shaders;
+		objects(const ruis::render::context& rendering_context);
+
 		utki::shared_ref<const vertex_array> empty_vertex_array;
 
 		/**
@@ -75,14 +77,13 @@ public:
 
 	const ruis::render::context::shaders& shaders() const noexcept
 	{
-		return this->common_objects.get().shaders.get();
+		return this->common_shaders.get();
 	}
 
-	renderer(utki::shared_ref<ruis::render::context> render_context);
-
 	renderer(
-		utki::shared_ref<ruis::render::context> render_context, //
-		utki::shared_ref<objects> common_objects
+		utki::shared_ref<ruis::render::context> rendering_context, //
+		utki::shared_ref<const ruis::render::context::shaders> common_shaders,
+		utki::shared_ref<const objects> common_objects
 	);
 
 	renderer(const renderer&) = delete;

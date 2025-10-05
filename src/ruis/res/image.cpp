@@ -68,7 +68,7 @@ public:
 		const papki::file& fi
 	)
 	{
-		return utki::make_shared<res_raster_image>(loader.renderer.get().render_context.get().make_texture_2d(
+		return utki::make_shared<res_raster_image>(loader.rendering_context.get().make_texture_2d(
 			rasterimage::read(fi),
 			{
 				// TODO: what about params?
@@ -80,23 +80,29 @@ public:
 class res_svg_image : public image
 {
 public:
-	const utki::shared_ref<ruis::render::renderer> renderer;
+	const utki::shared_ref<const ruis::render::context> rendering_context;
 
 private:
 	std::unique_ptr<svgdom::svg_element> dom;
 
 public:
 	res_svg_image( //
-		utki::shared_ref<ruis::render::renderer> renderer,
+		utki::shared_ref<const ruis::render::context> rendering_context,
 		decltype(dom) dom
 	) :
-		renderer(std::move(renderer)),
+		rendering_context(std::move(rendering_context)),
 		dom(std::move(dom))
 	{}
 
 	r4::vector2<uint32_t> dims(const ruis::units& units) const noexcept override
 	{
-		ASSERT(units.dots_per_pp() > 0)
+		utki::assert(
+			units.dots_per_pp() > 0,
+			[&](auto& o) {
+				o << "units.dots_per_pp() = " << units.dots_per_pp();
+			},
+			SL
+		);
 		auto wh = this->dom->get_dimensions(units.dots_per_inch() / units.dots_per_pp());
 		wh *= units.dots_per_pp();
 		using std::ceil;
@@ -151,7 +157,7 @@ public:
 		auto dims = im.dims();
 
 		// clang-format off
-		auto tex_2d = this->renderer.get().render_context.get().make_texture_2d(
+		auto tex_2d = this->rendering_context.get().make_texture_2d(
 			std::move(im),
 			{
 				.min_filter = render::texture_2d::filter::nearest,
@@ -180,7 +186,7 @@ public:
 		auto dom = svgdom::load(fi);
 		ASSERT(dom)
 		return utki::make_shared<res_svg_image>(
-			loader.renderer, //
+			loader.rendering_context, //
 			std::move(dom)
 		);
 	}

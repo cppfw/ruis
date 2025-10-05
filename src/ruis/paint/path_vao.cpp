@@ -32,21 +32,21 @@ path_vao::path_vao(const utki::shared_ref<const ruis::render::renderer>& r) :
 
 void path_vao::set(const path::vertices& path)
 {
-	auto core_buf = this->renderer.get().render_context.get().make_vertex_buffer(path.pos);
+	auto core_buf = this->renderer.get().rendering_context.get().make_vertex_buffer(path.pos);
 
-	this->core = this->renderer.get().render_context.get().make_vertex_array(
+	this->core = this->renderer.get().rendering_context.get().make_vertex_array(
 		{
 			core_buf,
 		},
-		this->renderer.get().render_context.get().make_index_buffer(path.in_indices),
+		this->renderer.get().rendering_context.get().make_index_buffer(path.in_indices),
 		ruis::render::vertex_array::mode::triangle_strip
 	);
-	this->border = this->renderer.get().render_context.get().make_vertex_array(
+	this->border = this->renderer.get().rendering_context.get().make_vertex_array(
 		{
 			core_buf,
-			this->renderer.get().render_context.get().make_vertex_buffer(path.alpha),
+			this->renderer.get().rendering_context.get().make_vertex_buffer(path.alpha),
 		},
-		this->renderer.get().render_context.get().make_index_buffer(path.out_indices),
+		this->renderer.get().rendering_context.get().make_index_buffer(path.out_indices),
 		ruis::render::vertex_array::mode::triangle_strip
 	);
 }

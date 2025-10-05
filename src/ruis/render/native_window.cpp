@@ -19,23 +19,24 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 /* ================ LICENSE END ================ */
 
-#include "mouse_cursor_stack.hpp"
+#include "native_window.hpp"
 
 #include <utki/debug.hpp>
 
-using namespace ruis;
+using namespace ruis::render;
 
-mouse_cursor_stack::mouse_cursor_stack(std::function<void(ruis::mouse_cursor)> set_mouse_cursor) :
-	set_mouse_cursor(std::move(set_mouse_cursor))
+void native_window::set_fullscreen(bool enable)
 {
-	if (!this->set_mouse_cursor) {
-		throw std::invalid_argument( //
-			"mouse_cursor_stack::mouse_cursor_stack(): set_mouse_cursor function cannot be null"
-		);
+	if (enable == this->is_fullscreen()) {
+		return;
 	}
+
+	this->set_fullscreen_internal(enable);
+
+	this->is_fullscreen_v = enable;
 }
 
-decltype(mouse_cursor_stack::cursor_stack)::iterator mouse_cursor_stack::push(mouse_cursor cursor)
+native_window::cursor_id native_window::push_mouse_cursor(mouse_cursor cursor)
 {
 	this->cursor_stack.push_front(cursor);
 
@@ -44,9 +45,9 @@ decltype(mouse_cursor_stack::cursor_stack)::iterator mouse_cursor_stack::push(mo
 	return this->cursor_stack.begin();
 }
 
-void mouse_cursor_stack::pop(decltype(cursor_stack)::iterator i)
+void native_window::pop_mouse_cursor(cursor_id i)
 {
-	ASSERT(this->cursor_stack.size() > 1)
+	utki::assert(this->cursor_stack.size() > 1, SL);
 	bool top_cursor = i == this->cursor_stack.begin();
 
 	this->cursor_stack.erase(i);

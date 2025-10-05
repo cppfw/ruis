@@ -1,20 +1,20 @@
 [submodule "tests/harness/modules/ruisapp"]
 	path = tests/harness/modules/ruisapp
 	url = ../ruisapp
-	branch = main
+	branch = multiwindow # main
 [submodule "tests/harness/modules/ruis-render-opengl"]
 	path = tests/harness/modules/ruis-render-opengl
 	url = ../ruis-render-opengl
-	branch = main
+	branch = multiwindow # main
 [submodule "tests/harness/modules/ruis-render-opengles"]
 	path = tests/harness/modules/ruis-render-opengles
 	url = ../ruis-render-opengles
-	branch = main
-[submodule "tool-configs"]
-	path = tool-configs
-	url = ../tool-configs
-	branch = main
+	branch = multiwindow # main
 [submodule "tests/harness/modules/ruis-render-null"]
 	path = tests/harness/modules/ruis-render-null
 	url = ../ruis-render-null
+	branch = multiwindow # main
+[submodule "tool-configs"]
+	path = tool-configs
+	url = ../tool-configs
 	branch = main

@@ -38,7 +38,7 @@ class dragger : public ruis::gap
 
 	tiling_area& owner;
 
-	ruis::mouse_cursor_stack::iterator arrows_cursor_iter;
+	ruis::render::native_window::cursor_id arrows_cursor_iter;
 
 public:
 	// TODO: use shared_ref?
@@ -74,7 +74,7 @@ public:
 
 		if (!this->grabbed) {
 			if (!this->is_hovered()) {
-				this->context.get().cursor_stack.pop(this->arrows_cursor_iter);
+				this->context.get().window().pop_mouse_cursor(this->arrows_cursor_iter);
 			}
 		}
 
@@ -138,7 +138,7 @@ public:
 		}
 
 		if (this->is_hovered() || grabbed) {
-			this->arrows_cursor_iter = this->context.get().cursor_stack.push( //
+			this->arrows_cursor_iter = this->context.get().window().push_mouse_cursor( //
 				[&]() {
 					if (this->owner.is_vertical()) {
 						return ruis::mouse_cursor::up_down_arrow;
@@ -148,7 +148,7 @@ public:
 				}()
 			);
 		} else {
-			this->context.get().cursor_stack.pop(this->arrows_cursor_iter);
+			this->context.get().window().pop_mouse_cursor(this->arrows_cursor_iter);
 		}
 	}
 

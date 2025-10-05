@@ -67,7 +67,9 @@ class resource_loader
 	friend class resource;
 
 public:
-	const utki::shared_ref<ruis::render::renderer> renderer;
+	const utki::shared_ref<const ruis::render::context> rendering_context;
+
+	const utki::shared_ref<const ruis::render::renderer::objects> common_rendering_objects;
 
 private:
 	class res_pack_entry
@@ -111,8 +113,12 @@ private:
 	std::list<res_pack_entry> res_packs;
 
 public:
-	resource_loader(utki::shared_ref<ruis::render::renderer> renderer) :
-		renderer(std::move(renderer))
+	resource_loader(
+		utki::shared_ref<const ruis::render::context> rendering_context,
+		utki::shared_ref<const ruis::render::renderer::objects> common_rendering_objects
+	) :
+		rendering_context(std::move(rendering_context)),
+		common_rendering_objects(std::move(common_rendering_objects))
 	{}
 
 public:

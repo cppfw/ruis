@@ -55,23 +55,32 @@ using namespace ruis::make;
 }
 
 class application : public ruisapp::application{
+	ruisapp::window& window;
 public:
 	application() :
 			ruisapp::application(
-				"ruis-tests",
 				{
-					.dims = {1024, 800},
-					.buffers = {ruisapp::buffer::depth}
+					.name = "ruis-tests"s
 				}
-			)
+			),
+			window(this->make_window({
+							.dims = {1024, 800},
+							.buffers = {ruisapp::buffer::depth}
+						}))
 	{
-		this->gui.init_standard_widgets(*this->get_res_file("../../res/ruis_res/"));
+		this->window.gui.context.get().window().close_handler = [this](){
+			this->quit();
+		};
 
-		this->gui.context.get().loader().mount_res_pack(*this->get_res_file("res/"));
+		auto& gui = this->window.gui;
+
+		gui.init_standard_widgets(*this->get_res_file("../../res/ruis_res/"));
+
+		gui.context.get().loader().mount_res_pack(*this->get_res_file("res/"));
 //		this->ResMan().MountResPack(ruis::ZipFile::New(papki::FSFile::New("res.zip")));
 
-		auto c = make_root_widget(this->gui.context);
-		this->gui.set_root(c);
+		auto c = make_root_widget(gui.context);
+		gui.set_root(c);
 
 		utki::dynamic_reference_cast<ruis::key_proxy>(c).get().key_handler = [this](ruis::key_proxy&, const ruis::key_event& e) -> bool {
 			if(e.is_down){
@@ -90,10 +99,10 @@ public:
 			this->show_virtual_keyboard();
 		};
 
-		std::dynamic_pointer_cast<ruis::push_button>(c.get().try_get_widget("push_button_in_scroll_container"))->click_handler = [this](ruis::push_button&){
-			this->gui.context.get().post_to_ui_thread(
+		std::dynamic_pointer_cast<ruis::push_button>(c.get().try_get_widget("push_button_in_scroll_container"))->click_handler = [ctx = gui.context](ruis::push_button&){
+			ctx.get().post_to_ui_thread(
 					[](){
-						std::cout << "Print from UI thread!!!!!!!!" << std::endl;
+						utki::logcat("Print from UI thread!!!!!!!!", '\n');
 					}
 				);
 		};
@@ -322,26 +331,27 @@ public:
 		{
 			auto b = c.get().try_get_widget_as<ruis::push_button>("fullscreen_button");
 			ASSERT(b)
-			b->click_handler = [this](ruis::push_button&) {
-				this->set_fullscreen(!this->is_fullscreen());
+			b->click_handler = [](ruis::push_button& b) {
+				auto& w = b.context.get().window();
+				w.set_fullscreen(!w.is_fullscreen());
 			};
 		}
 		{
 			auto b = c.get().try_get_widget_as<ruis::push_button>("image_push_button");
 			ASSERT(b)
-			b->click_handler = [this](ruis::push_button&) {
-				this->set_fullscreen(true);
+			b->click_handler = [](ruis::push_button& b) {
+				b.context.get().window().set_fullscreen(true);
 			};
 		}
 
 		// mouse cursor
 		{
-			auto b = c.get().try_get_widget_as<ruis::push_button>("showhide_mousecursor_button");
+			auto& b = c.get().get_widget_as<ruis::push_button>("showhide_mousecursor_button");
 			bool visible = true;
-			this->set_mouse_cursor_visible(visible);
-			b->click_handler = [visible, this](ruis::push_button&) mutable{
+			b.context.get().window().set_mouse_cursor_visible(visible);
+			b.click_handler = [visible](ruis::push_button& b) mutable{
 				visible = !visible;
-				this->set_mouse_cursor_visible(visible);
+				b.context.get().window().set_mouse_cursor_visible(visible);
 			};
 		}
 

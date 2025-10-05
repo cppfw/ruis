@@ -26,7 +26,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "util/events.hpp"
 #include "util/localization.hpp"
 #include "util/mouse_cursor.hpp"
-#include "util/mouse_cursor_stack.hpp"
 #include "util/units.hpp"
 
 #include "resource_loader.hpp"
@@ -71,18 +70,12 @@ public:
 	}
 
 	/**
-	 * @brief Resource loader.
-	 * Allows loading and managing life time of resources.
-	 */
-	const utki::shared_ref<resource_loader> res_loader;
-
-	/**
 	 * @brief Shorthand alias for resource loader.
 	 * @return this->res_loader.get().
 	 */
 	resource_loader& loader() noexcept
 	{
-		return this->res_loader.get();
+		return this->style().res_loader.get();
 	}
 
 	/**
@@ -104,9 +97,18 @@ public:
 	 * @brief Shorthand alias for renderer.
 	 * @return this->renderer.get().
 	 */
-	const ruis::render::renderer& ren() const noexcept
+	ruis::render::renderer& ren() const noexcept
 	{
 		return this->renderer.get();
+	}
+
+	/**
+	 * @brief Shorthand alias for native_window.
+	 * @return The native window of this GUI context.
+	 */
+	ruis::render::native_window& window() noexcept
+	{
+		return this->ren().ctx().native_window;
 	}
 
 	/**
@@ -115,12 +117,6 @@ public:
 	 */
 	// potentially, updater can be shared between contexts, this is why it is shared_ref
 	const utki::shared_ref<ruis::updater> updater;
-
-	/**
-	 * @brief Mouse cursor stack.
-	 * It allows changing shape of the mouse cursor.
-	 */
-	mouse_cursor_stack cursor_stack;
 
 	/**
 	 * @brief current localization.
@@ -144,22 +140,18 @@ public:
 
 	struct parameters {
 		std::function<void(std::function<void()>)> post_to_ui_thread_function;
-		std::function<void(ruis::mouse_cursor)> set_mouse_cursor_function;
-		ruis::units units;
+		utki::shared_ref<ruis::updater> updater;
+		utki::shared_ref<ruis::render::renderer> renderer;
+		utki::shared_ref<ruis::style_provider> style_provider;
 		utki::shared_ref<ruis::localization> localization = utki::make_shared<ruis::localization>();
+		ruis::units units;
 	};
 
 	/**
 	 * @brief Constructor.
-	 * @param style_provider - style provider to use for this context.
-	 * @param updater - updater to use along with this context.
 	 * @param params - context parameters.
 	 */
-	context(
-		utki::shared_ref<ruis::style_provider> style_provider,
-		utki::shared_ref<ruis::updater> updater,
-		parameters params
-	);
+	context(parameters params);
 
 	context(const context&) = delete;
 	context& operator=(const context&) = delete;

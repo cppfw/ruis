@@ -29,14 +29,14 @@ class context;
 
 class texture_cube
 {
+	const utki::shared_ref<const ruis::render::context> rendering_context;
+
 protected:
-	texture_cube(utki::shared_ref<ruis::render::context> render_context) :
-		render_context(std::move(render_context))
+	texture_cube(utki::shared_ref<const ruis::render::context> rendering_context) :
+		rendering_context(std::move(rendering_context))
 	{}
 
 public:
-	const utki::shared_ref<ruis::render::context> render_context;
-
 	texture_cube(const texture_cube&) = delete;
 	texture_cube& operator=(const texture_cube&) = delete;
 

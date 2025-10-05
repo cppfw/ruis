@@ -102,6 +102,7 @@ void text_input_line::render(const ruis::matrix4& matrix) const
 
 		ASSERT(this->first_visible_char_index <= this->get_string().size())
 		font.render(
+			this->ctx().ren(), //
 			matr,
 			this->get_current_color(),
 			this->get_string().substr(

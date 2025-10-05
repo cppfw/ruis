@@ -28,8 +28,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace ruis;
 
 // NOLINTNEXTLINE(modernize-pass-by-value)
-gui::gui(const utki::shared_ref<ruis::context>& context) :
-	context(context),
+gui::gui(utki::shared_ref<ruis::context> context) :
+	context(std::move(context)),
 	root_widget(ruis::make::gap(this->context, {}))
 {}
 
@@ -88,11 +88,23 @@ void gui::init_standard_widgets(papki::file& fi)
 	}
 }
 
-void gui::set_viewport(const ruis::vector2& size)
+void gui::set_viewport(const ruis::rect& rect)
 {
-	this->viewport_size = size;
+	if (this->viewport_rect == rect) {
+		return;
+	}
 
-	this->root_widget.get().resize(this->viewport_size);
+	this->context.get().ren().ctx().apply([&]() {
+		this->viewport_rect = rect;
+
+		utki::log_debug([&](auto& o) {
+			o << "gui::set_viewport(): new viewport retangle = " << this->viewport_rect << std::endl;
+		});
+
+		this->context.get().ren().ctx().set_viewport(this->viewport_rect.to<uint32_t>());
+
+		this->root_widget.get().resize(this->viewport_rect.d);
+	});
 }
 
 void gui::set_root(utki::shared_ref<ruis::widget> w)
@@ -101,10 +113,14 @@ void gui::set_root(utki::shared_ref<ruis::widget> w)
 		throw std::invalid_argument("given widget is already added to some container");
 	}
 
+	if (w.get().context.to_shared_ptr() != this->context.to_shared_ptr()) {
+		throw std::invalid_argument("cannot set root widget from another GUI context");
+	}
+
 	this->root_widget = std::move(w);
 
 	this->root_widget.get().move_to(ruis::vector2(0));
-	this->root_widget.get().resize(this->viewport_size);
+	this->root_widget.get().resize(this->viewport_rect.d);
 }
 
 void gui::render(const matrix4& matrix) const
@@ -117,12 +133,18 @@ void gui::render(const matrix4& matrix) const
 		this->root_widget.get().lay_out();
 	}
 
-	ruis::matrix4 m = make_viewport_matrix(matrix, this->viewport_size);
+	ruis::matrix4 m = make_viewport_matrix(
+		matrix, //
+		this->viewport_rect.d
+	);
 
 	this->get_root().render_internal(m);
 }
 
-void gui::send_mouse_move(const vector2& pos, unsigned id)
+void gui::send_mouse_move(
+	const vector2& pos, //
+	unsigned id
+)
 {
 	auto& rw = this->get_root();
 	if (rw.is_interactive()) {
@@ -131,7 +153,12 @@ void gui::send_mouse_move(const vector2& pos, unsigned id)
 	}
 }
 
-void gui::send_mouse_button(bool is_down, const vector2& pos, mouse_button button, unsigned id)
+void gui::send_mouse_button(
+	bool is_down, //
+	const vector2& pos,
+	mouse_button button,
+	unsigned id
+)
 {
 	auto& rw = this->get_root();
 	if (rw.is_interactive()) {
@@ -140,12 +167,18 @@ void gui::send_mouse_button(bool is_down, const vector2& pos, mouse_button butto
 	}
 }
 
-void gui::send_mouse_hover(bool is_hovered, unsigned pointer_id)
+void gui::send_mouse_hover(
+	bool is_hovered, //
+	unsigned pointer_id
+)
 {
 	this->get_root().set_hovered(is_hovered, pointer_id);
 }
 
-void gui::send_key(bool is_down, key key_code)
+void gui::send_key(
+	bool is_down, //
+	key key_code
+)
 {
 	//		TRACE(<< "HandleKeyEvent(): is_down = " << is_down << " is_char_input_only = " << is_char_input_only << "
 	// keyCode = " << unsigned(keyCode) << std::endl)
@@ -169,16 +202,19 @@ void gui::send_key(bool is_down, key key_code)
 	}
 }
 
-void gui::send_character_input(const input_string_provider& string_provider, key key_code)
+void gui::send_character_input(
+	const input_string_provider& string_provider, //
+	key key_code
+)
 {
 	if (auto w = this->context.get().focused_widget.lock()) {
-		character_input_event e;
-		auto str = string_provider.get();
-		e.string = str;
-		e.combo.key = key_code;
-		e.combo.modifiers = this->key_modifiers;
-
 		if (auto c = dynamic_cast<character_input_widget*>(w.get())) {
+			character_input_event e;
+			auto str = string_provider.get();
+			e.string = str;
+			e.combo.key = key_code;
+			e.combo.modifiers = this->key_modifiers;
+
 			c->on_character_input(e);
 		}
 	}

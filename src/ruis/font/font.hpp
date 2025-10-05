@@ -88,7 +88,8 @@ protected:
 	 * rendering.
 	 */
 	virtual render_result render_internal(
-		const ruis::matrix4& matrix, //
+		render::renderer& renderer, //
+		const ruis::matrix4& matrix,
 		const ruis::color& color,
 		const std::u32string_view str,
 		unsigned tab_size,
@@ -132,7 +133,8 @@ public:
 	 * @return Render result.
 	 */
 	render_result render(
-		const ruis::matrix4& matrix, //
+		render::renderer& renderer, //
+		const ruis::matrix4& matrix,
 		const ruis::color& color,
 		const std::u32string_view str,
 		unsigned tab_size = 4,
@@ -140,7 +142,8 @@ public:
 	) const
 	{
 		return this->render_internal(
-			matrix, //
+			renderer, //
+			matrix,
 			color,
 			str,
 			tab_size,
@@ -160,7 +163,8 @@ public:
 	 * @return Render result.
 	 */
 	render_result render(
-		const ruis::matrix4& matrix, //
+		render::renderer& renderer, //
+		const ruis::matrix4& matrix,
 		const ruis::color& color,
 		utki::utf8_iterator str,
 		unsigned tab_size = 4,
@@ -168,7 +172,8 @@ public:
 	) const
 	{
 		return this->render(
-			matrix, //
+			renderer, //
+			matrix,
 			color,
 			utki::to_utf32(str),
 			tab_size,
@@ -188,6 +193,7 @@ public:
 	 * @return Render result.
 	 */
 	render_result render(
+		render::renderer& renderer, //
 		const ruis::matrix4& matrix, //
 		const ruis::color& color,
 		const char* str,
@@ -196,9 +202,12 @@ public:
 	) const
 	{
 		return this->render(
-			matrix, //
+			renderer, //
+			matrix,
 			color,
-			utki::utf8_iterator(str)
+			utki::utf8_iterator(str),
+			tab_size,
+			offset
 		);
 	}
 
@@ -214,17 +223,19 @@ public:
 	 * @return Redner result.
 	 */
 	render_result render(
+		render::renderer& renderer, //
 		const ruis::matrix4& matrix, //
 		const ruis::color& color,
-		const std::string& str,
+		std::string_view str,
 		unsigned tab_size = 4,
 		size_t offset = std::numeric_limits<size_t>::max()
 	) const
 	{
 		return this->render(
-			matrix, //
+			renderer, //
+			matrix,
 			color,
-			str.c_str(),
+			utki::utf8_iterator(str),
 			tab_size,
 			offset
 		);

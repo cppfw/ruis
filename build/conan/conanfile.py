@@ -57,7 +57,7 @@ class RuisConan(ConanFile):
 		# shallow fetch commit
 		git.fetch_commit(url=sources["url"], commit=sources['commit'])
 		# shallow clone submodules
-		git.run("submodule update --init --remote --depth 1")
+		git.run("submodule update --init --remote")
 
 	def build(self):
 		if self.settings.os == "Emscripten":

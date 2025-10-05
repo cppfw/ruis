@@ -1,3 +1,24 @@
+/*
+ruis - GUI framework
+
+Copyright (C) 2012-2025  Ivan Gagis <igagis@gmail.com>
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program. If not, see <http://www.gnu.org/licenses/>.
+*/
+
+/* ================ LICENSE END ================ */
+
 #include "gui.hpp"
 
 #include <ruis/widget/button/impl/check_box.hpp>
@@ -14,6 +35,7 @@
 #include <ruis/widget/slider/slider.hpp>
 #include <ruisapp/application.hpp>
 
+#include "application.hpp"
 #include "rectangles_window.hpp"
 #include "table_list_window.hpp"
 #include "table_tree_view_window.hpp"
@@ -301,13 +323,13 @@ utki::shared_ref<ruis::window> make_selection_box_window(
 		ASSERT(sel < language_id_to_name_mapping.size())
 
 		sb.context.get().post_to_ui_thread([lng = language_id_to_name_mapping.at(sel).first]() {
-			auto& app = ruisapp::inst();
+			auto& app = application::inst();
 
 			// std::cout << "new localization = " << lng << std::endl;
 
-			app.gui.context.get().localization.get() =
+			app.window.gui.context.get().localization.get() =
 				ruis::localization(tml::read(*app.get_res_file(utki::cat("res/localization/", lng, ".tml"))));
-			app.gui.get_root().reload();
+			app.window.gui.get_root().reload();
 		});
 	};
 

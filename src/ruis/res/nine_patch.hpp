@@ -50,8 +50,6 @@ class nine_patch : public resource
 	friend class ruis::resource_loader;
 
 public:
-	const utki::shared_ref<ruis::render::renderer> renderer;
-
 	/**
 	 * @brief Nine-patch vertex_array objects in row-column order.
 	 */
@@ -71,7 +69,8 @@ public:
 	~nine_patch() override = default;
 
 	nine_patch(
-		utki::shared_ref<ruis::render::renderer> renderer,
+		const ruis::render::context& rendering_context,
+		const ruis::render::renderer::objects& common_rendering_objects,
 		utki::shared_ref<const res::image> image,
 		sides<real> fraction_borders
 	);

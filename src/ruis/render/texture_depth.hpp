@@ -30,18 +30,18 @@ class context;
 
 class texture_depth : public rasterimage::dimensioned
 {
+	const utki::shared_ref<const ruis::render::context> rendering_context;
+
 protected:
 	texture_depth(
-		utki::shared_ref<ruis::render::context> render_context, //
+		utki::shared_ref<const ruis::render::context> rendering_context, //
 		r4::vector2<uint32_t> dims
 	) :
 		rasterimage::dimensioned(dims),
-		render_context(std::move(render_context))
+		rendering_context(std::move(rendering_context))
 	{}
 
 public:
-	const utki::shared_ref<ruis::render::context> render_context;
-
 	texture_depth(const texture_depth&) = delete;
 	texture_depth& operator=(const texture_depth&) = delete;
 

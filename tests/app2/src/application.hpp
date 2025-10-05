@@ -21,27 +21,18 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include <functional>
-#include <list>
+#include <ruisapp/application.hpp>
 
-#include "mouse_cursor.hpp"
-
-namespace ruis {
-
-class mouse_cursor_stack
+class application : public ruisapp::application
 {
-	std::list<mouse_cursor> cursor_stack = {mouse_cursor::arrow};
-
-	const std::function<void(ruis::mouse_cursor)> set_mouse_cursor;
-
 public:
-	using iterator = decltype(cursor_stack)::iterator;
+	ruisapp::window& window;
 
-	mouse_cursor_stack(std::function<void(ruis::mouse_cursor)> set_mouse_cursor);
+	application();
 
-	iterator push(mouse_cursor cursor);
-
-	void pop(iterator i);
+	static application& inst()
+	{
+		// NOLINTNEXTLINE(cppcoreguidelines-pro-type-static-cast-downcast, "intentional")
+		return static_cast<application&>(ruisapp::inst());
+	}
 };
-
-} // namespace ruis

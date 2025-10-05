@@ -30,14 +30,14 @@ class context;
 
 class texturing_shader
 {
+	const utki::shared_ref<const ruis::render::context> rendering_context;
+
 protected:
-	texturing_shader(utki::shared_ref<ruis::render::context> render_context) :
-		render_context(std::move(render_context))
+	texturing_shader(utki::shared_ref<const ruis::render::context> rendering_context) :
+		rendering_context(std::move(rendering_context))
 	{}
 
 public:
-	const utki::shared_ref<ruis::render::context> render_context;
-
 	texturing_shader(const texturing_shader&) = delete;
 	texturing_shader& operator=(const texturing_shader&) = delete;
 

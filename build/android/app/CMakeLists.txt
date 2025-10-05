@@ -12,15 +12,13 @@ file(GLOB_RECURSE srcs
 
 include (${ANDROID_GRADLE_NATIVE_BUNDLE_PLUGIN_MK})
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -DDEBUG")
 
 include_directories(
     ../../../src
     ../../../tests/harness/modules/ruisapp/src
     ../../../tests/harness/modules/ruis-render-opengles/src
 )
-#link_directories(../ruis/build/intermediates/cmake/release/obj/${ANDROID_ABI})
-#link_directories(../ruis/.cxx/Debug/4x66344r/arm64-v8a)
 
 add_library(
         # Specifies the name of the library.
