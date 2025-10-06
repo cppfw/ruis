@@ -1,3 +1,9 @@
+libruis (0.6.2) unstable; urgency=medium
+
+  * native_window virtual keyboard interface
+
+ -- Ivan Gagis <igagis@gmail.com>  Mon, 06 Oct 2025 21:54:59 +0300
+
 libruis (0.6.1) unstable; urgency=medium
 
   * fix install
