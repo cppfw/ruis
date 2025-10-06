@@ -297,6 +297,7 @@ void text_input_line::on_focus_change()
 	} else {
 		this->context.get().updater.get().stop(*this);
 	}
+	this->context.get().window().set_virtual_keyboard_visible(this->is_focused());
 }
 
 void text_input_line::on_resize()
