@@ -84,5 +84,12 @@ public:
 	void pop_mouse_cursor(cursor_id i);
 
 	virtual void set_mouse_cursor_visible(bool visible) {}
+
+	/**
+	 * @brief Show/hide the virtual keyboard.
+	 * On mobile platforms this function should show/hide the on-screen keyboard.
+	 * On desktop platforms with physical keyboard this funtion should do nothing.
+	 */
+	virtual void set_virtual_keyboard_visible(bool visible) noexcept {}
 };
 } // namespace ruis::render

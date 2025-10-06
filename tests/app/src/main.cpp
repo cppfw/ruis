@@ -95,8 +95,8 @@ public:
 //		std::shared_ptr<ruis::widget> c = ruis::gui::inst().inflater().Inflate(zf);
 
 		ASSERT(c.get().try_get_widget_as<ruis::push_button>("show_VK_button"))
-		std::dynamic_pointer_cast<ruis::push_button>(c.get().try_get_widget("show_VK_button"))->click_handler = [this](ruis::push_button&){
-			this->show_virtual_keyboard();
+		std::dynamic_pointer_cast<ruis::push_button>(c.get().try_get_widget("show_VK_button"))->click_handler = [this](ruis::push_button& b){
+			b.context.get().window().set_virtual_keyboard_visible(true);
 		};
 
 		std::dynamic_pointer_cast<ruis::push_button>(c.get().try_get_widget("push_button_in_scroll_container"))->click_handler = [ctx = gui.context](ruis::push_button&){
