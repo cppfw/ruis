@@ -67,12 +67,10 @@ void gui::init_standard_widgets(papki::file& fi)
 	bool mounted = false;
 	for (const auto& s : paths) {
 		try {
-			//			TRACE(<< "s = " << s << std::endl)
 			fi.set_path(s);
-			//			TRACE(<< "fi.path() = " << fi.path() << std::endl)
 			this->context.get().loader().mount_res_pack(fi);
 		} catch (std::runtime_error&) {
-			//			TRACE(<< "could not mount " << s << std::endl)
+			// utki::logcat_debug("could not mount respack: ", s, '\n');
 			continue;
 		}
 
