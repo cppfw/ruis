@@ -14,5 +14,5 @@ link:https://raw.githubusercontent.com/cppfw/{name}/main/wiki/images/screenshot2
 It is designed to use modern 3d graphics APIs like OpenGL etc.
 
 = Useful info
-  - link:wiki/Installation.adoc[Installation]
-  - link:wiki/Tutorials.adoc[Tutorials]
+  - link:wiki/installation.adoc[Installation]
+  - link:wiki/tutorials.adoc[Tutorials]

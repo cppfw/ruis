@@ -1,5 +1,0 @@
-= Tutorials
-
-- link:tutorials/BasicInfo.adoc[Basic info]
-- link:tutorials/CreatingBasicApp.adoc[Creating basic application]
-- link:tutorials/BindingToEngine.adoc[Attaching non-intrusive *ruis* to your program]
