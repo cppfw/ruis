@@ -1,3 +1,9 @@
+libruis (0.6.3) unstable; urgency=medium
+
+  * papki -> fsif
+
+ -- Ivan Gagis <igagis@gmail.com>  Mon, 03 Nov 2025 16:33:53 +0200
+
 libruis (0.6.2) unstable; urgency=medium
 
   * native_window virtual keyboard interface
