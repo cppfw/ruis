@@ -28,7 +28,7 @@ endif
 
 this_ldlibs += $(shell pkg-config --libs freetype2)
 
-this_ldlibs += -l papki$(this_dbg)
+this_ldlibs += -l fsif$(this_dbg)
 this_ldlibs += -l tml$(this_dbg)
 this_ldlibs += -l svgdom$(this_dbg)
 this_ldlibs += -l svgren$(this_dbg)

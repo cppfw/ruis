@@ -21,8 +21,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "resource_loader.hpp"
 
-#include <papki/root_dir.hpp>
-#include <papki/util.hpp>
+#include <fsif/root_dir.hpp>
+#include <fsif/util.hpp>
 
 #include "util/util.hpp"
 
@@ -33,7 +33,7 @@ constexpr const char* wording_include = "include";
 constexpr const char* wording_include_subdirs = "include_subdirs";
 } // namespace
 
-decltype(resource_loader::res_packs)::const_iterator resource_loader::mount_res_pack(const papki::file& fi)
+decltype(resource_loader::res_packs)::const_iterator resource_loader::mount_res_pack(const fsif::file& fi)
 {
 	ASSERT(!fi.is_open())
 
@@ -55,7 +55,7 @@ decltype(resource_loader::res_packs)::const_iterator resource_loader::mount_res_
 		} else if (p.value == wording_include_subdirs) {
 			fi.set_path(fi.dir());
 			for (auto& f : fi.list_dir()) {
-				if (papki::is_dir(f)) {
+				if (fsif::is_dir(f)) {
 					fi.set_path(dir + f);
 					this->mount_res_pack(fi);
 				}
@@ -65,7 +65,7 @@ decltype(resource_loader::res_packs)::const_iterator resource_loader::mount_res_
 	}
 
 	this->res_packs.emplace_back(
-		papki::root_dir::make(
+		fsif::root_dir::make(
 			fi.spawn(), //
 			dir
 		),

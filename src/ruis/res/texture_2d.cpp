@@ -66,7 +66,7 @@ texture_2d::texture_2d(utki::shared_ref<const render::texture_2d> tex) :
 utki::shared_ref<texture_2d> texture_2d::load(
 	const ruis::resource_loader& loader,
 	const tml::forest& desc,
-	const papki::file& fi
+	const fsif::file& fi
 )
 {
 	ruis::render::context::texture_2d_parameters params{

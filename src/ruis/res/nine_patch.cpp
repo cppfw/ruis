@@ -33,7 +33,7 @@ using namespace ruis::res;
 utki::shared_ref<nine_patch> nine_patch::load(
 	const ruis::resource_loader& loader, //
 	const tml::forest& desc,
-	const papki::file& fi
+	const fsif::file& fi
 )
 {
 	sides<real> fraction_borders(-1);

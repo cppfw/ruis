@@ -55,7 +55,7 @@ constexpr auto file_nz_param = "file_nz"sv;
 utki::shared_ref<texture_cube> texture_cube::load(
 	const ruis::resource_loader& loader,
 	const tml::forest& desc,
-	const papki::file& fi
+	const fsif::file& fi
 )
 {
 	std::string_view file_px;

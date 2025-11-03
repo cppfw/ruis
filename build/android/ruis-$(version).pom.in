@@ -16,7 +16,7 @@
 	  </dependency>
 	  <dependency>
 		  <groupId>io.github.cppfw</groupId>
-		  <artifactId>papki</artifactId>
+		  <artifactId>fsif</artifactId>
 		  <version>[1.0.93,)</version>
 		  <type>aar</type>
 		  <scope>compile</scope>

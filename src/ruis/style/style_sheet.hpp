@@ -62,7 +62,7 @@ public:
 	 */
 	const tml::forest* get(std::string_view style_id) const noexcept;
 
-	static style_sheet load(const papki::file& fi);
+	static style_sheet load(const fsif::file& fi);
 };
 
 } // namespace ruis

@@ -29,7 +29,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
-#include <papki/file.hpp>
+#include <fsif/file.hpp>
 #include <r4/rectangle.hpp>
 #include <r4/vector.hpp>
 
@@ -62,7 +62,7 @@ class freetype_face
 		FT_Face f = nullptr;
 		std::vector<std::uint8_t> font_file; // the buffer should be alive as long as the Face is alive!!!
 
-		freetype_face_wrapper(FT_Library& lib, const papki::file& fi);
+		freetype_face_wrapper(FT_Library& lib, const fsif::file& fi);
 
 		freetype_face_wrapper(const freetype_face_wrapper&) = delete;
 		freetype_face_wrapper& operator=(const freetype_face_wrapper&) = delete;
@@ -76,7 +76,7 @@ class freetype_face
 	void set_size(unsigned font_size) const;
 
 public:
-	freetype_face(const papki::file& fi);
+	freetype_face(const fsif::file& fi);
 
 	struct glyph {
 		std::array<r4::vector2<real>, 4> vertices{};

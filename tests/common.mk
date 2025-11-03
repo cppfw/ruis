@@ -70,7 +70,7 @@ endif
 
 this_ldlibs += $(this__libruis)
 
-this_ldlibs += -l papki$(this_dbg)
+this_ldlibs += -l fsif$(this_dbg)
 this_ldlibs += -l tml$(this_dbg)
 this_ldlibs += -l utki$(this_dbg)
 this_ldlibs += -l m

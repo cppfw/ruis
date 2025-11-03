@@ -50,7 +50,7 @@ repositories {
 }
 dependencies {
     implementation 'io.github.cppfw:utki:+'
-    implementation 'io.github.cppfw:papki:+'
+    implementation 'io.github.cppfw:fsif:+'
     implementation 'io.github.cppfw:r4:+'
     implementation 'io.github.cppfw:tml:+'
     implementation 'io.github.cppfw:svgren:+'

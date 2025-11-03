@@ -1,7 +1,7 @@
 #include <tst/set.hpp>
 #include <tst/check.hpp>
 
-#include <papki/span_file.hpp>
+#include <fsif/span_file.hpp>
 
 #include <ruis/style/style_provider.hpp>
 #include <ruis/util/color.hpp>
@@ -197,7 +197,7 @@ const tst::set set("style", [](tst::suite& suite){
 
         auto style_provider = make_style_provider();
         auto& s = style_provider.get();
-        s.res_loader.get().mount_res_pack(papki::span_file(utki::make_span(res_pack_desc)));
+        s.res_loader.get().mount_res_pack(fsif::span_file(utki::make_span(res_pack_desc)));
 
         auto ss1 = utki::make_shared<ruis::style_sheet>(
             tml::read(

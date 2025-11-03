@@ -1,7 +1,7 @@
 #include <r4/quaternion.hpp>
 #include <utki/debug.hpp>
 #include <utki/unicode.hpp>
-#include <papki/fs_file.hpp>
+#include <fsif/native_file.hpp>
 
 #include <ruis/widget/label/text.hpp>
 #include <ruis/widget/group/window.hpp>

@@ -83,7 +83,7 @@ private:
 	static utki::shared_ref<texture_2d> load( //
 		const ruis::resource_loader& loader,
 		const ::tml::forest& desc,
-		const papki::file& fi
+		const fsif::file& fi
 	);
 };
 

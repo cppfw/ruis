@@ -37,7 +37,7 @@ ruis::res::cursor::cursor(
 utki::shared_ref<cursor> cursor::load(
 	const ruis::resource_loader& loader, //
 	const tml::forest& desc,
-	const papki::file& fi
+	const fsif::file& fi
 )
 {
 	vector2 hotspot;

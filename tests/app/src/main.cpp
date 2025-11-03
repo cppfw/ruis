@@ -4,7 +4,7 @@
 
 #include <r4/quaternion.hpp>
 #include <utki/debug.hpp>
-#include <papki/fs_file.hpp>
+#include <fsif/native_file.hpp>
 
 #include <ruisapp/application.hpp>
 
@@ -77,7 +77,7 @@ public:
 		gui.init_standard_widgets(*this->get_res_file("../../res/ruis_res/"));
 
 		gui.context.get().loader().mount_res_pack(*this->get_res_file("res/"));
-//		this->ResMan().MountResPack(ruis::ZipFile::New(papki::FSFile::New("res.zip")));
+//		this->ResMan().MountResPack(ruis::ZipFile::New(fsif::FSFile::New("res.zip")));
 
 		auto c = make_root_widget(gui.context);
 		gui.set_root(c);
@@ -91,7 +91,7 @@ public:
 			return false;
 		};
 
-//		ruis::ZipFile zf(papki::FSFile::New("res.zip"), "test.gui.stob");
+//		ruis::ZipFile zf(fsif::FSFile::New("res.zip"), "test.gui.stob");
 //		std::shared_ptr<ruis::widget> c = ruis::gui::inst().inflater().Inflate(zf);
 
 		ASSERT(c.get().try_get_widget_as<ruis::push_button>("show_VK_button"))

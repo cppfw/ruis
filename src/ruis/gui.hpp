@@ -109,7 +109,7 @@ public:
 	 * @param fi - file interface to use for resource loading.
 	 */
 	// TODO: make free function taking context as argument
-	void init_standard_widgets(papki::file& fi);
+	void init_standard_widgets(fsif::file& fi);
 
 	/**
 	 * @brief Feed in the mouse move event to GUI.

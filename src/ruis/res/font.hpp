@@ -76,10 +76,10 @@ public:
 	font(
 		utki::shared_ref<const ruis::render::context> rendering_context, //
 		utki::shared_ref<const ruis::render::renderer::objects> common_rendering_objects,
-		const papki::file& file_normal,
-		std::unique_ptr<const papki::file> file_bold,
-		std::unique_ptr<const papki::file> file_italic,
-		std::unique_ptr<const papki::file> file_bold_italic,
+		const fsif::file& file_normal,
+		std::unique_ptr<const fsif::file> file_bold,
+		std::unique_ptr<const fsif::file> file_italic,
+		std::unique_ptr<const fsif::file> file_bold_italic,
 		unsigned max_cached
 	);
 
@@ -113,7 +113,7 @@ private:
 	static utki::shared_ref<font> load(
 		const ruis::resource_loader& loader, //
 		const ::tml::forest& desc,
-		const papki::file& fi
+		const fsif::file& fi
 	);
 };
 

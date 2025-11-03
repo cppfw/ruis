@@ -48,7 +48,7 @@ freetype_face::freetype_lib_wrapper::~freetype_lib_wrapper()
 	FT_Done_FreeType(this->lib);
 }
 
-freetype_face::freetype_face_wrapper::freetype_face_wrapper(FT_Library& lib, const papki::file& fi)
+freetype_face::freetype_face_wrapper::freetype_face_wrapper(FT_Library& lib, const fsif::file& fi)
 {
 	this->font_file = fi.load();
 	ASSERT(!this->font_file.empty())
@@ -63,7 +63,7 @@ freetype_face::freetype_face_wrapper::~freetype_face_wrapper() noexcept
 	FT_Done_Face(this->f);
 }
 
-freetype_face::freetype_face(const papki::file& fi) :
+freetype_face::freetype_face(const fsif::file& fi) :
 	face(freetype.lib, fi)
 {}
 

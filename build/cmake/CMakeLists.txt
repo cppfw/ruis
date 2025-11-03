@@ -26,7 +26,7 @@ myci_declare_library(${name}
     DEPENDENCIES
         rasterimage
         r4
-        papki
+        fsif
         tml
         utki
         veg

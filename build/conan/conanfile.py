@@ -19,7 +19,7 @@ class RuisConan(ConanFile):
 
 	def requirements(self):
 		self.requires("utki/[>=1.1.202]@cppfw/main", transitive_headers=True, transitive_libs=True)
-		self.requires("papki/[>=0.0.0]@cppfw/main", transitive_headers=True, transitive_libs=True)
+		self.requires("fsif/[>=0.0.0]@cppfw/main", transitive_headers=True, transitive_libs=True)
 		self.requires("svgren/[>=0.0.0]@cppfw/main", transitive_headers=False, transitive_libs=True)
 		self.requires("rasterimage/[>=0.1.3]@cppfw/main", transitive_headers=True, transitive_libs=True)
 		self.requires("tml/[>=0.0.0]@cppfw/main", transitive_headers=True, transitive_libs=True)

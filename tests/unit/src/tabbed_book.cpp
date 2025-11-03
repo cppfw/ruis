@@ -1,7 +1,7 @@
 #include <tst/set.hpp>
 #include <tst/check.hpp>
 
-#include <papki/fs_file.hpp>
+#include <fsif/native_file.hpp>
 
 #include <ruis/widget/button/tab_group.hpp>
 #include <ruis/widget/group/book.hpp>
@@ -21,7 +21,7 @@ const tst::set set("tabbed_book", [](tst::suite& suite){
 		ruis::gui gui(c);
 
 		// make initializations needed by ruis::tabbed_book
-		c.get().loader().mount_res_pack(papki::fs_file("../../res/ruis_res/main.res"));
+		c.get().loader().mount_res_pack(fsif::native_file("../../res/ruis_res/main.res"));
 
 		class sub_tabbed_book : public ruis::tabbed_book{
 		public:

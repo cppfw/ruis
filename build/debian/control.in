@@ -15,7 +15,7 @@ Build-Depends:
 	libfreetype6-dev,
 	libgles2-mesa-dev,
 	libutki-dev (>= 1.1.112),
-	libpapki-dev (>= 1.0.91),
+	libfsif-dev (>= 1.0.91),
 	libr4-dev (>= 1.0.52),
 	libsvgdom-dev (>= 0.3.56),
 	libsvgren-dev (>= 0.5.7),
@@ -55,7 +55,7 @@ Depends:
 	libruis-dbg$(soname) (= ${binary:Version}),
 	${misc:Depends},
 	libutki-dev,
-	libpapki-dev,
+	libfsif-dev,
 	libr4-dev,
 	libtml-dev,
 	librasterimage-dev

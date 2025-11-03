@@ -86,7 +86,7 @@ private:
 	static utki::shared_ref<image> load(
 		const ruis::resource_loader& loader,
 		const ::tml::forest& desc,
-		const papki::file& fi
+		const fsif::file& fi
 	);
 
 public:
@@ -99,7 +99,7 @@ public:
 	 */
 	static utki::shared_ref<image> load( //
 		const ruis::resource_loader& loader,
-		const papki::file& fi
+		const fsif::file& fi
 	);
 };
 

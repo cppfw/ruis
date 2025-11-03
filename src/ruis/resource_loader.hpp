@@ -24,7 +24,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <list>
 #include <map>
 
-#include <papki/file.hpp>
+#include <fsif/file.hpp>
 #include <tml/tree.hpp>
 #include <utki/exception.hpp>
 #include <utki/shared.hpp>
@@ -81,7 +81,7 @@ private:
 		res_pack_entry(const res_pack_entry&) = delete;
 		res_pack_entry& operator=(const res_pack_entry&) = delete;
 
-		std::unique_ptr<const papki::file> fi;
+		std::unique_ptr<const fsif::file> fi;
 
 		// TODO: use std::map/std::unordered_map?
 		tml::forest script;
@@ -132,7 +132,7 @@ public:
 	 *             resource description filename is assumed to be "main.res".
 	 * @return mounted resource pack id.
 	 */
-	decltype(res_packs)::const_iterator mount_res_pack(const papki::file& fi);
+	decltype(res_packs)::const_iterator mount_res_pack(const fsif::file& fi);
 
 	/**
 	 * @brief Unmount mounted resource pack.

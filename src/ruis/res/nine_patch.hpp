@@ -81,7 +81,7 @@ private:
 	static utki::shared_ref<nine_patch> load(
 		const ruis::resource_loader& loader,
 		const ::tml::forest& desc,
-		const papki::file& fi
+		const fsif::file& fi
 	);
 };
 

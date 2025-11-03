@@ -93,7 +93,7 @@ utki::shared_ref<const ruis::render::vertex_array> gradient::make_vao(
 utki::shared_ref<gradient> gradient::load(
 	const ruis::resource_loader& loader, //
 	const tml::forest& desc,
-	const papki::file& fi
+	const fsif::file& fi
 )
 {
 	bool vertical = false;

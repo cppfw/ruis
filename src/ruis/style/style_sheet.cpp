@@ -69,7 +69,7 @@ std::map<std::string, tml::forest, std::less<>> style_sheet::parse(tml::forest d
 	return ret;
 }
 
-style_sheet style_sheet::load(const papki::file& fi)
+style_sheet style_sheet::load(const fsif::file& fi)
 {
 	return {tml::read(fi)};
 }

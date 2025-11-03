@@ -65,7 +65,7 @@ public:
 
 	static utki::shared_ref<res_raster_image> load( //
 		const ruis::resource_loader& loader,
-		const papki::file& fi
+		const fsif::file& fi
 	)
 	{
 		return utki::make_shared<res_raster_image>(loader.rendering_context.get().make_texture_2d(
@@ -180,7 +180,7 @@ public:
 
 	static utki::shared_ref<res_svg_image> load( //
 		const ruis::resource_loader& loader,
-		const papki::file& fi
+		const fsif::file& fi
 	)
 	{
 		auto dom = svgdom::load(fi);
@@ -196,7 +196,7 @@ public:
 utki::shared_ref<image> image::load( //
 	const ruis::resource_loader& loader,
 	const tml::forest& desc,
-	const papki::file& fi
+	const fsif::file& fi
 )
 {
 	for (auto& p : desc) {
@@ -214,7 +214,7 @@ utki::shared_ref<image> image::load( //
 
 utki::shared_ref<image> image::load( //
 	const ruis::resource_loader& loader,
-	const papki::file& fi
+	const fsif::file& fi
 )
 {
 	if (fi.suffix().compare("svg") == 0) {
