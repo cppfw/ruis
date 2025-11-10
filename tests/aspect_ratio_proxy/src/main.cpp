@@ -28,7 +28,7 @@ public:
 			this->quit();
 		};
 
-		this->window.gui.init_standard_widgets(*this->get_res_file("../../res/ruis_res/"));
+		this->window.gui.init_standard_widgets(this->get_res_file("../../res/ruis_res/").get());
 
 		auto ctx = this->window.gui.context;
 

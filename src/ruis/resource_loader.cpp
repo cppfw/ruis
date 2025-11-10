@@ -35,7 +35,7 @@ constexpr const char* wording_include_subdirs = "include_subdirs";
 
 decltype(resource_loader::res_packs)::const_iterator resource_loader::mount_res_pack(const fsif::file& fi)
 {
-	ASSERT(!fi.is_open())
+	utki::assert(!fi.is_open(), SL);
 
 	std::string dir = fi.dir();
 
@@ -44,7 +44,7 @@ decltype(resource_loader::res_packs)::const_iterator resource_loader::mount_res_
 	}
 
 	auto script = tml::read(fi);
-	ASSERT(!fi.is_open())
+	utki::assert(!fi.is_open(), SL);
 
 	// handle includes
 	for (auto& p : script) {
@@ -72,8 +72,7 @@ decltype(resource_loader::res_packs)::const_iterator resource_loader::mount_res_
 		std::move(script)
 	);
 
-	ASSERT(this->res_packs.back().fi)
-	ASSERT(!this->res_packs.back().script.empty())
+	utki::assert(!this->res_packs.back().script.empty(), SL);
 
 	return std::prev(this->res_packs.end());
 }
@@ -88,7 +87,7 @@ void resource_loader::res_pack_entry::add_to_cache(
 	std::string_view id
 ) const
 {
-	ASSERT(!utki::contains(this->cache, id))
+	utki::assert(!utki::contains(this->cache, id), SL);
 
 	this->cache.insert(std::make_pair(
 		id, //
@@ -117,7 +116,7 @@ const tml::forest* resource_loader::res_pack_entry::find_resource_in_script(std:
 		id
 	);
 	if (j != this->script.end()) {
-		ASSERT(j->value.string == id)
+		utki::assert(j->value.string == id, SL);
 		return &j->children;
 	}
 

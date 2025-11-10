@@ -40,9 +40,9 @@ public:
 			this->quit();
 		};
 
-		this->window.gui.init_standard_widgets(*this->get_res_file("../../res/ruis_res/"));
+		this->window.gui.init_standard_widgets(this->get_res_file("../../res/ruis_res/").get());
 
-		this->window.gui.context.get().loader().mount_res_pack(*this->get_res_file("res/"));
+		this->window.gui.context.get().loader().mount_res_pack(this->get_res_file("res/").get());
 
 		auto& ctx = this->window.gui.context;
 

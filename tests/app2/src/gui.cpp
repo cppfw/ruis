@@ -328,7 +328,7 @@ utki::shared_ref<ruis::window> make_selection_box_window(
 			// std::cout << "new localization = " << lng << std::endl;
 
 			app.window.gui.context.get().localization.get() =
-				ruis::localization(tml::read(*app.get_res_file(utki::cat("res/localization/", lng, ".tml"))));
+				ruis::localization(tml::read(app.get_res_file(utki::cat("res/localization/", lng, ".tml")).get()));
 			app.window.gui.get_root().reload();
 		});
 	};

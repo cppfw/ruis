@@ -102,7 +102,7 @@ public:
 			this->quit();
 		};
 
-		this->window.gui.init_standard_widgets(*this->get_res_file("../../res/ruis_res/"));
+		this->window.gui.init_standard_widgets(this->get_res_file("../../res/ruis_res/"));
 
 		auto c = make_root_widget(this->window.gui.context);
 		this->window.gui.set_root(c);

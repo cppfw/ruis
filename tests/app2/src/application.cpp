@@ -32,12 +32,12 @@ application::application() :
 }),
 	window(this->make_window({.dims = {1024, 800}}))
 {
-	this->window.gui.init_standard_widgets(*this->get_res_file("../../res/ruis_res/"));
+	this->window.gui.init_standard_widgets(this->get_res_file("../../res/ruis_res/").get());
 
 	this->window.gui.context.get().localization.get() =
-		ruis::localization(tml::read(*this->get_res_file("res/localization/en.tml")));
+		ruis::localization(tml::read(this->get_res_file("res/localization/en.tml").get()));
 
-	this->window.gui.context.get().loader().mount_res_pack(*this->get_res_file("res/"));
+	this->window.gui.context.get().loader().mount_res_pack(this->get_res_file("res/").get());
 
 	// clang-format off
 		auto kp = ruis::make::key_proxy(

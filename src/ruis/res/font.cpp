@@ -98,13 +98,13 @@ utki::shared_ref<res::font> res::font::load(
 			fi.set_path(get_property_value(p).string);
 		} else if (p.value == "bold") {
 			// NOLINTNEXTLINE(bugprone-unused-return-value, "false positive")
-			file_bold = fi.spawn(get_property_value(p).string);
+			file_bold = fi.spawn(get_property_value(p).string).to_unique_ptr();
 		} else if (p.value == "italic") {
 			// NOLINTNEXTLINE(bugprone-unused-return-value, "false positive")
-			file_italic = fi.spawn(get_property_value(p).string);
+			file_italic = fi.spawn(get_property_value(p).string).to_unique_ptr();
 		} else if (p.value == "bold_italic") {
 			// NOLINTNEXTLINE(bugprone-unused-return-value, "false positive")
-			file_bold_italic = fi.spawn(get_property_value(p).string);
+			file_bold_italic = fi.spawn(get_property_value(p).string).to_unique_ptr();
 		}
 	}
 

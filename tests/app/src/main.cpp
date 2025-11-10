@@ -74,9 +74,9 @@ public:
 
 		auto& gui = this->window.gui;
 
-		gui.init_standard_widgets(*this->get_res_file("../../res/ruis_res/"));
+		gui.init_standard_widgets(this->get_res_file("../../res/ruis_res/").get());
 
-		gui.context.get().loader().mount_res_pack(*this->get_res_file("res/"));
+		gui.context.get().loader().mount_res_pack(this->get_res_file("res/").get());
 //		this->ResMan().MountResPack(ruis::ZipFile::New(fsif::FSFile::New("res.zip")));
 
 		auto c = make_root_widget(gui.context);

@@ -81,7 +81,7 @@ private:
 		res_pack_entry(const res_pack_entry&) = delete;
 		res_pack_entry& operator=(const res_pack_entry&) = delete;
 
-		std::unique_ptr<const fsif::file> fi;
+		utki::unique_ref<const fsif::file> fi;
 
 		// TODO: use std::map/std::unordered_map?
 		tml::forest script;
@@ -202,11 +202,10 @@ utki::shared_ref<const resource_type> resource_loader::load(std::string_view id)
 		}
 
 		try {
-			ASSERT(res_pack.fi)
 			auto resource = resource_type::load(
 				*this, //
 				*desc,
-				*res_pack.fi
+				res_pack.fi
 			);
 
 			// resource need to know its id so that it would be possible to reload the resource
