@@ -1,5 +1,6 @@
 {
   "dependencies": [
-      "ruis"
+      "ruis",
+      "tst"
   ]
 }
