@@ -34,7 +34,7 @@ else()
         SOURCES
             ${ruis_render_null_srcs}
         PUBLIC_INCLUDE_DIRECTORIES
-            ${ruis_test_harness_dir}/ruis-render-null/src
+            ${ruis_test_harness_dir}/modules/ruis-render-null/src
         DEPENDENCIES
             ruis
     )
