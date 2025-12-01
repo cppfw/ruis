@@ -63,9 +63,6 @@ else()
     set(ruisapp_namespace ruis)
 endif()
 
-# =================
-# = GUI test apps =
-
 function(ruis_declare_app name)
     set(srcs)
     myci_add_source_files(srcs
