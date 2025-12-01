@@ -9,31 +9,24 @@ if(IOS)
     return()
 endif()
 
-if(CPPFW_MONOREPO)
-    # In case of monorepo build we can add necessary dependencies right here.
-
-    myci_add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/../../../ruis-render-opengl/build/cmake
-        BINARY_DIR
-            ruis-render-opengl
-    )
-    myci_add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/../../../ruis-render-opengles/build/cmake
-        BINARY_DIR
-            ruis-render-opengles
-    )
-    myci_add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/../../../ruisapp/build/cmake
-        BINARY_DIR
-            ruisapp
-    )
-
-    set(ruisapp_namespace ruisapp)
-else()
-    # In case of non-monorepo build, we need to build the dependencies
-    # from sources (from git submodules) together with unit tests.
-
-    # TODO:
-
-    set(ruisapp_namespace ruis)
+if(NOT CPPFW_MONOREPO)
+    return()
 endif()
+
+# In case of monorepo build we can add necessary dependencies right here.
+
+myci_add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/../../../ruis-render-opengl/build/cmake
+    BINARY_DIR
+        ruis-render-opengl
+)
+myci_add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/../../../ruis-render-opengles/build/cmake
+    BINARY_DIR
+        ruis-render-opengles
+)
+myci_add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/../../../ruisapp/build/cmake
+    BINARY_DIR
+        ruisapp
+)
 
 function(ruis_declare_app name)
     set(srcs)
@@ -50,7 +43,7 @@ function(ruis_declare_app name)
         RESOURCE_DIRECTORY
             ../../tests/${name}/res
         DEPENDENCIES
-            ${ruisapp_namespace}::ruisapp-opengl
+            ruisapp::ruisapp-opengl
     )
 
     myci_declare_application(ruis-${name}-app-opengles
@@ -60,7 +53,7 @@ function(ruis_declare_app name)
         RESOURCE_DIRECTORY
             ../../tests/${name}/res
         DEPENDENCIES
-            ${ruisapp_namespace}::ruisapp-opengles
+            ruisapp::ruisapp-opengles
     )
 endfunction()
 
