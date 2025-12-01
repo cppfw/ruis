@@ -39,7 +39,7 @@ else()
             ruis
     )
 
-    set(ruis_render_null_namespace ruis)
+    set(ruis_render_null_namespace ${PROJECT_NAME})
 endif()
 
 set(tests_srcs)
