@@ -400,7 +400,16 @@ jobs:
     defaults:
       run:
         shell: powershell
-    name: vcpkg - windows
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - Debug
+          - Release
+        arch:
+          - Win32
+          - x64
+    name: vcpkg - windows - ${{ matrix.arch }}|${{ matrix.config }}
     steps:
     - name: git clone
       uses: actions/checkout@v4
