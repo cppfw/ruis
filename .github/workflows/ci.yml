@@ -373,12 +373,15 @@ jobs:
       - name: prepare vcpkg port
         run: |
           myci-vcpkg-prepare.sh --vcpkg-dir build/vcpkg --git-ref ${{ github.sha }}
-      - name: test vcpkg port
+      - name: test vcpkg port - build
         run: |
           cd build/vcpkg/test
           cmake .
-          make
-          ./test
+          cmake --build . --parallel
+      - name: test vcpkg port - test
+        run: |
+          cd build/vcpkg/test
+          cmake --build . --target test
       - name: upload vcpkg logs to artifacts
         if: always() # even if previous steps fail, this one needs to be run
         uses: actions/upload-artifact@v4
@@ -421,12 +424,15 @@ jobs:
       run: New-Item -ItemType SymbolicLink -Path vcpkg-installation -Target $env:VCPKG_ROOT
     - name: prepare vcpkg port
       run: myci-vcpkg-prepare.ps1 -gitref ${{ github.sha }}
-    - name: test vcpkg port
+    - name: test vcpkg port - build
       run: |
         cd build/vcpkg/test
-        cmake .
-        cmake --build . --parallel
-        ./Debug/test.exe
+        cmake . -A ${{ matrix.arch }}
+        cmake --build . --parallel --config ${{ matrix.config }}
+    - name: test vcpkg port - test
+      run: |
+        cd build/vcpkg/test
+        cmake --build . --config ${{ matrix.config}} --target test
     - name: upload vcpkg logs to artifacts
       if: always() # even if previous steps fail, this one needs to be run
       uses: actions/upload-artifact@v4
