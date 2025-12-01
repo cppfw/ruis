@@ -360,6 +360,8 @@ jobs:
           install: myci cmake git curl zip unzip tar nodejs pkg-config
       - name: git clone
         uses: myci-actions/checkout@main
+        with:
+          submodules: true #  non-recursive, no remote
       - name: install vcpkg
         run: |
           git clone https://github.com/microsoft/vcpkg.git vcpkg-installation
@@ -413,6 +415,8 @@ jobs:
     steps:
     - name: git clone
       uses: actions/checkout@v4
+      with:
+        submodules: true
     - name: get myci scripts
       uses: actions/checkout@v4
       with:
