@@ -446,7 +446,7 @@ jobs:
       if: always() # even if previous steps fail, this one needs to be run
       uses: actions/upload-artifact@v4
       with:
-        name: vcpkg_windows_logs
+        name: vcpkg_windows_${{ matrix.arch }}_${{ matrix.config }}_logs
         path: |
           vcpkg-installation/buildtrees/${{ env.PACKAGE_NAME }}/
           build/vcpkg/**/*.log

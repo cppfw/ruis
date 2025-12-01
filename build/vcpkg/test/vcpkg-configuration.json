@@ -23,6 +23,9 @@
           "tml",
           "rasterimage",
           "veg",
+          "clargs",
+          "nitki",
+          "opros",
           "tst"
         ]
       }
