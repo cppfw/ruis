@@ -22,7 +22,8 @@
           "mikroxml",
           "tml",
           "rasterimage",
-          "veg"
+          "veg",
+          "tst"
         ]
       }
     ],

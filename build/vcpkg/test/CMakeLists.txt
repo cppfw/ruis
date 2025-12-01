@@ -6,5 +6,6 @@ project(test)
 
 find_package(myci CONFIG REQUIRED)
 find_package(ruis CONFIG REQUIRED)
+find_package(tst CONFIG REQUIRED)
 
 include(../../cmake/unit_tests.cmake)
