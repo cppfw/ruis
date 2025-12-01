@@ -55,13 +55,16 @@ if(CPPFW_MONOREPO)
 
     set(ruisapp_namespace ruisapp)
 else()
-    # In case of non-monorepo build, we need to build the tst framework
+    # In case of non-monorepo build, we need to build the dependencies
     # from sources (from git submodules) together with unit tests.
 
     # TODO:
 
     set(ruisapp_namespace ruis)
 endif()
+
+# =================
+# = GUI test apps =
 
 function(ruis_declare_app name)
     set(srcs)
@@ -101,3 +104,47 @@ ruis_declare_app(easing)
 ruis_declare_app(paint)
 ruis_declare_app(tabbed_book)
 ruis_declare_app(wire_area)
+
+# ==============
+# = unit tests =
+
+if(CPPFW_MONOREPO)
+    # In case of monorepo build we can add necessary dependencies right here.
+
+    myci_add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/../../../ruis-render-null/build/cmake
+        BINARY_DIR
+            ruis-render-null
+    )
+
+    set(ruis_render_null_namespace ruis-render-null)
+else()
+    # In case of non-monorepo build, we need to build the dependencies
+    # from sources (from git submodules) together with unit tests.
+
+    # TODO:
+
+    set(ruis_render_null_namespace ruis)
+endif()
+
+set(tests_srcs)
+myci_add_source_files(tests_srcs
+    DIRECTORY
+        ${CMAKE_CURRENT_LIST_DIR}/../../tests/unit/src
+    RECURSIVE
+)
+myci_add_source_files(tests_srcs
+    DIRECTORY
+        ${CMAKE_CURRENT_LIST_DIR}/../../tests/harness/util
+    RECURSIVE
+)
+
+myci_declare_application(${PROJECT_NAME}-tests
+    SOURCES
+        ${tests_srcs}
+    DEPENDENCIES
+        tst
+        ruis
+        ${ruis_render_null_namespace}::ruis-render-null
+)
+
+myci_declare_test(${PROJECT_NAME}-tests)

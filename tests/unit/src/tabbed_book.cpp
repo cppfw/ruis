@@ -20,8 +20,8 @@ const tst::set set("tabbed_book", [](tst::suite& suite){
 
 		ruis::gui gui(c);
 
-		// make initializations needed by ruis::tabbed_book
-		c.get().loader().mount_res_pack(fsif::native_file("../../res/ruis_res/main.res"));
+		fsif::native_file fi;
+		gui.init_standard_widgets(fi);
 
 		class sub_tabbed_book : public ruis::tabbed_book{
 		public:

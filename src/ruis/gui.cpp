@@ -33,7 +33,10 @@ gui::gui(utki::shared_ref<ruis::context> context) :
 	root_widget(ruis::make::gap(this->context, {}))
 {}
 
-void gui::init_standard_widgets(fsif::file& fi)
+void gui::init_standard_widgets(
+	// TODO: make const&
+	fsif::file& fi
+)
 {
 	// mount default resource pack
 
