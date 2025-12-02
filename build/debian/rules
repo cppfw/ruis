@@ -31,3 +31,6 @@ override_dh_auto_install:
 override_dh_auto_clean:
 	dh_auto_clean --buildsystem=makefile -- --directory=../
 	dh_auto_clean --buildsystem=makefile -- --directory=../src config=dbg
+
+override_dh_auto_test:
+	dh_auto_test --buildsystem=makefile -- --directory=../
