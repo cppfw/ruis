@@ -34,15 +34,14 @@ gui::gui(utki::shared_ref<ruis::context> context) :
 {}
 
 void gui::init_standard_widgets(
-	// TODO: make const&
-	fsif::file& fi
+	const fsif::file& fi
 )
 {
 	// mount default resource pack
 
 	std::vector<std::string> paths;
 
-	if (fi.path().length() != 0) {
+	if (!fi.path().empty()) {
 		paths.push_back(fi.path());
 	}
 
