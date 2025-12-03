@@ -55,22 +55,23 @@ std::tuple<unsigned, std::u32string_view::const_iterator> read_number(
 		*number_i = char(*i);
 	}
 
-	auto number_length = std::distance(number_chars.begin(), number_i);
+	auto number_view = std::string_view(
+		number_chars.data(), //
+		std::distance(number_chars.begin(), number_i)
+	);
 
+	// TODO: use some higher level utility function to parse a number from a string_view than std::from_chars
 	unsigned value{};
 	auto res = std::from_chars(
-		number_chars.data(), //
-		number_chars.data() + number_length,
+		number_view.data(), //
+		utki::end_pointer(number_view),
 		value
 	);
 
 	if (res.ec != std::errc()) {
 		throw std::invalid_argument(utki::cat(
-			"could not parse format replacement field id: ",
-			std::string_view(
-				number_chars.data(), //
-				number_length
-			)
+			"could not parse format replacement field id: ", //
+			number_view
 		));
 	}
 
