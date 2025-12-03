@@ -55,15 +55,18 @@ function(ruis_declare_app name)
             ruisapp::ruisapp-opengl
     )
 
-    myci_declare_application(ruis-${name}-app-opengles
-        GUI
-        SOURCES
-            ${srcs}
-        RESOURCE_DIRECTORY
-            ${resources_dir}
-        DEPENDENCIES
-            ruisapp::ruisapp-opengles
-    )
+    # not all platforms have OpenGL ES, so check if opengles variant of ruisapp is defined
+    if(TARGET ruisapp-opengles)
+        myci_declare_application(ruis-${name}-app-opengles
+            GUI
+            SOURCES
+                ${srcs}
+            RESOURCE_DIRECTORY
+                ${resources_dir}
+            DEPENDENCIES
+                ruisapp::ruisapp-opengles
+        )
+    endif()
 endfunction()
 
 ruis_declare_app(align)
