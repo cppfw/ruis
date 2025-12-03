@@ -29,6 +29,11 @@ myci_add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/../../../ruisapp/build/cmake
 )
 
 function(ruis_declare_app name)
+    set(options HAS_RESOURCES)
+    set(single)
+    set(multiple)
+    cmake_parse_arguments(arg "${options}" "${single}" "${multiple}" ${ARGN})
+
     set(srcs)
     myci_add_source_files(srcs
         DIRECTORY
@@ -36,12 +41,16 @@ function(ruis_declare_app name)
         RECURSIVE
     )
 
+    if(arg_HAS_RESOURCES)
+        set(resources_dir ../../tests/${name}/res)
+    endif()
+
     myci_declare_application(ruis-${name}-app-opengl
         GUI
         SOURCES
             ${srcs}
         RESOURCE_DIRECTORY
-            ../../tests/${name}/res
+            ${resources_dir}
         DEPENDENCIES
             ruisapp::ruisapp-opengl
     )
@@ -51,17 +60,17 @@ function(ruis_declare_app name)
         SOURCES
             ${srcs}
         RESOURCE_DIRECTORY
-            ../../tests/${name}/res
+            ${resources_dir}
         DEPENDENCIES
             ruisapp::ruisapp-opengles
     )
 endfunction()
 
 ruis_declare_app(align)
-ruis_declare_app(app)
-ruis_declare_app(app2)
+ruis_declare_app(app HAS_RESOURCES)
+ruis_declare_app(app2 HAS_RESOURCES)
 ruis_declare_app(aspect_ratio_proxy)
-ruis_declare_app(book)
+ruis_declare_app(book HAS_RESOURCES)
 ruis_declare_app(easing)
 ruis_declare_app(paint)
 ruis_declare_app(tabbed_book)
