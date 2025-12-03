@@ -55,10 +55,12 @@ std::tuple<unsigned, std::u32string_view::const_iterator> read_number(
 		*number_i = char(*i);
 	}
 
+	auto number_length = std::distance(number_chars.begin(), number_i);
+
 	unsigned value{};
 	auto res = std::from_chars(
-		&*number_chars.begin(), //
-		&*number_i,
+		number_chars.data(), //
+		number_chars.data() + number_length,
 		value
 	);
 
@@ -66,8 +68,8 @@ std::tuple<unsigned, std::u32string_view::const_iterator> read_number(
 		throw std::invalid_argument(utki::cat(
 			"could not parse format replacement field id: ",
 			std::string_view(
-				&*number_chars.begin(), //
-				std::distance(number_chars.begin(), number_i)
+				number_chars.data(), //
+				number_length
 			)
 		));
 	}
