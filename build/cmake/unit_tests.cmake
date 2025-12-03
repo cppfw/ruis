@@ -63,4 +63,7 @@ myci_declare_application(${PROJECT_NAME}-tests
         ${ruis_render_null_namespace}::ruis-render-null
 )
 
-myci_declare_test(${PROJECT_NAME}-tests)
+myci_declare_test(
+    RUN_TARGET
+        run-${PROJECT_NAME}-tests
+)
