@@ -63,6 +63,7 @@ std::tuple<unsigned, std::u32string_view::const_iterator> read_number(
 	// TODO: use some higher level utility function to parse a number from a string_view than std::from_chars
 	unsigned value{};
 	auto res = std::from_chars(
+		// NOLINTNEXTLINE(bugprone-suspicious-stringview-data-usage, "end pointer is provided")
 		number_view.data(), //
 		utki::end_pointer(number_view),
 		value
