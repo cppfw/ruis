@@ -50,4 +50,4 @@ public:
 	) const;
 };
 
-} // namespace ruis
+} // namespace ruis::paint

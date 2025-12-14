@@ -51,4 +51,4 @@ public:
 	void render(const ruis::matrix4& matrix, ruis::color color) const;
 };
 
-} // namespace ruis
+} // namespace ruis::paint
