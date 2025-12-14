@@ -23,7 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <cmath>
 
-using namespace ruis;
+using namespace ruis::paint;
 
 void path::line_to(ruis::vector2 abs_pos)
 {

@@ -23,7 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../render/renderer.hpp"
 
-namespace ruis {
+namespace ruis::paint {
 
 class frame_vao
 {

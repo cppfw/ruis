@@ -43,10 +43,10 @@ void wire_area::render(const ruis::matrix4& matrix)const{
 		auto p0 = s.get().pos_in_ancestor(prim_outlet_pos[0], this);
 		auto p = s.get().slave->pos_in_ancestor(slave_outlet_pos[0], this) - p0;
 		
-		ruis::path path;
+		ruis::paint::path path;
 		path.cubic_to(prim_outlet_pos[1] * spline_control_length, p + slave_outlet_pos[1] * spline_control_length, p);
 		
-		ruis::path_vao vba(this->context.get().renderer);
+		ruis::paint::path_vao vba(this->context.get().renderer);
 		vba.set(path.stroke(this->wire_half_width, antialias_width, 1));
 		
 		vba.render(ruis::matrix4(matrix).translate(p0), this->wire_color);
@@ -56,10 +56,10 @@ void wire_area::render(const ruis::matrix4& matrix)const{
 		auto outlet_pos = this->grabbed_socket->outlet_pos();
 		auto p0 = this->grabbed_socket->pos_in_ancestor(outlet_pos[0], this);
 		
-		ruis::path path;
+		ruis::paint::path path;
 		path.line_to(this->mouse_pos - p0);
 		
-		ruis::path_vao vba(this->context.get().renderer);
+		ruis::paint::path_vao vba(this->context.get().renderer);
 		vba.set(path.stroke(this->wire_half_width, antialias_width, 1));
 		
 		vba.render(ruis::matrix4(matrix).translate(p0), this->grabbed_color);

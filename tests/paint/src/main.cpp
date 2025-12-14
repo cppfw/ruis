@@ -13,7 +13,7 @@
 using namespace std::string_literals;
 
 class path_widget : virtual public ruis::widget{
-	ruis::path_vao vao;
+	ruis::paint::path_vao vao;
 public:
 	struct all_parameters{
 		ruis::layout_parameters layout_params;
@@ -33,7 +33,7 @@ public:
 	}
 
 	void on_resize()override{
-		ruis::path path;
+		ruis::paint::path path;
 		path.line_to(this->rect().d / 2);
 		path.cubic_by(
 				ruis::vector2(this->rect().d.x() / 2, 0),
@@ -58,7 +58,7 @@ inline utki::shared_ref<::path_widget> path_widget(
 }
 
 class frame_widget : virtual public ruis::widget{
-	ruis::frame_vao vao;
+	ruis::paint::frame_vao vao;
 public:
 	struct all_parameters{
 		ruis::layout_parameters layout_params;

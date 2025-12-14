@@ -21,7 +21,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "frame_vao.hpp"
 
-using namespace ruis;
+using namespace ruis::paint;
 
 // NOLINTNEXTLINE(modernize-pass-by-value)
 frame_vao::frame_vao(const utki::shared_ref<const ruis::render::renderer>& r) :
