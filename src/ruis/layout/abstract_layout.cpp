@@ -19,7 +19,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 /* ================ LICENSE END ================ */
 
-#include "layout.hpp"
+#include "abstract_layout.hpp"
 
 #include "linear_layout.hpp"
 #include "pile_layout.hpp"
@@ -28,8 +28,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis::layout;
 
-const utki::shared_ref<layout> ruis::layout::trivial = utki::make_shared<trivial_layout>();
-const utki::shared_ref<layout> ruis::layout::size = utki::make_shared<size_layout>();
-const utki::shared_ref<layout> ruis::layout::pile = utki::make_shared<pile_layout>();
-const utki::shared_ref<layout> ruis::layout::row = utki::make_shared<linear_layout>(false);
-const utki::shared_ref<layout> ruis::layout::column = utki::make_shared<linear_layout>(true);
+const utki::shared_ref<abstract_layout> ruis::layout::trivial = utki::make_shared<trivial_layout>();
+const utki::shared_ref<abstract_layout> ruis::layout::size = utki::make_shared<size_layout>();
+const utki::shared_ref<abstract_layout> ruis::layout::pile = utki::make_shared<pile_layout>();
+const utki::shared_ref<abstract_layout> ruis::layout::row = utki::make_shared<linear_layout>(false);
+const utki::shared_ref<abstract_layout> ruis::layout::column = utki::make_shared<linear_layout>(true);

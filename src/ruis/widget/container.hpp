@@ -130,11 +130,12 @@ private:
 	};
 
 protected:
-	void render_child(const matrix4& matrix, const widget& c) const;
+	void render_child(const matrix4& matrix, //
+		const widget& c) const;
 
 public:
 	struct parameters {
-		std::shared_ptr<ruis::layout::layout> layout;
+		std::shared_ptr<ruis::layout::abstract_layout> layout;
 	};
 
 	struct all_parameters {
@@ -144,7 +145,7 @@ public:
 	};
 
 private:
-	utki::shared_ref<ruis::layout::layout> layout;
+	utki::shared_ref<ruis::layout::abstract_layout> layout;
 
 public:
 	container(
@@ -153,7 +154,7 @@ public:
 		widget_list children
 	);
 
-	const ruis::layout::layout& get_layout() const
+	const ruis::layout::abstract_layout& get_layout() const
 	{
 		return this->layout.get();
 	}
@@ -525,4 +526,4 @@ utki::shared_ref<ruis::container> row(
 } // namespace ruis
 
 // include definitions for forward declared classes
-#include "../layout/layout.hpp"
+#include "../layout/abstract_layout.hpp"

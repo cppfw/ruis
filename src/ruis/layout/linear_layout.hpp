@@ -23,20 +23,22 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../util/oriented.hpp"
 
-#include "layout.hpp"
+#include "abstract_layout.hpp"
 
 namespace ruis::layout {
 
 class linear_layout :
-	public layout, //
+	public abstract_layout, //
 	public oriented
 {
 public:
 	linear_layout(bool is_vertical);
 
-	void lay_out(const vector2& dims, semiconst_widget_list& widgets) const override;
+	void lay_out(const vector2& dims,//
+		 semiconst_widget_list& widgets) const override;
 
-	vector2 measure(const vector2& quotum, const_widget_list& widgets) const override;
+	vector2 measure(const vector2& quotum, //
+		const_widget_list& widgets) const override;
 };
 
 } // namespace ruis

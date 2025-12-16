@@ -3,7 +3,7 @@
 #include <ruisapp/application.hpp>
 
 #include <ruis/widget/container.hpp>
-#include <ruis/layout/layout.hpp>
+#include <ruis/layout/abstract_layout.hpp>
 #include <ruis/widget/label/text.hpp>
 #include <ruis/widget/label/rectangle.hpp>
 

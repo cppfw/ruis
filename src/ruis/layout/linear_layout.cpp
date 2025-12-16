@@ -38,7 +38,8 @@ struct info {
 };
 } // namespace
 
-void linear_layout::lay_out(const vector2& dims, semiconst_widget_list& widgets) const
+void linear_layout::lay_out(const vector2& dims,//
+	 semiconst_widget_list& widgets) const
 {
 	unsigned long_index = this->get_long_index();
 	unsigned trans_index = this->get_trans_index();
@@ -254,7 +255,8 @@ void linear_layout::lay_out(const vector2& dims, semiconst_widget_list& widgets)
 	}
 }
 
-ruis::vector2 linear_layout::measure(const vector2& quotum, const_widget_list& widgets) const
+ruis::vector2 linear_layout::measure(const vector2& quotum, //
+	const_widget_list& widgets) const
 {
 	unsigned long_index = this->get_long_index();
 	unsigned trans_index = this->get_trans_index();
