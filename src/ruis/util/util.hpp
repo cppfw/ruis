@@ -27,7 +27,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <utki/config.hpp>
 
 #include "../config.hpp"
-#include "../layout/layout_parameters.hpp"
+#include "../layout/parameters.hpp"
 
 #include "units.hpp"
 

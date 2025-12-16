@@ -130,9 +130,9 @@ styled<color> style_provider::get_color_cursor() const
 	return this->get<color>("color_cursor"sv);
 }
 
-styled<dimension> style_provider::get_dim_indent_tree_view_item() const
+styled<layout::dimension> style_provider::get_dim_indent_tree_view_item() const
 {
-	return this->get<dimension>("dim_tree_view_item_indent"sv);
+	return this->get<layout::dimension>("dim_tree_view_item_indent"sv);
 }
 
 styled<length> style_provider::get_font_size_normal() const

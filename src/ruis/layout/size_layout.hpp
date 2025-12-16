@@ -23,7 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "trivial_layout.hpp"
 
-namespace ruis {
+namespace ruis::layout {
 
 class size_layout : public trivial_layout
 {

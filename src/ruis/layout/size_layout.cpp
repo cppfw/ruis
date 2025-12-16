@@ -24,7 +24,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../util/util.hpp"
 #include "../widget/widget.hpp"
 
-using namespace ruis;
+using namespace ruis::layout;
 
 void size_layout::lay_out(
 	const vector2& dims, //

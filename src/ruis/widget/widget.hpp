@@ -33,7 +33,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <utki/types.hpp>
 
 #include "../config.hpp"
-#include "../layout/layout_parameters.hpp"
+#include "../layout/parameters.hpp"
 #include "../render/texture_2d.hpp"
 #include "../util/events.hpp"
 #include "../util/key.hpp"
@@ -44,6 +44,10 @@ namespace ruis {
 class context;
 class container;
 
+namespace layout{
+class layout;
+}
+
 /**
  * @brief Base widget class.
  */
@@ -52,7 +56,7 @@ class widget : virtual public utki::shared
 	friend class container;
 	friend class context;
 	friend class gui;
-	friend class layout;
+	friend class layout::layout;
 
 public:
 	const utki::shared_ref<ruis::context> context;
@@ -149,13 +153,13 @@ public:
 	 * This method invalidates layout.
 	 * @return Layout parameters of the widget.
 	 */
-	layout_parameters& get_layout_params();
+	layout::parameters& get_layout_params();
 
 	/**
 	 * @brief Get constant layout parameters of the widget.
 	 * @return Constant layout parameters of the widget.
 	 */
-	const layout_parameters& get_layout_params_const() const
+	const layout::parameters& get_layout_params_const() const
 	{
 		return this->layout_params;
 	}
@@ -450,12 +454,12 @@ public:
 	};
 
 	struct all_parameters {
-		layout_parameters layout_params;
+		layout::parameters layout_params;
 		parameters widget_params;
 	};
 
 private:
-	layout_parameters layout_params;
+	layout::parameters layout_params;
 	parameters params;
 
 public:
@@ -471,7 +475,7 @@ public:
 protected:
 	widget(
 		utki::shared_ref<ruis::context> context, //
-		layout_parameters layout_params,
+		layout::parameters layout_params,
 		parameters params
 	);
 

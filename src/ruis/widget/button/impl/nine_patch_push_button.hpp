@@ -32,7 +32,7 @@ class nine_patch_push_button :
 {
 public:
 	struct all_parameters {
-		layout_parameters layout_params;
+		layout::parameters layout_params;
 		ruis::widget::parameters widget_params;
 		container::parameters container_params;
 		button::parameters button_params;

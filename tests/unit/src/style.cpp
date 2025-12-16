@@ -248,7 +248,7 @@ const tst::set set("style", [](tst::suite& suite){
         ruis::styled<ruis::length> l;
         tst::check(l.get().is_undefined(), SL);
 
-        ruis::styled<ruis::dimension> d;
+        ruis::styled<ruis::layout::dimension> d;
         tst::check(d.get().is_undefined(), SL);
 
         ruis::styled<ruis::res::tml> tml;
@@ -265,8 +265,8 @@ const tst::set set("style", [](tst::suite& suite){
         ruis::styled<ruis::length> l = ruis::length::make_pp(10);
         tst::check_eq(l.get(), ruis::length::make_pp(10), SL);
 
-        ruis::styled<ruis::dimension> d = ruis::length::make_pp(10);
-        tst::check_eq(d.get(), ruis::dimension(ruis::length::make_pp(10)), SL);
+        ruis::styled<ruis::layout::dimension> d = ruis::length::make_pp(10);
+        tst::check_eq(d.get(), ruis::layout::dimension(ruis::length::make_pp(10)), SL);
 
         ruis::styled<ruis::res::tml> tml = std::make_shared<ruis::res::tml>(tml::read("Hello{world!}"));
         tst::check(tml.get() != nullptr, SL);

@@ -16,7 +16,7 @@ class path_widget : virtual public ruis::widget{
 	ruis::paint::path_vao vao;
 public:
 	struct all_parameters{
-		ruis::layout_parameters layout_params;
+		ruis::layout::parameters layout_params;
 		ruis::widget::parameters widget_params;
 	};
 
@@ -61,7 +61,7 @@ class frame_widget : virtual public ruis::widget{
 	ruis::paint::frame_vao vao;
 public:
 	struct all_parameters{
-		ruis::layout_parameters layout_params;
+		ruis::layout::parameters layout_params;
 		ruis::widget::parameters widget_params;
 	};
 

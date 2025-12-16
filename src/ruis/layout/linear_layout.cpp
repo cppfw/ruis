@@ -26,7 +26,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../util/util.hpp"
 #include "../widget/widget.hpp"
 
-using namespace ruis;
+using namespace ruis::layout;
 
 linear_layout::linear_layout(bool is_vertical) :
 	oriented({.vertical = is_vertical})
@@ -34,7 +34,7 @@ linear_layout::linear_layout(bool is_vertical) :
 
 namespace {
 struct info {
-	vector2 measured_dims;
+	ruis::vector2 measured_dims;
 };
 } // namespace
 
@@ -254,7 +254,7 @@ void linear_layout::lay_out(const vector2& dims, semiconst_widget_list& widgets)
 	}
 }
 
-vector2 linear_layout::measure(const vector2& quotum, const_widget_list& widgets) const
+ruis::vector2 linear_layout::measure(const vector2& quotum, const_widget_list& widgets) const
 {
 	unsigned long_index = this->get_long_index();
 	unsigned trans_index = this->get_trans_index();

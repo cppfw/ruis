@@ -23,7 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace std::string_view_literals;
 
-using namespace ruis;
+using namespace ruis::layout;
 
 const dimension dimension::min(dimension::type::min);
 const dimension dimension::max(dimension::type::max);
@@ -47,7 +47,7 @@ dimension dimension::make_from(const tml::forest& desc)
 	return length::make_from(desc);
 }
 
-std::ostream& ruis::operator<<(std::ostream& o, const dimension& d)
+std::ostream& ruis::layout::operator<<(std::ostream& o, const dimension& d)
 {
 	switch (d.get_type()) {
 		case dimension::type::fill:

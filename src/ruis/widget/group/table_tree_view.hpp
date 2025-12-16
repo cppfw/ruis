@@ -76,7 +76,7 @@ public:
 	};
 
 	struct all_parameters {
-		ruis::layout_parameters layout_params;
+		ruis::layout::parameters layout_params;
 		ruis::widget::parameters widget_params;
 		parameters table_tree_view_params;
 	};

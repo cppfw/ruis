@@ -35,7 +35,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
+namespace layout{
 class layout;
+}
 
 /**
  * @brief Container widget.
@@ -132,17 +134,17 @@ protected:
 
 public:
 	struct parameters {
-		std::shared_ptr<ruis::layout> layout;
+		std::shared_ptr<ruis::layout::layout> layout;
 	};
 
 	struct all_parameters {
-		layout_parameters layout_params;
+		layout::parameters layout_params;
 		widget::parameters widget_params;
 		container::parameters container_params;
 	};
 
 private:
-	utki::shared_ref<ruis::layout> layout;
+	utki::shared_ref<ruis::layout::layout> layout;
 
 public:
 	container(
@@ -151,7 +153,7 @@ public:
 		widget_list children
 	);
 
-	const ruis::layout& get_layout() const
+	const ruis::layout::layout& get_layout() const
 	{
 		return this->layout.get();
 	}

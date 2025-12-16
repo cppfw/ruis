@@ -37,7 +37,7 @@ public:
 
 public:
 	struct all_parameters{
-		ruis::layout_parameters layout_params;
+		ruis::layout::parameters layout_params;
 		ruis::widget::parameters widget_params;
 		parameters wire_socket_params;
 	};

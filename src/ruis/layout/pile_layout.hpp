@@ -23,7 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "layout.hpp"
 
-namespace ruis {
+namespace ruis::layout {
 
 class pile_layout : public layout
 {

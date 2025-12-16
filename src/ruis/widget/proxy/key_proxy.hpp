@@ -34,7 +34,7 @@ class key_proxy : public container
 {
 public:
 	struct all_parameters {
-		layout_parameters layout_params;
+		layout::parameters layout_params;
 		widget::parameters widget_params;
 		container::parameters container_params;
 	};

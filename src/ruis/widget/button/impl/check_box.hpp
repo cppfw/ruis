@@ -44,7 +44,7 @@ class check_box :
 
 public:
 	struct all_parameters {
-		layout_parameters layout_params;
+		layout::parameters layout_params;
 		widget::parameters widget_params;
 		button::parameters button_params;
 		nine_patch::parameters nine_patch_params;

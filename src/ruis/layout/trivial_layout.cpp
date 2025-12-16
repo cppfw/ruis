@@ -23,9 +23,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../widget/widget.hpp"
 
-using namespace ruis;
+using namespace ruis::layout;
 
-vector2 trivial_layout::measure(
+ruis::vector2 trivial_layout::measure(
 	const vector2& quotum, //
 	const_widget_list& widgets
 ) const

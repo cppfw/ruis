@@ -26,10 +26,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "size_layout.hpp"
 #include "trivial_layout.hpp"
 
-using namespace ruis;
+using namespace ruis::layout;
 
-const utki::shared_ref<layout> layout::trivial = utki::make_shared<trivial_layout>();
-const utki::shared_ref<layout> layout::size = utki::make_shared<size_layout>();
-const utki::shared_ref<layout> layout::pile = utki::make_shared<pile_layout>();
-const utki::shared_ref<layout> layout::row = utki::make_shared<linear_layout>(false);
-const utki::shared_ref<layout> layout::column = utki::make_shared<linear_layout>(true);
+const utki::shared_ref<layout> ruis::layout::trivial = utki::make_shared<trivial_layout>();
+const utki::shared_ref<layout> ruis::layout::size = utki::make_shared<size_layout>();
+const utki::shared_ref<layout> ruis::layout::pile = utki::make_shared<pile_layout>();
+const utki::shared_ref<layout> ruis::layout::row = utki::make_shared<linear_layout>(false);
+const utki::shared_ref<layout> ruis::layout::column = utki::make_shared<linear_layout>(true);

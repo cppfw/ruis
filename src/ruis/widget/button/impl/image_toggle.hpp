@@ -32,7 +32,7 @@ class image_toggle :
 {
 public:
 	struct all_parameters {
-		layout_parameters layout_params;
+		layout::parameters layout_params;
 		widget::parameters widget_params;
 		button::parameters button_params;
 		blending_widget::parameters blending_params;

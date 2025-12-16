@@ -24,7 +24,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../util/util.hpp"
 #include "../widget/widget.hpp"
 
-using namespace ruis;
+using namespace ruis::layout;
 
 void pile_layout::lay_out(
 	const vector2& dims, //
@@ -62,7 +62,7 @@ void pile_layout::lay_out(
 	}
 }
 
-vector2 pile_layout::measure(
+ruis::vector2 pile_layout::measure(
 	const vector2& quotum, //
 	const_widget_list& widgets
 ) const

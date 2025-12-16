@@ -27,12 +27,12 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "dimension.hpp"
 
-namespace ruis {
+namespace ruis::layout{
 
 /**
  * @brief Widget layout parameters.
  */
-struct layout_parameters {
+struct parameters {
 	/**
 	 * @brief desired dimensions.
 	 */

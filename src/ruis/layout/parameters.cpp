@@ -19,7 +19,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 /* ================ LICENSE END ================ */
 
-#include "layout_parameters.hpp"
+#include "parameters.hpp"
 
 #include "../util/util.hpp"
 

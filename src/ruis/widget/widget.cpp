@@ -30,7 +30,7 @@ using namespace ruis;
 
 widget::widget(
 	utki::shared_ref<ruis::context> context, //
-	layout_parameters layout_params,
+	layout::parameters layout_params,
 	parameters params
 ) :
 	context(std::move(context)),
@@ -370,14 +370,14 @@ vector2 widget::pos_in_ancestor(vector2 pos, const widget* ancestor)
 	return this->parent()->pos_in_ancestor(this->rect().p + pos, ancestor);
 }
 
-layout_parameters& widget::get_layout_params()
+layout::parameters& widget::get_layout_params()
 {
 	if (this->parent()) {
 		this->parent()->invalidate_layout();
 	}
 
 	// NOLINTNEXTLINE(cppcoreguidelines-pro-type-const-cast)
-	return const_cast<layout_parameters&>(this->get_layout_params_const());
+	return const_cast<layout::parameters&>(this->get_layout_params_const());
 }
 
 widget& widget::get_widget(std::string_view id, bool allow_itself)
@@ -455,7 +455,7 @@ void widget::reload()
 
 vector2 ruis::dims_for_widget(const widget& w, const vector2& parent_dims)
 {
-	const layout_parameters& lp = w.get_layout_params_const();
+	const layout::parameters& lp = w.get_layout_params_const();
 	vector2 d;
 	for (unsigned i = 0; i != 2; ++i) {
 		const auto& dim = lp.dims[i].get();

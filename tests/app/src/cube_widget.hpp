@@ -15,7 +15,7 @@ public:
 	std::shared_ptr<ruis::render::vertex_array> cubeVAO;
 
     struct all_parameters{
-        ruis::layout_parameters layout_params;
+        ruis::layout::parameters layout_params;
         ruis::widget::parameters widget_params;
     };
 

@@ -59,7 +59,7 @@ class list :
 
 public:
 	struct all_parameters {
-		layout_parameters layout_params;
+		layout::parameters layout_params;
 		widget::parameters widget_params;
 		oriented::parameters oriented_params;
 		list_widget::parameters list_params;
