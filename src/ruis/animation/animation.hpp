@@ -60,9 +60,10 @@ protected:
 
 	/**
 	 * @brief Move animation forward.
+	 * @param dt_ms - number of milliseconds to forward the animation.
 	 * @return Number of milliseconds over the end if the animation has ended.
 	 */
-	uint32_t forward(uint32_t dt);
+	uint32_t forward(uint32_t dt_ms);
 
 public:
 	std::function<void(real factor)> update_handler;
@@ -73,7 +74,7 @@ public:
 		uint32_t duration_ms
 	);
 
-	void start();
+	void start(uint32_t dt_ms = 0);
 	void stop() noexcept;
 
 	/**
