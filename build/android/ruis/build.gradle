@@ -5,6 +5,8 @@ apply plugin: 'com.ydq.android.gradle.native-aar.import' // must go after androi
 android {
     compileSdkVersion 29
 
+    namespace "cppfw.github.io.ruis"
+
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 29
