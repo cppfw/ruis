@@ -30,13 +30,13 @@ namespace ruis {
  * @brief Information about screen units.
  * This class holds information about screen units and performs conversion
  * from one unit to another.
- * Length can be expressed in pixels, millimeters or perception pixels.
+ * Length can be expressed in pixels, millimeters or perception pixels (pp).
  * Perception pixel is a convenience unit which is different depending on the screen dimensions,
  * density and supposed viewing distance (e.g. large TV is viewed from 2-3 meters, and tablet is viewed from 30-50cm).
  * Perception pixel is never less than one pixel.
- * For normal desktop displays like HD or Full HD point is equal to one pixel.
- * For higher density desktop displays point is more than one pixel depending on density.
- * For mobile platforms the point is also 1 or more pixels depending on display density and physical size.
+ * For normal desktop displays like HD or Full HD the pp is equal to one pixel.
+ * For higher density desktop displays the pp is more than one pixel depending on density.
+ * For mobile platforms the pp is also 1 or more pixels depending on display density and physical size.
  */
 class units
 {
