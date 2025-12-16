@@ -139,28 +139,30 @@ public:
 	}
 
 	/**
-	 * @brief Comparator functor.
+	 * @brief Operator less than.
 	 * Implements operation < for sides.
 	 * For use with std::map, etc.
+	 * @param lhs - left hand side operand.
+	 * @param rhs - right hand side operand.
+	 * @return true if lhs < rhs.
+	 * @return false otherwise.
 	 */
-	struct comparator {
-		bool operator()(
-			const sides& lhs, //
-			const sides& rhs
-		) const
-		{
-			if (lhs.left() == rhs.left()) {
-				if (lhs.top() == rhs.top()) {
-					if (lhs.right() == rhs.right()) {
-						return lhs.bottom() < rhs.bottom();
-					}
-					return lhs.right() < rhs.right();
+	friend bool operator<(
+		const sides& lhs, //
+		const sides& rhs
+	)
+	{
+		if (lhs.left() == rhs.left()) {
+			if (lhs.top() == rhs.top()) {
+				if (lhs.right() == rhs.right()) {
+					return lhs.bottom() < rhs.bottom();
 				}
-				return lhs.top() < rhs.top();
+				return lhs.right() < rhs.right();
 			}
-			return lhs.left() < rhs.left();
+			return lhs.top() < rhs.top();
 		}
-	};
+		return lhs.left() < rhs.left();
+	}
 };
 
 } // namespace ruis

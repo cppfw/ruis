@@ -99,8 +99,7 @@ private:
 
 	static std::map<
 		sides<real>, //
-		std::weak_ptr<rounded_corners_texture>,
-		sides<real>::comparator //
+		std::weak_ptr<rounded_corners_texture>
 		>
 		// NOLINTNEXTLINE(cppcoreguidelines-avoid-non-const-global-variables, "false-positive")
 		cache;
