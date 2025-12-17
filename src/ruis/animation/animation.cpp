@@ -74,13 +74,15 @@ void animation::update(uint32_t dt)
 void animation::start(uint32_t dt_ms)
 {
 	// This will add the updatable to an active list, but will not call the update() immediately.
-	this->updater.get().start(//
-		utki::make_shared_from(//
-			static_cast<updateable&>(*this)));
+	this->updater.get().start( //
+		utki::make_shared_from( //
+			static_cast<updateable&>(*this)
+		)
+	);
 
 	// This call to update() can potentially stop the started updating,
 	// this is why it is called after the updating has been started.
-	if(dt_ms != 0){
+	if (dt_ms != 0) {
 		this->update(dt_ms);
 	}
 }

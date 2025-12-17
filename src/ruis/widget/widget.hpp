@@ -44,9 +44,9 @@ namespace ruis {
 class context;
 class container;
 
-namespace layout{
+namespace layout {
 class layout;
-}
+} // namespace layout
 
 /**
  * @brief Base widget class.

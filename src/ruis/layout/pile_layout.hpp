@@ -39,4 +39,4 @@ public:
 	) const override;
 };
 
-} // namespace ruis
+} // namespace ruis::layout

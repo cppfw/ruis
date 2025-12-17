@@ -35,9 +35,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
-namespace layout{
+namespace layout {
 class layout;
-}
+} // namespace layout
 
 /**
  * @brief Container widget.
@@ -130,8 +130,10 @@ private:
 	};
 
 protected:
-	void render_child(const matrix4& matrix, //
-		const widget& c) const;
+	void render_child(
+		const matrix4& matrix, //
+		const widget& c
+	) const;
 
 public:
 	struct parameters {

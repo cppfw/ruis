@@ -39,16 +39,20 @@ public:
 	abstract_layout(abstract_layout&&) = delete;
 	abstract_layout& operator=(abstract_layout&&) = delete;
 
-	virtual vector2 measure(const vector2& quotum,//
-		 const_widget_list& widgets) const = 0;
+	virtual vector2 measure(
+		const vector2& quotum, //
+		const_widget_list& widgets
+	) const = 0;
 
 	/**
 	 * @brief Arrange widgets.
 	 * @param dims - dimensions of the area available to the layout.
 	 * @param widgets - widgets to arrange.
 	 */
-	virtual void lay_out(const vector2& dims, //
-		semiconst_widget_list& widgets) const = 0;
+	virtual void lay_out(
+		const vector2& dims, //
+		semiconst_widget_list& widgets
+	) const = 0;
 
 	virtual ~abstract_layout() = default;
 };
@@ -59,4 +63,4 @@ extern const utki::shared_ref<abstract_layout> pile;
 extern const utki::shared_ref<abstract_layout> row;
 extern const utki::shared_ref<abstract_layout> column;
 
-} // namespace ruis
+} // namespace ruis::layout

@@ -27,7 +27,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "dimension.hpp"
 
-namespace ruis::layout{
+namespace ruis::layout {
 
 /**
  * @brief Widget layout parameters.
@@ -53,4 +53,4 @@ struct parameters {
 	r4::vector2<styled<ruis::align>> align = {ruis::align::undefined, ruis::align::undefined};
 };
 
-}; // namespace ruis
+}; // namespace ruis::layout

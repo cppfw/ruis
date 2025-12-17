@@ -30,8 +30,7 @@ using namespace ruis;
 
 std::map<
 	sides<real>, //
-	std::weak_ptr<rectangle::rounded_corners_texture>
-	>
+	std::weak_ptr<rectangle::rounded_corners_texture>>
 	// NOLINTNEXTLINE(cppcoreguidelines-avoid-non-const-global-variables, "false-positive")
 	rectangle::cache;
 

@@ -155,8 +155,8 @@ public:
 
 std::ostream& operator<<(std::ostream& o, const dimension& d);
 
-} // namespace ruis
+} // namespace ruis::layout
 
-namespace ruis{
+namespace ruis {
 using dim = layout::dimension;
-}
+} // namespace ruis
