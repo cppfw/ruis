@@ -129,6 +129,16 @@ public:
 		return {this->left_right(), this->top_bottom()};
 	}
 
+	bool is_zero()const noexcept
+	{
+		for(auto& e : *this){
+			if(e != 0){
+				return false;
+			}
+		}
+		return true;
+	}
+
 	friend std::ostream& operator<<(
 		std::ostream& stream, //
 		const sides<component_type>& s

@@ -23,6 +23,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../base/color_widget.hpp"
 
+#include "../../paint/rectangle_vao.hpp"
+
 #include "padding.hpp"
 
 namespace ruis {
@@ -71,41 +73,9 @@ public:
 	void render(const ruis::matrix4& matrix) const override;
 
 private:
-	void render_rounder_corners(const mat4& matrix) const;
+	void update_vaos();
 
-	struct rounded_corners_texture {
-		utki::shared_ref<const render::texture_2d> tex;
-
-		// texture middle point
-		vec2 middle_px;
-
-		// vaos for corners
-		std::array<std::array<utki::shared_ref<const render::vertex_array>, 2>, 2> vaos;
-
-		rounded_corners_texture(
-			ruis::render::renderer& r, //
-			utki::shared_ref<const render::texture_2d> tex,
-			vec2 middle_px
-		);
-
-	private:
-		rounded_corners_texture(
-			ruis::render::renderer& r, //
-			vec2 middle,
-			utki::shared_ref<const render::texture_2d>& tex,
-			vec2 middle_px
-		);
-	};
-
-	static std::map<
-		sides<real>, //
-		std::weak_ptr<rounded_corners_texture>>
-		// NOLINTNEXTLINE(cppcoreguidelines-avoid-non-const-global-variables, "false-positive")
-		cache;
-
-	std::shared_ptr<rounded_corners_texture> rounded_corners_tex;
-
-	void update_rounded_corners_texture();
+	ruis::paint::rectangle_vao fill_vao;
 };
 
 namespace make {

@@ -28,6 +28,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis::paint {
 
+// TODO: doxygen
 class path_vao
 {
 	utki::shared_ref<const ruis::render::renderer> renderer;
@@ -36,7 +37,7 @@ class path_vao
 	utki::shared_ref<const ruis::render::vertex_array> border;
 
 public:
-	path_vao(const utki::shared_ref<const ruis::render::renderer>& r);
+	path_vao(utki::shared_ref<const ruis::render::renderer> r);
 
 	path_vao(const path_vao&) = delete;
 	path_vao& operator=(const path_vao&) = delete;
@@ -48,7 +49,8 @@ public:
 
 	void set(const path::vertices& path);
 
-	void render(const ruis::matrix4& matrix, ruis::color color) const;
+	void render(const ruis::matrix4& matrix,//
+		 ruis::color color) const;
 };
 
 } // namespace ruis::paint

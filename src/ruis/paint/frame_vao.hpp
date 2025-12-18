@@ -25,6 +25,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis::paint {
 
+// TODO: doxygen
 class frame_vao
 {
 	utki::shared_ref<const ruis::render::renderer> renderer;
@@ -42,7 +43,8 @@ public:
 
 	~frame_vao() = default;
 
-	void set(vector2 dims, vector2 thickness);
+	void set(vector2 dims,//
+		 vector2 thickness);
 
 	void render(
 		const matrix4& matrix, //

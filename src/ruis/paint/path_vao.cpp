@@ -24,8 +24,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace ruis::paint;
 
 // NOLINTNEXTLINE(modernize-pass-by-value)
-path_vao::path_vao(const utki::shared_ref<const ruis::render::renderer>& r) :
-	renderer(r),
+path_vao::path_vao(utki::shared_ref<const ruis::render::renderer> r) :
+	renderer(std::move(r)),
 	core(this->renderer.get().obj().empty_vertex_array),
 	border(this->renderer.get().obj().empty_vertex_array)
 {}

@@ -27,6 +27,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis::paint {
 
+// TODO: doxygen
 class path
 {
 	std::vector<ruis::vector2> points = {{ruis::vector2(0)}};
@@ -43,16 +44,20 @@ public:
 	~path() = default;
 
 	void line_to(ruis::vector2 abs_pos);
-
-	void line_to(ruis::real x, ruis::real y)
+	void line_to(ruis::real x,//
+		 ruis::real y)
 	{
 		this->line_to(ruis::vector2(x, y));
 	}
 
 	void line_by(ruis::vector2 rel_pos);
 
-	void cubic_to(ruis::vector2 abs_p1, ruis::vector2 abs_p2, ruis::vector2 abs_p3);
-	void cubic_by(ruis::vector2 rel_p1, ruis::vector2 rel_p2, ruis::vector2 rel_p3);
+	void cubic_to(ruis::vector2 abs_p1,//
+		 ruis::vector2 abs_p2,//
+		  ruis::vector2 abs_p3);
+	void cubic_by(ruis::vector2 rel_p1,//
+		 ruis::vector2 rel_p2,//
+		  ruis::vector2 rel_p3);
 
 	struct vertices {
 		std::vector<ruis::vector2> pos;
