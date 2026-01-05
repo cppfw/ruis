@@ -43,8 +43,10 @@ public:
 
 	~frame_vao() = default;
 
-	void set(vector2 dims,//
-		 vector2 thickness);
+	void set(
+		vector2 dims, //
+		vector2 thickness
+	);
 
 	void render(
 		const matrix4& matrix, //

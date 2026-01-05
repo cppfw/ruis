@@ -34,38 +34,40 @@ std::map<
 	rectangle_vao::cache;
 
 rectangle_vao::rectangle_vao(
-    utki::shared_ref<const ruis::render::renderer> renderer,
-        ruis::sides<ruis::real> corner_radii, //
-        ruis::real stroke_width
+	utki::shared_ref<const ruis::render::renderer> renderer,
+	ruis::sides<ruis::real> corner_radii, //
+	ruis::real stroke_width
 ) :
-    renderer(std::move(renderer))
+	renderer(std::move(renderer))
 {
-    this->set(corner_radii,//
-        stroke_width);
+	this->set(
+		corner_radii, //
+		stroke_width
+	);
 }
 
 void rectangle_vao::set(
-        ruis::sides<ruis::real> corner_radii, //
-        ruis::real stroke_width
-    )
-    {
-        this->corner_radii = corner_radii;
-        this->stroke_width = stroke_width;
+	ruis::sides<ruis::real> corner_radii, //
+	ruis::real stroke_width
+)
+{
+	this->corner_radii = corner_radii;
+	this->stroke_width = stroke_width;
 
-        this->update_rounded_corners_texture();
-    }
+	this->update_rounded_corners_texture();
+}
 
 void rectangle_vao::render(
-    const ruis::matrix4& matrix,//
-    const vec2& dims,
+	const ruis::matrix4& matrix, //
+	const vec2& dims,
 	const ruis::color& color
-)const
+) const
 {
-    auto& r = this->renderer.get();
+	auto& r = this->renderer.get();
 
 	r.rendering_context.get().set_simple_alpha_blending();
 
-    if (!this->rounded_corners_tex) {
+	if (!this->rounded_corners_tex) {
 		ruis::matrix4 matr(matrix);
 		matr.scale(dims);
 
@@ -75,16 +77,17 @@ void rectangle_vao::render(
 			color.to_vec4f()
 		);
 	} else {
-		this->render_rounder_corners(matrix,//
-            dims,
-            color
-        );
+		this->render_rounder_corners(
+			matrix, //
+			dims,
+			color
+		);
 	}
 }
 
 void rectangle_vao::render_rounder_corners(
-    const mat4& matrix,
-    const vec2& dims,
+	const mat4& matrix, //
+	const vec2& dims,
 	const ruis::color& color
 ) const
 {
@@ -430,7 +433,7 @@ rectangle_vao::rounded_corners_texture::rounded_corners_texture(
 
 void rectangle_vao::update_rounded_corners_texture()
 {
-    // TODO: check also stroke_width
+	// TODO: check also stroke_width
 	if (this->corner_radii.is_zero()) {
 		this->rounded_corners_tex.reset();
 		return;
@@ -450,7 +453,7 @@ void rectangle_vao::update_rounded_corners_texture()
 
 	// TODO: convert to greyscale image
 
-    const auto& r = this->renderer.get();
+	const auto& r = this->renderer.get();
 
 	auto tex = r.ctx().make_texture_2d(std::move(raster_image), {});
 

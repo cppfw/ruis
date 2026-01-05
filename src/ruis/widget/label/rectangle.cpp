@@ -50,18 +50,18 @@ rectangle::rectangle( //
 		std::move(params.color_params)
 	),
 	params(std::move(params.rectangle_params)),
-	fill_vao(
-		this->context.get().renderer
-	)
+	fill_vao(this->context.get().renderer)
 {
 	this->update_vaos();
 }
 
 void rectangle::render(const ruis::matrix4& matrix) const
 {
-	this->fill_vao.render(matrix,//
-	this->rect().d,
-	this->get_current_color());
+	this->fill_vao.render(
+		matrix, //
+		this->rect().d,
+		this->get_current_color()
+	);
 
 	this->padding::render(matrix);
 }

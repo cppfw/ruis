@@ -22,51 +22,53 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #pragma once
 
 #include "../config.hpp"
-#include "../util/sides.hpp"
 #include "../render/renderer.hpp"
+#include "../util/sides.hpp"
 
-namespace ruis::paint{
+namespace ruis::paint {
 
 // TODO: doxygen
-class rectangle_vao{
-    utki::shared_ref<const ruis::render::renderer> renderer;
+class rectangle_vao
+{
+	utki::shared_ref<const ruis::render::renderer> renderer;
 
-    ruis::sides<ruis::real> corner_radii = 0;
+	ruis::sides<ruis::real> corner_radii = 0;
 
-    // zero means filled rectangle
-    ruis::real stroke_width = 0; // TODO: use
+	// zero means filled rectangle
+	ruis::real stroke_width = 0; // TODO: use
+
 public:
-    rectangle_vao(
-        utki::shared_ref<const ruis::render::renderer> renderer,
-        ruis::sides<ruis::real> corner_radii = 0, //
-        ruis::real stroke_width = 0
-    );
+	rectangle_vao(
+		utki::shared_ref<const ruis::render::renderer> renderer,
+		ruis::sides<ruis::real> corner_radii = 0, //
+		ruis::real stroke_width = 0
+	);
 
-    rectangle_vao(const rectangle_vao&) = delete;
-    rectangle_vao& operator=(const rectangle_vao&) = delete;
+	rectangle_vao(const rectangle_vao&) = delete;
+	rectangle_vao& operator=(const rectangle_vao&) = delete;
 
-    rectangle_vao(rectangle_vao&&) = delete;
-    rectangle_vao& operator=(rectangle_vao&&) = delete;
+	rectangle_vao(rectangle_vao&&) = delete;
+	rectangle_vao& operator=(rectangle_vao&&) = delete;
 
-    ~rectangle_vao() = default;
+	~rectangle_vao() = default;
 
-    void set(
-        ruis::sides<ruis::real> corner_radii, //
-        ruis::real stroke_width
-    );
+	void set(
+		ruis::sides<ruis::real> corner_radii, //
+		ruis::real stroke_width
+	);
 
-    void render(
-        const ruis::matrix4& matrix,//
-        const vec2& dims,
+	void render(
+		const ruis::matrix4& matrix, //
+		const vec2& dims,
 		const ruis::color& color
-    ) const;
+	) const;
 
 private:
-    void render_rounder_corners(
-        const mat4& matrix,
-        const vec2& dims,
+	void render_rounder_corners(
+		const mat4& matrix, //
+		const vec2& dims,
 		const ruis::color& color
-    ) const;
+	) const;
 
 	struct rounded_corners_texture {
 		utki::shared_ref<const render::texture_2d> tex;
@@ -103,4 +105,4 @@ private:
 	void update_rounded_corners_texture();
 };
 
-}
+} // namespace ruis::paint

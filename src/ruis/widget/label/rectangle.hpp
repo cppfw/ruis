@@ -21,9 +21,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "../base/color_widget.hpp"
-
 #include "../../paint/rectangle_vao.hpp"
+#include "../base/color_widget.hpp"
 
 #include "padding.hpp"
 

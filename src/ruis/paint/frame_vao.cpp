@@ -29,8 +29,10 @@ frame_vao::frame_vao(const utki::shared_ref<const ruis::render::renderer>& r) :
 	vao(this->renderer.get().obj().empty_vertex_array)
 {}
 
-void frame_vao::set(vector2 dims,//
-	 vector2 thickness)
+void frame_vao::set(
+	vector2 dims, //
+	vector2 thickness
+)
 {
 	constexpr auto num_frame_vertices = 8;
 	std::array<vector2, num_frame_vertices> vertices = {
