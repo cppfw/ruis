@@ -116,7 +116,45 @@ utki::shared_ref<ruis::widget> make_rectangles_window(
 						.color = 0xff800000
 					},
 					.rectangle_params{
-						.corner_radii = {0, 5_pp, 10_pp, 15_pp}
+						.corner_radii = {
+							0, // left-top
+							5_pp, // right-top
+							10_pp, // right-bottom
+							0 // left-bottom
+						}
+					}
+				},
+				{
+					m::text(c, {}, U"one side square corners"s)
+				}
+			),
+			m::gap(c,
+				{
+					.layout_params{
+						.dims = {0_px, 5_pp}
+					}
+				}
+			),
+			m::rectangle(c,
+				{
+					.padding_params{
+						.borders{
+							5_pp, // left
+							10_pp, // top
+							15_pp, // right
+							20_pp // bottom
+						}
+					},
+					.color_params{
+						.color = 0xff800000
+					},
+					.rectangle_params{
+						.corner_radii = {
+							0, // left-top
+							5_pp, // right-top
+							10_pp, // right-bottom
+							15_pp // left-bottom
+						}
 					}
 				},
 				{
