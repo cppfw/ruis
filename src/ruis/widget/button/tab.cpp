@@ -40,7 +40,7 @@ bool tab::mask_overlaps(vector2 pos)
 			// this is not the first widget in the parent
 
 			auto prev_iter = this->parent()->find(*this);
-			ASSERT(prev_iter != this->parent()->children().end())
+			utki::assert(prev_iter != this->parent()->children().end(), SL);
 			--prev_iter;
 
 			if (auto prev_tab = dynamic_cast<tab*>(&prev_iter->get())) {
