@@ -68,6 +68,27 @@
             "group": "build"
 		},
         {
+            "label": "run-touch",
+            "type": "shell",
+            "command": "make run-touch",
+            "problemMatcher": [],
+            "group": "build"
+		},
+        {
+            "label": "run-touch-dev",
+            "type": "shell",
+            "command": "make run-touch config=dev",
+            "problemMatcher": [],
+            "group": "build"
+        },
+        {
+            "label": "run-touch-gles2-dev",
+            "type": "shell",
+            "command": "make run-touch ren=gles2 config=dev",
+            "problemMatcher": [],
+            "group": "build"
+        },
+        {
             "label": "run-easing",
             "type": "shell",
             "command": "make run-easing",

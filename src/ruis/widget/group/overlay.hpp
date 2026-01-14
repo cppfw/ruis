@@ -55,7 +55,7 @@ public:
 	/**
 	 * @brief Showing context menu.
 	 * This function adds the popup widget to the overlay as the topmost widget.
-	 * The given oppup widget is wrapped into special overhead container to make it properly positioned
+	 * The given popup widget is wrapped into special overhead container to make it properly positioned
 	 * on the screen and to handle mouse clicks outside of the popup widget
 	 * (i.e. close the popup in case of mouse click outside).
 	 * @param popup - popup widget to show.

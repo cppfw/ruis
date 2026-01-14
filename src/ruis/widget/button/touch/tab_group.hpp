@@ -21,12 +21,15 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
+#include "../../../paint/rectangle_vao.hpp"
 #include "../choice_group.hpp"
 
 namespace ruis::touch {
 
 class tab_group : public choice_group
 {
+	ruis::paint::rectangle_vao selector_vao;
+
 public:
 	struct all_parameters {
 		layout::parameters layout_params;

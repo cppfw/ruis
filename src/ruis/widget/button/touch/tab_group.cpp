@@ -41,12 +41,25 @@ tab_group::tab_group(
 			.container_params = std::move(params.container_params),
 		},
 		std::move(tabs)
+	),
+	selector_vao(
+		this->context.get().renderer, //
+		{ruis::length::make_pp(10).get(this->context)} // TODO: get from params
 	)
 {}
 
 void tab_group::render(const ruis::matrix4& matrix) const
 {
-	// TODO: render selector
+	// render selector
+	if (auto active_tab = this->get_active().lock()) {
+		ruis::matrix4 matr(matrix);
+		matr.translate(active_tab->rect().p);
+		this->selector_vao.render(
+			matr, //
+			active_tab->rect().d,
+			this->context.get().style().get_color_highlight().get() // TODO: get from params
+		);
+	}
 
 	this->choice_group::render(matrix);
 }
