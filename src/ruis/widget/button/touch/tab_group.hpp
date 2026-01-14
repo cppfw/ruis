@@ -19,6 +19,12 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 /* ================ LICENSE END ================ */
 
-#include "chained_animation.hpp"
+#pragma once
 
-using namespace ruis;
+#include "../../container.hpp"
+
+namespace ruis::touch{
+class tab_group : public container{
+public:
+};
+}

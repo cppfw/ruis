@@ -1,7 +1,7 @@
 /*
 ruis - GUI framework
 
-Copyright (C) 2012-2025  Ivan Gagis <igagis@gmail.com>
+Copyright (C) 2012-2026  Ivan Gagis <igagis@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
