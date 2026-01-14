@@ -21,10 +21,42 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "../../container.hpp"
+#include "../choice_group.hpp"
 
-namespace ruis::touch{
-class tab_group : public container{
+namespace ruis::touch {
+
+class tab_group : public choice_group
+{
 public:
+	struct all_parameters {
+		layout::parameters layout_params;
+		widget::parameters widget_params;
+		container::parameters container_params;
+	};
+
+	tab_group(
+		utki::shared_ref<ruis::context> context, //
+		all_parameters params,
+		widget_list tabs
+	);
+
+	void render(const ruis::matrix4& matrix) const override;
 };
-}
+
+namespace make {
+/**
+ * @brief Create touch tab group.
+ * Default container layout is row.
+ * @param context - ruis context.
+ * @param params - touch tab group parameters.
+ * @param tabs - tabs to add to the tab group.
+ * @return Shared reference to the created tab group.
+ */
+utki::shared_ref<ruis::touch::tab_group> tab_group(
+	utki::shared_ref<ruis::context> context, //
+	ruis::touch::tab_group::all_parameters params,
+	widget_list tabs = {}
+);
+} // namespace make
+
+} // namespace ruis::touch

@@ -55,7 +55,11 @@ void choice_group::set_active_choice_button(std::weak_ptr<choice_button> cb)
 {
 	auto oldactive = this->active_choice_button.lock();
 
-	if (cb.lock() == oldactive) {
+	auto new_cb = cb.lock();
+
+	utki::assert(new_cb, SL);
+
+	if (new_cb == oldactive) {
 		return;
 	}
 

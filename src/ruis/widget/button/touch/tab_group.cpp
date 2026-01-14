@@ -23,4 +23,47 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis::touch;
 
+tab_group::tab_group(
+	utki::shared_ref<ruis::context> context, //
+	all_parameters params,
+	widget_list tabs
+) :
+	widget(
+		std::move(context), //
+		std::move(params.layout_params),
+		std::move(params.widget_params)
+	),
+	choice_group(
+		this->context, //
+		{
+			.layout_params = std::move(params.layout_params),
+			.widget_params = std::move(params.widget_params),
+			.container_params = std::move(params.container_params),
+		},
+		std::move(tabs)
+	)
+{}
 
+void tab_group::render(const ruis::matrix4& matrix) const
+{
+	// TODO: render selector
+
+	this->choice_group::render(matrix);
+}
+
+utki::shared_ref<ruis::touch::tab_group> ruis::touch::make::tab_group(
+	utki::shared_ref<ruis::context> context, //
+	ruis::touch::tab_group::all_parameters params,
+	widget_list tabs
+)
+{
+	if (!params.container_params.layout) {
+		params.container_params.layout = ruis::layout::row;
+	}
+
+	return utki::make_shared<ruis::touch::tab_group>(
+		std::move(context), //
+		std::move(params),
+		std::move(tabs)
+	);
+}

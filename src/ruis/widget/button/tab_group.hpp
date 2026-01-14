@@ -27,9 +27,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
-class tab_group :
-	virtual public widget, //
-	public choice_group
+class tab_group : public choice_group
 {
 	std::shared_ptr<const res::image> filler;
 	std::shared_ptr<const render::texture_2d> filler_texture;
