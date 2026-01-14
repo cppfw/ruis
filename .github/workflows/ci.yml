@@ -411,7 +411,7 @@ jobs:
         arch:
           - Win32
           - x64
-    name: vcpkg - windows - ${{ matrix.arch }}|${{ matrix.config }}
+    name: vcpkg - windows - ${{ matrix.arch }} | ${{ matrix.config }}
     steps:
     - name: git clone
       uses: actions/checkout@v4
