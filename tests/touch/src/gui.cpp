@@ -25,6 +25,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <ruis/widget/button/touch/tab_group.hpp>
 #include <ruis/widget/group/overlay.hpp>
 #include <ruis/widget/label/image.hpp>
+#include <ruis/widget/label/padding.hpp>
 
 using namespace std::string_literals;
 using namespace std::string_view_literals;
@@ -43,12 +44,18 @@ namespace {
 
 class tab_button :
 	public ruis::choice_button, //
-	public ruis::image
+	private ruis::container
 {
 public:
+	struct all_parameters {
+		ruis::layout::parameters layout_params;
+		ruis::widget::parameters widget_params;
+		ruis::image::parameters image_params;
+	};
+
 	tab_button(
 		utki::shared_ref<ruis::context> context, //
-		ruis::image::all_parameters params
+		all_parameters params
 	) :
 		widget(
 			std::move(context), //
@@ -58,11 +65,48 @@ public:
 		button(this->context, {}),
 		toggle_button(this->context),
 		choice_button(this->context),
-		ruis::image(
+		// clang-format off
+		ruis::container(
 			this->context, //
-			std::move(params)
+			{
+				.container_params = {
+					.layout = ruis::layout::pile
+				}
+			},
+			{
+				m::padding(
+					this->context,
+					{
+						.layout_params = {
+							.dims = {ruis::dim::fill, ruis::dim::fill}
+						},
+						.container_params = {
+							.layout = ruis::layout::pile
+						},
+						.padding_params = {
+							.borders = {10_pp}
+						}
+					},
+					{
+						m::image(this->context,
+							{
+								.layout_params = {
+									.dims = {ruis::dim::fill, ruis::dim::fill}
+								},
+								.image_params = std::move(params.image_params)
+							}
+						)
+					}
+				)
+			}
 		)
+	// clang-format on
 	{}
+
+	bool on_mouse_button(const ruis::mouse_button_event& event) override
+	{
+		return this->choice_button::on_mouse_button(event);
+	}
 };
 
 utki::shared_ref<ruis::widget> make_tab_button(
@@ -72,7 +116,7 @@ utki::shared_ref<ruis::widget> make_tab_button(
 {
 	// clang-format off
 	return utki::make_shared<tab_button>(std::move(c),
-		ruis::image::all_parameters{
+		tab_button::all_parameters{
 			.layout_params = {
 				.dims = {ruis::dim::fill, ruis::dim::fill},
 				.weight = 1
