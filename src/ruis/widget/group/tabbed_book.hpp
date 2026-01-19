@@ -36,7 +36,7 @@ class tabbed_book :
 	private ruis::container
 {
 	// NOLINTNEXTLINE(clang-analyzer-webkit.NoUncountedMemberChecker, "false-positive")
-	ruis::tab_group& tab_group;
+	ruis::choice_group& choice_group;
 
 	// NOLINTNEXTLINE(clang-analyzer-webkit.NoUncountedMemberChecker, "false-positive")
 	ruis::book& book;
@@ -66,11 +66,11 @@ public:
 		> book_factory;
 
 		std::function< //
-			utki::shared_ref<ruis::tab_group>(
+			utki::shared_ref<ruis::choice_group>(
 				utki::shared_ref<ruis::context>, //
 				widget_list
 			) //
-		> tab_group_factory;
+		> choice_group_factory;
 	};
 
 	struct all_parameters {
@@ -97,7 +97,7 @@ private:
 		utki::shared_ref<ruis::context> context, //
 		all_parameters& params,
 		pages_list_type& pages,
-		utki::shared_ref<ruis::tab_group> tab_group,
+		utki::shared_ref<ruis::choice_group> choice_group,
 		utki::shared_ref<ruis::book> book
 	);
 

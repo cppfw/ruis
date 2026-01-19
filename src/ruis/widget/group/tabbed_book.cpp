@@ -45,10 +45,27 @@ tabbed_book::tabbed_book(
 				children.emplace_back(p.first);
 			}
 
-			if(!params.tabbed_book_params.tab_group_factory){
-				throw std::logic_error("tabbed_book::tabbed_book(): params.tabbed_book_params.tab_group_factory is null");
+			if(!params.tabbed_book_params.choice_group_factory){
+				// clang-format off
+				params.tabbed_book_params.choice_group_factory = [](
+						utki::shared_ref<ruis::context> context,
+						widget_list tabs
+					){
+						return ruis::make::choice_group(std::move(context),
+							{
+								.layout_params{
+									.dims{ruis::dim::fill, ruis::dim::min}
+								},
+								.container_params{
+									.layout = ruis::layout::row
+								}
+							},
+							std::move(tabs)
+						);
+					};
+				// clang-format on
 			}
-			return params.tabbed_book_params.tab_group_factory(
+			return params.tabbed_book_params.choice_group_factory(
 				context,
 				std::move(children)
 			);
@@ -61,7 +78,22 @@ tabbed_book::tabbed_book(
 			}
 
 			if(!params.tabbed_book_params.book_factory){
-				throw std::logic_error("tabbed_book::tabbed_book(): params.tabbed_book_params.book_factory is null");
+				// clang-format off
+				params.tabbed_book_params.book_factory = [](
+						utki::shared_ref<ruis::context> context, //
+						std::vector<utki::shared_ref<page>> pages
+					){
+						return ruis::make::book(std::move(context),
+							{
+								.layout_params{
+									.dims{ruis::dim::fill, ruis::dim::max},
+									.weight = 1
+								}
+							},
+							std::move(pages)
+						);
+					};
+				// clang-format on
 			}
 			return params.tabbed_book_params.book_factory(
 				context, //
@@ -75,7 +107,7 @@ tabbed_book::tabbed_book(
 	utki::shared_ref<ruis::context> context, //
 	all_parameters& params,
 	pages_list_type& pages,
-	utki::shared_ref<ruis::tab_group> tab_group,
+	utki::shared_ref<ruis::choice_group> choice_group,
 	utki::shared_ref<ruis::book> book
 ) :
 	widget(
@@ -91,12 +123,12 @@ tabbed_book::tabbed_book(
 			}
 		},
 		{
-			tab_group,
+			choice_group,
 			book
 		}
 	),
 	// clang-format on
-	tab_group(tab_group),
+	choice_group(choice_group),
 	book(book), //
 	tab_page_pairs(std::move(pages))
 {
@@ -137,7 +169,7 @@ void tabbed_book::add(
 {
 	// TODO: what if exception is thrown on any step below?
 
-	this->tab_group.push_back(tab);
+	this->choice_group.push_back(tab);
 	this->book.push(page);
 
 	// make the tab active
@@ -169,20 +201,20 @@ void tabbed_book::activate_another_tab(choice_button& t)
 	}
 
 	// find another tab and activate it
-	auto i = this->tab_group.find(t);
-	utki::assert(i != this->tab_group.end(), SL);
-	utki::assert(!this->tab_group.empty(), SL);
-	if (i == this->tab_group.begin()) {
+	auto i = this->choice_group.find(t);
+	utki::assert(i != this->choice_group.end(), SL);
+	utki::assert(!this->choice_group.empty(), SL);
+	if (i == this->choice_group.begin()) {
 		auto ni = std::next(i);
-		if (ni != this->tab_group.end()) {
+		if (ni != this->choice_group.end()) {
 			auto next_tab = std::dynamic_pointer_cast<ruis::choice_button>(ni->to_shared_ptr());
 			utki::assert(next_tab, SL);
 			next_tab->set_pressed(true);
 		}
 	} else {
-		utki::assert(i != this->tab_group.begin(), SL);
+		utki::assert(i != this->choice_group.begin(), SL);
 		auto ni = std::prev(i);
-		utki::assert(ni >= this->tab_group.begin(), SL);
+		utki::assert(ni >= this->choice_group.begin(), SL);
 		auto next_tab = std::dynamic_pointer_cast<ruis::choice_button>(ni->to_shared_ptr());
 		utki::assert(next_tab, SL);
 		next_tab->set_pressed(true);
@@ -200,7 +232,7 @@ utki::shared_ref<page> tabbed_book::tear_out(choice_button& t)
 
 	this->tab_page_pairs.erase(i);
 
-	utki::assert(t.parent() == &this->tab_group, SL);
+	utki::assert(t.parent() == &this->choice_group, SL);
 
 	this->activate_another_tab(t);
 
@@ -246,28 +278,9 @@ utki::shared_ref<ruis::tabbed_book> ruis::make::tabbed_book(
 		pages
 )
 {
-	if(!params.tabbed_book_params.book_factory){
+	if(!params.tabbed_book_params.choice_group_factory){
 		// clang-format off
-		params.tabbed_book_params.book_factory = [](
-				utki::shared_ref<ruis::context> context, //
-				std::vector<utki::shared_ref<page>> pages
-			){
-				return ruis::make::book(std::move(context),
-					{
-						.layout_params{
-							.dims{ruis::dim::fill, ruis::dim::max},
-							.weight = 1
-						}
-					},
-					std::move(pages)
-				);
-			};
-		// clang-format on
-	}
-
-	if(!params.tabbed_book_params.tab_group_factory){
-		// clang-format off
-		params.tabbed_book_params.tab_group_factory = [](
+		params.tabbed_book_params.choice_group_factory = [](
 				utki::shared_ref<ruis::context> context,
 				widget_list tabs
 			){
