@@ -32,16 +32,49 @@ using namespace ruis::make;
 tabbed_book::tabbed_book(
 	utki::shared_ref<ruis::context> context, //
 	all_parameters params,
-	std::vector< //
-		std::pair<
-			utki::shared_ref<choice_button>, //
-			utki::shared_ref<page> //
-			> //
-		> //
-		pages
+	pages_list_type pages
+) :
+	tabbed_book(
+		context,
+		params,
+		pages,
+		[&](){
+			widget_list children;
+			children.reserve(pages.size());
+			for(const auto& p : pages){
+				children.emplace_back(p.first); // TODO: move?
+			}
+
+			utki::assert(params.tabbed_book_params.tab_group_factory, SL);
+			return params.tabbed_book_params.tab_group_factory(
+				context,
+				std::move(children)
+			);
+		}(),
+		[&](){
+			std::vector<utki::shared_ref<page>> children;
+			children.reserve(pages.size());
+			for(const auto& p : pages){
+				children.emplace_back(p.second); // TODO: move?
+			}
+			utki::assert(params.tabbed_book_params.book_factory, SL);
+			return params.tabbed_book_params.book_factory(
+				context, //
+				std::move(children)
+			);
+		}()
+	)
+{}
+
+tabbed_book::tabbed_book(
+	utki::shared_ref<ruis::context> context, //
+	all_parameters& params,
+	pages_list_type& pages,
+	utki::shared_ref<ruis::tab_group> tab_group,
+	utki::shared_ref<ruis::book> book
 ) :
 	widget(
-		std::move(context), //
+		context, //
 		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
@@ -49,52 +82,17 @@ tabbed_book::tabbed_book(
 	container(this->context,
 		{
 			.container_params{
-				.layout = ruis::layout::column
+				.layout = ruis::layout::column // TODO: get from params
 			}
 		},
 		{
-			m::tab_group(this->context,
-				{
-					.layout_params{
-						.dims{ruis::dim::fill, ruis::dim::min}
-					},
-					.widget_params{
-						.id = "ruis_tab_group"s
-					}
-				},
-				[&](){
-					std::vector<utki::shared_ref<widget>> children;
-					children.reserve(pages.size());
-					for(const auto& p : pages){
-						children.emplace_back(p.first); // TODO: move?
-					}
-					return children;
-				}()
-			),
-			m::book(this->context,
-				{
-					.layout_params{
-						.dims{ruis::dim::fill, ruis::dim::max},
-						.weight = 1
-					},
-					.widget_params{
-						.id = "ruis_book"s
-					}
-				},
-				[&](){
-					std::vector<utki::shared_ref<page>> children;
-					children.reserve(pages.size());
-					for(const auto& p : pages){
-						children.emplace_back(p.second); // TODO: move?
-					}
-					return children;
-				}()
-			)
+			tab_group,
+			book
 		}
 	),
 	// clang-format on
-	tab_group(this->get_widget_as<ruis::tab_group>("ruis_tab_group")),
-	book(this->get_widget_as<ruis::book>("ruis_book")), //
+	tab_group(tab_group),
+	book(book), //
 	tab_page_pairs(std::move(pages))
 {
 	for (auto& pair : this->tab_page_pairs) {

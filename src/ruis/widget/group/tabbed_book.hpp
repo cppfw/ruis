@@ -58,8 +58,50 @@ class tabbed_book :
 
 public:
 	struct parameters{
-		std::shared_ptr<ruis::book> book;
-		std::shared_ptr<ruis::tab_group> tab_group;
+		// clang-format off
+		std::function<
+			utki::shared_ref<ruis::book>(
+				utki::shared_ref<ruis::context>, //
+				std::vector<utki::shared_ref<page>>
+			)
+		> book_factory =
+			[](
+				utki::shared_ref<ruis::context> context, //
+				std::vector<utki::shared_ref<page>> pages
+			){
+				return ruis::make::book(std::move(context),
+					{
+						.layout_params{
+							.dims{ruis::dim::fill, ruis::dim::max},
+							.weight = 1
+						}
+					},
+					std::move(pages)
+				);
+			};
+		// clang-format on
+
+		// clang-format off
+		std::function<
+			utki::shared_ref<ruis::tab_group>(
+				utki::shared_ref<ruis::context>,
+				widget_list
+			)
+		> tab_group_factory =
+			[](
+				utki::shared_ref<ruis::context> context,
+				widget_list tabs
+			){
+				return ruis::make::tab_group(std::move(context),
+					{
+						.layout_params{
+							.dims{ruis::dim::fill, ruis::dim::min}
+						}
+					},
+					std::move(tabs)
+				);
+			};
+		// clang-format on
 	};
 
 	struct all_parameters {
@@ -68,17 +110,29 @@ public:
 		parameters tabbed_book_params;
 	};
 
+	using pages_list_type = std::vector< //
+		std::pair<
+			utki::shared_ref<choice_button>, //
+			utki::shared_ref<page> //
+			> //
+		>;
+
 	tabbed_book(
 		utki::shared_ref<ruis::context> context, //
 		all_parameters params,
-		std::vector< //
-			std::pair<
-				utki::shared_ref<choice_button>, //
-				utki::shared_ref<page> //
-				> //
-			> //
-			pages
+		pages_list_type pages
 	);
+
+private:
+	tabbed_book(
+		utki::shared_ref<ruis::context> context, //
+		all_parameters& params,
+		pages_list_type& pages,
+		utki::shared_ref<ruis::tab_group> tab_group,
+		utki::shared_ref<ruis::book> book
+	);
+
+public:
 
 	void add(
 		utki::shared_ref<choice_button> tab, //
@@ -118,19 +172,6 @@ inline utki::shared_ref<ruis::tabbed_book> tabbed_book(
 		pages = {}
 )
 {
-	if(!params.tabbed_book_params.book){
-		params.tabbed_book_params.book = make::book(context, //
-			{
-			// TODO:
-		});
-	}
-
-	if(!params.tabbed_book_params.tab_group){
-		params.tabbed_book_params.tab_group = make::tab_group(context, {
-			// TODO:
-		});
-	}
-
 	return utki::make_shared<ruis::tabbed_book>(
 		std::move(context), //
 		std::move(params),
