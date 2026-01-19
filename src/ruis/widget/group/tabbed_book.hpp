@@ -58,50 +58,19 @@ class tabbed_book :
 
 public:
 	struct parameters{
-		// clang-format off
-		std::function<
+		std::function< //
 			utki::shared_ref<ruis::book>(
 				utki::shared_ref<ruis::context>, //
 				std::vector<utki::shared_ref<page>>
-			)
-		> book_factory =
-			[](
-				utki::shared_ref<ruis::context> context, //
-				std::vector<utki::shared_ref<page>> pages
-			){
-				return ruis::make::book(std::move(context),
-					{
-						.layout_params{
-							.dims{ruis::dim::fill, ruis::dim::max},
-							.weight = 1
-						}
-					},
-					std::move(pages)
-				);
-			};
-		// clang-format on
+			) //
+		> book_factory;
 
-		// clang-format off
-		std::function<
+		std::function< //
 			utki::shared_ref<ruis::tab_group>(
-				utki::shared_ref<ruis::context>,
+				utki::shared_ref<ruis::context>, //
 				widget_list
-			)
-		> tab_group_factory =
-			[](
-				utki::shared_ref<ruis::context> context,
-				widget_list tabs
-			){
-				return ruis::make::tab_group(std::move(context),
-					{
-						.layout_params{
-							.dims{ruis::dim::fill, ruis::dim::min}
-						}
-					},
-					std::move(tabs)
-				);
-			};
-		// clang-format on
+			) //
+		> tab_group_factory;
 	};
 
 	struct all_parameters {
@@ -160,7 +129,7 @@ public:
 };
 
 namespace make {
-inline utki::shared_ref<ruis::tabbed_book> tabbed_book(
+utki::shared_ref<ruis::tabbed_book> tabbed_book(
 	utki::shared_ref<ruis::context> context, //
 	ruis::tabbed_book::all_parameters params,
 	std::vector< //
@@ -170,14 +139,7 @@ inline utki::shared_ref<ruis::tabbed_book> tabbed_book(
 			> //
 		> //
 		pages = {}
-)
-{
-	return utki::make_shared<ruis::tabbed_book>(
-		std::move(context), //
-		std::move(params),
-		std::move(pages)
-	);
-}
+);
 } // namespace make
 
 } // namespace ruis

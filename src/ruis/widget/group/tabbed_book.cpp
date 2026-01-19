@@ -42,10 +42,12 @@ tabbed_book::tabbed_book(
 			widget_list children;
 			children.reserve(pages.size());
 			for(const auto& p : pages){
-				children.emplace_back(p.first); // TODO: move?
+				children.emplace_back(p.first);
 			}
 
-			utki::assert(params.tabbed_book_params.tab_group_factory, SL);
+			if(!params.tabbed_book_params.tab_group_factory){
+				throw std::logic_error("tabbed_book::tabbed_book(): params.tabbed_book_params.tab_group_factory is null");
+			}
 			return params.tabbed_book_params.tab_group_factory(
 				context,
 				std::move(children)
@@ -55,9 +57,12 @@ tabbed_book::tabbed_book(
 			std::vector<utki::shared_ref<page>> children;
 			children.reserve(pages.size());
 			for(const auto& p : pages){
-				children.emplace_back(p.second); // TODO: move?
+				children.emplace_back(p.second);
 			}
-			utki::assert(params.tabbed_book_params.book_factory, SL);
+
+			if(!params.tabbed_book_params.book_factory){
+				throw std::logic_error("tabbed_book::tabbed_book(): params.tabbed_book_params.book_factory is null");
+			}
 			return params.tabbed_book_params.book_factory(
 				context, //
 				std::move(children)
@@ -226,5 +231,61 @@ auto tabbed_book::find_pair(const ruis::page& p) -> decltype(tab_page_pairs)::it
 		[&p](const auto& pair) {
 			return &p == &pair.second.get();
 		}
+	);
+}
+
+utki::shared_ref<ruis::tabbed_book> ruis::make::tabbed_book(
+	utki::shared_ref<ruis::context> context, //
+	ruis::tabbed_book::all_parameters params,
+	std::vector< //
+		std::pair<
+			utki::shared_ref<ruis::choice_button>, //
+			utki::shared_ref<ruis::page> //
+			> //
+		> //
+		pages
+)
+{
+	if(!params.tabbed_book_params.book_factory){
+		// clang-format off
+		params.tabbed_book_params.book_factory = [](
+				utki::shared_ref<ruis::context> context, //
+				std::vector<utki::shared_ref<page>> pages
+			){
+				return ruis::make::book(std::move(context),
+					{
+						.layout_params{
+							.dims{ruis::dim::fill, ruis::dim::max},
+							.weight = 1
+						}
+					},
+					std::move(pages)
+				);
+			};
+		// clang-format on
+	}
+
+	if(!params.tabbed_book_params.tab_group_factory){
+		// clang-format off
+		params.tabbed_book_params.tab_group_factory = [](
+				utki::shared_ref<ruis::context> context,
+				widget_list tabs
+			){
+				return ruis::make::tab_group(std::move(context),
+					{
+						.layout_params{
+							.dims{ruis::dim::fill, ruis::dim::min}
+						}
+					},
+					std::move(tabs)
+				);
+			};
+		// clang-format on
+	}
+
+	return utki::make_shared<ruis::tabbed_book>(
+		std::move(context), //
+		std::move(params),
+		std::move(pages)
 	);
 }
