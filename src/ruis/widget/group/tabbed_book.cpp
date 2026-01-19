@@ -38,14 +38,14 @@ tabbed_book::tabbed_book(
 		context,
 		params,
 		pages,
-		[&](){
+		[&]() {
 			widget_list children;
 			children.reserve(pages.size());
-			for(const auto& p : pages){
+			for (const auto& p : pages) {
 				children.emplace_back(p.first);
 			}
 
-			if(!params.tabbed_book_params.choice_group_factory){
+			if (!params.tabbed_book_params.choice_group_factory) {
 				// clang-format off
 				params.tabbed_book_params.choice_group_factory = [](
 						utki::shared_ref<ruis::context> context,
@@ -66,18 +66,18 @@ tabbed_book::tabbed_book(
 				// clang-format on
 			}
 			return params.tabbed_book_params.choice_group_factory(
-				context,
+				context, //
 				std::move(children)
 			);
 		}(),
-		[&](){
+		[&]() {
 			std::vector<utki::shared_ref<page>> children;
 			children.reserve(pages.size());
-			for(const auto& p : pages){
+			for (const auto& p : pages) {
 				children.emplace_back(p.second);
 			}
 
-			if(!params.tabbed_book_params.book_factory){
+			if (!params.tabbed_book_params.book_factory) {
 				// clang-format off
 				params.tabbed_book_params.book_factory = [](
 						utki::shared_ref<ruis::context> context, //
@@ -278,7 +278,7 @@ utki::shared_ref<ruis::tabbed_book> ruis::make::tabbed_book(
 		pages
 )
 {
-	if(!params.tabbed_book_params.choice_group_factory){
+	if (!params.tabbed_book_params.choice_group_factory) {
 		// clang-format off
 		params.tabbed_book_params.choice_group_factory = [](
 				utki::shared_ref<ruis::context> context,

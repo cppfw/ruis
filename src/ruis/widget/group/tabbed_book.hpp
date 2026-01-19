@@ -57,7 +57,7 @@ class tabbed_book :
 	void set_tab_pressed_change_handler(typename decltype(tab_page_pairs)::value_type& pair);
 
 public:
-	struct parameters{
+	struct parameters {
 		std::function< //
 			utki::shared_ref<ruis::book>(
 				utki::shared_ref<ruis::context>, //
@@ -70,7 +70,8 @@ public:
 				utki::shared_ref<ruis::context>, //
 				widget_list
 			) //
-		> choice_group_factory;
+			>
+			choice_group_factory;
 	};
 
 	struct all_parameters {
@@ -102,7 +103,6 @@ private:
 	);
 
 public:
-
 	void add(
 		utki::shared_ref<choice_button> tab, //
 		utki::shared_ref<ruis::page> page
