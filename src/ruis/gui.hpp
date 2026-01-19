@@ -99,7 +99,7 @@ public:
 	 * - z-axis away.
 	 * @param matrix - use this transformation matrix. Usually a renderer's initial matrix.
 	 */
-	void render(const matrix4& matrix) const;
+	void render(const mat4& matrix) const;
 
 	/**
 	 * @brief Initialize standard widgets library.
@@ -116,7 +116,7 @@ public:
 	 * @param pos - new position of the mouse pointer.
 	 * @param id - ID of the mouse pointer.
 	 */
-	void send_mouse_move(const vector2& pos, unsigned id);
+	void send_mouse_move(const vec2& pos, unsigned id);
 
 	/**
 	 * @brief Feed in the mouse button event to GUI.
@@ -125,7 +125,7 @@ public:
 	 * @param button - mouse button.
 	 * @param id - ID of the mouse pointer.
 	 */
-	void send_mouse_button(bool is_down, const vector2& pos, mouse_button button, unsigned id);
+	void send_mouse_button(bool is_down, const vec2& pos, mouse_button button, unsigned id);
 
 	/**
 	 * @brief Feed in mouse hover event to GUI.

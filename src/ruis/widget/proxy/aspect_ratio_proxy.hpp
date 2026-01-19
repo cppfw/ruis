@@ -62,7 +62,7 @@ public:
 		return this->params.x_above_y;
 	}
 
-	ruis::vector2 measure(const ruis::vector2& quotum) const override;
+	ruis::vec2 measure(const ruis::vec2& quotum) const override;
 };
 
 namespace make {

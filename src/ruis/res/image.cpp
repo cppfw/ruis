@@ -52,7 +52,7 @@ public:
 
 	utki::shared_ref<const render::texture_2d> get(
 		const ruis::units& units, //
-		vector2 for_dims
+		vec2 for_dims
 	) const override
 	{
 		return this->tex_2d;
@@ -111,7 +111,7 @@ public:
 
 	utki::shared_ref<const render::texture_2d> get(
 		const ruis::units& units, //
-		vector2 for_dims
+		vec2 for_dims
 	) const override
 	{
 		// TODO: develop algorithm to go through cache from time to time and drop zombie textures

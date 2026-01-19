@@ -47,9 +47,9 @@ text::text(
 	)
 {}
 
-void text::render(const ruis::matrix4& matrix) const
+void text::render(const ruis::mat4& matrix) const
 {
-	ruis::matrix4 matr(matrix);
+	ruis::mat4 matr(matrix);
 
 	using std::round;
 

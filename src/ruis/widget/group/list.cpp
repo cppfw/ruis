@@ -203,7 +203,7 @@ bool list::arrange_widget(
 	widget_list::const_iterator& insert_before
 )
 {
-	vector2 dim = dims_for_widget(w.get(), this->rect().d);
+	vec2 dim = dims_for_widget(w.get(), this->rect().d);
 
 	w.get().resize(dim);
 
@@ -211,7 +211,7 @@ bool list::arrange_widget(
 	unsigned trans_index = this->get_trans_index();
 
 	{
-		vector2 to;
+		vec2 to;
 		to[long_index] = pos;
 		to[trans_index] = 0;
 		w.get().move_to(to);
@@ -319,7 +319,7 @@ void list::update_tail_items_info()
 
 		auto w = this->get_provider().get_widget(i - 1);
 
-		vector2 d = dims_for_widget(w.get(), this->rect().d);
+		vec2 d = dims_for_widget(w.get(), this->rect().d);
 
 		auto item_dim = d[long_index];
 		dim -= item_dim;
@@ -383,7 +383,7 @@ void list::scroll_by(real delta)
 			})
 			for (; this->pos_index < this->first_tail_item_index;) {
 				auto w = this->get_provider().get_widget(this->pos_index);
-				vector2 d = dims_for_widget(w.get(), this->rect().d);
+				vec2 d = dims_for_widget(w.get(), this->rect().d);
 				this->push_back(w); // this is just optimization, to avoid creating same widget twice
 				if (d[long_index] > delta) {
 					this->pos_offset = delta;
@@ -406,7 +406,7 @@ void list::scroll_by(real delta)
 				ASSERT(this->added_index == this->pos_index)
 				--this->pos_index;
 				auto w = this->get_provider().get_widget(this->pos_index);
-				vector2 d = dims_for_widget(w.get(), this->rect().d);
+				vec2 d = dims_for_widget(w.get(), this->rect().d);
 				this->insert(
 					w,
 					this->children().begin()
@@ -426,12 +426,12 @@ void list::scroll_by(real delta)
 	this->notify_scroll_pos_changed(old_index, old_offset);
 }
 
-ruis::vector2 list::measure(const ruis::vector2& quotum) const
+ruis::vec2 list::measure(const ruis::vec2& quotum) const
 {
 	unsigned long_index = this->get_long_index();
 	unsigned trans_index = this->get_trans_index();
 
-	vector2 ret(quotum);
+	vec2 ret(quotum);
 
 	using std::max;
 	ret[long_index] = max(ret[long_index], real(0)); // clamp bottom

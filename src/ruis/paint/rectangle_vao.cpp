@@ -58,7 +58,7 @@ void rectangle_vao::set(
 }
 
 void rectangle_vao::render(
-	const ruis::matrix4& matrix, //
+	const ruis::mat4& matrix, //
 	const vec2& dims,
 	const ruis::color& color
 ) const
@@ -68,7 +68,7 @@ void rectangle_vao::render(
 	r.rendering_context.get().set_simple_alpha_blending();
 
 	if (!this->rounded_corners_tex) {
-		ruis::matrix4 matr(matrix);
+		ruis::mat4 matr(matrix);
 		matr.scale(dims);
 
 		r.shaders().color_pos->render(

@@ -58,7 +58,7 @@ public:
 	);
 
 	void render(
-		const ruis::matrix4& matrix, //
+		const ruis::mat4& matrix, //
 		const vec2& dims,
 		const ruis::color& color
 	) const;

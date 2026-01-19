@@ -28,7 +28,7 @@ using namespace ruis::res;
 
 ruis::res::cursor::cursor(
 	utki::shared_ref<const ruis::res::image> image, //
-	const vector2& hotspot
+	const vec2& hotspot
 ) :
 	image_v(std::move(image)),
 	hotspot_v(hotspot)
@@ -40,7 +40,7 @@ utki::shared_ref<cursor> cursor::load(
 	const fsif::file& fi
 )
 {
-	vector2 hotspot;
+	vec2 hotspot;
 	bool hotspot_set = false;
 
 	const tml::leaf* image_res_id = nullptr;

@@ -136,11 +136,11 @@ freetype_face::glyph freetype_face::load_glyph(char32_t c, unsigned font_size) c
 	return glyph{
 		// vertices
 		{
-         (ruis::vector2(real(m->horiBearingX), -real(m->horiBearingY)) / real(freetype_granularity)),
-         (ruis::vector2(real(m->horiBearingX), real(m->height - m->horiBearingY)) / real(freetype_granularity)),
-         (ruis::vector2(real(m->horiBearingX + m->width), real(m->height - m->horiBearingY)) /
+         (ruis::vec2(real(m->horiBearingX), -real(m->horiBearingY)) / real(freetype_granularity)),
+         (ruis::vec2(real(m->horiBearingX), real(m->height - m->horiBearingY)) / real(freetype_granularity)),
+         (ruis::vec2(real(m->horiBearingX + m->width), real(m->height - m->horiBearingY)) /
 			 real(freetype_granularity)),
-         (ruis::vector2(real(m->horiBearingX + m->width), -real(m->horiBearingY)) / real(freetype_granularity)) //
+         (ruis::vec2(real(m->horiBearingX + m->width), -real(m->horiBearingY)) / real(freetype_granularity)) //
 		},
 		// image
 		rasterimage::image<uint8_t, 1>::make(
@@ -255,7 +255,7 @@ const texture_font::glyph& texture_font::get_glyph(char32_t c) const
 
 real texture_font::render_glyph_internal(
 	render::renderer& renderer, //
-	const ruis::matrix4& matrix,
+	const ruis::mat4& matrix,
 	const ruis::color& color,
 	char32_t ch
 ) const
@@ -340,7 +340,7 @@ ruis::rect texture_font::get_bounding_box_internal(std::u32string_view str, unsi
 
 font::render_result texture_font::render_internal(
 	render::renderer& renderer, //
-	const ruis::matrix4& matrix,
+	const ruis::mat4& matrix,
 	const ruis::color& color,
 	const std::u32string_view str,
 	unsigned tab_size,
@@ -355,7 +355,7 @@ font::render_result texture_font::render_internal(
 
 	renderer.rendering_context.get().set_simple_alpha_blending();
 
-	ruis::matrix4 matr(matrix);
+	ruis::mat4 matr(matrix);
 
 	real space_advance = this->get_glyph(U' ').advance;
 

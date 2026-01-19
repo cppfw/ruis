@@ -131,7 +131,7 @@ private:
 
 protected:
 	void render_child(
-		const matrix4& matrix, //
+		const mat4& matrix, //
 		const widget& c
 	) const;
 
@@ -161,7 +161,7 @@ public:
 		return this->layout.get();
 	}
 
-	void render(const matrix4& matrix) const override;
+	void render(const mat4& matrix) const override;
 
 	bool on_mouse_button(const mouse_button_event& event) override;
 
@@ -169,7 +169,7 @@ public:
 
 	void on_hovered_change(unsigned pointer_id) override;
 
-	ruis::vector2 measure(const ruis::vector2& quotum) const override;
+	ruis::vec2 measure(const ruis::vec2& quotum) const override;
 
 	/**
 	 * @brief Layout child widgets.

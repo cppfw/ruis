@@ -39,8 +39,8 @@ public:
 	abstract_layout(abstract_layout&&) = delete;
 	abstract_layout& operator=(abstract_layout&&) = delete;
 
-	virtual vector2 measure(
-		const vector2& quotum, //
+	virtual vec2 measure(
+		const vec2& quotum, //
 		const_widget_list& widgets
 	) const = 0;
 
@@ -50,7 +50,7 @@ public:
 	 * @param widgets - widgets to arrange.
 	 */
 	virtual void lay_out(
-		const vector2& dims, //
+		const vec2& dims, //
 		semiconst_widget_list& widgets
 	) const = 0;
 

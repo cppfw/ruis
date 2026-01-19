@@ -10,7 +10,7 @@ class cube_widget :
 {
 	std::shared_ptr<const ruis::res::texture_2d> tex;
 
-	ruis::quaternion rot = ruis::quaternion().set_identity();
+	ruis::quat rot = ruis::quat().set_identity();
 public:
 	std::shared_ptr<ruis::render::vertex_array> cubeVAO;
 
@@ -29,7 +29,7 @@ public:
 
 	void update(uint32_t dt) override;
 
-	void render(const ruis::matrix4& matrix)const override;
+	void render(const ruis::mat4& matrix)const override;
 };
 
 namespace make{

@@ -79,7 +79,7 @@ public:
 	 */
 	virtual utki::shared_ref<const render::texture_2d> get(
 		const ruis::units& units, //
-		vector2 for_dims = 0
+		vec2 for_dims = 0
 	) const = 0;
 
 private:

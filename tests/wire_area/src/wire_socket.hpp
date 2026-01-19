@@ -67,7 +67,7 @@ public:
 	 * @return Array of two vectors. First is the position of the outlet within the widget.
 	 *         Second is the unit vector of outlet wire direction.
 	 */
-	std::array<ruis::vector2, 2> outlet_pos()const noexcept;
+	std::array<ruis::vec2, 2> outlet_pos()const noexcept;
 
 	void connect(const std::shared_ptr<wire_socket>& o = nullptr);
 	void disconnect();

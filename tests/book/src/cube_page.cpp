@@ -20,14 +20,14 @@ namespace{
 class cube_widget : public ruis::widget, public ruis::updateable{
 	std::shared_ptr<const ruis::res::texture_2d> tex;
 	
-	ruis::quaternion rot = ruis::quaternion().set_identity();
+	ruis::quat rot = ruis::quat().set_identity();
 public:
 	std::shared_ptr<ruis::render::vertex_array> cube_vao;
 	
 	cube_widget(utki::shared_ref<ruis::context> context) :
 			widget(std::move(context), {}, {})
 	{
-		std::array<ruis::vector3, 36> cube_pos = {{
+		std::array<ruis::vec3, 36> cube_pos = {{
 			{-1, -1, 1}, {1, -1, 1}, {-1, 1, 1},
 			{ 1, -1, 1}, {1,  1, 1}, {-1, 1, 1},
 			
@@ -49,7 +49,7 @@ public:
 		
 		auto pos_vbo = this->context.get().renderer.get().rendering_context.get().make_vertex_buffer(utki::make_span(cube_pos));
 		
-		std::array<ruis::vector2, 36> cube_tex = {{
+		std::array<ruis::vec2, 36> cube_tex = {{
 			{0, 0}, {1, 0}, {0, 1},
 			{1, 0}, {1, 1}, {0, 1},
 			{0, 0}, {1, 0}, {0, 1},
@@ -91,7 +91,7 @@ public:
 	void update(uint32_t dt) override{
 		this->fpsSecCounter += dt;
 		++this->fps;
-		this->rot *= ruis::quaternion().set_rotation(r4::vector3<float>(1, 2, 1).normalize(), 1.5f * (float(dt) / 1000));
+		this->rot *= ruis::quat().set_rotation(r4::vector3<float>(1, 2, 1).normalize(), 1.5f * (float(dt) / 1000));
 		if(this->fpsSecCounter >= 1000){
 			std::cout << "fps = " << std::dec << fps << std::endl;
 			this->fpsSecCounter = 0;
@@ -100,10 +100,10 @@ public:
 		this->clear_cache();
 	}
 	
-	void render(const ruis::matrix4& matrix)const override{
+	void render(const ruis::mat4& matrix)const override{
 		this->widget::render(matrix);
 		
-		ruis::matrix4 matr(matrix);
+		ruis::mat4 matr(matrix);
 		matr.scale(this->rect().d / 2);
 		matr.translate(1, 1);
 		matr.scale(1, -1);

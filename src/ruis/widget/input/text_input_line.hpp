@@ -79,9 +79,9 @@ public:
 
 	~text_input_line() override = default;
 
-	vector2 measure(const ruis::vector2& quotum) const noexcept override;
+	vec2 measure(const ruis::vec2& quotum) const noexcept override;
 
-	void render(const ruis::matrix4& matrix) const override;
+	void render(const ruis::mat4& matrix) const override;
 
 	bool on_mouse_button(const mouse_button_event& event) override;
 

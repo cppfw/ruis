@@ -38,11 +38,11 @@ gradient::gradient( //
 	params(std::move(params.gradient_params))
 {}
 
-void gradient::render(const matrix4& matrix) const
+void gradient::render(const mat4& matrix) const
 {
 	this->context.get().renderer.get().rendering_context.get().set_simple_alpha_blending();
 
-	ruis::matrix4 matr(matrix);
+	ruis::mat4 matr(matrix);
 	matr.scale(this->rect().d);
 
 	if (this->params.gradient) {

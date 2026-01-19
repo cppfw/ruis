@@ -47,7 +47,7 @@ void gap::render(const mat4& matrix) const
 	// draw rectangle
 	auto& r = this->context.get().renderer.get();
 
-	ruis::matrix4 matr(matrix);
+	ruis::mat4 matr(matrix);
 	matr.scale(this->rect().d);
 
 	r.shaders().color_pos->render(

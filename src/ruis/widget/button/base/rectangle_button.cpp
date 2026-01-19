@@ -23,7 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
-void rectangle_button::render(const matrix4& matrix) const
+void rectangle_button::render(const mat4& matrix) const
 {
 	this->rectangle::render(matrix);
 }

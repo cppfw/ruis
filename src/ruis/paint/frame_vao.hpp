@@ -44,12 +44,12 @@ public:
 	~frame_vao() = default;
 
 	void set(
-		vector2 dims, //
-		vector2 thickness
+		vec2 dims, //
+		vec2 thickness
 	);
 
 	void render(
-		const matrix4& matrix, //
+		const mat4& matrix, //
 		ruis::color color
 	) const;
 };

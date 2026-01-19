@@ -34,12 +34,12 @@ linear_layout::linear_layout(bool is_vertical) :
 
 namespace {
 struct info {
-	ruis::vector2 measured_dims;
+	ruis::vec2 measured_dims;
 };
 } // namespace
 
 void linear_layout::lay_out(
-	const vector2& dims, //
+	const vec2& dims, //
 	semiconst_widget_list& widgets
 ) const
 {
@@ -64,7 +64,7 @@ void linear_layout::lay_out(
 
 			const auto& trans_dim = lp.dims[trans_index].get();
 
-			vector2 d;
+			vec2 d;
 			switch (trans_dim.get_type()) {
 				case dim::type::max:
 					[[fallthrough]];
@@ -101,7 +101,7 @@ void linear_layout::lay_out(
 			}
 
 			if (!d.is_positive_or_zero()) {
-				vector2 md = w.get().measure(d);
+				vec2 md = w.get().measure(d);
 				for (unsigned i = 0; i != md.size(); ++i) {
 					if (d[i] < 0) {
 						d[i] = md[i];
@@ -138,7 +138,7 @@ void linear_layout::lay_out(
 
 			if (weight != 0) {
 				ASSERT(weight > 0)
-				vector2 d;
+				vec2 d;
 				if (flexible > 0) {
 					ASSERT(net_weight > 0)
 					real dl = flexible * weight / net_weight;
@@ -195,7 +195,7 @@ void linear_layout::lay_out(
 						[[fallthrough]];
 					case dim::type::length:
 						if (d.x() < 0 || d.y() < 0) {
-							vector2 md = w.get().measure(d);
+							vec2 md = w.get().measure(d);
 							for (unsigned i = 0; i != md.size(); ++i) {
 								if (d[i] < 0) {
 									d[i] = md[i];
@@ -214,11 +214,11 @@ void linear_layout::lay_out(
 				w.get().resize(info->measured_dims);
 			}
 
-			vector2 room;
+			vec2 room;
 			room[long_index] = long_room;
 			room[trans_index] = dims[trans_index];
 
-			vector2 new_pos;
+			vec2 new_pos;
 			new_pos[long_index] = pos;
 			new_pos[trans_index] = 0;
 
@@ -249,7 +249,7 @@ void linear_layout::lay_out(
 
 		// TODO: is it ok to always reisze last widget?
 		if (remainder > 0) {
-			vector2 d;
+			vec2 d;
 			d[trans_index] = 0;
 			d[long_index] = round(remainder);
 			widgets.back().get().resize_by(d);
@@ -257,8 +257,8 @@ void linear_layout::lay_out(
 	}
 }
 
-ruis::vector2 linear_layout::measure(
-	const vector2& quotum, //
+ruis::vec2 linear_layout::measure(
+	const vec2& quotum, //
 	const_widget_list& widgets
 ) const
 {
@@ -282,7 +282,7 @@ ruis::vector2 linear_layout::measure(
 
 			net_weight += weight;
 
-			vector2 child_quotum;
+			vec2 child_quotum;
 
 			const auto& trans_dim = lp.dims[trans_index].get();
 
@@ -345,7 +345,7 @@ ruis::vector2 linear_layout::measure(
 		}
 	}
 
-	vector2 ret;
+	vec2 ret;
 
 	auto flex_len = [&]() -> real {
 		if (quotum[long_index] < 0) {
@@ -375,7 +375,7 @@ ruis::vector2 linear_layout::measure(
 				continue;
 			}
 
-			vector2 d;
+			vec2 d;
 			d[long_index] = info->measured_dims[long_index];
 
 			if (flex_len > 0) {
@@ -394,7 +394,7 @@ ruis::vector2 linear_layout::measure(
 				}
 				if (&w.get() == last_child) {
 					if (remainder > 0) {
-						vector2 correction;
+						vec2 correction;
 						correction[trans_index] = 0;
 						correction[long_index] = round(remainder);
 						d += correction;

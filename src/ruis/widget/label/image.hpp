@@ -75,9 +75,9 @@ public:
 
 	~image() override = default;
 
-	void render(const ruis::matrix4& matrix) const override;
+	void render(const ruis::mat4& matrix) const override;
 
-	ruis::vector2 measure(const ruis::vector2& quotum) const override;
+	ruis::vec2 measure(const ruis::vec2& quotum) const override;
 
 	void set_image(std::shared_ptr<const res::image> image);
 

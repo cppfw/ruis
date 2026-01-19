@@ -65,7 +65,7 @@ public:
 	 */
 	utki::shared_ref<widget> show_popup(
 		utki::shared_ref<widget> popup, //
-		vector2 pos
+		vec2 pos
 	);
 
 	/**

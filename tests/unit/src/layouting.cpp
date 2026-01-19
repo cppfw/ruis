@@ -71,7 +71,7 @@ const tst::set set("layouting", [](tst::suite& suite){
 
         // when resizing widget to different size it should change it's size and call on_resize() virtual method
         // which by default does re-layouting
-        tc.get().resize(c.get().rect().d + ruis::vector2{1, 1});
+        tc.get().resize(c.get().rect().d + ruis::vec2{1, 1});
         tst::check(tc.get().is_layout_dirty(), SL);
     });
 
@@ -92,7 +92,7 @@ const tst::set set("layouting", [](tst::suite& suite){
         tc.get().invalidate_layout();
 
         // gui render method will check if layout is dirty and perform re-layouting
-        gui.render(ruis::matrix4().set_identity());
+        gui.render(ruis::mat4().set_identity());
         tst::check(tc.get().is_layout_dirty(), SL);
     });
 });

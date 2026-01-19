@@ -29,12 +29,12 @@ class pile_layout : public abstract_layout
 {
 public:
 	void lay_out(
-		const vector2& dims, //
+		const vec2& dims, //
 		semiconst_widget_list& widgets
 	) const override;
 
-	vector2 measure(
-		const vector2& quotum, //
+	vec2 measure(
+		const vec2& quotum, //
 		const_widget_list& widgets
 	) const override;
 };

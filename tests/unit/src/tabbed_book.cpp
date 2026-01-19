@@ -33,7 +33,7 @@ const tst::set set("tabbed_book", [](tst::suite& suite){
 
 		auto book = utki::make_shared<sub_tabbed_book>(c);
 
-		ruis::matrix4 m;
+		ruis::mat4 m;
 		book.get().render(m);
 		// TODO: call other methods like on_key(), on_mouse_move(), etc.
 	});

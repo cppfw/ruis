@@ -404,7 +404,7 @@ window::window(
 	this->set_borders(params.borders);
 
 	// this should go after initializing borders
-	this->empty_min_dim = this->measure(vector2(-1));
+	this->empty_min_dim = this->measure(vec2(-1));
 }
 
 void ruis::window::setup_widgets()
@@ -474,7 +474,7 @@ void ruis::window::setup_widgets()
 		w->mouse_move_handler = [this](mouse_proxy&, const mouse_move_event& e) {
 			if (this->mouse_captured) {
 				using std::min;
-				ruis::vector2 d = e.pos - this->capture_point;
+				ruis::vec2 d = e.pos - this->capture_point;
 				d = min(d, this->rect().d - this->empty_min_dim); // clamp top
 				this->move_by(d);
 				this->resize_by(-d);
@@ -494,11 +494,11 @@ void ruis::window::setup_widgets()
 			if (this->mouse_captured) {
 				using std::min;
 				using std::max;
-				ruis::vector2 d = e.pos - this->capture_point;
+				ruis::vec2 d = e.pos - this->capture_point;
 				d.x() = min(d.x(), this->rect().d.x() - this->empty_min_dim.x()); // clamp top
 				d.y() = max(d.y(), -(this->rect().d.y() - this->empty_min_dim.y())); // clamp bottom
-				this->move_by(ruis::vector2(d.x(), 0));
-				this->resize_by(ruis::vector2(-d.x(), d.y()));
+				this->move_by(ruis::vec2(d.x(), 0));
+				this->resize_by(ruis::vec2(-d.x(), d.y()));
 			}
 			return false;
 		};
@@ -515,11 +515,11 @@ void ruis::window::setup_widgets()
 			if (this->mouse_captured) {
 				using std::min;
 				using std::max;
-				ruis::vector2 d = e.pos - this->capture_point;
+				ruis::vec2 d = e.pos - this->capture_point;
 				d.x() = max(d.x(), -(this->rect().d.x() - this->empty_min_dim.x())); // clamp bottom
 				d.y() = min(d.y(), this->rect().d.y() - this->empty_min_dim.y()); // clamp top
-				this->move_by(ruis::vector2(0, d.y()));
-				this->resize_by(ruis::vector2(d.x(), -d.y()));
+				this->move_by(ruis::vec2(0, d.y()));
+				this->resize_by(ruis::vec2(d.x(), -d.y()));
 			}
 			return false;
 		};
@@ -535,7 +535,7 @@ void ruis::window::setup_widgets()
 		w->mouse_move_handler = [this](mouse_proxy&, const mouse_move_event& e) {
 			if (this->mouse_captured) {
 				using std::max;
-				ruis::vector2 d = e.pos - this->capture_point;
+				ruis::vec2 d = e.pos - this->capture_point;
 				d = max(d, -(this->rect().d - this->empty_min_dim)); // clamp bottom
 				this->resize_by(d);
 			}
@@ -553,10 +553,10 @@ void ruis::window::setup_widgets()
 		w->mouse_move_handler = [this](mouse_proxy&, const mouse_move_event& e) {
 			if (this->mouse_captured) {
 				using std::min;
-				ruis::vector2 d = e.pos - this->capture_point;
+				ruis::vec2 d = e.pos - this->capture_point;
 				d.x() = min(d.x(), this->rect().d.x() - this->empty_min_dim.x()); // clamp top
-				this->move_by(ruis::vector2(d.x(), 0));
-				this->resize_by(ruis::vector2(-d.x(), 0));
+				this->move_by(ruis::vec2(d.x(), 0));
+				this->resize_by(ruis::vec2(-d.x(), 0));
 			}
 			return false;
 		};
@@ -572,9 +572,9 @@ void ruis::window::setup_widgets()
 		w->mouse_move_handler = [this](mouse_proxy&, const mouse_move_event& e) {
 			if (this->mouse_captured) {
 				using std::max;
-				ruis::vector2 d = e.pos - this->capture_point;
+				ruis::vec2 d = e.pos - this->capture_point;
 				d.x() = max(d.x(), -(this->rect().d.x() - this->empty_min_dim.x())); // clamp bottom
-				this->resize_by(ruis::vector2(d.x(), 0));
+				this->resize_by(ruis::vec2(d.x(), 0));
 			}
 			return false;
 		};
@@ -590,10 +590,10 @@ void ruis::window::setup_widgets()
 		w->mouse_move_handler = [this](mouse_proxy&, const mouse_move_event& e) {
 			if (this->mouse_captured) {
 				using std::min;
-				ruis::vector2 d = e.pos - this->capture_point;
+				ruis::vec2 d = e.pos - this->capture_point;
 				d.y() = min(d.y(), this->rect().d.y() - this->empty_min_dim.y()); // clamp top
-				this->move_by(ruis::vector2(0, d.y()));
-				this->resize_by(ruis::vector2(0, -d.y()));
+				this->move_by(ruis::vec2(0, d.y()));
+				this->resize_by(ruis::vec2(0, -d.y()));
 			}
 			return false;
 		};
@@ -609,9 +609,9 @@ void ruis::window::setup_widgets()
 		w->mouse_move_handler = [this](mouse_proxy&, const mouse_move_event& e) {
 			if (this->mouse_captured) {
 				using std::max;
-				ruis::vector2 d = e.pos - this->capture_point;
+				ruis::vec2 d = e.pos - this->capture_point;
 				d.y() = max(d.y(), -(this->rect().d.y() - this->empty_min_dim.y())); // clamp bottom
-				this->resize_by(ruis::vector2(0, d.y()));
+				this->resize_by(ruis::vec2(0, d.y()));
 			}
 			return false;
 		};

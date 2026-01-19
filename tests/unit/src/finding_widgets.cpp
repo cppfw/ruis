@@ -191,7 +191,7 @@ const tst::set set("finding_widgets", [](tst::suite& suite){
 		// clang-format on
 
 		auto& found = w.get().get_widget("child").get_widget("child2");
-		tst::check_eq(found.rect().p, ruis::vector2{1, 2}, SL);
+		tst::check_eq(found.rect().p, ruis::vec2{1, 2}, SL);
 	});
 });
 }

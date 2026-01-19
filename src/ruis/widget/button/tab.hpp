@@ -33,7 +33,7 @@ class tab :
 	virtual public choice_button, //
 	public nine_patch_toggle
 {
-	bool mask_overlaps(vector2 pos);
+	bool mask_overlaps(vec2 pos);
 
 public:
 	struct all_parameters {

@@ -44,7 +44,7 @@ class window :
 	public content_wrapping,
 	private container
 {
-	ruis::vector2 empty_min_dim; // minimal dimension of empty window
+	ruis::vec2 empty_min_dim; // minimal dimension of empty window
 
 	std::shared_ptr<color_widget> title_bg;
 	constexpr static auto default_title_bg_color_topmost = 0xffad9869;
@@ -74,7 +74,7 @@ class window :
 	render::native_window::cursor_id rb_border_cursor_iter;
 
 	bool mouse_captured = false;
-	ruis::vector2 capture_point;
+	ruis::vec2 capture_point;
 
 	void setup_widgets();
 

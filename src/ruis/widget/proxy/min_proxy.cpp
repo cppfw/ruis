@@ -37,7 +37,7 @@ min_proxy::min_proxy( //
 	params(std::move(params.min_proxy_params))
 {}
 
-ruis::vector2 min_proxy::measure(const vector2& quotum) const
+ruis::vec2 min_proxy::measure(const vec2& quotum) const
 {
 	auto t = this->target.lock();
 	if (!t) {

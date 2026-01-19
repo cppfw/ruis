@@ -57,7 +57,7 @@ container::container(
 }
 
 void container::render_child(
-	const matrix4& matrix, //
+	const mat4& matrix, //
 	const widget& c
 ) const
 {
@@ -65,13 +65,13 @@ void container::render_child(
 		return;
 	}
 
-	ruis::matrix4 matr(matrix);
+	ruis::mat4 matr(matrix);
 	matr.translate(c.rect().p);
 
 	c.render_internal(matr);
 }
 
-void container::render(const ruis::matrix4& matrix) const
+void container::render(const ruis::mat4& matrix) const
 {
 	for (auto& w : this->children()) {
 		this->render_child(matrix, w.get());
@@ -232,7 +232,7 @@ void container::on_hovered_change(unsigned pointer_id)
 	}
 }
 
-vector2 container::measure(const vector2& quotum) const
+vec2 container::measure(const vec2& quotum) const
 {
 	return this->get_layout().measure(quotum, this->children());
 }

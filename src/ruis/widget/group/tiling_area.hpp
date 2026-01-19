@@ -75,7 +75,7 @@ public:
 
 	void on_lay_out() override;
 
-	ruis::vector2 measure(const ruis::vector2& quotum) const override;
+	ruis::vec2 measure(const ruis::vec2& quotum) const override;
 
 	// override in order to avoid invalidation of layout when children list changes,
 	// because default implementation of this method invalidates layout

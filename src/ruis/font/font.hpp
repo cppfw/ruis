@@ -89,7 +89,7 @@ protected:
 	 */
 	virtual render_result render_internal(
 		render::renderer& renderer, //
-		const ruis::matrix4& matrix,
+		const ruis::mat4& matrix,
 		const ruis::color& color,
 		const std::u32string_view str,
 		unsigned tab_size,
@@ -134,7 +134,7 @@ public:
 	 */
 	render_result render(
 		render::renderer& renderer, //
-		const ruis::matrix4& matrix,
+		const ruis::mat4& matrix,
 		const ruis::color& color,
 		const std::u32string_view str,
 		unsigned tab_size = 4,
@@ -164,7 +164,7 @@ public:
 	 */
 	render_result render(
 		render::renderer& renderer, //
-		const ruis::matrix4& matrix,
+		const ruis::mat4& matrix,
 		const ruis::color& color,
 		utki::utf8_iterator str,
 		unsigned tab_size = 4,
@@ -194,7 +194,7 @@ public:
 	 */
 	render_result render(
 		render::renderer& renderer, //
-		const ruis::matrix4& matrix, //
+		const ruis::mat4& matrix, //
 		const ruis::color& color,
 		const char* str,
 		unsigned tab_size = 4,
@@ -224,7 +224,7 @@ public:
 	 */
 	render_result render(
 		render::renderer& renderer, //
-		const ruis::matrix4& matrix, //
+		const ruis::mat4& matrix, //
 		const ruis::color& color,
 		std::string_view str,
 		unsigned tab_size = 4,

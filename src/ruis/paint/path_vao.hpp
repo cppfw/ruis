@@ -50,7 +50,7 @@ public:
 	void set(const path::vertices& path);
 
 	void render(
-		const ruis::matrix4& matrix, //
+		const ruis::mat4& matrix, //
 		ruis::color color
 	) const;
 };

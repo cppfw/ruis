@@ -25,7 +25,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
-bool tab::mask_overlaps(vector2 pos)
+bool tab::mask_overlaps(vec2 pos)
 {
 	auto borders = this->get_actual_borders();
 

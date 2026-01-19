@@ -30,7 +30,7 @@ namespace ruis::paint {
 // TODO: doxygen
 class path
 {
-	std::vector<ruis::vector2> points = {{ruis::vector2(0)}};
+	std::vector<ruis::vec2> points = {{ruis::vec2(0)}};
 
 public:
 	path() = default;
@@ -43,31 +43,31 @@ public:
 
 	~path() = default;
 
-	void line_to(ruis::vector2 abs_pos);
+	void line_to(ruis::vec2 abs_pos);
 
 	void line_to(
 		ruis::real x, //
 		ruis::real y
 	)
 	{
-		this->line_to(ruis::vector2(x, y));
+		this->line_to(ruis::vec2(x, y));
 	}
 
-	void line_by(ruis::vector2 rel_pos);
+	void line_by(ruis::vec2 rel_pos);
 
 	void cubic_to(
-		ruis::vector2 abs_p1, //
-		ruis::vector2 abs_p2, //
-		ruis::vector2 abs_p3
+		ruis::vec2 abs_p1, //
+		ruis::vec2 abs_p2, //
+		ruis::vec2 abs_p3
 	);
 	void cubic_by(
-		ruis::vector2 rel_p1, //
-		ruis::vector2 rel_p2, //
-		ruis::vector2 rel_p3
+		ruis::vec2 rel_p1, //
+		ruis::vec2 rel_p2, //
+		ruis::vec2 rel_p3
 	);
 
 	struct vertices {
-		std::vector<ruis::vector2> pos;
+		std::vector<ruis::vec2> pos;
 		std::vector<ruis::real> alpha;
 
 		std::vector<uint16_t> in_indices;

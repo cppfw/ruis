@@ -30,12 +30,12 @@ frame_vao::frame_vao(const utki::shared_ref<const ruis::render::renderer>& r) :
 {}
 
 void frame_vao::set(
-	vector2 dims, //
-	vector2 thickness
+	vec2 dims, //
+	vec2 thickness
 )
 {
 	constexpr auto num_frame_vertices = 8;
-	std::array<vector2, num_frame_vertices> vertices = {
+	std::array<vec2, num_frame_vertices> vertices = {
 		{// outer
 		 {0, 0},
 		 {dims.x(), 0},
@@ -61,7 +61,7 @@ void frame_vao::set(
 }
 
 void frame_vao::render(
-	const matrix4& matrix, //
+	const mat4& matrix, //
 	ruis::color color
 ) const
 {

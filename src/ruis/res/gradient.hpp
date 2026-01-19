@@ -96,7 +96,7 @@ public:
 	 */
 	void render(
 		ruis::render::renderer& renderer, //
-		const ruis::matrix4& m
+		const ruis::mat4& m
 	) const;
 
 private:

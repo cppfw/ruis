@@ -78,12 +78,12 @@ widget& widget::get_ancestor(const std::string& id)
 	return *a;
 }
 
-void widget::move_to(const vector2& new_pos)
+void widget::move_to(const vec2& new_pos)
 {
 	this->params.rectangle.p = new_pos;
 }
 
-void widget::resize(const ruis::vector2& new_dims)
+void widget::resize(const ruis::vec2& new_dims)
 {
 	if (this->params.rectangle.d == new_dims) {
 		if (this->is_layout_dirty()) {
@@ -148,7 +148,7 @@ void widget::invalidate_layout() noexcept
 	this->cache_frame_buffer.reset();
 }
 
-void widget::render_internal(const ruis::matrix4& matrix) const
+void widget::render_internal(const ruis::mat4& matrix) const
 {
 	if (!this->rect().d.is_positive()) {
 		return;
@@ -212,7 +212,7 @@ void widget::render_internal(const ruis::matrix4& matrix) const
 #ifdef M_RUIS_RENDER_WIDGET_BORDERS
 	ruis::ColorPosShader& s = App::inst().shaders.colorPosShader;
 	s.Bind();
-	ruis::matrix4 matr(matrix);
+	ruis::mat4 matr(matrix);
 	matr.scale(this->rect().d);
 	s.set_matrix(matr);
 
@@ -267,9 +267,9 @@ utki::shared_ref<render::frame_buffer> widget::render_to_texture(std::shared_ptr
 	return fb;
 }
 
-void widget::render_from_cache(const r4::matrix4<float>& matrix) const
+void widget::render_from_cache(const mat4& matrix) const
 {
-	ruis::matrix4 matr(matrix);
+	ruis::mat4 matr(matrix);
 	matr.scale(this->rect().d);
 
 	auto& r = this->context.get().renderer.get();
@@ -327,18 +327,18 @@ void widget::unfocus() noexcept
 	this->context.get().set_focused_widget(nullptr);
 }
 
-r4::rectangle<uint32_t> widget::compute_viewport_rect(const matrix4& matrix) const noexcept
+r4::rectangle<uint32_t> widget::compute_viewport_rect(const mat4& matrix) const noexcept
 {
 	using std::round;
 
 	r4::rectangle<uint32_t> ret{
-		{this->context.get().renderer.get().rendering_context.get().to_window_coords(matrix * vector2(0, 0)),
+		{this->context.get().renderer.get().rendering_context.get().to_window_coords(matrix * vec2(0, 0)),
 		 this->context.get().renderer.get().rendering_context.get().to_window_coords(matrix * this->rect().d)}
 	};
 	return ret;
 }
 
-ruis::vector2 widget::get_absolute_pos() const noexcept
+ruis::vec2 widget::get_absolute_pos() const noexcept
 {
 	if (!this->parent()) {
 		return this->rect().p;
@@ -354,12 +354,12 @@ ruis::rect widget::get_absolute_rect() const noexcept
 	return this->rect();
 }
 
-vector2 widget::measure(const ruis::vector2& quotum) const
+vec2 widget::measure(const ruis::vec2& quotum) const
 {
 	return max(quotum, 0);
 }
 
-vector2 widget::pos_in_ancestor(vector2 pos, const widget* ancestor)
+vec2 widget::pos_in_ancestor(vec2 pos, const widget* ancestor)
 {
 	if (ancestor == this || !this->parent()) {
 		return pos;
@@ -453,10 +453,10 @@ void widget::reload()
 	this->on_reload();
 }
 
-vector2 ruis::dims_for_widget(const widget& w, const vector2& parent_dims)
+vec2 ruis::dims_for_widget(const widget& w, const vec2& parent_dims)
 {
 	const layout::parameters& lp = w.get_layout_params_const();
-	vector2 d;
+	vec2 d;
 	for (unsigned i = 0; i != 2; ++i) {
 		const auto& dim = lp.dims[i].get();
 		switch (dim.get_type()) {
@@ -476,7 +476,7 @@ vector2 ruis::dims_for_widget(const widget& w, const vector2& parent_dims)
 		}
 	}
 	if (!d.is_positive_or_zero()) {
-		vector2 md = w.measure(d);
+		vec2 md = w.measure(d);
 		for (unsigned i = 0; i != md.size(); ++i) {
 			if (d[i] < 0) {
 				d[i] = md[i];

@@ -59,7 +59,7 @@ public:
 
 	~text() override = default;
 
-	void render(const ruis::matrix4& matrix) const override;
+	void render(const ruis::mat4& matrix) const override;
 };
 
 namespace make {

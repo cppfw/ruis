@@ -53,7 +53,7 @@ public:
 
 	void set_active(bool active);
 
-	void render(const matrix4& matrix) const override;
+	void render(const mat4& matrix) const override;
 
 private:
 	void update(uint32_t dt_ms) override;

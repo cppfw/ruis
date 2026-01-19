@@ -100,7 +100,7 @@ public:
 	 * @param tex - texture to render.
 	 */
 	void render(
-		const matrix4& matrix, //
+		const mat4& matrix, //
 		const render::texture_2d& tex
 	) const
 	{
@@ -118,7 +118,7 @@ public:
 	 * @param vao - vertex array to use for rendering.
 	 */
 	virtual void render(
-		const matrix4& matrix, //
+		const mat4& matrix, //
 		const render::texture_2d& tex,
 		const render::vertex_array& vao
 	) const

@@ -61,7 +61,7 @@ struct mouse_button_event {
 	 * Position of the mouse cursor at the moment when the button event has occurred,
 	 * in widget local coordinates.
 	 */
-	vector2 pos;
+	vec2 pos;
 
 	/**
 	 * @brief Mouse button id.
@@ -81,7 +81,7 @@ struct mouse_move_event {
 	 * Position of the mouse cursor at the moment when the button event has occurred,
 	 * in widget local coordinates.
 	 */
-	vector2 pos;
+	vec2 pos;
 
 	/**
 	 * @brief Mouse pointer id.

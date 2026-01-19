@@ -39,16 +39,16 @@ namespace ruis {
 class scroll_area : public container
 {
 	// offset from top left corner
-	vector2 cur_scroll_pos = vector2(0);
+	vec2 cur_scroll_pos = vec2(0);
 
 	// cached dimensions of the invisible contents part, which goes beyond right and bottom edge of the scroll_area
-	vector2 invisible_dims;
+	vec2 invisible_dims;
 
 	// cached scroll factor
-	vector2 cur_scroll_factor;
+	vec2 cur_scroll_factor;
 
 protected:
-	vector2 dims_for_widget(const widget& w) const;
+	vec2 dims_for_widget(const widget& w) const;
 
 public:
 	struct all_parameters {
@@ -75,9 +75,9 @@ public:
 
 	bool on_mouse_move(const mouse_move_event& event) override;
 
-	void render(const ruis::matrix4& matrix) const override;
+	void render(const ruis::mat4& matrix) const override;
 
-	ruis::vector2 measure(const ruis::vector2& quotum) const override
+	ruis::vec2 measure(const ruis::vec2& quotum) const override
 	{
 		// NOLINTNEXTLINE(bugprone-parent-virtual-call, "we want to cancel container::measure() override")
 		return this->widget::measure(quotum);
@@ -91,7 +91,7 @@ public:
 	 * @brief Get current scroll position.
 	 * @return Current scrolling position in pixels.
 	 */
-	const vector2& get_scroll_pos() const
+	const vec2& get_scroll_pos() const
 	{
 		return this->cur_scroll_pos;
 	}
@@ -101,24 +101,24 @@ public:
 	 * The scroll position will be clamped to effective dimensions of scroll_area's contents.
 	 * @param new_scroll_pos - new scroll position.
 	 */
-	void set_scroll_pos(const vector2& new_scroll_pos);
+	void set_scroll_pos(const vec2& new_scroll_pos);
 
 	/**
 	 * @brief Set scroll position as factor.
 	 * @param factor - factor with components from range [0:1].
 	 */
-	void set_scroll_factor(const vector2& factor);
+	void set_scroll_factor(const vec2& factor);
 
 	/**
 	 * @brief Get current scroll position as factor.
 	 * @return Current scroll position as factor with components from range [0:1].
 	 */
-	const vector2& get_scroll_factor() const
+	const vec2& get_scroll_factor() const
 	{
 		return this->cur_scroll_factor;
 	}
 
-	vector2 get_visible_area_fraction() const noexcept;
+	vec2 get_visible_area_fraction() const noexcept;
 
 	virtual void on_scroll_pos_change();
 

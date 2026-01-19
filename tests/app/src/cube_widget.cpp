@@ -11,37 +11,37 @@ cube_widget::cube_widget(
     )
 {
     // NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers)
-    std::array<ruis::vector3, 36> cube_pos = {{
-        ruis::vector3(-1, -1,  1), ruis::vector3( 1, -1,  1), ruis::vector3(-1,  1,  1),
-        ruis::vector3( 1, -1,  1), ruis::vector3( 1,  1,  1), ruis::vector3(-1,  1,  1),
-        ruis::vector3( 1, -1,  1), ruis::vector3( 1, -1, -1), ruis::vector3( 1,  1,  1),
-        ruis::vector3( 1, -1, -1), ruis::vector3( 1,  1, -1), ruis::vector3( 1,  1,  1),
-        ruis::vector3( 1, -1, -1), ruis::vector3(-1, -1, -1), ruis::vector3( 1,  1, -1),
-        ruis::vector3(-1, -1, -1), ruis::vector3(-1,  1, -1), ruis::vector3( 1,  1, -1),
-        ruis::vector3(-1, -1, -1), ruis::vector3(-1, -1,  1), ruis::vector3(-1,  1, -1),
-        ruis::vector3(-1, -1,  1), ruis::vector3(-1,  1,  1), ruis::vector3(-1,  1, -1),
-        ruis::vector3(-1,  1, -1), ruis::vector3(-1,  1,  1), ruis::vector3( 1,  1, -1),
-        ruis::vector3(-1,  1,  1), ruis::vector3( 1,  1,  1), ruis::vector3( 1,  1, -1),
-        ruis::vector3(-1, -1, -1), ruis::vector3( 1, -1, -1), ruis::vector3(-1, -1,  1),
-        ruis::vector3(-1, -1,  1), ruis::vector3( 1, -1, -1), ruis::vector3( 1, -1,  1)
+    std::array<ruis::vec3, 36> cube_pos = {{
+        ruis::vec3(-1, -1,  1), ruis::vec3( 1, -1,  1), ruis::vec3(-1,  1,  1),
+        ruis::vec3( 1, -1,  1), ruis::vec3( 1,  1,  1), ruis::vec3(-1,  1,  1),
+        ruis::vec3( 1, -1,  1), ruis::vec3( 1, -1, -1), ruis::vec3( 1,  1,  1),
+        ruis::vec3( 1, -1, -1), ruis::vec3( 1,  1, -1), ruis::vec3( 1,  1,  1),
+        ruis::vec3( 1, -1, -1), ruis::vec3(-1, -1, -1), ruis::vec3( 1,  1, -1),
+        ruis::vec3(-1, -1, -1), ruis::vec3(-1,  1, -1), ruis::vec3( 1,  1, -1),
+        ruis::vec3(-1, -1, -1), ruis::vec3(-1, -1,  1), ruis::vec3(-1,  1, -1),
+        ruis::vec3(-1, -1,  1), ruis::vec3(-1,  1,  1), ruis::vec3(-1,  1, -1),
+        ruis::vec3(-1,  1, -1), ruis::vec3(-1,  1,  1), ruis::vec3( 1,  1, -1),
+        ruis::vec3(-1,  1,  1), ruis::vec3( 1,  1,  1), ruis::vec3( 1,  1, -1),
+        ruis::vec3(-1, -1, -1), ruis::vec3( 1, -1, -1), ruis::vec3(-1, -1,  1),
+        ruis::vec3(-1, -1,  1), ruis::vec3( 1, -1, -1), ruis::vec3( 1, -1,  1)
     }};
 
     auto pos_vbo = this->context.get().renderer.get().rendering_context.get().make_vertex_buffer(utki::make_span(cube_pos));
 
     // NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers)
-    std::array<ruis::vector2, 36> cube_tex = {{
-        ruis::vector2(0, 0), ruis::vector2(1, 0), ruis::vector2(0, 1),
-        ruis::vector2(1, 0), ruis::vector2(1, 1), ruis::vector2(0, 1),
-        ruis::vector2(0, 0), ruis::vector2(1, 0), ruis::vector2(0, 1),
-        ruis::vector2(1, 0), ruis::vector2(1, 1), ruis::vector2(0, 1),
-        ruis::vector2(0, 0), ruis::vector2(1, 0), ruis::vector2(0, 1),
-        ruis::vector2(1, 0), ruis::vector2(1, 1), ruis::vector2(0, 1),
-        ruis::vector2(0, 0), ruis::vector2(1, 0), ruis::vector2(0, 1),
-        ruis::vector2(1, 0), ruis::vector2(1, 1), ruis::vector2(0, 1),
-        ruis::vector2(0, 0), ruis::vector2(1, 0), ruis::vector2(0, 1),
-        ruis::vector2(1, 0), ruis::vector2(1, 1), ruis::vector2(0, 1),
-        ruis::vector2(0, 0), ruis::vector2(1, 0), ruis::vector2(0, 1),
-        ruis::vector2(1, 0), ruis::vector2(1, 1), ruis::vector2(0, 1)
+    std::array<ruis::vec2, 36> cube_tex = {{
+        ruis::vec2(0, 0), ruis::vec2(1, 0), ruis::vec2(0, 1),
+        ruis::vec2(1, 0), ruis::vec2(1, 1), ruis::vec2(0, 1),
+        ruis::vec2(0, 0), ruis::vec2(1, 0), ruis::vec2(0, 1),
+        ruis::vec2(1, 0), ruis::vec2(1, 1), ruis::vec2(0, 1),
+        ruis::vec2(0, 0), ruis::vec2(1, 0), ruis::vec2(0, 1),
+        ruis::vec2(1, 0), ruis::vec2(1, 1), ruis::vec2(0, 1),
+        ruis::vec2(0, 0), ruis::vec2(1, 0), ruis::vec2(0, 1),
+        ruis::vec2(1, 0), ruis::vec2(1, 1), ruis::vec2(0, 1),
+        ruis::vec2(0, 0), ruis::vec2(1, 0), ruis::vec2(0, 1),
+        ruis::vec2(1, 0), ruis::vec2(1, 1), ruis::vec2(0, 1),
+        ruis::vec2(0, 0), ruis::vec2(1, 0), ruis::vec2(0, 1),
+        ruis::vec2(1, 0), ruis::vec2(1, 1), ruis::vec2(0, 1)
     }};
 
     auto tex_vbo = this->context.get().renderer.get().rendering_context.get().make_vertex_buffer(utki::make_span(cube_tex));
@@ -68,7 +68,7 @@ void cube_widget::update(uint32_t dt){
     this->fpsSecCounter += dt;
     ++this->fps;
     // NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers)
-    this->rot *= ruis::quaternion().set_rotation(r4::vector3<float>(1, 2, 1).normalize(), 1.5f * (float(dt) / std::milli::den));
+    this->rot *= ruis::quat().set_rotation(r4::vector3<float>(1, 2, 1).normalize(), 1.5f * (float(dt) / std::milli::den));
     if(this->fpsSecCounter >= std::milli::den){
         utki::log([&](auto&o){
             o << "fps = " << std::dec << fps << std::endl;
@@ -79,8 +79,8 @@ void cube_widget::update(uint32_t dt){
     this->clear_cache();
 }
 
-void cube_widget::render(const ruis::matrix4& matrix)const{
-    ruis::matrix4 matr(matrix);
+void cube_widget::render(const ruis::mat4& matrix)const{
+    ruis::mat4 matr(matrix);
     matr.scale(this->rect().d / 2);
     matr.translate(1, 1);
     matr.scale(1, -1, -1); // y down, z away

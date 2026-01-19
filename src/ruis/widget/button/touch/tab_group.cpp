@@ -48,14 +48,14 @@ tab_group::tab_group(
 	)
 {}
 
-void tab_group::render(const ruis::matrix4& matrix) const
+void tab_group::render(const ruis::mat4& matrix) const
 {
 	// render selector
 	if (auto active_tab = this->get_active().lock()) {
 		ruis::color clr(0x80808080);
 		ruis::real gap = ruis::length::make_pp(4).get(this->context);
 
-		ruis::matrix4 matr(matrix);
+		ruis::mat4 matr(matrix);
 		matr.translate(active_tab->rect().p + vec2(gap));
 		this->selector_vao.render(
 			matr, //

@@ -34,14 +34,14 @@ public:
 
 	~wire_area() override = default;
 	
-	void render(const ruis::matrix4& matrix)const override;
+	void render(const ruis::mat4& matrix)const override;
 
 	void on_lay_out() override;
 	
 	bool on_mouse_move(const ruis::mouse_move_event& e)override;
 
 private:
-	ruis::vector2 mouse_pos;
+	ruis::vec2 mouse_pos;
 	
 	std::shared_ptr<wire_socket> grabbed_socket;
 	std::shared_ptr<wire_socket> hovered_socket;

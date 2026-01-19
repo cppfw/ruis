@@ -55,7 +55,7 @@ rectangle::rectangle( //
 	this->update_vaos();
 }
 
-void rectangle::render(const ruis::matrix4& matrix) const
+void rectangle::render(const ruis::mat4& matrix) const
 {
 	this->fill_vao.render(
 		matrix, //

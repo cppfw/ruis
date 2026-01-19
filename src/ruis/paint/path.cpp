@@ -25,25 +25,25 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis::paint;
 
-void path::line_to(ruis::vector2 abs_pos)
+void path::line_to(ruis::vec2 abs_pos)
 {
 	this->points.emplace_back(abs_pos);
 }
 
-void path::line_by(ruis::vector2 rel_pos)
+void path::line_by(ruis::vec2 rel_pos)
 {
 	ASSERT(this->points.size() != 0)
 	this->line_to(this->points.back() + rel_pos);
 }
 
-void path::cubic_by(ruis::vector2 rel_p1, ruis::vector2 rel_p2, ruis::vector2 rel_p3)
+void path::cubic_by(ruis::vec2 rel_p1, ruis::vec2 rel_p2, ruis::vec2 rel_p3)
 {
 	ASSERT(this->points.size() != 0)
 	auto& d = this->points.back();
 	this->cubic_to(d + rel_p1, d + rel_p2, d + rel_p3);
 }
 
-void path::cubic_to(ruis::vector2 p1, ruis::vector2 p2, ruis::vector2 p3)
+void path::cubic_to(ruis::vec2 p1, ruis::vec2 p2, ruis::vec2 p3)
 {
 	auto p0 = this->points.back();
 
@@ -93,7 +93,7 @@ path::vertices path::stroke(ruis::real half_width, ruis::real antialias_width, r
 			}
 		}
 
-		ruis::vector2 prev_normal = 0, next_normal;
+		ruis::vec2 prev_normal = 0, next_normal;
 
 		ASSERT(prev || next)
 

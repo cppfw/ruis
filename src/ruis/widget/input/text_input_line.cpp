@@ -63,18 +63,18 @@ text_input_line::text_input_line(
 	this->set_clip(true);
 }
 
-void text_input_line::render(const ruis::matrix4& matrix) const
+void text_input_line::render(const ruis::mat4& matrix) const
 {
 	// render selection
 	if (this->cursor_index != this->selection_start_index) {
-		ruis::matrix4 matr(matrix);
+		ruis::mat4 matr(matrix);
 		matr.translate(
 			this->selection_start_index < this->cursor_index ? this->selection_start_pos : this->cursor_pos,
 			0
 		);
 
 		using std::abs;
-		matr.scale(vector2(
+		matr.scale(vec2(
 			abs(this->cursor_pos - this->selection_start_pos), //
 			this->rect().d.y()
 		));
@@ -89,7 +89,7 @@ void text_input_line::render(const ruis::matrix4& matrix) const
 	}
 
 	{
-		ruis::matrix4 matr(matrix);
+		ruis::mat4 matr(matrix);
 
 		using std::round;
 
@@ -113,9 +113,9 @@ void text_input_line::render(const ruis::matrix4& matrix) const
 	}
 
 	if (this->is_focused() && this->cursor_blink_visible) {
-		ruis::matrix4 matr(matrix);
+		ruis::mat4 matr(matrix);
 		matr.translate(this->cursor_pos, 0);
-		matr.scale(vector2(cursor_width * this->context.get().units.dots_per_fp(), this->rect().d.y()));
+		matr.scale(vec2(cursor_width * this->context.get().units.dots_per_fp(), this->rect().d.y()));
 
 		auto& r = this->context.get().renderer.get();
 		r.shaders().color_pos->render(
@@ -151,9 +151,9 @@ bool text_input_line::on_mouse_move(const mouse_move_event& e)
 	return true;
 }
 
-vector2 text_input_line::measure(const ruis::vector2& quotum) const noexcept
+vec2 text_input_line::measure(const ruis::vec2& quotum) const noexcept
 {
-	vector2 ret;
+	vec2 ret;
 
 	if (quotum.x() < 0) {
 		ret.x() = this->get_bounding_box().d.x() + cursor_width * this->context.get().units.dots_per_fp();

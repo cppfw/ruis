@@ -180,7 +180,7 @@ scroll_bar::scroll_bar( //
 			o << "new_pos = " << new_pos << ", max_pos = " << max_pos;
 		})
 
-		ruis::vector2 new_position(0);
+		ruis::vec2 new_position(0);
 		new_position[long_index] = new_pos;
 
 		this->handle.move_to(new_position);
@@ -210,13 +210,13 @@ void scroll_bar::on_lay_out()
 	unsigned long_index = this->get_long_index();
 	unsigned trans_index = this->get_trans_index();
 
-	ruis::vector2 new_size(this->rect().d);
+	ruis::vec2 new_size(this->rect().d);
 
 	using std::round;
 
 	new_size[long_index] = round(new_size[long_index] * this->get_band_fraction());
 
-	auto min_handle_size = this->handle.measure(vector2(-1));
+	auto min_handle_size = this->handle.measure(vec2(-1));
 
 	using std::max;
 	new_size[long_index] =
@@ -228,7 +228,7 @@ void scroll_bar::on_lay_out()
 	// move scroll handle
 	{
 		float effective_length = this->rect().d[long_index] - this->handle.rect().d[long_index];
-		ruis::vector2 new_pos(0);
+		ruis::vec2 new_pos(0);
 		if (effective_length > 0) {
 			new_pos[long_index] = round(effective_length * this->get_fraction());
 			ASSERT(new_pos[long_index] <= effective_length, [&](auto& o) {

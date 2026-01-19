@@ -47,7 +47,7 @@ private:
 
 	mutable std::shared_ptr<const render::texture_2d> quad_tex;
 
-	vector2 cursor_pos;
+	vec2 cursor_pos;
 
 public:
 	struct all_parameters {
@@ -75,7 +75,7 @@ public:
 
 	bool on_mouse_move(const mouse_move_event& e) override;
 
-	void render(const ruis::matrix4& matrix) const override;
+	void render(const ruis::mat4& matrix) const override;
 };
 
 namespace make {

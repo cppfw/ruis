@@ -34,7 +34,7 @@ class text_string_widget : public text_widget
 	string text_string;
 
 protected:
-	vector2 measure(const ruis::vector2& quotum) const noexcept override;
+	vec2 measure(const ruis::vec2& quotum) const noexcept override;
 
 	text_string_widget(
 		utki::shared_ref<ruis::context> context, //

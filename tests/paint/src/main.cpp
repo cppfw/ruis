@@ -28,7 +28,7 @@ public:
 		vao(this->context.get().renderer)
 	{}
 
-	void render(const ruis::matrix4& matrix)const override{
+	void render(const ruis::mat4& matrix)const override{
 		this->vao.render(matrix, 0xff00ffff);
 	}
 
@@ -36,8 +36,8 @@ public:
 		ruis::paint::path path;
 		path.line_to(this->rect().d / 2);
 		path.cubic_by(
-				ruis::vector2(this->rect().d.x() / 2, 0),
-				ruis::vector2(0, this->rect().d.y() / 2),
+				ruis::vec2(this->rect().d.x() / 2, 0),
+				ruis::vec2(0, this->rect().d.y() / 2),
 				this->rect().d / 2
 			);
 		this->vao.set(path.stroke());
@@ -73,14 +73,14 @@ public:
 		vao(this->context.get().renderer)
 	{}
 
-	void render(const ruis::matrix4& matrix)const override{
+	void render(const ruis::mat4& matrix)const override{
 		this->vao.render(matrix, 0xffff8080);
 	}
 
 	void on_resize()override{
 		this->vao.set(
 				this->rect().d,
-				ruis::vector2{10, 20}
+				ruis::vec2{10, 20}
 			);
 	}
 };

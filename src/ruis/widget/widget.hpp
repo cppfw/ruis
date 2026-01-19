@@ -110,7 +110,7 @@ private:
 	mutable bool cache_dirty = true;
 	mutable std::shared_ptr<render::frame_buffer> cache_frame_buffer;
 
-	void render_from_cache(const r4::matrix4<float>& matrix) const;
+	void render_from_cache(const mat4& matrix) const;
 
 protected:
 	void clear_cache();
@@ -272,7 +272,7 @@ public:
 	 * @brief Get widget's position in absolute coordinates.
 	 * @return widget's position in absolute coordinates.
 	 */
-	ruis::vector2 get_absolute_pos() const noexcept;
+	ruis::vec2 get_absolute_pos() const noexcept;
 
 	/**
 	 * @brief Get widget's rectangle in absolute coordinates.
@@ -285,19 +285,19 @@ public:
 	 * @param matrix - transformation matrix which transforms point (0,0) to left top corner point of the widget.
 	 * @return Rectangle of the widget in viewport coordinates.
 	 */
-	r4::rectangle<uint32_t> compute_viewport_rect(const matrix4& matrix) const noexcept;
+	r4::rectangle<uint32_t> compute_viewport_rect(const mat4& matrix) const noexcept;
 
 	/**
 	 * @brief Move widget to position within its parent.
 	 * @param new_pos - new widget's position.
 	 */
-	void move_to(const vector2& new_pos);
+	void move_to(const vec2& new_pos);
 
 	/**
 	 * @brief Shift widget within its parent.
 	 * @param delta - vector to shift the widget by.
 	 */
-	void move_by(const vector2& delta)
+	void move_by(const vec2& delta)
 	{
 		this->move_to(this->params.rectangle.p + delta);
 	}
@@ -306,13 +306,13 @@ public:
 	 * @brief Set new dimensions of the widget.
 	 * @param new_dims - new dimensions of the widget.
 	 */
-	void resize(const vector2& new_dims);
+	void resize(const vec2& new_dims);
 
 	/**
 	 * @brief Extend or shrink the widget dimensions by given value.
 	 * @param delta - value to change the widget dimensions by.
 	 */
-	void resize_by(const vector2& delta)
+	void resize_by(const vec2& delta)
 	{
 		this->resize(this->rect().d + delta);
 	}
@@ -495,10 +495,10 @@ public:
 	 * implementation does nothing.
 	 * @param matrix - transformation matrix to use when rendering.
 	 */
-	virtual void render(const ruis::matrix4& matrix) const {}
+	virtual void render(const ruis::mat4& matrix) const {}
 
 private:
-	void render_internal(const ruis::matrix4& matrix) const;
+	void render_internal(const ruis::mat4& matrix) const;
 
 private:
 	void on_key_internal(const ruis::key_event& e);
@@ -600,7 +600,7 @@ public:
 	 * drawing is assumed.
 	 * @return Measured desired widget dimensions.
 	 */
-	virtual vector2 measure(const vector2& quotum) const;
+	virtual vec2 measure(const vec2& quotum) const;
 
 public:
 	/**
@@ -657,9 +657,9 @@ public:
 	 * @return true if point is inside of the widget boundaries.
 	 * @return false otherwise.
 	 */
-	bool overlaps(const ruis::vector2& pos) const noexcept
+	bool overlaps(const ruis::vec2& pos) const noexcept
 	{
-		return ruis::rect(ruis::vector2(0, 0), this->rect().d).overlaps(pos);
+		return ruis::rect(ruis::vec2(0, 0), this->rect().d).overlaps(pos);
 	}
 
 	/**
@@ -706,7 +706,7 @@ public:
 	 *        If null then it will go down till the root widget.
 	 * @return translated position.
 	 */
-	vector2 pos_in_ancestor(vector2 pos, const widget* ancestor = nullptr);
+	vec2 pos_in_ancestor(vec2 pos, const widget* ancestor = nullptr);
 
 public:
 	/**
@@ -742,7 +742,7 @@ public:
  * @param parent_dims - parent widget dimensions.
  * @return Dimensions of widget.
  */
-vector2 dims_for_widget(const widget& w, const vector2& parent_dims);
+vec2 dims_for_widget(const widget& w, const vec2& parent_dims);
 
 } // namespace ruis
 

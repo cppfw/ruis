@@ -27,7 +27,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace ruis::layout;
 
 void size_layout::lay_out(
-	const vector2& dims, //
+	const vec2& dims, //
 	semiconst_widget_list& widgets
 ) const
 {

@@ -50,7 +50,7 @@ public:
 		all_parameters params
 	);
 
-	vector2 measure(const vector2& quotum) const override;
+	vec2 measure(const vec2& quotum) const override;
 };
 
 namespace make {

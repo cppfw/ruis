@@ -27,7 +27,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace ruis::layout;
 
 void pile_layout::lay_out(
-	const vector2& dims, //
+	const vec2& dims, //
 	semiconst_widget_list& widgets
 ) const
 {
@@ -35,7 +35,7 @@ void pile_layout::lay_out(
 		auto& w = widget.get();
 		w.resize(dims_for_widget(w, dims));
 
-		ruis::vector2 pos;
+		ruis::vec2 pos;
 		for (unsigned i = 0; i != 2; ++i) {
 			const auto& lp = w.get_layout_params_const();
 
@@ -62,19 +62,19 @@ void pile_layout::lay_out(
 	}
 }
 
-ruis::vector2 pile_layout::measure(
-	const vector2& quotum, //
+ruis::vec2 pile_layout::measure(
+	const vec2& quotum, //
 	const_widget_list& widgets
 ) const
 {
-	vector2 ret(quotum);
+	vec2 ret(quotum);
 	using std::max;
 	ret = max(ret, real(0)); // clamp bottom
 
 	for (const auto& w : widgets) {
 		auto& lp = w.get().get_layout_params_const();
 
-		ruis::vector2 d;
+		ruis::vec2 d;
 
 		for (unsigned j = 0; j != d.size(); ++j) {
 			const auto& dim = lp.dims[j].get();

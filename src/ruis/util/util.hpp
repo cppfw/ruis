@@ -44,33 +44,33 @@ namespace ruis {
  * @param viewport_dim - dimensions of the viewport.
  * @return Viewport matrix.
  */
-inline ruis::matrix4 make_viewport_matrix(
-	const ruis::matrix4& initial, //
-	ruis::vector2 viewport_dim
+inline ruis::mat4 make_viewport_matrix(
+	const ruis::mat4& initial, //
+	ruis::vec2 viewport_dim
 )
 {
-	ruis::matrix4 m(initial);
+	ruis::mat4 m(initial);
 
 	// viewport right and bottom edges correspond to coordinates equal to viewport size in pixels.
-	m.scale(vector2(1).comp_divide(viewport_dim));
+	m.scale(vec2(1).comp_divide(viewport_dim));
 
 	return m;
 }
 
 // TODO: docygen comment
-ruis::vector2 make_vec2(
+ruis::vec2 make_vec2(
 	tml::forest::const_iterator begin, //
 	tml::forest::const_iterator end
 );
 
 /**
- * @brief Parse 2 values from tml as vector2.
- * @param desc - forest of at least two trees holding vector2 values.
+ * @brief Parse 2 values from tml as vec2.
+ * @param desc - forest of at least two trees holding vec2 values.
  *                If there are less than 2 trees in the forest then the rest of
  *                vector components will be filled with latest parsed value.
- * @return parsed vector2.
+ * @return parsed vec2.
  */
-inline ruis::vector2 make_vec2(const tml::forest& desc)
+inline ruis::vec2 make_vec2(const tml::forest& desc)
 {
 	return make_vec2(
 		desc.begin(), //

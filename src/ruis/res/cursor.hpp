@@ -42,12 +42,12 @@ namespace ruis::res {
 class cursor : public resource
 {
 	utki::shared_ref<const res::image> image_v;
-	vector2 hotspot_v;
+	vec2 hotspot_v;
 
 public:
 	cursor(
 		utki::shared_ref<const ruis::res::image> image, //
-		const vector2& hotspot
+		const vec2& hotspot
 	);
 
 	cursor(const cursor&) = delete;
@@ -63,7 +63,7 @@ public:
 		return this->image_v.get();
 	}
 
-	const vector2& hotspot() const noexcept
+	const vec2& hotspot() const noexcept
 	{
 		return this->hotspot_v;
 	}

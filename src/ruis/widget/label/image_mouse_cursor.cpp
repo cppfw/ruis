@@ -64,7 +64,7 @@ bool image_mouse_cursor::on_mouse_move(const mouse_move_event& e)
 	return this->container::on_mouse_move(e);
 }
 
-void image_mouse_cursor::render(const ruis::matrix4& matrix) const
+void image_mouse_cursor::render(const ruis::mat4& matrix) const
 {
 	this->container::render(matrix);
 
@@ -83,7 +83,7 @@ void image_mouse_cursor::render(const ruis::matrix4& matrix) const
 
 	ASSERT(this->quad_tex)
 
-	matrix4 matr(matrix);
+	mat4 matr(matrix);
 	matr.translate(this->cursor_pos);
 	matr.translate(-this->params.cursor->hotspot());
 	matr.scale(this->quad_tex->dims().to<real>());

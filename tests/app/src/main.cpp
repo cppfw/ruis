@@ -199,7 +199,7 @@ public:
 
 			auto mouse_proxy = c.get().try_get_widget_as<ruis::mouse_proxy>("list_mouseproxy");
 			struct button_state : public utki::shared{
-				ruis::vector2 old_pos = 0;
+				ruis::vec2 old_pos = 0;
 				bool is_left_button_pressed = false;
 			};
 			auto state = std::make_shared<button_state>();
@@ -272,7 +272,7 @@ public:
 
 			auto mouse_proxy = c.get().try_get_widget_as<ruis::mouse_proxy>("horizontal_list_mouseproxy");
 			struct button_state : public utki::shared{
-				ruis::vector2 old_pos = 0;
+				ruis::vec2 old_pos = 0;
 				bool is_left_button_pressed = false;
 			};
 			auto state = std::make_shared<button_state>();

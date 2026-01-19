@@ -43,7 +43,7 @@ image::image( //
 	vao(this->context.get().renderer.get().obj().empty_vertex_array)
 {}
 
-void image::render(const ruis::matrix4& matrix) const
+void image::render(const ruis::mat4& matrix) const
 {
 	auto img = this->params.img.get();
 
@@ -65,7 +65,7 @@ void image::render(const ruis::matrix4& matrix) const
 	}
 	ASSERT(this->texture)
 
-	ruis::matrix4 matr(matrix);
+	ruis::mat4 matr(matrix);
 	matr.scale(this->rect().d);
 
 	r.render(
@@ -75,7 +75,7 @@ void image::render(const ruis::matrix4& matrix) const
 	);
 }
 
-ruis::vector2 image::measure(const ruis::vector2& quotum) const
+ruis::vec2 image::measure(const ruis::vec2& quotum) const
 {
 	auto img = this->params.img.get();
 
@@ -87,14 +87,14 @@ ruis::vector2 image::measure(const ruis::vector2& quotum) const
 		return {0, 0};
 	}
 
-	vector2 img_dims = img->dims(this->context.get().units).to<real>();
+	vec2 img_dims = img->dims(this->context.get().units).to<real>();
 
 	ASSERT(img_dims.is_positive_or_zero(), [&](auto& o) {
 		o << "img_dims = " << img_dims << " widget id = " << this->id();
 	})
 
 	if (!this->params.keep_aspect_ratio) {
-		vector2 ret = img_dims;
+		vec2 ret = img_dims;
 
 		for (unsigned i = 0; i != ret.size(); ++i) {
 			if (quotum[i] >= 0) {
@@ -117,7 +117,7 @@ ruis::vector2 image::measure(const ruis::vector2& quotum) const
 	} else if (quotum.x() < 0) {
 		ASSERT(quotum.y() >= 0)
 
-		vector2 ret = {
+		vec2 ret = {
 			round(ratio * quotum.y()), //
 			quotum.y()
 		};
@@ -138,7 +138,7 @@ ruis::vector2 image::measure(const ruis::vector2& quotum) const
 
 		ASSERT(ratio > 0)
 
-		vector2 ret = {
+		vec2 ret = {
 			quotum.x(), //
 			round(quotum.x() / ratio)
 		};

@@ -93,7 +93,7 @@ overlay::overlay(
 
 utki::shared_ref<widget> overlay::show_popup(
 	utki::shared_ref<widget> popup, //
-	vector2 anchor
+	vec2 anchor
 )
 {
 	// clang-format off
@@ -138,7 +138,7 @@ utki::shared_ref<widget> overlay::show_popup(
 
 	c.get().push_back(std::move(popup));
 
-	vector2 dim = dims_for_widget(
+	vec2 dim = dims_for_widget(
 		w, //
 		this->rect().d
 	);

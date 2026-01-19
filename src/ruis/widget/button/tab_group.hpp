@@ -56,11 +56,11 @@ public:
 
 	void set_filler(std::shared_ptr<const res::image> filler);
 
-	ruis::vector2 measure(const ruis::vector2& quotum) const override;
+	ruis::vec2 measure(const ruis::vec2& quotum) const override;
 
 	void on_lay_out() override;
 
-	void render(const ruis::matrix4& matrix) const override;
+	void render(const ruis::mat4& matrix) const override;
 };
 
 namespace make {

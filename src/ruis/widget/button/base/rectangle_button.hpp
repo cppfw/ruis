@@ -44,7 +44,7 @@ public:
 		// TODO: add disabled_color ?
 	};
 
-	void render(const matrix4& matrix) const override;
+	void render(const mat4& matrix) const override;
 
 private:
 	parameters params;

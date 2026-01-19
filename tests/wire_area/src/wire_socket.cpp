@@ -45,27 +45,27 @@ void wire_socket::disconnect(){
 	}
 }
 
-std::array<ruis::vector2, 2> wire_socket::outlet_pos() const noexcept{
-	ruis::vector2 dir;
-	ruis::vector2 pos;
+std::array<ruis::vec2, 2> wire_socket::outlet_pos() const noexcept{
+	ruis::vec2 dir;
+	ruis::vec2 pos;
 	switch(this->params.outlet_orientation){
 		default:
 			ASSERT(false)
 		case orientation::bottom:
-			pos = this->rect().p + this->rect().d.comp_mul(ruis::vector2(0.5, 1));
-			dir = ruis::vector2(0, 1);
+			pos = this->rect().p + this->rect().d.comp_mul(ruis::vec2(0.5, 1));
+			dir = ruis::vec2(0, 1);
 			break;
 		case orientation::left:
-			pos = this->rect().p + this->rect().d.comp_mul(ruis::vector2(0, 0.5));
-			dir = ruis::vector2(-1, 0);
+			pos = this->rect().p + this->rect().d.comp_mul(ruis::vec2(0, 0.5));
+			dir = ruis::vec2(-1, 0);
 			break;
 		case orientation::right:
-			pos = this->rect().p + this->rect().d.comp_mul(ruis::vector2(1, 0.5));
-			dir = ruis::vector2(1, 0);
+			pos = this->rect().p + this->rect().d.comp_mul(ruis::vec2(1, 0.5));
+			dir = ruis::vec2(1, 0);
 			break;
 		case orientation::top:
-			pos = this->rect().p + this->rect().d.comp_mul(ruis::vector2(0.5, 0));
-			dir = ruis::vector2(0, -1);
+			pos = this->rect().p + this->rect().d.comp_mul(ruis::vec2(0.5, 0));
+			dir = ruis::vec2(0, -1);
 			break;
 	}
 	return {{pos, dir}};

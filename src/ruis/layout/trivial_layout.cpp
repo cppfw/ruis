@@ -25,8 +25,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis::layout;
 
-ruis::vector2 trivial_layout::measure(
-	const vector2& quotum, //
+ruis::vec2 trivial_layout::measure(
+	const vec2& quotum, //
 	const_widget_list& widgets
 ) const
 {
@@ -58,7 +58,7 @@ ruis::vector2 trivial_layout::measure(
 }
 
 void trivial_layout::lay_out(
-	const vector2& dims, //
+	const vec2& dims, //
 	semiconst_widget_list& widgets
 ) const
 {

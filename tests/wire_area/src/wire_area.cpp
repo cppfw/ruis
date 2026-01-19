@@ -30,7 +30,7 @@ wire_area::wire_area(
 	// clang-format on
 {}
 
-void wire_area::render(const ruis::matrix4& matrix)const{
+void wire_area::render(const ruis::mat4& matrix)const{
 	this->container::render(matrix);
 	
 	for(auto& s : this->sockets){
@@ -49,7 +49,7 @@ void wire_area::render(const ruis::matrix4& matrix)const{
 		ruis::paint::path_vao vba(this->context.get().renderer);
 		vba.set(path.stroke(this->wire_half_width, antialias_width, 1));
 		
-		vba.render(ruis::matrix4(matrix).translate(p0), this->wire_color);
+		vba.render(ruis::mat4(matrix).translate(p0), this->wire_color);
 	}
 	
 	if(this->grabbed_socket){
@@ -62,7 +62,7 @@ void wire_area::render(const ruis::matrix4& matrix)const{
 		ruis::paint::path_vao vba(this->context.get().renderer);
 		vba.set(path.stroke(this->wire_half_width, antialias_width, 1));
 		
-		vba.render(ruis::matrix4(matrix).translate(p0), this->grabbed_color);
+		vba.render(ruis::mat4(matrix).translate(p0), this->grabbed_color);
 	}
 }
 

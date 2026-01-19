@@ -31,12 +31,12 @@ using namespace std::string_literals;
 
 using namespace ruis;
 
-ruis::vector2 ruis::make_vec2(
+ruis::vec2 ruis::make_vec2(
 	tml::forest::const_iterator begin, //
 	tml::forest::const_iterator end
 )
 {
-	ruis::vector2 ret;
+	ruis::vec2 ret;
 
 	unsigned n = 0;
 	real v = 0;
@@ -55,11 +55,11 @@ ruis::vector2 ruis::make_vec2(
 ruis::rect ruis::make_rect(const tml::forest& desc)
 {
 	using std::min;
-	vector2 p = make_vec2(
+	vec2 p = make_vec2(
 		desc.begin(), //
 		desc.end()
 	);
-	vector2 d = make_vec2(
+	vec2 d = make_vec2(
 		utki::next(
 			desc.begin(), //
 			min(size_t(2), desc.size())
@@ -72,11 +72,11 @@ ruis::rect ruis::make_rect(const tml::forest& desc)
 ruis::sides<real> ruis::make_sides(const tml::forest& desc)
 {
 	using std::min;
-	vector2 p = make_vec2(
+	vec2 p = make_vec2(
 		desc.begin(), //
 		desc.end()
 	);
-	vector2 d = make_vec2(
+	vec2 d = make_vec2(
 		utki::next(
 			desc.begin(), //
 			min(size_t(2), desc.size())

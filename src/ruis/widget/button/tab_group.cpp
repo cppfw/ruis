@@ -59,9 +59,9 @@ void tab_group::set_filler(std::shared_ptr<const res::image> filler)
 	this->filler_texture = this->filler->get(this->context.get().units).to_shared_ptr();
 }
 
-ruis::vector2 tab_group::measure(const ruis::vector2& quotum) const
+ruis::vec2 tab_group::measure(const ruis::vec2& quotum) const
 {
-	vector2 ret(quotum);
+	vec2 ret(quotum);
 	using std::max;
 	ret = max(ret, real(0)); // clamp bottom
 
@@ -79,7 +79,7 @@ ruis::vector2 tab_group::measure(const ruis::vector2& quotum) const
 			);
 		}
 
-		ruis::vector2 d;
+		ruis::vec2 d;
 
 		for (unsigned j = 0; j != d.size(); ++j) {
 			const auto& dim = lp.dims[j].get();
@@ -145,7 +145,7 @@ void tab_group::on_lay_out()
 		using std::round;
 
 		pos -= min(prev_borders.right(), borders.left());
-		c.get().move_to(vector2(
+		c.get().move_to(vec2(
 			pos, //
 			// align bottom
 			round(this->rect().d.y() - c.get().rect().d.y())
@@ -156,7 +156,7 @@ void tab_group::on_lay_out()
 	}
 }
 
-void tab_group::render(const ruis::matrix4& matrix) const
+void tab_group::render(const ruis::mat4& matrix) const
 {
 	auto active_tab = this->get_active().lock();
 
@@ -175,7 +175,7 @@ void tab_group::render(const ruis::matrix4& matrix) const
 		real ce = this->children().back().get().rect().x2();
 		real l = this->rect().d.x() - ce;
 		if (l > 0) {
-			matrix4 m(matrix);
+			mat4 m(matrix);
 			m.translate(ce, this->rect().d.y() - real(this->filler_texture->dims().y()));
 			m.scale(l, real(this->filler_texture->dims().y()));
 			this->context.get().ren().render(

@@ -114,8 +114,8 @@ class texture_font : public font
 	mutable std::list<char32_t> last_used_order;
 
 	struct glyph {
-		ruis::vector2 top_left;
-		ruis::vector2 bottom_right;
+		ruis::vec2 top_left;
+		ruis::vec2 bottom_right;
 
 		// TOOD: make utki::shared_ref?
 		std::shared_ptr<render::vertex_array> vao;
@@ -158,7 +158,7 @@ public:
 protected:
 	render_result render_internal(
 		render::renderer& renderer, //
-		const ruis::matrix4& matrix,
+		const ruis::mat4& matrix,
 		const ruis::color& color,
 		const std::u32string_view str,
 		unsigned tab_size,
@@ -178,7 +178,7 @@ protected:
 private:
 	real render_glyph_internal(
 		render::renderer& renderer, //
-		const ruis::matrix4& matrix,
+		const ruis::mat4& matrix,
 		const ruis::color& color,
 		char32_t ch
 	) const;

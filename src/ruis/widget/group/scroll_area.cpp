@@ -45,13 +45,13 @@ scroll_area::scroll_area(
 
 bool scroll_area::on_mouse_button(const mouse_button_event& e)
 {
-	vector2 d = -this->cur_scroll_pos;
+	vec2 d = -this->cur_scroll_pos;
 	return this->container::on_mouse_button(mouse_button_event{e.is_down, e.pos - d, e.button, e.pointer_id});
 }
 
 bool scroll_area::on_mouse_move(const mouse_move_event& e)
 {
-	vector2 d = -this->cur_scroll_pos;
+	vec2 d = -this->cur_scroll_pos;
 	return this->container::on_mouse_move(mouse_move_event{
 		e.pos - d, //
 		e.pointer_id,
@@ -59,11 +59,11 @@ bool scroll_area::on_mouse_move(const mouse_move_event& e)
 	});
 }
 
-void scroll_area::render(const ruis::matrix4& matrix) const
+void scroll_area::render(const ruis::mat4& matrix) const
 {
-	vector2 d = -this->cur_scroll_pos;
+	vec2 d = -this->cur_scroll_pos;
 
-	matrix4 matr(matrix);
+	mat4 matr(matrix);
 	matr.translate(d);
 
 	this->container::render(matr);
@@ -80,7 +80,7 @@ void scroll_area::clamp_scroll_pos()
 	this->cur_scroll_pos = min(this->cur_scroll_pos, this->invisible_dims);
 }
 
-void scroll_area::set_scroll_pos(const vector2& new_scroll_pos)
+void scroll_area::set_scroll_pos(const vec2& new_scroll_pos)
 {
 	using std::round;
 	this->cur_scroll_pos = round(new_scroll_pos);
@@ -91,9 +91,9 @@ void scroll_area::set_scroll_pos(const vector2& new_scroll_pos)
 	this->on_scroll_pos_change();
 }
 
-void scroll_area::set_scroll_factor(const vector2& factor)
+void scroll_area::set_scroll_factor(const vec2& factor)
 {
-	vector2 new_scroll_pos = this->invisible_dims.comp_mul(factor);
+	vec2 new_scroll_pos = this->invisible_dims.comp_mul(factor);
 
 	this->set_scroll_pos(new_scroll_pos);
 }
@@ -101,7 +101,7 @@ void scroll_area::set_scroll_factor(const vector2& factor)
 void scroll_area::update_scroll_factor()
 {
 	// at this point effective dimension should be updated
-	vector2 factor = this->cur_scroll_pos.comp_div(this->invisible_dims);
+	vec2 factor = this->cur_scroll_pos.comp_div(this->invisible_dims);
 
 	if (this->cur_scroll_factor == factor) {
 		return;
@@ -120,10 +120,10 @@ void scroll_area::update_scroll_factor()
 // NOTE:
 // scroll_area uses it's own dims_for_widget() beacuse it has slightly different behaviour for 'max',
 // it wants 'max' children to be bigger than scroll_area in case their minimal dimensions are bigger.
-vector2 scroll_area::dims_for_widget(const widget& w) const
+vec2 scroll_area::dims_for_widget(const widget& w) const
 {
 	const layout::parameters& lp = w.get_layout_params_const();
-	vector2 d;
+	vec2 d;
 	for (unsigned i = 0; i != 2; ++i) {
 		const auto& dim = lp.dims[i].get();
 
@@ -145,7 +145,7 @@ vector2 scroll_area::dims_for_widget(const widget& w) const
 		}
 	}
 	if (!d.is_positive_or_zero()) {
-		vector2 md = w.measure(d);
+		vec2 md = w.measure(d);
 		for (unsigned i = 0; i != md.size(); ++i) {
 			if (d[i] < 0) {
 				if (lp.dims[i].get().get_type() == ruis::dim::type::max && md[i] < this->rect().d[i]) {
@@ -176,7 +176,7 @@ void scroll_area::on_lay_out()
 	// correct scroll position
 
 	// distance of content's bottom right corner from bottom right corner of the scroll_area
-	vector2 br = this->cur_scroll_pos - this->invisible_dims;
+	vec2 br = this->cur_scroll_pos - this->invisible_dims;
 
 	for (size_t i = 0; i != br.size(); ++i) {
 		if (br[i] > 0) {
@@ -205,12 +205,12 @@ void scroll_area::on_children_change()
 
 void scroll_area::update_invisible_dims()
 {
-	ruis::vector2 min_dims(0);
+	ruis::vec2 min_dims(0);
 
 	using std::max;
 
 	for (const auto& c : this->children()) {
-		ruis::vector2 d = c.get().rect().p + this->dims_for_widget(c.get());
+		ruis::vec2 d = c.get().rect().p + this->dims_for_widget(c.get());
 
 		min_dims = max(min_dims, d); // clamp bottom
 	}
@@ -220,7 +220,7 @@ void scroll_area::update_invisible_dims()
 	this->update_scroll_factor();
 }
 
-vector2 scroll_area::get_visible_area_fraction() const noexcept
+vec2 scroll_area::get_visible_area_fraction() const noexcept
 {
 	auto ret = this->rect().d.comp_div(this->rect().d + this->invisible_dims);
 

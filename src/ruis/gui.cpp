@@ -117,11 +117,11 @@ void gui::set_root(utki::shared_ref<ruis::widget> w)
 
 	this->root_widget = std::move(w);
 
-	this->root_widget.get().move_to(ruis::vector2(0));
+	this->root_widget.get().move_to(ruis::vec2(0));
 	this->root_widget.get().resize(this->viewport_rect.d);
 }
 
-void gui::render(const matrix4& matrix) const
+void gui::render(const mat4& matrix) const
 {
 	if (this->get_root().is_layout_dirty()) {
 		LOG([](auto& o) {
@@ -131,7 +131,7 @@ void gui::render(const matrix4& matrix) const
 		this->root_widget.get().lay_out();
 	}
 
-	ruis::matrix4 m = make_viewport_matrix(
+	ruis::mat4 m = make_viewport_matrix(
 		matrix, //
 		this->viewport_rect.d
 	);
@@ -140,7 +140,7 @@ void gui::render(const matrix4& matrix) const
 }
 
 void gui::send_mouse_move(
-	const vector2& pos, //
+	const vec2& pos, //
 	unsigned id
 )
 {
@@ -153,7 +153,7 @@ void gui::send_mouse_move(
 
 void gui::send_mouse_button(
 	bool is_down, //
-	const vector2& pos,
+	const vec2& pos,
 	mouse_button button,
 	unsigned id
 )
