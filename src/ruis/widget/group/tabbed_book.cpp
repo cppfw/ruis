@@ -66,7 +66,7 @@ tabbed_book::tabbed_book(
 					std::vector<utki::shared_ref<widget>> children;
 					children.reserve(pages.size());
 					for(const auto& p : pages){
-						children.emplace_back(p.first);
+						children.emplace_back(p.first); // TODO: move?
 					}
 					return children;
 				}()
@@ -85,7 +85,7 @@ tabbed_book::tabbed_book(
 					std::vector<utki::shared_ref<page>> children;
 					children.reserve(pages.size());
 					for(const auto& p : pages){
-						children.push_back(p.second);
+						children.emplace_back(p.second); // TODO: move?
 					}
 					return children;
 				}()

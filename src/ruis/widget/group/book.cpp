@@ -117,13 +117,13 @@ void book::activate_last_page()
 
 utki::shared_ref<page> book::tear_out(page& pg)
 {
-	ASSERT(pg.get_parent_book() == this)
+	utki::assert(pg.get_parent_book() == this, SL);
 
 	auto i = std::find_if(this->pages.begin(), this->pages.end(), [&pg](const auto& v) -> bool {
 		return &v.get() == &pg;
 	});
 
-	ASSERT(i != this->pages.end())
+	utki::assert(i != this->pages.end(), SL);
 
 	auto index = size_t(std::distance(this->pages.begin(), i));
 
@@ -151,10 +151,10 @@ utki::shared_ref<page> book::tear_out(page& pg)
 		this->clear();
 
 		if (!this->pages.empty()) {
-			ASSERT(this->active_page_index < this->pages.size(), [this](auto& o) {
+			utki::assert(this->active_page_index < this->pages.size(), [this](auto& o) {
 				o << "this->active_page_index = " << this->active_page_index
 				  << ", this->pages.size() = " << this->pages.size();
-			})
+			}, SL);
 			auto p = this->pages[this->active_page_index];
 			this->push_back(p);
 			p.get().on_show();
@@ -191,7 +191,7 @@ void book::activate(const page& p)
 			return &pg.get() == &p;
 		}
 	);
-	ASSERT(i != this->pages.end())
+	utki::assert(i != this->pages.end(), SL);
 
 	this->activate(std::distance(this->pages.begin(), i));
 }

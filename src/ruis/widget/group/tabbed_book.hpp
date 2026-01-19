@@ -57,9 +57,15 @@ class tabbed_book :
 	void set_tab_pressed_change_handler(typename decltype(tab_page_pairs)::value_type& pair);
 
 public:
+	struct parameters{
+		std::shared_ptr<ruis::book> book;
+		std::shared_ptr<ruis::tab_group> tab_group;
+	};
+
 	struct all_parameters {
 		layout::parameters layout_params;
 		widget::parameters widget_params;
+		parameters tabbed_book_params;
 	};
 
 	tabbed_book(
@@ -112,6 +118,19 @@ inline utki::shared_ref<ruis::tabbed_book> tabbed_book(
 		pages = {}
 )
 {
+	if(!params.tabbed_book_params.book){
+		params.tabbed_book_params.book = make::book(context, //
+			{
+			// TODO:
+		});
+	}
+
+	if(!params.tabbed_book_params.tab_group){
+		params.tabbed_book_params.tab_group = make::tab_group(context, {
+			// TODO:
+		});
+	}
+
 	return utki::make_shared<ruis::tabbed_book>(
 		std::move(context), //
 		std::move(params),
