@@ -26,7 +26,7 @@ using namespace ruis::touch;
 tab_group::tab_group(
 	utki::shared_ref<ruis::context> context, //
 	all_parameters params,
-	widget_list tabs
+	widget_list children
 ) :
 	widget(
 		std::move(context), //
@@ -40,7 +40,7 @@ tab_group::tab_group(
 			.widget_params = std::move(params.widget_params),
 			.container_params = std::move(params.container_params),
 		},
-		std::move(tabs)
+		std::move(children)
 	),
 	selector_vao(
 		this->context.get().renderer, //

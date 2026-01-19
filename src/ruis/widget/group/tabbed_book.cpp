@@ -21,9 +21,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "tabbed_book.hpp"
 
-#include "../button/tab.hpp"
-#include "../button/tab_group.hpp"
-
 using namespace std::string_literals;
 
 using namespace ruis;
@@ -37,7 +34,7 @@ tabbed_book::tabbed_book(
 	all_parameters params,
 	std::vector< //
 		std::pair<
-			utki::shared_ref<tab>, //
+			utki::shared_ref<choice_button>, //
 			utki::shared_ref<page> //
 			> //
 		> //
@@ -117,7 +114,7 @@ tabbed_book::tabbed_book(
 
 	// on page programmatic activate we need to activate the corresponding tab as well
 	this->book.active_page_change_handler = [this](ruis::book& b) {
-		ASSERT(b.get_active_page())
+		utki::assert(b.get_active_page(), SL);
 		auto i = this->find_pair(*b.get_active_page());
 		if (i != this->tab_page_pairs.end()) {
 			auto& [tab, page] = *i;
@@ -131,7 +128,7 @@ tabbed_book::tabbed_book(
 }
 
 void tabbed_book::add(
-	utki::shared_ref<tab> tab, //
+	utki::shared_ref<choice_button> tab, //
 	utki::shared_ref<ruis::page> page
 )
 {
@@ -162,7 +159,7 @@ void tabbed_book::set_tab_pressed_change_handler(typename decltype(tab_page_pair
 	};
 }
 
-void tabbed_book::activate_another_tab(tab& t)
+void tabbed_book::activate_another_tab(choice_button& t)
 {
 	if (!t.is_pressed()) {
 		return;
@@ -170,26 +167,26 @@ void tabbed_book::activate_another_tab(tab& t)
 
 	// find another tab and activate it
 	auto i = this->tab_group.find(t);
-	ASSERT(i != this->tab_group.end())
-	ASSERT(!this->tab_group.empty())
+	utki::assert(i != this->tab_group.end(), SL);
+	utki::assert(!this->tab_group.empty(), SL);
 	if (i == this->tab_group.begin()) {
 		auto ni = std::next(i);
 		if (ni != this->tab_group.end()) {
-			auto next_tab = std::dynamic_pointer_cast<ruis::tab>(ni->to_shared_ptr());
-			ASSERT(next_tab)
+			auto next_tab = std::dynamic_pointer_cast<ruis::choice_button>(ni->to_shared_ptr());
+			utki::assert(next_tab, SL);
 			next_tab->set_pressed(true);
 		}
 	} else {
-		ASSERT(i != this->tab_group.begin())
+		utki::assert(i != this->tab_group.begin(), SL);
 		auto ni = std::prev(i);
-		ASSERT(ni >= this->tab_group.begin())
-		auto next_tab = std::dynamic_pointer_cast<ruis::tab>(ni->to_shared_ptr());
-		ASSERT(next_tab)
+		utki::assert(ni >= this->tab_group.begin(), SL);
+		auto next_tab = std::dynamic_pointer_cast<ruis::choice_button>(ni->to_shared_ptr());
+		utki::assert(next_tab, SL);
 		next_tab->set_pressed(true);
 	}
 }
 
-utki::shared_ref<page> tabbed_book::tear_out(tab& t)
+utki::shared_ref<page> tabbed_book::tear_out(choice_button& t)
 {
 	auto i = this->find_pair(t);
 	if (i == this->tab_page_pairs.end()) {
@@ -200,19 +197,19 @@ utki::shared_ref<page> tabbed_book::tear_out(tab& t)
 
 	this->tab_page_pairs.erase(i);
 
-	ASSERT(t.parent() == &this->tab_group)
+	utki::assert(t.parent() == &this->tab_group, SL);
 
 	this->activate_another_tab(t);
 
 	t.remove_from_parent();
 
-	ASSERT(!page.get().is_active() || this->book.size() == 1)
+	utki::assert(!page.get().is_active() || this->book.size() == 1, SL);
 	page.get().tear_out();
 
 	return page;
 }
 
-auto tabbed_book::find_pair(const ruis::tab& t) -> decltype(tab_page_pairs)::iterator
+auto tabbed_book::find_pair(const ruis::choice_button& t) -> decltype(tab_page_pairs)::iterator
 {
 	return std::find_if(
 		this->tab_page_pairs.begin(), //

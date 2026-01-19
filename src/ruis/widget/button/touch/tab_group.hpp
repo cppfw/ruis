@@ -40,7 +40,7 @@ public:
 	tab_group(
 		utki::shared_ref<ruis::context> context, //
 		all_parameters params,
-		widget_list tabs
+		widget_list children
 	);
 
 	void render(const ruis::mat4& matrix) const override;

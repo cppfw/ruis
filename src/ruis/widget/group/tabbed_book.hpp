@@ -23,7 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <unordered_map>
 
-#include "../button/tab.hpp"
+#include "../button/choice_button.hpp"
 #include "../button/tab_group.hpp"
 
 #include "book.hpp"
@@ -43,16 +43,16 @@ class tabbed_book :
 
 	std::vector< //
 		std::pair<
-			utki::shared_ref<tab>, //
+			utki::shared_ref<choice_button>, //
 			utki::shared_ref<page> //
 			> //
 		>
 		tab_page_pairs;
 
-	decltype(tab_page_pairs)::iterator find_pair(const ruis::tab& t);
+	decltype(tab_page_pairs)::iterator find_pair(const ruis::choice_button& t);
 	decltype(tab_page_pairs)::iterator find_pair(const ruis::page& p);
 
-	void activate_another_tab(tab& t);
+	void activate_another_tab(choice_button& t);
 
 	void set_tab_pressed_change_handler(typename decltype(tab_page_pairs)::value_type& pair);
 
@@ -67,7 +67,7 @@ public:
 		all_parameters params,
 		std::vector< //
 			std::pair<
-				utki::shared_ref<tab>, //
+				utki::shared_ref<choice_button>, //
 				utki::shared_ref<page> //
 				> //
 			> //
@@ -75,7 +75,7 @@ public:
 	);
 
 	void add(
-		utki::shared_ref<tab> tab, //
+		utki::shared_ref<choice_button> tab, //
 		utki::shared_ref<ruis::page> page
 	);
 
@@ -84,7 +84,7 @@ public:
 		return this->book;
 	}
 
-	utki::shared_ref<page> tear_out(tab& t);
+	utki::shared_ref<page> tear_out(choice_button& t);
 
 	using ruis::container::render;
 	using ruis::container::on_lay_out;
@@ -105,7 +105,7 @@ inline utki::shared_ref<ruis::tabbed_book> tabbed_book(
 	ruis::tabbed_book::all_parameters params,
 	std::vector< //
 		std::pair<
-			utki::shared_ref<ruis::tab>, //
+			utki::shared_ref<ruis::choice_button>, //
 			utki::shared_ref<ruis::page> //
 			> //
 		> //
