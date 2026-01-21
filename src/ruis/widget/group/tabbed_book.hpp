@@ -72,6 +72,8 @@ public:
 			) //
 			>
 			choice_group_factory;
+
+		bool reverse_order = false;
 	};
 
 	struct all_parameters {

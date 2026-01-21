@@ -122,7 +122,10 @@ tabbed_book::tabbed_book(
 				.layout = ruis::layout::column // TODO: get from params
 			}
 		},
-		{
+		params.tabbed_book_params.reverse_order ? widget_list{
+			book,
+			choice_group
+		} : widget_list{
 			choice_group,
 			book
 		}

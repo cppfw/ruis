@@ -22,10 +22,12 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "gui.hpp"
 
 #include <ruis/res/image.hpp>
-#include <ruis/widget/button/touch/tab_group.hpp>
+#include <ruis/widget/group/touch/tabbed_book.hpp>
 #include <ruis/widget/group/overlay.hpp>
 #include <ruis/widget/label/image.hpp>
 #include <ruis/widget/label/padding.hpp>
+
+#include "list_page.hpp"
 
 using namespace std::string_literals;
 using namespace std::string_view_literals;
@@ -36,7 +38,7 @@ namespace m {
 
 using namespace ruis::make;
 
-using ruis::touch::make::tab_group;
+using ruis::touch::make::tabbed_book;
 
 }; // namespace m
 
@@ -109,7 +111,7 @@ public:
 	}
 };
 
-utki::shared_ref<ruis::widget> make_tab_button(
+utki::shared_ref<ruis::choice_button> make_tab_button(
 	utki::shared_ref<ruis::context> c, //
 	utki::shared_ref<const ruis::res::image> icon
 )
@@ -118,7 +120,7 @@ utki::shared_ref<ruis::widget> make_tab_button(
 	return utki::make_shared<tab_button>(std::move(c),
 		tab_button::all_parameters{
 			.layout_params = {
-				.dims = {ruis::dim::fill, ruis::dim::fill},
+				.dims = {ruis::dim::fill, 60_pp},
 				.weight = 1
 			},
 			.image_params = {
@@ -141,16 +143,25 @@ utki::shared_ref<ruis::widget> make_root_widget(utki::shared_ref<ruis::context> 
 			}
 		},
 		{
-			m::tab_group(c,
+			m::tabbed_book(c,
 				{
 					.layout_params = {
-						.dims = {ruis::dim::fill, 60_pp}
+						.dims = {ruis::dim::fill, ruis::dim::fill}
 					}
 				},
 				{
-					make_tab_button(c, c.get().loader().load<ruis::res::image>("img_home")),
-					make_tab_button(c, c.get().loader().load<ruis::res::image>("img_home")),
-					make_tab_button(c, c.get().loader().load<ruis::res::image>("img_home")),
+					{
+						make_tab_button(c, c.get().loader().load<ruis::res::image>("img_home")),
+						make_list_page(c)
+					},
+					{
+						make_tab_button(c, c.get().loader().load<ruis::res::image>("img_home")),
+						make_list_page(c)
+					},
+					{
+						make_tab_button(c, c.get().loader().load<ruis::res::image>("img_home")),
+						make_list_page(c)
+					}
 				}
 			)
 		}
