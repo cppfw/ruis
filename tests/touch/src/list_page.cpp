@@ -21,18 +21,19 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "list_page.hpp"
 
-namespace{
-class list_page : public ruis::page{
+namespace {
+class list_page : public ruis::page
+{
 public:
-    list_page(utki::shared_ref<ruis::context> c) :
-        ruis::widget(std::move(c), {}, {}),
-        ruis::page(this->context, {})
-    {}
+	list_page(utki::shared_ref<ruis::context> c) :
+		ruis::widget(std::move(c), {}, {}),
+		ruis::page(this->context, {})
+	{}
 };
 
-}
+} // namespace
 
 utki::shared_ref<ruis::page> make_list_page(utki::shared_ref<ruis::context> c)
 {
-    return utki::make_shared<list_page>(std::move(c));
+	return utki::make_shared<list_page>(std::move(c));
 }

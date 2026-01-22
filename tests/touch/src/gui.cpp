@@ -22,8 +22,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "gui.hpp"
 
 #include <ruis/res/image.hpp>
-#include <ruis/widget/group/touch/tabbed_book.hpp>
 #include <ruis/widget/group/overlay.hpp>
+#include <ruis/widget/group/touch/tabbed_book.hpp>
 #include <ruis/widget/label/image.hpp>
 #include <ruis/widget/label/padding.hpp>
 

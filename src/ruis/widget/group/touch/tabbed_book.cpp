@@ -26,40 +26,40 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace ruis::touch;
 
 utki::shared_ref<ruis::tabbed_book> ruis::touch::make::tabbed_book(
-    utki::shared_ref<ruis::context> context, //
-    ruis::tabbed_book::all_parameters params,
-    std::vector< //
-        std::pair<
-            utki::shared_ref<ruis::choice_button>, //
-            utki::shared_ref<ruis::page> //
-            > //
-        > //
-        pages
+	utki::shared_ref<ruis::context> context, //
+	ruis::tabbed_book::all_parameters params,
+	std::vector< //
+		std::pair<
+			utki::shared_ref<ruis::choice_button>, //
+			utki::shared_ref<ruis::page> //
+			> //
+		> //
+		pages
 )
 {
-    if (!params.tabbed_book_params.choice_group_factory) {
-        // clang-format off
+	if (!params.tabbed_book_params.choice_group_factory) {
+		// clang-format off
         params.tabbed_book_params.choice_group_factory = [](
-                utki::shared_ref<ruis::context> context,
-                widget_list tabs
-            ){
-                return ruis::touch::make::tab_group(std::move(context),
-                    {
-                        .layout_params{
-                            .dims{ruis::dim::fill, ruis::dim::min}
-                        }
-                    },
-                    std::move(tabs)
-                );
-            };
-        // clang-format on
+            utki::shared_ref<ruis::context> context,
+            widget_list tabs
+        ){
+            return ruis::touch::make::tab_group(std::move(context),
+                {
+                    .layout_params{
+                        .dims{ruis::dim::fill, ruis::dim::min}
+                    }
+                },
+                std::move(tabs)
+            );
+        };
+		// clang-format on
 
-        params.tabbed_book_params.reverse_order = true;
-    }
+		params.tabbed_book_params.reverse_order = true;
+	}
 
-    return utki::make_shared<ruis::tabbed_book>(
-        std::move(context), //
-        std::move(params),
-        std::move(pages)
-    );
+	return utki::make_shared<ruis::tabbed_book>(
+		std::move(context), //
+		std::move(params),
+		std::move(pages)
+	);
 }
