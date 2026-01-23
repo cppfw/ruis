@@ -68,7 +68,10 @@ public:
 		parameters slider_params;
 	};
 
-	slider(utki::shared_ref<ruis::context> c, all_parameters params);
+	slider(
+		utki::shared_ref<ruis::context> c, //
+		all_parameters params
+	);
 
 public:
 	slider(const slider&) = delete;
@@ -84,9 +87,15 @@ private:
 };
 
 namespace make {
-inline utki::shared_ref<slider> slider(utki::shared_ref<context> context, slider::all_parameters params)
+inline utki::shared_ref<ruis::slider> slider(
+	utki::shared_ref<context> context, //
+	slider::all_parameters params
+)
 {
-	return utki::make_shared<ruis::slider>(std::move(context), std::move(params));
+	return utki::make_shared<ruis::slider>(
+		std::move(context), //
+		std::move(params)
+	);
 }
 } // namespace make
 

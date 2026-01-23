@@ -27,7 +27,7 @@ using namespace ruis::length_literals;
 
 utki::shared_ref<ruis::push_button> m::push_button(
 	utki::shared_ref<ruis::context> context, //
-	ruis::container::all_parameters params,
+	ruis::push_button::all_parameters params,
 	ruis::widget_list contents
 )
 {

@@ -55,6 +55,8 @@ protected:
 	);
 
 public:
+	using all_parameters = container::all_parameters;
+
 	push_button(const push_button&) = delete;
 	push_button& operator=(const push_button&) = delete;
 
@@ -74,7 +76,7 @@ namespace make {
 
 utki::shared_ref<ruis::push_button> push_button( //
 	utki::shared_ref<ruis::context> context,
-	container::all_parameters params,
+	ruis::push_button::all_parameters params,
 	widget_list children
 );
 

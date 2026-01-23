@@ -54,20 +54,20 @@ book::book( //
 			return {pages.back()};
 		}()
 	),
-	// clang-format off
+	// clang-format on
 	pages(std::move(pages)),
-	active_page_index([&](){
-		if(this->pages.empty()){
+	active_page_index([&]() {
+		if (this->pages.empty()) {
 			// set invalid index
 			return std::numeric_limits<size_t>::max();
 		}
 		return this->pages.size() - 1;
 	}())
 {
-	for(auto& p : this->pages){
+	for (auto& p : this->pages) {
 		this->set_page_parent_book(p);
 	}
-	if(!this->pages.empty()){
+	if (!this->pages.empty()) {
 		this->pages.back().get().on_show();
 	}
 }
@@ -151,10 +151,14 @@ utki::shared_ref<page> book::tear_out(page& pg)
 		this->clear();
 
 		if (!this->pages.empty()) {
-			utki::assert(this->active_page_index < this->pages.size(), [this](auto& o) {
-				o << "this->active_page_index = " << this->active_page_index
-				  << ", this->pages.size() = " << this->pages.size();
-			}, SL);
+			utki::assert(
+				this->active_page_index < this->pages.size(),
+				[this](auto& o) {
+					o << "this->active_page_index = " << this->active_page_index
+					  << ", this->pages.size() = " << this->pages.size();
+				},
+				SL
+			);
 			auto p = this->pages[this->active_page_index];
 			this->push_back(p);
 			p.get().on_show();
@@ -249,7 +253,11 @@ page::page(
 	utki::shared_ref<ruis::context> context, //
 	ruis::widget::parameters widget_params
 ) :
-	widget(std::move(context), {}, std::move(widget_params))
+	widget(
+		std::move(context), //
+		{},
+		std::move(widget_params)
+	)
 {}
 
 utki::shared_ref<page> page::tear_out()

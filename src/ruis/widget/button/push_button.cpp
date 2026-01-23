@@ -96,7 +96,7 @@ void push_button::on_click()
 
 utki::shared_ref<ruis::push_button> ruis::make::push_button( //
 	utki::shared_ref<ruis::context> context,
-	container::all_parameters params,
+	ruis::push_button::all_parameters params,
 	widget_list children
 )
 {

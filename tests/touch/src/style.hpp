@@ -32,7 +32,7 @@ using ruis::touch::make::tabbed_book;
 
 utki::shared_ref<ruis::push_button> push_button(
 	utki::shared_ref<ruis::context> context, //
-	ruis::container::all_parameters params,
+	ruis::push_button::all_parameters params,
 	ruis::widget_list contents
 );
 

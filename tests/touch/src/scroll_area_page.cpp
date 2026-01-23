@@ -24,6 +24,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <ruis/widget/button/impl/rectangle_push_button.hpp>
 #include <ruis/widget/group/touch/scroll_area.hpp>
 #include <ruis/widget/label/text.hpp>
+#include <ruis/widget/slider/slider.hpp>
 
 #include "style.hpp"
 
@@ -40,14 +41,26 @@ ruis::widget_list make_scroll_area_page_contents(utki::shared_ref<ruis::context>
         m::push_button(c,
             {
                 .layout_params{
-                    .dims{ruis::dim::fill, ruis::dim::min},
-                    .align = {ruis::align::center, ruis::align::center}
+                    .dims{ruis::dim::fill, ruis::dim::min}
                 }
             },
             {
                 m::text(c, {}, U"Button 1"s)
             }
-        )
+        ),
+        m::slider(c,
+            {
+                .layout_params{
+                    .dims{50_pp, 300_pp}
+                },
+                .fraction_params{
+                    .fraction = 0.5f
+                },
+                .oriented_params{
+                    .vertical = true
+                }
+            }
+        ),
     };
     //clang-format on
 }
@@ -64,6 +77,9 @@ public:
         ruis::touch::scroll_area(
             this->context, //
             {
+                .layout_params = { // TODO: is needed?
+                    .dims = {ruis::dim::fill, ruis::dim::fill}
+                },
                 .container_params{
                     .layout = ruis::layout::column
                 }

@@ -28,7 +28,7 @@ class fraction_widget : public virtual widget
 {
 protected:
 	struct parameters {
-		float fraction = 0; // current position from 0 to 1
+		real fraction = 0; // current position from 0 to 1
 	};
 
 private:
