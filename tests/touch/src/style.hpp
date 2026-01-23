@@ -21,7 +21,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include <ruis/widget/button/impl/rectangle_push_button.hpp>
+#include <ruis/widget/button/push_button.hpp>
 #include <ruis/widget/group/touch/tabbed_book.hpp>
 
 namespace m {
@@ -31,8 +31,8 @@ using namespace ruis::make;
 using ruis::touch::make::tabbed_book;
 
 utki::shared_ref<ruis::push_button> push_button(
-	utki::shared_ref<ruis::context> context,
-	ruis::rectangle_push_button::all_parameters params,
+	utki::shared_ref<ruis::context> context, //
+	ruis::container::all_parameters params,
 	ruis::widget_list contents
 );
 

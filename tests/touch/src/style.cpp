@@ -21,20 +21,31 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "style.hpp"
 
+#include <ruis/widget/button/impl/rectangle_push_button.hpp>
+
 using namespace ruis::length_literals;
 
 utki::shared_ref<ruis::push_button> m::push_button(
-	utki::shared_ref<ruis::context> context,
-	ruis::rectangle_push_button::all_parameters params,
+	utki::shared_ref<ruis::context> context, //
+	ruis::container::all_parameters params,
 	ruis::widget_list contents
 )
 {
-	params.padding_params.borders = 5_pp;
-	params.rectangle_params.corner_radii = 5_pp;
-
+	// clang-format off
 	return ruis::make::rectangle_push_button(
-		std::move(context), //
-		std::move(params),
+		std::move(context),
+		{
+            .layout_params = std::move(params.layout_params),
+            .widget_params = std::move(params.widget_params),
+            .container_params = std::move(params.container_params),
+            .padding_params{
+                .borders = {5_pp}
+            },
+            .rectangle_params{
+                .corner_radii = {5_pp}
+            }
+        },
 		std::move(contents)
 	);
+	// clang-format on
 }
