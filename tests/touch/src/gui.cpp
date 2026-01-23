@@ -26,6 +26,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <ruis/widget/group/touch/tabbed_book.hpp>
 #include <ruis/widget/label/image.hpp>
 #include <ruis/widget/label/padding.hpp>
+#include <ruis/widget/label/text.hpp>
 
 #include "list_page.hpp"
 
@@ -53,6 +54,7 @@ public:
 		ruis::layout::parameters layout_params;
 		ruis::widget::parameters widget_params;
 		ruis::image::parameters image_params;
+		ruis::string text;
 	};
 
 	tab_button(
@@ -64,7 +66,11 @@ public:
 			std::move(params.layout_params),
 			std::move(params.widget_params)
 		),
-		button(this->context, {}),
+		button(
+			this->context,
+			{
+    }
+		),
 		toggle_button(this->context),
 		choice_button(this->context),
 		// clang-format off
@@ -83,7 +89,7 @@ public:
 							.dims = {ruis::dim::fill, ruis::dim::fill}
 						},
 						.container_params = {
-							.layout = ruis::layout::pile
+							.layout = ruis::layout::column
 						},
 						.padding_params = {
 							.borders = {10_pp}
@@ -93,10 +99,20 @@ public:
 						m::image(this->context,
 							{
 								.layout_params = {
-									.dims = {ruis::dim::fill, ruis::dim::fill}
+									.dims = {ruis::dim::min, ruis::dim::fill},
+									.weight = 1
 								},
 								.image_params = std::move(params.image_params)
 							}
+						),
+						m::text(this->context,
+							{
+								.layout_params = {
+									.dims = {ruis::dim::min, ruis::dim::min},
+									.align = {ruis::align::center, ruis::align::center}
+								}
+							},
+							std::move(params.text)
 						)
 					}
 				)
@@ -113,7 +129,8 @@ public:
 
 utki::shared_ref<ruis::choice_button> make_tab_button(
 	utki::shared_ref<ruis::context> c, //
-	utki::shared_ref<const ruis::res::image> icon
+	utki::shared_ref<const ruis::res::image> icon,
+	ruis::string text
 )
 {
 	// clang-format off
@@ -124,8 +141,10 @@ utki::shared_ref<ruis::choice_button> make_tab_button(
 				.weight = 1
 			},
 			.image_params = {
-				.img = std::move(icon)
-			}
+				.img = std::move(icon),
+				.keep_aspect_ratio = true
+			},
+			.text = std::move(text)
 		}
 	);
 	// clang-format on
@@ -151,15 +170,15 @@ utki::shared_ref<ruis::widget> make_root_widget(utki::shared_ref<ruis::context> 
 				},
 				{
 					{
-						make_tab_button(c, c.get().loader().load<ruis::res::image>("img_home")),
+						make_tab_button(c, c.get().loader().load<ruis::res::image>("img_home"), U"Home"s),
 						make_list_page(c)
 					},
 					{
-						make_tab_button(c, c.get().loader().load<ruis::res::image>("img_home")),
+						make_tab_button(c, c.get().loader().load<ruis::res::image>("img_home"), U"List"s),
 						make_list_page(c)
 					},
 					{
-						make_tab_button(c, c.get().loader().load<ruis::res::image>("img_home")),
+						make_tab_button(c, c.get().loader().load<ruis::res::image>("img_home"), U"Stuff"s),
 						make_list_page(c)
 					}
 				}

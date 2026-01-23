@@ -155,9 +155,9 @@ table_list::table_list(
 	table_rows_list(std::move(rows_list))
 {
 	this->headers_tiling_area.get().tiles_resized_handler = [this](auto& ta) {
-		for (auto& child : this->table_rows_list.get().children()) {
+		for (auto& child : this->table_rows_list.get().get_visible_children()) {
 			auto* c = dynamic_cast<ruis::container*>(&child.get());
-			ASSERT(c)
+			utki::assert(c, SL);
 			this->arrange_list_item_cells(c->children());
 		}
 	};

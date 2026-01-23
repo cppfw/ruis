@@ -57,5 +57,5 @@ void choice_button::activate()
 		return;
 	}
 
-	cg->set_active_choice_button(utki::make_shared_from(*this).to_shared_ptr());
+	cg->set_active_choice_button(utki::make_weak_from(*this));
 }

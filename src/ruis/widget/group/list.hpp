@@ -36,10 +36,8 @@ class list :
 	// NOTE: order of virtual public and private declarations here matters for clang due to some bug,
 	//       see
 	//       http://stackoverflow.com/questions/42427145/clang-cannot-cast-to-private-base-while-there-is-a-public-virtual-inheritance
-	// UPDATE 2025-07-29: private container inheritance changed to be public.
 	virtual public widget,
-	// inherit container publicly because sometimes it is needed to access current visible child widgets of the list
-	public container,
+	private container,
 	public oriented,
 	public list_widget
 {
@@ -142,6 +140,17 @@ public:
 	 * Emitted when list's scroll position has changed.
 	 */
 	std::function<void(list&)> scroll_change_handler;
+
+	/**
+	 * @brief Get visible children widgets.
+	 * The returned span is only valid in local scope. The list manages visible children widgets itself,
+	 * so the span may change after list layout or other operations modifying the list's contents.
+	 * @return span of visible children widgets.
+	 */
+	utki::span<const utki::shared_ref<widget>> get_visible_children() noexcept
+	{
+		return this->children();
+	}
 
 private:
 	void update_children_list();

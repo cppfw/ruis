@@ -161,7 +161,7 @@ tabbed_book::tabbed_book(
 	};
 
 	if (!this->tab_page_pairs.empty()) {
-		this->tab_page_pairs.back().first.get().activate();
+		this->tab_page_pairs.front().first.get().activate();
 	}
 }
 
