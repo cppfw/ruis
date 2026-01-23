@@ -176,7 +176,7 @@ void tabbed_book::add(
 	this->book.push(page);
 
 	// make the tab active
-	tab.get().set_pressed(true);
+	tab.get().set_pressed(true); // TODO: why?
 
 	this->tab_page_pairs.emplace_back(
 		std::move(tab), //

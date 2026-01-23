@@ -139,6 +139,14 @@ public:
 		return true;
 	}
 
+	sides& operator=(component_type e) noexcept
+	{
+		for (auto& v : *this) {
+			v = e;
+		}
+		return *this;
+	}
+
 	friend std::ostream& operator<<(
 		std::ostream& stream, //
 		const sides<component_type>& s

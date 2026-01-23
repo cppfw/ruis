@@ -31,22 +31,31 @@ scroll_area::scroll_area(
 	all_parameters params,
 	widget_list children
 ) :
-	widget( //
-		std::move(context),
+	widget(
+		std::move(context), //
 		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
-	container( //
+	// clang-format off
+	container(
 		this->context,
-		{.container_params = std::move(params.container_params)},
+		{
+			.container_params = std::move(params.container_params)
+		},
 		std::move(children)
 	)
+// clang-format on
 {}
 
 bool scroll_area::on_mouse_button(const mouse_button_event& e)
 {
 	vec2 d = -this->cur_scroll_pos;
-	return this->container::on_mouse_button(mouse_button_event{e.is_down, e.pos - d, e.button, e.pointer_id});
+	return this->container::on_mouse_button(mouse_button_event{
+		e.is_down, //
+		e.pos - d,
+		e.button,
+		e.pointer_id
+	});
 }
 
 bool scroll_area::on_mouse_move(const mouse_move_event& e)
@@ -74,7 +83,7 @@ void scroll_area::clamp_scroll_pos()
 	using std::max;
 	using std::min;
 
-	ASSERT(this->invisible_dims.is_positive_or_zero())
+	utki::assert(this->invisible_dims.is_positive_or_zero(), SL);
 
 	this->cur_scroll_pos = max(this->cur_scroll_pos, {0, 0});
 	this->cur_scroll_pos = min(this->cur_scroll_pos, this->invisible_dims);
@@ -111,7 +120,7 @@ void scroll_area::update_scroll_factor()
 		if (this->invisible_dims[i] == 0) {
 			this->cur_scroll_factor[i] = 0;
 		} else {
-			ASSERT(this->invisible_dims[i] > 0)
+			utki::assert(this->invisible_dims[i] > 0, SL);
 			this->cur_scroll_factor[i] = this->cur_scroll_pos[i] / this->invisible_dims[i];
 		}
 	}

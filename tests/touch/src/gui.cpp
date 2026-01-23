@@ -29,19 +29,13 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <ruis/widget/label/text.hpp>
 
 #include "list_page.hpp"
+#include "scroll_area_page.hpp"
+#include "style.hpp"
 
 using namespace std::string_literals;
 using namespace std::string_view_literals;
 
 using namespace ruis::length_literals;
-
-namespace m {
-
-using namespace ruis::make;
-
-using ruis::touch::make::tabbed_book;
-
-}; // namespace m
 
 namespace {
 
@@ -171,15 +165,15 @@ utki::shared_ref<ruis::widget> make_root_widget(utki::shared_ref<ruis::context> 
 				{
 					{
 						make_tab_button(c, c.get().loader().load<ruis::res::image>("img_home"), U"Home"s),
-						make_list_page(c)
+						make_scroll_area_page(c)
 					},
 					{
-						make_tab_button(c, c.get().loader().load<ruis::res::image>("img_home"), U"List"s),
+						make_tab_button(c, c.get().loader().load<ruis::res::image>("img_list"), U"List"s),
 						make_list_page(c)
 					},
 					{
 						make_tab_button(c, c.get().loader().load<ruis::res::image>("img_home"), U"Stuff"s),
-						make_list_page(c)
+						make_list_page(c) // TODO: make stuff page
 					}
 				}
 			)
