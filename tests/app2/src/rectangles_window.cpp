@@ -168,7 +168,7 @@ utki::shared_ref<ruis::widget> make_rectangles_window(
 					}
 				}
 			),
-			m::rectangle_push_button::push_button(c,
+			m::rectangle_push_button(c,
 				{
 					.padding_params{
 						.borders{
