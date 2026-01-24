@@ -39,9 +39,7 @@ scroll_area::scroll_area(
 	// clang-format off
 	container(
 		this->context,
-		{
-			.container_params = std::move(params.container_params)
-		},
+		{},
 		std::move(children)
 	)
 // clang-format on
@@ -127,7 +125,7 @@ void scroll_area::update_scroll_factor()
 }
 
 // NOTE:
-// scroll_area uses it's own dims_for_widget() beacuse it has slightly different behaviour for 'max',
+// scroll_area uses it's own dims_for_widget() because it has slightly different behaviour for 'max',
 // it wants 'max' children to be bigger than scroll_area in case their minimal dimensions are bigger.
 vec2 scroll_area::dims_for_widget(const widget& w) const
 {
@@ -137,6 +135,9 @@ vec2 scroll_area::dims_for_widget(const widget& w) const
 		const auto& dim = lp.dims[i].get();
 
 		switch (dim.get_type()) {
+			case ruis::dim::type::max:
+				d[i] = -1; // will be updated below
+				break;
 			case ruis::dim::type::fill:
 				d[i] = this->rect().d[i];
 				break;
@@ -145,9 +146,6 @@ vec2 scroll_area::dims_for_widget(const widget& w) const
 				[[fallthrough]];
 			case ruis::dim::type::min:
 				[[fallthrough]];
-			case ruis::dim::type::max:
-				d[i] = -1; // will be updated below
-				break;
 			case ruis::dim::type::length:
 				d[i] = dim.get_length().get(this->context);
 				break;

@@ -79,9 +79,6 @@ public:
             {
                 .layout_params = { // TODO: is needed?
                     .dims = {ruis::dim::fill, ruis::dim::fill}
-                },
-                .container_params{
-                    .layout = ruis::layout::column
                 }
             },
             make_scroll_area_page_contents(this->context)

@@ -36,9 +36,7 @@ scroll_area::scroll_area(
 	// clang-format off
 	ruis::scroll_area(
 		this->context,
-		{
-            .container_params = std::move(params.container_params)
-        },
+		{},
 		std::move(children)
 	)
 // clang-format on

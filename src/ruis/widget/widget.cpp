@@ -459,6 +459,7 @@ vec2 ruis::dims_for_widget(const widget& w, const vec2& parent_dims)
 	vec2 d;
 	for (unsigned i = 0; i != 2; ++i) {
 		const auto& dim = lp.dims[i].get();
+
 		switch (dim.get_type()) {
 			case ruis::dim::type::max:
 				[[fallthrough]];
