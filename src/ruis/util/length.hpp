@@ -67,7 +67,7 @@ public:
 
 	real get(const ruis::units& units) const noexcept
 	{
-		ASSERT(!this->is_undefined())
+		utki::assert(!this->is_undefined(), SL);
 		return this->get_internal(units);
 	}
 

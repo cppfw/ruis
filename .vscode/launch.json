@@ -254,14 +254,14 @@
 			"preLaunchTask": "build-dev"
 		},
 		{
-			"name": "(gdb) unit inflating",
+			"name": "(gdb) touch",
 			"type": "cppdbg",
 			"request": "launch",
-			"program": "${workspaceFolder}/tests/unit/out/dev/tests",
-			"args": ["--suite=inflating", "--test=inflating_left_alignment"],
+			"program": "${workspaceFolder}/tests/touch/out/dev/tests",
+			"args": [],
 			"stopAtEntry": false,
-			"cwd": "${workspaceFolder}/tests/unit",
-			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/out/dev:../harness/ruisapp/build"}],
+			"cwd": "${workspaceFolder}/tests/touch",
+			"environment": [{"name": "LD_LIBRARY_PATH", "value": "../../src/out/dev:../harness/ruisapp/src/out/dev"}],
 			"externalConsole": false,
 			"MIMode": "gdb",
 			"setupCommands": [

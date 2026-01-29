@@ -41,7 +41,7 @@ ruis::widget_list make_scroll_area_page_contents(utki::shared_ref<ruis::context>
         m::push_button(c,
             {
                 .layout_params{
-                    .dims{ruis::dim::fill, ruis::dim::min}
+                    .dims = {ruis::dim::fill, ruis::dim::min}
                 }
             },
             {

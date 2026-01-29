@@ -135,9 +135,6 @@ vec2 scroll_area::dims_for_widget(const widget& w) const
 		const auto& dim = lp.dims[i].get();
 
 		switch (dim.get_type()) {
-			case ruis::dim::type::max:
-				d[i] = -1; // will be updated below
-				break;
 			case ruis::dim::type::fill:
 				d[i] = this->rect().d[i];
 				break;
@@ -146,6 +143,9 @@ vec2 scroll_area::dims_for_widget(const widget& w) const
 				[[fallthrough]];
 			case ruis::dim::type::min:
 				[[fallthrough]];
+			case ruis::dim::type::max:
+				d[i] = -1; // will be updated below
+				break;
 			case ruis::dim::type::length:
 				d[i] = dim.get_length().get(this->context);
 				break;
