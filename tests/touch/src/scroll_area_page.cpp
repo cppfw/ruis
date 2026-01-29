@@ -24,7 +24,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <ruis/widget/button/impl/rectangle_push_button.hpp>
 #include <ruis/widget/group/touch/scroll_area.hpp>
 #include <ruis/widget/label/text.hpp>
-#include <ruis/widget/slider/slider.hpp>
+#include <ruis/widget/slider/scroll_bar.hpp>
 
 #include "style.hpp"
 
@@ -41,20 +41,23 @@ ruis::widget_list make_scroll_area_page_contents(utki::shared_ref<ruis::context>
         m::push_button(c,
             {
                 .layout_params{
-                    .dims = {ruis::dim::fill, ruis::dim::min}
+                    .dims = {ruis::dim::fill, 200_pp}
                 }
             },
             {
                 m::text(c, {}, U"Button 1"s)
             }
         ),
-        m::slider(c,
+        m::scroll_bar(c,
             {
                 .layout_params{
-                    .dims{50_pp, 300_pp}
+                    .dims{50_pp, 1000_pp}
                 },
                 .fraction_params{
-                    .fraction = 0.5f
+                    .fraction = 0.25
+                },
+                .fraction_band_params{
+                    .band_fraction = 0.2
                 },
                 .oriented_params{
                     .vertical = true
@@ -75,13 +78,19 @@ public:
 		ruis::page(this->context, {}),
 		// clang-format off
         ruis::touch::scroll_area(
-            this->context, //
+            this->context,
+            {},
             {
-                .layout_params = { // TODO: is needed?
-                    .dims = {ruis::dim::fill, ruis::dim::fill}
-                }
-            },
-            make_scroll_area_page_contents(this->context)
+                m::column(
+                    this->context,
+                    {
+                        .layout_params = {
+                            .dims = {ruis::dim::fill, ruis::dim::fill}
+                        }
+                    },
+                    make_scroll_area_page_contents(this->context)
+                )
+            }
         )
 	// clang-format on
 	{}
