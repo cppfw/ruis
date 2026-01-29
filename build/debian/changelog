@@ -1,3 +1,9 @@
+libruis (0.6.7) unstable; urgency=medium
+
+  * test release
+
+ -- Ivan Gagis <igagis@gmail.com>  Thu, 29 Jan 2026 12:48:32 +0200
+
 libruis (0.6.6) unstable; urgency=medium
 
   * matrix4 -> mat4
