@@ -163,22 +163,26 @@ bool container::on_mouse_button(const mouse_button_event& e)
 
 bool container::on_mouse_move(const mouse_move_event& e)
 {
-	//	TRACE(<< "container::on_mouse_move(): pos = " << pos << std::endl)
-
 	blocked_flag_guard blocked_guard(this->is_blocked);
 
 	// check if mouse captured
 	if (!e.ignore_mouse_capture) {
-		auto i = this->mouse_capture_map.find(e.pointer_id);
-		if (i != this->mouse_capture_map.end()) {
+		if (auto i = this->mouse_capture_map.find(e.pointer_id); i != this->mouse_capture_map.end()) {
 			if (auto w = i->second.capturing_widget.lock()) {
-				if (w->is_interactive()) {
-					w->on_mouse_move(mouse_move_event{e.pos - w->rect().p, e.pointer_id, e.ignore_mouse_capture});
-					w->set_hovered(w->rect().overlaps(e.pos), e.pointer_id);
+				if (w->is_interactive()) { // TODO: why check interactive here?
+					auto consumed = w->on_mouse_move(mouse_move_event{
+						e.pos - w->rect().p, //
+						e.pointer_id,
+						e.ignore_mouse_capture
+					});
+					w->set_hovered(
+						w->rect().overlaps(e.pos), //
+						e.pointer_id
+					);
 
-					// doesn't matter what to return because parent widget also captured
-					// the mouse and in this case the return value is ignored
-					return true;
+					// Need to return actual consumed status here because some widgets may analyse it
+					// to implement some specific behaviour, e.g. scrolling by dragging the mouse.
+					return consumed;
 				}
 			}
 			this->mouse_capture_map.erase(i);
@@ -190,9 +194,13 @@ bool container::on_mouse_move(const mouse_move_event& e)
 		auto& c = i->get();
 
 		if (!c.is_interactive()) {
-			ASSERT(!c.is_hovered(), [&](auto& o) {
-				o << "c->name() = " << c.id();
-			})
+			utki::assert(
+				!c.is_hovered(),
+				[&](auto& o) {
+					o << "c->name() = " << c.id();
+				},
+				SL
+			);
 			continue;
 		}
 

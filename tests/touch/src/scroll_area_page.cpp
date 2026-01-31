@@ -37,17 +37,27 @@ namespace {
 ruis::widget_list make_scroll_area_page_contents(utki::shared_ref<ruis::context> c)
 {
 	// clang-format off
-    return {
-        m::push_button(c,
-            {
-                .layout_params{
-                    .dims = {ruis::dim::fill, 200_pp}
-                }
-            },
-            {
-                m::text(c, {}, U"Button 1"s)
+    auto button_1 = m::push_button(c,
+        {
+            .layout_params{
+                .dims = {ruis::dim::fill, 200_pp}
             }
-        ),
+        },
+        {
+            m::text(c, {}, U"Button 1"s)
+        }
+    );
+	// clang-format on
+
+	button_1.get().click_handler = [](ruis::push_button&) {
+		utki::log([](auto& o) {
+			o << "Button 1 clicked\n";
+		});
+	};
+
+	// clang-format off
+    return {
+        button_1,
         m::scroll_bar(c,
             {
                 .layout_params{
@@ -85,7 +95,7 @@ public:
                     this->context,
                     {
                         .layout_params = {
-                            .dims = {ruis::dim::fill, ruis::dim::fill}
+                            .dims = {ruis::dim::fill, ruis::dim::min}
                         }
                     },
                     make_scroll_area_page_contents(this->context)

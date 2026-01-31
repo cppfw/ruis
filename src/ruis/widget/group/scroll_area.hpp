@@ -103,6 +103,12 @@ public:
 	void set_scroll_pos(const vec2& new_scroll_pos);
 
 	/**
+	 * @brief Scroll by delta.
+	 * @param delta - amount to scroll by in pixels.
+	 */
+	void scroll_by(const vec2& delta);
+
+	/**
 	 * @brief Set scroll position as factor.
 	 * @param factor - factor with components from range [0:1].
 	 */
