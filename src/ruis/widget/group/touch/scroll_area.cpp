@@ -133,7 +133,15 @@ bool scroll_area::on_mouse_move(const mouse_move_event& event)
 					{
 						ruis::mouse_button_event mbe{
 							false, // is_down
-							std::numeric_limits<ruis::real>::min(),
+							[]() {
+								using std::numeric_limits;
+
+								if constexpr (numeric_limits<ruis::real>::has_infinity) {
+									return -numeric_limits<ruis::real>::infinity();
+								} else {
+									return numeric_limits<ruis::real>::min();
+								}
+							}(),
 							mouse_button::left,
 							this->cur_pointer_id
 						};
