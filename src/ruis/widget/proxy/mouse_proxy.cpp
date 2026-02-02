@@ -34,21 +34,20 @@ mouse_proxy::mouse_proxy( //
 	)
 {}
 
-bool mouse_proxy::on_mouse_button(const mouse_button_event& e)
+event_status mouse_proxy::on_mouse_button(const mouse_button_event& e)
 {
 	if (this->mouse_button_handler) {
 		return this->mouse_button_handler(*this, e);
 	}
-	return false;
+	return event_status::propagate;
 }
 
-bool mouse_proxy::on_mouse_move(const mouse_move_event& e)
+event_status mouse_proxy::on_mouse_move(const mouse_move_event& e)
 {
-	// LOG("e.pos = " << e.pos << ", rect() = " << this->rect() << std::endl)
 	if (this->mouse_move_handler) {
 		return this->mouse_move_handler(*this, e);
 	}
-	return false;
+	return event_status::propagate;
 }
 
 void mouse_proxy::on_hovered_change(unsigned pointer_id)

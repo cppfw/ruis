@@ -66,7 +66,7 @@ void wire_area::render(const ruis::mat4& matrix)const{
 	}
 }
 
-bool wire_area::on_mouse_move(const ruis::mouse_move_event& e){
+ruis::event_status wire_area::on_mouse_move(const ruis::mouse_move_event& e){
 	// LOG("mm" << std::endl)
 	if(this->grabbed_socket){
 		this->mouse_pos = e.pos;

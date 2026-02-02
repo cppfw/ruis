@@ -65,17 +65,17 @@ bool tab::mask_overlaps(vec2 pos)
 	return true;
 }
 
-bool tab::on_mouse_button(const mouse_button_event& e)
+event_status tab::on_mouse_button(const mouse_button_event& e)
 {
 	if (e.is_down) {
 		if (!mask_overlaps(e.pos)) {
-			return false;
+			return event_status::propagate;
 		}
 	}
 	// we want exactly nine_patch_button::on_mouse_button()
 	// NOLINTNEXTLINE(bugprone-parent-virtual-call)
-	if (this->nine_patch_button::on_mouse_button(e)) {
-		return true;
+	if (this->nine_patch_button::on_mouse_button(e) == event_status::consumed) {
+		return event_status::consumed;
 	}
 	return this->choice_button::on_mouse_button(e);
 }

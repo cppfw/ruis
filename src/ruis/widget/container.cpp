@@ -78,7 +78,7 @@ void container::render(const ruis::mat4& matrix) const
 	}
 }
 
-bool container::on_mouse_button(const mouse_button_event& e)
+event_status container::on_mouse_button(const mouse_button_event& e)
 {
 	//	TRACE(<< "container::OnMouseButton(): isDown = " << isDown << ", button = " << button << ", pos = " << pos <<
 	// std::endl)
@@ -108,9 +108,10 @@ bool container::on_mouse_button(const mouse_button_event& e)
 						this->mouse_capture_map.erase(i);
 					}
 
+					// TODO: make same as in on_mouse_move handler? I.e. returning the actual status.
 					// doesn't matter what to return because parent widget also captured
 					// the mouse and in this case the return value is ignored
-					return true;
+					return event_status::consumed;
 				}
 			}
 			this->mouse_capture_map.erase(i);
@@ -133,8 +134,15 @@ bool container::on_mouse_button(const mouse_button_event& e)
 		// but, since we get mouse click, then the widget was hovered before the click.
 		c.set_hovered(true, e.pointer_id);
 
-		if (c.on_mouse_button(mouse_button_event{e.is_down, e.pos - c.rect().p, e.button, e.pointer_id})) {
-			ASSERT(this->mouse_capture_map.find(e.pointer_id) == this->mouse_capture_map.end())
+		if (c.on_mouse_button(mouse_button_event{e.is_down, e.pos - c.rect().p, e.button, e.pointer_id}) ==
+			event_status::consumed)
+		{
+			utki::assert(
+				[&]() {
+					return this->mouse_capture_map.find(e.pointer_id) == this->mouse_capture_map.end();
+				},
+				SL
+			);
 
 			// normally, we get here only when the mouse was not captured by widget, because
 			// as soon as mouse button down event comes to some widget, it captures the mouse.
@@ -154,14 +162,14 @@ bool container::on_mouse_button(const mouse_button_event& e)
 				i->get().set_hovered(false, e.pointer_id);
 			}
 
-			return true;
+			return event_status::consumed;
 		}
 	}
 
 	return this->widget::on_mouse_button(e);
 }
 
-bool container::on_mouse_move(const mouse_move_event& e)
+event_status container::on_mouse_move(const mouse_move_event& e)
 {
 	blocked_flag_guard blocked_guard(this->is_blocked);
 
@@ -170,7 +178,7 @@ bool container::on_mouse_move(const mouse_move_event& e)
 		if (auto i = this->mouse_capture_map.find(e.pointer_id); i != this->mouse_capture_map.end()) {
 			if (auto w = i->second.capturing_widget.lock()) {
 				if (w->is_interactive()) { // TODO: why check interactive here?
-					auto consumed = w->on_mouse_move(mouse_move_event{
+					auto status = w->on_mouse_move(mouse_move_event{
 						e.pos - w->rect().p, //
 						e.pointer_id,
 						e.ignore_mouse_capture
@@ -180,9 +188,9 @@ bool container::on_mouse_move(const mouse_move_event& e)
 						e.pointer_id
 					);
 
-					// Need to return actual consumed status here because some widgets may analyse it
+					// Need to return actual status here because some widgets may analyse it
 					// to implement some specific behaviour, e.g. scrolling by dragging the mouse.
-					return consumed;
+					return status;
 				}
 			}
 			this->mouse_capture_map.erase(i);
@@ -212,7 +220,9 @@ bool container::on_mouse_move(const mouse_move_event& e)
 		c.set_hovered(true, e.pointer_id);
 
 		// LOG("e.pos = " << e.pos << ", rect() = " << c->rect() << std::endl)
-		if (c.on_mouse_move(mouse_move_event{e.pos - c.rect().p, e.pointer_id, e.ignore_mouse_capture})) {
+		if (c.on_mouse_move(mouse_move_event{e.pos - c.rect().p, e.pointer_id, e.ignore_mouse_capture}) ==
+			event_status::consumed)
+		{
 			// widget has consumed the mouse move event,
 			// that means the rest of the underlying widgets are not hovered,
 			// update the hovered state of those
@@ -220,11 +230,11 @@ bool container::on_mouse_move(const mouse_move_event& e)
 				i->get().set_hovered(false, e.pointer_id);
 			}
 
-			return true;
+			return event_status::consumed;
 		}
 	}
 
-	return false;
+	return event_status::propagate;
 }
 
 void container::on_hovered_change(unsigned pointer_id)

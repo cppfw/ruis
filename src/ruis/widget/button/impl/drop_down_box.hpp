@@ -64,8 +64,8 @@ private:
 	// index of the hovered item in the drop down menu
 	int hovered_index = -1;
 
-	bool on_mouse_button(const mouse_button_event& e) override;
-	bool on_mouse_move(const mouse_move_event& e) override;
+	event_status on_mouse_button(const mouse_button_event& e) override;
+	event_status on_mouse_move(const mouse_move_event& e) override;
 
 	utki::shared_ref<widget> wrap_item(
 		const utki::shared_ref<widget>& w, //

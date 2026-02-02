@@ -163,9 +163,9 @@ public:
 
 	void render(const mat4& matrix) const override;
 
-	bool on_mouse_button(const mouse_button_event& event) override;
+	event_status on_mouse_button(const mouse_button_event& event) override;
 
-	bool on_mouse_move(const mouse_move_event& event) override;
+	event_status on_mouse_move(const mouse_move_event& event) override;
 
 	void on_hovered_change(unsigned pointer_id) override;
 

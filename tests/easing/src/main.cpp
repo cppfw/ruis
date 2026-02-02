@@ -24,13 +24,13 @@ public:
 			{make_gui(this->window.gui.context)}
 		);
 
-		kp.get().key_handler = [this](ruis::key_proxy&, const ruis::key_event& e) -> bool {
+		kp.get().key_handler = [this](ruis::key_proxy&, const ruis::key_event& e) {
 			if (e.is_down) {
 				if (e.combo.key == ruis::key::escape) {
 					this->quit();
 				}
 			}
-			return false;
+			return ruis::event_status::propagate;
 		};
 
 		this->window.gui.set_root(std::move(kp));

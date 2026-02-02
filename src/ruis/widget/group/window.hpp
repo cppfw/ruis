@@ -120,9 +120,8 @@ public:
 	 */
 	bool is_topmost() const noexcept;
 
-	bool on_mouse_button(const mouse_button_event& event) override;
-
-	bool on_mouse_move(const mouse_move_event& event) override;
+	event_status on_mouse_button(const mouse_button_event& event) override;
+	event_status on_mouse_move(const mouse_move_event& event) override;
 
 	void set_background(utki::shared_ref<widget> w);
 

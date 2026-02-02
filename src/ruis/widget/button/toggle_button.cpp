@@ -30,14 +30,14 @@ toggle_button::toggle_button(utki::shared_ref<ruis::context> context) :
 	button(this->context, button::parameters{})
 {}
 
-bool toggle_button::on_mouse_button(const mouse_button_event& e)
+event_status toggle_button::on_mouse_button(const mouse_button_event& e)
 {
 	if (e.button == mouse_button::left) {
 		if (e.is_down) {
 			this->toggle();
 		}
-		return true;
+		return event_status::consumed;
 	}
 
-	return false;
+	return event_status::propagate;
 }

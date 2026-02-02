@@ -28,7 +28,7 @@ namespace ruis {
 class click_proxy : virtual public widget
 {
 	bool is_pressed_v = false;
-	bool deferred_release_ret = false;
+	event_status deferred_release_ret = event_status::propagate;
 
 public:
 	struct all_parameters {
@@ -49,7 +49,8 @@ public:
 
 	~click_proxy() override = default;
 
-	bool on_mouse_button(const mouse_button_event& event) override;
+	event_status on_mouse_button(const mouse_button_event& event) override;
+
 	void on_hovered_change(unsigned pointer_id) override;
 
 	bool is_pressed() const noexcept
@@ -60,7 +61,7 @@ public:
 	/**
 	 * @brief Handler for mouse press state changes.
 	 */
-	std::function<bool(click_proxy& w)> pressed_change_handler;
+	std::function<event_status(click_proxy& w)> pressed_change_handler;
 
 	/**
 	 * @brief Handler for clicked event.

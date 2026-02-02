@@ -124,14 +124,14 @@ utki::shared_ref<widget> overlay::show_popup(
 	]( //
 			mouse_proxy& w, //
 			const mouse_button_event& e
-		) -> bool //
+		) //
 	{
 		if (auto c = cntr.lock()) {
 			c->context.get().post_to_ui_thread([c]() {
 				c->remove_from_parent();
 			});
 		}
-		return false;
+		return event_status::propagate;
 	};
 
 	auto& w = popup.get();

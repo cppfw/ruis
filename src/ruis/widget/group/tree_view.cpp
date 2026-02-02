@@ -398,14 +398,16 @@ tree_view::provider_base::tree_item_widget_parts tree_view::provider_base::get_i
 									.to_shared_ptr());
 
 			auto plusminus_mouse_proxy = w.get().try_get_widget_as<ruis::mouse_proxy>("plusminus_mouseproxy");
-			ASSERT(plusminus_mouse_proxy)
-			plusminus_mouse_proxy->mouse_button_handler =
-				[this, path = iter_path, is_collapsed](ruis::mouse_proxy&, const ruis::mouse_button_event& e) -> bool {
+			utki::assert(plusminus_mouse_proxy, SL);
+			plusminus_mouse_proxy->mouse_button_handler = [this, path = iter_path, is_collapsed](
+															  ruis::mouse_proxy&, //
+															  const ruis::mouse_button_event& e
+														  ) {
 				if (e.button != ruis::mouse_button::left) {
-					return false;
+					return event_status::propagate;
 				}
 				if (!e.is_down) {
-					return false;
+					return event_status::propagate;
 				}
 
 				if (is_collapsed) {
@@ -414,20 +416,15 @@ tree_view::provider_base::tree_item_widget_parts tree_view::provider_base::get_i
 					this->collapse(utki::make_span(path));
 				}
 
-				// TODO: comment logging
-				utki::log([](auto& o) {
+				utki::log_debug([&](auto& o) {
 					o << "plusminus clicked:";
-				});
-				for (const auto& p : path) {
-					utki::log([&](auto& o) {
+					for (const auto& p : path) {
 						o << " " << p;
-					});
-				}
-				utki::log([](auto& o) {
+					}
 					o << std::endl;
 				});
 
-				return true;
+				return event_status::consumed;
 			};
 			widget.get().push_back(w);
 		}

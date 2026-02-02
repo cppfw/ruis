@@ -132,32 +132,32 @@ slider::slider( //
 	hi.set_nine_patch(this->params.handle);
 
 	auto hp = this->try_get_widget_as<mouse_proxy>("ruis_handle_proxy");
-	hp->mouse_button_handler = [this](mouse_proxy&, const mouse_button_event& e) -> bool {
+	hp->mouse_button_handler = [this](mouse_proxy&, const mouse_button_event& e) {
 		if (e.button != mouse_button::left) {
-			return false;
+			return event_status::propagate;
 		}
 
 		if (e.is_down) {
-			ASSERT(!this->is_grabbed)
+			utki::assert(!this->is_grabbed, SL);
 			this->is_grabbed = true;
 
 			unsigned long_index = this->get_long_index();
 			this->grab_point = e.pos[long_index];
 
-			return true;
+			return event_status::consumed;
 		} else {
 			if (this->is_grabbed) {
 				this->is_grabbed = false;
-				return true;
+				return event_status::consumed;
 			} else {
-				return false;
+				return event_status::propagate;
 			}
 		}
 	};
 
-	hp->mouse_move_handler = [this](mouse_proxy&, const mouse_move_event& e) -> bool {
+	hp->mouse_move_handler = [this](mouse_proxy&, const mouse_move_event& e) {
 		if (!this->is_grabbed) {
-			return false;
+			return event_status::propagate;
 		}
 
 		using std::min;
@@ -173,23 +173,27 @@ slider::slider( //
 		new_pos = max(new_pos, real(0)); // clamp bottom
 		new_pos = min(new_pos, max_pos); // clamp top
 
-		ASSERT(0 <= new_pos && new_pos <= max_pos, [&](auto& o) {
-			o << "new_pos = " << new_pos << ", max_pos = " << max_pos;
-		})
+		utki::assert(
+			0 <= new_pos && new_pos <= max_pos,
+			[&](auto& o) {
+				o << "new_pos = " << new_pos << ", max_pos = " << max_pos;
+			},
+			SL
+		);
 
 		ruis::vec2 new_position(0);
 		new_position[long_index] = new_pos;
 
 		this->handle.move_to(new_position);
 
-		ASSERT(max_pos >= 0)
+		utki::assert(max_pos >= 0, SL);
 
 		if (max_pos > 0) {
 			// update factor
 			this->set_fraction(new_pos / max_pos);
 		}
 
-		return true;
+		return event_status::consumed;
 	};
 }
 

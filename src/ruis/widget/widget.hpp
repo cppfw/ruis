@@ -49,6 +49,23 @@ class layout;
 } // namespace layout
 
 /**
+ * @brief Status of event handling by widgets.
+ */
+enum class event_status {
+	/**
+	 * @brief The event was consumed.
+	 * The event should not propagate to parent widgets.
+	 */
+	consumed,
+
+	/**
+	 * @brief The event was not sonsumed.
+	 * The event should propagate to parent widgets.
+	 */
+	propagate
+};
+
+/**
  * @brief Base widget class.
  */
 class widget : virtual public utki::shared
@@ -536,12 +553,11 @@ public:
 	 * This method is called by framework when a widget is requested to handle a key event.
 	 * So, the widget is either a focused widget or root widget.
 	 * @param e - key event information structure.
-	 * @return true to consume event and prevent its further propagation.
-	 * @return false to allow the event to be propagated further.
+	 * @return Event handling status. Default implementation returns 'propagate'.
 	 */
-	virtual bool on_key(const ruis::key_event& e)
+	virtual event_status on_key(const ruis::key_event& e)
 	{
-		return false;
+		return event_status::propagate;
 	}
 
 	/**
@@ -574,24 +590,22 @@ public:
 	 * @brief Handle mouse button event.
 	 * This function is called by framework when widget receives mouse button event.
 	 * @param event - mouse button event information, like button, pointer position, etc.
-	 * @return true to consume the event and prevent its further propagation.
-	 * @return false to allow the event to be propagated to underlying widgets.
+	 * @return Event handling status. Default implementation returns 'propagate'.
 	 */
-	virtual bool on_mouse_button(const mouse_button_event& event)
+	virtual event_status on_mouse_button(const mouse_button_event& event)
 	{
-		return false;
+		return event_status::propagate;
 	}
 
 	/**
 	 * @brief Handle mouse move event.
 	 * Called by framework when mouse pointer was moved within the widget.
 	 * @param event - mouse move event information, like new pointer position, pointer id.
-	 * @return true to consume the event and prevent its further propagation.
-	 * @return false to allow the event to be propagated to underlying widgets.
+	 * @return Event handling status. Default implementation returns 'propagate'.
 	 */
-	virtual bool on_mouse_move(const mouse_move_event& event)
+	virtual event_status on_mouse_move(const mouse_move_event& event)
 	{
-		return false;
+		return event_status::propagate;
 	}
 
 	/**

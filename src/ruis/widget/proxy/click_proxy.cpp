@@ -34,12 +34,12 @@ click_proxy::click_proxy( //
 	)
 {}
 
-bool click_proxy::on_mouse_button(const mouse_button_event& e)
+event_status click_proxy::on_mouse_button(const mouse_button_event& e)
 {
-	bool ret = false;
+	auto ret = event_status::propagate;
 
 	if (e.button != mouse_button::left) {
-		return false;
+		return event_status::propagate;
 	}
 
 	if (e.is_down) {
@@ -66,7 +66,6 @@ bool click_proxy::on_mouse_button(const mouse_button_event& e)
 
 void click_proxy::on_hovered_change(unsigned pointer_id)
 {
-	// TRACE(<< "on_hover_change(): hovered = " << this->is_hovered() << " pointer_id = " << pointer_id << std::endl)
 	if (pointer_id != 0) {
 		return;
 	}

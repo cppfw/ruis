@@ -40,10 +40,10 @@ void choice_button::on_pressed_change()
 	}
 }
 
-bool choice_button::on_mouse_button(const mouse_button_event& e)
+event_status choice_button::on_mouse_button(const mouse_button_event& e)
 {
 	if (this->is_pressed()) {
-		return true;
+		return event_status::consumed;
 	}
 	return this->toggle_button::on_mouse_button(e);
 }

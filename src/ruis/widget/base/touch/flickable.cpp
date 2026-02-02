@@ -23,16 +23,16 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis::touch;
 
-bool flickable::on_mouse_button(const mouse_button_event& event)
+ruis::event_status flickable::on_mouse_button(const mouse_button_event& event)
 {
 	if (event.button != mouse_button::left) {
-		return false;
+		return event_status::propagate;
 	}
 
 	// Single touch mode.
 	if (this->cur_state != state::idle) {
 		if (this->cur_pointer_id != event.pointer_id) {
-			return false;
+			return event_status::propagate;
 		}
 	}
 
@@ -52,7 +52,7 @@ bool flickable::on_mouse_button(const mouse_button_event& event)
 			// std::cout << "withtin scroll threshold\n";
 
 			this->flickable_on_mouse_button(event);
-			return true;
+			return event_status::consumed;
 		case state::not_scrolling:
 			[[fallthrough]];
 		case state::within_scroll_threshold:
@@ -68,11 +68,11 @@ bool flickable::on_mouse_button(const mouse_button_event& event)
 
 			// std::cout << "idle\n";
 
-			return true;
+			return event_status::consumed;
 	}
 }
 
-bool flickable::on_mouse_move(const mouse_move_event& event)
+ruis::event_status flickable::on_mouse_move(const mouse_move_event& event)
 {
 	// Single touch mode.
 	if (this->cur_state != state::idle) {
@@ -89,13 +89,12 @@ bool flickable::on_mouse_move(const mouse_move_event& event)
 			return this->flickable_on_mouse_move(event);
 		case state::within_scroll_threshold:
 			{
-				bool consumed = this->flickable_on_mouse_move(event);
-				if (consumed) {
+				if (this->flickable_on_mouse_move(event) == event_status::consumed) {
 					this->cur_state = state::not_scrolling;
 
 					// std::cout << "mouse move: consumed, not scrolling\n";
 
-					return true;
+					return event_status::consumed;
 				}
 				vec2 delta = event.pos - this->prev_touch_point;
 				vec2 abs_delta = abs(delta);
@@ -131,7 +130,7 @@ bool flickable::on_mouse_move(const mouse_move_event& event)
 					this->flickable_scroll_by(-delta);
 				}
 			}
-			return true;
+			return event_status::consumed;
 		case state::not_scrolling:
 			// std::cout << "mouse move: not scrolling\n";
 			return this->flickable_on_mouse_move(event);
@@ -142,7 +141,7 @@ bool flickable::on_mouse_move(const mouse_move_event& event)
 				// std::cout << "mouse move: scrolling, delta: " << delta << "\n";
 				this->flickable_scroll_by(-delta);
 				this->prev_touch_point = event.pos;
-				return true;
+				return event_status::consumed;
 			}
 	}
 }

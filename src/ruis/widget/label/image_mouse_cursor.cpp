@@ -56,7 +56,7 @@ void image_mouse_cursor::set_cursor(const utki::shared_ref<const res::cursor>& c
 	this->quad_tex.reset();
 }
 
-bool image_mouse_cursor::on_mouse_move(const mouse_move_event& e)
+event_status image_mouse_cursor::on_mouse_move(const mouse_move_event& e)
 {
 	if (e.pointer_id == 0) {
 		this->cursor_pos = e.pos;

@@ -71,9 +71,9 @@ std::array<ruis::vec2, 2> wire_socket::outlet_pos() const noexcept{
 	return {{pos, dir}};
 }
 
-bool wire_socket::on_mouse_button(const ruis::mouse_button_event& e){
+ruis::event_status wire_socket::on_mouse_button(const ruis::mouse_button_event& e){
 	if(e.button != ruis::mouse_button::left){
-		return false;
+		return ruis::event_status::propagate;
 	}
 	
 	if(auto wa = this->try_get_ancestor<wire_area>()){
@@ -92,9 +92,9 @@ bool wire_socket::on_mouse_button(const ruis::mouse_button_event& e){
 			wa->grabbed_socket->connect(wa->hovered_socket);
 			wa->grabbed_socket.reset();
 		}
-		return true;
+		return ruis::event_status::consumed;
 	}
-	return false;
+	return ruis::event_status::propagate;
 }
 
 void wire_socket::on_hovered_change(unsigned pointer_id){

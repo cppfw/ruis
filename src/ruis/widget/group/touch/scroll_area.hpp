@@ -37,12 +37,12 @@ public:
 		widget_list children
 	);
 
-	bool on_mouse_button(const mouse_button_event& event) override;
-	bool on_mouse_move(const mouse_move_event& event) override;
+	event_status on_mouse_button(const mouse_button_event& event) override;
+	event_status on_mouse_move(const mouse_move_event& event) override;
 
 private:
-	bool flickable_on_mouse_button(const mouse_button_event& event) override;
-	bool flickable_on_mouse_move(const mouse_move_event& event) override;
+	event_status flickable_on_mouse_button(const mouse_button_event& event) override;
+	event_status flickable_on_mouse_move(const mouse_move_event& event) override;
 	void flickable_scroll_by(const vec2& delta) override;
 };
 

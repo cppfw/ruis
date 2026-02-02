@@ -59,7 +59,7 @@ public:
 
 	~radio_button() override = default;
 
-	bool on_mouse_button(const mouse_button_event& e) override
+	event_status on_mouse_button(const mouse_button_event& e) override
 	{
 		return this->choice_button::on_mouse_button(e);
 	}

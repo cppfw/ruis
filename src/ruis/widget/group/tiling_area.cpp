@@ -63,10 +63,10 @@ public:
 		owner(owner)
 	{}
 
-	bool on_mouse_button(const ruis::mouse_button_event& e) override
+	event_status on_mouse_button(const ruis::mouse_button_event& e) override
 	{
 		if (e.button != ruis::mouse_button::left) {
-			return false;
+			return event_status::propagate;
 		}
 
 		this->grabbed = e.is_down;
@@ -78,13 +78,13 @@ public:
 			}
 		}
 
-		return true;
+		return event_status::consumed;
 	}
 
-	bool on_mouse_move(const ruis::mouse_move_event& e) override
+	event_status on_mouse_move(const ruis::mouse_move_event& e) override
 	{
 		if (!this->grabbed) {
-			return false;
+			return event_status::propagate;
 		}
 
 		auto [long_index, trans_index] = this->owner.get_long_trans_indices();
@@ -93,8 +93,8 @@ public:
 
 		// delta[trans_index] = ruis::real(0);
 
-		ASSERT(this->prev_widget)
-		ASSERT(this->next_widget)
+		utki::assert(this->prev_widget, SL);
+		utki::assert(this->next_widget, SL);
 
 		auto old_prev_dim = this->prev_widget->rect().d[long_index];
 		auto old_next_dim = this->next_widget->rect().d[long_index];
@@ -128,7 +128,7 @@ public:
 
 		this->owner.notify_tiles_resized();
 
-		return true;
+		return event_status::consumed;
 	}
 
 	void on_hovered_change(unsigned pointer_id) override

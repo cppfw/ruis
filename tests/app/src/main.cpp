@@ -82,13 +82,16 @@ public:
 		auto c = make_root_widget(gui.context);
 		gui.set_root(c);
 
-		utki::dynamic_reference_cast<ruis::key_proxy>(c).get().key_handler = [this](ruis::key_proxy&, const ruis::key_event& e) -> bool {
+		utki::dynamic_reference_cast<ruis::key_proxy>(c).get().key_handler = [this](
+			ruis::key_proxy&, //
+			const ruis::key_event& e
+		) -> ruis::event_status {
 			if(e.is_down){
 				if(e.combo.key == ruis::key::escape){
 					this->quit();
 				}
 			}
-			return false;
+			return ruis::event_status::propagate;
 		};
 
 //		ruis::ZipFile zf(fsif::FSFile::New("res.zip"), "test.gui.stob");
@@ -113,10 +116,10 @@ public:
 
 			auto& cp = c.get().get_widget_as<ruis::click_proxy>("cube_click_proxy");
 			auto& bg = c.get().get_widget_as<ruis::rectangle>("cube_bg_color");
-			cp.pressed_change_handler = [bg{utki::make_shared_from(bg)}](ruis::click_proxy& w) -> bool {
+			cp.pressed_change_handler = [bg{utki::make_shared_from(bg)}](ruis::click_proxy& w) {
 				// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers)
 				bg.get().set_color(w.is_pressed() ? 0xff808080 : 0x80808080);
-				return true;
+				return ruis::event_status::consumed;
 			};
 			cp.pressed_change_handler(cp); // set initial color
 			cp.click_handler = [cube = utki::make_shared_from(cube)](ruis::click_proxy&) -> bool {
@@ -206,12 +209,13 @@ public:
 
 			static const ruis::real wheel_delta = 10;
 
-			mouse_proxy->mouse_button_handler = [state, vl](ruis::mouse_proxy&, const ruis::mouse_button_event& e){
+			mouse_proxy->mouse_button_handler = [state, vl](ruis::mouse_proxy&,//
+				 const ruis::mouse_button_event& e){
 				switch(e.button){
 					case ruis::mouse_button::left:
 						state->is_left_button_pressed = e.is_down;
 						state->old_pos = e.pos;
-						return true;
+						return ruis::event_status::consumed;
 					case ruis::mouse_button::wheel_down:
 						if(auto l = vl.lock()){
 							l->scroll_by(wheel_delta);
@@ -225,19 +229,20 @@ public:
 					default:
 						break;
 				}
-				return false;
+				return ruis::event_status::propagate;
 			};
 
-			mouse_proxy->mouse_move_handler = [vs, vl, state](ruis::mouse_proxy&, const ruis::mouse_move_event& e){
+			mouse_proxy->mouse_move_handler = [vs, vl, state](ruis::mouse_proxy&,//
+				 const ruis::mouse_move_event& e) -> ruis::event_status {
 				if(state->is_left_button_pressed){
 					auto dp = state->old_pos - e.pos;
 					state->old_pos = e.pos;
 					if(auto l = vl.lock()){
 						l->scroll_by(dp.y());
 					}
-					return true;
+					return ruis::event_status::consumed;
 				}
-				return false;
+				return ruis::event_status::propagate;
 			};
 		}
 
@@ -279,13 +284,16 @@ public:
 
 			static const ruis::real wheel_delta = 10;
 
-			mouse_proxy->mouse_button_handler = [state, hl](ruis::mouse_proxy&, const ruis::mouse_button_event& e){
+			mouse_proxy->mouse_button_handler = [state, hl](
+				ruis::mouse_proxy&,//
+				const ruis::mouse_button_event& e
+			) -> ruis::event_status {
 				std::cout << "button = " << unsigned(e.button) << std::endl;
 				switch(e.button){
 					case ruis::mouse_button::left:
 						state->is_left_button_pressed = e.is_down;
 						state->old_pos = e.pos;
-						return true;
+						return ruis::event_status::consumed;
 					case ruis::mouse_button::wheel_left:
 						std::cout << "wheel_left" << std::endl;
 						if(e.is_down){
@@ -305,19 +313,20 @@ public:
 					default:
 						break;
 				}
-				return false;
+				return ruis::event_status::propagate;
 			};
 
-			mouse_proxy->mouse_move_handler = [hl, hs, state](ruis::mouse_proxy& w, const ruis::mouse_move_event& e) -> bool {
+			mouse_proxy->mouse_move_handler = [hl, hs, state](ruis::mouse_proxy& w,//
+				 const ruis::mouse_move_event& e) {
 				if(state->is_left_button_pressed){
 					auto dp = state->old_pos - e.pos;
 					state->old_pos = e.pos;
 					if(auto l = hl.lock()){
 						l->scroll_by(dp.x());
 					}
-					return true;
+					return ruis::event_status::consumed;
 				}
-				return false;
+				return ruis::event_status::propagate;
 			};
 		}
 

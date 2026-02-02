@@ -211,23 +211,26 @@ public:
                 color_label.set_visible(utki::deep_equals(path, utki::make_span(this->selected_item)));
 
                 auto mp = v.get().try_get_widget_as<ruis::mouse_proxy>("mouse_proxy");
-                ASSERT(mp)
-                mp->mouse_button_handler = [this, path = utki::make_vector(path)](ruis::mouse_proxy&, const ruis::mouse_button_event& e) -> bool{
+                utki::assert(mp, SL);
+                mp->mouse_button_handler = [this, path = utki::make_vector(path)](ruis::mouse_proxy&, //
+                    const ruis::mouse_button_event& e){
                     if(!e.is_down || e.button != ruis::mouse_button::left){
-                        return false;
+                        return ruis::event_status::propagate;
                     }
 
                     this->selected_item = path;
-#ifdef DEBUG
-                    LOG([](auto&o){o << " selected item = ";})
-                    for(const auto& k : this->selected_item){
-                        LOG([&](auto&o){o << k << ", ";})
-                    }
-                    LOG([](auto&o){o << std::endl;})
-#endif
+                    
+                    utki::log_debug([&](auto&o){
+                        o << " selected item = ";
+                        for(const auto& k : this->selected_item){        
+                            o << k << ", ";
+                        }
+                        o << std::endl;
+                    });
+
                     this->notify_item_changed();
 
-                    return true;
+                    return ruis::event_status::consumed;
                 };
             }
 

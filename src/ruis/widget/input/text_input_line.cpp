@@ -126,10 +126,10 @@ void text_input_line::render(const ruis::mat4& matrix) const
 	}
 }
 
-bool text_input_line::on_mouse_button(const mouse_button_event& e)
+event_status text_input_line::on_mouse_button(const mouse_button_event& e)
 {
 	if (e.button != mouse_button::left) {
-		return false;
+		return event_status::propagate;
 	}
 
 	this->left_mouse_button_down = e.is_down;
@@ -138,17 +138,17 @@ bool text_input_line::on_mouse_button(const mouse_button_event& e)
 		this->set_cursor_index(this->pos_to_index(e.pos.x()));
 	}
 
-	return true;
+	return event_status::consumed;
 }
 
-bool text_input_line::on_mouse_move(const mouse_move_event& e)
+event_status text_input_line::on_mouse_move(const mouse_move_event& e)
 {
 	if (!this->left_mouse_button_down) {
-		return false;
+		return event_status::propagate;
 	}
 
 	this->set_cursor_index(this->pos_to_index(e.pos.x()), true);
-	return true;
+	return event_status::consumed;
 }
 
 vec2 text_input_line::measure(const ruis::vec2& quotum) const noexcept
@@ -316,7 +316,7 @@ void text_input_line::start_cursor_blinking()
 	);
 }
 
-bool text_input_line::on_key(const ruis::key_event& e)
+event_status text_input_line::on_key(const ruis::key_event& e)
 {
 	switch (e.combo.key) {
 		case ruis::key::left_control:
@@ -330,7 +330,7 @@ bool text_input_line::on_key(const ruis::key_event& e)
 		default:
 			break;
 	}
-	return false;
+	return event_status::propagate;
 }
 
 void text_input_line::on_character_input(const character_input_event& e)

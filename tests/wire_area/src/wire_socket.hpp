@@ -72,7 +72,7 @@ public:
 	void connect(const std::shared_ptr<wire_socket>& o = nullptr);
 	void disconnect();
 
-	bool on_mouse_button(const ruis::mouse_button_event& event)override;
+	event_status on_mouse_button(const ruis::mouse_button_event& event)override;
 
 	void on_hovered_change(unsigned pointer_id) override;
 	

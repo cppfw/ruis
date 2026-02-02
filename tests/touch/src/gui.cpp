@@ -115,7 +115,7 @@ public:
 	// clang-format on
 	{}
 
-	bool on_mouse_button(const ruis::mouse_button_event& event) override
+	ruis::event_status on_mouse_button(const ruis::mouse_button_event& event) override
 	{
 		return this->choice_button::on_mouse_button(event);
 	}

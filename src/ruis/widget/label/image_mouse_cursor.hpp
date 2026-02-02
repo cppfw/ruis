@@ -73,7 +73,7 @@ public:
 
 	void set_cursor(const utki::shared_ref<const res::cursor>& cursor);
 
-	bool on_mouse_move(const mouse_move_event& e) override;
+	event_status on_mouse_move(const mouse_move_event& e) override;
 
 	void render(const ruis::mat4& matrix) const override;
 };

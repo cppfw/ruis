@@ -38,7 +38,7 @@ public:
 
 	void on_lay_out() override;
 	
-	bool on_mouse_move(const ruis::mouse_move_event& e)override;
+	ruis::event_status on_mouse_move(const ruis::mouse_move_event& e)override;
 
 private:
 	ruis::vec2 mouse_pos;

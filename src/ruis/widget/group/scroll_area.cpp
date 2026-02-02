@@ -45,7 +45,7 @@ scroll_area::scroll_area(
 // clang-format on
 {}
 
-bool scroll_area::on_mouse_button(const mouse_button_event& e)
+event_status scroll_area::on_mouse_button(const mouse_button_event& e)
 {
 	vec2 d = -this->cur_scroll_pos;
 	return this->container::on_mouse_button(mouse_button_event{
@@ -56,7 +56,7 @@ bool scroll_area::on_mouse_button(const mouse_button_event& e)
 	});
 }
 
-bool scroll_area::on_mouse_move(const mouse_move_event& e)
+event_status scroll_area::on_mouse_move(const mouse_move_event& e)
 {
 	vec2 d = -this->cur_scroll_pos;
 	return this->container::on_mouse_move(mouse_move_event{

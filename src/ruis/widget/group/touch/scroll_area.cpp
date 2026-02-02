@@ -42,22 +42,22 @@ scroll_area::scroll_area(
 // clang-format on
 {}
 
-bool scroll_area::on_mouse_button(const mouse_button_event& event)
+ruis::event_status scroll_area::on_mouse_button(const mouse_button_event& event)
 {
 	return this->flickable::on_mouse_button(event);
 }
 
-bool scroll_area::on_mouse_move(const mouse_move_event& event)
+ruis::event_status scroll_area::on_mouse_move(const mouse_move_event& event)
 {
 	return this->flickable::on_mouse_move(event);
 }
 
-bool scroll_area::flickable_on_mouse_button(const mouse_button_event& event)
+ruis::event_status scroll_area::flickable_on_mouse_button(const mouse_button_event& event)
 {
 	return this->ruis::scroll_area::on_mouse_button(event);
 }
 
-bool scroll_area::flickable_on_mouse_move(const mouse_move_event& event)
+ruis::event_status scroll_area::flickable_on_mouse_move(const mouse_move_event& event)
 {
 	return this->ruis::scroll_area::on_mouse_move(event);
 }

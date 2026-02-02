@@ -54,3 +54,11 @@ nine_patch_toggle::nine_patch_toggle(
 		std::move(children)
 	)
 {}
+
+event_status nine_patch_toggle::on_mouse_button(const mouse_button_event& e)
+{
+	if (this->nine_patch_button::on_mouse_button(e) == event_status::consumed) {
+		return event_status::consumed;
+	}
+	return this->toggle_button::on_mouse_button(e);
+}

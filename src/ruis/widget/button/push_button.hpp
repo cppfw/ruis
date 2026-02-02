@@ -45,7 +45,7 @@ protected:
 	 */
 	virtual void on_click();
 
-	bool on_mouse_button(const mouse_button_event& event) override;
+	event_status on_mouse_button(const mouse_button_event& event) override;
 
 	void on_hovered_change(unsigned pointer_id) override;
 

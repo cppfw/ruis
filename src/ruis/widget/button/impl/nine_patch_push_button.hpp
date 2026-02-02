@@ -50,7 +50,7 @@ public:
 protected:
 	void on_pressed_change() override;
 
-	bool on_mouse_button(const mouse_button_event& e) override
+	event_status on_mouse_button(const mouse_button_event& e) override
 	{
 		return this->push_button::on_mouse_button(e);
 	}

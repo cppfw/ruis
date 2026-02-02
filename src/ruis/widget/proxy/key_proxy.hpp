@@ -57,9 +57,9 @@ public:
 	 * @brief Keyboard key signal.
 	 * Emitted when a keyboard key event reaches this widget.
 	 */
-	std::function<bool(key_proxy& w, const ruis::key_event& e)> key_handler;
+	std::function<event_status(key_proxy& w, const ruis::key_event& e)> key_handler;
 
-	bool on_key(const ruis::key_event& e) override;
+	event_status on_key(const ruis::key_event& e) override;
 };
 
 namespace make {

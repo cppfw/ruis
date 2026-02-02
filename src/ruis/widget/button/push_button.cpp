@@ -35,10 +35,10 @@ push_button::push_button( //
 	button(this->context, std::move(button_params))
 {}
 
-bool push_button::on_mouse_button(const mouse_button_event& e)
+event_status push_button::on_mouse_button(const mouse_button_event& e)
 {
 	if (e.button != mouse_button::left) {
-		return false;
+		return event_status::propagate;
 	}
 
 	if (e.is_down) {
@@ -61,7 +61,7 @@ bool push_button::on_mouse_button(const mouse_button_event& e)
 		}
 	}
 
-	return true;
+	return event_status::consumed;
 }
 
 void push_button::on_hovered_change(unsigned pointer_id)

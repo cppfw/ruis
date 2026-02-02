@@ -137,14 +137,14 @@ drop_down_box::drop_down_box(
 	};
 }
 
-bool drop_down_box::on_mouse_button(const mouse_button_event& e)
+event_status drop_down_box::on_mouse_button(const mouse_button_event& e)
 {
 	if (e.is_down) {
 		++this->num_mouse_buttons_pressed;
 	} else {
 		// TODO: twice I got this assert triggered, perhaps there are situations when
 		//       button release event comes without prior button press, need to investigate
-		ASSERT(this->num_mouse_buttons_pressed != 0)
+		utki::assert(this->num_mouse_buttons_pressed != 0, SL);
 
 		--this->num_mouse_buttons_pressed;
 	}
@@ -156,7 +156,7 @@ bool drop_down_box::on_mouse_button(const mouse_button_event& e)
 	return this->nine_patch_push_button::on_mouse_button(e);
 }
 
-bool drop_down_box::on_mouse_move(const mouse_move_event& e)
+event_status drop_down_box::on_mouse_move(const mouse_move_event& e)
 {
 	if (auto cm = this->current_drop_down_menu.lock()) {
 		if (this->num_mouse_buttons_pressed != 0) {
@@ -236,14 +236,14 @@ void drop_down_box::show_drop_down_menu()
 	this->hovered_index = -1;
 
 	np.get().get_widget_as<mouse_proxy>("ruis_drop_down_menu_mouse_proxy").mouse_button_handler =
-		[this](mouse_proxy&, const mouse_button_event& e) -> bool {
-		// LOG("button down = " << e.is_down << std::endl)
-		if (!e.is_down) {
-			this->handle_mouse_button_up(false);
-		}
+		[this](mouse_proxy&, const mouse_button_event& e) {
+			// LOG("button down = " << e.is_down << std::endl)
+			if (!e.is_down) {
+				this->handle_mouse_button_up(false);
+			}
 
-		return true;
-	};
+			return event_status::consumed;
+		};
 
 	this->current_drop_down_menu = olay->show_popup(
 		np, //

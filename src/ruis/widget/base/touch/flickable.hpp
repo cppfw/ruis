@@ -47,15 +47,13 @@ class flickable : virtual public ruis::widget
 	unsigned cur_pointer_id = std::numeric_limits<unsigned>::max();
 
 public:
-	bool on_mouse_button(const mouse_button_event& event) override;
-	bool on_mouse_move(const mouse_move_event& event) override;
+	event_status on_mouse_button(const mouse_button_event& event) override;
+	event_status on_mouse_move(const mouse_move_event& event) override;
 
 protected:
-    // TODO: doxygen
-	virtual bool flickable_on_mouse_button(const mouse_button_event& event) = 0;
-
-	virtual bool flickable_on_mouse_move(const mouse_move_event& event) = 0;
-
+	// TODO: doxygen
+	virtual event_status flickable_on_mouse_button(const mouse_button_event& event) = 0;
+	virtual event_status flickable_on_mouse_move(const mouse_move_event& event) = 0;
 	virtual void flickable_scroll_by(const vec2& delta) = 0;
 };
 

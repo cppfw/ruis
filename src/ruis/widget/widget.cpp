@@ -293,7 +293,7 @@ void widget::clear_cache()
 void widget::on_key_internal(const ruis::key_event& e)
 {
 	if (this->is_interactive()) {
-		if (this->on_key(e)) {
+		if (this->on_key(e) == event_status::consumed) {
 			return;
 		}
 	}
@@ -322,7 +322,12 @@ void widget::unfocus() noexcept
 		return;
 	}
 
-	ASSERT(this->context.get().focused_widget.lock() && this->context.get().focused_widget.lock().get() == this)
+	utki::assert(
+		[&]() {
+			return this->context.get().focused_widget.lock() && this->context.get().focused_widget.lock().get() == this;
+		},
+		SL
+	);
 
 	this->context.get().set_focused_widget(nullptr);
 }

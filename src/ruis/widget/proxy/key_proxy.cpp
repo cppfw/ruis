@@ -44,12 +44,12 @@ key_proxy::key_proxy( //
 // clang-format on
 {}
 
-bool key_proxy::on_key(const ruis::key_event& e)
+event_status key_proxy::on_key(const ruis::key_event& e)
 {
 	if (this->key_handler) {
 		return this->key_handler(*this, e);
 	}
-	return false;
+	return event_status::propagate;
 }
 
 utki::shared_ref<ruis::key_proxy> ruis::make::key_proxy(
