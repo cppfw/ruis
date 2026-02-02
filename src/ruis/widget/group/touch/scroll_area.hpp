@@ -21,31 +21,15 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
+#include "../../base/touch/flickable.hpp"
 #include "../scroll_area.hpp"
 
 namespace ruis::touch {
 
-class scroll_area : public ruis::scroll_area
+class scroll_area :
+	public ruis::scroll_area, //
+	private touch::flickable
 {
-	constexpr static auto scroll_threshold_pp = 5;
-
-	// TODO: convert from scroll_threshold_pp in on_reload()?
-	// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers, "constant value")
-	real scroll_threshold_px = 10;
-
-	enum class state {
-		idle,
-		within_scroll_threshold,
-		not_scrolling,
-		scrolling
-	} cur_state = state::idle;
-
-	vec2 prev_touch_point;
-
-	// Scroll area only works in single touch mode.
-	// This variable holds the pointer ID of the current touch.
-	unsigned cur_pointer_id = std::numeric_limits<unsigned>::max();
-
 public:
 	scroll_area(
 		utki::shared_ref<ruis::context> context, //
@@ -54,8 +38,12 @@ public:
 	);
 
 	bool on_mouse_button(const mouse_button_event& event) override;
-
 	bool on_mouse_move(const mouse_move_event& event) override;
+
+private:
+	bool flickable_on_mouse_button(const mouse_button_event& event) override;
+	bool flickable_on_mouse_move(const mouse_move_event& event) override;
+	void flickable_scroll_by(const vec2& delta) override;
 };
 
 } // namespace ruis::touch
