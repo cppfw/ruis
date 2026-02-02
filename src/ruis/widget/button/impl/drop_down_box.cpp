@@ -238,8 +238,7 @@ void drop_down_box::show_drop_down_menu()
 	np.get().get_widget_as<mouse_proxy>("ruis_drop_down_menu_mouse_proxy").mouse_button_handler =
 		[this](mouse_proxy&, const mouse_button_event& e) {
 			if (e.action == button_action::release) {
-				this->handle_mouse_button_up(
-					false // not a first button up event
+				this->handle_mouse_button_up(false // not a first button up event
 				);
 			}
 

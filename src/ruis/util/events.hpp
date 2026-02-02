@@ -52,7 +52,7 @@ enum class mouse_button {
 /**
  * @brief Button or key action.
  */
-enum class button_action{
+enum class button_action {
 	press,
 	release
 };

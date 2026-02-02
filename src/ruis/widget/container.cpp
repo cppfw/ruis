@@ -91,10 +91,16 @@ event_status container::on_mouse_button(const mouse_button_event& e)
 		if (i != this->mouse_capture_map.end()) {
 			if (auto w = i->second.capturing_widget.lock()) {
 				if (w->is_interactive()) {
-					w->on_mouse_button(mouse_button_event{e.action,//
-						 e.pos - w->rect().p, e.button, e.pointer_id});
-					w->set_hovered(w->rect().overlaps(e.pos),//
-					 e.pointer_id);
+					w->on_mouse_button(mouse_button_event{
+						e.action, //
+						e.pos - w->rect().p,
+						e.button,
+						e.pointer_id
+					});
+					w->set_hovered(
+						w->rect().overlaps(e.pos), //
+						e.pointer_id
+					);
 
 					unsigned& num_buttons_captured = i->second.num_buttons_captured;
 					if (e.action == button_action::press) {
@@ -136,9 +142,12 @@ event_status container::on_mouse_button(const mouse_button_event& e)
 		// but, since we get mouse click, then the widget was hovered before the click.
 		c.set_hovered(true, e.pointer_id);
 
-		if (c.on_mouse_button(mouse_button_event{e.action,//
-			 e.pos - c.rect().p, e.button, e.pointer_id}) ==
-			event_status::consumed)
+		if (c.on_mouse_button(mouse_button_event{
+				e.action, //
+				e.pos - c.rect().p,
+				e.button,
+				e.pointer_id
+			}) == event_status::consumed)
 		{
 			utki::assert(
 				[&]() {
@@ -153,20 +162,23 @@ event_status container::on_mouse_button(const mouse_button_event& e)
 			// But, in theory, it can be button up event here, if some widget which captured
 			// mouse was removed from its parent. So, check if we have button down event.
 			if (e.action == button_action::press) {
-				this->mouse_capture_map.insert(
-					std::make_pair(e.pointer_id,//
-						 mouse_capture_info{utki::make_weak(i->to_shared_ptr()),//
-							 1 // one button captured
-							})
-				);
+				this->mouse_capture_map.insert(std::make_pair(
+					e.pointer_id, //
+					mouse_capture_info{
+						utki::make_weak(i->to_shared_ptr()), //
+						1 // one button captured
+					}
+				));
 			}
 
 			// widget has consumed the mouse button event,
 			// that means the rest of the underlying widgets are not hovered,
 			// update the hovered state of those
 			for (++i; i != this->children().rend(); ++i) {
-				i->get().set_hovered(false,//
-					 e.pointer_id);
+				i->get().set_hovered(
+					false, //
+					e.pointer_id
+				);
 			}
 
 			return event_status::consumed;
