@@ -49,7 +49,7 @@ event_status scroll_area::on_mouse_button(const mouse_button_event& e)
 {
 	vec2 d = -this->cur_scroll_pos;
 	return this->container::on_mouse_button(mouse_button_event{
-		e.is_down, //
+		e.action, //
 		e.pos - d,
 		e.button,
 		e.pointer_id

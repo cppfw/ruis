@@ -406,7 +406,7 @@ tree_view::provider_base::tree_item_widget_parts tree_view::provider_base::get_i
 				if (e.button != ruis::mouse_button::left) {
 					return event_status::propagate;
 				}
-				if (!e.is_down) {
+				if (e.action == button_action::release) {
 					return event_status::propagate;
 				}
 

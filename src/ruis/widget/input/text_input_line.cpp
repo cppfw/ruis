@@ -132,9 +132,9 @@ event_status text_input_line::on_mouse_button(const mouse_button_event& e)
 		return event_status::propagate;
 	}
 
-	this->left_mouse_button_down = e.is_down;
+	this->left_mouse_button_down = (e.action == button_action::press);
 
-	if (e.is_down) {
+	if (e.action == button_action::press) {
 		this->set_cursor_index(this->pos_to_index(e.pos.x()));
 	}
 
@@ -321,11 +321,11 @@ event_status text_input_line::on_key(const ruis::key_event& e)
 	switch (e.combo.key) {
 		case ruis::key::left_control:
 		case ruis::key::right_control:
-			this->ctrl_pressed = e.is_down;
+			this->ctrl_pressed = (e.action == button_action::press);
 			break;
 		case ruis::key::left_shift:
 		case ruis::key::right_shift:
-			this->shift_pressed = e.is_down;
+			this->shift_pressed = (e.action == button_action::press);
 			break;
 		default:
 			break;

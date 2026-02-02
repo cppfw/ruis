@@ -214,7 +214,7 @@ public:
                 utki::assert(mp, SL);
                 mp->mouse_button_handler = [this, path = utki::make_vector(path)](ruis::mouse_proxy&, //
                     const ruis::mouse_button_event& e){
-                    if(!e.is_down || e.button != ruis::mouse_button::left){
+                    if(e.action == ruis::button_action::release || e.button != ruis::mouse_button::left){
                         return ruis::event_status::propagate;
                     }
 

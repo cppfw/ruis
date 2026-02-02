@@ -69,7 +69,7 @@ public:
 			return event_status::propagate;
 		}
 
-		this->grabbed = e.is_down;
+		this->grabbed = (e.action == button_action::press);
 		this->grab_point = e.pos;
 
 		if (!this->grabbed) {

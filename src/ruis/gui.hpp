@@ -116,16 +116,18 @@ public:
 	 * @param pos - new position of the mouse pointer.
 	 * @param id - ID of the mouse pointer.
 	 */
-	void send_mouse_move(const vec2& pos, unsigned id);
+	void send_mouse_move(const vec2& pos, //
+		unsigned id);
 
 	/**
 	 * @brief Feed in the mouse button event to GUI.
-	 * @param is_down - is mouse button pressed (true) or released (false).
+	 * @param action - mouse button action, i.e. pressed or released.
 	 * @param pos - position of the mouse pointer at the moment the button was pressed or released.
 	 * @param button - mouse button.
 	 * @param id - ID of the mouse pointer.
 	 */
-	void send_mouse_button(bool is_down, const vec2& pos, mouse_button button, unsigned id);
+	void send_mouse_button(button_action action,//
+		 const vec2& pos, mouse_button button, unsigned id);
 
 	/**
 	 * @brief Feed in mouse hover event to GUI.
@@ -133,7 +135,8 @@ public:
 	 * @param is_hovered - whether the mouse pointer entered (true) the GUI area or left (false).
 	 * @param id - mouse pointer ID.
 	 */
-	void send_mouse_hover(bool is_hovered, unsigned id);
+	void send_mouse_hover(bool is_hovered, //
+		unsigned id);
 
 private:
 	utki::flags<ruis::key_modifier> key_modifiers;
@@ -142,10 +145,11 @@ public:
 	/**
 	 * @brief Feed in the key event to GUI.
 	 * Note, this method is not supposed to receive repeated key events, when user holds down the key.
-	 * @param is_down - is the key pressed (true) or released (false).
+	 * @param action - button action, i.e. pressed or released.
 	 * @param key_code - code of the key.
 	 */
-	void send_key(bool is_down, key key_code);
+	void send_key(button_action action,//
+		 key key_code);
 
 	/**
 	 * @brief Input string provider.

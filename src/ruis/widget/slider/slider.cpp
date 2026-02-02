@@ -137,7 +137,7 @@ slider::slider( //
 			return event_status::propagate;
 		}
 
-		if (e.is_down) {
+		if (e.action == button_action::press) {
 			utki::assert(!this->is_grabbed, SL);
 			this->is_grabbed = true;
 

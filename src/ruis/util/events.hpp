@@ -49,12 +49,20 @@ enum class mouse_button {
 	enum_size
 };
 
+/**
+ * @brief Button or key action.
+ */
+enum class button_action{
+	press,
+	release
+};
+
 struct mouse_button_event {
 	/**
-	 * @brief Button pressed state.
-	 * Was the button pressed (true) or released (false).
+	 * @brief Button action.
+	 * Pressed or released.
 	 */
-	bool is_down;
+	button_action action;
 
 	/**
 	 * @brief Mouse pointer position.
@@ -97,7 +105,7 @@ struct mouse_move_event {
 };
 
 struct key_event {
-	bool is_down = true;
+	button_action action = button_action::press;
 	key_combo combo;
 };
 

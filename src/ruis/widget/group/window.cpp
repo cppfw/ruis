@@ -425,9 +425,9 @@ void ruis::window::setup_widgets()
 				return event_status::propagate;
 			}
 
-			this->mouse_captured = e.is_down;
+			this->mouse_captured = (e.action == button_action::press);
 
-			if (e.is_down) {
+			if (e.action == button_action::press) {
 				this->capture_point = e.pos;
 			} else {
 				if (!mp.is_hovered()) {
@@ -701,7 +701,7 @@ void ruis::window::set_borders(sides<length> borders)
 
 event_status ruis::window::on_mouse_button(const mouse_button_event& e)
 {
-	if (e.is_down && !this->is_topmost()) {
+	if (e.action == button_action::press && !this->is_topmost()) {
 		this->context.get().post_to_ui_thread([this]() {
 			this->move_to_top();
 			this->focus();

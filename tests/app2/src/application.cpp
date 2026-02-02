@@ -54,7 +54,7 @@ application::application() :
 	// clang-format on
 
 	kp.get().key_handler = [this](ruis::key_proxy&, const ruis::key_event& e) {
-		if (e.is_down) {
+		if (e.action == ruis::button_action::press) {
 			if (e.combo.key == ruis::key::escape) {
 				this->quit();
 			}

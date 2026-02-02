@@ -77,7 +77,7 @@ ruis::event_status wire_socket::on_mouse_button(const ruis::mouse_button_event& 
 	}
 	
 	if(auto wa = this->try_get_ancestor<wire_area>()){
-		if(e.is_down){
+		if(e.action == ruis::button_action::press){
 			std::shared_ptr<wire_socket> grabbed_socket;
 			if(auto p = this->get_remote()){
 				p->disconnect();

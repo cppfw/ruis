@@ -152,7 +152,7 @@ void gui::send_mouse_move(
 }
 
 void gui::send_mouse_button(
-	bool is_down, //
+	button_action action, //
 	const vec2& pos,
 	mouse_button button,
 	unsigned id
@@ -161,7 +161,7 @@ void gui::send_mouse_button(
 	auto& rw = this->get_root();
 	if (rw.is_interactive()) {
 		rw.set_hovered(rw.rect().overlaps(pos), id);
-		rw.on_mouse_button(mouse_button_event{is_down, pos, button, id});
+		rw.on_mouse_button(mouse_button_event{action, pos, button, id});
 	}
 }
 
@@ -174,22 +174,19 @@ void gui::send_mouse_hover(
 }
 
 void gui::send_key(
-	bool is_down, //
+	button_action action, //
 	key key_code
 )
 {
-	//		TRACE(<< "HandleKeyEvent(): is_down = " << is_down << " is_char_input_only = " << is_char_input_only << "
-	// keyCode = " << unsigned(keyCode) << std::endl)
-
 	auto modifier = ruis::to_key_modifier(key_code);
 	if (modifier != ruis::key_modifier::unknown) {
-		this->key_modifiers.set(modifier, is_down);
+		this->key_modifiers.set(modifier, action == button_action::press);
 	}
 
 	ruis::key_event e;
 	e.combo.key = key_code;
 	e.combo.modifiers = this->key_modifiers;
-	e.is_down = is_down;
+	e.action = action;
 
 	if (auto w = this->context.get().focused_widget.lock()) {
 		//		TRACE(<< "HandleKeyEvent(): there is a focused widget" << std::endl)

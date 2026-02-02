@@ -42,7 +42,7 @@ event_status click_proxy::on_mouse_button(const mouse_button_event& e)
 		return event_status::propagate;
 	}
 
-	if (e.is_down) {
+	if (e.action == button_action::press) {
 		this->is_pressed_v = true;
 		if (this->pressed_change_handler) {
 			ret = this->pressed_change_handler(*this);

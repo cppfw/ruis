@@ -41,7 +41,7 @@ event_status push_button::on_mouse_button(const mouse_button_event& e)
 		return event_status::propagate;
 	}
 
-	if (e.is_down) {
+	if (e.action == button_action::press) {
 		if (!this->is_pressed()) {
 			// NOTE: sometimes pos is outside of the widget. For example, when mouse is captured by this widget and
 			//       some other mouse button is clicked, and then the left one is clicked outside of widget,

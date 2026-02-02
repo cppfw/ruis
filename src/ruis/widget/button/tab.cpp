@@ -67,7 +67,7 @@ bool tab::mask_overlaps(vec2 pos)
 
 event_status tab::on_mouse_button(const mouse_button_event& e)
 {
-	if (e.is_down) {
+	if (e.action == button_action::press) {
 		if (!mask_overlaps(e.pos)) {
 			return event_status::propagate;
 		}

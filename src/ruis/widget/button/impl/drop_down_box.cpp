@@ -139,7 +139,7 @@ drop_down_box::drop_down_box(
 
 event_status drop_down_box::on_mouse_button(const mouse_button_event& e)
 {
-	if (e.is_down) {
+	if (e.action == button_action::press) {
 		++this->num_mouse_buttons_pressed;
 	} else {
 		// TODO: twice I got this assert triggered, perhaps there are situations when
@@ -149,7 +149,7 @@ event_status drop_down_box::on_mouse_button(const mouse_button_event& e)
 		--this->num_mouse_buttons_pressed;
 	}
 
-	if (!e.is_down) {
+	if (e.action == button_action::release) {
 		this->handle_mouse_button_up(true);
 	}
 
@@ -237,9 +237,10 @@ void drop_down_box::show_drop_down_menu()
 
 	np.get().get_widget_as<mouse_proxy>("ruis_drop_down_menu_mouse_proxy").mouse_button_handler =
 		[this](mouse_proxy&, const mouse_button_event& e) {
-			// LOG("button down = " << e.is_down << std::endl)
-			if (!e.is_down) {
-				this->handle_mouse_button_up(false);
+			if (e.action == button_action::release) {
+				this->handle_mouse_button_up(
+					false // not a first button up event
+				);
 			}
 
 			return event_status::consumed;

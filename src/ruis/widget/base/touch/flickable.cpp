@@ -43,7 +43,7 @@ ruis::event_status flickable::on_mouse_button(const mouse_button_event& event)
 			utki::assert(false, SL);
 			[[fallthrough]];
 		case state::idle:
-			utki::assert(event.is_down, SL);
+			utki::assert(event.action == button_action::press, SL);
 
 			this->cur_state = state::within_scroll_threshold;
 			this->prev_touch_point = event.pos;
@@ -56,14 +56,14 @@ ruis::event_status flickable::on_mouse_button(const mouse_button_event& event)
 		case state::not_scrolling:
 			[[fallthrough]];
 		case state::within_scroll_threshold:
-			utki::assert(!event.is_down, SL);
+			utki::assert(event.action == button_action::release, SL);
 			this->cur_state = state::idle;
 
 			// std::cout << "idle\n";
 
 			return this->flickable_on_mouse_button(event);
 		case state::scrolling:
-			utki::assert(!event.is_down, SL);
+			utki::assert(event.action == button_action::release, SL);
 			this->cur_state = state::idle;
 
 			// std::cout << "idle\n";
@@ -111,7 +111,7 @@ ruis::event_status flickable::on_mouse_move(const mouse_move_event& event)
 					// send mouse button up event out of widget area to cancel any ongoing interactions
 					{
 						ruis::mouse_button_event mbe{
-							false, // is_down
+							button_action::release,
 							[]() {
 								using std::numeric_limits;
 
