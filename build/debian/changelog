@@ -1,3 +1,9 @@
+libruis (0.6.8) unstable; urgency=medium
+
+  * add event_status and button_action
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 03 Feb 2026 10:36:39 +0200
+
 libruis (0.6.7) unstable; urgency=medium
 
   * test release
