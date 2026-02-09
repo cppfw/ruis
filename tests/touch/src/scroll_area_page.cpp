@@ -74,6 +74,7 @@ ruis::widget_list make_scroll_area_page_contents(utki::shared_ref<ruis::context>
                 }
             }
         ),
+        m::text(c, {}, U"some text"s)
     };
     //clang-format on
 }
