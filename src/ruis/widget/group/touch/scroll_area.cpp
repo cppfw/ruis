@@ -62,7 +62,7 @@ ruis::event_status scroll_area::flickable_on_mouse_move(const mouse_move_event& 
 	return this->ruis::scroll_area::on_mouse_move(event);
 }
 
-void scroll_area::flickable_scroll_by(const vec2& delta)
+ruis::vec2 scroll_area::flickable_scroll_by(const vec2& delta)
 {
-	this->scroll_by(delta);
+	return this->scroll_by(delta);
 }

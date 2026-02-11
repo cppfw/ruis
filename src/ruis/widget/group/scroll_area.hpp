@@ -105,8 +105,9 @@ public:
 	/**
 	 * @brief Scroll by delta.
 	 * @param delta - amount to scroll by in pixels.
+	 * @return Number of pixels actually scrolled.
 	 */
-	void scroll_by(const vec2& delta);
+	vec2 scroll_by(const vec2& delta);
 
 	/**
 	 * @brief Set scroll position as factor.

@@ -54,7 +54,13 @@ protected:
 	// TODO: doxygen
 	virtual event_status flickable_on_mouse_button(const mouse_button_event& event) = 0;
 	virtual event_status flickable_on_mouse_move(const mouse_move_event& event) = 0;
-	virtual void flickable_scroll_by(const vec2& delta) = 0;
+
+	/**
+	 * @brief Scroll by given number of pixels.
+	 * @param delta - number of pixels to scroll by.
+	 * @return Number of pixels actually scrolled.
+	 */
+	virtual vec2 flickable_scroll_by(const vec2& delta) = 0;
 };
 
 } // namespace ruis::touch

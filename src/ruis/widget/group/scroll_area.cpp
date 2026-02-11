@@ -110,9 +110,11 @@ void scroll_area::set_scroll_pos(const vec2& new_scroll_pos)
 	this->on_scroll_pos_change();
 }
 
-void scroll_area::scroll_by(const vec2& delta)
+vec2 scroll_area::scroll_by(const vec2& delta)
 {
-	this->set_scroll_pos(this->get_scroll_pos() + delta);
+	auto old_scroll_pos = this->get_scroll_pos();
+	this->set_scroll_pos(old_scroll_pos + delta);
+	return this->get_scroll_pos() - old_scroll_pos;
 }
 
 void scroll_area::set_scroll_factor(const vec2& factor)
