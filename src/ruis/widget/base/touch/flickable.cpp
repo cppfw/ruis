@@ -47,7 +47,10 @@ ruis::event_status flickable::on_mouse_button(const mouse_button_event& event)
 		case state::idle:
 			utki::assert(event.action == button_action::press, SL);
 
-			this->last_touch_move_timestamp_ms = utki::get_ticks_ms();
+			this->push_touch_move_to_history({
+				.position = event.pos,
+				.timestamp_ms = utki::get_ticks_ms()
+			});
 
 			this->cur_state = state::within_scroll_threshold;
 			this->prev_touch_point = event.pos;
@@ -87,16 +90,10 @@ ruis::event_status flickable::on_mouse_move(const mouse_move_event& event)
 		}
 	}
 
-	uint32_t cur_ticks_ms = utki::get_ticks_ms();
-	uint32_t dt_ms = cur_ticks_ms - this->last_touch_move_timestamp_ms;
-	this->last_touch_move_timestamp_ms = cur_ticks_ms;
-
-	vec2 delta = event.pos - this->prev_touch_point;
-
-	this->touch_velocity_px_per_ms = delta / ruis::real(dt_ms);
-
-	std::cout << "dt_ms = " << dt_ms << std::endl;
-	std::cout << "touch velocity = " << this->touch_velocity_px_per_ms << std::endl;
+	this->push_touch_move_to_history({
+		.position = event.pos,
+		.timestamp_ms = utki::get_ticks_ms()
+	});
 
 	switch (this->cur_state) {
 		default:
@@ -113,6 +110,8 @@ ruis::event_status flickable::on_mouse_move(const mouse_move_event& event)
 
 					return event_status::consumed;
 				}
+
+				vec2 delta = event.pos - this->prev_touch_point;
 				vec2 abs_delta = abs(delta);
 
 				// std::cout << "mouse move: within scroll threshold, delta: " << delta << ", abs_delta: " << abs_delta << "\n";
@@ -152,6 +151,7 @@ ruis::event_status flickable::on_mouse_move(const mouse_move_event& event)
 			return this->flickable_on_mouse_move(event);
 		case state::scrolling:
 			{
+				vec2 delta = event.pos - this->prev_touch_point;
 				// std::cout << "mouse move: scrolling, delta: " << delta << "\n";
 				this->flickable_scroll_by(-delta);
 				this->prev_touch_point = event.pos;
@@ -164,3 +164,29 @@ void flickable::update(uint32_t dt_ms)
 {
 	// TODO:
 }
+
+void flickable::push_touch_move_to_history(touch_move_info tm){
+	constexpr auto max_history_records = 10;
+	constexpr auto max_history_age_ms = 200;
+	constexpr auto min_time_between_points_ms = 1;
+
+	if(this->touch_history.empty()){
+		this->touch_history.push_back(std::move(tm));
+		return;
+	}
+
+	utki::assert(!this->touch_history.empty(), SL);
+	auto& last_record = this->touch_history.back();
+
+	if(tm.timestamp_ms - last_record.timestamp_ms <= min_time_between_points_ms){
+		// we are too close in time to the last record, just update the last record
+		last_record = tm;
+		return;
+	}
+
+	if(this->touch_history.size() == max_history_records){
+		this->touch_history.pop_front();
+	}
+
+	this->touch_history.push_back(std::move(tm));
+};

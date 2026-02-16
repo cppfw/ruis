@@ -21,6 +21,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
+#include <deque>
+
 #include "../../widget.hpp"
 
 namespace ruis::touch {
@@ -48,13 +50,14 @@ class flickable :
 	// This variable holds the pointer ID of the current touch.
 	unsigned cur_pointer_id = std::numeric_limits<unsigned>::max();
 
-	// timestamp of the last touch move event (i.e. mouse_move event)
-	uint32_t last_touch_move_timestamp_ms;
+	struct touch_move_info{
+		vec2 position;
+		uint32_t timestamp_ms;
+	};
 
-	// delta of the last touch move
-	vec2 last_touch_move_delta;
+	std::deque<touch_move_info> touch_history;
 
-	vec2 touch_velocity_px_per_ms;
+	void push_touch_move_to_history(touch_move_info tm);
 
 public:
 	event_status on_mouse_button(const mouse_button_event& event) override;
