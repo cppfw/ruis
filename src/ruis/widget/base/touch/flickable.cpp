@@ -45,39 +45,53 @@ ruis::event_status flickable::on_mouse_button(const mouse_button_event& event)
 			utki::assert(false, SL);
 			[[fallthrough]];
 		case state::idle:
-			utki::assert(event.action == button_action::press, SL);
+			{
+				utki::assert(event.action == button_action::press, SL);
 
-			this->push_touch_move_to_history({
-				.position = event.pos,
-				.timestamp_ms = utki::get_ticks_ms()
-			});
+				this->push_touch_move_to_history({
+					.position = event.pos,
+					.timestamp_ms = utki::get_ticks_ms()
+				});
+				auto vel = this->calculate_touch_velocity();
+				std::cout << "touch press, vel = " << vel << std::endl;
 
-			this->cur_state = state::within_scroll_threshold;
-			this->prev_touch_point = event.pos;
-			this->cur_pointer_id = event.pointer_id;
+				this->cur_state = state::within_scroll_threshold;
+				this->prev_touch_point = event.pos;
+				this->cur_pointer_id = event.pointer_id;
 
-			// std::cout << "withtin scroll threshold\n";
+				// std::cout << "withtin scroll threshold\n";
 
-			this->flickable_on_mouse_button(event);
-			return event_status::consumed;
+				this->flickable_on_mouse_button(event);
+				return event_status::consumed;
+			}
 		case state::not_scrolling:
 			[[fallthrough]];
 		case state::within_scroll_threshold:
-			utki::assert(event.action == button_action::release, SL);
-			this->cur_state = state::idle;
+			{
+				utki::assert(event.action == button_action::release, SL);
+				this->cur_state = state::idle;
 
-			// std::cout << "idle\n";
+				auto vel = this->calculate_touch_velocity();
+				std::cout << "touch release, vel = " << vel << std::endl;
 
-			return this->flickable_on_mouse_button(event);
+				this->touch_history.clear();
+
+				return this->flickable_on_mouse_button(event);
+			}
 		case state::scrolling:
-			utki::assert(event.action == button_action::release, SL);
-			this->cur_state = state::idle;
+			{
+				utki::assert(event.action == button_action::release, SL);
+				this->cur_state = state::idle;
 
-			// TODO: start updating
+				// TODO: start updating
 
-			// std::cout << "idle\n";
+				auto vel = this->calculate_touch_velocity();
+				std::cout << "touch release, vel = " << vel << std::endl;
 
-			return event_status::consumed;
+				this->touch_history.clear();
+
+				return event_status::consumed;
+			}
 	}
 }
 
@@ -88,12 +102,18 @@ ruis::event_status flickable::on_mouse_move(const mouse_move_event& event)
 		if (event.pointer_id != this->cur_pointer_id) {
 			return this->flickable_on_mouse_move(event);
 		}
+	}else{
+		// no touch active, ignore mouse move events
+		return ruis::event_status::propagate;
 	}
 
 	this->push_touch_move_to_history({
 		.position = event.pos,
 		.timestamp_ms = utki::get_ticks_ms()
 	});
+
+	auto vel = this->calculate_touch_velocity();
+	std::cout << "touch move, vel = " << vel << std::endl;
 
 	switch (this->cur_state) {
 		default:
@@ -190,3 +210,31 @@ void flickable::push_touch_move_to_history(touch_move_info tm){
 
 	this->touch_history.push_back(std::move(tm));
 };
+
+ruis::vec2 flickable::calculate_touch_velocity(){
+	if(this->touch_history.size() < 2){
+		std::cout << "flickable::calculate_touch_velocity(): return 0. this->touch_history.size() = " << this->touch_history.size() << std::endl;
+		return {0};
+	}
+
+	if(this->touch_history.size() == 2){
+		const auto& p1 = this->touch_history.front();
+		const auto& p2 = this->touch_history.back();
+
+		auto dt_ms = p2.timestamp_ms - p1.timestamp_ms;
+		utki::assert(dt_ms > 0, SL);
+
+		auto dp = p2.position - p1.position;
+
+		auto vel = dp / ruis::real(dt_ms);
+
+		std::cout << "flickable::calculate_touch_velocity(): return " << vel << ". this->touch_history.size() = " << this->touch_history.size() << std::endl;
+		return vel;
+	}
+
+	// TODO:
+	ruis::vec2 vel = 0;
+
+	std::cout << "flickable::calculate_touch_velocity(): return " << vel << ". this->touch_history.size() = " << this->touch_history.size() << std::endl;
+	return vel;
+}

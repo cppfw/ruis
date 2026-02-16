@@ -58,6 +58,7 @@ class flickable :
 	std::deque<touch_move_info> touch_history;
 
 	void push_touch_move_to_history(touch_move_info tm);
+	vec2 calculate_touch_velocity();
 
 public:
 	event_status on_mouse_button(const mouse_button_event& event) override;
