@@ -25,7 +25,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis::touch {
 
-class flickable : virtual public ruis::widget
+class flickable :
+	virtual public ruis::widget, //
+	private updateable
 {
 	constexpr static auto scroll_threshold_pp = 5;
 
@@ -46,6 +48,14 @@ class flickable : virtual public ruis::widget
 	// This variable holds the pointer ID of the current touch.
 	unsigned cur_pointer_id = std::numeric_limits<unsigned>::max();
 
+	// timestamp of the last touch move event (i.e. mouse_move event)
+	uint32_t last_touch_move_timestamp_ms;
+
+	// delta of the last touch move
+	vec2 last_touch_move_delta;
+
+	vec2 touch_velocity_px_per_ms;
+
 public:
 	event_status on_mouse_button(const mouse_button_event& event) override;
 	event_status on_mouse_move(const mouse_move_event& event) override;
@@ -61,6 +71,9 @@ protected:
 	 * @return Number of pixels actually scrolled.
 	 */
 	virtual vec2 flickable_scroll_by(const vec2& delta) = 0;
+
+private:
+	void update(uint32_t dt_ms) override;
 };
 
 } // namespace ruis::touch

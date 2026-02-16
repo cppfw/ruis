@@ -21,6 +21,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "flickable.hpp"
 
+#include <utki/time.hpp>
+
 using namespace ruis::touch;
 
 ruis::event_status flickable::on_mouse_button(const mouse_button_event& event)
@@ -45,6 +47,8 @@ ruis::event_status flickable::on_mouse_button(const mouse_button_event& event)
 		case state::idle:
 			utki::assert(event.action == button_action::press, SL);
 
+			this->last_touch_move_timestamp_ms = utki::get_ticks_ms();
+
 			this->cur_state = state::within_scroll_threshold;
 			this->prev_touch_point = event.pos;
 			this->cur_pointer_id = event.pointer_id;
@@ -66,6 +70,8 @@ ruis::event_status flickable::on_mouse_button(const mouse_button_event& event)
 			utki::assert(event.action == button_action::release, SL);
 			this->cur_state = state::idle;
 
+			// TODO: start updating
+
 			// std::cout << "idle\n";
 
 			return event_status::consumed;
@@ -81,11 +87,22 @@ ruis::event_status flickable::on_mouse_move(const mouse_move_event& event)
 		}
 	}
 
+	uint32_t cur_ticks_ms = utki::get_ticks_ms();
+	uint32_t dt_ms = cur_ticks_ms - this->last_touch_move_timestamp_ms;
+	this->last_touch_move_timestamp_ms = cur_ticks_ms;
+
+	vec2 delta = event.pos - this->prev_touch_point;
+
+	this->touch_velocity_px_per_ms = delta / ruis::real(dt_ms);
+
+	std::cout << "dt_ms = " << dt_ms << std::endl;
+	std::cout << "touch velocity = " << this->touch_velocity_px_per_ms << std::endl;
+
 	switch (this->cur_state) {
 		default:
-			utki::assert(false, SL);
 			[[fallthrough]];
 		case state::idle:
+			utki::assert(false, SL);
 			return this->flickable_on_mouse_move(event);
 		case state::within_scroll_threshold:
 			{
@@ -96,7 +113,6 @@ ruis::event_status flickable::on_mouse_move(const mouse_move_event& event)
 
 					return event_status::consumed;
 				}
-				vec2 delta = event.pos - this->prev_touch_point;
 				vec2 abs_delta = abs(delta);
 
 				// std::cout << "mouse move: within scroll threshold, delta: " << delta << ", abs_delta: " << abs_delta << "\n";
@@ -136,12 +152,15 @@ ruis::event_status flickable::on_mouse_move(const mouse_move_event& event)
 			return this->flickable_on_mouse_move(event);
 		case state::scrolling:
 			{
-				auto delta = event.pos - this->prev_touch_point;
-
 				// std::cout << "mouse move: scrolling, delta: " << delta << "\n";
 				this->flickable_scroll_by(-delta);
 				this->prev_touch_point = event.pos;
 				return event_status::consumed;
 			}
 	}
+}
+
+void flickable::update(uint32_t dt_ms)
+{
+	// TODO:
 }

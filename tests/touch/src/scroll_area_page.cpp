@@ -76,7 +76,7 @@ ruis::widget_list make_scroll_area_page_contents(utki::shared_ref<ruis::context>
         ),
         m::text(c, {}, U"some text"s)
     };
-    // clang-format on
+	// clang-format on
 }
 
 class scroll_area_page :
@@ -85,7 +85,15 @@ class scroll_area_page :
 {
 public:
 	scroll_area_page(utki::shared_ref<ruis::context> c) :
-		ruis::widget(std::move(c), {}, {}),
+		// clang-format off
+        ruis::widget(
+            std::move(c),
+            {},
+            {
+                .clip = true
+            }
+        ),
+		// clang-format on
 		ruis::page(this->context, {}),
 		// clang-format off
         ruis::touch::scroll_area(
@@ -95,7 +103,7 @@ public:
                 m::column(
                     this->context,
                     {
-                        .layout_params = {
+                        .layout_params{
                             .dims = {ruis::dim::fill, ruis::dim::min}
                         }
                     },
