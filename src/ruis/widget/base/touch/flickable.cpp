@@ -253,9 +253,9 @@ ruis::vec2 flickable::calculate_touch_velocity_for_at_least_3_points_using_ols_m
 	// Ordinary Least Squares method fits quadratic curve y(t)=a*t^2+b*t+c to a set of n >= 3 points.
 	// Coefficients a, b and c can be found by solving the following system of linear equations
 	//
-	// / sum(t^4) sum(t^3) sum(t^2) \   / a \   / sum(y * t^2) \
+	// | sum(t^4) sum(t^3) sum(t^2) |   | a |   | sum(y * t^2) |
 	// | sum(t^3) sum(t^2) sum(t)   | * | b | = | sum(y * t)   |
-	// \ sum(t^2) sum(t)   n        /   \ c /   \ sum(y)       /
+	// | sum(t^2) sum(t)   n        |   | c |   | sum(y)       |
 	//
 	// The touch velocity is effectively v = dy/dt = 2*a*t + b
 	//
