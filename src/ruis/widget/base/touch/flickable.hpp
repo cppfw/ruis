@@ -60,6 +60,8 @@ class flickable :
 	void push_touch_move_to_history(touch_move_info tm);
 	vec2 calculate_touch_velocity();
 
+	ruis::vec2 calculate_touch_velocity_for_at_least_3_points_using_ols_method();
+
 public:
 	event_status on_mouse_button(const mouse_button_event& event) override;
 	event_status on_mouse_move(const mouse_move_event& event) override;
