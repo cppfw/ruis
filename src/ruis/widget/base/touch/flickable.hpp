@@ -50,7 +50,7 @@ class flickable :
 	// This variable holds the pointer ID of the current touch.
 	unsigned cur_pointer_id = std::numeric_limits<unsigned>::max();
 
-	struct touch_move_info{
+	struct touch_move_info {
 		vec2 position;
 		uint32_t timestamp_ms;
 	};

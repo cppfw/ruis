@@ -49,10 +49,7 @@ ruis::event_status flickable::on_mouse_button(const mouse_button_event& event)
 			{
 				utki::assert(event.action == button_action::press, SL);
 
-				this->push_touch_move_to_history({
-					.position = event.pos,
-					.timestamp_ms = utki::get_ticks_ms()
-				});
+				this->push_touch_move_to_history({.position = event.pos, .timestamp_ms = utki::get_ticks_ms()});
 				auto vel = this->calculate_touch_velocity();
 				std::cout << "touch press, vel = " << vel << std::endl;
 
@@ -103,15 +100,12 @@ ruis::event_status flickable::on_mouse_move(const mouse_move_event& event)
 		if (event.pointer_id != this->cur_pointer_id) {
 			return this->flickable_on_mouse_move(event);
 		}
-	}else{
+	} else {
 		// no touch active, ignore mouse move events
 		return ruis::event_status::propagate;
 	}
 
-	this->push_touch_move_to_history({
-		.position = event.pos,
-		.timestamp_ms = utki::get_ticks_ms()
-	});
+	this->push_touch_move_to_history({.position = event.pos, .timestamp_ms = utki::get_ticks_ms()});
 
 	auto vel = this->calculate_touch_velocity();
 	std::cout << "touch move, vel = " << vel << std::endl;
@@ -186,20 +180,23 @@ void flickable::update(uint32_t dt_ms)
 	// TODO:
 }
 
-namespace{
+namespace {
 constexpr auto max_history_records = 10;
-}
+} // namespace
 
-void flickable::push_touch_move_to_history(touch_move_info tm){
+void flickable::push_touch_move_to_history(touch_move_info tm)
+{
 	constexpr auto max_history_age_ms = 200;
 	constexpr auto min_time_between_points_ms = 1;
 
 	// drop too old records
-	while(!this->touch_history.empty() && tm.timestamp_ms - this->touch_history.front().timestamp_ms > max_history_age_ms){
+	while (!this->touch_history.empty() &&
+		   tm.timestamp_ms - this->touch_history.front().timestamp_ms > max_history_age_ms)
+	{
 		this->touch_history.pop_front();
 	}
 
-	if(this->touch_history.empty()){
+	if (this->touch_history.empty()) {
 		this->touch_history.push_back(std::move(tm));
 		return;
 	}
@@ -208,26 +205,27 @@ void flickable::push_touch_move_to_history(touch_move_info tm){
 
 	auto& last_record = this->touch_history.back();
 
-	if(tm.timestamp_ms - last_record.timestamp_ms <= min_time_between_points_ms){
+	if (tm.timestamp_ms - last_record.timestamp_ms <= min_time_between_points_ms) {
 		// we are too close in time to the last record, just update the last record
 		last_record = tm;
 		return;
 	}
 
-	if(this->touch_history.size() == max_history_records){
+	if (this->touch_history.size() == max_history_records) {
 		this->touch_history.pop_front();
 	}
 
 	this->touch_history.push_back(std::move(tm));
 };
 
-ruis::vec2 flickable::calculate_touch_velocity(){
-	if(this->touch_history.size() < 2){
+ruis::vec2 flickable::calculate_touch_velocity()
+{
+	if (this->touch_history.size() < 2) {
 		// std::cout << "flickable::calculate_touch_velocity(): return 0. this->touch_history.size() = " << this->touch_history.size() << std::endl;
 		return {0};
 	}
 
-	if(this->touch_history.size() == 2){
+	if (this->touch_history.size() == 2) {
 		const auto& p1 = this->touch_history.front();
 		const auto& p2 = this->touch_history.back();
 
@@ -249,7 +247,8 @@ ruis::vec2 flickable::calculate_touch_velocity(){
 	return vel;
 }
 
-ruis::vec2 flickable::calculate_touch_velocity_for_at_least_3_points_using_ols_method(){
+ruis::vec2 flickable::calculate_touch_velocity_for_at_least_3_points_using_ols_method()
+{
 	// Ordinary Least Squares method fits quadratic curve y(t)=a*t^2+b*t+c to a set of n >= 3 points.
 	// Coefficients a, b and c can be found by solving the following system of linear equations
 	//
@@ -276,7 +275,7 @@ ruis::vec2 flickable::calculate_touch_velocity_for_at_least_3_points_using_ols_m
 	ruis::vec2 pos_time_sum = 0;
 	ruis::vec2 pos_sum = 0;
 
-	for(const auto& rec : this->touch_history){
+	for (const auto& rec : this->touch_history) {
 		// Here we still do arithmetics in uint32_t space.
 		// The time_bias_ms is the latest timestamp, so subtract from it to get positive biased time.
 		uint32_t shifted_time = time_bias_ms - rec.timestamp_ms;
@@ -313,14 +312,14 @@ ruis::vec2 flickable::calculate_touch_velocity_for_at_least_3_points_using_ols_m
 	constexpr auto epsilon = ruis::real(1e-9);
 
 	using std::abs;
-	if(abs(det) < epsilon){
+	if (abs(det) < epsilon) {
 		// the matrix is not invertible
 		return {0};
 	}
 
 	// replace 2nd column with right-hand side vector and calculate determinant
 	ruis::vec2 det_b;
-	for(auto [p0, p1, p2, out] : utki::views::zip(pos_time_pow2_sum, pos_time_sum, pos_sum, det_b)){
+	for (auto [p0, p1, p2, out] : utki::views::zip(pos_time_pow2_sum, pos_time_sum, pos_sum, det_b)) {
 		m[0][1] = p0;
 		m[1][1] = p1;
 		m[2][1] = p2;
