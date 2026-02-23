@@ -63,7 +63,9 @@ class flickable :
 
 	ruis::vec2 calculate_touch_velocity_for_at_least_3_points_using_ols_method();
 
-
+	// inertial scrolling state
+	ruis::vec2 velocity;
+	ruis::real friction = this->context.get().units.pp_to_px(0.1);
 
 public:
 	event_status on_mouse_button(const mouse_button_event& event) override;

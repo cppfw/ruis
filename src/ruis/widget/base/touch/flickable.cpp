@@ -77,18 +77,28 @@ ruis::event_status flickable::on_mouse_button(const mouse_button_event& event)
 			}
 		case state::dragging:
 			{
+				utki::assert(false, SL);
 				utki::assert(event.action == button_action::release, SL);
-				this->cur_state = state::idle;
+				this->cur_state = state::inertial_scrolling;
 
-				// TODO: start updating
-
-				auto vel = this->calculate_touch_velocity();
-				std::cout << "touch release, vel = " << vel << std::endl;
+				this->velocity = this->calculate_touch_velocity();
+				std::cout << "touch release, vel = " << this->velocity << std::endl;
 
 				this->touch_history.clear();
 
+				this->context.get().updater.get().start(utki::make_shared_from(static_cast<updateable&>(*this)));
+
 				return event_status::consumed;
 			}
+		case state::inertial_scrolling:
+			utki::assert(event.action == button_action::press, SL);
+
+			this->cur_state = state::dragging;
+			this->prev_touch_point = event.pos;
+
+			this->context.get().updater.get().stop(*this);
+
+			return event_status::consumed;
 	}
 }
 
@@ -182,7 +192,27 @@ ruis::event_status flickable::on_mouse_move(const mouse_move_event& event)
 
 void flickable::update(uint32_t dt_ms)
 {
-	// TODO:
+	utki::assert(this->cur_state == state::inertial_scrolling, SL);
+
+	auto scrolled_by = this->flickable_scroll_by(-this->velocity * dt_ms);
+
+	using std::copysign;
+	auto velocity_sign = this->velocity.comp_op([](const auto& e){return copysign(real(1), e);});
+
+	auto prev_velocity = this->velocity;
+
+	this->velocity -= velocity_sign * this->friction * dt_ms;
+
+	for(auto [prev, cur, scrolled] : utki::views::zip(prev_velocity, this->velocity, scrolled_by)){
+		using std::signbit;
+		if(signbit(prev) != signbit(cur) || scrolled == 0){
+			cur = ruis::real(0);
+		}
+	}
+
+	if(this->velocity.is_zero()){
+		this->context.get().updater.get().stop(*this);
+	}
 }
 
 namespace {
