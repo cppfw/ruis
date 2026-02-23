@@ -93,6 +93,8 @@ ruis::event_status flickable::on_mouse_button(const mouse_button_event& event)
 		case state::inertial_scrolling:
 			utki::assert(event.action == button_action::press, SL);
 
+			// inertial scrolling stopped by touch
+
 			this->cur_state = state::dragging;
 			this->prev_touch_point = event.pos;
 
