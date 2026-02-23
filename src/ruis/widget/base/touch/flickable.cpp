@@ -81,7 +81,7 @@ ruis::event_status flickable::on_mouse_button(const mouse_button_event& event)
 				utki::assert(event.action == button_action::release, SL);
 				this->cur_state = state::inertial_scrolling;
 
-				this->velocity = this->calculate_touch_velocity();
+				this->velocity = this->calculate_touch_velocity_px_per_ms();
 				std::cout << "touch release, vel = " << this->velocity << std::endl;
 
 				this->touch_history.clear();
@@ -253,7 +253,7 @@ void flickable::push_touch_move_to_history(touch_move_info tm)
 	this->touch_history.push_back(std::move(tm));
 };
 
-ruis::vec2 flickable::calculate_touch_velocity()
+ruis::vec2 flickable::calculate_touch_velocity_px_per_ms()
 {
 	if (this->touch_history.size() < 2) {
 		// std::cout << "flickable::calculate_touch_velocity(): return 0. this->touch_history.size() = " << this->touch_history.size() << std::endl;
@@ -276,13 +276,13 @@ ruis::vec2 flickable::calculate_touch_velocity()
 	}
 
 	// use Ordinary Least Squares method to fit a quadratic curve to the points of touch history
-	ruis::vec2 vel = calculate_touch_velocity_for_at_least_3_points_using_ols_method();
+	ruis::vec2 vel = calculate_touch_velocity_for_at_least_3_points_using_ols_method_px_per_ms();
 
 	// std::cout << "flickable::calculate_touch_velocity(): return " << vel << ". this->touch_history.size() = " << this->touch_history.size() << std::endl;
 	return vel;
 }
 
-ruis::vec2 flickable::calculate_touch_velocity_for_at_least_3_points_using_ols_method()
+ruis::vec2 flickable::calculate_touch_velocity_for_at_least_3_points_using_ols_method_px_per_ms()
 {
 	// Ordinary Least Squares method fits quadratic curve y(t)=a*t^2+b*t+c to a set of n >= 3 points.
 	// Coefficients a, b and c can be found by solving the following system of linear equations

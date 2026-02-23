@@ -59,9 +59,13 @@ class flickable :
 	std::deque<touch_move_info> touch_history;
 
 	void push_touch_move_to_history(touch_move_info tm);
-	vec2 calculate_touch_velocity();
 
-	ruis::vec2 calculate_touch_velocity_for_at_least_3_points_using_ols_method();
+	vec2 calculate_touch_velocity_px_per_ms();
+
+	/**
+	 * @return Pixels per ms.
+	 */
+	ruis::vec2 calculate_touch_velocity_for_at_least_3_points_using_ols_method_px_per_ms();
 
 	// inertial scrolling state
 	ruis::vec2 velocity;
