@@ -119,6 +119,7 @@ public:
 
 	/**
 	 * @brief Convert millimeters to pixels (dots).
+	 * The resulting value is rounded.
 	 * @param mm - value in millimeters.
 	 * @return Value in pixels.
 	 */
@@ -130,6 +131,7 @@ public:
 
 	/**
 	 * @brief Convert perception pixels to pixels.
+	 * The resulting value is rounded.
 	 * @param pp - value in perception pixels.
 	 * @return  Value in pixels.
 	 */

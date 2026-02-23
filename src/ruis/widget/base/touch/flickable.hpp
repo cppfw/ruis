@@ -33,7 +33,7 @@ class flickable :
 {
 	constexpr static auto scroll_threshold_pp = 5;
 
-	// TODO: convert from scroll_threshold_pp in on_reload()?
+	// TODO: convert from scroll_threshold_pp if dots per pp changes
 	// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers, "constant value")
 	real scroll_threshold_px = 10;
 
@@ -63,8 +63,8 @@ class flickable :
 	ruis::vec2 calculate_touch_velocity_for_at_least_3_points_using_ols_method_px_per_ms();
 
 	// inertial scrolling state
-	ruis::vec2 velocity;
-	ruis::real friction = this->context.get().units.pp_to_px(0.1);
+	ruis::real friction = this->context.get().units.dots_per_pp() * 0.005; // TODO: update if dots per pp changes
+	ruis::vec2 velocity_px_per_ms;
 
 public:
 	event_status on_mouse_button(const mouse_button_event& event) override;

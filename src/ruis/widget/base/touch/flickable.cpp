@@ -81,8 +81,8 @@ ruis::event_status flickable::on_mouse_button(const mouse_button_event& event)
 				utki::assert(event.action == button_action::release, SL);
 				this->cur_state = state::inertial_scrolling;
 
-				this->velocity = this->calculate_touch_velocity_px_per_ms();
-				std::cout << "touch release, vel = " << this->velocity << std::endl;
+				this->velocity_px_per_ms = this->calculate_touch_velocity_px_per_ms();
+				// std::cout << "touch release, vel = " << this->velocity_px_per_ms << std::endl;
 
 				this->touch_history.clear();
 
@@ -194,24 +194,30 @@ void flickable::update(uint32_t dt_ms)
 {
 	utki::assert(this->cur_state == state::inertial_scrolling, SL);
 
-	auto scrolled_by = this->flickable_scroll_by(-this->velocity * dt_ms);
+	auto scrolled_by = this->flickable_scroll_by(-this->velocity_px_per_ms * ruis::real(dt_ms));
 
 	using std::copysign;
-	auto velocity_sign = this->velocity.comp_op([](const auto& e){return copysign(real(1), e);});
+	auto velocity_sign = this->velocity_px_per_ms.comp_op([](const auto& e){return copysign(real(1), e);});
 
-	auto prev_velocity = this->velocity;
+	auto prev_velocity_px_per_ms = this->velocity_px_per_ms;
 
-	this->velocity -= velocity_sign * this->friction * dt_ms;
+	// std::cout << "velocity_sign = " << velocity_sign << ", this->friction = " << this->friction << ", dt_ms = " << dt_ms << std::endl;
+	auto dv = velocity_sign * this->friction * ruis::real(dt_ms);
+	// std::cout << "dv = " << dv << std::endl;
+	this->velocity_px_per_ms -= dv;
 
-	for(auto [prev, cur, scrolled] : utki::views::zip(prev_velocity, this->velocity, scrolled_by)){
+	// std::cout << "this->velocity_px_per_ms = " << this->velocity_px_per_ms << std::endl;
+
+	for(auto [prev, cur, scrolled_px] : utki::views::zip(prev_velocity_px_per_ms, this->velocity_px_per_ms, scrolled_by)){
 		using std::signbit;
-		if(signbit(prev) != signbit(cur) || scrolled == 0){
+		if(signbit(prev) != signbit(cur) || scrolled_px == 0){
 			cur = ruis::real(0);
 		}
 	}
 
-	if(this->velocity.is_zero()){
+	if(this->velocity_px_per_ms.is_zero()){
 		this->context.get().updater.get().stop(*this);
+		this->cur_state = state::idle;
 	}
 }
 
