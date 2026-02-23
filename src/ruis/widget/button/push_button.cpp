@@ -55,7 +55,10 @@ event_status push_button::on_mouse_button(const mouse_button_event& e)
 	} else {
 		if (this->is_pressed()) {
 			if (this->pointer_id == e.pointer_id) {
-				// check that released the same pointer which has pressed the button before
+				// released the same pointer which has pressed the button before
+
+				std::cout << "push_button: released" << std::endl;
+
 				this->set_pressed(false);
 			}
 		}
@@ -66,7 +69,7 @@ event_status push_button::on_mouse_button(const mouse_button_event& e)
 
 void push_button::on_hovered_change(unsigned pointer_id)
 {
-	//	TRACE(<< "push_button::on_hover_change(): enter" << std::endl)
+	std::cout << "push_button::on_hover_change(): this->is_hovered(" << pointer_id << ") = " << this->is_hovered(pointer_id) << std::endl;
 
 	if (!this->is_hovered(pointer_id)) {
 		if (this->is_pressed() && this->pointer_id == pointer_id) {

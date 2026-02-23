@@ -41,7 +41,8 @@ class flickable :
 		idle,
 		within_scroll_threshold,
 		not_scrolling,
-		scrolling
+		dragging,
+		inertial_scrolling
 	} cur_state = state::idle;
 
 	vec2 prev_touch_point;
@@ -61,6 +62,8 @@ class flickable :
 	vec2 calculate_touch_velocity();
 
 	ruis::vec2 calculate_touch_velocity_for_at_least_3_points_using_ols_method();
+
+
 
 public:
 	event_status on_mouse_button(const mouse_button_event& event) override;

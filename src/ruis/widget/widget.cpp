@@ -442,10 +442,10 @@ void widget::set_hovered(bool is_hovered, unsigned pointer_id)
 	//	TRACE(<< "widget::setHovered(): isHovered = " << isHovered << " this->name() = " << this->name() << std::endl)
 
 	if (is_hovered) {
-		ASSERT(!this->is_hovered(pointer_id))
+		utki::assert([&](){return !this->is_hovered(pointer_id);}, SL);
 		this->hovered.insert(pointer_id);
 	} else {
-		ASSERT(this->is_hovered(pointer_id))
+		utki::assert([&](){return this->is_hovered(pointer_id);}, SL);
 		this->hovered.erase(pointer_id);
 	}
 

@@ -83,9 +83,8 @@ void scroll_area::clamp_scroll_pos()
 
 	utki::assert(this->invisible_dims.is_positive_or_zero(), SL);
 
-	std::cout << "scroll_area::clamp_scroll_pos(): invisible_dims: " << this->invisible_dims << "\n";
-	std::cout << "scroll_area::clamp_scroll_pos(): before clamping this->cur_scroll_pos: " << this->cur_scroll_pos
-			  << "\n";
+	// std::cout << "scroll_area::clamp_scroll_pos(): invisible_dims: " << this->invisible_dims << "\n";
+	// std::cout << "scroll_area::clamp_scroll_pos(): before clamping this->cur_scroll_pos: " << this->cur_scroll_pos << "\n";
 
 	this->cur_scroll_pos =
 		max(real(0), //
@@ -97,13 +96,13 @@ void scroll_area::set_scroll_pos(const vec2& new_scroll_pos)
 {
 	using std::round;
 
-	std::cout << "sceoll_area::set_scroll_pos(): this->cur_scroll_pos: " << this->cur_scroll_pos << "\n";
+	// std::cout << "sceoll_area::set_scroll_pos(): this->cur_scroll_pos: " << this->cur_scroll_pos << "\n";
 
 	this->cur_scroll_pos = round(new_scroll_pos);
 
 	this->clamp_scroll_pos();
 
-	std::cout << "sceoll_area::set_scroll_pos(): after clamping this->cur_scroll_pos: " << this->cur_scroll_pos << "\n";
+	// std::cout << "sceoll_area::set_scroll_pos(): after clamping this->cur_scroll_pos: " << this->cur_scroll_pos << "\n";
 
 	this->update_scroll_factor();
 

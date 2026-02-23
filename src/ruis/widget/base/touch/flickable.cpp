@@ -50,8 +50,8 @@ ruis::event_status flickable::on_mouse_button(const mouse_button_event& event)
 				utki::assert(event.action == button_action::press, SL);
 
 				this->push_touch_move_to_history({.position = event.pos, .timestamp_ms = utki::get_ticks_ms()});
-				auto vel = this->calculate_touch_velocity();
-				std::cout << "touch press, vel = " << vel << std::endl;
+
+				// std::cout << "touch press, vel = " << this->calculate_touch_velocity() << std::endl;
 
 				this->cur_state = state::within_scroll_threshold;
 				this->prev_touch_point = event.pos;
@@ -69,14 +69,13 @@ ruis::event_status flickable::on_mouse_button(const mouse_button_event& event)
 				utki::assert(event.action == button_action::release, SL);
 				this->cur_state = state::idle;
 
-				auto vel = this->calculate_touch_velocity();
-				std::cout << "touch release, vel = " << vel << std::endl;
+				// std::cout << "touch release, vel = " << this->calculate_touch_velocity() << std::endl;
 
 				this->touch_history.clear();
 
 				return this->flickable_on_mouse_button(event);
 			}
-		case state::scrolling:
+		case state::dragging:
 			{
 				utki::assert(event.action == button_action::release, SL);
 				this->cur_state = state::idle;
@@ -107,8 +106,7 @@ ruis::event_status flickable::on_mouse_move(const mouse_move_event& event)
 
 	this->push_touch_move_to_history({.position = event.pos, .timestamp_ms = utki::get_ticks_ms()});
 
-	auto vel = this->calculate_touch_velocity();
-	std::cout << "touch move, vel = " << vel << std::endl;
+	// std::cout << "touch move, vel = " << this->calculate_touch_velocity() << std::endl;
 
 	switch (this->cur_state) {
 		default:
@@ -132,7 +130,7 @@ ruis::event_status flickable::on_mouse_move(const mouse_move_event& event)
 				// std::cout << "mouse move: within scroll threshold, delta: " << delta << ", abs_delta: " << abs_delta << "\n";
 
 				if (abs_delta.x() > this->scroll_threshold_px || abs_delta.y() > this->scroll_threshold_px) {
-					this->cur_state = state::scrolling;
+					this->cur_state = state::dragging;
 
 					// std::cout << "scrolling\n";
 
@@ -140,21 +138,28 @@ ruis::event_status flickable::on_mouse_move(const mouse_move_event& event)
 
 					// send mouse button up event out of widget area to cancel any ongoing interactions
 					{
-						ruis::mouse_button_event mbe{
-							button_action::release,
-							[]() {
-								using std::numeric_limits;
+						auto pos = []() {
+							using std::numeric_limits;
 
-								if constexpr (numeric_limits<ruis::real>::has_infinity) {
-									return -numeric_limits<ruis::real>::infinity();
-								} else {
-									return numeric_limits<ruis::real>::min();
-								}
-							}(),
-							mouse_button::left,
-							this->cur_pointer_id
-						};
-						this->flickable_on_mouse_button(mbe);
+							if constexpr (numeric_limits<ruis::real>::has_infinity) {
+								return -numeric_limits<ruis::real>::infinity();
+							} else {
+								return numeric_limits<ruis::real>::min();
+							}
+						}();
+
+						// move the cursor out of any widget to update hovered states
+						this->flickable_on_mouse_move({
+							.pos = pos,
+							.pointer_id = this->cur_pointer_id
+						});
+
+						this->flickable_on_mouse_button({
+							.action = button_action::release,
+							.pos = pos,
+							.button = mouse_button::left,
+							.pointer_id = this->cur_pointer_id
+						});
 					}
 
 					this->flickable_scroll_by(-delta);
@@ -164,7 +169,7 @@ ruis::event_status flickable::on_mouse_move(const mouse_move_event& event)
 		case state::not_scrolling:
 			// std::cout << "mouse move: not scrolling\n";
 			return this->flickable_on_mouse_move(event);
-		case state::scrolling:
+		case state::dragging:
 			{
 				vec2 delta = event.pos - this->prev_touch_point;
 				// std::cout << "mouse move: scrolling, delta: " << delta << "\n";
