@@ -52,17 +52,17 @@ ruis::vec2 aspect_ratio_proxy::measure(const ruis::vec2& quotum) const
 	}
 
 	if (quotum.x() < 0) {
-		return ruis::vec2(
+		return {
 			quotum.y() * this->params.x_above_y, //
 			quotum.y()
-		);
+		};
 	}
 
 	if (quotum.y() < 0) {
-		return ruis::vec2(
+		return {
 			quotum.x(), //
 			quotum.x() / this->params.x_above_y
-		);
+		};
 	}
 
 	return quotum;
