@@ -26,6 +26,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis::touch;
 
+flickable::flickable(utki::shared_ref<ruis::context> context) :
+	friction(context.get().units.dots_per_pp() * 0.005)
+{}
+
 ruis::event_status flickable::on_mouse_button(const mouse_button_event& event)
 {
 	if (event.button != mouse_button::left) {
@@ -161,17 +165,14 @@ ruis::event_status flickable::on_mouse_move(const mouse_move_event& event)
 						}();
 
 						// move the cursor out of any widget to update hovered states
-						this->flickable_on_mouse_move({
-							.pos = pos,
-							.pointer_id = this->cur_pointer_id
-						});
+						this->flickable_on_mouse_move({.pos = pos, .pointer_id = this->cur_pointer_id});
 
-						this->flickable_on_mouse_button({
-							.action = button_action::release,
-							.pos = pos,
-							.button = mouse_button::left,
-							.pointer_id = this->cur_pointer_id
-						});
+						this->flickable_on_mouse_button(
+							{.action = button_action::release,
+							 .pos = pos,
+							 .button = mouse_button::left,
+							 .pointer_id = this->cur_pointer_id}
+						);
 					}
 
 					this->flickable_scroll_by(-delta);
@@ -199,7 +200,9 @@ void flickable::update(uint32_t dt_ms)
 	auto scrolled_by = this->flickable_scroll_by(-this->velocity_px_per_ms * ruis::real(dt_ms));
 
 	using std::copysign;
-	auto velocity_sign = this->velocity_px_per_ms.comp_op([](const auto& e){return copysign(real(1), e);});
+	auto velocity_sign = this->velocity_px_per_ms.comp_op([](const auto& e) {
+		return copysign(real(1), e);
+	});
 
 	auto prev_velocity_px_per_ms = this->velocity_px_per_ms;
 
@@ -210,14 +213,16 @@ void flickable::update(uint32_t dt_ms)
 
 	// std::cout << "this->velocity_px_per_ms = " << this->velocity_px_per_ms << std::endl;
 
-	for(auto [prev, cur, scrolled_px] : utki::views::zip(prev_velocity_px_per_ms, this->velocity_px_per_ms, scrolled_by)){
+	for (auto [prev, cur, scrolled_px] :
+		 utki::views::zip(prev_velocity_px_per_ms, this->velocity_px_per_ms, scrolled_by))
+	{
 		using std::signbit;
-		if(signbit(prev) != signbit(cur) || scrolled_px == 0){
+		if (signbit(prev) != signbit(cur) || scrolled_px == 0) {
 			cur = ruis::real(0);
 		}
 	}
 
-	if(this->velocity_px_per_ms.is_zero()){
+	if (this->velocity_px_per_ms.is_zero()) {
 		this->context.get().updater.get().stop(*this);
 		this->cur_state = state::idle;
 	}

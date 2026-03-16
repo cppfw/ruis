@@ -38,8 +38,9 @@ scroll_area::scroll_area(
 		this->context,
 		{},
 		std::move(children)
-	)
-// clang-format on
+	),
+	// clang-format on
+	flickable(this->context)
 {}
 
 ruis::event_status scroll_area::on_mouse_button(const mouse_button_event& event)

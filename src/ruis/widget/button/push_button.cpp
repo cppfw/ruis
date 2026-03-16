@@ -57,7 +57,7 @@ event_status push_button::on_mouse_button(const mouse_button_event& e)
 			if (this->pointer_id == e.pointer_id) {
 				// released the same pointer which has pressed the button before
 
-				std::cout << "push_button: released" << std::endl;
+				// std::cout << "push_button: released" << std::endl;
 
 				this->set_pressed(false);
 			}

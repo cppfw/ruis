@@ -263,7 +263,12 @@ void container::on_hovered_change(unsigned pointer_id)
 	}
 
 	// the container has just became unhovered
-	utki::assert([&](){return !this->is_hovered(pointer_id);}, SL);
+	utki::assert(
+		[&]() {
+			return !this->is_hovered(pointer_id);
+		},
+		SL
+	);
 
 	// unhover all the children
 	blocked_flag_guard blocked_guard(this->is_blocked);
