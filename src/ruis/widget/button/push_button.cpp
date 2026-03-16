@@ -69,7 +69,7 @@ event_status push_button::on_mouse_button(const mouse_button_event& e)
 
 void push_button::on_hovered_change(unsigned pointer_id)
 {
-	std::cout << "push_button::on_hover_change(): this->is_hovered(" << pointer_id << ") = " << this->is_hovered(pointer_id) << std::endl;
+	// std::cout << "push_button::on_hover_change(): this->is_hovered(" << pointer_id << ") = " << this->is_hovered(pointer_id) << std::endl;
 
 	if (!this->is_hovered(pointer_id)) {
 		if (this->is_pressed() && this->pointer_id == pointer_id) {
