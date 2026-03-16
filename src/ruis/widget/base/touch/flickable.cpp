@@ -27,7 +27,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace ruis::touch;
 
 flickable::flickable(utki::shared_ref<ruis::context> context) :
-	friction(context.get().units.dots_per_pp() * 0.005)
+	friction(context.get().units.dots_per_pp() * ruis::real(0.005)) // TODO: magic constant
 {}
 
 ruis::event_status flickable::on_mouse_button(const mouse_button_event& event)
