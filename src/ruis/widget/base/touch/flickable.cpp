@@ -310,7 +310,7 @@ ruis::vec2 flickable::calculate_touch_velocity_for_at_least_3_points_using_ols_m
 	//
 	// The touch velocity is effectively v = dy/dt = 2*a*t + b
 	//
-	// If we bias t foe each point to the last point, i.e. last point will be at t=0 and previous
+	// If we bias t for each point to the last point timestamp, i.e. last point will be at t=0 and previous
 	// points will be at some negative times, then v(0) = b.
 	// Effecively the touch velocity is the b coefficient.
 
