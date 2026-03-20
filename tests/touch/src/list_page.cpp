@@ -21,13 +21,61 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "list_page.hpp"
 
+#include <ruis/widget/group/touch/list.hpp>
+#include <ruis/widget/label/text.hpp>
+
+#include "style.hpp"
+
+using namespace std::string_literals;
+
 namespace {
-class list_page : public ruis::page
+class list_page_provider : public ruis::list_provider
+{
+public:
+	list_page_provider(utki::shared_ref<ruis::context> context) :
+		ruis::list_provider(std::move(context))
+	{}
+
+	size_t count() const noexcept override
+	{
+		return 100;
+	}
+
+	utki::shared_ref<ruis::widget> get_widget(size_t index) override
+	{
+		return m::text(this->context, {}, U"Hello world!"s);
+	}
+};
+} // namespace
+
+namespace {
+class list_page :
+	public ruis::page, //
+	private ruis::touch::list
 {
 public:
 	list_page(utki::shared_ref<ruis::context> c) :
-		ruis::widget(std::move(c), {}, {}),
-		ruis::page(this->context, {})
+		// clang-format off
+		ruis::widget(std::move(c),
+			{},
+			{
+				.clip = true
+			}
+		),
+		// clang-format on
+		ruis::page(this->context, {}),
+		// clang-format off
+		ruis::touch::list(this->context,
+			{
+				.oriented_params{
+					.vertical = true
+				},
+				.list_params{
+					.provider = utki::make_shared<list_page_provider>(this->context)
+				}
+			}
+		)
+	// clang-format on
 	{}
 };
 

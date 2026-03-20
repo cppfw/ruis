@@ -23,6 +23,16 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis::touch;
 
+list::list(utki::shared_ref<ruis::context> context, all_parameters params) :
+	widget(
+		std::move(context), //
+		std::move(params.layout_params),
+		std::move(params.widget_params)
+	),
+	ruis::list(this->context, std::move(params)),
+    flickable(this->context)
+{}
+
 ruis::event_status list::on_mouse_button(const mouse_button_event& event)
 {
 	return this->flickable::on_mouse_button(event);
