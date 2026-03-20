@@ -293,7 +293,7 @@ void list::update_children_list()
 
 	// remove rest
 	if (iter_index < iter_end_index) {
-		ASSERT(iter != this->children().end())
+		utki::assert(iter != this->children().end(), SL);
 		for (; iter != this->children().end(); ++iter_index) {
 			iter = this->erase(iter);
 		}
@@ -355,6 +355,9 @@ void list::notify_scroll_pos_changed(size_t old_index, real old_offset)
 
 real list::scroll_by(real delta)
 {
+	using std::round;
+	delta = round(delta);
+
 	size_t old_index = this->pos_index;
 	real old_offset = this->pos_offset;
 
@@ -364,6 +367,7 @@ real list::scroll_by(real delta)
 	real scrolled_by = 0;
 
 	if (delta >= 0) {
+		// go through visible widgets first
 		for (auto& c : this->children()) {
 			auto wd = c.get().rect().d[long_index] - this->pos_offset;
 			if (wd > delta) {
@@ -379,6 +383,7 @@ real list::scroll_by(real delta)
 			++this->pos_index;
 		}
 
+		// if there is still distance to scroll, then go through the rest of the widgets
 		if (delta > 0) {
 			utki::assert(
 				this->pos_index > this->added_index + this->children().size(),
@@ -438,9 +443,14 @@ real list::scroll_by(real delta)
 		}
 	}
 
+	// this will update the scrolling position to the bottom of the list if we have scrolled past the end of the list
 	this->update_children_list();
 
+	// TODO: detect the situation when we have scrolled past the list's end and update the scrolled_by value accordingly
+
 	this->notify_scroll_pos_changed(old_index, old_offset);
+
+	std::cout << "list: scrolled_by = " << scrolled_by << std::endl;
 
 	return scrolled_by;
 }
