@@ -22,7 +22,11 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "list_page.hpp"
 
 #include <ruis/widget/group/touch/list.hpp>
+#include <ruis/widget/label/gap.hpp>
+#include <ruis/widget/label/padding.hpp>
 #include <ruis/widget/label/text.hpp>
+#include <utki/string.hpp>
+#include <utki/unicode.hpp>
 
 #include "style.hpp"
 
@@ -43,7 +47,65 @@ public:
 
 	utki::shared_ref<ruis::widget> get_widget(size_t index) override
 	{
-		return m::text(this->context, {}, U"Hello world!"s);
+		// clang-format off
+		auto button = m::push_button(this->context,
+			{
+				.layout_params{
+					.dims = {ruis::dim::min, ruis::length::make_pp(30)}
+				}
+			},
+			{
+				m::text(this->context, {}, U"Button"s)
+			}
+		);
+		// clang-format on
+
+		button.get().click_handler = [index](auto& btn) {
+			std::cout << "Item #" << index << " button cliecked" << std::endl;
+		};
+
+		// clang-format off
+		return m::column(this->context,
+			{
+				.layout_params{
+					.dims = {ruis::dim::fill, ruis::dim::min}
+				}
+			},
+			{
+				m::padding(this->context,
+					{
+						.container_params{
+							.layout = ruis::layout::row
+						},
+						.padding_params{
+							.borders = {ruis::length::make_pp(3)}
+						}
+					},
+					{
+						m::text(this->context, {}, utki::to_utf32(utki::cat("Item #", index))),
+						m::gap(this->context,
+							{
+								.layout_params{
+									.dims = {ruis::length::make_pp(5), ruis::dim::min}
+								}
+							}
+						),
+						std::move(button)
+					}
+				),
+				m::gap(this->context,
+					{
+						.layout_params{
+							.dims = {ruis::dim::fill, ruis::length::make_pp(1)}
+						},
+						.color_params{
+							.color = 0xff808080
+						}
+					}
+				)
+			}
+		);
+		// clang-format on
 	}
 };
 } // namespace

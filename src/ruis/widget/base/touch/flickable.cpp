@@ -27,7 +27,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace ruis::touch;
 
 namespace {
-constexpr auto friction_coefficient = 0.005;
+constexpr auto friction_coefficient = 0.001;
 } // namespace
 
 flickable::flickable(utki::shared_ref<ruis::context> context) :

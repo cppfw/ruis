@@ -30,7 +30,7 @@ list::list(utki::shared_ref<ruis::context> context, all_parameters params) :
 		std::move(params.widget_params)
 	),
 	ruis::list(this->context, std::move(params)),
-    flickable(this->context)
+	flickable(this->context)
 {}
 
 ruis::event_status list::on_mouse_button(const mouse_button_event& event)

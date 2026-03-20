@@ -36,7 +36,7 @@ class padding :
 {
 public:
 	struct parameters {
-		sides<length> borders;
+		sides<length> borders; // TODO: make sides<styled<length>>
 	};
 
 private:
