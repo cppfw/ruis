@@ -22,19 +22,18 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #pragma once
 
 #include "../../base/touch/flickable.hpp"
-#include "../scroll_area.hpp"
+#include "../list.hpp"
 
 namespace ruis::touch {
 
-class scroll_area :
-	public ruis::scroll_area, //
-	private touch::flickable
+class list :
+	public ruis::list, //
+	private flickable
 {
 public:
-	scroll_area(
+	list(
 		utki::shared_ref<ruis::context> context, //
-		scroll_area::all_parameters params,
-		widget_list children
+		all_parameters params
 	);
 
 	event_status on_mouse_button(const mouse_button_event& event) override;
@@ -47,7 +46,7 @@ private:
 };
 
 namespace make {
-// TDOO: add scroll_area() factory
+// TODO: add list() factory
 } // namespace make
 
 } // namespace ruis::touch

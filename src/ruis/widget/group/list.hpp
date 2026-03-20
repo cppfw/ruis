@@ -126,8 +126,9 @@ public:
 	/**
 	 * @brief Scroll the list by given number of pixels.
 	 * @param delta - number of pixels to scroll, can be positive or negative.
+	 * @return number of pixels actually scrolled by.
 	 */
-	void scroll_by(real delta);
+	real scroll_by(real delta);
 
 	/**
 	 * @brief Model change signal.
@@ -151,6 +152,10 @@ public:
 	{
 		return this->children();
 	}
+
+protected:
+	using container::on_mouse_move;
+	using container::on_mouse_button;
 
 private:
 	void update_children_list();

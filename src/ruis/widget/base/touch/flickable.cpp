@@ -178,8 +178,6 @@ ruis::event_status flickable::on_mouse_move(const mouse_move_event& event)
 							 .pointer_id = this->cur_pointer_id}
 						);
 					}
-
-					this->flickable_scroll_by(-delta);
 				}
 			}
 			return event_status::consumed;

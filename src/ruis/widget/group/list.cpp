@@ -353,14 +353,15 @@ void list::notify_scroll_pos_changed(size_t old_index, real old_offset)
 	}
 }
 
-void list::scroll_by(real delta)
+real list::scroll_by(real delta)
 {
 	size_t old_index = this->pos_index;
 	real old_offset = this->pos_offset;
 
+	// list's longitudinal direction index
 	unsigned long_index = this->get_long_index();
 
-	//	TRACE(<< "delta = " << delta << std::endl)
+	real scrolled_by = 0;
 
 	if (delta >= 0) {
 		for (auto& c : this->children()) {
@@ -368,29 +369,39 @@ void list::scroll_by(real delta)
 			if (wd > delta) {
 				this->pos_offset += delta;
 				delta -= wd;
+				scrolled_by += delta;
 				break;
 			}
 
 			delta -= wd;
+			scrolled_by += wd;
 			this->pos_offset = 0;
 			++this->pos_index;
 		}
 
 		if (delta > 0) {
-			ASSERT(this->pos_index > this->added_index + this->children().size(), [&](auto& o) {
-				o << "this->pos_index = " << this->pos_index << " this->added_index = " << this->added_index
-				  << " this->children().size() = " << this->children().size();
-			})
+			utki::assert(
+				this->pos_index > this->added_index + this->children().size(),
+				[&](auto& o) {
+					o << "this->pos_index = " << this->pos_index << " this->added_index = " << this->added_index
+					  << " this->children().size() = " << this->children().size();
+				},
+				SL
+			);
 			for (; this->pos_index < this->first_tail_item_index;) {
 				auto w = this->get_provider().get_widget(this->pos_index);
 				vec2 d = dims_for_widget(w.get(), this->rect().d);
-				this->push_back(w); // this is just optimization, to avoid creating same widget twice
+
+				// this is just optimization, to avoid creating same widget twice
+				this->push_back(std::move(w));
+
 				if (d[long_index] > delta) {
 					this->pos_offset = delta;
 					break;
 				}
 				delta -= d[long_index];
-				ASSERT(this->pos_offset == 0)
+				scrolled_by += d[long_index];
+				utki::assert(this->pos_offset == 0, SL);
 				++this->pos_index;
 			}
 		}
@@ -398,25 +409,31 @@ void list::scroll_by(real delta)
 		delta = -delta;
 		if (delta <= this->pos_offset) {
 			this->pos_offset -= delta;
+			scrolled_by -= delta;
 		} else {
-			ASSERT(this->added_index == this->pos_index)
+			utki::assert(this->added_index == this->pos_index, SL);
 			delta -= this->pos_offset;
+			scrolled_by -= this->pos_offset;
 			this->pos_offset = 0;
 			for (; this->pos_index > 0;) {
-				ASSERT(this->added_index == this->pos_index)
+				utki::assert(this->added_index == this->pos_index, SL);
 				--this->pos_index;
 				auto w = this->get_provider().get_widget(this->pos_index);
 				vec2 d = dims_for_widget(w.get(), this->rect().d);
+
+				// this is just optimization, to avoid creating same widget twice
 				this->insert(
-					w,
+					std::move(w), //
 					this->children().begin()
-				); // this is just optimization, to avoid creating same widget twice
+				);
+
 				--this->added_index;
 				if (d[long_index] > delta) {
 					this->pos_offset = d[long_index] - delta;
 					break;
 				}
 				delta -= d[long_index];
+				scrolled_by -= d[long_index];
 			}
 		}
 	}
@@ -424,6 +441,8 @@ void list::scroll_by(real delta)
 	this->update_children_list();
 
 	this->notify_scroll_pos_changed(old_index, old_offset);
+
+	return scrolled_by;
 }
 
 ruis::vec2 list::measure(const ruis::vec2& quotum) const
