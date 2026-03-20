@@ -46,8 +46,8 @@ ruis::event_status list::flickable_on_mouse_move(const mouse_move_event& event)
 ruis::vec2 list::flickable_scroll_by(const vec2& delta)
 {
 	if (this->is_vertical()) {
-		return vec2(0, this->scroll_by(delta.y()));
+		return {0, this->scroll_by(delta.y())};
 	} else {
-		return vec2(this->scroll_by(delta.x()), 0);
+		return {this->scroll_by(delta.x()), 0};
 	}
 }
