@@ -63,7 +63,8 @@ public:
 				utki::shared_ref<ruis::context>, //
 				std::vector<utki::shared_ref<page>>
 			) //
-		> book_factory;
+			>
+			book_factory;
 
 		std::function< //
 			utki::shared_ref<ruis::choice_group>(

@@ -85,7 +85,6 @@ ruis::event_status flickable::on_mouse_button(const mouse_button_event& event)
 			}
 		case state::dragging:
 			{
-				utki::assert(false, SL);
 				utki::assert(event.action == button_action::release, SL);
 				this->cur_state = state::inertial_scrolling;
 
@@ -114,14 +113,14 @@ ruis::event_status flickable::on_mouse_button(const mouse_button_event& event)
 
 ruis::event_status flickable::on_mouse_move(const mouse_move_event& event)
 {
-	// Single touch mode.
-	if (this->cur_state != state::idle) {
-		if (event.pointer_id != this->cur_pointer_id) {
-			return this->flickable_on_mouse_move(event);
-		}
-	} else {
+	if (this->cur_state == state::idle || this->cur_state == state::inertial_scrolling) {
 		// no touch active, ignore mouse move events
 		return ruis::event_status::propagate;
+	}
+
+	// Single touch mode.
+	if (event.pointer_id != this->cur_pointer_id) {
+		return this->flickable_on_mouse_move(event);
 	}
 
 	this->push_touch_move_to_history({.position = event.pos, .timestamp_ms = utki::get_ticks_ms()});
@@ -129,11 +128,21 @@ ruis::event_status flickable::on_mouse_move(const mouse_move_event& event)
 	// std::cout << "touch move, vel = " << this->calculate_touch_velocity() << std::endl;
 
 	switch (this->cur_state) {
-		default:
+		case state::inertial_scrolling:
+			// check for inertial_scrolling is done before the switch()
 			[[fallthrough]];
 		case state::idle:
-			utki::assert(false, SL);
-			return this->flickable_on_mouse_move(event);
+			// check for idle is done before the switch()
+			[[fallthrough]];
+		default:
+			utki::assert(
+				false,
+				[&](auto& o) {
+					o << "this->cur_state = " << unsigned(this->cur_state);
+				},
+				SL
+			);
+			return ruis::event_status::propagate;
 		case state::within_scroll_threshold:
 			{
 				if (this->flickable_on_mouse_move(event) == event_status::consumed) {
