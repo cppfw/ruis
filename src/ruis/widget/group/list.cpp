@@ -366,16 +366,23 @@ real list::scroll_by(real delta)
 
 	real scrolled_by = 0;
 
+	std::cout << "delta = " << delta << std::endl;
+
 	if (delta >= 0) {
+		std::cout << "delta >= 0" << std::endl;
+
 		// go through visible widgets first
 		for (auto& c : this->children()) {
 			auto wd = c.get().rect().d[long_index] - this->pos_offset;
 			if (wd > delta) {
+				std::cout << "wd > delta, delta = " << delta << ", wd = " << wd << std::endl;
 				this->pos_offset += delta;
 				delta -= wd;
 				scrolled_by += delta;
 				break;
 			}
+
+			std::cout << "wd <= delta, delta = " << delta << ", wd = " << wd << std::endl;
 
 			delta -= wd;
 			scrolled_by += wd;
@@ -385,6 +392,7 @@ real list::scroll_by(real delta)
 
 		// if there is still distance to scroll, then go through the rest of the widgets
 		if (delta > 0) {
+			std::cout << "delta > 0: delta = " << delta << std::endl;
 			utki::assert(
 				this->pos_index > this->added_index + this->children().size(),
 				[&](auto& o) {
@@ -411,8 +419,10 @@ real list::scroll_by(real delta)
 			}
 		}
 	} else {
+		utki::assert(delta < 0, SL);
 		delta = -delta;
 		if (delta <= this->pos_offset) {
+			std::cout << "delta <= this->pos_offset" << std::endl;
 			this->pos_offset -= delta;
 			scrolled_by -= delta;
 		} else {
@@ -433,10 +443,13 @@ real list::scroll_by(real delta)
 				);
 
 				--this->added_index;
-				if (d[long_index] > delta) {
+				if (delta <= d[long_index]) {
+					std::cout << "delta <= d[long_index]: delta = " << delta << std::endl;
 					this->pos_offset = d[long_index] - delta;
+					scrolled_by -= delta;
 					break;
 				}
+				std::cout << "delta > d[long_index]: delta = " << delta << std::endl;
 				delta -= d[long_index];
 				scrolled_by -= d[long_index];
 			}
