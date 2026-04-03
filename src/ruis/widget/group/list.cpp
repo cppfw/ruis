@@ -376,7 +376,7 @@ real list::scroll_by(real delta)
 
 	// TODO: added for now as delta of 0 causes unexpected scrolled_by valu returned.
 	//       figure out if this can be handled as delta >= 0 condition.
-	if(delta == 0){
+	if (delta == 0) {
 		return scrolled_by;
 	}
 
@@ -389,6 +389,8 @@ real list::scroll_by(real delta)
 			// because previous one which was first visible is aready scrolled away upwards.
 			auto dim = c.get().rect().d[long_index] - this->pos_offset;
 			if (delta <= dim) {
+				// We can scroll the whole delta and the same widget remains the first visible one,
+				// only its position offset changes.
 				std::cout << "delta <= dim, delta = " << delta << ", dim = " << dim << std::endl;
 				this->pos_offset += delta;
 				scrolled_by += delta;
@@ -448,7 +450,12 @@ real list::scroll_by(real delta)
 			for (; this->pos_index > 0;) {
 				utki::assert(this->added_index == this->pos_index, SL);
 				--this->pos_index;
-				utki::assert([&]() -> bool { return this->pos_index < this->get_provider().count(); }, SL);
+				utki::assert(
+					[&]() -> bool {
+						return this->pos_index < this->get_provider().count();
+					},
+					SL
+				);
 				auto w = this->get_provider().get_widget(this->pos_index);
 				vec2 d = dims_for_widget(w.get(), this->rect().d);
 				auto long_dim = d[long_index];
