@@ -44,13 +44,16 @@ class list :
 	// index of the first item added to container as child
 	size_t added_index = size_t(-1);
 
-	size_t pos_index = 0; // index of the first visible item
+	// index of the first visible item
+	size_t pos_index = 0;
 
-	// offset in pixels of the first visible item.
-	// the value is positive, tough the item is biased towards negative coordinate values.
+	// Offset in pixels of the first visible item.
+	// The value is positive, tough the item is biased towards negative coordinate values.
 	real pos_offset = real(0);
 
-	size_t num_tail_items = 0; // zero means that number of tail items has to be recomputed
+	// zero means that number of tail items has to be recomputed
+	size_t num_tail_items = 0;
+
 	size_t first_tail_item_index = 0;
 	real first_tail_item_offset = real(0);
 	real first_tail_item_dim = real(0);

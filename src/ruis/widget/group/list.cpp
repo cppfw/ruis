@@ -118,11 +118,11 @@ real list::get_scroll_factor() const noexcept
 		return 0;
 	}
 
-	ASSERT(this->get_provider().count() >= this->num_tail_items)
+	utki::assert(this->get_provider().count() >= this->num_tail_items, SL);
 
-	size_t length = this->get_provider().count() - this->num_tail_items;
+	size_t num_items_without_tail = this->get_provider().count() - this->num_tail_items;
 
-	if (length == 0) {
+	if (num_items_without_tail == 0) {
 		return 0;
 	}
 
@@ -130,9 +130,9 @@ real list::get_scroll_factor() const noexcept
 		return 0;
 	}
 
-	auto index = this->get_long_index();
+	auto long_index = this->get_long_index();
 
-	real list_dim = this->rect().d[index];
+	real list_dim = this->rect().d[long_index];
 
 	// calculate average item dimension from visible items
 	auto average_item_dim = list_dim / this->calc_num_visible_items();
@@ -141,9 +141,10 @@ real list::get_scroll_factor() const noexcept
 		return 0;
 	}
 
-	return (real(real(this->pos_index) + this->pos_offset / this->children().front().get().rect().d[index]) *
+	return (real(real(this->pos_index) + this->pos_offset / this->children().front().get().rect().d[long_index]) *
 			average_item_dim) /
-		(real(real(length) + this->first_tail_item_offset / this->first_tail_item_dim) * average_item_dim);
+		(real(real(num_items_without_tail) + this->first_tail_item_offset / this->first_tail_item_dim) *
+		 average_item_dim);
 }
 
 void list::set_scroll_factor(
@@ -274,20 +275,25 @@ void list::update_children_list()
 	const size_t iter_end_index = iter_index + this->children().size();
 	size_t index = this->pos_index;
 	for (bool is_last = false; index < this->get_provider().count() && !is_last;) {
-		// std::shared_ptr<widget> w;
-		bool is_added = false;
+		bool is_already_added = false;
 		auto w = [&]() {
 			if (iter_index <= index && index < iter_end_index && iter != this->children().end()) {
 				++iter_index;
-				is_added = true;
+				is_already_added = true;
 				return *iter;
 			} else {
-				is_added = false;
+				is_already_added = false;
 				return this->get_provider().get_widget(index);
 			}
 		}();
 
-		is_last = this->arrange_widget(w, pos, is_added, index, iter);
+		is_last = this->arrange_widget(
+			w, //
+			pos,
+			is_already_added,
+			index,
+			iter
+		);
 		++index;
 	}
 
