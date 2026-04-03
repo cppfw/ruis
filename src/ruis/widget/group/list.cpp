@@ -374,24 +374,32 @@ real list::scroll_by(real delta)
 
 	std::cout << "delta = " << delta << std::endl;
 
-	if (delta >= 0) {
-		std::cout << "delta >= 0" << std::endl;
+	// TODO: added for now as delta of 0 causes unexpected scrolled_by valu returned.
+	//       figure out if this can be handled as delta >= 0 condition.
+	if(delta == 0){
+		return scrolled_by;
+	}
+
+	if (delta > 0) {
+		std::cout << "delta > 0" << std::endl;
 
 		// go through visible widgets first
 		for (auto& c : this->children()) {
-			auto wd = c.get().rect().d[long_index] - this->pos_offset;
-			if (wd > delta) {
-				std::cout << "wd > delta, delta = " << delta << ", wd = " << wd << std::endl;
+			// Since we are scrolling 'up', assume we are dealing with the first visible widget on each iteration,
+			// because previous one which was first visible is aready scrolled away upwards.
+			auto dim = c.get().rect().d[long_index] - this->pos_offset;
+			if (delta <= dim) {
+				std::cout << "delta <= dim, delta = " << delta << ", dim = " << dim << std::endl;
 				this->pos_offset += delta;
-				delta -= wd;
 				scrolled_by += delta;
+				delta = 0;
 				break;
 			}
 
-			std::cout << "wd <= delta, delta = " << delta << ", wd = " << wd << std::endl;
+			std::cout << "dim <= delta, delta = " << delta << ", dim = " << dim << std::endl;
 
-			delta -= wd;
-			scrolled_by += wd;
+			delta -= dim;
+			scrolled_by += dim;
 			this->pos_offset = 0;
 			++this->pos_index;
 		}
@@ -436,28 +444,32 @@ real list::scroll_by(real delta)
 			delta -= this->pos_offset;
 			scrolled_by -= this->pos_offset;
 			this->pos_offset = 0;
+
 			for (; this->pos_index > 0;) {
 				utki::assert(this->added_index == this->pos_index, SL);
 				--this->pos_index;
+				utki::assert([&]() -> bool { return this->pos_index < this->get_provider().count(); }, SL);
 				auto w = this->get_provider().get_widget(this->pos_index);
 				vec2 d = dims_for_widget(w.get(), this->rect().d);
+				auto long_dim = d[long_index];
 
 				// this is just optimization, to avoid creating same widget twice
 				this->insert(
 					std::move(w), //
 					this->children().begin()
 				);
-
+				utki::assert(this->added_index > 0, SL);
 				--this->added_index;
-				if (delta <= d[long_index]) {
-					std::cout << "delta <= d[long_index]: delta = " << delta << std::endl;
-					this->pos_offset = d[long_index] - delta;
+
+				if (delta <= long_dim) {
+					std::cout << "delta <= long_dim: delta = " << delta << std::endl;
+					this->pos_offset = long_dim - delta;
 					scrolled_by -= delta;
 					break;
 				}
-				std::cout << "delta > d[long_index]: delta = " << delta << std::endl;
-				delta -= d[long_index];
-				scrolled_by -= d[long_index];
+				std::cout << "delta > long_dim: delta = " << delta << std::endl;
+				delta -= long_dim;
+				scrolled_by -= long_dim;
 			}
 		}
 	}
