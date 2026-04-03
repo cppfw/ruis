@@ -398,7 +398,7 @@ real list::scroll_by(real delta)
 				break;
 			}
 
-			// delta is big enough that scrolling by it will make the first visible widget to scroll away upwards 
+			// delta is big enough that scrolling by it will make the first visible widget to scroll away upwards
 
 			std::cout << "dim <= delta, delta = " << delta << ", dim = " << dim << std::endl;
 
@@ -410,6 +410,9 @@ real list::scroll_by(real delta)
 
 		// if there is still distance to scroll, then go through the rest of the widgets
 		if (delta > 0) {
+			// We have scrolled away upwards all the previously visible widgets,
+			// so this->pos_index currently points to a widget which is not added to the container as child.
+
 			std::cout << "delta > 0: delta = " << delta << std::endl;
 			utki::assert(
 				this->pos_index > this->added_index + this->children().size(),
@@ -419,19 +422,23 @@ real list::scroll_by(real delta)
 				},
 				SL
 			);
+
 			for (; this->pos_index < this->first_tail_item_index;) {
 				auto w = this->get_provider().get_widget(this->pos_index);
-				vec2 d = dims_for_widget(w.get(), this->rect().d);
+				vec2 dims = dims_for_widget(w.get(), this->rect().d);
+				auto long_dim = dims[long_index];
 
 				// this is just optimization, to avoid creating same widget twice
 				this->push_back(std::move(w));
 
-				if (d[long_index] > delta) {
+				if (delta < long_dim) {
+					// The delta is smaller than widget's dimension, so the scroll is only within that widget.
 					this->pos_offset = delta;
+					scrolled_by += delta;
 					break;
 				}
-				delta -= d[long_index];
-				scrolled_by += d[long_index];
+				delta -= long_dim;
+				scrolled_by += long_dim;
 				utki::assert(this->pos_offset == 0, SL);
 				++this->pos_index;
 			}
