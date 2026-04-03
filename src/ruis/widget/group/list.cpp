@@ -398,6 +398,8 @@ real list::scroll_by(real delta)
 				break;
 			}
 
+			// delta is big enough that scrolling by it will make the first visible widget to scroll away upwards 
+
 			std::cout << "dim <= delta, delta = " << delta << ", dim = " << dim << std::endl;
 
 			delta -= dim;
