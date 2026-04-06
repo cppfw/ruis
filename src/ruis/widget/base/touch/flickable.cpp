@@ -209,7 +209,7 @@ void flickable::update(uint32_t dt_ms)
 	utki::assert(this->cur_state == state::inertial_scrolling, SL);
 
 	auto scrolled_by = this->flickable_scroll_by(-this->velocity_px_per_ms * ruis::real(dt_ms));
-	std::cout << "flickable::update(): scroled_by = " << scrolled_by << std::endl;
+	// std::cout << "flickable::update(): scroled_by = " << scrolled_by << std::endl;
 
 	using std::copysign;
 	auto velocity_sign = this->velocity_px_per_ms.comp_op([](const auto& e) {

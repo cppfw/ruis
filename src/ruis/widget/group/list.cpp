@@ -372,35 +372,56 @@ real list::scroll_by(real delta)
 
 	real scrolled_by = 0;
 
-	std::cout << "delta = " << delta << std::endl;
+	// std::cout << "delta = " << delta << std::endl;
 
-	// TODO: added for now as delta of 0 causes unexpected scrolled_by valu returned.
+	// TODO: added for now as delta of 0 causes unexpected scrolled_by value returned.
 	//       figure out if this can be handled as delta >= 0 condition.
 	if (delta == 0) {
 		return scrolled_by;
 	}
 
 	if (delta > 0) {
-		std::cout << "delta > 0" << std::endl;
+		// std::cout << "delta > 0" << std::endl;
 
 		// go through visible widgets first
 		for (auto& c : this->children()) {
+			utki::assert(this->pos_index <= this->first_tail_item_index, SL);
+
+			// if we are already at the end of the list, within the last item
+			if (this->pos_index == this->first_tail_item_index) {
+				// std::cout << "1111111111111111111111111111111111" << std::endl;
+				utki::assert(this->pos_offset <= this->first_tail_item_offset, SL);
+				auto max_scroll_till_end = this->first_tail_item_offset - this->pos_offset;
+				using std::min;
+				delta = min(this->first_tail_item_dim, max_scroll_till_end);
+				this->pos_offset += delta;
+				scrolled_by += delta;
+
+				// Stop scrolling on this.
+				delta = 0;
+
+				break;
+			}
+
 			// Since we are scrolling 'up', assume we are dealing with the first visible widget on each iteration,
 			// because previous one which was first visible is aready scrolled away upwards.
 			auto dim = c.get().rect().d[long_index] - this->pos_offset;
 			if (delta <= dim) {
 				// We can scroll the whole delta and the same widget remains the first visible one,
 				// only its position offset changes.
-				std::cout << "delta <= dim, delta = " << delta << ", dim = " << dim << std::endl;
+				// std::cout << "delta <= dim, delta = " << delta << ", dim = " << dim << std::endl;
 				this->pos_offset += delta;
 				scrolled_by += delta;
+
+				// Stop scrolling on this.
 				delta = 0;
+
 				break;
 			}
 
 			// delta is big enough that scrolling by it will make the first visible widget to scroll away upwards
 
-			std::cout << "dim <= delta, delta = " << delta << ", dim = " << dim << std::endl;
+			// std::cout << "dim <= delta, delta = " << delta << ", dim = " << dim << std::endl;
 
 			delta -= dim;
 			scrolled_by += dim;
@@ -413,7 +434,7 @@ real list::scroll_by(real delta)
 			// We have scrolled away upwards all the previously visible widgets,
 			// so this->pos_index currently points to a widget which is not added to the container as child.
 
-			std::cout << "delta > 0: delta = " << delta << std::endl;
+			// std::cout << "delta > 0: delta = " << delta << std::endl;
 			utki::assert(
 				this->pos_index > this->added_index + this->children().size(),
 				[&](auto& o) {
@@ -442,12 +463,22 @@ real list::scroll_by(real delta)
 				utki::assert(this->pos_offset == 0, SL);
 				++this->pos_index;
 			}
+
+			if (this->pos_index == this->first_tail_item_index) {
+				// we have scrolled till the end of the list, and are within the last item
+				// std::cout << "222222222222222222222222222" << std::endl;
+				utki::assert(this->pos_offset <= this->first_tail_item_offset, SL);
+				auto max_scroll_till_end = this->first_tail_item_offset - this->pos_offset;
+				using std::min;
+				delta = min(this->first_tail_item_dim, max_scroll_till_end);
+				utki::assert(delta < this->first_tail_item_dim, SL);
+			}
 		}
 	} else {
 		utki::assert(delta < 0, SL);
 		delta = -delta;
 		if (delta <= this->pos_offset) {
-			std::cout << "delta <= this->pos_offset" << std::endl;
+			// std::cout << "delta <= this->pos_offset" << std::endl;
 			this->pos_offset -= delta;
 			scrolled_by -= delta;
 		} else {
@@ -478,12 +509,12 @@ real list::scroll_by(real delta)
 				--this->added_index;
 
 				if (delta <= long_dim) {
-					std::cout << "delta <= long_dim: delta = " << delta << std::endl;
+					// std::cout << "delta <= long_dim: delta = " << delta << std::endl;
 					this->pos_offset = long_dim - delta;
 					scrolled_by -= delta;
 					break;
 				}
-				std::cout << "delta > long_dim: delta = " << delta << std::endl;
+				// std::cout << "delta > long_dim: delta = " << delta << std::endl;
 				delta -= long_dim;
 				scrolled_by -= long_dim;
 			}
@@ -497,7 +528,7 @@ real list::scroll_by(real delta)
 
 	this->notify_scroll_pos_changed(old_index, old_offset);
 
-	std::cout << "list: scrolled_by = " << scrolled_by << std::endl;
+	// std::cout << "list: scrolled_by = " << scrolled_by << std::endl;
 
 	return scrolled_by;
 }
