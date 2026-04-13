@@ -27,6 +27,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <ruis/widget/label/image.hpp>
 #include <ruis/widget/label/padding.hpp>
 #include <ruis/widget/label/text.hpp>
+#include <ruis/widget/button/touch/tab_button.hpp>
 
 #include "list_page.hpp"
 #include "scroll_area_page.hpp"
@@ -39,97 +40,15 @@ using namespace ruis::length_literals;
 
 namespace {
 
-class tab_button :
-	public ruis::choice_button, //
-	private ruis::container
-{
-public:
-	struct all_parameters {
-		ruis::layout::parameters layout_params;
-		ruis::widget::parameters widget_params;
-		ruis::image::parameters image_params;
-		ruis::string text;
-	};
-
-	tab_button(
-		utki::shared_ref<ruis::context> context, //
-		all_parameters params
-	) :
-		widget(
-			std::move(context), //
-			std::move(params.layout_params),
-			std::move(params.widget_params)
-		),
-		button(
-			this->context,
-			{
-    }
-		),
-		toggle_button(this->context),
-		choice_button(this->context),
-		// clang-format off
-		ruis::container(
-			this->context, //
-			{
-				.container_params = {
-					.layout = ruis::layout::pile
-				}
-			},
-			{
-				m::padding(
-					this->context,
-					{
-						.layout_params = {
-							.dims = {ruis::dim::fill, ruis::dim::fill}
-						},
-						.container_params = {
-							.layout = ruis::layout::column
-						},
-						.padding_params = {
-							.borders = {10_pp}
-						}
-					},
-					{
-						m::image(this->context,
-							{
-								.layout_params = {
-									.dims = {ruis::dim::min, ruis::dim::fill},
-									.weight = 1
-								},
-								.image_params = std::move(params.image_params)
-							}
-						),
-						m::text(this->context,
-							{
-								.layout_params = {
-									.dims = {ruis::dim::min, ruis::dim::min},
-									.align = {ruis::align::center, ruis::align::center}
-								}
-							},
-							std::move(params.text)
-						)
-					}
-				)
-			}
-		)
-	// clang-format on
-	{}
-
-	ruis::event_status on_mouse_button(const ruis::mouse_button_event& event) override
-	{
-		return this->choice_button::on_mouse_button(event);
-	}
-};
-
-utki::shared_ref<ruis::choice_button> make_tab_button(
+utki::shared_ref<ruis::touch::tab_button> make_tab_button(
 	utki::shared_ref<ruis::context> c, //
 	utki::shared_ref<const ruis::res::image> icon,
 	ruis::string text
 )
 {
 	// clang-format off
-	return utki::make_shared<tab_button>(std::move(c),
-		tab_button::all_parameters{
+	return ruis::touch::make::tab_button(std::move(c),
+		ruis::touch::tab_button::all_parameters{
 			.layout_params = {
 				.dims = {ruis::dim::fill, 60_pp},
 				.weight = 1
@@ -138,8 +57,8 @@ utki::shared_ref<ruis::choice_button> make_tab_button(
 				.img = std::move(icon),
 				.keep_aspect_ratio = true
 			},
-			.text = std::move(text)
-		}
+		},
+		std::move(text)
 	);
 	// clang-format on
 }
