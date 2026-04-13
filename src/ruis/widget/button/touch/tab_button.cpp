@@ -7,23 +7,23 @@ using namespace ruis::touch;
 using namespace ruis::length_literals;
 
 tab_button::tab_button(
-    utki::shared_ref<ruis::context> context, //
-    all_parameters params,
-    ruis::string text
+	utki::shared_ref<ruis::context> context, //
+	all_parameters params,
+	ruis::string text
 ) :
-    widget(
-        std::move(context), //
-        std::move(params.layout_params),
-        std::move(params.widget_params)
-    ),
-    button(
-        this->context,
-        {
+	widget(
+		std::move(context), //
+		std::move(params.layout_params),
+		std::move(params.widget_params)
+	),
+	button(
+		this->context,
+		{
 }
-    ),
-    toggle_button(this->context),
-    choice_button(this->context),
-    // clang-format off
+	),
+	toggle_button(this->context),
+	choice_button(this->context),
+	// clang-format off
     ruis::container(
         this->context, //
         {
@@ -73,18 +73,18 @@ tab_button::tab_button(
 
 ruis::event_status tab_button::on_mouse_button(const ruis::mouse_button_event& event)
 {
-    return this->choice_button::on_mouse_button(event);
+	return this->choice_button::on_mouse_button(event);
 }
 
 utki::shared_ref<ruis::touch::tab_button> ruis::touch::make::tab_button(
 	utki::shared_ref<ruis::context> context, //
 	ruis::touch::tab_button::all_parameters params,
-    ruis::string text
+	ruis::string text
 )
 {
 	return utki::make_shared<ruis::touch::tab_button>(
-        std::move(context),
-        std::move(params),
-        std::move(text)
-    );
+		std::move(context), //
+		std::move(params),
+		std::move(text)
+	);
 }
