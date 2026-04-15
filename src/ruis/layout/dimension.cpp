@@ -50,19 +50,21 @@ dimension dimension::make_from(const tml::forest& desc)
 std::ostream& ruis::layout::operator<<(std::ostream& o, const dimension& d)
 {
 	switch (d.get_type()) {
-		case dimension::type::fill:
+		using enum dimension::type;
+
+		case fill:
 			o << "fill"sv;
 			break;
-		case dimension::type::min:
+		case min:
 			o << "min"sv;
 			break;
-		case dimension::type::max:
+		case max:
 			o << "max"sv;
 			break;
-		case dimension::type::length:
+		case length:
 			o << d.get_length();
 			break;
-		case dimension::type::undefined:
+		case undefined:
 			o << "undefined"sv;
 			break;
 	}

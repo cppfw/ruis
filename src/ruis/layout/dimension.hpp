@@ -115,12 +115,14 @@ public:
 		}
 
 		switch (this->get_type()) {
-			case type::min:
-			case type::max:
-			case type::fill:
-			case type::undefined:
+			using enum type;
+
+			case min:
+			case max:
+			case fill:
+			case undefined:
 				return true;
-			case type::length:
+			case length:
 				return this->get_length() == d.get_length();
 		}
 
@@ -130,11 +132,17 @@ public:
 	bool operator==(const length& d) const
 	{
 		switch (this->get_type()) {
-			case type::length:
+			using enum type;
+
+			case length:
 				return this->value == d;
-			case type::min:
+			case min:
 				return d.is_undefined();
-			default:
+			case max:
+				[[fallthrough]];
+			case fill:
+				[[fallthrough]];
+			case undefined:
 				return false;
 		}
 	}
