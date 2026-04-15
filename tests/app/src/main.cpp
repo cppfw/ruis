@@ -212,16 +212,18 @@ public:
 			mouse_proxy->mouse_button_handler = [state, vl](ruis::mouse_proxy&,//
 				 const ruis::mouse_button_event& e){
 				switch(e.button){
-					case ruis::mouse_button::left:
+					using enum ruis::mouse_button;
+
+					case left:
 						state->is_left_button_pressed = (e.action == ruis::button_action::press);
 						state->old_pos = e.pos;
 						return ruis::event_status::consumed;
-					case ruis::mouse_button::wheel_down:
+					case wheel_down:
 						if(auto l = vl.lock()){
 							l->scroll_by(wheel_delta);
 						}
 						break;
-					case ruis::mouse_button::wheel_up:
+					case wheel_up:
 						if(auto l = vl.lock()){
 							l->scroll_by(-wheel_delta);
 						}
@@ -290,11 +292,13 @@ public:
 			) -> ruis::event_status {
 				std::cout << "button = " << unsigned(e.button) << std::endl;
 				switch(e.button){
-					case ruis::mouse_button::left:
+					using enum ruis::mouse_button;
+
+					case left:
 						state->is_left_button_pressed = (e.action == ruis::button_action::press);
 						state->old_pos = e.pos;
 						return ruis::event_status::consumed;
-					case ruis::mouse_button::wheel_left:
+					case wheel_left:
 						std::cout << "wheel_left" << std::endl;
 						if(e.action == ruis::button_action::press){
 							if(auto l = hl.lock()){
@@ -302,7 +306,7 @@ public:
 							}
 						}
 						break;
-					case ruis::mouse_button::wheel_right:
+					case wheel_right:
 						std::cout << "wheel_right" << std::endl;
 						if(e.action == ruis::button_action::press){
 							if(auto l = hl.lock()){

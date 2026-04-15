@@ -128,10 +128,12 @@ ruis::event_status flickable::on_mouse_move(const mouse_move_event& event)
 	// std::cout << "touch move, vel = " << this->calculate_touch_velocity() << std::endl;
 
 	switch (this->cur_state) {
-		case state::inertial_scrolling:
+		using enum state;
+
+		case inertial_scrolling:
 			// check for inertial_scrolling is done before the switch()
 			[[fallthrough]];
-		case state::idle:
+		case idle:
 			// check for idle is done before the switch()
 			[[fallthrough]];
 		default:
@@ -143,7 +145,7 @@ ruis::event_status flickable::on_mouse_move(const mouse_move_event& event)
 				SL
 			);
 			return ruis::event_status::propagate;
-		case state::within_scroll_threshold:
+		case within_scroll_threshold:
 			{
 				if (this->flickable_on_mouse_move(event) == event_status::consumed) {
 					this->cur_state = state::not_scrolling;
@@ -190,10 +192,10 @@ ruis::event_status flickable::on_mouse_move(const mouse_move_event& event)
 				}
 			}
 			return event_status::consumed;
-		case state::not_scrolling:
+		case not_scrolling:
 			// std::cout << "mouse move: not scrolling\n";
 			return this->flickable_on_mouse_move(event);
-		case state::dragging:
+		case dragging:
 			{
 				vec2 delta = event.pos - this->prev_touch_point;
 				// std::cout << "mouse move: scrolling, delta: " << delta << "\n";
