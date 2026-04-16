@@ -4,7 +4,7 @@ this_cxxflags += -Werror # treat warnings as errors
 this_cxxflags += -Wfatal-errors # stop on first error encountered
 this_cxxflags += -fstrict-aliasing # in order to comply with the c++ standard more strictly
 this_cxxflags += -g # include debugging symbols
-this_cxxflags += -std=c++17
+this_cxxflags += -std=c++20
 this_cxxflags += -fPIC # generate position independent code
 
 this_ldlibs += -lstdc++
