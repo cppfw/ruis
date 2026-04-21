@@ -38,8 +38,8 @@ timer::timer( //
 
 void timer::update(uint32_t dt_ms)
 {
-	if (dt_ms < this->left_ms) {
-		constexpr auto max_dt_ms = std::numeric_limits<uint16_t>::max();
+	if (dt_ms < uint32_t(this->left_ms)) {
+		constexpr auto max_dt_ms = uint32_t(std::numeric_limits<uint16_t>::max());
 
 		this->left_ms -= dt_ms;
 
@@ -48,7 +48,7 @@ void timer::update(uint32_t dt_ms)
 				this->updater.get().stop(*this);
 				this->updater.get().start( //
 					utki::make_shared_from(static_cast<updateable&>(*this)),
-					this->left_ms
+					uint16_t(this->left_ms)
 				);
 			}
 		}

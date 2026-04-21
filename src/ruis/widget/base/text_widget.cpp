@@ -94,7 +94,6 @@ text_widget::text_widget(
 	utki::shared_ref<ruis::context> context, //
 	parameters params
 ) :
-	widget(std::move(context), {}, {}),
 	params([&]() {
 		if (!params.font_face.get() && !params.font_face.is_from_style()) {
 			params.font_face = this->context.get().style().get_font_face_normal();

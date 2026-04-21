@@ -12,9 +12,7 @@ public:
 		left,
 		top,
 		right,
-		bottom,
-
-		enum_size
+		bottom
 	};
 
 	struct parameters{

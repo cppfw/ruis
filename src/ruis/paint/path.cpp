@@ -171,13 +171,13 @@ path::vertices path::stroke(ruis::real half_width, ruis::real antialias_width, r
 	ret.out_indices.push_back(2);
 
 	for (unsigned i = 0; i != this->points.size(); ++i) {
-		ret.out_indices.push_back(4 * i);
-		ret.out_indices.push_back(4 * i + 1);
+		ret.out_indices.push_back(uint16_t(4 * i));
+		ret.out_indices.push_back(uint16_t(4 * i + 1));
 	}
 
 	for (auto i = unsigned(this->points.size() - 1); i != 0; --i) {
-		ret.out_indices.push_back(4 * i + 3);
-		ret.out_indices.push_back(4 * i + 2);
+		ret.out_indices.push_back(uint16_t(4 * i + 3));
+		ret.out_indices.push_back(uint16_t(4 * i + 2));
 	}
 
 	ret.out_indices.push_back(3);
