@@ -58,7 +58,7 @@ utki::shared_ref<ruis::widget> make_root_widget(utki::shared_ref<ruis::context> 
                                     }
                                 },
                                 {
-                                    make_window0(c, {0, 0}),
+                                    make_window0(c, {0_pp, 0_pp}),
                                     make_window1(c, {300_pp, 10_pp}),
                                     make_tree_view_window(c, {300_pp, 250_pp}),
                                     make_sliders_window(c, {0_pp, 250_pp}),

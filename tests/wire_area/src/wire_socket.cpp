@@ -46,8 +46,8 @@ void wire_socket::disconnect(){
 }
 
 std::array<ruis::vec2, 2> wire_socket::outlet_pos() const noexcept{
-	ruis::vec2 dir;
-	ruis::vec2 pos;
+	ruis::vec2 dir{0, 0};
+	ruis::vec2 pos{0, 0};
 	switch(this->params.outlet_orientation){
 		using enum orientation;
 

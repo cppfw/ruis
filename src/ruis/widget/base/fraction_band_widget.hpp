@@ -29,7 +29,7 @@ class fraction_band_widget : public fraction_widget
 {
 protected:
 	struct parameters {
-		float band_fraction = 0; // current bar size factor from 0 to 1
+		real band_fraction = 0; // current bar size factor from 0 to 1
 	};
 
 private:

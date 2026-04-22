@@ -117,10 +117,10 @@ utki::shared_ref<ruis::widget> make_rectangles_window(
 					},
 					.rectangle_params{
 						.corner_radii = {
-							0, // left-top
+							0_pp, // left-top
 							5_pp, // right-top
 							10_pp, // right-bottom
-							0 // left-bottom
+							0_pp // left-bottom
 						}
 					}
 				},
@@ -150,7 +150,7 @@ utki::shared_ref<ruis::widget> make_rectangles_window(
 					},
 					.rectangle_params{
 						.corner_radii = {
-							0, // left-top
+							0_pp, // left-top
 							5_pp, // right-top
 							10_pp, // right-bottom
 							15_pp // left-bottom
