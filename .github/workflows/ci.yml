@@ -391,7 +391,7 @@ jobs:
         with:
           name: vcpkg_linux_logs
           path: |
-            vcpkg-installation/buildtrees/${{ env.PACKAGE_NAME }}/
+            vcpkg-installation/buildtrees/**/*.log
             build/vcpkg/**/*.log
       - name: deploy vcpkg port
         run: |
@@ -453,7 +453,7 @@ jobs:
       with:
         name: vcpkg_windows_${{ matrix.arch }}_${{ matrix.config }}_logs
         path: |
-          vcpkg-installation/buildtrees/${{ env.PACKAGE_NAME }}/
+          vcpkg-installation/buildtrees/**/*.log
           build/vcpkg/**/*.log
 ##### vcpkg-ios #####
   vcpkg-ios:
@@ -510,7 +510,7 @@ jobs:
       with:
         name: vcpkg_ios_${{ matrix.config }}_logs
         path: |
-          vcpkg-installation/buildtrees/${{ env.PACKAGE_NAME }}/
+          vcpkg-installation/buildtrees/**/*.log
           build/vcpkg/**/*.log
 ##### conan - linux #####
   conan-linux:
