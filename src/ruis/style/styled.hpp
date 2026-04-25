@@ -25,6 +25,15 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
+/**
+ * @brief A styled value.
+ * This class is used to represent a value which can be either a direct value or a reference to a style value.
+ * Style values are stored in style_provider and can be shared between multiple styled values.
+ * @tparam value_type - type of the value.
+ *                      It can be any type, but it is recommended to use simple types like int, float, color, length, etc. or resources like font, image, etc.
+ *                      If value_type is a resource type (i.e. derived from ruis::resource) then styled will hold a shared_ptr to the resource,
+ *                      otherwise it will hold the value directly.
+ */
 // TODO: make a concept which requires value_type::make_from(tml::forest)
 // Or value type can be derived from ruis::resource
 template <typename value_type>
