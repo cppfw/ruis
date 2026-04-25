@@ -35,6 +35,7 @@ android {
             path "CMakeLists.txt"
         }
     }
+    namespace 'cppfw.github.io.ruistests'
 }
 
 repositories {
