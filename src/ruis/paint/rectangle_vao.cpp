@@ -390,17 +390,17 @@ rectangle_vao::rounded_corners_texture::rounded_corners_texture(
 		{
 			make_quad_vao(r,
 				{
-					{0, 0},
-					middle
+					.p1 = {0, 0},
+					.p2 = middle
 				}
 			),
 			make_quad_vao(r,
 				{
-					{
+					.p1 = {
 						middle.x(),
 						0
 					},
-					{
+					.p2 = {
 						1,
 						middle.y()
 					}
@@ -410,11 +410,11 @@ rectangle_vao::rounded_corners_texture::rounded_corners_texture(
 		{
 			make_quad_vao(r,
 				{
-					{
+					.p1 = {
 						0,
 						middle.y()
 					},
-					{
+					.p2 = {
 						middle.x(),
 						1
 					}
@@ -422,8 +422,8 @@ rectangle_vao::rounded_corners_texture::rounded_corners_texture(
 			),
 			make_quad_vao(r,
 				{
-					middle,
-					{1, 1}
+					.p1 = middle,
+					.p2 = {1, 1}
 				}
 			)
 		}
