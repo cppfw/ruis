@@ -54,7 +54,7 @@ jobs:
           name: cobertura.xml
           path: cobertura.xml
       - name: upload coverage data to codecov.io
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v6
         if: always() # even if previous steps fail, this one needs to be run
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
@@ -67,7 +67,7 @@ jobs:
           verbose: true # optional (default = false)
       - name: upload test report to codecov.io
         if: always() # even if previous steps fail, this one needs to be run
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v6
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           report_type: test_results
