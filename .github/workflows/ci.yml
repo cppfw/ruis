@@ -49,7 +49,7 @@ jobs:
         # due to some bug in gcov, we need to use --gcov-ignore-parse-errors=negative_hits.warn
         run: pipx run gcovr --gcov-ignore-parse-errors=negative_hits.warn --exclude-throw-branches --filter src/ --cobertura > cobertura.xml
       - name: upload coverage report to artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: cobertura.xml
           path: cobertura.xml
@@ -387,7 +387,7 @@ jobs:
           cmake --build . --target test
       - name: upload vcpkg logs to artifacts
         if: always() # even if previous steps fail, this one needs to be run
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: vcpkg_linux_logs
           path: |
@@ -415,11 +415,11 @@ jobs:
     name: vcpkg - windows - ${{ matrix.arch }} | ${{ matrix.config }}
     steps:
     - name: git clone
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       with:
         submodules: true
     - name: get myci scripts
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       with:
         repository: cppfw/myci
         ref: latest
@@ -449,7 +449,7 @@ jobs:
         cmake --build . --config ${{ matrix.config}} --target test
     - name: upload vcpkg logs to artifacts
       if: always() # even if previous steps fail, this one needs to be run
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: vcpkg_windows_${{ matrix.arch }}_${{ matrix.config }}_logs
         path: |
@@ -506,7 +506,7 @@ jobs:
 #        ./test
     - name: upload vcpkg logs to artifacts
       if: always() # even if previous steps fail, this one needs to be run
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: vcpkg_ios_${{ matrix.config }}_logs
         path: |
