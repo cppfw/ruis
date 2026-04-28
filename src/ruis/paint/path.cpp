@@ -21,7 +21,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "path.hpp"
 
-#include <cmath>
+#include <numbers>
 
 using namespace ruis::paint;
 
@@ -123,18 +123,17 @@ path::vertices path::stroke(ruis::real half_width, ruis::real antialias_width, r
 		auto miter = miter_coeff * half_width;
 		auto antialias_miter = miter_coeff * (half_width + antialias_width);
 
-		using std::sqrt;
 		using utki::pi;
 
 		if (!prev) {
 			ASSERT(next)
 			ret.pos.push_back(
-				(*cur) - normal * miter - normal.rot(-ruis::real(pi) / 4) * antialias_width * ruis::real(sqrt(2))
+				(*cur) - normal * miter - normal.rot(-ruis::real(pi) / 4) * antialias_width *  std::numbers::sqrt2_v<ruis::real>
 			);
 		} else if (!next) {
 			ASSERT(prev)
 			ret.pos.push_back(
-				(*cur) - normal * miter - normal.rot(ruis::real(pi) / 4) * antialias_width * ruis::real(sqrt(2))
+				(*cur) - normal * miter - normal.rot(ruis::real(pi) / 4) * antialias_width * std::numbers::sqrt2_v<ruis::real>
 			);
 		} else {
 			ret.pos.push_back((*cur) - normal * antialias_miter);
@@ -154,11 +153,11 @@ path::vertices path::stroke(ruis::real half_width, ruis::real antialias_width, r
 
 		if (!prev) {
 			ret.pos.push_back(
-				(*cur) + normal * miter + normal.rot(ruis::real(pi) / 4) * antialias_width * ruis::real(sqrt(2))
+				(*cur) + normal * miter + normal.rot(ruis::real(pi) / 4) * antialias_width *  std::numbers::sqrt2_v<ruis::real>
 			);
 		} else if (!next) {
 			ret.pos.push_back(
-				(*cur) + normal * miter + normal.rot(-ruis::real(pi) / 4) * antialias_width * ruis::real(sqrt(2))
+				(*cur) + normal * miter + normal.rot(-ruis::real(pi) / 4) * antialias_width *  std::numbers::sqrt2_v<ruis::real>
 			);
 		} else {
 			ret.pos.push_back((*cur) + normal * antialias_miter);
