@@ -21,6 +21,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
+#include <concepts>
+
 #include "style_provider.hpp"
 
 namespace ruis {
@@ -155,12 +157,7 @@ public:
 	{}
 
 	template <
-		typename convertible_type, //
-		std::enable_if_t< //
-			// NOLINTNEXTLINE(modernize-type-traits, "false-positive")
-			std::is_convertible_v<convertible_type, actual_value_type>, //
-			bool //
-			> = true //
+		std::convertible_to<actual_value_type> convertible_type //
 		>
 	styled(convertible_type conv) :
 		value(actual_value_type(conv))

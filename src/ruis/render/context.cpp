@@ -49,14 +49,13 @@ context::~context()
 
 	// remove all occurrencies of this context from current contexts stack,
 	// because there can be several of them
-	cur_context_stack.erase(
-		std::remove(
-			cur_context_stack.begin(), //
-			cur_context_stack.end(),
-			this
-		),
-		cur_context_stack.end()
-	);
+	{
+		auto subrange_to_remove = std::ranges::remove(cur_context_stack, this);
+		cur_context_stack.erase(
+			subrange_to_remove.begin(), //
+			subrange_to_remove.end()
+		);
+	}
 
 	if (!cur_context_stack.empty()) {
 		cur_context_stack.back()->native_window.get().bind_rendering_context();

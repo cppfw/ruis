@@ -127,14 +127,12 @@ path::vertices path::stroke(ruis::real half_width, ruis::real antialias_width, r
 
 		if (!prev) {
 			ASSERT(next)
-			ret.pos.push_back(
-				(*cur) - normal * miter - normal.rot(-ruis::real(pi) / 4) * antialias_width *  std::numbers::sqrt2_v<ruis::real>
-			);
+			ret.pos
+				.push_back((*cur) - normal * miter - normal.rot(-ruis::real(pi) / 4) * antialias_width * std::numbers::sqrt2_v<ruis::real>);
 		} else if (!next) {
 			ASSERT(prev)
-			ret.pos.push_back(
-				(*cur) - normal * miter - normal.rot(ruis::real(pi) / 4) * antialias_width * std::numbers::sqrt2_v<ruis::real>
-			);
+			ret.pos
+				.push_back((*cur) - normal * miter - normal.rot(ruis::real(pi) / 4) * antialias_width * std::numbers::sqrt2_v<ruis::real>);
 		} else {
 			ret.pos.push_back((*cur) - normal * antialias_miter);
 		}
@@ -152,13 +150,11 @@ path::vertices path::stroke(ruis::real half_width, ruis::real antialias_width, r
 		++in_index;
 
 		if (!prev) {
-			ret.pos.push_back(
-				(*cur) + normal * miter + normal.rot(ruis::real(pi) / 4) * antialias_width *  std::numbers::sqrt2_v<ruis::real>
-			);
+			ret.pos
+				.push_back((*cur) + normal * miter + normal.rot(ruis::real(pi) / 4) * antialias_width * std::numbers::sqrt2_v<ruis::real>);
 		} else if (!next) {
-			ret.pos.push_back(
-				(*cur) + normal * miter + normal.rot(-ruis::real(pi) / 4) * antialias_width *  std::numbers::sqrt2_v<ruis::real>
-			);
+			ret.pos
+				.push_back((*cur) + normal * miter + normal.rot(-ruis::real(pi) / 4) * antialias_width * std::numbers::sqrt2_v<ruis::real>);
 		} else {
 			ret.pos.push_back((*cur) + normal * antialias_miter);
 		}
