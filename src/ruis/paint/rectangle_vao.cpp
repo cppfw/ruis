@@ -21,6 +21,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "rectangle_vao.hpp"
 
+#include <numbers>
+
 #include <veg/canvas.hpp>
 
 #include "../util/util.hpp"
