@@ -147,7 +147,11 @@ void gui::send_mouse_move(
 	auto& rw = this->get_root();
 	if (rw.is_interactive()) {
 		rw.set_hovered(rw.rect().overlaps(pos), id);
-		rw.on_mouse_move(mouse_move_event{pos, id, false});
+		rw.on_mouse_move(mouse_move_event{
+			.pos = pos, //
+			.pointer_id = id,
+			.ignore_mouse_capture = false
+		});
 	}
 }
 
@@ -161,7 +165,12 @@ void gui::send_mouse_button(
 	auto& rw = this->get_root();
 	if (rw.is_interactive()) {
 		rw.set_hovered(rw.rect().overlaps(pos), id);
-		rw.on_mouse_button(mouse_button_event{action, pos, button, id});
+		rw.on_mouse_button(mouse_button_event{
+			.action = action, //
+			.pos = pos,
+			.button = button,
+			.pointer_id = id
+		});
 	}
 }
 

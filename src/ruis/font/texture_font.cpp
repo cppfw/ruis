@@ -85,9 +85,9 @@ freetype_face::metrics freetype_face::get_metrics(unsigned font_size) const
 	this->set_size(font_size);
 	using std::ceil;
 	return {
-		ceil(real(this->face.f->size->metrics.height) / real(freetype_granularity)), // height
-		-ceil(real(this->face.f->size->metrics.descender) / real(freetype_granularity)), // descender
-		ceil(real(this->face.f->size->metrics.ascender) / real(freetype_granularity)) // ascender
+		.height = ceil(real(this->face.f->size->metrics.height) / real(freetype_granularity)), //
+		.descender = -ceil(real(this->face.f->size->metrics.descender) / real(freetype_granularity)),
+		.ascender = ceil(real(this->face.f->size->metrics.ascender) / real(freetype_granularity))
 	};
 }
 
@@ -102,13 +102,13 @@ freetype_face::glyph freetype_face::load_glyph(char32_t c, unsigned font_size) c
 				"texture_font::load_glyph(): could not load 'unknown character' glyph (UTF-32: 0xfffd)"
 			);
 		}
-		LOG([&](auto& o) {
+		utki::log_debug([&](auto& o) {
 			o << "texture_font::load_glyph(" << std::hex << uint32_t(c) << "): failed to load glyph" << std::endl;
-		})
+		});
 		return {
-			{}, // vertices
-			{}, // image
-			-1 // advance
+			.vertices = {}, //
+			.image = {},
+			.advance = -1 // negative means invalid
 		};
 	}
 
@@ -123,32 +123,31 @@ freetype_face::glyph freetype_face::load_glyph(char32_t c, unsigned font_size) c
 	if (!slot->bitmap.buffer) {
 		// empty glyph (space)
 		return glyph{
-			{}, // vertices
-			{}, // image
-			advance
+			.vertices = {}, //
+			.image = {},
+			.advance = advance
 		};
 	}
 
-	ASSERT(slot->format == FT_GLYPH_FORMAT_BITMAP)
-	ASSERT(slot->bitmap.pixel_mode == FT_PIXEL_MODE_GRAY)
-	ASSERT(slot->bitmap.pitch >= 0)
+	utki::assert(slot->format == FT_GLYPH_FORMAT_BITMAP);
+	utki::assert(slot->bitmap.pixel_mode == FT_PIXEL_MODE_GRAY);
+	utki::assert(slot->bitmap.pitch >= 0);
 
 	return glyph{
-		// vertices
-		{
-         (ruis::vec2(real(m->horiBearingX), -real(m->horiBearingY)) / real(freetype_granularity)),
-         (ruis::vec2(real(m->horiBearingX), real(m->height - m->horiBearingY)) / real(freetype_granularity)),
-         (ruis::vec2(real(m->horiBearingX + m->width), real(m->height - m->horiBearingY)) /
-			 real(freetype_granularity)),
-         (ruis::vec2(real(m->horiBearingX + m->width), -real(m->horiBearingY)) / real(freetype_granularity)) //
-		},
-		// image
-		rasterimage::image<uint8_t, 1>::make(
+		.vertices =
+			{
+					   (ruis::vec2(real(m->horiBearingX), -real(m->horiBearingY)) / real(freetype_granularity)), //
+				(ruis::vec2(real(m->horiBearingX), real(m->height - m->horiBearingY)) / real(freetype_granularity)),
+					   (ruis::vec2(real(m->horiBearingX + m->width), real(m->height - m->horiBearingY)) /
+				 real(freetype_granularity)),
+					   (ruis::vec2(real(m->horiBearingX + m->width), -real(m->horiBearingY)) / real(freetype_granularity)) //
+			}, //
+		.image = rasterimage::image<uint8_t, 1>::make(
 			{slot->bitmap.width, slot->bitmap.rows},
 			slot->bitmap.buffer,
 			slot->bitmap.pitch
 		),
-		advance
+		.advance = advance
 	};
 }
 
@@ -188,7 +187,7 @@ texture_font::glyph texture_font::load_glyph(char32_t c) const
 	g.tex = rc.make_texture_2d(
 		std::move(ftg.image),
 		{
-			.min_filter = render::texture_2d::filter::nearest,
+			.min_filter = render::texture_2d::filter::nearest, //
 			.mag_filter = render::texture_2d::filter::nearest,
 			.mipmap = render::texture_2d::mipmap::none
 		}
@@ -233,7 +232,7 @@ const texture_font::glyph& texture_font::get_glyph(char32_t c) const
 	auto i = this->glyphs.find(c);
 	if (i == this->glyphs.end()) {
 		auto r = this->glyphs.insert(std::make_pair(c, this->load_glyph(c)));
-		ASSERT(r.second)
+		utki::assert(r.second);
 		i = r.first;
 		this->last_used_order.push_front(c);
 		i->second.last_used_iter = this->last_used_order.begin();
@@ -248,7 +247,7 @@ const texture_font::glyph& texture_font::get_glyph(char32_t c) const
 		this->last_used_order.splice(this->last_used_order.begin(), this->last_used_order, g.last_used_iter);
 	}
 
-	ASSERT(this->last_used_order.size() <= this->max_cached)
+	utki::assert(this->last_used_order.size() <= this->max_cached);
 
 	return i->second;
 }
@@ -347,7 +346,10 @@ font::render_result texture_font::render_internal(
 	size_t offset
 ) const
 {
-	render_result ret = {0, 0};
+	render_result ret = {
+		.advance = 0, //
+		.length = 0
+	};
 
 	if (str.size() == 0) {
 		return ret;
