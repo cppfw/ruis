@@ -156,9 +156,8 @@ public:
 		value(std::move(value))
 	{}
 
-	template <
-		std::convertible_to<actual_value_type> convertible_type //
-		>
+	template <std::convertible_to<actual_value_type> convertible_type //
+			  >
 	styled(convertible_type conv) :
 		value(actual_value_type(conv))
 	{}

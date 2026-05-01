@@ -167,8 +167,8 @@ std::string_view ruis::to_string(ruis::key key)
 
 namespace {
 struct key_name_key_pair {
-	std::string_view first;
-	ruis::key second;
+	std::string_view name;
+	ruis::key key;
 };
 
 constexpr auto key_name_to_key_ordered_mapping = []() constexpr {
@@ -271,9 +271,13 @@ constexpr auto key_name_to_key_ordered_mapping = []() constexpr {
 		{"f15"sv, ruis::key::f15},
 	}}};
 
-	utki::sort(arr.begin(), arr.end(), [](const auto& a, const auto& b) {
-		return a.first < b.first;
-	});
+	utki::sort(
+		arr.begin(), //
+		arr.end(),
+		[](const auto& a, const auto& b) {
+			return a.name < b.name;
+		}
+	);
 	return arr;
 }();
 } // namespace
@@ -285,11 +289,11 @@ ruis::key ruis::to_key(std::string_view name)
 		key_name_to_key_ordered_mapping.end(),
 		name,
 		[](const auto& a, const std::string_view& b) {
-			return a.first < b;
+			return a.name < b;
 		}
 	);
-	if (i != key_name_to_key_ordered_mapping.end() && i->first == name) {
-		return i->second;
+	if (i != key_name_to_key_ordered_mapping.end() && i->name == name) {
+		return i->key;
 	}
 	return ruis::key::unknown;
 }

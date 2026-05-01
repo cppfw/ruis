@@ -21,6 +21,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "resource_loader.hpp"
 
+#include <algorithm>
+#include <ranges>
+
 #include <fsif/root_dir.hpp>
 #include <fsif/util.hpp>
 
@@ -110,10 +113,11 @@ std::shared_ptr<resource> resource_loader::res_pack_entry::find_in_cache(std::st
 
 const tml::forest* resource_loader::res_pack_entry::find_resource_in_script(std::string_view id) const
 {
-	auto j = std::find(
-		this->script.begin(), //
-		this->script.end(),
-		id
+	auto j = std::ranges::find_if(
+		this->script, //
+		[&](const auto& n) {
+			return n.value.string == id;
+		}
 	);
 	if (j != this->script.end()) {
 		utki::assert(j->value.string == id, SL);
