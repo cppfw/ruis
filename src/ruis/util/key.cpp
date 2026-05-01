@@ -169,10 +169,18 @@ namespace {
 struct key_name_key_pair {
 	std::string_view name;
 	ruis::key key;
+
+	// This constructor is added to suppress clang-tidy to ask using designated initializers,
+	// when constructing key_name_key_pair items in the array, because it looks clearer without them.
+	constexpr key_name_key_pair(std::string_view name, ruis::key key) :
+		name(name),
+		key(key)
+	{}
 };
 
 constexpr auto key_name_to_key_ordered_mapping = []() constexpr {
-	// TODO: refactor to avoid listing key names again
+	// utki::enum_array is used here just to set the array size to the number of keys in ruis::key enum,
+	// so that we can be sure that all keys are listed in the mapping.
 	utki::enum_array<key_name_key_pair, ruis::key> arr = {{{
 		{"space"sv, ruis::key::space},
 		{"enter"sv, ruis::key::enter},
