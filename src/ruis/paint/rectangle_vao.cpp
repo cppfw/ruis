@@ -21,6 +21,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "rectangle_vao.hpp"
 
+#include <numbers>
+
 #include <veg/canvas.hpp>
 
 #include "../util/util.hpp"
@@ -263,8 +265,7 @@ void rectangle_vao::render_rounder_corners(
 namespace {
 // approximate 90 degree arc with bezier curve which matches the arc at 45 degree point
 // and has the same tangent as an arc at 45 degree point
-using std::sqrt;
-const auto arc_bezier_param = ruis::real(4 * (sqrt(2) - 1) / 3);
+const auto arc_bezier_param = ruis::real(4 * (std::numbers::sqrt2 - 1) / 3);
 
 auto make_rounded_corners_texture_image(const ruis::sides<ruis::real>& radii)
 {
