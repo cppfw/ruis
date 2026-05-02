@@ -119,9 +119,12 @@ utki::shared_ref<page> book::tear_out(page& pg)
 {
 	utki::assert(pg.get_parent_book() == this, SL);
 
-	auto i = std::find_if(this->pages.begin(), this->pages.end(), [&pg](const auto& v) -> bool {
-		return &v.get() == &pg;
-	});
+	auto i = std::ranges::find_if(
+		this->pages, //
+		[&pg](const auto& v) -> bool {
+			return &v.get() == &pg;
+		}
+	);
 
 	utki::assert(i != this->pages.end(), SL);
 
@@ -188,9 +191,8 @@ void book::activate(const page& p)
 		throw std::logic_error("book::activate(): requested page is not in this book");
 	}
 
-	auto i = std::find_if(
-		this->pages.begin(), //
-		this->pages.end(),
+	auto i = std::ranges::find_if(
+		this->pages, //
 		[&p](const auto& pg) {
 			return &pg.get() == &p;
 		}
