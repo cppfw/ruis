@@ -69,9 +69,8 @@ void rectangle::render(const ruis::mat4& matrix) const
 void rectangle::update_vaos()
 {
 	sides<real> radii;
-	std::transform(
-		this->params.corner_radii.begin(),
-		this->params.corner_radii.end(),
+	std::ranges::transform(
+		this->params.corner_radii,
 		radii.begin(),
 		[this](const auto& r) -> real {
 			if (r.get().is_undefined()) {
