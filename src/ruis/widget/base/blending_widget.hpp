@@ -63,11 +63,11 @@ public:
 public:
 	struct parameters {
 		bool enabled = true;
-		blending_factors factors = {
-			ruis::render::context::blend_factor::src_alpha,
-			ruis::render::context::blend_factor::one_minus_src_alpha,
-			ruis::render::context::blend_factor::one,
-			ruis::render::context::blend_factor::one_minus_src_alpha
+		blending_factors factors = blending_factors{
+			.src = ruis::render::context::blend_factor::src_alpha,
+			.dst = ruis::render::context::blend_factor::one_minus_src_alpha,
+			.src_alpha = ruis::render::context::blend_factor::one,
+			.dst_alpha = ruis::render::context::blend_factor::one_minus_src_alpha
 		};
 	};
 
