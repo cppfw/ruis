@@ -49,10 +49,10 @@ event_status scroll_area::on_mouse_button(const mouse_button_event& e)
 {
 	vec2 d = -this->cur_scroll_pos;
 	return this->container::on_mouse_button(mouse_button_event{
-		e.action, //
-		e.pos - d,
-		e.button,
-		e.pointer_id
+		.action = e.action, //
+		.pos = e.pos - d,
+		.button = e.button,
+		.pointer_id = e.pointer_id
 	});
 }
 
@@ -60,9 +60,9 @@ event_status scroll_area::on_mouse_move(const mouse_move_event& e)
 {
 	vec2 d = -this->cur_scroll_pos;
 	return this->container::on_mouse_move(mouse_move_event{
-		e.pos - d, //
-		e.pointer_id,
-		e.ignore_mouse_capture
+		.pos = e.pos - d, //
+		.pointer_id = e.pointer_id,
+		.ignore_mouse_capture = e.ignore_mouse_capture
 	});
 }
 
