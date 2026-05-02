@@ -334,13 +334,13 @@ void widget::unfocus() noexcept
 
 r4::rectangle<uint32_t> widget::compute_viewport_rect(const mat4& matrix) const noexcept
 {
-	using std::round;
-
-	r4::rectangle<uint32_t> ret{
-		{this->context.get().renderer.get().rendering_context.get().to_window_coords(matrix * vec2(0, 0)),
-		 this->context.get().renderer.get().rendering_context.get().to_window_coords(matrix * this->rect().d)}
+	return {
+		{
+         .p1 = this->context.get().renderer.get().rendering_context.get().to_window_coords(matrix * vec2(0, 0)),
+         .p2 =
+				this->context.get().renderer.get().rendering_context.get().to_window_coords(matrix * this->rect().d) //
+		}
 	};
-	return ret;
 }
 
 ruis::vec2 widget::get_absolute_pos() const noexcept

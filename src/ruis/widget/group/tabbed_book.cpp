@@ -249,9 +249,8 @@ utki::shared_ref<page> tabbed_book::tear_out(choice_button& t)
 
 auto tabbed_book::find_pair(const ruis::choice_button& t) -> decltype(tab_page_pairs)::iterator
 {
-	return std::find_if(
-		this->tab_page_pairs.begin(), //
-		this->tab_page_pairs.end(),
+	return std::ranges::find_if(
+		this->tab_page_pairs, //
 		[&t](const auto& pair) {
 			return &t == &pair.first.get();
 		}
@@ -260,9 +259,8 @@ auto tabbed_book::find_pair(const ruis::choice_button& t) -> decltype(tab_page_p
 
 auto tabbed_book::find_pair(const ruis::page& p) -> decltype(tab_page_pairs)::iterator
 {
-	return std::find_if(
-		this->tab_page_pairs.begin(), //
-		this->tab_page_pairs.end(),
+	return std::ranges::find_if(
+		this->tab_page_pairs, //
 		[&p](const auto& pair) {
 			return &p == &pair.second.get();
 		}

@@ -108,9 +108,8 @@ const tst::set set("finding_widgets", [](tst::suite& suite){
 		tst::check_ne(aaas.size(), size_t(0), SL);
 
 		for(const auto& id : expected_ids){
-            auto i = std::find_if(
-					aaas.begin(),
-					aaas.end(),
+            auto i = std::ranges::find_if(
+					aaas, //
 					[&id](const decltype(aaas)::value_type& wg) -> bool {
 						return wg.get().id() == id;
 					}

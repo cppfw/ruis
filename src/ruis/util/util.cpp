@@ -101,9 +101,8 @@ const tml::leaf& ruis::get_property_value(const tml::tree& p)
 
 bool ruis::is_all_undefined(const sides<styled<length>>& s)
 {
-	auto i = std::find_if(
-		s.begin(), //
-		s.end(),
+	auto i = std::ranges::find_if(
+		s, //
 		[](const auto& e) {
 			return !e.get().is_undefined();
 		}
