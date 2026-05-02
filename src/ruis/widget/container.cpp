@@ -80,9 +80,6 @@ void container::render(const ruis::mat4& matrix) const
 
 event_status container::on_mouse_button(const mouse_button_event& e)
 {
-	//	TRACE(<< "container::OnMouseButton(): isDown = " << isDown << ", button = " << button << ", pos = " << pos <<
-	// std::endl)
-
 	blocked_flag_guard blocked_guard(this->is_blocked);
 
 	// check if mouse captured
@@ -92,10 +89,10 @@ event_status container::on_mouse_button(const mouse_button_event& e)
 			if (auto w = i->second.capturing_widget.lock()) {
 				if (w->is_interactive()) {
 					w->on_mouse_button(mouse_button_event{
-						e.action, //
-						e.pos - w->rect().p,
-						e.button,
-						e.pointer_id
+						.action = e.action, //
+						.pos = e.pos - w->rect().p,
+						.button = e.button,
+						.pointer_id = e.pointer_id
 					});
 					w->set_hovered(
 						w->rect().overlaps(e.pos), //
@@ -108,8 +105,8 @@ event_status container::on_mouse_button(const mouse_button_event& e)
 						// which are already down, so we increase the button counter.
 						++num_buttons_captured;
 					} else {
-						// If we get button up event,
-						//  then it is for one of the buttons which was down before, so we decrease the button counter.
+						// If we get button up event, then it is for one of the buttons which was down before,
+						// so we decrease the button counter.
 						--num_buttons_captured;
 					}
 					if (num_buttons_captured == 0) {
@@ -143,10 +140,10 @@ event_status container::on_mouse_button(const mouse_button_event& e)
 		c.set_hovered(true, e.pointer_id);
 
 		if (c.on_mouse_button(mouse_button_event{
-				e.action, //
-				e.pos - c.rect().p,
-				e.button,
-				e.pointer_id
+				.action = e.action, //
+				.pos = e.pos - c.rect().p,
+				.button = e.button,
+				.pointer_id = e.pointer_id
 			}) == event_status::consumed)
 		{
 			utki::assert(
@@ -156,7 +153,7 @@ event_status container::on_mouse_button(const mouse_button_event& e)
 				SL
 			);
 
-			// normally, we get here only when the mouse was not captured by widget, because
+			// Normally, we get here only when the mouse was not captured by widget, because
 			// as soon as mouse button down event comes to some widget, it captures the mouse.
 			// So, the event should be button down.
 			// But, in theory, it can be button up event here, if some widget which captured
@@ -165,15 +162,15 @@ event_status container::on_mouse_button(const mouse_button_event& e)
 				this->mouse_capture_map.insert(std::make_pair(
 					e.pointer_id, //
 					mouse_capture_info{
-						utki::make_weak(i->to_shared_ptr()), //
-						1 // one button captured
+						.capturing_widget = utki::make_weak(i->to_shared_ptr()), //
+						.num_buttons_captured = 1 // one button captured
 					}
 				));
 			}
 
-			// widget has consumed the mouse button event,
+			// Widget has consumed the mouse button event,
 			// that means the rest of the underlying widgets are not hovered,
-			// update the hovered state of those
+			// update the hovered state of those.
 			for (++i; i != this->children().rend(); ++i) {
 				i->get().set_hovered(
 					false, //
@@ -198,9 +195,9 @@ event_status container::on_mouse_move(const mouse_move_event& e)
 			if (auto w = i->second.capturing_widget.lock()) {
 				if (w->is_interactive()) { // TODO: why check interactive here?
 					auto status = w->on_mouse_move(mouse_move_event{
-						e.pos - w->rect().p, //
-						e.pointer_id,
-						e.ignore_mouse_capture
+						.pos = e.pos - w->rect().p, //
+						.pointer_id = e.pointer_id,
+						.ignore_mouse_capture = e.ignore_mouse_capture
 					});
 					w->set_hovered(
 						w->rect().overlaps(e.pos), //
@@ -238,9 +235,11 @@ event_status container::on_mouse_move(const mouse_move_event& e)
 
 		c.set_hovered(true, e.pointer_id);
 
-		// LOG("e.pos = " << e.pos << ", rect() = " << c->rect() << std::endl)
-		if (c.on_mouse_move(mouse_move_event{e.pos - c.rect().p, e.pointer_id, e.ignore_mouse_capture}) ==
-			event_status::consumed)
+		if (c.on_mouse_move(mouse_move_event{
+				.pos = e.pos - c.rect().p, //
+				.pointer_id = e.pointer_id,
+				.ignore_mouse_capture = e.ignore_mouse_capture
+			}) == event_status::consumed)
 		{
 			// widget has consumed the mouse move event,
 			// that means the rest of the underlying widgets are not hovered,
