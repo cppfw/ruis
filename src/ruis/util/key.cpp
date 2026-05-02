@@ -23,6 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <algorithm>
 #include <array>
+#include <ranges>
 
 #include <utki/enum_array.hpp>
 #include <utki/sort.hpp>
@@ -172,6 +173,8 @@ struct key_name_key_pair {
 
 	// This constructor is added to suppress clang-tidy to ask using designated initializers,
 	// when constructing key_name_key_pair items in the array, because it looks clearer without them.
+	// Since the structure is called a pair and the two values are of different types it is obvious
+	// to construct it by just specifying the two values without specifying which is what.
 	constexpr key_name_key_pair(std::string_view name, ruis::key key) :
 		name(name),
 		key(key)
@@ -292,13 +295,11 @@ constexpr auto key_name_to_key_ordered_mapping = []() constexpr {
 
 ruis::key ruis::to_key(std::string_view name)
 {
-	auto i = std::lower_bound(
-		key_name_to_key_ordered_mapping.begin(),
-		key_name_to_key_ordered_mapping.end(),
+	auto i = std::ranges::lower_bound(
+		key_name_to_key_ordered_mapping, //
 		name,
-		[](const auto& a, const std::string_view& b) {
-			return a.name < b;
-		}
+		{}, // comparison function, empty means to use operator<()
+		&key_name_key_pair::name
 	);
 	if (i != key_name_to_key_ordered_mapping.end() && i->name == name) {
 		return i->key;
