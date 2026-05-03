@@ -31,6 +31,7 @@ add_library(
         ${srcs}
     )
 
+# TODO: is this a duplication? See same above before add_library.
 include_directories(
         ../../src/
         ../../tests/harness/modules/ruisapp/src
