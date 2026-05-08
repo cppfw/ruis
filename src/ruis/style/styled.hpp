@@ -133,21 +133,21 @@ private:
 
 	const style_value_ref_type& get_ref() const noexcept
 	{
-		ASSERT(!this->value.valueless_by_exception())
-		ASSERT(this->is_from_style())
+		utki::assert(!this->value.valueless_by_exception());
+		utki::assert(this->is_from_style());
 		// use std::get_if() to avoid throwing exceptions
 		const auto* r = std::get_if<style_value_ref_type>(&this->value);
-		ASSERT(r)
+		utki::assert(r);
 		return *r;
 	}
 
 	const actual_value_type& get_value() const noexcept
 	{
-		ASSERT(!this->value.valueless_by_exception())
-		ASSERT(!this->is_from_style())
+		utki::assert(!this->value.valueless_by_exception());
+		utki::assert(!this->is_from_style());
 		// use std::get_if() to avoid throwing exceptions
 		const auto* v = std::get_if<actual_value_type>(&this->value);
-		ASSERT(v)
+		utki::assert(v);
 		return *v;
 	}
 

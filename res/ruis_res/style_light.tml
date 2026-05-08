@@ -1,0 +1,21 @@
+version{1}
+// TODO: support inherit
+ruis{
+    color_background{0xffd5d5d5}
+    color_middleground{0xffc2c2c2}
+    color_foreground{0xffb0b0b0}
+
+    color_text_normal{0xff000000}
+    color_text_selection_bg{0xff80b0b0}
+
+    color_highlight{0xffad9869}
+
+    color_cursor{0xffff8080}
+
+    // TODO: support include
+    dim_tree_view_item_indent{17pp}
+
+    font_size_normal{12pp}
+    font_face_normal{ruis_fnt_normal}
+}
+user{}

@@ -90,14 +90,15 @@ void style_provider::store_to_cache(
 	std::weak_ptr<style_value_base> v
 ) const
 {
-	ASSERT(!utki::contains(this->cache, id))
+	utki::assert(!utki::contains(this->cache, id));
 
 	[[maybe_unused]] auto res = this->cache.insert(std::make_pair(
 		std::string(id), //
 		std::move(v)
 	));
 
-	ASSERT(res.second) // insert took place
+	// insert took place
+	utki::assert(res.second);
 }
 
 styled<color> style_provider::get_color_background() const

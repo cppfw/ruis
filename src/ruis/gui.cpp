@@ -70,7 +70,6 @@ void gui::init_standard_widgets(const fsif::file& fi)
 			fi.set_path(s);
 			this->context.get().loader().mount_res_pack(fi);
 		} catch (std::runtime_error&) {
-			// utki::logcat_debug("could not mount respack: ", s, '\n');
 			continue;
 		}
 

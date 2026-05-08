@@ -118,11 +118,10 @@ template <typename value_type>
 styled<value_type> style_provider::get(std::string_view id) const
 {
 	if (auto svb = this->get_from_cache(id)) {
-		auto sv = std::dynamic_pointer_cast<const typename styled<value_type>::style_value>(svb);
-		if (!sv) {
-			throw std::invalid_argument("style::get(id): requested value_type does not match the one stored in cache");
+		if (auto sv = std::dynamic_pointer_cast<const typename styled<value_type>::style_value>(svb)) {
+			return {utki::shared_ref<const typename styled<value_type>::style_value>(std::move(sv))};
 		}
-		return {utki::shared_ref<const typename styled<value_type>::style_value>(std::move(sv))};
+		throw std::invalid_argument("style::get(id): requested value_type does not match the one stored in cache");
 	}
 
 	const auto* desc = this->cur_style_sheet.get().get(id);
