@@ -25,6 +25,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "widget/input/character_input_widget.hpp"
 #include "widget/label/gap.hpp"
 
+using namespace std::string_view_literals;
+
 using namespace ruis;
 
 // NOLINTNEXTLINE(modernize-pass-by-value)
@@ -52,16 +54,8 @@ void gui::init_standard_widgets(const fsif::file& fi)
 #	include "../soname.txt"
 		;
 
-	{
-		std::stringstream ss;
-		ss << "/usr/local/share/ruis/res" << soname << "/";
-		paths.push_back(ss.str());
-	}
-	{
-		std::stringstream ss;
-		ss << "/usr/share/ruis/res" << soname << "/";
-		paths.push_back(ss.str());
-	}
+	paths.push_back(utki::cat("/usr/local/share/ruis/res"sv, soname));
+	paths.push_back(utki::cat("/usr/share/ruis/res"sv, soname));
 #endif
 
 	bool mounted = false;
