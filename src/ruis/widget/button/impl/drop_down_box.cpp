@@ -23,7 +23,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <utki/debug.hpp>
 
-#include "../../../default_style.hpp"
 #include "../../group/overlay.hpp"
 #include "../../label/gap.hpp"
 #include "../../label/rectangle.hpp"

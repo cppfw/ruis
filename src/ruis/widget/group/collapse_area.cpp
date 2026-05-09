@@ -22,7 +22,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "collapse_area.hpp"
 
 #include "../../context.hpp"
-#include "../../default_style.hpp"
 #include "../../util/util.hpp"
 #include "../button/impl/image_toggle.hpp"
 #include "../button/toggle_button.hpp"

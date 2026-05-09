@@ -4,7 +4,6 @@
 #include <ruis/widget/slider/scroll_bar.hpp>
 #include <ruis/widget/button/push_button.hpp>
 #include <ruis/widget/group/scroll_area.hpp>
-#include <ruis/default_style.hpp>
 
 using namespace std::string_literals;
 using namespace std::string_view_literals;

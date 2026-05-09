@@ -22,7 +22,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "tree_view.hpp"
 
 #include "../../context.hpp"
-#include "../../default_style.hpp"
 #include "../../layout/linear_layout.hpp"
 #include "../label/gap.hpp"
 #include "../label/image.hpp"

@@ -6,7 +6,6 @@
 #include <ruis/widget/button/impl/image_push_button.hpp>
 #include <ruis/widget/label/gap.hpp>
 #include <ruis/widget/input/text_input_line.hpp>
-#include <ruis/default_style.hpp>
 #include <ruisapp/application.hpp>
 
 #include "new_native_window.hpp"

@@ -27,7 +27,6 @@
 #include <ruis/widget/input/text_input_line.hpp>
 #include <ruis/widget/button/selection_box.hpp>
 #include <ruis/layout/linear_layout.hpp>
-#include <ruis/default_style.hpp>
 
 #include "root_widget.hpp"
 #include "cube_widget.hpp"
