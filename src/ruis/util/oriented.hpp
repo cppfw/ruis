@@ -26,6 +26,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
+/**
+ * @brief Base class for oriented widgets.
+ * This is a base class for widgets which can be either vertical or horizontal, like lists or sliders.
+ */
 class oriented
 {
 public:

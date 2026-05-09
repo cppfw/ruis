@@ -30,7 +30,7 @@ namespace ruis {
  * The base class for widgets which are essentially containers,
  * but enchancing functionality of simple container widget,
  * for example, by adding padding to the contents or adding
- * some special control widgets on top of the content.
+ * some special control widgets on top of the content like decorated window.
  */
 class content_wrapping
 {
