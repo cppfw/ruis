@@ -35,11 +35,22 @@ void style_provider::set(utki::shared_ref<style_sheet> ss)
 {
 	this->cur_style_sheet = std::move(ss);
 
+	// ==== reload standard cache ====
+	for (auto [v, id] : this->standard_cache.zip_with_enum()) {
+		auto sv = v.lock();
+		if (!sv) {
+			continue;
+		}
+
+		sv->reload(
+			this->cur_style_sheet.get().get(id), //
+			this->res_loader.get()
+		);
+	}
+
+	// ==== reload user cache ====
 	std::vector<std::string_view> keys_to_remove;
 
-	// TODO: reload standard cache
-
-	// reload cache
 	for (auto& pair : this->user_cache) {
 		auto sv = pair.second.lock();
 		if (!sv) {
