@@ -37,8 +37,10 @@ void style_provider::set(utki::shared_ref<style_sheet> ss)
 
 	std::vector<std::string_view> keys_to_remove;
 
+	// TODO: reload standard cache
+
 	// reload cache
-	for (auto& pair : this->cache) {
+	for (auto& pair : this->user_cache) {
 		auto sv = pair.second.lock();
 		if (!sv) {
 			// the weak reference has expired
@@ -65,24 +67,45 @@ void style_provider::set(utki::shared_ref<style_sheet> ss)
 
 	// remove unused cache entries
 	for (const auto& k : keys_to_remove) {
-		auto i = this->cache.find(k);
-		this->cache.erase(i);
+		auto i = this->user_cache.find(k);
+		this->user_cache.erase(i);
 	}
+}
+
+std::shared_ptr<const style_provider::style_value_base> style_provider::get_from_cache(style id) const
+{
+	auto& w = this->standard_cache[id];
+	auto p = w.lock();
+	if (!p) {
+		return nullptr;
+	}
+
+	return p;
 }
 
 std::shared_ptr<const style_provider::style_value_base> style_provider::get_from_cache(std::string_view id) const
 {
-	auto i = this->cache.find(id);
-	if (i == this->cache.end()) {
+	auto i = this->user_cache.find(id);
+	if (i == this->user_cache.end()) {
 		return nullptr;
 	}
 
 	auto p = i->second.lock();
 	if (!p) {
-		this->cache.erase(i);
+		this->user_cache.erase(i);
 	}
 
 	return p;
+}
+
+void style_provider::store_to_cache(
+	style id, //
+	std::weak_ptr<style_value_base> v
+) const
+{
+	utki::assert(this->standard_cache[id].expired());
+
+	this->standard_cache[id] = std::move(v);
 }
 
 void style_provider::store_to_cache(
@@ -90,9 +113,9 @@ void style_provider::store_to_cache(
 	std::weak_ptr<style_value_base> v
 ) const
 {
-	utki::assert(!utki::contains(this->cache, id));
+	utki::assert(!utki::contains(this->user_cache, id));
 
-	[[maybe_unused]] auto res = this->cache.insert(std::make_pair(
+	[[maybe_unused]] auto res = this->user_cache.insert(std::make_pair(
 		std::string(id), //
 		std::move(v)
 	));
@@ -103,45 +126,45 @@ void style_provider::store_to_cache(
 
 styled<color> style_provider::get_color_background() const
 {
-	return this->get<color>("color_background"sv);
+	return this->get<color>(style::color_background);
 }
 
 styled<color> style_provider::get_color_middleground() const
 {
-	return this->get<color>("color_middleground"sv);
+	return this->get<color>(style::color_middleground);
 }
 
 styled<color> style_provider::get_color_foreground() const
 {
-	return this->get<color>("color_foreground"sv);
+	return this->get<color>(style::color_foreground);
 }
 
 styled<color> style_provider::get_color_text_normal() const
 {
-	return this->get<color>("color_text_normal"sv);
+	return this->get<color>(style::color_text_normal);
 }
 
 styled<color> style_provider::get_color_highlight() const
 {
-	return this->get<color>("color_highlight"sv);
+	return this->get<color>(style::color_highlight);
 }
 
 styled<color> style_provider::get_color_cursor() const
 {
-	return this->get<color>("color_cursor"sv);
+	return this->get<color>(style::color_cursor);
 }
 
 styled<layout::dimension> style_provider::get_dim_indent_tree_view_item() const
 {
-	return this->get<layout::dimension>("dim_tree_view_item_indent"sv);
+	return this->get<layout::dimension>(style::dim_tree_view_item_indent);
 }
 
 styled<length> style_provider::get_font_size_normal() const
 {
-	return this->get<length>("font_size_normal"sv);
+	return this->get<length>(style::font_size_normal);
 }
 
 styled<res::font> style_provider::get_font_face_normal() const
 {
-	return this->get<res::font>("font_face_normal"sv);
+	return this->get<res::font>(style::font_face_normal);
 }

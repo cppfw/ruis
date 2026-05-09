@@ -22,8 +22,33 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #pragma once
 
 #include <tml/tree.hpp>
+#include <utki/enum_array.hpp>
 
 namespace ruis {
+
+/**
+ * @brief Style value id.
+ * Ruis standard style values.
+ */
+enum class style {
+	color_background,
+	color_middleground,
+	color_foreground,
+
+	color_text_normal,
+	color_text_selection_bg,
+
+	color_highlight,
+
+	color_cursor,
+
+	dim_tree_view_item_indent,
+
+	font_size_normal,
+	font_face_normal,
+
+	enum_size
+};
 
 /**
  * @brief Style sheet.
@@ -45,9 +70,12 @@ namespace ruis {
  */
 class style_sheet
 {
-	std::map<std::string, tml::forest, std::less<>> id_to_description_map;
+	utki::enum_array<tml::forest, style> standard_styles;
+	std::map<std::string, tml::forest, std::less<>> user_styles;
 
-	static std::map<std::string, tml::forest, std::less<>> parse(tml::forest desc);
+	void parse(tml::forest desc);
+
+	static style name_to_style(std::string_view name);
 
 public:
 	style_sheet() = default;
@@ -61,6 +89,16 @@ public:
 	 * @return nullptr in case the style id is not present in the style sheet.
 	 */
 	const tml::forest* get(std::string_view style_id) const noexcept;
+
+	/**
+	 * @brief Get standard style value description.
+	 * @param style_id - id of the standard style value.
+	 * @return reference to the standard style value description.
+	 */
+	const tml::forest& get(style style_id) const noexcept
+	{
+		return this->standard_styles[style_id];
+	}
 
 	static style_sheet load(const fsif::file& fi);
 };

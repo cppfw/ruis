@@ -24,11 +24,39 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace std::string_view_literals;
 using namespace ruis;
 
-style_sheet::style_sheet(tml::forest desc) :
-	id_to_description_map(parse(std::move(desc)))
-{}
+style style_sheet::name_to_style(std::string_view name)
+{
+	if (name == "color_background"sv) {
+		return style::color_background;
+	} else if (name == "color_middleground"sv) {
+		return style::color_middleground;
+	} else if (name == "color_foreground"sv) {
+		return style::color_foreground;
+	} else if (name == "color_text_normal"sv) {
+		return style::color_text_normal;
+	} else if (name == "color_text_selection_bg"sv) {
+		return style::color_text_selection_bg;
+	} else if (name == "color_highlight"sv) {
+		return style::color_highlight;
+	} else if (name == "color_cursor"sv) {
+		return style::color_cursor;
+	} else if (name == "dim_tree_view_item_indent"sv) {
+		return style::dim_tree_view_item_indent;
+	} else if (name == "font_size_normal"sv) {
+		return style::font_size_normal;
+	} else if (name == "font_face_normal"sv) {
+		return style::font_face_normal;
+	}
 
-std::map<std::string, tml::forest, std::less<>> style_sheet::parse(tml::forest desc)
+	throw std::invalid_argument(utki::cat("style_sheet::name_to_style(name): unknown style name: ", name));
+}
+
+style_sheet::style_sheet(tml::forest desc)
+{
+	this->parse(std::move(desc));
+}
+
+void style_sheet::parse(tml::forest desc)
 {
 	if (desc.empty()) {
 		throw std::invalid_argument("style_sheet::parse(desc): empty style sheet description supplied");
@@ -52,21 +80,20 @@ std::map<std::string, tml::forest, std::less<>> style_sheet::parse(tml::forest d
 		));
 	}
 
-	std::map<std::string, tml::forest, std::less<>> ret;
-
 	for (auto& d : utki::skip_front<1>(desc)) {
-		// TODO: why "ruis" and "user" are stored into same place?
-		if (d.value.string == "ruis"sv || d.value.string == "user"sv) {
+		if (d.value.string == "ruis"sv) {
 			for (auto& s : d.children) {
-				ret.insert_or_assign(
+				this->standard_styles[style_sheet::name_to_style(s.value.string)] = std::move(s.children);
+			}
+		} else if (d.value.string == "user"sv) {
+			for (auto& s : d.children) {
+				this->user_styles.insert_or_assign(
 					std::move(s.value.string), //
 					std::move(s.children)
 				);
 			}
 		}
 	}
-
-	return ret;
 }
 
 style_sheet style_sheet::load(const fsif::file& fi)
@@ -76,8 +103,8 @@ style_sheet style_sheet::load(const fsif::file& fi)
 
 const tml::forest* style_sheet::get(std::string_view style_id) const noexcept
 {
-	auto i = this->id_to_description_map.find(style_id);
-	if (i == this->id_to_description_map.end()) {
+	auto i = this->user_styles.find(style_id);
+	if (i == this->user_styles.end()) {
 		return nullptr;
 	}
 

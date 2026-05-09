@@ -69,9 +69,16 @@ class style_provider
 		virtual ~style_value_base() = default;
 	};
 
-	mutable std::map<std::string, std::weak_ptr<style_value_base>, std::less<>> cache;
+	mutable utki::enum_array<std::weak_ptr<style_value_base>, style> standard_cache;
+	mutable std::map<std::string, std::weak_ptr<style_value_base>, std::less<>> user_cache;
 
+	std::shared_ptr<const style_value_base> get_from_cache(style id) const;
 	std::shared_ptr<const style_value_base> get_from_cache(std::string_view id) const;
+
+	void store_to_cache(
+		style id, //
+		std::weak_ptr<style_value_base> v
+	) const;
 
 	void store_to_cache(
 		std::string_view id, //
@@ -83,6 +90,9 @@ public:
 
 private:
 	utki::shared_ref<ruis::style_sheet> cur_style_sheet;
+
+	template <typename value_type>
+	styled<value_type> get(style id) const;
 
 public:
 	style_provider(utki::shared_ref<ruis::resource_loader> loader);
@@ -113,6 +123,34 @@ public:
 #include "styled.hpp"
 
 namespace ruis {
+
+template <typename value_type>
+styled<value_type> style_provider::get(style id) const
+{
+	if (auto svb = this->get_from_cache(id)) {
+		if (auto sv = std::dynamic_pointer_cast<const typename styled<value_type>::style_value>(svb)) {
+			return {utki::shared_ref<const typename styled<value_type>::style_value>(std::move(sv))};
+		}
+		throw std::invalid_argument("style::get(id): requested value_type does not match the one stored in cache");
+	}
+	const auto& desc = this->cur_style_sheet.get().get(id);
+
+	if (desc.empty()) {
+		throw std::invalid_argument(
+			utki::cat("style_provider::get(style): no style value with id ", unsigned(id), " in the style sheet")
+		);
+	}
+
+	auto ret = utki::make_shared<typename styled<value_type>::style_value>(
+		desc, //
+		this->res_loader.get()
+	);
+	this->store_to_cache(
+		id, //
+		ret.to_shared_ptr()
+	);
+	return {ret};
+}
 
 template <typename value_type>
 styled<value_type> style_provider::get(std::string_view id) const
