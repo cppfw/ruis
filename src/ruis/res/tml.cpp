@@ -28,8 +28,8 @@ using namespace std::string_view_literals;
 
 using namespace ruis::res;
 
-ruis::res::tml::tml(::tml::forest tml_forest) :
-	tml_forest(std::move(tml_forest))
+ruis::res::tml::tml(::tml::forest forest) :
+	forest(std::move(forest))
 {}
 
 utki::shared_ref<ruis::res::tml> ruis::res::tml::load( //

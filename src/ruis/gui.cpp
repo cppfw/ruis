@@ -67,9 +67,6 @@ void gui::init_standard_widgets(const fsif::file& fi)
 			continue;
 		}
 
-		fi.set_path(utki::cat(s, "style_dark.tml"));
-		this->context.get().style_provider.get().set(utki::make_shared<style_sheet>(tml::read(fi)));
-
 		mounted = true;
 		break;
 	}
@@ -77,6 +74,10 @@ void gui::init_standard_widgets(const fsif::file& fi)
 	if (!mounted) {
 		throw std::runtime_error("gui::init_standard_widgets(): could not mount default resource pack");
 	}
+
+	// TODO: pass which style to load via parameter
+	auto style_res = this->context.get().loader().load<ruis::res::tml>("ruis_tml_style_dark"sv);
+	this->context.get().style_provider.get().set(utki::make_shared<style_sheet>(style_res.get().forest));
 }
 
 void gui::set_viewport(const ruis::rect& rect)

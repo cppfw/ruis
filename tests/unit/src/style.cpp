@@ -212,7 +212,7 @@ const tst::set set("style", [](tst::suite& suite){
 
         auto tml_sv = s.get<ruis::res::tml>("tml_style_value"sv);
         tst::check(tml_sv.get(), SL);
-        tst::check_eq(tml_sv.get()->forest(), tml::read("Hello world!"s), SL);
+        tst::check_eq(tml_sv.get()->forest, tml::read("Hello world!"s), SL);
 
         auto ss2 = utki::make_shared<ruis::style_sheet>(
             tml::read(
@@ -227,12 +227,12 @@ const tst::set set("style", [](tst::suite& suite){
 
         s.set(ss2);
 
-        tst::check_eq(tml_sv.get()->forest(), tml::read("World, hello!"s), SL);
+        tst::check_eq(tml_sv.get()->forest, tml::read("World, hello!"s), SL);
 
         {
             auto tml_sv = s.get<ruis::res::tml>("tml_style_value"sv);
             tst::check(tml_sv.get(), SL);
-            tst::check_eq(tml_sv.get()->forest(), tml::read("World, hello!"s), SL);
+            tst::check_eq(tml_sv.get()->forest, tml::read("World, hello!"s), SL);
         }
     });
 
@@ -268,7 +268,7 @@ const tst::set set("style", [](tst::suite& suite){
 
         ruis::styled<ruis::res::tml> tml = std::make_shared<ruis::res::tml>(tml::read("Hello{world!}"));
         tst::check(tml.get() != nullptr, SL);
-        tst::check_eq(tml.get()->forest(), tml::read("Hello{world!}"), SL);
+        tst::check_eq(tml.get()->forest, tml::read("Hello{world!}"), SL);
     });
 });
 }

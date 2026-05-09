@@ -46,8 +46,6 @@ class tml : public resource
 {
 	friend class ruis::resource_loader;
 
-	::tml::forest tml_forest;
-
 public:
 	/**
 	 * @brief Create tml resource.
@@ -63,10 +61,7 @@ public:
 
 	~tml() override = default;
 
-	const ::tml::forest& forest() const noexcept
-	{
-		return this->tml_forest;
-	}
+	const ::tml::forest forest;
 
 private:
 	static utki::shared_ref<tml> load( //
