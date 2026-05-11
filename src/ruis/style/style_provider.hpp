@@ -32,6 +32,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../util/length.hpp"
 
 #include "style_sheet.hpp"
+#include "styled.hpp"
 
 namespace ruis {
 
@@ -39,50 +40,25 @@ namespace res {
 class font;
 } // namespace res
 
-template <typename styled_value_type>
-class styled;
-
 class style_provider
 {
 	template <typename styled_value_type>
 	friend class styled;
 
-	class style_value_base
-	{
-		friend class style_provider;
+	mutable utki::enum_array<std::weak_ptr<internal::style_value_base>, style> standard_cache;
+	mutable std::map<std::string, std::weak_ptr<internal::style_value_base>, std::less<>> user_cache;
 
-	protected:
-		virtual void reload(
-			const tml::forest& desc, //
-			const ruis::resource_loader& loader
-		) = 0;
-
-		style_value_base() = default;
-
-	public:
-		style_value_base(const style_value_base&) = delete;
-		style_value_base& operator=(const style_value_base&) = delete;
-
-		style_value_base(style_value_base&&) = delete;
-		style_value_base& operator=(style_value_base&&) = delete;
-
-		virtual ~style_value_base() = default;
-	};
-
-	mutable utki::enum_array<std::weak_ptr<style_value_base>, style> standard_cache;
-	mutable std::map<std::string, std::weak_ptr<style_value_base>, std::less<>> user_cache;
-
-	std::shared_ptr<const style_value_base> get_from_cache(style id) const;
-	std::shared_ptr<const style_value_base> get_from_cache(std::string_view id) const;
+	std::shared_ptr<const internal::style_value_base> get_from_cache(style id) const;
+	std::shared_ptr<const internal::style_value_base> get_from_cache(std::string_view id) const;
 
 	void store_to_cache(
 		style id, //
-		std::weak_ptr<style_value_base> v
+		std::weak_ptr<internal::style_value_base> v
 	) const;
 
 	void store_to_cache(
 		std::string_view id, //
-		std::weak_ptr<style_value_base> v
+		std::weak_ptr<internal::style_value_base> v
 	) const;
 
 public:
@@ -117,12 +93,6 @@ public:
 	styled<length> get_font_size_normal() const;
 	styled<res::font> get_font_face_normal() const;
 };
-
-} // namespace ruis
-
-#include "styled.hpp"
-
-namespace ruis {
 
 template <typename value_type>
 styled<value_type> style_provider::get(style id) const

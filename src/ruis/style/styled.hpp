@@ -23,9 +23,37 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <concepts>
 
-#include "style_provider.hpp"
+#include <tml/tree.hpp>
+
+#include "../resource_loader.hpp"
 
 namespace ruis {
+
+class style_provider;
+
+namespace internal{
+class style_value_base
+{
+	friend class ruis::style_provider;
+
+protected:
+	virtual void reload(
+		const tml::forest& desc, //
+		const ruis::resource_loader& loader
+	) = 0;
+
+	style_value_base() = default;
+
+public:
+	style_value_base(const style_value_base&) = delete;
+	style_value_base& operator=(const style_value_base&) = delete;
+
+	style_value_base(style_value_base&&) = delete;
+	style_value_base& operator=(style_value_base&&) = delete;
+
+	virtual ~style_value_base() = default;
+};
+}
 
 /**
  * @brief A styled value.
@@ -53,7 +81,7 @@ public:
 		>;
 
 private:
-	class style_value : public style_provider::style_value_base
+	class style_value : public internal::style_value_base
 	{
 		template <typename checked_type, typename = void>
 		struct has_static_member_make_from : public std::false_type {};

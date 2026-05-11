@@ -83,7 +83,7 @@ void style_provider::set(utki::shared_ref<style_sheet> ss)
 	}
 }
 
-std::shared_ptr<const style_provider::style_value_base> style_provider::get_from_cache(style id) const
+std::shared_ptr<const internal::style_value_base> style_provider::get_from_cache(style id) const
 {
 	auto& w = this->standard_cache[id];
 	auto p = w.lock();
@@ -94,7 +94,7 @@ std::shared_ptr<const style_provider::style_value_base> style_provider::get_from
 	return p;
 }
 
-std::shared_ptr<const style_provider::style_value_base> style_provider::get_from_cache(std::string_view id) const
+std::shared_ptr<const internal::style_value_base> style_provider::get_from_cache(std::string_view id) const
 {
 	auto i = this->user_cache.find(id);
 	if (i == this->user_cache.end()) {
@@ -111,7 +111,7 @@ std::shared_ptr<const style_provider::style_value_base> style_provider::get_from
 
 void style_provider::store_to_cache(
 	style id, //
-	std::weak_ptr<style_value_base> v
+	std::weak_ptr<internal::style_value_base> v
 ) const
 {
 	utki::assert(this->standard_cache[id].expired());
@@ -121,7 +121,7 @@ void style_provider::store_to_cache(
 
 void style_provider::store_to_cache(
 	std::string_view id, //
-	std::weak_ptr<style_value_base> v
+	std::weak_ptr<internal::style_value_base> v
 ) const
 {
 	utki::assert(!utki::contains(this->user_cache, id));
