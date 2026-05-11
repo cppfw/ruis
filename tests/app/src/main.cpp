@@ -27,6 +27,7 @@
 #include <ruis/widget/input/text_input_line.hpp>
 #include <ruis/widget/button/selection_box.hpp>
 #include <ruis/layout/linear_layout.hpp>
+#include <ruis/standard_widgets.hpp>
 
 #include "root_widget.hpp"
 #include "cube_widget.hpp"
@@ -73,7 +74,10 @@ public:
 
 		auto& gui = this->window.gui;
 
-		gui.init_standard_widgets(this->get_res_file("../../res/ruis_res/").get());
+		ruis::init_standard_widgets(
+			gui.context, //
+			this->get_res_file("../../res/ruis_res/").get()
+		);
 
 		gui.context.get().loader().mount_res_pack(this->get_res_file("res/").get());
 //		this->ResMan().MountResPack(ruis::ZipFile::New(fsif::FSFile::New("res.zip")));

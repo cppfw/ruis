@@ -1,3 +1,4 @@
+#include <ruis/standard_widgets.hpp>
 #include <ruis/widget/proxy/key_proxy.hpp>
 #include <ruisapp/application.hpp>
 
@@ -14,7 +15,10 @@ public:
     }),
 		window(this->make_window({.dims = {1024, 800}}))
 	{
-		this->window.gui.init_standard_widgets(this->get_res_file("../../res/ruis_res/"));
+		ruis::init_standard_widgets(
+			this->window.gui.context, //
+			this->get_res_file("../../res/ruis_res/")
+		);
 
 		// this->gui.context.get().loader.mount_res_pack(this->get_res_file("res/"));
 

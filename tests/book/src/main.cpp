@@ -10,6 +10,7 @@
 #include <ruis/widget/button/tab_group.hpp>
 #include <ruis/widget/button/tab.hpp>
 #include <ruis/widget/label/text.hpp>
+#include <ruis/standard_widgets.hpp>
 
 #include "pile_page.hpp"
 #include "cube_page.hpp"
@@ -40,7 +41,10 @@ public:
 			this->quit();
 		};
 
-		this->window.gui.init_standard_widgets(this->get_res_file("../../res/ruis_res/").get());
+		ruis::init_standard_widgets(
+			this->window.gui.context, //
+			this->get_res_file("../../res/ruis_res/").get()
+		);
 
 		this->window.gui.context.get().loader().mount_res_pack(this->get_res_file("res/").get());
 

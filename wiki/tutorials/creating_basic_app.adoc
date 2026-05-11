@@ -46,6 +46,7 @@ public:
 			ruisapp::application(ruisapp::window_params(r4::vec2ui(800, 600)))
 	{
 		// ruisapp::application has the 'gui' member variable which is an instance of ruis::gui
+		// TODO: update to use free floating function
 		this->gui.init_standard_widgets(this->get_res_file());
 	}
 };
@@ -79,6 +80,7 @@ public:
 	application() :
 			ruisapp::application(ruisapp::window_params(r4::Vec2ui(800, 600)))
 	{
+		// TODO: update to use free floating function
 		this->gui.init_standard_widgets(this->get_res_file());
 
 		// Inflate widgets hierarchy from GUI description script
@@ -107,6 +109,7 @@ public:
 	application() :
 			ruisapp::application(ruisapp::window_params(r4::vec2ui(800, 600)))
 	{
+		// TODO: update to use free floating function
 		this->gui.init_standard_widgets(this->get_res_file());
 
 		// Inflate widgets hierarchy from GUI description script

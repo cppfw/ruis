@@ -25,6 +25,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "widget/input/character_input_widget.hpp"
 #include "widget/label/gap.hpp"
 
+// TODO: remove when guit::init_standard_widgets() is removed
+#include "standard_widgets.hpp"
+
 using namespace std::string_view_literals;
 
 using namespace ruis;
@@ -37,47 +40,7 @@ gui::gui(utki::shared_ref<ruis::context> context) :
 
 void gui::init_standard_widgets(const fsif::file& fi)
 {
-	// mount default resource pack
-
-	std::vector<std::string> paths;
-
-	if (!fi.path().empty()) {
-		paths.push_back(fi.path());
-	}
-
-	paths.emplace_back("ruis_res/");
-
-#if (M_OS == M_OS_LINUX && M_OS_NAME != M_OS_NAME_ANDROID) || (M_OS == M_OS_MACOSX && M_OS_NAME != M_OS_NAME_IOS) || \
-	(M_OS == M_OS_UNIX)
-
-	unsigned soname =
-#	include "../soname.txt"
-		;
-
-	paths.push_back(utki::cat("/usr/local/share/ruis/res"sv, soname));
-	paths.push_back(utki::cat("/usr/share/ruis/res"sv, soname));
-#endif
-
-	bool mounted = false;
-	for (const auto& s : paths) {
-		try {
-			fi.set_path(s);
-			this->context.get().loader().mount_res_pack(fi);
-		} catch (std::runtime_error&) {
-			continue;
-		}
-
-		mounted = true;
-		break;
-	}
-
-	if (!mounted) {
-		throw std::runtime_error("gui::init_standard_widgets(): could not mount default resource pack");
-	}
-
-	// TODO: pass which style to load via parameter
-	auto style_res = this->context.get().loader().load<ruis::res::tml>("ruis_tml_style_dark"sv);
-	this->context.get().style().set(utki::make_shared<style_sheet>(style_res.get().forest));
+	ruis::init_standard_widgets(this->context, fi);
 }
 
 void gui::set_viewport(const ruis::rect& rect)

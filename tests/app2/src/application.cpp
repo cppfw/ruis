@@ -21,6 +21,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "application.hpp"
 
+#include <ruis/standard_widgets.hpp>
 #include <ruis/widget/proxy/key_proxy.hpp>
 #include <ruisapp/application.hpp>
 
@@ -32,7 +33,10 @@ application::application() :
 }),
 	window(this->make_window({.dims = {1024, 800}}))
 {
-	this->window.gui.init_standard_widgets(this->get_res_file("../../res/ruis_res/").get());
+	ruis::init_standard_widgets(
+		this->window.gui.context, //
+		this->get_res_file("../../res/ruis_res/").get()
+	);
 
 	this->window.gui.context.get().localization.get() =
 		ruis::localization(tml::read(this->get_res_file("res/localization/en.tml").get()));

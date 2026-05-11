@@ -7,6 +7,7 @@
 #include <ruis/widget/group/book.hpp>
 #include <ruis/widget/group/tabbed_book.hpp>
 #include <ruis/gui.hpp>
+#include <ruis/standard_widgets.hpp>
 
 #include "../../harness/util/dummy_context.hpp"
 
@@ -21,7 +22,7 @@ const tst::set set("tabbed_book", [](tst::suite& suite){
 		ruis::gui gui(c);
 
 		fsif::native_file fi("../../res/ruis_res/");
-		gui.init_standard_widgets(fi);
+		ruis::init_standard_widgets(gui.context, fi);
 
 		class sub_tabbed_book : public ruis::tabbed_book{
 		public:

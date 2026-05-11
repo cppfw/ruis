@@ -7,6 +7,7 @@
 #include <ruis/widget/button/tab.hpp>
 #include <ruis/widget/label/text.hpp>
 #include <ruis/widget/group/tabbed_book.hpp>
+#include <ruis/standard_widgets.hpp>
 
 #include "sample_page.hpp"
 
@@ -170,7 +171,10 @@ public:
 			this->quit();
 		};
 
-		this->window.gui.init_standard_widgets(this->get_res_file("../../res/ruis_res/"));
+		ruis::init_standard_widgets(
+			this->window.gui.context, //
+			this->get_res_file("../../res/ruis_res/")
+		);
 
 		auto c = make_root_widget(this->window.gui.context);
 		this->window.gui.set_root(c);

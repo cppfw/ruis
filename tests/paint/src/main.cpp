@@ -9,6 +9,7 @@
 #include <ruis/widget/slider/scroll_bar.hpp>
 #include <ruis/widget/button/push_button.hpp>
 #include <ruis/widget/label/text.hpp>
+#include <ruis/standard_widgets.hpp>
 
 using namespace std::string_literals;
 
@@ -191,7 +192,10 @@ public:
 			this->quit();
 		};
 
-		this->window.gui.init_standard_widgets(this->get_res_file("../../res/ruis_res/"));
+		ruis::init_standard_widgets(
+			this->window.gui.context, //
+			this->get_res_file("../../res/ruis_res/")
+		);
 
 		this->window.gui.set_root(make_root_widget(this->window.gui.context));
 	}

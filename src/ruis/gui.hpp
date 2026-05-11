@@ -108,7 +108,7 @@ public:
 	 * widgets to be used by application.
 	 * @param fi - file interface to use for resource loading.
 	 */
-	// TODO: make free function taking context as argument
+	[[deprecated("use free floating ruis::init_standard_widgets()")]]
 	void init_standard_widgets(const fsif::file& fi);
 
 	/**

@@ -5,6 +5,7 @@
 
 #include <ruis/widget/label/text.hpp>
 #include <ruis/widget/group/window.hpp>
+#include <ruis/standard_widgets.hpp>
 
 #include <ruisapp/application.hpp>
 
@@ -125,7 +126,10 @@ public:
 			this->quit();
 		};
 
-		this->window.gui.init_standard_widgets(this->get_res_file("../../res/ruis_res/"));
+		ruis::init_standard_widgets(
+			this->window.gui.context, //
+			this->get_res_file("../../res/ruis_res/")
+		);
 
 		auto c = make_root_widget(this->window.gui.context);
 

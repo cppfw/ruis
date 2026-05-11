@@ -6,6 +6,7 @@
 #include <ruis/layout/abstract_layout.hpp>
 #include <ruis/widget/label/text.hpp>
 #include <ruis/widget/label/rectangle.hpp>
+#include <ruis/standard_widgets.hpp>
 
 using namespace std::string_literals;
 
@@ -326,7 +327,10 @@ public:
 				}
 			))
 	{
-		this->window.gui.init_standard_widgets(this->get_res_file("../../res/ruis_res/").get());
+		ruis::init_standard_widgets(
+			this->window.gui.context, //
+			this->get_res_file("../../res/ruis_res/").get()
+		);
 
 		this->window.gui.set_root(make_layout(this->window.gui.context));
 

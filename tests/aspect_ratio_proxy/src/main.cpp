@@ -6,6 +6,7 @@
 #include <ruis/widget/proxy/aspect_ratio_proxy.hpp>
 #include <ruis/widget/label/text.hpp>
 #include <ruis/widget/label/rectangle.hpp>
+#include <ruis/standard_widgets.hpp>
 
 using namespace std::string_literals;
 
@@ -28,7 +29,10 @@ public:
 			this->quit();
 		};
 
-		this->window.gui.init_standard_widgets(this->get_res_file("../../res/ruis_res/").get());
+		ruis::init_standard_widgets(
+			this->window.gui.context, //
+			this->get_res_file("../../res/ruis_res/").get()
+		);
 
 		auto ctx = this->window.gui.context;
 
