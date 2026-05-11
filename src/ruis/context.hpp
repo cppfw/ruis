@@ -64,7 +64,7 @@ public:
 	 * @brief Shorthand alias for style_provider.
 	 * @return this->style_provider.get().
 	 */
-	const ruis::style_provider& style() const noexcept
+	ruis::style_provider& style() noexcept
 	{
 		return this->style_provider.get();
 	}
