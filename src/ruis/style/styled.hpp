@@ -31,7 +31,7 @@ namespace ruis {
 
 class style_provider;
 
-namespace internal{
+namespace internal {
 class style_value_base
 {
 	friend class ruis::style_provider;
@@ -53,7 +53,7 @@ public:
 
 	virtual ~style_value_base() = default;
 };
-}
+} // namespace internal
 
 /**
  * @brief A styled value.
