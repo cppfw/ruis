@@ -6,6 +6,7 @@
 
 #include <ruis/widget/button/push_button.hpp>
 #include <ruis/widget/label/busy.hpp>
+#include <ruis/standard_widgets.hpp>
 
 #include "root_gui.hpp"
 
