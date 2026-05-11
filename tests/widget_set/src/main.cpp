@@ -9,6 +9,7 @@
 #include <ruis/widget/label/busy.hpp>
 #include <ruis/widget/label/text.hpp>
 #include <ruis/util/weak_widget_set.hpp>
+#include <ruis/standard_widgets.hpp>
 
 using namespace std::string_literals;
 
