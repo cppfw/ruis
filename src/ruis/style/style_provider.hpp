@@ -68,7 +68,32 @@ private:
 	utki::shared_ref<ruis::style_sheet> cur_style_sheet;
 
 	template <typename value_type>
-	styled<value_type> get(style id) const;
+	styled<value_type> get(style id) const
+	{
+		if (auto svb = this->get_from_cache(id)) {
+			if (auto sv = std::dynamic_pointer_cast<const typename styled<value_type>::style_value>(svb)) {
+				return {utki::shared_ref<const typename styled<value_type>::style_value>(std::move(sv))};
+			}
+			throw std::invalid_argument("style::get(id): requested value_type does not match the one stored in cache");
+		}
+		const auto& desc = this->cur_style_sheet.get().get(id);
+
+		if (desc.empty()) {
+			throw std::invalid_argument(
+				utki::cat("style_provider::get(style): no style value with id ", unsigned(id), " in the style sheet")
+			);
+		}
+
+		auto ret = utki::make_shared<typename styled<value_type>::style_value>(
+			desc, //
+			this->res_loader.get()
+		);
+		this->store_to_cache(
+			id, //
+			ret.to_shared_ptr()
+		);
+		return {ret};
+	}
 
 public:
 	style_provider(utki::shared_ref<ruis::resource_loader> loader);
@@ -76,7 +101,30 @@ public:
 	void set(utki::shared_ref<style_sheet> ss);
 
 	template <typename value_type>
-	styled<value_type> get(std::string_view id) const;
+	styled<value_type> get(std::string_view id) const
+	{
+		if (auto svb = this->get_from_cache(id)) {
+			if (auto sv = std::dynamic_pointer_cast<const typename styled<value_type>::style_value>(svb)) {
+				return {utki::shared_ref<const typename styled<value_type>::style_value>(std::move(sv))};
+			}
+			throw std::invalid_argument("style::get(id): requested value_type does not match the one stored in cache");
+		}
+
+		const auto* desc = this->cur_style_sheet.get().get(id);
+		if (!desc) {
+			return typename styled<value_type>::actual_value_type();
+		}
+
+		auto ret = utki::make_shared<typename styled<value_type>::style_value>(
+			*desc, //
+			this->res_loader.get()
+		);
+		this->store_to_cache(
+			id, //
+			ret.to_shared_ptr()
+		);
+		return {ret};
+	}
 
 	// ===================================
 	// ====== standard style values ======
@@ -93,59 +141,5 @@ public:
 	styled<length> get_font_size_normal() const;
 	styled<res::font> get_font_face_normal() const;
 };
-
-template <typename value_type>
-styled<value_type> style_provider::get(style id) const
-{
-	if (auto svb = this->get_from_cache(id)) {
-		if (auto sv = std::dynamic_pointer_cast<const typename styled<value_type>::style_value>(svb)) {
-			return {utki::shared_ref<const typename styled<value_type>::style_value>(std::move(sv))};
-		}
-		throw std::invalid_argument("style::get(id): requested value_type does not match the one stored in cache");
-	}
-	const auto& desc = this->cur_style_sheet.get().get(id);
-
-	if (desc.empty()) {
-		throw std::invalid_argument(
-			utki::cat("style_provider::get(style): no style value with id ", unsigned(id), " in the style sheet")
-		);
-	}
-
-	auto ret = utki::make_shared<typename styled<value_type>::style_value>(
-		desc, //
-		this->res_loader.get()
-	);
-	this->store_to_cache(
-		id, //
-		ret.to_shared_ptr()
-	);
-	return {ret};
-}
-
-template <typename value_type>
-styled<value_type> style_provider::get(std::string_view id) const
-{
-	if (auto svb = this->get_from_cache(id)) {
-		if (auto sv = std::dynamic_pointer_cast<const typename styled<value_type>::style_value>(svb)) {
-			return {utki::shared_ref<const typename styled<value_type>::style_value>(std::move(sv))};
-		}
-		throw std::invalid_argument("style::get(id): requested value_type does not match the one stored in cache");
-	}
-
-	const auto* desc = this->cur_style_sheet.get().get(id);
-	if (!desc) {
-		return typename styled<value_type>::actual_value_type();
-	}
-
-	auto ret = utki::make_shared<typename styled<value_type>::style_value>(
-		*desc, //
-		this->res_loader.get()
-	);
-	this->store_to_cache(
-		id, //
-		ret.to_shared_ptr()
-	);
-	return {ret};
-}
 
 } // namespace ruis
