@@ -50,8 +50,8 @@ void ruis::init_standard_widgets(
 #	include "../soname.txt"
 		;
 
-	paths.push_back(utki::cat("/usr/local/share/ruis/res"sv, soname));
-	paths.push_back(utki::cat("/usr/share/ruis/res"sv, soname));
+	paths.push_back(utki::cat("/usr/local/share/ruis/res"sv, soname, "/"));
+	paths.push_back(utki::cat("/usr/share/ruis/res"sv, soname, "/"));
 #endif
 
 	bool mounted = false;
@@ -59,7 +59,10 @@ void ruis::init_standard_widgets(
 		try {
 			fi.set_path(s);
 			context.loader().mount_res_pack(fi);
-		} catch (std::runtime_error&) {
+		} catch (std::runtime_error& e) {
+			utki::log_debug([&](auto& o) {
+				o << "could not mount resource pack from " << s << ": " << e.what() << std::endl;
+			});
 			continue;
 		}
 
