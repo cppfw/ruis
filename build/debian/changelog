@@ -1,3 +1,9 @@
+libruis (0.6.12) unstable; urgency=medium
+
+  * fix res pack mounting
+
+ -- Ivan Gagis <igagis@gmail.com>  Fri, 15 May 2026 22:52:35 +0300
+
 libruis (0.6.11) unstable; urgency=medium
 
   * refactoring
