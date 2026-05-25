@@ -27,6 +27,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <ruis/widget/group/touch/tabbed_book.hpp>
 #include <ruis/widget/label/image.hpp>
 #include <ruis/widget/label/padding.hpp>
+#include <ruis/widget/label/rectangle.hpp>
 #include <ruis/widget/label/text.hpp>
 
 #include "list_page.hpp"
@@ -75,6 +76,16 @@ utki::shared_ref<ruis::widget> make_root_widget(utki::shared_ref<ruis::context> 
 			}
 		},
 		{
+			m::rectangle(c,
+				{
+					.layout_params = {
+						.dims = {ruis::dim::fill, ruis::dim::fill}
+					},
+					.color_params = {
+						.color = c.get().style().get_color_background()
+					}
+				}
+			),
 			m::tabbed_book(c,
 				{
 					.layout_params = {
