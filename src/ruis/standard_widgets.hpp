@@ -21,6 +21,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
+#include <string_view>
+
 #include "context.hpp"
 
 namespace ruis {
@@ -29,6 +31,8 @@ enum class theme {
 	dark,
 	light
 };
+
+std::string_view to_resource_id(theme th) noexcept;
 
 void init_standard_widgets(
 	ruis::context& context, //

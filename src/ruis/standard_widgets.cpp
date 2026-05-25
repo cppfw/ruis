@@ -27,6 +27,19 @@ using namespace std::string_view_literals;
 
 using namespace ruis;
 
+std::string_view ruis::to_resource_id(theme th) noexcept
+{
+	switch (th) {
+		using enum theme;
+		case dark:
+			return "ruis_tml_theme_dark"sv;
+		case light:
+			return "ruis_tml_theme_light"sv;
+	}
+
+	return "ruis_tml_theme_dark"sv;
+}
+
 void ruis::init_standard_widgets(
 	ruis::context& context, //
 	const fsif::file& fi,
@@ -74,17 +87,6 @@ void ruis::init_standard_widgets(
 		throw std::runtime_error("init_standard_widgets(): could not mount default resource pack");
 	}
 
-	auto theme_resource_id = [&]() {
-		switch (th) {
-			using enum theme;
-			default:
-			case dark:
-				return "ruis_tml_theme_dark"sv;
-			case light:
-				return "ruis_tml_theme_light"sv;
-		}
-	}();
-
-	auto style_res = context.loader().load<ruis::res::tml>(theme_resource_id);
+	auto style_res = context.loader().load<ruis::res::tml>(to_resource_id(th));
 	context.style().set(utki::make_shared<style_sheet>(style_res.get().forest));
 }

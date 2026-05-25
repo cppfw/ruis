@@ -21,7 +21,11 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "scroll_area_page.hpp"
 
+#include <ruis/res/tml.hpp>
+#include <ruis/standard_widgets.hpp>
+#include <ruis/style/style_sheet.hpp>
 #include <ruis/widget/button/impl/rectangle_push_button.hpp>
+#include <ruis/widget/button/selection_box.hpp>
 #include <ruis/widget/group/touch/scroll_area.hpp>
 #include <ruis/widget/label/text.hpp>
 #include <ruis/widget/slider/scroll_bar.hpp>
@@ -29,24 +33,76 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "style.hpp"
 
 using namespace std::string_literals;
+using namespace std::string_view_literals;
 
 using namespace ruis::length_literals;
 
 namespace {
 
+void apply_theme(
+	ruis::context& c, //
+	ruis::theme theme
+)
+{
+	auto style_res = c.loader().load<ruis::res::tml>(ruis::to_resource_id(theme));
+	c.style().set(utki::make_shared<ruis::style_sheet>(style_res.get().forest));
+}
+
+class theme_selection_provider : public ruis::list_provider
+{
+	std::vector<std::u32string> items;
+
+public:
+	theme_selection_provider(utki::shared_ref<ruis::context> context) :
+		ruis::list_provider(std::move(context)),
+		items{U"Dark"s, U"Light"s}
+	{}
+
+	size_t count() const noexcept override
+	{
+		return this->items.size();
+	}
+
+	utki::shared_ref<ruis::widget> get_widget(size_t index) override
+	{
+		return m::text(this->context, {}, this->items.at(index));
+	}
+};
+
 ruis::widget_list make_scroll_area_page_contents(utki::shared_ref<ruis::context> c)
 {
 	// clang-format off
-    auto button_1 = m::push_button(c,
-        {
-            .layout_params{
-                .dims = {ruis::dim::fill, 200_pp}
-            }
-        },
-        {
-            m::text(c, {}, U"Button 1"s)
-        }
-    );
+	auto theme_selector = m::selection_box(c,
+		{
+			.layout_params{
+				.dims = {ruis::dim::max, ruis::dim::min}
+			},
+			.list_params{
+				.provider = utki::make_shared<theme_selection_provider>(c)
+			}
+		}
+	);
+	// clang-format on
+
+	theme_selector.get().set_selection(size_t(ruis::theme::dark));
+	theme_selector.get().selection_handler = [](ruis::selection_box& sb) {
+		apply_theme(
+			sb.context.get(), //
+			ruis::theme(sb.get_selection())
+		);
+	};
+
+	// clang-format off
+	auto button_1 = m::push_button(c,
+		{
+			.layout_params{
+				.dims = {ruis::dim::fill, 200_pp}
+			}
+		},
+		{
+			m::text(c, {}, U"Button 1"s)
+		}
+	);
 	// clang-format on
 
 	button_1.get().click_handler = [](ruis::push_button&) {
@@ -56,26 +112,37 @@ ruis::widget_list make_scroll_area_page_contents(utki::shared_ref<ruis::context>
 	};
 
 	// clang-format off
-    return {
-        button_1,
-        m::scroll_bar(c,
-            {
-                .layout_params{
-                    .dims{50_pp, 1000_pp}
-                },
-                .fraction_params{
-                    .fraction = ruis::real(0.25)
-                },
-                .fraction_band_params{
-                    .band_fraction = ruis::real(0.2)
-                },
-                .oriented_params{
-                    .vertical = true
-                }
-            }
-        ),
-        m::text(c, {}, U"some text"s)
-    };
+	return {
+		m::row(c,
+			{
+				.layout_params{
+					.dims = {ruis::dim::fill, ruis::dim::min}
+				}
+			},
+			{
+				m::text(c, {}, U"Theme:"s),
+				theme_selector
+			}
+		),
+		button_1,
+		m::scroll_bar(c,
+			{
+				.layout_params{
+					.dims{50_pp, 1000_pp}
+				},
+				.fraction_params{
+					.fraction = ruis::real(0.25)
+				},
+				.fraction_band_params{
+					.band_fraction = ruis::real(0.2)
+				},
+				.oriented_params{
+					.vertical = true
+				}
+			}
+		),
+		m::text(c, {}, U"some text"s)
+	};
 	// clang-format on
 }
 
@@ -86,31 +153,31 @@ class scroll_area_page :
 public:
 	scroll_area_page(utki::shared_ref<ruis::context> c) :
 		// clang-format off
-        ruis::widget(
-            std::move(c),
-            {},
-            {
-                .clip = true
-            }
-        ),
+		ruis::widget(
+			std::move(c),
+			{},
+			{
+				.clip = true
+			}
+		),
 		// clang-format on
 		ruis::page(this->context, {}),
 		// clang-format off
-        ruis::touch::scroll_area(
-            this->context,
-            {},
-            {
-                m::column(
-                    this->context,
-                    {
-                        .layout_params{
-                            .dims = {ruis::dim::fill, ruis::dim::min}
-                        }
-                    },
-                    make_scroll_area_page_contents(this->context)
-                )
-            }
-        )
+		ruis::touch::scroll_area(
+			this->context,
+			{},
+			{
+				m::column(
+					this->context,
+					{
+						.layout_params{
+							.dims = {ruis::dim::fill, ruis::dim::min}
+						}
+					},
+					make_scroll_area_page_contents(this->context)
+				)
+			}
+		)
 	// clang-format on
 	{}
 };
