@@ -27,6 +27,11 @@ list_provider::list_provider(utki::shared_ref<ruis::context> context) :
 	context(std::move(context))
 {}
 
+utki::shared_ref<widget> list_provider::get_highlighted_widget(size_t index)
+{
+	return this->get_widget(index);
+}
+
 void list_provider::notify_model_change()
 {
 	if (!this->owner) {

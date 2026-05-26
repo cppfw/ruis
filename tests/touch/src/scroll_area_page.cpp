@@ -64,7 +64,30 @@ public:
 
 	utki::shared_ref<ruis::widget> get_widget(size_t index) override
 	{
-		return m::text(this->context, {}, this->items.at(index));
+		// clang-format off
+		return m::text(this->context,
+			{
+				.color_params{
+					.color = this->context.get().style().get_color_text_normal()
+				}
+			},
+			this->items.at(index)
+		);
+		// clang-format on
+	}
+
+	utki::shared_ref<ruis::widget> get_highlighted_widget(size_t index) override
+	{
+		// clang-format off
+		return m::text(this->context,
+			{
+				.color_params{
+					.color = this->context.get().style().get_color_highlight()
+				}
+			},
+			this->items.at(index)
+		);
+		// clang-format on
 	}
 };
 

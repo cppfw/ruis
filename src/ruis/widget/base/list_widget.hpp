@@ -69,6 +69,14 @@ public:
 	virtual utki::shared_ref<widget> get_widget(size_t index) = 0;
 
 	/**
+	 * @brief Get widget for a highlighted item.
+	 * Default implemetation just falls back to calling get_widget().
+	 * @param index - index of the item to provide widget for.
+	 * @return Widget for requested item.
+	 */
+	virtual utki::shared_ref<widget> get_highlighted_widget(size_t index);
+
+	/**
 	 * @brief Notify about change of items model.
 	 * The user is supposed to invoke this function when items model change.
 	 */
