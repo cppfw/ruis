@@ -84,15 +84,6 @@ selection_box::selection_box(
 					.container_params{
 						.layout = ruis::layout::pile
 					}
-				},
-				{
-					ruis::make::text(this->context,
-					{
-						.color_params{
-							.color = this->context.get().style().get_color_text_normal()
-						}
-					}
-				)
 				}
 			)
 		}
