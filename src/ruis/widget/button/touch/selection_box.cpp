@@ -26,6 +26,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace std::string_literals;
 using namespace std::string_view_literals;
+using namespace ruis::length_literals;
 
 using namespace ruis::touch;
 
@@ -43,10 +44,19 @@ selection_box::selection_box(
 		std::move(params.widget_params)
 	),
 	// clang-format off
-	container(this->context,
+	rectangle(this->context,
 		{
 			.container_params{
 				.layout = ruis::layout::row
+			},
+			.padding_params{
+				.borders = {10_pp}
+			},
+			.color_params{
+				.color = this->context.get().style().get_color_middleground(),
+			},
+			.rectangle_params{
+				.corner_radii = {10_pp}
 			}
 		},
 		{
