@@ -91,9 +91,7 @@ selection_box::selection_box(
 						.color_params{
 							.color = this->context.get().style().get_color_text_normal()
 						}
-					},
-					// TODO: should be 0th item from provider
-					U"Hello world"s
+					}
 				)
 				}
 			)
