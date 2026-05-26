@@ -25,7 +25,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <ruis/standard_widgets.hpp>
 #include <ruis/style/style_sheet.hpp>
 #include <ruis/widget/button/impl/rectangle_push_button.hpp>
-#include <ruis/widget/button/selection_box.hpp>
 #include <ruis/widget/group/touch/scroll_area.hpp>
 #include <ruis/widget/label/text.hpp>
 #include <ruis/widget/slider/scroll_bar.hpp>
@@ -79,7 +78,8 @@ ruis::widget_list make_scroll_area_page_contents(utki::shared_ref<ruis::context>
 			},
 			.list_params{
 				.provider = utki::make_shared<theme_selection_provider>(c)
-			}
+			},
+			.title = U"Theme"s // TODO: localize
 		}
 	);
 	// clang-format on
@@ -113,17 +113,7 @@ ruis::widget_list make_scroll_area_page_contents(utki::shared_ref<ruis::context>
 
 	// clang-format off
 	return {
-		m::row(c,
-			{
-				.layout_params{
-					.dims = {ruis::dim::fill, ruis::dim::min}
-				}
-			},
-			{
-				m::text(c, {}, U"Theme:"s),
-				theme_selector
-			}
-		),
+		theme_selector,
 		button_1,
 		m::scroll_bar(c,
 			{

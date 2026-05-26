@@ -45,6 +45,7 @@ public:
 		layout::parameters layout_params;
 		widget::parameters widget_params;
 		list_widget::parameters list_params;
+		string title;
 	};
 
 private:

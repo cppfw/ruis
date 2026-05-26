@@ -21,21 +21,27 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include <ruis/widget/button/push_button.hpp>
-#include <ruis/widget/button/touch/selection_box.hpp>
-#include <ruis/widget/group/touch/tabbed_book.hpp>
+#include "../selection_box.hpp"
 
-namespace m {
+namespace ruis::touch {
 
-using namespace ruis::make;
+class selection_box :
+	public virtual ruis::widget, //
+	private container,
+	public ruis::selection_box
+{
+public:
+	selection_box(
+		utki::shared_ref<ruis::context> context, //
+		ruis::selection_box::all_parameters params
+	);
+};
 
-using ruis::touch::make::tabbed_book;
-using ruis::touch::make::selection_box;
-
-utki::shared_ref<ruis::push_button> push_button(
+namespace make {
+utki::shared_ref<ruis::touch::selection_box> selection_box(
 	utki::shared_ref<ruis::context> context, //
-	ruis::push_button::all_parameters params,
-	ruis::widget_list contents
+	ruis::selection_box::all_parameters params
 );
+} // namespace make
 
-}; // namespace m
+} // namespace ruis::touch
