@@ -539,7 +539,7 @@ jobs:
           repo: deb https://gagis.hopto.org/repo/cppfw/${{ matrix.os }} ${{ matrix.codename }} main
           repo-name: cppfw
           keys-asc: https://gagis.hopto.org/repo/cppfw/pubkey.gpg
-          install: devscripts equivs myci pipx cmake git
+          install: devscripts equivs myci pipx cmake git pkg-config
       - name: add ~/.local/bin to PATH
         uses: myci-actions/export-env-var@main
         with: {name: PATH, value: "$PATH:$HOME/.local/bin"}
