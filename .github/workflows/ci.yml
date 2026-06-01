@@ -548,7 +548,7 @@ jobs:
       - name: create default conan profile
         run: |
           conan profile detect --name default
-          sed -i -E "s/compiler.cppstd=.*$/compiler.cppstd=17/g" ~/.conan2/profiles/default
+          sed -i -E "s/compiler.cppstd=.*$/compiler.cppstd=20/g" ~/.conan2/profiles/default
       - name: git clone
         uses: myci-actions/checkout@main
       - name: set PACKAGE_VERSION
@@ -603,7 +603,7 @@ jobs:
       - name: create default conan profile
         run: |
           conan profile detect --name default
-          sed -i -E "s/compiler.cppstd=.*$/compiler.cppstd=17/g" ~/.conan2/profiles/default
+          sed -i -E "s/compiler.cppstd=.*$/compiler.cppstd=20/g" ~/.conan2/profiles/default
       - name: set PACKAGE_VERSION
         uses: myci-actions/export-env-var@main
         with: {name: PACKAGE_VERSION, value: $(myci-deb-version.sh)}
@@ -645,7 +645,7 @@ jobs:
       - name: create default conan profile
         run: |
           conan profile detect --name default
-          sed -i -E "s/compiler.cppstd=.*$/compiler.cppstd=17/g" ~/.conan2/profiles/default
+          sed -i -E "s/compiler.cppstd=.*$/compiler.cppstd=20/g" ~/.conan2/profiles/default
       - name: git clone
         uses: myci-actions/checkout@main
         with:
