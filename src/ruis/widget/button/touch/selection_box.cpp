@@ -43,8 +43,14 @@ selection_box::selection_box(
 		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
+	button(
+		this->context,
+		{
+}
+	),
+	push_button(this->context, {}),
 	// clang-format off
-	rectangle(this->context,
+	rectangle_push_button(this->context,
 		{
 			.container_params{
 				.layout = ruis::layout::row
@@ -52,24 +58,11 @@ selection_box::selection_box(
 			.padding_params{
 				.borders = {10_pp}
 			},
-			.color_params{
-				.color = this->context.get().style().get_color_middleground(),
-			},
 			.rectangle_params{
 				.corner_radii = {10_pp}
 			}
 		},
 		{
-			ruis::make::rectangle(this->context,
-				{
-					.layout_params{
-						.dims = {ruis::dim::fill, ruis::dim::fill}
-					},
-					.color_params{
-						.color = this->context.get().style().get_color_middleground()
-					}
-				}
-			),
 			ruis::make::text(this->context,
 				{
 					.layout_params{

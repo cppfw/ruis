@@ -21,14 +21,16 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
+#include "../impl/rectangle_push_button.hpp"
 #include "../selection_box.hpp"
-#include "../../label/rectangle.hpp"
+
+// #include "../../label/rectangle.hpp"
 
 namespace ruis::touch {
 
 class selection_box :
 	public virtual ruis::widget, //
-	public rectangle,
+	public rectangle_push_button,
 	public ruis::selection_box
 {
 public:
