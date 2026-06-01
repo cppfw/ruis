@@ -32,6 +32,7 @@ using namespace ruis::touch;
 
 namespace {
 constexpr auto selection_label_id = "ruis_touch_selection_box_selection"sv;
+constexpr auto default_padding = 10_pp;
 } // namespace
 
 selection_box::selection_box(
@@ -56,10 +57,10 @@ selection_box::selection_box(
 				.layout = ruis::layout::row
 			},
 			.padding_params{
-				.borders = {10_pp}
+				.borders = {default_padding}
 			},
 			.rectangle_params{
-				.corner_radii = {10_pp}
+				.corner_radii = {default_padding}
 			}
 		},
 		{
