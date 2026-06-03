@@ -33,6 +33,10 @@ application::application() :
 }),
 	window(this->make_window({.dims = {1024, 800}}))
 {
+	this->window.gui.context.get().window().close_handler = [this]() {
+		this->quit();
+	};
+
 	ruis::init_standard_widgets(
 		this->window.gui.context, //
 		this->get_res_file("../../res/ruis_res/").get()
