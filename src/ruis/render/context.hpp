@@ -109,6 +109,11 @@ public:
 	 */
 	void set_vsync_enabled(bool enabled);
 
+	bool is_vsync_enabled() const noexcept
+	{
+		return this->native_window.get().is_vsync_enabled();
+	}
+
 	// ===============================
 	// ====== factory functions ======
 

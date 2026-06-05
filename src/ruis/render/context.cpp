@@ -39,6 +39,10 @@ context::context(
 		// this context is the first one created, so it should become current
 		this->native_window.get().bind_rendering_context();
 	}
+
+	// By choice, the VSYNC is enabled by default.
+	// This call will synchornize the is_vsync_enabled_v field of the native window with the actual VSYNC state of the window.
+	this->set_vsync_enabled(true);
 }
 
 context::~context()

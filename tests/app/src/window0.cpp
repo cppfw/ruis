@@ -50,10 +50,9 @@ utki::shared_ref<ruis::window> make_window0(
 {
     auto check_box = m::check_box(c, {
         .button_params{
-            .pressed = true
+            .pressed = c.get().ren().ctx().is_vsync_enabled()
         }
     });
-    c.get().ren().ctx().set_vsync_enabled(true);
 
     check_box.get().pressed_change_handler = [](ruis::button& b){
         b.context.get().ren().ctx().set_vsync_enabled(b.is_pressed());
