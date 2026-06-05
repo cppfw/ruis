@@ -44,11 +44,13 @@ class native_window
 	}
 
 	virtual void set_fullscreen_internal(bool enable) {}
+	virtual void set_vsync_enabled_internal(bool enabled) {}
 
 	std::list<mouse_cursor> cursor_stack = {mouse_cursor::arrow};
 
 	virtual void set_mouse_cursor(ruis::mouse_cursor c) {}
 
+	bool is_vsync_enabled_v = false;
 	bool is_fullscreen_v = false;
 	bool is_maximized_v = false;
 	bool is_minimized_v = false;
@@ -69,7 +71,11 @@ public:
 
 	virtual void swap_frame_buffers() {}
 
-	virtual void set_vsync_enabled(bool enabled) noexcept {}
+	bool is_vsync_enabled() const noexcept
+	{
+		return this->is_vsync_enabled_v;
+	}
+	void set_vsync_enabled(bool enabled);
 
 	// =====================
 	// = window dimensions =

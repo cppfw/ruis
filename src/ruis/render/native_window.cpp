@@ -25,6 +25,17 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis::render;
 
+void native_window::set_vsync_enabled(bool enabled)
+{
+	if (enabled == this->is_vsync_enabled()) {
+		return;
+	}
+
+	this->set_vsync_enabled_internal(enabled);
+
+	this->is_vsync_enabled_v = enabled;
+}
+
 void native_window::set_fullscreen(bool enable)
 {
 	if (enable == this->is_fullscreen()) {
