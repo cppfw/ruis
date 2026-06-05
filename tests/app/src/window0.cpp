@@ -53,10 +53,10 @@ utki::shared_ref<ruis::window> make_window0(
             .pressed = true
         }
     });
-    c.get().window().set_vsync_enabled(true);
+    c.get().ren().ctx().set_vsync_enabled(true);
 
     check_box.get().pressed_change_handler = [](ruis::button& b){
-        b.context.get().window().set_vsync_enabled(b.is_pressed());
+        b.context.get().ren().ctx().set_vsync_enabled(b.is_pressed());
     };
 
     // clang-format off

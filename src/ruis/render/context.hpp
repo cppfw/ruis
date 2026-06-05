@@ -100,6 +100,15 @@ public:
 	// TODO: make argument generic callable instead of std::function? i.e. template method for compiler optimizations?
 	void apply(std::function<void()> proc);
 
+	/**
+	 * @brief Enable/disable vertical synchronization (vsync).
+	 * @param enabled - 'true' to enable vsync, 'false' to disable it.
+	 * Vsync is a technique to synchronize frame presentation with monitor's vertical refreshes.
+	 * Enabling vsync can help to avoid screen tearing, but can cause input lag and reduce frame rate.
+	 * Disabling vsync can increase frame rate and reduce input lag, but can cause screen tearing.
+	 */
+	void set_vsync_enabled(bool enabled);
+
 	// ===============================
 	// ====== factory functions ======
 

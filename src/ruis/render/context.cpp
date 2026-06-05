@@ -110,3 +110,10 @@ void context::set_simple_alpha_blending()
 		context::blend_factor::one_minus_src_alpha
 	);
 }
+
+void context::set_vsync_enabled(bool enabled)
+{
+	this->apply([&]() {
+		this->native_window.get().set_vsync_enabled(enabled);
+	});
+}
