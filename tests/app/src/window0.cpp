@@ -48,6 +48,17 @@ utki::shared_ref<ruis::window> make_window0(
     ruis::vec2_length pos
 )
 {
+    auto check_box = m::check_box(c, {
+        .button_params{
+            .pressed = true
+        }
+    });
+    c.get().window().set_vsync_enabled(true);
+
+    check_box.get().pressed_change_handler = [](ruis::button& b){
+        b.context.get().window().set_vsync_enabled(b.is_pressed());
+    };
+
     // clang-format off
     return m::window(c,
         {
@@ -96,13 +107,7 @@ utki::shared_ref<ruis::window> make_window0(
                                     }
                                 },
                                 {
-                                    m::check_box(c,
-                                        {
-                                            .button_params{
-                                                .pressed = true
-                                            }
-                                        }
-                                    )
+                                    check_box
                                 }
                             ),
                             m::text(c,
@@ -112,7 +117,7 @@ utki::shared_ref<ruis::window> make_window0(
                                         .font_face = c.get().loader().load<ruis::res::font>("fnt_monospace")
                                     }
                                 },
-                                U"some checkbox"s
+                                U"VSYNC enabled"s
                             )
                         }
                     ),
