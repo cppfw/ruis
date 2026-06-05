@@ -44,6 +44,7 @@ class native_window
 	}
 
 	virtual void set_fullscreen_internal(bool enable) {}
+
 	virtual void set_vsync_enabled_internal(bool enabled) {}
 
 	std::list<mouse_cursor> cursor_stack = {mouse_cursor::arrow};
@@ -75,6 +76,7 @@ public:
 	{
 		return this->is_vsync_enabled_v;
 	}
+
 	void set_vsync_enabled(bool enabled);
 
 	// =====================
