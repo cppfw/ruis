@@ -140,7 +140,7 @@ public:
     }
 
     utki::shared_ref<ruis::widget> get_widget(utki::span<const size_t> path)override{
-        ASSERT(!path.empty())
+        utki::assert(!path.empty());
 
         auto list = &this->root;
         decltype(list) parent_list = nullptr;

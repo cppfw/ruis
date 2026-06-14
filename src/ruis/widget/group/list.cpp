@@ -56,13 +56,12 @@ list::list(
 
 void list::on_lay_out()
 {
-	//	TRACE(<< "list::on_lay_out(): invoked" << std::endl)
-
 	this->num_tail_items = 0; // 0 means that it needs to be recomputed
 
 	this->update_children_list();
 
-	// defer the scroll position change notification, because layouting happens during render phase
+	// Defer the scroll position change notification,
+	// because layouting happens during render phase right before rendering.
 	this->context.get().post_to_ui_thread([wl = utki::make_weak_from(*this)]() {
 		if (auto l = wl.lock()) {
 			l->notify_scroll_pos_changed();
@@ -299,7 +298,7 @@ void list::update_children_list()
 
 	// remove rest
 	if (iter_index < iter_end_index) {
-		utki::assert(iter != this->children().end(), SL);
+		utki::assert(iter != this->children().end());
 		for (; iter != this->children().end(); ++iter_index) {
 			iter = this->erase(iter);
 		}
