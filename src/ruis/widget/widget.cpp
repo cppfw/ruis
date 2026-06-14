@@ -468,7 +468,10 @@ void widget::reload()
 	this->on_reload();
 }
 
-vec2 ruis::dims_for_widget(const widget& w, const vec2& parent_dims)
+vec2 ruis::dims_for_widget(
+	const widget& w, //
+	const vec2& parent_dims
+)
 {
 	const layout::parameters& lp = w.get_layout_params_const();
 	vec2 d;

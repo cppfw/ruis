@@ -25,6 +25,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <ruis/widget/button/push_button.hpp>
 #include <ruis/widget/button/selection_box.hpp>
 #include <ruis/widget/container.hpp>
+#include <ruis/widget/group/drag_area.hpp>
 #include <ruis/widget/group/overlay.hpp>
 #include <ruis/widget/group/window.hpp>
 #include <ruis/widget/label/gap.hpp>
@@ -398,13 +399,10 @@ utki::shared_ref<ruis::widget> make_root_widgets_structure(utki::shared_ref<ruis
 			}
 		},
 		{
-			m::container(c,
+			m::drag_area(c,
 				{
 					.layout_params = {
 						.dims = {ruis::dim::fill, ruis::dim::fill}
-					},
-					.container_params = {
-						.layout = ruis::layout::trivial
 					}
 				},
 				{

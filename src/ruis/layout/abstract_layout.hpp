@@ -46,11 +46,11 @@ public:
 
 	/**
 	 * @brief Arrange widgets.
-	 * @param dims - dimensions of the area available to the layout.
+	 * @param container_dims - dimensions of the area available to the layout.
 	 * @param widgets - widgets to arrange.
 	 */
 	virtual void lay_out(
-		const vec2& dims, //
+		const vec2& container_dims, //
 		semiconst_widget_list& widgets
 	) const = 0;
 

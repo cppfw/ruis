@@ -25,6 +25,12 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis::layout {
 
+/**
+  * @brief Size layout.
+  * This layout only modifies dimensions of widgets according to their layout parameters,
+  * it does not change position of widgets at all.
+ */
+// TODO: is this layout used anywhere??? If not, then remove.
 class size_layout : public trivial_layout
 {
 public:

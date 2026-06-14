@@ -780,7 +780,10 @@ public:
  * @param parent_dims - parent widget dimensions.
  * @return Dimensions of widget.
  */
-vec2 dims_for_widget(const widget& w, const vec2& parent_dims);
+vec2 dims_for_widget(
+	const widget& w, //
+	const vec2& parent_dims
+);
 
 } // namespace ruis
 

@@ -2,6 +2,7 @@
 
 #include <ruis/widget/proxy/key_proxy.hpp>
 #include <ruis/widget/group/overlay.hpp>
+#include <ruis/widget/group/drag_area.hpp>
 #include <ruis/widget/label/image_mouse_cursor.hpp>
 
 #include "window0.hpp"
@@ -48,13 +49,10 @@ utki::shared_ref<ruis::widget> make_root_widget(utki::shared_ref<ruis::context> 
                             },
                         },
                         {
-                            m::container(c,
+                            m::drag_area(c,
                                 {
                                     .layout_params{
                                         .dims{ruis::dim::fill, ruis::dim::fill}
-                                    },
-                                    .container_params{
-                                        .layout = ruis::layout::trivial
                                     }
                                 },
                                 {
