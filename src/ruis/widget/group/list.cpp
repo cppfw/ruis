@@ -548,6 +548,11 @@ ruis::vec2 list::measure(const ruis::vec2& quotum) const
 
 	ret[trans_index] = 0;
 
+	// TODO: just going through visible widgets seems not correct, because measure is called  before actually
+	//       resizing the list widget, so currently visible widgets can be different from the ones which
+	//       would be visible for the given quotum. Need to figure out how to handle this correctly and implement it.
+	//       This problem is visible in the test 'app' when running under Wayland on a monitor with scale factor 2,
+	//       the tree_view is truncated horizontally because of this issue right after the app start.
 	for (const auto& w : this->children()) {
 		ret[trans_index] = max(ret[trans_index], w.get().rect().d[trans_index]); // clamp bottom
 	}
