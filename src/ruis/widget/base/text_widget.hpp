@@ -102,6 +102,7 @@ public:
 
 	/**
 	 * @brief Get font for drawing.
+	 * Gets font of the specified style.
 	 * @return Font for drawing.
 	 * @throw std::logic_error in case there is no font face currently set.
 	 */
@@ -129,6 +130,8 @@ public:
 			this->text_change_handler(*this);
 		}
 	}
+
+	void on_reload() override;
 
 	std::function<void(text_widget& w)> text_change_handler;
 

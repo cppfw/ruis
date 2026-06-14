@@ -91,7 +91,10 @@ freetype_face::metrics freetype_face::get_metrics(unsigned font_size) const
 	};
 }
 
-freetype_face::glyph freetype_face::load_glyph(char32_t c, unsigned font_size) const
+freetype_face::glyph freetype_face::load_glyph(
+	char32_t c, //
+	unsigned font_size
+) const
 {
 	// set character size in pixels
 	this->set_size(font_size);

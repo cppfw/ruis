@@ -106,3 +106,8 @@ text_widget::text_widget(
 {
 	this->update_fonts();
 }
+
+void text_widget::on_reload()
+{
+	this->update_fonts_and_notify();
+}

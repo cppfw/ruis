@@ -113,4 +113,6 @@ void text_string_widget::on_reload()
 		auto new_wording = this->context.get().localization.get().reload(std::move(w));
 		this->set_wording(std::move(new_wording));
 	}
+
+	this->text_widget::on_reload();
 }
