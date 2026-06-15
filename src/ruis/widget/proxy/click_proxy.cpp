@@ -58,7 +58,9 @@ event_status click_proxy::on_mouse_button(const mouse_button_event& e)
 	}
 
 	// Always consume button event because then the mouse is captured by the widget if button is down
-	// and then we'll get event when button is up, thus we detect the button click.
+	// and then we will get event when button is up, thus we can detect the button click.
+	// If the button down event is not consumed, then the mouse is not captured and button up event will come
+	// to some other widget, hovered by mouse, not to this click_proxy.
 	return event_status::consumed;
 }
 

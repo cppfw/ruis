@@ -173,7 +173,7 @@ void selection_box::show_selection_menu()
 							}
 						},
 						{
-
+							// TODO:
 						}
 					),
 					// mouse proxy to consume mouse events, to prevent the menu from closing if clicked in the rectangle area
