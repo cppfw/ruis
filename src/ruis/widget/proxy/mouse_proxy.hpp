@@ -32,9 +32,20 @@ namespace ruis {
 class mouse_proxy : virtual public widget
 {
 public:
+	using mouse_button_handler_type = std::function<event_status(mouse_proxy& w, const mouse_button_event&)>;
+	using mouse_move_handler_type = std::function<event_status(mouse_proxy& w, const mouse_move_event&)>;
+	using hovered_change_handler_type = std::function<void(mouse_proxy& w, unsigned pointer_id)>;
+
+	struct parameters{
+		mouse_button_handler_type  mouse_button_handler;
+		mouse_move_handler_type 		mouse_move_handler;
+		hovered_change_handler_type 		hovered_change_handler;
+	};
+
 	struct all_parameters {
 		layout::parameters layout_params;
 		widget::parameters widget_params;
+		parameters mouse_proxy_params;
 	};
 
 	mouse_proxy(
@@ -54,7 +65,7 @@ public:
 	 * @brief Mouse button event signal.
 	 * Emitted when mouse button event reaches this widget.
 	 */
-	std::function<event_status(mouse_proxy& w, const mouse_button_event&)> mouse_button_handler;
+	mouse_button_handler_type mouse_button_handler;
 
 	event_status on_mouse_button(const mouse_button_event&) override;
 
@@ -62,7 +73,7 @@ public:
 	 * @brief Mouse move event signal.
 	 * Emitted when mouse move event reaches this widget.
 	 */
-	std::function<event_status(mouse_proxy& w, const mouse_move_event&)> mouse_move_handler;
+	mouse_move_handler_type mouse_move_handler;
 
 	event_status on_mouse_move(const mouse_move_event& event) override;
 
@@ -70,22 +81,16 @@ public:
 	 * @brief Hover changed event signal.
 	 * Emitted when hover changed event reaches this widget.
 	 */
-	std::function<void(mouse_proxy& w, unsigned pointer_id)> hovered_change_handler;
+	hovered_change_handler_type hovered_change_handler;
 
 	void on_hovered_change(unsigned pointer_id) override;
 };
 
 namespace make {
-inline utki::shared_ref<ruis::mouse_proxy> mouse_proxy(
+utki::shared_ref<ruis::mouse_proxy> mouse_proxy(
 	utki::shared_ref<ruis::context> context, //
 	ruis::mouse_proxy::all_parameters params
-)
-{
-	return utki::make_shared<ruis::mouse_proxy>(
-		std::move(context), //
-		std::move(params)
-	);
-}
+);
 } // namespace make
 
 } // namespace ruis

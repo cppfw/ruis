@@ -31,7 +31,10 @@ mouse_proxy::mouse_proxy( //
 		std::move(context),
 		std::move(params.layout_params),
 		std::move(params.widget_params)
-	)
+	),
+	mouse_button_handler(std::move(params.mouse_proxy_params.mouse_button_handler)),
+	mouse_move_handler(std::move(params.mouse_proxy_params.mouse_move_handler)),
+	hovered_change_handler(std::move(params.mouse_proxy_params.hovered_change_handler))
 {}
 
 event_status mouse_proxy::on_mouse_button(const mouse_button_event& e)
@@ -55,4 +58,15 @@ void mouse_proxy::on_hovered_change(unsigned pointer_id)
 	if (this->hovered_change_handler) {
 		this->hovered_change_handler(*this, pointer_id);
 	}
+}
+
+utki::shared_ref<ruis::mouse_proxy> ruis::make::mouse_proxy(
+	utki::shared_ref<ruis::context> context, //
+	ruis::mouse_proxy::all_parameters params
+)
+{
+	return utki::make_shared<ruis::mouse_proxy>(
+		std::move(context), //
+		std::move(params)
+	);
 }

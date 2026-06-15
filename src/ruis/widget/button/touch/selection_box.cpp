@@ -24,6 +24,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../../group/overlay.hpp"
 #include "../../label/rectangle.hpp"
 #include "../../label/text.hpp"
+#include "../../label/padding.hpp"
 #include "../../proxy/click_proxy.hpp"
 
 using namespace std::string_literals;
@@ -140,11 +141,42 @@ void selection_box::show_selection_menu()
 						.rectangle = {0, 0, 0, 0}
 					},
 					.color_params{
-						.color = 0x80000000 // TODO: use color from style
+						.color = 0x80000000 // TODO: use color from theme
 					}
 				}
 			),
-			bg_click_proxy
+			bg_click_proxy,
+			ruis::make::padding(c,
+				{
+					.layout_params{
+						.dims = {ruis::dim::fill, ruis::dim::fill}
+					},
+					.padding_params{
+						.borders = {30_pp}
+					}
+				},
+				{
+					ruis::make::rectangle(c,
+						{
+							.layout_params{
+								.dims = {ruis::dim::fill, ruis::dim::fill}
+							},
+							.padding_params{
+								.borders = {20_pp} // TODO: get from theme
+							},
+							.color_params{
+								.color = c.get().style().get_color_foreground()
+							},
+							.rectangle_params{
+								.corner_radii = {20_pp} // TODO: get from theme
+							}
+						},
+						{
+							
+						}
+					)
+				}
+			)
 		}
 	);
 	// clang-format on
@@ -157,9 +189,6 @@ void selection_box::show_selection_menu()
 			});
 		}
 	};
-
-	// bg_click_proxy.get().pressed_change_handler = [](auto& cp){
-	// };
 
 	c.get().post_to_ui_thread([olay = utki::make_shared_from(olay), root]() {
 		olay.get().push_back(root);
