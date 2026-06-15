@@ -352,3 +352,14 @@ void drop_down_box::on_reload()
 	this->nine_patch_push_button::on_reload();
 	this->selection_box::on_reload();
 }
+
+utki::shared_ref<ruis::drop_down_box> ruis::make::drop_down_box(
+	utki::shared_ref<ruis::context> context, //
+	drop_down_box::all_parameters params
+)
+{
+	return utki::make_shared<ruis::drop_down_box>(
+		std::move(context), //
+		std::move(params)
+	);
+}

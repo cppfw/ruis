@@ -78,16 +78,10 @@ private:
 };
 
 namespace make {
-inline utki::shared_ref<ruis::drop_down_box> drop_down_box(
+utki::shared_ref<ruis::drop_down_box> drop_down_box(
 	utki::shared_ref<ruis::context> context, //
 	drop_down_box::all_parameters params
-)
-{
-	return utki::make_shared<ruis::drop_down_box>(
-		std::move(context), //
-		std::move(params)
-	);
-}
+);
 } // namespace make
 
 } // namespace ruis
