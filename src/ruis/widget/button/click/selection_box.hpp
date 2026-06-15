@@ -40,8 +40,9 @@ public:
 	struct all_parameters {
 		ruis::layout::parameters layout_params;
 		ruis::widget::parameters widget_params;
-		nine_patch_button::parameters nine_patch_button_params;
 		list_widget::parameters list_params;
+
+		nine_patch_button::parameters nine_patch_button_params;
 	};
 
 	selection_box(

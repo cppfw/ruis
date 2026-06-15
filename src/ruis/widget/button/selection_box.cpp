@@ -75,11 +75,11 @@ utki::shared_ref<ruis::selection_box> ruis::make::selection_box(
 		ruis::click::selection_box::all_parameters{
 			.layout_params = std::move(params.layout_params), //
 			.widget_params = std::move(params.widget_params),
+			.list_params = std::move(params.list_params),
 			.nine_patch_button_params = {
 				.unpressed_nine_patch = c.loader().load<res::nine_patch>("ruis_npt_button_normal"sv),
 				.pressed_nine_patch = c.loader().load<res::nine_patch>("ruis_npt_button_pressed"sv)
-			},
-			.list_params = std::move(params.list_params)
+			}
 		}
 	);
 	// clang-format on
