@@ -24,6 +24,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../../group/overlay.hpp"
 #include "../../label/rectangle.hpp"
 #include "../../label/text.hpp"
+#include "../../proxy/click_proxy.hpp"
 
 using namespace std::string_literals;
 using namespace std::string_view_literals;
@@ -113,6 +114,16 @@ void selection_box::show_selection_menu()
 	auto& c = this->context;
 
 	// clang-format off
+	auto bg_click_proxy = ruis::make::click_proxy(c,
+		{
+			.layout_params{
+				.dims = {ruis::dim::fill, ruis::dim::fill}
+			}
+		}
+	);
+	// clang-format on
+
+	// clang-format off
 	auto root = ruis::make::pile(c,
 		{
 			.layout_params{
@@ -132,10 +143,23 @@ void selection_box::show_selection_menu()
 						.color = 0x80000000 // TODO: use color from style
 					}
 				}
-			)
+			),
+			bg_click_proxy
 		}
 	);
 	// clang-format on
+
+	bg_click_proxy.get().click_handler = [weak_root = utki::make_weak(root)](ruis::click_proxy& cp){
+		std::cout << "clicked" << std::endl;
+		if(auto r = weak_root.lock()){
+			r->context.get().post_to_ui_thread([r](){
+				r->remove_from_parent();
+			});
+		}
+	};
+
+	// bg_click_proxy.get().pressed_change_handler = [](auto& cp){
+	// };
 
 	c.get().post_to_ui_thread([olay = utki::make_shared_from(olay), root]() {
 		olay.get().push_back(root);

@@ -36,32 +36,30 @@ click_proxy::click_proxy( //
 
 event_status click_proxy::on_mouse_button(const mouse_button_event& e)
 {
-	auto ret = event_status::propagate;
-
 	if (e.button != mouse_button::left) {
-		return event_status::propagate;
+		return event_status::consumed;
 	}
 
 	if (e.action == button_action::press) {
 		this->is_pressed_v = true;
 		if (this->pressed_change_handler) {
-			ret = this->pressed_change_handler(*this);
+			this->pressed_change_handler(*this);
 		}
 	} else {
 		if (this->is_pressed()) {
 			this->is_pressed_v = false;
 			if (this->pressed_change_handler) {
-				ret = this->pressed_change_handler(*this);
+				this->pressed_change_handler(*this);
 			}
 			if (this->click_handler) {
 				this->click_handler(*this);
 			}
-		} else {
-			ret = this->deferred_release_ret;
 		}
 	}
 
-	return ret;
+	// Always consume button event because then the mouse is captured by the widget if button is down
+	// and then we'll get event when button is up, thus we detect the button click.
+	return event_status::consumed;
 }
 
 void click_proxy::on_hovered_change(unsigned pointer_id)
@@ -74,8 +72,19 @@ void click_proxy::on_hovered_change(unsigned pointer_id)
 		if (this->is_pressed()) {
 			this->is_pressed_v = false;
 			if (this->pressed_change_handler) {
-				this->deferred_release_ret = this->pressed_change_handler(*this);
+				this->pressed_change_handler(*this);
 			}
 		}
 	}
+}
+
+utki::shared_ref<ruis::click_proxy> ruis::make::click_proxy(
+	utki::shared_ref<ruis::context> context, //
+	ruis::click_proxy::all_parameters params
+)
+{
+	return utki::make_shared<ruis::click_proxy>(
+		std::move(context), //
+		std::move(params)
+	);
 }

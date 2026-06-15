@@ -122,16 +122,14 @@ public:
 			cp.pressed_change_handler = [bg{utki::make_shared_from(bg)}](ruis::click_proxy& w) {
 				// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers)
 				bg.get().set_color(w.is_pressed() ? 0xff808080 : 0x80808080);
-				return ruis::event_status::consumed;
 			};
 			cp.pressed_change_handler(cp); // set initial color
-			cp.click_handler = [cube = utki::make_shared_from(cube)](ruis::click_proxy&) -> bool {
+			cp.click_handler = [cube = utki::make_shared_from(cube)](ruis::click_proxy&){
 				if(cube.get().is_updating()){
 					cube.get().context.get().updater.get().stop(cube.get());
 				}else{
 					cube.get().context.get().updater.get().start(cube, 0);
 				}
-				return true;
 			};
 		}
 

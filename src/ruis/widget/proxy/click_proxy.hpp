@@ -28,7 +28,6 @@ namespace ruis {
 class click_proxy : virtual public widget
 {
 	bool is_pressed_v = false;
-	event_status deferred_release_ret = event_status::propagate;
 
 public:
 	struct all_parameters {
@@ -60,8 +59,10 @@ public:
 
 	/**
 	 * @brief Handler for mouse press state changes.
+	 * The event is always consumed, because otherwise the mouse is not captured and we
+	 * never receive the mbutton up event neede to detect a button click.
 	 */
-	std::function<event_status(click_proxy& w)> pressed_change_handler;
+	std::function<void(click_proxy& w)> pressed_change_handler;
 
 	/**
 	 * @brief Handler for clicked event.
@@ -70,16 +71,10 @@ public:
 };
 
 namespace make {
-inline utki::shared_ref<ruis::click_proxy> click_proxy(
+utki::shared_ref<ruis::click_proxy> click_proxy(
 	utki::shared_ref<ruis::context> context, //
 	ruis::click_proxy::all_parameters params
-)
-{
-	return utki::make_shared<ruis::click_proxy>(
-		std::move(context), //
-		std::move(params)
-	);
-}
+);
 } // namespace make
 
 } // namespace ruis
