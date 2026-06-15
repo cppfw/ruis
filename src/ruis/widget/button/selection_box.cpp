@@ -23,7 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../../context.hpp"
 
-#include "impl/drop_down_box.hpp"
+#include "click/selection_box.hpp"
 
 using namespace std::string_view_literals;
 

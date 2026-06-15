@@ -2,7 +2,7 @@
 
 #include <ruis/widget/label/padding.hpp>
 #include <ruis/widget/button/impl/check_box.hpp>
-#include <ruis/widget/button/impl/drop_down_box.hpp>
+#include <ruis/widget/button/click/selection_box.hpp>
 #include <ruis/widget/button/choice_group.hpp>
 #include <ruis/widget/button/impl/radio_button.hpp>
 

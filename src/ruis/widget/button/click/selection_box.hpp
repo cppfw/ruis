@@ -23,7 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../selection_box.hpp"
 
-#include "nine_patch_push_button.hpp"
+#include "../impl/nine_patch_push_button.hpp"
 
 namespace ruis::click {
 
