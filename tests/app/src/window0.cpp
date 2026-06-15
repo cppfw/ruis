@@ -120,7 +120,7 @@ utki::shared_ref<ruis::window> make_window0(
                             )
                         }
                     ),
-                    m::drop_down_box(c,
+                    m::selection_box(c,
                         {
                             .layout_params{
                                 .dims{ruis::dim::max, ruis::dim::min}

@@ -25,7 +25,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "nine_patch_push_button.hpp"
 
-namespace ruis {
+namespace ruis::click {
 
 // NOLINTNEXTLINE(bugprone-incorrect-enable-shared-from-this, "std::shared_from_this is public via widget")
 class drop_down_box :
@@ -78,10 +78,10 @@ private:
 };
 
 namespace make {
-utki::shared_ref<ruis::drop_down_box> drop_down_box(
+utki::shared_ref<ruis::click::drop_down_box> drop_down_box(
 	utki::shared_ref<ruis::context> context, //
 	drop_down_box::all_parameters params
 );
 } // namespace make
 
-} // namespace ruis
+} // namespace ruis::click

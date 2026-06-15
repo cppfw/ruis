@@ -34,11 +34,12 @@ using namespace std::string_view_literals;
 using namespace ruis::length_literals;
 
 using namespace ruis;
+using namespace ruis::click;
 
 namespace {
 std::vector<utki::shared_ref<widget>> make_drop_down_box_widget_structure(utki::shared_ref<ruis::context> c)
 {
-	namespace m = make;
+	namespace m = ruis::make;
 
 	// clang-format off
 	return {
@@ -353,12 +354,12 @@ void drop_down_box::on_reload()
 	this->selection_box::on_reload();
 }
 
-utki::shared_ref<ruis::drop_down_box> ruis::make::drop_down_box(
+utki::shared_ref<ruis::click::drop_down_box> ruis::click::make::drop_down_box(
 	utki::shared_ref<ruis::context> context, //
 	drop_down_box::all_parameters params
 )
 {
-	return utki::make_shared<ruis::drop_down_box>(
+	return utki::make_shared<ruis::click::drop_down_box>(
 		std::move(context), //
 		std::move(params)
 	);
