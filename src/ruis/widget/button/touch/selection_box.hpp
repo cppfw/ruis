@@ -34,16 +34,32 @@ class selection_box :
 	public ruis::selection_box
 {
 public:
+	struct all_parameters{
+		// parameters for ruis::selection_box
+		layout::parameters layout_params;
+		widget::parameters widget_params;
+		list_widget::parameters list_params;
+		string title;
+
+		// parameters specific to ruis::touch::selection_box
+		// TODO: add rectangle_push_button params
+	};
+
 	selection_box(
 		utki::shared_ref<ruis::context> context, //
-		ruis::selection_box::all_parameters params
+		all_parameters params
 	);
+
+	void on_click() override;
+
+private:
+	void show_selection_menu();
 };
 
 namespace make {
 utki::shared_ref<ruis::touch::selection_box> selection_box(
 	utki::shared_ref<ruis::context> context, //
-	ruis::selection_box::all_parameters params
+	ruis::touch::selection_box::all_parameters params
 );
 } // namespace make
 

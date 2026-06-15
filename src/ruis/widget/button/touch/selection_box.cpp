@@ -21,6 +21,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "selection_box.hpp"
 
+#include "../../group/overlay.hpp"
 #include "../../label/rectangle.hpp"
 #include "../../label/text.hpp"
 
@@ -37,7 +38,7 @@ constexpr auto default_padding = 10_pp;
 
 selection_box::selection_box(
 	utki::shared_ref<ruis::context> context, //
-	ruis::selection_box::all_parameters params
+	all_parameters params
 ) :
 	widget(
 		std::move(context), //
@@ -100,9 +101,50 @@ selection_box::selection_box(
 	)
 {}
 
+void selection_box::on_click()
+{
+	this->show_selection_menu();
+}
+
+void selection_box::show_selection_menu()
+{
+	auto& olay = this->get_ancestor<overlay>();
+
+	auto& c = this->context;
+
+	// clang-format off
+	auto root = ruis::make::pile(c,
+		{
+			.layout_params{
+				.dims = {ruis::dim::fill, ruis::dim::fill}
+			}
+		},
+		{
+			ruis::make::rectangle(c,
+				{
+					.layout_params{
+						.dims = {ruis::dim::fill, ruis::dim::fill}
+					},
+					.widget_params{
+						.rectangle = {0, 0, 0, 0}
+					},
+					.color_params{
+						.color = 0x80000000 // TODO: use color from style
+					}
+				}
+			)
+		}
+	);
+	// clang-format on
+
+	c.get().post_to_ui_thread([olay = utki::make_shared_from(olay), root](){
+		olay.get().push_back(root);
+	});
+}
+
 utki::shared_ref<ruis::touch::selection_box> ruis::touch::make::selection_box(
 	utki::shared_ref<context> context, //
-	ruis::selection_box::all_parameters params
+	ruis::touch::selection_box::all_parameters params
 )
 {
 	return utki::make_shared<ruis::touch::selection_box>(

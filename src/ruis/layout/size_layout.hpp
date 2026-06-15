@@ -30,7 +30,7 @@ namespace ruis::layout {
   * This layout only modifies dimensions of widgets according to their layout parameters,
   * it does not change position of widgets at all.
  */
-// TODO: is this layout used anywhere??? If not, then remove.
+// The size_layout is used at least in ruis::overlay.
 class size_layout : public trivial_layout
 {
 public:

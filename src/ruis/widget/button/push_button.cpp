@@ -83,7 +83,7 @@ void push_button::on_pressed_change()
 	this->button::on_pressed_change();
 
 	if (this->is_currently_pressed && this->is_hovered()) {
-		ASSERT(!this->is_pressed())
+		utki::assert(!this->is_pressed());
 		this->on_click();
 	}
 

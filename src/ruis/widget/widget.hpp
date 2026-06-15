@@ -724,6 +724,15 @@ public:
 	}
 
 	/**
+	 * @brief Get ancestor with given id and of given class.
+	 * @param id - id to look for. If empty, then any ancestor of the given class will match.
+	 * @return pointer to the found ancestor widget.
+	 * @return nullptr if no ancestor which satisfies the conditions was found.
+	 */
+	template <typename widget_type>
+	widget_type& get_ancestor(const std::string& id = std::string()); // defined in container.hpp
+
+	/**
 	 * @brief Get ancestor widget with given id.
 	 * @param id - id to look for.
 	 * @return reference to the found ancestor widget.

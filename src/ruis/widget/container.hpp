@@ -468,6 +468,28 @@ std::shared_ptr<widget_type> widget::try_get_widget(bool allow_itself) noexcept
 	return nullptr;
 }
 
+template <class widget_type>
+widget_type& widget::get_ancestor(const std::string& id)
+{
+	if (!this->parent()) {
+		throw std::logic_error("widget::get_ancestor(): requested ancestor widget not found");
+	}
+
+	auto p = dynamic_cast<widget_type*>(
+		// down-cast to widget* because container can be privately inherited by widget_type
+		// and in this case dynamic_cast to widget_type* will fail
+		static_cast<widget*>(this->parent())
+	);
+
+	if (p) {
+		if (id.empty() || p->id() == id) {
+			return *p;
+		}
+	}
+
+	return this->parent()->get_ancestor<widget_type>(id);
+}
+
 template <typename widget_type>
 widget_type& widget::get_widget(bool allow_itself)
 {
