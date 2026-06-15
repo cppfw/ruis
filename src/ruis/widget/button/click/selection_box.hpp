@@ -38,10 +38,13 @@ class selection_box :
 
 public:
 	struct all_parameters {
+		// fields for ruis::selection_box
 		ruis::layout::parameters layout_params;
 		ruis::widget::parameters widget_params;
 		list_widget::parameters list_params;
+		string title;
 
+		// fields specific to ruis::click::selection_box
 		nine_patch_button::parameters nine_patch_button_params;
 	};
 
