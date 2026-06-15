@@ -26,6 +26,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../../label/rectangle.hpp"
 #include "../../label/text.hpp"
 #include "../../proxy/click_proxy.hpp"
+#include "../../proxy/mouse_proxy.hpp"
 
 using namespace std::string_literals;
 using namespace std::string_view_literals;
@@ -172,7 +173,18 @@ void selection_box::show_selection_menu()
 							}
 						},
 						{
-							
+
+						}
+					),
+					ruis::make::mouse_proxy(c,
+						{
+							.layout_params{
+								.dims = {ruis::dim::fill, ruis::dim::fill}
+							},
+							.mouse_proxy_params{
+								.mouse_button_handler = [](auto&, auto&){return ruis::event_status::consumed;},
+								.mouse_move_handler = [](auto&, auto&){return ruis::event_status::consumed;}
+							}
 						}
 					)
 				}
