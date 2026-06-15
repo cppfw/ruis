@@ -176,6 +176,7 @@ void selection_box::show_selection_menu()
 
 						}
 					),
+					// mouse proxy to consume mouse events, to prevent the menu from closing if clicked in the rectangle area
 					ruis::make::mouse_proxy(c,
 						{
 							.layout_params{
@@ -194,7 +195,7 @@ void selection_box::show_selection_menu()
 	// clang-format on
 
 	bg_click_proxy.get().click_handler = [weak_root = utki::make_weak(root)](ruis::click_proxy& cp) {
-		std::cout << "clicked" << std::endl;
+		// std::cout << "clicked" << std::endl;
 		if (auto r = weak_root.lock()) {
 			r->context.get().post_to_ui_thread([r]() {
 				r->remove_from_parent();
