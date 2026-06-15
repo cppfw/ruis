@@ -22,9 +22,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "selection_box.hpp"
 
 #include "../../group/overlay.hpp"
+#include "../../label/padding.hpp"
 #include "../../label/rectangle.hpp"
 #include "../../label/text.hpp"
-#include "../../label/padding.hpp"
 #include "../../proxy/click_proxy.hpp"
 
 using namespace std::string_literals;

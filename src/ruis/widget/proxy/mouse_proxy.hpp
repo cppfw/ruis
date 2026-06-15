@@ -36,10 +36,10 @@ public:
 	using mouse_move_handler_type = std::function<event_status(mouse_proxy& w, const mouse_move_event&)>;
 	using hovered_change_handler_type = std::function<void(mouse_proxy& w, unsigned pointer_id)>;
 
-	struct parameters{
-		mouse_button_handler_type  mouse_button_handler;
-		mouse_move_handler_type 		mouse_move_handler;
-		hovered_change_handler_type 		hovered_change_handler;
+	struct parameters {
+		mouse_button_handler_type mouse_button_handler;
+		mouse_move_handler_type mouse_move_handler;
+		hovered_change_handler_type hovered_change_handler;
 	};
 
 	struct all_parameters {
