@@ -33,11 +33,10 @@ using namespace std::string_view_literals;
 
 using namespace ruis::length_literals;
 
-using namespace ruis;
 using namespace ruis::click;
 
 namespace {
-std::vector<utki::shared_ref<widget>> make_drop_down_box_widget_structure(utki::shared_ref<ruis::context> c)
+std::vector<utki::shared_ref<ruis::widget>> make_selection_box_widget_structure(utki::shared_ref<ruis::context> c)
 {
 	namespace m = ruis::make;
 
@@ -90,7 +89,7 @@ std::vector<utki::shared_ref<widget>> make_drop_down_box_widget_structure(utki::
 }
 } // namespace
 
-drop_down_box::drop_down_box(
+selection_box::selection_box(
 	utki::shared_ref<ruis::context> context, //
 	all_parameters params
 ) :
@@ -120,9 +119,9 @@ drop_down_box::drop_down_box(
 					return std::move(params.nine_patch_button_params);
 				}() //
 		},
-		make_drop_down_box_widget_structure(this->context)
+		make_selection_box_widget_structure(this->context)
 	),
-	selection_box(
+	ruis::selection_box(
 		this->context, //
 		this->get_widget_as<ruis::container>("ruis_dropdown_selection"),
 		std::move(params.list_params)
@@ -137,7 +136,7 @@ drop_down_box::drop_down_box(
 	};
 }
 
-event_status drop_down_box::on_mouse_button(const mouse_button_event& e)
+ruis::event_status selection_box::on_mouse_button(const mouse_button_event& e)
 {
 	if (e.action == button_action::press) {
 		++this->num_mouse_buttons_pressed;
@@ -156,7 +155,7 @@ event_status drop_down_box::on_mouse_button(const mouse_button_event& e)
 	return this->nine_patch_push_button::on_mouse_button(e);
 }
 
-event_status drop_down_box::on_mouse_move(const mouse_move_event& e)
+ruis::event_status selection_box::on_mouse_move(const mouse_move_event& e)
 {
 	if (auto cm = this->current_drop_down_menu.lock()) {
 		if (this->num_mouse_buttons_pressed != 0) {
@@ -171,11 +170,11 @@ event_status drop_down_box::on_mouse_move(const mouse_move_event& e)
 	return this->nine_patch_push_button::on_mouse_move(e);
 }
 
-void drop_down_box::show_drop_down_menu()
+void selection_box::show_drop_down_menu()
 {
 	auto olay = this->try_get_ancestor<overlay>();
 	if (!olay) {
-		throw std::logic_error("drop_down_box: no overlay parent found");
+		throw std::logic_error("selection_box: no overlay parent found");
 	}
 
 	// clang-format off
@@ -251,7 +250,7 @@ void drop_down_box::show_drop_down_menu()
 	);
 }
 
-void drop_down_box::handle_mouse_button_up(bool is_first_button_up_event)
+void selection_box::handle_mouse_button_up(bool is_first_button_up_event)
 {
 	auto ddm = this->current_drop_down_menu.lock();
 	if (!ddm) {
@@ -278,7 +277,7 @@ void drop_down_box::handle_mouse_button_up(bool is_first_button_up_event)
 	});
 }
 
-utki::shared_ref<widget> drop_down_box::wrap_item(
+utki::shared_ref<ruis::widget> selection_box::wrap_item(
 	const utki::shared_ref<widget>& w, //
 	size_t index
 )
@@ -348,18 +347,18 @@ utki::shared_ref<widget> drop_down_box::wrap_item(
 	return wd;
 }
 
-void drop_down_box::on_reload()
+void selection_box::on_reload()
 {
 	this->nine_patch_push_button::on_reload();
-	this->selection_box::on_reload();
+	this->ruis::selection_box::on_reload();
 }
 
-utki::shared_ref<ruis::click::drop_down_box> ruis::click::make::drop_down_box(
+utki::shared_ref<ruis::click::selection_box> ruis::click::make::selection_box(
 	utki::shared_ref<ruis::context> context, //
-	drop_down_box::all_parameters params
+	click::selection_box::all_parameters params
 )
 {
-	return utki::make_shared<ruis::click::drop_down_box>(
+	return utki::make_shared<ruis::click::selection_box>(
 		std::move(context), //
 		std::move(params)
 	);

@@ -28,10 +28,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 namespace ruis::click {
 
 // NOLINTNEXTLINE(bugprone-incorrect-enable-shared-from-this, "std::shared_from_this is public via widget")
-class drop_down_box :
+class selection_box :
 	virtual public widget, //
 	private nine_patch_push_button,
-	public selection_box
+	public ruis::selection_box
 {
 	std::weak_ptr<widget> current_drop_down_menu;
 
@@ -45,18 +45,18 @@ public:
 		list_widget::parameters list_params;
 	};
 
-	drop_down_box(
+	selection_box(
 		utki::shared_ref<ruis::context> context, //
 		all_parameters params
 	);
 
-	drop_down_box(const drop_down_box&) = delete;
-	drop_down_box& operator=(const drop_down_box&) = delete;
+	selection_box(const selection_box&) = delete;
+	selection_box& operator=(const selection_box&) = delete;
 
-	drop_down_box(drop_down_box&&) = delete;
-	drop_down_box& operator=(drop_down_box&&) = delete;
+	selection_box(selection_box&&) = delete;
+	selection_box& operator=(selection_box&&) = delete;
 
-	~drop_down_box() override = default;
+	~selection_box() override = default;
 
 	void on_reload() override;
 
@@ -78,9 +78,9 @@ private:
 };
 
 namespace make {
-utki::shared_ref<ruis::click::drop_down_box> drop_down_box(
+utki::shared_ref<ruis::click::selection_box> selection_box(
 	utki::shared_ref<ruis::context> context, //
-	drop_down_box::all_parameters params
+	click::selection_box::all_parameters params
 );
 } // namespace make
 

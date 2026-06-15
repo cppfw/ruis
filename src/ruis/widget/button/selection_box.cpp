@@ -70,9 +70,9 @@ utki::shared_ref<ruis::selection_box> ruis::make::selection_box(
 {
 	auto& c = context.get();
 	// clang-format off
-	return utki::make_shared<ruis::click::drop_down_box>(
+	return utki::make_shared<ruis::click::selection_box>(
 		std::move(context), //
-		ruis::click::drop_down_box::all_parameters{
+		ruis::click::selection_box::all_parameters{
 			.layout_params = std::move(params.layout_params), //
 			.widget_params = std::move(params.widget_params),
 			.nine_patch_button_params = {
