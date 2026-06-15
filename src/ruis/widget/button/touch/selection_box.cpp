@@ -137,7 +137,7 @@ void selection_box::show_selection_menu()
 	);
 	// clang-format on
 
-	c.get().post_to_ui_thread([olay = utki::make_shared_from(olay), root](){
+	c.get().post_to_ui_thread([olay = utki::make_shared_from(olay), root]() {
 		olay.get().push_back(root);
 	});
 }

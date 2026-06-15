@@ -34,7 +34,7 @@ class selection_box :
 	public ruis::selection_box
 {
 public:
-	struct all_parameters{
+	struct all_parameters {
 		// parameters for ruis::selection_box
 		layout::parameters layout_params;
 		widget::parameters widget_params;
