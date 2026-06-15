@@ -358,6 +358,20 @@ utki::shared_ref<ruis::click::selection_box> ruis::click::make::selection_box(
 	click::selection_box::all_parameters params
 )
 {
+	auto& c = context.get();
+
+	{
+		auto& npbp = params.nine_patch_button_params;
+
+		if (!npbp.pressed_nine_patch) {
+			npbp.pressed_nine_patch = c.loader().load<res::nine_patch>("ruis_npt_button_pressed"sv);
+		}
+
+		if (!npbp.unpressed_nine_patch) {
+			npbp.unpressed_nine_patch = c.loader().load<res::nine_patch>("ruis_npt_button_normal"sv);
+		}
+	}
+
 	return utki::make_shared<ruis::click::selection_box>(
 		std::move(context), //
 		std::move(params)
