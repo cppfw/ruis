@@ -61,3 +61,14 @@ ruis::vec2 list::flickable_scroll_by(const vec2& delta)
 		return {this->scroll_by(delta.x()), 0};
 	}
 }
+
+utki::shared_ref<ruis::touch::list> ruis::touch::make::list(
+	utki::shared_ref<ruis::context> context, //
+	ruis::touch::list::all_parameters params
+)
+{
+	return utki::make_shared<ruis::touch::list>(
+		std::move(context), //
+		std::move(params)
+	);
+}

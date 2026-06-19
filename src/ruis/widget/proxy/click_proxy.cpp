@@ -31,7 +31,9 @@ click_proxy::click_proxy( //
 		std::move(context),
 		std::move(params.layout_params),
 		std::move(params.widget_params)
-	)
+	),
+	pressed_change_handler(std::move(params.click_proxy_params.pressed_change_handler)),
+	click_handler(std::move(params.click_proxy_params.click_handler))
 {}
 
 event_status click_proxy::on_mouse_button(const mouse_button_event& e)

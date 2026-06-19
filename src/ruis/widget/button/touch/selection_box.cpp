@@ -22,6 +22,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "selection_box.hpp"
 
 #include "../../group/overlay.hpp"
+#include "../../group/touch/list.hpp"
+#include "../../label/gap.hpp"
 #include "../../label/padding.hpp"
 #include "../../label/rectangle.hpp"
 #include "../../label/text.hpp"
@@ -109,6 +111,120 @@ void selection_box::on_click()
 	this->show_selection_menu();
 }
 
+namespace {
+class wrapping_provider : public ruis::list_provider
+{
+	// Store strong reference to owner selection_box to kae sure it is alive
+	// while selection menu is shown.
+	utki::shared_ref<ruis::touch::selection_box> owner;
+
+public:
+	wrapping_provider(utki::shared_ref<ruis::touch::selection_box> owner) :
+		ruis::list_provider(owner.get().context),
+		owner(std::move(owner))
+	{}
+
+	size_t count() const noexcept override
+	{
+		return this->owner.get().get_provider().count();
+	}
+
+	utki::shared_ref<ruis::widget> get_widget(size_t index) override
+	{
+		// clang-format off
+		auto pressed_indicator = ruis::make::rectangle(this->context,
+			{
+				.layout_params{
+					.dims = {ruis::dim::fill, ruis::dim::fill}
+				},
+				.widget_params{
+					.visible = false
+				},
+				.color_params{
+					.color = this->context.get().style().get_color_highlight()
+				}
+			}
+		);
+		// clang-format on
+
+		// clang-format off
+		auto click_proxy = ruis::make::click_proxy(this->context,
+			{
+				.layout_params{
+					.dims = {ruis::dim::fill, ruis::dim::fill}
+				},
+				.click_proxy_params{
+					.pressed_change_handler = [&pi = pressed_indicator.get()](auto& cp){
+						// std::cout << "pressed = " << cp.is_pressed() << std::endl;
+						pi.set_visible(cp.is_pressed());
+					},
+					.click_handler = [owner = this->owner, index](auto& cp){
+						owner.get().set_selection(index);
+						// TODO: close selection menu
+					}
+				}
+			}
+		);
+		// clang-format on
+
+		// clang-format off
+		return ruis::make::column(this->context,
+			{
+				.layout_params{
+					.dims = {ruis::dim::fill, ruis::dim::min}
+				}
+			},
+			{
+				ruis::make::pile(this->context,
+					{
+						.layout_params{
+							.dims = {ruis::dim::fill, ruis::dim::min}
+						}
+					},
+					{
+						std::move(pressed_indicator),
+						ruis::make::padding(this->context,
+							{
+								.layout_params{
+									.dims = {ruis::dim::fill, ruis::dim::min}
+								},
+								.container_params{
+									.layout = ruis::layout::pile
+								},
+								.padding_params{
+									.borders = {10_pp} // TODO: take from theme
+								}
+							},
+							{
+								[&]() {
+									if (index == this->owner.get().get_selection()) {
+										return this->owner.get().get_provider().get_highlighted_widget(index);
+									} else {
+										return this->owner.get().get_provider().get_widget(index);
+									}
+								}()
+							}
+						),
+						std::move(click_proxy)
+					}
+				),
+				ruis::make::gap(this->context,
+					{
+						.layout_params{
+							.dims = {ruis::dim::fill, ruis::length::make_pp(1)}
+						},
+						.color_params{
+							.color = 0xff808080 // TODO: get from theme
+						}
+					}
+				)
+			}
+		);
+		// clang-format on
+	}
+};
+} // namespace
+
 void selection_box::show_selection_menu()
 {
 	auto& olay = this->get_ancestor<overlay>();
@@ -157,6 +273,18 @@ void selection_box::show_selection_menu()
 					}
 				},
 				{
+					// mouse proxy to consume mouse events, to prevent the menu from closing if clicked in the rectangle area
+					ruis::make::mouse_proxy(c,
+						{
+							.layout_params{
+								.dims = {ruis::dim::fill, ruis::dim::fill}
+							},
+							.mouse_proxy_params{
+								.mouse_button_handler = [](auto&, auto&){return ruis::event_status::consumed;},
+								.mouse_move_handler = [](auto&, auto&){return ruis::event_status::consumed;}
+							}
+						}
+					),
 					ruis::make::rectangle(c,
 						{
 							.layout_params{
@@ -173,19 +301,16 @@ void selection_box::show_selection_menu()
 							}
 						},
 						{
-							// TODO:
-						}
-					),
-					// mouse proxy to consume mouse events, to prevent the menu from closing if clicked in the rectangle area
-					ruis::make::mouse_proxy(c,
-						{
-							.layout_params{
-								.dims = {ruis::dim::fill, ruis::dim::fill}
-							},
-							.mouse_proxy_params{
-								.mouse_button_handler = [](auto&, auto&){return ruis::event_status::consumed;},
-								.mouse_move_handler = [](auto&, auto&){return ruis::event_status::consumed;}
-							}
+							ruis::touch::make::list(c,
+								{
+									.layout_params{
+										.dims = {ruis::dim::fill, ruis::dim::fill}
+									},
+									.list_params{
+										.provider = utki::make_shared<wrapping_provider>(utki::make_shared_from(*this))
+									}
+								}
+							)
 						}
 					)
 				}

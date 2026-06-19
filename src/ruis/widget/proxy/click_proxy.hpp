@@ -30,9 +30,18 @@ class click_proxy : virtual public widget
 	bool is_pressed_v = false;
 
 public:
+	using pressed_change_handler_type = std::function<void(click_proxy& w)>;
+	using click_handler_type = std::function<void(click_proxy& w)>;
+
+	struct parameters {
+		pressed_change_handler_type pressed_change_handler;
+		click_handler_type click_handler;
+	};
+
 	struct all_parameters {
 		layout::parameters layout_params;
 		widget::parameters widget_params;
+		parameters click_proxy_params;
 	};
 
 	click_proxy(
@@ -62,12 +71,12 @@ public:
 	 * The event is always consumed, because otherwise the mouse is not captured and we
 	 * never receive the mbutton up event neede to detect a button click.
 	 */
-	std::function<void(click_proxy& w)> pressed_change_handler;
+	pressed_change_handler_type pressed_change_handler;
 
 	/**
 	 * @brief Handler for clicked event.
 	 */
-	std::function<void(click_proxy& w)> click_handler;
+	click_handler_type click_handler;
 };
 
 namespace make {

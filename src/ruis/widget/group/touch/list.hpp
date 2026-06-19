@@ -46,7 +46,10 @@ private:
 };
 
 namespace make {
-// TODO: add list() factory
+utki::shared_ref<ruis::touch::list> list(
+	utki::shared_ref<ruis::context> context, //
+	ruis::touch::list::all_parameters params
+);
 } // namespace make
 
 } // namespace ruis::touch
