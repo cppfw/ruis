@@ -150,6 +150,16 @@ styled<color> style_provider::get_color_foreground() const
 	return this->get<color>(style::color_foreground);
 }
 
+styled<color> style_provider::get_color_dimmed() const
+{
+	return this->get<color>(style::color_dimmed);
+}
+
+styled<color> style_provider::get_color_separator() const
+{
+	return this->get<color>(style::color_separator);
+}
+
 styled<color> style_provider::get_color_text_normal() const
 {
 	return this->get<color>(style::color_text_normal);

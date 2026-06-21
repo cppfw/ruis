@@ -5,6 +5,10 @@ ruis{
     color_middleground{0xffc2c2c2}
     color_foreground{0xffb0b0b0}
 
+    color_dimmed{0x80000000}
+
+    color_separator{0xff909090}
+
     color_text_normal{0xff000000}
     color_text_selection_bg{0xff80b0b0}
     color_text_highlight{0xffff00ff}

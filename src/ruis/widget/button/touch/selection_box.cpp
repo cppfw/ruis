@@ -217,7 +217,7 @@ public:
 							.dims = {ruis::dim::fill, ruis::length::make_pp(1)}
 						},
 						.color_params{
-							.color = 0xff808080 // TODO: get from theme
+							.color = this->context.get().style().get_color_separator()
 						}
 					}
 				)
@@ -261,7 +261,7 @@ void selection_box::show_selection_menu()
 						.rectangle = {0, 0, 0, 0}
 					},
 					.color_params{
-						.color = 0x80000000 // TODO: use color from theme
+						.color = this->context.get().style().get_color_dimmed()
 					}
 				}
 			),
