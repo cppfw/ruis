@@ -76,6 +76,7 @@ private:
 	);
 
 	void show_drop_down_menu();
+	void close_drop_down_menu();
 
 	void handle_mouse_button_up(bool is_first_button_up_event);
 };

@@ -133,6 +133,7 @@ public:
 	styled<color> get_color_middleground() const;
 	styled<color> get_color_foreground() const;
 	styled<color> get_color_text_normal() const;
+	styled<color> get_color_text_highlight() const;
 	styled<color> get_color_highlight() const;
 	styled<color> get_color_cursor() const;
 

@@ -82,7 +82,7 @@ public:
 		return m::text(this->context,
 			{
 				.color_params{
-					.color = this->context.get().style().get_color_highlight()
+					.color = this->context.get().style().get_color_text_highlight()
 				}
 			},
 			this->items.at(index)

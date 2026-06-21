@@ -69,6 +69,7 @@ public:
 
 	/**
 	 * @brief Set currently selected item.
+	 * Doesn't invoke the selection_handler.
 	 * @param i - index of the item to set as currently selected.
 	 */
 	void set_selection(size_t i);
@@ -86,6 +87,9 @@ public:
 
 private:
 	void handle_model_change() override;
+
+protected:
+	void notify_selection_changed();
 };
 
 namespace make {

@@ -36,6 +36,8 @@ style style_sheet::name_to_style(std::string_view name)
 		return style::color_text_normal;
 	} else if (name == "color_text_selection_bg"sv) {
 		return style::color_text_selection_bg;
+	} else if (name == "color_text_highlight"sv) {
+		return style::color_text_highlight;
 	} else if (name == "color_highlight"sv) {
 		return style::color_highlight;
 	} else if (name == "color_cursor"sv) {

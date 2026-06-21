@@ -159,8 +159,11 @@ public:
 						pi.set_visible(cp.is_pressed());
 					},
 					.click_handler = [owner = this->owner, index](auto& cp){
-						owner.get().set_selection(index);
 						owner.get().close_selection_menu();
+						if(owner.get().get_selection() != index){
+							owner.get().set_selection(index);
+							owner.get().notify_selection_changed();
+						}
 					}
 				}
 			}
@@ -192,7 +195,7 @@ public:
 									.layout = ruis::layout::pile
 								},
 								.padding_params{
-									.borders = {10_pp} // TODO: take from theme
+									.borders = {default_padding}
 								}
 							},
 							{

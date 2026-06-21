@@ -6,6 +6,7 @@ ruis{
 
     color_text_normal{0xffffffff}
     color_text_selection_bg{0xff804040}
+    color_text_highlight{0xffad9869}
 
     color_highlight{0xffad9869}
 

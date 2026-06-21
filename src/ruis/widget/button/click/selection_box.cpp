@@ -250,31 +250,33 @@ void selection_box::show_drop_down_menu()
 	);
 }
 
-void selection_box::handle_mouse_button_up(bool is_first_button_up_event)
+void selection_box::close_drop_down_menu()
 {
 	auto ddm = this->current_drop_down_menu.lock();
 	if (!ddm) {
 		return;
 	}
+	this->context.get().post_to_ui_thread([ddm]() {
+		ddm->remove_from_parent();
+	});
+}
 
+void selection_box::handle_mouse_button_up(bool is_first_button_up_event)
+{
 	if (this->hovered_index < 0) {
 		if (!is_first_button_up_event) {
-			this->context.get().post_to_ui_thread([ddm]() {
-				ddm->remove_from_parent(); // close drop down menu
-			});
+			this->close_drop_down_menu();
 		}
 		return;
 	}
-	this->set_selection(this->hovered_index);
 
-	auto ddb = utki::make_shared_from(*this);
+	this->close_drop_down_menu();
 
-	this->context.get().post_to_ui_thread([ddb, ddm]() {
-		ddm->remove_from_parent(); // close drop down menu
-		if (ddb.get().selection_handler) {
-			ddb.get().selection_handler(ddb.get());
-		}
-	});
+	utki::assert(this->hovered_index >= 0);
+	if (size_t(this->hovered_index) != this->get_selection()) {
+		this->set_selection(this->hovered_index);
+		this->notify_selection_changed();
+	}
 }
 
 utki::shared_ref<ruis::widget> selection_box::wrap_item(

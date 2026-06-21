@@ -37,6 +37,7 @@ enum class style {
 
 	color_text_normal,
 	color_text_selection_bg,
+	color_text_highlight,
 
 	color_highlight,
 

@@ -155,6 +155,11 @@ styled<color> style_provider::get_color_text_normal() const
 	return this->get<color>(style::color_text_normal);
 }
 
+styled<color> style_provider::get_color_text_highlight() const
+{
+	return this->get<color>(style::color_text_highlight);
+}
+
 styled<color> style_provider::get_color_highlight() const
 {
 	return this->get<color>(style::color_highlight);

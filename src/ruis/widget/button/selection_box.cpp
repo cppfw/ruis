@@ -56,6 +56,13 @@ void selection_box::handle_model_change()
 	this->selection_container.push_back(this->get_provider().get_highlighted_widget(this->get_selection()));
 }
 
+void selection_box::notify_selection_changed()
+{
+	if (this->selection_handler) {
+		this->selection_handler(*this);
+	}
+}
+
 void selection_box::set_selection(size_t i)
 {
 	this->selected_index = i;
