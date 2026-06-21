@@ -53,7 +53,14 @@ public:
 	void on_click() override;
 
 private:
+	class wrapping_provider;
+
+	// Current selection menu, if open. Use weak_ptr to make sure the selection menu
+	// lifetime is only defined by the parent widget of the selection menu widget.
+	std::weak_ptr<ruis::widget> selection_menu;
+
 	void show_selection_menu();
+	void close_selection_menu();
 };
 
 namespace make {

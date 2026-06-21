@@ -111,8 +111,8 @@ void selection_box::on_click()
 	this->show_selection_menu();
 }
 
-namespace {
-class wrapping_provider : public ruis::list_provider
+namespace ruis::touch {
+class selection_box::wrapping_provider : public ruis::list_provider
 {
 	// Store strong reference to owner selection_box to kae sure it is alive
 	// while selection menu is shown.
@@ -160,7 +160,7 @@ public:
 					},
 					.click_handler = [owner = this->owner, index](auto& cp){
 						owner.get().set_selection(index);
-						// TODO: close selection menu
+						owner.get().close_selection_menu();
 					}
 				}
 			}
@@ -223,7 +223,7 @@ public:
 		// clang-format on
 	}
 };
-} // namespace
+} // namespace ruis::touch
 
 void selection_box::show_selection_menu()
 {
@@ -331,6 +331,18 @@ void selection_box::show_selection_menu()
 	c.get().post_to_ui_thread([olay = utki::make_shared_from(olay), root]() {
 		olay.get().push_back(root);
 	});
+
+	this->selection_menu = root.to_shared_ptr();
+}
+
+void selection_box::close_selection_menu()
+{
+	if (auto sm = this->selection_menu.lock()) {
+		this->context.get().post_to_ui_thread([sm = std::move(sm)]() {
+			sm->remove_from_parent();
+		});
+	}
+	this->selection_menu.reset();
 }
 
 utki::shared_ref<ruis::touch::selection_box> ruis::touch::make::selection_box(
