@@ -51,8 +51,6 @@ public:
 	 */
 	const ruis::real min_tile_size;
 
-	const ruis::real dragger_size;
-
 	struct parameters {
 		styled<color> dragger_color;
 	};

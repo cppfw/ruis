@@ -27,7 +27,7 @@ using namespace ruis;
 
 namespace {
 const ruis::real minimal_tile_size_pp = 30;
-const ruis::real dragger_size_pp = 5;
+const auto dragger_size_pp = 5;
 } // namespace
 
 namespace ruis::internal {
@@ -186,7 +186,6 @@ tiling_area::tiling_area(
 	),
 	// clang-format on
 	min_tile_size(this->context.get().units.pp_to_px(minimal_tile_size_pp)),
-	dragger_size(this->context.get().units.pp_to_px(dragger_size_pp)),
 	params([&]() {
 		constexpr uint32_t default_dragger_color = 0xffff8080;
 
@@ -269,7 +268,7 @@ void tiling_area::on_lay_out()
 	// ====================
 	// = lay out draggers =
 
-	ASSERT(this->size() >= 1)
+	utki::assert(this->size() >= 1);
 
 	auto num_draggers = [&]() -> size_t {
 		if (this->content().empty()) {
@@ -294,7 +293,7 @@ void tiling_area::on_lay_out()
 	}
 
 	ruis::vec2 dragger_dims;
-	dragger_dims[long_index] = this->dragger_size;
+	dragger_dims[long_index] = this->context.get().units.pp_to_px(dragger_size_pp);
 	dragger_dims[trans_index] = this->rect().d[trans_index];
 
 	for (auto i = std::next(this->begin()); i != this->end(); ++i) {
@@ -311,7 +310,7 @@ void tiling_area::on_lay_out()
 
 		ruis::vec2 dragger_pos;
 		dragger_pos[trans_index] = ruis::real(0);
-		dragger_pos[long_index] = round(dragger.next_widget->rect().p[long_index] - this->dragger_size / 2);
+		dragger_pos[long_index] = round(dragger.next_widget->rect().p[long_index] - dragger_dims[long_index] / 2);
 		dragger.move_to(dragger_pos);
 	}
 
