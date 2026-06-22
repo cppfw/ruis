@@ -251,6 +251,12 @@ const page* book::get_active_page() const
 	return nullptr;
 }
 
+void book::on_reload(){
+	for(auto& p : this->pages){
+		p.get().on_reload();
+	}
+}
+
 page::page(
 	utki::shared_ref<ruis::context> context, //
 	ruis::widget::parameters widget_params

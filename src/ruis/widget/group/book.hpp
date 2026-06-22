@@ -127,6 +127,8 @@ public:
 	// page is either pushed or teared out
 	std::function<void(book&, const page&)> pages_change_handler;
 
+	void on_reload() override;
+
 private:
 	utki::shared_ref<page> tear_out(page& page);
 
