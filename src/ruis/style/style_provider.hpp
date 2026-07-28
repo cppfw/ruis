@@ -132,8 +132,14 @@ public:
 	styled<color> get_color_background() const;
 	styled<color> get_color_middleground() const;
 	styled<color> get_color_foreground() const;
+	styled<color> get_color_primary() const;
+	styled<color> get_color_panel() const;
+	styled<color> get_color_sunken() const;
 	styled<color> get_color_dimmed() const;
 	styled<color> get_color_separator() const;
+	styled<color> get_color_text() const;
+	styled<color> get_color_text_secondary() const;
+	styled<color> get_color_text_disabled() const;
 	styled<color> get_color_text_normal() const;
 	styled<color> get_color_text_highlight() const;
 	styled<color> get_color_highlight() const;

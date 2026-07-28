@@ -1,15 +1,15 @@
 version{1}
 ruis{
     color_background{0xff353535}
-//    color_primary{0xff505050} // TODO:
-//    color_panel{0xff424242} // TODO:
-//    color_sunken{0xff505050} // TODO:
+    color_primary{0xff505050}
+    color_panel{0xff424242}
+    color_sunken{0xff505050}
 
     color_dimmed{0x80000000}
 
-//    color_text{0xffffffff}
-//    color_text_secondary{0xffa0a0a0} // TODO:
-//    color_text_disabled{0x808080} // TODO:
+    color_text{0xffffffff}
+    color_text_secondary{0xffa0a0a0}
+    color_text_disabled{0x808080}
 
     // ========= obsolete =============
 

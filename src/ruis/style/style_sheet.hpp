@@ -34,10 +34,17 @@ enum class style {
 	color_background,
 	color_middleground,
 	color_foreground,
+	color_primary,
+	color_panel,
+	color_sunken,
 
 	color_dimmed,
 
 	color_separator,
+
+	color_text,
+	color_text_secondary,
+	color_text_disabled,
 
 	color_text_normal,
 	color_text_selection_bg,

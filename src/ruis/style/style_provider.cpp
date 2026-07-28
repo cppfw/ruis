@@ -160,6 +160,36 @@ styled<color> style_provider::get_color_separator() const
 	return this->get<color>(style::color_separator);
 }
 
+styled<color> style_provider::get_color_primary() const
+{
+	return this->get<color>(style::color_primary);
+}
+
+styled<color> style_provider::get_color_panel() const
+{
+	return this->get<color>(style::color_panel);
+}
+
+styled<color> style_provider::get_color_sunken() const
+{
+	return this->get<color>(style::color_sunken);
+}
+
+styled<color> style_provider::get_color_text() const
+{
+	return this->get<color>(style::color_text);
+}
+
+styled<color> style_provider::get_color_text_secondary() const
+{
+	return this->get<color>(style::color_text_secondary);
+}
+
+styled<color> style_provider::get_color_text_disabled() const
+{
+	return this->get<color>(style::color_text_disabled);
+}
+
 styled<color> style_provider::get_color_text_normal() const
 {
 	return this->get<color>(style::color_text_normal);
