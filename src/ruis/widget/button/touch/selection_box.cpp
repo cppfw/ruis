@@ -272,7 +272,7 @@ void selection_box::show_selection_menu()
 						.dims = {ruis::dim::fill, ruis::dim::fill}
 					},
 					.padding_params{
-						.borders = {30_pp}
+						.borders = {30_pp} // TODO: get from theme
 					}
 				},
 				{
