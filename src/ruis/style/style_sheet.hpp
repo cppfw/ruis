@@ -32,8 +32,9 @@ namespace ruis {
  */
 enum class style {
 	color_background,
-	color_primary,
 	color_panel,
+	color_primary,
+	color_highlight,
 	color_sunken,
 
 	color_dimmed,
@@ -43,8 +44,6 @@ enum class style {
 	color_text_disabled,
 	color_text_selection_bg, // TODO: ?
 	color_text_highlight, // TODO: ?
-
-	color_highlight, // TODO:  ?
 
 	color_cursor, // TODO: ?
 
