@@ -40,12 +40,12 @@ style style_sheet::name_to_style(std::string_view name)
 		return style::color_text_secondary;
 	} else if (name == "color_highlight"sv) {
 		return style::color_highlight;
-	} else if (name == "dim_tree_view_item_indent"sv) {
-		return style::dim_tree_view_item_indent;
-	} else if (name == "font_size_normal"sv) {
-		return style::font_size_normal;
-	} else if (name == "font_face_normal"sv) {
-		return style::font_face_normal;
+	} else if (name == "dim_tree_view_indent"sv || name == "dim_tree_view_item_indent"sv) {
+		return style::dim_tree_view_indent;
+	} else if (name == "font_size_text"sv || name == "font_size_normal"sv) {
+		return style::font_size_text;
+	} else if (name == "font_face_text"sv || name == "font_face_normal"sv) {
+		return style::font_face_text;
 	}
 
 	throw std::invalid_argument(utki::cat("style_sheet::name_to_style(name): unknown style name: ", name));

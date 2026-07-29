@@ -137,7 +137,7 @@ public:
 	styled<color> get_color_text_secondary() const;
 	styled<color> get_color_highlight() const;
 
-	styled<layout::dimension> get_dim_indent_tree_view_item() const;
+	styled<layout::dimension> get_dim_tree_view_indent() const;
 
 	styled<length> get_font_size_normal() const;
 	styled<res::font> get_font_face_normal() const;

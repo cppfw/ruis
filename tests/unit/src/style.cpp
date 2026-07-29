@@ -37,7 +37,7 @@ const tst::set set("style", [](tst::suite& suite){
 
                     color_highlight{0xffad9869}
 
-                    dim_tree_view_item_indent{17pp}
+                    dim_tree_view_indent{17pp}
                 }
                 user{}
             )qwertyuiop"s);
@@ -47,7 +47,7 @@ const tst::set set("style", [](tst::suite& suite){
         auto& color_bg = ss.get(ruis::style::color_background);
         tst::check_eq(tml::to_string(color_bg), "0xff353535"s);
 
-        auto& length_tv_indent = ss.get(ruis::style::dim_tree_view_item_indent);
+        auto& length_tv_indent = ss.get(ruis::style::dim_tree_view_indent);
         tst::check_eq(tml::to_string(length_tv_indent), "17pp"s, SL);
 
         auto non_existent = ss.get("non_existent_id"sv);
@@ -64,7 +64,7 @@ const tst::set set("style", [](tst::suite& suite){
 
                 color_highlight{0xffad9869}
 
-                dim_tree_view_item_indent{17pp}
+                dim_tree_view_indent{17pp}
             }
             user{
                 real_style_value{13}
@@ -81,7 +81,7 @@ const tst::set set("style", [](tst::suite& suite){
         auto color_bg = s.get_color_background();
         tst::check_eq(color_bg.get(), ruis::color(0xff353535), SL);
 
-        auto length_ident = s.get_dim_indent_tree_view_item();
+        auto length_ident = s.get_dim_tree_view_indent();
         tst::check_eq(length_ident.get(), ruis::layout::dimension(ruis::length::make_pp(17)), SL);
     });
 
@@ -136,7 +136,7 @@ const tst::set set("style", [](tst::suite& suite){
                     version{1}
                     ruis{
                         color_background{0xff353535}
-                        dim_tree_view_item_indent{17pp}
+                        dim_tree_view_indent{17pp}
                     }
                 )qwertyuiop"s
             )
@@ -147,7 +147,7 @@ const tst::set set("style", [](tst::suite& suite){
         auto color_bg = s.get_color_background();
         tst::check_eq(color_bg.get(), ruis::color(0xff353535), SL);
 
-        auto length_ident = s.get_dim_indent_tree_view_item();
+        auto length_ident = s.get_dim_tree_view_indent();
         tst::check_eq(length_ident.get(), ruis::layout::dimension(ruis::length::make_pp(17)));
 
         auto ss2 = utki::make_shared<ruis::style_sheet>(
@@ -156,7 +156,7 @@ const tst::set set("style", [](tst::suite& suite){
                     version{1}
                     ruis{
                         color_background{0xff00ff00}
-                        dim_tree_view_item_indent{13pp}
+                        dim_tree_view_indent{13pp}
                     }
                 )qwertyuiop"s
             )
@@ -173,7 +173,7 @@ const tst::set set("style", [](tst::suite& suite){
         }
 
         {
-            auto length_ident = s.get_dim_indent_tree_view_item();
+            auto length_ident = s.get_dim_tree_view_indent();
             tst::check_eq(length_ident.get(), ruis::layout::dimension(ruis::length::make_pp(13)));
         }
     });

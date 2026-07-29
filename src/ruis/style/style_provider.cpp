@@ -170,17 +170,17 @@ styled<color> style_provider::get_color_highlight() const
 	return this->get<color>(style::color_highlight);
 }
 
-styled<layout::dimension> style_provider::get_dim_indent_tree_view_item() const
+styled<layout::dimension> style_provider::get_dim_tree_view_indent() const
 {
-	return this->get<layout::dimension>(style::dim_tree_view_item_indent);
+	return this->get<layout::dimension>(style::dim_tree_view_indent);
 }
 
 styled<length> style_provider::get_font_size_normal() const
 {
-	return this->get<length>(style::font_size_normal);
+	return this->get<length>(style::font_size_text);
 }
 
 styled<res::font> style_provider::get_font_face_normal() const
 {
-	return this->get<res::font>(style::font_face_normal);
+	return this->get<res::font>(style::font_face_text);
 }

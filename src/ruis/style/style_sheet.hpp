@@ -41,17 +41,17 @@ enum class style {
 	color_text,
 	color_text_secondary,
 
-	dim_tree_view_item_indent, // TODO: ?
+	dim_tree_view_indent,
 
-	font_size_normal, // TODO: rename to font_size_text
-	font_face_normal, // TODO: rename to font_face_text
+	font_size_text,
+	font_face_text,
 
 	enum_size
 };
 
 /**
  * @brief Style sheet.
- * TODO: write more description
+ * Represents ruis standard style values and user-defined style values.
  * File format:
  * @verbatim
  * version{<version-number>}
