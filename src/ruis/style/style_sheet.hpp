@@ -40,8 +40,6 @@ enum class style {
 
 	color_text,
 	color_text_secondary,
-	color_text_selection_bg, // TODO: ?
-	color_text_highlight, // TODO: ?
 
 	color_cursor, // TODO: ?
 

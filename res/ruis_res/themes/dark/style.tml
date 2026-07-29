@@ -1,22 +1,16 @@
 version{1}
 ruis{
     color_background{0xff353535}
-    color_primary{0xff505050}
     color_panel{0xff424242}
-    color_sunken{0xff505050}
+    color_primary{0xff505050}
+    color_highlight{0xffad9869}
 
     color_dimmed{0xb0000000}
 
     color_text{0xffffffff}
     color_text_secondary{0xffa0a0a0}
-    color_text_disabled{0x808080}
 
     // ========= obsolete =============
-
-    color_text_selection_bg{0xff804040}
-    color_text_highlight{0xffad9869}
-
-    color_highlight{0xffad9869}
 
     color_cursor{0xffff8080}
 
