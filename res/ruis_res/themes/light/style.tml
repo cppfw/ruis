@@ -8,8 +8,6 @@ ruis{
 
     color_dimmed{0xb0000000}
 
-    color_separator{0xff909090}
-
     color_text{0xff000000}
     color_text_secondary{0xff505050}
     color_text_disabled{0x808080}

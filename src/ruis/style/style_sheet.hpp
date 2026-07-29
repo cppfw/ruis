@@ -38,8 +38,6 @@ enum class style {
 
 	color_dimmed,
 
-	color_separator, // TODO: remove
-
 	color_text,
 	color_text_secondary,
 	color_text_disabled,

@@ -145,11 +145,6 @@ styled<color> style_provider::get_color_dimmed() const
 	return this->get<color>(style::color_dimmed);
 }
 
-styled<color> style_provider::get_color_separator() const
-{
-	return this->get<color>(style::color_separator);
-}
-
 styled<color> style_provider::get_color_primary() const
 {
 	return this->get<color>(style::color_primary);

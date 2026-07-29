@@ -36,8 +36,6 @@ style style_sheet::name_to_style(std::string_view name)
 		return style::color_sunken;
 	} else if (name == "color_dimmed"sv) {
 		return style::color_dimmed;
-	} else if (name == "color_separator"sv) {
-		return style::color_separator;
 	} else if (name == "color_text"sv) {
 		return style::color_text;
 	} else if (name == "color_text_secondary"sv) {
