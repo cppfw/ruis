@@ -32,7 +32,6 @@ namespace ruis {
  */
 enum class style {
 	color_background,
-	color_foreground, // TODO: remove
 	color_primary,
 	color_panel,
 	color_sunken,

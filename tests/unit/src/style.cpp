@@ -31,7 +31,7 @@ const tst::set set("style", [](tst::suite& suite){
                 version{1}
                 ruis{
                     color_background{0xff353535}
-                    color_foreground{0xff505050}
+                    color_primary{0xff505050}
 
                     color_text_normal{0xffffffff}
 
@@ -60,7 +60,7 @@ const tst::set set("style", [](tst::suite& suite){
             version{1}
             ruis{
                 color_background{0xff353535}
-                color_foreground{0xff505050}
+                color_primary{0xff505050}
 
                 color_text_normal{0xffffffff}
 

@@ -217,7 +217,7 @@ public:
 							.dims = {ruis::dim::fill, ruis::length::make_pp(1)}
 						},
 						.color_params{
-							.color = this->context.get().style().get_color_separator()
+							.color = this->context.get().style().get_color_primary()
 						}
 					}
 				)
@@ -297,7 +297,7 @@ void selection_box::show_selection_menu()
 								.borders = {20_pp} // TODO: get from theme
 							},
 							.color_params{
-								.color = c.get().style().get_color_foreground()
+								.color = c.get().style().get_color_panel()
 							},
 							.rectangle_params{
 								.corner_radii = {20_pp} // TODO: get from theme

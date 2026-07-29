@@ -5,15 +5,13 @@ ruis{
     color_panel{0xff424242}
     color_sunken{0xff505050}
 
-    color_dimmed{0x80000000}
+    color_dimmed{0xb0000000}
 
     color_text{0xffffffff}
     color_text_secondary{0xffa0a0a0}
     color_text_disabled{0x808080}
 
     // ========= obsolete =============
-
-    color_foreground{0xff505050}
 
     color_separator{0xff505050}
 

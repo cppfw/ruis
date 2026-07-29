@@ -28,8 +28,6 @@ style style_sheet::name_to_style(std::string_view name)
 {
 	if (name == "color_background"sv) {
 		return style::color_background;
-	} else if (name == "color_foreground"sv) {
-		return style::color_foreground;
 	} else if (name == "color_primary"sv) {
 		return style::color_primary;
 	} else if (name == "color_panel"sv) {

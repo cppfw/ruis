@@ -140,11 +140,6 @@ styled<color> style_provider::get_color_background() const
 	return this->get<color>(style::color_background);
 }
 
-styled<color> style_provider::get_color_foreground() const
-{
-	return this->get<color>(style::color_foreground);
-}
-
 styled<color> style_provider::get_color_dimmed() const
 {
 	return this->get<color>(style::color_dimmed);
