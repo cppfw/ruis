@@ -140,11 +140,6 @@ styled<color> style_provider::get_color_background() const
 	return this->get<color>(style::color_background);
 }
 
-styled<color> style_provider::get_color_middleground() const
-{
-	return this->get<color>(style::color_middleground);
-}
-
 styled<color> style_provider::get_color_foreground() const
 {
 	return this->get<color>(style::color_foreground);

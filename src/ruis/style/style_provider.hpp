@@ -130,7 +130,6 @@ public:
 	// ====== standard style values ======
 
 	styled<color> get_color_background() const;
-	styled<color> get_color_middleground() const;
 	styled<color> get_color_foreground() const;
 	styled<color> get_color_primary() const;
 	styled<color> get_color_panel() const;

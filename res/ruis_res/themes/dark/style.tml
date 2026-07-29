@@ -13,7 +13,6 @@ ruis{
 
     // ========= obsolete =============
 
-    color_middleground{0xff424242}
     color_foreground{0xff505050}
 
     color_separator{0xff505050}

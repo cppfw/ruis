@@ -2,7 +2,6 @@ version{1}
 // TODO: support inherit
 ruis{
     color_background{0xffd5d5d5}
-    color_middleground{0xffc2c2c2}
     color_foreground{0xffb0b0b0}
     color_primary{0xffb0b0b0}
     color_panel{0xffc2c2c2}
