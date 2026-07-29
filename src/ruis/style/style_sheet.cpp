@@ -42,8 +42,6 @@ style style_sheet::name_to_style(std::string_view name)
 		return style::color_text_secondary;
 	} else if (name == "color_text_disabled"sv) {
 		return style::color_text_disabled;
-	} else if (name == "color_text_normal"sv) {
-		return style::color_text_normal;
 	} else if (name == "color_text_selection_bg"sv) {
 		return style::color_text_selection_bg;
 	} else if (name == "color_text_highlight"sv) {

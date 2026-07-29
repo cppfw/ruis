@@ -137,7 +137,6 @@ public:
 	styled<color> get_color_text() const;
 	styled<color> get_color_text_secondary() const;
 	styled<color> get_color_text_disabled() const;
-	styled<color> get_color_text_normal() const;
 	styled<color> get_color_text_highlight() const;
 	styled<color> get_color_highlight() const;
 	styled<color> get_color_cursor() const;

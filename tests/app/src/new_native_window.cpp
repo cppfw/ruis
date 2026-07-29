@@ -83,7 +83,7 @@ utki::shared_ref<ruis::widget> make_new_native_window_root_widget(
                                 .dims{ruis::dim::fill, ruis::dim::max}
                             },
                             .color_params{
-                                .color = c.get().style().get_color_text_normal()
+                                .color = c.get().style().get_color_text()
                             }
                         },
                         U"Hello Wrodl!!!"s

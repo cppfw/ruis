@@ -68,7 +68,7 @@ public:
 		return m::text(this->context,
 			{
 				.color_params{
-					.color = this->context.get().style().get_color_text_normal()
+					.color = this->context.get().style().get_color_text()
 				}
 			},
 			this->items.at(index)
