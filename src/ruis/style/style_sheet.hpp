@@ -35,13 +35,11 @@ enum class style {
 	color_panel,
 	color_primary,
 	color_highlight,
-	color_sunken,
 
 	color_dimmed,
 
 	color_text,
 	color_text_secondary,
-	color_text_disabled,
 	color_text_selection_bg, // TODO: ?
 	color_text_highlight, // TODO: ?
 

@@ -32,16 +32,12 @@ style style_sheet::name_to_style(std::string_view name)
 		return style::color_primary;
 	} else if (name == "color_panel"sv) {
 		return style::color_panel;
-	} else if (name == "color_sunken"sv) {
-		return style::color_sunken;
 	} else if (name == "color_dimmed"sv) {
 		return style::color_dimmed;
 	} else if (name == "color_text"sv) {
 		return style::color_text;
 	} else if (name == "color_text_secondary"sv) {
 		return style::color_text_secondary;
-	} else if (name == "color_text_disabled"sv) {
-		return style::color_text_disabled;
 	} else if (name == "color_text_selection_bg"sv) {
 		return style::color_text_selection_bg;
 	} else if (name == "color_text_highlight"sv) {
