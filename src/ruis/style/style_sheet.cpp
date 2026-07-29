@@ -40,8 +40,6 @@ style style_sheet::name_to_style(std::string_view name)
 		return style::color_text_secondary;
 	} else if (name == "color_highlight"sv) {
 		return style::color_highlight;
-	} else if (name == "color_cursor"sv) {
-		return style::color_cursor;
 	} else if (name == "dim_tree_view_item_indent"sv) {
 		return style::dim_tree_view_item_indent;
 	} else if (name == "font_size_normal"sv) {

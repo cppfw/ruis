@@ -41,8 +41,6 @@ enum class style {
 	color_text,
 	color_text_secondary,
 
-	color_cursor, // TODO: ?
-
 	dim_tree_view_item_indent, // TODO: ?
 
 	font_size_normal, // TODO: rename to font_size_text

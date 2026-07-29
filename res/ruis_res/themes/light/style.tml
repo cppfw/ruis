@@ -11,8 +11,6 @@ ruis{
     color_text{0xff000000}
     color_text_secondary{0xff505050}
 
-    color_cursor{0xffff8080}
-
     // TODO: support include
     dim_tree_view_item_indent{17pp}
 
