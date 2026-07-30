@@ -33,7 +33,7 @@ const tst::set set("style", [](tst::suite& suite){
                     color_background{0xff353535}
                     color_primary{0xff505050}
 
-                    color_text_normal{0xffffffff}
+                    color_text{0xffffffff}
 
                     color_highlight{0xffad9869}
 
