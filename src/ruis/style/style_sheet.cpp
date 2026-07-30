@@ -42,9 +42,9 @@ style style_sheet::name_to_style(std::string_view name)
 		return style::color_highlight;
 	} else if (name == "dim_tree_view_indent"sv || name == "dim_tree_view_item_indent"sv) {
 		return style::dim_tree_view_indent;
-	} else if (name == "font_size_text"sv || name == "font_size_normal"sv) {
+	} else if (name == "font_size_text"sv) {
 		return style::font_size_text;
-	} else if (name == "font_face_text"sv || name == "font_face_normal"sv) {
+	} else if (name == "font_face_text"sv) {
 		return style::font_face_text;
 	}
 

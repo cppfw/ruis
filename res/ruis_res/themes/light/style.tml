@@ -14,7 +14,7 @@ ruis{
     // TODO: support include
     dim_tree_view_item_indent{17pp}
 
-    font_size_normal{12pp}
-    font_face_normal{ruis_fnt_normal}
+    font_size_text{12pp}
+    font_face_text{ruis_fnt_normal}
 }
 user{}
