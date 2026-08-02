@@ -35,13 +35,8 @@ class rectangle_button :
 {
 public:
 	struct parameters {
-		constexpr static const auto default_pressed_color = 0xffaaaaaa;
-		uint32_t pressed_color = default_pressed_color;
-
-		constexpr static const auto default_unpressed_color = 0xff666666;
-		uint32_t unpressed_color = default_unpressed_color;
-
-		// TODO: add disabled_color ?
+		styled<ruis::color> pressed_color;
+		styled<ruis::color> unpressed_color;
 	};
 
 	void render(const mat4& matrix) const override;

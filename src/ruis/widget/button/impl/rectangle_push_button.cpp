@@ -50,3 +50,27 @@ rectangle_push_button::rectangle_push_button(
 		std::move(contents) //
 	)
 {}
+
+namespace ruis::make {
+
+utki::shared_ref<ruis::rectangle_push_button> rectangle_push_button(
+	utki::shared_ref<ruis::context> context,
+	ruis::rectangle_push_button::all_parameters params,
+	ruis::widget_list contents
+)
+{
+	if(params.rectangle_button_params.unpressed_color.get().is_undefined()){
+		params.rectangle_button_params.unpressed_color = context.get().style().get_color_primary();
+	}
+	if(params.rectangle_button_params.pressed_color.get().is_undefined()){
+		params.rectangle_button_params.pressed_color = context.get().style().get_color_dimmed();
+	}
+
+	return utki::make_shared<ruis::rectangle_push_button>(
+		std::move(context), //
+		std::move(params),
+		std::move(contents)
+	);
+}
+
+} // namespace ruis::make

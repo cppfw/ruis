@@ -74,9 +74,6 @@ selection_box::selection_box(
 				{
 					.layout_params{
 						.align = {ruis::align::front, ruis::align::center}
-					},
-					.color_params{
-						.color = this->context.get().style().get_color_text()
 					}
 				},
 				std::move(params.title)
