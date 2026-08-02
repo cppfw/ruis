@@ -175,6 +175,11 @@ styled<layout::dimension> style_provider::get_dim_indent() const
 	return this->get<layout::dimension>(style::dim_indent);
 }
 
+styled<layout::dimension> style_provider::get_dim_gap() const
+{
+	return this->get<layout::dimension>(style::dim_gap);
+}
+
 styled<length> style_provider::get_font_size_normal() const
 {
 	return this->get<length>(style::font_size_text);

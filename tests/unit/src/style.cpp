@@ -37,7 +37,7 @@ const tst::set set("style", [](tst::suite& suite){
 
                     color_highlight{0xffad9869}
 
-                    dim_tree_view_indent{17pp}
+                    dim_indent{17pp}
                 }
                 user{}
             )qwertyuiop"s);
@@ -136,7 +136,7 @@ const tst::set set("style", [](tst::suite& suite){
                     version{1}
                     ruis{
                         color_background{0xff353535}
-                        dim_tree_view_indent{17pp}
+                        dim_indent{17pp}
                     }
                 )qwertyuiop"s
             )
