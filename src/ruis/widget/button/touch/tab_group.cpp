@@ -57,6 +57,20 @@ tab_group::tab_group(
 
 void tab_group::render(const ruis::mat4& matrix) const
 {
+	// render background
+	{
+		auto& r = this->context.get().renderer.get();
+
+		ruis::mat4 matr(matrix);
+		matr.scale(this->rect().d);
+
+		r.shaders().color_pos->render(
+			matr, //
+			r.obj().pos_quad_01_vao,
+			this->context.get().style().get_color_panel().get()
+		);
+	}
+
 	// render selector
 	if (auto active_tab = this->get_active().lock()) {
 		// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers, "TODO: get from params")

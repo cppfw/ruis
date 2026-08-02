@@ -3,7 +3,7 @@ ruis{
     color_background{0xff101010}
     color_panel{0xff424242}
     color_primary{0xff505050}
-    color_secondary{0xff404040}
+    color_secondary{0xff303030}
     color_highlight{0xffad9869}
 
     color_dimmed{0xb0000000}

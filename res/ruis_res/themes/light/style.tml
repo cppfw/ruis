@@ -4,7 +4,7 @@ ruis{
     color_background{0xffffffff}
     color_panel{0xffa0a0a0}
     color_primary{0xffc0c0c0}
-    color_secondary{0xff909090}
+    color_secondary{0xff707070}
     color_highlight{0xffbf8100}
 
     color_dimmed{0xb0000000}
