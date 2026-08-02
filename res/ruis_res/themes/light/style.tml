@@ -1,5 +1,5 @@
 version{1}
-// TODO: support inherit
+// TODO: support inherit?
 ruis{
     color_background{0xffd5d5d5}
     color_panel{0xffc2c2c2}
@@ -11,7 +11,6 @@ ruis{
     color_text{0xff000000}
     color_text_secondary{0xff505050}
 
-    // TODO: support include
     dim_tree_view_item_indent{17pp}
 
     font_size_text{12pp}

@@ -10,8 +10,6 @@ ruis{
     color_text{0xffffffff}
     color_text_secondary{0xffa0a0a0}
 
-    // ========= obsolete =============
-
     dim_tree_view_item_indent{17pp}
 
     font_size_text{12pp}
