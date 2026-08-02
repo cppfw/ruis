@@ -104,7 +104,7 @@ utki::shared_ref<ruis::widget> make_empty_space_indent(utki::shared_ref<ruis::co
 		{
 			.layout_params{
 				.dims{
-					c.get().style().get_dim_indent(),
+					ruis::styled<ruis::layout::dimension>(ruis::layout::dimension(c.get().style().get_len_indent().get())),
 					ruis::length::make_px(0)
 				}
 			}
@@ -122,7 +122,7 @@ utki::shared_ref<ruis::widget> make_vertical_line_indent(utki::shared_ref<ruis::
 		{
 			.layout_params{
 				.dims{
-					c.get().style().get_dim_indent(),
+					ruis::styled<ruis::layout::dimension>(ruis::layout::dimension(c.get().style().get_len_indent().get())),
 					ruis::dim::fill
 				}
 			}
@@ -152,7 +152,7 @@ utki::shared_ref<ruis::container> make_line_end_indent(utki::shared_ref<ruis::co
 		{
 			.layout_params{
 				.dims{
-					c.get().style().get_dim_indent(),
+					ruis::styled<ruis::layout::dimension>(ruis::layout::dimension(c.get().style().get_len_indent().get())),
 					ruis::dim::max
 				}
 			}
@@ -228,7 +228,7 @@ utki::shared_ref<ruis::container> make_line_middle_indent(utki::shared_ref<ruis:
 		{
 			.layout_params{
 				.dims{
-					c.get().style().get_dim_indent(),
+					ruis::styled<ruis::layout::dimension>(ruis::layout::dimension(c.get().style().get_len_indent().get())),
 					ruis::dim::max
 				}
 			}

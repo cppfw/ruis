@@ -47,12 +47,14 @@ tab_group::tab_group(
 		// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers, "TODO: get from params")
 		{ruis::length::make_pp(10).get(this->context)} // TODO: get from params
 	),
+	background_color(this->context.get().style().get_color_panel()), // TODO: get from params
 	selector_color([&](){
 		if(params.selector_color.get().is_undefined()){
 			params.selector_color = this->context.get().style().get_color_secondary();
 		}
 		return std::move(params.selector_color);
-	}())
+	}()),
+	selector_gap(this->context.get().style().get_len_gap()) // TODO: get from params
 {}
 
 void tab_group::render(const ruis::mat4& matrix) const
@@ -67,14 +69,14 @@ void tab_group::render(const ruis::mat4& matrix) const
 		r.shaders().color_pos->render(
 			matr, //
 			r.obj().pos_quad_01_vao,
-			this->context.get().style().get_color_panel().get()
+			this->background_color.get()
 		);
 	}
 
 	// render selector
 	if (auto active_tab = this->get_active().lock()) {
 		// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers, "TODO: get from params")
-		ruis::real gap = ruis::length::make_pp(4).get(this->context);
+		ruis::real gap = this->selector_gap.get().get(this->context);
 
 		ruis::mat4 matr(matrix);
 		matr.translate(active_tab->rect().p + vec2(gap));

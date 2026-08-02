@@ -42,10 +42,10 @@ style style_sheet::name_to_style(std::string_view name)
 		return style::color_secondary;
 	} else if (name == "color_highlight"sv) {
 		return style::color_highlight;
-	} else if (name == "dim_indent"sv) {
-		return style::dim_indent;
-	} else if (name == "dim_gap"sv) {
-		return style::dim_gap;
+	} else if (name == "len_indent"sv) {
+		return style::len_indent;
+	} else if (name == "len_gap"sv) {
+		return style::len_gap;
 	} else if (name == "font_size_text"sv) {
 		return style::font_size_text;
 	} else if (name == "font_face_text"sv) {

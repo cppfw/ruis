@@ -175,14 +175,14 @@ styled<color> style_provider::get_color_highlight() const
 	return this->get<color>(style::color_highlight);
 }
 
-styled<layout::dimension> style_provider::get_dim_indent() const
+styled<length> style_provider::get_len_indent() const
 {
-	return this->get<layout::dimension>(style::dim_indent);
+	return this->get<length>(style::len_indent);
 }
 
-styled<layout::dimension> style_provider::get_dim_gap() const
+styled<length> style_provider::get_len_gap() const
 {
-	return this->get<layout::dimension>(style::dim_gap);
+	return this->get<length>(style::len_gap);
 }
 
 styled<length> style_provider::get_font_size_normal() const
