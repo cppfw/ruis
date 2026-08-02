@@ -41,7 +41,7 @@ enum class style {
 	color_text,
 	color_text_secondary,
 
-	dim_tree_view_indent,
+	dim_indent,
 
 	font_size_text,
 	font_face_text,

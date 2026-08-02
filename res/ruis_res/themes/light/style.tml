@@ -11,7 +11,7 @@ ruis{
     color_text{0xff000000}
     color_text_secondary{0xff505050}
 
-    dim_tree_view_item_indent{17pp}
+    dim_indent{17pp}
 
     font_size_text{12pp}
     font_face_text{ruis_fnt_normal}

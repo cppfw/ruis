@@ -170,9 +170,9 @@ styled<color> style_provider::get_color_highlight() const
 	return this->get<color>(style::color_highlight);
 }
 
-styled<layout::dimension> style_provider::get_dim_tree_view_indent() const
+styled<layout::dimension> style_provider::get_dim_indent() const
 {
-	return this->get<layout::dimension>(style::dim_tree_view_indent);
+	return this->get<layout::dimension>(style::dim_indent);
 }
 
 styled<length> style_provider::get_font_size_normal() const
