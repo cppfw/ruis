@@ -39,6 +39,8 @@ public:
 		layout::parameters layout_params;
 		widget::parameters widget_params;
 		list_widget::parameters list_params;
+		rectangle_button::parameters rectangle_button_params;
+
 		string title;
 
 		// parameters specific to ruis::touch::selection_box

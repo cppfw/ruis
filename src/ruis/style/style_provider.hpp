@@ -135,6 +135,7 @@ public:
 	styled<color> get_color_dimmed() const;
 	styled<color> get_color_text() const;
 	styled<color> get_color_text_secondary() const;
+	styled<color> get_color_secondary() const;
 	styled<color> get_color_highlight() const;
 
 	styled<layout::dimension> get_dim_indent() const;

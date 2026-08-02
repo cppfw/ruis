@@ -51,7 +51,7 @@ rectangle_button::rectangle_button( //
 	parameters params,
 	widget_list contents //
 ) :
-	widget(std::move(context), {}, {}),
+	widget(context, {}, {}),
 	button(this->context, button::parameters{}),
 	rectangle(
 		this->context,
@@ -64,7 +64,17 @@ rectangle_button::rectangle_button( //
 		// clang-format on
 		std::move(contents)
 	),
-	params(std::move(params))
+	params([&]() {
+		if(params.unpressed_color.get().is_undefined()){
+			params.unpressed_color = context.get().style().get_color_primary();
+		}
+		if(params.pressed_color.get().is_undefined()){
+			params.pressed_color = context.get().style().get_color_secondary();
+		}
+
+		return std::move(params);
+	}()
+	)
 {
 	this->update_color();
 }

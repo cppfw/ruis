@@ -32,7 +32,7 @@ text::text(
 	string text
 ) :
 	widget(
-		std::move(context), //
+		context, //
 		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
@@ -43,7 +43,15 @@ text::text(
 	),
 	color_widget(
 		this->context, //
-		std::move(params.color_params)
+		[&](){
+			if(params.color_params.color.get().is_undefined()){
+				params.color_params.color = this->context.get().style().get_color_text();
+			}
+			if(params.color_params.disabled_color.get().is_undefined()){
+				params.color_params.disabled_color = this->context.get().style().get_color_text_secondary();
+			}
+			return std::move(params.color_params);
+		}()
 	)
 {}
 
@@ -76,13 +84,6 @@ utki::shared_ref<ruis::text> text(
 	string text
 )
 {
-	if(params.color_params.color.get().is_undefined()){
-		params.color_params.color = context.get().style().get_color_text();
-	}
-	if(params.color_params.disabled_color.get().is_undefined()){
-		params.color_params.disabled_color = context.get().style().get_color_text_secondary();
-	}
-
 	return utki::make_shared<ruis::text>(
 		std::move(context), //
 		std::move(params),

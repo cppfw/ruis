@@ -38,6 +38,8 @@ style style_sheet::name_to_style(std::string_view name)
 		return style::color_text;
 	} else if (name == "color_text_secondary"sv) {
 		return style::color_text_secondary;
+	} else if (name == "color_secondary"sv) {
+		return style::color_secondary;
 	} else if (name == "color_highlight"sv) {
 		return style::color_highlight;
 	} else if (name == "dim_indent"sv) {

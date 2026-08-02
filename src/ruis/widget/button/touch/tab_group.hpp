@@ -29,12 +29,15 @@ namespace ruis::touch {
 class tab_group : public choice_group
 {
 	ruis::paint::rectangle_vao selector_vao;
+	styled<ruis::color> selector_color;
 
 public:
 	struct all_parameters {
 		layout::parameters layout_params;
 		widget::parameters widget_params;
 		container::parameters container_params;
+
+		styled<ruis::color> selector_color;
 	};
 
 	tab_group(

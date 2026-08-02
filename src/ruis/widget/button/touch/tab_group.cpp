@@ -29,7 +29,7 @@ tab_group::tab_group(
 	widget_list children
 ) :
 	widget(
-		std::move(context), //
+		context, //
 		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
@@ -46,7 +46,13 @@ tab_group::tab_group(
 		this->context.get().renderer, //
 		// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers, "TODO: get from params")
 		{ruis::length::make_pp(10).get(this->context)} // TODO: get from params
-	)
+	),
+	selector_color([&](){
+		if(params.selector_color.get().is_undefined()){
+			params.selector_color = this->context.get().style().get_color_secondary();
+		}
+		return std::move(params.selector_color);
+	}())
 {}
 
 void tab_group::render(const ruis::mat4& matrix) const
@@ -54,7 +60,6 @@ void tab_group::render(const ruis::mat4& matrix) const
 	// render selector
 	if (auto active_tab = this->get_active().lock()) {
 		// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers, "TODO: get from params")
-		ruis::color clr(0x80808080);
 		ruis::real gap = ruis::length::make_pp(4).get(this->context);
 
 		ruis::mat4 matr(matrix);
@@ -62,7 +67,7 @@ void tab_group::render(const ruis::mat4& matrix) const
 		this->selector_vao.render(
 			matr, //
 			active_tab->rect().d - 2 * vec2(gap),
-			clr // TODO: get from params
+			this->selector_color.get()
 		);
 	}
 
