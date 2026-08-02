@@ -36,11 +36,8 @@ class color_widget : public virtual widget
 {
 public:
 	struct parameters {
-		constexpr static auto default_color = 0xffffffff;
-		styled<ruis::color> color = default_color;
-
-		constexpr static auto default_disabled_color = 0xff808080;
-		styled<ruis::color> disabled_color = default_disabled_color;
+		styled<ruis::color> color;
+		styled<ruis::color> disabled_color;
 	};
 
 private:

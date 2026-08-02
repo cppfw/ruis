@@ -67,3 +67,27 @@ void text::render(const ruis::mat4& matrix) const
 		this->get_string()
 	);
 }
+
+namespace ruis::make {
+
+utki::shared_ref<ruis::text> text(
+	utki::shared_ref<ruis::context> context, //
+	text::all_parameters params,
+	string text
+)
+{
+	if(params.color_params.color.get().is_undefined()){
+		params.color_params.color = context.get().style().get_color_text();
+	}
+	if(params.color_params.disabled_color.get().is_undefined()){
+		params.color_params.disabled_color = context.get().style().get_color_text_secondary();
+	}
+
+	return utki::make_shared<ruis::text>(
+		std::move(context), //
+		std::move(params),
+		std::move(text)
+	);
+}
+
+} // namespace ruis::make

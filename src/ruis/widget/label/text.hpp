@@ -63,18 +63,11 @@ public:
 };
 
 namespace make {
-inline utki::shared_ref<ruis::text> text(
+utki::shared_ref<ruis::text> text(
 	utki::shared_ref<ruis::context> context, //
 	text::all_parameters params,
 	string text = {}
-)
-{
-	return utki::make_shared<ruis::text>(
-		std::move(context), //
-		std::move(params),
-		std::move(text)
-	);
-}
+);
 } // namespace make
 
 } // namespace ruis

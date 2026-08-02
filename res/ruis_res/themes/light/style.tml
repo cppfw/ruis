@@ -1,15 +1,15 @@
 version{1}
 // TODO: support inherit?
 ruis{
-    color_background{0xffd5d5d5}
-    color_panel{0xffc2c2c2}
-    color_primary{0xffb0b0b0}
-    color_highlight{0xffad9869}
+    color_background{0xffffffff}
+    color_panel{0xfffafafa}
+    color_primary{0xffbbdefb}
+    color_highlight{0xffffc107}
 
-    color_dimmed{0xb0000000}
+    color_dimmed{0x33000000}
 
     color_text{0xff000000}
-    color_text_secondary{0xff505050}
+    color_text_secondary{0xff616161}
 
     dim_indent{17pp}
     dim_gap{4pp}
