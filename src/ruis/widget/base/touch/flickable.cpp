@@ -47,16 +47,16 @@ ruis::event_status flickable::on_mouse_button(const mouse_button_event& event)
 		}
 	}
 
-	utki::assert(this->cur_state == state::idle || event.pointer_id == this->cur_pointer_id, SL);
+	utki::assert(this->cur_state == state::idle || event.pointer_id == this->cur_pointer_id);
 
 	switch (this->cur_state) {
 		default:
-			utki::assert(false, SL);
+			utki::assert(false);
 			[[fallthrough]];
 		case state::idle:
 			{
 				// in idle state the mouse button is unpressed, so the only valid event is press
-				utki::assert(event.action == button_action::press, SL);
+				utki::assert(event.action == button_action::press);
 
 				this->push_touch_move_to_history({.position = event.pos, .timestamp_ms = utki::get_ticks_ms()});
 
@@ -75,7 +75,8 @@ ruis::event_status flickable::on_mouse_button(const mouse_button_event& event)
 			[[fallthrough]];
 		case state::within_scroll_threshold:
 			{
-				utki::assert(event.action == button_action::release, SL);
+				// in not_scrolling and within_scroll_threshold states the mouse button is pressed, so the only valid event is release
+				utki::assert(event.action == button_action::release);
 				this->cur_state = state::idle;
 
 				// std::cout << "touch release, vel = " << this->calculate_touch_velocity() << std::endl;
@@ -86,8 +87,18 @@ ruis::event_status flickable::on_mouse_button(const mouse_button_event& event)
 			}
 		case state::dragging:
 			{
-				utki::assert(event.action == button_action::release, SL);
+				// in dragging state the mouse button is pressed, so the only valid event is release
+				utki::assert(event.action == button_action::release);
+
 				this->cur_state = state::inertial_scrolling;
+
+				this->push_touch_move_to_history({.position = event.pos, .timestamp_ms = utki::get_ticks_ms()});
+
+				// print all points of the touch history
+				// std::cout << "Touch history:\n";
+				// for (const auto& point : this->touch_history) {
+				// 	std::cout << "  " << point.position << " at " << point.timestamp_ms << " ms\n";
+				// }
 
 				this->velocity_px_per_ms = this->calculate_touch_velocity_px_per_ms();
 				// std::cout << "touch release, vel = " << this->velocity_px_per_ms << std::endl;
@@ -99,7 +110,8 @@ ruis::event_status flickable::on_mouse_button(const mouse_button_event& event)
 				return event_status::consumed;
 			}
 		case state::inertial_scrolling:
-			utki::assert(event.action == button_action::press, SL);
+			// in inertial_scrolling state the mouse button is unpressed, so the only valid event is press
+			utki::assert(event.action == button_action::press);
 
 			// inertial scrolling stopped by touch
 
@@ -209,7 +221,7 @@ ruis::event_status flickable::on_mouse_move(const mouse_move_event& event)
 
 void flickable::update(uint32_t dt_ms)
 {
-	utki::assert(this->cur_state == state::inertial_scrolling, SL);
+	utki::assert(this->cur_state == state::inertial_scrolling);
 
 	auto scrolled_by = this->flickable_scroll_by(-this->velocity_px_per_ms * ruis::real(dt_ms));
 	// std::cout << "flickable::update(): scroled_by = " << scrolled_by << std::endl;
@@ -264,7 +276,7 @@ void flickable::push_touch_move_to_history(touch_move_info tm)
 		return;
 	}
 
-	utki::assert(!this->touch_history.empty(), SL);
+	utki::assert(!this->touch_history.empty());
 
 	auto& last_record = this->touch_history.back();
 
@@ -293,7 +305,7 @@ ruis::vec2 flickable::calculate_touch_velocity_px_per_ms()
 		const auto& p2 = this->touch_history.back();
 
 		auto dt_ms = p2.timestamp_ms - p1.timestamp_ms;
-		utki::assert(dt_ms > 0, SL);
+		utki::assert(dt_ms > 0);
 
 		auto dp = p2.position - p1.position;
 
@@ -326,7 +338,7 @@ ruis::vec2 flickable::calculate_touch_velocity_for_at_least_3_points_using_ols_m
 	// Effecively the touch velocity is the b coefficient.
 
 	// need at least 3 points for quadratic curve fitting
-	utki::assert(this->touch_history.size() >= 3, SL);
+	utki::assert(this->touch_history.size() >= 3);
 
 	uint32_t time_bias_ms = this->touch_history.back().timestamp_ms;
 
@@ -389,5 +401,7 @@ ruis::vec2 flickable::calculate_touch_velocity_for_at_least_3_points_using_ols_m
 		out = m.det();
 	}
 
-	return det_b.comp_div(det);
+	// std::cout << "det = " << det << ", det_b = " << det_b << std::endl;
+
+	return det_b / det;
 }
