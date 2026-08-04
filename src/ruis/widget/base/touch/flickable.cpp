@@ -55,6 +55,7 @@ ruis::event_status flickable::on_mouse_button(const mouse_button_event& event)
 			[[fallthrough]];
 		case state::idle:
 			{
+				// in idle state the mouse button is unpressed, so the only valid event is press
 				utki::assert(event.action == button_action::press, SL);
 
 				this->push_touch_move_to_history({.position = event.pos, .timestamp_ms = utki::get_ticks_ms()});

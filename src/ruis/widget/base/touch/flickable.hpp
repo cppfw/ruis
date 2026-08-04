@@ -39,9 +39,25 @@ class flickable :
 
 	enum class state {
 		idle,
+
+		/**
+		 * @brief The user is touching the flickable, but has not yet moved the touch point enough to start scrolling.
+		 * The flickable will not scroll until the touch point has moved enough to exceed the scroll threshold.
+		 * This state is used to forward the mouse move events to the child widget that is being touched, until the scroll threshold is exceeded.
+		 * Once the scroll threshold is exceeded, the flickable will start scrolling and will not forward the mouse move events to the child widget anymore.
+		 */
 		within_scroll_threshold,
+
+		/**
+		 * @brief The user is dragging the content.
+		 * Some child widget of the flickable has consumed the mouse event and dragging is happening within that child widget.
+		 * In that case the flickable will not scroll.
+		 * This state is used to forward the mouse move events to the child widget that is being dragged.
+		 */
 		not_scrolling,
+
 		dragging,
+
 		inertial_scrolling
 	} cur_state = state::idle;
 
