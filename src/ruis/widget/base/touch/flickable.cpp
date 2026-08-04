@@ -261,7 +261,7 @@ constexpr auto max_history_records = 10;
 
 void flickable::push_touch_move_to_history(touch_move_info tm)
 {
-	constexpr auto max_history_age_ms = 200;
+	constexpr auto max_history_age_ms = 100;
 	constexpr auto min_time_between_points_ms = 1;
 
 	// drop too old records
@@ -315,7 +315,7 @@ ruis::vec2 flickable::calculate_touch_velocity_px_per_ms()
 		return vel;
 	}
 
-	// use Ordinary Least Squares method to fit a quadratic curve to the points of touch history
+	// use Ordinary Least Squares method to fit a line to the points of touch history
 	ruis::vec2 vel = calculate_touch_velocity_for_at_least_3_points_using_ols_method_px_per_ms();
 
 	// std::cout << "flickable::calculate_touch_velocity(): return " << vel << ". this->touch_history.size() = " << this->touch_history.size() << std::endl;
@@ -324,84 +324,43 @@ ruis::vec2 flickable::calculate_touch_velocity_px_per_ms()
 
 ruis::vec2 flickable::calculate_touch_velocity_for_at_least_3_points_using_ols_method_px_per_ms()
 {
-	// Ordinary Least Squares method fits quadratic curve y(t)=a*t^2+b*t+c to a set of n >= 3 points.
-	// Coefficients a, b and c can be found by solving the following system of linear equations
-	//
-	// | sum(t^4) sum(t^3) sum(t^2) |   | a |   | sum(y * t^2) |
-	// | sum(t^3) sum(t^2) sum(t)   | * | b | = | sum(y * t)   |
-	// | sum(t^2) sum(t)   n        |   | c |   | sum(y)       |
-	//
-	// The touch velocity is effectively v = dy/dt = 2*a*t + b
-	//
-	// If we bias t for each point to the last point timestamp, i.e. last point will be at t=0 and previous
-	// points will be at some negative times, then v(0) = b.
-	// Effecively the touch velocity is the b coefficient.
+	// Ordinary Least Squares method fits a linear model y(t)=b*t+c to a set of n >= 3 points.
+	// The touch velocity at the latest point is the slope b of that fit.
 
-	// need at least 3 points for quadratic curve fitting
 	utki::assert(this->touch_history.size() >= 3);
 
 	uint32_t time_bias_ms = this->touch_history.back().timestamp_ms;
 
 	ruis::real time_sum = 0;
 	ruis::real time_pow2_sum = 0;
-	ruis::real time_pow3_sum = 0;
-	ruis::real time_pow4_sum = 0;
-	ruis::vec2 pos_time_pow2_sum = 0;
 	ruis::vec2 pos_time_sum = 0;
 	ruis::vec2 pos_sum = 0;
 
 	for (const auto& rec : this->touch_history) {
 		// Here we still do arithmetics in uint32_t space.
-		// The time_bias_ms is the latest timestamp, so subtract from it to get positive biased time.
 		uint32_t shifted_time = time_bias_ms - rec.timestamp_ms;
 
-		// since we bias to lates timestamp, the actual biased time should be negative
+		// since we bias to last timestamp, the actual biased time is negative for previous points
 		ruis::real t = -ruis::real(shifted_time);
 
 		ruis::real t_pow2 = t * t;
-		ruis::real t_pow3 = t_pow2 * t;
-		ruis::real t_pow4 = t_pow3 * t;
-
-		// std::cout << "shifted time = " << t << std::endl;
 
 		time_sum += t;
 		time_pow2_sum += t_pow2;
-		time_pow3_sum += t_pow3;
-		time_pow4_sum += t_pow4;
 
 		pos_sum += rec.position;
 		pos_time_sum += rec.position * t;
-		pos_time_pow2_sum += rec.position * t_pow2;
 	}
 
-	// clang-format off
-	ruis::mat3 m{
-		{time_pow4_sum, time_pow3_sum, time_pow2_sum},
-		{time_pow3_sum, time_pow2_sum, time_sum},
-		{time_pow2_sum, time_sum, this->touch_history.size()}
-	};
-	// clang-format on
+	auto num_points = ruis::real(this->touch_history.size());
 
-	auto det = m.det();
+	auto denominator = time_pow2_sum - time_pow2_sum / num_points;
 
 	constexpr auto epsilon = ruis::real(1e-9);
-
 	using std::abs;
-	if (abs(det) < epsilon) {
-		// the matrix is not invertible
+	if (abs(denominator) < epsilon) {
 		return {0};
 	}
 
-	// replace 2nd column with right-hand side vector and calculate determinant
-	ruis::vec2 det_b;
-	for (auto [p0, p1, p2, out] : utki::views::zip(pos_time_pow2_sum, pos_time_sum, pos_sum, det_b)) {
-		m[0][1] = p0;
-		m[1][1] = p1;
-		m[2][1] = p2;
-		out = m.det();
-	}
-
-	// std::cout << "det = " << det << ", det_b = " << det_b << std::endl;
-
-	return det_b / det;
+	return (pos_time_sum - pos_sum * time_sum / num_points) / denominator;
 }
