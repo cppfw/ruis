@@ -48,8 +48,8 @@ tab_group::tab_group(
 		{ruis::length::make_pp(10).get(this->context)} // TODO: get from params
 	),
 	background_color(this->context.get().style().get_color_panel()), // TODO: get from params
-	selector_color([&](){
-		if(params.selector_color.get().is_undefined()){
+	selector_color([&]() {
+		if (params.selector_color.get().is_undefined()) {
 			params.selector_color = this->context.get().style().get_color_secondary();
 		}
 		return std::move(params.selector_color);

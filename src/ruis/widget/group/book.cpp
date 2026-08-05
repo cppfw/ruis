@@ -251,8 +251,9 @@ const page* book::get_active_page() const
 	return nullptr;
 }
 
-void book::on_reload(){
-	for(auto& p : this->pages){
+void book::on_reload()
+{
+	for (auto& p : this->pages) {
 		p.get().on_reload();
 	}
 }

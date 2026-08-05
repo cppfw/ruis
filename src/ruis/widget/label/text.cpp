@@ -43,11 +43,11 @@ text::text(
 	),
 	color_widget(
 		this->context, //
-		[&](){
-			if(params.color_params.color.get().is_undefined()){
+		[&]() {
+			if (params.color_params.color.get().is_undefined()) {
 				params.color_params.color = this->context.get().style().get_color_text();
 			}
-			if(params.color_params.disabled_color.get().is_undefined()){
+			if (params.color_params.disabled_color.get().is_undefined()) {
 				params.color_params.disabled_color = this->context.get().style().get_color_text_secondary();
 			}
 			return std::move(params.color_params);
