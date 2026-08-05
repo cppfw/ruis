@@ -92,13 +92,11 @@ ruis::event_status flickable::on_mouse_button(const mouse_button_event& event)
 
 				this->cur_state = state::inertial_scrolling;
 
-				this->push_touch_move_to_history({.position = event.pos, .timestamp_ms = utki::get_ticks_ms()});
-
-				// print all points of the touch history
-				// std::cout << "Touch history:\n";
-				// for (const auto& point : this->touch_history) {
-				// 	std::cout << "  " << point.position << " at " << point.timestamp_ms << " ms\n";
-				// }
+				// After reaching the last touch point, it still can remain touched for some time without moving,
+				// so when the touch is released we need to update the timestamp of the last touch point to the current time,
+				// so that the velocity calculation would be correct.
+				utki::assert(!this->touch_history.empty());
+				this->touch_history.back().timestamp_ms = utki::get_ticks_ms();
 
 				this->velocity_px_per_ms = this->calculate_touch_velocity_px_per_ms();
 				// std::cout << "touch release, vel = " << this->velocity_px_per_ms << std::endl;
