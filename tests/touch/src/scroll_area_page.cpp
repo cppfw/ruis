@@ -26,6 +26,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <ruis/style/style_sheet.hpp>
 #include <ruis/widget/button/impl/rectangle_push_button.hpp>
 #include <ruis/widget/group/touch/scroll_area.hpp>
+#include <ruis/widget/label/gap.hpp>
 #include <ruis/widget/label/text.hpp>
 #include <ruis/widget/slider/scroll_bar.hpp>
 
@@ -137,7 +138,21 @@ ruis::widget_list make_scroll_area_page_contents(utki::shared_ref<ruis::context>
 	// clang-format off
 	return {
 		theme_selector,
+		ruis::make::gap(c,
+			{
+				.layout_params{
+					.dims = {ruis::dim::fill, c.get().style().get_len_gap().get()}
+				}
+			}
+		),
 		button_1,
+		ruis::make::gap(c,
+			{
+				.layout_params{
+					.dims = {ruis::dim::fill, c.get().style().get_len_gap().get()}
+				}
+			}
+		),
 		m::scroll_bar(c,
 			{
 				.layout_params{
@@ -151,6 +166,13 @@ ruis::widget_list make_scroll_area_page_contents(utki::shared_ref<ruis::context>
 				},
 				.oriented_params{
 					.vertical = true
+				}
+			}
+		),
+		ruis::make::gap(c,
+			{
+				.layout_params{
+					.dims = {ruis::dim::fill, c.get().style().get_len_gap().get()}
 				}
 			}
 		),

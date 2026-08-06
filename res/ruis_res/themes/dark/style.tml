@@ -12,7 +12,7 @@ ruis{
     color_text_secondary{0xffa0a0a0}
 
     len_indent{17pp}
-    len_gap{4pp}
+    len_gap{8pp}
     len_button_padding{5pp}
     len_dialog_margin{30pp}
     len_dialog_padding{20pp}
