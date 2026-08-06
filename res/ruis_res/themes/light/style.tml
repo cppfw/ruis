@@ -1,5 +1,5 @@
 version{1}
-// TODO: support inherit?
+// TODO: support include?
 ruis{
     color_background{0xffffffff}
     color_panel{0xffa0a0a0}
@@ -14,6 +14,9 @@ ruis{
 
     len_indent{17pp}
     len_gap{4pp}
+    len_button_padding{5pp}
+    len_dialog_margin{30pp}
+    len_dialog_padding{20pp}
 
     font_size_text{12pp}
     font_face_text{ruis_fnt_normal}

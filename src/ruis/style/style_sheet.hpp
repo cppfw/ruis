@@ -44,9 +44,9 @@ enum class style {
 
 	len_indent,
 	len_gap,
-	// TODO: add len_button_padding
-	// TODO: add len_dismiss_dialog_border
-	// TODO: add len_dialog_padding
+	len_button_padding,
+	len_dialog_margin,
+	len_dialog_padding,
 
 	font_size_text,
 	font_face_text,

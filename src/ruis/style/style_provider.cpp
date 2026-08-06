@@ -185,6 +185,21 @@ styled<length> style_provider::get_len_gap() const
 	return this->get<length>(style::len_gap);
 }
 
+styled<length> style_provider::get_len_button_padding() const
+{
+	return this->get<length>(style::len_button_padding);
+}
+
+styled<length> style_provider::get_len_dialog_margin() const
+{
+	return this->get<length>(style::len_dialog_margin);
+}
+
+styled<length> style_provider::get_len_dialog_padding() const
+{
+	return this->get<length>(style::len_dialog_padding);
+}
+
 styled<length> style_provider::get_font_size_normal() const
 {
 	return this->get<length>(style::font_size_text);

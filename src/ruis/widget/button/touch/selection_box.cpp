@@ -271,7 +271,7 @@ void selection_box::show_selection_menu()
 						.dims = {ruis::dim::fill, ruis::dim::fill}
 					},
 					.padding_params{
-						.borders = {30_pp} // TODO: get from theme
+						.borders = {c.get().style().get_len_dialog_margin()}
 					}
 				},
 				{
@@ -293,13 +293,13 @@ void selection_box::show_selection_menu()
 								.dims = {ruis::dim::fill, ruis::dim::fill}
 							},
 							.padding_params{
-								.borders = {20_pp} // TODO: get from theme
+								.borders = {c.get().style().get_len_dialog_padding()}
 							},
 							.color_params{
 								.color = c.get().style().get_color_panel()
 							},
 							.rectangle_params{
-								.corner_radii = {20_pp} // TODO: get from theme
+								.corner_radii = {c.get().style().get_len_dialog_padding()}
 							}
 						},
 						{

@@ -141,6 +141,10 @@ public:
 	styled<length> get_len_indent() const;
 	styled<length> get_len_gap() const;
 
+	styled<length> get_len_button_padding() const;
+	styled<length> get_len_dialog_margin() const;
+	styled<length> get_len_dialog_padding() const;
+
 	styled<length> get_font_size_normal() const;
 	styled<res::font> get_font_face_normal() const;
 };

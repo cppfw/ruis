@@ -46,6 +46,12 @@ style style_sheet::name_to_style(std::string_view name)
 		return style::len_indent;
 	} else if (name == "len_gap"sv) {
 		return style::len_gap;
+	} else if (name == "len_button_padding"sv) {
+		return style::len_button_padding;
+	} else if (name == "len_dialog_margin"sv) {
+		return style::len_dialog_margin;
+	} else if (name == "len_dialog_padding"sv) {
+		return style::len_dialog_padding;
 	} else if (name == "font_size_text"sv) {
 		return style::font_size_text;
 	} else if (name == "font_face_text"sv) {
