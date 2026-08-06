@@ -36,7 +36,7 @@ class padding :
 {
 public:
 	struct parameters {
-		sides<length> borders; // TODO: make sides<styled<length>>
+		sides<styled<length>> borders;
 	};
 
 private:
@@ -64,7 +64,7 @@ public:
 	 * @brief Set border settings.
 	 * @param borders - border values to set.
 	 */
-	void set_borders(sides<length> borders);
+	void set_borders(sides<styled<length>> borders);
 
 	/**
 	 * @brief Get current border settings.

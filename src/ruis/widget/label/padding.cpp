@@ -159,7 +159,7 @@ utki::shared_ref<ruis::padding> ruis::make::padding(
 	);
 }
 
-void padding::set_borders(sides<length> borders)
+void padding::set_borders(sides<styled<length>> borders)
 {
 	if (this->params.borders == borders) {
 		return;
@@ -185,10 +185,10 @@ sides<real> padding::get_actual_borders() const noexcept
 	)
 	// clang-format on
 	{
-		if (b.is_undefined()) {
+		if (b.get().is_undefined()) {
 			a = m;
 		} else {
-			a = b.get(this->context);
+			a = b.get().get(this->context);
 		}
 	}
 

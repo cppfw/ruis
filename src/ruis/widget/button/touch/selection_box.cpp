@@ -38,7 +38,7 @@ using namespace ruis::touch;
 
 namespace {
 constexpr auto selection_label_id = "ruis_touch_selection_box_selection"sv;
-constexpr auto default_padding = 10_pp;
+constexpr auto default_padding = 10_pp; // TODO: get from theme
 } // namespace
 
 selection_box::selection_box(
@@ -212,7 +212,7 @@ public:
 				ruis::make::gap(this->context,
 					{
 						.layout_params{
-							.dims = {ruis::dim::fill, ruis::length::make_pp(1)}
+							.dims = {ruis::dim::fill, ruis::length::make_pp(1)} // TODO: get from theme
 						},
 						.color_params{
 							.color = this->context.get().style().get_color_primary()
@@ -250,6 +250,7 @@ void selection_box::show_selection_menu()
 			}
 		},
 		{
+			// dimming background
 			ruis::make::rectangle(c,
 				{
 					.layout_params{
