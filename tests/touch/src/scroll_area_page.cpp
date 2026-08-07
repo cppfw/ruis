@@ -27,6 +27,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <ruis/widget/button/impl/rectangle_push_button.hpp>
 #include <ruis/widget/group/touch/scroll_area.hpp>
 #include <ruis/widget/label/gap.hpp>
+#include <ruis/widget/label/padding.hpp>
 #include <ruis/widget/label/text.hpp>
 #include <ruis/widget/slider/scroll_bar.hpp>
 
@@ -202,11 +203,16 @@ public:
 			this->context,
 			{},
 			{
-				m::column(
-					this->context,
+				m::padding(this->context,
 					{
 						.layout_params{
 							.dims = {ruis::dim::fill, ruis::dim::min}
+						},
+						.container_params{
+							.layout = ruis::layout::column
+						},
+						.padding_params{
+							.borders = {this->context.get().style().get_len_gap()}
 						}
 					},
 					make_scroll_area_page_contents(this->context)
