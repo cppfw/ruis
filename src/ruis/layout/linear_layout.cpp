@@ -62,7 +62,7 @@ void linear_layout::lay_out(
 
 			net_weight += weight;
 
-			const auto& trans_dim = lp.dims[trans_index].get();
+			const auto& trans_dim = lp.dims[trans_index];
 
 			vec2 d;
 			switch (trans_dim.get_type()) {
@@ -81,7 +81,7 @@ void linear_layout::lay_out(
 					break;
 			}
 
-			const auto& long_dim = lp.dims[long_index].get();
+			const auto& long_dim = lp.dims[long_index];
 
 			switch (long_dim.get_type()) {
 				case dim::type::fill:
@@ -152,7 +152,7 @@ void linear_layout::lay_out(
 					}
 				}
 
-				const auto& long_dim = lp.dims[long_index].get();
+				const auto& long_dim = lp.dims[long_index];
 
 				switch (long_dim.get_type()) {
 					case dim::type::fill:
@@ -170,7 +170,7 @@ void linear_layout::lay_out(
 						break;
 				}
 
-				const auto& trans_dim = lp.dims[trans_index].get();
+				const auto& trans_dim = lp.dims[trans_index];
 
 				switch (trans_dim.get_type()) {
 					case dim::type::max:
@@ -284,7 +284,7 @@ ruis::vec2 linear_layout::measure(
 
 			vec2 child_quotum;
 
-			const auto& trans_dim = lp.dims[trans_index].get();
+			const auto& trans_dim = lp.dims[trans_index];
 
 			switch (trans_dim.get_type()) {
 				case dim::type::max:
@@ -311,7 +311,7 @@ ruis::vec2 linear_layout::measure(
 					break;
 			}
 
-			const auto& long_dim = lp.dims[long_index].get();
+			const auto& long_dim = lp.dims[long_index];
 
 			switch (long_dim.get_type()) {
 				// NOLINTNEXTLINE(bugprone-branch-clone, "false positive")
@@ -402,7 +402,7 @@ ruis::vec2 linear_layout::measure(
 				}
 			}
 
-			const auto& trans_dim = lp.dims[trans_index].get();
+			const auto& trans_dim = lp.dims[trans_index];
 
 			switch (trans_dim.get_type()) {
 				case dim::type::max:

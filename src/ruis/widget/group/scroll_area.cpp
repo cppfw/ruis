@@ -154,7 +154,7 @@ vec2 scroll_area::dims_for_widget(const widget& w) const
 	const layout::parameters& lp = w.get_layout_params_const();
 	vec2 d;
 	for (unsigned i = 0; i != 2; ++i) {
-		const auto& dim = lp.dims[i].get();
+		const auto& dim = lp.dims[i];
 
 		switch (dim.get_type()) {
 			case ruis::dim::type::fill:
@@ -177,7 +177,7 @@ vec2 scroll_area::dims_for_widget(const widget& w) const
 		vec2 md = w.measure(d);
 		for (unsigned i = 0; i != md.size(); ++i) {
 			if (d[i] < 0) {
-				if (lp.dims[i].get().get_type() == ruis::dim::type::max && md[i] < this->rect().d[i]) {
+				if (lp.dims[i].get_type() == ruis::dim::type::max && md[i] < this->rect().d[i]) {
 					d[i] = this->rect().d[i];
 				} else {
 					d[i] = md[i];

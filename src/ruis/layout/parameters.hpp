@@ -36,7 +36,7 @@ struct parameters {
 	/**
 	 * @brief desired dimensions.
 	 */
-	r4::vector2<styled<dimension>> dims; // TODO: dimension should hold styled length instead of making styled dimension here
+	r4::vector2<dimension> dims;
 
 	/**
 	 * @brief Weight of the widget.

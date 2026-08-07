@@ -476,7 +476,7 @@ vec2 ruis::dims_for_widget(
 	const layout::parameters& lp = w.get_layout_params_const();
 	vec2 d;
 	for (unsigned i = 0; i != 2; ++i) {
-		const auto& dim = lp.dims[i].get();
+		const auto& dim = lp.dims[i];
 
 		switch (dim.get_type()) {
 			case ruis::dim::type::max:

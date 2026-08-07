@@ -82,7 +82,7 @@ ruis::vec2 tab_group::measure(const ruis::vec2& quotum) const
 		ruis::vec2 d;
 
 		for (unsigned j = 0; j != d.size(); ++j) {
-			const auto& dim = lp.dims[j].get();
+			const auto& dim = lp.dims[j];
 			switch (dim.get_type()) {
 				case ruis::dim::type::fill:
 					[[fallthrough]];

@@ -21,6 +21,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
+#include "../style/styled.hpp"
 #include "../util/length.hpp"
 
 namespace ruis::layout {
@@ -71,7 +72,7 @@ public:
 
 private:
 	type type_v;
-	length value;
+	styled<length> value;
 
 public:
 	constexpr dimension(type t = type::undefined) :
@@ -82,29 +83,39 @@ public:
 	 * @brief Construct a new dimension policy object.
 	 * @param len - the exact length, undefined length value is equivalent to 'min'.
 	 */
-	constexpr dimension(length len) :
+	constexpr dimension(styled<length> len) :
 		type_v([&]() constexpr {
-			if (len.is_undefined()) {
+			if (len.get().is_undefined()) {
 				return type::min;
 			} else {
 				return type::length;
 			}
 		}()),
-		value(len)
+		value(std::move(len))
+	{}
+
+	constexpr dimension(length len) :
+		dimension(styled<length>(std::move(len)))
 	{}
 
 	constexpr type get_type() const noexcept
 	{
+		if (this->type_v == type::length && this->value.get().is_undefined()) {
+			return type::undefined;
+		}
 		return this->type_v;
 	}
 
-	constexpr auto get_length() const noexcept
+	auto get_length() const noexcept
 	{
-		return this->value;
+		return this->value.get();
 	}
 
 	constexpr bool is_undefined() const noexcept
 	{
+		if (this->type_v == type::length) {
+			return this->value.get().is_undefined();
+		}
 		return this->get_type() == type::undefined;
 	}
 

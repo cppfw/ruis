@@ -180,7 +180,7 @@ private:
 	}
 
 public:
-	styled(actual_value_type value = actual_value_type()) :
+	constexpr styled(actual_value_type value = actual_value_type()) :
 		value(std::move(value))
 	{}
 
