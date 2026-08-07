@@ -83,7 +83,7 @@ public:
 	 * @brief Construct a new dimension policy object.
 	 * @param len - the exact length, undefined length value is equivalent to 'min'.
 	 */
-	constexpr dimension(styled<length> len) :
+	dimension(styled<length> len) :
 		type_v([&]() constexpr {
 			if (len.get().is_undefined()) {
 				return type::min;
@@ -94,7 +94,7 @@ public:
 		value(std::move(len))
 	{}
 
-	constexpr dimension(length len) :
+	dimension(length len) :
 		dimension(styled<length>(std::move(len)))
 	{}
 
