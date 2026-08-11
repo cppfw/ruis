@@ -27,10 +27,6 @@ using namespace ruis::touch;
 
 using namespace ruis::length_literals;
 
-namespace {
-constexpr auto button_padding = 10_pp;
-} // namespace
-
 tab_button::tab_button(
 	utki::shared_ref<ruis::context> context, //
 	all_parameters params,
@@ -67,7 +63,7 @@ tab_button::tab_button(
                         .layout = ruis::layout::column
                     },
                     .padding_params = {
-                        .borders = {button_padding}
+                        .borders = {this->context.get().style().get_len_button_padding()}
                     }
                 },
                 {
