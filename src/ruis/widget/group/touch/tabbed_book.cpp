@@ -28,13 +28,7 @@ using namespace ruis::touch;
 utki::shared_ref<ruis::tabbed_book> ruis::touch::make::tabbed_book(
 	utki::shared_ref<ruis::context> context, //
 	ruis::tabbed_book::all_parameters params,
-	std::vector< //
-		std::pair<
-			utki::shared_ref<ruis::choice_button>, //
-			utki::shared_ref<ruis::page> //
-			> //
-		> //
-		pages
+	ruis::tabbed_book::pages_list_type pages
 )
 {
 	if (!params.tabbed_book_params.choice_group_factory) {

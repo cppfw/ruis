@@ -29,13 +29,7 @@ namespace make {
 utki::shared_ref<ruis::tabbed_book> tabbed_book(
 	utki::shared_ref<ruis::context> context, //
 	ruis::tabbed_book::all_parameters params,
-	std::vector< //
-		std::pair<
-			utki::shared_ref<ruis::choice_button>, //
-			utki::shared_ref<ruis::page> //
-			> //
-		> //
-		pages = {}
+	ruis::tabbed_book::pages_list_type pages = {}
 );
 } // namespace make
 
