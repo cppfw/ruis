@@ -21,6 +21,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "tab_group.hpp"
 
+#include "../../label/padding.hpp"
+
 using namespace ruis::touch;
 
 tab_group::tab_group(
@@ -40,12 +42,32 @@ tab_group::tab_group(
 			.widget_params = std::move(params.widget_params),
 			.container_params = std::move(params.container_params),
 		},
-		std::move(children)
+		[&](){
+			for(auto& c : children){
+				c = ruis::make::padding(
+					context,
+					{
+						// use same layout params for the padding, except the dims
+						.layout_params = [&](){
+							auto lp = c.get().get_layout_params_const();
+							lp.dims = {ruis::dim::max, ruis::dim::max};
+							return lp;
+						}(),
+						.padding_params{
+							.borders = {context.get().style().get_len_gap()} // TODO: get from params, should be same as selector_gap
+						}
+					},
+					{c}
+				);
+			}
+
+			return std::move(children);
+		}()
 	),
 	selector_vao(
 		this->context.get().renderer, //
 		// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers, "TODO: get from params")
-		{ruis::length::make_pp(10).get(this->context)} // TODO: get from params
+		{ruis::length::make_pp(10).get(this->context)} // TODO: get rounded corners from params
 	),
 	background_color(this->context.get().style().get_color_panel()), // TODO: get from params
 	selector_color([&]() {
@@ -53,8 +75,7 @@ tab_group::tab_group(
 			params.selector_color = this->context.get().style().get_color_secondary();
 		}
 		return std::move(params.selector_color);
-	}()),
-	selector_gap(this->context.get().style().get_len_gap()) // TODO: get from params
+	}())
 {}
 
 void tab_group::render(const ruis::mat4& matrix) const
@@ -75,14 +96,13 @@ void tab_group::render(const ruis::mat4& matrix) const
 
 	// render selector
 	if (auto active_tab = this->get_active().lock()) {
-		// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers, "TODO: get from params")
-		ruis::real gap = this->selector_gap.get().get(this->context);
+		auto pos = active_tab.get()->get_pos_in_ancestor({0}, this);
 
 		ruis::mat4 matr(matrix);
-		matr.translate(active_tab->rect().p + vec2(gap));
+		matr.translate(pos);
 		this->selector_vao.render(
 			matr, //
-			active_tab->rect().d - 2 * vec2(gap),
+			active_tab->rect().d,
 			this->selector_color.get()
 		);
 	}

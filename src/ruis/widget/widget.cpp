@@ -364,7 +364,7 @@ vec2 widget::measure(const ruis::vec2& quotum) const
 	return max(quotum, 0);
 }
 
-vec2 widget::pos_in_ancestor(vec2 pos, const widget* ancestor)
+vec2 widget::get_pos_in_ancestor(vec2 pos, const widget* ancestor)
 {
 	if (ancestor == this || !this->parent()) {
 		return pos;
@@ -372,7 +372,7 @@ vec2 widget::pos_in_ancestor(vec2 pos, const widget* ancestor)
 
 	ASSERT(this->parent())
 
-	return this->parent()->pos_in_ancestor(this->rect().p + pos, ancestor);
+	return this->parent()->get_pos_in_ancestor(this->rect().p + pos, ancestor);
 }
 
 layout::parameters& widget::get_layout_params()

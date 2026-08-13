@@ -32,7 +32,6 @@ class tab_group : public choice_group
 
 	styled<ruis::color> background_color;
 	styled<ruis::color> selector_color;
-	styled<ruis::length> selector_gap;
 
 public:
 	struct all_parameters {

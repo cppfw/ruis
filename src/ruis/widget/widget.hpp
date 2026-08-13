@@ -753,7 +753,7 @@ public:
 	 *        If null then it will go down till the root widget.
 	 * @return translated position.
 	 */
-	vec2 pos_in_ancestor(vec2 pos, const widget* ancestor = nullptr);
+	vec2 get_pos_in_ancestor(vec2 pos, const widget* ancestor = nullptr);
 
 public:
 	/**

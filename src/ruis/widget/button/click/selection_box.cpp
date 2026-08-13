@@ -246,7 +246,7 @@ void selection_box::show_drop_down_menu()
 
 	this->current_drop_down_menu = olay->show_popup(
 		np, //
-		this->pos_in_ancestor(vec2(0), olay) + vec2(0, this->rect().d.y())
+		this->get_pos_in_ancestor(vec2(0), olay) + vec2(0, this->rect().d.y())
 	);
 }
 
