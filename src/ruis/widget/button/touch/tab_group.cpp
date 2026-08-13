@@ -42,20 +42,21 @@ tab_group::tab_group(
 			.widget_params = std::move(params.widget_params),
 			.container_params = std::move(params.container_params),
 		},
-		[&](){
-			for(auto& c : children){
+		[&]() {
+			for (auto& c : children) {
 				c = ruis::make::padding(
 					context,
-					{
-						// use same layout params for the padding, except the dims
-						.layout_params = [&](){
-							auto lp = c.get().get_layout_params_const();
-							lp.dims = {ruis::dim::max, ruis::dim::max};
-							return lp;
-						}(),
-						.padding_params{
-							.borders = {context.get().style().get_len_gap()} // TODO: get from params, should be same as selector_gap
-						}
+					{// use same layout params for the padding, except the dims
+					 .layout_params =
+						 [&]() {
+							 auto lp = c.get().get_layout_params_const();
+							 lp.dims = {ruis::dim::max, ruis::dim::max};
+							 return lp;
+						 }(),
+					 .padding_params{
+						 .borders = {context.get().style().get_len_gap()
+						 } // TODO: get from params, should be same as selector_gap
+					 }
 					},
 					{c}
 				);
