@@ -40,8 +40,8 @@ void wire_area::render(const ruis::mat4& matrix)const{
 		
 		auto prim_outlet_pos = s.get().outlet_pos();
 		auto slave_outlet_pos = s.get().slave->outlet_pos();
-		auto p0 = s.get().pos_in_ancestor(prim_outlet_pos[0], this);
-		auto p = s.get().slave->pos_in_ancestor(slave_outlet_pos[0], this) - p0;
+		auto p0 = s.get().get_pos_in_ancestor(prim_outlet_pos[0], this);
+		auto p = s.get().slave->get_pos_in_ancestor(slave_outlet_pos[0], this) - p0;
 		
 		ruis::paint::path path;
 		path.cubic_to(prim_outlet_pos[1] * spline_control_length, p + slave_outlet_pos[1] * spline_control_length, p);
@@ -54,7 +54,7 @@ void wire_area::render(const ruis::mat4& matrix)const{
 	
 	if(this->grabbed_socket){
 		auto outlet_pos = this->grabbed_socket->outlet_pos();
-		auto p0 = this->grabbed_socket->pos_in_ancestor(outlet_pos[0], this);
+		auto p0 = this->grabbed_socket->get_pos_in_ancestor(outlet_pos[0], this);
 		
 		ruis::paint::path path;
 		path.line_to(this->mouse_pos - p0);

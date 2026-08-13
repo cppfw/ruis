@@ -87,7 +87,7 @@ ruis::event_status wire_socket::on_mouse_button(const ruis::mouse_button_event& 
 			}
 			
 			wa->grabbed_socket = std::move(grabbed_socket);
-			wa->mouse_pos = this->pos_in_ancestor(e.pos, wa);
+			wa->mouse_pos = this->get_pos_in_ancestor(e.pos, wa);
 		}else{
 			wa->grabbed_socket->connect(wa->hovered_socket);
 			wa->grabbed_socket.reset();
