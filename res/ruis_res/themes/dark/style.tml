@@ -19,6 +19,7 @@ ruis{
     len_dialog_padding{20pp}
 
     font_size_text{12pp}
+    font_size_title{22pp}
     font_face_text{ruis_fnt_normal}
 }
 user{}

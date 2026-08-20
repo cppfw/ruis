@@ -210,6 +210,11 @@ styled<length> style_provider::get_font_size_normal() const
 	return this->get<length>(style::font_size_text);
 }
 
+styled<length> style_provider::get_font_size_title() const
+{
+	return this->get<length>(style::font_size_title);
+}
+
 styled<res::font> style_provider::get_font_face_normal() const
 {
 	return this->get<res::font>(style::font_face_text);

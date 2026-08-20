@@ -50,6 +50,8 @@ enum class style {
 	len_dialog_padding,
 
 	font_size_text,
+	font_size_title,
+
 	font_face_text,
 
 	enum_size

@@ -56,6 +56,8 @@ style style_sheet::name_to_style(std::string_view name)
 		return style::len_dialog_padding;
 	} else if (name == "font_size_text"sv) {
 		return style::font_size_text;
+	} else if (name == "font_size_title"sv) {
+		return style::font_size_title;
 	} else if (name == "font_face_text"sv) {
 		return style::font_face_text;
 	}
