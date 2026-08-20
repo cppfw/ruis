@@ -42,6 +42,8 @@ style style_sheet::name_to_style(std::string_view name)
 		return style::color_secondary;
 	} else if (name == "color_highlight"sv) {
 		return style::color_highlight;
+	} else if (name == "color_special"sv) {
+		return style::color_special;
 	} else if (name == "len_indent"sv) {
 		return style::len_indent;
 	} else if (name == "len_gap"sv) {

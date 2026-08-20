@@ -136,6 +136,7 @@ public:
 	styled<color> get_color_text() const;
 	styled<color> get_color_text_secondary() const;
 	styled<color> get_color_secondary() const;
+	styled<color> get_color_special() const;
 	styled<color> get_color_highlight() const;
 
 	styled<length> get_len_indent() const;

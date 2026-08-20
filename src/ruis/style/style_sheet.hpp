@@ -33,14 +33,15 @@ namespace ruis {
 enum class style {
 	color_background,
 	color_panel,
+	color_special,
 	color_primary,
+	color_secondary,
 	color_highlight,
 
 	color_dimmed,
 
 	color_text,
 	color_text_secondary,
-	color_secondary,
 
 	len_indent,
 	len_gap,
