@@ -27,7 +27,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
-class oval :
+class ellipse :
 	padding, //
 	color_widget
 {
@@ -40,19 +40,19 @@ public:
 		color_widget::parameters color_params;
 	};
 
-	oval(
+	ellipse(
 		utki::shared_ref<ruis::context> context, //
 		all_parameters params,
 		widget_list children
 	);
 
-	oval(const oval&) = delete;
-	oval& operator=(const oval&) = delete;
+	ellipse(const ellipse&) = delete;
+	ellipse& operator=(const ellipse&) = delete;
 
-	oval(oval&&) = delete;
-	oval& operator=(oval&&) = delete;
+	ellipse(ellipse&&) = delete;
+	ellipse& operator=(ellipse&&) = delete;
 
-	~oval() override = default;
+	~ellipse() override = default;
 
 	void render(const ruis::mat4& matrix) const override;
 };
