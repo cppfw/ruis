@@ -32,16 +32,16 @@ class rectangle_vao
 {
 	utki::shared_ref<const ruis::render::renderer> renderer;
 
-	ruis::sides<ruis::real> corner_radii = 0;
+	ruis::sides<real> corner_radii = 0;
 
 	// zero means filled rectangle
-	ruis::real stroke_width = 0; // TODO: use
+	real stroke_width = 0; // TODO: use
 
 public:
 	rectangle_vao(
 		utki::shared_ref<const ruis::render::renderer> renderer,
-		ruis::sides<ruis::real> corner_radii = 0, //
-		ruis::real stroke_width = 0
+		ruis::sides<real> corner_radii = 0, //
+		real stroke_width = 0
 	);
 
 	rectangle_vao(const rectangle_vao&) = delete;

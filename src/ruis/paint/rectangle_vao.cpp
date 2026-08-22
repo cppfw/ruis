@@ -95,7 +95,7 @@ void rectangle_vao::render_rounder_corners(
 {
 	auto& r = this->renderer.get();
 
-	ASSERT(this->rounded_corners_tex)
+	utki::assert(this->rounded_corners_tex);
 	const auto& t = *this->rounded_corners_tex;
 
 	const auto& tex_middle = t.middle_px;
