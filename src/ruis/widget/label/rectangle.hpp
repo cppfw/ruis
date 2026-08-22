@@ -38,7 +38,10 @@ class rectangle :
 {
 public:
 	struct parameters {
-		// TODO: comment
+		/**
+		 * @brief Corner radii of the rectangle.
+		 * The order of the radii is: left-top, right-top, right-bottom, left-bottom.
+		 */
 		sides<styled<length>> corner_radii;
 	};
 
