@@ -5,7 +5,7 @@
 #include <ruis/widget/widget.hpp>
 #include <ruis/paint/path_vao.hpp>
 #include <ruis/paint/frame_vao.hpp>
-#include <ruis/paint/oval_vao.hpp>
+#include <ruis/paint/ellipse_vao.hpp>
 #include <ruis/widget/label/padding.hpp>
 #include <ruis/widget/slider/scroll_bar.hpp>
 #include <ruis/widget/button/push_button.hpp>
@@ -102,15 +102,15 @@ inline utki::shared_ref<::frame_widget> frame_widget(
 }
 }
 
-class oval_widget : virtual public ruis::widget{
-	ruis::paint::oval_vao vao;
+class ellipse_widget : virtual public ruis::widget{
+	ruis::paint::ellipse_vao vao;
 public:
 	struct all_parameters{
 		ruis::layout::parameters layout_params;
 		ruis::widget::parameters widget_params;
 	};
 
-	oval_widget(
+	ellipse_widget(
 		utki::shared_ref<ruis::context> context, //
 		all_parameters params
 	) :
@@ -135,12 +135,12 @@ public:
 };
 
 namespace make{
-inline utki::shared_ref<::oval_widget> oval_widget(
+inline utki::shared_ref<::ellipse_widget> ellipse_widget(
 	utki::shared_ref<ruis::context> context,
-	::oval_widget::all_parameters params
+	::ellipse_widget::all_parameters params
 )
 {
-	return utki::make_shared<::oval_widget>(
+	return utki::make_shared<::ellipse_widget>(
 		std::move(context),
 		std::move(params)
 	);
@@ -191,7 +191,7 @@ utki::shared_ref<ruis::widget> make_root_widget(utki::shared_ref<ruis::context> 
 					)
 				}
 			),
-			m::oval_widget(c,
+			m::ellipse_widget(c,
 				{
 					.layout_params{
 						.dims = {400_pp, 200_pp},
