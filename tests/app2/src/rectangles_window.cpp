@@ -135,10 +135,10 @@ utki::shared_ref<ruis::widget> make_rectangles_window(
 					m::ellipse(c,
 						{
 							.padding_params{
-								.borders = c.get().style().get_len_gap()
+								.borders = {c.get().style().get_len_gap()}
 							},
 							.color_params{
-								.color = 0xff008000
+								.color = 0xff000080
 							}
 						},
 						{

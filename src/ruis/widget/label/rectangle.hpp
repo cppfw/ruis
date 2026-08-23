@@ -81,19 +81,11 @@ private:
 };
 
 namespace make {
-inline utki::shared_ref<ruis::rectangle> rectangle(
+utki::shared_ref<ruis::rectangle> rectangle(
 	utki::shared_ref<ruis::context> context,
 	rectangle::all_parameters params,
 	widget_list children = {}
-)
-{
-	return utki::make_shared<ruis::rectangle>(
-		std::move(context), //
-		std::move(params),
-		std::move(children)
-	);
-}
-
+);
 } // namespace make
 
 } // namespace ruis

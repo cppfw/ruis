@@ -28,14 +28,14 @@ ellipse::ellipse( //
     all_parameters params,
     widget_list children
 ) :
-    widget( //
-        std::move(context),
+    widget(
+        std::move(context), //
         std::move(params.layout_params),
         std::move(params.widget_params)
     ),
     // clang-format off
-    padding( //
-        this->context,
+    padding(
+        this->context, //
         {
             .container_params = std::move(params.container_params),
             .padding_params = std::move(params.padding_params)
@@ -43,8 +43,8 @@ ellipse::ellipse( //
         std::move(children)
     ),
     // clang-format on
-    color_widget( //
-        this->context,
+    color_widget(
+        this->context, //
         std::move(params.color_params)
     ),
     vao(this->context.get().renderer)
@@ -63,6 +63,8 @@ void ellipse::update_vao()
 void ellipse::on_resize()
 {
     this->update_vao();
+
+    this->padding::on_resize();
 }
 
 void ellipse::render(const ruis::mat4& matrix) const
@@ -71,6 +73,8 @@ void ellipse::render(const ruis::mat4& matrix) const
         matrix, //
         this->get_current_color()
     );
+
+    this->padding::render(matrix);
 }
 
 utki::shared_ref<ruis::ellipse> ruis::make::ellipse(

@@ -82,3 +82,16 @@ void rectangle::update_vaos()
 
 	this->fill_vao.set(radii, 0);
 }
+
+utki::shared_ref<ruis::rectangle> ruis::make::rectangle(
+	utki::shared_ref<ruis::context> context,
+	rectangle::all_parameters params,
+	widget_list children
+)
+{
+	return utki::make_shared<ruis::rectangle>(
+		std::move(context), //
+		std::move(params),
+		std::move(children)
+	);
+}
