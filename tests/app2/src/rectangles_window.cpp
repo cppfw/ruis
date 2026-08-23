@@ -22,6 +22,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "rectangles_window.hpp"
 
 #include <ruis/widget/button/impl/rectangle_push_button.hpp>
+#include <ruis/widget/button/impl/ellipse_push_button.hpp>
 #include <ruis/widget/group/window.hpp>
 #include <ruis/widget/label/gap.hpp>
 #include <ruis/widget/label/rectangle.hpp>
@@ -64,7 +65,7 @@ utki::shared_ref<ruis::widget> make_rectangles_window(
 			m::rectangle(c,
 				{
 					.color_params{
-						.color = 0xff800000
+						.color = c.get().style().get_color_panel()
 					}
 				},
 				{
@@ -187,25 +188,40 @@ utki::shared_ref<ruis::widget> make_rectangles_window(
 					}
 				}
 			),
-			m::rectangle_push_button(c,
+			m::row(c,
+				{},
 				{
-					.padding_params{
-						.borders{
-							5_pp, // left
-							10_pp, // top
-							15_pp, // right
-							20_pp // bottom
+					m::rectangle_push_button(c,
+						{
+							.padding_params{
+								.borders{
+									5_pp, // left
+									10_pp, // top
+									15_pp, // right
+									20_pp // bottom
+								}
+							},
+							.rectangle_params{
+								.corner_radii = {5_pp}
+							},
+							.rectangle_button_params{
+								// TODO:
+							}
+						},
+						{
+							m::text(c, {}, U"rounded corners button"s)
 						}
-					},
-					.rectangle_params{
-						.corner_radii = {5_pp}
-					},
-					.rectangle_button_params{
-						// TODO:
-					}
-				},
-				{
-					m::text(c, {}, U"rounded corners button"s)
+					),
+					m::ellipse_push_button(c,
+						{
+							.padding_params{
+								.borders = {c.get().style().get_len_gap()}
+							}
+						},
+						{
+							m::text(c, {}, U"ellipse button"s)
+						}
+					)
 				}
 			)
 		}
