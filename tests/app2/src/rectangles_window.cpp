@@ -26,6 +26,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <ruis/widget/label/gap.hpp>
 #include <ruis/widget/label/rectangle.hpp>
 #include <ruis/widget/label/text.hpp>
+#include <ruis/widget/label/ellipse.hpp>
 
 using namespace std::string_literals;
 using namespace std::string_view_literals;
@@ -102,30 +103,48 @@ utki::shared_ref<ruis::widget> make_rectangles_window(
 					}
 				}
 			),
-			m::rectangle(c,
+			m::row(c,
+				{},
 				{
-					.padding_params{
-						.borders{
-							5_pp, // left
-							10_pp, // top
-							15_pp, // right
-							20_pp // bottom
+					m::rectangle(c,
+						{
+							.padding_params{
+								.borders{
+									5_pp, // left
+									10_pp, // top
+									15_pp, // right
+									20_pp // bottom
+								}
+							},
+							.color_params{
+								.color = 0xff800000
+							},
+							.rectangle_params{
+								.corner_radii = {
+									0_pp, // left-top
+									5_pp, // right-top
+									10_pp, // right-bottom
+									0_pp // left-bottom
+								}
+							}
+						},
+						{
+							m::text(c, {}, U"one side square corners"s)
 						}
-					},
-					.color_params{
-						.color = 0xff800000
-					},
-					.rectangle_params{
-						.corner_radii = {
-							0_pp, // left-top
-							5_pp, // right-top
-							10_pp, // right-bottom
-							0_pp // left-bottom
+					),
+					m::ellipse(c,
+						{
+							.padding_params{
+								.borders = c.get().style().get_len_gap()
+							},
+							.color_params{
+								.color = 0xff008000
+							}
+						},
+						{
+							m::text(c, {}, U"ellipse"s)
 						}
-					}
-				},
-				{
-					m::text(c, {}, U"one side square corners"s)
+					)
 				}
 			),
 			m::gap(c,

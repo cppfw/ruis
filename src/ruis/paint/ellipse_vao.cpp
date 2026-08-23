@@ -74,7 +74,7 @@ auto make_ellipse_texture_image(ruis::vec2 radii)
 
 void ellipse_vao::update_texture()
 {
-	if (this->radii.is_zero()) {
+	if (!this->radii.is_positive()) {
 		this->tex.reset();
 		return;
 	}

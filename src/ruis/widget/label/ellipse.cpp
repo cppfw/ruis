@@ -20,3 +20,68 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 /* ================ LICENSE END ================ */
 
 #include "ellipse.hpp"
+
+using namespace ruis;
+
+ellipse::ellipse( //
+    utki::shared_ref<ruis::context> context,
+    all_parameters params,
+    widget_list children
+) :
+    widget( //
+        std::move(context),
+        std::move(params.layout_params),
+        std::move(params.widget_params)
+    ),
+    // clang-format off
+    padding( //
+        this->context,
+        {
+            .container_params = std::move(params.container_params),
+            .padding_params = std::move(params.padding_params)
+        },
+        std::move(children)
+    ),
+    // clang-format on
+    color_widget( //
+        this->context,
+        std::move(params.color_params)
+    ),
+    vao(this->context.get().renderer)
+{
+    this->update_vao();
+}
+
+void ellipse::update_vao()
+{
+    this->vao.set(
+        this->rect().d / 2, //
+        0 // stroke width
+    );
+}
+
+void ellipse::on_resize()
+{
+    this->update_vao();
+}
+
+void ellipse::render(const ruis::mat4& matrix) const
+{
+    this->vao.render(
+        matrix, //
+        this->get_current_color()
+    );
+}
+
+utki::shared_ref<ruis::ellipse> ruis::make::ellipse(
+    utki::shared_ref<ruis::context> context, //
+    ruis::ellipse::all_parameters params,
+    widget_list children
+)
+{
+    return utki::make_shared<ruis::ellipse>(
+        std::move(context), //
+        std::move(params),
+        std::move(children)
+    );
+}
