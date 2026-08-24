@@ -130,7 +130,7 @@ public:
 	}
 
 	void on_resize()override{
-		this->vao.set(this->rect().d / 2);
+		this->vao.set(this->rect().d);
 	}
 };
 

@@ -26,42 +26,45 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace ruis::paint;
 
 std::map<
-	ruis::vec2, // radii
+	ruis::vec2, // diameters
 	std::weak_ptr<const ruis::render::texture_2d>>
 	// TODO: ? NOLINTNEXTLINE(cppcoreguidelines-avoid-non-const-global-variables, "false-positive")
 	ellipse_vao::cache;
 
 ellipse_vao::ellipse_vao(
 	utki::shared_ref<const ruis::render::renderer> renderer,
-	vec2 radii, //
+	vec2 diameters, //
 	real stroke_width
 ) :
 	renderer(std::move(renderer))
 {
 	this->set(
-		radii, //
+		diameters, //
 		stroke_width
 	);
 }
 
 void ellipse_vao::set(
-	vec2 radii, //
+	vec2 diameters, //
 	real stroke_width
 )
 {
-	this->radii = radii;
+	this->diameters = diameters;
 	this->stroke_width = stroke_width;
 
 	this->update_texture();
 }
 
 namespace {
-auto make_ellipse_texture_image(ruis::vec2 radii)
+auto make_ellipse_texture_image(ruis::vec2 diameters)
 {
 	using std::round;
-	veg::canvas canvas(round(radii * 2).to<uint32_t>());
+	veg::canvas canvas(round(diameters).to<uint32_t>());
 
-	canvas.ellipse(radii, radii);
+	canvas.ellipse(
+		diameters / 2, // center
+		diameters / 2 // radii
+	);
 
 	// white
 	canvas.set_source({1, 1, 1, 1});
@@ -74,14 +77,14 @@ auto make_ellipse_texture_image(ruis::vec2 radii)
 
 void ellipse_vao::update_texture()
 {
-	if (!this->radii.is_positive()) {
+	if (!this->diameters.is_positive()) {
 		this->tex.reset();
 		return;
 	}
 
 	// try to find in cache
 	// TODO: develop algorithm to go through cache from time to time and drop zombie textures
-	auto it = this->cache.find(this->radii);
+	auto it = this->cache.find(this->diameters);
 	if (it != this->cache.end()) {
 		if (auto t = it->second.lock()) {
 			this->tex = std::move(t);
@@ -96,13 +99,13 @@ void ellipse_vao::update_texture()
 	const auto& r = this->renderer.get();
 
 	this->tex = r.ctx().make_texture_2d(
-		make_ellipse_texture_image(this->radii), //
+		make_ellipse_texture_image(this->diameters), //
 		{}
 	);
 
 	// add to cache
 	this->cache.insert(std::make_pair(
-		this->radii, //
+		this->diameters, //
 		utki::make_weak(this->tex)
 	));
 }
@@ -121,7 +124,7 @@ void ellipse_vao::render(
 	r.rendering_context.get().set_simple_alpha_blending();
 
 	ruis::mat4 matr(matrix);
-	matr.scale(this->radii * 2);
+	matr.scale(this->diameters);
 
 	r.shaders().color_pos_tex->render(
 		matr, //

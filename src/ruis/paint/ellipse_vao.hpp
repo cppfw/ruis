@@ -29,7 +29,7 @@ class ellipse_vao
 {
 	utki::shared_ref<const ruis::render::renderer> renderer;
 
-	vec2 radii = 0;
+	vec2 diameters = 0;
 
 	// zero means filled rectangle
 	real stroke_width = 0; // TODO: use
@@ -37,7 +37,7 @@ class ellipse_vao
 public:
 	ellipse_vao(
 		utki::shared_ref<const ruis::render::renderer> renderer,
-		vec2 radii = 0, //
+		vec2 diameters = 0, //
 		real stroke_width = 0
 	);
 
@@ -50,7 +50,7 @@ public:
 	~ellipse_vao() = default;
 
 	void set(
-		vec2 radii, //
+		vec2 diameters, //
 		real stroke_width = 0 // 0 means filled ellipse
 	);
 
@@ -63,7 +63,7 @@ private:
 	std::shared_ptr<const render::texture_2d> tex;
 
 	static std::map<
-		vec2, // radii
+		vec2, // diameters
 		std::weak_ptr<const render::texture_2d>>
 		// TODO: ? NOLINTNEXTLINE(cppcoreguidelines-avoid-non-const-global-variables, "false-positive")
 		cache;

@@ -55,7 +55,7 @@ ellipse::ellipse( //
 void ellipse::update_vao()
 {
     this->vao.set(
-        this->rect().d / 2, //
+        this->rect().d, // diameters
         0 // stroke width
     );
 }
