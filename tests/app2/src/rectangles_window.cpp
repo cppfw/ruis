@@ -213,11 +213,7 @@ utki::shared_ref<ruis::widget> make_rectangles_window(
 						}
 					),
 					m::ellipse_push_button(c,
-						{
-							.padding_params{
-								.borders = {c.get().style().get_len_gap()}
-							}
-						},
+						{},
 						{
 							m::text(c, {}, U"ellipse button"s)
 						}
