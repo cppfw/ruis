@@ -21,8 +21,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "../base/color_widget.hpp"
 #include "../../paint/ellipse_vao.hpp"
+#include "../base/color_widget.hpp"
 
 #include "padding.hpp"
 
@@ -59,18 +59,18 @@ public:
 
 	void render(const ruis::mat4& matrix) const override;
 
-	void on_resize()override;
+	void on_resize() override;
 
 public:
 	void update_vao();
 };
 
-namespace make{
+namespace make {
 utki::shared_ref<ruis::ellipse> ellipse(
 	utki::shared_ref<ruis::context> context, //
 	ruis::ellipse::all_parameters params,
 	widget_list children = {}
 );
-}
+} // namespace make
 
 } // namespace ruis

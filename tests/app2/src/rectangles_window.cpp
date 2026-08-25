@@ -21,13 +21,13 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "rectangles_window.hpp"
 
-#include <ruis/widget/button/impl/rectangle_push_button.hpp>
 #include <ruis/widget/button/impl/ellipse_push_button.hpp>
+#include <ruis/widget/button/impl/rectangle_push_button.hpp>
 #include <ruis/widget/group/window.hpp>
+#include <ruis/widget/label/ellipse.hpp>
 #include <ruis/widget/label/gap.hpp>
 #include <ruis/widget/label/rectangle.hpp>
 #include <ruis/widget/label/text.hpp>
-#include <ruis/widget/label/ellipse.hpp>
 
 using namespace std::string_literals;
 using namespace std::string_view_literals;

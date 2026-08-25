@@ -24,16 +24,16 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace ruis;
 
 ellipse::ellipse( //
-    utki::shared_ref<ruis::context> context,
-    all_parameters params,
-    widget_list children
+	utki::shared_ref<ruis::context> context,
+	all_parameters params,
+	widget_list children
 ) :
-    widget(
-        std::move(context), //
-        std::move(params.layout_params),
-        std::move(params.widget_params)
-    ),
-    // clang-format off
+	widget(
+		std::move(context), //
+		std::move(params.layout_params),
+		std::move(params.widget_params)
+	),
+	// clang-format off
     padding(
         this->context, //
         {
@@ -42,50 +42,50 @@ ellipse::ellipse( //
         },
         std::move(children)
     ),
-    // clang-format on
-    color_widget(
-        this->context, //
-        std::move(params.color_params)
-    ),
-    vao(this->context.get().renderer)
+	// clang-format on
+	color_widget(
+		this->context, //
+		std::move(params.color_params)
+	),
+	vao(this->context.get().renderer)
 {
-    this->update_vao();
+	this->update_vao();
 }
 
 void ellipse::update_vao()
 {
-    this->vao.set(
-        this->rect().d, // diameters
-        0 // stroke width
-    );
+	this->vao.set(
+		this->rect().d, // diameters
+		0 // stroke width
+	);
 }
 
 void ellipse::on_resize()
 {
-    this->update_vao();
+	this->update_vao();
 
-    this->padding::on_resize();
+	this->padding::on_resize();
 }
 
 void ellipse::render(const ruis::mat4& matrix) const
 {
-    this->vao.render(
-        matrix, //
-        this->get_current_color()
-    );
+	this->vao.render(
+		matrix, //
+		this->get_current_color()
+	);
 
-    this->padding::render(matrix);
+	this->padding::render(matrix);
 }
 
 utki::shared_ref<ruis::ellipse> ruis::make::ellipse(
-    utki::shared_ref<ruis::context> context, //
-    ruis::ellipse::all_parameters params,
-    widget_list children
+	utki::shared_ref<ruis::context> context, //
+	ruis::ellipse::all_parameters params,
+	widget_list children
 )
 {
-    return utki::make_shared<ruis::ellipse>(
-        std::move(context), //
-        std::move(params),
-        std::move(children)
-    );
+	return utki::make_shared<ruis::ellipse>(
+		std::move(context), //
+		std::move(params),
+		std::move(children)
+	);
 }
