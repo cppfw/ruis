@@ -196,7 +196,7 @@ dialog::dialog(
 			},
 			.container_params = [&](){
 				if(!params.container_params.layout){
-					params.container_params.layout = ruis::layout::column;
+					params.container_params.layout = ruis::layout::pile;
 				}
 				return std::move(params.container_params);
 			}()

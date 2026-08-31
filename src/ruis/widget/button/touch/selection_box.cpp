@@ -243,8 +243,7 @@ void selection_box::show_selection_menu()
 			ruis::touch::make::list(c,
 				{
 					.layout_params{
-						.dims = {ruis::dim::fill, ruis::dim::fill},
-						.weight = 1 // TODO: should not be needed, dialog layout can be pile
+						.dims = {ruis::dim::fill, ruis::dim::fill}
 					},
 					.list_params{
 						.provider = utki::make_shared<wrapping_provider>(utki::make_shared_from(*this))

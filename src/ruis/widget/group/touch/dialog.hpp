@@ -115,7 +115,7 @@ public:
 namespace make {
 /**
  * @brief Construct 'dialog' widget.
- * Default content layout is column.
+ * Default content layout is pile.
  * @param context - ruis context.
  * @param params - 'dialog' widget parameters.
  * @param children - contents of the constructed 'dialog' widget.
