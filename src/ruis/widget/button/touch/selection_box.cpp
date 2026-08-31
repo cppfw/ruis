@@ -22,13 +22,13 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "selection_box.hpp"
 
 #include "../../group/overlay.hpp"
+#include "../../group/touch/dialog.hpp"
 #include "../../group/touch/list.hpp"
 #include "../../label/gap.hpp"
 #include "../../label/padding.hpp"
 #include "../../label/rectangle.hpp"
 #include "../../label/text.hpp"
 #include "../../proxy/click_proxy.hpp"
-#include "../../proxy/mouse_proxy.hpp"
 
 using namespace std::string_literals;
 using namespace std::string_view_literals;
@@ -233,108 +233,33 @@ void selection_box::show_selection_menu()
 	auto& c = this->context;
 
 	// clang-format off
-	auto bg_click_proxy = ruis::make::click_proxy(c,
-		{
-			.layout_params{
-				.dims = {ruis::dim::fill, ruis::dim::fill}
-			}
-		}
-	);
-	// clang-format on
-
-	// clang-format off
-	auto root = ruis::make::pile(c,
+	auto root = ruis::touch::make::dialog(c,
 		{
 			.layout_params{
 				.dims = {ruis::dim::fill, ruis::dim::fill}
 			}
 		},
 		{
-			// dimming background
-			ruis::make::rectangle(c,
+			ruis::touch::make::list(c,
 				{
 					.layout_params{
-						.dims = {ruis::dim::fill, ruis::dim::fill}
+						.dims = {ruis::dim::fill, ruis::dim::fill},
+						.weight = 1
 					},
-					.widget_params{
-						.rectangle = {0, 0, 0, 0}
-					},
-					.color_params{
-						.color = this->context.get().style().get_color_dimmed()
+					.list_params{
+						.provider = utki::make_shared<wrapping_provider>(utki::make_shared_from(*this))
 					}
-				}
-			),
-			bg_click_proxy,
-			ruis::make::padding(c,
-				{
-					.layout_params{
-						.dims = {ruis::dim::fill, ruis::dim::fill}
-					},
-					.padding_params{
-						.borders = {c.get().style().get_len_dialog_margin()}
-					}
-				},
-				{
-					// mouse proxy to consume mouse events, to prevent the menu from closing if clicked in the rectangle area
-					ruis::make::mouse_proxy(c,
-						{
-							.layout_params{
-								.dims = {ruis::dim::fill, ruis::dim::fill}
-							},
-							.mouse_proxy_params{
-								.mouse_button_handler = [](auto&, auto&){return ruis::event_status::consumed;},
-								.mouse_move_handler = [](auto&, auto&){return ruis::event_status::consumed;}
-							}
-						}
-					),
-					ruis::make::rectangle(c,
-						{
-							.layout_params{
-								.dims = {ruis::dim::fill, ruis::dim::fill}
-							},
-							.padding_params{
-								.borders = {c.get().style().get_len_dialog_padding()}
-							},
-							.color_params{
-								.color = c.get().style().get_color_panel()
-							},
-							.rectangle_params{
-								.corner_radii = {c.get().style().get_len_dialog_padding()}
-							}
-						},
-						{
-							ruis::touch::make::list(c,
-								{
-									.layout_params{
-										.dims = {ruis::dim::fill, ruis::dim::fill}
-									},
-									.list_params{
-										.provider = utki::make_shared<wrapping_provider>(utki::make_shared_from(*this))
-									}
-								}
-							)
-						}
-					)
 				}
 			)
 		}
 	);
 	// clang-format on
 
-	bg_click_proxy.get().click_handler = [weak_root = utki::make_weak(root)](ruis::click_proxy& cp) {
-		// std::cout << "clicked" << std::endl;
-		if (auto r = weak_root.lock()) {
-			r->context.get().post_to_ui_thread([r]() {
-				r->remove_from_parent();
-			});
-		}
-	};
-
 	c.get().post_to_ui_thread([olay = utki::make_shared_from(olay), root]() {
 		olay.get().push_back(root);
 	});
 
-	this->selection_menu = root.to_shared_ptr();
+	this->selection_menu = utki::make_weak(root);
 }
 
 void selection_box::close_selection_menu()
