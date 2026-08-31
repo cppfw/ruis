@@ -43,6 +43,7 @@ constexpr auto bg_click_proxy_id = "ruis_touch_dialog_bg_click_proxy"sv;
 constexpr auto key_proxy_id = "ruis_touch_dialog_key_proxy"sv;
 
 // Resolve an optional styled value, falling back to the given default when it is undefined.
+// TODO: add this functionality to the get() method of the styled class.
 template <typename value_type>
 styled<value_type> resolve(
 	const styled<value_type>& v, //

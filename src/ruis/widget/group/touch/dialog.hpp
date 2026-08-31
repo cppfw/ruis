@@ -53,12 +53,14 @@ public:
 		 * @brief Color of the dimming background behind the dialog.
 		 * Defaults to the 'color_dimmed' style value if undefined.
 		 */
+		// TODO: remove for now
 		styled<color> dim_color;
 
 		/**
 		 * @brief Color of the dialog panel background.
 		 * Defaults to the 'color_panel' style value if undefined.
 		 */
+		// TODO: should be color_params
 		styled<color> panel_color;
 
 		/**
@@ -71,12 +73,14 @@ public:
 		 * @brief Padding between the dialog panel background and the dialog content.
 		 * Defaults to the 'len_dialog_padding' style value if undefined.
 		 */
+		// TODO: should be padding_params
 		styled<length> padding;
 
 		/**
 		 * @brief Corner radii of the dialog panel background.
 		 * Defaults to the 'len_dialog_padding' style value if undefined.
 		 */
+		// TODO: should it be a rectangle_params?
 		styled<length> corner_radius;
 	};
 
