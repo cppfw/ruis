@@ -244,7 +244,7 @@ void selection_box::show_selection_menu()
 				{
 					.layout_params{
 						.dims = {ruis::dim::fill, ruis::dim::fill},
-						.weight = 1
+						.weight = 1 // TODO: should not be needed, dialog layout can be pile
 					},
 					.list_params{
 						.provider = utki::make_shared<wrapping_provider>(utki::make_shared_from(*this))
