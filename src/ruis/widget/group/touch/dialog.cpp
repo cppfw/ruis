@@ -47,7 +47,7 @@ constexpr auto key_proxy_id = "ruis_touch_dialog_key_proxy"sv;
 widget_list make_chrome(
 	utki::shared_ref<ruis::context> c, //
 	utki::shared_ref<ruis::container> content_container, //
-	dialog::parameters params
+	dialog::all_parameters params
 )
 {
 	const auto& style = c.get().style();
@@ -103,31 +103,33 @@ widget_list make_chrome(
 				.dims = {ruis::dim::fill, ruis::dim::fill}
 			},
 			.padding_params{
-				.borders = {[&](){
-					if(params.padding.get().is_undefined()){
-						return style.get_len_dialog_padding();
-					}else{
-						return std::move(params.padding);
+				.borders = [&](){
+					for(auto& b : params.padding_params.borders){
+						if(b.get().is_undefined()){
+							b = style.get_len_dialog_padding();
+						}
 					}
-				}()}
+					return std::move(params.padding_params.borders);
+				}()
 			},
 			.color_params{
 				.color = [&](){
-					if(params.panel_color.get().is_undefined()){
+					if(params.color_params.color.get().is_undefined()){
 						return style.get_color_panel();
 					}else{
-						return std::move(params.panel_color);
+						return std::move(params.color_params.color);
 					}
 				}()
 			},
 			.rectangle_params{
-				.corner_radii = {[&](){
-					if(params.corner_radius.get().is_undefined()){
-						return style.get_len_dialog_padding();
-					}else{
-						return std::move(params.corner_radius);
+				.corner_radii = [&](){
+					for(auto& r : params.rectangle_params.corner_radii){
+						if(r.get().is_undefined()){
+							r = style.get_len_dialog_padding();
+						}
 					}
-				}()}
+					return std::move(params.rectangle_params.corner_radii);
+				}()
 			}
 		},
 		{
@@ -144,13 +146,15 @@ widget_list make_chrome(
 				.dims = {ruis::dim::fill, ruis::dim::fill}
 			},
 			.padding_params{
-				.borders = {[&](){
-					if(params.margin.get().is_undefined()){
-						return style.get_len_dialog_margin();
-					}else{
-						return std::move(params.margin);
+				.borders = [&](){
+					auto borders = params.dialog_params.margin_params.borders;
+					for(auto& b : borders){
+						if(b.get().is_undefined()){
+							b = style.get_len_dialog_margin();
+						}
 					}
-				}()}
+					return borders;
+				}()
 			}
 		},
 		{
@@ -222,7 +226,7 @@ dialog::dialog(
 		make_chrome(
 			this->context, //
 			this->content_container, //
-			std::move(params.dialog_params)
+			params
 		)
 	)
 // clang-format on

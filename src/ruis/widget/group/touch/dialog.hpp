@@ -21,9 +21,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "../../../util/color.hpp"
 #include "../../../util/content_wrapping.hpp"
-#include "../../../util/length.hpp"
+#include "../../base/color_widget.hpp"
+#include "../../label/padding.hpp"
+#include "../../label/rectangle.hpp"
 
 namespace ruis::touch {
 
@@ -50,37 +51,35 @@ class dialog :
 public:
 	struct parameters {
 		/**
-		 * @brief Color of the dialog panel background.
-		 * Defaults to the 'color_panel' style value if undefined.
-		 */
-		// TODO: should be color_params
-		styled<color> panel_color;
-
-		/**
 		 * @brief Margin between the dialog panel and the edge of the dialog area.
 		 * Defaults to the 'len_dialog_margin' style value if undefined.
 		 */
-		styled<length> margin;
-
-		/**
-		 * @brief Padding between the dialog panel background and the dialog content.
-		 * Defaults to the 'len_dialog_padding' style value if undefined.
-		 */
-		// TODO: should be padding_params
-		styled<length> padding;
-
-		/**
-		 * @brief Corner radii of the dialog panel background.
-		 * Defaults to the 'len_dialog_padding' style value if undefined.
-		 */
-		// TODO: should it be a rectangle_params?
-		styled<length> corner_radius;
+		padding::parameters margin_params;
 	};
 
 	struct all_parameters {
 		layout::parameters layout_params;
 		widget::parameters widget_params;
 		container::parameters container_params;
+
+		/**
+		 * @brief Color of the dialog panel background.
+		 * Defaults to the 'color_panel' style value if undefined.
+		 */
+		color_widget::parameters color_params;
+
+		/**
+		 * @brief Padding between the dialog panel background and the dialog content.
+		 * Defaults to the 'len_dialog_padding' style value if undefined.
+		 */
+		padding::parameters padding_params;
+
+		/**
+		 * @brief Corner radii of the dialog panel background.
+		 * Defaults to the 'len_dialog_padding' style value if undefined.
+		 */
+		rectangle::parameters rectangle_params;
+
 		parameters dialog_params;
 	};
 
