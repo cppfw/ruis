@@ -42,17 +42,6 @@ namespace m = ruis::make;
 constexpr auto bg_click_proxy_id = "ruis_touch_dialog_bg_click_proxy"sv;
 constexpr auto key_proxy_id = "ruis_touch_dialog_key_proxy"sv;
 
-// Resolve an optional styled value, falling back to the given default when it is undefined.
-// TODO: add this functionality to the get() method of the styled class.
-template <typename value_type>
-styled<value_type> resolve(
-	const styled<value_type>& v, //
-	const styled<value_type>& def
-)
-{
-	return v.get().is_undefined() ? def : v;
-}
-
 // Build the chrome (dimming background, close-on-click/keypress proxies and the styled panel)
 // surrounding the given dialog content container.
 widget_list make_chrome(
@@ -62,11 +51,6 @@ widget_list make_chrome(
 )
 {
 	const auto& style = c.get().style();
-
-	auto panel_color = resolve(params.panel_color, style.get_color_panel());
-	auto margin = resolve(params.margin, style.get_len_dialog_margin());
-	auto padding = resolve(params.padding, style.get_len_dialog_padding());
-	auto corner_radius = resolve(params.corner_radius, style.get_len_dialog_padding());
 
 	// Dimming background
 	// clang-format off
@@ -119,13 +103,31 @@ widget_list make_chrome(
 				.dims = {ruis::dim::fill, ruis::dim::fill}
 			},
 			.padding_params{
-				.borders = {std::move(padding)}
+				.borders = {[&](){
+					if(params.padding.get().is_undefined()){
+						return style.get_len_dialog_padding();
+					}else{
+						return std::move(params.padding);
+					}
+				}()}
 			},
 			.color_params{
-				.color = std::move(panel_color)
+				.color = [&](){
+					if(params.panel_color.get().is_undefined()){
+						return style.get_color_panel();
+					}else{
+						return std::move(params.panel_color);
+					}
+				}()
 			},
 			.rectangle_params{
-				.corner_radii = {std::move(corner_radius)}
+				.corner_radii = {[&](){
+					if(params.corner_radius.get().is_undefined()){
+						return style.get_len_dialog_padding();
+					}else{
+						return std::move(params.corner_radius);
+					}
+				}()}
 			}
 		},
 		{
@@ -142,7 +144,13 @@ widget_list make_chrome(
 				.dims = {ruis::dim::fill, ruis::dim::fill}
 			},
 			.padding_params{
-				.borders = {std::move(margin)}
+				.borders = {[&](){
+					if(params.margin.get().is_undefined()){
+						return style.get_len_dialog_margin();
+					}else{
+						return std::move(params.margin);
+					}
+				}()}
 			}
 		},
 		{
