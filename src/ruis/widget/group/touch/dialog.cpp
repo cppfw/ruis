@@ -39,7 +39,6 @@ namespace {
 
 namespace m = ruis::make;
 
-constexpr auto bg_click_proxy_id = "ruis_touch_dialog_bg_click_proxy"sv;
 constexpr auto key_proxy_id = "ruis_touch_dialog_key_proxy"sv;
 
 // Build the chrome (dimming background, close-on-click/keypress proxies and the styled panel)
@@ -47,7 +46,8 @@ constexpr auto key_proxy_id = "ruis_touch_dialog_key_proxy"sv;
 widget_list make_chrome(
 	utki::shared_ref<ruis::context> c, //
 	utki::shared_ref<ruis::container> content_container, //
-	dialog::all_parameters params
+	dialog::all_parameters params, //
+	std::function<void(ruis::click_proxy&)> bg_click_handler
 )
 {
 	const auto& style = c.get().style();
@@ -73,8 +73,8 @@ widget_list make_chrome(
 			.layout_params{
 				.dims = {ruis::dim::fill, ruis::dim::fill}
 			},
-			.widget_params{
-				.id = std::string(bg_click_proxy_id)
+			.click_proxy_params{
+				.click_handler = std::move(bg_click_handler)
 			}
 		}
 	);
@@ -226,16 +226,12 @@ dialog::dialog(
 		make_chrome(
 			this->context, //
 			this->content_container, //
-			params
+			params, //
+			[this](ruis::click_proxy&){ this->close(); }
 		)
 	)
 // clang-format on
 {
-	// Set click handler on the background proxy to close the dialog when clicking outside
-	this->get_widget_as<click_proxy>(bg_click_proxy_id).click_handler = [this](ruis::click_proxy&) {
-		this->close();
-	};
-
 	// Set key handler to close the dialog on Escape key press
 	this->get_widget_as<key_proxy>(key_proxy_id).key_handler =
 		[this](ruis::key_proxy&, const ruis::key_event& e) -> ruis::event_status {
