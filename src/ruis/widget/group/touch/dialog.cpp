@@ -63,7 +63,6 @@ widget_list make_chrome(
 {
 	const auto& style = c.get().style();
 
-	auto dim_color = resolve(params.dim_color, style.get_color_dimmed());
 	auto panel_color = resolve(params.panel_color, style.get_color_panel());
 	auto margin = resolve(params.margin, style.get_len_dialog_margin());
 	auto padding = resolve(params.padding, style.get_len_dialog_padding());
@@ -77,7 +76,7 @@ widget_list make_chrome(
 				.dims = {ruis::dim::fill, ruis::dim::fill}
 			},
 			.color_params{
-				.color = std::move(dim_color)
+				.color = style.get_color_dimmed()
 			}
 		}
 	);

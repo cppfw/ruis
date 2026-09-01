@@ -50,13 +50,6 @@ class dialog :
 public:
 	struct parameters {
 		/**
-		 * @brief Color of the dimming background behind the dialog.
-		 * Defaults to the 'color_dimmed' style value if undefined.
-		 */
-		// TODO: remove for now
-		styled<color> dim_color;
-
-		/**
 		 * @brief Color of the dialog panel background.
 		 * Defaults to the 'color_panel' style value if undefined.
 		 */
