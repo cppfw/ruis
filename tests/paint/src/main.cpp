@@ -6,6 +6,7 @@
 #include <ruis/paint/path_vao.hpp>
 #include <ruis/paint/frame_vao.hpp>
 #include <ruis/paint/ellipse_vao.hpp>
+#include <ruis/paint/rectangle_vao.hpp>
 #include <ruis/widget/label/padding.hpp>
 #include <ruis/widget/slider/scroll_bar.hpp>
 #include <ruis/widget/button/push_button.hpp>
@@ -147,6 +148,60 @@ inline utki::shared_ref<::ellipse_widget> ellipse_widget(
 }
 }
 
+class rectangle_widget : virtual public ruis::widget{
+	ruis::paint::rectangle_vao vao;
+public:
+	struct all_parameters{
+		ruis::layout::parameters layout_params;
+		ruis::widget::parameters widget_params;
+	};
+
+	rectangle_widget(
+		utki::shared_ref<ruis::context> context, //
+		all_parameters params
+	) :
+		widget(
+			std::move(context), //
+			std::move(params.layout_params),
+			std::move(params.widget_params)
+		),
+		vao(this->context.get().renderer)
+	{}
+
+	void render(const ruis::mat4& matrix)const override{
+		this->vao.render(
+			matrix, //
+			this->rect().d, //
+			0xff8080ff
+		);
+	}
+
+	void on_resize()override{
+		this->vao.set(
+			{
+				10,
+				20,
+				30,
+				40
+			},
+			0
+		);
+	}
+};
+
+namespace make{
+inline utki::shared_ref<::rectangle_widget> rectangle_widget(
+	utki::shared_ref<ruis::context> context,
+	::rectangle_widget::all_parameters params
+)
+{
+	return utki::make_shared<::rectangle_widget>(
+		std::move(context),
+		std::move(params)
+	);
+}
+}
+
 namespace m{
 using namespace ruis::make;
 using namespace ::make;
@@ -197,6 +252,35 @@ utki::shared_ref<ruis::widget> make_root_widget(utki::shared_ref<ruis::context> 
 						.dims = {400_pp, 200_pp},
 						.align = {ruis::align::front, ruis::align::front}
 					}
+				}
+			),
+			m::padding(c,
+				{
+					.layout_params{
+						.dims = {300_pp, 150_pp},
+						.align = {ruis::align::front, ruis::align::back}
+					},
+					.container_params{
+						.layout = ruis::layout::pile
+					},
+					.padding_params{
+						// gaps to the left and bottom window edges
+						.borders = {
+							ruis::length::make_pp(40),
+							ruis::length::make_pp(0),
+							ruis::length::make_pp(0),
+							ruis::length::make_pp(40)
+						}
+					}
+				},
+				{
+					m::rectangle_widget(c,
+						{
+							.layout_params{
+								.dims = {ruis::dim::fill, ruis::dim::fill}
+							}
+						}
+					)
 				}
 			),
 			m::scroll_bar(c,
