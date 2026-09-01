@@ -33,10 +33,15 @@ namespace ruis {
 class key_proxy : public container
 {
 public:
+	struct parameters {
+		std::function<event_status(key_proxy& w, const ruis::key_event& e)> key_handler;
+	};
+
 	struct all_parameters {
 		layout::parameters layout_params;
 		widget::parameters widget_params;
 		container::parameters container_params;
+		parameters key_proxy_params;
 	};
 
 	key_proxy(

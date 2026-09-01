@@ -40,7 +40,8 @@ key_proxy::key_proxy( //
 			.container_params = std::move(params.container_params)
 		},
 		std::move(children)
-	)
+	),
+	key_handler(std::move(params.key_proxy_params.key_handler))
 // clang-format on
 {}
 

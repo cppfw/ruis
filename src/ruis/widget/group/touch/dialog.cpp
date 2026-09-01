@@ -29,9 +29,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../../proxy/key_proxy.hpp"
 #include "../../proxy/mouse_proxy.hpp"
 
-using namespace std::string_literals;
-using namespace std::string_view_literals;
-
 using namespace ruis;
 using namespace ruis::touch;
 
@@ -39,15 +36,14 @@ namespace {
 
 namespace m = ruis::make;
 
-constexpr auto key_proxy_id = "ruis_touch_dialog_key_proxy"sv;
-
 // Build the chrome (dimming background, close-on-click/keypress proxies and the styled panel)
 // surrounding the given dialog content container.
 widget_list make_chrome(
 	utki::shared_ref<ruis::context> c, //
 	utki::shared_ref<ruis::container> content_container, //
 	dialog::all_parameters params, //
-	std::function<void(ruis::click_proxy&)> bg_click_handler
+	std::function<void(ruis::click_proxy&)> bg_click_handler, //
+	std::function<ruis::event_status(ruis::key_proxy&, const ruis::key_event&)> key_handler
 )
 {
 	const auto& style = c.get().style();
@@ -87,8 +83,8 @@ widget_list make_chrome(
 			.layout_params{
 				.dims = {ruis::dim::fill, ruis::dim::fill}
 			},
-			.widget_params{
-				.id = std::string(key_proxy_id)
+			.key_proxy_params{
+				.key_handler = std::move(key_handler)
 			}
 		},
 		{}
@@ -227,21 +223,18 @@ dialog::dialog(
 			this->context, //
 			this->content_container, //
 			params, //
-			[this](ruis::click_proxy&){ this->close(); }
+			[this](ruis::click_proxy&){ this->close(); }, //
+			[this](ruis::key_proxy&, const ruis::key_event& e) -> ruis::event_status {
+				if (e.action == ruis::button_action::press && e.combo.key == ruis::key::escape) {
+					this->close();
+					return ruis::event_status::consumed;
+				}
+				return ruis::event_status::propagate;
+			}
 		)
 	)
 // clang-format on
-{
-	// Set key handler to close the dialog on Escape key press
-	this->get_widget_as<key_proxy>(key_proxy_id).key_handler =
-		[this](ruis::key_proxy&, const ruis::key_event& e) -> ruis::event_status {
-		if (e.action == ruis::button_action::press && e.combo.key == ruis::key::escape) {
-			this->close();
-			return ruis::event_status::consumed;
-		}
-		return ruis::event_status::propagate;
-	};
-}
+{}
 
 void dialog::close()
 {
