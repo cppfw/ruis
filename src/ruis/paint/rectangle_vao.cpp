@@ -37,24 +37,17 @@ std::map<
 
 rectangle_vao::rectangle_vao(
 	utki::shared_ref<const ruis::render::renderer> renderer,
-	ruis::sides<ruis::real> corner_radii, //
-	ruis::real stroke_width
+	parameters params
 ) :
-	renderer(std::move(renderer))
+	renderer(std::move(renderer)),
+	params(params)
 {
-	this->set(
-		corner_radii, //
-		stroke_width
-	);
+	this->update_rounded_corners_texture();
 }
 
-void rectangle_vao::set(
-	ruis::sides<ruis::real> corner_radii, //
-	ruis::real stroke_width
-)
+void rectangle_vao::set(parameters params)
 {
-	this->corner_radii = corner_radii;
-	this->stroke_width = stroke_width;
+	this->params = params;
 
 	this->update_rounded_corners_texture();
 }
@@ -435,13 +428,13 @@ rectangle_vao::rounded_corners_texture::rounded_corners_texture(
 void rectangle_vao::update_rounded_corners_texture()
 {
 	// TODO: check also stroke_width
-	if (this->corner_radii.is_zero()) {
+	if (this->params.corner_radii.is_zero()) {
 		this->rounded_corners_tex.reset();
 		return;
 	}
 
 	// TODO: develop algorithm to go through cache from time to time and drop zombie textures
-	if (auto i = this->cache.find(this->corner_radii); i != this->cache.end()) {
+	if (auto i = this->cache.find(this->params.corner_radii); i != this->cache.end()) {
 		if (auto t = i->second.lock()) {
 			this->rounded_corners_tex = std::move(t);
 			return;
@@ -450,7 +443,7 @@ void rectangle_vao::update_rounded_corners_texture()
 		}
 	}
 
-	auto raster_image = make_rounded_corners_texture_image(this->corner_radii);
+	auto raster_image = make_rounded_corners_texture_image(this->params.corner_radii);
 
 	// TODO: convert to greyscale image
 
@@ -460,8 +453,8 @@ void rectangle_vao::update_rounded_corners_texture()
 
 	using std::max;
 	auto middle_px = ruis::vec2(
-		max(this->corner_radii[0], this->corner_radii[3]),
-		max(this->corner_radii[0], this->corner_radii[1]) //
+		max(this->params.corner_radii[0], this->params.corner_radii[3]),
+		max(this->params.corner_radii[0], this->params.corner_radii[1]) //
 	);
 
 	this->rounded_corners_tex = std::make_shared<rounded_corners_texture>(
@@ -472,7 +465,7 @@ void rectangle_vao::update_rounded_corners_texture()
 
 	// add to cache
 	this->cache.insert(std::make_pair(
-		this->corner_radii, //
+		this->params.corner_radii, //
 		utki::make_weak(this->rounded_corners_tex)
 	));
 }

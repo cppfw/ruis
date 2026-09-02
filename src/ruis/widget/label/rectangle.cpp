@@ -50,7 +50,8 @@ rectangle::rectangle( //
 		std::move(params.color_params)
 	),
 	params(std::move(params.rectangle_params)),
-	fill_vao(this->context.get().renderer)
+	fill_vao(this->context.get().renderer, {}),
+	stroke_vao(this->context.get().renderer, {})
 {
 	this->update_vaos();
 }
@@ -80,7 +81,7 @@ void rectangle::update_vaos()
 		} //
 	);
 
-	this->fill_vao.set(radii, 0);
+	this->fill_vao.set({.corner_radii = radii});
 }
 
 utki::shared_ref<ruis::rectangle> ruis::make::rectangle(

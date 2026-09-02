@@ -75,8 +75,9 @@ public:
 		padding::parameters padding_params;
 
 		/**
-		 * @brief Corner radii of the dialog panel background.
-		 * Defaults to the 'len_dialog_padding' style value if undefined.
+		 * @brief Dialog panel background rectangle parameters.
+		 *   - corner_radii defaults to the 'len_dialog_padding' style value if undefined.
+		 *   - stroke_width defaults to 0 (filled rectangle) if undefined.
 		 */
 		rectangle::parameters rectangle_params;
 

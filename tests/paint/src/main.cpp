@@ -157,8 +157,7 @@ public:
 		ruis::widget::parameters widget_params;
 		ruis::color_widget::parameters color_params;
 
-		ruis::sides<ruis::real> corner_radii = 0;
-		ruis::real stroke_width = 0;
+		ruis::paint::rectangle_vao::parameters rectangle_vao_params;
 	};
 
 	rectangle_widget(
@@ -172,8 +171,7 @@ public:
 		),
 		vao(
 			this->context.get().renderer, //
-			params.corner_radii,
-			params.stroke_width
+			std::move(params.rectangle_vao_params)
 		),
 		color_params(std::move(params.color_params))
 	{}
@@ -280,8 +278,10 @@ utki::shared_ref<ruis::widget> make_root_widget(utki::shared_ref<ruis::context> 
 							.color_params{
 								.color = 0x80ff8080
 							},
-							.corner_radii = {10, 20, 30, 40},
-							.stroke_width = 0
+							.rectangle_vao_params{
+								.corner_radii = {10, 20, 30, 40},
+								.stroke_width = 0
+							}
 						}
 					),
 					m::rectangle_widget(c,
@@ -292,8 +292,10 @@ utki::shared_ref<ruis::widget> make_root_widget(utki::shared_ref<ruis::context> 
 							.color_params{
 								.color = 0x8000ff00
 							},
-							.corner_radii = {10, 20, 30, 40},
-							.stroke_width = 5
+							.rectangle_vao_params{
+								.corner_radii = {10, 20, 30, 40},
+								.stroke_width = 5
+							}
 						}
 					)
 				}

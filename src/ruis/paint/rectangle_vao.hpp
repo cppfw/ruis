@@ -32,11 +32,6 @@ class rectangle_vao
 {
 	utki::shared_ref<const ruis::render::renderer> renderer;
 
-	ruis::sides<real> corner_radii = 0;
-
-	// zero means filled rectangle
-	real stroke_width = 0;
-
 public:
 	struct parameters {
 		/**
@@ -62,8 +57,7 @@ private:
 public:
 	rectangle_vao(
 		utki::shared_ref<const ruis::render::renderer> renderer,
-		ruis::sides<real> corner_radii = 0, //
-		real stroke_width = 0
+		parameters params
 	);
 
 	rectangle_vao(const rectangle_vao&) = delete;
@@ -74,10 +68,7 @@ public:
 
 	~rectangle_vao() = default;
 
-	void set(
-		ruis::sides<ruis::real> corner_radii, //
-		ruis::real stroke_width
-	);
+	void set(parameters params);
 
 	void render(
 		const ruis::mat4& matrix, //

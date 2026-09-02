@@ -78,6 +78,7 @@ private:
 	void update_vaos();
 
 	ruis::paint::rectangle_vao fill_vao;
+	ruis::paint::rectangle_vao stroke_vao; // TODO: use
 };
 
 namespace make {
