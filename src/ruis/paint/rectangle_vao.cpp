@@ -320,7 +320,68 @@ void add_inner_roundend_corners_rectangle(
 	ruis::real stroke_width
 )
 {
-	// TODO:
+	utki::assert(stroke_width > 0);
+
+	using std::max;
+
+	ruis::corners<ruis::real> inner_radii = radii;
+	for(auto& r : inner_radii){
+		r -= stroke_width;
+	}
+
+	canvas.move_abs(ruis::vec2{
+		stroke_width, //
+		max(radii.left_top(), stroke_width)
+	});
+
+	if(inner_radii.left_top() > 0){
+		canvas.cubic_curve_rel(
+			{0, -arc_bezier_param * inner_radii.left_top()}, //
+			{inner_radii.left_top() * (1 - arc_bezier_param), -inner_radii.left_top()},
+			{inner_radii.left_top(), -inner_radii.left_top()}
+		);
+	}
+
+	canvas.line_abs(ruis::vec2(
+		canvas_dims.x() - max(radii.right_top(), stroke_width), //
+		stroke_width
+	));
+
+	if(inner_radii.right_top() > 0){
+		canvas.cubic_curve_rel(
+			{arc_bezier_param * inner_radii.right_top(), 0}, //
+			{inner_radii.right_top(), inner_radii.right_top() * (1 - arc_bezier_param)},
+			{inner_radii.right_top(), inner_radii.right_top()}
+		);
+	}
+
+	canvas.line_abs(ruis::vec2(
+		canvas_dims.x() - stroke_width, //
+		canvas_dims.y() - max(radii.right_bottom(), stroke_width)
+	));
+
+	if(inner_radii.right_bottom() > 0){
+		canvas.cubic_curve_rel(
+			{0, arc_bezier_param * inner_radii.right_bottom()}, //
+			{-inner_radii.right_bottom() * (1 - arc_bezier_param), inner_radii.right_bottom()},
+			{-inner_radii.right_bottom(), inner_radii.right_bottom()}
+		);
+	}
+
+	canvas.line_abs(ruis::vec2(
+		max(radii.left_bottom(), stroke_width), //
+		canvas_dims.y() - stroke_width
+	));
+
+	if(inner_radii.left_bottom() > 0){
+		canvas.cubic_curve_rel(
+			{-arc_bezier_param * inner_radii.left_bottom(), 0}, //
+			{-inner_radii.left_bottom(), -inner_radii.left_bottom() * (1 - arc_bezier_param)},
+			{-inner_radii.left_bottom(), -inner_radii.left_bottom()}
+		);
+	}
+
+	canvas.close_path();
 }
 
 auto make_rounded_corners_texture_image(const rectangle_vao::parameters& params)

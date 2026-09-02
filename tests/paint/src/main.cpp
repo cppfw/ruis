@@ -294,7 +294,7 @@ utki::shared_ref<ruis::widget> make_root_widget(utki::shared_ref<ruis::context> 
 							},
 							.rectangle_vao_params{
 								.corner_radii = {10, 20, 30, 40},
-								.stroke_width = 5
+								.stroke_width = 15
 							}
 						}
 					)
