@@ -35,7 +35,29 @@ class rectangle_vao
 	ruis::sides<real> corner_radii = 0;
 
 	// zero means filled rectangle
-	real stroke_width = 0; // TODO: use
+	real stroke_width = 0;
+
+public:
+	struct parameters {
+		/**
+		 * @brief Corner radii.
+		 * The orgder of corners is:
+		 * 	 left = left-top
+		 *   top = right-top
+		 *   right = right-bottom
+		 *   bottom = left-bottom
+		 */
+		ruis::sides<real> corner_radii = 0;
+
+		/**
+		 * @brief Stroke width.
+		 * Zero means filled rectangle.
+		 */
+		real stroke_width = 0;
+	};
+
+private:
+	parameters params;
 
 public:
 	rectangle_vao(
