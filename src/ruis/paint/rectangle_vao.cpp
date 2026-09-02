@@ -262,7 +262,7 @@ const auto arc_bezier_param = ruis::real(4 * (std::numbers::sqrt2 - 1) / 3);
 
 void add_outer_roundend_corners_rectangle(
 	veg::canvas& canvas, //
-	const ruis::sides<ruis::real>& corner_radii
+	const ruis::corners<ruis::real>& corner_radii
 )
 {
 }

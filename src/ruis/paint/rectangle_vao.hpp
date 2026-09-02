@@ -23,7 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../config.hpp"
 #include "../render/renderer.hpp"
-#include "../util/sides.hpp"
+#include "../util/corners.hpp"
 
 namespace ruis::paint {
 
@@ -36,13 +36,8 @@ public:
 	struct parameters {
 		/**
 		 * @brief Corner radii.
-		 * The radius index to rectangle corner map is:
-		 *   0 = left-top
-		 *   1 = right-top
-		 *   2 = right-bottom
-		 *   3 = left-bottom
 		 */
-		ruis::sides<real> corner_radii = 0;
+		ruis::corners<real> corner_radii = 0;
 
 		/**
 		 * @brief Stroke width.

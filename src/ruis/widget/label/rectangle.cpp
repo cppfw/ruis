@@ -69,7 +69,7 @@ void rectangle::render(const ruis::mat4& matrix) const
 
 void rectangle::update_vaos()
 {
-	sides<real> radii;
+	corners<real> radii;
 	std::ranges::transform(
 		this->params.corner_radii,
 		radii.begin(),

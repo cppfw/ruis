@@ -42,7 +42,7 @@ public:
 		 * @brief Corner radii of the rectangle.
 		 * The order of the radii is: left-top, right-top, right-bottom, left-bottom.
 		 */
-		sides<styled<length>> corner_radii;
+		corners<styled<length>> corner_radii;
 	};
 
 private:
