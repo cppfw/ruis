@@ -260,6 +260,13 @@ namespace {
 // and has the same tangent as an arc at 45 degree point
 const auto arc_bezier_param = ruis::real(4 * (std::numbers::sqrt2 - 1) / 3);
 
+void add_outer_roundend_corners_rectangle(
+	veg::canvas& canvas, //
+	const ruis::sides<ruis::real>& corner_radii
+)
+{
+}
+
 auto make_rounded_corners_texture_image(const rectangle_vao::parameters& params)
 {
 	const auto& left_top = params.corner_radii[0];
@@ -269,11 +276,13 @@ auto make_rounded_corners_texture_image(const rectangle_vao::parameters& params)
 
 	using std::max;
 	auto canvas_size = ruis::vec2(
-		max(left_top, left_bottom) + max(right_top, right_bottom), //
-		max(left_top, right_top) + max(left_bottom, right_bottom)
+		max({left_top, left_bottom, params.stroke_width}) + max({right_top, right_bottom, params.stroke_width}), //
+		max({left_top, right_top, params.stroke_width}) + max({left_bottom, right_bottom, params.stroke_width})
 	);
 
 	veg::canvas canvas(canvas_size.to<uint32_t>());
+
+	add_outer_roundend_corners_rectangle(canvas, params.corner_radii); // TODO:
 
 	canvas.move_abs(ruis::vec2{
 		0, //
@@ -320,6 +329,8 @@ auto make_rounded_corners_texture_image(const rectangle_vao::parameters& params)
 	);
 
 	canvas.close_path();
+
+
 
 	// white
 	canvas.set_source({1, 1, 1, 1});
