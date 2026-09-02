@@ -36,7 +36,7 @@ std::map<
 	rectangle_vao::cache;
 
 rectangle_vao::rectangle_vao(
-	utki::shared_ref<const ruis::render::renderer> renderer,
+	utki::shared_ref<const ruis::render::renderer> renderer, //
 	parameters params
 ) :
 	renderer(std::move(renderer)),
@@ -206,7 +206,7 @@ void rectangle_vao::render_rounded_corners(
 	}
 
 	// center
-	if(!is_stroked){
+	if (!is_stroked) {
 		ruis::mat4 matr(matrix);
 		matr.translate(tex_middle);
 		matr.scale(center_size);
@@ -221,7 +221,7 @@ void rectangle_vao::render_rounded_corners(
 	// right
 	{
 		ruis::mat4 matr(matrix);
-		if(!is_stroked){
+		if (!is_stroked) {
 			// filled rectangle
 			matr.translate(
 				tail_pos.x(), //
@@ -231,7 +231,7 @@ void rectangle_vao::render_rounded_corners(
 				tex_tail.x(), //
 				center_size.y()
 			);
-		}else{
+		} else {
 			// stroked rectangle
 			matr.translate(
 				dims.x() - this->params.stroke_width, //
@@ -253,7 +253,7 @@ void rectangle_vao::render_rounded_corners(
 	// bottom
 	{
 		ruis::mat4 matr(matrix);
-		if(!is_stroked){
+		if (!is_stroked) {
 			// filled rectangle
 			matr.translate(
 				tex_middle.x(), //
@@ -263,7 +263,7 @@ void rectangle_vao::render_rounded_corners(
 				center_size.x(), //
 				tex_tail.y()
 			);
-		}else{
+		} else {
 			// stroked rectangle
 			matr.translate(
 				tex_middle.x(), //
@@ -353,7 +353,7 @@ void add_inner_roundend_corners_rectangle(
 	using std::max;
 
 	ruis::corners<ruis::real> inner_radii = radii;
-	for(auto& r : inner_radii){
+	for (auto& r : inner_radii) {
 		r -= stroke_width;
 	}
 
@@ -362,7 +362,7 @@ void add_inner_roundend_corners_rectangle(
 		max(radii.left_top(), stroke_width)
 	});
 
-	if(inner_radii.left_top() > 0){
+	if (inner_radii.left_top() > 0) {
 		canvas.cubic_curve_rel(
 			{0, -arc_bezier_param * inner_radii.left_top()}, //
 			{inner_radii.left_top() * (1 - arc_bezier_param), -inner_radii.left_top()},
@@ -375,7 +375,7 @@ void add_inner_roundend_corners_rectangle(
 		stroke_width
 	));
 
-	if(inner_radii.right_top() > 0){
+	if (inner_radii.right_top() > 0) {
 		canvas.cubic_curve_rel(
 			{arc_bezier_param * inner_radii.right_top(), 0}, //
 			{inner_radii.right_top(), inner_radii.right_top() * (1 - arc_bezier_param)},
@@ -388,7 +388,7 @@ void add_inner_roundend_corners_rectangle(
 		canvas_dims.y() - max(radii.right_bottom(), stroke_width)
 	));
 
-	if(inner_radii.right_bottom() > 0){
+	if (inner_radii.right_bottom() > 0) {
 		canvas.cubic_curve_rel(
 			{0, arc_bezier_param * inner_radii.right_bottom()}, //
 			{-inner_radii.right_bottom() * (1 - arc_bezier_param), inner_radii.right_bottom()},
@@ -401,7 +401,7 @@ void add_inner_roundend_corners_rectangle(
 		canvas_dims.y() - stroke_width
 	));
 
-	if(inner_radii.left_bottom() > 0){
+	if (inner_radii.left_bottom() > 0) {
 		canvas.cubic_curve_rel(
 			{-arc_bezier_param * inner_radii.left_bottom(), 0}, //
 			{-inner_radii.left_bottom(), -inner_radii.left_bottom() * (1 - arc_bezier_param)},
@@ -418,8 +418,10 @@ auto make_rounded_corners_texture_image(const rectangle_vao::parameters& params)
 
 	using std::max;
 	auto canvas_dims = ruis::vec2(
-		max({radii.left_top(), radii.left_bottom(), params.stroke_width}) + max({radii.right_top(), radii.right_bottom(), params.stroke_width}), //
-		max({radii.left_top(), radii.right_top(), params.stroke_width}) + max({radii.left_bottom(), radii.right_bottom(), params.stroke_width})
+		max({radii.left_top(), radii.left_bottom(), params.stroke_width}) +
+			max({radii.right_top(), radii.right_bottom(), params.stroke_width}), //
+		max({radii.left_top(), radii.right_top(), params.stroke_width}) +
+			max({radii.left_bottom(), radii.right_bottom(), params.stroke_width})
 	);
 
 	veg::canvas canvas(canvas_dims.to<uint32_t>());
@@ -430,7 +432,7 @@ auto make_rounded_corners_texture_image(const rectangle_vao::parameters& params)
 		radii
 	);
 
-	if(params.stroke_width > 0){
+	if (params.stroke_width > 0) {
 		// stroked rectangle, so we need to add inner rectangle to make it hollow
 		add_inner_roundend_corners_rectangle(
 			canvas, //

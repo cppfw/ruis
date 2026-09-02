@@ -67,12 +67,11 @@ tab_group::tab_group(
 	),
 	selector_vao(
 		this->context.get().renderer, //
-		{
-			.corner_radii = {
-				// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers, "TODO: get from params")
-				ruis::length::make_pp(10).get(this->context) // TODO: get rounded corners from params
-			}
-		}
+		{.corner_radii =
+			 {
+				 // NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers, "TODO: get from params")
+				 ruis::length::make_pp(10).get(this->context) // TODO: get rounded corners from params
+			 }}
 	),
 	background_color(this->context.get().style().get_color_panel()), // TODO: get from params
 	selector_color([&]() {

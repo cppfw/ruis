@@ -54,8 +54,12 @@ public:
 		component_type left_bottom
 	) :
 		std::array<component_type, 4>({
-			{left_top, right_top, right_bottom, left_bottom}
-		})
+			{//
+			 left_top, //
+			 right_top, right_bottom,
+			 left_bottom
+			}
+    })
 	{}
 
 	component_type& left_top() noexcept
@@ -141,11 +145,13 @@ public:
 		const corners<component_type>& c
 	)
 	{
-		stream << "("
-			<< c.left_top() << ", "
-			<< c.right_top() << ", "
-			<< c.right_bottom() << ", "
-			<< c.left_bottom() << ")";
+		stream //
+			<< "(" //
+			<< c.left_top() << ", " //
+			<< c.right_top() << ", " //
+			<< c.right_bottom() << ", " //
+			<< c.left_bottom() //
+			<< ")";
 		return stream;
 	}
 

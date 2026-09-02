@@ -62,7 +62,7 @@ private:
 
 public:
 	rectangle_vao(
-		utki::shared_ref<const ruis::render::renderer> renderer,
+		utki::shared_ref<const ruis::render::renderer> renderer, //
 		parameters params
 	);
 
