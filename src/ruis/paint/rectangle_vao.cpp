@@ -262,26 +262,10 @@ const auto arc_bezier_param = ruis::real(4 * (std::numbers::sqrt2 - 1) / 3);
 
 void add_outer_roundend_corners_rectangle(
 	veg::canvas& canvas, //
-	const ruis::corners<ruis::real>& corner_radii
+	const ruis::vec2& canvas_dims,
+	const ruis::corners<ruis::real>& radii
 )
 {
-	// TODO:
-}
-
-auto make_rounded_corners_texture_image(const rectangle_vao::parameters& params)
-{
-	const auto& radii = params.corner_radii;
-
-	using std::max;
-	auto canvas_size = ruis::vec2(
-		max({radii.left_top(), radii.left_bottom(), params.stroke_width}) + max({radii.right_top(), radii.right_bottom(), params.stroke_width}), //
-		max({radii.left_top(), radii.right_top(), params.stroke_width}) + max({radii.left_bottom(), radii.right_bottom(), params.stroke_width})
-	);
-
-	veg::canvas canvas(canvas_size.to<uint32_t>());
-
-	add_outer_roundend_corners_rectangle(canvas, params.corner_radii);
-
 	canvas.move_abs(ruis::vec2{
 		0, //
 		radii.left_top()
@@ -294,7 +278,7 @@ auto make_rounded_corners_texture_image(const rectangle_vao::parameters& params)
 	);
 
 	canvas.line_abs(ruis::vec2(
-		canvas_size.x() - radii.right_top(), //
+		canvas_dims.x() - radii.right_top(), //
 		0
 	));
 
@@ -305,8 +289,8 @@ auto make_rounded_corners_texture_image(const rectangle_vao::parameters& params)
 	);
 
 	canvas.line_abs(ruis::vec2(
-		canvas_size.x(), //
-		canvas_size.y() - radii.right_bottom()
+		canvas_dims.x(), //
+		canvas_dims.y() - radii.right_bottom()
 	));
 
 	canvas.cubic_curve_rel(
@@ -317,7 +301,7 @@ auto make_rounded_corners_texture_image(const rectangle_vao::parameters& params)
 
 	canvas.line_abs(ruis::vec2(
 		radii.left_bottom(), //
-		canvas_size.y()
+		canvas_dims.y()
 	));
 
 	canvas.cubic_curve_rel(
@@ -327,8 +311,45 @@ auto make_rounded_corners_texture_image(const rectangle_vao::parameters& params)
 	);
 
 	canvas.close_path();
+}
 
-	// TODO: add stroke support (inner rectangle for stroke)
+void add_inner_roundend_corners_rectangle(
+	veg::canvas& canvas, //
+	const ruis::vec2& canvas_dims,
+	const ruis::corners<ruis::real>& radii,
+	ruis::real stroke_width
+)
+{
+	// TODO:
+}
+
+auto make_rounded_corners_texture_image(const rectangle_vao::parameters& params)
+{
+	const auto& radii = params.corner_radii;
+
+	using std::max;
+	auto canvas_dims = ruis::vec2(
+		max({radii.left_top(), radii.left_bottom(), params.stroke_width}) + max({radii.right_top(), radii.right_bottom(), params.stroke_width}), //
+		max({radii.left_top(), radii.right_top(), params.stroke_width}) + max({radii.left_bottom(), radii.right_bottom(), params.stroke_width})
+	);
+
+	veg::canvas canvas(canvas_dims.to<uint32_t>());
+
+	add_outer_roundend_corners_rectangle(
+		canvas, //
+		canvas_dims,
+		radii
+	);
+
+	if(params.stroke_width > 0){
+		// stroked rectangle, so we need to add inner rectangle to make it hollow
+		add_inner_roundend_corners_rectangle(
+			canvas, //
+			canvas_dims,
+			radii,
+			params.stroke_width
+		);
+	}
 
 	// white
 	canvas.set_source({1, 1, 1, 1});
