@@ -150,10 +150,15 @@ inline utki::shared_ref<::ellipse_widget> ellipse_widget(
 
 class rectangle_widget : virtual public ruis::widget{
 	ruis::paint::rectangle_vao vao;
+	ruis::color_widget::parameters color_params;
 public:
 	struct all_parameters{
 		ruis::layout::parameters layout_params;
 		ruis::widget::parameters widget_params;
+		ruis::color_widget::parameters color_params;
+
+		ruis::sides<ruis::real> corner_radii = 0;
+		ruis::real stroke_width = 0;
 	};
 
 	rectangle_widget(
@@ -165,26 +170,19 @@ public:
 			std::move(params.layout_params),
 			std::move(params.widget_params)
 		),
-		vao(this->context.get().renderer)
+		vao(
+			this->context.get().renderer, //
+			params.corner_radii,
+			params.stroke_width
+		),
+		color_params(std::move(params.color_params))
 	{}
 
 	void render(const ruis::mat4& matrix)const override{
 		this->vao.render(
 			matrix, //
 			this->rect().d, //
-			0xff8080ff
-		);
-	}
-
-	void on_resize()override{
-		this->vao.set(
-			{
-				10,
-				20,
-				30,
-				40
-			},
-			0
+			this->color_params.color.get()
 		);
 	}
 };
@@ -278,7 +276,24 @@ utki::shared_ref<ruis::widget> make_root_widget(utki::shared_ref<ruis::context> 
 						{
 							.layout_params{
 								.dims = {ruis::dim::fill, ruis::dim::fill}
-							}
+							},
+							.color_params{
+								.color = 0x80ff8080
+							},
+							.corner_radii = {10, 20, 30, 40},
+							.stroke_width = 0
+						}
+					),
+					m::rectangle_widget(c,
+						{
+							.layout_params{
+								.dims = {200_pp, 100_pp}
+							},
+							.color_params{
+								.color = 0x8000ff00
+							},
+							.corner_radii = {10, 20, 30, 40},
+							.stroke_width = 5
 						}
 					)
 				}
