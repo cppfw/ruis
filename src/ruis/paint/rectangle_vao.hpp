@@ -49,6 +49,17 @@ public:
 		 * Zero means filled rectangle.
 		 */
 		real stroke_width = 0;
+
+		friend bool operator<(
+			const parameters& lhs, //
+			const parameters& rhs
+		)
+		{
+			if (lhs.corner_radii == rhs.corner_radii) {
+				return lhs.stroke_width < rhs.stroke_width;
+			}
+			return lhs.corner_radii < rhs.corner_radii;
+		}
 	};
 
 private:
@@ -108,7 +119,7 @@ private:
 	};
 
 	static std::map<
-		sides<real>, //
+		parameters, //
 		std::weak_ptr<rounded_corners_texture>>
 		// NOLINTNEXTLINE(cppcoreguidelines-avoid-non-const-global-variables, "false-positive")
 		cache;

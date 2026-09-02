@@ -30,7 +30,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace ruis::paint;
 
 std::map<
-	ruis::sides<ruis::real>, //
+	ruis::paint::rectangle_vao::parameters, //
 	std::weak_ptr<rectangle_vao::rounded_corners_texture>>
 	// NOLINTNEXTLINE(cppcoreguidelines-avoid-non-const-global-variables, "false-positive")
 	rectangle_vao::cache;
@@ -427,14 +427,13 @@ rectangle_vao::rounded_corners_texture::rounded_corners_texture(
 
 void rectangle_vao::update_rounded_corners_texture()
 {
-	// TODO: check also stroke_width
 	if (this->params.corner_radii.is_zero()) {
 		this->rounded_corners_tex.reset();
 		return;
 	}
 
 	// TODO: develop algorithm to go through cache from time to time and drop zombie textures
-	if (auto i = this->cache.find(this->params.corner_radii); i != this->cache.end()) {
+	if (auto i = this->cache.find(this->params); i != this->cache.end()) {
 		if (auto t = i->second.lock()) {
 			this->rounded_corners_tex = std::move(t);
 			return;
@@ -465,7 +464,7 @@ void rectangle_vao::update_rounded_corners_texture()
 
 	// add to cache
 	this->cache.insert(std::make_pair(
-		this->params.corner_radii, //
+		this->params, //
 		utki::make_weak(this->rounded_corners_tex)
 	));
 }
