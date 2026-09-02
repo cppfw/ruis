@@ -265,72 +265,70 @@ void add_outer_roundend_corners_rectangle(
 	const ruis::corners<ruis::real>& corner_radii
 )
 {
+	// TODO:
 }
 
 auto make_rounded_corners_texture_image(const rectangle_vao::parameters& params)
 {
-	const auto& left_top = params.corner_radii[0];
-	const auto& right_top = params.corner_radii[1];
-	const auto& right_bottom = params.corner_radii[2];
-	const auto& left_bottom = params.corner_radii[3];
+	const auto& radii = params.corner_radii;
 
 	using std::max;
 	auto canvas_size = ruis::vec2(
-		max({left_top, left_bottom, params.stroke_width}) + max({right_top, right_bottom, params.stroke_width}), //
-		max({left_top, right_top, params.stroke_width}) + max({left_bottom, right_bottom, params.stroke_width})
+		max({radii.left_top(), radii.left_bottom(), params.stroke_width}) + max({radii.right_top(), radii.right_bottom(), params.stroke_width}), //
+		max({radii.left_top(), radii.right_top(), params.stroke_width}) + max({radii.left_bottom(), radii.right_bottom(), params.stroke_width})
 	);
 
 	veg::canvas canvas(canvas_size.to<uint32_t>());
 
-	add_outer_roundend_corners_rectangle(canvas, params.corner_radii); // TODO:
+	add_outer_roundend_corners_rectangle(canvas, params.corner_radii);
 
 	canvas.move_abs(ruis::vec2{
 		0, //
-		left_top
+		radii.left_top()
 	});
 
 	canvas.cubic_curve_rel(
-		{0, -arc_bezier_param * left_top}, //
-		{left_top * (1 - arc_bezier_param), -left_top},
-		{left_top, -left_top}
+		{0, -arc_bezier_param * radii.left_top()}, //
+		{radii.left_top() * (1 - arc_bezier_param), -radii.left_top()},
+		{radii.left_top(), -radii.left_top()}
 	);
 
 	canvas.line_abs(ruis::vec2(
-		canvas_size.x() - right_top, //
+		canvas_size.x() - radii.right_top(), //
 		0
 	));
 
 	canvas.cubic_curve_rel(
-		{arc_bezier_param * right_top, 0}, //
-		{right_top, right_top * (1 - arc_bezier_param)},
-		{right_top, right_top}
+		{arc_bezier_param * radii.right_top(), 0}, //
+		{radii.right_top(), radii.right_top() * (1 - arc_bezier_param)},
+		{radii.right_top(), radii.right_top()}
 	);
 
 	canvas.line_abs(ruis::vec2(
 		canvas_size.x(), //
-		canvas_size.y() - right_bottom
+		canvas_size.y() - radii.right_bottom()
 	));
 
 	canvas.cubic_curve_rel(
-		{0, arc_bezier_param * right_bottom}, //
-		{-right_bottom * (1 - arc_bezier_param), right_bottom},
-		{-right_bottom, right_bottom}
+		{0, arc_bezier_param * radii.right_bottom()}, //
+		{-radii.right_bottom() * (1 - arc_bezier_param), radii.right_bottom()},
+		{-radii.right_bottom(), radii.right_bottom()}
 	);
 
 	canvas.line_abs(ruis::vec2(
-		left_bottom, //
+		radii.left_bottom(), //
 		canvas_size.y()
 	));
 
 	canvas.cubic_curve_rel(
-		{-arc_bezier_param * left_bottom, 0}, //
-		{-left_bottom, -left_bottom * (1 - arc_bezier_param)},
-		{-left_bottom, -left_bottom}
+		{-arc_bezier_param * radii.left_bottom(), 0}, //
+		{-radii.left_bottom(), -radii.left_bottom() * (1 - arc_bezier_param)},
+		{-radii.left_bottom(), -radii.left_bottom()}
 	);
 
 	canvas.close_path();
 
-
+	// TODO: add stroke support (inner rectangle for stroke)
 
 	// white
 	canvas.set_source({1, 1, 1, 1});
