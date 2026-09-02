@@ -36,11 +36,11 @@ public:
 	struct parameters {
 		/**
 		 * @brief Corner radii.
-		 * The orgder of corners is:
-		 * 	 left = left-top
-		 *   top = right-top
-		 *   right = right-bottom
-		 *   bottom = left-bottom
+		 * The radius index to rectangle corner map is:
+		 *   0 = left-top
+		 *   1 = right-top
+		 *   2 = right-bottom
+		 *   3 = left-bottom
 		 */
 		ruis::sides<real> corner_radii = 0;
 
