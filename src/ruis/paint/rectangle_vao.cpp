@@ -260,12 +260,12 @@ namespace {
 // and has the same tangent as an arc at 45 degree point
 const auto arc_bezier_param = ruis::real(4 * (std::numbers::sqrt2 - 1) / 3);
 
-auto make_rounded_corners_texture_image(const ruis::sides<ruis::real>& radii)
+auto make_rounded_corners_texture_image(const rectangle_vao::parameters& params)
 {
-	const auto& left_top = radii[0];
-	const auto& right_top = radii[1];
-	const auto& right_bottom = radii[2];
-	const auto& left_bottom = radii[3];
+	const auto& left_top = params.corner_radii[0];
+	const auto& right_top = params.corner_radii[1];
+	const auto& right_bottom = params.corner_radii[2];
+	const auto& left_bottom = params.corner_radii[3];
 
 	using std::max;
 	auto canvas_size = ruis::vec2(
@@ -442,7 +442,7 @@ void rectangle_vao::update_rounded_corners_texture()
 		}
 	}
 
-	auto raster_image = make_rounded_corners_texture_image(this->params.corner_radii);
+	auto raster_image = make_rounded_corners_texture_image(this->params);
 
 	// TODO: convert to greyscale image
 
