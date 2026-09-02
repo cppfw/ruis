@@ -7,7 +7,7 @@ namespace {
 const tst::set set("corners", [](tst::suite& suite) {
 
 	suite.add("default_constructor_initializes_to_zero", [] {
-		ruis::corners<int> c;
+		ruis::corners<int> c(0);
 		tst::check(c.is_zero(), SL);
 		tst::check_eq(c[0], 0, SL);
 		tst::check_eq(c[1], 0, SL);
