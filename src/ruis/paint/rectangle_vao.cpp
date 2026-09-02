@@ -169,7 +169,7 @@ void rectangle_vao::render_rounder_corners(
 	}
 
 	// center
-	{
+	if(this->params.stroke_width <= 0){
 		ruis::mat4 matr(matrix);
 		matr.translate(tex_middle);
 		matr.scale(center_size);
