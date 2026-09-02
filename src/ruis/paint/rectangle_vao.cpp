@@ -72,7 +72,7 @@ void rectangle_vao::render(
 			color.to_vec4f()
 		);
 	} else {
-		this->render_rounder_corners(
+		this->render_rounded_corners(
 			matrix, //
 			dims,
 			color
@@ -80,7 +80,7 @@ void rectangle_vao::render(
 	}
 }
 
-void rectangle_vao::render_rounder_corners(
+void rectangle_vao::render_rounded_corners(
 	const mat4& matrix, //
 	const vec2& dims,
 	const ruis::color& color
@@ -110,25 +110,6 @@ void rectangle_vao::render_rounder_corners(
 		);
 	}
 
-	// top
-	{
-		ruis::mat4 matr(matrix);
-		matr.translate(
-			tex_middle.x(), //
-			0
-		);
-		matr.scale(
-			center_size.x(), //
-			tex_middle.y()
-		);
-
-		r.shaders().color_pos->render(
-			matr, //
-			r.obj().pos_quad_01_vao.get(),
-			color
-		);
-	}
-
 	// right-top
 	{
 		ruis::mat4 matr(matrix);
@@ -146,57 +127,6 @@ void rectangle_vao::render_rounder_corners(
 			t.vaos[0][1],
 			color,
 			t.tex
-		);
-	}
-
-	// left
-	{
-		ruis::mat4 matr(matrix);
-		matr.translate(
-			0, //
-			tex_middle.y()
-		);
-		matr.scale(
-			tex_middle.x(), //
-			center_size.y()
-		);
-
-		r.shaders().color_pos->render(
-			matr, //
-			r.obj().pos_quad_01_vao.get(),
-			color
-		);
-	}
-
-	// center
-	if(this->params.stroke_width <= 0){
-		ruis::mat4 matr(matrix);
-		matr.translate(tex_middle);
-		matr.scale(center_size);
-
-		r.shaders().color_pos->render(
-			matr, //
-			r.obj().pos_quad_01_vao.get(),
-			color
-		);
-	}
-
-	// right
-	{
-		ruis::mat4 matr(matrix);
-		matr.translate(
-			tail_pos.x(), //
-			tex_middle.y()
-		);
-		matr.scale(
-			tex_tail.x(), //
-			center_size.y()
-		);
-
-		r.shaders().color_pos->render(
-			matr, //
-			r.obj().pos_quad_01_vao.get(),
-			color
 		);
 	}
 
@@ -220,25 +150,6 @@ void rectangle_vao::render_rounder_corners(
 		);
 	}
 
-	// bottom
-	{
-		ruis::mat4 matr(matrix);
-		matr.translate(
-			tex_middle.x(), //
-			tail_pos.y()
-		);
-		matr.scale(
-			center_size.x(), //
-			tex_tail.y()
-		);
-
-		r.shaders().color_pos->render(
-			matr, //
-			r.obj().pos_quad_01_vao.get(),
-			color
-		);
-	}
-
 	// right-bottom
 	{
 		ruis::mat4 matr(matrix);
@@ -251,6 +162,123 @@ void rectangle_vao::render_rounder_corners(
 			t.vaos[1][1],
 			color,
 			t.tex
+		);
+	}
+
+	bool is_stroked = this->params.stroke_width > 0;
+
+	// top
+	{
+		ruis::mat4 matr(matrix);
+		matr.translate(
+			tex_middle.x(), //
+			0
+		);
+		matr.scale(
+			center_size.x(), //
+			is_stroked ? this->params.stroke_width : tex_middle.y()
+		);
+
+		r.shaders().color_pos->render(
+			matr, //
+			r.obj().pos_quad_01_vao.get(),
+			color
+		);
+	}
+
+	// left
+	{
+		ruis::mat4 matr(matrix);
+		matr.translate(
+			0, //
+			tex_middle.y()
+		);
+		matr.scale(
+			is_stroked ? this->params.stroke_width : tex_middle.x(), //
+			center_size.y()
+		);
+
+		r.shaders().color_pos->render(
+			matr, //
+			r.obj().pos_quad_01_vao.get(),
+			color
+		);
+	}
+
+	// center
+	if(!is_stroked){
+		ruis::mat4 matr(matrix);
+		matr.translate(tex_middle);
+		matr.scale(center_size);
+
+		r.shaders().color_pos->render(
+			matr, //
+			r.obj().pos_quad_01_vao.get(),
+			color
+		);
+	}
+
+	// right
+	{
+		ruis::mat4 matr(matrix);
+		if(!is_stroked){
+			// filled rectangle
+			matr.translate(
+				tail_pos.x(), //
+				tex_middle.y()
+			);
+			matr.scale(
+				tex_tail.x(), //
+				center_size.y()
+			);
+		}else{
+			// stroked rectangle
+			matr.translate(
+				dims.x() - this->params.stroke_width, //
+				tex_middle.y()
+			);
+			matr.scale(
+				this->params.stroke_width, //
+				center_size.y()
+			);
+		}
+
+		r.shaders().color_pos->render(
+			matr, //
+			r.obj().pos_quad_01_vao.get(),
+			color
+		);
+	}
+
+	// bottom
+	{
+		ruis::mat4 matr(matrix);
+		if(!is_stroked){
+			// filled rectangle
+			matr.translate(
+				tex_middle.x(), //
+				tail_pos.y()
+			);
+			matr.scale(
+				center_size.x(), //
+				tex_tail.y()
+			);
+		}else{
+			// stroked rectangle
+			matr.translate(
+				tex_middle.x(), //
+				dims.y() - this->params.stroke_width
+			);
+			matr.scale(
+				center_size.x(), //
+				this->params.stroke_width
+			);
+		}
+
+		r.shaders().color_pos->render(
+			matr, //
+			r.obj().pos_quad_01_vao.get(),
+			color
 		);
 	}
 }

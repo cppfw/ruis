@@ -83,7 +83,7 @@ public:
 	) const;
 
 private:
-	void render_rounder_corners(
+	void render_rounded_corners(
 		const mat4& matrix, //
 		const vec2& dims,
 		const ruis::color& color
