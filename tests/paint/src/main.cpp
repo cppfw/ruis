@@ -4,7 +4,6 @@
 
 #include <ruis/widget/widget.hpp>
 #include <ruis/paint/path_vao.hpp>
-#include <ruis/paint/frame_vao.hpp>
 #include <ruis/paint/ellipse_vao.hpp>
 #include <ruis/paint/rectangle_vao.hpp>
 #include <ruis/widget/label/padding.hpp>
@@ -56,47 +55,6 @@ inline utki::shared_ref<::path_widget> path_widget(
 )
 {
 	return utki::make_shared<::path_widget>(
-		std::move(context),
-		std::move(params)
-	);
-}
-}
-
-class frame_widget : virtual public ruis::widget{
-	ruis::paint::frame_vao vao;
-public:
-	struct all_parameters{
-		ruis::layout::parameters layout_params;
-		ruis::widget::parameters widget_params;
-	};
-
-	frame_widget(
-		utki::shared_ref<ruis::context> context, //
-		all_parameters params
-	) :
-		widget(std::move(context), std::move(params.layout_params), std::move(params.widget_params)),
-		vao(this->context.get().renderer)
-	{}
-
-	void render(const ruis::mat4& matrix)const override{
-		this->vao.render(matrix, 0xffff8080);
-	}
-
-	void on_resize()override{
-		this->vao.set(
-				this->rect().d,
-				ruis::vec2{10, 20}
-			);
-	}
-};
-
-namespace make{
-inline utki::shared_ref<::frame_widget> frame_widget(
-	utki::shared_ref<ruis::context> context,
-	::frame_widget::all_parameters params
-)
-{
-	return utki::make_shared<::frame_widget>(
 		std::move(context),
 		std::move(params)
 	);
@@ -213,33 +171,6 @@ utki::shared_ref<ruis::widget> make_root_widget(utki::shared_ref<ruis::context> 
 					.layout_params{
 						.dims = {ruis::dim::fill, ruis::dim::fill}
 					}
-				}
-			),
-			m::padding(c,
-				{
-					.layout_params{
-						.dims = {ruis::dim::fill, ruis::dim::fill}
-					},
-					.container_params{
-						.layout = ruis::layout::pile
-					},
-					.padding_params{
-						.borders = {
-							ruis::length::make_pp(5),
-							ruis::length::make_pp(5),
-							ruis::length::make_pp(5),
-							ruis::length::make_pp(5)
-						}
-					}
-				},
-				{
-					m::frame_widget(c,
-						{
-							.layout_params{
-								.dims = {ruis::dim::fill, ruis::dim::fill}
-							}
-						}
-					)
 				}
 			),
 			m::ellipse_widget(c,
