@@ -43,6 +43,17 @@ public:
 		 * The order of the radii is: left-top, right-top, right-bottom, left-bottom.
 		 */
 		corners<styled<length>> corner_radii;
+
+		/**
+		 * @brief Stroke width of the rectangle.
+		 */
+		styled<length> stroke_width = 0;
+
+		/**
+		 * @brief Stroke color of the rectangle.
+		 */
+		// stroke_color is red by default to make it easily noticable if it is used without being set to some other color
+		styled<ruis::color> stroke_color = ruis::color(0xff, 0, 0, 0xff);
 	};
 
 private:

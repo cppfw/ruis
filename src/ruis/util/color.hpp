@@ -28,11 +28,41 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
+/**
+ * @brief Color class.
+ * This class represents a color value with 4 channels: red, green, blue and alpha
+ * Color channels inidexing is:
+ *   0 = red
+ *   1 = green
+ *   2 = blue
+ *   3 = alpha
+ */
 class color : public r4::vector4<uint8_t>
 {
 public:
+	/**
+	 * @brief Create a color from a 32-bit RGBA value.
+	 * The 32-bit value is interpreted as follows:
+	 * - bits 0-7: red component channel
+	 * - bits 8-15: green component channel
+	 * - bits 16-23: blue component channel
+	 * - bits 24-31: alpha component channel
+	 * 
+	 * The 0 value for all 4 channels means undefined value for the color.
+	 * For a fully transparent color, use alpha = 0 and some other color component to be non-zero, e.g. red = 1.
+	 * @param rgba - 32-bit RGBA value.
+	 */
 	constexpr color(uint32_t rgba = 0) :
 		r4::vector4<uint8_t>(rasterimage::from_32bit_pixel(rgba))
+	{}
+
+	constexpr color(
+		uint8_t red,//
+		uint8_t green,
+		uint8_t blue,
+		uint8_t alpha)
+	:
+		r4::vector4<uint8_t>(red, green, blue, alpha)
 	{}
 
 	constexpr uint32_t to_uint32_t() const noexcept
