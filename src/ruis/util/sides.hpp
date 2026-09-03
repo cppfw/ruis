@@ -94,12 +94,12 @@ public:
 		return this->operator[](3);
 	}
 
-	component_type left_right() const noexcept
+	component_type dim_x() const noexcept
 	{
 		return this->left() + this->right();
 	}
 
-	component_type top_bottom() const noexcept
+	component_type dim_y() const noexcept
 	{
 		return this->top() + this->bottom();
 	}
@@ -126,7 +126,7 @@ public:
 
 	r4::vector2<component_type> dims() const noexcept
 	{
-		return {this->left_right(), this->top_bottom()};
+		return {this->dim_x(), this->dim_y()};
 	}
 
 	bool is_zero() const noexcept
