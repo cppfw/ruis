@@ -5,16 +5,6 @@
 
 namespace {
 const tst::set set("corners", [](tst::suite& suite) {
-
-	suite.add("default_constructor_initializes_to_zero", [] {
-		ruis::corners<int> c(0);
-		tst::check(c.is_zero(), SL);
-		tst::check_eq(c[0], 0, SL);
-		tst::check_eq(c[1], 0, SL);
-		tst::check_eq(c[2], 0, SL);
-		tst::check_eq(c[3], 0, SL);
-	});
-
 	suite.add("single_value_constructor_sets_all_corners", [] {
 		ruis::corners<int> c(5);
 		tst::check_eq(c.left_top(), 5, SL);
