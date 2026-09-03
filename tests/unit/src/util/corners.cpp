@@ -51,26 +51,6 @@ const tst::set set("corners", [](tst::suite& suite) {
 		tst::check_eq(c.left_bottom(), 4, SL);
 	});
 
-	suite.add("top_is_sum_of_left_top_and_right_top", [] {
-		ruis::corners<int> c(1, 2, 3, 4);
-		tst::check_eq(c.top(), 3, SL);
-	});
-
-	suite.add("bottom_is_sum_of_left_bottom_and_right_bottom", [] {
-		ruis::corners<int> c(1, 2, 3, 4);
-		tst::check_eq(c.bottom(), 7, SL);
-	});
-
-	suite.add("left_is_sum_of_left_top_and_left_bottom", [] {
-		ruis::corners<int> c(1, 2, 3, 4);
-		tst::check_eq(c.left(), 5, SL);
-	});
-
-	suite.add("right_is_sum_of_right_top_and_right_bottom", [] {
-		ruis::corners<int> c(1, 2, 3, 4);
-		tst::check_eq(c.right(), 5, SL);
-	});
-
 	suite.add("is_zero_returns_true_for_all_zeros", [] {
 		ruis::corners<int> c(0);
 		tst::check(c.is_zero(), SL);
@@ -146,10 +126,6 @@ const tst::set set("corners", [](tst::suite& suite) {
 		tst::check_eq(c.right_top(), 2.5f, SL);
 		tst::check_eq(c.right_bottom(), 3.5f, SL);
 		tst::check_eq(c.left_bottom(), 4.5f, SL);
-		tst::check_eq(c.top(), 4.0f, SL);
-		tst::check_eq(c.bottom(), 8.0f, SL);
-		tst::check_eq(c.left(), 6.0f, SL);
-		tst::check_eq(c.right(), 6.0f, SL);
 	});
 
 });

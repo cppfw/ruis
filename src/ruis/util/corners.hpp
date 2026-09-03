@@ -24,8 +24,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <array>
 #include <ostream>
 
-#include <r4/vector.hpp>
-
 namespace ruis {
 
 /**
@@ -36,17 +34,34 @@ namespace ruis {
  *   1 = right_top
  *   2 = right_bottom
  *   3 = left_bottom
+ *
+ * The corner ordering follows a clockwise traversal starting from the top-left corner.
  */
 template <class component_type>
 class corners : public std::array<component_type, 4>
 {
 public:
+	/**
+	 * @brief Default constructor.
+	 * The corner values are uninitialized.
+	 */
 	corners() = default;
 
-	corners(component_type b) :
-		corners(b, b, b, b)
+	/**
+	 * @brief Constructor that initializes all corners to the same value.
+	 * @param v - value to assign to all four corners.
+	 */
+	corners(component_type v) :
+		corners(v, v, v, v)
 	{}
 
+	/**
+	 * @brief Constructor that initializes each corner individually.
+	 * @param left_top - value for the left-top corner.
+	 * @param right_top - value for the right-top corner.
+	 * @param right_bottom - value for the right-bottom corner.
+	 * @param left_bottom - value for the left-bottom corner.
+	 */
 	corners(
 		component_type left_top, //
 		component_type right_top,
@@ -62,66 +77,74 @@ public:
     })
 	{}
 
+	/**
+	 * @brief Get or set the left-top corner value.
+	 */
 	component_type& left_top() noexcept
 	{
 		return this->operator[](0);
 	}
 
+	/**
+	 * @brief Get the left-top corner value.
+	 */
 	const component_type& left_top() const noexcept
 	{
 		return this->operator[](0);
 	}
 
+	/**
+	 * @brief Get or set the right-top corner value.
+	 */
 	component_type& right_top() noexcept
 	{
 		return this->operator[](1);
 	}
 
+	/**
+	 * @brief Get the right-top corner value.
+	 */
 	const component_type& right_top() const noexcept
 	{
 		return this->operator[](1);
 	}
 
+	/**
+	 * @brief Get or set the right-bottom corner value.
+	 */
 	component_type& right_bottom() noexcept
 	{
 		return this->operator[](2);
 	}
 
+	/**
+	 * @brief Get the right-bottom corner value.
+	 */
 	const component_type& right_bottom() const noexcept
 	{
 		return this->operator[](2);
 	}
 
+	/**
+	 * @brief Get or set the left-bottom corner value.
+	 */
 	component_type& left_bottom() noexcept
 	{
 		return this->operator[](3);
 	}
 
+	/**
+	 * @brief Get the left-bottom corner value.
+	 */
 	const component_type& left_bottom() const noexcept
 	{
 		return this->operator[](3);
 	}
 
-	component_type top() const noexcept
-	{
-		return this->left_top() + this->right_top();
-	}
-
-	component_type bottom() const noexcept
-	{
-		return this->left_bottom() + this->right_bottom();
-	}
-
-	component_type left() const noexcept
-	{
-		return this->left_top() + this->left_bottom();
-	}
-
-	component_type right() const noexcept
-	{
-		return this->right_top() + this->right_bottom();
-	}
-
+	/**
+	 * @brief Check whether all corner values are zero.
+	 * @return true if every corner value is zero, false otherwise.
+	 */
 	bool is_zero() const noexcept
 	{
 		for (auto& e : *this) {
@@ -132,37 +155,49 @@ public:
 		return true;
 	}
 
-	corners& operator=(component_type e) noexcept
+	/**
+	 * @brief Assign the same value to all corners.
+	 * @param v - value to assign.
+	 * @return Reference to this object.
+	 */
+	corners& operator=(component_type v) noexcept
 	{
-		for (auto& v : *this) {
-			v = e;
+		for (auto& c : *this) {
+			c = v;
 		}
 		return *this;
 	}
 
+	/**
+	 * @brief Stream output operator.
+	 * Prints the four corner values in order: (left_top, right_top, right_bottom, left_bottom).
+	 * @param s - output stream.
+	 * @param c - corners object to print.
+	 * @return The output stream.
+	 */
 	friend std::ostream& operator<<(
-		std::ostream& stream, //
+		std::ostream& s, //
 		const corners<component_type>& c
 	)
 	{
-		stream //
+		s //
 			<< "(" //
 			<< c.left_top() << ", " //
 			<< c.right_top() << ", " //
 			<< c.right_bottom() << ", " //
 			<< c.left_bottom() //
 			<< ")";
-		return stream;
+		return s;
 	}
 
 	/**
 	 * @brief Operator less than.
-	 * Implements operation < for corners.
-	 * For use with std::map, etc.
+	 * Implements lexicographic comparison for corners in the order:
+	 * left_top, right_top, right_bottom, left_bottom.
+	 * For use with std::map, std::set, etc.
 	 * @param lhs - left hand side operand.
 	 * @param rhs - right hand side operand.
-	 * @return true if lhs < rhs.
-	 * @return false otherwise.
+	 * @return true if lhs < rhs, false otherwise.
 	 */
 	friend bool operator<(
 		const corners& lhs, //
