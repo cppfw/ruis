@@ -212,6 +212,24 @@ utki::shared_ref<ruis::widget> make_rectangles_window(
 							m::text(c, {}, U"rounded corners button"s)
 						}
 					),
+					m::ellipse_push_button(c,
+						{},
+						{
+							m::text(c, {}, U"ellipse button"s)
+						}
+					)
+				}
+			),
+			m::gap(c,
+				{
+					.layout_params{
+						.dims = {0_px, 5_pp}
+					}
+				}
+			),
+			m::row(c,
+				{},
+				{
 					m::rectangle_push_button(c,
 						{
 							.padding_params{
@@ -233,12 +251,6 @@ utki::shared_ref<ruis::widget> make_rectangles_window(
 						},
 						{
 							m::text(c, {}, U"stroked button"s)
-						}
-					),
-					m::ellipse_push_button(c,
-						{},
-						{
-							m::text(c, {}, U"ellipse button"s)
 						}
 					)
 				}
