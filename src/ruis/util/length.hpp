@@ -53,7 +53,10 @@ public:
 		value(value)
 	{}
 
-	constexpr length(real value, units u) :
+	constexpr length(
+		real value, //
+		units u
+	) :
 		value(value),
 		value_units(u)
 	{}

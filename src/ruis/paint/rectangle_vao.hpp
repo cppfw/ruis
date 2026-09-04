@@ -41,9 +41,9 @@ public:
 
 		/**
 		 * @brief Stroke width.
-		 * Zero means filled rectangle.
+		 * Non-positive value means filled rectangle.
 		 */
-		real stroke_width = 0;
+		real stroke_width = -1;
 
 		friend bool operator<(
 			const parameters& lhs, //

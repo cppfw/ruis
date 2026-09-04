@@ -47,7 +47,7 @@ public:
 		/**
 		 * @brief Stroke width of the rectangle.
 		 */
-		styled<length> stroke_width = 0;
+		styled<length> stroke_width;
 
 		/**
 		 * @brief Stroke color of the rectangle.
