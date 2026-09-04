@@ -212,6 +212,29 @@ utki::shared_ref<ruis::widget> make_rectangles_window(
 							m::text(c, {}, U"rounded corners button"s)
 						}
 					),
+					m::rectangle_push_button(c,
+						{
+							.padding_params{
+								.borders{
+									5_pp, // left
+									10_pp, // top
+									15_pp, // right
+									20_pp // bottom
+								}
+							},
+							.rectangle_params{
+								.corner_radii = {5_pp},
+								.stroke_width = 3_pp,
+								.stroke_color = 0xff0000ff
+							},
+							.rectangle_button_params{
+								// TODO:
+							}
+						},
+						{
+							m::text(c, {}, U"stroked button"s)
+						}
+					),
 					m::ellipse_push_button(c,
 						{},
 						{

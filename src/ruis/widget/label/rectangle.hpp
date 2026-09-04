@@ -46,6 +46,7 @@ public:
 
 		/**
 		 * @brief Stroke width of the rectangle.
+		 * Undefined value means no stroke.
 		 */
 		styled<length> stroke_width;
 
@@ -86,10 +87,15 @@ public:
 	void render(const ruis::mat4& matrix) const override;
 
 private:
+	bool has_stroke() const
+	{
+		return !this->params.stroke_width.get().is_undefined();
+	}
+
 	void update_vaos();
 
 	ruis::paint::rectangle_vao fill_vao;
-	ruis::paint::rectangle_vao stroke_vao; // TODO: use
+	ruis::paint::rectangle_vao stroke_vao;
 };
 
 namespace make {

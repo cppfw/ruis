@@ -58,11 +58,36 @@ rectangle::rectangle( //
 
 void rectangle::render(const ruis::mat4& matrix) const
 {
-	this->fill_vao.render(
-		matrix, //
-		this->rect().d,
-		this->get_current_color()
-	);
+	const auto& dims = this->rect().d;
+
+	if (this->has_stroke()) {
+		const auto sw = this->params.stroke_width.get().get(this->context);
+		const auto half_sw = sw / 2;
+
+		ruis::mat4 matr(matrix);
+		matr.translate(
+			half_sw, //
+			half_sw
+		);
+
+		this->fill_vao.render(
+			matr, //
+			dims - sw,
+			this->get_current_color()
+		);
+
+		this->stroke_vao.render(
+			matrix, //
+			dims,
+			this->params.stroke_color.get()
+		);
+	} else {
+		this->fill_vao.render(
+			matrix, //
+			dims,
+			this->get_current_color()
+		);
+	}
 
 	this->padding::render(matrix);
 }
@@ -82,6 +107,15 @@ void rectangle::update_vaos()
 	);
 
 	this->fill_vao.set({.corner_radii = radii});
+
+	if (this->has_stroke()) {
+		this->stroke_vao.set({
+			.corner_radii = radii,
+			.stroke_width = this->params.stroke_width.get().get(this->context)
+		});
+	} else {
+		this->stroke_vao.set({});
+	}
 }
 
 utki::shared_ref<ruis::rectangle> ruis::make::rectangle(
