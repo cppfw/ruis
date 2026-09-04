@@ -86,6 +86,13 @@ public:
 
 	void render(const ruis::mat4& matrix) const override;
 
+	void set_stroke_color(styled<ruis::color> color);
+
+	const color& get_stroke_color() const noexcept
+	{
+		return this->params.stroke_color.get();
+	}
+
 private:
 	bool has_stroke() const
 	{

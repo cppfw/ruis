@@ -56,6 +56,16 @@ rectangle::rectangle( //
 	this->update_vaos();
 }
 
+void rectangle::set_stroke_color(styled<ruis::color> color)
+{
+	if (this->params.stroke_color == color) {
+		return;
+	}
+
+	this->params.stroke_color = std::move(color);
+	this->clear_cache();
+}
+
 void rectangle::render(const ruis::mat4& matrix) const
 {
 	const auto& dims = this->rect().d;
