@@ -100,7 +100,7 @@ void text_input_line::render(const ruis::mat4& matrix) const
 			round((font.get_height() + font.get_ascender() - font.get_descender()) / 2)
 		);
 
-		ASSERT(this->first_visible_char_index <= this->get_string().size())
+		utki::assert(this->first_visible_char_index <= this->get_string().size());
 		font.render(
 			this->ctx().ren(), //
 			matr,
@@ -201,8 +201,8 @@ void text_input_line::set_cursor_index(size_t index, bool selection)
 
 	const auto& font = this->get_font();
 
-	ASSERT(this->first_visible_char_index <= this->get_string().size())
-	ASSERT(this->cursor_index > this->first_visible_char_index)
+	utki::assert(this->first_visible_char_index <= this->get_string().size());
+	utki::assert(this->cursor_index > this->first_visible_char_index);
 	this->cursor_pos = font.get_advance(std::u32string(
 						   this->get_string(),
 						   this->first_visible_char_index,
@@ -210,7 +210,7 @@ void text_input_line::set_cursor_index(size_t index, bool selection)
 					   )) +
 		this->x_offset;
 
-	ASSERT(this->cursor_pos >= 0)
+	utki::assert(this->cursor_pos >= 0);
 
 	if (this->cursor_pos > this->rect().d.x() - cursor_width * this->context.get().units.dots_per_fp()) {
 		this->cursor_pos = this->rect().d.x() - cursor_width * this->context.get().units.dots_per_fp();
@@ -223,9 +223,9 @@ void text_input_line::set_cursor_index(size_t index, bool selection)
 			 this->x_offset > 0;
 			 ++i)
 		{
-			ASSERT(i != this->get_string().rend())
+			utki::assert(i != this->get_string().rend());
 			this->x_offset -= font.get_advance(*i);
-			ASSERT(this->first_visible_char_index > 0)
+			utki::assert(this->first_visible_char_index > 0);
 			--this->first_visible_char_index;
 		}
 	}
@@ -233,7 +233,7 @@ void text_input_line::set_cursor_index(size_t index, bool selection)
 
 real text_input_line::index_to_pos(size_t index)
 {
-	ASSERT(this->first_visible_char_index <= this->get_string().size())
+	utki::assert(this->first_visible_char_index <= this->get_string().size());
 
 	if (index <= this->first_visible_char_index) {
 		return 0;
@@ -450,7 +450,7 @@ void text_input_line::on_character_input(const character_input_event& e)
 
 size_t text_input_line::delete_selection()
 {
-	ASSERT(this->cursor_index != this->selection_start_index)
+	utki::assert(this->cursor_index != this->selection_start_index);
 
 	size_t start = 0;
 	size_t end = 0;
