@@ -37,6 +37,8 @@ public:
 	struct parameters {
 		styled<ruis::color> pressed_color;
 		styled<ruis::color> unpressed_color;
+		styled<ruis::color> pressed_stroke_color;
+		styled<ruis::color> unpressed_stroke_color;
 	};
 
 	void render(const mat4& matrix) const override;

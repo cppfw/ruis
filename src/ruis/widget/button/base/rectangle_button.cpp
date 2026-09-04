@@ -38,8 +38,10 @@ void rectangle_button::update_color()
 {
 	if (this->is_pressed()) {
 		this->set_color(this->params.pressed_color);
+		this->set_stroke_color(this->params.pressed_stroke_color);
 	} else {
 		this->set_color(this->params.unpressed_color);
+		this->set_stroke_color(this->params.unpressed_stroke_color);
 	}
 }
 
@@ -77,6 +79,12 @@ rectangle_button::rectangle_button( //
 		}
 		if (params.pressed_color.get().is_undefined()) {
 			params.pressed_color = context.get().style().get_color_secondary();
+		}
+		if (params.unpressed_stroke_color.get().is_undefined()) {
+			params.unpressed_stroke_color = context.get().style().get_color_primary();
+		}
+		if (params.pressed_stroke_color.get().is_undefined()) {
+			params.pressed_stroke_color = context.get().style().get_color_secondary();
 		}
 
 		return std::move(params);

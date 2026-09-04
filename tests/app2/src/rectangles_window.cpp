@@ -246,7 +246,10 @@ utki::shared_ref<ruis::widget> make_rectangles_window(
 								.stroke_color = 0xff0000ff
 							},
 							.rectangle_button_params{
-								// TODO:
+								.pressed_color = 0xff202020,
+								.unpressed_color = 0xff404040,
+								.pressed_stroke_color = 0xff00ff00,
+								.unpressed_stroke_color = 0xff0000ff
 							}
 						},
 						{
