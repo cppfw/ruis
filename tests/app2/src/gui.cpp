@@ -34,6 +34,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <ruis/widget/proxy/resize_proxy.hpp>
 #include <ruis/widget/slider/scroll_bar.hpp>
 #include <ruis/widget/slider/slider.hpp>
+#include <ruis/widget/input/impl/rectangle_text_input_line.hpp>
 #include <ruisapp/application.hpp>
 
 #include "application.hpp"
@@ -389,6 +390,60 @@ utki::shared_ref<ruis::window> make_selection_box_window(
 }
 } // namespace
 
+namespace {
+utki::shared_ref<ruis::window> make_text_input_window(
+	utki::shared_ref<ruis::context> c, //
+	ruis::vec2_length pos
+)
+{
+	// clang-format off
+	return m::window(c,
+		{
+			.widget_params = {
+				.rectangle = {
+					{
+						pos.x().get(c),
+						pos.y().get(c)
+					},
+					{
+						ruis::length::make_pp(300).get(c),
+						ruis::length::make_pp(200).get(c)
+					}
+				}
+			},
+			.container_params = {
+				.layout = ruis::layout::column
+			},
+			.title = c.get().localization.get().get("text_input"sv)
+		},
+		{
+			m::rectangle_text_input_line(c,
+				{
+					.layout_params = {
+						.dims = {ruis::dim::fill, ruis::dim::min}
+					},
+					.rectangle_params = {
+						.corner_radii = {5_pp, 5_pp, 5_pp, 5_pp},
+						.stroke_width = 2_pp
+					}
+				},
+				U"Type here..."
+			),
+			m::text(c,
+				{
+					.layout_params = {
+						.dims = {ruis::dim::fill, ruis::dim::min},
+						.align = {ruis::align::front, ruis::align::center}
+					}
+				},
+				U"Rectangle text input line with rounded corners"
+			)
+		}
+	);
+	// clang-format on
+}
+} // namespace
+
 utki::shared_ref<ruis::widget> make_root_widgets_structure(utki::shared_ref<ruis::context> c)
 {
 	// clang-format off
@@ -412,7 +467,9 @@ utki::shared_ref<ruis::widget> make_root_widgets_structure(utki::shared_ref<ruis
 
 					make_rectangles_window(c, {10_pp, 230_pp}),
 					make_table_list_window(c, {310_pp, 230_pp}),
-					make_table_tree_view_window(c, {630_pp, 230_pp})
+					make_table_tree_view_window(c, {630_pp, 230_pp}),
+
+					make_text_input_window(c, {10_pp, 440_pp})
 				}
 			)
 		}

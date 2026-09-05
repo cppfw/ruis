@@ -29,4 +29,7 @@ vocabulary{
     table_tree_view{
         str{taulupuunäkymä}
     }
+    text_input{
+        str{"tekstikenttä"}
+    }
 }

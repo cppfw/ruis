@@ -25,6 +25,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
+using namespace ruis::length_literals;
+
 rectangle_text_input_line::rectangle_text_input_line(
 	utki::shared_ref<ruis::context> context, //
 	all_parameters params,
@@ -36,8 +38,9 @@ rectangle_text_input_line::rectangle_text_input_line(
 		ruis::make::text_input_line(
 			context, //
 			{
-				.layout_params = std::move(params.text_input_line_params.layout_params),
-				.widget_params = std::move(params.text_input_line_params.widget_params),
+				.layout_params{
+					.dims = {ruis::dim::max, ruis::dim::max}
+				},
 				.text_widget_params = std::move(params.text_input_line_params.text_widget_params),
 				.color_params = std::move(params.text_input_line_params.color_params)
 			},
@@ -61,9 +64,13 @@ rectangle_text_input_line::rectangle_text_input_line(
 	rectangle(
 		this->context,
 		{
-			.container_params = std::move(params.container_params),
-			.padding_params = std::move(params.padding_params),
-			.color_params = std::move(params.color_params),
+			.container_params{
+				.layout = layout::pile
+			},
+			.padding_params{
+				.borders = {5_pp} // TODO:
+			},
+			.color_params = std::move(params.color_params), // TODO:
 			.rectangle_params = {
 				.corner_radii = std::move(params.rectangle_params.corner_radii),
 				.stroke_width = std::move(params.rectangle_params.stroke_width),
@@ -82,8 +89,11 @@ rectangle_text_input_line::rectangle_text_input_line(
 		text_input_line.get()
 	)
 {
-	// Set fill color to background color from style
+	// Set rectangle fill color to background color from style
 	this->set_color(this->context.get().style().get_color_background());
+
+	// Set text color to text color from style (different from background)
+	text_input_line.get().set_color(this->context.get().style().get_color_text());
 }
 
 void rectangle_text_input_line::on_focus_change()

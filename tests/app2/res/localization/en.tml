@@ -29,4 +29,7 @@ vocabulary{
     table_tree_view{
         str{"table tree view"}
     }
+    text_input{
+        str{"text input"}
+    }
 }

@@ -29,4 +29,7 @@ vocabulary{
     table_tree_view{
         str{"табличный вид дерева"}
     }
+    text_input{
+        str{"текстовое поле"}
+    }
 }
