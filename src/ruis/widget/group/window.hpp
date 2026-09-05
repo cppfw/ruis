@@ -21,7 +21,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "../../util/content_wrapping.hpp"
+#include "../base/decorated_widget.hpp"
 #include "../../util/length.hpp"
 #include "../label/rectangle.hpp"
 #include "../label/text.hpp"
@@ -41,8 +41,8 @@ namespace ruis {
 // NOLINTNEXTLINE(bugprone-incorrect-enable-shared-from-this, "std::shared_from_this is public via widget")
 class window :
 	virtual public widget, //
-	public content_wrapping,
-	private container
+	private container,
+	public decorated_widget<container>
 {
 	ruis::vec2 empty_min_dim; // minimal dimension of empty window
 
@@ -90,6 +90,14 @@ public:
 		sides<length> borders;
 	};
 
+private:
+	window(
+		utki::shared_ref<ruis::context>& context, //
+		all_parameters& params,
+		utki::shared_ref<ruis::container> content_container
+	);
+
+public:
 	window(
 		utki::shared_ref<ruis::context> context, //
 		all_parameters params,

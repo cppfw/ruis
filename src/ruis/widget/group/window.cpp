@@ -328,27 +328,38 @@ window::window(
 	all_parameters params,
 	widget_list children
 ) :
+	window(
+		context,
+		params,
+		m::container(
+			context,
+			// clang-format off
+				{
+					.layout_params = {
+						.dims = {ruis::dim::fill, ruis::dim::fill},
+						.weight = 1
+					},
+					.widget_params = {
+						.clip = true
+					},
+					.container_params = std::move(params.container_params)
+				},
+			// clang-format on
+			std::move(children)
+		)
+	)
+{}
+
+window::window(
+	utki::shared_ref<ruis::context>& context,
+	all_parameters& params,
+	utki::shared_ref<ruis::container> content_container
+) :
 	widget( //
 		std::move(context),
 		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
-	content_wrapping(m::container(
-		this->context,
-		// clang-format off
-			{
-				.layout_params = {
-					.dims = {ruis::dim::fill, ruis::dim::fill},
-					.weight = 1
-				},
-				.widget_params = {
-					.clip = true
-				},
-				.container_params = std::move(params.container_params)
-			},
-		// clang-format on
-		std::move(children)
-	)),
 	// clang-format off
 	container( //
 		this->context,
@@ -359,9 +370,14 @@ window::window(
 		},
 		make_children(
 			this->context, //
-			this->content_container,
+			content_container,
 			std::move(params.title)
 		)
+	),
+	// clang-format on
+	decorated_widget(
+		this->context, //
+		content_container.get()
 	)
 // clang-format on
 {

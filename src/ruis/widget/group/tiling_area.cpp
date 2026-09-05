@@ -166,25 +166,40 @@ tiling_area::tiling_area(
 	all_parameters params,
 	ruis::widget_list children
 ) :
+	tiling_area(
+		context, //
+		params,
+		ruis::make::container(
+			context,
+			{},
+			std::move(children) //
+		)
+	)
+{}
+
+tiling_area::tiling_area(
+	utki::shared_ref<ruis::context>& context, //
+	all_parameters& params,
+	utki::shared_ref<ruis::container> content_container
+) :
 	ruis::widget(
 		std::move(context),
 		std::move(params.layout_params),
 		std::move(params.widget_params) //
 	),
 	ruis::oriented({.vertical = false}),
-	ruis::content_wrapping(ruis::make::container(
-		this->context,
-		{},
-		std::move(children) //
-	)),
 	// clang-format off
 	ruis::container(this->context,
 		{},
 		{
-			this->content_container
+			content_container
 		}
 	),
 	// clang-format on
+	decorated_widget(
+		this->context, //
+		content_container.get()
+	),
 	min_tile_size(this->context.get().units.pp_to_px(minimal_tile_size_pp)),
 	params([&]() {
 		constexpr uint32_t default_dragger_color = 0xffff8080;
@@ -195,7 +210,7 @@ tiling_area::tiling_area(
 		return std::move(params.tiling_area_params);
 	}())
 {
-	this->content().move_to({0, 0});
+	this->get_decorated().move_to({0, 0});
 }
 
 void tiling_area::on_lay_out()
@@ -207,7 +222,7 @@ void tiling_area::on_lay_out()
 	// calculate current length of all tiles
 	ruis::real tiles_length = 0;
 
-	for (const auto& t : this->content()) {
+	for (const auto& t : this->get_decorated()) {
 		tiles_length += max( //
 			t.get().rect().d[long_index],
 			this->min_tile_size
@@ -221,7 +236,7 @@ void tiling_area::on_lay_out()
 	// arrange tiles
 	if (content_dims[long_index] >= tiles_length) {
 		ruis::vec2 pos{0, 0};
-		for (auto& t : this->content()) {
+		for (auto& t : this->get_decorated()) {
 			ruis::real tile_length = max( //
 				t.get().rect().d[long_index],
 				this->min_tile_size
@@ -242,7 +257,7 @@ void tiling_area::on_lay_out()
 
 		ruis::vec2 pos{0, 0};
 
-		for (auto& t : this->content()) {
+		for (auto& t : this->get_decorated()) {
 			ruis::real tile_length = max(t.get().rect().d[long_index], this->min_tile_size);
 
 			ASSERT(tiles_length > 0)
@@ -263,7 +278,7 @@ void tiling_area::on_lay_out()
 		}
 	}
 
-	this->content().resize(content_dims);
+	this->get_decorated().resize(content_dims);
 
 	// ====================
 	// = lay out draggers =
@@ -271,10 +286,10 @@ void tiling_area::on_lay_out()
 	utki::assert(this->size() >= 1);
 
 	auto num_draggers = [&]() -> size_t {
-		if (this->content().empty()) {
+		if (this->get_decorated().empty()) {
 			return 0;
 		} else {
-			return this->content().size() - 1;
+			return this->get_decorated().size() - 1;
 		}
 	}();
 
@@ -299,12 +314,12 @@ void tiling_area::on_lay_out()
 	for (auto i = std::next(this->begin()); i != this->end(); ++i) {
 		auto index = size_t(std::distance(this->begin(), i)) - 1;
 
-		ASSERT(index < this->content().size())
+		ASSERT(index < this->get_decorated().size())
 
 		auto& dragger = dynamic_cast<internal::dragger&>(i->get());
 
-		dragger.prev_widget = this->content().children()[index].to_shared_ptr();
-		dragger.next_widget = this->content().children()[index + 1].to_shared_ptr();
+		dragger.prev_widget = this->get_decorated().children()[index].to_shared_ptr();
+		dragger.next_widget = this->get_decorated().children()[index + 1].to_shared_ptr();
 
 		dragger.resize(dragger_dims);
 
@@ -325,7 +340,7 @@ ruis::vec2 tiling_area::measure(const ruis::vec2& quotum) const
 
 	// longitudinal index
 	if (quotum[long_index] < 0) {
-		ret[long_index] = this->min_tile_size * real(this->content().size());
+		ret[long_index] = this->min_tile_size * real(this->get_decorated().size());
 	} else {
 		ret[long_index] = quotum[long_index];
 	}
@@ -337,7 +352,7 @@ ruis::vec2 tiling_area::measure(const ruis::vec2& quotum) const
 		tile_quotum[trans_index] = -1;
 
 		real d = 0;
-		for (const auto& w : this->content()) {
+		for (const auto& w : this->get_decorated()) {
 			auto measured = w.get().measure(tile_quotum);
 			using std::max;
 			d = max(d, measured[trans_index]);

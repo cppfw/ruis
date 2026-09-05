@@ -21,7 +21,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "../../util/content_wrapping.hpp"
+#include "../base/decorated_widget.hpp"
 #include "../container.hpp"
 
 namespace ruis {
@@ -29,8 +29,8 @@ namespace ruis {
 // NOLINTNEXTLINE(bugprone-incorrect-enable-shared-from-this, "std::shared_from_this is public via widget")
 class collapse_area :
 	virtual public widget, //
-	public content_wrapping,
-	private container
+	private container,
+	public decorated_widget<container>
 {
 	// TODO: use shared_ref
 	// NOLINTNEXTLINE(clang-analyzer-webkit.NoUncountedMemberChecker, "false-positive")
@@ -44,6 +44,14 @@ public:
 		string title;
 	};
 
+private:
+	collapse_area(
+		utki::shared_ref<ruis::context>& context, //
+		all_parameters& params,
+		utki::shared_ref<ruis::container> content_container
+	);
+
+public:
 	collapse_area(
 		utki::shared_ref<ruis::context> context, //
 		all_parameters params,

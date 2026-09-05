@@ -188,7 +188,7 @@ void table_list::notify_scroll_changed()
 void table_list::arrange_list_item_cells(ruis::semiconst_widget_list& cells)
 {
 	real pos = 0;
-	for (auto [c, h] : utki::views::zip(cells, this->headers_tiling_area.get().content().children())) {
+	for (auto [c, h] : utki::views::zip(cells, this->headers_tiling_area.get().get_decorated().children())) {
 		auto md = c.get().measure({
 			h.get().rect().d.x(),
 			-1 //

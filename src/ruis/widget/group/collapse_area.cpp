@@ -45,20 +45,31 @@ collapse_area::collapse_area(
 	all_parameters params,
 	widget_list contents
 ) :
+	collapse_area(
+		context,
+		params,
+		m::container(
+			context,
+			// clang-format off
+				{
+					.container_params = std::move(params.container_params)
+				},
+			// clang-format on
+			std::move(contents)
+		)
+	)
+{}
+
+collapse_area::collapse_area(
+	utki::shared_ref<ruis::context>& context,
+	all_parameters& params,
+	utki::shared_ref<ruis::container> content_container
+) :
 	widget(
 		std::move(context), //
 		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
-	content_wrapping(m::container(
-		this->context,
-		// clang-format off
-			{
-				.container_params = std::move(params.container_params)
-			},
-		// clang-format on
-		std::move(contents)
-	)),
 	// clang-format off
 	container(
 		this->context,
@@ -135,16 +146,20 @@ collapse_area::collapse_area(
 					)
 				}
 			),
-			this->content_container
+			content_container
 		}
 	),
 	// clang-format on
+	decorated_widget(
+		this->context, //
+		content_container.get()
+	),
 	title_v(this->get_widget_as<container>("ruis_title"))
 {
 	{
 		auto& sw = this->get_widget_as<toggle_button>("ruis_switch");
 		sw.pressed_change_handler = [this](button& tb) {
-			auto& lp = this->content().get_layout_params();
+			auto& lp = this->get_decorated().get_layout_params();
 			if (tb.is_pressed()) {
 				using namespace length_literals;
 				lp.dims.y() = 0_px;

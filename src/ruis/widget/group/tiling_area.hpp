@@ -21,7 +21,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "../../util/content_wrapping.hpp"
+#include "../base/decorated_widget.hpp"
 #include "../../util/oriented.hpp"
 #include "../container.hpp"
 
@@ -40,8 +40,8 @@ class dragger;
 class tiling_area :
 	virtual public widget, //
 	public ruis::oriented,
-	public content_wrapping,
-	private ruis::container
+	private ruis::container,
+	public decorated_widget<container>
 {
 	friend class ruis::internal::dragger;
 
@@ -65,6 +65,14 @@ public:
 		parameters tiling_area_params;
 	};
 
+private:
+	tiling_area(
+		utki::shared_ref<ruis::context>& context, //
+		all_parameters& params,
+		utki::shared_ref<ruis::container> content_container
+	);
+
+public:
 	tiling_area(
 		utki::shared_ref<ruis::context> context, //
 		all_parameters params,
