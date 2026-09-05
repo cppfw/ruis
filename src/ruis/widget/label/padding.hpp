@@ -30,6 +30,11 @@ namespace ruis {
 // public inheritance of widget. So, the linter complaint is false-positive, suppress it.
 // NOLINTNEXTLINE(bugprone-incorrect-enable-shared-from-this, "false-positive")
 class padding :
+	// Explicit virtual public inheritance of widget at the first place is needed
+	// to prevent it to be protected by private inheritance of container.
+	// Otherwise, the compiler complains hen trying to use std::enable_shared_from_this<widget> base of widget:
+	//   fatal error: 'shared_from_this' is a protected member of 'std::enable_shared_from_this<utki::shared>'
+	//   note: constrained by protected inheritance here: protected container
 	virtual public widget, //
 	protected container,
 	public decorated_widget<container>
