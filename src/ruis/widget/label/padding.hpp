@@ -31,7 +31,8 @@ namespace ruis {
 // NOLINTNEXTLINE(bugprone-incorrect-enable-shared-from-this, "false-positive")
 class padding :
 	protected container, //
-	public decorated_widget<container>
+	public decorated_widget<container>,
+	virtual public widget
 {
 public:
 	struct parameters {
