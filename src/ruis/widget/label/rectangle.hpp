@@ -50,11 +50,13 @@ public:
 		 */
 		styled<length> stroke_width;
 
+		// stroke_color is red by default to make it easily noticable if it is used without being set to some other color
+		static constexpr ruis::color default_stroke_color = ruis::color(0xff, 0, 0, 0xff);
+
 		/**
 		 * @brief Stroke color of the rectangle.
 		 */
-		// stroke_color is red by default to make it easily noticable if it is used without being set to some other color
-		styled<ruis::color> stroke_color = ruis::color(0xff, 0, 0, 0xff);
+		styled<ruis::color> stroke_color = default_stroke_color;
 	};
 
 private:
