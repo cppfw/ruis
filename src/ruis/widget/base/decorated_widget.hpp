@@ -1,5 +1,7 @@
 #pragma once
 
+#include <concepts>
+
 #include "../widget.hpp"
 
 namespace ruis {
@@ -13,9 +15,11 @@ namespace ruis {
  * In the class hierarchy, the decorated_widget must be initialized after the decorated
  * widget's ancestor container to ensure proper parent-child relationships.
  *
- * @tparam widget_type The type of the widget being decorated. Must be a widget type.
+ * @tparam widget_type The type of the widget being decorated. Must be a widget type
+ *                     (i.e., derived from ruis::widget).
  */
 template <typename widget_type>
+	requires std::derived_from<widget_type, widget>
 class decorated_widget : virtual public widget {
     widget_type& decorated;
 
