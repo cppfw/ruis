@@ -30,7 +30,7 @@ namespace ruis {
 // public inheritance of widget. So, the linter complaint is false-positive, suppress it.
 // NOLINTNEXTLINE(bugprone-incorrect-enable-shared-from-this, "false-positive")
 class padding :
-	protected container,
+	protected container, //
 	public decorated_widget<container>
 {
 public:
@@ -48,8 +48,10 @@ public:
 		container::parameters container_params;
 		parameters padding_params;
 	};
+
 private:
-	padding(utki::shared_ref<ruis::context>& context, //
+	padding(
+		utki::shared_ref<ruis::context>& context, //
 		all_parameters& params,
 		utki::shared_ref<ruis::container> content_container
 	);

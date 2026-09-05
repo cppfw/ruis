@@ -72,8 +72,8 @@ public:
 		uint8_t red, //
 		uint8_t green,
 		uint8_t blue,
-		uint8_t alpha)
-	:
+		uint8_t alpha
+	) :
 		r4::vector4<uint8_t>(red, green, blue, alpha)
 	{}
 

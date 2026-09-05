@@ -119,9 +119,9 @@ void rectangle::update_vaos()
 	this->fill_vao.set({.corner_radii = radii});
 
 	if (this->has_stroke()) {
-		this->stroke_vao.set({
-			.corner_radii = radii,
-			.stroke_width = this->params.stroke_width.get().get(this->context)
+		this->stroke_vao.set({//
+							  .corner_radii = radii, //
+							  .stroke_width = this->params.stroke_width.get().get(this->context)
 		});
 	} else {
 		this->stroke_vao.set({});
