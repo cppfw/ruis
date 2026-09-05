@@ -30,9 +30,9 @@ namespace ruis {
 // public inheritance of widget. So, the linter complaint is false-positive, suppress it.
 // NOLINTNEXTLINE(bugprone-incorrect-enable-shared-from-this, "false-positive")
 class padding :
-	protected container, //
-	public decorated_widget<container>,
-	virtual public widget
+	virtual public widget, //
+	protected container,
+	public decorated_widget<container>
 {
 public:
 	struct parameters {
