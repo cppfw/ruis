@@ -19,11 +19,11 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 /* ================ LICENSE END ================ */
 
-#include "text_string_widget.hpp"
+#include "text_line_widget.hpp"
 
 using namespace ruis;
 
-text_string_widget::text_string_widget(
+text_line_widget::text_line_widget(
 	utki::shared_ref<ruis::context> context,
 	text_widget::parameters text_widget_params,
 	string text
@@ -42,12 +42,12 @@ text_string_widget::text_string_widget(
 	this->recompute_bounding_box();
 }
 
-void text_string_widget::recompute_bounding_box()
+void text_line_widget::recompute_bounding_box()
 {
 	this->bb = this->get_font().get_bounding_box(this->get_string());
 }
 
-vec2 text_string_widget::measure(const ruis::vec2& quotum) const noexcept
+vec2 text_line_widget::measure(const ruis::vec2& quotum) const noexcept
 {
 	vec2 ret(this->bb.d.x(), this->get_font().get_height());
 
@@ -60,25 +60,25 @@ vec2 text_string_widget::measure(const ruis::vec2& quotum) const noexcept
 	return ret;
 }
 
-void text_string_widget::on_text_change()
+void text_line_widget::on_text_change()
 {
 	this->recompute_bounding_box();
 	this->text_widget::on_text_change();
 }
 
-void text_string_widget::set_text(string text)
+void text_line_widget::set_text(string text)
 {
 	this->text_string = std::move(text);
 	this->invalidate_layout();
 	this->on_text_change();
 }
 
-void text_string_widget::set_text(std::u32string text)
+void text_line_widget::set_text(std::u32string text)
 {
 	this->set_text(string(text));
 }
 
-const std::u32string& text_string_widget::get_string() const noexcept
+const std::u32string& text_line_widget::get_string() const noexcept
 {
 	if (std::holds_alternative<std::u32string>(this->text_string)) {
 		return *std::get_if<std::u32string>(&this->text_string);
@@ -87,26 +87,26 @@ const std::u32string& text_string_widget::get_string() const noexcept
 	return std::get_if<wording>(&this->text_string)->string();
 }
 
-std::u32string text_string_widget::get_text() const
+std::u32string text_line_widget::get_text() const
 {
 	return this->get_string();
 }
 
-wording& text_string_widget::get_wording()
+wording& text_line_widget::get_wording()
 {
 	if (!std::holds_alternative<wording>(this->text_string)) {
-		throw std::invalid_argument("text_string_widget(): this instance does not hold a wording");
+		throw std::invalid_argument("text_line_widget(): this instance does not hold a wording");
 	}
 
 	return *std::get_if<wording>(&this->text_string);
 }
 
-void text_string_widget::set_wording(wording w)
+void text_line_widget::set_wording(wording w)
 {
 	this->set_text(std::move(w));
 }
 
-void text_string_widget::on_reload()
+void text_line_widget::on_reload()
 {
 	if (std::holds_alternative<wording>(this->text_string)) {
 		auto& w = this->get_wording();

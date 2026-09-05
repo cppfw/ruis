@@ -49,7 +49,7 @@ text_input_line::text_input_line(
 		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
-	text_string_widget(
+	text_line_widget(
 		this->context, //
 		std::move(params.text_widget_params),
 		std::move(text)

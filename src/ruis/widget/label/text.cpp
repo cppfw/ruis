@@ -36,7 +36,7 @@ text::text(
 		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
-	text_string_widget(
+	text_line_widget(
 		this->context, //
 		std::move(params.text_params),
 		std::move(text)
