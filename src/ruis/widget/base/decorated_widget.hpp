@@ -9,8 +9,7 @@ namespace ruis {
 /**
  * @brief Base class for widgets that decorate other widgets.
  *
- * The decorated_widget class template implements the Decorator pattern for widgets.
- * It wraps another widget (the "decorated" widget) and can modify or extend its behavior.
+ * The decorated_widget class template provides common interface to get the decorated widget.
  *
  * In the class hierarchy, the decorated_widget must be initialized after the decorated
  * widget's ancestor container to ensure proper parent-child relationships.
