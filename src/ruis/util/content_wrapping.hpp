@@ -32,6 +32,7 @@ namespace ruis {
  * for example, by adding padding to the contents or adding
  * some special control widgets on top of the content like decorated window.
  */
+// TODO: remove in favor of decorated?
 class content_wrapping
 {
 protected:

@@ -73,7 +73,7 @@ check_box::check_box(
 			)
 		}
 	),
-	tick_widget(this->content().get_widget_as<image>("ruis_checkbox_check"sv))
+	tick_widget(this->get_decorated().get_widget_as<image>("ruis_checkbox_check"sv))
 // clang-format on
 {
 	this->tick_widget.set_visible(this->is_pressed());

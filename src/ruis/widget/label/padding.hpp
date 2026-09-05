@@ -21,7 +21,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "../../util/content_wrapping.hpp"
+#include "../base/decorated_widget.hpp"
 #include "../container.hpp"
 
 namespace ruis {
@@ -30,9 +30,8 @@ namespace ruis {
 // public inheritance of widget. So, the linter complaint is false-positive, suppress it.
 // NOLINTNEXTLINE(bugprone-incorrect-enable-shared-from-this, "false-positive")
 class padding :
-	public virtual widget, //
-	public content_wrapping,
-	protected container
+	protected container,
+	public decorated_widget<container>
 {
 public:
 	struct parameters {
@@ -49,7 +48,13 @@ public:
 		container::parameters container_params;
 		parameters padding_params;
 	};
+private:
+	padding(utki::shared_ref<ruis::context>& context, //
+		all_parameters& params,
+		utki::shared_ref<ruis::container> content_container
+	);
 
+public:
 	padding(
 		utki::shared_ref<ruis::context> context, //
 		all_parameters params,

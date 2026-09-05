@@ -78,6 +78,19 @@ widget& widget::get_ancestor(const std::string& id)
 	return *a;
 }
 
+bool widget::has_ancestor(const widget& w) const noexcept
+{
+	if (!this->parent()) {
+		return false;
+	}
+
+	if (static_cast<const widget*>(this->parent()) == &w) {
+		return true;
+	}
+
+	return this->parent()->has_ancestor(w);
+}
+
 void widget::move_to(const vec2& new_pos)
 {
 	this->params.rectangle.p = new_pos;

@@ -39,14 +39,11 @@ padding::padding(
 	all_parameters params,
 	widget_list children
 ) :
-	widget( //
-		std::move(context),
-		std::move(params.layout_params),
-		std::move(params.widget_params)
-	),
-	content_wrapping(m::container(
-		this->context,
-		// clang-format off
+	padding(
+		context, //
+		params,
+		m::container(
+			context,
 			{
 				.container_params = [&](){
 					// pile layout by default
@@ -56,18 +53,34 @@ padding::padding(
 					return std::move(params.container_params);
 				}()
 			},
-		// clang-format on
-		std::move(children)
-	)),
+			std::move(children)
+		)
+	)
+{}
+
+padding::padding(
+	utki::shared_ref<ruis::context>& context, //
+	all_parameters& params,
+	utki::shared_ref<ruis::container> content_container
+) :
+	widget( //
+		std::move(context),
+		std::move(params.layout_params),
+		std::move(params.widget_params)
+	),
 	// clang-format off
 	container(
 		this->context,
 		{},
 		{
-			this->content_container
+			content_container
 		}
 	),
 	// clang-format on
+	decorated_widget(
+		this->context, //
+		content_container.get()
+	),
 	params(std::move(params.padding_params))
 {}
 
@@ -109,7 +122,7 @@ vec2 padding::measure(const vec2& quotum) const
 
 	vec2 ret = quotum;
 	{
-		auto content_min_dims = this->content().measure(borderless_quotum);
+		auto content_min_dims = this->get_decorated().measure(borderless_quotum);
 		// clang-format off
 		for(auto [r, m, blt, brb] :
 			utki::views::zip(
@@ -136,7 +149,7 @@ void padding::on_lay_out()
 
 	vec2 content_dims = max(real(0), this->rect().d - borders.dims());
 
-	auto& c = this->content();
+	auto& c = this->get_decorated();
 
 	c.move_to(borders.left_top());
 	c.resize(content_dims);

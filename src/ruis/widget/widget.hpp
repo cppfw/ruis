@@ -747,6 +747,14 @@ public:
 	}
 
 	/**
+	 * @brief Check if given widget is an ancestor of this widget.
+	 * @param w - ancestor widget to check.
+	 * @return true if given widget is an ancestor of this widget.
+	 * @return false otherwise.
+	 */
+	bool has_ancestor(const widget& w) const noexcept;
+
+	/**
 	 * @brief Calculate position in ancestor coordinates.
 	 * @param pos - position to translate to ancestor coordinates.
 	 * @param ancestor - ancestor of the widget hierarchy relatively to which the translation is to be done.
