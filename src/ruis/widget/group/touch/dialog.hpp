@@ -21,8 +21,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "../../../util/content_wrapping.hpp"
 #include "../../base/color_widget.hpp"
+#include "../../base/decorated_widget.hpp"
 #include "../../label/padding.hpp"
 #include "../../label/rectangle.hpp"
 
@@ -45,8 +45,8 @@ namespace ruis::touch {
 // NOLINTNEXTLINE(bugprone-incorrect-enable-shared-from-this, "false-positive")
 class dialog :
 	public virtual widget, //
-	public content_wrapping,
-	private container
+	private container,
+	public decorated_widget<container>
 {
 public:
 	struct parameters {
@@ -84,6 +84,14 @@ public:
 		parameters dialog_params;
 	};
 
+private:
+	dialog(
+		utki::shared_ref<ruis::context>& context, //
+		all_parameters& params,
+		utki::shared_ref<ruis::container> content_container
+	);
+
+public:
 	dialog(
 		utki::shared_ref<ruis::context> context, //
 		all_parameters params,

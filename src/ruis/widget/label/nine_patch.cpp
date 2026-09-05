@@ -185,7 +185,7 @@ void nine_patch::render_nine_patch(const mat4& matrix) const
 			0
 		);
 		matr.scale(
-			this->get_decorated().rect().d.x() - this->get_decorated().rect().x2(), //
+			this->rect().d.x() - this->get_decorated().rect().x2(), //
 			this->get_decorated().rect().p.y()
 		);
 
@@ -236,7 +236,7 @@ void nine_patch::render_nine_patch(const mat4& matrix) const
 			this->get_decorated().rect().p.y()
 		);
 		matr.scale(
-			this->get_decorated().rect().d.x() - this->get_decorated().rect().x2(), //
+			this->rect().d.x() - this->get_decorated().rect().x2(), //
 			this->get_decorated().rect().d.y()
 		);
 
@@ -256,7 +256,7 @@ void nine_patch::render_nine_patch(const mat4& matrix) const
 		);
 		matr.scale(
 			this->get_decorated().rect().p.x(), //
-			this->get_decorated().rect().d.y() - this->get_decorated().rect().y2()
+			this->rect().d.y() - this->get_decorated().rect().y2()
 		);
 
 		r.render(
@@ -275,7 +275,7 @@ void nine_patch::render_nine_patch(const mat4& matrix) const
 		);
 		matr.scale(
 			this->get_decorated().rect().d.x(), //
-			this->get_decorated().rect().d.y() - this->get_decorated().rect().y2()
+			this->rect().d.y() - this->get_decorated().rect().y2()
 		);
 
 		r.render(
@@ -292,7 +292,7 @@ void nine_patch::render_nine_patch(const mat4& matrix) const
 		auto content_x2_y2 = this->get_decorated().rect().x2_y2();
 
 		matr.translate(content_x2_y2);
-		matr.scale(this->get_decorated().rect().d - content_x2_y2);
+		matr.scale(this->rect().d - content_x2_y2);
 
 		r.render(
 			matr, //

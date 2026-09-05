@@ -183,34 +183,15 @@ widget_list make_chrome(
 } // namespace
 
 dialog::dialog(
-	utki::shared_ref<ruis::context> context, //
-	all_parameters params,
-	widget_list children
+	utki::shared_ref<ruis::context>& context, //
+	all_parameters& params,
+	utki::shared_ref<ruis::container> content_container
 ) :
 	widget( //
 		std::move(context),
 		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
-	content_wrapping(m::container(
-		this->context,
-		// clang-format off
-		{
-			.layout_params = {
-				// content container fills the dialog panel, so that fill-sized children
-				// (e.g. scrollable lists) can take the whole available area of the panel
-				.dims = {ruis::dim::fill, ruis::dim::fill}
-			},
-			.container_params = [&](){
-				if(!params.container_params.layout){
-					params.container_params.layout = ruis::layout::pile;
-				}
-				return std::move(params.container_params);
-			}()
-		},
-		// clang-format on
-		std::move(children)
-	)),
 	// clang-format off
 	container(
 		this->context,
@@ -221,7 +202,7 @@ dialog::dialog(
 		},
 		make_chrome(
 			this->context, //
-			this->content_container, //
+			content_container, //
 			params, //
 			[this](ruis::click_proxy&){ this->close(); }, //
 			[this](ruis::key_proxy&, const ruis::key_event& e) -> ruis::event_status {
@@ -232,8 +213,42 @@ dialog::dialog(
 				return ruis::event_status::propagate;
 			}
 		)
+	),
+	// clang-format on
+	decorated_widget(
+		this->context, //
+		content_container.get()
 	)
-// clang-format on
+{}
+
+dialog::dialog(
+	utki::shared_ref<ruis::context> context, //
+	all_parameters params,
+	widget_list children
+) :
+	dialog(
+		context,
+		params,
+		m::container(
+			context,
+			// clang-format off
+			{
+				.layout_params = {
+					// content container fills the dialog panel, so that fill-sized children
+					// (e.g. scrollable lists) can take the whole available area of the panel
+					.dims = {ruis::dim::fill, ruis::dim::fill}
+				},
+				.container_params = [&](){
+					if(!params.container_params.layout){
+						params.container_params.layout = ruis::layout::pile;
+					}
+					return std::move(params.container_params);
+				}()
+			},
+			// clang-format on
+			std::move(children)
+		)
+	)
 {}
 
 void dialog::close()
