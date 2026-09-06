@@ -55,7 +55,7 @@ rectangle_text_input_line::rectangle_text_input_line(
 	utki::shared_ref<ruis::text_input_line> text_input_line
 ) :
 	widget(
-		std::move(context), //
+		context, //
 		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
@@ -68,7 +68,7 @@ rectangle_text_input_line::rectangle_text_input_line(
 				.layout = layout::pile
 			},
 			.padding_params{
-				.borders = {5_pp} // TODO:
+				.borders = {context.get().style().get_len_gap()}
 			},
 			.color_params = std::move(params.color_params), // TODO:
 			.rectangle_params = {

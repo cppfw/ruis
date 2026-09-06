@@ -424,14 +424,7 @@ utki::shared_ref<ruis::window> make_text_input_window(
 						.align = {ruis::align::front, ruis::align::center}
 					}
 				},
-				U"Rectangle text input line with rounded corners"
-			),
-			m::gap(c,
-				{
-					.layout_params = {
-						.dims = {ruis::dim::fill, 5_pp}
-					}
-				}
+				U"Enter some text:"
 			),
 			m::rectangle_text_input_line(c,
 				{
