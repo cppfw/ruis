@@ -417,6 +417,22 @@ utki::shared_ref<ruis::window> make_text_input_window(
 			.title = c.get().localization.get().get("text_input"sv)
 		},
 		{
+			m::text(c,
+				{
+					.layout_params = {
+						.dims = {ruis::dim::fill, ruis::dim::min},
+						.align = {ruis::align::front, ruis::align::center}
+					}
+				},
+				U"Rectangle text input line with rounded corners"
+			),
+			m::gap(c,
+				{
+					.layout_params = {
+						.dims = {ruis::dim::fill, 5_pp}
+					}
+				}
+			),
 			m::rectangle_text_input_line(c,
 				{
 					.layout_params = {
@@ -428,15 +444,6 @@ utki::shared_ref<ruis::window> make_text_input_window(
 					}
 				},
 				U"Type here..."
-			),
-			m::text(c,
-				{
-					.layout_params = {
-						.dims = {ruis::dim::fill, ruis::dim::min},
-						.align = {ruis::align::front, ruis::align::center}
-					}
-				},
-				U"Rectangle text input line with rounded corners"
 			)
 		}
 	);
