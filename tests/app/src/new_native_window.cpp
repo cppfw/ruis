@@ -4,7 +4,7 @@
 #include <ruis/widget/label/text.hpp>
 #include <ruis/widget/container.hpp>
 #include <ruis/widget/label/nine_patch.hpp>
-#include <ruis/widget/input/text_input_line.hpp>
+#include <ruis/widget/input/components/raw_text_input_line.hpp>
 #include <ruisapp/application.hpp>
 
 using namespace std::string_literals;
@@ -77,7 +77,7 @@ utki::shared_ref<ruis::widget> make_new_native_window_root_widget(
                     }
                 },
                 {
-                    m::text_input_line(c,
+                    m::raw_text_input_line(c,
                         {
                             .layout_params{
                                 .dims{ruis::dim::fill, ruis::dim::max}

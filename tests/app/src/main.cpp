@@ -24,7 +24,7 @@
 #include <ruis/widget/proxy/resize_proxy.hpp>
 #include <ruis/widget/proxy/click_proxy.hpp>
 #include <ruis/widget/label/image.hpp>
-#include <ruis/widget/input/text_input_line.hpp>
+#include <ruis/widget/input/components/raw_text_input_line.hpp>
 #include <ruis/widget/button/selection_box.hpp>
 #include <ruis/layout/linear_layout.hpp>
 #include <ruis/standard_widgets.hpp>
@@ -337,7 +337,7 @@ public:
 
 		// text_input
 		{
-			auto& l = c.get().get_widget("text_input").get_widget<ruis::text_input_line>();
+			auto& l = c.get().get_widget("text_input").get_widget<ruis::raw_text_input_line>();
 			utki::assert(!l.get_text().empty(), SL);
 		}
 
