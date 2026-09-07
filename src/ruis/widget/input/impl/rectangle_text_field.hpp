@@ -10,7 +10,7 @@ the Free Software Foundation, either version 3 of the License, or
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
@@ -23,19 +23,19 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../../base/decorated_widget.hpp"
 #include "../../label/rectangle.hpp"
-#include "../components/raw_text_input_line.hpp"
+#include "../text_field.hpp"
 
 namespace ruis {
 
 /**
- * @brief Text input line widget with a rectangle background.
+ * @brief Text field widget with a rectangle background.
  * This widget combines a rectangle (with stroke and fill colors from style)
- * and a raw_text_input_line as its child.
+ * and a text_field as its child.
  */
-class rectangle_text_input_line :
+class rectangle_text_field :
 	virtual public widget, //
 	private rectangle,
-	public decorated_widget<raw_text_input_line>
+	public decorated_widget<text_field>
 {
 public:
 	struct parameters {
@@ -53,14 +53,14 @@ public:
 	};
 
 private:
-	rectangle_text_input_line(
+	rectangle_text_field(
 		utki::shared_ref<ruis::context>& context, //
 		all_parameters& params,
-		utki::shared_ref<ruis::raw_text_input_line> raw_text_input_line
+		utki::shared_ref<ruis::text_field> text_field
 	);
 
 public:
-	rectangle_text_input_line(
+	rectangle_text_field(
 		utki::shared_ref<ruis::context> context, //
 		all_parameters params,
 		ruis::string text
@@ -70,9 +70,9 @@ public:
 };
 
 namespace make {
-utki::shared_ref<ruis::rectangle_text_input_line> rectangle_text_input_line(
+utki::shared_ref<ruis::rectangle_text_field> rectangle_text_field(
 	utki::shared_ref<ruis::context> context, //
-	ruis::rectangle_text_input_line::all_parameters params,
+	ruis::rectangle_text_field::all_parameters params,
 	ruis::string text
 );
 } // namespace make

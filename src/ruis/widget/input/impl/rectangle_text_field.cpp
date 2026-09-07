@@ -10,7 +10,7 @@ the Free Software Foundation, either version 3 of the License, or
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
@@ -19,7 +19,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 /* ================ LICENSE END ================ */
 
-#include "rectangle_text_input_line.hpp"
+#include "rectangle_text_field.hpp"
 
 #include <utki/debug.hpp>
 
@@ -27,16 +27,16 @@ using namespace ruis;
 
 using namespace ruis::length_literals;
 
-rectangle_text_input_line::rectangle_text_input_line(
+rectangle_text_field::rectangle_text_field(
 	utki::shared_ref<ruis::context> context, //
 	all_parameters params,
 	ruis::string text
 ) :
-	rectangle_text_input_line(
+	rectangle_text_field(
 		context,
 		params,
 		// clang-format off
-		ruis::make::raw_text_input_line(
+		ruis::make::text_field(
 			context, //
 			{
 				.layout_params{
@@ -51,17 +51,17 @@ rectangle_text_input_line::rectangle_text_input_line(
 	)
 {}
 
-rectangle_text_input_line::rectangle_text_input_line(
+rectangle_text_field::rectangle_text_field(
 	utki::shared_ref<ruis::context>& context, //
 	all_parameters& params,
-	utki::shared_ref<ruis::raw_text_input_line> raw_text_input_line
+	utki::shared_ref<ruis::text_field> text_field
 ) :
 	widget(
 		context, //
 		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
-	// Initialize rectangle first so it adds the raw_text_input_line as a child
+	// Initialize rectangle first so it adds the text_field as a child
 	// clang-format off
 	rectangle(
 		this->context,
@@ -82,31 +82,31 @@ rectangle_text_input_line::rectangle_text_input_line(
 			}
 		},
 		{
-			raw_text_input_line
+			text_field
 		}
 	),
 	// clang-format on
-	decorated_widget<ruis::raw_text_input_line>(
+	decorated_widget<ruis::text_field>(
 		this->context, //
-		raw_text_input_line.get()
+		text_field.get()
 	)
 {
 	// Set rectangle fill color
 	this->set_color(this->context.get().style().get_color_background());
 }
 
-void rectangle_text_input_line::on_focus_change()
+void rectangle_text_field::on_focus_change()
 {
-	this->decorated_widget<ruis::raw_text_input_line>::get_decorated().on_focus_change();
+	this->decorated_widget<ruis::text_field>::get_decorated().on_focus_change();
 }
 
-utki::shared_ref<ruis::rectangle_text_input_line> ruis::make::rectangle_text_input_line(
+utki::shared_ref<ruis::rectangle_text_field> ruis::make::rectangle_text_field(
 	utki::shared_ref<ruis::context> context, //
-	ruis::rectangle_text_input_line::all_parameters params,
+	ruis::rectangle_text_field::all_parameters params,
 	ruis::string text
 )
 {
-	return utki::make_shared<ruis::rectangle_text_input_line>(
+	return utki::make_shared<ruis::rectangle_text_field>(
 		std::move(context), //
 		std::move(params),
 		std::move(text)

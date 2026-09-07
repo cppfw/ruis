@@ -21,27 +21,107 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "impl/rectangle_text_input_line.hpp"
+#include "../../updateable.hpp"
+#include "../base/text_line_widget.hpp"
+#include "../widget.hpp"
+
+#include "components/character_input_widget.hpp"
 
 namespace ruis {
 
-namespace make {
-
 /**
- * @brief Factory function to create a text field widget.
- * Creates a rectangle_text_input_line under the hood.
- * 
- * @param context GUI context
- * @param params Parameters for the text field
- * @param text Initial text content
- * @return Shared reference to the created decorated widget
+ * @brief Text field widget without any decoration.
  */
-utki::shared_ref<ruis::decorated_widget<ruis::raw_text_input_line>> text_field(
+// NOLINTNEXTLINE(bugprone-incorrect-enable-shared-from-this, "std::shared_from_this is public via text_line_widget")
+class text_field :
+	public text_line_widget, //
+	public character_input_widget,
+	public color_widget,
+	private updateable
+{
+	size_t first_visible_char_index = 0;
+	real x_offset = 0;
+
+	real cursor_pos = 0;
+
+	size_t cursor_index = 0;
+
+	real selection_start_pos = 0;
+
+	size_t selection_start_index = 0;
+
+	bool cursor_blink_visible = true;
+
+	bool ctrl_pressed = false;
+	bool shift_pressed = false;
+
+	bool left_mouse_button_down = false;
+
+public:
+	text_field(const text_field&) = delete;
+	text_field& operator=(const text_field&) = delete;
+
+	text_field(text_field&&) = delete;
+	text_field& operator=(text_field&&) = delete;
+
+	struct all_parameters {
+		layout::parameters layout_params;
+		widget::parameters widget_params;
+		text_widget::parameters text_widget_params;
+		color_widget::parameters color_params;
+	};
+
+	text_field(
+		utki::shared_ref<ruis::context> context, //
+		all_parameters params,
+		string text
+	);
+
+	~text_field() override = default;
+
+	vec2 measure(const ruis::vec2& quotum) const noexcept override;
+
+	void render(const ruis::mat4& matrix) const override;
+
+	event_status on_mouse_button(const mouse_button_event& event) override;
+	event_status on_mouse_move(const mouse_move_event& event) override;
+
+	void on_focus_change() override;
+
+	event_status on_key(const ruis::key_event& e) override;
+
+	void on_resize() override;
+
+	void update(uint32_t dt) override;
+
+	void on_character_input(const character_input_event& e) override;
+
+	void set_cursor_index(size_t index, bool selection = false);
+
+private:
+	void update_cursor_pos_based_on_index();
+
+	void start_cursor_blinking();
+
+	size_t pos_to_index(real pos);
+
+	real index_to_pos(size_t index);
+
+	bool there_is_selection() const noexcept
+	{
+		return this->cursor_index != this->selection_start_index;
+	}
+
+	// returns new cursor index
+	size_t delete_selection();
+};
+
+namespace make {
+utki::shared_ref<ruis::text_field> text_field(
 	utki::shared_ref<ruis::context> context, //
-	ruis::rectangle_text_input_line::all_parameters params,
+	ruis::text_field::all_parameters params,
 	ruis::string text
 );
-
 } // namespace make
 
 } // namespace ruis

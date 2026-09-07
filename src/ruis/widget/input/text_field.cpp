@@ -21,18 +21,468 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "text_field.hpp"
 
-#include "impl/rectangle_text_input_line.hpp"
+#include "../../context.hpp"
+#include "../../util/key.hpp"
+#include "../../util/util.hpp"
 
-utki::shared_ref<ruis::decorated_widget<ruis::raw_text_input_line>> ruis::make::text_field(
+#if M_OS == M_OS_WINDOWS
+#	ifdef DELETE
+#		undef DELETE
+#	endif
+#endif
+
+using namespace ruis;
+
+namespace {
+const uint32_t cursor_blink_period = 500; // milliseconds
+
+const real cursor_width = real(1.0);
+} // namespace
+
+text_field::text_field(
 	utki::shared_ref<ruis::context> context, //
-	ruis::rectangle_text_input_line::all_parameters params,
+	all_parameters params,
+	string text
+) :
+	widget(
+		std::move(context), //
+		std::move(params.layout_params),
+		std::move(params.widget_params)
+	),
+	text_line_widget(
+		this->context, //
+		std::move(params.text_widget_params),
+		std::move(text)
+	),
+	character_input_widget(this->context),
+	color_widget(
+		this->context, //
+		[&]() {
+			if (params.color_params.color.get().is_undefined()) {
+				params.color_params.color = this->context.get().style().get_color_text();
+			}
+			return std::move(params.color_params);
+		}()
+	)
+{
+	this->set_clip(true);
+}
+
+void text_field::render(const ruis::mat4& matrix) const
+{
+	// render selection
+	if (this->cursor_index != this->selection_start_index) {
+		ruis::mat4 matr(matrix);
+		matr.translate(
+			this->selection_start_index < this->cursor_index ? this->selection_start_pos : this->cursor_pos,
+			0
+		);
+
+		using std::abs;
+		matr.scale(vec2(
+			abs(this->cursor_pos - this->selection_start_pos), //
+			this->rect().d.y()
+		));
+
+		auto& r = this->context.get().renderer.get();
+
+		r.shaders().color_pos->render(
+			matr, //
+			r.obj().pos_quad_01_vao.get(),
+			this->text_widget::get_params().selection_color.get()
+		);
+	}
+
+	{
+		ruis::mat4 matr(matrix);
+
+		using std::round;
+
+		const auto& font = this->get_font();
+
+		matr.translate(
+			-this->get_bounding_box().p.x() + this->x_offset,
+			round((font.get_height() + font.get_ascender() - font.get_descender()) / 2)
+		);
+
+		utki::assert(this->first_visible_char_index <= this->get_string().size());
+		font.render(
+			this->ctx().ren(), //
+			matr,
+			this->get_current_color(),
+			this->get_string().substr(
+				this->first_visible_char_index, //
+				this->get_string().size() - this->first_visible_char_index
+			)
+		);
+	}
+
+	if (this->is_focused() && this->cursor_blink_visible) {
+		ruis::mat4 matr(matrix);
+		matr.translate(this->cursor_pos, 0);
+		matr.scale(vec2(cursor_width * this->context.get().units.dots_per_fp(), this->rect().d.y()));
+
+		auto& r = this->context.get().renderer.get();
+		r.shaders().color_pos->render(
+			matr, //
+			r.obj().pos_quad_01_vao.get(),
+			this->get_current_color()
+		);
+	}
+}
+
+event_status text_field::on_mouse_button(const mouse_button_event& e)
+{
+	if (e.button != mouse_button::left) {
+		return event_status::propagate;
+	}
+
+	this->left_mouse_button_down = (e.action == button_action::press);
+
+	if (e.action == button_action::press) {
+		this->set_cursor_index(this->pos_to_index(e.pos.x()));
+	}
+
+	return event_status::consumed;
+}
+
+event_status text_field::on_mouse_move(const mouse_move_event& e)
+{
+	if (!this->left_mouse_button_down) {
+		return event_status::propagate;
+	}
+
+	this->set_cursor_index(this->pos_to_index(e.pos.x()), true);
+	return event_status::consumed;
+}
+
+vec2 text_field::measure(const ruis::vec2& quotum) const noexcept
+{
+	vec2 ret;
+
+	if (quotum.x() < 0) {
+		ret.x() = this->get_bounding_box().d.x() + cursor_width * this->context.get().units.dots_per_fp();
+	} else {
+		ret.x() = quotum.x();
+	}
+
+	if (quotum.y() < 0) {
+		ret.y() = this->get_font().get_height();
+	} else {
+		ret.y() = quotum.y();
+	}
+
+	return ret;
+}
+
+void text_field::set_cursor_index(size_t index, bool selection)
+{
+	this->cursor_index = index;
+
+	using std::min;
+	this->cursor_index = min(this->cursor_index, this->get_string().size()); // clamp top
+
+	if (!selection) {
+		this->selection_start_index = this->cursor_index;
+	}
+
+	utki::scope_exit cursor_index_scope_exit([this]() {
+		this->selection_start_pos = this->index_to_pos(this->selection_start_index);
+
+		if (!this->is_focused()) {
+			this->focus();
+		}
+		this->start_cursor_blinking();
+	});
+
+	//	TRACE(<< "selection_start_index = " << this->selection_start_index << std::endl)
+
+	if (this->cursor_index <= this->first_visible_char_index) {
+		this->first_visible_char_index = this->cursor_index;
+		this->x_offset = 0;
+		this->cursor_pos = 0;
+		return;
+	}
+
+	const auto& font = this->get_font();
+
+	utki::assert(this->first_visible_char_index <= this->get_string().size());
+	utki::assert(this->cursor_index > this->first_visible_char_index);
+	this->cursor_pos = font.get_advance(std::u32string(
+						   this->get_string(),
+						   this->first_visible_char_index,
+						   this->cursor_index - this->first_visible_char_index
+					   )) +
+		this->x_offset;
+
+	utki::assert(this->cursor_pos >= 0);
+
+	if (this->cursor_pos > this->rect().d.x() - cursor_width * this->context.get().units.dots_per_fp()) {
+		this->cursor_pos = this->rect().d.x() - cursor_width * this->context.get().units.dots_per_fp();
+
+		this->x_offset = this->cursor_pos; // start from rightmost cursor position
+		this->first_visible_char_index = this->cursor_index;
+
+		// calculate advance backwards
+		for (auto i = utki::next(this->get_string().rbegin(), this->get_string().size() - this->cursor_index);
+			 this->x_offset > 0;
+			 ++i)
+		{
+			utki::assert(i != this->get_string().rend());
+			this->x_offset -= font.get_advance(*i);
+			utki::assert(this->first_visible_char_index > 0);
+			--this->first_visible_char_index;
+		}
+	}
+}
+
+real text_field::index_to_pos(size_t index)
+{
+	utki::assert(this->first_visible_char_index <= this->get_string().size());
+
+	if (index <= this->first_visible_char_index) {
+		return 0;
+	}
+
+	using std::min;
+	index = min(index, this->get_string().size()); // clamp top
+
+	real ret = this->x_offset;
+
+	for (auto i = utki::next(this->get_string().begin(), this->first_visible_char_index);
+		 i != this->get_string().end() && index != this->first_visible_char_index;
+		 ++i, --index)
+	{
+		ret += this->get_font().get_advance(*i);
+		if (ret >= this->rect().d.x()) {
+			ret = this->rect().d.x();
+			break;
+		}
+	}
+
+	return ret;
+}
+
+size_t text_field::pos_to_index(real pos)
+{
+	size_t index = this->first_visible_char_index;
+	real p = this->x_offset;
+
+	for (auto i = utki::next(this->get_string().begin(), this->first_visible_char_index); i != this->get_string().end();
+		 ++i)
+	{
+		real w = this->get_font().get_advance(*i);
+
+		if (pos < p + w) {
+			if (pos < p + w / 2) {
+				break;
+			}
+			++index;
+			break;
+		}
+
+		p += w;
+		++index;
+	}
+
+	return index;
+}
+
+void text_field::update(uint32_t dt)
+{
+	this->cursor_blink_visible = !this->cursor_blink_visible;
+}
+
+void text_field::on_focus_change()
+{
+	if (this->is_focused()) {
+		this->ctrl_pressed = false;
+		this->shift_pressed = false;
+		this->start_cursor_blinking();
+	} else {
+		this->context.get().updater.get().stop(*this);
+	}
+	this->context.get().window().set_virtual_keyboard_visible(this->is_focused());
+}
+
+void text_field::on_resize()
+{
+	this->selection_start_pos = this->index_to_pos(this->selection_start_index);
+}
+
+void text_field::start_cursor_blinking()
+{
+	this->context.get().updater.get().stop(*this);
+	this->cursor_blink_visible = true;
+	this->context.get().updater.get().start(
+		utki::make_shared_from(*static_cast<updateable*>(this)), //
+		cursor_blink_period
+	);
+}
+
+event_status text_field::on_key(const ruis::key_event& e)
+{
+	switch (e.combo.key) {
+		case ruis::key::left_control:
+		case ruis::key::right_control:
+			this->ctrl_pressed = (e.action == button_action::press);
+			break;
+		case ruis::key::left_shift:
+		case ruis::key::right_shift:
+			this->shift_pressed = (e.action == button_action::press);
+			break;
+		default:
+			break;
+	}
+	return event_status::propagate;
+}
+
+void text_field::on_character_input(const character_input_event& e)
+{
+	switch (e.combo.key) {
+		case ruis::key::enter:
+			break;
+		case ruis::key::arrow_right:
+			if (this->cursor_index != this->get_string().size()) {
+				size_t new_index = 0;
+				if (this->ctrl_pressed) {
+					bool space_skipped = false;
+					new_index = this->cursor_index;
+					for (auto i = utki::next(this->get_string().begin(), this->cursor_index);
+						 i != this->get_string().end();
+						 ++i, ++new_index)
+					{
+						if (*i == uint32_t(' ')) {
+							if (space_skipped) {
+								break;
+							}
+						} else {
+							space_skipped = true;
+						}
+					}
+
+				} else {
+					new_index = this->cursor_index + 1;
+				}
+				this->set_cursor_index(new_index, this->shift_pressed);
+			}
+			break;
+		case ruis::key::arrow_left:
+			if (this->cursor_index != 0) {
+				size_t new_index = 0;
+				if (this->ctrl_pressed) {
+					bool space_skipped = false;
+					new_index = this->cursor_index;
+					for (auto i =
+							 utki::next(this->get_string().rbegin(), this->get_string().size() - this->cursor_index);
+						 i != this->get_string().rend();
+						 ++i, --new_index)
+					{
+						if (*i == uint32_t(' ')) {
+							if (space_skipped) {
+								break;
+							}
+						} else {
+							space_skipped = true;
+						}
+					}
+				} else {
+					new_index = this->cursor_index - 1;
+				}
+				this->set_cursor_index(new_index, this->shift_pressed);
+			}
+			break;
+		case ruis::key::end:
+			this->set_cursor_index(this->get_string().size(), this->shift_pressed);
+			break;
+		case ruis::key::home:
+			this->set_cursor_index(0, this->shift_pressed);
+			break;
+		case ruis::key::backspace:
+			if (this->there_is_selection()) {
+				this->set_cursor_index(this->delete_selection());
+			} else {
+				if (this->cursor_index != 0) {
+					auto t = this->get_string();
+					this->clear();
+					t.erase(utki::next(t.begin(), this->cursor_index - 1));
+					this->set_text(std::move(t));
+					this->set_cursor_index(this->cursor_index - 1);
+				}
+			}
+			break;
+		case ruis::key::deletion:
+			if (this->there_is_selection()) {
+				this->set_cursor_index(this->delete_selection());
+			} else {
+				if (this->cursor_index < this->get_string().size()) {
+					auto t = this->get_string();
+					this->clear();
+					t.erase(utki::next(t.begin(), this->cursor_index));
+					this->set_text(std::move(t));
+				}
+			}
+			this->start_cursor_blinking();
+			break;
+		case ruis::key::escape:
+			// do nothing
+			break;
+		case ruis::key::a:
+			if (this->ctrl_pressed) {
+				this->selection_start_index = 0;
+				this->set_cursor_index(this->get_string().size(), true);
+				break;
+			}
+			// fall through
+		default:
+			if (!e.string.empty()) {
+				if (this->there_is_selection()) {
+					this->cursor_index = this->delete_selection();
+				}
+
+				auto t = this->get_string();
+				this->clear();
+				t.insert(utki::next(t.begin(), this->cursor_index), e.string.begin(), e.string.end());
+				this->set_text(std::move(t));
+
+				this->set_cursor_index(this->cursor_index + e.string.size());
+			}
+
+			break;
+	}
+}
+
+size_t text_field::delete_selection()
+{
+	utki::assert(this->cursor_index != this->selection_start_index);
+
+	size_t start = 0;
+	size_t end = 0;
+	if (this->cursor_index < this->selection_start_index) {
+		start = this->cursor_index;
+		end = this->selection_start_index;
+	} else {
+		start = this->selection_start_index;
+		end = this->cursor_index;
+	}
+
+	auto t = this->get_string();
+	this->clear();
+	t.erase(utki::next(t.begin(), start), utki::next(t.begin(), end));
+	this->set_text(std::move(t));
+
+	return start;
+}
+
+utki::shared_ref<ruis::text_field> ruis::make::text_field(
+	utki::shared_ref<ruis::context> context, //
+	ruis::text_field::all_parameters params,
 	ruis::string text
 )
 {
-	auto ret = ruis::make::rectangle_text_input_line(
+	return utki::make_shared<ruis::text_field>(
 		std::move(context), //
 		std::move(params),
 		std::move(text)
 	);
-	return ret;
 }
