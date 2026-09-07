@@ -71,7 +71,7 @@ public:
 	const std::string& id() const
 	{
 		// TODO: make empty static string and return it in case of empty()?
-		ASSERT(!this->empty())
+		utki::assert(!this->empty());
 		return this->iter->first;
 	}
 
@@ -84,7 +84,7 @@ public:
 
 	const std::u32string& string() const noexcept
 	{
-		ASSERT(!this->empty())
+		utki::assert(!this->empty());
 		if (this->is_formatted()) {
 			return this->formatted_string;
 		} else {
@@ -113,9 +113,50 @@ public:
  * @brief GUI string.
  * GUI string can be either exact UTF-32 string or a reference to a localized wording.
  */
-using string = std::variant<
+class string : private std::variant<
 	std::u32string, //
 	wording //
-	>;
+	>
+{
+public:
+	string() = default;
+
+	string(std::string_view s);
+
+	string(const char32_t* s) :
+		std::variant<std::u32string, wording>(std::u32string(s))
+	{}
+
+	string(wording w) :
+		std::variant<std::u32string, wording>(std::move(w))
+	{}
+
+	string(std::u32string s) :
+		std::variant<std::u32string, wording>(std::move(s))
+	{}
+
+	bool is_wording() const noexcept
+	{
+		return std::holds_alternative<wording>(*this);
+	}
+
+	const std::u32string& get() const{
+		if (std::holds_alternative<std::u32string>(*this)) {
+			return *std::get_if<std::u32string>(this);
+		}
+		utki::assert(std::holds_alternative<wording>(*this));
+		return std::get_if<wording>(this)->string();
+	}
+
+	const wording& get_wording() const{
+		utki::assert(this->is_wording());
+		return *std::get_if<wording>(this);
+	}
+
+	wording& get_wording(){
+		utki::assert(this->is_wording());
+		return *std::get_if<wording>(this);
+	}
+};
 
 } // namespace ruis

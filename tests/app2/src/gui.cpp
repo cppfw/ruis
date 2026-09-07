@@ -440,9 +440,13 @@ utki::shared_ref<ruis::window> make_text_input_window(
 					.rectangle_params = {
 						.corner_radii = {5_pp, 5_pp, 5_pp, 5_pp},
 						.stroke_width = 2_pp
+					},
+					.text_field_params{
+						.hint = U"Type here..."s,
+						.hint_color = c.get().style().get_color_text_secondary()
 					}
 				},
-				U"Type here..."
+				{}
 			)
 		}
 	);

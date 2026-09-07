@@ -80,11 +80,7 @@ void text_line_widget::set_text(std::u32string text)
 
 const std::u32string& text_line_widget::get_string() const noexcept
 {
-	if (std::holds_alternative<std::u32string>(this->text_string)) {
-		return *std::get_if<std::u32string>(&this->text_string);
-	}
-	ASSERT(std::holds_alternative<wording>(this->text_string));
-	return std::get_if<wording>(&this->text_string)->string();
+	return this->text_string.get();
 }
 
 std::u32string text_line_widget::get_text() const
@@ -92,26 +88,12 @@ std::u32string text_line_widget::get_text() const
 	return this->get_string();
 }
 
-wording& text_line_widget::get_wording()
-{
-	if (!std::holds_alternative<wording>(this->text_string)) {
-		throw std::invalid_argument("text_line_widget(): this instance does not hold a wording");
-	}
-
-	return *std::get_if<wording>(&this->text_string);
-}
-
-void text_line_widget::set_wording(wording w)
-{
-	this->set_text(std::move(w));
-}
-
 void text_line_widget::on_reload()
 {
-	if (std::holds_alternative<wording>(this->text_string)) {
-		auto& w = this->get_wording();
+	if (this->text_string.is_wording()) {
+		auto& w = this->text_string.get_wording();
 		auto new_wording = this->context.get().localization.get().reload(std::move(w));
-		this->set_wording(std::move(new_wording));
+		this->set_text(std::move(new_wording));
 	}
 
 	this->text_widget::on_reload();

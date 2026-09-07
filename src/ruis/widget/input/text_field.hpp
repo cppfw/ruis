@@ -58,6 +58,13 @@ class text_field :
 	bool left_mouse_button_down = false;
 
 public:
+	struct parameters {
+		ruis::string hint;
+		styled<ruis::color> hint_color;
+	};
+private:
+	parameters params;
+public:
 	text_field(const text_field&) = delete;
 	text_field& operator=(const text_field&) = delete;
 
@@ -68,6 +75,7 @@ public:
 		layout::parameters layout_params;
 		widget::parameters widget_params;
 		text_widget::parameters text_widget_params;
+		parameters text_field_params;
 		color_widget::parameters color_params;
 	};
 

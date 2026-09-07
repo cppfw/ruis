@@ -115,6 +115,12 @@ public:
 
 	virtual void set_text(std::u32string text) = 0;
 
+	/**
+	 * @brief Get text as UTF-32 string.
+	 * The internal representation of the text in particular implemntation of the text_widget
+	 * may be different from UTF-32, so this function returns a new UTF-32 string object each time it is called.
+	 * @return Text as UTF-32 string.
+	 */
 	virtual std::u32string get_text() const = 0;
 
 	void clear()

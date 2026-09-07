@@ -63,7 +63,8 @@ text_field::text_field(
 			}
 			return std::move(params.color_params);
 		}()
-	)
+	),
+	params(std::move(params.text_field_params))
 {
 	this->set_clip(true);
 }
@@ -93,7 +94,28 @@ void text_field::render(const ruis::mat4& matrix) const
 		);
 	}
 
-	{
+	// render text or hint
+	if(this->get_string().empty()){
+		// render hint
+		ruis::mat4 matr(matrix);
+
+		using std::round;
+
+		const auto& font = this->get_font();
+
+		matr.translate(
+			-this->get_bounding_box().p.x() + this->x_offset,
+			round((font.get_height() + font.get_ascender() - font.get_descender()) / 2)
+		);
+
+		font.render(
+			this->ctx().ren(), //
+			matr,
+			this->params.hint_color.get(),
+			this->params.hint.get()
+		);
+	}else{
+		// render text
 		ruis::mat4 matr(matrix);
 
 		using std::round;
@@ -117,6 +139,7 @@ void text_field::render(const ruis::mat4& matrix) const
 		);
 	}
 
+	// render cursor
 	if (this->is_focused() && this->cursor_blink_visible) {
 		ruis::mat4 matr(matrix);
 		matr.translate(this->cursor_pos, 0);

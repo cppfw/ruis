@@ -43,6 +43,7 @@ rectangle_text_field::rectangle_text_field(
 					.dims = {ruis::dim::max, ruis::dim::max}
 				},
 				.text_widget_params = std::move(params.text_widget_params),
+				.text_field_params = std::move(params.text_field_params),
 				.color_params = std::move(params.color_params)
 			},
 			std::move(text)

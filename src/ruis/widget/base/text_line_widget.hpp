@@ -27,6 +27,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
+// TODO: rename to text_string_widget
 class text_line_widget : public text_widget
 {
 	mutable ruis::rect bb{};
@@ -62,15 +63,6 @@ public:
 	void set_text(std::u32string text) override;
 
 	std::u32string get_text() const override;
-
-	void set_wording(wording w);
-
-	/**
-	 * @brief Get wording.
-	 * @return Reference to the wording held by this instance.
-	 * @throw std::ivalid_argument - in case this instance does not hold a wording.
-	 */
-	wording& get_wording();
 
 	/**
 	 * @brief Get actual text string.
