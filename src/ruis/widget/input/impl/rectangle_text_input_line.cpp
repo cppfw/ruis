@@ -35,31 +35,33 @@ rectangle_text_input_line::rectangle_text_input_line(
 	rectangle_text_input_line(
 		context,
 		params,
-		ruis::make::text_input_line(
+		// clang-format off
+		ruis::make::raw_text_input_line(
 			context, //
 			{
 				.layout_params{
 					.dims = {ruis::dim::max, ruis::dim::max}
 				},
-				.text_widget_params = std::move(params.text_input_line_params.text_widget_params),
-				.color_params = std::move(params.text_input_line_params.color_params)
+				.text_widget_params = std::move(params.text_widget_params),
+				.color_params = std::move(params.color_params)
 			},
 			std::move(text)
 		)
+		// clang-format on
 	)
 {}
 
 rectangle_text_input_line::rectangle_text_input_line(
 	utki::shared_ref<ruis::context>& context, //
 	all_parameters& params,
-	utki::shared_ref<ruis::text_input_line> text_input_line
+	utki::shared_ref<ruis::raw_text_input_line> raw_text_input_line
 ) :
 	widget(
 		context, //
 		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
-	// Initialize rectangle first so it adds the text_input_line as a child
+	// Initialize rectangle first so it adds the raw_text_input_line as a child
 	// clang-format off
 	rectangle(
 		this->context,
@@ -80,25 +82,22 @@ rectangle_text_input_line::rectangle_text_input_line(
 			}
 		},
 		{
-			text_input_line
+			raw_text_input_line
 		}
 	),
 	// clang-format on
-	decorated_widget<ruis::text_input_line>(
+	decorated_widget<ruis::raw_text_input_line>(
 		this->context, //
-		text_input_line.get()
+		raw_text_input_line.get()
 	)
 {
-	// Set rectangle fill color to background color from style
+	// Set rectangle fill color
 	this->set_color(this->context.get().style().get_color_background());
-
-	// Set text color to text color from style (different from background)
-	text_input_line.get().set_color(this->context.get().style().get_color_text());
 }
 
 void rectangle_text_input_line::on_focus_change()
 {
-	this->decorated_widget<ruis::text_input_line>::get_decorated().on_focus_change();
+	this->decorated_widget<ruis::raw_text_input_line>::get_decorated().on_focus_change();
 }
 
 utki::shared_ref<ruis::rectangle_text_input_line> ruis::make::rectangle_text_input_line(

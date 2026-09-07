@@ -19,11 +19,11 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 /* ================ LICENSE END ================ */
 
-#include "text_input_line.hpp"
+#include "raw_text_input_line.hpp"
 
-#include "../../context.hpp"
-#include "../../util/key.hpp"
-#include "../../util/util.hpp"
+#include "../../../context.hpp"
+#include "../../../util/key.hpp"
+#include "../../../util/util.hpp"
 
 #if M_OS == M_OS_WINDOWS
 #	ifdef DELETE
@@ -39,7 +39,7 @@ const uint32_t cursor_blink_period = 500; // milliseconds
 const real cursor_width = real(1.0);
 } // namespace
 
-text_input_line::text_input_line(
+raw_text_input_line::raw_text_input_line(
 	utki::shared_ref<ruis::context> context, //
 	all_parameters params,
 	string text
@@ -57,13 +57,18 @@ text_input_line::text_input_line(
 	character_input_widget(this->context),
 	color_widget(
 		this->context, //
-		std::move(params.color_params)
+		[&](){
+			if(params.color_params.color.get().is_undefined()){
+				params.color_params.color = this->context.get().style().get_color_text();
+			}
+			return std::move(params.color_params);
+		}()
 	)
 {
 	this->set_clip(true);
 }
 
-void text_input_line::render(const ruis::mat4& matrix) const
+void raw_text_input_line::render(const ruis::mat4& matrix) const
 {
 	// render selection
 	if (this->cursor_index != this->selection_start_index) {
@@ -126,7 +131,7 @@ void text_input_line::render(const ruis::mat4& matrix) const
 	}
 }
 
-event_status text_input_line::on_mouse_button(const mouse_button_event& e)
+event_status raw_text_input_line::on_mouse_button(const mouse_button_event& e)
 {
 	if (e.button != mouse_button::left) {
 		return event_status::propagate;
@@ -141,7 +146,7 @@ event_status text_input_line::on_mouse_button(const mouse_button_event& e)
 	return event_status::consumed;
 }
 
-event_status text_input_line::on_mouse_move(const mouse_move_event& e)
+event_status raw_text_input_line::on_mouse_move(const mouse_move_event& e)
 {
 	if (!this->left_mouse_button_down) {
 		return event_status::propagate;
@@ -151,7 +156,7 @@ event_status text_input_line::on_mouse_move(const mouse_move_event& e)
 	return event_status::consumed;
 }
 
-vec2 text_input_line::measure(const ruis::vec2& quotum) const noexcept
+vec2 raw_text_input_line::measure(const ruis::vec2& quotum) const noexcept
 {
 	vec2 ret;
 
@@ -170,7 +175,7 @@ vec2 text_input_line::measure(const ruis::vec2& quotum) const noexcept
 	return ret;
 }
 
-void text_input_line::set_cursor_index(size_t index, bool selection)
+void raw_text_input_line::set_cursor_index(size_t index, bool selection)
 {
 	this->cursor_index = index;
 
@@ -231,7 +236,7 @@ void text_input_line::set_cursor_index(size_t index, bool selection)
 	}
 }
 
-real text_input_line::index_to_pos(size_t index)
+real raw_text_input_line::index_to_pos(size_t index)
 {
 	utki::assert(this->first_visible_char_index <= this->get_string().size());
 
@@ -258,7 +263,7 @@ real text_input_line::index_to_pos(size_t index)
 	return ret;
 }
 
-size_t text_input_line::pos_to_index(real pos)
+size_t raw_text_input_line::pos_to_index(real pos)
 {
 	size_t index = this->first_visible_char_index;
 	real p = this->x_offset;
@@ -283,12 +288,12 @@ size_t text_input_line::pos_to_index(real pos)
 	return index;
 }
 
-void text_input_line::update(uint32_t dt)
+void raw_text_input_line::update(uint32_t dt)
 {
 	this->cursor_blink_visible = !this->cursor_blink_visible;
 }
 
-void text_input_line::on_focus_change()
+void raw_text_input_line::on_focus_change()
 {
 	if (this->is_focused()) {
 		this->ctrl_pressed = false;
@@ -300,13 +305,13 @@ void text_input_line::on_focus_change()
 	this->context.get().window().set_virtual_keyboard_visible(this->is_focused());
 }
 
-void text_input_line::on_resize()
+void raw_text_input_line::on_resize()
 {
 	//	TRACE(<< "text_input_line::on_resize(): size = " << this->rect().d << std::endl)
 	this->selection_start_pos = this->index_to_pos(this->selection_start_index);
 }
 
-void text_input_line::start_cursor_blinking()
+void raw_text_input_line::start_cursor_blinking()
 {
 	this->context.get().updater.get().stop(*this);
 	this->cursor_blink_visible = true;
@@ -316,7 +321,7 @@ void text_input_line::start_cursor_blinking()
 	);
 }
 
-event_status text_input_line::on_key(const ruis::key_event& e)
+event_status raw_text_input_line::on_key(const ruis::key_event& e)
 {
 	switch (e.combo.key) {
 		case ruis::key::left_control:
@@ -333,7 +338,7 @@ event_status text_input_line::on_key(const ruis::key_event& e)
 	return event_status::propagate;
 }
 
-void text_input_line::on_character_input(const character_input_event& e)
+void raw_text_input_line::on_character_input(const character_input_event& e)
 {
 	switch (e.combo.key) {
 		case ruis::key::enter:
@@ -448,7 +453,7 @@ void text_input_line::on_character_input(const character_input_event& e)
 	}
 }
 
-size_t text_input_line::delete_selection()
+size_t raw_text_input_line::delete_selection()
 {
 	utki::assert(this->cursor_index != this->selection_start_index);
 
@@ -470,13 +475,13 @@ size_t text_input_line::delete_selection()
 	return start;
 }
 
-utki::shared_ref<ruis::text_input_line> ruis::make::text_input_line(
+utki::shared_ref<ruis::raw_text_input_line> ruis::make::raw_text_input_line(
 	utki::shared_ref<ruis::context> context, //
-	ruis::text_input_line::all_parameters params,
+	ruis::raw_text_input_line::all_parameters params,
 	ruis::string text
 )
 {
-	return utki::make_shared<ruis::text_input_line>(
+	return utki::make_shared<ruis::raw_text_input_line>(
 		std::move(context), //
 		std::move(params),
 		std::move(text)

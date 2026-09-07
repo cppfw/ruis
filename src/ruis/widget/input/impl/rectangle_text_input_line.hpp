@@ -23,19 +23,19 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../../base/decorated_widget.hpp"
 #include "../../label/rectangle.hpp"
-#include "../text_input_line.hpp"
+#include "../components/raw_text_input_line.hpp"
 
 namespace ruis {
 
 /**
  * @brief Text input line widget with a rectangle background.
  * This widget combines a rectangle (with stroke and fill colors from style)
- * and a text_input_line as its child.
+ * and a raw_text_input_line as its child.
  */
 class rectangle_text_input_line :
 	virtual public widget, //
 	private rectangle,
-	public decorated_widget<text_input_line>
+	public decorated_widget<raw_text_input_line>
 {
 public:
 	struct parameters {
@@ -47,16 +47,16 @@ public:
 		widget::parameters widget_params;
 		container::parameters container_params;
 		padding::parameters padding_params;
-		color_widget::parameters color_params;
 		rectangle::parameters rectangle_params;
-		text_input_line::all_parameters text_input_line_params;
+		color_widget::parameters color_params;
+		text_widget::parameters text_widget_params;
 	};
 
 private:
 	rectangle_text_input_line(
 		utki::shared_ref<ruis::context>& context, //
 		all_parameters& params,
-		utki::shared_ref<ruis::text_input_line> text_input_line
+		utki::shared_ref<ruis::raw_text_input_line> raw_text_input_line
 	);
 
 public:

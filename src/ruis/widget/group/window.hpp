@@ -21,8 +21,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "../base/decorated_widget.hpp"
 #include "../../util/length.hpp"
+#include "../base/decorated_widget.hpp"
 #include "../label/rectangle.hpp"
 #include "../label/text.hpp"
 #include "../proxy/mouse_proxy.hpp"

@@ -324,7 +324,7 @@ void ruis::window::set_background(utki::shared_ref<widget> w)
 }
 
 window::window(
-	utki::shared_ref<ruis::context> context,
+	utki::shared_ref<ruis::context> context, //
 	all_parameters params,
 	widget_list children
 ) :

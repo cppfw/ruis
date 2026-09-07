@@ -41,7 +41,7 @@ using namespace ruis::make;
 } // namespace m
 
 collapse_area::collapse_area(
-	utki::shared_ref<ruis::context> context,
+	utki::shared_ref<ruis::context> context, //
 	all_parameters params,
 	widget_list contents
 ) :

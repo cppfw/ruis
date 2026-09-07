@@ -28,13 +28,13 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <ruis/widget/group/drag_area.hpp>
 #include <ruis/widget/group/overlay.hpp>
 #include <ruis/widget/group/window.hpp>
+#include <ruis/widget/input/impl/rectangle_text_input_line.hpp>
 #include <ruis/widget/label/gap.hpp>
 #include <ruis/widget/label/padding.hpp>
 #include <ruis/widget/proxy/key_proxy.hpp>
 #include <ruis/widget/proxy/resize_proxy.hpp>
 #include <ruis/widget/slider/scroll_bar.hpp>
 #include <ruis/widget/slider/slider.hpp>
-#include <ruis/widget/input/impl/rectangle_text_input_line.hpp>
 #include <ruisapp/application.hpp>
 
 #include "application.hpp"

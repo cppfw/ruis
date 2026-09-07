@@ -21,19 +21,18 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "../../updateable.hpp"
-#include "../base/text_line_widget.hpp"
-#include "../widget.hpp"
-
-#include "character_input_widget.hpp"
+#include "../../../updateable.hpp"
+#include "../../base/text_line_widget.hpp"
+#include "../../widget.hpp"
+#include "../character_input_widget.hpp"
 
 namespace ruis {
 
 /**
- * @brief TODO:.
+ * @brief Raw text input line widget without any decoration.
  */
 // NOLINTNEXTLINE(bugprone-incorrect-enable-shared-from-this, "std::shared_from_this is public via text_line_widget")
-class text_input_line :
+class raw_text_input_line :
 	public text_line_widget, //
 	public character_input_widget,
 	public color_widget,
@@ -58,11 +57,11 @@ class text_input_line :
 	bool left_mouse_button_down = false;
 
 public:
-	text_input_line(const text_input_line&) = delete;
-	text_input_line& operator=(const text_input_line&) = delete;
+	raw_text_input_line(const raw_text_input_line&) = delete;
+	raw_text_input_line& operator=(const raw_text_input_line&) = delete;
 
-	text_input_line(text_input_line&&) = delete;
-	text_input_line& operator=(text_input_line&&) = delete;
+	raw_text_input_line(raw_text_input_line&&) = delete;
+	raw_text_input_line& operator=(raw_text_input_line&&) = delete;
 
 	struct all_parameters {
 		layout::parameters layout_params;
@@ -71,13 +70,13 @@ public:
 		color_widget::parameters color_params;
 	};
 
-	text_input_line(
+	raw_text_input_line(
 		utki::shared_ref<ruis::context> context, //
 		all_parameters params,
 		string text
 	);
 
-	~text_input_line() override = default;
+	~raw_text_input_line() override = default;
 
 	vec2 measure(const ruis::vec2& quotum) const noexcept override;
 
@@ -117,9 +116,9 @@ private:
 };
 
 namespace make {
-utki::shared_ref<ruis::text_input_line> text_input_line(
+utki::shared_ref<ruis::raw_text_input_line> raw_text_input_line(
 	utki::shared_ref<ruis::context> context, //
-	ruis::text_input_line::all_parameters params,
+	ruis::raw_text_input_line::all_parameters params,
 	ruis::string text
 );
 } // namespace make
