@@ -62,8 +62,10 @@ public:
 		ruis::string hint;
 		styled<ruis::color> hint_color;
 	};
+
 private:
 	parameters params;
+
 public:
 	text_field(const text_field&) = delete;
 	text_field& operator=(const text_field&) = delete;

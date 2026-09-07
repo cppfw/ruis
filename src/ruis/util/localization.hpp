@@ -113,10 +113,11 @@ public:
  * @brief GUI string.
  * GUI string can be either exact UTF-32 string or a reference to a localized wording.
  */
-class string : private std::variant<
-	std::u32string, //
-	wording //
-	>
+class string :
+	private std::variant<
+		std::u32string, //
+		wording //
+		>
 {
 public:
 	string() = default;
@@ -140,7 +141,8 @@ public:
 		return std::holds_alternative<wording>(*this);
 	}
 
-	const std::u32string& get() const{
+	const std::u32string& get() const
+	{
 		if (std::holds_alternative<std::u32string>(*this)) {
 			return *std::get_if<std::u32string>(this);
 		}
@@ -148,12 +150,14 @@ public:
 		return std::get_if<wording>(this)->string();
 	}
 
-	const wording& get_wording() const{
+	const wording& get_wording() const
+	{
 		utki::assert(this->is_wording());
 		return *std::get_if<wording>(this);
 	}
 
-	wording& get_wording(){
+	wording& get_wording()
+	{
 		utki::assert(this->is_wording());
 		return *std::get_if<wording>(this);
 	}

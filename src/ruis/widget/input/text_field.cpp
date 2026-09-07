@@ -95,7 +95,7 @@ void text_field::render(const ruis::mat4& matrix) const
 	}
 
 	// render text or hint
-	if(this->get_string().empty()){
+	if (this->get_string().empty()) {
 		// render hint
 		ruis::mat4 matr(matrix);
 
@@ -114,7 +114,7 @@ void text_field::render(const ruis::mat4& matrix) const
 			this->params.hint_color.get(),
 			this->params.hint.get()
 		);
-	}else{
+	} else {
 		// render text
 		ruis::mat4 matr(matrix);
 

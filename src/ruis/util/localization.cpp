@@ -112,4 +112,3 @@ wording localization::reload(wording&& w) const
 string::string(std::string_view s) :
 	std::variant<std::u32string, wording>(utki::to_utf32(s))
 {}
-
