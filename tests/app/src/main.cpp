@@ -15,7 +15,7 @@
 #include <ruis/widget/button/push_button.hpp>
 #include <ruis/widget/label/text.hpp>
 #include <ruis/res/texture_2d.hpp>
-#include <ruis/widget/input/character_input_widget.hpp>
+#include <ruis/widget/input/components/character_input_widget.hpp>
 #include <ruis/widget/group/scroll_area.hpp>
 #include <ruis/widget/proxy/mouse_proxy.hpp>
 #include <ruis/widget/slider/scroll_bar.hpp>

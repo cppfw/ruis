@@ -24,7 +24,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../../../updateable.hpp"
 #include "../../base/text_line_widget.hpp"
 #include "../../widget.hpp"
-#include "../character_input_widget.hpp"
+#include "character_input_widget.hpp"
 
 namespace ruis {
 

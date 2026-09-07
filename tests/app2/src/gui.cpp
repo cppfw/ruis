@@ -28,7 +28,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <ruis/widget/group/drag_area.hpp>
 #include <ruis/widget/group/overlay.hpp>
 #include <ruis/widget/group/window.hpp>
-#include <ruis/widget/input/impl/rectangle_text_input_line.hpp>
+#include <ruis/widget/input/text_input_line.hpp>
 #include <ruis/widget/label/gap.hpp>
 #include <ruis/widget/label/padding.hpp>
 #include <ruis/widget/proxy/key_proxy.hpp>
@@ -432,7 +432,7 @@ utki::shared_ref<ruis::window> make_text_input_window(
 				},
 				U"Enter some text:"
 			),
-			m::rectangle_text_input_line(c,
+			m::text_input_line(c,
 				{
 					.layout_params = {
 						.dims = {ruis::dim::fill, ruis::dim::min}
