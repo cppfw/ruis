@@ -94,7 +94,7 @@ const tst::set set("color", [](tst::suite& suite) {
 
 	suite.add("make_from_forest_with_value", [] {
 		tml::forest f;
-		f.emplace_back(tml::tree(tml::leaf("0xff804010")));
+		f.emplace_back(tml::leaf("0xff804010"));
 
 		auto c = ruis::color::make_from(f);
 		tst::check_eq(c.r(), uint8_t(0x10), SL);
