@@ -57,8 +57,8 @@ raw_text_input_line::raw_text_input_line(
 	character_input_widget(this->context),
 	color_widget(
 		this->context, //
-		[&](){
-			if(params.color_params.color.get().is_undefined()){
+		[&]() {
+			if (params.color_params.color.get().is_undefined()) {
 				params.color_params.color = this->context.get().style().get_color_text();
 			}
 			return std::move(params.color_params);
