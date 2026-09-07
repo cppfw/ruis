@@ -22,7 +22,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "gui.hpp"
 
 #include "res/tml.hpp"
-#include "widget/input/components/character_input_widget.hpp"
+#include "widget/input/character_input_widget.hpp"
 #include "widget/label/gap.hpp"
 
 // TODO: remove when guit::init_standard_widgets() is removed
