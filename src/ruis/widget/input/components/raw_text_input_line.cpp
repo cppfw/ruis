@@ -307,7 +307,6 @@ void raw_text_input_line::on_focus_change()
 
 void raw_text_input_line::on_resize()
 {
-	//	TRACE(<< "text_input_line::on_resize(): size = " << this->rect().d << std::endl)
 	this->selection_start_pos = this->index_to_pos(this->selection_start_index);
 }
 

@@ -28,15 +28,15 @@ namespace ruis {
 namespace make {
 
 /**
- * @brief Factory function to create a text input line widget.
+ * @brief Factory function to create a text field widget.
  * Creates a rectangle_text_input_line under the hood.
  * 
  * @param context GUI context
- * @param params Parameters for the text input line
+ * @param params Parameters for the text field
  * @param text Initial text content
  * @return Shared reference to the created decorated widget
  */
-utki::shared_ref<ruis::decorated_widget<ruis::raw_text_input_line>> text_input_line(
+utki::shared_ref<ruis::decorated_widget<ruis::raw_text_input_line>> text_field(
 	utki::shared_ref<ruis::context> context, //
 	ruis::rectangle_text_input_line::all_parameters params,
 	ruis::string text

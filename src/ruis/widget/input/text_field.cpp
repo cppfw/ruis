@@ -19,11 +19,11 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 /* ================ LICENSE END ================ */
 
-#include "text_input_line.hpp"
+#include "text_field.hpp"
 
 #include "impl/rectangle_text_input_line.hpp"
 
-utki::shared_ref<ruis::decorated_widget<ruis::raw_text_input_line>> ruis::make::text_input_line(
+utki::shared_ref<ruis::decorated_widget<ruis::raw_text_input_line>> ruis::make::text_field(
 	utki::shared_ref<ruis::context> context, //
 	ruis::rectangle_text_input_line::all_parameters params,
 	ruis::string text
