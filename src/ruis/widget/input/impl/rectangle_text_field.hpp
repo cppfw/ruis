@@ -48,9 +48,9 @@ public:
 		container::parameters container_params;
 		padding::parameters padding_params;
 		rectangle::parameters rectangle_params;
+		color_widget::parameters color_params;
 		text_widget::parameters text_widget_params;
 		text_field::parameters text_field_params;
-		color_widget::parameters color_params;
 	};
 
 private:

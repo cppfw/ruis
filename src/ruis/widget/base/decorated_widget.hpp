@@ -38,7 +38,10 @@ namespace ruis {
  * @tparam widget_type The type of the widget being decorated. Must be a widget type
  *                     (i.e., derived from ruis::widget).
  */
-template <typename widget_type>
+template <
+	typename widget_type, //
+	typename decorated_tag_type = int // int means default decorated tag, useful when decorator decorates onlyu one widget
+	>
 requires std::derived_from<widget_type, widget>
 class decorated_widget : virtual public widget
 {
@@ -68,7 +71,7 @@ public:
 	 *
 	 * @return Reference to the decorated widget.
 	 */
-	widget_type& get_decorated() noexcept
+	widget_type& get_decorated(decorated_tag_type tag = {}) noexcept
 	{
 		return this->decorated;
 	}
@@ -78,7 +81,7 @@ public:
 	 *
 	 * @return Const reference to the decorated widget.
 	 */
-	const widget_type& get_decorated() const noexcept
+	const widget_type& get_decorated(decorated_tag_type tag = {}) const noexcept
 	{
 		return this->decorated;
 	}
