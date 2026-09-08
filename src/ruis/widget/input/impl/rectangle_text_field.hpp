@@ -38,10 +38,6 @@ class rectangle_text_field :
 	public text_field
 {
 public:
-	struct parameters {
-		// Additional parameters can be added here if needed
-	};
-
 	struct all_parameters {
 		layout::parameters layout_params;
 		widget::parameters widget_params;
