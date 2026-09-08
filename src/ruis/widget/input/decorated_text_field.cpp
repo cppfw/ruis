@@ -31,6 +31,7 @@ utki::shared_ref<ruis::decorated_widget<ruis::text_field>> ruis::make::decorated
 {
 	auto ret = ruis::make::rectangle_text_field(
 		std::move(context), //
+		// clang-format off
 		{
 			.layout_params = std::move(params.layout_params),
 			.widget_params = std::move(params.widget_params),
@@ -38,6 +39,7 @@ utki::shared_ref<ruis::decorated_widget<ruis::text_field>> ruis::make::decorated
 			.text_widget_params = std::move(params.text_widget_params),
 			.text_field_params = std::move(params.text_field_params)
 		},
+		// clang-format on
 		std::move(text)
 	);
 	return ret;

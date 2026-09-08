@@ -21,8 +21,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "text_field.hpp"
 #include "../base/decorated_widget.hpp"
+
+#include "text_field.hpp"
 
 namespace ruis {
 

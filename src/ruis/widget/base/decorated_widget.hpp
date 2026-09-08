@@ -40,8 +40,8 @@ namespace ruis {
  */
 template <
 	typename widget_type, //
-	typename decorated_tag_type = int // int means default decorated tag, useful when decorator decorates onlyu one widget
-	>
+	// decorated_tag_type = int means default decorated tag, useful when decorator decorates only one widget
+	typename decorated_tag_type = int>
 requires std::derived_from<widget_type, widget>
 class decorated_widget : virtual public widget
 {
