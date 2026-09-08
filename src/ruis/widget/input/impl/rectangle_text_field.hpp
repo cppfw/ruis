@@ -23,7 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../../base/wrapped_widget.hpp"
 #include "../../label/rectangle.hpp"
-#include "../bare_text_field.hpp"
+#include "../text_field.hpp"
 
 namespace ruis {
 
@@ -35,7 +35,7 @@ namespace ruis {
 class rectangle_text_field :
 	virtual public widget, //
 	private rectangle,
-	public wrapped_widget<bare_text_field>
+	public text_field
 {
 public:
 	struct parameters {

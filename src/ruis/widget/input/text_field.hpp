@@ -23,26 +23,42 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../base/wrapped_widget.hpp"
 
-#include "impl/rectangle_text_field.hpp"
-
 #include "bare_text_field.hpp"
 
 namespace ruis {
+
+// TODO: add doxygen docs
+class text_field : public wrapped_widget<bare_text_field>
+{
+public:
+	struct all_parameters {
+		layout::parameters layout_params;
+		widget::parameters widget_params;
+		color_widget::parameters color_params;
+		text_widget::parameters text_widget_params;
+		bare_text_field::parameters text_field_params;
+	};
+
+protected:
+	text_field(
+		utki::shared_ref<ruis::context> context, //
+		bare_text_field& bare
+	);
+};
 
 namespace make {
 
 /**
  * @brief Factory function to create a text field widget.
- * Creates a rectangle_text_field under the hood.
  * 
- * @param context GUI context
- * @param params Parameters for the text field
- * @param text Initial text content
- * @return Shared reference to the created widget
+ * @param context - GUI context.
+ * @param params - Parameters for the text field.
+ * @param text - Initial text content.
+ * @return Shared reference to the created widget.
  */
-utki::shared_ref<ruis::wrapped_widget<ruis::bare_text_field>> text_field(
+utki::shared_ref<ruis::text_field> text_field(
 	utki::shared_ref<ruis::context> context, //
-	ruis::rectangle_text_field::all_parameters params,
+	ruis::text_field::all_parameters params,
 	ruis::string text
 );
 

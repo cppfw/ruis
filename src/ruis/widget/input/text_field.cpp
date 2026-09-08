@@ -23,13 +23,26 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "impl/rectangle_text_field.hpp"
 
-utki::shared_ref<ruis::wrapped_widget<ruis::bare_text_field>> ruis::make::text_field(
+using namespace ruis;
+
+text_field::text_field(
 	utki::shared_ref<ruis::context> context, //
-	ruis::rectangle_text_field::all_parameters params,
+	bare_text_field& bare
+) :
+	widget(std::move(context), {}, {}),
+	wrapped_widget<bare_text_field>(
+		context, //
+		bare
+	)
+{}
+
+utki::shared_ref<ruis::text_field> ruis::make::text_field(
+	utki::shared_ref<ruis::context> context, //
+	ruis::text_field::all_parameters params,
 	ruis::string text
 )
 {
-	auto ret = ruis::make::rectangle_text_field(
+	return ruis::make::rectangle_text_field(
 		std::move(context), //
 		// clang-format off
 		{
@@ -42,5 +55,4 @@ utki::shared_ref<ruis::wrapped_widget<ruis::bare_text_field>> ruis::make::text_f
 		// clang-format on
 		std::move(text)
 	);
-	return ret;
 }

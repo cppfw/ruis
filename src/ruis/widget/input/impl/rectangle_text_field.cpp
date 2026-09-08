@@ -87,7 +87,7 @@ rectangle_text_field::rectangle_text_field(
 		}
 	),
 	// clang-format on
-	wrapped_widget<ruis::bare_text_field>(
+	text_field(
 		this->context, //
 		bare_text_field.get()
 	)
