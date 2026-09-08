@@ -22,7 +22,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #pragma once
 
 #include "../../util/length.hpp"
-#include "../base/decorated_widget.hpp"
+#include "../base/wrapped_widget.hpp"
 #include "../label/rectangle.hpp"
 #include "../label/text.hpp"
 #include "../proxy/mouse_proxy.hpp"
@@ -42,7 +42,7 @@ namespace ruis {
 class window :
 	virtual public widget, //
 	private container,
-	public decorated_widget<container>
+	public wrapped_widget<container>
 {
 	ruis::vec2 empty_min_dim; // minimal dimension of empty window
 

@@ -21,7 +21,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "../base/decorated_widget.hpp"
+#include "../base/wrapped_widget.hpp"
 
 #include "text_field.hpp"
 
@@ -38,7 +38,7 @@ namespace make {
  * @param text Initial text content
  * @return Shared reference to the created decorated widget
  */
-utki::shared_ref<ruis::decorated_widget<ruis::text_field>> decorated_text_field(
+utki::shared_ref<ruis::wrapped_widget<ruis::text_field>> decorated_text_field(
 	utki::shared_ref<ruis::context> context, //
 	ruis::text_field::all_parameters params,
 	ruis::string text

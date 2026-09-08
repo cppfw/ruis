@@ -87,7 +87,7 @@ rectangle_text_field::rectangle_text_field(
 		}
 	),
 	// clang-format on
-	decorated_widget<ruis::text_field>(
+	wrapped_widget<ruis::text_field>(
 		this->context, //
 		text_field.get()
 	)
@@ -98,7 +98,7 @@ rectangle_text_field::rectangle_text_field(
 
 void rectangle_text_field::on_focus_change()
 {
-	this->decorated_widget<ruis::text_field>::get_decorated().on_focus_change();
+	this->wrapped_widget<ruis::text_field>::get_wrapped().on_focus_change();
 }
 
 utki::shared_ref<ruis::rectangle_text_field> ruis::make::rectangle_text_field(

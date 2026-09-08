@@ -22,7 +22,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #pragma once
 
 #include "../../util/oriented.hpp"
-#include "../base/decorated_widget.hpp"
+#include "../base/wrapped_widget.hpp"
 #include "../container.hpp"
 
 namespace ruis {
@@ -41,7 +41,7 @@ class tiling_area :
 	virtual public widget, //
 	public ruis::oriented,
 	private ruis::container,
-	public decorated_widget<container>
+	public wrapped_widget<container>
 {
 	friend class ruis::internal::dragger;
 

@@ -76,7 +76,7 @@ padding::padding(
 		}
 	),
 	// clang-format on
-	decorated_widget(
+	wrapped_widget(
 		this->context, //
 		content_container.get()
 	),
@@ -121,7 +121,7 @@ vec2 padding::measure(const vec2& quotum) const
 
 	vec2 ret = quotum;
 	{
-		auto content_min_dims = this->get_decorated().measure(borderless_quotum);
+		auto content_min_dims = this->get_wrapped().measure(borderless_quotum);
 		// clang-format off
 		for(auto [r, m, blt, brb] :
 			utki::views::zip(
@@ -148,7 +148,7 @@ void padding::on_lay_out()
 
 	vec2 content_dims = max(real(0), this->rect().d - borders.dims());
 
-	auto& c = this->get_decorated();
+	auto& c = this->get_wrapped();
 
 	c.move_to(borders.left_top());
 	c.resize(content_dims);

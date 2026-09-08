@@ -215,7 +215,7 @@ dialog::dialog(
 		)
 	),
 	// clang-format on
-	decorated_widget(
+	wrapped_widget(
 		this->context, //
 		content_container.get()
 	)

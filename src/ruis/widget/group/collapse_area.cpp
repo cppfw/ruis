@@ -150,7 +150,7 @@ collapse_area::collapse_area(
 		}
 	),
 	// clang-format on
-	decorated_widget(
+	wrapped_widget(
 		this->context, //
 		content_container.get()
 	),
@@ -159,7 +159,7 @@ collapse_area::collapse_area(
 	{
 		auto& sw = this->get_widget_as<toggle_button>("ruis_switch");
 		sw.pressed_change_handler = [this](button& tb) {
-			auto& lp = this->get_decorated().get_layout_params();
+			auto& lp = this->get_wrapped().get_layout_params();
 			if (tb.is_pressed()) {
 				using namespace length_literals;
 				lp.dims.y() = 0_px;

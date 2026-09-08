@@ -23,7 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "impl/rectangle_text_field.hpp"
 
-utki::shared_ref<ruis::decorated_widget<ruis::text_field>> ruis::make::decorated_text_field(
+utki::shared_ref<ruis::wrapped_widget<ruis::text_field>> ruis::make::decorated_text_field(
 	utki::shared_ref<ruis::context> context, //
 	ruis::text_field::all_parameters params,
 	ruis::string text

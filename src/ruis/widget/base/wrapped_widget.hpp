@@ -28,62 +28,62 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 namespace ruis {
 
 /**
- * @brief Base class for widgets that decorate other widgets.
+ * @brief Base class for widgets that wrap other widgets.
  *
- * The decorated_widget class template provides common interface to get the decorated widget.
+ * The wrapped_widget class template provides common interface to get the wrapped widget.
  *
- * In the class hierarchy, the decorated_widget must be initialized after the decorated
+ * In the class hierarchy, the wrapped_widget must be initialized after the wrapped
  * widget's ancestor container to ensure proper parent-child relationships.
  *
- * @tparam widget_type The type of the widget being decorated. Must be a widget type
+ * @tparam widget_type The type of the widget being wrapped. Must be a widget type
  *                     (i.e., derived from ruis::widget).
  */
 template <
 	typename widget_type, //
-	// decorated_tag_type = int means default decorated tag, useful when decorator decorates only one widget
-	typename decorated_tag_type = int>
+	// wrapped_tag_type = int means default wrapped tag, useful when wrapper wraps only one widget
+	typename wrapped_tag_type = int>
 requires std::derived_from<widget_type, widget>
-class decorated_widget : virtual public widget
+class wrapped_widget : virtual public widget
 {
-	widget_type& decorated;
+	widget_type& wrapped;
 
 protected:
 	/**
-	 * @brief Construct a decorated_widget.
+	 * @brief Construct a wrapped_widget.
 	 *
 	 * @param context Shared reference to the ruis context.
-	 * @param decorated Reference to the widget being decorated.
-	 *                 This widget must have this decorated_widget as an ancestor.
+	 * @param wrapped Reference to the widget being wrapped.
+	 *                 This widget must have this wrapped_widget as an ancestor.
 	 */
-	decorated_widget(
+	wrapped_widget(
 		utki::shared_ref<ruis::context> context, //
-		widget_type& decorated
+		widget_type& wrapped
 	) :
 		widget(std::move(context), {}, {}),
-		decorated(decorated)
+		wrapped(wrapped)
 	{
-		utki::assert(this->decorated.has_ancestor(*this));
+		utki::assert(this->wrapped.has_ancestor(*this));
 	}
 
 public:
 	/**
-	 * @brief Get a mutable reference to the decorated widget.
+	 * @brief Get a mutable reference to the wrapped widget.
 	 *
-	 * @return Reference to the decorated widget.
+	 * @return Reference to the wrapped widget.
 	 */
-	widget_type& get_decorated(decorated_tag_type tag = {}) noexcept
+	widget_type& get_wrapped(wrapped_tag_type tag = {}) noexcept
 	{
-		return this->decorated;
+		return this->wrapped;
 	}
 
 	/**
-	 * @brief Get a const reference to the decorated widget.
+	 * @brief Get a const reference to the wrapped widget.
 	 *
-	 * @return Const reference to the decorated widget.
+	 * @return Const reference to the wrapped widget.
 	 */
-	const widget_type& get_decorated(decorated_tag_type tag = {}) const noexcept
+	const widget_type& get_wrapped(wrapped_tag_type tag = {}) const noexcept
 	{
-		return this->decorated;
+		return this->wrapped;
 	}
 };
 } // namespace ruis

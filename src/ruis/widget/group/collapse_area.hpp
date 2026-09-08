@@ -21,7 +21,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "../base/decorated_widget.hpp"
+#include "../base/wrapped_widget.hpp"
 #include "../container.hpp"
 
 namespace ruis {
@@ -30,7 +30,7 @@ namespace ruis {
 class collapse_area :
 	virtual public widget, //
 	private container,
-	public decorated_widget<container>
+	public wrapped_widget<container>
 {
 	// TODO: use shared_ref
 	// NOLINTNEXTLINE(clang-analyzer-webkit.NoUncountedMemberChecker, "false-positive")

@@ -21,7 +21,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "../../base/decorated_widget.hpp"
+#include "../../base/wrapped_widget.hpp"
 #include "../../label/rectangle.hpp"
 #include "../text_field.hpp"
 
@@ -35,7 +35,7 @@ namespace ruis {
 class rectangle_text_field :
 	virtual public widget, //
 	private rectangle,
-	public decorated_widget<text_field>
+	public wrapped_widget<text_field>
 {
 public:
 	struct parameters {
