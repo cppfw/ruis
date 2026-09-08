@@ -23,8 +23,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../base/wrapped_widget.hpp"
 
-#include "bare_text_field.hpp"
 #include "impl/rectangle_text_field.hpp"
+
+#include "bare_text_field.hpp"
 
 namespace ruis {
 

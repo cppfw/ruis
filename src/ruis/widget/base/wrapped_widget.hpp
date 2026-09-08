@@ -27,9 +27,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
-struct container_tag{};
-struct text_field_tag{};
-
 /**
  * @brief Base class for widgets that wrap other widgets.
  *
