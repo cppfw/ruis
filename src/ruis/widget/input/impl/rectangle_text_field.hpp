@@ -23,19 +23,19 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../../base/wrapped_widget.hpp"
 #include "../../label/rectangle.hpp"
-#include "../text_field.hpp"
+#include "../bare_text_field.hpp"
 
 namespace ruis {
 
 /**
  * @brief Text field widget with a rectangle background.
  * This widget combines a rectangle (with stroke and fill colors from style)
- * and a text_field as its child.
+ * and a bare_text_field as its child.
  */
 class rectangle_text_field :
 	virtual public widget, //
 	private rectangle,
-	public wrapped_widget<text_field>
+	public wrapped_widget<bare_text_field>
 {
 public:
 	struct parameters {
@@ -50,14 +50,14 @@ public:
 		rectangle::parameters rectangle_params;
 		color_widget::parameters color_params;
 		text_widget::parameters text_widget_params;
-		text_field::parameters text_field_params;
+		bare_text_field::parameters text_field_params;
 	};
 
 private:
 	rectangle_text_field(
 		utki::shared_ref<ruis::context>& context, //
 		all_parameters& params,
-		utki::shared_ref<ruis::text_field> text_field
+		utki::shared_ref<ruis::bare_text_field> bare_text_field
 	);
 
 public:

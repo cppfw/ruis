@@ -23,7 +23,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../base/wrapped_widget.hpp"
 
-#include "text_field.hpp"
+#include "bare_text_field.hpp"
+#include "impl/rectangle_text_field.hpp"
 
 namespace ruis {
 
@@ -38,9 +39,9 @@ namespace make {
  * @param text Initial text content
  * @return Shared reference to the created decorated widget
  */
-utki::shared_ref<ruis::wrapped_widget<ruis::text_field>> decorated_text_field(
+utki::shared_ref<ruis::wrapped_widget<ruis::bare_text_field>> decorated_text_field(
 	utki::shared_ref<ruis::context> context, //
-	ruis::text_field::all_parameters params,
+	ruis::rectangle_text_field::all_parameters params,
 	ruis::string text
 );
 

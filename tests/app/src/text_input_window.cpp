@@ -5,7 +5,7 @@
 #include <ruis/widget/group/collapse_area.hpp>
 #include <ruis/widget/button/impl/image_push_button.hpp>
 #include <ruis/widget/label/gap.hpp>
-#include <ruis/widget/input/text_field.hpp>
+#include <ruis/widget/input/bare_text_field.hpp>
 #include <ruisapp/application.hpp>
 
 #include "new_native_window.hpp"
@@ -190,7 +190,7 @@ utki::shared_ref<ruis::window> make_text_input_window(
                     }
                 },
                 {
-                    m::text_field(c,
+                    m::bare_text_field(c,
                         {
                             .layout_params{
                                 .dims{ruis::dim::fill, ruis::dim::max}

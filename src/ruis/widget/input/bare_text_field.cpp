@@ -19,7 +19,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 /* ================ LICENSE END ================ */
 
-#include "text_field.hpp"
+#include "bare_text_field.hpp"
 
 #include "../../context.hpp"
 #include "../../util/key.hpp"
@@ -39,7 +39,7 @@ const uint32_t cursor_blink_period = 500; // milliseconds
 const real cursor_width = real(1.0);
 } // namespace
 
-text_field::text_field(
+bare_text_field::bare_text_field(
 	utki::shared_ref<ruis::context> context, //
 	all_parameters params,
 	string text
@@ -69,7 +69,7 @@ text_field::text_field(
 	this->set_clip(true);
 }
 
-void text_field::render(const ruis::mat4& matrix) const
+void bare_text_field::render(const ruis::mat4& matrix) const
 {
 	// render selection
 	if (this->cursor_index != this->selection_start_index) {
@@ -154,7 +154,7 @@ void text_field::render(const ruis::mat4& matrix) const
 	}
 }
 
-event_status text_field::on_mouse_button(const mouse_button_event& e)
+event_status bare_text_field::on_mouse_button(const mouse_button_event& e)
 {
 	if (e.button != mouse_button::left) {
 		return event_status::propagate;
@@ -169,7 +169,7 @@ event_status text_field::on_mouse_button(const mouse_button_event& e)
 	return event_status::consumed;
 }
 
-event_status text_field::on_mouse_move(const mouse_move_event& e)
+event_status bare_text_field::on_mouse_move(const mouse_move_event& e)
 {
 	if (!this->left_mouse_button_down) {
 		return event_status::propagate;
@@ -179,7 +179,7 @@ event_status text_field::on_mouse_move(const mouse_move_event& e)
 	return event_status::consumed;
 }
 
-vec2 text_field::measure(const ruis::vec2& quotum) const noexcept
+vec2 bare_text_field::measure(const ruis::vec2& quotum) const noexcept
 {
 	vec2 ret;
 
@@ -198,7 +198,7 @@ vec2 text_field::measure(const ruis::vec2& quotum) const noexcept
 	return ret;
 }
 
-void text_field::set_cursor_index(size_t index, bool selection)
+void bare_text_field::set_cursor_index(size_t index, bool selection)
 {
 	this->cursor_index = index;
 
@@ -259,7 +259,7 @@ void text_field::set_cursor_index(size_t index, bool selection)
 	}
 }
 
-real text_field::index_to_pos(size_t index)
+real bare_text_field::index_to_pos(size_t index)
 {
 	utki::assert(this->first_visible_char_index <= this->get_string().size());
 
@@ -286,7 +286,7 @@ real text_field::index_to_pos(size_t index)
 	return ret;
 }
 
-size_t text_field::pos_to_index(real pos)
+size_t bare_text_field::pos_to_index(real pos)
 {
 	size_t index = this->first_visible_char_index;
 	real p = this->x_offset;
@@ -311,12 +311,12 @@ size_t text_field::pos_to_index(real pos)
 	return index;
 }
 
-void text_field::update(uint32_t dt)
+void bare_text_field::update(uint32_t dt)
 {
 	this->cursor_blink_visible = !this->cursor_blink_visible;
 }
 
-void text_field::on_focus_change()
+void bare_text_field::on_focus_change()
 {
 	if (this->is_focused()) {
 		this->ctrl_pressed = false;
@@ -328,12 +328,12 @@ void text_field::on_focus_change()
 	this->context.get().window().set_virtual_keyboard_visible(this->is_focused());
 }
 
-void text_field::on_resize()
+void bare_text_field::on_resize()
 {
 	this->selection_start_pos = this->index_to_pos(this->selection_start_index);
 }
 
-void text_field::start_cursor_blinking()
+void bare_text_field::start_cursor_blinking()
 {
 	this->context.get().updater.get().stop(*this);
 	this->cursor_blink_visible = true;
@@ -343,7 +343,7 @@ void text_field::start_cursor_blinking()
 	);
 }
 
-event_status text_field::on_key(const ruis::key_event& e)
+event_status bare_text_field::on_key(const ruis::key_event& e)
 {
 	switch (e.combo.key) {
 		case ruis::key::left_control:
@@ -360,7 +360,7 @@ event_status text_field::on_key(const ruis::key_event& e)
 	return event_status::propagate;
 }
 
-void text_field::on_character_input(const character_input_event& e)
+void bare_text_field::on_character_input(const character_input_event& e)
 {
 	switch (e.combo.key) {
 		case ruis::key::enter:
@@ -475,7 +475,7 @@ void text_field::on_character_input(const character_input_event& e)
 	}
 }
 
-size_t text_field::delete_selection()
+size_t bare_text_field::delete_selection()
 {
 	utki::assert(this->cursor_index != this->selection_start_index);
 
@@ -497,13 +497,13 @@ size_t text_field::delete_selection()
 	return start;
 }
 
-utki::shared_ref<ruis::text_field> ruis::make::text_field(
+utki::shared_ref<ruis::bare_text_field> ruis::make::bare_text_field(
 	utki::shared_ref<ruis::context> context, //
-	ruis::text_field::all_parameters params,
+	ruis::bare_text_field::all_parameters params,
 	ruis::string text
 )
 {
-	return utki::make_shared<ruis::text_field>(
+	return utki::make_shared<ruis::bare_text_field>(
 		std::move(context), //
 		std::move(params),
 		std::move(text)
