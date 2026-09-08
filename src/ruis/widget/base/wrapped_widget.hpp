@@ -40,12 +40,12 @@ namespace ruis {
  */
 template <
 	typename widget_type, //
-	// wrapped_tag_type = int means default wrapped tag, useful when wrapper wraps only one widget
-	typename wrapped_tag_type = int>
+	// bare_tag_type = int means default wrapped tag, useful when wrapper wraps only one widget
+	typename bare_tag_type = int>
 requires std::derived_from<widget_type, widget>
 class wrapped_widget : virtual public widget
 {
-	widget_type& wrapped;
+	widget_type& bare;
 
 protected:
 	/**
@@ -57,12 +57,12 @@ protected:
 	 */
 	wrapped_widget(
 		utki::shared_ref<ruis::context> context, //
-		widget_type& wrapped
+		widget_type& bare
 	) :
 		widget(std::move(context), {}, {}),
-		wrapped(wrapped)
+		bare(bare)
 	{
-		utki::assert(this->wrapped.has_ancestor(*this));
+		utki::assert(this->bare.has_ancestor(*this));
 	}
 
 public:
@@ -71,9 +71,9 @@ public:
 	 *
 	 * @return Reference to the wrapped widget.
 	 */
-	widget_type& get_wrapped(wrapped_tag_type tag = {}) noexcept
+	widget_type& get_bare(bare_tag_type tag = {}) noexcept
 	{
-		return this->wrapped;
+		return this->bare;
 	}
 
 	/**
@@ -81,9 +81,9 @@ public:
 	 *
 	 * @return Const reference to the wrapped widget.
 	 */
-	const widget_type& get_wrapped(wrapped_tag_type tag = {}) const noexcept
+	const widget_type& get_bare(bare_tag_type tag = {}) const noexcept
 	{
-		return this->wrapped;
+		return this->bare;
 	}
 };
 } // namespace ruis

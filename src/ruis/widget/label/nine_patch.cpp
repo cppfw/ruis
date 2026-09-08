@@ -149,7 +149,7 @@ void nine_patch::render_nine_patch(const mat4& matrix) const
 	// left-top
 	{
 		ruis::mat4 matr(matrix);
-		matr.scale(this->get_wrapped().rect().p);
+		matr.scale(this->get_bare().rect().p);
 
 		r.render(
 			matr, //
@@ -162,12 +162,12 @@ void nine_patch::render_nine_patch(const mat4& matrix) const
 	{
 		ruis::mat4 matr(matrix);
 		matr.translate(
-			this->get_wrapped().rect().p.x(), //
+			this->get_bare().rect().p.x(), //
 			0
 		);
 		matr.scale(
-			this->get_wrapped().rect().d.x(), //
-			this->get_wrapped().rect().p.y()
+			this->get_bare().rect().d.x(), //
+			this->get_bare().rect().p.y()
 		);
 
 		r.render(
@@ -181,12 +181,12 @@ void nine_patch::render_nine_patch(const mat4& matrix) const
 	{
 		ruis::mat4 matr(matrix);
 		matr.translate(
-			this->get_wrapped().rect().x2(), //
+			this->get_bare().rect().x2(), //
 			0
 		);
 		matr.scale(
-			this->rect().d.x() - this->get_wrapped().rect().x2(), //
-			this->get_wrapped().rect().p.y()
+			this->rect().d.x() - this->get_bare().rect().x2(), //
+			this->get_bare().rect().p.y()
 		);
 
 		r.render(
@@ -201,11 +201,11 @@ void nine_patch::render_nine_patch(const mat4& matrix) const
 		ruis::mat4 matr(matrix);
 		matr.translate(
 			0, //
-			this->get_wrapped().rect().p.y()
+			this->get_bare().rect().p.y()
 		);
 		matr.scale(
-			this->get_wrapped().rect().p.x(), //
-			this->get_wrapped().rect().d.y()
+			this->get_bare().rect().p.x(), //
+			this->get_bare().rect().d.y()
 		);
 
 		r.render(
@@ -218,8 +218,8 @@ void nine_patch::render_nine_patch(const mat4& matrix) const
 	// center
 	{
 		ruis::mat4 matr(matrix);
-		matr.translate(this->get_wrapped().rect().p);
-		matr.scale(this->get_wrapped().rect().d);
+		matr.translate(this->get_bare().rect().p);
+		matr.scale(this->get_bare().rect().d);
 
 		r.render(
 			matr, //
@@ -232,12 +232,12 @@ void nine_patch::render_nine_patch(const mat4& matrix) const
 	{
 		ruis::mat4 matr(matrix);
 		matr.translate(
-			this->get_wrapped().rect().x2(), //
-			this->get_wrapped().rect().p.y()
+			this->get_bare().rect().x2(), //
+			this->get_bare().rect().p.y()
 		);
 		matr.scale(
-			this->rect().d.x() - this->get_wrapped().rect().x2(), //
-			this->get_wrapped().rect().d.y()
+			this->rect().d.x() - this->get_bare().rect().x2(), //
+			this->get_bare().rect().d.y()
 		);
 
 		r.render(
@@ -252,11 +252,11 @@ void nine_patch::render_nine_patch(const mat4& matrix) const
 		ruis::mat4 matr(matrix);
 		matr.translate(
 			0, //
-			this->get_wrapped().rect().y2()
+			this->get_bare().rect().y2()
 		);
 		matr.scale(
-			this->get_wrapped().rect().p.x(), //
-			this->rect().d.y() - this->get_wrapped().rect().y2()
+			this->get_bare().rect().p.x(), //
+			this->rect().d.y() - this->get_bare().rect().y2()
 		);
 
 		r.render(
@@ -270,12 +270,12 @@ void nine_patch::render_nine_patch(const mat4& matrix) const
 	{
 		ruis::mat4 matr(matrix);
 		matr.translate(
-			this->get_wrapped().rect().p.x(), //
-			this->get_wrapped().rect().y2()
+			this->get_bare().rect().p.x(), //
+			this->get_bare().rect().y2()
 		);
 		matr.scale(
-			this->get_wrapped().rect().d.x(), //
-			this->rect().d.y() - this->get_wrapped().rect().y2()
+			this->get_bare().rect().d.x(), //
+			this->rect().d.y() - this->get_bare().rect().y2()
 		);
 
 		r.render(
@@ -289,7 +289,7 @@ void nine_patch::render_nine_patch(const mat4& matrix) const
 	{
 		ruis::mat4 matr(matrix);
 
-		auto content_x2_y2 = this->get_wrapped().rect().x2_y2();
+		auto content_x2_y2 = this->get_bare().rect().x2_y2();
 
 		matr.translate(content_x2_y2);
 		matr.scale(this->rect().d - content_x2_y2);

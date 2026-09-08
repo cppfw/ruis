@@ -121,7 +121,7 @@ vec2 padding::measure(const vec2& quotum) const
 
 	vec2 ret = quotum;
 	{
-		auto content_min_dims = this->get_wrapped().measure(borderless_quotum);
+		auto content_min_dims = this->get_bare().measure(borderless_quotum);
 		// clang-format off
 		for(auto [r, m, blt, brb] :
 			utki::views::zip(
@@ -148,7 +148,7 @@ void padding::on_lay_out()
 
 	vec2 content_dims = max(real(0), this->rect().d - borders.dims());
 
-	auto& c = this->get_wrapped();
+	auto& c = this->get_bare();
 
 	c.move_to(borders.left_top());
 	c.resize(content_dims);
