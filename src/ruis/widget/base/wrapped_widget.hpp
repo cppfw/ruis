@@ -27,6 +27,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
+struct container_tag{};
+struct text_field_tag{};
+
 /**
  * @brief Base class for widgets that wrap other widgets.
  *
@@ -35,13 +38,10 @@ namespace ruis {
  * In the class hierarchy, the wrapped_widget must be initialized after the wrapped
  * widget's ancestor container to ensure proper parent-child relationships.
  *
- * @tparam widget_type The type of the widget being wrapped. Must be a widget type
- *                     (i.e., derived from ruis::widget).
+ * @tparam widget_type - The type of the widget being wrapped. Must be a widget type
+ *                      (i.e., derived from ruis::widget).
  */
-template <
-	typename widget_type, //
-	// bare_tag_type = int means default wrapped tag, useful when wrapper wraps only one widget
-	typename bare_tag_type = int>
+template <typename widget_type>
 requires std::derived_from<widget_type, widget>
 class wrapped_widget : virtual public widget
 {
@@ -71,7 +71,7 @@ public:
 	 *
 	 * @return Reference to the wrapped widget.
 	 */
-	widget_type& get_bare(bare_tag_type tag = {}) noexcept
+	widget_type& get_bare() noexcept
 	{
 		return this->bare;
 	}
@@ -81,7 +81,7 @@ public:
 	 *
 	 * @return Const reference to the wrapped widget.
 	 */
-	const widget_type& get_bare(bare_tag_type tag = {}) const noexcept
+	const widget_type& get_bare() const noexcept
 	{
 		return this->bare;
 	}

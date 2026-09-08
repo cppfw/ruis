@@ -19,11 +19,11 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 /* ================ LICENSE END ================ */
 
-#include "decorated_text_field.hpp"
+#include "text_field.hpp"
 
 #include "impl/rectangle_text_field.hpp"
 
-utki::shared_ref<ruis::wrapped_widget<ruis::bare_text_field>> ruis::make::decorated_text_field(
+utki::shared_ref<ruis::wrapped_widget<ruis::bare_text_field>> ruis::make::text_field(
 	utki::shared_ref<ruis::context> context, //
 	ruis::rectangle_text_field::all_parameters params,
 	ruis::string text

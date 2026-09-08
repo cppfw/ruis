@@ -31,15 +31,15 @@ namespace ruis {
 namespace make {
 
 /**
- * @brief Factory function to create a decorated text field widget.
+ * @brief Factory function to create a text field widget.
  * Creates a rectangle_text_field under the hood.
  * 
  * @param context GUI context
- * @param params Parameters for the decorated text field
+ * @param params Parameters for the text field
  * @param text Initial text content
- * @return Shared reference to the created decorated widget
+ * @return Shared reference to the created widget
  */
-utki::shared_ref<ruis::wrapped_widget<ruis::bare_text_field>> decorated_text_field(
+utki::shared_ref<ruis::wrapped_widget<ruis::bare_text_field>> text_field(
 	utki::shared_ref<ruis::context> context, //
 	ruis::rectangle_text_field::all_parameters params,
 	ruis::string text

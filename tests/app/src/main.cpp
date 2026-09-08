@@ -23,7 +23,7 @@
 #include <ruis/widget/proxy/resize_proxy.hpp>
 #include <ruis/widget/proxy/click_proxy.hpp>
 #include <ruis/widget/label/image.hpp>
-#include <ruis/widget/input/impl/rectangle_text_field.hpp>
+#include <ruis/widget/input/text_field.hpp>
 #include <ruis/widget/button/selection_box.hpp>
 #include <ruis/layout/linear_layout.hpp>
 #include <ruis/standard_widgets.hpp>
