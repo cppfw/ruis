@@ -31,7 +31,7 @@ text_field::text_field(
 ) :
 	widget(std::move(context), {}, {}),
 	wrapped_widget<bare_text_field>(
-		context, //
+		this->context, //
 		bare
 	)
 {}

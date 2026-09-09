@@ -515,7 +515,7 @@ public:
 
 protected:
 	widget(
-		utki::shared_ref<ruis::context> context, //
+		const utki::shared_ref<ruis::context>& context, //
 		layout::parameters layout_params,
 		parameters params
 	);

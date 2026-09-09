@@ -29,11 +29,11 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace ruis;
 
 widget::widget(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	layout::parameters layout_params,
 	parameters params
 ) :
-	context(std::move(context)),
+	context(context),
 	layout_params(std::move(layout_params)),
 	params(std::move(params))
 {}

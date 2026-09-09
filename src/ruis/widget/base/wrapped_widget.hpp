@@ -53,10 +53,10 @@ protected:
 	 *                 This widget must have this wrapped_widget as an ancestor.
 	 */
 	wrapped_widget(
-		utki::shared_ref<ruis::context> context, //
+		const utki::shared_ref<ruis::context>& context, //
 		widget_type& bare
 	) :
-		widget(std::move(context), {}, {}),
+		widget(context, {}, {}),
 		bare(bare)
 	{
 		utki::assert(this->bare.has_ancestor(*this));
