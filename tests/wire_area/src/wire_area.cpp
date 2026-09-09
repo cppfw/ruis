@@ -13,11 +13,11 @@ const ruis::real spline_control_length = ruis::real(100);
 }
 
 wire_area::wire_area(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	all_parameters params,
 	ruis::widget_list children
 ) :
-	ruis::widget(std::move(context), std::move(params.layout_params), std::move(params.widget_params)),
+	ruis::widget(context, std::move(params.layout_params), std::move(params.widget_params)),
 	// clang-format off
 	ruis::container(this->context,
 		{

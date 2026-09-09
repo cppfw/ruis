@@ -43,7 +43,7 @@ public:
 	};
 
 	tab_group(
-		utki::shared_ref<ruis::context> context, //
+		const utki::shared_ref<ruis::context>& context, //
 		all_parameters params,
 		widget_list children
 	);
@@ -61,7 +61,7 @@ namespace make {
  * @return Shared reference to the created tab group.
  */
 utki::shared_ref<ruis::touch::tab_group> tab_group(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	ruis::touch::tab_group::all_parameters params,
 	widget_list tabs = {}
 );

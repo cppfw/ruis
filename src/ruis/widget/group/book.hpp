@@ -34,7 +34,7 @@ class page : public virtual widget
 
 protected:
 	page(
-		utki::shared_ref<ruis::context> context, //
+		const utki::shared_ref<ruis::context>& context, //
 		ruis::widget::parameters widget_params
 	);
 
@@ -92,7 +92,7 @@ public:
 	};
 
 	book(
-		utki::shared_ref<ruis::context> context, //
+		const utki::shared_ref<ruis::context>& context, //
 		all_parameters params,
 		std::vector<utki::shared_ref<page>> pages
 	);
@@ -141,13 +141,13 @@ private:
 
 namespace make {
 inline utki::shared_ref<ruis::book> book(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	ruis::book::all_parameters params,
 	std::vector<utki::shared_ref<page>> pages = {}
 )
 {
 	return utki::make_shared<ruis::book>(
-		std::move(context), //
+		context, //
 		std::move(params),
 		std::move(pages)
 	);

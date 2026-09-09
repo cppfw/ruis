@@ -45,7 +45,7 @@ public:
 	};
 
 	key_proxy(
-		utki::shared_ref<ruis::context> context, //
+		const utki::shared_ref<ruis::context>& context, //
 		all_parameters params,
 		widget_list children
 	);
@@ -77,7 +77,7 @@ namespace make {
  * @return newly created 'key_proxy' widget.
  */
 utki::shared_ref<ruis::key_proxy> key_proxy(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	key_proxy::all_parameters params,
 	widget_list children
 );

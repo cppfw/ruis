@@ -67,14 +67,14 @@ public:
 
 private:
 	tiling_area(
-		utki::shared_ref<ruis::context>& context, //
+		const utki::shared_ref<ruis::context>& context, //
 		all_parameters& params,
 		utki::shared_ref<ruis::container> content_container
 	);
 
 public:
 	tiling_area(
-		utki::shared_ref<ruis::context> context, //
+		const utki::shared_ref<ruis::context>& context, //
 		all_parameters params,
 		ruis::widget_list children
 	);
@@ -102,7 +102,7 @@ private:
 
 namespace make {
 utki::shared_ref<ruis::tiling_area> tiling_area(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	ruis::tiling_area::all_parameters params,
 	ruis::widget_list children
 );

@@ -46,11 +46,11 @@ public:
 	std::shared_ptr<ruis::widget> next_widget;
 
 	dragger(
-		utki::shared_ref<ruis::context> c, //
+		const utki::shared_ref<ruis::context>& c, //
 		tiling_area& owner,
 		styled<color> color
 	) :
-		ruis::widget(std::move(c), {}, {}),
+		ruis::widget(c, {}, {}),
 		// clang-format off
 		ruis::gap(this->context,
 			{
@@ -162,7 +162,7 @@ public:
 } // namespace ruis::internal
 
 tiling_area::tiling_area(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	all_parameters params,
 	ruis::widget_list children
 ) :
@@ -178,12 +178,12 @@ tiling_area::tiling_area(
 {}
 
 tiling_area::tiling_area(
-	utki::shared_ref<ruis::context>& context, //
+	const utki::shared_ref<ruis::context>& context, //
 	all_parameters& params,
 	utki::shared_ref<ruis::container> content_container
 ) :
 	ruis::widget(
-		std::move(context),
+		context,
 		std::move(params.layout_params),
 		std::move(params.widget_params) //
 	),
@@ -373,7 +373,7 @@ void tiling_area::notify_tiles_resized()
 }
 
 utki::shared_ref<ruis::tiling_area> make::tiling_area(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	ruis::tiling_area::all_parameters params,
 	ruis::widget_list children
 )
@@ -383,7 +383,7 @@ utki::shared_ref<ruis::tiling_area> make::tiling_area(
 	}
 
 	return utki::make_shared<ruis::tiling_area>(
-		std::move(context), //
+		context, //
 		std::move(params),
 		std::move(children)
 	);

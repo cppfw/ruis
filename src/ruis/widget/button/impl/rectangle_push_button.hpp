@@ -41,7 +41,7 @@ public:
 	};
 
 	rectangle_push_button(
-		utki::shared_ref<ruis::context> context, //
+		const utki::shared_ref<ruis::context>& context, //
 		all_parameters params,
 		ruis::widget_list contents
 	);
@@ -61,7 +61,7 @@ public:
 
 namespace make {
 utki::shared_ref<ruis::rectangle_push_button> rectangle_push_button(
-	utki::shared_ref<ruis::context> context,
+	const utki::shared_ref<ruis::context>& context,
 	ruis::rectangle_push_button::all_parameters params,
 	ruis::widget_list contents
 );

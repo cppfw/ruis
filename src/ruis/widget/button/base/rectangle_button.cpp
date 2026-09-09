@@ -46,7 +46,7 @@ void rectangle_button::update_color()
 }
 
 rectangle_button::rectangle_button( //
-	utki::shared_ref<ruis::context> context,
+	const utki::shared_ref<ruis::context>& context,
 	container::parameters container_params,
 	padding::parameters padding_params,
 	rectangle::parameters rectangle_params,

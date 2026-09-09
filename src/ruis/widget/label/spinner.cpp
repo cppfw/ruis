@@ -30,11 +30,11 @@ using namespace std::string_view_literals;
 using namespace ruis;
 
 spinner::spinner( //
-	utki::shared_ref<ruis::context> context,
+	const utki::shared_ref<ruis::context>& context,
 	all_parameters params
 ) :
 	widget( //
-		std::move(context),
+		context,
 		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
@@ -71,7 +71,7 @@ void spinner::update(uint32_t dt_ms)
 }
 
 utki::shared_ref<ruis::spinner> ruis::make::refresh(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	spinner::all_parameters params
 )
 {
@@ -83,7 +83,7 @@ utki::shared_ref<ruis::spinner> ruis::make::refresh(
 	}
 
 	return utki::make_shared<ruis::spinner>(
-		std::move(context), //
+		context, //
 		std::move(params)
 	);
 }

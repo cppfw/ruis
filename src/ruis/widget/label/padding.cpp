@@ -6,7 +6,7 @@ Copyright (C) 2012-2026  Ivan Gagis <igagis@gmail.com>
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+at your option any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -35,7 +35,7 @@ using namespace ruis::make;
 } // namespace m
 
 padding::padding(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	all_parameters params,
 	widget_list children
 ) :
@@ -58,12 +58,12 @@ padding::padding(
 {}
 
 padding::padding(
-	utki::shared_ref<ruis::context>& context, //
+	const utki::shared_ref<ruis::context>& context, //
 	all_parameters& params,
 	utki::shared_ref<ruis::container> content_container
 ) :
 	widget( //
-		std::move(context),
+		context,
 		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
@@ -155,7 +155,7 @@ void padding::on_lay_out()
 }
 
 utki::shared_ref<ruis::padding> ruis::make::padding(
-	utki::shared_ref<context> context, //
+	const utki::shared_ref<context>& context, //
 	padding::all_parameters params,
 	widget_list children
 )
@@ -165,7 +165,7 @@ utki::shared_ref<ruis::padding> ruis::make::padding(
 	}
 
 	return utki::make_shared<ruis::padding>(
-		std::move(context), //
+		context, //
 		std::move(params),
 		std::move(children)
 	);

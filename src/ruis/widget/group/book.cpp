@@ -29,12 +29,12 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace ruis;
 
 book::book( //
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	all_parameters params,
 	std::vector<utki::shared_ref<page>> pages
 ) :
 	widget( //
-		std::move(context),
+		context,
 		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
@@ -259,11 +259,11 @@ void book::on_reload()
 }
 
 page::page(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	ruis::widget::parameters widget_params
 ) :
 	widget(
-		std::move(context), //
+		context, //
 		{},
 		std::move(widget_params)
 	)

@@ -73,7 +73,7 @@ protected:
 	 * @param params - text widget parameters.
 	 */
 	text_widget(
-		utki::shared_ref<ruis::context> context, //
+		const utki::shared_ref<ruis::context>& context, //
 		parameters params
 	);
 

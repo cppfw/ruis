@@ -25,8 +25,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
-choice_button::choice_button(utki::shared_ref<ruis::context> context) :
-	widget(std::move(context), {}, {}),
+choice_button::choice_button(const utki::shared_ref<ruis::context>& context) :
+	widget(context, {}, {}),
 	button(this->context, ruis::button::parameters{}),
 	toggle_button(this->context)
 {}

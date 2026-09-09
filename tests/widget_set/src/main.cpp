@@ -19,7 +19,7 @@ namespace m{
 using namespace ruis::make;
 }
 
-utki::shared_ref<ruis::widget> make_root_widget(utki::shared_ref<ruis::context> c){
+utki::shared_ref<ruis::widget> make_root_widget(const utki::shared_ref<ruis::context>& c){
 	// clang-format off
 	return m::pile(c,
 		{},

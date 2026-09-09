@@ -44,7 +44,7 @@ void ellipse_button::update_color()
 }
 
 ellipse_button::ellipse_button( //
-	utki::shared_ref<ruis::context> context,
+	const utki::shared_ref<ruis::context>& context,
 	container::parameters container_params,
 	padding::parameters padding_params,
 	parameters params,

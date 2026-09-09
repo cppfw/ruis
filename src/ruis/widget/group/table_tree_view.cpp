@@ -29,10 +29,10 @@ class table_tree_view::table_list_provider_for_table_tree_view : public table_li
 
 public:
 	table_list_provider_for_table_tree_view(
-		utki::shared_ref<ruis::context> context, //
+		const utki::shared_ref<ruis::context>& context, //
 		utki::shared_ref<table_tree_view::provider> provider
 	) :
-		table_list::provider(std::move(context)),
+		table_list::provider(context),
 		provider(std::move(provider))
 	{
 		if (this->provider.get().list_provider) {
@@ -55,8 +55,8 @@ public:
 	}
 };
 
-table_tree_view::provider::provider(utki::shared_ref<ruis::context> context) :
-	provider_base(std::move(context))
+table_tree_view::provider::provider(const utki::shared_ref<ruis::context>& context) :
+	provider_base(context)
 {}
 
 void table_tree_view::provider::on_list_model_changed()
@@ -87,7 +87,7 @@ ruis::widget_list table_tree_view::provider::list_get_row_widgets(size_t index)
 }
 
 table_tree_view::table_tree_view(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	all_parameters params
 ) :
 	ruis::widget(
@@ -112,12 +112,12 @@ table_tree_view::table_tree_view(
 {}
 
 utki::shared_ref<ruis::table_tree_view> make::table_tree_view(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	ruis::table_tree_view::all_parameters params
 )
 {
 	return utki::make_shared<ruis::table_tree_view>(
-		std::move(context), //
+		context, //
 		std::move(params)
 	);
 }

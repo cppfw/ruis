@@ -43,14 +43,14 @@ public:
 	};
 
 	image_push_button( //
-		utki::shared_ref<ruis::context> context,
+		const utki::shared_ref<ruis::context>& context,
 		all_parameters params
 	);
 };
 
 namespace make {
 utki::shared_ref<ruis::image_push_button> image_push_button(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	ruis::image_push_button::all_parameters params
 );
 } // namespace make

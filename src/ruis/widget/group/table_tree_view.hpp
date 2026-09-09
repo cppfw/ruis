@@ -48,7 +48,7 @@ public:
 		ruis::widget_list list_get_row_widgets(size_t index);
 
 	public:
-		provider(utki::shared_ref<ruis::context> context);
+		provider(const utki::shared_ref<ruis::context>& context);
 
 		/**
 		 * @brief Create table row cell widgets for an item.
@@ -82,7 +82,7 @@ public:
 	};
 
 	table_tree_view(
-		utki::shared_ref<ruis::context> context, //
+		const utki::shared_ref<ruis::context>& context, //
 		all_parameters params
 	);
 
@@ -98,7 +98,7 @@ public:
 
 namespace make {
 utki::shared_ref<ruis::table_tree_view> table_tree_view(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	ruis::table_tree_view::all_parameters params
 );
 } // namespace make

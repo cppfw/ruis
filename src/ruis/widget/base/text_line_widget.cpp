@@ -24,12 +24,12 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace ruis;
 
 text_line_widget::text_line_widget(
-	utki::shared_ref<ruis::context> context,
+	const utki::shared_ref<ruis::context>& context,
 	text_widget::parameters text_widget_params,
 	string text
 ) :
 	widget(
-		std::move(context), //
+		context, //
 		{},
 		{}
 	),

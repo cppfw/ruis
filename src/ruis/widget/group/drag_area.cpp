@@ -24,12 +24,12 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace ruis;
 
 drag_area::drag_area(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	all_parameters params,
 	widget_list children
 ) :
 	widget(
-		std::move(context), //
+		context, //
 		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
@@ -65,13 +65,13 @@ void drag_area::on_reload()
 }
 
 utki::shared_ref<drag_area> ruis::make::drag_area(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	ruis::drag_area::all_parameters params,
 	widget_list children
 )
 {
 	return utki::make_shared<ruis::drag_area>(
-		std::move(context), //
+		context, //
 		std::move(params),
 		std::move(children)
 	);

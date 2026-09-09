@@ -51,7 +51,7 @@ protected:
 	virtual void on_pressed_change();
 
 	button(
-		utki::shared_ref<ruis::context> context, //
+		const utki::shared_ref<ruis::context>& context, //
 		parameters params
 	);
 

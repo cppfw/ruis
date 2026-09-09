@@ -36,7 +36,8 @@ using namespace ruis::length_literals;
 using namespace ruis::click;
 
 namespace {
-std::vector<utki::shared_ref<ruis::widget>> make_selection_box_widget_structure(utki::shared_ref<ruis::context> c)
+std::vector<utki::shared_ref<ruis::widget>> make_selection_box_widget_structure(const utki::shared_ref<ruis::context>& c
+)
 {
 	namespace m = ruis::make;
 
@@ -90,11 +91,11 @@ std::vector<utki::shared_ref<ruis::widget>> make_selection_box_widget_structure(
 } // namespace
 
 selection_box::selection_box(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	all_parameters params
 ) :
 	widget(
-		std::move(context), //
+		context, //
 		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
@@ -356,7 +357,7 @@ void selection_box::on_reload()
 }
 
 utki::shared_ref<ruis::click::selection_box> ruis::click::make::selection_box(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	click::selection_box::all_parameters params
 )
 {
@@ -375,7 +376,7 @@ utki::shared_ref<ruis::click::selection_box> ruis::click::make::selection_box(
 	}
 
 	return utki::make_shared<ruis::click::selection_box>(
-		std::move(context), //
+		context, //
 		std::move(params)
 	);
 }

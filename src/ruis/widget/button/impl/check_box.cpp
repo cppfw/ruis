@@ -29,7 +29,7 @@ using namespace std::string_view_literals;
 using namespace ruis;
 
 check_box::check_box(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	all_parameters params
 ) :
 	widget( //

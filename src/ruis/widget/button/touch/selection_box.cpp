@@ -6,7 +6,7 @@ Copyright (C) 2012-2026  Ivan Gagis <igagis@gmail.com>
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+at your option any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -42,11 +42,11 @@ constexpr auto default_padding = 10_pp; // TODO: get from theme
 } // namespace
 
 selection_box::selection_box(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	all_parameters params
 ) :
 	widget(
-		std::move(context), //
+		context, //
 		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
@@ -272,12 +272,12 @@ void selection_box::close_selection_menu()
 }
 
 utki::shared_ref<ruis::touch::selection_box> ruis::touch::make::selection_box(
-	utki::shared_ref<context> context, //
+	const utki::shared_ref<context>& context, //
 	ruis::touch::selection_box::all_parameters params
 )
 {
 	return utki::make_shared<ruis::touch::selection_box>(
-		std::move(context), //
+		context, //
 		std::move(params)
 	);
 }

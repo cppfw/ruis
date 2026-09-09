@@ -8,7 +8,7 @@ class pile_page :
 {
 public:
 	pile_page( //
-		utki::shared_ref<ruis::context> context,
+		const utki::shared_ref<ruis::context>& context,
 		ruis::widget::parameters widget_params,
 		ruis::widget_list contents
 	);
@@ -29,13 +29,13 @@ private:
 
 namespace make{
 inline utki::shared_ref<::pile_page> pile_page(
-	utki::shared_ref<ruis::context> context,
+	const utki::shared_ref<ruis::context>& context,
 	ruis::widget::parameters widget_params,
 	ruis::widget_list contents = {}
 )
 {
 	return utki::make_shared<::pile_page>( //
-		std::move(context),
+		context,
 		std::move(widget_params),
 		std::move(contents)
 	);

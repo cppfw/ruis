@@ -96,7 +96,7 @@ private:
 	}
 
 public:
-	style_provider(utki::shared_ref<ruis::resource_loader> loader);
+	style_provider(const utki::shared_ref<ruis::resource_loader>& loader);
 
 	void set(utki::shared_ref<style_sheet> ss);
 

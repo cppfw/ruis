@@ -47,7 +47,7 @@ public:
 	};
 
 	spinner(
-		utki::shared_ref<ruis::context> context, //
+		const utki::shared_ref<ruis::context>& context, //
 		all_parameters params
 	);
 
@@ -61,18 +61,18 @@ private:
 
 namespace make {
 inline utki::shared_ref<ruis::spinner> spinner(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	spinner::all_parameters params
 )
 {
 	return utki::make_shared<ruis::spinner>(
-		std::move(context), //
+		context, //
 		std::move(params)
 	);
 }
 
 utki::shared_ref<ruis::spinner> refresh(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	spinner::all_parameters params
 );
 

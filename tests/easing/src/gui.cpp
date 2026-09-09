@@ -23,7 +23,7 @@ constexpr uint32_t animation_duration_ms = 1000;
 
 namespace {
 utki::shared_ref<ruis::widget> make_eased_animation_sample( //
-	utki::shared_ref<ruis::context> c,
+	const utki::shared_ref<ruis::context>& c,
 	std::function<ruis::real(ruis::real)> easing,
 	std::string name
 )
@@ -102,7 +102,7 @@ utki::shared_ref<ruis::widget> make_eased_animation_sample( //
 } // namespace
 
 namespace {
-utki::shared_ref<ruis::widget> make_left_column(utki::shared_ref<ruis::context> c)
+utki::shared_ref<ruis::widget> make_left_column(const utki::shared_ref<ruis::context>& c)
 {
 	// clang-format off
 	return m::column(c,
@@ -189,7 +189,7 @@ utki::shared_ref<ruis::widget> make_left_column(utki::shared_ref<ruis::context> 
 } // namespace
 
 namespace {
-utki::shared_ref<ruis::widget> make_right_column(utki::shared_ref<ruis::context> c)
+utki::shared_ref<ruis::widget> make_right_column(const utki::shared_ref<ruis::context>& c)
 {
 	// clang-format off
 	return m::column(c,
@@ -271,7 +271,7 @@ utki::shared_ref<ruis::widget> make_right_column(utki::shared_ref<ruis::context>
 }
 } // namespace
 
-utki::shared_ref<ruis::widget> make_gui(utki::shared_ref<ruis::context> c)
+utki::shared_ref<ruis::widget> make_gui(const utki::shared_ref<ruis::context>& c)
 {
 	// clang-format off
 	return m::row(c,

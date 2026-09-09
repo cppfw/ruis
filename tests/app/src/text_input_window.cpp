@@ -21,7 +21,7 @@ using namespace ruis::make;
 
 namespace{
 utki::shared_ref<ruis::push_button> make_push_button(
-    utki::shared_ref<ruis::context> c, //
+    const utki::shared_ref<ruis::context>& c, //
     std::u32string text
 )
 {
@@ -45,7 +45,7 @@ utki::shared_ref<ruis::push_button> make_push_button(
 }
 
 utki::shared_ref<ruis::window> make_text_input_window(
-    utki::shared_ref<ruis::context> c,
+    const utki::shared_ref<ruis::context>& c,
     ruis::vec2_length pos
 )
 {

@@ -28,12 +28,12 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace ruis;
 
 image_mouse_cursor::image_mouse_cursor(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	all_parameters params,
 	widget_list children
 ) :
 	widget(
-		std::move(context), //
+		context, //
 		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
@@ -95,7 +95,7 @@ void image_mouse_cursor::render(const ruis::mat4& matrix) const
 }
 
 utki::shared_ref<ruis::image_mouse_cursor> ruis::make::image_mouse_cursor(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	ruis::image_mouse_cursor::all_parameters params,
 	ruis::widget_list children
 )
@@ -105,7 +105,7 @@ utki::shared_ref<ruis::image_mouse_cursor> ruis::make::image_mouse_cursor(
 	}
 
 	return utki::make_shared<ruis::image_mouse_cursor>(
-		std::move(context), //
+		context, //
 		std::move(params),
 		std::move(children)
 	);

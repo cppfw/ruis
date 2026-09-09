@@ -72,7 +72,7 @@ public:
 	};
 
 	rectangle(
-		utki::shared_ref<ruis::context> context, //
+		const utki::shared_ref<ruis::context>& context, //
 		all_parameters params,
 		widget_list children
 	);
@@ -114,7 +114,7 @@ private:
 
 namespace make {
 utki::shared_ref<ruis::rectangle> rectangle(
-	utki::shared_ref<ruis::context> context,
+	const utki::shared_ref<ruis::context>& context,
 	rectangle::all_parameters params,
 	widget_list children = {}
 );

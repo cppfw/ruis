@@ -50,14 +50,14 @@ public:
 
 private:
 	nine_patch_text_field(
-		utki::shared_ref<ruis::context>& context, //
+		const utki::shared_ref<ruis::context>& context, //
 		all_parameters& params,
 		utki::shared_ref<ruis::bare_text_field> bare_text_field
 	);
 
 public:
 	nine_patch_text_field(
-		utki::shared_ref<ruis::context> context, //
+		const utki::shared_ref<ruis::context>& context, //
 		all_parameters params,
 		ruis::string text
 	);
@@ -67,7 +67,7 @@ public:
 
 namespace make {
 utki::shared_ref<ruis::nine_patch_text_field> nine_patch_text_field(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	ruis::nine_patch_text_field::all_parameters params,
 	ruis::string text
 );

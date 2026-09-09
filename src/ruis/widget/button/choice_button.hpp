@@ -42,7 +42,7 @@ protected:
 
 	event_status on_mouse_button(const mouse_button_event& event) override;
 
-	choice_button(utki::shared_ref<ruis::context> context);
+	choice_button(const utki::shared_ref<ruis::context>& context);
 
 public:
 	choice_button(const choice_button&) = delete;

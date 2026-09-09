@@ -14,7 +14,7 @@ using namespace ruis::make;
 }
 
 utki::shared_ref<ruis::window> make_vertical_list_window(
-    utki::shared_ref<ruis::context> c, //
+    const utki::shared_ref<ruis::context>& c, //
     ruis::vec2_length pos
 )
 {
@@ -70,8 +70,8 @@ utki::shared_ref<ruis::window> make_vertical_list_window(
                                     class the_provider : public ruis::list_provider{
                                         std::vector<std::u32string> items;
                                     public:
-                                        the_provider(utki::shared_ref<ruis::context> context) :
-                                            list_provider(std::move(context)),
+                                        the_provider(const utki::shared_ref<ruis::context>& context) :
+                                            list_provider(context),
                                             items{
                                                 U"item0"s,
                                                 U"item_1_iequwgfiew"s,

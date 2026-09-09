@@ -20,8 +20,8 @@ class tree_view_items_provider : public ruis::tree_view::provider{
 public:
 
     // NOLINTNEXTLINE(modernize-pass-by-value)
-    tree_view_items_provider(utki::shared_ref<ruis::context> context) :
-            provider(std::move(context))
+    tree_view_items_provider(const utki::shared_ref<ruis::context>& context) :
+            provider(context)
     {
         this->root = tml::read(R"qwertyuiop(
                 root1{
@@ -280,7 +280,7 @@ public:
 }
 
 utki::shared_ref<ruis::window> make_tree_view_window(
-    utki::shared_ref<ruis::context> c, //
+    const utki::shared_ref<ruis::context>& c, //
     ruis::vec2_length pos
 )
 {

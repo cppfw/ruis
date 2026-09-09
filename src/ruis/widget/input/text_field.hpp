@@ -41,7 +41,7 @@ public:
 
 protected:
 	text_field(
-		utki::shared_ref<ruis::context> context, //
+		const utki::shared_ref<ruis::context>& context, //
 		bare_text_field& bare
 	);
 };
@@ -57,7 +57,7 @@ namespace make {
  * @return Shared reference to the created widget.
  */
 utki::shared_ref<ruis::text_field> text_field(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	ruis::text_field::all_parameters params,
 	ruis::string text
 );

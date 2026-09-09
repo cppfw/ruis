@@ -61,7 +61,7 @@ public:
 	};
 
 	nine_patch(
-		utki::shared_ref<ruis::context> context, //
+		const utki::shared_ref<ruis::context>& context, //
 		all_parameters params,
 		widget_list children
 	);
@@ -93,13 +93,13 @@ protected:
 
 namespace make {
 inline utki::shared_ref<ruis::nine_patch> nine_patch(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	nine_patch::all_parameters params,
 	widget_list children = {}
 )
 {
 	return utki::make_shared<ruis::nine_patch>(
-		std::move(context), //
+		context, //
 		std::move(params),
 		std::move(children)
 	);

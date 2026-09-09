@@ -27,7 +27,7 @@ namespace ruis::touch {
 
 namespace make {
 utki::shared_ref<ruis::tabbed_book> tabbed_book(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	ruis::tabbed_book::all_parameters params,
 	ruis::tabbed_book::pages_list_type pages = {}
 );

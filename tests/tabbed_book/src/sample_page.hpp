@@ -8,7 +8,7 @@ class sample_page :
 {
 public:
     sample_page(
-        utki::shared_ref<ruis::context> context, //
+        const utki::shared_ref<ruis::context>& context, //
         std::string_view text
     );
 

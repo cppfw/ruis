@@ -42,13 +42,13 @@ using namespace ruis::length_literals;
 namespace {
 
 utki::shared_ref<ruis::touch::tab_button> make_tab_button(
-	utki::shared_ref<ruis::context> c, //
+	const utki::shared_ref<ruis::context>& c, //
 	utki::shared_ref<const ruis::res::image> icon,
 	ruis::string text
 )
 {
 	// clang-format off
-	return ruis::touch::make::tab_button(std::move(c),
+	return ruis::touch::make::tab_button(c,
 		ruis::touch::tab_button::all_parameters{
 			.layout_params = {
 				.dims = {ruis::dim::fill, 60_pp},
@@ -66,7 +66,7 @@ utki::shared_ref<ruis::touch::tab_button> make_tab_button(
 
 } // namespace
 
-utki::shared_ref<ruis::widget> make_root_widget(utki::shared_ref<ruis::context> c)
+utki::shared_ref<ruis::widget> make_root_widget(const utki::shared_ref<ruis::context>& c)
 {
 	// clang-format off
 	return m::overlay(c,

@@ -28,7 +28,7 @@ using namespace std::string_view_literals;
 using namespace ruis;
 
 nine_patch_text_field::nine_patch_text_field(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	all_parameters params,
 	ruis::string text
 ) :
@@ -64,7 +64,7 @@ nine_patch_text_field::nine_patch_text_field(
 {}
 
 nine_patch_text_field::nine_patch_text_field(
-	utki::shared_ref<ruis::context>& context, //
+	const utki::shared_ref<ruis::context>& context, //
 	all_parameters& params,
 	utki::shared_ref<ruis::bare_text_field> bare_text_field
 ) :
@@ -116,13 +116,13 @@ void nine_patch_text_field::on_focus_change()
 }
 
 utki::shared_ref<ruis::nine_patch_text_field> ruis::make::nine_patch_text_field(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	ruis::nine_patch_text_field::all_parameters params,
 	ruis::string text
 )
 {
 	return utki::make_shared<ruis::nine_patch_text_field>(
-		std::move(context), //
+		context, //
 		std::move(params),
 		std::move(text)
 	);

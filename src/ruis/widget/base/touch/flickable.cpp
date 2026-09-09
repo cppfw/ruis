@@ -30,7 +30,7 @@ namespace {
 constexpr auto friction_coefficient = 0.001;
 } // namespace
 
-flickable::flickable(utki::shared_ref<ruis::context> context) :
+flickable::flickable(const utki::shared_ref<ruis::context>& context) :
 	friction(context.get().units.dots_per_pp() * ruis::real(friction_coefficient))
 {}
 

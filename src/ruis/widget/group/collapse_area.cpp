@@ -41,7 +41,7 @@ using namespace ruis::make;
 } // namespace m
 
 collapse_area::collapse_area(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	all_parameters params,
 	widget_list contents
 ) :
@@ -61,12 +61,12 @@ collapse_area::collapse_area(
 {}
 
 collapse_area::collapse_area(
-	utki::shared_ref<ruis::context>& context,
+	const utki::shared_ref<ruis::context>& context,
 	all_parameters& params,
 	utki::shared_ref<ruis::container> content_container
 ) :
 	widget(
-		std::move(context), //
+		context, //
 		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
@@ -171,7 +171,7 @@ collapse_area::collapse_area(
 }
 
 utki::shared_ref<ruis::collapse_area> ruis::make::collapse_area(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	ruis::collapse_area::all_parameters params,
 	widget_list contents
 )
@@ -181,7 +181,7 @@ utki::shared_ref<ruis::collapse_area> ruis::make::collapse_area(
 	}
 
 	return utki::make_shared<ruis::collapse_area>(
-		std::move(context), //
+		context, //
 		std::move(params),
 		std::move(contents)
 	);

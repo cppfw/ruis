@@ -151,7 +151,7 @@ private:
 
 public:
 	container(
-		utki::shared_ref<ruis::context> context, //
+		const utki::shared_ref<ruis::context>& context, //
 		all_parameters params,
 		widget_list children
 	);
@@ -524,25 +524,25 @@ std::vector<utki::shared_ref<widget_type>> widget::get_all_widgets(bool allow_it
 
 namespace make {
 utki::shared_ref<ruis::container> container(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	container::all_parameters params,
 	widget_list children = {}
 );
 
 utki::shared_ref<ruis::container> pile(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	widget::all_parameters params,
 	widget_list children = {}
 );
 
 utki::shared_ref<ruis::container> column(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	widget::all_parameters params,
 	widget_list children = {}
 );
 
 utki::shared_ref<ruis::container> row(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	widget::all_parameters params,
 	widget_list children = {}
 );

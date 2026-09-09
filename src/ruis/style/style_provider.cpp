@@ -26,8 +26,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace std::string_view_literals;
 using namespace ruis;
 
-style_provider::style_provider(utki::shared_ref<ruis::resource_loader> loader) :
-	res_loader(std::move(loader)),
+style_provider::style_provider(const utki::shared_ref<ruis::resource_loader>& loader) :
+	res_loader(loader),
 	cur_style_sheet(utki::make_shared<style_sheet>())
 {}
 

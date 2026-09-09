@@ -30,12 +30,12 @@ void ellipse_push_button::on_pressed_change()
 }
 
 ellipse_push_button::ellipse_push_button(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	all_parameters params,
 	ruis::widget_list contents
 ) :
 	widget( //
-		std::move(context),
+		context,
 		std::move(params.layout_params),
 		std::move(params.widget_params) //
 	),
@@ -53,13 +53,13 @@ ellipse_push_button::ellipse_push_button(
 namespace ruis::make {
 
 utki::shared_ref<ruis::ellipse_push_button> ellipse_push_button(
-	utki::shared_ref<ruis::context> context,
+	const utki::shared_ref<ruis::context>& context,
 	ruis::ellipse_push_button::all_parameters params,
 	ruis::widget_list contents
 )
 {
 	return utki::make_shared<ruis::ellipse_push_button>(
-		std::move(context), //
+		context, //
 		std::move(params),
 		std::move(contents)
 	);

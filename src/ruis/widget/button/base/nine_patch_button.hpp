@@ -48,7 +48,7 @@ private:
 
 protected:
 	nine_patch_button(
-		utki::shared_ref<ruis::context> context, //
+		const utki::shared_ref<ruis::context>& context, //
 		container::parameters container_params,
 		button::parameters button_params,
 		blending_widget::parameters blending_params,

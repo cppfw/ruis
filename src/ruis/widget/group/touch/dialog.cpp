@@ -6,7 +6,7 @@ Copyright (C) 2012-2026  Ivan Gagis <igagis@gmail.com>
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+at your option any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -39,7 +39,7 @@ namespace m = ruis::make;
 // Build the chrome (dimming background, close-on-click/keypress proxies and the styled panel)
 // surrounding the given dialog content container.
 widget_list make_chrome(
-	utki::shared_ref<ruis::context> c, //
+	const utki::shared_ref<ruis::context>& c, //
 	utki::shared_ref<ruis::container> content_container, //
 	dialog::all_parameters params, //
 	std::function<void(ruis::click_proxy&)> bg_click_handler, //
@@ -177,12 +177,12 @@ widget_list make_chrome(
 } // namespace
 
 dialog::dialog(
-	utki::shared_ref<ruis::context>& context, //
+	const utki::shared_ref<ruis::context>& context, //
 	all_parameters& params,
 	utki::shared_ref<ruis::container> content_container
 ) :
 	widget( //
-		std::move(context),
+		context,
 		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
@@ -216,7 +216,7 @@ dialog::dialog(
 {}
 
 dialog::dialog(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	all_parameters params,
 	widget_list children
 ) :
@@ -256,13 +256,13 @@ void dialog::close()
 }
 
 utki::shared_ref<ruis::touch::dialog> ruis::touch::make::dialog(
-	utki::shared_ref<context> context, //
+	const utki::shared_ref<context>& context, //
 	dialog::all_parameters params,
 	widget_list children
 )
 {
 	return utki::make_shared<ruis::touch::dialog>(
-		std::move(context), //
+		context, //
 		std::move(params),
 		std::move(children)
 	);

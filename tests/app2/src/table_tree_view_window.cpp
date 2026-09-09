@@ -66,8 +66,8 @@ class table_tree_view_provider : public ruis::table_tree_view::provider
 	)qwertyuiop");
 
 public:
-	table_tree_view_provider(utki::shared_ref<ruis::context> context) :
-		ruis::table_tree_view::provider(std::move(context))
+	table_tree_view_provider(const utki::shared_ref<ruis::context>& context) :
+		ruis::table_tree_view::provider(context)
 	{}
 
 	size_t count(utki::span<const size_t> index) const noexcept override

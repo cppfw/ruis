@@ -6,7 +6,7 @@ Copyright (C) 2012-2026  Ivan Gagis <igagis@gmail.com>
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+at your option any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -36,7 +36,7 @@ namespace {
 
 namespace m = ruis::make;
 
-utki::shared_ref<container> make_top_row(utki::shared_ref<context> c)
+utki::shared_ref<container> make_top_row(const utki::shared_ref<context>& c)
 {
 	// clang-format off
 	return m::container(c,
@@ -79,7 +79,7 @@ utki::shared_ref<container> make_top_row(utki::shared_ref<context> c)
 	// clang-format on
 }
 
-utki::shared_ref<container> make_bottom_row(utki::shared_ref<context> c)
+utki::shared_ref<container> make_bottom_row(const utki::shared_ref<context>& c)
 {
 	// clang-format off
 	return m::container(c,
@@ -123,7 +123,7 @@ utki::shared_ref<container> make_bottom_row(utki::shared_ref<context> c)
 }
 
 utki::shared_ref<container> make_caption(
-	utki::shared_ref<context> c, //
+	const utki::shared_ref<context>& c, //
 	string title
 )
 {
@@ -207,7 +207,7 @@ utki::shared_ref<container> make_caption(
 }
 
 utki::shared_ref<container> make_middle(
-	utki::shared_ref<context> c, //
+	const utki::shared_ref<context>& c, //
 	utki::shared_ref<container> content_conatiner,
 	string title
 )
@@ -234,7 +234,7 @@ utki::shared_ref<container> make_middle(
 }
 
 utki::shared_ref<container> make_middle_row(
-	utki::shared_ref<context> c, //
+	const utki::shared_ref<context>& c, //
 	utki::shared_ref<container> content_container,
 	string title
 )
@@ -281,7 +281,7 @@ utki::shared_ref<container> make_middle_row(
 }
 
 std::vector<utki::shared_ref<widget>> make_children(
-	utki::shared_ref<context> c, //
+	const utki::shared_ref<context>& c, //
 	utki::shared_ref<container> content_container,
 	string title
 )
@@ -324,7 +324,7 @@ void ruis::window::set_background(utki::shared_ref<widget> w)
 }
 
 window::window(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	all_parameters params,
 	widget_list children
 ) :
@@ -351,12 +351,12 @@ window::window(
 {}
 
 window::window(
-	utki::shared_ref<ruis::context>& context,
+	const utki::shared_ref<ruis::context>& context,
 	all_parameters& params,
 	utki::shared_ref<ruis::container> content_container
 ) :
 	widget( //
-		std::move(context),
+		context,
 		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
@@ -786,7 +786,7 @@ void window::on_lay_out()
 }
 
 utki::shared_ref<window> ruis::make::window(
-	utki::shared_ref<context> context,
+	const utki::shared_ref<context>& context,
 	window::all_parameters params,
 	widget_list children
 )
@@ -795,7 +795,7 @@ utki::shared_ref<window> ruis::make::window(
 		params.container_params.layout = ruis::layout::pile;
 	}
 	return utki::make_shared<ruis::window>(
-		std::move(context), //
+		context, //
 		std::move(params),
 		std::move(children)
 	);

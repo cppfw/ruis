@@ -28,12 +28,12 @@ using namespace ruis::touch;
 using namespace ruis::length_literals;
 
 tab_button::tab_button(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	all_parameters params,
 	ruis::string text
 ) :
 	widget(
-		std::move(context), //
+		context, //
 		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
@@ -98,13 +98,13 @@ ruis::event_status tab_button::on_mouse_button(const ruis::mouse_button_event& e
 }
 
 utki::shared_ref<ruis::touch::tab_button> ruis::touch::make::tab_button(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	ruis::touch::tab_button::all_parameters params,
 	ruis::string text
 )
 {
 	return utki::make_shared<ruis::touch::tab_button>(
-		std::move(context), //
+		context, //
 		std::move(params),
 		std::move(text)
 	);

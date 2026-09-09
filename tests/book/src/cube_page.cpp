@@ -24,8 +24,8 @@ class cube_widget : public ruis::widget, public ruis::updateable{
 public:
 	std::shared_ptr<ruis::render::vertex_array> cube_vao;
 	
-	cube_widget(utki::shared_ref<ruis::context> context) :
-			widget(std::move(context), {}, {})
+	cube_widget(const utki::shared_ref<ruis::context>& context) :
+			widget(context, {}, {})
 	{
 		std::array<ruis::vec3, 36> cube_pos = {{
 			{-1, -1, 1}, {1, -1, 1}, {-1, 1, 1},
@@ -116,10 +116,10 @@ public:
 };
 }
 
-cube_page::cube_page(utki::shared_ref<ruis::context> c) :
+cube_page::cube_page(const utki::shared_ref<ruis::context>& c) :
 		// clang-format off
 		widget(
-			std::move(c),
+			c,
 			{
 				.dims = {ruis::dim::fill, ruis::dim::fill}
 			},

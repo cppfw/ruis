@@ -25,10 +25,10 @@ public:
 	};
 
 	path_widget(
-		utki::shared_ref<ruis::context> context, //
+		const utki::shared_ref<ruis::context>& context, //
 		all_parameters params
 	) :
-		widget(std::move(context), std::move(params.layout_params), std::move(params.widget_params)),
+		widget(context, std::move(params.layout_params), std::move(params.widget_params)),
 		vao(this->context.get().renderer)
 	{}
 
@@ -50,12 +50,12 @@ public:
 
 namespace make{
 inline utki::shared_ref<::path_widget> path_widget(
-	utki::shared_ref<ruis::context> context,
+	const utki::shared_ref<ruis::context>& context,
 	::path_widget::all_parameters params
 )
 {
 	return utki::make_shared<::path_widget>(
-		std::move(context),
+		context,
 		std::move(params)
 	);
 }
@@ -70,11 +70,11 @@ public:
 	};
 
 	ellipse_widget(
-		utki::shared_ref<ruis::context> context, //
+		const utki::shared_ref<ruis::context>& context, //
 		all_parameters params
 	) :
 		widget(
-			std::move(context), //
+			context, //
 			std::move(params.layout_params),
 			std::move(params.widget_params)
 		),
@@ -95,12 +95,12 @@ public:
 
 namespace make{
 inline utki::shared_ref<::ellipse_widget> ellipse_widget(
-	utki::shared_ref<ruis::context> context,
+	const utki::shared_ref<ruis::context>& context,
 	::ellipse_widget::all_parameters params
 )
 {
 	return utki::make_shared<::ellipse_widget>(
-		std::move(context),
+		context,
 		std::move(params)
 	);
 }
@@ -119,11 +119,11 @@ public:
 	};
 
 	rectangle_widget(
-		utki::shared_ref<ruis::context> context, //
+		const utki::shared_ref<ruis::context>& context, //
 		all_parameters params
 	) :
 		widget(
-			std::move(context), //
+			context, //
 			std::move(params.layout_params),
 			std::move(params.widget_params)
 		),
@@ -145,12 +145,12 @@ public:
 
 namespace make{
 inline utki::shared_ref<::rectangle_widget> rectangle_widget(
-	utki::shared_ref<ruis::context> context,
+	const utki::shared_ref<ruis::context>& context,
 	::rectangle_widget::all_parameters params
 )
 {
 	return utki::make_shared<::rectangle_widget>(
-		std::move(context),
+		context,
 		std::move(params)
 	);
 }
@@ -161,7 +161,7 @@ using namespace ruis::make;
 using namespace ::make;
 }
 
-utki::shared_ref<ruis::widget> make_root_widget(utki::shared_ref<ruis::context> c){
+utki::shared_ref<ruis::widget> make_root_widget(const utki::shared_ref<ruis::context>& c){
 	// clang-format off
 	return m::pile(c,
 		{},

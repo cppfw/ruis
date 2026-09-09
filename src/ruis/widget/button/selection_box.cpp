@@ -30,11 +30,11 @@ using namespace std::string_view_literals;
 using namespace ruis;
 
 selection_box::selection_box(
-	utki::shared_ref<ruis::context> context,
+	const utki::shared_ref<ruis::context>& context,
 	container& selection_container,
 	list_widget::parameters list_widget_params
 ) :
-	widget(std::move(context), {}, {}),
+	widget(context, {}, {}),
 	list_widget(
 		this->context, //
 		std::move(list_widget_params)
@@ -71,13 +71,13 @@ void selection_box::set_selection(size_t i)
 }
 
 utki::shared_ref<ruis::selection_box> ruis::make::selection_box(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	ruis::selection_box::all_parameters params
 )
 {
 	// clang-format off
 	return ruis::click::make::selection_box(
-		std::move(context), //
+		context, //
 		ruis::click::selection_box::all_parameters{
 			.layout_params = std::move(params.layout_params), //
 			.widget_params = std::move(params.widget_params),

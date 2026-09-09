@@ -12,7 +12,7 @@ namespace m{
     using namespace ::make;
 }
 
-utki::shared_ref<ruis::page> make_main_page(utki::shared_ref<ruis::context> c){
+utki::shared_ref<ruis::page> make_main_page(const utki::shared_ref<ruis::context>& c){
     // clang-format off
     return m::pile_page(c,
         ruis::widget::parameters{},

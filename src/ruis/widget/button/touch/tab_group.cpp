@@ -26,7 +26,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace ruis::touch;
 
 tab_group::tab_group(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	all_parameters params,
 	widget_list children
 ) :
@@ -115,7 +115,7 @@ void tab_group::render(const ruis::mat4& matrix) const
 }
 
 utki::shared_ref<ruis::touch::tab_group> ruis::touch::make::tab_group(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	ruis::touch::tab_group::all_parameters params,
 	widget_list tabs
 )
@@ -125,7 +125,7 @@ utki::shared_ref<ruis::touch::tab_group> ruis::touch::make::tab_group(
 	}
 
 	return utki::make_shared<ruis::touch::tab_group>(
-		std::move(context), //
+		context, //
 		std::move(params),
 		std::move(tabs)
 	);

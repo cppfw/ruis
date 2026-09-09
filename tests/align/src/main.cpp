@@ -14,7 +14,7 @@ namespace m = ruis::make;
 
 namespace{
 utki::shared_ref<ruis::container> make_pile_layout( //
-	utki::shared_ref<ruis::context> c,
+	const utki::shared_ref<ruis::context>& c,
 	ruis::layout::parameters layout_params
 )
 {
@@ -125,7 +125,7 @@ utki::shared_ref<ruis::container> make_pile_layout( //
 }
 
 namespace{
-utki::shared_ref<ruis::widget> make_separator(utki::shared_ref<ruis::context> c, bool vertical){
+utki::shared_ref<ruis::widget> make_separator(const utki::shared_ref<ruis::context>& c, bool vertical){
 	return m::rectangle(
 		c,
 		{
@@ -143,7 +143,7 @@ utki::shared_ref<ruis::widget> make_separator(utki::shared_ref<ruis::context> c,
 }
 
 utki::shared_ref<ruis::container> make_linear_layout( //
-	utki::shared_ref<ruis::context> c,
+	const utki::shared_ref<ruis::context>& c,
 	ruis::layout::parameters layout_params,
 	bool vertical
 )
@@ -261,7 +261,7 @@ utki::shared_ref<ruis::container> make_linear_layout( //
 }
 
 namespace{
-utki::shared_ref<ruis::container> make_layout(utki::shared_ref<ruis::context> c){	
+utki::shared_ref<ruis::container> make_layout(const utki::shared_ref<ruis::context>& c){	
 	return m::container(
 		c,
 		{

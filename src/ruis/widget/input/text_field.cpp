@@ -26,10 +26,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace ruis;
 
 text_field::text_field(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	bare_text_field& bare
 ) :
-	widget(std::move(context), {}, {}),
+	widget(context, {}, {}),
 	wrapped_widget<bare_text_field>(
 		this->context, //
 		bare
@@ -37,13 +37,13 @@ text_field::text_field(
 {}
 
 utki::shared_ref<ruis::text_field> ruis::make::text_field(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	ruis::text_field::all_parameters params,
 	ruis::string text
 )
 {
 	return ruis::make::rectangle_text_field(
-		std::move(context), //
+		context, //
 		// clang-format off
 		{
 			.layout_params = std::move(params.layout_params),

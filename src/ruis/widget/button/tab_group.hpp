@@ -40,7 +40,7 @@ public:
 	};
 
 	tab_group(
-		utki::shared_ref<ruis::context> context, //
+		const utki::shared_ref<ruis::context>& context, //
 		all_parameters params,
 		widget_list children
 	);
@@ -64,13 +64,13 @@ public:
 
 namespace make {
 inline utki::shared_ref<ruis::tab_group> tab_group(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	ruis::tab_group::all_parameters params,
 	widget_list children = {}
 )
 {
 	return utki::make_shared<ruis::tab_group>(
-		std::move(context), //
+		context, //
 		std::move(params),
 		std::move(children)
 	);

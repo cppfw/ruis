@@ -45,7 +45,7 @@ public:
 	};
 
 	click_proxy(
-		utki::shared_ref<ruis::context> context, //
+		const utki::shared_ref<ruis::context>& context, //
 		all_parameters params
 	);
 
@@ -81,7 +81,7 @@ public:
 
 namespace make {
 utki::shared_ref<ruis::click_proxy> click_proxy(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	ruis::click_proxy::all_parameters params
 );
 } // namespace make

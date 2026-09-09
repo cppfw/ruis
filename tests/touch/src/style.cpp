@@ -26,14 +26,14 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace ruis::length_literals;
 
 utki::shared_ref<ruis::push_button> m::push_button(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	ruis::push_button::all_parameters params,
 	ruis::widget_list contents
 )
 {
 	// clang-format off
 	return ruis::make::rectangle_push_button(
-		std::move(context),
+		context,
 		{
             .layout_params = std::move(params.layout_params),
             .widget_params = std::move(params.widget_params),

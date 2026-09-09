@@ -45,7 +45,7 @@ public:
 	};
 
 	text(
-		utki::shared_ref<ruis::context> context, //
+		const utki::shared_ref<ruis::context>& context, //
 		all_parameters params,
 		string text
 	);
@@ -64,7 +64,7 @@ public:
 
 namespace make {
 utki::shared_ref<ruis::text> text(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	text::all_parameters params,
 	string text = {}
 );

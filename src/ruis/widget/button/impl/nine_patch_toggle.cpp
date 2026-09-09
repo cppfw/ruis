@@ -30,7 +30,7 @@ void nine_patch_toggle::on_pressed_change()
 }
 
 nine_patch_toggle::nine_patch_toggle(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	container::parameters container_params,
 	button::parameters button_params,
 	blending_widget::parameters blending_params,
@@ -38,7 +38,7 @@ nine_patch_toggle::nine_patch_toggle(
 	nine_patch_button::parameters nine_patch_button_params,
 	widget_list children
 ) :
-	widget(std::move(context), {}, {}),
+	widget(context, {}, {}),
 	button(
 		this->context, //
 		std::move(button_params)

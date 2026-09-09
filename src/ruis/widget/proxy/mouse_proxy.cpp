@@ -24,11 +24,11 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace ruis;
 
 mouse_proxy::mouse_proxy( //
-	utki::shared_ref<ruis::context> context,
+	const utki::shared_ref<ruis::context>& context,
 	all_parameters params
 ) :
 	widget( //
-		std::move(context),
+		context,
 		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
@@ -61,12 +61,12 @@ void mouse_proxy::on_hovered_change(unsigned pointer_id)
 }
 
 utki::shared_ref<ruis::mouse_proxy> ruis::make::mouse_proxy(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	ruis::mouse_proxy::all_parameters params
 )
 {
 	return utki::make_shared<ruis::mouse_proxy>(
-		std::move(context), //
+		context, //
 		std::move(params)
 	);
 }

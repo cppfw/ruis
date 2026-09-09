@@ -47,7 +47,7 @@ public:
 	};
 
 	radio_button(
-		utki::shared_ref<ruis::context> context, //
+		const utki::shared_ref<ruis::context>& context, //
 		all_parameters params
 	);
 
@@ -76,12 +76,12 @@ private:
 
 namespace make {
 inline utki::shared_ref<ruis::radio_button> radio_button(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	ruis::radio_button::all_parameters params
 )
 {
 	return utki::make_shared<ruis::radio_button>(
-		std::move(context), //
+		context, //
 		std::move(params)
 	);
 }

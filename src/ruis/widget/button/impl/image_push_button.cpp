@@ -30,11 +30,11 @@ void image_push_button::on_pressed_change()
 }
 
 image_push_button::image_push_button( //
-	utki::shared_ref<ruis::context> context,
+	const utki::shared_ref<ruis::context>& context,
 	all_parameters params
 ) :
 	widget( //
-		std::move(context),
+		context,
 		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
@@ -55,12 +55,12 @@ image_push_button::image_push_button( //
 {}
 
 utki::shared_ref<ruis::image_push_button> ruis::make::image_push_button(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	ruis::image_push_button::all_parameters params
 )
 {
 	return utki::make_shared<ruis::image_push_button>(
-		std::move(context), //
+		context, //
 		std::move(params)
 	);
 }

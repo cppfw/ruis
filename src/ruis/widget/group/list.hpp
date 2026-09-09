@@ -67,7 +67,7 @@ public:
 	};
 
 	list(
-		utki::shared_ref<ruis::context> context, //
+		const utki::shared_ref<ruis::context>& context, //
 		all_parameters params
 	);
 
@@ -184,12 +184,12 @@ private:
 
 namespace make {
 inline utki::shared_ref<ruis::list> list( //
-	utki::shared_ref<ruis::context> context,
+	const utki::shared_ref<ruis::context>& context,
 	list::all_parameters params
 )
 {
 	return utki::make_shared<ruis::list>( //
-		std::move(context),
+		context,
 		std::move(params)
 	);
 }

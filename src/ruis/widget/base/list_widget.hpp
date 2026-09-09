@@ -40,7 +40,7 @@ class list_provider
 	list_widget* owner = nullptr;
 
 protected:
-	list_provider(utki::shared_ref<ruis::context> context);
+	list_provider(const utki::shared_ref<ruis::context>& context);
 
 public:
 	list_provider(const list_provider&) = delete;
@@ -97,7 +97,7 @@ private:
 
 protected:
 	list_widget(
-		utki::shared_ref<ruis::context> context, //
+		const utki::shared_ref<ruis::context>& context, //
 		parameters params
 	);
 

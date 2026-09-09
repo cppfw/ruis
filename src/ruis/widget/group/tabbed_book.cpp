@@ -30,7 +30,7 @@ using namespace ruis::make;
 } // namespace m
 
 tabbed_book::tabbed_book(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	all_parameters params,
 	pages_list_type pages
 ) :
@@ -48,10 +48,10 @@ tabbed_book::tabbed_book(
 			if (!params.tabbed_book_params.choice_group_factory) {
 				// clang-format off
 				params.tabbed_book_params.choice_group_factory = [](
-						utki::shared_ref<ruis::context> context,
+						const utki::shared_ref<ruis::context>& context,
 						widget_list tabs
 					){
-						return ruis::make::choice_group(std::move(context),
+						return ruis::make::choice_group(context,
 							{
 								.layout_params{
 									.dims{ruis::dim::fill, ruis::dim::min}
@@ -80,10 +80,10 @@ tabbed_book::tabbed_book(
 			if (!params.tabbed_book_params.book_factory) {
 				// clang-format off
 				params.tabbed_book_params.book_factory = [](
-						utki::shared_ref<ruis::context> context, //
+						const utki::shared_ref<ruis::context>& context, //
 						std::vector<utki::shared_ref<page>> pages
 					){
-						return ruis::make::book(std::move(context),
+						return ruis::make::book(context,
 							{
 								.layout_params{
 									.dims{ruis::dim::fill, ruis::dim::max},
@@ -104,7 +104,7 @@ tabbed_book::tabbed_book(
 {}
 
 tabbed_book::tabbed_book(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	all_parameters& params,
 	pages_list_type& pages,
 	utki::shared_ref<ruis::choice_group> choice_group,
@@ -268,7 +268,7 @@ auto tabbed_book::find_pair(const ruis::page& p) -> decltype(tab_page_pairs)::it
 }
 
 utki::shared_ref<ruis::tabbed_book> ruis::make::tabbed_book(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	ruis::tabbed_book::all_parameters params,
 	std::vector< //
 		std::pair<
@@ -282,10 +282,10 @@ utki::shared_ref<ruis::tabbed_book> ruis::make::tabbed_book(
 	if (!params.tabbed_book_params.choice_group_factory) {
 		// clang-format off
 		params.tabbed_book_params.choice_group_factory = [](
-				utki::shared_ref<ruis::context> context,
+				const utki::shared_ref<ruis::context>& context,
 				widget_list tabs
 			){
-				return ruis::make::tab_group(std::move(context),
+				return ruis::make::tab_group(context,
 					{
 						.layout_params{
 							.dims{ruis::dim::fill, ruis::dim::min}
@@ -298,7 +298,7 @@ utki::shared_ref<ruis::tabbed_book> ruis::make::tabbed_book(
 	}
 
 	return utki::make_shared<ruis::tabbed_book>(
-		std::move(context), //
+		context, //
 		std::move(params),
 		std::move(pages)
 	);

@@ -38,7 +38,7 @@ public:
 	};
 
 	gap( //
-		utki::shared_ref<ruis::context> context,
+		const utki::shared_ref<ruis::context>& context,
 		all_parameters params //
 	);
 
@@ -47,12 +47,12 @@ public:
 
 namespace make {
 inline utki::shared_ref<ruis::gap> gap(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	ruis::gap::all_parameters params
 )
 {
 	return utki::make_shared<ruis::gap>( //
-		std::move(context),
+		context,
 		std::move(params)
 	);
 }

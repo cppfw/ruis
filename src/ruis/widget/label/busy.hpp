@@ -40,7 +40,7 @@ public:
 	};
 
 	busy(
-		utki::shared_ref<ruis::context> context, //
+		const utki::shared_ref<ruis::context>& context, //
 		all_parameters params
 	);
 
@@ -49,12 +49,12 @@ public:
 
 namespace make {
 inline utki::shared_ref<ruis::busy> busy(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	ruis::busy::all_parameters params
 )
 {
 	return utki::make_shared<ruis::busy>(
-		std::move(context), //
+		context, //
 		std::move(params)
 	);
 }

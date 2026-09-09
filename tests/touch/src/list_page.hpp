@@ -23,4 +23,4 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <ruis/widget/group/book.hpp>
 
-utki::shared_ref<ruis::page> make_list_page(utki::shared_ref<ruis::context> c);
+utki::shared_ref<ruis::page> make_list_page(const utki::shared_ref<ruis::context>& c);

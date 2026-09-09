@@ -23,9 +23,15 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
-fraction_band_widget::fraction_band_widget(utki::shared_ref<ruis::context> c, all_parameters params) :
-	widget(std::move(c), {}, {}),
-	fraction_widget(this->context, std::move(params.fraction_params)),
+fraction_band_widget::fraction_band_widget(
+	const utki::shared_ref<ruis::context>& c, //
+	all_parameters params
+) :
+	widget(c, {}, {}),
+	fraction_widget(
+		this->context, //
+		std::move(params.fraction_params)
+	),
 	params(std::move(params.fraction_band_params))
 {}
 

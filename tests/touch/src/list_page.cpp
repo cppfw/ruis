@@ -36,8 +36,8 @@ namespace {
 class list_page_provider : public ruis::list_provider
 {
 public:
-	list_page_provider(utki::shared_ref<ruis::context> context) :
-		ruis::list_provider(std::move(context))
+	list_page_provider(const utki::shared_ref<ruis::context>& context) :
+		ruis::list_provider(context)
 	{}
 
 	size_t count() const noexcept override
@@ -116,9 +116,9 @@ class list_page :
 	private ruis::touch::list
 {
 public:
-	list_page(utki::shared_ref<ruis::context> c) :
+	list_page(const utki::shared_ref<ruis::context>& c) :
 		// clang-format off
-		ruis::widget(std::move(c),
+		ruis::widget(c,
 			{},
 			{
 				.clip = true
@@ -143,7 +143,7 @@ public:
 
 } // namespace
 
-utki::shared_ref<ruis::page> make_list_page(utki::shared_ref<ruis::context> c)
+utki::shared_ref<ruis::page> make_list_page(const utki::shared_ref<ruis::context>& c)
 {
-	return utki::make_shared<list_page>(std::move(c));
+	return utki::make_shared<list_page>(c);
 }

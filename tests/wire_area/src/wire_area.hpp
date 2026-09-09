@@ -21,7 +21,7 @@ public:
 	};
 
 	wire_area(
-		utki::shared_ref<ruis::context> context, //
+		const utki::shared_ref<ruis::context>& context, //
 		all_parameters params,
 		ruis::widget_list children
 	);
@@ -51,13 +51,13 @@ private:
 
 namespace make{
 inline utki::shared_ref<ruis::wire_area> wire_area(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	ruis::wire_area::all_parameters params,
 	widget_list children
 )
 {
 	return utki::make_shared<ruis::wire_area>(
-		std::move(context), //
+		context, //
 		std::move(params),
 		std::move(children)
 	);

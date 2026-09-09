@@ -51,14 +51,14 @@ public:
 
 private:
 	rectangle_text_field(
-		utki::shared_ref<ruis::context>& context, //
+		const utki::shared_ref<ruis::context>& context, //
 		all_parameters& params,
 		utki::shared_ref<ruis::bare_text_field> bare_text_field
 	);
 
 public:
 	rectangle_text_field(
-		utki::shared_ref<ruis::context> context, //
+		const utki::shared_ref<ruis::context>& context, //
 		all_parameters params,
 		ruis::string text
 	);
@@ -68,7 +68,7 @@ public:
 
 namespace make {
 utki::shared_ref<ruis::rectangle_text_field> rectangle_text_field(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	ruis::rectangle_text_field::all_parameters params,
 	ruis::string text
 );

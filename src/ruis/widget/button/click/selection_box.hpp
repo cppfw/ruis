@@ -49,7 +49,7 @@ public:
 	};
 
 	selection_box(
-		utki::shared_ref<ruis::context> context, //
+		const utki::shared_ref<ruis::context>& context, //
 		all_parameters params
 	);
 
@@ -83,7 +83,7 @@ private:
 
 namespace make {
 utki::shared_ref<ruis::click::selection_box> selection_box(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	click::selection_box::all_parameters params
 );
 } // namespace make

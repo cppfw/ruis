@@ -46,14 +46,14 @@ public:
 
 private:
 	collapse_area(
-		utki::shared_ref<ruis::context>& context, //
+		const utki::shared_ref<ruis::context>& context, //
 		all_parameters& params,
 		utki::shared_ref<ruis::container> content_container
 	);
 
 public:
 	collapse_area(
-		utki::shared_ref<ruis::context> context, //
+		const utki::shared_ref<ruis::context>& context, //
 		all_parameters params,
 		widget_list contents
 	);
@@ -74,7 +74,7 @@ namespace make {
  * @return newly created 'collapse_area' widget.
  */
 utki::shared_ref<ruis::collapse_area> collapse_area(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	ruis::collapse_area::all_parameters params,
 	widget_list contents
 );

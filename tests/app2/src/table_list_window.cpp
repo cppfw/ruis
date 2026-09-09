@@ -110,8 +110,8 @@ utki::shared_ref<ruis::widget> make_table_list_window(
 				.provider = [&](){
 					class provider : public ruis::table_list::provider{
 					public:
-						provider(utki::shared_ref<ruis::context> context) :
-							ruis::table_list::provider(std::move(context))
+						provider(const utki::shared_ref<ruis::context>& context) :
+							ruis::table_list::provider(context)
 						{}
 
 						size_t count() const noexcept override{

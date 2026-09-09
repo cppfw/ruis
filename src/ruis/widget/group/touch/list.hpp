@@ -32,7 +32,7 @@ class list :
 {
 public:
 	list(
-		utki::shared_ref<ruis::context> context, //
+		const utki::shared_ref<ruis::context>& context, //
 		all_parameters params
 	);
 
@@ -47,7 +47,7 @@ private:
 
 namespace make {
 utki::shared_ref<ruis::touch::list> list(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	ruis::touch::list::all_parameters params
 );
 } // namespace make

@@ -40,7 +40,7 @@ public:
 	};
 
 	ellipse_push_button(
-		utki::shared_ref<ruis::context> context, //
+		const utki::shared_ref<ruis::context>& context, //
 		all_parameters params,
 		ruis::widget_list contents
 	);
@@ -60,7 +60,7 @@ public:
 
 namespace make {
 utki::shared_ref<ruis::ellipse_push_button> ellipse_push_button(
-	utki::shared_ref<ruis::context> context,
+	const utki::shared_ref<ruis::context>& context,
 	ruis::ellipse_push_button::all_parameters params,
 	ruis::widget_list contents
 );

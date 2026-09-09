@@ -26,12 +26,12 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace ruis;
 
 rectangle::rectangle( //
-	utki::shared_ref<ruis::context> context,
+	const utki::shared_ref<ruis::context>& context,
 	all_parameters params,
 	widget_list children
 ) :
 	widget( //
-		std::move(context),
+		context,
 		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
@@ -135,13 +135,13 @@ void rectangle::update_vaos()
 }
 
 utki::shared_ref<ruis::rectangle> ruis::make::rectangle(
-	utki::shared_ref<ruis::context> context,
+	const utki::shared_ref<ruis::context>& context,
 	rectangle::all_parameters params,
 	widget_list children
 )
 {
 	return utki::make_shared<ruis::rectangle>(
-		std::move(context), //
+		context, //
 		std::move(params),
 		std::move(children)
 	);

@@ -94,7 +94,7 @@ utki::shared_ref<ruis::tiling_area> make_headers_widget(
 } // namespace
 
 table_list::table_list(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	all_parameters params
 ) :
 	table_list(
@@ -212,12 +212,12 @@ void table_list::provider::notify_model_change()
 }
 
 utki::shared_ref<ruis::table_list> make::table_list(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	ruis::table_list::all_parameters params
 )
 {
 	return utki::make_shared<ruis::table_list>(
-		std::move(context), //
+		context, //
 		std::move(params)
 	);
 }

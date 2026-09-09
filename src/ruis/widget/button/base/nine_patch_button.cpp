@@ -27,7 +27,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace ruis;
 
 nine_patch_button::nine_patch_button( //
-	utki::shared_ref<ruis::context> context,
+	const utki::shared_ref<ruis::context>& context,
 	container::parameters container_params,
 	button::parameters button_params,
 	blending_widget::parameters blending_params,
@@ -35,7 +35,7 @@ nine_patch_button::nine_patch_button( //
 	parameters params,
 	widget_list children
 ) :
-	widget(std::move(context), {}, {}),
+	widget(context, {}, {}),
 	button(this->context, std::move(button_params)),
 	// clang-format off
 	nine_patch(

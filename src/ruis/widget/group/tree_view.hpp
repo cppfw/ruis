@@ -81,8 +81,8 @@ public:
 	public:
 		const utki::shared_ref<ruis::context> context;
 
-		provider_base(utki::shared_ref<ruis::context> context) :
-			context(std::move(context))
+		provider_base(const utki::shared_ref<ruis::context>& context) :
+			context(context)
 		{}
 
 		provider_base(const provider_base&) = delete;
@@ -164,7 +164,7 @@ public:
 		 * @brief Construct tree_view items provider.
 		 * @param context - ruis context to store.
 		 */
-		provider(utki::shared_ref<ruis::context> context);
+		provider(const utki::shared_ref<ruis::context>& context);
 
 		provider(const provider&) = delete;
 		provider& operator=(const provider&) = delete;
@@ -197,7 +197,7 @@ public:
 	};
 
 	tree_view(
-		utki::shared_ref<ruis::context> context, //
+		const utki::shared_ref<ruis::context>& context, //
 		all_parameters params
 	);
 
@@ -242,12 +242,12 @@ private:
 
 namespace make {
 inline utki::shared_ref<ruis::tree_view> tree_view(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	ruis::tree_view::all_parameters params
 )
 {
 	return utki::make_shared<ruis::tree_view>(
-		std::move(context), //
+		context, //
 		std::move(params)
 	);
 }

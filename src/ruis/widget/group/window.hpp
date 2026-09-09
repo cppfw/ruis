@@ -6,7 +6,7 @@ Copyright (C) 2012-2026  Ivan Gagis <igagis@gmail.com>
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+at your option any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -92,14 +92,14 @@ public:
 
 private:
 	window(
-		utki::shared_ref<ruis::context>& context, //
+		const utki::shared_ref<ruis::context>& context, //
 		all_parameters& params,
 		utki::shared_ref<ruis::container> content_container
 	);
 
 public:
 	window(
-		utki::shared_ref<ruis::context> context, //
+		const utki::shared_ref<ruis::context>& context, //
 		all_parameters params,
 		widget_list children
 	);
@@ -152,7 +152,7 @@ namespace make {
  * @return newly constructed 'window' widget.
  */
 utki::shared_ref<ruis::window> window(
-	utki::shared_ref<context> context, //
+	const utki::shared_ref<context>& context, //
 	window::all_parameters params,
 	widget_list contents
 );

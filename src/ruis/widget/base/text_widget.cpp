@@ -91,7 +91,7 @@ void text_widget::update_fonts_and_notify()
 }
 
 text_widget::text_widget(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	parameters params
 ) :
 	params([&]() {

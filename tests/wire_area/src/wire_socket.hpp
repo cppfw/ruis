@@ -41,7 +41,7 @@ public:
 	};
 
 	wire_socket(
-		utki::shared_ref<ruis::context> context, //
+		const utki::shared_ref<ruis::context>& context, //
 		all_parameters params
 	);
 	
@@ -91,12 +91,12 @@ public:
 
 namespace make{
 inline utki::shared_ref<ruis::wire_socket> wire_socket(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	ruis::wire_socket::all_parameters params
 )
 {
 	return utki::make_shared<ruis::wire_socket>(
-		std::move(context), //
+		context, //
 		std::move(params)
 	);
 }

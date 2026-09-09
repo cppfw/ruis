@@ -20,7 +20,7 @@ public:
     };
 
     cube_widget(
-        utki::shared_ref<ruis::context> context, //
+        const utki::shared_ref<ruis::context>& context, //
         all_parameters params
     );
 
@@ -34,12 +34,12 @@ public:
 
 namespace make{
 inline utki::shared_ref<::cube_widget> cube_widget(
-    utki::shared_ref<ruis::context> context,
+    const utki::shared_ref<ruis::context>& context,
     ::cube_widget::all_parameters params
 )
 {
     return utki::make_shared<::cube_widget>(
-        std::move(context),
+        context,
         std::move(params)
     );
 }

@@ -40,12 +40,12 @@ const real cursor_width = real(1.0);
 } // namespace
 
 bare_text_field::bare_text_field(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	all_parameters params,
 	string text
 ) :
 	widget(
-		std::move(context), //
+		context, //
 		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
@@ -498,13 +498,13 @@ size_t bare_text_field::delete_selection()
 }
 
 utki::shared_ref<ruis::bare_text_field> ruis::make::bare_text_field(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	ruis::bare_text_field::all_parameters params,
 	ruis::string text
 )
 {
 	return utki::make_shared<ruis::bare_text_field>(
-		std::move(context), //
+		context, //
 		std::move(params),
 		std::move(text)
 	);

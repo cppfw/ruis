@@ -27,11 +27,11 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace ruis;
 
 image_toggle::image_toggle(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	all_parameters params
 ) :
 	widget(
-		std::move(context), //
+		context, //
 		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
@@ -49,12 +49,12 @@ image_toggle::image_toggle(
 {}
 
 utki::shared_ref<ruis::image_toggle> ruis::make::image_toggle(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	ruis::image_toggle::all_parameters params
 )
 {
 	return utki::make_shared<ruis::image_toggle>(
-		std::move(context), //
+		context, //
 		std::move(params)
 	);
 }

@@ -60,11 +60,11 @@ public:
 };
 
 tree_view::tree_view( //
-	utki::shared_ref<ruis::context> context,
+	const utki::shared_ref<ruis::context>& context,
 	all_parameters params
 ) :
 	widget( //
-		std::move(context),
+		context,
 		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
@@ -97,7 +97,7 @@ void tree_view::notify_view_change()
 }
 
 namespace {
-utki::shared_ref<ruis::widget> make_empty_space_indent(utki::shared_ref<ruis::context> c)
+utki::shared_ref<ruis::widget> make_empty_space_indent(const utki::shared_ref<ruis::context>& c)
 {
 	// clang-format off
 	return ruis::make::gap(c,
@@ -115,7 +115,7 @@ utki::shared_ref<ruis::widget> make_empty_space_indent(utki::shared_ref<ruis::co
 } // namespace
 
 namespace {
-utki::shared_ref<ruis::widget> make_vertical_line_indent(utki::shared_ref<ruis::context> c)
+utki::shared_ref<ruis::widget> make_vertical_line_indent(const utki::shared_ref<ruis::context>& c)
 {
 	// clang-format off
 	return ruis::make::pile(c,
@@ -145,7 +145,7 @@ utki::shared_ref<ruis::widget> make_vertical_line_indent(utki::shared_ref<ruis::
 } // namespace
 
 namespace {
-utki::shared_ref<ruis::container> make_line_end_indent(utki::shared_ref<ruis::context> c)
+utki::shared_ref<ruis::container> make_line_end_indent(const utki::shared_ref<ruis::context>& c)
 {
 	// clang-format off
 	return ruis::make::pile(c,
@@ -221,7 +221,7 @@ utki::shared_ref<ruis::container> make_line_end_indent(utki::shared_ref<ruis::co
 } // namespace
 
 namespace {
-utki::shared_ref<ruis::container> make_line_middle_indent(utki::shared_ref<ruis::context> c)
+utki::shared_ref<ruis::container> make_line_middle_indent(const utki::shared_ref<ruis::context>& c)
 {
 	// clang-format off
 	return ruis::make::pile(c,
@@ -279,7 +279,7 @@ utki::shared_ref<ruis::container> make_line_middle_indent(utki::shared_ref<ruis:
 } // namespace
 
 namespace {
-utki::shared_ref<ruis::widget> make_plus_minus_widget(utki::shared_ref<ruis::context> c)
+utki::shared_ref<ruis::widget> make_plus_minus_widget(const utki::shared_ref<ruis::context>& c)
 {
 	// clang-format off
 	return ruis::make::pile(c,
@@ -308,8 +308,8 @@ utki::shared_ref<ruis::widget> make_plus_minus_widget(utki::shared_ref<ruis::con
 }
 } // namespace
 
-tree_view::provider::provider(utki::shared_ref<ruis::context> context) :
-	provider_base(std::move(context))
+tree_view::provider::provider(const utki::shared_ref<ruis::context>& context) :
+	provider_base(context)
 {}
 
 void tree_view::provider_base::init()

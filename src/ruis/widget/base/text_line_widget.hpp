@@ -38,7 +38,7 @@ protected:
 	vec2 measure(const ruis::vec2& quotum) const noexcept override;
 
 	text_line_widget(
-		utki::shared_ref<ruis::context> context, //
+		const utki::shared_ref<ruis::context>& context, //
 		text_widget::parameters text_widget_params,
 		string text
 	);

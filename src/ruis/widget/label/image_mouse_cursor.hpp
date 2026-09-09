@@ -58,7 +58,7 @@ public:
 	};
 
 	image_mouse_cursor(
-		utki::shared_ref<ruis::context> context, //
+		const utki::shared_ref<ruis::context>& context, //
 		all_parameters params,
 		widget_list children
 	);
@@ -88,7 +88,7 @@ namespace make {
  * @return newly created 'image_mouse_cursor' widget.
  */
 utki::shared_ref<ruis::image_mouse_cursor> image_mouse_cursor(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	ruis::image_mouse_cursor::all_parameters params,
 	ruis::widget_list children = {}
 );

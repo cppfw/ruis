@@ -50,8 +50,8 @@ public:
 	public:
 		const utki::shared_ref<ruis::context> context;
 
-		provider(utki::shared_ref<ruis::context> context) :
-			context(std::move(context))
+		provider(const utki::shared_ref<ruis::context>& context) :
+			context(context)
 		{}
 
 		provider(const provider&) = delete;
@@ -98,7 +98,7 @@ public:
 	};
 
 	table_list(
-		utki::shared_ref<ruis::context> context, //
+		const utki::shared_ref<ruis::context>& context, //
 		all_parameters params
 	);
 
@@ -197,7 +197,7 @@ private:
 
 namespace make {
 utki::shared_ref<ruis::table_list> table_list(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	ruis::table_list::all_parameters params
 );
 } // namespace make

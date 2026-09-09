@@ -29,12 +29,12 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace ruis;
 
 container::container(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	all_parameters params,
 	widget_list children
 ) :
 	widget( //
-		std::move(context),
+		context,
 		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
@@ -534,27 +534,27 @@ void container::on_reload()
 }
 
 utki::shared_ref<ruis::container> ruis::make::container(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	container::all_parameters params,
 	widget_list children
 )
 {
 	return utki::make_shared<ruis::container>(
-		std::move(context), //
+		context, //
 		std::move(params),
 		std::move(children)
 	);
 }
 
 utki::shared_ref<ruis::container> ruis::make::pile(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	widget::all_parameters params,
 	widget_list children
 )
 {
 	// clang-format off
 	return make::container(
-		std::move(context),
+		context,
 		{
 		 	.layout_params = std::move(params.layout_params),
 		 	.widget_params = std::move(params.widget_params),
@@ -568,14 +568,14 @@ utki::shared_ref<ruis::container> ruis::make::pile(
 }
 
 utki::shared_ref<ruis::container> ruis::make::column(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	widget::all_parameters params,
 	widget_list children
 )
 {
 	// clang-format off
 	return make::container(
-		std::move(context),
+		context,
 		{
 		 	.layout_params = std::move(params.layout_params),
 		 	.widget_params = std::move(params.widget_params),
@@ -589,14 +589,14 @@ utki::shared_ref<ruis::container> ruis::make::column(
 }
 
 utki::shared_ref<ruis::container> ruis::make::row(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	widget::all_parameters params,
 	widget_list children
 )
 {
 	// clang-format off
 	return make::container(
-		std::move(context),
+		context,
 		{
 		 	.layout_params = std::move(params.layout_params),
 		 	.widget_params = std::move(params.widget_params),

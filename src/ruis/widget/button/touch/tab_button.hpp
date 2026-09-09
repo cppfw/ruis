@@ -40,7 +40,7 @@ public:
 	};
 
 	tab_button(
-		utki::shared_ref<ruis::context> context, //
+		const utki::shared_ref<ruis::context>& context, //
 		all_parameters params,
 		ruis::string text
 	);
@@ -50,7 +50,7 @@ public:
 
 namespace make {
 utki::shared_ref<ruis::touch::tab_button> tab_button(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	ruis::touch::tab_button::all_parameters params,
 	ruis::string text
 );

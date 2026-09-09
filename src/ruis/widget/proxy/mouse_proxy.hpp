@@ -49,7 +49,7 @@ public:
 	};
 
 	mouse_proxy(
-		utki::shared_ref<ruis::context> context, //
+		const utki::shared_ref<ruis::context>& context, //
 		all_parameters params
 	);
 
@@ -88,7 +88,7 @@ public:
 
 namespace make {
 utki::shared_ref<ruis::mouse_proxy> mouse_proxy(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	ruis::mouse_proxy::all_parameters params
 );
 } // namespace make

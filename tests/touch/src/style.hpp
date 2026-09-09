@@ -33,7 +33,7 @@ using ruis::touch::make::tabbed_book;
 using ruis::touch::make::selection_box;
 
 utki::shared_ref<ruis::push_button> push_button(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	ruis::push_button::all_parameters params,
 	ruis::widget_list contents
 );

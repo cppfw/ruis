@@ -41,7 +41,7 @@ public:
 	};
 
 	image_toggle(
-		utki::shared_ref<ruis::context> context, //
+		const utki::shared_ref<ruis::context>& context, //
 		all_parameters params
 	);
 
@@ -56,7 +56,7 @@ public:
 
 namespace make {
 utki::shared_ref<ruis::image_toggle> image_toggle(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	ruis::image_toggle::all_parameters params
 );
 } // namespace make

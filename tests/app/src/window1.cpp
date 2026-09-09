@@ -13,7 +13,7 @@ using namespace ruis::make;
 }
 
 utki::shared_ref<ruis::window> make_window1(
-    utki::shared_ref<ruis::context> c, //
+    const utki::shared_ref<ruis::context>& c, //
     ruis::vec2_length pos
 )
 {
@@ -158,8 +158,8 @@ utki::shared_ref<ruis::window> make_window1(
                                     class the_provider : public ruis::list_provider{
                                         std::vector<std::u32string> items;
                                     public:
-                                        the_provider(utki::shared_ref<ruis::context> context) :
-                                            list_provider(std::move(context)),
+                                        the_provider(const utki::shared_ref<ruis::context>& context) :
+                                            list_provider(context),
                                             items{
                                                 U"item1|"s,
                                                 U"item2|"s,

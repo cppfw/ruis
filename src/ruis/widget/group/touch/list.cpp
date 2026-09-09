@@ -23,9 +23,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis::touch;
 
-list::list(utki::shared_ref<ruis::context> context, all_parameters params) :
+list::list(const utki::shared_ref<ruis::context>& context,//
+	 all_parameters params) :
 	widget(
-		std::move(context), //
+		context, //
 		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
@@ -63,12 +64,12 @@ ruis::vec2 list::flickable_scroll_by(const vec2& delta)
 }
 
 utki::shared_ref<ruis::touch::list> ruis::touch::make::list(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	ruis::touch::list::all_parameters params
 )
 {
 	return utki::make_shared<ruis::touch::list>(
-		std::move(context), //
+		context, //
 		std::move(params)
 	);
 }

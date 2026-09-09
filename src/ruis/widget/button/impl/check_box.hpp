@@ -52,7 +52,7 @@ public:
 	};
 
 	check_box(
-		utki::shared_ref<ruis::context> context, //
+		const utki::shared_ref<ruis::context>& context, //
 		all_parameters params
 	);
 
@@ -81,12 +81,12 @@ private:
 
 namespace make {
 inline utki::shared_ref<ruis::check_box> check_box( //
-	utki::shared_ref<ruis::context> context,
+	const utki::shared_ref<ruis::context>& context,
 	check_box::all_parameters params
 )
 {
 	return utki::make_shared<ruis::check_box>( //
-		std::move(context),
+		context,
 		std::move(params)
 	);
 }

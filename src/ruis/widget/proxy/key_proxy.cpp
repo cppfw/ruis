@@ -24,12 +24,12 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace ruis;
 
 key_proxy::key_proxy( //
-	utki::shared_ref<ruis::context> context,
+	const utki::shared_ref<ruis::context>& context,
 	all_parameters params,
 	widget_list children
 ) :
 	widget( //
-		std::move(context),
+		context,
 		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
@@ -54,7 +54,7 @@ event_status key_proxy::on_key(const ruis::key_event& e)
 }
 
 utki::shared_ref<ruis::key_proxy> ruis::make::key_proxy(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	key_proxy::all_parameters params,
 	widget_list children
 )
@@ -64,7 +64,7 @@ utki::shared_ref<ruis::key_proxy> ruis::make::key_proxy(
 	}
 
 	return utki::make_shared<ruis::key_proxy>(
-		std::move(context), //
+		context, //
 		std::move(params),
 		std::move(children)
 	);

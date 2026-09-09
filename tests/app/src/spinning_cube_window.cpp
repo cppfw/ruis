@@ -16,7 +16,7 @@ using namespace ::make;
 }
 
 utki::shared_ref<ruis::window> make_spinning_cube_window(
-    utki::shared_ref<ruis::context> c, //
+    const utki::shared_ref<ruis::context>& c, //
     ruis::vec2_length pos
 )
 {

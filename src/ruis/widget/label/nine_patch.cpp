@@ -40,12 +40,12 @@ using namespace ruis::make;
 } // namespace
 
 nine_patch::nine_patch( //
-	utki::shared_ref<ruis::context> context,
+	const utki::shared_ref<ruis::context>& context,
 	all_parameters params,
 	widget_list children
 ) :
 	widget( //
-		std::move(context),
+		context,
 		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),

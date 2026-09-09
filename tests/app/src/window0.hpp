@@ -3,6 +3,6 @@
 #include <ruis/widget/group/window.hpp>
 
 utki::shared_ref<ruis::window> make_window0(
-    utki::shared_ref<ruis::context> c, //
+    const utki::shared_ref<ruis::context>& c, //
     ruis::vec2_length pos
 );

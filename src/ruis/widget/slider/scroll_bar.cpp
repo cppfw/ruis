@@ -37,7 +37,7 @@ using namespace ruis::make;
 } // namespace m
 
 namespace {
-std::vector<utki::shared_ref<ruis::widget>> make_widgets(utki::shared_ref<ruis::context> c)
+std::vector<utki::shared_ref<ruis::widget>> make_widgets(const utki::shared_ref<ruis::context>& c)
 {
 	// clang-format off
 	return {
@@ -95,11 +95,11 @@ std::vector<utki::shared_ref<ruis::widget>> make_widgets(utki::shared_ref<ruis::
 } // namespace
 
 scroll_bar::scroll_bar( //
-	utki::shared_ref<ruis::context> c,
+	const utki::shared_ref<ruis::context>& c,
 	all_parameters params
 ) :
 	widget( //
-		std::move(c),
+		c,
 		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),

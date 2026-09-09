@@ -28,10 +28,10 @@ using namespace std::string_view_literals;
 using namespace ruis;
 
 push_button::push_button( //
-	utki::shared_ref<ruis::context> context,
+	const utki::shared_ref<ruis::context>& context,
 	button::parameters button_params
 ) :
-	widget(std::move(context), {}, {}),
+	widget(context, {}, {}),
 	button(this->context, std::move(button_params))
 {}
 
@@ -98,7 +98,7 @@ void push_button::on_click()
 }
 
 utki::shared_ref<ruis::push_button> ruis::make::push_button( //
-	utki::shared_ref<ruis::context> context,
+	const utki::shared_ref<ruis::context>& context,
 	ruis::push_button::all_parameters params,
 	widget_list children
 )
@@ -110,7 +110,7 @@ utki::shared_ref<ruis::push_button> ruis::make::push_button( //
 
 	auto& c = context.get();
 	return make::nine_patch_push_button( //
-		std::move(context),
+		context,
 		// clang-format off
 		{
 			.layout_params = std::move(params.layout_params),

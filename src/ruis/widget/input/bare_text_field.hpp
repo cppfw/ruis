@@ -82,7 +82,7 @@ public:
 	};
 
 	bare_text_field(
-		utki::shared_ref<ruis::context> context, //
+		const utki::shared_ref<ruis::context>& context, //
 		all_parameters params,
 		string text
 	);
@@ -128,7 +128,7 @@ private:
 
 namespace make {
 utki::shared_ref<ruis::bare_text_field> bare_text_field(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	ruis::bare_text_field::all_parameters params,
 	ruis::string text
 );

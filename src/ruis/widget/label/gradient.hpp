@@ -51,7 +51,7 @@ private:
 
 public:
 	gradient(
-		utki::shared_ref<ruis::context> context, //
+		const utki::shared_ref<ruis::context>& context, //
 		all_parameters params
 	);
 
@@ -68,12 +68,12 @@ public:
 
 namespace make {
 inline utki::shared_ref<ruis::gradient> gradient(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	gradient::all_parameters params
 )
 {
 	return utki::make_shared<ruis::gradient>(
-		std::move(context), //
+		context, //
 		std::move(params)
 	);
 }

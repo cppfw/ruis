@@ -28,7 +28,7 @@ using namespace ruis;
 using namespace ruis::length_literals;
 
 rectangle_text_field::rectangle_text_field(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	all_parameters params,
 	ruis::string text
 ) :
@@ -64,7 +64,7 @@ rectangle_text_field::rectangle_text_field(
 {}
 
 rectangle_text_field::rectangle_text_field(
-	utki::shared_ref<ruis::context>& context, //
+	const utki::shared_ref<ruis::context>& context, //
 	all_parameters& params,
 	utki::shared_ref<ruis::bare_text_field> bare_text_field
 ) :
@@ -126,13 +126,13 @@ void rectangle_text_field::on_focus_change()
 }
 
 utki::shared_ref<ruis::rectangle_text_field> ruis::make::rectangle_text_field(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	ruis::rectangle_text_field::all_parameters params,
 	ruis::string text
 )
 {
 	return utki::make_shared<ruis::rectangle_text_field>(
-		std::move(context), //
+		context, //
 		std::move(params),
 		std::move(text)
 	);

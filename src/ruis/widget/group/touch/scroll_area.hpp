@@ -32,7 +32,7 @@ class scroll_area :
 {
 public:
 	scroll_area(
-		utki::shared_ref<ruis::context> context, //
+		const utki::shared_ref<ruis::context>& context, //
 		scroll_area::all_parameters params,
 		widget_list children
 	);

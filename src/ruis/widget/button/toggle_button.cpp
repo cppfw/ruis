@@ -25,8 +25,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
-toggle_button::toggle_button(utki::shared_ref<ruis::context> context) :
-	widget(std::move(context), {}, {}),
+toggle_button::toggle_button(const utki::shared_ref<ruis::context>& context) :
+	widget(context, {}, {}),
 	button(this->context, button::parameters{})
 {}
 

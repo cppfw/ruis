@@ -50,7 +50,7 @@ protected:
 	void on_hovered_change(unsigned pointer_id) override;
 
 	push_button( //
-		utki::shared_ref<ruis::context> context,
+		const utki::shared_ref<ruis::context>& context,
 		button::parameters button_params
 	);
 
@@ -75,7 +75,7 @@ public:
 namespace make {
 
 utki::shared_ref<ruis::push_button> push_button( //
-	utki::shared_ref<ruis::context> context,
+	const utki::shared_ref<ruis::context>& context,
 	ruis::push_button::all_parameters params,
 	widget_list children
 );

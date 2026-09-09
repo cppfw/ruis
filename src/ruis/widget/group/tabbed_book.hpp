@@ -60,7 +60,7 @@ public:
 	struct parameters {
 		std::function< //
 			utki::shared_ref<ruis::book>(
-				utki::shared_ref<ruis::context>, //
+				const utki::shared_ref<ruis::context>&, //
 				std::vector<utki::shared_ref<page>>
 			) //
 			>
@@ -68,7 +68,7 @@ public:
 
 		std::function< //
 			utki::shared_ref<ruis::choice_group>(
-				utki::shared_ref<ruis::context>, //
+				const utki::shared_ref<ruis::context>&, //
 				widget_list
 			) //
 			>
@@ -91,14 +91,14 @@ public:
 		>;
 
 	tabbed_book(
-		utki::shared_ref<ruis::context> context, //
+		const utki::shared_ref<ruis::context>& context, //
 		all_parameters params,
 		pages_list_type pages
 	);
 
 private:
 	tabbed_book(
-		utki::shared_ref<ruis::context> context, //
+		const utki::shared_ref<ruis::context>& context, //
 		all_parameters& params,
 		pages_list_type& pages,
 		utki::shared_ref<ruis::choice_group> choice_group,
@@ -133,7 +133,7 @@ public:
 
 namespace make {
 utki::shared_ref<ruis::tabbed_book> tabbed_book(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	ruis::tabbed_book::all_parameters params,
 	std::vector< //
 		std::pair<

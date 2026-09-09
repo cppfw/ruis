@@ -51,7 +51,7 @@ namespace m = ruis::make;
 
 namespace {
 utki::shared_ref<ruis::window> make_sliders_window(
-	utki::shared_ref<ruis::context> c, //
+	const utki::shared_ref<ruis::context>& c, //
 	ruis::vec2_length pos
 )
 {
@@ -169,7 +169,7 @@ utki::shared_ref<ruis::window> make_sliders_window(
 
 namespace {
 utki::shared_ref<ruis::window> make_image_window(
-	utki::shared_ref<ruis::context> c, //
+	const utki::shared_ref<ruis::context>& c, //
 	ruis::vec2_length pos
 )
 {
@@ -239,10 +239,10 @@ class selection_box_provider : public ruis::list_provider
 
 public:
 	selection_box_provider(
-		utki::shared_ref<ruis::context> context, //
+		const utki::shared_ref<ruis::context>& context, //
 		std::vector<std::string> items
 	) :
-		list_provider(std::move(context)),
+		list_provider(context),
 		items(std::move(items))
 	{}
 
@@ -278,8 +278,8 @@ namespace {
 class language_selection_provider : public ruis::list_provider
 {
 public:
-	language_selection_provider(utki::shared_ref<ruis::context> context) :
-		list_provider(std::move(context))
+	language_selection_provider(const utki::shared_ref<ruis::context>& context) :
+		list_provider(context)
 	{}
 
 	size_t count() const noexcept override
@@ -300,7 +300,7 @@ public:
 
 namespace {
 utki::shared_ref<ruis::window> make_selection_box_window(
-	utki::shared_ref<ruis::context> c, //
+	const utki::shared_ref<ruis::context>& c, //
 	ruis::vec2_length pos
 )
 {
@@ -392,7 +392,7 @@ utki::shared_ref<ruis::window> make_selection_box_window(
 
 namespace {
 utki::shared_ref<ruis::window> make_text_input_window(
-	utki::shared_ref<ruis::context> c, //
+	const utki::shared_ref<ruis::context>& c, //
 	ruis::vec2_length pos
 )
 {
@@ -449,7 +449,7 @@ utki::shared_ref<ruis::window> make_text_input_window(
 }
 } // namespace
 
-utki::shared_ref<ruis::widget> make_root_widgets_structure(utki::shared_ref<ruis::context> c)
+utki::shared_ref<ruis::widget> make_root_widgets_structure(const utki::shared_ref<ruis::context>& c)
 {
 	// clang-format off
 	return m::overlay(c,

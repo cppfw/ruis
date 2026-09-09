@@ -18,7 +18,7 @@ using namespace ruis::make;
 
 namespace{
 utki::shared_ref<ruis::widget> make_radio_button(
-    utki::shared_ref<ruis::context> c, //
+    const utki::shared_ref<ruis::context>& c, //
     std::u32string text
 )
 {
@@ -44,7 +44,7 @@ utki::shared_ref<ruis::widget> make_radio_button(
 }
 
 utki::shared_ref<ruis::window> make_window0(
-    utki::shared_ref<ruis::context> c, //
+    const utki::shared_ref<ruis::context>& c, //
     ruis::vec2_length pos
 )
 {
@@ -134,8 +134,8 @@ utki::shared_ref<ruis::window> make_window0(
                                     {
                                         std::vector<std::u32string> items;
                                     public:
-                                        the_provider(utki::shared_ref<ruis::context> context) :
-                                            list_provider(std::move(context)),
+                                        the_provider(const utki::shared_ref<ruis::context>& context) :
+                                            list_provider(context),
                                             items{
                                                 U"item0"s,
                                                 U"item1"s,

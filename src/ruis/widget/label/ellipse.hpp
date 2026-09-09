@@ -44,7 +44,7 @@ public:
 	};
 
 	ellipse(
-		utki::shared_ref<ruis::context> context, //
+		const utki::shared_ref<ruis::context>& context, //
 		all_parameters params,
 		widget_list children
 	);
@@ -67,7 +67,7 @@ public:
 
 namespace make {
 utki::shared_ref<ruis::ellipse> ellipse(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	ruis::ellipse::all_parameters params,
 	widget_list children = {}
 );

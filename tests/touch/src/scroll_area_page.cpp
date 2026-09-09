@@ -54,8 +54,8 @@ class theme_selection_provider : public ruis::list_provider
 	std::vector<std::u32string> items;
 
 public:
-	theme_selection_provider(utki::shared_ref<ruis::context> context) :
-		ruis::list_provider(std::move(context)),
+	theme_selection_provider(const utki::shared_ref<ruis::context>& context) :
+		ruis::list_provider(context),
 		items{U"Dark"s, U"Light"s}
 	{}
 
@@ -93,7 +93,7 @@ public:
 	}
 };
 
-ruis::widget_list make_scroll_area_page_contents(utki::shared_ref<ruis::context> c)
+ruis::widget_list make_scroll_area_page_contents(const utki::shared_ref<ruis::context>& c)
 {
 	// clang-format off
 	auto theme_selector = m::selection_box(c,
@@ -187,10 +187,10 @@ class scroll_area_page :
 	private ruis::touch::scroll_area
 {
 public:
-	scroll_area_page(utki::shared_ref<ruis::context> c) :
+	scroll_area_page(const utki::shared_ref<ruis::context>& c) :
 		// clang-format off
 		ruis::widget(
-			std::move(c),
+			c,
 			{},
 			{
 				.clip = true
@@ -225,7 +225,7 @@ public:
 
 } // namespace
 
-utki::shared_ref<ruis::page> make_scroll_area_page(utki::shared_ref<ruis::context> c)
+utki::shared_ref<ruis::page> make_scroll_area_page(const utki::shared_ref<ruis::context>& c)
 {
-	return utki::make_shared<scroll_area_page>(std::move(c));
+	return utki::make_shared<scroll_area_page>(c);
 }

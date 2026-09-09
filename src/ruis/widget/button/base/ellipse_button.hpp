@@ -48,7 +48,7 @@ protected:
 	void on_pressed_change() override;
 
 	ellipse_button( //
-		utki::shared_ref<ruis::context> context,
+		const utki::shared_ref<ruis::context>& context,
 		container::parameters container_params,
 		padding::parameters padding_params,
 		parameters params,

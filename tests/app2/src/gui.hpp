@@ -23,4 +23,4 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <ruis/context.hpp>
 
-utki::shared_ref<ruis::widget> make_root_widgets_structure(utki::shared_ref<ruis::context> c);
+utki::shared_ref<ruis::widget> make_root_widgets_structure(const utki::shared_ref<ruis::context>& c);

@@ -23,8 +23,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
-list_provider::list_provider(utki::shared_ref<ruis::context> context) :
-	context(std::move(context))
+list_provider::list_provider(const utki::shared_ref<ruis::context>& context) :
+	context(context)
 {}
 
 utki::shared_ref<widget> list_provider::get_highlighted_widget(size_t index)
@@ -46,10 +46,10 @@ void list_provider::notify_model_change()
 }
 
 list_widget::list_widget(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	parameters params
 ) :
-	widget(std::move(context), {}, {}),
+	widget(context, {}, {}),
 	params(std::move(params))
 {
 	if (this->params.provider.get().owner) {

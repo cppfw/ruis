@@ -38,7 +38,7 @@ public:
 	};
 
 	resize_proxy(
-		utki::shared_ref<ruis::context> context, //
+		const utki::shared_ref<ruis::context>& context, //
 		all_parameters params
 	);
 
@@ -61,12 +61,12 @@ public:
 
 namespace make {
 inline utki::shared_ref<ruis::resize_proxy> resize_proxy(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	resize_proxy::all_parameters params
 )
 {
 	return utki::make_shared<ruis::resize_proxy>(
-		std::move(context), //
+		context, //
 		std::move(params)
 	);
 }

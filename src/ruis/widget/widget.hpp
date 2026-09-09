@@ -76,7 +76,7 @@ class widget : virtual public utki::shared
 	friend class layout::layout;
 
 public:
-	const utki::shared_ref<ruis::context> context;
+	const utki::shared_ref<ruis::context>& context;
 
 	/**
 	 * @brief Shorthand alias for this->context.

@@ -63,7 +63,7 @@ public:
 	};
 
 	image(
-		utki::shared_ref<ruis::context> context, //
+		const utki::shared_ref<ruis::context>& context, //
 		all_parameters params
 	);
 
@@ -106,12 +106,12 @@ public:
 
 namespace make {
 inline utki::shared_ref<ruis::image> image(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	image::all_parameters params
 )
 {
 	return utki::make_shared<ruis::image>(
-		std::move(context), //
+		context, //
 		std::move(params)
 	);
 }

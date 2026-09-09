@@ -20,7 +20,7 @@ using namespace ruis::make;
 }
 
 utki::shared_ref<ruis::widget> make_socket(
-	utki::shared_ref<ruis::context> c, //
+	const utki::shared_ref<ruis::context>& c, //
 	std::string text,
 	ruis::wire_socket::orientation outlet_orientation,
 	bool in_socket
@@ -56,7 +56,7 @@ utki::shared_ref<ruis::widget> make_socket(
 	// clang-format on
 }
 
-utki::shared_ref<ruis::widget> make_root_widget(utki::shared_ref<ruis::context> c){
+utki::shared_ref<ruis::widget> make_root_widget(const utki::shared_ref<ruis::context>& c){
 	// clang-format off
 	return m::wire_area(c,
 		{

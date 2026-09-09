@@ -43,7 +43,7 @@ public:
 	};
 
 	drag_area(
-		utki::shared_ref<ruis::context> context, //
+		const utki::shared_ref<ruis::context>& context, //
 		all_parameters params,
 		widget_list children
 	);
@@ -53,7 +53,7 @@ public:
 
 namespace make {
 utki::shared_ref<ruis::drag_area> drag_area(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	ruis::drag_area::all_parameters params,
 	widget_list children
 );

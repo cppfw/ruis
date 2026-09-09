@@ -6,7 +6,7 @@
 using namespace std::string_literals;
 
 sample_page::sample_page(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	std::string_view text
 ) :
 	ruis::widget(std::move( context), {}, {}),

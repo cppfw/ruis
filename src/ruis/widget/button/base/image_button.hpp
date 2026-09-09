@@ -49,7 +49,7 @@ protected:
 	void on_pressed_change() override;
 
 	image_button(
-		utki::shared_ref<ruis::context> context, //
+		const utki::shared_ref<ruis::context>& context, //
 		blending_widget::parameters blending_params,
 		image::parameters image_params,
 		parameters params

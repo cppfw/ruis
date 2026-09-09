@@ -27,10 +27,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace ruis;
 
 button::button(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	parameters params
 ) :
-	widget(std::move(context), {}, {}),
+	widget(context, {}, {}),
 	params(std::move(params))
 {}
 

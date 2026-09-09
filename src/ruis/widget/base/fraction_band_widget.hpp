@@ -43,7 +43,10 @@ protected:
 	};
 
 protected:
-	fraction_band_widget(utki::shared_ref<ruis::context> c, all_parameters params);
+	fraction_band_widget(
+		const utki::shared_ref<ruis::context>& c, //
+		all_parameters params
+	);
 
 	virtual void on_band_change();
 

@@ -87,7 +87,7 @@ public:
 	event_status on_mouse_move(const mouse_move_event& event) override;
 
 protected:
-	flickable(utki::shared_ref<ruis::context> context);
+	flickable(const utki::shared_ref<ruis::context>& context);
 
 	// TODO: doxygen
 	virtual event_status flickable_on_mouse_button(const mouse_button_event& event) = 0;

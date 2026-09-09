@@ -46,7 +46,7 @@ private:
 
 public:
 	min_proxy(
-		utki::shared_ref<ruis::context> context, //
+		const utki::shared_ref<ruis::context>& context, //
 		all_parameters params
 	);
 
@@ -55,12 +55,12 @@ public:
 
 namespace make {
 inline utki::shared_ref<ruis::min_proxy> min_proxy( //
-	utki::shared_ref<ruis::context> context,
+	const utki::shared_ref<ruis::context>& context,
 	min_proxy::all_parameters params
 )
 {
 	return utki::make_shared<ruis::min_proxy>(
-		std::move(context), //
+		context, //
 		std::move(params)
 	);
 }

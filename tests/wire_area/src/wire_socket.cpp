@@ -7,10 +7,10 @@
 using namespace ruis;
 
 wire_socket::wire_socket(
-	utki::shared_ref<ruis::context> context,
+	const utki::shared_ref<ruis::context>& context,
 	all_parameters params
 ) :
-	ruis::widget(std::move(context), std::move(params.layout_params), std::move(params.widget_params)),
+	ruis::widget(context, std::move(params.layout_params), std::move(params.widget_params)),
 	params(std::move(params.wire_socket_params))
 {}
 

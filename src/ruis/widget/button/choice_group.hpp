@@ -48,7 +48,7 @@ public:
 	};
 
 	choice_group(
-		utki::shared_ref<ruis::context> context, //
+		const utki::shared_ref<ruis::context>& context, //
 		all_parameters params,
 		widget_list children
 	);
@@ -81,7 +81,7 @@ namespace make {
  * @param children - children of the constructed 'choice_group' widget.
  */
 utki::shared_ref<ruis::choice_group> choice_group(
-	utki::shared_ref<ruis::context> context, //
+	const utki::shared_ref<ruis::context>& context, //
 	ruis::choice_group::all_parameters params,
 	widget_list children
 );
