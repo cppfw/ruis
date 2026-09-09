@@ -39,7 +39,7 @@ image_mouse_cursor::image_mouse_cursor(
 	),
 	// clang-format off
 	container(
-		std::move(context), //
+		context, //
 		{
 			.container_params = std::move(params.container_params)
 		},
@@ -52,7 +52,7 @@ image_mouse_cursor::image_mouse_cursor(
 void image_mouse_cursor::set_cursor(const utki::shared_ref<const res::cursor>& cursor)
 {
 	this->params.cursor = cursor.to_shared_ptr();
-	ASSERT(this->params.cursor)
+	utki::assert(this->params.cursor);
 	this->quad_tex.reset();
 }
 
@@ -77,11 +77,11 @@ void image_mouse_cursor::render(const ruis::mat4& matrix) const
 	}
 
 	if (!this->quad_tex) {
-		ASSERT(this->params.cursor)
+		utki::assert(this->params.cursor);
 		this->quad_tex = this->params.cursor->image().get(this->context.get().units).to_shared_ptr();
 	}
 
-	ASSERT(this->quad_tex)
+	utki::assert(this->quad_tex);
 
 	mat4 matr(matrix);
 	matr.translate(this->cursor_pos);
