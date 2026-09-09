@@ -33,7 +33,7 @@ gap::gap(
 		std::move(params.widget_params) //
 	),
 	color_widget(
-		this->context,
+		context,
 		std::move(params.color_params) //
 	)
 {}

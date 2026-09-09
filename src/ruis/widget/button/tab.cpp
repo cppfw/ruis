@@ -96,7 +96,7 @@ tab::tab(
 		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
-	button(this->context, ruis::button::parameters{}),
+	button(context, ruis::button::parameters{}),
 	toggle_button(this->context),
 	choice_button(this->context),
 	nine_patch_toggle(

@@ -72,7 +72,7 @@ collapse_area::collapse_area(
 	),
 	// clang-format off
 	container(
-		this->context,
+		context,
 		{
 			.container_params{
 				.layout = ruis::layout::column

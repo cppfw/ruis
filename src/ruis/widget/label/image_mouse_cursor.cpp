@@ -39,7 +39,7 @@ image_mouse_cursor::image_mouse_cursor(
 	),
 	// clang-format off
 	container(
-		std::move(this->context), //
+		std::move(context), //
 		{
 			.container_params = std::move(params.container_params)
 		},

@@ -100,7 +100,7 @@ selection_box::selection_box(
 		std::move(params.widget_params)
 	),
 	button(
-		this->context, //
+		context, //
 		button::parameters{}
 	),
 	nine_patch_push_button(
@@ -144,6 +144,7 @@ ruis::event_status selection_box::on_mouse_button(const mouse_button_event& e)
 	} else {
 		// TODO: twice I got this assert triggered, perhaps there are situations when
 		//       button release event comes without prior button press, need to investigate
+		// REPRODUCTION: press mouse button out of the selection_box, move cursor to selectioon_box, release the mouse button.
 		utki::assert(this->num_mouse_buttons_pressed != 0, SL);
 
 		--this->num_mouse_buttons_pressed;

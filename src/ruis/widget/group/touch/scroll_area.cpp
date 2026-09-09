@@ -35,7 +35,7 @@ scroll_area::scroll_area(
 	),
 	// clang-format off
 	ruis::scroll_area(
-		this->context,
+		context,
 		{},
 		std::move(children)
 	),

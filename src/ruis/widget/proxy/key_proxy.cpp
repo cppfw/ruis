@@ -35,7 +35,7 @@ key_proxy::key_proxy( //
 	),
 	// clang-format off
 	container( //
-		this->context,
+		context,
 		{
 			.container_params = std::move(params.container_params)
 		},

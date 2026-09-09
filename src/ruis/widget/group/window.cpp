@@ -362,7 +362,7 @@ window::window(
 	),
 	// clang-format off
 	container( //
-		this->context,
+		context,
 		{
 			.container_params = {
 				.layout = ruis::layout::pile

@@ -43,13 +43,13 @@ radio_button::radio_button(
 		std::move(params.widget_params)
 	),
 	button(
-		this->context, //
+		context, //
 		std::move(params.button_params)
 	),
-	toggle_button(this->context),
-	choice_button(this->context),
+	toggle_button(context),
+	choice_button(context),
 	// clang-format off
-	container(this->context,
+	container(context,
 		{
 			.container_params{
 				.layout = layout::pile

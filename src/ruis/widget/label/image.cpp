@@ -36,11 +36,11 @@ image::image( //
 		std::move(params.widget_params)
 	),
 	blending_widget( //
-		this->context,
+		context,
 		std::move(params.blending_params)
 	),
 	params(std::move(params.image_params)),
-	vao(this->context.get().renderer.get().obj().empty_vertex_array)
+	vao(context.get().renderer.get().obj().empty_vertex_array)
 {}
 
 void image::render(const ruis::mat4& matrix) const

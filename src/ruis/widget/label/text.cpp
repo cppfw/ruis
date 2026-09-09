@@ -37,12 +37,12 @@ text::text(
 		std::move(params.widget_params)
 	),
 	text_line_widget(
-		this->context, //
+		context, //
 		std::move(params.text_params),
 		std::move(text)
 	),
 	color_widget(
-		this->context, //
+		context, //
 		[&]() {
 			if (params.color_params.color.get().is_undefined()) {
 				params.color_params.color = this->context.get().style().get_color_text();

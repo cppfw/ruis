@@ -76,7 +76,7 @@ nine_patch_text_field::nine_patch_text_field(
 	// Initialize nine_patch first so it adds the bare_text_field as a child
 	// clang-format off
 	nine_patch(
-		this->context,
+		context,
 		{
 			.container_params{
 				.layout = layout::pile

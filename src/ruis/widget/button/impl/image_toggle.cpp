@@ -36,12 +36,12 @@ image_toggle::image_toggle(
 		std::move(params.widget_params)
 	),
 	button(
-		this->context, //
+		context, //
 		std::move(params.button_params)
 	),
-	toggle_button(this->context),
+	toggle_button(context),
 	image_button(
-		this->context,
+		context,
 		std::move(params.blending_params), //
 		std::move(params.image_params),
 		std::move(params.image_button_params)

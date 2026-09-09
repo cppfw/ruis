@@ -38,7 +38,7 @@ tab_button::tab_button(
 		std::move(params.widget_params)
 	),
 	button(
-		this->context,
+		context,
 		{
 }
 	),

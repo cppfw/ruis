@@ -188,14 +188,14 @@ dialog::dialog(
 	),
 	// clang-format off
 	container(
-		this->context,
+		context,
 		{
 			.container_params = {
 				.layout = ruis::layout::pile
 			}
 		},
 		make_chrome(
-			this->context, //
+			context, //
 			content_container, //
 			params, //
 			[this](ruis::click_proxy&){ this->close(); }, //
@@ -210,7 +210,7 @@ dialog::dialog(
 	),
 	// clang-format on
 	wrapped_widget(
-		this->context, //
+		context, //
 		content_container.get()
 	)
 {}

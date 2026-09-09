@@ -70,7 +70,7 @@ tree_view::tree_view( //
 	),
 	// clang-format off
 	list(
-		this->context,
+		context,
 		{
 			.oriented_params{.vertical = true},
 		 	.list_params{

@@ -35,7 +35,7 @@ ellipse::ellipse( //
 	),
 	// clang-format off
     padding(
-        this->context, //
+        context, //
         {
             .container_params = std::move(params.container_params),
             .padding_params = std::move(params.padding_params)

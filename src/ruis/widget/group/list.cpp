@@ -38,7 +38,7 @@ list::list(
 	),
 	// clang-format off
 	ruis::container(
-		this->context,
+		context,
 		{
 			.container_params{
 				.layout = layout::trivial

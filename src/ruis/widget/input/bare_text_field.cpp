@@ -50,13 +50,13 @@ bare_text_field::bare_text_field(
 		std::move(params.widget_params)
 	),
 	text_line_widget(
-		this->context, //
+		context, //
 		std::move(params.text_widget_params),
 		std::move(text)
 	),
-	character_input_widget(this->context),
+	character_input_widget(context),
 	color_widget(
-		this->context, //
+		context, //
 		[&]() {
 			if (params.color_params.color.get().is_undefined()) {
 				params.color_params.color = this->context.get().style().get_color_text();

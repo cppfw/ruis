@@ -97,7 +97,7 @@ table_tree_view::table_tree_view(
 	),
 	// clang-format off
     ruis::table_list(
-        this->context,
+        context,
         {
             .table_list_params{
                 .column_headers = std::move(params.table_tree_view_params.column_headers),

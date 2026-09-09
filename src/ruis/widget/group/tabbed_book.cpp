@@ -116,7 +116,7 @@ tabbed_book::tabbed_book(
 		std::move(params.widget_params)
 	),
 	// clang-format off
-	container(this->context,
+	container(context,
 		{
 			.container_params{
 				.layout = ruis::layout::column // TODO: get from params

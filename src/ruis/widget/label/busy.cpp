@@ -33,7 +33,7 @@ busy::busy(
 		std::move(params.widget_params)
 	),
 	spinner(
-		this->context, //
+		context, //
 		// clang-format off
 		{
 			.image_params = std::move(params.image_params),

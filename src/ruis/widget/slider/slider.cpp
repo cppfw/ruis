@@ -104,12 +104,12 @@ slider::slider( //
 		std::move(params.widget_params)
 	),
 	fraction_widget( //
-		this->context,
+		context,
 		std::move(params.fraction_params)
 	),
 	oriented(std::move(params.oriented_params)),
 	container( //
-		this->context,
+		context,
 		{.container_params = {.layout = layout::pile}},
 		make_widgets(this->context)
 	),

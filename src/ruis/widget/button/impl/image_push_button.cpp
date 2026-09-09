@@ -39,11 +39,11 @@ image_push_button::image_push_button( //
 		std::move(params.widget_params)
 	),
 	button( //
-		this->context,
+		context,
 		std::move(params.button_params)
 	),
 	push_button( //
-		this->context,
+		context,
 		button::parameters{}
 	),
 	image_button( //

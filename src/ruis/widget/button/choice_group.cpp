@@ -36,7 +36,7 @@ choice_group::choice_group(
 		std::move(params.widget_params)
 	),
 	// clang-format off
-	container(this->context,
+	container(context,
 		{
 			.container_params = std::move(params.container_params)
 		},

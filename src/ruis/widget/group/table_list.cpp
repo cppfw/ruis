@@ -139,7 +139,7 @@ table_list::table_list(
 	),
 	// clang-format off
 	ruis::container(
-		this->context,
+		context,
 		{
 			.container_params{
 				.layout = ruis::layout::column

@@ -38,12 +38,12 @@ check_box::check_box(
 		std::move(params.widget_params)
 	),
 	button( //
-		this->context,
+		context,
 		std::move(params.button_params)
 	),
-	toggle_button(this->context),
+	toggle_button(context),
 	// clang-format off
-	nine_patch(this->context,
+	nine_patch(context,
 		{
 			.container_params = {
 				.layout = layout::pile

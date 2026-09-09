@@ -32,8 +32,8 @@ list::list(
 		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
-	ruis::list(this->context, std::move(params)),
-	flickable(this->context)
+	ruis::list(context, std::move(params)),
+	flickable(context)
 {}
 
 ruis::event_status list::on_mouse_button(const mouse_button_event& event)

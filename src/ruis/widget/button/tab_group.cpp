@@ -39,7 +39,7 @@ tab_group::tab_group(
 	),
 	// clang-format off
 	choice_group(
-		this->context, //
+		context, //
 		{
 			.container_params = std::move(params.container_params)
 		},

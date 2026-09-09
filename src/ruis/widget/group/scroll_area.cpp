@@ -38,7 +38,7 @@ scroll_area::scroll_area(
 	),
 	// clang-format off
 	container(
-		this->context,
+		context,
 		{},
 		std::move(children)
 	)

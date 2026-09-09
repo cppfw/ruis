@@ -69,7 +69,7 @@ padding::padding(
 	),
 	// clang-format off
 	container(
-		this->context,
+		context,
 		{},
 		{
 			content_container

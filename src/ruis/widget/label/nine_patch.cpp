@@ -50,11 +50,11 @@ nine_patch::nine_patch( //
 		std::move(params.widget_params)
 	),
 	blending_widget( //
-		this->context,
+		context,
 		std::move(params.blending_params)
 	),
 	padding(
-		this->context, //
+		context, //
 		// clang-format off
 		{
 			.container_params = std::move(params.container_params),

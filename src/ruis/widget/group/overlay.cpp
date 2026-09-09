@@ -80,7 +80,7 @@ overlay::overlay(
 	),
 	// clang-format off
 	container( //
-		this->context,
+		context,
 		{
 			.container_params{
 				.layout = layout::pile

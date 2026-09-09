@@ -39,7 +39,7 @@ spinner::spinner( //
 		std::move(params.widget_params)
 	),
 	image(
-		this->context,
+		context,
 		{.blending_params = std::move(params.blending_params), //
 		 .image_params = std::move(params.image_params)}
 	)

@@ -36,7 +36,7 @@ tab_group::tab_group(
 		std::move(params.widget_params)
 	),
 	choice_group(
-		this->context, //
+		context, //
 		{
 			.layout_params = std::move(params.layout_params),
 			.widget_params = std::move(params.widget_params),

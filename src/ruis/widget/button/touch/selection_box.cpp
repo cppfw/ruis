@@ -51,7 +51,7 @@ selection_box::selection_box(
 		std::move(params.widget_params)
 	),
 	button(
-		this->context,
+		context,
 		{
 }
 	),

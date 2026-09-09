@@ -34,7 +34,7 @@ drag_area::drag_area(
 		std::move(params.widget_params)
 	),
 	// clang-format off
-    container(this->context,
+    container(context,
         {
             .container_params = {
                 .layout = ruis::layout::trivial
