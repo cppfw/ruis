@@ -48,6 +48,8 @@ style style_sheet::name_to_style(std::string_view name)
 		return style::len_indent;
 	} else if (name == "len_gap"sv) {
 		return style::len_gap;
+	} else if (name == "len_border"sv) {
+		return style::len_border;
 	} else if (name == "len_button_padding"sv) {
 		return style::len_button_padding;
 	} else if (name == "len_dialog_margin"sv) {

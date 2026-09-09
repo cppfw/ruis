@@ -141,6 +141,7 @@ public:
 
 	styled<length> get_len_indent() const;
 	styled<length> get_len_gap() const;
+	styled<length> get_len_border() const;
 
 	styled<length> get_len_button_padding() const;
 	styled<length> get_len_dialog_margin() const;
