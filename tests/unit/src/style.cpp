@@ -38,6 +38,7 @@ const tst::set set("style", [](tst::suite& suite){
                     color_highlight{0xffad9869}
 
                     len_indent{17pp}
+                    len_border{1pp}
                 }
                 user{}
             )qwertyuiop"s);
@@ -49,6 +50,9 @@ const tst::set set("style", [](tst::suite& suite){
 
         auto& length_tv_indent = ss.get(ruis::style::len_indent);
         tst::check_eq(tml::to_string(length_tv_indent), "17pp"s, SL);
+
+        auto& length_tv_border = ss.get(ruis::style::len_border);
+        tst::check_eq(tml::to_string(length_tv_border), "1pp"s, SL);
 
         auto non_existent = ss.get("non_existent_id"sv);
         tst::check(!non_existent, SL);
@@ -65,6 +69,7 @@ const tst::set set("style", [](tst::suite& suite){
                 color_highlight{0xffad9869}
 
                 len_indent{17pp}
+                len_border{1pp}
             }
             user{
                 real_style_value{13}
@@ -83,6 +88,9 @@ const tst::set set("style", [](tst::suite& suite){
 
         auto length_ident = s.get_len_indent();
         tst::check_eq(length_ident.get(), ruis::length::make_pp(17), SL);
+
+        auto length_border = s.get_len_border();
+        tst::check_eq(length_border.get(), ruis::length::make_pp(1), SL);
     });
 
     // test that ruis::real values can be obtained from style
