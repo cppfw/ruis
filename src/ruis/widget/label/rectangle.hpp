@@ -32,9 +32,7 @@ namespace ruis {
  * @brief Rectangle widget.
  * This is a widget which can display a rectangle of a single color.
  */
-class rectangle :
-	public padding, //
-	public color_widget
+class rectangle : public padding
 {
 public:
 	struct parameters {
@@ -44,7 +42,10 @@ public:
 		 */
 		corners<styled<length>> corner_radii;
 
-		// TODO: add fill_color here, remove color_widget from inherited
+		/**
+		 * @brief Fill color of the rectangle.
+		 */
+		styled<ruis::color> fill_color;
 
 		/**
 		 * @brief Stroke width of the rectangle.
@@ -67,7 +68,6 @@ public:
 		widget::parameters widget_params;
 		container::parameters container_params;
 		padding::parameters padding_params;
-		color_widget::parameters color_params;
 		parameters rectangle_params;
 	};
 
@@ -87,11 +87,17 @@ public:
 
 	void render(const ruis::mat4& matrix) const override;
 
+	void set_fill_color(styled<ruis::color> color);
 	void set_stroke_color(styled<ruis::color> color);
 
 	const color& get_stroke_color() const noexcept
 	{
 		return this->params.stroke_color.get();
+	}
+
+	const color& get_fill_color() const noexcept
+	{
+		return this->params.fill_color.get();
 	}
 
 private:

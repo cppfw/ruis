@@ -55,8 +55,8 @@ widget_list make_chrome(
 			.layout_params{
 				.dims = {ruis::dim::fill, ruis::dim::fill}
 			},
-			.color_params{
-				.color = style.get_color_dimmed()
+			.rectangle_params{
+				.fill_color = style.get_color_dimmed()
 			}
 		}
 	);
@@ -108,25 +108,19 @@ widget_list make_chrome(
 					return std::move(params.padding_params.borders);
 				}()
 			},
-			.color_params{
-				.color = [&](){
-					if(params.color_params.color.get().is_undefined()){
-						return style.get_color_panel();
-					}else{
-						return std::move(params.color_params.color);
+			.rectangle_params = [&](){
+				for(auto& r : params.rectangle_params.corner_radii){
+					if(r.get().is_undefined()){
+						r = style.get_len_dialog_padding();
 					}
-				}()
-			},
-			.rectangle_params{
-				.corner_radii = [&](){
-					for(auto& r : params.rectangle_params.corner_radii){
-						if(r.get().is_undefined()){
-							r = style.get_len_dialog_padding();
-						}
-					}
-					return std::move(params.rectangle_params.corner_radii);
-				}()
-			}
+				}
+
+				if(params.rectangle_params.fill_color.get().is_undefined()){
+					params.rectangle_params.fill_color = style.get_color_panel();
+				}
+
+				return std::move(params.rectangle_params);
+			}()
 		},
 		{
 			std::move(content_container)

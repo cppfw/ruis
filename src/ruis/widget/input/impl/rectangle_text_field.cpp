@@ -90,21 +90,10 @@ rectangle_text_field::rectangle_text_field(
 
 				return std::move(params.padding_params);
 			}(),
-			.color_params = [&](){
-				return color_widget::parameters{
-					.color = context.get().style().get_color_background(),
-					// // TODO: set default disabled color?
-				};
-
-				// TODO: the color params are for bare_text_field
-				// if(params.color_params.color.get().is_undefined()){
-				// 	params.color_params.color = context.get().style().get_color_background();
-				// }
-				// // TODO: set default disabled color?
-
-				// return std::move(params.color_params);
-			}(),
 			.rectangle_params = [&](){
+				if(params.rectangle_params.fill_color.get().is_undefined()){
+					params.rectangle_params.fill_color = context.get().style().get_color_background();
+				}
 				if(params.rectangle_params.stroke_color.get().is_undefined()){
 					params.rectangle_params.stroke_color = context.get().style().get_color_primary();
 				}

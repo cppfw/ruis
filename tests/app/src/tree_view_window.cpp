@@ -171,8 +171,8 @@ public:
                                 .id = "selection"s,
                                 .visible = false
                             },
-                            .color_params{
-                                .color = c.get().style().get_color_highlight()
+                            .rectangle_params{
+                                .fill_color = c.get().style().get_color_highlight()
                             }
                         }
                     ),
@@ -246,8 +246,8 @@ public:
                             .layout_params{
                                 .dims{ruis::length::make_pp(5), ruis::length::make_pp(2)}
                             },
-                            .color_params{
-                                .color = 0xff0000ff
+                            .rectangle_params{
+                                .fill_color = 0xff0000ff
                             }
                         }
                     )
@@ -256,7 +256,7 @@ public:
             // clang-format on
 
             b.get().click_handler = [this, path = utki::make_vector(path), parent_list](ruis::push_button& button){
-                ASSERT(parent_list)
+                utki::assert(parent_list);
                 parent_list->erase(utki::next(parent_list->begin(), path.back()));
                 this->notify_item_removed(utki::make_span(path));
             };

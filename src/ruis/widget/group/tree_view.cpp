@@ -133,8 +133,8 @@ utki::shared_ref<ruis::widget> make_vertical_line_indent(utki::shared_ref<ruis::
 					.layout_params{
 						.dims{ruis::length::make_pp(1), ruis::dim::fill}
 					},
-					.color_params{
-						.color = c.get().style().get_color_highlight()
+					.rectangle_params{
+						.fill_color = c.get().style().get_color_highlight()
 					}
 				}
 			)
@@ -171,8 +171,8 @@ utki::shared_ref<ruis::container> make_line_end_indent(utki::shared_ref<ruis::co
 								.dims{ruis::length::make_pp(1), ruis::dim::fill},
 								.weight = 1
 							},
-				   			.color_params{
-								.color = c.get().style().get_color_highlight()
+				   			.rectangle_params{
+								.fill_color = c.get().style().get_color_highlight()
 							}
 						}
 			  		),
@@ -207,8 +207,8 @@ utki::shared_ref<ruis::container> make_line_end_indent(utki::shared_ref<ruis::co
 								.dims{ruis::dim::fill, ruis::length::make_pp(1)},
 								.weight = 1
 							},
-				   			.color_params{
-								.color = c.get().style().get_color_highlight()
+							.rectangle_params{
+								.fill_color = c.get().style().get_color_highlight()
 							}
 						}
 			  		)
@@ -239,8 +239,8 @@ utki::shared_ref<ruis::container> make_line_middle_indent(utki::shared_ref<ruis:
 					.layout_params{
 						.dims{ruis::length::make_pp(1), ruis::dim::max}
 					},
-					.color_params{
-						.color = c.get().style().get_color_highlight()
+					.rectangle_params{
+						.fill_color = c.get().style().get_color_highlight()
 					}
 				}
 			),
@@ -265,8 +265,8 @@ utki::shared_ref<ruis::container> make_line_middle_indent(utki::shared_ref<ruis:
 								.dims{ruis::dim::fill, ruis::length::make_pp(1)},
 								.weight = 1
 							},
-							.color_params{
-								.color = c.get().style().get_color_highlight()
+							.rectangle_params{
+								.fill_color = c.get().style().get_color_highlight()
 							}
 						}
 					)

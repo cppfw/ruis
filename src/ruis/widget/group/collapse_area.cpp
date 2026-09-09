@@ -91,8 +91,8 @@ collapse_area::collapse_area(
 							.layout_params{
 								.dims{ruis::dim::fill, ruis::dim::fill}
 							},
-							.color_params{
-								.color = this->context.get().style().get_color_panel()
+							.rectangle_params{
+								.fill_color = this->context.get().style().get_color_panel()
 							}
 						}
 					),

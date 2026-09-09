@@ -37,10 +37,10 @@ void rectangle_button::on_pressed_change()
 void rectangle_button::update_color()
 {
 	if (this->is_pressed()) {
-		this->set_color(this->params.pressed_color);
+		this->set_fill_color(this->params.pressed_color);
 		this->set_stroke_color(this->params.pressed_stroke_color);
 	} else {
-		this->set_color(this->params.unpressed_color);
+		this->set_fill_color(this->params.unpressed_color);
 		this->set_stroke_color(this->params.unpressed_stroke_color);
 	}
 }

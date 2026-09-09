@@ -33,8 +33,8 @@ utki::shared_ref<ruis::container> make_pile_layout( //
 					.layout_params = {
 						.dims = {ruis::dim::fill, ruis::dim::fill}
 					},
-					.color_params = {
-						.color = 0xff808080
+					.rectangle_params{
+						.fill_color = 0xff808080
 					}
 				}
 			),
@@ -135,8 +135,8 @@ utki::shared_ref<ruis::widget> make_separator(utki::shared_ref<ruis::context> c,
 				 	vertical ? ruis::layout::dimension(ruis::length::make_px(1)) : ruis::layout::dimension(ruis::dim::fill)
 				}
 			},
-			.color_params = {
-				.color = 0xffffffff
+			.rectangle_params = {
+				.fill_color = 0xffffffff
 			}
 		}
 	);

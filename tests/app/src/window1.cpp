@@ -117,8 +117,8 @@ utki::shared_ref<ruis::window> make_window1(
                             .layout_params{
                                 .dims{ruis::dim::fill, ruis::dim::fill}
                             },
-                            .color_params{
-                                .color = 0xff808080
+                            .rectangle_params{
+                                .fill_color = 0xff808080
                             }
                         }
                     ),

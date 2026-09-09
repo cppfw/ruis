@@ -81,8 +81,8 @@ utki::shared_ref<ruis::widget> make_root_widget(utki::shared_ref<ruis::context> 
 					.layout_params = {
 						.dims = {ruis::dim::fill, ruis::dim::fill}
 					},
-					.color_params = {
-						.color = c.get().style().get_color_background()
+					.rectangle_params = {
+						.fill_color = c.get().style().get_color_background()
 					}
 				}
 			),

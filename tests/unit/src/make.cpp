@@ -48,8 +48,8 @@ const tst::set set("make", [](tst::suite& suite){
                 ruis::make::rectangle(
                     gui.context,
                     {
-                        .color_params = {
-                            .color = 0xff0000ff
+                        .rectangle_params{
+                            .fill_color = 0xff0000ff
                         }
                     }
                 )

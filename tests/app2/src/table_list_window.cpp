@@ -73,11 +73,9 @@ utki::shared_ref<ruis::widget> make_table_list_header(
 			.padding_params{
 				.borders = {5_pp}
 			},
-			.color_params{
-				.color = 0xff006060
-			},
 			.rectangle_params{
-				.corner_radii = {3_pp}
+				.corner_radii = {3_pp},
+				.fill_color = 0xff006060
 			}
 		},
 		{

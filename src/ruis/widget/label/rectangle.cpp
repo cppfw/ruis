@@ -45,15 +45,21 @@ rectangle::rectangle( //
 		std::move(children)
 	),
 	// clang-format on
-	color_widget( //
-		this->context,
-		std::move(params.color_params)
-	),
 	params(std::move(params.rectangle_params)),
 	fill_vao(this->context.get().renderer, {}),
 	stroke_vao(this->context.get().renderer, {})
 {
 	this->update_vaos();
+}
+
+void rectangle::set_fill_color(styled<ruis::color> color)
+{
+	if (this->params.fill_color == color) {
+		return;
+	}
+
+	this->params.fill_color = std::move(color);
+	this->clear_cache();
 }
 
 void rectangle::set_stroke_color(styled<ruis::color> color)
@@ -83,7 +89,7 @@ void rectangle::render(const ruis::mat4& matrix) const
 		this->fill_vao.render(
 			matr, //
 			dims - sw,
-			this->get_current_color()
+			this->get_fill_color()
 		);
 
 		this->stroke_vao.render(
@@ -95,7 +101,7 @@ void rectangle::render(const ruis::mat4& matrix) const
 		this->fill_vao.render(
 			matrix, //
 			dims,
-			this->get_current_color()
+			this->get_fill_color()
 		);
 	}
 

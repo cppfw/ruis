@@ -311,8 +311,8 @@ utki::shared_ref<ruis::widget> selection_box::wrap_item(
 						.id = "ruis_dropdown_color"s,
 						.visible = false
 					},
-					.color_params{
-						.color = this->context.get().style().get_color_highlight()
+					.rectangle_params{
+						.fill_color = this->context.get().style().get_color_highlight()
 					}
 				}
 			)
@@ -321,10 +321,10 @@ utki::shared_ref<ruis::widget> selection_box::wrap_item(
 	// clang-format on
 
 	auto mp = wd.get().try_get_widget_as<mouse_proxy>("ruis_dropdown_mouseproxy");
-	ASSERT(mp)
+	utki::assert(mp);
 
 	auto cl = wd.get().try_get_widget_as<rectangle>("ruis_dropdown_color");
-	ASSERT(cl)
+	utki::assert(cl);
 	auto cl_weak = utki::make_weak(cl);
 
 	wd.get().push_back(w);

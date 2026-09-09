@@ -138,8 +138,8 @@ public:
 				.widget_params{
 					.visible = false
 				},
-				.color_params{
-					.color = this->context.get().style().get_color_highlight()
+				.rectangle_params{
+					.fill_color = this->context.get().style().get_color_highlight()
 				}
 			}
 		);

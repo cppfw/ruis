@@ -64,8 +64,8 @@ utki::shared_ref<ruis::widget> make_rectangles_window(
 		{
 			m::rectangle(c,
 				{
-					.color_params{
-						.color = c.get().style().get_color_panel()
+					.rectangle_params{
+						.fill_color = c.get().style().get_color_panel()
 					}
 				},
 				{
@@ -89,8 +89,8 @@ utki::shared_ref<ruis::widget> make_rectangles_window(
 							20_pp // bottom
 						}
 					},
-					.color_params{
-						.color = 0xff800000
+					.rectangle_params{
+						.fill_color = 0xff800000
 					}
 				},
 				{
@@ -117,16 +117,14 @@ utki::shared_ref<ruis::widget> make_rectangles_window(
 									20_pp // bottom
 								}
 							},
-							.color_params{
-								.color = 0xff800000
-							},
 							.rectangle_params{
 								.corner_radii = {
 									0_pp, // left-top
 									5_pp, // right-top
 									10_pp, // right-bottom
 									0_pp // left-bottom
-								}
+								},
+								.fill_color = 0xff800000
 							}
 						},
 						{
@@ -165,16 +163,14 @@ utki::shared_ref<ruis::widget> make_rectangles_window(
 							20_pp // bottom
 						}
 					},
-					.color_params{
-						.color = 0xff800000
-					},
 					.rectangle_params{
 						.corner_radii = {
 							0_pp, // left-top
 							5_pp, // right-top
 							10_pp, // right-bottom
 							15_pp // left-bottom
-						}
+						},
+						.fill_color = 0xff800000
 					}
 				},
 				{
