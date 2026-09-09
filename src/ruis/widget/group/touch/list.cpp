@@ -23,8 +23,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis::touch;
 
-list::list(const utki::shared_ref<ruis::context>& context,//
-	 all_parameters params) :
+list::list(
+	const utki::shared_ref<ruis::context>& context, //
+	all_parameters params
+) :
 	widget(
 		context, //
 		std::move(params.layout_params),
