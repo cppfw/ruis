@@ -98,7 +98,7 @@ rectangle_text_field::rectangle_text_field(
 					params.rectangle_params.stroke_color = context.get().style().get_color_primary();
 				}
 				if(params.rectangle_params.stroke_width.get().is_undefined()){
-					params.rectangle_params.stroke_width = context.get().style().get_len_gap(); // TODO: add len_border to style?
+					params.rectangle_params.stroke_width = context.get().style().get_len_border();
 				}
 				for(auto& r : params.rectangle_params.corner_radii){
 					if(r.get().is_undefined()){
