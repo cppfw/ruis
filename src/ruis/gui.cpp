@@ -33,8 +33,8 @@ using namespace std::string_view_literals;
 using namespace ruis;
 
 // NOLINTNEXTLINE(modernize-pass-by-value)
-gui::gui(const utki::shared_ref<ruis::context>& context) :
-	context(context),
+gui::gui(utki::shared_ref<ruis::context> context) :
+	context(std::move(context)),
 	root_widget(ruis::make::gap(this->context, {}))
 {}
 

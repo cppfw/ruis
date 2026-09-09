@@ -38,7 +38,7 @@ public:
 	 * @brief Constructor.
 	 * @param context - ruis context to use for this gui instance.
 	 */
-	gui(const utki::shared_ref<ruis::context>& context);
+	gui(utki::shared_ref<ruis::context> context);
 
 	gui(const gui&) = delete;
 	gui& operator=(const gui&) = delete;
