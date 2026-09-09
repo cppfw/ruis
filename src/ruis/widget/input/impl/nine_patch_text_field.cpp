@@ -19,20 +19,20 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 /* ================ LICENSE END ================ */
 
-#include "rectangle_text_field.hpp"
+#include "nine_patch_text_field.hpp"
 
 #include <utki/debug.hpp>
 
+using namespace std::string_view_literals;
+
 using namespace ruis;
 
-using namespace ruis::length_literals;
-
-rectangle_text_field::rectangle_text_field(
+nine_patch_text_field::nine_patch_text_field(
 	utki::shared_ref<ruis::context> context, //
 	all_parameters params,
 	ruis::string text
 ) :
-	rectangle_text_field(
+	nine_patch_text_field(
 		context,
 		params,
 		// clang-format off
@@ -63,7 +63,7 @@ rectangle_text_field::rectangle_text_field(
 	)
 {}
 
-rectangle_text_field::rectangle_text_field(
+nine_patch_text_field::nine_patch_text_field(
 	utki::shared_ref<ruis::context>& context, //
 	all_parameters& params,
 	utki::shared_ref<ruis::bare_text_field> bare_text_field
@@ -73,9 +73,9 @@ rectangle_text_field::rectangle_text_field(
 		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
-	// Initialize rectangle first so it adds the bare_text_field as a child
+	// Initialize nine_patch first so it adds the bare_text_field as a child
 	// clang-format off
-	rectangle(
+	nine_patch(
 		this->context,
 		{
 			.container_params{
@@ -90,34 +90,13 @@ rectangle_text_field::rectangle_text_field(
 
 				return std::move(params.padding_params);
 			}(),
-			.color_params = [&](){
-				return color_widget::parameters{
-					.color = context.get().style().get_color_background(),
-					// // TODO: set default disabled color?
-				};
-
-				// TODO: the color params are for bare_text_field
-				// if(params.color_params.color.get().is_undefined()){
-				// 	params.color_params.color = context.get().style().get_color_background();
-				// }
-				// // TODO: set default disabled color?
-
-				// return std::move(params.color_params);
-			}(),
-			.rectangle_params = [&](){
-				if(params.rectangle_params.stroke_color.get().is_undefined()){
-					params.rectangle_params.stroke_color = context.get().style().get_color_primary();
+			.nine_patch_params = [&](){
+				if(!params.nine_patch_params.nine_patch){
+					params.nine_patch_params.nine_patch = context.get().loader().load<ruis::res::nine_patch>("ruis_npt_textfield_background"sv);
 				}
-				if(params.rectangle_params.stroke_width.get().is_undefined()){
-					params.rectangle_params.stroke_width = context.get().style().get_len_gap(); // TODO: add len_border to style?
-				}
-				for(auto& r : params.rectangle_params.corner_radii){
-					if(r.get().is_undefined()){
-						r  = context.get().style().get_len_button_padding();
-					}
-				}
+				// TODO: set default disabled nine patch if not set
 
-				return std::move(params.rectangle_params);
+				return std::move(params.nine_patch_params);
 			}()
 		},
 		{
@@ -131,18 +110,18 @@ rectangle_text_field::rectangle_text_field(
 	)
 {}
 
-void rectangle_text_field::on_focus_change()
+void nine_patch_text_field::on_focus_change()
 {
 	this->wrapped_widget<ruis::bare_text_field>::get_bare().on_focus_change();
 }
 
-utki::shared_ref<ruis::rectangle_text_field> ruis::make::rectangle_text_field(
+utki::shared_ref<ruis::nine_patch_text_field> ruis::make::nine_patch_text_field(
 	utki::shared_ref<ruis::context> context, //
-	ruis::rectangle_text_field::all_parameters params,
+	ruis::nine_patch_text_field::all_parameters params,
 	ruis::string text
 )
 {
-	return utki::make_shared<ruis::rectangle_text_field>(
+	return utki::make_shared<ruis::nine_patch_text_field>(
 		std::move(context), //
 		std::move(params),
 		std::move(text)

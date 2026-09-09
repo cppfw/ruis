@@ -5,7 +5,7 @@
 #include <ruis/widget/group/collapse_area.hpp>
 #include <ruis/widget/button/impl/image_push_button.hpp>
 #include <ruis/widget/label/gap.hpp>
-#include <ruis/widget/input/bare_text_field.hpp>
+#include <ruis/widget/input/impl/nine_patch_text_field.hpp>
 #include <ruisapp/application.hpp>
 
 #include "new_native_window.hpp"
@@ -177,7 +177,7 @@ utki::shared_ref<ruis::window> make_text_input_window(
                     }
                 }
             ),
-            m::nine_patch(c,
+            m::nine_patch_text_field(c,
                 {
                     .layout_params{
                         .dims{ruis::dim::max, ruis::dim::min}
@@ -185,23 +185,11 @@ utki::shared_ref<ruis::window> make_text_input_window(
                     .widget_params{
                         .id = "text_input"s
                     },
-                    .nine_patch_params{
-                        .nine_patch = c.get().loader().load<ruis::res::nine_patch>("ruis_npt_textfield_background"sv)
+                    .color_params{
+                        .color = c.get().style().get_color_text()
                     }
                 },
-                {
-                    m::bare_text_field(c,
-                        {
-                            .layout_params{
-                                .dims{ruis::dim::fill, ruis::dim::max}
-                            },
-                            .color_params{
-                                .color = c.get().style().get_color_text()
-                            }
-                        },
-                        U"Hello Wrodl!!!"s
-                    )
-                }
+                U"Hello Wrodl!!!"s
             ),
             make_push_button(c, U"button!!!"s),
             make_push_button(c, U"button!!!"s),

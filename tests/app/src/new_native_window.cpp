@@ -4,7 +4,7 @@
 #include <ruis/widget/label/text.hpp>
 #include <ruis/widget/container.hpp>
 #include <ruis/widget/label/nine_patch.hpp>
-#include <ruis/widget/input/bare_text_field.hpp>
+#include <ruis/widget/input/text_field.hpp>
 #include <ruisapp/application.hpp>
 
 using namespace std::string_literals;
@@ -64,7 +64,7 @@ utki::shared_ref<ruis::widget> make_new_native_window_root_widget(
                     std::move(close_button)
                 }
             ),
-            m::nine_patch(c,
+            m::text_field(c,
                 {
                     .layout_params{
                         .dims{ruis::dim::max, ruis::dim::min}
@@ -72,23 +72,11 @@ utki::shared_ref<ruis::widget> make_new_native_window_root_widget(
                     .widget_params{
                         .id = "text_input"s
                     },
-                    .nine_patch_params{
-                        .nine_patch = c.get().loader().load<ruis::res::nine_patch>("ruis_npt_textfield_background"sv)
+                    .color_params{
+                        .color = c.get().style().get_color_text()
                     }
                 },
-                {
-                    m::bare_text_field(c,
-                        {
-                            .layout_params{
-                                .dims{ruis::dim::fill, ruis::dim::max}
-                            },
-                            .color_params{
-                                .color = c.get().style().get_color_text()
-                            }
-                        },
-                        U"Hello Wrodl!!!"s
-                    )
-                }
+                U"Hello Wrodl!!!"s
             ),
             std::move(button)
         }
