@@ -30,7 +30,7 @@ namespace ruis {
 /**
  * @brief Text field widget with a rectangle background.
  * This widget combines a rectangle (with stroke and fill colors from style)
- * and a bare_text_field as its child.
+ * and a text_input_field as its child.
  */
 class rectangle_text_field :
 	virtual public widget, //
@@ -46,14 +46,14 @@ public:
 		rectangle::parameters rectangle_params;
 		color_widget::parameters color_params;
 		text_widget::parameters text_widget_params;
-		bare_text_field::parameters text_field_params;
+		text_input_field::parameters text_field_params;
 	};
 
 private:
 	rectangle_text_field(
 		const utki::shared_ref<ruis::context>& context, //
 		all_parameters& params,
-		utki::shared_ref<ruis::bare_text_field> bare_text_field
+		utki::shared_ref<ruis::text_input_field> text_input_field
 	);
 
 public:

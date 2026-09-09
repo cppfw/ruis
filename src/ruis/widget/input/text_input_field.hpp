@@ -33,7 +33,7 @@ namespace ruis {
  * @brief Text field widget without any decoration.
  */
 // NOLINTNEXTLINE(bugprone-incorrect-enable-shared-from-this, "std::shared_from_this is public via text_line_widget")
-class bare_text_field :
+class text_input_field :
 	public text_line_widget, //
 	public character_input_widget,
 	public color_widget,
@@ -67,11 +67,11 @@ private:
 	parameters params;
 
 public:
-	bare_text_field(const bare_text_field&) = delete;
-	bare_text_field& operator=(const bare_text_field&) = delete;
+	text_input_field(const text_input_field&) = delete;
+	text_input_field& operator=(const text_input_field&) = delete;
 
-	bare_text_field(bare_text_field&&) = delete;
-	bare_text_field& operator=(bare_text_field&&) = delete;
+	text_input_field(text_input_field&&) = delete;
+	text_input_field& operator=(text_input_field&&) = delete;
 
 	struct all_parameters {
 		layout::parameters layout_params;
@@ -81,13 +81,13 @@ public:
 		parameters text_field_params;
 	};
 
-	bare_text_field(
+	text_input_field(
 		const utki::shared_ref<ruis::context>& context, //
 		all_parameters params,
 		string text
 	);
 
-	~bare_text_field() override = default;
+	~text_input_field() override = default;
 
 	vec2 measure(const ruis::vec2& quotum) const noexcept override;
 
@@ -127,9 +127,9 @@ private:
 };
 
 namespace make {
-utki::shared_ref<ruis::bare_text_field> bare_text_field(
+utki::shared_ref<ruis::text_input_field> text_input_field(
 	const utki::shared_ref<ruis::context>& context, //
-	ruis::bare_text_field::all_parameters params,
+	ruis::text_input_field::all_parameters params,
 	ruis::string text
 );
 } // namespace make

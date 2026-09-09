@@ -36,7 +36,7 @@ rectangle_text_field::rectangle_text_field(
 		context,
 		params,
 		// clang-format off
-		ruis::make::bare_text_field(
+		ruis::make::text_input_field(
 			context, //
 			{
 				.layout_params{
@@ -66,14 +66,14 @@ rectangle_text_field::rectangle_text_field(
 rectangle_text_field::rectangle_text_field(
 	const utki::shared_ref<ruis::context>& context, //
 	all_parameters& params,
-	utki::shared_ref<ruis::bare_text_field> bare_text_field
+	utki::shared_ref<ruis::text_input_field> text_input_field
 ) :
 	widget(
 		context, //
 		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
-	// Initialize rectangle first so it adds the bare_text_field as a child
+	// Initialize rectangle first so it adds the text_input_field as a child
 	// clang-format off
 	rectangle(
 		context,
@@ -110,19 +110,19 @@ rectangle_text_field::rectangle_text_field(
 			}()
 		},
 		{
-			bare_text_field
+			text_input_field
 		}
 	),
 	// clang-format on
 	text_field(
 		context, //
-		bare_text_field.get()
+		text_input_field.get()
 	)
 {}
 
 void rectangle_text_field::on_focus_change()
 {
-	this->wrapped_widget<ruis::bare_text_field>::get_bare().on_focus_change();
+	this->wrapped_widget<ruis::text_input_field>::get_bare().on_focus_change();
 }
 
 utki::shared_ref<ruis::rectangle_text_field> ruis::make::rectangle_text_field(

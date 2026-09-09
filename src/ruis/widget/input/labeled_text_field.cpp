@@ -25,7 +25,7 @@ using namespace ruis;
 
 labeled_text_field::labeled_text_field(
 	const utki::shared_ref<ruis::context> context, //
-	bare_text_field& input_field,
+	ruis::text_input_field& text_input_field,
 	text& label
 ) :
 	widget(context, {}, {}),
@@ -35,6 +35,6 @@ labeled_text_field::labeled_text_field(
 	),
 	text_field(
 		context, //
-		input_field
+		text_input_field
 	)
 {}

@@ -23,12 +23,12 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../base/wrapped_widget.hpp"
 
-#include "bare_text_field.hpp"
+#include "text_input_field.hpp"
 
 namespace ruis {
 
 // TODO: add doxygen docs
-class text_field : public wrapped_widget<bare_text_field>
+class text_field : public wrapped_widget<text_input_field>
 {
 public:
 	struct all_parameters {
@@ -36,13 +36,13 @@ public:
 		widget::parameters widget_params;
 		color_widget::parameters color_params;
 		text_widget::parameters text_widget_params;
-		bare_text_field::parameters text_field_params;
+		text_input_field::parameters text_field_params;
 	};
 
 protected:
 	text_field(
 		const utki::shared_ref<ruis::context>& context, //
-		bare_text_field& bare
+		text_input_field& bare
 	);
 };
 

@@ -19,7 +19,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 /* ================ LICENSE END ================ */
 
-#include "bare_text_field.hpp"
+#include "text_input_field.hpp"
 
 #include "../../context.hpp"
 #include "../../util/key.hpp"
@@ -39,7 +39,7 @@ const uint32_t cursor_blink_period = 500; // milliseconds
 const real cursor_width = real(1.0);
 } // namespace
 
-bare_text_field::bare_text_field(
+text_input_field::text_input_field(
 	const utki::shared_ref<ruis::context>& context, //
 	all_parameters params,
 	string text
@@ -69,7 +69,7 @@ bare_text_field::bare_text_field(
 	this->set_clip(true);
 }
 
-void bare_text_field::render(const ruis::mat4& matrix) const
+void text_input_field::render(const ruis::mat4& matrix) const
 {
 	// render selection
 	if (this->cursor_index != this->selection_start_index) {
@@ -154,7 +154,7 @@ void bare_text_field::render(const ruis::mat4& matrix) const
 	}
 }
 
-event_status bare_text_field::on_mouse_button(const mouse_button_event& e)
+event_status text_input_field::on_mouse_button(const mouse_button_event& e)
 {
 	if (e.button != mouse_button::left) {
 		return event_status::propagate;
@@ -169,7 +169,7 @@ event_status bare_text_field::on_mouse_button(const mouse_button_event& e)
 	return event_status::consumed;
 }
 
-event_status bare_text_field::on_mouse_move(const mouse_move_event& e)
+event_status text_input_field::on_mouse_move(const mouse_move_event& e)
 {
 	if (!this->left_mouse_button_down) {
 		return event_status::propagate;
@@ -179,7 +179,7 @@ event_status bare_text_field::on_mouse_move(const mouse_move_event& e)
 	return event_status::consumed;
 }
 
-vec2 bare_text_field::measure(const ruis::vec2& quotum) const noexcept
+vec2 text_input_field::measure(const ruis::vec2& quotum) const noexcept
 {
 	vec2 ret;
 
@@ -198,7 +198,7 @@ vec2 bare_text_field::measure(const ruis::vec2& quotum) const noexcept
 	return ret;
 }
 
-void bare_text_field::set_cursor_index(size_t index, bool selection)
+void text_input_field::set_cursor_index(size_t index, bool selection)
 {
 	this->cursor_index = index;
 
@@ -259,7 +259,7 @@ void bare_text_field::set_cursor_index(size_t index, bool selection)
 	}
 }
 
-real bare_text_field::index_to_pos(size_t index)
+real text_input_field::index_to_pos(size_t index)
 {
 	utki::assert(this->first_visible_char_index <= this->get_string().size());
 
@@ -286,7 +286,7 @@ real bare_text_field::index_to_pos(size_t index)
 	return ret;
 }
 
-size_t bare_text_field::pos_to_index(real pos)
+size_t text_input_field::pos_to_index(real pos)
 {
 	size_t index = this->first_visible_char_index;
 	real p = this->x_offset;
@@ -311,12 +311,12 @@ size_t bare_text_field::pos_to_index(real pos)
 	return index;
 }
 
-void bare_text_field::update(uint32_t dt)
+void text_input_field::update(uint32_t dt)
 {
 	this->cursor_blink_visible = !this->cursor_blink_visible;
 }
 
-void bare_text_field::on_focus_change()
+void text_input_field::on_focus_change()
 {
 	if (this->is_focused()) {
 		this->ctrl_pressed = false;
@@ -328,12 +328,12 @@ void bare_text_field::on_focus_change()
 	this->context.get().window().set_virtual_keyboard_visible(this->is_focused());
 }
 
-void bare_text_field::on_resize()
+void text_input_field::on_resize()
 {
 	this->selection_start_pos = this->index_to_pos(this->selection_start_index);
 }
 
-void bare_text_field::start_cursor_blinking()
+void text_input_field::start_cursor_blinking()
 {
 	this->context.get().updater.get().stop(*this);
 	this->cursor_blink_visible = true;
@@ -343,7 +343,7 @@ void bare_text_field::start_cursor_blinking()
 	);
 }
 
-event_status bare_text_field::on_key(const ruis::key_event& e)
+event_status text_input_field::on_key(const ruis::key_event& e)
 {
 	switch (e.combo.key) {
 		case ruis::key::left_control:
@@ -360,7 +360,7 @@ event_status bare_text_field::on_key(const ruis::key_event& e)
 	return event_status::propagate;
 }
 
-void bare_text_field::on_character_input(const character_input_event& e)
+void text_input_field::on_character_input(const character_input_event& e)
 {
 	switch (e.combo.key) {
 		case ruis::key::enter:
@@ -475,7 +475,7 @@ void bare_text_field::on_character_input(const character_input_event& e)
 	}
 }
 
-size_t bare_text_field::delete_selection()
+size_t text_input_field::delete_selection()
 {
 	utki::assert(this->cursor_index != this->selection_start_index);
 
@@ -497,13 +497,13 @@ size_t bare_text_field::delete_selection()
 	return start;
 }
 
-utki::shared_ref<ruis::bare_text_field> ruis::make::bare_text_field(
+utki::shared_ref<ruis::text_input_field> ruis::make::text_input_field(
 	const utki::shared_ref<ruis::context>& context, //
-	ruis::bare_text_field::all_parameters params,
+	ruis::text_input_field::all_parameters params,
 	ruis::string text
 )
 {
-	return utki::make_shared<ruis::bare_text_field>(
+	return utki::make_shared<ruis::text_input_field>(
 		context, //
 		std::move(params),
 		std::move(text)

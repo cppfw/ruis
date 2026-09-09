@@ -29,7 +29,7 @@ namespace ruis {
 
 /**
  * @brief Text field widget with a nine-patch background.
- * This widget combines a nine_patch and a bare_text_field as its child.
+ * This widget combines a nine_patch and a text_input_field as its child.
  */
 class nine_patch_text_field :
 	virtual public widget, //
@@ -45,14 +45,14 @@ public:
 		nine_patch::parameters nine_patch_params;
 		color_widget::parameters color_params;
 		text_widget::parameters text_widget_params;
-		bare_text_field::parameters text_field_params;
+		text_input_field::parameters text_field_params;
 	};
 
 private:
 	nine_patch_text_field(
 		const utki::shared_ref<ruis::context>& context, //
 		all_parameters& params,
-		utki::shared_ref<ruis::bare_text_field> bare_text_field
+		utki::shared_ref<ruis::text_input_field> text_input_field
 	);
 
 public:

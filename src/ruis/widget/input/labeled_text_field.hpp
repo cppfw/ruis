@@ -37,13 +37,13 @@ public:
 		widget::parameters widget_params;
 		color_widget::parameters color_params;
 		text_widget::parameters text_widget_params;
-		bare_text_field::parameters text_field_params;
+		text_input_field::parameters text_field_params;
 		labeled_widget::parameters label_params;
 	};
 
 	labeled_text_field(
 		const utki::shared_ref<ruis::context> context, //
-		bare_text_field& input_field,
+		ruis::text_input_field& text_input_field,
 		text& label
 	);
 };
