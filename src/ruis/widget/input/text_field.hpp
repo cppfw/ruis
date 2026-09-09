@@ -27,7 +27,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
-// TODO: add doxygen docs
+/**
+ * @brief Abstract decorated text input field.
+ * The text_input_field wrapped in some decoration, e.g. rectangle widget.
+ */
 class text_field : public wrapped_widget<text_input_field>
 {
 public:

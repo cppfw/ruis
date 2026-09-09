@@ -30,7 +30,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 namespace ruis {
 
 /**
- * @brief Text field widget without any decoration.
+ * @brief Text input field widget without any decoration.
  */
 // NOLINTNEXTLINE(bugprone-incorrect-enable-shared-from-this, "std::shared_from_this is public via text_line_widget")
 class text_input_field :

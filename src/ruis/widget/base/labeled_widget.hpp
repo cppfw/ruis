@@ -36,6 +36,7 @@ public:
 		ruis::string text;
 	};
 
+protected:
 	labeled_widget(
 		const utki::shared_ref<ruis::context>& context, //
 		text& label
@@ -47,6 +48,7 @@ public:
 		)
 	{}
 
+public:
 	text& get_label()
 	{
 		return this->get_bare();
