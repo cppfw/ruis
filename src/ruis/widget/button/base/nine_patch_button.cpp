@@ -36,10 +36,10 @@ nine_patch_button::nine_patch_button( //
 	widget_list children
 ) :
 	widget(context, {}, {}),
-	button(this->context, std::move(button_params)),
+	button(context, std::move(button_params)),
 	// clang-format off
 	nine_patch(
-		this->context,
+		context,
 		{
 			.container_params = std::move(container_params),
 			.blending_params = std::move(blending_params),

@@ -54,9 +54,9 @@ rectangle_button::rectangle_button( //
 	widget_list contents //
 ) :
 	widget(context, {}, {}),
-	button(this->context, button::parameters{}),
+	button(context, button::parameters{}),
 	rectangle(
-		this->context,
+		context,
 		// clang-format off
 		rectangle::all_parameters{
 			.container_params = std::move(container_params), 

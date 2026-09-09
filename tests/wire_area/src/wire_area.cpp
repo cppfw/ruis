@@ -17,9 +17,10 @@ wire_area::wire_area(
 	all_parameters params,
 	ruis::widget_list children
 ) :
-	ruis::widget(context, std::move(params.layout_params), std::move(params.widget_params)),
+	ruis::widget(context,//
+		 std::move(params.layout_params), std::move(params.widget_params)),
 	// clang-format off
-	ruis::container(this->context,
+	ruis::container(context,
 		{
 			.container_params{
 				.layout = ruis::layout::trivial

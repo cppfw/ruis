@@ -57,7 +57,7 @@ check_box::check_box(
 			}()
 		},
 		{
-			make::image(this->context,
+			make::image(context,
 				{
 					.widget_params = {
 						.id = "ruis_checkbox_check"s

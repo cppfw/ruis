@@ -40,9 +40,9 @@ rectangle_push_button::rectangle_push_button(
 		std::move(params.widget_params) //
 	),
 	button(context, {}),
-	push_button(this->context, {}),
+	push_button(context, {}),
 	rectangle_button( //
-		this->context,
+		context,
 		std::move(params.container_params),
 		std::move(params.padding_params),
 		std::move(params.rectangle_params),

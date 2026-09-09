@@ -126,18 +126,18 @@ cube_page::cube_page(const utki::shared_ref<ruis::context>& c) :
 			{}
 		),
 		page(
-			this->context,
+			context,
 			ruis::widget::parameters{}
 		),
 		container(
-			this->context,
+			context,
 			ruis::container::all_parameters{
 				.container_params{
 					.layout = ruis::layout::column
 				}
 			},
 			{
-				m::gap(this->context,
+				m::gap(context,
 					{
 						.layout_params{
 							.dims = {ruis::dim::fill, ruis::dim::fill},
@@ -148,18 +148,18 @@ cube_page::cube_page(const utki::shared_ref<ruis::context>& c) :
 						}
 					}
 				),
-				m::text(this->context,
+				m::text(context,
 					{},
 					U"cube page"s
 				),
-				m::push_button(this->context,
+				m::push_button(context,
 					{
 						.widget_params{
 							.id = "back_button"s
 						}
 					},
 					{
-						m::text(this->context,
+						m::text(context,
 							{},
 							U"back"s
 						)

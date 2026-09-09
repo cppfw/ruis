@@ -112,18 +112,18 @@ scroll_bar::scroll_bar( //
 	),
 	oriented(std::move(params.oriented_params)),
 	container( //
-		this->context,
+		context,
 		{.container_params = {.layout = layout::pile}},
-		make_widgets(this->context)
+		make_widgets(context)
 	),
 	handle(this->get_widget("ruis_handle")),
 	params([&]() {
 		auto& sbp = params.scroll_bar_params;
 		if (!sbp.background) {
-			sbp.background = this->context.get().loader().load<res::nine_patch>("ruis_npt_slider_bg").to_shared_ptr();
+			sbp.background = context.get().loader().load<res::nine_patch>("ruis_npt_slider_bg").to_shared_ptr();
 		}
 		if (!sbp.handle) {
-			sbp.handle = this->context.get().loader().load<res::nine_patch>("ruis_npt_slider_handle").to_shared_ptr();
+			sbp.handle = context.get().loader().load<res::nine_patch>("ruis_npt_slider_handle").to_shared_ptr();
 		}
 		return params.scroll_bar_params;
 	}())

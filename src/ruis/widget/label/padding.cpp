@@ -77,7 +77,7 @@ padding::padding(
 	),
 	// clang-format on
 	wrapped_widget(
-		this->context, //
+		context, //
 		content_container.get()
 	),
 	params(std::move(params.padding_params))

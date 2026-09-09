@@ -8,9 +8,9 @@ pile_page::pile_page(
 	ruis::widget_list contents
 ) :
 	widget(context, {}, std::move(widget_params)),
-	page(this->context, ruis::widget::parameters{}),
+	page(context, ruis::widget::parameters{}),
 	container(
-		this->context,//
+		context,//
 		{
 			.container_params{
 				.layout = ruis::layout::pile

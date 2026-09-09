@@ -44,7 +44,7 @@ public:
 			},
 			{}
 		),
-		container(this->context,
+		container(context,
 			{
 				.container_params{
 					.layout = ruis::layout::size

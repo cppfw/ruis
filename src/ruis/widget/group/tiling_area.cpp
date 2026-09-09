@@ -52,7 +52,7 @@ public:
 	) :
 		ruis::widget(c, {}, {}),
 		// clang-format off
-		ruis::gap(this->context,
+		ruis::gap(context,
 			{
 				.color_params{
 					.color = std::move(color)
@@ -189,7 +189,7 @@ tiling_area::tiling_area(
 	),
 	ruis::oriented({.vertical = false}),
 	// clang-format off
-	ruis::container(this->context,
+	ruis::container(context,
 		{},
 		{
 			content_container
@@ -197,10 +197,10 @@ tiling_area::tiling_area(
 	),
 	// clang-format on
 	wrapped_widget(
-		this->context, //
+		context, //
 		content_container.get()
 	),
-	min_tile_size(this->context.get().units.pp_to_px(minimal_tile_size_pp)),
+	min_tile_size(context.get().units.pp_to_px(minimal_tile_size_pp)),
 	params([&]() {
 		constexpr uint32_t default_dragger_color = 0xffff8080;
 

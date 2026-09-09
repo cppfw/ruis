@@ -115,7 +115,7 @@ rectangle_text_field::rectangle_text_field(
 	),
 	// clang-format on
 	text_field(
-		this->context, //
+		context, //
 		bare_text_field.get()
 	)
 {}

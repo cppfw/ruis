@@ -105,7 +105,7 @@ nine_patch_text_field::nine_patch_text_field(
 	),
 	// clang-format on
 	text_field(
-		this->context, //
+		context, //
 		bare_text_field.get()
 	)
 {}

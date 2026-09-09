@@ -104,26 +104,26 @@ selection_box::selection_box(
 		button::parameters{}
 	),
 	nine_patch_push_button(
-		this->context, //
+		context, //
 		{
 			.container_params = {.layout = ruis::layout::row},
 			.nine_patch_button_params =
-				[&c = this->context.get(), &params]() {
+				[&]() {
 					if (!params.nine_patch_button_params.pressed_nine_patch) {
 						params.nine_patch_button_params.pressed_nine_patch =
-							c.loader().load<res::nine_patch>("ruis_npt_button_pressed"sv);
+							context.get().loader().load<res::nine_patch>("ruis_npt_button_pressed"sv);
 					}
 					if (!params.nine_patch_button_params.unpressed_nine_patch) {
 						params.nine_patch_button_params.unpressed_nine_patch =
-							c.loader().load<res::nine_patch>("ruis_npt_button_normal"sv);
+							context.get().loader().load<res::nine_patch>("ruis_npt_button_normal"sv);
 					}
 					return std::move(params.nine_patch_button_params);
 				}() //
 		},
-		make_selection_box_widget_structure(this->context)
+		make_selection_box_widget_structure(context)
 	),
 	ruis::selection_box(
-		this->context, //
+		context, //
 		this->get_widget_as<ruis::container>("ruis_dropdown_selection"),
 		std::move(params.list_params)
 	)

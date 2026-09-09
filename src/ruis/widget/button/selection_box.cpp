@@ -36,7 +36,7 @@ selection_box::selection_box(
 ) :
 	widget(context, {}, {}),
 	list_widget(
-		this->context, //
+		context, //
 		std::move(list_widget_params)
 	),
 	selection_container(selection_container)

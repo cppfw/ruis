@@ -27,8 +27,8 @@ using namespace ruis;
 
 choice_button::choice_button(const utki::shared_ref<ruis::context>& context) :
 	widget(context, {}, {}),
-	button(this->context, ruis::button::parameters{}),
-	toggle_button(this->context)
+	button(context, ruis::button::parameters{}),
+	toggle_button(context)
 {}
 
 void choice_button::on_pressed_change()

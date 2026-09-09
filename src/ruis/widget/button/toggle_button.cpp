@@ -27,7 +27,7 @@ using namespace ruis;
 
 toggle_button::toggle_button(const utki::shared_ref<ruis::context>& context) :
 	widget(context, {}, {}),
-	button(this->context, button::parameters{})
+	button(context, button::parameters{})
 {}
 
 event_status toggle_button::on_mouse_button(const mouse_button_event& e)

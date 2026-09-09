@@ -42,11 +42,11 @@ tab_button::tab_button(
 		{
 }
 	),
-	toggle_button(this->context),
-	choice_button(this->context),
+	toggle_button(context),
+	choice_button(context),
 	// clang-format off
     ruis::container(
-        this->context, //
+        context, //
         {
             .container_params = {
                 .layout = ruis::layout::pile
@@ -54,7 +54,7 @@ tab_button::tab_button(
         },
         {
             ruis::make::padding(
-                this->context,
+                context,
                 {
                     .layout_params = {
                         .dims = {ruis::dim::fill, ruis::dim::fill}
@@ -63,11 +63,11 @@ tab_button::tab_button(
                         .layout = ruis::layout::column
                     },
                     .padding_params = {
-                        .borders = {this->context.get().style().get_len_button_padding()}
+                        .borders = {context.get().style().get_len_button_padding()}
                     }
                 },
                 {
-                    ruis::make::image(this->context,
+                    ruis::make::image(context,
                         {
                             .layout_params = {
                                 .dims = {ruis::dim::min, ruis::dim::fill},
@@ -76,7 +76,7 @@ tab_button::tab_button(
                             .image_params = std::move(params.image_params)
                         }
                     ),
-                    ruis::make::text(this->context,
+                    ruis::make::text(context,
                         {
                             .layout_params = {
                                 .dims = {ruis::dim::min, ruis::dim::min},

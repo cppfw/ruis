@@ -369,14 +369,14 @@ window::window(
 			}
 		},
 		make_children(
-			this->context, //
+			context, //
 			content_container,
 			std::move(params.title)
 		)
 	),
 	// clang-format on
 	wrapped_widget(
-		this->context, //
+		context, //
 		content_container.get()
 	)
 // clang-format on

@@ -79,24 +79,24 @@ collapse_area::collapse_area(
 			}
 		},
 		{
-			m::pile(this->context,
+			m::pile(context,
 				{
 					.layout_params{
 						.dims{ruis::dim::max, ruis::dim::min}
 					}
 				},
 				{
-					m::rectangle(this->context,
+					m::rectangle(context,
 						{
 							.layout_params{
 								.dims{ruis::dim::fill, ruis::dim::fill}
 							},
 							.rectangle_params{
-								.fill_color = this->context.get().style().get_color_panel()
+								.fill_color = context.get().style().get_color_panel()
 							}
 						}
 					),
-					m::padding(this->context,
+					m::padding(context,
 						{
 							.layout_params{
 								.dims{ruis::dim::max, ruis::dim::min}
@@ -114,32 +114,32 @@ collapse_area::collapse_area(
 							}
 						},
 						{
-							m::image_toggle(this->context,
+							m::image_toggle(context,
 								{
 									.widget_params{
 										.id = "ruis_switch"s
 									},
 									.image_button_params{
-										.unpressed_image = this->context.get().loader().load<res::image>("ruis_img_dropdown_arrow"sv),
-										.pressed_image = this->context.get().loader().load<res::image>("ruis_img_dropright_arrow"sv)
+										.unpressed_image = context.get().loader().load<res::image>("ruis_img_dropdown_arrow"sv),
+										.pressed_image = context.get().loader().load<res::image>("ruis_img_dropright_arrow"sv)
 									}
 								}
 							),
-							m::gap(this->context,
+							m::gap(context,
 								{
 									.layout_params{
 										.dims{4_pp, 0_px}
 									}
 								}
 							),
-							m::pile(this->context,
+							m::pile(context,
 								{
 									.widget_params{
 										.id = "ruis_title"s
 									}
 								},
 								{
-									m::text(this->context, {}, std::move(params.title))
+									m::text(context, {}, std::move(params.title))
 								}
 							)
 						}
@@ -151,7 +151,7 @@ collapse_area::collapse_area(
 	),
 	// clang-format on
 	wrapped_widget(
-		this->context, //
+		context, //
 		content_container.get()
 	),
 	title_v(this->get_widget_as<container>("ruis_title"))

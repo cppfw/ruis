@@ -51,9 +51,9 @@ ellipse_button::ellipse_button( //
 	widget_list contents //
 ) :
 	widget(context, {}, {}),
-	button(this->context, button::parameters{}),
+	button(context, button::parameters{}),
 	ellipse(
-		this->context,
+		context,
 		// clang-format off
 		ellipse::all_parameters{
 			.container_params = std::move(container_params), 

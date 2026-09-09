@@ -13,10 +13,10 @@ namespace{
 class container_which_invalidates_its_layout_during_layouting : public ruis::container{
 public:
     container_which_invalidates_its_layout_during_layouting(
-                const utki::shared_ref<ruis::context>& c
+                const utki::shared_ref<ruis::context>& context
         ) :
-            ruis::widget(c, {}, {}),
-            ruis::container(this->context, {}, {})
+            ruis::widget(context, {}, {}),
+            ruis::container(context, {}, {})
     {}
 
     void on_lay_out()override{

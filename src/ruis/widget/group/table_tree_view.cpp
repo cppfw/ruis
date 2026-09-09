@@ -102,7 +102,7 @@ table_tree_view::table_tree_view(
             .table_list_params{
                 .column_headers = std::move(params.table_tree_view_params.column_headers),
                 .provider = utki::make_shared<table_tree_view::table_list_provider_for_table_tree_view>(
-                    this->context,
+                    context,
                     std::move(params.table_tree_view_params.provider)
                 )
             }

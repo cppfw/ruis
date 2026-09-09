@@ -55,9 +55,9 @@ selection_box::selection_box(
 		{
 }
 	),
-	push_button(this->context, {}),
+	push_button(context, {}),
 	// clang-format off
-	rectangle_push_button(this->context,
+	rectangle_push_button(context,
 		{
 			.container_params{
 				.layout = ruis::layout::row
@@ -71,7 +71,7 @@ selection_box::selection_box(
 			.rectangle_button_params = std::move(params.rectangle_button_params)
 		},
 		{
-			ruis::make::text(this->context,
+			ruis::make::text(context,
 				{
 					.layout_params{
 						.align = {ruis::align::front, ruis::align::center}
@@ -79,7 +79,7 @@ selection_box::selection_box(
 				},
 				std::move(params.title)
 			),
-			ruis::make::container(this->context,
+			ruis::make::container(context,
 				{
 					.layout_params{
 						.weight = 1,
@@ -98,7 +98,7 @@ selection_box::selection_box(
 	),
 	// clang-format on
 	ruis::selection_box(
-		this->context, //
+		context, //
 		this->get_widget_as<ruis::container>(selection_label_id),
 		std::move(params.list_params)
 	)

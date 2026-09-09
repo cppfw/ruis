@@ -47,9 +47,9 @@ image_button::image_button( //
 	parameters params
 ) :
 	widget(context, {}, {}),
-	button(this->context, button::parameters{}),
+	button(context, button::parameters{}),
 	image( //
-		this->context,
+		context,
 		{.blending_params = std::move(blending_params), //
 		 .image_params = std::move(image_params)}
 	),

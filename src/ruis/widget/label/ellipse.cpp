@@ -44,10 +44,10 @@ ellipse::ellipse( //
     ),
 	// clang-format on
 	color_widget(
-		this->context, //
+		context, //
 		std::move(params.color_params)
 	),
-	vao(this->context.get().renderer)
+	vao(context.get().renderer)
 {
 	this->update_vao();
 }

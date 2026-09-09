@@ -9,32 +9,32 @@ sample_page::sample_page(
 	const utki::shared_ref<ruis::context>& context, //
 	std::string_view text
 ) :
-	ruis::widget(std::move( context), {}, {}),
-	ruis::page(this->context, {}),
+	ruis::widget(context, {}, {}),
+	ruis::page(context, {}),
 	// clang-format off
 	ruis::container(
-		this->context,
+		context,
 		{
 			.container_params{
 				.layout = ruis::layout::row
 			}
 		},
 		{
-			ruis::make::text(this->context,
+			ruis::make::text(context,
 				{
 					.widget_params{
 						.id = "text"s
 					}
 				}
 			),
-			ruis::make::push_button(this->context,
+			ruis::make::push_button(context,
 				{
 					.widget_params{
 						.id = "button"s
 					}
 				},
 				{
-					ruis::make::text(this->context,
+					ruis::make::text(context,
 						{},
 						U"tear out the page"s
 					)

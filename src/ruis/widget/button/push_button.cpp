@@ -32,7 +32,7 @@ push_button::push_button( //
 	button::parameters button_params
 ) :
 	widget(context, {}, {}),
-	button(this->context, std::move(button_params))
+	button(context, std::move(button_params))
 {}
 
 event_status push_button::on_mouse_button(const mouse_button_event& e)

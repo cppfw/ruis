@@ -56,20 +56,20 @@ radio_button::radio_button(
 			}
 		},
 		{
-			m::image(this->context,
+			m::image(context,
 				{
 					.image_params{
-						.img = this->context.get().loader().load<res::image>("ruis_img_radiobutton_bg"sv)
+						.img = context.get().loader().load<res::image>("ruis_img_radiobutton_bg"sv)
 					}
 				}
 			),
-			m::image(this->context,
+			m::image(context,
 				{
 					.widget_params{
 						.visible = this->is_pressed()
 					},
 					.image_params{
-						.img = this->context.get().loader().load<res::image>("ruis_img_radiobutton_tick")
+						.img = context.get().loader().load<res::image>("ruis_img_radiobutton_tick")
 					}
 				}
 			)

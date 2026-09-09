@@ -187,23 +187,23 @@ class scroll_area_page :
 	private ruis::touch::scroll_area
 {
 public:
-	scroll_area_page(const utki::shared_ref<ruis::context>& c) :
+	scroll_area_page(const utki::shared_ref<ruis::context>& context) :
 		// clang-format off
 		ruis::widget(
-			c,
+			context,
 			{},
 			{
 				.clip = true
 			}
 		),
 		// clang-format on
-		ruis::page(this->context, {}),
+		ruis::page(context, {}),
 		// clang-format off
 		ruis::touch::scroll_area(
-			this->context,
+			context,
 			{},
 			{
-				m::padding(this->context,
+				m::padding(context,
 					{
 						.layout_params{
 							.dims = {ruis::dim::fill, ruis::dim::min}
@@ -212,10 +212,10 @@ public:
 							.layout = ruis::layout::column
 						},
 						.padding_params{
-							.borders = {this->context.get().style().get_len_gap()}
+							.borders = {context.get().style().get_len_gap()}
 						}
 					},
-					make_scroll_area_page_contents(this->context)
+					make_scroll_area_page_contents(context)
 				)
 			}
 		)

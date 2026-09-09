@@ -34,7 +34,7 @@ text_line_widget::text_line_widget(
 		{}
 	),
 	text_widget(
-		this->context, //
+		context, //
 		std::move(text_widget_params)
 	),
 	text_string(std::move(text))

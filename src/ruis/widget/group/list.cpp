@@ -49,7 +49,7 @@ list::list(
 	// clang-format on
 	oriented(std::move(params.oriented_params)),
 	list_widget(
-		this->context, //
+		context, //
 		std::move(params.list_params)
 	)
 {}

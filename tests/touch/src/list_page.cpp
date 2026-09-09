@@ -116,24 +116,24 @@ class list_page :
 	private ruis::touch::list
 {
 public:
-	list_page(const utki::shared_ref<ruis::context>& c) :
+	list_page(const utki::shared_ref<ruis::context>& context) :
 		// clang-format off
-		ruis::widget(c,
+		ruis::widget(context,
 			{},
 			{
 				.clip = true
 			}
 		),
 		// clang-format on
-		ruis::page(this->context, {}),
+		ruis::page(context, {}),
 		// clang-format off
-		ruis::touch::list(this->context,
+		ruis::touch::list(context,
 			{
 				.oriented_params{
 					.vertical = true
 				},
 				.list_params{
-					.provider = utki::make_shared<list_page_provider>(this->context)
+					.provider = utki::make_shared<list_page_provider>(context)
 				}
 			}
 		)

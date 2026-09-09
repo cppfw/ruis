@@ -28,7 +28,7 @@ const tst::set set("tabbed_book", [](tst::suite& suite){
 		public:
 			sub_tabbed_book(const utki::shared_ref<ruis::context>& context) :
 				ruis::widget(context, {}, {}),
-				tabbed_book(this->context, ruis::tabbed_book::all_parameters{}, {})
+				tabbed_book(context, ruis::tabbed_book::all_parameters{}, {})
 			{}
 		};
 

@@ -47,7 +47,7 @@ image_push_button::image_push_button( //
 		button::parameters{}
 	),
 	image_button( //
-		this->context,
+		context,
 		std::move(params.blending_params),
 		std::move(params.image_params),
 		std::move(params.image_button_params)

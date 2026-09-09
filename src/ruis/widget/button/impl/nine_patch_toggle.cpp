@@ -40,12 +40,12 @@ nine_patch_toggle::nine_patch_toggle(
 ) :
 	widget(context, {}, {}),
 	button(
-		this->context, //
+		context, //
 		std::move(button_params)
 	),
-	toggle_button(this->context),
+	toggle_button(context),
 	nine_patch_button(
-		this->context, //
+		context, //
 		std::move(container_params),
 		button::parameters{},
 		std::move(blending_params),
