@@ -43,18 +43,18 @@ rectangle_text_field::rectangle_text_field(
 					.dims = {ruis::dim::max, ruis::dim::max}
 				},
 				.color_params = [&](){
-					if(params.color_params.color.get().is_undefined()){
-						params.color_params.color = context.get().style().get_color_text();
+					if(params.text_field_params.color_params.color.get().is_undefined()){
+						params.text_field_params.color_params.color = context.get().style().get_color_text();
 					}
 
-					return std::move(params.color_params);
+					return std::move(params.text_field_params.color_params);
 				}(),
-				.text_widget_params = std::move(params.text_widget_params),
-				.text_field_params = [&](){
-					if(params.text_field_params.hint_color.get().is_undefined()){
-						params.text_field_params.hint_color = context.get().style().get_color_text_secondary();
+				.text_widget_params = std::move(params.text_field_params.text_widget_params),
+				.text_input_params = [&](){
+					if(params.text_field_params.text_input_params.hint_color.get().is_undefined()){
+						params.text_field_params.text_input_params.hint_color = context.get().style().get_color_text_secondary();
 					}
-					return std::move(params.text_field_params);
+					return std::move(params.text_field_params.text_input_params);
 				}()
 			},
 			std::move(text)

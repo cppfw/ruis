@@ -64,7 +64,7 @@ text_input_field::text_input_field(
 			return std::move(params.color_params);
 		}()
 	),
-	params(std::move(params.text_field_params))
+	params(std::move(params.text_input_params))
 {
 	this->set_clip(true);
 }

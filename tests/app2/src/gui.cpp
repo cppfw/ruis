@@ -438,7 +438,9 @@ utki::shared_ref<ruis::window> make_text_input_window(
 						.dims = {ruis::dim::fill, ruis::dim::min}
 					},
 					.text_field_params{
-						.hint = U"Type here..."s
+						.text_input_params{
+							.hint = U"Type here..."s
+						}
 					}
 				},
 				{}

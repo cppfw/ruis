@@ -50,7 +50,7 @@ nine_patch_text_field::nine_patch_text_field(
 					return std::move(params.color_params);
 				}(),
 				.text_widget_params = std::move(params.text_widget_params),
-				.text_field_params = [&](){
+				.text_input_params = [&](){
 					if(params.text_field_params.hint_color.get().is_undefined()){
 						params.text_field_params.hint_color = context.get().style().get_color_text_secondary();
 					}
