@@ -209,7 +209,7 @@ dialog::dialog(
 		)
 	),
 	// clang-format on
-	wrapped_widget(
+	containing_widget(
 		context, //
 		content_container.get()
 	)

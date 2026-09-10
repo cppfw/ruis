@@ -22,7 +22,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #pragma once
 
 #include "../../base/color_widget.hpp"
-#include "../../base/wrapped_widget.hpp"
+#include "../../base/containing_widget.hpp"
 #include "../../label/padding.hpp"
 #include "../../label/rectangle.hpp"
 
@@ -46,7 +46,7 @@ namespace ruis::touch {
 class dialog :
 	public virtual widget, //
 	private container,
-	public wrapped_widget<container>
+	public containing_widget
 {
 public:
 	struct parameters {

@@ -375,11 +375,10 @@ window::window(
 		)
 	),
 	// clang-format on
-	wrapped_widget(
+	containing_widget(
 		context, //
 		content_container.get()
 	)
-// clang-format on
 {
 	this->setup_widgets();
 

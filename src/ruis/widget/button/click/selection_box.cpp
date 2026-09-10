@@ -228,7 +228,7 @@ void selection_box::show_drop_down_menu()
 		lp.dims.x() = length::make_px(this->rect().d.x());
 	}
 
-	auto& va = np.get().get_widget_as<ruis::nine_patch>("ruis_contextmenu_content").get_bare();
+	auto& va = np.get().get_widget_as<ruis::nine_patch>("ruis_contextmenu_content").get_container();
 
 	for (size_t i = 0; i != this->get_provider().count(); ++i) {
 		va.push_back(this->wrap_item(this->get_provider().get_widget(i), i));

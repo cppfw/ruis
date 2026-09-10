@@ -21,7 +21,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "../base/wrapped_widget.hpp"
+#include "../base/containing_widget.hpp"
 #include "../container.hpp"
 
 namespace ruis {
@@ -37,7 +37,7 @@ class padding :
 	//   note: constrained by protected inheritance here: protected container
 	virtual public widget, //
 	protected container,
-	public wrapped_widget<container>
+	public containing_widget
 {
 public:
 	struct parameters {
