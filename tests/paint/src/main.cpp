@@ -28,8 +28,12 @@ public:
 		const utki::shared_ref<ruis::context>& context, //
 		all_parameters params
 	) :
-		widget(context, std::move(params.layout_params), std::move(params.widget_params)),
-		vao(this->context.get().renderer)
+		widget(
+			context,//
+			std::move(params.layout_params),
+			std::move(params.widget_params)
+		),
+		vao(context.get().renderer)
 	{}
 
 	void render(const ruis::mat4& matrix)const override{
@@ -78,7 +82,7 @@ public:
 			std::move(params.layout_params),
 			std::move(params.widget_params)
 		),
-		vao(this->context.get().renderer)
+		vao(context.get().renderer)
 	{}
 
 	void render(const ruis::mat4& matrix)const override{
@@ -128,7 +132,7 @@ public:
 			std::move(params.widget_params)
 		),
 		vao(
-			this->context.get().renderer, //
+			context.get().renderer, //
 			std::move(params.rectangle_vao_params)
 		),
 		color_params(std::move(params.color_params))

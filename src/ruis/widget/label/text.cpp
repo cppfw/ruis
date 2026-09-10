@@ -40,18 +40,6 @@ text::text(
 		context, //
 		std::move(params.text_params),
 		std::move(text)
-	),
-	color_widget(
-		context, //
-		[&]() {
-			if (params.color_params.color.get().is_undefined()) {
-				params.color_params.color = this->context.get().style().get_color_text();
-			}
-			if (params.color_params.disabled_color.get().is_undefined()) {
-				params.color_params.disabled_color = this->context.get().style().get_color_text_secondary();
-			}
-			return std::move(params.color_params);
-		}()
 	)
 {}
 

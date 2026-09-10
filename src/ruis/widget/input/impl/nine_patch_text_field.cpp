@@ -42,15 +42,7 @@ nine_patch_text_field::nine_patch_text_field(
 				.layout_params{
 					.dims = {ruis::dim::max, ruis::dim::max}
 				},
-				.text_input_params = [&](){
-					if(params.text_input_params.color_params.color.get().is_undefined()){
-						params.text_input_params.color_params.color = context.get().style().get_color_text();
-					}
-					if(params.text_input_params.hint_color.get().is_undefined()){
-						params.text_input_params.hint_color = context.get().style().get_color_text_secondary();
-					}
-					return std::move(params.text_input_params);
-				}()
+				.text_input_params = std::move(params.text_input_params)
 			},
 			std::move(text)
 		)

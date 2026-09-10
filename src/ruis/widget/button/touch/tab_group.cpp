@@ -66,17 +66,17 @@ tab_group::tab_group(
 		}()
 	),
 	selector_vao(
-		this->context.get().renderer, //
+		context.get().renderer, //
 		{.corner_radii =
 			 {
 				 // NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers, "TODO: get from params")
-				 ruis::length::make_pp(10).get(this->context) // TODO: get rounded corners from params
+				 ruis::length::make_pp(10).get(context) // TODO: get rounded corners from params
 			 }}
 	),
-	background_color(this->context.get().style().get_color_panel()), // TODO: get from params
+	background_color(context.get().style().get_color_panel()), // TODO: get from params
 	selector_color([&]() {
 		if (params.selector_color.get().is_undefined()) {
-			params.selector_color = this->context.get().style().get_color_secondary();
+			params.selector_color = context.get().style().get_color_secondary();
 		}
 		return std::move(params.selector_color);
 	}())

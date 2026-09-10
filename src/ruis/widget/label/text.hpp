@@ -32,15 +32,12 @@ namespace ruis {
  * This widget shows text.
  * From GUI script it can be instantiated as "text".
  */
-class text :
-	public text_line_widget, //
-	public color_widget
+class text : public text_line_widget
 {
 public:
 	struct all_parameters {
 		layout::parameters layout_params;
 		widget::parameters widget_params;
-		color_widget::parameters color_params;
 		text_widget::parameters text_params;
 	};
 

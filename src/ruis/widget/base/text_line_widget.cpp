@@ -25,7 +25,7 @@ using namespace ruis;
 
 text_line_widget::text_line_widget(
 	const utki::shared_ref<ruis::context>& context,
-	text_widget::parameters text_widget_params,
+	text_widget::parameters text_params,
 	string text
 ) :
 	widget(
@@ -35,7 +35,7 @@ text_line_widget::text_line_widget(
 	),
 	text_widget(
 		context, //
-		std::move(text_widget_params)
+		std::move(text_params)
 	),
 	text_string(std::move(text))
 {

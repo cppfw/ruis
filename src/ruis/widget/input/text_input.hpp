@@ -36,7 +36,6 @@ namespace ruis {
 class text_input :
 	public text_line_widget, //
 	public character_input_widget,
-	public color_widget,
 	private updateable // TODO: make it virtual-inherited?
 {
 	size_t first_visible_char_index = 0;
@@ -59,8 +58,7 @@ class text_input :
 
 public:
 	struct parameters {
-		text_widget::parameters text_widget_params;
-		color_widget::parameters color_params;
+		text_widget::parameters text_params;
 
 		ruis::string hint;
 		styled<ruis::color> hint_color;

@@ -37,10 +37,14 @@ namespace ruis {
 /**
  * @brief Abstract widget displaying a text.
  */
-class text_widget : virtual public widget
+class text_widget :
+	virtual public widget, //
+	public color_widget
 {
 public:
 	struct parameters {
+		color_widget::parameters color_params;
+
 		constexpr static const auto default_font_size_pp = 12;
 		styled<length> font_size = length::make_pp(default_font_size_pp);
 
@@ -70,6 +74,7 @@ protected:
 	 * If font size in parameters is undefined, then tries to set it to 'font_size_normal'
 	 * from current default style of the ruis context.
 	 * @param context - ruis context.
+	 * @param color_params - text color parameters.
 	 * @param params - text widget parameters.
 	 */
 	text_widget(

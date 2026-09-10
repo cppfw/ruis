@@ -46,8 +46,8 @@ rectangle::rectangle( //
 	),
 	// clang-format on
 	params(std::move(params.rectangle_params)),
-	fill_vao(this->context.get().renderer, {}),
-	stroke_vao(this->context.get().renderer, {})
+	fill_vao(context.get().renderer, {}),
+	stroke_vao(context.get().renderer, {})
 {
 	this->update_vaos();
 }

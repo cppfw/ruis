@@ -73,8 +73,10 @@ utki::shared_ref<ruis::widget> make_new_native_window_root_widget(
                         .id = "text_input"s
                     },
                     .text_input_params{
-                        .color_params{
-                            .color = c.get().style().get_color_text()
+                        .text_params{
+                            .color_params{
+                                .color = c.get().style().get_color_text()
+                            }
                         }
                     }
                 },

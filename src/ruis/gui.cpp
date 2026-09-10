@@ -35,7 +35,7 @@ using namespace ruis;
 // NOLINTNEXTLINE(modernize-pass-by-value)
 gui::gui(utki::shared_ref<ruis::context> context) :
 	context(std::move(context)),
-	root_widget(ruis::make::gap(this->context, {}))
+	root_widget(ruis::make::gap(context, {}))
 {}
 
 void gui::init_standard_widgets(const fsif::file& fi)

@@ -35,10 +35,8 @@ public:
 	struct all_parameters {
 		layout::parameters layout_params;
 		widget::parameters widget_params;
-		color_widget::parameters color_params;
-		text_widget::parameters text_widget_params;
-		text_input::parameters text_field_params;
 		labeled_widget::parameters label_params;
+		text_input::parameters text_field_params;
 	};
 
 	labeled_text_field(

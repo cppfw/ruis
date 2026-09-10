@@ -186,8 +186,10 @@ utki::shared_ref<ruis::window> make_text_input_window(
                         .id = "text_input"s
                     },
                     .text_input_params{
-                        .color_params{
-                            .color = c.get().style().get_color_text()
+                        .text_params{
+                            .color_params{
+                                .color = c.get().style().get_color_text()
+                            }
                         }
                     }
                 },

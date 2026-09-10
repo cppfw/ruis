@@ -94,12 +94,24 @@ text_widget::text_widget(
 	const utki::shared_ref<ruis::context>& context, //
 	parameters params
 ) :
+	color_widget(
+		context,
+		[&](){
+			if (params.color_params.color.get().is_undefined()) {
+				params.color_params.color = context.get().style().get_color_text();
+			}
+			if (params.color_params.disabled_color.get().is_undefined()) {
+				params.color_params.disabled_color = context.get().style().get_color_text_secondary();
+			}
+			return std::move(params.color_params);
+		}()
+	),
 	params([&]() {
 		if (!params.font_face.get() && !params.font_face.is_from_style()) {
-			params.font_face = this->context.get().style().get_font_face_normal();
+			params.font_face = context.get().style().get_font_face_normal();
 		}
 		if (params.font_size.get().is_undefined() && !params.font_size.is_from_style()) {
-			params.font_size = this->context.get().style().get_font_size_normal();
+			params.font_size = context.get().style().get_font_size_normal();
 		}
 		return std::move(params);
 	}())

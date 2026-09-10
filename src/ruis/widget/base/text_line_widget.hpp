@@ -39,7 +39,7 @@ protected:
 
 	text_line_widget(
 		const utki::shared_ref<ruis::context>& context, //
-		text_widget::parameters text_widget_params,
+		text_widget::parameters text_params,
 		string text
 	);
 

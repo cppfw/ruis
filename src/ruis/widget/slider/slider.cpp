@@ -95,11 +95,11 @@ std::vector<utki::shared_ref<ruis::widget>> make_widgets(const utki::shared_ref<
 } // namespace
 
 slider::slider( //
-	const utki::shared_ref<ruis::context>& c,
+	const utki::shared_ref<ruis::context>& context,
 	all_parameters params
 ) :
 	widget( //
-		c,
+		context,
 		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
@@ -111,16 +111,16 @@ slider::slider( //
 	container( //
 		context,
 		{.container_params = {.layout = layout::pile}},
-		make_widgets(this->context)
+		make_widgets(context)
 	),
 	handle(this->get_widget("ruis_handle")),
 	params([&]() {
 		auto& sbp = params.slider_params;
 		if (!sbp.background) {
-			sbp.background = this->context.get().loader().load<res::nine_patch>("ruis_npt_slider_bg").to_shared_ptr();
+			sbp.background = context.get().loader().load<res::nine_patch>("ruis_npt_slider_bg").to_shared_ptr();
 		}
 		if (!sbp.handle) {
-			sbp.handle = this->context.get().loader().load<res::nine_patch>("ruis_npt_slider_handle").to_shared_ptr();
+			sbp.handle = context.get().loader().load<res::nine_patch>("ruis_npt_slider_handle").to_shared_ptr();
 		}
 		return params.slider_params;
 	}())

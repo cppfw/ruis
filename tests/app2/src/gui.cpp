@@ -423,10 +423,10 @@ utki::shared_ref<ruis::window> make_text_input_window(
 						.dims = {ruis::dim::fill, ruis::dim::min},
 						.align = {ruis::align::front, ruis::align::center}
 					},
-					.color_params{
-						.color = c.get().style().get_color_text_secondary()
-					},
 					.text_params{
+						.color_params{
+							.color = c.get().style().get_color_text_secondary()
+						},
 						.font_size = c.get().style().get_font_size_normal() // TODO: use smaller font size for this text, add style font_size_subscript?
 					}
 				},
