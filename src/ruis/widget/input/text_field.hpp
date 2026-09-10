@@ -21,23 +21,23 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "text_input_field.hpp"
+#include "text_input.hpp"
 
 namespace ruis {
 
 /**
  * @brief Abstract decorated text input field.
- * The text_input_field wrapped in some decoration, e.g. rectangle widget.
+ * The text_input wrapped in some decoration, e.g. rectangle widget.
  */
 class text_field : virtual public widget
 {
-	ruis::text_input_field& text_input_field;
+	ruis::text_input& text_input;
 
 public:
 	struct parameters {
 		color_widget::parameters color_params;
 		text_widget::parameters text_widget_params;
-		text_input_field::parameters text_input_params;
+		text_input::parameters text_input_params;
 	};
 
 	struct all_parameters {
@@ -49,13 +49,13 @@ public:
 protected:
 	text_field(
 		const utki::shared_ref<ruis::context>& context, //
-		ruis::text_input_field& bare
+		ruis::text_input& bare
 	);
 
 public:
-	ruis::text_input_field& get_text_input_field()
+	ruis::text_input& get_text_input()
 	{
-		return this->text_input_field;
+		return this->text_input;
 	}
 };
 

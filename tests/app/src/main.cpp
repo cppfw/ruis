@@ -336,7 +336,7 @@ public:
 
 		// text_input
 		{
-			auto& l = c.get().get_widget("text_input").get_widget<ruis::text_input_field>();
+			auto& l = c.get().get_widget("text_input").get_widget<ruis::text_input>();
 			utki::assert(!l.get_text().empty(), SL);
 		}
 

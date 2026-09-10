@@ -27,10 +27,10 @@ using namespace ruis;
 
 text_field::text_field(
 	const utki::shared_ref<ruis::context>& context, //
-	ruis::text_input_field& text_input_field
+	ruis::text_input& text_input
 ) :
 	widget(context, {}, {}),
-	text_input_field(text_input_field)
+	text_input(text_input)
 {}
 
 utki::shared_ref<ruis::text_field> ruis::make::text_field(

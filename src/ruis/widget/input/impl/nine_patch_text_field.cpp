@@ -36,7 +36,7 @@ nine_patch_text_field::nine_patch_text_field(
 		context,
 		params,
 		// clang-format off
-		ruis::make::text_input_field(
+		ruis::make::text_input(
 			context, //
 			{
 				.layout_params{
@@ -66,14 +66,14 @@ nine_patch_text_field::nine_patch_text_field(
 nine_patch_text_field::nine_patch_text_field(
 	const utki::shared_ref<ruis::context>& context, //
 	all_parameters& params,
-	utki::shared_ref<ruis::text_input_field> text_input_field
+	utki::shared_ref<ruis::text_input> text_input
 ) :
 	widget(
 		context, //
 		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
-	// Initialize nine_patch first so it adds the text_input_field as a child
+	// Initialize nine_patch first so it adds the text_input as a child
 	// clang-format off
 	nine_patch(
 		context,
@@ -100,13 +100,13 @@ nine_patch_text_field::nine_patch_text_field(
 			}()
 		},
 		{
-			text_input_field
+			text_input
 		}
 	),
 	// clang-format on
 	text_field(
 		context, //
-		text_input_field.get()
+		text_input.get()
 	)
 {}
 
