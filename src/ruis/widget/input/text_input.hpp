@@ -57,15 +57,18 @@ class text_input :
 	bool left_mouse_button_down = false;
 
 public:
-	struct parameters {
-		text_widget::parameters text_params;
-
+	struct specific_parameters{
 		ruis::string hint;
 		styled<ruis::color> hint_color;
 	};
 
+	struct parameters {
+		text_widget::parameters text_params;
+		specific_parameters specific_params;
+	};
+
 private:
-	parameters params;
+	specific_parameters params;
 
 public:
 	text_input(const text_input&) = delete;
