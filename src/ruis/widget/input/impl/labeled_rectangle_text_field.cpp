@@ -22,4 +22,3 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "labeled_rectangle_text_field.hpp"
 
 using namespace ruis;
-

@@ -21,8 +21,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "../base/wrapped_widget.hpp"
-
 #include "text_input_field.hpp"
 
 namespace ruis {
@@ -31,10 +29,10 @@ namespace ruis {
  * @brief Abstract decorated text input field.
  * The text_input_field wrapped in some decoration, e.g. rectangle widget.
  */
-class text_field :
-	virtual public widget,
-	private wrapped_widget<text_input_field>
+class text_field : virtual public widget
 {
+	ruis::text_input_field& text_input_field;
+
 public:
 	struct all_parameters {
 		layout::parameters layout_params;
@@ -47,12 +45,13 @@ public:
 protected:
 	text_field(
 		const utki::shared_ref<ruis::context>& context, //
-		text_input_field& bare
+		ruis::text_input_field& bare
 	);
 
 public:
-	text_input_field& get_text_input_field(){
-		return this->get_bare();
+	ruis::text_input_field& get_text_input_field()
+	{
+		return this->text_input_field;
 	}
 };
 

@@ -23,14 +23,12 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../label/text.hpp"
 
-#include "wrapped_widget.hpp"
-
 namespace ruis {
 
-class labeled_widget :
-    virtual public widget, //
-    private wrapped_widget<text>
+class labeled_widget : virtual public widget
 {
+	text& label;
+
 public:
 	struct parameters {
 		color_widget::parameters color_params;
@@ -44,16 +42,13 @@ protected:
 		text& label
 	) :
 		widget(context, {}, {}),
-		wrapped_widget<text>(
-			context, //
-			label
-		)
+		label(label)
 	{}
 
 public:
 	text& get_label()
 	{
-		return this->get_bare();
+		return this->label;
 	}
 };
 

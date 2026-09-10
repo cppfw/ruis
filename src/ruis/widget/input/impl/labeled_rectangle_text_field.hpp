@@ -21,17 +21,18 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "rectangle_text_field.hpp"
 #include "../labeled_text_field.hpp"
 
-namespace ruis{
+#include "rectangle_text_field.hpp"
 
-class labeled_rectangle_text_field : 
-    public labeled_text_field,//
-    private container
+namespace ruis {
+
+class labeled_rectangle_text_field :
+	public labeled_text_field, //
+	private container
 {
 public:
-    // TODO:
+	// TODO:
 };
 
-}
+} // namespace ruis
