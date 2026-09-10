@@ -62,7 +62,7 @@ dependencies {
 task copyResToAssets {
     doLast {
         copy{
-            from "../../tests/app/res"
+            from "../../tests/app1/res"
             into "src/main/assets/res"
             include "**/*"
         }

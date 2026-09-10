@@ -8,10 +8,10 @@
 			"name": "(gdb) app-xorg",
 			"type": "cppdbg",
 			"request": "launch",
-			"program": "${workspaceFolder}/tests/app/out/dev/tests",
+			"program": "${workspaceFolder}/tests/app1/out/dev/tests",
 			"args": [],
 			"stopAtEntry": false,
-			"cwd": "${workspaceFolder}/tests/app",
+			"cwd": "${workspaceFolder}/tests/app1",
 			"environment": [
 				{
 					"name": "LD_LIBRARY_PATH",
@@ -37,10 +37,10 @@
 			"name": "(gdb) app-wayland",
 			"type": "cppdbg",
 			"request": "launch",
-			"program": "${workspaceFolder}/tests/app/out/dev/tests",
+			"program": "${workspaceFolder}/tests/app1/out/dev/tests",
 			"args": [],
 			"stopAtEntry": false,
-			"cwd": "${workspaceFolder}/tests/app",
+			"cwd": "${workspaceFolder}/tests/app1",
 			"environment": [
 				{
 					"name": "LD_LIBRARY_PATH",
@@ -62,10 +62,10 @@
 			"name": "(gdb) app-sdl",
 			"type": "cppdbg",
 			"request": "launch",
-			"program": "${workspaceFolder}/tests/app/out/dev/tests",
+			"program": "${workspaceFolder}/tests/app1/out/dev/tests",
 			"args": [],
 			"stopAtEntry": false,
-			"cwd": "${workspaceFolder}/tests/app",
+			"cwd": "${workspaceFolder}/tests/app1",
 			"environment": [
 				{
 					"name": "LD_LIBRARY_PATH",

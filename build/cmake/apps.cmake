@@ -70,7 +70,7 @@ function(ruis_declare_app name)
 endfunction()
 
 ruis_declare_app(align)
-ruis_declare_app(app HAS_RESOURCES)
+ruis_declare_app(app1 HAS_RESOURCES)
 ruis_declare_app(app2 HAS_RESOURCES)
 ruis_declare_app(aspect_ratio_proxy)
 ruis_declare_app(book HAS_RESOURCES)

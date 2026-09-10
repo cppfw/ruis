@@ -4,7 +4,7 @@ set(name ruisapp_application)
 project(${name})
 
 file(GLOB_RECURSE srcs
-        "../../../tests/app/src/*.cpp"
+        "../../../tests/app1/src/*.cpp"
         "../../../src/*.cpp"
         "../../../tests/harness/modules/ruisapp/src/*.cpp"
         "../../../tests/harness/modules/ruis-render-opengles/src/*.cpp"
