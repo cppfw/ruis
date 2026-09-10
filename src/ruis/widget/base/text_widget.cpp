@@ -43,5 +43,5 @@ text_widget::text_widget(
 		}()
 	),
 	font_widget(context, std::move(params.font_params)),
-	params(std::move(params))
+	params(std::move(params.specific_params))
 {}

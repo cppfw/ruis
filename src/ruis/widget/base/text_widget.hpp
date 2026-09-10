@@ -40,16 +40,19 @@ class text_widget :
 	public font_widget
 {
 public:
-	struct parameters {
-		color_widget::parameters color_params;
-		font_widget::parameters font_params;
-
+	struct specific_parameters{
 		constexpr static const auto default_selection_color = 0xff804040;
 		styled<ruis::color> selection_color = default_selection_color;
 	};
 
+	struct parameters {
+		color_widget::parameters color_params;
+		font_widget::parameters font_params;
+		specific_parameters specific_params;
+	};
+
 private:
-	parameters params; // TODO: save only selection color
+	specific_parameters params;
 
 protected:
 	/**
@@ -67,7 +70,7 @@ protected:
 		parameters params
 	);
 
-	const parameters& get_params() const noexcept
+	const specific_parameters& get_params() const noexcept
 	{
 		return this->params;
 	}
