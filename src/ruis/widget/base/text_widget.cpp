@@ -96,7 +96,7 @@ text_widget::text_widget(
 ) :
 	color_widget(
 		context,
-		[&](){
+		[&]() {
 			if (params.color_params.color.get().is_undefined()) {
 				params.color_params.color = context.get().style().get_color_text();
 			}
