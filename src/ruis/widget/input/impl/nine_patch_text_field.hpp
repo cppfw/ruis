@@ -42,9 +42,7 @@ public:
 		container::parameters container_params;
 		padding::parameters padding_params;
 		nine_patch::parameters nine_patch_params;
-		color_widget::parameters color_params;
-		text_widget::parameters text_widget_params;
-		text_input::parameters text_field_params;
+		text_input::parameters text_input_params;
 	};
 
 private:

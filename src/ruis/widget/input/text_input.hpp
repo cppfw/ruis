@@ -37,7 +37,7 @@ class text_input :
 	public text_line_widget, //
 	public character_input_widget,
 	public color_widget,
-	private updateable
+	private updateable // TODO: make it virtual-inherited?
 {
 	size_t first_visible_char_index = 0;
 	real x_offset = 0;
@@ -59,6 +59,9 @@ class text_input :
 
 public:
 	struct parameters {
+		text_widget::parameters text_widget_params;
+		color_widget::parameters color_params;
+
 		ruis::string hint;
 		styled<ruis::color> hint_color;
 	};
@@ -76,9 +79,7 @@ public:
 	struct all_parameters {
 		layout::parameters layout_params;
 		widget::parameters widget_params;
-		color_widget::parameters color_params;
-		text_widget::parameters text_widget_params;
-		text_input::parameters text_input_params;
+		parameters text_input_params;
 	};
 
 	text_input(

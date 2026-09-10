@@ -51,17 +51,17 @@ text_input::text_input(
 	),
 	text_line_widget(
 		context, //
-		std::move(params.text_widget_params),
+		std::move(params.text_input_params.text_widget_params),
 		std::move(text)
 	),
 	character_input_widget(context),
 	color_widget(
 		context, //
 		[&]() {
-			if (params.color_params.color.get().is_undefined()) {
-				params.color_params.color = this->context.get().style().get_color_text();
+			if (params.text_input_params.color_params.color.get().is_undefined()) {
+				params.text_input_params.color_params.color = this->context.get().style().get_color_text();
 			}
-			return std::move(params.color_params);
+			return std::move(params.text_input_params.color_params);
 		}()
 	),
 	params(std::move(params.text_input_params))

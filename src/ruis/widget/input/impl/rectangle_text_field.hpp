@@ -43,7 +43,7 @@ public:
 		container::parameters container_params;
 		padding::parameters padding_params;
 		rectangle::parameters rectangle_params;
-		text_field::parameters text_field_params;
+		text_input::parameters text_input_params;
 	};
 
 private:

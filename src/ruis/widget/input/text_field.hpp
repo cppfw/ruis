@@ -34,16 +34,10 @@ class text_field : virtual public widget
 	ruis::text_input& text_input;
 
 public:
-	struct parameters {
-		color_widget::parameters color_params;
-		text_widget::parameters text_widget_params;
-		text_input::parameters text_input_params;
-	};
-
 	struct all_parameters {
 		layout::parameters layout_params;
 		widget::parameters widget_params;
-		parameters text_field_params;
+		text_input::parameters text_input_params;
 	};
 
 protected:
