@@ -62,8 +62,6 @@ public:
 		all_parameters params,
 		ruis::string text
 	);
-
-	void on_focus_change() override;
 };
 
 namespace make {

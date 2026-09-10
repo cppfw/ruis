@@ -29,7 +29,7 @@ namespace ruis {
 
 class labeled_text_field :
 	public labeled_widget, //
-	public text_field
+    private wrapped_widget<text_field>
 {
 public:
 	struct all_parameters {
@@ -43,9 +43,13 @@ public:
 
 	labeled_text_field(
 		const utki::shared_ref<ruis::context> context, //
-		ruis::text_input_field& text_input_field,
+		ruis::text_field& text_field,
 		text& label
 	);
+
+    text_input_field& get_text_input_field(){
+        return this->wrapped_widget<text_field>::get_bare().get_text_input_field();
+    }
 };
 
 } // namespace ruis

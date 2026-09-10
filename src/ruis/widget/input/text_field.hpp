@@ -31,7 +31,9 @@ namespace ruis {
  * @brief Abstract decorated text input field.
  * The text_input_field wrapped in some decoration, e.g. rectangle widget.
  */
-class text_field : public wrapped_widget<text_input_field>
+class text_field :
+	virtual public widget,
+	private wrapped_widget<text_input_field>
 {
 public:
 	struct all_parameters {
@@ -47,6 +49,11 @@ protected:
 		const utki::shared_ref<ruis::context>& context, //
 		text_input_field& bare
 	);
+
+public:
+	text_input_field& get_text_input_field(){
+		return this->get_bare();
+	}
 };
 
 namespace make {

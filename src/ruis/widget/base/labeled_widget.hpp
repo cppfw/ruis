@@ -27,7 +27,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
-class labeled_widget : public wrapped_widget<text>
+class labeled_widget :
+    virtual public widget, //
+    private wrapped_widget<text>
 {
 public:
 	struct parameters {

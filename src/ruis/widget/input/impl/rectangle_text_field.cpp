@@ -120,11 +120,6 @@ rectangle_text_field::rectangle_text_field(
 	)
 {}
 
-void rectangle_text_field::on_focus_change()
-{
-	this->wrapped_widget<ruis::text_input_field>::get_bare().on_focus_change();
-}
-
 utki::shared_ref<ruis::rectangle_text_field> ruis::make::rectangle_text_field(
 	const utki::shared_ref<ruis::context>& context, //
 	ruis::rectangle_text_field::all_parameters params,
