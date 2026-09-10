@@ -24,13 +24,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <list>
 #include <vector>
 
-#include <r4/rectangle.hpp>
-#include <utki/enum_array.hpp>
-
-#include "../../res/font.hpp"
 #include "../widget.hpp"
 
 #include "color_widget.hpp"
+#include "font_widget.hpp"
 
 namespace ruis {
 
@@ -39,32 +36,20 @@ namespace ruis {
  */
 class text_widget :
 	virtual public widget, //
-	public color_widget
+	public color_widget,
+	public font_widget
 {
 public:
 	struct parameters {
 		color_widget::parameters color_params;
-
-		constexpr static const auto default_font_size_pp = 12;
-		styled<length> font_size = length::make_pp(default_font_size_pp);
-
-		styled<res::font> font_face;
+		font_widget::parameters font_params;
 
 		constexpr static const auto default_selection_color = 0xff804040;
 		styled<ruis::color> selection_color = default_selection_color;
 	};
 
 private:
-	parameters params;
-
-	utki::enum_array<
-		std::shared_ptr<const ruis::font>, //
-		res::font::style //
-		>
-		fonts;
-
-	void update_fonts();
-	void update_fonts_and_notify();
+	parameters params; // TODO: save only selection color
 
 protected:
 	/**
@@ -96,23 +81,6 @@ public:
 
 	~text_widget() override = default;
 
-	void set_font_face(styled<res::font> font_face);
-
-	void set_font_size(styled<length> size);
-
-	const length& get_font_size() const noexcept
-	{
-		return this->params.font_size.get();
-	}
-
-	/**
-	 * @brief Get font for drawing.
-	 * Gets font of the specified style.
-	 * @return Font for drawing.
-	 * @throw std::logic_error in case there is no font face currently set.
-	 */
-	const ruis::font& get_font(res::font::style style = res::font::style::normal) const;
-
 	void set_text(std::string_view text)
 	{
 		this->set_text(utki::to_utf32(text));
@@ -133,16 +101,12 @@ public:
 		this->set_text(std::u32string());
 	}
 
-	virtual void on_font_change() {}
-
 	virtual void on_text_change()
 	{
 		if (this->text_change_handler) {
 			this->text_change_handler(*this);
 		}
 	}
-
-	void on_reload() override;
 
 	std::function<void(text_widget& w)> text_change_handler;
 

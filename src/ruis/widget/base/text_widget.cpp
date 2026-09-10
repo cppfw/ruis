@@ -26,70 +26,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
-void text_widget::set_font_face(styled<res::font> font_face)
-{
-	if (this->params.font_face == font_face) {
-		return;
-	}
-
-	this->params.font_face = std::move(font_face);
-
-	this->update_fonts_and_notify();
-}
-
-void text_widget::set_font_size(styled<length> size)
-{
-	if (this->params.font_size == size) {
-		return;
-	}
-
-	this->params.font_size = std::move(size);
-
-	this->update_fonts_and_notify();
-}
-
-const ruis::font& text_widget::get_font(res::font::style style) const
-{
-	const auto& f = this->fonts[style];
-	if (!f) {
-		throw std::logic_error("text_widget::get_font(): font face is not set");
-	}
-
-	return *f;
-}
-
-void text_widget::update_fonts()
-{
-	if (!this->params.font_face.get()) {
-		// font face is not set
-		for (auto& f : this->fonts) {
-			f.reset();
-		}
-		return;
-	}
-
-	real font_size = [&]() -> real {
-		if (this->params.font_size.get().is_undefined()) {
-			return length::make_pp(parameters::default_font_size_pp).get(this->context);
-		}
-		return this->params.font_size.get().get(this->context);
-	}();
-
-	for (auto [v, e] : this->fonts.zip_with_enum()) {
-		v = this->params.font_face.get()->get(
-			font_size, //
-			e
-		);
-	}
-}
-
-void text_widget::update_fonts_and_notify()
-{
-	this->update_fonts();
-	this->invalidate_layout();
-	this->on_font_change();
-}
-
 text_widget::text_widget(
 	const utki::shared_ref<ruis::context>& context, //
 	parameters params
@@ -106,20 +42,6 @@ text_widget::text_widget(
 			return std::move(params.color_params);
 		}()
 	),
-	params([&]() {
-		if (!params.font_face.get() && !params.font_face.is_from_style()) {
-			params.font_face = context.get().style().get_font_face_normal();
-		}
-		if (params.font_size.get().is_undefined() && !params.font_size.is_from_style()) {
-			params.font_size = context.get().style().get_font_size_normal();
-		}
-		return std::move(params);
-	}())
-{
-	this->update_fonts();
-}
-
-void text_widget::on_reload()
-{
-	this->update_fonts_and_notify();
-}
+	font_widget(context, std::move(params.font_params)),
+	params(std::move(params))
+{}

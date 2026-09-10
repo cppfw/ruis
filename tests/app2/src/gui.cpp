@@ -427,7 +427,9 @@ utki::shared_ref<ruis::window> make_text_input_window(
 						.color_params{
 							.color = c.get().style().get_color_text_secondary()
 						},
-						.font_size = c.get().style().get_font_size_normal() // TODO: use smaller font size for this text, add style font_size_subscript?
+						.font_params{
+							.size = c.get().style().get_font_size_normal() // TODO: use smaller font size for this text, add style font_size_subscript?
+						}
 					}
 				},
 				U"Enter some text:"
