@@ -36,9 +36,10 @@ public:
 		layout::parameters layout_params;
 		widget::parameters widget_params;
 		labeled_widget::parameters label_params;
-		text_input::parameters text_field_params;
+		text_input::parameters text_input_params;
 	};
 
+protected:
 	labeled_text_field(
 		const utki::shared_ref<ruis::context> context, //
 		ruis::text_input& text_input,
