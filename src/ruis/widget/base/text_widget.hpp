@@ -40,7 +40,7 @@ class text_widget :
 	public font_widget
 {
 public:
-	struct specific_parameters{
+	struct specific_parameters {
 		constexpr static const auto default_selection_color = 0xff804040;
 		styled<ruis::color> selection_color = default_selection_color;
 	};

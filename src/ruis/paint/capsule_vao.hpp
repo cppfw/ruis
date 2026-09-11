@@ -27,49 +27,50 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 namespace ruis::paint {
 
 // TODO: doxygen
-class ellipse_vao
+class capsule_vao
 {
 	utki::shared_ref<const ruis::render::renderer> renderer;
 
-	vec2 diameters = 0;
-
-	// zero means filled rectangle
-	real stroke_width = 0; // TODO: use
+	ruis::real diameter = 0;
+	ruis::real stroke_width = 0; // TODO: implement
 
 public:
-	ellipse_vao(
+	capsule_vao(
 		utki::shared_ref<const ruis::render::renderer> renderer,
-		vec2 diameters = 0, //
-		real stroke_width = 0
+		ruis::real diameter = 0,
+		ruis::real stroke_width = 0 // 0 = filled capsule
 	);
 
-	ellipse_vao(const ellipse_vao&) = delete;
-	ellipse_vao& operator=(const ellipse_vao&) = delete;
+	capsule_vao(const capsule_vao&) = delete;
+	capsule_vao& operator=(const capsule_vao&) = delete;
 
-	ellipse_vao(ellipse_vao&&) = delete;
-	ellipse_vao& operator=(ellipse_vao&&) = delete;
+	capsule_vao(capsule_vao&&) = delete;
+	capsule_vao& operator=(capsule_vao&&) = delete;
 
-	~ellipse_vao() = default;
+	~capsule_vao() = default;
 
 	void set(
-		vec2 diameters, //
-		real stroke_width = 0 // 0 means filled ellipse
+		ruis::real diameter,
+		ruis::real stroke_width = 0 // 0 = filled capsule
 	);
 
 	void render(
 		const ruis::mat4& matrix, //
-		const ruis::color& color
+		const ruis::color& color,
+		ruis::real length,
+		bool is_vertical = false
 	) const;
 
 private:
 	std::shared_ptr<const render::texture_2d> tex;
 
 	static std::map<
-		vec2, // diameters
+		ruis::real, // diameter
 		std::weak_ptr<const render::texture_2d>>
 		// TODO: ? NOLINTNEXTLINE(cppcoreguidelines-avoid-non-const-global-variables, "false-positive")
 		cache;
 
 	void update_texture();
 };
+
 } // namespace ruis::paint

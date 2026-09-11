@@ -60,20 +60,84 @@ renderer::objects::objects(const ruis::render::context& rendering_context) :
 		this->quad_fan_indices,
 		vertex_array::mode::triangle_fan
 	)),
-	white_texture(rendering_context.make_texture_2d(
-		[]() {
-			// raster image 1 by 1 pixel
-			rasterimage::image_variant imvar(
-				{1, 1}, //
-				rasterimage::format::rgba,
-				rasterimage::depth::uint_8_bit
-			);
+	// clang-format off
+	pos_tex_texture_quadrants_01_vaos(
+		{
+			// left-top
+			rendering_context.make_vertex_array(
+				{
+					this->quad_01_vbo,
+					rendering_context.make_vertex_buffer(utki::make_span(std::array<vec2, 4>{
+						vec2(0, 0), //
+						vec2(0, 0.5),
+						vec2(0.5, 0.5),
+						vec2(0.5, 0)
+					}))
+				},
+				this->quad_fan_indices,
+				vertex_array::mode::triangle_fan
+			),
+			// right-top
+			rendering_context.make_vertex_array(
+				{
+					this->quad_01_vbo,
+					rendering_context.make_vertex_buffer(utki::make_span(std::array<vec2, 4>{
+						vec2(0.5, 0), //
+						vec2(0.5, 0.5),
+						vec2(1, 0.5),
+						vec2(1, 0)
+					}))
+				},
+				this->quad_fan_indices,
+				vertex_array::mode::triangle_fan
+			),
+			// right-bottom
+			rendering_context.make_vertex_array(
+				{
+					this->quad_01_vbo,
+					rendering_context.make_vertex_buffer(utki::make_span(std::array<vec2, 4>{
+						vec2(0.5, 0.5), //
+						vec2(0.5, 1),
+						vec2(1, 1),
+						vec2(1, 0.5)
+					}))
+				},
+				this->quad_fan_indices,
+				vertex_array::mode::triangle_fan
+			),
+			// left-bottom
+			rendering_context.make_vertex_array(
+				{
+					this->quad_01_vbo,
+					rendering_context.make_vertex_buffer(utki::make_span(std::array<vec2, 4>{
+						vec2(0, 0.5), //
+						vec2(0, 1),
+						vec2(0.5, 1),
+						vec2(0.5, 0.5)
+					}))
+				},
+				this->quad_fan_indices,
+				vertex_array::mode::triangle_fan
+			)
+		}
+	),
+	// clang-format on
+	white_texture(
+		rendering_context.make_texture_2d(
+			[]() {
+				// raster image 1 by 1 pixel
+				rasterimage::image_variant imvar(
+					{1, 1}, //
+					rasterimage::format::rgba,
+					rasterimage::depth::uint_8_bit
+				);
 
-			auto& im = imvar.get<rasterimage::format::rgba, rasterimage::depth::uint_8_bit>();
-			constexpr auto opaque_white = std::remove_reference_t<decltype(im)>::pixel_type{0xff, 0xff, 0xff, 0xff};
-			im[0][0] = opaque_white;
-			return imvar;
-		}(),
-		{}
-	))
+				auto& im = imvar.get<rasterimage::format::rgba, rasterimage::depth::uint_8_bit>();
+				constexpr auto opaque_white = std::remove_reference_t<decltype(im)>::pixel_type{0xff, 0xff, 0xff, 0xff};
+				im[0][0] = opaque_white;
+				return imvar;
+			}(),
+			{}
+		)
+	)
 {}

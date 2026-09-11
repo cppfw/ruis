@@ -43,6 +43,7 @@ public:
 
 	~path() = default;
 
+	// TODO: rename to line_abs/line_rel etc. similar to how it is done in veg
 	void line_to(ruis::vec2 abs_pos);
 
 	void line_to(

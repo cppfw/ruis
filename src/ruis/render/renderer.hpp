@@ -59,12 +59,20 @@ public:
 		 * @brief Unit quad VBO.
 		 * Vertices are in X-Y plane going counter-clockwise [(0, 0), (0, 1), (1, 1), (1, 0)].
 		 */
-		utki::shared_ref<const vertex_buffer> quad_01_vbo;
+		const utki::shared_ref<const vertex_buffer> quad_01_vbo;
 
-		utki::shared_ref<const index_buffer> quad_fan_indices;
-		utki::shared_ref<const vertex_array> pos_quad_01_vao;
-		utki::shared_ref<const vertex_array> pos_tex_quad_01_vao;
-		utki::shared_ref<const texture_2d> white_texture;
+		const utki::shared_ref<const index_buffer> quad_fan_indices;
+		const utki::shared_ref<const vertex_array> pos_quad_01_vao;
+		const utki::shared_ref<const vertex_array> pos_tex_quad_01_vao;
+
+		/**
+		 * @brief Texture quadrants VAOs.
+		 * Each VAO has quad_01_vbo for positions, but quarter texture coordinates VBO.
+		 * Order is: left-top, right-top, right-bottom, left-bottom.
+		 */
+		const std::array<utki::shared_ref<const vertex_array>, 4> pos_tex_texture_quadrants_01_vaos;
+
+		const utki::shared_ref<const texture_2d> white_texture; // TODO: is needed?
 	};
 
 	// common objects may be shared between renderers

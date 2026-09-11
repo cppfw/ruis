@@ -57,7 +57,7 @@ class text_input :
 	bool left_mouse_button_down = false;
 
 public:
-	struct specific_parameters{
+	struct specific_parameters {
 		ruis::string hint;
 		styled<ruis::color> hint_color;
 	};

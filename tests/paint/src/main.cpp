@@ -6,6 +6,7 @@
 #include <ruis/paint/path_vao.hpp>
 #include <ruis/paint/ellipse_vao.hpp>
 #include <ruis/paint/rectangle_vao.hpp>
+#include <ruis/paint/capsule_vao.hpp>
 #include <ruis/widget/label/padding.hpp>
 #include <ruis/widget/slider/scroll_bar.hpp>
 #include <ruis/widget/button/push_button.hpp>
@@ -160,6 +161,72 @@ inline utki::shared_ref<::rectangle_widget> rectangle_widget(
 }
 }
 
+class capsule_widget : virtual public ruis::widget{
+	ruis::paint::capsule_vao vao;
+	bool is_vertical;
+	ruis::length stroke_width;
+	ruis::color color;
+public:
+	struct all_parameters{
+		ruis::layout::parameters layout_params;
+		ruis::widget::parameters widget_params;
+		bool is_vertical = false;
+		ruis::length stroke_width;
+		ruis::color color;
+	};
+
+	capsule_widget(
+		const utki::shared_ref<ruis::context>& context, //
+		all_parameters params
+	) :
+		widget(
+			context, //
+			std::move(params.layout_params),
+			std::move(params.widget_params)
+		),
+		vao(
+			context.get().renderer, //
+			0,
+			0
+		),
+		is_vertical(params.is_vertical),
+		stroke_width(params.stroke_width),
+		color(params.color)
+	{}
+
+	void render(const ruis::mat4& matrix)const override{
+		this->vao.render(
+			matrix, //
+			this->color,
+			this->is_vertical ? this->rect().d.y() : this->rect().d.x(),
+			this->is_vertical
+		);
+	}
+
+	void on_resize()override{
+		// diameter is the non-longitudinal dimension of the widget
+		auto d = this->rect().d;
+		this->vao.set(
+			this->is_vertical ? d.x() : d.y(), //
+			this->stroke_width.is_undefined()? 0 :
+			this->stroke_width.get(this->context)
+		);
+	}
+};
+
+namespace make{
+inline utki::shared_ref<::capsule_widget> capsule_widget(
+	const utki::shared_ref<ruis::context>& context,
+	::capsule_widget::all_parameters params
+)
+{
+	return utki::make_shared<::capsule_widget>(
+		context,
+		std::move(params)
+	);
+}
+}
+
 namespace m{
 using namespace ruis::make;
 using namespace ::make;
@@ -253,6 +320,48 @@ utki::shared_ref<ruis::widget> make_root_widget(const utki::shared_ref<ruis::con
 					.oriented_params{
 						.vertical = false
 					}
+				}
+			),
+			m::capsule_widget(c,
+				{
+					.layout_params{
+						.dims = {80_pp, 300_pp},
+						.align = {ruis::align::center, ruis::align::front}
+					},
+					.is_vertical = true,
+					.color = 0xffff8080
+				}
+			),
+			m::capsule_widget(c,
+				{
+					.layout_params{
+						.dims = {70_pp, 280_pp},
+						.align = {ruis::align::center, ruis::align::front}
+					},
+					.is_vertical = true,
+					.stroke_width = 2_pp,
+					.color = 0xff80ff80
+				}
+			),
+			m::capsule_widget(c,
+				{
+					.layout_params{
+						.dims = {300_pp, 80_pp},
+						.align = {ruis::align::center, ruis::align::center}
+					},
+					.is_vertical = false,
+					.color = 0xffff8080
+				}
+			),
+			m::capsule_widget(c,
+				{
+					.layout_params{
+						.dims = {280_pp, 70_pp},
+						.align = {ruis::align::center, ruis::align::center}
+					},
+					.is_vertical = false,
+					.stroke_width = 2_pp,
+					.color = 0xff80ff80
 				}
 			),
 			m::push_button(c,

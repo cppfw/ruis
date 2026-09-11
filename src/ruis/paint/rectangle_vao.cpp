@@ -97,6 +97,9 @@ void rectangle_vao::render_rounded_corners(
 	auto center_size = dims - tex_dims;
 	auto tail_pos = dims - tex_tail;
 
+	// TODO: clamp center_size to 0
+	// TODO: clamp tail_pos to tex_middle
+
 	// left-top
 	{
 		ruis::mat4 matr(matrix);
