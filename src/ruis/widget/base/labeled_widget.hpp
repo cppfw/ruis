@@ -31,7 +31,6 @@ class labeled_widget : virtual public widget
 
 public:
 	struct parameters {
-		color_widget::parameters color_params;
 		text_widget::parameters text_params;
 		ruis::string text;
 	};

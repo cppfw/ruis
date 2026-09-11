@@ -33,17 +33,19 @@ namespace ruis {
  */
 class rectangle_text_field :
 	virtual public widget, //
-	private rectangle,
+	public rectangle,
 	public text_field
 {
 public:
+	struct parameters {
+		rectangle::parameters rectangle_params;
+		text_input::parameters text_input_params;
+	};
+
 	struct all_parameters {
 		layout::parameters layout_params;
 		widget::parameters widget_params;
-		container::parameters container_params;
-		padding::parameters padding_params;
-		rectangle::parameters rectangle_params;
-		text_input::parameters text_input_params;
+		parameters params;
 	};
 
 private:

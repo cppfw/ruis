@@ -27,12 +27,37 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
+/**
+ * @brief Rectangle text field widget with a text label above it.
+ * This widget combines a container laid out as a column,
+ * a text label as the first child and a rectangle_text_field as the second one.
+ */
 class labeled_rectangle_text_field :
-	public labeled_text_field, //
-	private container
+	private container, //
+	public labeled_text_field
 {
 public:
-	// TODO:
+	struct all_parameters {
+		layout::parameters layout_params;
+		widget::parameters widget_params;
+		labeled_widget::parameters label_params;
+		rectangle_text_field::parameters rectangle_text_field_params;
+	};
+
+public:
+	labeled_rectangle_text_field(
+		const utki::shared_ref<ruis::context>& context, //
+		all_parameters params,
+		ruis::string text
+	);
 };
+
+namespace make {
+utki::shared_ref<ruis::labeled_rectangle_text_field> labeled_rectangle_text_field(
+	const utki::shared_ref<ruis::context>& context, //
+	ruis::labeled_rectangle_text_field::all_parameters params,
+	ruis::string text
+);
+} // namespace make
 
 } // namespace ruis

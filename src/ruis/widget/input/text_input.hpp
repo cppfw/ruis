@@ -80,7 +80,7 @@ public:
 	struct all_parameters {
 		layout::parameters layout_params;
 		widget::parameters widget_params;
-		parameters text_input_params;
+		parameters params;
 	};
 
 	text_input(

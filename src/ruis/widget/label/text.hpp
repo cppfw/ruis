@@ -38,7 +38,7 @@ public:
 	struct all_parameters {
 		layout::parameters layout_params;
 		widget::parameters widget_params;
-		text_widget::parameters text_params;
+		text_widget::parameters params;
 	};
 
 	text(

@@ -42,7 +42,7 @@ nine_patch_text_field::nine_patch_text_field(
 				.layout_params{
 					.dims = {ruis::dim::max, ruis::dim::max}
 				},
-				.text_input_params = std::move(params.text_input_params)
+				.params = std::move(params.params.text_input_params)
 			},
 			std::move(text)
 		)
@@ -68,22 +68,16 @@ nine_patch_text_field::nine_patch_text_field(
 			.container_params{
 				.layout = layout::pile
 			},
-			.padding_params = [&](){
-				for(auto& b : params.padding_params.borders){
-					if(b.get().is_undefined()){
-						b = context.get().style().get_len_gap();
-					}
-				}
-
-				return std::move(params.padding_params);
-			}(),
+			.padding_params{
+				.borders = {context.get().style().get_len_gap()}
+			},
 			.nine_patch_params = [&](){
-				if(!params.nine_patch_params.nine_patch){
-					params.nine_patch_params.nine_patch = context.get().loader().load<ruis::res::nine_patch>("ruis_npt_textfield_background"sv);
+				if(!params.params.nine_patch_params.nine_patch){
+					params.params.nine_patch_params.nine_patch = context.get().loader().load<ruis::res::nine_patch>("ruis_npt_textfield_background"sv);
 				}
 				// TODO: set default disabled nine patch if not set
 
-				return std::move(params.nine_patch_params);
+				return std::move(params.params.nine_patch_params);
 			}()
 		},
 		{

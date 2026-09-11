@@ -118,7 +118,7 @@ utki::shared_ref<ruis::window> make_vertical_list_window(
                                                     {
                                                         m::text(this->context,
                                                             {
-                                                                .text_params{
+                                                                .params{
                                                                     .color_params{
                                                                         .color = 0xff0000ff
                                                                     }

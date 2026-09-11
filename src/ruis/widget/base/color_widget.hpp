@@ -36,8 +36,8 @@ class color_widget : public virtual widget
 {
 public:
 	struct parameters {
-		styled<ruis::color> color;
-		styled<ruis::color> disabled_color;
+		styled<ruis::color> color; // TODO: rename to normal?
+		styled<ruis::color> disabled_color; // TODO: rename to disabled?
 	};
 
 private:

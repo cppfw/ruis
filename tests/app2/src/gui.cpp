@@ -28,7 +28,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <ruis/widget/group/drag_area.hpp>
 #include <ruis/widget/group/overlay.hpp>
 #include <ruis/widget/group/window.hpp>
-#include <ruis/widget/input/impl/rectangle_text_field.hpp>
+#include <ruis/widget/input/impl/labeled_rectangle_text_field.hpp>
 #include <ruis/widget/label/gap.hpp>
 #include <ruis/widget/label/padding.hpp>
 #include <ruis/widget/proxy/key_proxy.hpp>
@@ -417,31 +417,19 @@ utki::shared_ref<ruis::window> make_text_input_window(
 			.title = c.get().localization.get().get("text_input"sv)
 		},
 		{
-			m::text(c,
-				{
-					.layout_params = {
-						.dims = {ruis::dim::fill, ruis::dim::min},
-						.align = {ruis::align::front, ruis::align::center}
-					},
-					.text_params{
-						.color_params{
-							.color = c.get().style().get_color_text_secondary()
-						},
-						.font_params{
-							.size = c.get().style().get_font_size_normal() // TODO: use smaller font size for this text, add style font_size_subscript?
-						}
-					}
-				},
-				U"Enter some text:"
-			),
-			m::rectangle_text_field(c,
+			m::labeled_rectangle_text_field(c,
 				{
 					.layout_params = {
 						.dims = {ruis::dim::fill, ruis::dim::min}
 					},
-					.text_input_params{
-						.specific_params{
-							.hint = U"Type here..."s
+					.label_params{
+						.text = U"Enter some text:"
+					},
+					.rectangle_text_field_params{
+						.text_input_params{
+							.specific_params{
+								.hint = U"Type here..."s
+							}
 						}
 					}
 				},

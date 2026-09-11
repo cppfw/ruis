@@ -36,13 +36,15 @@ class nine_patch_text_field :
 	public text_field
 {
 public:
+	struct parameters {
+		nine_patch::parameters nine_patch_params;
+		text_input::parameters text_input_params;
+	};
+
 	struct all_parameters {
 		layout::parameters layout_params;
 		widget::parameters widget_params;
-		container::parameters container_params;
-		padding::parameters padding_params;
-		nine_patch::parameters nine_patch_params;
-		text_input::parameters text_input_params;
+		parameters params;
 	};
 
 private:

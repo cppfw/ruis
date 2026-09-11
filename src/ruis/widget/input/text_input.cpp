@@ -51,15 +51,15 @@ text_input::text_input(
 	),
 	text_line_widget(
 		context, //
-		std::move(params.text_input_params.text_params),
+		std::move(params.params.text_params),
 		std::move(text)
 	),
 	character_input_widget(context),
 	params([&]() {
-		if (params.text_input_params.specific_params.hint_color.get().is_undefined()) {
-			params.text_input_params.specific_params.hint_color = context.get().style().get_color_text_secondary();
+		if (params.params.specific_params.hint_color.get().is_undefined()) {
+			params.params.specific_params.hint_color = context.get().style().get_color_text_secondary();
 		}
-		return std::move(params.text_input_params.specific_params);
+		return std::move(params.params.specific_params);
 	}())
 {
 	this->set_clip(true);

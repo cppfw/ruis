@@ -95,7 +95,7 @@ utki::shared_ref<ruis::window> make_window1(
                         {
                             m::text(c,
                                 {
-                                    .text_params{
+                                    .params{
                                         .color_params{
                                             .color = 0xffccfbff
                                         }

@@ -21,4 +21,77 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "labeled_rectangle_text_field.hpp"
 
+#include <utki/debug.hpp>
+
+#include "../../label/text.hpp"
+
 using namespace ruis;
+
+labeled_rectangle_text_field::labeled_rectangle_text_field(
+	const utki::shared_ref<ruis::context>& context, //
+	all_parameters params,
+	ruis::string text
+) :
+	widget(
+		context, //
+		std::move(params.layout_params),
+		std::move(params.widget_params)
+	),
+	// Initialize container first so it adds the label and the text field as its children
+	// clang-format off
+	container(
+		context, //
+		{
+			.container_params{
+				.layout = ruis::layout::column
+			}
+		},
+		{
+			ruis::make::text(
+				context, //
+				{
+					.layout_params{
+						.dims = {ruis::dim::fill, ruis::dim::min},
+						.align = {ruis::align::front, ruis::align::center}
+					},
+					.params = [&](){
+						if(params.label_params.text_params.color_params.color.get().is_undefined()){
+							params.label_params.text_params.color_params.color = context.get().style().get_color_text_secondary();
+						}
+						return std::move(params.label_params.text_params);
+					}()
+				},
+				std::move(params.label_params.text)
+			),
+			ruis::make::rectangle_text_field(
+				context, //
+				{
+					.layout_params{
+						.dims = {ruis::dim::max, ruis::dim::max}
+					},
+					.params = std::move(params.rectangle_text_field_params)
+				},
+				std::move(text)
+			)
+		}
+	),
+	// clang-format on
+	labeled_text_field(
+		context, //
+		this->get_text_input(),
+		this->get_label()
+	)
+{}
+
+utki::shared_ref<ruis::labeled_rectangle_text_field> ruis::make::labeled_rectangle_text_field(
+	const utki::shared_ref<ruis::context>& context, //
+	ruis::labeled_rectangle_text_field::all_parameters params,
+	ruis::string text
+)
+{
+	return utki::make_shared<ruis::labeled_rectangle_text_field>(
+		context, //
+		std::move(params),
+		std::move(text)
+	);
+}

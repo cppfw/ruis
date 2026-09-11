@@ -111,7 +111,7 @@ utki::shared_ref<ruis::window> make_window0(
                             ),
                             m::text(c,
                                 {
-                                    .text_params{
+                                    .params{
                                         .font_params{
                                             .size = ruis::length::make_pp(20),
                                             .face = c.get().loader().load<ruis::res::font>("fnt_monospace")

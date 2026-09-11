@@ -47,8 +47,8 @@ public:
 
 	struct parameters {
 		color_widget::parameters color_params;
-		font_widget::parameters font_params;
-		specific_parameters specific_params;
+		font_widget::parameters font_params; // TODO: rename to font?
+		specific_parameters specific_params; // TODO: rename to own or params?
 	};
 
 private:

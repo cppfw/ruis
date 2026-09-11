@@ -69,7 +69,7 @@ public:
 		// clang-format off
 		return m::text(this->context,
 			{
-				.text_params{
+				.params{
 					.color_params{
 						.color = this->context.get().style().get_color_text()
 					}
@@ -85,7 +85,7 @@ public:
 		// clang-format off
 		return m::text(this->context,
 			{
-				.text_params{
+				.params{
 					.color_params{
 						.color = this->context.get().style().get_color_highlight()
 					}

@@ -185,10 +185,12 @@ utki::shared_ref<ruis::window> make_text_input_window(
                     .widget_params{
                         .id = "text_input"s
                     },
-                    .text_input_params{
-                        .text_params{
-                            .color_params{
-                                .color = c.get().style().get_color_text()
+                    .params{
+                        .text_input_params{
+                            .text_params{
+                                .color_params{
+                                    .color = c.get().style().get_color_text()
+                                }
                             }
                         }
                     }

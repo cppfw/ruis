@@ -42,7 +42,7 @@ rectangle_text_field::rectangle_text_field(
 				.layout_params{
 					.dims = {ruis::dim::max, ruis::dim::max}
 				},
-				.text_input_params = std::move(params.text_input_params)
+				.params = std::move(params.params.text_input_params)
 			},
 			std::move(text)
 		)
@@ -68,32 +68,24 @@ rectangle_text_field::rectangle_text_field(
 			.container_params{
 				.layout = layout::pile
 			},
-			.padding_params = [&](){
-				for(auto& b : params.padding_params.borders){
-					if(b.get().is_undefined()){
-						b = context.get().style().get_len_gap();
-					}
-				}
-
-				return std::move(params.padding_params);
-			}(),
+			.padding_params = {context.get().style().get_len_gap()},
 			.rectangle_params = [&](){
-				if(params.rectangle_params.fill_color.get().is_undefined()){
-					params.rectangle_params.fill_color = context.get().style().get_color_background();
+				if(params.params.rectangle_params.fill_color.get().is_undefined()){
+					params.params.rectangle_params.fill_color = context.get().style().get_color_background();
 				}
-				if(params.rectangle_params.stroke_color.get().is_undefined()){
-					params.rectangle_params.stroke_color = context.get().style().get_color_primary();
+				if(params.params.rectangle_params.stroke_color.get().is_undefined()){
+					params.params.rectangle_params.stroke_color = context.get().style().get_color_primary();
 				}
-				if(params.rectangle_params.stroke_width.get().is_undefined()){
-					params.rectangle_params.stroke_width = context.get().style().get_len_border();
+				if(params.params.rectangle_params.stroke_width.get().is_undefined()){
+					params.params.rectangle_params.stroke_width = context.get().style().get_len_border();
 				}
-				for(auto& r : params.rectangle_params.corner_radii){
+				for(auto& r : params.params.rectangle_params.corner_radii){
 					if(r.get().is_undefined()){
 						r  = context.get().style().get_len_button_padding();
 					}
 				}
 
-				return std::move(params.rectangle_params);
+				return std::move(params.params.rectangle_params);
 			}()
 		},
 		{
