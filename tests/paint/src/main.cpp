@@ -143,7 +143,7 @@ public:
 		this->vao.render(
 			matrix, //
 			this->rect().d, //
-			this->color_params.color.get()
+			this->color_params.normal.get()
 		);
 	}
 };
@@ -278,7 +278,7 @@ utki::shared_ref<ruis::widget> make_root_widget(const utki::shared_ref<ruis::con
 								.dims = {ruis::dim::fill, ruis::dim::fill}
 							},
 							.color_params{
-								.color = 0x80ff8080
+								.normal = 0x80ff8080
 							},
 							.rectangle_vao_params{
 								.corner_radii = {10, 20, 30, 40},
@@ -292,7 +292,7 @@ utki::shared_ref<ruis::widget> make_root_widget(const utki::shared_ref<ruis::con
 								.dims = {200_pp, 100_pp}
 							},
 							.color_params{
-								.color = 0x8000ff00
+								.normal = 0x8000ff00
 							},
 							.rectangle_vao_params{
 								.corner_radii = {10, 20, 30, 40},

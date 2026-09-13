@@ -99,7 +99,7 @@ public:
 							.dims = {ruis::dim::fill, ruis::length::make_pp(1)}
 						},
 						.color_params{
-							.color = 0xff808080
+							.normal = 0xff808080
 						}
 					}
 				)

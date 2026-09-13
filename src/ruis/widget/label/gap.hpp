@@ -32,8 +32,8 @@ public:
 		layout::parameters layout_params;
 		widget::parameters widget_params;
 		color_widget::parameters color_params = {
-			.color = {},
-			.disabled_color = {} //
+			.normal = {},
+			.disabled = {} //
 		};
 	};
 

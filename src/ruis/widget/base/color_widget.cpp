@@ -35,22 +35,22 @@ color_widget::color_widget(
 
 void color_widget::set_color(styled<ruis::color> color)
 {
-	if (this->params.color == color) {
+	if (this->params.normal == color) {
 		return;
 	}
 
-	this->params.color = std::move(color);
+	this->params.normal = std::move(color);
 	this->clear_cache();
 	this->on_color_change();
 }
 
 void color_widget::set_disabled_color(styled<ruis::color> color)
 {
-	if (this->params.disabled_color == color) {
+	if (this->params.disabled == color) {
 		return;
 	}
 
-	this->params.disabled_color = std::move(color);
+	this->params.disabled = std::move(color);
 	this->clear_cache();
 	this->on_color_change();
 }
@@ -58,7 +58,7 @@ void color_widget::set_disabled_color(styled<ruis::color> color)
 const color& color_widget::get_current_color() const noexcept
 {
 	if (this->is_enabled()) {
-		return this->get_color();
+		return this->get_normal_color();
 	} else {
 		return this->get_disabled_color();
 	}

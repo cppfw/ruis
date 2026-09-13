@@ -71,7 +71,7 @@ public:
 			{
 				.params{
 					.color_params{
-						.color = this->context.get().style().get_color_text()
+						.normal = this->context.get().style().get_color_text()
 					}
 				}
 			},
@@ -87,7 +87,7 @@ public:
 			{
 				.params{
 					.color_params{
-						.color = this->context.get().style().get_color_highlight()
+						.normal = this->context.get().style().get_color_highlight()
 					}
 				}
 			},

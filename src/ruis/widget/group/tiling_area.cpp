@@ -55,7 +55,7 @@ public:
 		ruis::gap(context,
 			{
 				.color_params{
-					.color = std::move(color)
+					.normal = std::move(color)
 				}
 			}
 		),

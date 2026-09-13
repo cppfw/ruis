@@ -120,7 +120,7 @@ utki::shared_ref<ruis::window> make_vertical_list_window(
                                                             {
                                                                 .params{
                                                                     .color_params{
-                                                                        .color = 0xff0000ff
+                                                                        .normal = 0xff0000ff
                                                                     }
                                                                 }
                                                             },

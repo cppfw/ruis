@@ -29,15 +29,15 @@ namespace ruis {
 /**
  * @brief Basic widget which has a color attribute.
  *
- * @li @c color - color value.
- * @li @c disabled_color - color value for disabled state.
+ * @li @c normal - color value.
+ * @li @c disabled - color value for disabled state.
  */
 class color_widget : public virtual widget
 {
 public:
 	struct parameters {
-		styled<ruis::color> color; // TODO: rename to normal?
-		styled<ruis::color> disabled_color; // TODO: rename to disabled?
+		styled<ruis::color> normal;
+		styled<ruis::color> disabled;
 	};
 
 private:
@@ -60,16 +60,16 @@ public:
 
 	void set_color(styled<ruis::color> color);
 
-	const color& get_color() const noexcept
+	const color& get_normal_color() const noexcept
 	{
-		return this->params.color.get();
+		return this->params.normal.get();
 	}
 
 	void set_disabled_color(styled<ruis::color> color);
 
 	const color& get_disabled_color() const noexcept
 	{
-		return this->params.disabled_color.get();
+		return this->params.disabled.get();
 	}
 
 	/**
