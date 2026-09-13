@@ -118,7 +118,7 @@ public:
 	struct all_parameters{
 		ruis::layout::parameters layout_params;
 		ruis::widget::parameters widget_params;
-		ruis::color_widget::parameters color_params;
+		ruis::color_widget::parameters color;
 
 		ruis::paint::rectangle_vao::parameters rectangle_vao_params;
 	};
@@ -136,7 +136,7 @@ public:
 			context.get().renderer, //
 			std::move(params.rectangle_vao_params)
 		),
-		color_params(std::move(params.color_params))
+		color_params(std::move(params.color))
 	{}
 
 	void render(const ruis::mat4& matrix)const override{
@@ -277,7 +277,7 @@ utki::shared_ref<ruis::widget> make_root_widget(const utki::shared_ref<ruis::con
 							.layout_params{
 								.dims = {ruis::dim::fill, ruis::dim::fill}
 							},
-							.color_params{
+							.color{
 								.normal = 0x80ff8080
 							},
 							.rectangle_vao_params{
@@ -291,7 +291,7 @@ utki::shared_ref<ruis::widget> make_root_widget(const utki::shared_ref<ruis::con
 							.layout_params{
 								.dims = {200_pp, 100_pp}
 							},
-							.color_params{
+							.color{
 								.normal = 0x8000ff00
 							},
 							.rectangle_vao_params{

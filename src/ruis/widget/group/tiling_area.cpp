@@ -54,7 +54,7 @@ public:
 		// clang-format off
 		ruis::gap(context,
 			{
-				.color_params{
+				.color{
 					.normal = std::move(color)
 				}
 			}

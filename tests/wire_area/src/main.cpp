@@ -33,7 +33,7 @@ utki::shared_ref<ruis::widget> make_socket(
 			m::text(c,
 				{
 					.params{
-						.color_params{
+						.color{
 							.normal = in_socket ? 0xff0000ff : 0xff00ff00
 						}
 					}

@@ -66,7 +66,7 @@ public:
 		 * @brief Color of the dialog panel background.
 		 * Defaults to the 'color_panel' style value if undefined.
 		 */
-		color_widget::parameters color_params;
+		color_widget::parameters color;
 
 		/**
 		 * @brief Padding between the dialog panel background and the dialog content.

@@ -34,7 +34,7 @@ gap::gap(
 	),
 	color_widget(
 		context,
-		std::move(params.color_params) //
+		std::move(params.color) //
 	)
 {}
 

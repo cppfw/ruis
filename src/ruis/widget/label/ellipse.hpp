@@ -40,7 +40,7 @@ public:
 		widget::parameters widget_params;
 		container::parameters container_params;
 		padding::parameters padding_params;
-		color_widget::parameters color_params;
+		color_widget::parameters color;
 	};
 
 	ellipse(

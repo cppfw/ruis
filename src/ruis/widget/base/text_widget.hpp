@@ -46,7 +46,7 @@ public:
 	};
 
 	struct parameters {
-		color_widget::parameters color_params;
+		color_widget::parameters color;
 		font_widget::parameters font_params; // TODO: rename to font?
 		specific_parameters specific_params; // TODO: rename to own or params?
 	};
@@ -62,7 +62,7 @@ protected:
 	 * If font size in parameters is undefined, then tries to set it to 'font_size_normal'
 	 * from current default style of the ruis context.
 	 * @param context - ruis context.
-	 * @param color_params - text color parameters.
+	 * @param color - text color parameters.
 	 * @param params - text widget parameters.
 	 */
 	text_widget(

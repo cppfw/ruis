@@ -214,7 +214,7 @@ public:
 						.layout_params{
 							.dims = {ruis::dim::fill, ruis::length::make_pp(1)} // TODO: get from theme
 						},
-						.color_params{
+						.color{
 							.normal = this->context.get().style().get_color_primary()
 						}
 					}

@@ -31,7 +31,7 @@ public:
 	struct all_parameters {
 		layout::parameters layout_params;
 		widget::parameters widget_params;
-		color_widget::parameters color_params = {
+		color_widget::parameters color = {
 			.normal = {},
 			.disabled = {} //
 		};

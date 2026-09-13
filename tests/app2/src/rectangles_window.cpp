@@ -136,7 +136,7 @@ utki::shared_ref<ruis::widget> make_rectangles_window(
 							.padding_params{
 								.borders = {c.get().style().get_len_gap()}
 							},
-							.color_params{
+							.color{
 								.normal = 0xff000080
 							}
 						},

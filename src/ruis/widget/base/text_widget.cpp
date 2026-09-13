@@ -33,13 +33,13 @@ text_widget::text_widget(
 	color_widget(
 		context,
 		[&]() {
-			if (params.color_params.normal.get().is_undefined()) {
-				params.color_params.normal = context.get().style().get_color_text();
+			if (params.color.normal.get().is_undefined()) {
+				params.color.normal = context.get().style().get_color_text();
 			}
-			if (params.color_params.disabled.get().is_undefined()) {
-				params.color_params.disabled = context.get().style().get_color_text_secondary();
+			if (params.color.disabled.get().is_undefined()) {
+				params.color.disabled = context.get().style().get_color_text_secondary();
 			}
-			return std::move(params.color_params);
+			return std::move(params.color);
 		}()
 	),
 	font_widget(context, std::move(params.font_params)),

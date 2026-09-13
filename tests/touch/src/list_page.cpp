@@ -98,7 +98,7 @@ public:
 						.layout_params{
 							.dims = {ruis::dim::fill, ruis::length::make_pp(1)}
 						},
-						.color_params{
+						.color{
 							.normal = 0xff808080
 						}
 					}
