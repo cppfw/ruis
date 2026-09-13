@@ -37,7 +37,7 @@ public:
 	struct all_parameters {
 		layout::parameters layout_params;
 		widget::parameters widget_params;
-		text_input::parameters text_input_params;
+		ruis::text_input::parameters text_input;
 	};
 
 protected:
