@@ -40,7 +40,7 @@ gap::gap(
 
 void gap::render(const mat4& matrix) const
 {
-	if (this->get_current_color().is_undefined()) {
+	if (this->get_color().is_undefined()) {
 		return;
 	}
 
@@ -53,6 +53,6 @@ void gap::render(const mat4& matrix) const
 	r.shaders().color_pos->render(
 		matr, //
 		r.obj().pos_quad_01_vao.get(),
-		this->get_current_color().to_vec4f()
+		this->get_color().to_vec4f()
 	);
 }

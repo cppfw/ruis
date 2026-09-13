@@ -76,7 +76,7 @@ public:
 	 * @brief Get color for current enabled/disabled state.
 	 * @return color for the current enabled/disabled state.
 	 */
-	const color& get_current_color() const noexcept;
+	const color& get_color() const noexcept;
 
 	/**
 	 * @brief Color change callback.

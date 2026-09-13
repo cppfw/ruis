@@ -55,7 +55,7 @@ void color_widget::set_disabled_color(styled<ruis::color> color)
 	this->on_color_change();
 }
 
-const color& color_widget::get_current_color() const noexcept
+const color& color_widget::get_color() const noexcept
 {
 	if (this->is_enabled()) {
 		return this->get_normal_color();

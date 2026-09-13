@@ -127,7 +127,7 @@ void text_input::render(const ruis::mat4& matrix) const
 		font.render(
 			this->ctx().ren(), //
 			matr,
-			this->get_current_color(),
+			this->get_color(),
 			this->get_string().substr(
 				this->first_visible_char_index, //
 				this->get_string().size() - this->first_visible_char_index
@@ -145,7 +145,7 @@ void text_input::render(const ruis::mat4& matrix) const
 		r.shaders().color_pos->render(
 			matr, //
 			r.obj().pos_quad_01_vao.get(),
-			this->get_current_color()
+			this->get_color()
 		);
 	}
 }

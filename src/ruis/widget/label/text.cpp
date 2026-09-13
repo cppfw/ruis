@@ -59,7 +59,7 @@ void text::render(const ruis::mat4& matrix) const
 	font.render(
 		this->ctx().ren(), //
 		matr,
-		this->get_current_color(),
+		this->get_color(),
 		this->get_string()
 	);
 }

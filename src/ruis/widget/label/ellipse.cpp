@@ -71,7 +71,7 @@ void ellipse::render(const ruis::mat4& matrix) const
 {
 	this->vao.render(
 		matrix, //
-		this->get_current_color()
+		this->get_color()
 	);
 
 	this->padding::render(matrix);
