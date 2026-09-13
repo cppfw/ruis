@@ -63,7 +63,7 @@ public:
 	};
 
 	struct parameters {
-		text_widget::parameters text_params; // TODO: rename to text
+		text_widget::parameters text;
 		specific_parameters specific;
 	};
 

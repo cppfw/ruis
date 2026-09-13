@@ -51,7 +51,7 @@ text_input::text_input(
 	),
 	text_line_widget(
 		context, //
-		std::move(params.params.text_params),
+		std::move(params.params.text),
 		std::move(text)
 	),
 	character_input_widget(context),
