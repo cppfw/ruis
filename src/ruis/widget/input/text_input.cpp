@@ -56,10 +56,10 @@ text_input::text_input(
 	),
 	character_input_widget(context),
 	params([&]() {
-		if (params.params.specific_params.hint_color.get().is_undefined()) {
-			params.params.specific_params.hint_color = context.get().style().get_color_text_secondary();
+		if (params.params.specific.hint_color.get().is_undefined()) {
+			params.params.specific.hint_color = context.get().style().get_color_text_secondary();
 		}
-		return std::move(params.params.specific_params);
+		return std::move(params.params.specific);
 	}())
 {
 	this->set_clip(true);

@@ -427,7 +427,7 @@ utki::shared_ref<ruis::window> make_text_input_window(
 					},
 					.rectangle_text_field_params{
 						.text_input_params{
-							.specific_params{
+							.specific{
 								.hint = U"Type here..."s
 							}
 						}
