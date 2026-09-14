@@ -44,7 +44,7 @@ public:
 	struct parameters
 	{
 		ruis::list_widget::parameters list;
-		ruis::nine_patch_button::parameters nine_patch_button;
+		ruis::nine_patch_button::specific_parameters nine_patch_button;
 		specific_parameters specific;
 	};
 

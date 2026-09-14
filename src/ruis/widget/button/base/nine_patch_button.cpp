@@ -32,7 +32,7 @@ nine_patch_button::nine_patch_button( //
 	button::parameters button_params,
 	blending_widget::parameters blending_params,
 	nine_patch::parameters nine_patch_params,
-	parameters params,
+	specific_parameters params,
 	widget_list children
 ) :
 	widget(context, {}, {}),

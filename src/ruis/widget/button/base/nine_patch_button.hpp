@@ -38,13 +38,13 @@ class nine_patch_button :
 	public nine_patch
 {
 public:
-	struct parameters {
+	struct specific_parameters {
 		std::shared_ptr<const res::nine_patch> unpressed_nine_patch;
 		std::shared_ptr<const res::nine_patch> pressed_nine_patch;
 	};
 
 private:
-	parameters params;
+	specific_parameters params;
 
 protected:
 	nine_patch_button(
@@ -53,7 +53,7 @@ protected:
 		button::parameters button_params,
 		blending_widget::parameters blending_params,
 		nine_patch::parameters nine_patch_params,
-		parameters params,
+		specific_parameters params,
 		widget_list children
 	);
 
@@ -70,14 +70,14 @@ public:
 
 	void set_unpressed_nine_patch(std::shared_ptr<const res::nine_patch> np);
 
-	const decltype(parameters::unpressed_nine_patch)& get_unpressed_nine_patch() const noexcept
+	const std::shared_ptr<const res::nine_patch>& get_unpressed_nine_patch() const noexcept
 	{
 		return this->params.unpressed_nine_patch;
 	}
 
 	void set_pressed_nine_patch(std::shared_ptr<const res::nine_patch> np);
 
-	const decltype(parameters::pressed_nine_patch)& get_pressed_nine_patch() const noexcept
+	const std::shared_ptr<const res::nine_patch>& get_pressed_nine_patch() const noexcept
 	{
 		return this->params.pressed_nine_patch;
 	}
