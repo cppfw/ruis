@@ -27,7 +27,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
-// TODO: rename to text_string_widget
+// TODO: doxygen
 class text_string_widget : public text_widget
 {
 	mutable ruis::rect bb{};
