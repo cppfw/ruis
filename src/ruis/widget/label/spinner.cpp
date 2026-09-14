@@ -38,7 +38,8 @@ spinner::spinner( //
 		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
-	image(context, {.params = std::move(params.params.image)})
+	image(context, {.params = std::move(params.params.image)}),
+	params(std::move(params.params.specific))
 {}
 
 void spinner::render(const mat4& matrix) const
@@ -63,7 +64,7 @@ void spinner::set_active(bool active)
 
 void spinner::update(uint32_t dt_ms)
 {
-	angle += real(utki::pi) / real(std::milli::den) * real(dt_ms);
+	angle += this->params.rounds_per_second / real(std::milli::den) * real(dt_ms);
 }
 
 utki::shared_ref<ruis::spinner> ruis::make::refresh(

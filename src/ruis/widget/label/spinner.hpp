@@ -39,8 +39,16 @@ class spinner :
 	real angle = 0;
 
 public:
+	struct specific_parameters{
+		real rounds_per_second = real(utki::pi);
+	};
+private:
+	specific_parameters params;
+
+public:
 	struct parameters {
 		ruis::image::parameters image;
+		specific_parameters specific;
 	};
 
 	struct all_parameters {
