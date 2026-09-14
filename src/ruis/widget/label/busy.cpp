@@ -36,14 +36,15 @@ busy::busy(
 		context, //
 		// clang-format off
 		{
-			.params = std::move(params.params)
+			.params = [&](){
+				if(!params.params.spinner.image.img){
+					params.params.spinner.image.img = context.get().loader().load<ruis::res::image>("ruis_img_busy");
+				}
+				return std::move(params.params.spinner);
+			}()
 		} // clang-format on
 	)
-{
-	if (!this->get_image()) {
-		this->set_image(this->context.get().loader().load<ruis::res::image>("ruis_img_busy"));
-	}
-}
+{}
 
 void busy::set_active(bool active)
 {

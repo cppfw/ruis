@@ -39,10 +39,11 @@ class spinner :
 	real angle = 0;
 
 public:
-	struct specific_parameters{
+	struct specific_parameters {
 		// TODO: make styled?
 		real rounds_per_second = real(utki::pi);
 	};
+
 private:
 	specific_parameters params;
 

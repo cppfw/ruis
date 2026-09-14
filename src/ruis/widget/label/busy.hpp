@@ -32,10 +32,14 @@ namespace ruis {
 class busy : public spinner
 {
 public:
+	struct parameters {
+		ruis::spinner::parameters spinner;
+	};
+
 	struct all_parameters {
 		layout::parameters layout_params;
 		widget::parameters widget_params;
-		spinner::parameters params;
+		parameters params;
 	};
 
 	busy(
