@@ -33,7 +33,8 @@ namespace ruis {
  * a text label as the first child and a rectangle_text_field as the second one.
  */
 class labeled_rectangle_text_field :
-	private container, //
+	virtual public widget, //
+	private container,
 	public labeled_text_field
 {
 public:
