@@ -94,8 +94,8 @@ ruis::nine_patch_drop_down_box::nine_patch_drop_down_box(
 ) :
 	widget(
 		context, //
-		std::move(params.layout_params),
-		std::move(params.widget_params)
+		std::move(params.layout),
+		std::move(params.widget)
 	),
 	button(
 		context, //
@@ -110,15 +110,13 @@ ruis::nine_patch_drop_down_box::nine_patch_drop_down_box(
 					.layout = ruis::layout::row
 				},
 				.nine_patch_button = [&]() {
-					if (!params.nine_patch_button_params.pressed_nine_patch) {
-						params.nine_patch_button_params.pressed_nine_patch =
-							context.get().loader().load<res::nine_patch>("ruis_npt_button_pressed"sv);
+					if (auto& np = params.params.nine_patch_button.pressed_nine_patch; !np) {
+						np = context.get().loader().load<res::nine_patch>("ruis_npt_button_pressed"sv);
 					}
-					if (!params.nine_patch_button_params.unpressed_nine_patch) {
-						params.nine_patch_button_params.unpressed_nine_patch =
-							context.get().loader().load<res::nine_patch>("ruis_npt_button_normal"sv);
+					if (auto& np = params.params.nine_patch_button.unpressed_nine_patch; !np) {
+						np = context.get().loader().load<res::nine_patch>("ruis_npt_button_normal"sv);
 					}
-					return std::move(params.nine_patch_button_params);
+					return std::move(params.params.nine_patch_button);
 				}() //
 			}
 		},
@@ -128,7 +126,7 @@ ruis::nine_patch_drop_down_box::nine_patch_drop_down_box(
 	ruis::selection_box(
 		context, //
 		this->get_widget_as<ruis::container>("ruis_dropdown_selection"),
-		std::move(params.list_params)
+		std::move(params.params.list)
 	)
 {
 	this->pressed_change_handler = [this](button& b) {
@@ -370,7 +368,7 @@ utki::shared_ref<nine_patch_drop_down_box> ruis::make::nine_patch_drop_down_box(
 	auto& c = context.get();
 
 	{
-		auto& npbp = params.nine_patch_button_params;
+		auto& npbp = params.params.nine_patch_button;
 
 		if (!npbp.pressed_nine_patch) {
 			npbp.pressed_nine_patch = c.loader().load<res::nine_patch>("ruis_npt_button_pressed"sv);

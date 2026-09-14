@@ -37,15 +37,22 @@ class nine_patch_drop_down_box :
 	unsigned num_mouse_buttons_pressed = 0;
 
 public:
+	struct specific_parameters{
+		string title;
+	};
+
+	struct parameters
+	{
+		ruis::list_widget::parameters list;
+		ruis::nine_patch_button::parameters nine_patch_button;
+		specific_parameters specific;
+	};
+
 	struct all_parameters {
 		// fields for ruis::selection_box
-		ruis::layout::parameters layout_params;
-		ruis::widget::parameters widget_params;
-		list_widget::parameters list_params;
-		string title;
-
-		// fields specific to nine_patch_drop_down_box (impl)
-		nine_patch_button::parameters nine_patch_button_params;
+		ruis::layout::parameters layout;
+		ruis::widget::parameters widget;
+		parameters params;
 	};
 
 	nine_patch_drop_down_box(

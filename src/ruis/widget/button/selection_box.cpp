@@ -77,10 +77,12 @@ utki::shared_ref<ruis::selection_box> ruis::make::selection_box(
 {
 	return ruis::make::nine_patch_drop_down_box(
 		context, //
-		ruis::nine_patch_drop_down_box::all_parameters{
-			.layout_params = std::move(params.layout_params), //
-			.widget_params = std::move(params.widget_params),
-			.list_params = std::move(params.list_params)
+		{
+			.layout = std::move(params.layout_params), //
+			.widget = std::move(params.widget_params),
+			.params{
+				.list = std::move(params.list_params)
+			}
 		}
 	);
 }
