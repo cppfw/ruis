@@ -47,17 +47,21 @@ public:
 		std::shared_ptr<const res::nine_patch> disabled_nine_patch;
 	};
 
+	struct parameters{
+		ruis::container::parameters container;
+		ruis::padding::parameters padding;
+		ruis::blending_widget::parameters blending;
+		specific_parameters specific;
+	};
+
 private:
 	specific_parameters params;
 
 public:
 	struct all_parameters {
-		layout::parameters layout_params;
-		widget::parameters widget_params;
-		container::parameters container_params;
-		padding::parameters padding_params;
-		blending_widget::parameters blending_params;
-		nine_patch::specific_parameters nine_patch_params;
+		ruis::layout::parameters layout;
+		ruis::widget::parameters widget;
+		parameters params;
 	};
 
 	nine_patch(

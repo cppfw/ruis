@@ -43,10 +43,10 @@ std::vector<utki::shared_ref<ruis::widget>> make_widgets(const utki::shared_ref<
 	return {
 		m::nine_patch(c,
 			{
-				.layout_params = {
+				.layout = {
 					.dims = {ruis::dim::max, ruis::dim::max}
 				},
-				.widget_params = {
+				.widget = {
 					.id = "ruis_background"s
 				}
 			}
@@ -67,10 +67,10 @@ std::vector<utki::shared_ref<ruis::widget>> make_widgets(const utki::shared_ref<
 					{
 						m::nine_patch(c,
 							{
-								.layout_params = {
+								.layout = {
 									.dims = {ruis::dim::max, ruis::dim::max}
 								},
-								.widget_params = {
+								.widget = {
 									.id = "ruis_handle_image"s
 								}
 							}

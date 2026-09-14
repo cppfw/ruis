@@ -398,14 +398,16 @@ window::window(
 			ruis::make::nine_patch(
 				this->context,
 				{
-					.layout_params{
+					.layout{
 						.dims = {ruis::dim::fill, ruis::dim::fill}
 					},
-					.container_params{
-						.layout = layout::pile
-					},
-					.nine_patch_params{
-						.nine_patch = this->context.get().loader().load<ruis::res::nine_patch>("ruis_npt_window_bg")
+					.params{
+						.container{
+							.layout = layout::pile
+						},
+						.specific{
+							.nine_patch = this->context.get().loader().load<ruis::res::nine_patch>("ruis_npt_window_bg")
+						}
 					}
 				},
 				{}

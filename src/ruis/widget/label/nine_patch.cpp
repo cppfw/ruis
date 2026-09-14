@@ -46,24 +46,22 @@ nine_patch::nine_patch( //
 ) :
 	widget( //
 		context,
-		std::move(params.layout_params),
-		std::move(params.widget_params)
+		std::move(params.layout),
+		std::move(params.widget)
 	),
 	blending_widget( //
 		context,
-		std::move(params.blending_params)
+		std::move(params.params.blending)
 	),
 	padding(
 		context, //
-		// clang-format off
 		{
-			.container_params = std::move(params.container_params),
-			.padding_params = std::move(params.padding_params)
+			.container_params = std::move(params.params.container),
+			.padding_params = std::move(params.params.padding)
 		},
-		// clang-format on
 		std::move(children)
 	),
-	params(std::move(params.nine_patch_params))
+	params(std::move(params.params.specific))
 {
 	this->update_cur_nine_patch();
 }

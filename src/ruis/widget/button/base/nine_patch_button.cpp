@@ -37,9 +37,11 @@ nine_patch_button::nine_patch_button( //
 	nine_patch(
 		context,
 		{
-			.container_params = std::move(params.container),
-			.blending_params = std::move(params.blending),
-			.nine_patch_params = std::move(params.nine_patch)
+			.params{
+				.container = std::move(params.container),
+				.blending = std::move(params.blending),
+				.specific = std::move(params.nine_patch)
+			}
 		},
 		std::move(children)
 	),

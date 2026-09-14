@@ -45,16 +45,16 @@ check_box::check_box(
 	// clang-format off
 	nine_patch(context,
 		{
-			.container_params = {
-				.layout = layout::pile
-			},
-			.nine_patch_params = [&](){
-				auto p = std::move(params.nine_patch_params);
-				if(!p.nine_patch){
-					p.nine_patch = context.get().loader().load<res::nine_patch>("ruis_npt_checkbox_bg"sv);
-				}
-				return p;
-			}()
+			.params{
+				.container{.layout = layout::pile},
+				.specific = [&](){
+					auto p = std::move(params.nine_patch_params);
+					if(!p.nine_patch){
+						p.nine_patch = context.get().loader().load<res::nine_patch>("ruis_npt_checkbox_bg"sv);
+					}
+					return p;
+				}()
+			}
 		},
 		{
 			make::image(context,
