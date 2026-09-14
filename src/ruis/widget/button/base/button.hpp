@@ -31,6 +31,7 @@ namespace ruis {
  * @brief Basic button widget class.
  * Button has two states: normal and pressed.
  */
+// TODO: doxygen
 class button : public virtual widget
 {
 public:
