@@ -61,7 +61,7 @@ public:
 
 	struct parameters{
 		container::parameters container_params;
-		padding::parameters padding_params;
+		ruis::padding::specific_parameters padding_params;
 		specific_parameters specific;
 	};
 

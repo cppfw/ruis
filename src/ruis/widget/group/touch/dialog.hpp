@@ -54,7 +54,7 @@ public:
 		 * @brief Margin between the dialog panel and the edge of the dialog area.
 		 * Defaults to the 'len_dialog_margin' style value if undefined.
 		 */
-		padding::parameters margin_params;
+		ruis::padding::specific_parameters margin_params;
 	};
 
 	struct all_parameters {
@@ -72,7 +72,7 @@ public:
 		 * @brief Padding between the dialog panel background and the dialog content.
 		 * Defaults to the 'len_dialog_padding' style value if undefined.
 		 */
-		padding::parameters padding_params;
+		ruis::padding::specific_parameters padding_params;
 
 		/**
 		 * @brief Dialog panel background rectangle parameters.

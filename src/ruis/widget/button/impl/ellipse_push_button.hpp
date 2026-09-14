@@ -35,7 +35,7 @@ public:
 		layout::parameters layout_params;
 		widget::parameters widget_params;
 		ruis::container::parameters container_params;
-		ruis::padding::parameters padding_params;
+		ruis::padding::specific_parameters padding_params;
 		ellipse_button::parameters ellipse_button_params;
 	};
 

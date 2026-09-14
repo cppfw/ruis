@@ -46,7 +46,7 @@ void ellipse_button::update_color()
 ellipse_button::ellipse_button( //
 	const utki::shared_ref<ruis::context>& context,
 	container::parameters container_params,
-	padding::parameters padding_params,
+	ruis::padding::specific_parameters padding_params,
 	parameters params,
 	widget_list contents //
 ) :
@@ -57,7 +57,7 @@ ellipse_button::ellipse_button( //
 		// clang-format off
 		ellipse::all_parameters{
 			.container_params = std::move(container_params), 
-            .padding_params = [&](){
+            .padding_params = [&]() {
 				for(auto& b : padding_params.borders){
 					if(b.get().is_undefined()){
 						b = context.get().style().get_len_button_padding();

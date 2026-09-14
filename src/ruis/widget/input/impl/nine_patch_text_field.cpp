@@ -67,7 +67,7 @@ nine_patch_text_field::nine_patch_text_field(
 		{
 			.params{
 				.container{.layout = layout::pile},
-				.padding{
+				.padding_params{
 					.borders = {context.get().style().get_len_gap()}
 				},
 				.specific = [&](){

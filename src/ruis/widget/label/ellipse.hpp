@@ -39,7 +39,7 @@ public:
 		layout::parameters layout_params;
 		widget::parameters widget_params;
 		container::parameters container_params;
-		padding::parameters padding_params;
+		ruis::padding::specific_parameters padding_params;
 		color_widget::parameters color;
 	};
 

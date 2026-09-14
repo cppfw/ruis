@@ -49,7 +49,7 @@ public:
 
 	struct parameters{
 		ruis::container::parameters container;
-		ruis::padding::parameters padding;
+		ruis::padding::specific_parameters padding_params;
 		ruis::blending_widget::parameters blending;
 		specific_parameters specific;
 	};

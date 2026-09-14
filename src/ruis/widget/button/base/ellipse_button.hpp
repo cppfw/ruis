@@ -50,7 +50,7 @@ protected:
 	ellipse_button( //
 		const utki::shared_ref<ruis::context>& context,
 		container::parameters container_params,
-		padding::parameters padding_params,
+		ruis::padding::specific_parameters padding_params,
 		parameters params,
 		widget_list contents //
 	);

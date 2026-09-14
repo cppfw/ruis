@@ -59,12 +59,12 @@ rectangle_button::rectangle_button( //
 			.params{
 				.container_params = std::move(params.container),
 				.padding_params = [&](){
-					for(auto& b : params.padding.borders){
+					for(auto& b : params.padding_params.borders){
 						if(b.get().is_undefined()){
 							b = context.get().style().get_len_button_padding();
 						}
 					}
-					return std::move(params.padding);
+					return std::move(params.padding_params);
 				}(),
 				.specific = std::move(params.rectangle)
 			}

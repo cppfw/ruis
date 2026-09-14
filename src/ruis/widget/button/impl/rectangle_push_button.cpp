@@ -45,7 +45,7 @@ rectangle_push_button::rectangle_push_button(
 		context,
 		{
 			.container = std::move(params.params.container_params),
-			.padding = std::move(params.params.padding_params),
+			.padding_params = std::move(params.params.padding_params),
 			.rectangle = std::move(params.params.rectangle_params),
 			.specific = std::move(params.params.rectangle_button_params)
 		},
