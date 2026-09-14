@@ -100,18 +100,20 @@ collapse_area::collapse_area(
 					),
 					m::padding(context,
 						{
-							.layout_params{
+							.layout{
 								.dims{ruis::dim::max, ruis::dim::min}
 							},
-							.container_params{
-								.layout = ruis::layout::row
-							},
-							.padding_params{
-								.borders{
-									4_pp,
-									1_pp,
-									4_pp,
-									1_pp
+							.params{
+								.container{
+									.layout = ruis::layout::row
+								},
+								.specific{
+									.borders{
+										4_pp,
+										1_pp,
+										4_pp,
+										1_pp
+									}
 								}
 							}
 						},

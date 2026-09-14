@@ -173,15 +173,17 @@ utki::shared_ref<container> make_caption(
 				{
 					m::padding(c,
 						{
-							.layout_params = {
+							.layout{
 								.dims = {ruis::dim::fill, ruis::dim::min},
 								.weight = 1
 							},
-							.container_params = {
-								.layout = layout::pile
-							},
-							.padding_params = {
-								.borders = {3_pp, 2_pp, 0_pp, 2_pp}
+							.params{
+								.container{
+									.layout = layout::pile
+								},
+								.specific{
+									.borders = {3_pp, 2_pp, 0_pp, 2_pp}
+								}
 							}
 						},
 						{

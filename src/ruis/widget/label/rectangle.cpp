@@ -39,8 +39,7 @@ rectangle::rectangle( //
 	padding( //
 		context,
 		{
-			.container_params = std::move(params.params.container_params),
-			.padding_params = std::move(params.params.padding_params)
+			.params = std::move(params.params.padding)
 		},
 		std::move(children)
 	),

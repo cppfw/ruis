@@ -59,16 +59,22 @@ selection_box::selection_box(
 	rectangle_push_button(context,
 		{
 			.params{
-				.container_params{
-					.layout = ruis::layout::row
-				},
-				.padding_params{
-					.borders = {default_padding}
-				},
-				.rectangle_params{
-					.corner_radii = {default_padding}
-				},
-				.rectangle_button_params = std::move(params.rectangle_button_params)
+				.rectangle_button{
+					.rectangle{
+						.padding{
+							.container{
+								.layout = ruis::layout::row
+							},
+							.specific{
+								.borders = {default_padding}
+							}
+						},
+						.specific{
+							.corner_radii = {default_padding}
+						}
+					},
+					.specific = std::move(params.rectangle_button_params)
+				}
 			}
 		},
 		{
@@ -189,14 +195,16 @@ public:
 						std::move(pressed_indicator),
 						ruis::make::padding(this->context,
 							{
-								.layout_params{
+								.layout{
 									.dims = {ruis::dim::fill, ruis::dim::min}
 								},
-								.container_params{
-									.layout = ruis::layout::pile
-								},
-								.padding_params{
-									.borders = {default_padding}
+								.params{
+									.container{
+										.layout = ruis::layout::pile
+									},
+									.specific{
+										.borders = {default_padding}
+									}
 								}
 							},
 							{

@@ -42,9 +42,7 @@ public:
 	};
 
 	struct parameters{
-		ruis::container::parameters container;
-		ruis::padding::specific_parameters padding_params;
-		ruis::rectangle::specific_parameters rectangle;
+		ruis::rectangle::parameters rectangle;
 		specific_parameters specific;
 	};
 

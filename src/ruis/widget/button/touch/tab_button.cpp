@@ -56,14 +56,16 @@ tab_button::tab_button(
             ruis::make::padding(
                 context,
                 {
-                    .layout_params = {
+                    .layout{
                         .dims = {ruis::dim::fill, ruis::dim::fill}
                     },
-                    .container_params = {
-                        .layout = ruis::layout::column
-                    },
-                    .padding_params = {
-                        .borders = {context.get().style().get_len_button_padding()}
+                    .params{
+                        .container{
+                            .layout = ruis::layout::column
+                        },
+                        .specific{
+                            .borders = {context.get().style().get_len_button_padding()}
+                        }
                     }
                 },
                 {

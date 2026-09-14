@@ -36,6 +36,10 @@ class push_button : virtual public button
 
 	unsigned pointer_id = 0;
 
+public:
+	struct parameters{
+
+	};
 protected:
 	void on_pressed_change() override;
 
@@ -55,6 +59,7 @@ protected:
 	);
 
 public:
+	// TODO: add containing_push_button
 	using all_parameters = container::all_parameters;
 
 	push_button(const push_button&) = delete;

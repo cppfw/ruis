@@ -254,20 +254,22 @@ utki::shared_ref<ruis::widget> make_root_widget(const utki::shared_ref<ruis::con
 			),
 			m::padding(c,
 				{
-					.layout_params{
+					.layout{
 						.dims = {300_pp, 150_pp},
 						.align = {ruis::align::front, ruis::align::back}
 					},
-					.container_params{
-						.layout = ruis::layout::pile
-					},
-					.padding_params{
-						// gaps to the left and bottom window edges
-						.borders = {
-							ruis::length::make_pp(40),
-							ruis::length::make_pp(0),
-							ruis::length::make_pp(0),
-							ruis::length::make_pp(40)
+					.params{
+						.container{
+							.layout = ruis::layout::pile
+						},
+						.specific{
+							// gaps to the left and bottom window edges
+							.borders = {
+								ruis::length::make_pp(40),
+								ruis::length::make_pp(0),
+								ruis::length::make_pp(0),
+								ruis::length::make_pp(40)
+							}
 						}
 					}
 				},

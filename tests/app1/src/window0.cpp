@@ -29,8 +29,10 @@ utki::shared_ref<ruis::widget> make_radio_button(
         {
             m::padding(c,
                 {
-                    .padding_params{
-                        .borders{5_pp, 5_pp, 5_pp, 5_pp}
+                    .params{
+                        .specific{
+                            .borders{5_pp, 5_pp, 5_pp, 5_pp}
+                        }
                     }
                 },
                 {
@@ -94,15 +96,17 @@ utki::shared_ref<ruis::window> make_window0(
                         {
                             m::padding(c,
                                 {
-                                    .container_params{
-                                        .layout = ruis::layout::pile
-                                    },
-                                    .padding_params{
-                                        .borders{
-                                            ruis::length::make_pp(5),
-                                            ruis::length::make_pp(5),
-                                            ruis::length::make_pp(5),
-                                            ruis::length::make_pp(5)
+                                    .params{
+                                        .container{
+                                            .layout = ruis::layout::pile
+                                        },
+                                        .specific{
+                                            .borders{
+                                                ruis::length::make_pp(5),
+                                                ruis::length::make_pp(5),
+                                                ruis::length::make_pp(5),
+                                                ruis::length::make_pp(5)
+                                            }
                                         }
                                     }
                                 },

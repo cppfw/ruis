@@ -78,14 +78,16 @@ utki::shared_ref<ruis::window> make_sliders_window(
 		{
 			m::padding(c,
 				{
-					.layout_params = {
+					.layout{
 						.dims = {ruis::dim::fill, ruis::dim::min}
 					},
-					.container_params = {
-						.layout = ruis::layout::column
-					},
-					.padding_params = {
-						.borders = {10_pp, 20_pp, 30_pp, 40_pp}
+					.params{
+						.container{
+							.layout = ruis::layout::column
+						},
+						.specific{
+							.borders = {10_pp, 20_pp, 30_pp, 40_pp}
+						}
 					}
 				},
 				{

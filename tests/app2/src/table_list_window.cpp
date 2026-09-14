@@ -71,8 +71,10 @@ utki::shared_ref<ruis::widget> make_table_list_header(
 	return m::rectangle(c,
 		{
 			.params{
-				.padding_params{
-					.borders = {5_pp}
+				.padding{
+					.specific{
+						.borders = {5_pp}
+					}
 				},
 				.specific{
 					.corner_radii = {3_pp},

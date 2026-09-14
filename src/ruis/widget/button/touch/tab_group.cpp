@@ -44,22 +44,26 @@ tab_group::tab_group(
 		},
 		[&]() {
 			for (auto& c : children) {
+				// clang-format off
 				c = ruis::make::padding(
 					context,
-					{// use same layout params for the padding, except the dims
-					 .layout_params =
-						 [&]() {
-							 auto lp = c.get().get_layout_params_const();
-							 lp.dims = {ruis::dim::max, ruis::dim::max};
-							 return lp;
-						 }(),
-					 .padding_params{
-						 .borders = {context.get().style().get_len_gap()
-						 } // TODO: get from params, should be same as selector_gap
-					 }
+					{
+						// use same layout params for the padding, except the dims
+						.layout = [&]() {
+							auto lp = c.get().get_layout_params_const();
+							lp.dims = {ruis::dim::max, ruis::dim::max};
+							return lp;
+						}(),
+						.params{
+							.specific{
+								.borders = {context.get().style().get_len_gap()
+								} // TODO: get from params, should be same as selector_gap
+							}
+						}
 					},
 					{c}
 				);
+				// clang-format on
 			}
 
 			return std::move(children);
@@ -68,10 +72,10 @@ tab_group::tab_group(
 	selector_vao(
 		context.get().renderer, //
 		{.corner_radii =
-			 {
-				 // NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers, "TODO: get from params")
-				 ruis::length::make_pp(10).get(context) // TODO: get rounded corners from params
-			 }}
+			{
+				// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers, "TODO: get from params")
+				ruis::length::make_pp(10).get(context) // TODO: get rounded corners from params
+			}}
 	),
 	background_color(context.get().style().get_color_panel()), // TODO: get from params
 	selector_color([&]() {

@@ -101,15 +101,17 @@ widget_list make_chrome(
 				.dims = {ruis::dim::fill, ruis::dim::fill}
 			},
 			.params{
-				.padding_params{
-					.borders = [&](){
-						for(auto& b : params.padding_params.borders){
-							if(b.get().is_undefined()){
-								b = style.get_len_dialog_padding();
+				.padding{
+					.specific{
+						.borders = [&](){
+							for(auto& b : params.padding_params.borders){
+								if(b.get().is_undefined()){
+									b = style.get_len_dialog_padding();
+								}
 							}
-						}
-						return std::move(params.padding_params.borders);
-					}()
+							return std::move(params.padding_params.borders);
+						}()
+					}
 				},
 				.specific = [&](){
 					for(auto& r : params.rectangle_params.corner_radii){
@@ -136,19 +138,21 @@ widget_list make_chrome(
 	// clang-format off
 	auto margin_container = m::padding(c,
 		{
-			.layout_params{
+			.layout{
 				.dims = {ruis::dim::fill, ruis::dim::fill}
 			},
-			.padding_params{
-				.borders = [&](){
-					auto borders = params.dialog_params.margin_params.borders;
-					for(auto& b : borders){
-						if(b.get().is_undefined()){
-							b = style.get_len_dialog_margin();
+			.params{
+				.specific{
+					.borders = [&](){
+						auto borders = params.dialog_params.margin_params.borders;
+						for(auto& b : borders){
+							if(b.get().is_undefined()){
+								b = style.get_len_dialog_margin();
+							}
 						}
-					}
-					return borders;
-				}()
+						return borders;
+					}()
+				}
 			}
 		},
 		{

@@ -205,14 +205,16 @@ public:
 			{
 				m::padding(context,
 					{
-						.layout_params{
+						.layout{
 							.dims = {ruis::dim::fill, ruis::dim::min}
 						},
-						.container_params{
-							.layout = ruis::layout::column
-						},
-						.padding_params{
-							.borders = {context.get().style().get_len_gap()}
+						.params{
+							.container{
+								.layout = ruis::layout::column
+							},
+							.specific{
+								.borders = {context.get().style().get_len_gap()}
+							}
 						}
 					},
 					make_scroll_area_page_contents(context)

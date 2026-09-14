@@ -42,18 +42,20 @@ padding::padding(
 	padding(
 		context, //
 		params,
+		// clang-format off
 		m::container(
 			context,
-			{.container_params =
-				 [&]() {
-					 // pile layout by default
-					 if (!params.container_params.layout) {
-						 params.container_params.layout = layout::pile;
-					 }
-					 return std::move(params.container_params);
-				 }()},
+			{
+				.container_params = [&]() {
+					// pile layout by default
+					if (auto& l = params.params.container.layout; !l) {
+						l = layout::pile;
+					}
+					return std::move(params.params.container);
+				}()},
 			std::move(children)
 		)
+		// clang-format on
 	)
 {}
 
@@ -64,8 +66,8 @@ padding::padding(
 ) :
 	widget( //
 		context,
-		std::move(params.layout_params),
-		std::move(params.widget_params)
+		std::move(params.layout),
+		std::move(params.widget)
 	),
 	// clang-format off
 	container(
@@ -80,7 +82,7 @@ padding::padding(
 		context, //
 		content_container.get()
 	),
-	params(std::move(params.padding_params))
+	params(std::move(params.params.specific))
 {}
 
 sides<real> padding::get_min_borders() const noexcept
@@ -160,8 +162,8 @@ utki::shared_ref<ruis::padding> ruis::make::padding(
 	widget_list children
 )
 {
-	if (!params.container_params.layout) {
-		params.container_params.layout = ruis::layout::pile;
+	if (auto& l = params.params.container.layout; !l) {
+		l = ruis::layout::pile;
 	}
 
 	return utki::make_shared<ruis::padding>(

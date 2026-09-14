@@ -31,14 +31,16 @@ utki::shared_ref<ruis::widget> make_eased_animation_sample( //
 	// clang-format off
 	auto ret = m::padding(c,
 		{
-			.layout_params = {
+			.layout{
 				.dims = {ruis::dim::fill, ruis::dim::min}
 			},
-			.container_params = {
-				.layout = ruis::layout::column
-			},
-			.padding_params = {
-				.borders = {10_pp, 5_pp, 30_pp, 2_pp}
+			.params{
+				.container{
+					.layout = ruis::layout::column
+				},
+				.specific{
+					.borders = {10_pp, 5_pp, 30_pp, 2_pp}
+				}
 			}
 		},
 		{

@@ -44,15 +44,19 @@ public:
 		sides<styled<length>> borders;
 	};
 
+	struct parameters {
+		ruis::container::parameters container;
+		specific_parameters specific;
+	};
+
 private:
 	specific_parameters params;
 
 public:
 	struct all_parameters {
-		layout::parameters layout_params;
-		widget::parameters widget_params;
-		container::parameters container_params;
-		specific_parameters padding_params;
+		ruis::layout::parameters layout;
+		ruis::widget::parameters widget;
+		parameters params;
 	};
 
 private:

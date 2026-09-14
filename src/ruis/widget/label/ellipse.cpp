@@ -37,8 +37,10 @@ ellipse::ellipse( //
     padding(
         context, //
         {
-            .container_params = std::move(params.container_params),
-            .padding_params = std::move(params.padding_params)
+			.params{
+				.container = std::move(params.container_params),
+            	.specific = std::move(params.padding_params)
+			}
         },
         std::move(children)
     ),

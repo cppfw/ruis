@@ -74,11 +74,13 @@ public:
 			{
 				m::padding(this->context,
 					{
-						.container_params{
-							.layout = ruis::layout::row
-						},
-						.padding_params{
-							.borders = {ruis::length::make_pp(3)}
+						.params{
+							.container{
+								.layout = ruis::layout::row
+							},
+							.specific{
+								.borders = {ruis::length::make_pp(3)}
+							}
 						}
 					},
 					{
