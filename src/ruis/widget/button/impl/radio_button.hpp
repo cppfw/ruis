@@ -41,9 +41,9 @@ class radio_button :
 
 public:
 	struct all_parameters {
-		layout::parameters layout_params;
-		widget::parameters widget_params;
-		button::parameters button_params;
+		ruis::layout::parameters layout;
+		ruis::widget::parameters widget;
+		ruis::button::parameters button;
 	};
 
 	radio_button(

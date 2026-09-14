@@ -39,12 +39,12 @@ radio_button::radio_button(
 ) :
 	widget(
 		context, //
-		std::move(params.layout_params),
-		std::move(params.widget_params)
+		std::move(params.layout),
+		std::move(params.widget)
 	),
 	button(
 		context, //
-		std::move(params.button_params)
+		std::move(params.button)
 	),
 	toggle_button(context),
 	choice_button(context),
