@@ -41,7 +41,7 @@ public:
 	struct all_parameters {
 		layout::parameters layout_params;
 		widget::parameters widget_params;
-		labeled_widget::parameters label_params;
+		labeled_widget::parameters label;
 		rectangle_text_field::parameters rectangle_text_field_params;
 	};
 

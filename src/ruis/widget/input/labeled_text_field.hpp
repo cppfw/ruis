@@ -21,6 +21,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
+#include "text_input.hpp"
+
 #include "../base/labeled_widget.hpp"
 
 #include "text_field.hpp"
@@ -35,8 +37,8 @@ public:
 	struct all_parameters {
 		layout::parameters layout_params;
 		widget::parameters widget_params;
-		labeled_widget::parameters label_params;
-		text_input::parameters text_input_params;
+		labeled_widget::parameters label;
+		ruis::text_input::parameters text_input;
 	};
 
 protected:
