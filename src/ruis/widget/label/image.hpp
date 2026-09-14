@@ -59,7 +59,7 @@ public:
 	struct all_parameters {
 		layout::parameters layout_params;
 		widget::parameters widget_params;
-		image::parameters image_params; // TODO: rename to params
+		image::parameters params;
 	};
 
 	image(

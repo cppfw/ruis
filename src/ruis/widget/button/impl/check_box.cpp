@@ -62,7 +62,7 @@ check_box::check_box(
 					.widget_params = {
 						.id = "ruis_checkbox_check"s
 					},
-					.image_params = [&](){
+					.params = [&](){
 						auto p = std::move(params.image_params);
 						if(!p.img){
 							p.img = context.get().loader().load<res::image>("ruis_img_checkbox_tick"sv);

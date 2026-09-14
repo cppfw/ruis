@@ -43,7 +43,7 @@ utki::shared_ref<ruis::window> make_sliders_window(
                     .layout_params{
                         .dims{ruis::dim::min, ruis::dim::max}
                     },
-                    .image_params{
+                    .params{
                         .img = c.get().loader().load<ruis::res::image>("img_camera"sv),
                         .keep_aspect_ratio = true,
                     }

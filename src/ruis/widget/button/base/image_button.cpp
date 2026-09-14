@@ -50,7 +50,7 @@ image_button::image_button( //
 	button(context, button::parameters{}),
 	image( //
 		context,
-		{.image_params = std::move(image_params)}
+		{.params = std::move(image_params)}
 	),
 	params(std::move(params))
 {

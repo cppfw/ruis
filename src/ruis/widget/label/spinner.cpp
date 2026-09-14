@@ -40,7 +40,7 @@ spinner::spinner( //
 	),
 	image(
 		context,
-		{.image_params = std::move(params.image_params)}
+		{.params = std::move(params.image_params)}
 	)
 {}
 
