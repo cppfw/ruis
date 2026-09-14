@@ -69,9 +69,9 @@ renderer::objects::objects(const ruis::render::context& rendering_context) :
 					this->quad_01_vbo,
 					rendering_context.make_vertex_buffer(utki::make_span(std::array<vec2, 4>{
 						vec2(0, 0), //
-						vec2(0, 0.5),
-						vec2(0.5, 0.5),
-						vec2(0.5, 0)
+						vec2(0, utki::half),
+						vec2(utki::half, utki::half),
+						vec2(utki::half, 0)
 					}))
 				},
 				this->quad_fan_indices,
@@ -82,9 +82,9 @@ renderer::objects::objects(const ruis::render::context& rendering_context) :
 				{
 					this->quad_01_vbo,
 					rendering_context.make_vertex_buffer(utki::make_span(std::array<vec2, 4>{
-						vec2(0.5, 0), //
-						vec2(0.5, 0.5),
-						vec2(1, 0.5),
+						vec2(utki::half, 0), //
+						vec2(utki::half, utki::half),
+						vec2(1, utki::half),
 						vec2(1, 0)
 					}))
 				},
@@ -96,10 +96,10 @@ renderer::objects::objects(const ruis::render::context& rendering_context) :
 				{
 					this->quad_01_vbo,
 					rendering_context.make_vertex_buffer(utki::make_span(std::array<vec2, 4>{
-						vec2(0.5, 0.5), //
-						vec2(0.5, 1),
+						vec2(utki::half, utki::half), //
+						vec2(utki::half, 1),
 						vec2(1, 1),
-						vec2(1, 0.5)
+						vec2(1, utki::half)
 					}))
 				},
 				this->quad_fan_indices,
@@ -110,10 +110,10 @@ renderer::objects::objects(const ruis::render::context& rendering_context) :
 				{
 					this->quad_01_vbo,
 					rendering_context.make_vertex_buffer(utki::make_span(std::array<vec2, 4>{
-						vec2(0, 0.5), //
+						vec2(0, utki::half), //
 						vec2(0, 1),
-						vec2(0.5, 1),
-						vec2(0.5, 0.5)
+						vec2(utki::half, 1),
+						vec2(utki::half, utki::half)
 					}))
 				},
 				this->quad_fan_indices,
