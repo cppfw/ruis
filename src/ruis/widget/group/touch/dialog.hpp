@@ -79,7 +79,7 @@ public:
 		 *   - corner_radii defaults to the 'len_dialog_padding' style value if undefined.
 		 *   - stroke_width defaults to 0 (filled rectangle) if undefined.
 		 */
-		rectangle::parameters rectangle_params;
+		rectangle::specific_parameters rectangle_params;
 
 		parameters dialog_params;
 	};

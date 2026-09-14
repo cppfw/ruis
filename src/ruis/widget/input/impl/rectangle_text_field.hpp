@@ -38,7 +38,7 @@ class rectangle_text_field :
 {
 public:
 	struct parameters {
-		ruis::rectangle::parameters rectangle;
+		ruis::rectangle::specific_parameters rectangle;
 		ruis::text_input::parameters text_input;
 	};
 

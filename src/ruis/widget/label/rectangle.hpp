@@ -35,7 +35,7 @@ namespace ruis {
 class rectangle : public padding
 {
 public:
-	struct parameters {
+	struct specific_parameters {
 		/**
 		 * @brief Corner radii of the rectangle.
 		 * The order of the radii is: left-top, right-top, right-bottom, left-bottom.
@@ -60,7 +60,7 @@ public:
 	};
 
 private:
-	parameters params;
+	specific_parameters params;
 
 public:
 	struct all_parameters {
@@ -68,7 +68,7 @@ public:
 		widget::parameters widget_params;
 		container::parameters container_params;
 		padding::parameters padding_params;
-		parameters rectangle_params;
+		specific_parameters rectangle_params;
 	};
 
 	rectangle(
