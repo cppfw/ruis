@@ -47,10 +47,7 @@ void rectangle_button::update_color()
 
 rectangle_button::rectangle_button( //
 	const utki::shared_ref<ruis::context>& context,
-	container::parameters container_params,
-	padding::parameters padding_params,
-	rectangle::parameters rectangle_params,
-	specific_parameters params,
+	parameters params,
 	widget_list contents //
 ) :
 	widget(context, {}, {}),
@@ -58,36 +55,36 @@ rectangle_button::rectangle_button( //
 	rectangle(
 		context,
 		// clang-format off
-		rectangle::all_parameters{
-			.container_params = std::move(container_params), 
+		{
+			.container_params = std::move(params.container),
             .padding_params = [&](){
-				for(auto& b : padding_params.borders){
+				for(auto& b : params.padding.borders){
 					if(b.get().is_undefined()){
 						b = context.get().style().get_len_button_padding();
 					}
 				}
-				return std::move(padding_params);
+				return std::move(params.padding);
 			}(),
-			.rectangle_params = std::move(rectangle_params)
+			.rectangle_params = std::move(params.rectangle)
 		},
 		// clang-format on
 		std::move(contents)
 	),
 	params([&]() {
-		if (params.unpressed_color.get().is_undefined()) {
-			params.unpressed_color = context.get().style().get_color_primary();
+		if (params.specific.unpressed_color.get().is_undefined()) {
+			params.specific.unpressed_color = context.get().style().get_color_primary();
 		}
-		if (params.pressed_color.get().is_undefined()) {
-			params.pressed_color = context.get().style().get_color_secondary();
+		if (params.specific.pressed_color.get().is_undefined()) {
+			params.specific.pressed_color = context.get().style().get_color_secondary();
 		}
-		if (params.unpressed_stroke_color.get().is_undefined()) {
-			params.unpressed_stroke_color = context.get().style().get_color_primary();
+		if (params.specific.unpressed_stroke_color.get().is_undefined()) {
+			params.specific.unpressed_stroke_color = context.get().style().get_color_primary();
 		}
-		if (params.pressed_stroke_color.get().is_undefined()) {
-			params.pressed_stroke_color = context.get().style().get_color_secondary();
+		if (params.specific.pressed_stroke_color.get().is_undefined()) {
+			params.specific.pressed_stroke_color = context.get().style().get_color_secondary();
 		}
 
-		return std::move(params);
+		return std::move(params.specific);
 	}())
 {
 	this->update_color();

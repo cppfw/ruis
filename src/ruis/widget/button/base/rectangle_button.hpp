@@ -41,6 +41,13 @@ public:
 		styled<ruis::color> unpressed_stroke_color;
 	};
 
+	struct parameters{
+		ruis::container::parameters container;
+		ruis::padding::parameters padding;
+		ruis::rectangle::parameters rectangle;
+		specific_parameters specific;
+	};
+
 	void render(const mat4& matrix) const override;
 
 private:
@@ -53,10 +60,7 @@ protected:
 
 	rectangle_button( //
 		const utki::shared_ref<ruis::context>& context,
-		container::parameters container_params,
-		padding::parameters padding_params,
-		rectangle::parameters rectangle_params,
-		specific_parameters params,
+		parameters params,
 		widget_list contents //
 	);
 };
