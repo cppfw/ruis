@@ -35,7 +35,7 @@ public:
 		ruis::container::parameters container_params;
 		ruis::padding::parameters padding_params;
 		rectangle::parameters rectangle_params;
-		rectangle_button::parameters rectangle_button_params;
+		rectangle_button::specific_parameters rectangle_button_params;
 	};
 
 	struct all_parameters {

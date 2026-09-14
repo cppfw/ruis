@@ -34,7 +34,7 @@ class rectangle_button :
 	public rectangle
 {
 public:
-	struct parameters {
+	struct specific_parameters {
 		styled<ruis::color> pressed_color;
 		styled<ruis::color> unpressed_color;
 		styled<ruis::color> pressed_stroke_color;
@@ -44,7 +44,7 @@ public:
 	void render(const mat4& matrix) const override;
 
 private:
-	parameters params;
+	specific_parameters params;
 
 	void update_color();
 
@@ -56,7 +56,7 @@ protected:
 		container::parameters container_params,
 		padding::parameters padding_params,
 		rectangle::parameters rectangle_params,
-		parameters params,
+		specific_parameters params,
 		widget_list contents //
 	);
 };

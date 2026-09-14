@@ -50,7 +50,7 @@ rectangle_button::rectangle_button( //
 	container::parameters container_params,
 	padding::parameters padding_params,
 	rectangle::parameters rectangle_params,
-	parameters params,
+	specific_parameters params,
 	widget_list contents //
 ) :
 	widget(context, {}, {}),
