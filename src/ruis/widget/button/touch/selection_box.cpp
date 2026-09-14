@@ -55,7 +55,6 @@ selection_box::selection_box(
 		{
 }
 	),
-	push_button(context, {}),
 	// clang-format off
 	rectangle_push_button(context,
 		{

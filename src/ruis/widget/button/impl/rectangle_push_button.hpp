@@ -27,7 +27,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 namespace ruis {
 
 class rectangle_push_button :
-	virtual public ruis::push_button, //
+	public ruis::push_button, //
 	public rectangle_button
 {
 public:
