@@ -123,11 +123,13 @@ utki::shared_ref<ruis::window> make_text_input_window(
             ),
             m::nine_patch(c,
                 {
-                    .layout_params{
+                    .layout{
                         .dims{ruis::dim::max, ruis::dim::min}
                     },
-                    .nine_patch_params{
-                        .nine_patch = c.get().loader().load<ruis::res::nine_patch>("ruis_npt_frame"s)
+                    .params{
+                        .specific{
+                            .nine_patch = c.get().loader().load<ruis::res::nine_patch>("ruis_npt_frame"s)
+                        }
                     }
                 },
                 {

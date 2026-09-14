@@ -203,19 +203,22 @@ void ruis::nine_patch_drop_down_box::show_drop_down_menu()
 			),
 			ruis::make::nine_patch(this->context,
 				{
-					.layout_params{
+					.layout{
 						.dims{ruis::dim::max, ruis::dim::min}
 					},
-					.widget_params{
+					.widget{
 						.id = "ruis_contextmenu_content"s
 					},
-					.container_params{
-						.layout = ruis::layout::column
-					},
-					.nine_patch_params{
-						.nine_patch = this->context.get().loader().load<ruis::res::nine_patch>("ruis_npt_contextmenu_bg"sv)
+					.params{
+						.container{
+							.layout = ruis::layout::column
+						},
+						.specific{
+							.nine_patch = this->context.get().loader().load<ruis::res::nine_patch>("ruis_npt_contextmenu_bg"sv)
+						}
 					}
-				}
+				},
+				{}
 			)
 		}
 	);

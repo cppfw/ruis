@@ -124,15 +124,19 @@ utki::shared_ref<ruis::window> make_sliders_window(
 			),
 			m::nine_patch(c,
 				{
-					.nine_patch_params{
-						.nine_patch = c.get().loader().load<ruis::res::nine_patch>("ruis_npt_window_bg")
+					.params{
+						.specific{
+							.nine_patch = c.get().loader().load<ruis::res::nine_patch>("ruis_npt_window_bg")
+						}
 					}
 				},
 				{
 					m::nine_patch(c,
 						{
-							.nine_patch_params{
-								.nine_patch = c.get().loader().load<ruis::res::nine_patch>("ruis_npt_button_normal")
+							.params{
+								.specific{
+									.nine_patch = c.get().loader().load<ruis::res::nine_patch>("ruis_npt_button_normal")
+								}
 							}
 						},
 						{
