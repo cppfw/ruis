@@ -88,11 +88,11 @@ selection_box::selection_box(
 			),
 			ruis::make::container(context,
 				{
-					.layout_params{
+					.layout{
 						.weight = 1,
 						.align = {ruis::align::back, ruis::align::center}
 					},
-					.widget_params{
+					.widget{
 						// TODO: refactor to avoid using lookup widget by id
 						.id = std::string(selection_label_id)
 					},

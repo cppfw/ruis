@@ -26,10 +26,10 @@ utki::shared_ref<ruis::page> make_main_page(const utki::shared_ref<ruis::context
                 {
                     m::push_button(c,
                         {
-                            .layout_params{
+                            .layout{
                                 .dims = {ruis::dim::fill, ruis::dim::min}
                             },
-                            .widget_params{
+                            .widget{
                                 .id = "cube_button"s
                             }
                         },
@@ -42,10 +42,10 @@ utki::shared_ref<ruis::page> make_main_page(const utki::shared_ref<ruis::context
                     ),
                     m::push_button(c,
                         {
-                            .layout_params{
+                            .layout{
                                 .dims = {ruis::dim::fill, ruis::dim::min}
                             },
-                            .widget_params{
+                            .widget{
                                 .id = "stuff_button"s
                             }
                         },
@@ -58,10 +58,10 @@ utki::shared_ref<ruis::page> make_main_page(const utki::shared_ref<ruis::context
                     ),
                     m::push_button(c,
                         {
-                            .layout_params{
+                            .layout{
                                 .dims = {ruis::dim::fill, ruis::dim::min}
                             },
-                            .widget_params{
+                            .widget{
                                 .id = "close_button"s
                             }
                         },

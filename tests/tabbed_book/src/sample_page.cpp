@@ -29,7 +29,7 @@ sample_page::sample_page(
 			),
 			ruis::make::push_button(context,
 				{
-					.widget_params{
+					.widget{
 						.id = "button"s
 					}
 				},

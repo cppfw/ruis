@@ -53,34 +53,34 @@ std::vector<utki::shared_ref<ruis::widget>> make_widgets(const utki::shared_ref<
 		),
 		m::container(c,
 			{
-				.layout_params = {
+				.layout{
 					.dims = {ruis::dim::max, ruis::dim::max}
 				}
 			},
 			{
 				m::pile(c,
 					{
-						.widget_params = {
+						.widget_params{
 							.id = "ruis_handle"s
 						}
 					},
 					{
 						m::nine_patch(c,
 							{
-								.layout = {
+								.layout{
 									.dims = {ruis::dim::max, ruis::dim::max}
 								},
-								.widget = {
+								.widget{
 									.id = "ruis_handle_image"s
 								}
 							}
 						),
 						m::mouse_proxy(c,
 							{
-								.layout_params = {
+								.layout_params{
 									.dims = {ruis::dim::fill, ruis::dim::fill}
 								},
-								.widget_params = {
+								.widget_params{
 									.id = "ruis_handle_proxy"s
 								}
 							}

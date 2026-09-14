@@ -61,7 +61,7 @@ public:
 		// clang-format off
 		return make::container(this->context,
 			{
-				.layout_params{
+				.layout{
 					.dims = {ruis::dim::max, ruis::dim::min}
 				},
 				.container_params{

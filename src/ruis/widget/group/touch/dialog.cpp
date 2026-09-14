@@ -235,7 +235,7 @@ dialog::dialog(
 			context,
 			// clang-format off
 			{
-				.layout_params = {
+				.layout{
 					// content container fills the dialog panel, so that fill-sized children
 					// (e.g. scrollable lists) can take the whole available area of the panel
 					.dims = {ruis::dim::fill, ruis::dim::fill}
