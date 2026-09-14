@@ -121,8 +121,10 @@ collapse_area::collapse_area(
 									},
 									.params{
 										.image_button{
-											.unpressed_image = context.get().loader().load<res::image>("ruis_img_dropdown_arrow"sv),
-											.pressed_image = context.get().loader().load<res::image>("ruis_img_dropright_arrow"sv)
+											.specific{
+												.unpressed_image = context.get().loader().load<res::image>("ruis_img_dropdown_arrow"sv),
+												.pressed_image = context.get().loader().load<res::image>("ruis_img_dropright_arrow"sv)
+											}
 										}
 									}
 								}

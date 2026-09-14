@@ -42,10 +42,7 @@ image_toggle::image_toggle(
 	toggle_button(context),
 	image_button(
 		context,
-		{
-			.image = std::move(params.params.image),
-			.specific = std::move(params.params.image_button)
-		}
+		std::move(params.params.image_button)
 	)
 {}
 
