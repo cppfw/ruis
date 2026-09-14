@@ -40,23 +40,19 @@ class padding :
 	public containing_widget
 {
 public:
-	struct specific_parameters {
+	struct parameters {
 		sides<styled<length>> borders;
 	};
 
-	struct parameters{
-		ruis::container::parameters container;
-		specific_parameters specific;
-	};
-
 private:
-	specific_parameters params;
+	parameters params;
 
 public:
 	struct all_parameters {
 		layout::parameters layout_params;
 		widget::parameters widget_params;
-		parameters params;
+		container::parameters container_params;
+		parameters padding_params;
 	};
 
 private:
