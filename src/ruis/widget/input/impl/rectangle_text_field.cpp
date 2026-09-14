@@ -42,7 +42,7 @@ rectangle_text_field::rectangle_text_field(
 				.layout_params{
 					.dims = {ruis::dim::max, ruis::dim::max}
 				},
-				.params = std::move(params.params.text_input_params)
+				.params = std::move(params.params.text_input)
 			},
 			std::move(text)
 		)
@@ -70,22 +70,22 @@ rectangle_text_field::rectangle_text_field(
 			},
 			.padding_params = {context.get().style().get_len_gap()},
 			.rectangle_params = [&](){
-				if(params.params.rectangle_params.fill_color.get().is_undefined()){
-					params.params.rectangle_params.fill_color = context.get().style().get_color_background();
+				if(params.params.rectangle.fill_color.get().is_undefined()){
+					params.params.rectangle.fill_color = context.get().style().get_color_background();
 				}
-				if(params.params.rectangle_params.stroke_color.get().is_undefined()){
-					params.params.rectangle_params.stroke_color = context.get().style().get_color_primary();
+				if(params.params.rectangle.stroke_color.get().is_undefined()){
+					params.params.rectangle.stroke_color = context.get().style().get_color_primary();
 				}
-				if(params.params.rectangle_params.stroke_width.get().is_undefined()){
-					params.params.rectangle_params.stroke_width = context.get().style().get_len_border();
+				if(params.params.rectangle.stroke_width.get().is_undefined()){
+					params.params.rectangle.stroke_width = context.get().style().get_len_border();
 				}
-				for(auto& r : params.params.rectangle_params.corner_radii){
+				for(auto& r : params.params.rectangle.corner_radii){
 					if(r.get().is_undefined()){
 						r  = context.get().style().get_len_button_padding();
 					}
 				}
 
-				return std::move(params.params.rectangle_params);
+				return std::move(params.params.rectangle);
 			}()
 		},
 		{

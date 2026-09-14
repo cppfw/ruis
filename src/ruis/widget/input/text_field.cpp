@@ -46,7 +46,7 @@ utki::shared_ref<ruis::text_field> ruis::make::text_field(
 			.layout_params = std::move(params.layout_params),
 			.widget_params = std::move(params.widget_params),
 			.params{
-				.text_input_params = std::move(params.text_input)
+				.text_input = std::move(params.text_input)
 			}
 		},
 		// clang-format on

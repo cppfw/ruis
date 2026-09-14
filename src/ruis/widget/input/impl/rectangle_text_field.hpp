@@ -38,8 +38,8 @@ class rectangle_text_field :
 {
 public:
 	struct parameters {
-		rectangle::parameters rectangle_params;
-		text_input::parameters text_input_params;
+		ruis::rectangle::parameters rectangle;
+		ruis::text_input::parameters text_input;
 	};
 
 	struct all_parameters {
