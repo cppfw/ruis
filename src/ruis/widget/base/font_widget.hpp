@@ -27,6 +27,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../widget.hpp"
 
 namespace ruis {
+// TODO: doxygen
 class font_widget : virtual public widget
 {
 public:

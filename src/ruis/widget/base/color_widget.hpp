@@ -32,6 +32,7 @@ namespace ruis {
  * @li @c normal - color value.
  * @li @c disabled - color value for disabled state.
  */
+// TODO: doxygen
 class color_widget : public virtual widget
 {
 public:

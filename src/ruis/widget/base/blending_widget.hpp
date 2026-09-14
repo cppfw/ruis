@@ -38,6 +38,7 @@ namespace ruis {
  * src_alpha, one_minus_src_alpha, dst_alpha, one_minus_dst_alpha, constant_color, one_minus_constant_color,
  * constant_alpha, one_minus_constant_alpha, src_alpha_saturate.
  */
+// TODO: doxygen
 class blending_widget : public virtual widget
 {
 public:
