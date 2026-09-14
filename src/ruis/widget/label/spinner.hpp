@@ -39,11 +39,14 @@ class spinner :
 	real angle = 0;
 
 public:
+	struct parameters {
+		ruis::image::parameters image;
+	};
+
 	struct all_parameters {
 		layout::parameters layout_params;
 		widget::parameters widget_params;
-		image::parameters image_params;
-		blending_widget::parameters blending_params;
+		parameters params;
 	};
 
 	spinner(

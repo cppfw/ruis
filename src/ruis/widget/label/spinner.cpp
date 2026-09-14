@@ -38,10 +38,7 @@ spinner::spinner( //
 		std::move(params.layout_params),
 		std::move(params.widget_params)
 	),
-	image(
-		context,
-		{.params = std::move(params.image_params)}
-	)
+	image(context, {.params = std::move(params.params.image)})
 {}
 
 void spinner::render(const mat4& matrix) const
@@ -74,11 +71,11 @@ utki::shared_ref<ruis::spinner> ruis::make::refresh(
 	spinner::all_parameters params
 )
 {
-	if (!params.image_params.img) {
-		params.image_params.img = context.get().loader().load<res::image>("ruis_img_refresh"sv);
+	if (!params.params.image.img) {
+		params.params.image.img = context.get().loader().load<res::image>("ruis_img_refresh"sv);
 	}
-	if (!params.image_params.disabled_img) {
-		params.image_params.disabled_img = context.get().loader().load<res::image>("ruis_img_refresh_disabled"sv);
+	if (!params.params.image.disabled_img) {
+		params.params.image.disabled_img = context.get().loader().load<res::image>("ruis_img_refresh_disabled"sv);
 	}
 
 	return utki::make_shared<ruis::spinner>(

@@ -35,8 +35,7 @@ public:
 	struct all_parameters {
 		layout::parameters layout_params;
 		widget::parameters widget_params;
-		image::parameters image_params;
-		blending_widget::parameters blending_params;
+		spinner::parameters params;
 	};
 
 	busy(

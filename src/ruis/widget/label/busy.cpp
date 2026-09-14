@@ -36,10 +36,8 @@ busy::busy(
 		context, //
 		// clang-format off
 		{
-			.image_params = std::move(params.image_params),
-			.blending_params = std::move(params.blending_params)
-		}
-		// clang-format on
+			.params = std::move(params.params)
+		} // clang-format on
 	)
 {
 	if (!this->get_image()) {
