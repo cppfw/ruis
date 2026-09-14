@@ -42,11 +42,12 @@ nine_patch_toggle::nine_patch_toggle(
 	toggle_button(context),
 	nine_patch_button(
 		context, //
-		std::move(params.container),
-		button::parameters{},
-		std::move(params.blending),
-		std::move(params.nine_patch),
-		std::move(params.nine_patch_button),
+		{
+			.container = std::move(params.container),
+			.blending = std::move(params.blending),
+			.nine_patch = std::move(params.nine_patch),
+			.specific = std::move(params.nine_patch_button)
+		},
 		std::move(children)
 	)
 {}

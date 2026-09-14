@@ -43,17 +43,20 @@ public:
 		std::shared_ptr<const res::nine_patch> pressed_nine_patch;
 	};
 
+	struct parameters{
+		ruis::container::parameters container;
+		ruis::blending_widget::parameters blending;
+		ruis::nine_patch::parameters nine_patch;
+		specific_parameters specific;
+	};
+
 private:
 	specific_parameters params;
 
 protected:
 	nine_patch_button(
 		const utki::shared_ref<ruis::context>& context, //
-		container::parameters container_params,
-		button::parameters button_params,
-		blending_widget::parameters blending_params,
-		nine_patch::parameters nine_patch_params,
-		specific_parameters params,
+		parameters params,
 		widget_list children
 	);
 

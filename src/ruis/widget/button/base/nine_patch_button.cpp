@@ -28,27 +28,23 @@ using namespace ruis;
 
 nine_patch_button::nine_patch_button( //
 	const utki::shared_ref<ruis::context>& context,
-	container::parameters container_params,
-	button::parameters button_params,
-	blending_widget::parameters blending_params,
-	nine_patch::parameters nine_patch_params,
-	specific_parameters params,
+	parameters params,
 	widget_list children
 ) :
 	widget(context, {}, {}),
-	button(context, std::move(button_params)),
+	button(context, {}),
 	// clang-format off
 	nine_patch(
 		context,
 		{
-			.container_params = std::move(container_params),
-			.blending_params = std::move(blending_params),
-			.nine_patch_params = std::move(nine_patch_params)
+			.container_params = std::move(params.container),
+			.blending_params = std::move(params.blending),
+			.nine_patch_params = std::move(params.nine_patch)
 		},
 		std::move(children)
 	),
 	// clang-format on
-	params(std::move(params))
+	params(std::move(params.specific))
 {
 	this->nine_patch_button::on_pressed_change();
 }
