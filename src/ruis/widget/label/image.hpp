@@ -43,6 +43,7 @@ class image :
 {
 public:
 	struct parameters {
+		blending_widget::parameters blending;
 		std::shared_ptr<const ruis::res::image> img;
 		std::shared_ptr<const ruis::res::image> disabled_img; // image for disabled state
 		bool keep_aspect_ratio = false;
@@ -58,8 +59,7 @@ public:
 	struct all_parameters {
 		layout::parameters layout_params;
 		widget::parameters widget_params;
-		blending_widget::parameters blending_params;
-		image::parameters image_params;
+		image::parameters image_params; // TODO: rename to params
 	};
 
 	image(

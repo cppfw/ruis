@@ -37,7 +37,7 @@ image::image( //
 	),
 	blending_widget( //
 		context,
-		std::move(params.blending_params)
+		std::move(params.image_params.blending)
 	),
 	params(std::move(params.image_params)),
 	vao(context.get().renderer.get().obj().empty_vertex_array)

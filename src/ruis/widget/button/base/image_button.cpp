@@ -50,8 +50,7 @@ image_button::image_button( //
 	button(context, button::parameters{}),
 	image( //
 		context,
-		{.blending_params = std::move(blending_params), //
-		 .image_params = std::move(image_params)}
+		{.image_params = std::move(image_params)}
 	),
 	params(std::move(params))
 {
