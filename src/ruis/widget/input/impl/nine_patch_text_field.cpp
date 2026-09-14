@@ -42,7 +42,7 @@ nine_patch_text_field::nine_patch_text_field(
 				.layout_params{
 					.dims = {ruis::dim::max, ruis::dim::max}
 				},
-				.params = std::move(params.params.text_input_params)
+				.params = std::move(params.params.text_input)
 			},
 			std::move(text)
 		)
@@ -72,12 +72,14 @@ nine_patch_text_field::nine_patch_text_field(
 				.borders = {context.get().style().get_len_gap()}
 			},
 			.nine_patch_params = [&](){
-				if(!params.params.nine_patch_params.nine_patch){
-					params.params.nine_patch_params.nine_patch = context.get().loader().load<ruis::res::nine_patch>("ruis_npt_textfield_background"sv);
+				if(!params.params.nine_patch.nine_patch){
+					params.params.nine_patch.nine_patch = context.get().loader().load<ruis::res::nine_patch>("ruis_npt_textfield_background"sv);
 				}
-				// TODO: set default disabled nine patch if not set
+				if(!params.params.nine_patch.disabled_nine_patch){
+					params.params.nine_patch.disabled_nine_patch = context.get().loader().load<ruis::res::nine_patch>("ruis_npt_textfield_background"sv);
+				}
 
-				return std::move(params.params.nine_patch_params);
+				return std::move(params.params.nine_patch);
 			}()
 		},
 		{

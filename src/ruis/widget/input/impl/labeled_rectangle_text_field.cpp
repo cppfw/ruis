@@ -69,7 +69,7 @@ labeled_rectangle_text_field::labeled_rectangle_text_field(
 					.layout_params{
 						.dims = {ruis::dim::max, ruis::dim::max}
 					},
-					.params = std::move(params.rectangle_text_field_params)
+					.params = std::move(params.rectangle_text_field)
 				},
 				std::move(text)
 			)

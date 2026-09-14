@@ -37,8 +37,8 @@ class nine_patch_text_field :
 {
 public:
 	struct parameters {
-		nine_patch::parameters nine_patch_params;
-		text_input::parameters text_input_params;
+		ruis::nine_patch::parameters nine_patch;
+		ruis::text_input::parameters text_input;
 	};
 
 	struct all_parameters {
