@@ -35,7 +35,7 @@ public:
 		ruis::container::parameters container;
 		ruis::button::parameters button;
 		ruis::blending_widget::parameters blending;
-		ruis::nine_patch::parameters nine_patch;
+		ruis::nine_patch::specific_parameters nine_patch;
 		ruis::nine_patch_button::specific_parameters nine_patch_button;
 	};
 protected:

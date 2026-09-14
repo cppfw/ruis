@@ -42,13 +42,13 @@ class nine_patch :
 	std::shared_ptr<const render::texture_2d> image_texture;
 
 public:
-	struct parameters {
+	struct specific_parameters {
 		std::shared_ptr<const res::nine_patch> nine_patch;
 		std::shared_ptr<const res::nine_patch> disabled_nine_patch;
 	};
 
 private:
-	parameters params;
+	specific_parameters params;
 
 public:
 	struct all_parameters {
@@ -57,7 +57,7 @@ public:
 		container::parameters container_params;
 		padding::parameters padding_params;
 		blending_widget::parameters blending_params;
-		nine_patch::parameters nine_patch_params;
+		nine_patch::specific_parameters nine_patch_params;
 	};
 
 	nine_patch(

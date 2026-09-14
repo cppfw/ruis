@@ -47,7 +47,7 @@ public:
 		layout::parameters layout_params;
 		widget::parameters widget_params;
 		button::parameters button_params;
-		nine_patch::parameters nine_patch_params;
+		nine_patch::specific_parameters nine_patch_params;
 		image::parameters image_params;
 	};
 

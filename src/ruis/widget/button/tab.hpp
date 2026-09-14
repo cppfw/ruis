@@ -42,7 +42,7 @@ public:
 		container::parameters container_params;
 		button::parameters button_params;
 		blending_widget::parameters blending_params;
-		nine_patch::parameters nine_patch_params;
+		nine_patch::specific_parameters nine_patch_params;
 		nine_patch_button::specific_parameters nine_patch_button_params;
 	};
 
