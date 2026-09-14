@@ -56,16 +56,18 @@ rectangle_button::rectangle_button( //
 		context,
 		// clang-format off
 		{
-			.container_params = std::move(params.container),
-            .padding_params = [&](){
-				for(auto& b : params.padding.borders){
-					if(b.get().is_undefined()){
-						b = context.get().style().get_len_button_padding();
+			.params{
+				.container_params = std::move(params.container),
+				.padding_params = [&](){
+					for(auto& b : params.padding.borders){
+						if(b.get().is_undefined()){
+							b = context.get().style().get_len_button_padding();
+						}
 					}
-				}
-				return std::move(params.padding);
-			}(),
-			.rectangle_params = std::move(params.rectangle)
+					return std::move(params.padding);
+				}(),
+				.specific = std::move(params.rectangle)
+			}
 		},
 		// clang-format on
 		std::move(contents)

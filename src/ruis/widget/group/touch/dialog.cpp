@@ -52,11 +52,13 @@ widget_list make_chrome(
 	// clang-format off
 	auto dim_bg = m::rectangle(c,
 		{
-			.layout_params{
+			.layout{
 				.dims = {ruis::dim::fill, ruis::dim::fill}
 			},
-			.rectangle_params{
-				.fill_color = style.get_color_dimmed()
+			.params{
+				.specific{
+					.fill_color = style.get_color_dimmed()
+				}
 			}
 		}
 	);

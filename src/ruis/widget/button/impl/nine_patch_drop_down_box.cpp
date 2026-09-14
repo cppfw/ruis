@@ -310,15 +310,17 @@ utki::shared_ref<ruis::widget> ruis::nine_patch_drop_down_box::wrap_item(
 			),
 			ruis::make::rectangle(this->context,
 				{
-					.layout_params{
+					.layout{
 						.dims{ruis::dim::fill, ruis::dim::fill}
 					},
-					.widget_params{
+					.widget{
 						.id = "ruis_dropdown_color"s,
 						.visible = false
 					},
-					.rectangle_params{
-						.fill_color = this->context.get().style().get_color_highlight()
+					.params{
+						.specific{
+							.fill_color = this->context.get().style().get_color_highlight()
+						}
 					}
 				}
 			)

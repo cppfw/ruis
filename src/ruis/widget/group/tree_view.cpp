@@ -130,11 +130,13 @@ utki::shared_ref<ruis::widget> make_vertical_line_indent(const utki::shared_ref<
 		{
 			ruis::make::rectangle(c,
 				{
-					.layout_params{
+					.layout{
 						.dims{ruis::length::make_pp(1), ruis::dim::fill}
 					},
-					.rectangle_params{
-						.fill_color = c.get().style().get_color_highlight()
+					.params{
+						.specific{
+							.fill_color = c.get().style().get_color_highlight()
+						}
 					}
 				}
 			)
@@ -167,12 +169,14 @@ utki::shared_ref<ruis::container> make_line_end_indent(const utki::shared_ref<ru
 			 	{
 					ruis::make::rectangle(c,
 				  		{
-							.layout_params{
+							.layout{
 								.dims{ruis::length::make_pp(1), ruis::dim::fill},
 								.weight = 1
 							},
-				   			.rectangle_params{
-								.fill_color = c.get().style().get_color_highlight()
+							.params{
+								.specific{
+									.fill_color = c.get().style().get_color_highlight()
+								}
 							}
 						}
 			  		),

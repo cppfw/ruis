@@ -88,11 +88,13 @@ collapse_area::collapse_area(
 				{
 					m::rectangle(context,
 						{
-							.layout_params{
+							.layout{
 								.dims{ruis::dim::fill, ruis::dim::fill}
 							},
-							.rectangle_params{
-								.fill_color = context.get().style().get_color_panel()
+							.params{
+								.specific{
+									.fill_color = context.get().style().get_color_panel()
+								}
 							}
 						}
 					),

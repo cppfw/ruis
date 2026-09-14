@@ -59,16 +59,20 @@ public:
 		styled<ruis::color> stroke_color;
 	};
 
+	struct parameters{
+		container::parameters container_params;
+		padding::parameters padding_params;
+		specific_parameters specific;
+	};
+
 private:
 	specific_parameters params;
 
 public:
 	struct all_parameters {
-		layout::parameters layout_params;
-		widget::parameters widget_params;
-		container::parameters container_params;
-		padding::parameters padding_params;
-		specific_parameters rectangle_params;
+		ruis::layout::parameters layout;
+		ruis::widget::parameters widget;
+		parameters params;
 	};
 
 	rectangle(

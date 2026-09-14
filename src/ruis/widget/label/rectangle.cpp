@@ -32,20 +32,20 @@ rectangle::rectangle( //
 ) :
 	widget( //
 		context,
-		std::move(params.layout_params),
-		std::move(params.widget_params)
+		std::move(params.layout),
+		std::move(params.widget)
 	),
 	// clang-format off
 	padding( //
 		context,
 		{
-			.container_params = std::move(params.container_params),
-			.padding_params = std::move(params.padding_params)
+			.container_params = std::move(params.params.container_params),
+			.padding_params = std::move(params.params.padding_params)
 		},
 		std::move(children)
 	),
 	// clang-format on
-	params(std::move(params.rectangle_params)),
+	params(std::move(params.params.specific)),
 	fill_vao(context.get().renderer, {}),
 	stroke_vao(context.get().renderer, {})
 {
