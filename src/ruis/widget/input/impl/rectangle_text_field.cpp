@@ -65,28 +65,30 @@ rectangle_text_field::rectangle_text_field(
 	rectangle(
 		context,
 		{
-			.container_params{
-				.layout = layout::pile
-			},
-			.padding_params = {context.get().style().get_len_gap()},
-			.rectangle_params = [&](){
-				if(params.params.rectangle.fill_color.get().is_undefined()){
-					params.params.rectangle.fill_color = context.get().style().get_color_background();
-				}
-				if(params.params.rectangle.stroke_color.get().is_undefined()){
-					params.params.rectangle.stroke_color = context.get().style().get_color_primary();
-				}
-				if(params.params.rectangle.stroke_width.get().is_undefined()){
-					params.params.rectangle.stroke_width = context.get().style().get_len_border();
-				}
-				for(auto& r : params.params.rectangle.corner_radii){
-					if(r.get().is_undefined()){
-						r  = context.get().style().get_len_button_padding();
+			.params{
+				.container_params{
+					.layout = layout::pile
+				},
+				.padding_params = {context.get().style().get_len_gap()},
+				.specific = [&](){
+					if(params.params.rectangle.fill_color.get().is_undefined()){
+						params.params.rectangle.fill_color = context.get().style().get_color_background();
 					}
-				}
+					if(params.params.rectangle.stroke_color.get().is_undefined()){
+						params.params.rectangle.stroke_color = context.get().style().get_color_primary();
+					}
+					if(params.params.rectangle.stroke_width.get().is_undefined()){
+						params.params.rectangle.stroke_width = context.get().style().get_len_border();
+					}
+					for(auto& r : params.params.rectangle.corner_radii){
+						if(r.get().is_undefined()){
+							r  = context.get().style().get_len_button_padding();
+						}
+					}
 
-				return std::move(params.params.rectangle);
-			}()
+					return std::move(params.params.rectangle);
+				}()
+			}
 		},
 		{
 			text_input

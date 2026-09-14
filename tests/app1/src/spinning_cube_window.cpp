@@ -43,10 +43,10 @@ utki::shared_ref<ruis::window> make_spinning_cube_window(
         {
             m::rectangle(c,
                 {
-                    .layout_params{
+                    .layout{
                         .dims{ruis::dim::fill, ruis::dim::fill}
                     },
-                    .widget_params{
+                    .widget{
                         .id = "cube_bg_color"s
                     }
                 }

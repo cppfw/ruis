@@ -30,11 +30,13 @@ utki::shared_ref<ruis::container> make_pile_layout( //
 			m::rectangle(
 				c,
 				{
-					.layout_params = {
+					.layout{
 						.dims = {ruis::dim::fill, ruis::dim::fill}
 					},
-					.rectangle_params{
-						.fill_color = 0xff808080
+					.params{
+						.specific{
+							.fill_color = 0xff808080
+						}
 					}
 				}
 			),
@@ -126,17 +128,20 @@ utki::shared_ref<ruis::container> make_pile_layout( //
 
 namespace{
 utki::shared_ref<ruis::widget> make_separator(const utki::shared_ref<ruis::context>& c, bool vertical){
+	// TODO: use m::gap
 	return m::rectangle(
 		c,
 		{
-			.layout_params = {
+			.layout{
 				.dims = {
 					vertical ? ruis::layout::dimension(ruis::dim::fill) : ruis::layout::dimension(ruis::length::make_px(1)),//
 				 	vertical ? ruis::layout::dimension(ruis::length::make_px(1)) : ruis::layout::dimension(ruis::dim::fill)
 				}
 			},
-			.rectangle_params = {
-				.fill_color = 0xffffffff
+			.params{
+				.specific = {
+					.fill_color = 0xffffffff
+				}
 			}
 		}
 	);

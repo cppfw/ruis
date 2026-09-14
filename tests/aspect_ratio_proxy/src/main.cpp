@@ -74,11 +74,13 @@ public:
 								),
 								m::rectangle(ctx,
 									{
-										.layout_params{
+										.layout{
 											.dims = {ruis::dim::fill, ruis::dim::fill}
 										},
-										.rectangle_params{
-											.fill_color = 0xff008080
+										.params{
+											.specific{
+												.fill_color = 0xff008080
+											}
 										}
 									}
 								),

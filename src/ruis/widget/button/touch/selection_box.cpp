@@ -133,14 +133,16 @@ public:
 		// clang-format off
 		auto pressed_indicator = ruis::make::rectangle(this->context,
 			{
-				.layout_params{
+				.layout{
 					.dims = {ruis::dim::fill, ruis::dim::fill}
 				},
-				.widget_params{
+				.widget{
 					.visible = false
 				},
-				.rectangle_params{
-					.fill_color = this->context.get().style().get_color_highlight()
+				.params{
+					.specific{
+						.fill_color = this->context.get().style().get_color_highlight()
+					}
 				}
 			}
 		);

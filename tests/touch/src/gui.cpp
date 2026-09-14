@@ -78,11 +78,13 @@ utki::shared_ref<ruis::widget> make_root_widget(const utki::shared_ref<ruis::con
 		{
 			m::rectangle(c,
 				{
-					.layout_params = {
+					.layout{
 						.dims = {ruis::dim::fill, ruis::dim::fill}
 					},
-					.rectangle_params = {
-						.fill_color = c.get().style().get_color_background()
+					.params{
+						.specific = {
+							.fill_color = c.get().style().get_color_background()
+						}
 					}
 				}
 			),

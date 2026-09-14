@@ -164,15 +164,17 @@ public:
                 {
                     m::rectangle(c,
                         {
-                            .layout_params{
+                            .layout{
                                 .dims{ruis::dim::fill, ruis::dim::fill}
                             },
-                            .widget_params{
+                            .widget{
                                 .id = "selection"s,
                                 .visible = false
                             },
-                            .rectangle_params{
-                                .fill_color = c.get().style().get_color_highlight()
+                            .params{
+                                .specific{
+                                    .fill_color = c.get().style().get_color_highlight()
+                                }
                             }
                         }
                     ),
@@ -243,11 +245,13 @@ public:
                 {
                     m::rectangle(c,
                         {
-                            .layout_params{
+                            .layout{
                                 .dims{ruis::length::make_pp(5), ruis::length::make_pp(2)}
                             },
-                            .rectangle_params{
-                                .fill_color = 0xff0000ff
+                            .params{
+                                .specific{
+                                    .fill_color = 0xff0000ff
+                                }
                             }
                         }
                     )

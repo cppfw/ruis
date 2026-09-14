@@ -116,11 +116,13 @@ utki::shared_ref<ruis::window> make_window1(
                 {
                     m::rectangle(c,
                         {
-                            .layout_params{
+                            .layout{
                                 .dims{ruis::dim::fill, ruis::dim::fill}
                             },
-                            .rectangle_params{
-                                .fill_color = 0xff808080
+                            .params{
+                                .specific{
+                                    .fill_color = 0xff808080
+                                }
                             }
                         }
                     ),

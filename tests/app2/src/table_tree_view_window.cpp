@@ -124,12 +124,14 @@ utki::shared_ref<ruis::widget> make_table_tree_view_header(
 	// clang-format off
 	return m::rectangle(c,
 		{
-			.padding_params{
-				.borders = {5_pp}
-			},
-			.rectangle_params{
-				.corner_radii = {3_pp},
-				.fill_color = 0xff006060
+			.params{
+				.padding_params{
+					.borders = {5_pp}
+				},
+				.specific{
+					.corner_radii = {3_pp},
+					.fill_color = 0xff006060
+				}
 			}
 		},
 		{

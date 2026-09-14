@@ -97,32 +97,34 @@ widget_list make_chrome(
 	// clang-format off
 	auto panel_bg = m::rectangle(c,
 		{
-			.layout_params{
+			.layout{
 				.dims = {ruis::dim::fill, ruis::dim::fill}
 			},
-			.padding_params{
-				.borders = [&](){
-					for(auto& b : params.padding_params.borders){
-						if(b.get().is_undefined()){
-							b = style.get_len_dialog_padding();
+			.params{
+				.padding_params{
+					.borders = [&](){
+						for(auto& b : params.padding_params.borders){
+							if(b.get().is_undefined()){
+								b = style.get_len_dialog_padding();
+							}
+						}
+						return std::move(params.padding_params.borders);
+					}()
+				},
+				.specific = [&](){
+					for(auto& r : params.rectangle_params.corner_radii){
+						if(r.get().is_undefined()){
+							r = style.get_len_dialog_padding();
 						}
 					}
-					return std::move(params.padding_params.borders);
-				}()
-			},
-			.rectangle_params = [&](){
-				for(auto& r : params.rectangle_params.corner_radii){
-					if(r.get().is_undefined()){
-						r = style.get_len_dialog_padding();
+
+					if(params.rectangle_params.fill_color.get().is_undefined()){
+						params.rectangle_params.fill_color = style.get_color_panel();
 					}
-				}
 
-				if(params.rectangle_params.fill_color.get().is_undefined()){
-					params.rectangle_params.fill_color = style.get_color_panel();
-				}
-
-				return std::move(params.rectangle_params);
-			}()
+					return std::move(params.rectangle_params);
+				}()
+			}
 		},
 		{
 			std::move(content_container)
