@@ -423,7 +423,7 @@ utki::shared_ref<ruis::window> make_text_input_window(
 						.dims = {ruis::dim::fill, ruis::dim::min}
 					},
 					.label_params{
-						.text = U"Enter some text:"
+						.string = U"Enter some text:"
 					},
 					.rectangle_text_field_params{
 						.text_input_params{
