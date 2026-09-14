@@ -28,7 +28,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 namespace ruis {
 
 // TODO: rename to text_string_widget
-class text_line_widget : public text_widget
+class text_string_widget : public text_widget
 {
 	mutable ruis::rect bb{};
 
@@ -37,7 +37,7 @@ class text_line_widget : public text_widget
 protected:
 	vec2 measure(const ruis::vec2& quotum) const noexcept override;
 
-	text_line_widget(
+	text_string_widget(
 		const utki::shared_ref<ruis::context>& context, //
 		text_widget::parameters text_params,
 		string text
@@ -67,7 +67,7 @@ public:
 	/**
 	 * @brief Get actual text string.
 	 * Obtain reference to the actual displayed string of text.
-	 * @return Constant reference to the actual text string of the text_line_widget.
+	 * @return Constant reference to the actual text string of the text_string_widget.
 	 */
 	const std::u32string& get_string() const noexcept;
 

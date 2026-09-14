@@ -22,7 +22,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #pragma once
 
 #include "../../updateable.hpp"
-#include "../base/text_line_widget.hpp"
+#include "../base/text_string_widget.hpp"
 #include "../widget.hpp"
 
 #include "base/character_input_widget.hpp"
@@ -32,9 +32,9 @@ namespace ruis {
 /**
  * @brief Text input field widget without any decoration.
  */
-// NOLINTNEXTLINE(bugprone-incorrect-enable-shared-from-this, "std::shared_from_this is public via text_line_widget")
+// NOLINTNEXTLINE(bugprone-incorrect-enable-shared-from-this, "std::shared_from_this is public via text_string_widget")
 class text_input :
-	public text_line_widget, //
+	public text_string_widget, //
 	public character_input_widget,
 	private updateable // TODO: make it virtual-inherited?
 {

@@ -22,7 +22,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #pragma once
 
 #include "../../res/font.hpp"
-#include "../base/text_line_widget.hpp"
+#include "../base/text_string_widget.hpp"
 #include "../widget.hpp"
 
 namespace ruis {
@@ -32,7 +32,7 @@ namespace ruis {
  * This widget shows text.
  * From GUI script it can be instantiated as "text".
  */
-class text : public text_line_widget
+class text : public text_string_widget
 {
 public:
 	struct all_parameters {
