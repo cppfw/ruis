@@ -38,6 +38,8 @@ public:
 	struct all_parameters {
 		layout::parameters layout_params;
 		widget::parameters widget_params;
+
+		// TODO: move out to struct parameters
 		container::parameters container_params;
 		padding::parameters padding_params;
 		color_widget::parameters color;

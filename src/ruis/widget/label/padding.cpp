@@ -47,10 +47,10 @@ padding::padding(
 			{.container_params =
 				 [&]() {
 					 // pile layout by default
-					 if (!params.container_params.layout) {
-						 params.container_params.layout = layout::pile;
+					 if (!params.params.container.layout) {
+						 params.params.container.layout = layout::pile;
 					 }
-					 return std::move(params.container_params);
+					 return std::move(params.params.container);
 				 }()},
 			std::move(children)
 		)
@@ -80,7 +80,7 @@ padding::padding(
 		context, //
 		content_container.get()
 	),
-	params(std::move(params.padding_params))
+	params(std::move(params.params.specific))
 {}
 
 sides<real> padding::get_min_borders() const noexcept
@@ -154,23 +154,6 @@ void padding::on_lay_out()
 	c.resize(content_dims);
 }
 
-utki::shared_ref<ruis::padding> ruis::make::padding(
-	const utki::shared_ref<context>& context, //
-	padding::all_parameters params,
-	widget_list children
-)
-{
-	if (!params.container_params.layout) {
-		params.container_params.layout = ruis::layout::pile;
-	}
-
-	return utki::make_shared<ruis::padding>(
-		context, //
-		std::move(params),
-		std::move(children)
-	);
-}
-
 void padding::set_borders(sides<styled<length>> borders)
 {
 	if (this->params.borders == borders) {
@@ -210,4 +193,21 @@ sides<real> padding::get_actual_borders() const noexcept
 void padding::on_borders_change()
 {
 	this->invalidate_layout();
+}
+
+utki::shared_ref<ruis::padding> ruis::make::padding(
+	const utki::shared_ref<context>& context, //
+	padding::all_parameters params,
+	widget_list children
+)
+{
+	if (!params.params.container.layout) {
+		params.params.container.layout = ruis::layout::pile;
+	}
+
+	return utki::make_shared<ruis::padding>(
+		context, //
+		std::move(params),
+		std::move(children)
+	);
 }
