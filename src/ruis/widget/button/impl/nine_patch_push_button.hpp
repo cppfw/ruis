@@ -31,14 +31,18 @@ class nine_patch_push_button :
 	public nine_patch_button
 {
 public:
+	struct prameters{
+		ruis::container::parameters container;
+		ruis::blending_widget::parameters blending;
+		ruis::nine_patch::parameters nine_patch;
+		ruis::nine_patch_button::parameters nine_patch_button;
+	};
+
 	struct all_parameters {
-		layout::parameters layout_params;
-		ruis::widget::parameters widget_params;
-		container::parameters container_params;
-		button::parameters button_params;
-		blending_widget::parameters blending_params;
-		nine_patch::parameters nine_patch_params;
-		nine_patch_button::parameters nine_patch_button_params;
+		ruis::layout::parameters layout;
+		ruis::widget::parameters widget;
+		ruis::button::parameters button;
+		prameters params;
 	};
 
 	nine_patch_push_button(

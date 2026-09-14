@@ -32,12 +32,12 @@ nine_patch_push_button::nine_patch_push_button( //
 ) :
 	widget( //
 		context,
-		std::move(params.layout_params),
-		std::move(params.widget_params)
+		std::move(params.layout),
+		std::move(params.widget)
 	),
 	button( //
 		context,
-		std::move(params.button_params)
+		std::move(params.button)
 	),
 	push_button( //
 		context,
@@ -45,11 +45,11 @@ nine_patch_push_button::nine_patch_push_button( //
 	),
 	nine_patch_button( //
 		context,
-		std::move(params.container_params),
+		std::move(params.params.container),
 		{},
-		std::move(params.blending_params),
-		std::move(params.nine_patch_params),
-		std::move(params.nine_patch_button_params),
+		std::move(params.params.blending),
+		std::move(params.params.nine_patch),
+		std::move(params.params.nine_patch_button),
 		std::move(children)
 	)
 {

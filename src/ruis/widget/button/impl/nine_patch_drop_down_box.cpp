@@ -101,12 +101,15 @@ ruis::nine_patch_drop_down_box::nine_patch_drop_down_box(
 		context, //
 		button::parameters{}
 	),
+	// clang-format off
 	nine_patch_push_button(
 		context, //
 		{
-			.container_params = {.layout = ruis::layout::row},
-			.nine_patch_button_params =
-				[&]() {
+			.params{
+				.container = {
+					.layout = ruis::layout::row
+				},
+				.nine_patch_button = [&]() {
 					if (!params.nine_patch_button_params.pressed_nine_patch) {
 						params.nine_patch_button_params.pressed_nine_patch =
 							context.get().loader().load<res::nine_patch>("ruis_npt_button_pressed"sv);
@@ -117,9 +120,11 @@ ruis::nine_patch_drop_down_box::nine_patch_drop_down_box(
 					}
 					return std::move(params.nine_patch_button_params);
 				}() //
+			}
 		},
 		make_selection_box_widget_structure(context)
 	),
+	// clang-format on
 	ruis::selection_box(
 		context, //
 		this->get_widget_as<ruis::container>("ruis_dropdown_selection"),
