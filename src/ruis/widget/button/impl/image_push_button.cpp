@@ -35,12 +35,12 @@ image_push_button::image_push_button( //
 ) :
 	widget( //
 		context,
-		std::move(params.layout_params),
-		std::move(params.widget_params)
+		std::move(params.layout),
+		std::move(params.widget)
 	),
 	button( //
 		context,
-		std::move(params.button_params)
+		std::move(params.button)
 	),
 	push_button( //
 		context,
@@ -48,9 +48,10 @@ image_push_button::image_push_button( //
 	),
 	image_button( //
 		context,
-		std::move(params.blending_params),
-		std::move(params.image_params),
-		std::move(params.image_button_params)
+		{
+			.image = std::move(params.params.image),
+			.specific = std::move(params.params.image_button)
+		}
 	)
 {}
 

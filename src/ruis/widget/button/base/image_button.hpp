@@ -35,13 +35,18 @@ class image_button :
 	public image
 {
 public:
-	struct parameters {
+	struct specific_parameters {
 		std::shared_ptr<const res::image> unpressed_image;
 		std::shared_ptr<const res::image> pressed_image;
 	};
 
+	struct parameters{
+		ruis::image::parameters image;
+		specific_parameters specific;
+	};
+
 private:
-	parameters params;
+	specific_parameters params;
 
 	void update_image();
 
@@ -50,8 +55,6 @@ protected:
 
 	image_button(
 		const utki::shared_ref<ruis::context>& context, //
-		blending_widget::parameters blending_params,
-		image::parameters image_params,
 		parameters params
 	);
 

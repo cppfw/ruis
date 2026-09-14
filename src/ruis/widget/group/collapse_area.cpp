@@ -116,12 +116,14 @@ collapse_area::collapse_area(
 						{
 							m::image_toggle(context,
 								{
-									.widget_params{
+									.widget{
 										.id = "ruis_switch"s
 									},
-									.image_button_params{
-										.unpressed_image = context.get().loader().load<res::image>("ruis_img_dropdown_arrow"sv),
-										.pressed_image = context.get().loader().load<res::image>("ruis_img_dropright_arrow"sv)
+									.params{
+										.image_button{
+											.unpressed_image = context.get().loader().load<res::image>("ruis_img_dropdown_arrow"sv),
+											.pressed_image = context.get().loader().load<res::image>("ruis_img_dropright_arrow"sv)
+										}
 									}
 								}
 							),

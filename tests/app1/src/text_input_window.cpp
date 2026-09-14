@@ -151,15 +151,17 @@ utki::shared_ref<ruis::window> make_text_input_window(
                                     ),
                                     m::image_push_button(c,
                                         {
-                                            .layout_params{
+                                            .layout{
                                                 .dims{50_pp, 50_pp}
                                             },
-                                            .widget_params{
+                                            .widget{
                                                 .id = "image_push_button"s
                                             },
-                                            .image_button_params{
-                                                .unpressed_image = c.get().loader().load<ruis::res::image>("img_button_unpressed"sv),
-                                                .pressed_image = c.get().loader().load<ruis::res::image>("img_button_pressed"sv)
+                                            .params{
+                                                .image_button{
+                                                    .unpressed_image = c.get().loader().load<ruis::res::image>("img_button_unpressed"sv),
+                                                    .pressed_image = c.get().loader().load<ruis::res::image>("img_button_pressed"sv)
+                                                }
                                             }
                                         }
                                     ),

@@ -42,17 +42,15 @@ void image_button::on_pressed_change()
 
 image_button::image_button( //
 	const utki::shared_ref<ruis::context>& context,
-	blending_widget::parameters blending_params,
-	image::parameters image_params,
 	parameters params
 ) :
 	widget(context, {}, {}),
 	button(context, button::parameters{}),
-	image( //
-		context,
-		{.params = std::move(image_params)}
+	image(
+		context, //
+		{.params = std::move(params.image)}
 	),
-	params(std::move(params))
+	params(std::move(params.specific))
 {
 	this->update_image();
 }

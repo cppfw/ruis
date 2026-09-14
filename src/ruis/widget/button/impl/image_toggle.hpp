@@ -31,13 +31,16 @@ class image_toggle :
 	public image_button
 {
 public:
+	struct parameters{
+		ruis::image::parameters image;
+		ruis::image_button::specific_parameters image_button;
+	};
+
 	struct all_parameters {
-		layout::parameters layout_params;
-		widget::parameters widget_params;
-		button::parameters button_params;
-		blending_widget::parameters blending_params;
-		image::parameters image_params;
-		image_button::parameters image_button_params;
+		ruis::layout::parameters layout;
+		ruis::widget::parameters widget;
+		ruis::button::parameters button;
+		parameters params;
 	};
 
 	image_toggle(
