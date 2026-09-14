@@ -101,11 +101,13 @@ tab::tab(
 	choice_button(context),
 	nine_patch_toggle(
 		context,
-		std::move(params.container_params),
-		std::move(params.button_params),
-		std::move(params.blending_params),
-		std::move(params.nine_patch_params),
-		std::move(params.nine_patch_button_params),
+		{
+			.container = std::move(params.container_params),
+			.button = std::move(params.button_params),
+			.blending = std::move(params.blending_params),
+			.nine_patch = std::move(params.nine_patch_params),
+			.nine_patch_button = std::move(params.nine_patch_button_params)
+		},
 		std::move(children)
 	)
 {
