@@ -58,16 +58,18 @@ selection_box::selection_box(
 	// clang-format off
 	rectangle_push_button(context,
 		{
-			.container_params{
-				.layout = ruis::layout::row
-			},
-			.padding_params{
-				.borders = {default_padding}
-			},
-			.rectangle_params{
-				.corner_radii = {default_padding}
-			},
-			.rectangle_button_params = std::move(params.rectangle_button_params)
+			.params{
+				.container_params{
+					.layout = ruis::layout::row
+				},
+				.padding_params{
+					.borders = {default_padding}
+				},
+				.rectangle_params{
+					.corner_radii = {default_padding}
+				},
+				.rectangle_button_params = std::move(params.rectangle_button_params)
+			}
 		},
 		{
 			ruis::make::text(context,

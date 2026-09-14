@@ -31,13 +31,17 @@ class rectangle_push_button :
 	public rectangle_button
 {
 public:
-	struct all_parameters {
-		layout::parameters layout_params;
-		widget::parameters widget_params;
+	struct parameters{
 		ruis::container::parameters container_params;
 		ruis::padding::parameters padding_params;
 		rectangle::parameters rectangle_params;
 		rectangle_button::parameters rectangle_button_params;
+	};
+
+	struct all_parameters {
+		layout::parameters layout_params;
+		widget::parameters widget_params;
+		parameters params;
 	};
 
 	rectangle_push_button(

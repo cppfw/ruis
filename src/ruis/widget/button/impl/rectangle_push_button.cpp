@@ -43,10 +43,10 @@ rectangle_push_button::rectangle_push_button(
 	push_button(context, {}),
 	rectangle_button( //
 		context,
-		std::move(params.container_params),
-		std::move(params.padding_params),
-		std::move(params.rectangle_params),
-		std::move(params.rectangle_button_params),
+		std::move(params.params.container_params),
+		std::move(params.params.padding_params),
+		std::move(params.params.rectangle_params),
+		std::move(params.params.rectangle_button_params),
 		std::move(contents) //
 	)
 {}

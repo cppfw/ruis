@@ -189,19 +189,21 @@ utki::shared_ref<ruis::widget> make_rectangles_window(
 				{
 					m::rectangle_push_button(c,
 						{
-							.padding_params{
-								.borders{
-									5_pp, // left
-									10_pp, // top
-									15_pp, // right
-									20_pp // bottom
+							.params{
+								.padding_params{
+									.borders{
+										5_pp, // left
+										10_pp, // top
+										15_pp, // right
+										20_pp // bottom
+									}
+								},
+								.rectangle_params{
+									.corner_radii = {5_pp}
+								},
+								.rectangle_button_params{
+									// TODO:
 								}
-							},
-							.rectangle_params{
-								.corner_radii = {5_pp}
-							},
-							.rectangle_button_params{
-								// TODO:
 							}
 						},
 						{
@@ -228,24 +230,26 @@ utki::shared_ref<ruis::widget> make_rectangles_window(
 				{
 					m::rectangle_push_button(c,
 						{
-							.padding_params{
-								.borders{
-									5_pp, // left
-									10_pp, // top
-									15_pp, // right
-									20_pp // bottom
+							.params{
+								.padding_params{
+									.borders{
+										5_pp, // left
+										10_pp, // top
+										15_pp, // right
+										20_pp // bottom
+									}
+								},
+								.rectangle_params{
+									.corner_radii = {5_pp},
+									.stroke_width = 3_pp,
+									.stroke_color = 0xff0000ff
+								},
+								.rectangle_button_params{
+									.pressed_color = 0xff202020,
+									.unpressed_color = 0xff404040,
+									.pressed_stroke_color = 0xff00ff00,
+									.unpressed_stroke_color = 0xff0000ff
 								}
-							},
-							.rectangle_params{
-								.corner_radii = {5_pp},
-								.stroke_width = 3_pp,
-								.stroke_color = 0xff0000ff
-							},
-							.rectangle_button_params{
-								.pressed_color = 0xff202020,
-								.unpressed_color = 0xff404040,
-								.pressed_stroke_color = 0xff00ff00,
-								.unpressed_stroke_color = 0xff0000ff
 							}
 						},
 						{
