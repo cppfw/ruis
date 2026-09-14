@@ -24,6 +24,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../widget.hpp"
 
 namespace ruis {
+
+// TODO: doxygen
 class fraction_widget : public virtual widget
 {
 private:

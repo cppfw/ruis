@@ -25,6 +25,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
+// TODO: doxygen
 class fraction_band_widget : public fraction_widget
 {
 private:
@@ -38,7 +39,7 @@ protected:
 
 protected:
 	fraction_band_widget(
-		const utki::shared_ref<ruis::context>& c, //
+		const utki::shared_ref<ruis::context>& context, //
 		parameters params
 	);
 

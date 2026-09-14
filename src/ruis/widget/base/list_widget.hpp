@@ -83,6 +83,7 @@ public:
 	void notify_model_change();
 };
 
+// TODO: doxygen
 class list_widget : virtual public widget
 {
 	friend class list_provider;
