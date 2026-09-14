@@ -19,7 +19,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 /* ================ LICENSE END ================ */
 
-#include "selection_box.hpp"
+#include "nine_patch_drop_down_box.hpp"
 
 #include <utki/debug.hpp>
 
@@ -32,8 +32,6 @@ using namespace std::string_literals;
 using namespace std::string_view_literals;
 
 using namespace ruis::length_literals;
-
-using namespace ruis::click;
 
 namespace {
 std::vector<utki::shared_ref<ruis::widget>> make_selection_box_widget_structure(const utki::shared_ref<ruis::context>& c
@@ -90,7 +88,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_selection_box_widget_structure(
 }
 } // namespace
 
-selection_box::selection_box(
+ruis::nine_patch_drop_down_box::nine_patch_drop_down_box(
 	const utki::shared_ref<ruis::context>& context, //
 	all_parameters params
 ) :
@@ -137,7 +135,7 @@ selection_box::selection_box(
 	};
 }
 
-ruis::event_status selection_box::on_mouse_button(const mouse_button_event& e)
+ruis::event_status ruis::nine_patch_drop_down_box::on_mouse_button(const mouse_button_event& e)
 {
 	if (e.action == button_action::press) {
 		++this->num_mouse_buttons_pressed;
@@ -157,7 +155,7 @@ ruis::event_status selection_box::on_mouse_button(const mouse_button_event& e)
 	return this->nine_patch_push_button::on_mouse_button(e);
 }
 
-ruis::event_status selection_box::on_mouse_move(const mouse_move_event& e)
+ruis::event_status ruis::nine_patch_drop_down_box::on_mouse_move(const mouse_move_event& e)
 {
 	if (auto cm = this->current_drop_down_menu.lock()) {
 		if (this->num_mouse_buttons_pressed != 0) {
@@ -172,11 +170,11 @@ ruis::event_status selection_box::on_mouse_move(const mouse_move_event& e)
 	return this->nine_patch_push_button::on_mouse_move(e);
 }
 
-void selection_box::show_drop_down_menu()
+void ruis::nine_patch_drop_down_box::show_drop_down_menu()
 {
 	auto olay = this->try_get_ancestor<overlay>();
 	if (!olay) {
-		throw std::logic_error("click::selection_box: no overlay parent found");
+		throw std::logic_error("nine_patch_drop_down_box (impl): no overlay parent found");
 	}
 
 	// clang-format off
@@ -252,7 +250,7 @@ void selection_box::show_drop_down_menu()
 	);
 }
 
-void selection_box::close_drop_down_menu()
+void ruis::nine_patch_drop_down_box::close_drop_down_menu()
 {
 	auto ddm = this->current_drop_down_menu.lock();
 	if (!ddm) {
@@ -263,7 +261,7 @@ void selection_box::close_drop_down_menu()
 	});
 }
 
-void selection_box::handle_mouse_button_up(bool is_first_button_up_event)
+void ruis::nine_patch_drop_down_box::handle_mouse_button_up(bool is_first_button_up_event)
 {
 	if (this->hovered_index < 0) {
 		if (!is_first_button_up_event) {
@@ -281,7 +279,7 @@ void selection_box::handle_mouse_button_up(bool is_first_button_up_event)
 	}
 }
 
-utki::shared_ref<ruis::widget> selection_box::wrap_item(
+utki::shared_ref<ruis::widget> ruis::nine_patch_drop_down_box::wrap_item(
 	const utki::shared_ref<widget>& w, //
 	size_t index
 )
@@ -351,15 +349,17 @@ utki::shared_ref<ruis::widget> selection_box::wrap_item(
 	return wd;
 }
 
-void selection_box::on_reload()
+void ruis::nine_patch_drop_down_box::on_reload()
 {
 	this->nine_patch_push_button::on_reload();
 	this->ruis::selection_box::on_reload();
 }
 
-utki::shared_ref<ruis::click::selection_box> ruis::click::make::selection_box(
+using nine_patch_drop_down_box = ruis::nine_patch_drop_down_box;
+
+utki::shared_ref<nine_patch_drop_down_box> ruis::make::nine_patch_drop_down_box(
 	const utki::shared_ref<ruis::context>& context, //
-	click::selection_box::all_parameters params
+	nine_patch_drop_down_box::all_parameters params
 )
 {
 	auto& c = context.get();
@@ -376,7 +376,7 @@ utki::shared_ref<ruis::click::selection_box> ruis::click::make::selection_box(
 		}
 	}
 
-	return utki::make_shared<ruis::click::selection_box>(
+	return utki::make_shared<ruis::nine_patch_drop_down_box>(
 		context, //
 		std::move(params)
 	);

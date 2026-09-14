@@ -24,10 +24,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../impl/nine_patch_push_button.hpp"
 #include "../selection_box.hpp"
 
-namespace ruis::click {
+namespace ruis {
 
 // NOLINTNEXTLINE(bugprone-incorrect-enable-shared-from-this, "std::shared_from_this is public via widget")
-class selection_box :
+class nine_patch_drop_down_box :
 	virtual public widget, //
 	private nine_patch_push_button,
 	public ruis::selection_box
@@ -44,22 +44,22 @@ public:
 		list_widget::parameters list_params;
 		string title;
 
-		// fields specific to ruis::click::selection_box
+		// fields specific to nine_patch_drop_down_box (impl)
 		nine_patch_button::parameters nine_patch_button_params;
 	};
 
-	selection_box(
+	nine_patch_drop_down_box(
 		const utki::shared_ref<ruis::context>& context, //
 		all_parameters params
 	);
 
-	selection_box(const selection_box&) = delete;
-	selection_box& operator=(const selection_box&) = delete;
+	nine_patch_drop_down_box(const nine_patch_drop_down_box&) = delete;
+	nine_patch_drop_down_box& operator=(const nine_patch_drop_down_box&) = delete;
 
-	selection_box(selection_box&&) = delete;
-	selection_box& operator=(selection_box&&) = delete;
+	nine_patch_drop_down_box(nine_patch_drop_down_box&&) = delete;
+	nine_patch_drop_down_box& operator=(nine_patch_drop_down_box&&) = delete;
 
-	~selection_box() override = default;
+	~nine_patch_drop_down_box() override = default;
 
 	void on_reload() override;
 
@@ -82,10 +82,10 @@ private:
 };
 
 namespace make {
-utki::shared_ref<ruis::click::selection_box> selection_box(
+utki::shared_ref<nine_patch_drop_down_box> nine_patch_drop_down_box(
 	const utki::shared_ref<ruis::context>& context, //
-	click::selection_box::all_parameters params
+	nine_patch_drop_down_box::all_parameters params
 );
 } // namespace make
 
-} // namespace ruis::click
+} // namespace ruis

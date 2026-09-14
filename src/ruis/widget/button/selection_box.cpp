@@ -23,7 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../../context.hpp"
 
-#include "click/selection_box.hpp"
+#include "impl/nine_patch_drop_down_box.hpp"
 
 using namespace std::string_view_literals;
 
@@ -75,14 +75,12 @@ utki::shared_ref<ruis::selection_box> ruis::make::selection_box(
 	ruis::selection_box::all_parameters params
 )
 {
-	// clang-format off
-	return ruis::click::make::selection_box(
+	return ruis::make::nine_patch_drop_down_box(
 		context, //
-		ruis::click::selection_box::all_parameters{
+		ruis::nine_patch_drop_down_box::all_parameters{
 			.layout_params = std::move(params.layout_params), //
 			.widget_params = std::move(params.widget_params),
 			.list_params = std::move(params.list_params)
 		}
 	);
-	// clang-format on
 }
