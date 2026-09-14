@@ -25,14 +25,14 @@ using namespace ruis;
 
 fraction_band_widget::fraction_band_widget(
 	const utki::shared_ref<ruis::context>& context, //
-	all_parameters params
+	parameters params
 ) :
 	widget(context, {}, {}),
 	fraction_widget(
 		context, //
 		params.fraction
 	),
-	params(std::move(params.fraction_band_params))
+	band_fraction(params.band_fraction)
 {}
 
 void fraction_band_widget::on_band_change()
@@ -44,10 +44,10 @@ void fraction_band_widget::on_band_change()
 
 void fraction_band_widget::set_band_fraction(real fraction)
 {
-	if (this->params.band_fraction == fraction) {
+	if (this->band_fraction == fraction) {
 		return;
 	}
 
-	this->params.band_fraction = fraction;
+	this->band_fraction = fraction;
 	this->on_band_change();
 }

@@ -27,25 +27,19 @@ namespace ruis {
 
 class fraction_band_widget : public fraction_widget
 {
+private:
+	real band_fraction = 0; // current bar size factor from 0 to 1
+
 protected:
 	struct parameters {
-		real band_fraction = 0; // current bar size factor from 0 to 1
-	};
-
-private:
-	parameters params;
-
-protected:
-	// TODO: remove?
-	struct all_parameters {
 		real fraction = 0;
-		parameters fraction_band_params;
+		real band_fraction = 0;
 	};
 
 protected:
 	fraction_band_widget(
 		const utki::shared_ref<ruis::context>& c, //
-		all_parameters params
+		parameters params
 	);
 
 	virtual void on_band_change();
@@ -57,7 +51,7 @@ public:
 
 	real get_band_fraction() const noexcept
 	{
-		return this->params.band_fraction;
+		return this->band_fraction;
 	}
 };
 

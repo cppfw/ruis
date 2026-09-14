@@ -164,9 +164,7 @@ ruis::widget_list make_scroll_area_page_contents(const utki::shared_ref<ruis::co
 					.dims{50_pp, 1000_pp}
 				},
 				.fraction = ruis::real(0.25),
-				.fraction_band_params{
-					.band_fraction = ruis::real(0.2)
-				},
+				.band_fraction = ruis::real(0.2),
 				.oriented_params{
 					.vertical = true
 				}

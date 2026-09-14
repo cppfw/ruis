@@ -95,9 +95,7 @@ utki::shared_ref<ruis::window> make_sliders_window(
 								.dims = {ruis::dim::fill, ruis::dim::min},
 								.align = {ruis::align::front, ruis::align::front}
 							},
-							.fraction_band_params = {
-								.band_fraction = ruis::real(0.2)
-							},
+							.band_fraction = ruis::real(0.2),
 							.oriented_params = {
 								.vertical = false
 							}

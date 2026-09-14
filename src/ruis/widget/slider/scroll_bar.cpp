@@ -107,7 +107,7 @@ scroll_bar::scroll_bar( //
 		context,
 		{
 			.fraction = params.fraction,
-			.fraction_band_params = std::move(params.fraction_band_params) //
+			.band_fraction = params.band_fraction //
 		}
 	),
 	oriented(std::move(params.oriented_params)),
