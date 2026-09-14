@@ -105,7 +105,7 @@ slider::slider( //
 	),
 	fraction_widget( //
 		context,
-		std::move(params.fraction_params)
+		params.fraction
 	),
 	oriented(std::move(params.oriented_params)),
 	container( //

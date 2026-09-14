@@ -63,7 +63,7 @@ public:
 	struct all_parameters {
 		layout::parameters layout_params;
 		widget::parameters widget_params;
-		fraction_widget::parameters fraction_params;
+		real fraction = 0;
 		oriented::parameters oriented_params;
 		parameters slider_params;
 	};

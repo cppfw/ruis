@@ -106,7 +106,7 @@ scroll_bar::scroll_bar( //
 	fraction_band_widget( //
 		context,
 		{
-			.fraction_params = std::move(params.fraction_params),
+			.fraction = params.fraction,
 			.fraction_band_params = std::move(params.fraction_band_params) //
 		}
 	),

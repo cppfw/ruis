@@ -26,21 +26,16 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 namespace ruis {
 class fraction_widget : public virtual widget
 {
-protected:
-	struct parameters {
-		real fraction = 0; // current position from 0 to 1
-	};
-
 private:
-	parameters params;
+	real fraction = 0; // current position from 0 to 1
 
 protected:
 	fraction_widget(
-		const utki::shared_ref<ruis::context>& c, //
-		parameters params
+		const utki::shared_ref<ruis::context>& context, //
+		real fraction
 	) :
-		widget(c, {}, {}),
-		params(std::move(params))
+		widget(context, {}, {}),
+		fraction(fraction)
 	{}
 
 	virtual void on_fraction_change();
@@ -50,7 +45,7 @@ public:
 
 	real get_fraction() const noexcept
 	{
-		return this->params.fraction;
+		return this->fraction;
 	}
 
 	/**

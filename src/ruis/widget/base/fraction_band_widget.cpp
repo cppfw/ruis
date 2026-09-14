@@ -30,7 +30,7 @@ fraction_band_widget::fraction_band_widget(
 	widget(context, {}, {}),
 	fraction_widget(
 		context, //
-		std::move(params.fraction_params)
+		params.fraction
 	),
 	params(std::move(params.fraction_band_params))
 {}

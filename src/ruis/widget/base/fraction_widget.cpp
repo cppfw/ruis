@@ -42,11 +42,11 @@ void fraction_widget::set_fraction(
 		o << fraction;
 	})
 
-	if (this->params.fraction == fraction) {
+	if (this->fraction == fraction) {
 		return;
 	}
 
-	this->params.fraction = fraction;
+	this->fraction = fraction;
 
 	if (notify_change) {
 		this->on_fraction_change();
