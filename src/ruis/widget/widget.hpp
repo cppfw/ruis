@@ -97,7 +97,6 @@ public:
 	}
 
 private:
-	// TODO: make weak_ptr?
 	// NOLINTNEXTLINE(clang-analyzer-webkit.NoUncountedMemberChecker, "false-positive")
 	container* parent_container = nullptr;
 
