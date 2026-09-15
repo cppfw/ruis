@@ -108,7 +108,7 @@ utki::shared_ref<ruis::window> make_text_input_window(
                 {
                     m::tab(c,
                         {
-                            .widget_params{
+                            .widget{
                                 .id = "tab1"s
                             }
                         },

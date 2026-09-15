@@ -46,7 +46,9 @@ check_box::check_box(
 	nine_patch(context,
 		{
 			.params{
-				.container{.layout = layout::pile},
+				.padding{
+					.container{.layout = layout::pile}
+				},
 				.specific = [&](){
 					auto p = std::move(params.nine_patch_params);
 					if(!p.nine_patch){

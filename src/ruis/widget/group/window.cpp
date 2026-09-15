@@ -404,8 +404,10 @@ window::window(
 						.dims = {ruis::dim::fill, ruis::dim::fill}
 					},
 					.params{
-						.container{
-							.layout = layout::pile
+						.padding{
+							.container{
+								.layout = layout::pile
+							}
 						},
 						.specific{
 							.nine_patch = this->context.get().loader().load<ruis::res::nine_patch>("ruis_npt_window_bg")

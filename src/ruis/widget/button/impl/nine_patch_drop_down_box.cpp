@@ -105,28 +105,26 @@ ruis::nine_patch_drop_down_box::nine_patch_drop_down_box(
 	nine_patch_push_button(
 		context, //
 		{
-			.params{
-				.container = {
-					.layout = ruis::layout::row
-				},
-				.nine_patch_button = [&]() {
-					if (auto& np = params.params.nine_patch_button.pressed_nine_patch; !np) {
-						np = context.get().loader().load<res::nine_patch>("ruis_npt_button_pressed"sv);
-					}
-					if (auto& np = params.params.nine_patch_button.unpressed_nine_patch; !np) {
-						np = context.get().loader().load<res::nine_patch>("ruis_npt_button_normal"sv);
-					}
-					return std::move(params.params.nine_patch_button);
-				}() //
-			}
+			.params = [&](){
+				params.params.nine_patch_push_button.nine_patch_button.nine_patch.padding.container.layout = ruis::layout::row;
+
+				if (auto& np = params.params.nine_patch_push_button.nine_patch_button.specific.pressed_nine_patch; !np) {
+					np = context.get().loader().load<res::nine_patch>("ruis_npt_button_pressed"sv);
+				}
+				if (auto& np = params.params.nine_patch_push_button.nine_patch_button.specific.unpressed_nine_patch; !np) {
+					np = context.get().loader().load<res::nine_patch>("ruis_npt_button_normal"sv);
+				}
+
+				return std::move(params.params.nine_patch_push_button);
+			}()
 		},
 		make_selection_box_widget_structure(context)
 	),
 	// clang-format on
 	ruis::selection_box(
 		context, //
-		this->get_widget_as<ruis::container>("ruis_dropdown_selection"),
-		std::move(params.params.list)
+		this->get_widget_as<ruis::container>("ruis_dropdown_selection"), // TODO: avoid using lookup by name
+		std::move(params.params.selection_box)
 	)
 {
 	this->pressed_change_handler = [this](button& b) {
@@ -210,8 +208,10 @@ void ruis::nine_patch_drop_down_box::show_drop_down_menu()
 						.id = "ruis_contextmenu_content"s
 					},
 					.params{
-						.container{
-							.layout = ruis::layout::column
+						.padding{
+							.container{
+								.layout = ruis::layout::column
+							}
 						},
 						.specific{
 							.nine_patch = this->context.get().loader().load<ruis::res::nine_patch>("ruis_npt_contextmenu_bg"sv)
@@ -373,14 +373,14 @@ utki::shared_ref<nine_patch_drop_down_box> ruis::make::nine_patch_drop_down_box(
 	auto& c = context.get();
 
 	{
-		auto& npbp = params.params.nine_patch_button;
+		auto& npbp = params.params.nine_patch_push_button.nine_patch_button.specific;
 
-		if (!npbp.pressed_nine_patch) {
-			npbp.pressed_nine_patch = c.loader().load<res::nine_patch>("ruis_npt_button_pressed"sv);
+		if (auto& np = npbp.pressed_nine_patch; !np) {
+			np = c.loader().load<res::nine_patch>("ruis_npt_button_pressed"sv);
 		}
 
-		if (!npbp.unpressed_nine_patch) {
-			npbp.unpressed_nine_patch = c.loader().load<res::nine_patch>("ruis_npt_button_normal"sv);
+		if (auto& np = npbp.unpressed_nine_patch; !np) {
+			np = c.loader().load<res::nine_patch>("ruis_npt_button_normal"sv);
 		}
 	}
 

@@ -311,11 +311,13 @@ utki::shared_ref<ruis::window> make_selection_box_window(
 	// clang-format off
 	auto lang_sel_box = m::selection_box(c,
 		{
-			.layout_params{
+			.layout{
 				.dims = {ruis::dim::max, ruis::dim::min}
 			},
-			.list_params{
-				.provider = utki::make_shared<language_selection_provider>(c)
+			.params{
+				.list{
+					.provider = utki::make_shared<language_selection_provider>(c)
+				}
 			}
 		}
 	);
@@ -362,16 +364,18 @@ utki::shared_ref<ruis::window> make_selection_box_window(
 		{
 			m::selection_box(c,
 				{
-					.layout_params = {
+					.layout{
 						.dims = {ruis::dim::max, ruis::dim::min}
 					},
-					.list_params = {
-						.provider = utki::make_shared<selection_box_provider>(c,
-							std::vector<std::string>{
-								"Hello"s,
-								"World!"s
-							}
-						)
+					.params{
+						.list{
+							.provider = utki::make_shared<selection_box_provider>(c,
+								std::vector<std::string>{
+									"Hello"s,
+									"World!"s
+								}
+							)
+						}
 					}
 				}
 			),

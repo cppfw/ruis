@@ -116,10 +116,16 @@ utki::shared_ref<ruis::push_button> ruis::make::push_button( //
 			.layout = std::move(params.layout),
 			.widget = std::move(params.widget),
 			.params{
-				.container = std::move(params.container_params),
-				.nine_patch_button = {
-					.unpressed_nine_patch = c.loader().load<res::nine_patch>("ruis_npt_button_normal"sv),
-					.pressed_nine_patch = c.loader().load<res::nine_patch>("ruis_npt_button_pressed"sv)
+				.nine_patch_button{
+					.nine_patch{
+						.padding{
+							.container = std::move(params.container_params)
+						}
+					},
+					.specific{
+						.unpressed_nine_patch = c.loader().load<res::nine_patch>("ruis_npt_button_normal"sv),
+						.pressed_nine_patch = c.loader().load<res::nine_patch>("ruis_npt_button_pressed"sv)
+					}
 				}
 			}
         },

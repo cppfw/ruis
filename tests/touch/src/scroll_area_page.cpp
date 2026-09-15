@@ -102,13 +102,19 @@ ruis::widget_list make_scroll_area_page_contents(const utki::shared_ref<ruis::co
 	// clang-format off
 	auto theme_selector = m::selection_box(c,
 		{
-			.layout_params{
+			.layout{
 				.dims = {ruis::dim::max, ruis::dim::min}
 			},
-			.list_params{
-				.provider = utki::make_shared<theme_selection_provider>(c)
-			},
-			.title = U"Theme"s // TODO: localize
+			.params{
+				.selection_box{
+					.list{
+						.provider = utki::make_shared<theme_selection_provider>(c)
+					}
+				},
+				.specific{
+					.title = U"Theme"s // TODO: localize
+				}
+			}
 		}
 	);
 	// clang-format on

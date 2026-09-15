@@ -46,8 +46,8 @@ public:
 		blending_widget::parameters blending;
 
 		// TODO: move to specific
-		std::shared_ptr<const ruis::res::image> img;
-		std::shared_ptr<const ruis::res::image> disabled_img; // image for disabled state
+		std::shared_ptr<const ruis::res::image> img; // TODO: rename to source
+		std::shared_ptr<const ruis::res::image> disabled_img; // TODO: remove
 		bool keep_aspect_ratio = false;
 	};
 

@@ -32,12 +32,12 @@ using namespace ruis;
 selection_box::selection_box(
 	const utki::shared_ref<ruis::context>& context,
 	container& selection_container,
-	list_widget::parameters list_widget_params
+	parameters params
 ) :
 	widget(context, {}, {}),
 	list_widget(
 		context, //
-		std::move(list_widget_params)
+		std::move(params.list)
 	),
 	selection_container(selection_container)
 {
@@ -78,10 +78,12 @@ utki::shared_ref<ruis::selection_box> ruis::make::selection_box(
 	return ruis::make::nine_patch_drop_down_box(
 		context, //
 		{
-			.layout = std::move(params.layout_params), //
-			.widget = std::move(params.widget_params),
+			.layout = std::move(params.layout), //
+			.widget = std::move(params.widget),
 			.params{
-				.list = std::move(params.list_params)
+				.selection_box{
+					.list = std::move(params.params.list)
+				}
 			}
 		}
 	);

@@ -47,8 +47,8 @@ selection_box::selection_box(
 ) :
 	widget(
 		context, //
-		std::move(params.layout_params),
-		std::move(params.widget_params)
+		std::move(params.layout),
+		std::move(params.widget)
 	),
 	button(
 		context,
@@ -59,22 +59,14 @@ selection_box::selection_box(
 	rectangle_push_button(context,
 		{
 			.params{
-				.rectangle_button{
-					.rectangle{
-						.padding{
-							.container{
-								.layout = ruis::layout::row
-							},
-							.specific{
-								.borders = {default_padding}
-							}
-						},
-						.specific{
-							.corner_radii = {default_padding}
-						}
-					},
-					.specific = std::move(params.rectangle_button_params)
-				}
+				.rectangle_button = [&](){
+					params.params.rectangle_button.rectangle.padding.container.layout = ruis::layout::row;
+					
+					params.params.rectangle_button.rectangle.padding.specific.borders = default_padding;
+					params.params.rectangle_button.rectangle.specific.corner_radii = default_padding;
+
+					return std::move(params.params.rectangle_button);
+				}()
 			}
 		},
 		{
@@ -84,7 +76,7 @@ selection_box::selection_box(
 						.align = {ruis::align::front, ruis::align::center}
 					}
 				},
-				std::move(params.title)
+				std::move(params.params.specific.title)
 			),
 			ruis::make::container(context,
 				{
@@ -106,8 +98,8 @@ selection_box::selection_box(
 	// clang-format on
 	ruis::selection_box(
 		context, //
-		this->get_widget_as<ruis::container>(selection_label_id),
-		std::move(params.list_params)
+		this->get_widget_as<ruis::container>(selection_label_id), // TODO: avoid using lookup by name
+		std::move(params.params.selection_box)
 	)
 {}
 

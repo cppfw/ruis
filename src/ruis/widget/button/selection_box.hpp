@@ -28,9 +28,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 namespace ruis {
 
 /**
- * @brief Drop down box base class.
- * This is a base class for drop down box widgets.
- * Drop down box widget allows selection of an item from list of items.
+ * @brief Selection box base class.
+ * This is a base class for selection box widgets.
+ * Selection box widget allows selection of an item from list of items.
  */
 class selection_box :
 	virtual public widget, //
@@ -41,11 +41,14 @@ class selection_box :
 	container& selection_container;
 
 public:
+	struct parameters{
+		ruis::list_widget::parameters list;
+	};
+
 	struct all_parameters {
-		layout::parameters layout_params;
-		widget::parameters widget_params;
-		list_widget::parameters list_params;
-		string title;
+		ruis::layout::parameters layout;
+		ruis::widget::parameters widget;
+		parameters params;
 	};
 
 private:
@@ -55,7 +58,7 @@ protected:
 	selection_box(
 		const utki::shared_ref<ruis::context>& context, //
 		container& selection_container,
-		list_widget::parameters list_params
+		parameters params
 	);
 
 public:

@@ -43,13 +43,12 @@ class nine_patch :
 
 public:
 	struct specific_parameters {
-		std::shared_ptr<const res::nine_patch> nine_patch;
-		std::shared_ptr<const res::nine_patch> disabled_nine_patch;
+		std::shared_ptr<const res::nine_patch> nine_patch; // TODO: rename to source
+		std::shared_ptr<const res::nine_patch> disabled_nine_patch; // TODO: remove
 	};
 
 	struct parameters{
-		ruis::container::parameters container;
-		ruis::padding::specific_parameters padding_params;
+		ruis::padding::parameters padding;
 		ruis::blending_widget::parameters blending;
 		specific_parameters specific;
 	};

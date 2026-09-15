@@ -36,14 +36,14 @@ class tab :
 	bool mask_overlaps(vec2 pos);
 
 public:
+	struct parameters{
+		ruis::nine_patch_toggle::parameters nine_patch_toggle;
+	};
+
 	struct all_parameters {
-		ruis::layout::parameters layout_params;
-		ruis::widget::parameters widget_params;
-		container::parameters container_params;
-		button::parameters button_params;
-		blending_widget::parameters blending_params;
-		nine_patch::specific_parameters nine_patch_params;
-		nine_patch_button::specific_parameters nine_patch_button_params;
+		ruis::layout::parameters layout;
+		ruis::widget::parameters widget;
+		parameters params;
 	};
 
 	tab( //
