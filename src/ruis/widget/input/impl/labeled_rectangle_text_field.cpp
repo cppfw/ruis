@@ -34,8 +34,8 @@ labeled_rectangle_text_field::labeled_rectangle_text_field(
 ) :
 	widget(
 		context, //
-		std::move(params.layout_params),
-		std::move(params.widget_params)
+		std::move(params.layout),
+		std::move(params.widget)
 	),
 	// Initialize container first so it adds the label and the text field as its children
 	// clang-format off

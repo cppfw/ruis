@@ -429,7 +429,7 @@ utki::shared_ref<ruis::window> make_text_input_window(
 		{
 			m::labeled_rectangle_text_field(c,
 				{
-					.layout_params{
+					.layout{
 						.dims = {ruis::dim::fill, ruis::dim::min}
 					},
 					.params{
