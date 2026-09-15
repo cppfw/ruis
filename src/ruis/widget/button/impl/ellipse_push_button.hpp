@@ -31,12 +31,14 @@ class ellipse_push_button :
 	public ellipse_button
 {
 public:
+	struct parameters{
+		ruis::ellipse_button::parameters ellipse_button;
+	};
+
 	struct all_parameters {
-		layout::parameters layout_params;
-		widget::parameters widget_params;
-		ruis::container::parameters container_params;
-		ruis::padding::specific_parameters padding_params;
-		ellipse_button::parameters ellipse_button_params;
+		ruis::layout::parameters layout;
+		ruis::widget::parameters widget;
+		parameters params;
 	};
 
 	ellipse_push_button(

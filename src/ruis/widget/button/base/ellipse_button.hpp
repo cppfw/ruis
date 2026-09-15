@@ -32,27 +32,30 @@ class ellipse_button :
 	public ellipse
 {
 public:
-	struct parameters {
+	struct specific_parameters {
 		styled<ruis::color> pressed_color;
 		styled<ruis::color> unpressed_color;
+	};
+
+	struct parameters{
+		ruis::ellipse::parameters ellipse;
+		specific_parameters specific;
 	};
 
 	void render(const mat4& matrix) const override;
 
 private:
-	parameters params;
+	specific_parameters params;
 
 	void update_color();
 
 protected:
 	void on_pressed_change() override;
 
-	ellipse_button( //
-		const utki::shared_ref<ruis::context>& context,
-		container::parameters container_params,
-		ruis::padding::specific_parameters padding_params,
+	ellipse_button(
+		const utki::shared_ref<ruis::context>& context, //
 		parameters params,
-		widget_list contents //
+		widget_list contents
 	);
 };
 

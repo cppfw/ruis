@@ -30,24 +30,21 @@ ellipse::ellipse( //
 ) :
 	widget(
 		context, //
-		std::move(params.layout_params),
-		std::move(params.widget_params)
+		std::move(params.layout),
+		std::move(params.widget)
 	),
 	// clang-format off
     padding(
         context, //
         {
-			.params{
-				.container = std::move(params.container_params),
-            	.specific = std::move(params.padding_params)
-			}
+			.params = std::move(params.params.padding)
         },
         std::move(children)
     ),
 	// clang-format on
 	color_widget(
 		context, //
-		std::move(params.color)
+		std::move(params.params.color)
 	),
 	vao(context.get().renderer)
 {

@@ -34,19 +34,17 @@ ellipse_push_button::ellipse_push_button(
 	all_parameters params,
 	ruis::widget_list contents
 ) :
-	widget( //
-		context,
-		std::move(params.layout_params),
-		std::move(params.widget_params) //
+	widget(
+		context, //
+		std::move(params.layout),
+		std::move(params.widget)
 	),
 	button(context, {}),
 	push_button(context, {}),
-	ellipse_button( //
-		context,
-		std::move(params.container_params),
-		std::move(params.padding_params),
-		std::move(params.ellipse_button_params),
-		std::move(contents) //
+	ellipse_button(
+		context, //
+		std::move(params.params.ellipse_button),
+		std::move(contents)
 	)
 {}
 

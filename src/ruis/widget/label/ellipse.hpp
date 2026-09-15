@@ -35,12 +35,15 @@ class ellipse :
 	paint::ellipse_vao vao;
 
 public:
+	struct parameters{
+		ruis::padding::parameters padding;
+		ruis::color_widget::parameters color;
+	};
+
 	struct all_parameters {
-		layout::parameters layout_params;
-		widget::parameters widget_params;
-		container::parameters container_params;
-		ruis::padding::specific_parameters padding_params;
-		color_widget::parameters color;
+		ruis::layout::parameters layout;
+		ruis::widget::parameters widget;
+		parameters params;
 	};
 
 	ellipse(

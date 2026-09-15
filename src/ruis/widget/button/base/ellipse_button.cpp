@@ -43,41 +43,39 @@ void ellipse_button::update_color()
 	}
 }
 
-ellipse_button::ellipse_button( //
-	const utki::shared_ref<ruis::context>& context,
-	container::parameters container_params,
-	ruis::padding::specific_parameters padding_params,
+ellipse_button::ellipse_button(
+	const utki::shared_ref<ruis::context>& context, //
 	parameters params,
-	widget_list contents //
+	widget_list contents
 ) :
 	widget(context, {}, {}),
-	button(context, button::parameters{}),
+	button(context, {}),
 	ellipse(
 		context,
 		// clang-format off
-		ellipse::all_parameters{
-			.container_params = std::move(container_params), 
-            .padding_params = [&]() {
-				for(auto& b : padding_params.borders){
+		{
+			.params = [&](){
+				for(auto& b : params.ellipse.padding.specific.borders){
 					if(b.get().is_undefined()){
 						b = context.get().style().get_len_button_padding();
 					}
 				}
-				return std::move(padding_params);
+
+				return std::move(params.ellipse);
 			}()
 		},
 		// clang-format on
 		std::move(contents)
 	),
 	params([&]() {
-		if (params.unpressed_color.get().is_undefined()) {
-			params.unpressed_color = context.get().style().get_color_primary();
+		if (auto& c = params.specific.unpressed_color; c.get().is_undefined()) {
+			c = context.get().style().get_color_primary();
 		}
-		if (params.pressed_color.get().is_undefined()) {
-			params.pressed_color = context.get().style().get_color_secondary();
+		if (auto& c = params.specific.pressed_color; c.get().is_undefined()) {
+			c = context.get().style().get_color_secondary();
 		}
 
-		return std::move(params);
+		return std::move(params.specific);
 	}())
 {
 	this->update_color();
