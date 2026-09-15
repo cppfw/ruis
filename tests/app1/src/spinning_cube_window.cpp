@@ -54,7 +54,9 @@ utki::shared_ref<ruis::window> make_spinning_cube_window(
             m::image(c,
                 {
                     .params{
-                        .img = c.get().loader().load<ruis::res::image>("img_lattice"sv)
+                        .specific{
+                            .img = c.get().loader().load<ruis::res::image>("img_lattice"sv)
+                        }
                     }
                 }
             ),

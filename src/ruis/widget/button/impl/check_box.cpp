@@ -61,15 +61,15 @@ check_box::check_box(
 		{
 			make::image(context,
 				{
-					.widget_params = {
+					.widget{
 						.id = "ruis_checkbox_check"s
 					},
 					.params = [&](){
-						auto p = std::move(params.image_params);
-						if(!p.img){
-							p.img = context.get().loader().load<res::image>("ruis_img_checkbox_tick"sv);
+						auto&& p = std::move(params.image_params);
+						if(auto src = p.specific.img; !src){
+							src = context.get().loader().load<res::image>("ruis_img_checkbox_tick"sv);
 						}
-						return p;
+						return std::move(p);
 					}()
 				}
 			)

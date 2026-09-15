@@ -43,6 +43,7 @@ class check_box :
 	image& tick_widget;
 
 public:
+	// TODO: specific
 	struct all_parameters {
 		layout::parameters layout_params;
 		widget::parameters widget_params;

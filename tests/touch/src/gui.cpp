@@ -50,13 +50,15 @@ utki::shared_ref<ruis::touch::tab_button> make_tab_button(
 	// clang-format off
 	return ruis::touch::make::tab_button(c,
 		ruis::touch::tab_button::all_parameters{
-			.layout_params = {
+			.layout_params{
 				.dims = {ruis::dim::fill, 60_pp},
 				.weight = 1
 			},
-			.image_params = {
-				.img = std::move(icon),
-				.keep_aspect_ratio = true
+			.image_params{
+				.specific{
+					.img = std::move(icon),
+					.keep_aspect_ratio = true
+				}
 			},
 		},
 		std::move(text)

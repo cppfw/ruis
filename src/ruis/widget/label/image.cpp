@@ -32,14 +32,14 @@ image::image( //
 ) :
 	widget( //
 		context,
-		std::move(params.layout_params),
-		std::move(params.widget_params)
+		std::move(params.layout),
+		std::move(params.widget)
 	),
 	blending_widget( //
 		context,
 		std::move(params.params.blending)
 	),
-	params(std::move(params.params)),
+	params(std::move(params.params.specific)),
 	vao(context.get().renderer.get().obj().empty_vertex_array)
 {}
 

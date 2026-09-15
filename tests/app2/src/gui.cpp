@@ -200,15 +200,17 @@ utki::shared_ref<ruis::window> make_image_window(
 		{
 			m::image(c,
 				{
-					.layout_params = {
+					.layout{
 						.dims = {ruis::dim::min, ruis::dim::fill}
 					},
-					.widget_params = {
+					.widget{
 						.id = "image"s
 					},
-					.params = {
-						.img = c.get().loader().load<ruis::res::image>("img_home"sv),
-						.keep_aspect_ratio = true
+					.params{
+						.specific{
+							.img = c.get().loader().load<ruis::res::image>("img_home"sv),
+							.keep_aspect_ratio = true
+						}
 					}
 				}
 			),

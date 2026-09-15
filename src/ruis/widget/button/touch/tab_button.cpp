@@ -71,7 +71,7 @@ tab_button::tab_button(
                 {
                     ruis::make::image(context,
                         {
-                            .layout_params = {
+                            .layout{
                                 .dims = {ruis::dim::min, ruis::dim::fill},
                                 .weight = 1
                             },

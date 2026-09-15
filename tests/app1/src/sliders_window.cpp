@@ -40,12 +40,14 @@ utki::shared_ref<ruis::window> make_sliders_window(
         {
             m::image(c,
                 {
-                    .layout_params{
+                    .layout{
                         .dims{ruis::dim::min, ruis::dim::max}
                     },
                     .params{
-                        .img = c.get().loader().load<ruis::res::image>("img_camera"sv),
-                        .keep_aspect_ratio = true,
+                        .specific{
+                            .img = c.get().loader().load<ruis::res::image>("img_camera"sv),
+                            .keep_aspect_ratio = true
+                        }
                     }
                 }
             ),

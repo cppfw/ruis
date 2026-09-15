@@ -27,6 +27,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
+// TODO: doxygen
+
 /**
  * @brief Image widget.
  * This widget can display an image.
@@ -42,25 +44,27 @@ class image :
 	public blending_widget
 {
 public:
-	struct parameters {
-		blending_widget::parameters blending;
-
-		// TODO: move to specific
+	struct specific_parameters{
 		std::shared_ptr<const ruis::res::image> img; // TODO: rename to source
 		std::shared_ptr<const ruis::res::image> disabled_img; // TODO: remove
 		bool keep_aspect_ratio = false;
 	};
 
+	struct parameters {
+		blending_widget::parameters blending;
+		specific_parameters specific;
+	};
+
 private:
-	parameters params;
+	specific_parameters params;
 
 	mutable std::shared_ptr<const render::texture_2d> texture;
 	mutable utki::shared_ref<const render::vertex_array> vao;
 
 public:
 	struct all_parameters {
-		layout::parameters layout_params;
-		widget::parameters widget_params;
+		ruis::layout::parameters layout;
+		ruis::widget::parameters widget;
 		image::parameters params;
 	};
 

@@ -297,7 +297,7 @@ utki::shared_ref<ruis::widget> make_plus_minus_widget(const utki::shared_ref<rui
 		{
 			ruis::make::image(c,
 				{
-					.widget_params{
+					.widget{
 						.id = "plusminus"s
 					}
 				}

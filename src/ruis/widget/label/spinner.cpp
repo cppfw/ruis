@@ -72,11 +72,11 @@ utki::shared_ref<ruis::spinner> ruis::make::refresh(
 	spinner::all_parameters params
 )
 {
-	if (!params.params.image.img) {
-		params.params.image.img = context.get().loader().load<res::image>("ruis_img_refresh"sv);
+	if (auto& im = params.params.image.specific.img; !im) {
+		im = context.get().loader().load<res::image>("ruis_img_refresh"sv);
 	}
-	if (!params.params.image.disabled_img) {
-		params.params.image.disabled_img = context.get().loader().load<res::image>("ruis_img_refresh_disabled"sv);
+	if (auto& im = params.params.image.specific.disabled_img; !im) {
+		im = context.get().loader().load<res::image>("ruis_img_refresh_disabled"sv);
 	}
 
 	return utki::make_shared<ruis::spinner>(

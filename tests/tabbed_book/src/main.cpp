@@ -53,14 +53,16 @@ utki::shared_ref<ruis::tab> inflate_tab(ruis::tabbed_book& tb, const std::string
 						{
 							m::image(c,
 								{
-									.layout_params{
+									.layout{
 										.dims{
 											ruis::length::make_pp(8),
 											ruis::length::make_pp(8)
 										}
 									},
 									.params{
-										.img = c.get().loader().load<ruis::res::image>("ruis_img_close")
+										.specific{
+											.img = c.get().loader().load<ruis::res::image>("ruis_img_close")
+										}
 									}
 								}
 							)
