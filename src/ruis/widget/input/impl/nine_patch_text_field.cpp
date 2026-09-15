@@ -57,8 +57,8 @@ nine_patch_text_field::nine_patch_text_field(
 ) :
 	widget(
 		context, //
-		std::move(params.layout_params),
-		std::move(params.widget_params)
+		std::move(params.layout),
+		std::move(params.widget)
 	),
 	// Initialize nine_patch first so it adds the text_input as a child
 	// clang-format off

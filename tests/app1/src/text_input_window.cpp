@@ -183,10 +183,10 @@ utki::shared_ref<ruis::window> make_text_input_window(
             ),
             m::nine_patch_text_field(c,
                 {
-                    .layout_params{
+                    .layout{
                         .dims{ruis::dim::max, ruis::dim::min}
                     },
-                    .widget_params{
+                    .widget{
                         .id = "text_input"s
                     },
                     .params{
