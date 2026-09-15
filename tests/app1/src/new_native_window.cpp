@@ -66,10 +66,10 @@ utki::shared_ref<ruis::widget> make_new_native_window_root_widget(
             ),
             m::text_field(c,
                 {
-                    .layout_params{
+                    .layout{
                         .dims{ruis::dim::max, ruis::dim::min}
                     },
-                    .widget_params{
+                    .widget{
                         .id = "text_input"s
                     },
                     .text_input{

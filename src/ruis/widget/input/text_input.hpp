@@ -78,7 +78,7 @@ public:
 	text_input& operator=(text_input&&) = delete;
 
 	struct all_parameters {
-		layout::parameters layout;
+		ruis::layout::parameters layout;
 		ruis::widget::parameters widget;
 		parameters params;
 	};

@@ -43,8 +43,8 @@ utki::shared_ref<ruis::text_field> ruis::make::text_field(
 		context, //
 		// clang-format off
 		{
-			.layout = std::move(params.layout_params),
-			.widget = std::move(params.widget_params),
+			.layout = std::move(params.layout),
+			.widget = std::move(params.widget),
 			.params{
 				.text_input = std::move(params.text_input)
 			}
