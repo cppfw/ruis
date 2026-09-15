@@ -56,7 +56,7 @@ tabbed_book::tabbed_book(
 								.layout_params{
 									.dims{ruis::dim::fill, ruis::dim::min}
 								},
-								.container_params{
+								.params{
 									.layout = ruis::layout::row
 								}
 							},
@@ -118,7 +118,7 @@ tabbed_book::tabbed_book(
 	// clang-format off
 	container(context,
 		{
-			.container_params{
+			.params{
 				.layout = ruis::layout::column // TODO: get from params
 			}
 		},

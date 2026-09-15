@@ -37,7 +37,7 @@ key_proxy::key_proxy( //
 	container( //
 		context,
 		{
-			.container_params = std::move(params.container_params)
+			.params = std::move(params.params)
 		},
 		std::move(children)
 	),
@@ -59,8 +59,8 @@ utki::shared_ref<ruis::key_proxy> ruis::make::key_proxy(
 	widget_list children
 )
 {
-	if (!params.container_params.layout) {
-		params.container_params.layout = ruis::layout::pile;
+	if (!params.params.layout) {
+		params.params.layout = ruis::layout::pile;
 	}
 
 	return utki::make_shared<ruis::key_proxy>(

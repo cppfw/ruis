@@ -217,7 +217,7 @@ utki::shared_ref<ruis::widget> make_table_tree_view_window(
 					}
 				}
 			},
-			.container_params = {
+			.params = {
 				.layout = ruis::layout::row
 			},
 			.title = c.get().localization.get().get("table_tree_view"sv)

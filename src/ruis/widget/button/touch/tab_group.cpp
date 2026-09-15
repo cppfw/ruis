@@ -40,7 +40,7 @@ tab_group::tab_group(
 		{
 			.layout_params = std::move(params.layout_params),
 			.widget_params = std::move(params.widget_params),
-			.container_params = std::move(params.container_params),
+			.params = std::move(params.params),
 		},
 		[&]() {
 			for (auto& c : children) {
@@ -124,8 +124,8 @@ utki::shared_ref<ruis::touch::tab_group> ruis::touch::make::tab_group(
 	widget_list tabs
 )
 {
-	if (!params.container_params.layout) {
-		params.container_params.layout = ruis::layout::row;
+	if (!params.params.layout) {
+		params.params.layout = ruis::layout::row;
 	}
 
 	return utki::make_shared<ruis::touch::tab_group>(

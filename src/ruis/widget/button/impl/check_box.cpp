@@ -34,29 +34,28 @@ check_box::check_box(
 ) :
 	widget( //
 		context,
-		std::move(params.layout_params),
-		std::move(params.widget_params)
+		std::move(params.layout),
+		std::move(params.widget)
 	),
 	button( //
 		context,
-		std::move(params.button_params)
+		std::move(params.button)
 	),
 	toggle_button(context),
 	// clang-format off
 	nine_patch(context,
 		{
-			.params{
-				.padding{
-					.container{.layout = layout::pile}
-				},
-				.specific = [&](){
-					auto p = std::move(params.nine_patch_params);
-					if(!p.source){
-						p.source = context.get().loader().load<res::nine_patch>("ruis_npt_checkbox_bg"sv);
-					}
-					return p;
-				}()
-			}
+			.params = [&](){
+				auto&& p = params.params.nine_patch;
+
+				p.padding.container.layout = layout::pile;
+
+				if(auto& s = p.specific.source; !s){
+					s = context.get().loader().load<res::nine_patch>("ruis_npt_checkbox_bg"sv);
+				}
+
+				return std::move(p);
+			}()
 		},
 		{
 			make::image(context,
@@ -65,10 +64,12 @@ check_box::check_box(
 						.id = "ruis_checkbox_check"s
 					},
 					.params = [&](){
-						auto&& p = std::move(params.image_params);
-						if(auto src = p.specific.source; !src){
-							src = context.get().loader().load<res::image>("ruis_img_checkbox_tick"sv);
+						auto&& p = std::move(params.params.image);
+
+						if(auto& s = p.specific.source; !s){
+							s = context.get().loader().load<res::image>("ruis_img_checkbox_tick"sv);
 						}
+
 						return std::move(p);
 					}()
 				}

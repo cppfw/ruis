@@ -41,7 +41,7 @@ utki::shared_ref<ruis::push_button> m::push_button(
                 .rectangle_button{
                     .rectangle{
                         .padding{
-                            .container = std::move(params.container_params),
+                            .container = std::move(params.params),
                             .specific{
                                 .borders = {5_pp}
                             }

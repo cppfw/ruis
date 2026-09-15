@@ -198,7 +198,7 @@ dialog::dialog(
 	container(
 		context,
 		{
-			.container_params = {
+			.params = {
 				.layout = ruis::layout::pile
 			}
 		},
@@ -240,11 +240,11 @@ dialog::dialog(
 					// (e.g. scrollable lists) can take the whole available area of the panel
 					.dims = {ruis::dim::fill, ruis::dim::fill}
 				},
-				.container_params = [&](){
-					if(!params.container_params.layout){
-						params.container_params.layout = ruis::layout::pile;
+				.params = [&](){
+					if(!params.params.layout){
+						params.params.layout = ruis::layout::pile;
 					}
-					return std::move(params.container_params);
+					return std::move(params.params);
 				}()
 			},
 			// clang-format on

@@ -38,7 +38,7 @@ choice_group::choice_group(
 	// clang-format off
 	container(context,
 		{
-			.container_params = std::move(params.container_params)
+			.params = std::move(params.params)
 		},
 		std::move(children)
 	)
@@ -76,8 +76,8 @@ utki::shared_ref<ruis::choice_group> ruis::make::choice_group(
 	widget_list children
 )
 {
-	if (!params.container_params.layout) {
-		params.container_params.layout = ruis::layout::column;
+	if (!params.params.layout) {
+		params.params.layout = ruis::layout::column;
 	}
 
 	return utki::make_shared<ruis::choice_group>(

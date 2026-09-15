@@ -48,7 +48,7 @@ tab_button::tab_button(
     ruis::container(
         context, //
         {
-            .container_params = {
+            .params = {
                 .layout = ruis::layout::pile
             }
         },

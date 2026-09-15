@@ -43,13 +43,16 @@ class check_box :
 	image& tick_widget;
 
 public:
-	// TODO: specific
+	struct parameters{
+		ruis::nine_patch::parameters nine_patch;
+		ruis::image::parameters image;
+	};
+
 	struct all_parameters {
-		layout::parameters layout_params;
-		widget::parameters widget_params;
-		button::parameters button_params;
-		nine_patch::specific_parameters nine_patch_params;
-		image::parameters image_params;
+		ruis::layout::parameters layout;
+		ruis::widget::parameters widget;
+		ruis::button::parameters button;
+		parameters params;
 	};
 
 	check_box(

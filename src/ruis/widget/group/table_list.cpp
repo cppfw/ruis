@@ -64,7 +64,7 @@ public:
 				.layout{
 					.dims = {ruis::dim::max, ruis::dim::min}
 				},
-				.container_params{
+				.params{
 					.layout = ruis::layout::trivial
 				}
 			},
@@ -141,7 +141,7 @@ table_list::table_list(
 	ruis::container(
 		context,
 		{
-			.container_params{
+			.params{
 				.layout = ruis::layout::column
 			}
 		},

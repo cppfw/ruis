@@ -70,7 +70,7 @@ utki::shared_ref<ruis::window> make_sliders_window(
 					}
 				}
 			},
-			.container_params = {
+			.params = {
 				.layout = ruis::layout::column
 			},
 			.title = c.get().localization.get().get("sliders"sv)
@@ -192,7 +192,7 @@ utki::shared_ref<ruis::window> make_image_window(
 					}
 				}
 			},
-			.container_params = {
+			.params = {
 				.layout = ruis::layout::pile
 			},
 			.title = c.get().localization.get().get("image"sv)
@@ -358,7 +358,7 @@ utki::shared_ref<ruis::window> make_selection_box_window(
 					}
 				}
 			},
-			.container_params = {
+			.params = {
 				.layout = ruis::layout::column
 			},
 			.title = c.get().localization.get().get("selection_box"sv)
@@ -421,7 +421,7 @@ utki::shared_ref<ruis::window> make_text_input_window(
 					}
 				}
 			},
-			.container_params = {
+			.params = {
 				.layout = ruis::layout::column
 			},
 			.title = c.get().localization.get().get("text_input"sv)

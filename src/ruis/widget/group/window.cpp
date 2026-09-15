@@ -44,7 +44,7 @@ utki::shared_ref<container> make_top_row(const utki::shared_ref<context>& c)
 			.layout{
 				.dims = {ruis::dim::fill, ruis::dim::min}
 			},
-			.container_params{
+			.params{
 				.layout = ruis::layout::row
 			}
 		},
@@ -87,7 +87,7 @@ utki::shared_ref<container> make_bottom_row(const utki::shared_ref<context>& c)
 			.layout{
 				.dims = {ruis::dim::fill, ruis::dim::min}
 			},
-			.container_params{
+			.params{
 				.layout = ruis::layout::row
 			}
 		},
@@ -136,7 +136,7 @@ utki::shared_ref<container> make_caption(
 			.widget{
 				.clip = true
 			},
-			.container_params{
+			.params{
 				.layout = ruis::layout::pile
 			}
 		},
@@ -166,7 +166,7 @@ utki::shared_ref<container> make_caption(
 					.layout{
 						.dims = {ruis::dim::max, ruis::dim::max}
 					},
-					.container_params{
+					.params{
 						.layout = ruis::layout::row
 					}
 				},
@@ -221,7 +221,7 @@ utki::shared_ref<container> make_middle(
 				.dims = {ruis::dim::max, ruis::dim::max},
 				.weight = 1
 			},
-			.container_params{
+			.params{
 				.layout = ruis::layout::column
 			}
 		},
@@ -248,7 +248,7 @@ utki::shared_ref<container> make_middle_row(
 				.dims = {ruis::dim::max, ruis::dim::max},
 				.weight = 1
 			},
-			.container_params{
+			.params{
 				.layout = ruis::layout::row
 			}
 		},
@@ -295,7 +295,7 @@ std::vector<utki::shared_ref<widget>> make_children(
 				.layout{
 					.dims = {ruis::dim::max, ruis::dim::max}
 				},
-				.container_params{
+				.params{
 					.layout = ruis::layout::column
 				}
 			},
@@ -344,7 +344,7 @@ window::window(
 					.widget{
 						.clip = true
 					},
-					.container_params = std::move(params.container_params)
+					.params = std::move(params.params)
 				},
 			// clang-format on
 			std::move(children)
@@ -366,7 +366,7 @@ window::window(
 	container( //
 		context,
 		{
-			.container_params{
+			.params{
 				.layout = ruis::layout::pile
 			}
 		},
@@ -796,8 +796,8 @@ utki::shared_ref<window> ruis::make::window(
 	widget_list children
 )
 {
-	if (!params.container_params.layout) {
-		params.container_params.layout = ruis::layout::pile;
+	if (!params.params.layout) {
+		params.params.layout = ruis::layout::pile;
 	}
 	return utki::make_shared<ruis::window>(
 		context, //

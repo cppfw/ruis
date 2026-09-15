@@ -42,7 +42,7 @@ labeled_rectangle_text_field::labeled_rectangle_text_field(
 	container(
 		context, //
 		{
-			.container_params{
+			.params{
 				.layout = ruis::layout::column
 			}
 		},

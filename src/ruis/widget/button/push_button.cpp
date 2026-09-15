@@ -103,9 +103,9 @@ utki::shared_ref<ruis::push_button> ruis::make::push_button( //
 	widget_list children
 )
 {
-	if (!params.container_params.layout) {
+	if (!params.params.layout) {
 		// pile layout by default
-		params.container_params.layout = ruis::layout::pile;
+		params.params.layout = ruis::layout::pile;
 	}
 
 	auto& c = context.get();
@@ -119,7 +119,7 @@ utki::shared_ref<ruis::push_button> ruis::make::push_button( //
 				.nine_patch_button{
 					.nine_patch{
 						.padding{
-							.container = std::move(params.container_params)
+							.container = std::move(params.params)
 						}
 					},
 					.specific{

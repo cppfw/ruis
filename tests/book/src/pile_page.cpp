@@ -12,7 +12,7 @@ pile_page::pile_page(
 	container(
 		context,//
 		{
-			.container_params{
+			.params{
 				.layout = ruis::layout::pile
 			}
 		},

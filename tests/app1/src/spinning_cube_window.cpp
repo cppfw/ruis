@@ -35,7 +35,7 @@ utki::shared_ref<ruis::window> make_spinning_cube_window(
                     }
                 }
             },
-            .container_params{
+            .params{
                 .layout = ruis::layout::pile
             },
             .title = U"Spinning cube"s

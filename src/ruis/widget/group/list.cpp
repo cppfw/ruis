@@ -40,7 +40,7 @@ list::list(
 	ruis::container(
 		context,
 		{
-			.container_params{
+			.params{
 				.layout = layout::trivial
 			}
 		},

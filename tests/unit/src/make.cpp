@@ -28,7 +28,7 @@ const tst::set set("make", [](tst::suite& suite){
                 .layout = {
                     .dims = {ruis::dim::min, ruis::dim::fill}
                 },
-                .container_params = {
+                .params = {
                     .layout = ruis::layout::pile
                 }
             },

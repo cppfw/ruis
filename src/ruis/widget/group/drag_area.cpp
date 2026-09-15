@@ -36,7 +36,7 @@ drag_area::drag_area(
 	// clang-format off
     container(context,
         {
-            .container_params = {
+            .params = {
                 .layout = ruis::layout::trivial
             }
         },

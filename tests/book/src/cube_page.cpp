@@ -132,7 +132,7 @@ cube_page::cube_page(const utki::shared_ref<ruis::context>& c) :
 		container(
 			context,
 			ruis::container::all_parameters{
-				.container_params{
+				.params{
 					.layout = ruis::layout::column
 				}
 			},

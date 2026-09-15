@@ -40,10 +40,10 @@ container::container(
 	),
 	children_list(std::move(children)),
 	layout([&]() {
-		if (!params.container_params.layout) {
+		if (!params.params.layout) {
 			return ruis::layout::trivial;
 		}
-		return utki::shared_ref(params.container_params.layout);
+		return utki::shared_ref(params.params.layout);
 	}())
 {
 	for (auto& w : this->children()) {
@@ -558,7 +558,7 @@ utki::shared_ref<ruis::container> ruis::make::pile(
 		{
 		 	.layout = std::move(params.layout_params),
 		 	.widget = std::move(params.widget_params),
-		 	.container_params{
+		 	.params{
 				.layout = layout::pile
 			}
 		},
@@ -579,7 +579,7 @@ utki::shared_ref<ruis::container> ruis::make::column(
 		{
 		 	.layout = std::move(params.layout_params),
 		 	.widget = std::move(params.widget_params),
-		 	.container_params{
+		 	.params{
 				.layout = layout::column
 			}
 		},
@@ -600,7 +600,7 @@ utki::shared_ref<ruis::container> ruis::make::row(
 		{
 		 	.layout = std::move(params.layout_params),
 		 	.widget = std::move(params.widget_params),
-		 	.container_params{
+		 	.params{
 				.layout = layout::row
 			}
 		},

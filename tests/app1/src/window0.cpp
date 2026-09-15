@@ -19,212 +19,216 @@ using namespace ruis::make;
 
 namespace{
 utki::shared_ref<ruis::widget> make_radio_button(
-    const utki::shared_ref<ruis::context>& c, //
-    std::u32string text
+	const utki::shared_ref<ruis::context>& c, //
+	std::u32string text
 )
 {
-    // clang-format off
-    return m::row(c,
-        {},
-        {
-            m::padding(c,
-                {
-                    .params{
-                        .specific{
-                            .borders{5_pp, 5_pp, 5_pp, 5_pp}
-                        }
-                    }
-                },
-                {
-                    m::radio_button(c, {})
-                }
-            ),
-            m::text(c, {}, std::move(text))
-        }
-    );
-    // clang-format on
+	// clang-format off
+	return m::row(c,
+		{},
+		{
+			m::padding(c,
+				{
+					.params{
+						.specific{
+							.borders{5_pp, 5_pp, 5_pp, 5_pp}
+						}
+					}
+				},
+				{
+					m::radio_button(c, {})
+				}
+			),
+			m::text(c, {}, std::move(text))
+		}
+	);
+	// clang-format on
 }
 }
 
 utki::shared_ref<ruis::window> make_window0(
-    const utki::shared_ref<ruis::context>& c, //
-    ruis::vec2_length pos
+	const utki::shared_ref<ruis::context>& c, //
+	ruis::vec2_length pos
 )
 {
-    auto check_box = m::check_box(c, {
-        .button_params{
-            .pressed = c.get().ren().ctx().is_vsync_enabled()
-        }
-    });
+	// clang-format off
+	auto check_box = m::check_box(c,
+		{
+			.button{
+				.pressed = c.get().ren().ctx().is_vsync_enabled()
+			}
+		}
+	);
+	// clang-format on
 
-    check_box.get().pressed_change_handler = [](ruis::button& b){
-        b.context.get().ren().ctx().set_vsync_enabled(b.is_pressed());
-    };
+	check_box.get().pressed_change_handler = [](ruis::button& b){
+		b.context.get().ren().ctx().set_vsync_enabled(b.is_pressed());
+	};
 
-    // clang-format off
-    return m::window(c,
-        {
-            .widget_params{
-                .rectangle{
-                    {
-                        pos.x().get(c.get()),
-                        pos.y().get(c.get())
-                    },
-                    {
-                        ruis::length::make_pp(300).get(c.get()),
-                        ruis::length::make_pp(200).get(c.get())
-                    }
-                },
-                .cache = true
-            },
-            .title = U"cached"s
-        },
-        {
-            m::column(c,
-                {
-                    .layout_params{
-                        .dims{ruis::dim::max, ruis::dim::max}
-                    }
-                },
-                {
-                    m::row(c,
-                        {
-                            .layout_params{
-                                .align{ruis::align::back, ruis::align::undefined}
-                            }
-                        },
-                        {
-                            m::padding(c,
-                                {
-                                    .params{
-                                        .container{
-                                            .layout = ruis::layout::pile
-                                        },
-                                        .specific{
-                                            .borders{
-                                                ruis::length::make_pp(5),
-                                                ruis::length::make_pp(5),
-                                                ruis::length::make_pp(5),
-                                                ruis::length::make_pp(5)
-                                            }
-                                        }
-                                    }
-                                },
-                                {
-                                    check_box
-                                }
-                            ),
-                            m::text(c,
-                                {
-                                    .params{
-                                        .font{
-                                            .size = ruis::length::make_pp(20),
-                                            .face = c.get().loader().load<ruis::res::font>("fnt_monospace")
-                                        }
-                                    }
-                                },
-                                U"VSYNC enabled"s
-                            )
-                        }
-                    ),
-                    m::selection_box(c,
-                        {
-                            .layout{
-                                .dims{ruis::dim::max, ruis::dim::min}
-                            },
-                            .widget{
-                                .id = "dropdownselector"s
-                            },
-                            .params{
-                                .list{
-                                    .provider = [&](){
-                                        class the_provider : public ruis::list_provider
-                                        {
-                                            std::vector<std::u32string> items;
-                                        public:
-                                            the_provider(const utki::shared_ref<ruis::context>& context) :
-                                                list_provider(context),
-                                                items{
-                                                    U"item0"s,
-                                                    U"item1"s,
-                                                    U"item2"s,
-                                                    U"item3"s,
-                                                    U"item4"s,
-                                                    U"item5"s,
-                                                    U"item6"s,
-                                                    U"item7"s,
-                                                    U"item8"s,
-                                                    U"item9"s,
-                                                    U"item10"s
-                                                }
-                                            {}
+	// clang-format off
+	return m::window(c,
+		{
+			.widget_params{
+				.rectangle{
+					{
+						pos.x().get(c.get()),
+						pos.y().get(c.get())
+					},
+					{
+						ruis::length::make_pp(300).get(c.get()),
+						ruis::length::make_pp(200).get(c.get())
+					}
+				},
+				.cache = true
+			},
+			.title = U"cached"s
+		},
+		{
+			m::column(c,
+				{
+					.layout_params{
+						.dims{ruis::dim::max, ruis::dim::max}
+					}
+				},
+				{
+					m::row(c,
+						{
+							.layout_params{
+								.align{ruis::align::back, ruis::align::undefined}
+							}
+						},
+						{
+							m::padding(c,
+								{
+									.params{
+										.container{
+											.layout = ruis::layout::pile
+										},
+										.specific{
+											.borders{
+												ruis::length::make_pp(5),
+												ruis::length::make_pp(5),
+												ruis::length::make_pp(5),
+												ruis::length::make_pp(5)
+											}
+										}
+									}
+								},
+								{
+									check_box
+								}
+							),
+							m::text(c,
+								{
+									.params{
+										.font{
+											.size = ruis::length::make_pp(20),
+											.face = c.get().loader().load<ruis::res::font>("fnt_monospace")
+										}
+									}
+								},
+								U"VSYNC enabled"s
+							)
+						}
+					),
+					m::selection_box(c,
+						{
+							.layout{
+								.dims{ruis::dim::max, ruis::dim::min}
+							},
+							.widget{
+								.id = "dropdownselector"s
+							},
+							.params{
+								.list{
+									.provider = [&](){
+										class the_provider : public ruis::list_provider
+										{
+											std::vector<std::u32string> items;
+										public:
+											the_provider(const utki::shared_ref<ruis::context>& context) :
+												list_provider(context),
+												items{
+													U"item0"s,
+													U"item1"s,
+													U"item2"s,
+													U"item3"s,
+													U"item4"s,
+													U"item5"s,
+													U"item6"s,
+													U"item7"s,
+													U"item8"s,
+													U"item9"s,
+													U"item10"s
+												}
+											{}
 
-                                            size_t count()const noexcept override{
-                                                return this->items.size();
-                                            }
+											size_t count()const noexcept override{
+												return this->items.size();
+											}
 
-                                            utki::shared_ref<ruis::widget> get_widget(size_t index)override{
-                                                return m::text(this->context, {}, this->items.at(index));
-                                            }
-                                        };
-                                        return utki::make_shared<the_provider>(c);
-                                    }()
-                                }
-                            }
-                        }
-                    ),
-                    m::text(c,
-                        {
-                            .widget_params{
-                                .id = "dropdownselector_selection"s
-                            }
-                        },
-                        U"unkonwn"s
-                    ),
-                    m::row(c,
-                        {
-                            .layout_params{
-                                .align{ruis::align::front, ruis::align::front}
-                            }
-                        },
-                        {
-                            m::push_button(c,
-                                {
-                                    .widget{
-                                        .id = "showhide_mousecursor_button"s
-                                    }
-                                },
-                                {
-                                    m::text(c, {}, U"show/hide mouse"s)
-                                }
-                            ),
-                            m::push_button(c,
-                                {
-                                    .widget{
-                                        .id = "fullscreen_button"s
-                                    }
-                                },
-                                {
-                                    m::text(c, {}, U"toggle fullscreen"s)
-                                }
-                            )
-                        }
-                    ),
-                    m::choice_group(c,
-                        {
-                            .layout_params{
-                                .dims{ruis::dim::max, ruis::dim::min}
-                            }
-                        },
-                        {
-                            make_radio_button(c, U"radio button 1"s),
-                            make_radio_button(c, U"radio button 2"s),
-                            make_radio_button(c, U"radio button 3"s)
-                        }
-                    )
-                }
-            )
-        }
-    );
-    // clang-format on
+											utki::shared_ref<ruis::widget> get_widget(size_t index)override{
+												return m::text(this->context, {}, this->items.at(index));
+											}
+										};
+										return utki::make_shared<the_provider>(c);
+									}()
+								}
+							}
+						}
+					),
+					m::text(c,
+						{
+							.widget_params{
+								.id = "dropdownselector_selection"s
+							}
+						},
+						U"unkonwn"s
+					),
+					m::row(c,
+						{
+							.layout_params{
+								.align{ruis::align::front, ruis::align::front}
+							}
+						},
+						{
+							m::push_button(c,
+								{
+									.widget{
+										.id = "showhide_mousecursor_button"s
+									}
+								},
+								{
+									m::text(c, {}, U"show/hide mouse"s)
+								}
+							),
+							m::push_button(c,
+								{
+									.widget{
+										.id = "fullscreen_button"s
+									}
+								},
+								{
+									m::text(c, {}, U"toggle fullscreen"s)
+								}
+							)
+						}
+					),
+					m::choice_group(c,
+						{
+							.layout_params{
+								.dims{ruis::dim::max, ruis::dim::min}
+							}
+						},
+						{
+							make_radio_button(c, U"radio button 1"s),
+							make_radio_button(c, U"radio button 2"s),
+							make_radio_button(c, U"radio button 3"s)
+						}
+					)
+				}
+			)
+		}
+	);
+	// clang-format on
 }

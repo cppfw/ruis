@@ -143,7 +143,7 @@ public:
 	struct all_parameters {
 		ruis::layout::parameters layout;
 		ruis::widget::parameters widget;
-		container::parameters container_params;
+		parameters params;
 	};
 
 private:

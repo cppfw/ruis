@@ -190,7 +190,7 @@ utki::shared_ref<ruis::widget> make_table_list_window(
 					}
 				}
 			},
-			.container_params = {
+			.params = {
 				.layout = ruis::layout::row
 			},
 			.title = c.get().localization.get().get("table_list"sv)

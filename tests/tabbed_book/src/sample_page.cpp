@@ -15,7 +15,7 @@ sample_page::sample_page(
 	ruis::container(
 		context,
 		{
-			.container_params{
+			.params{
 				.layout = ruis::layout::row
 			}
 		},

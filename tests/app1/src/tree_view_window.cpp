@@ -305,7 +305,7 @@ utki::shared_ref<ruis::window> make_tree_view_window(
                     }
                 }
             },
-            .container_params{
+            .params{
                 .layout = ruis::layout::column
             },
             .title = U"TreeView"s

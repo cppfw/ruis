@@ -46,7 +46,7 @@ public:
 		),
 		container(context,
 			{
-				.container_params{
+				.params{
 					.layout = ruis::layout::size
 				}
 			},
@@ -82,7 +82,7 @@ overlay::overlay(
 	container( //
 		context,
 		{
-			.container_params{
+			.params{
 				.layout = layout::pile
 			}
 		},

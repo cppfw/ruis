@@ -88,7 +88,7 @@ selection_box::selection_box(
 						// TODO: refactor to avoid using lookup widget by id
 						.id = std::string(selection_label_id)
 					},
-					.container_params{
+					.params{
 						.layout = ruis::layout::pile
 					}
 				}

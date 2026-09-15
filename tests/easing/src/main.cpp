@@ -24,7 +24,7 @@ public:
 
 		auto kp = ruis::make::key_proxy(
 			this->window.gui.context,
-			{.container_params = {.layout = ruis::layout::pile}},
+			{.params = {.layout = ruis::layout::pile}},
 			{make_gui(this->window.gui.context)}
 		);
 

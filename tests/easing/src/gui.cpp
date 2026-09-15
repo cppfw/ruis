@@ -62,7 +62,7 @@ utki::shared_ref<ruis::widget> make_eased_animation_sample( //
 					.widget = {
 						.id = "button"s
 					},
-					.container_params = {
+					.params = {
 						.layout = ruis::layout::pile
 					}
 				},

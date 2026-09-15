@@ -41,7 +41,7 @@ tab_group::tab_group(
 	choice_group(
 		context, //
 		{
-			.container_params = std::move(params.container_params)
+			.params = std::move(params.params)
 		},
 		std::move(children)
 	)

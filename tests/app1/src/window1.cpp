@@ -32,7 +32,7 @@ utki::shared_ref<ruis::window> make_window1(
                     }
                 }
             },
-            .container_params{
+            .params{
                 .layout = ruis::layout::column
             },
             .title = U"HorizontalLayout"s

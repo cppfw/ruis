@@ -22,7 +22,7 @@ wire_area::wire_area(
 	// clang-format off
 	ruis::container(context,
 		{
-			.container_params{
+			.params{
 				.layout = ruis::layout::trivial
 			}
 		},

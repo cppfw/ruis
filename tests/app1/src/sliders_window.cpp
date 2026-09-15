@@ -32,7 +32,7 @@ utki::shared_ref<ruis::window> make_sliders_window(
                     }
                 }
             },
-            .container_params{
+            .params{
                 .layout = ruis::layout::row
             },
             .title = U"Sliders"s

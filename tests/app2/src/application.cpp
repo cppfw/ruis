@@ -51,7 +51,7 @@ application::application() :
 		auto kp = ruis::make::key_proxy(
 			this->window.gui.context,
 			{
-				.container_params{
+				.params{
 					.layout = ruis::layout::pile
 				}
 			},

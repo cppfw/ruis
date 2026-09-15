@@ -37,7 +37,7 @@ public:
 	struct all_parameters {
 		layout::parameters layout_params;
 		widget::parameters widget_params;
-		container::parameters container_params;
+		container::parameters params;
 
 		styled<ruis::color> selector_color;
 	};

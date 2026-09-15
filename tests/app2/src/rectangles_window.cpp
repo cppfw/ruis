@@ -56,7 +56,7 @@ utki::shared_ref<ruis::widget> make_rectangles_window(
 					}
 				}
 			},
-			.container_params = {
+			.params = {
 				.layout = ruis::layout::column
 			},
 			.title = c.get().localization.get().get("rectangles"sv)

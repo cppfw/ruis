@@ -33,7 +33,7 @@ utki::shared_ref<ruis::window> make_gradient_window(
                 },
                 .clip = true
             },
-            .container_params{
+            .params{
                 .layout = ruis::layout::pile
             },
             .title = U"none"s
@@ -54,7 +54,7 @@ utki::shared_ref<ruis::window> make_gradient_window(
                     .layout{
                         .dims{ruis::dim::fill, ruis::dim::fill}
                     },
-                    .container_params{
+                    .params{
                         .layout = ruis::layout::size
                     }
                 },

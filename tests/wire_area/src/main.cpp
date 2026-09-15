@@ -78,7 +78,7 @@ utki::shared_ref<ruis::widget> make_root_widget(const utki::shared_ref<ruis::con
 					.widget_params{
 						.rectangle{{0, 20}, {100, 50}}
 					},
-					.container_params{
+					.params{
 						.layout = ruis::layout::pile
 					},
 					.title = U"window 1"s
@@ -98,7 +98,7 @@ utki::shared_ref<ruis::widget> make_root_widget(const utki::shared_ref<ruis::con
 					.widget_params{
 						.rectangle{{150, 20}, {100, 50}}
 					},
-					.container_params{
+					.params{
 						.layout = ruis::layout::pile
 					},
 					.title = U"window 2"s

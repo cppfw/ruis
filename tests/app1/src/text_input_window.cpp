@@ -93,7 +93,7 @@ utki::shared_ref<ruis::window> make_text_input_window(
                     }
                 }
             },
-            .container_params{
+            .params{
                 .layout = ruis::layout::column
             },
             .title = U"TextInput"s

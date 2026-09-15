@@ -22,7 +22,7 @@ utki::shared_ref<ruis::container> make_pile_layout( //
 		c,
 		{
 			.layout = layout_params,
-			.container_params = {
+			.params = {
 				.layout = ruis::layout::pile
 			}
 		},
@@ -157,7 +157,7 @@ utki::shared_ref<ruis::container> make_linear_layout( //
 		c,
 		{
 			.layout = layout_params,
-			.container_params = {
+			.params = {
 				.layout = vertical ? ruis::layout::column : ruis::layout::row
 			}
 		},
@@ -270,7 +270,7 @@ utki::shared_ref<ruis::container> make_layout(const utki::shared_ref<ruis::conte
 	return m::container(
 		c,
 		{
-			.container_params = {
+			.params = {
 				.layout = ruis::layout::row
 			}
 		},
@@ -282,7 +282,7 @@ utki::shared_ref<ruis::container> make_layout(const utki::shared_ref<ruis::conte
 						.dims = {ruis::dim::fill, ruis::dim::fill},
 						.weight = 2
 					},
-					.container_params = {
+					.params = {
 						.layout = ruis::layout::column
 					}
 				},

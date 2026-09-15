@@ -42,7 +42,7 @@ book::book( //
 	container(
 		context,
 		{
-			.container_params{
+			.params{
 				.layout = layout::pile
 			}
 		},

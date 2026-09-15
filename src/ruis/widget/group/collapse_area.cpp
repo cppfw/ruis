@@ -52,7 +52,7 @@ collapse_area::collapse_area(
 			context,
 			// clang-format off
 				{
-					.container_params = std::move(params.container_params)
+					.params = std::move(params.params)
 				},
 			// clang-format on
 			std::move(contents)
@@ -74,7 +74,7 @@ collapse_area::collapse_area(
 	container(
 		context,
 		{
-			.container_params{
+			.params{
 				.layout = ruis::layout::column
 			}
 		},
@@ -184,8 +184,8 @@ utki::shared_ref<ruis::collapse_area> ruis::make::collapse_area(
 	widget_list contents
 )
 {
-	if (!params.container_params.layout) {
-		params.container_params.layout = ruis::layout::column;
+	if (!params.params.layout) {
+		params.params.layout = ruis::layout::column;
 	}
 
 	return utki::make_shared<ruis::collapse_area>(

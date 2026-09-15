@@ -37,7 +37,7 @@ utki::shared_ref<ruis::window> make_scroll_area_window(
                     }
                 }
             },
-            .container_params{
+            .params{
                 .layout = ruis::layout::column
             },
             .title = U"ScrollArea"s

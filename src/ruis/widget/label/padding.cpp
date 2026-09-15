@@ -46,7 +46,7 @@ padding::padding(
 		m::container(
 			context,
 			{
-				.container_params = [&]() {
+				.params = [&]() {
 					// pile layout by default
 					if (auto& l = params.params.container.layout; !l) {
 						l = layout::pile;

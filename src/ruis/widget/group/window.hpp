@@ -84,7 +84,7 @@ public:
 	struct all_parameters {
 		layout::parameters layout_params;
 		widget::parameters widget_params;
-		container::parameters container_params;
+		container::parameters params;
 		string title;
 		std::shared_ptr<widget> background; // TODO: only nine_patch?
 		sides<length> borders;

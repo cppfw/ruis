@@ -33,7 +33,7 @@ utki::shared_ref<ruis::window> make_vertical_list_window(
                     }
                 }
             },
-            .container_params{
+            .params{
                 .layout = ruis::layout::row
             },
             .title = U"VerticalList"s

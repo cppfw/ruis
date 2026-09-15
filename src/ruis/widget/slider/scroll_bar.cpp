@@ -113,7 +113,7 @@ scroll_bar::scroll_bar( //
 	oriented(std::move(params.oriented_params)),
 	container( //
 		context,
-		{.container_params = {.layout = layout::pile}},
+		{.params = {.layout = layout::pile}},
 		make_widgets(context)
 	),
 	handle(this->get_widget("ruis_handle")),

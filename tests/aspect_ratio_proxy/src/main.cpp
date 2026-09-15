@@ -39,7 +39,7 @@ public:
 		// clang-format off
 		auto c = m::container(ctx,
 			{
-				.container_params{
+				.params{
 					.layout = ruis::layout::trivial
 				}
 			},
@@ -49,7 +49,7 @@ public:
 						.widget_params{
 							.rectangle = {{200, 200}, {200, 100}}
 						},
-						.container_params{
+						.params{
 							.layout = ruis::layout::pile
 						},
 						.title = U"aspect ratio proxy"s
