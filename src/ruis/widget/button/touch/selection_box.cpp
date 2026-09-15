@@ -72,7 +72,7 @@ selection_box::selection_box(
 		{
 			ruis::make::text(context,
 				{
-					.layout_params{
+					.layout{
 						.align = {ruis::align::front, ruis::align::center}
 					}
 				},

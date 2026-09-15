@@ -22,7 +22,7 @@ sample_page::sample_page(
 		{
 			ruis::make::text(context,
 				{
-					.widget_params{
+					.widget{
 						.id = "text"s
 					}
 				}

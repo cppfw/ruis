@@ -180,7 +180,7 @@ public:
                     ),
                     m::text(c,
                         {
-                            .widget_params{
+                            .widget{
                                 .id = "value"s
                             }
                         }

@@ -51,10 +51,10 @@ utki::shared_ref<ruis::window> make_window1(
                 {
                     m::text(c,
                         {
-                            .layout_params{
+                            .layout{
                                 .weight = 0
                             },
-                            .widget_params{
+                            .widget{
                                 .id = "label1"s
                             }
                         },
@@ -62,10 +62,10 @@ utki::shared_ref<ruis::window> make_window1(
                     ),
                     m::text(c,
                         {
-                            .layout_params{
+                            .layout{
                                 .weight = 1
                             },
-                            .widget_params{
+                            .widget{
                                 .id = "label2"s
                             }
                         },
@@ -187,7 +187,7 @@ utki::shared_ref<ruis::window> make_window1(
                                         utki::shared_ref<ruis::widget> get_widget(size_t index) override{
                                             return m::text(this->context,
                                                 {
-                                                    .layout_params{
+                                                    .layout{
                                                         .dims{
                                                             ruis::dim::min,
                                                             index == 0 ? ruis::dim::max : ruis::dim::min

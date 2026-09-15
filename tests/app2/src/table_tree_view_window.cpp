@@ -105,7 +105,13 @@ public:
 		for (auto& c : cell_values) {
 			wl.emplace_back(ruis::make::text(
 				this->context, //
-				{.widget_params{.clip = true}},
+				// clang-format off
+				{
+					.widget{
+						.clip = true
+					}
+				},
+				// clang-format on
 				utki::to_utf32(c)
 			));
 		}

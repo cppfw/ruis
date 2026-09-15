@@ -80,7 +80,7 @@ tab_button::tab_button(
                     ),
                     ruis::make::text(context,
                         {
-                            .layout_params = {
+                            .layout{
                                 .dims = {ruis::dim::min, ruis::dim::min},
                                 .align = {ruis::align::center, ruis::align::center}
                             }

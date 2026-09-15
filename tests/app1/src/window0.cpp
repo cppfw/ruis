@@ -179,7 +179,7 @@ utki::shared_ref<ruis::window> make_window0(
 					),
 					m::text(c,
 						{
-							.widget_params{
+							.widget{
 								.id = "dropdownselector_selection"s
 							}
 						},

@@ -129,7 +129,13 @@ utki::shared_ref<ruis::widget> make_table_list_window(
 								ret.emplace_back(
 									m::text(
 										this->context,//
-										{.widget_params{.clip = true}},
+										// clang-format off
+										{
+											.widget{
+												.clip = true
+											}
+										},
+										// clang-format on
 										utki::to_utf32(list_data[index].children[i].value.string)
 									)
 								);

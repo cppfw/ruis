@@ -43,7 +43,7 @@ utki::shared_ref<ruis::container> make_pile_layout( //
 			m::text(
 				c,
 				{
-					.layout_params = {
+					.layout{
 						.align = {ruis::align::center, ruis::align::center}
 					}
 				},
@@ -52,7 +52,7 @@ utki::shared_ref<ruis::container> make_pile_layout( //
 			m::text(
 				c,
 				{
-					.layout_params = {
+					.layout{
 						.align = {ruis::align::front, ruis::align::center}
 					}
 				},
@@ -61,7 +61,7 @@ utki::shared_ref<ruis::container> make_pile_layout( //
 			m::text(
 				c,
 				{
-					.layout_params = {
+					.layout{
 						.align = {ruis::align::front, ruis::align::front}
 					}
 				},
@@ -70,7 +70,7 @@ utki::shared_ref<ruis::container> make_pile_layout( //
 			m::text(
 				c,
 				{
-					.layout_params = {
+					.layout{
 						.align = {ruis::align::center, ruis::align::front}
 					}
 				},
@@ -79,7 +79,7 @@ utki::shared_ref<ruis::container> make_pile_layout( //
 			m::text(
 				c,
 				{
-					.layout_params = {
+					.layout{
 						.align = {ruis::align::back, ruis::align::front}
 					}
 				},
@@ -88,7 +88,7 @@ utki::shared_ref<ruis::container> make_pile_layout( //
 			m::text(
 				c,
 				{
-					.layout_params = {
+					.layout{
 						.align = {ruis::align::back, ruis::align::center}
 					}
 				},
@@ -97,7 +97,7 @@ utki::shared_ref<ruis::container> make_pile_layout( //
 			m::text(
 				c,
 				{
-					.layout_params = {
+					.layout{
 						.align = {ruis::align::back, ruis::align::back}
 					}
 				},
@@ -106,7 +106,7 @@ utki::shared_ref<ruis::container> make_pile_layout( //
 			m::text(
 				c,
 				{
-					.layout_params = {
+					.layout{
 						.align = {ruis::align::center, ruis::align::back}
 					}
 				},
@@ -115,7 +115,7 @@ utki::shared_ref<ruis::container> make_pile_layout( //
 			m::text(
 				c,
 				{
-					.layout_params = {
+					.layout{
 						.align = {ruis::align::front, ruis::align::back}
 					}
 				},
@@ -165,7 +165,7 @@ utki::shared_ref<ruis::container> make_linear_layout( //
 			m::text(
 				c,
 				{
-					.layout_params = {
+					.layout{
 						.weight = 1,
 						.align = {ruis::align::front, ruis::align::front}
 					}
@@ -176,7 +176,7 @@ utki::shared_ref<ruis::container> make_linear_layout( //
 			m::text(
 				c,
 				{
-					.layout_params = {
+					.layout{
 						.weight = 1,
 						.align = {ruis::align::center, ruis::align::front}
 					}
@@ -187,7 +187,7 @@ utki::shared_ref<ruis::container> make_linear_layout( //
 			m::text(
 				c,
 				{
-					.layout_params = {
+					.layout{
 						.weight = 1,
 						.align = {ruis::align::back, ruis::align::front}
 					}
@@ -198,7 +198,7 @@ utki::shared_ref<ruis::container> make_linear_layout( //
 			m::text(
 				c,
 				{
-					.layout_params = {
+					.layout{
 						.weight = 1,
 						.align = {ruis::align::back, ruis::align::center}
 					}
@@ -209,7 +209,7 @@ utki::shared_ref<ruis::container> make_linear_layout( //
 			m::text(
 				c,
 				{
-					.layout_params = {
+					.layout{
 						.weight = 1,
 						.align = {ruis::align::back, ruis::align::back}
 					}
@@ -220,7 +220,7 @@ utki::shared_ref<ruis::container> make_linear_layout( //
 			m::text(
 				c,
 				{
-					.layout_params = {
+					.layout{
 						.weight = 1,
 						.align = {ruis::align::center, ruis::align::back}
 					}
@@ -231,7 +231,7 @@ utki::shared_ref<ruis::container> make_linear_layout( //
 			m::text(
 				c,
 				{
-					.layout_params = {
+					.layout{
 						.weight = 1,
 						.align = {ruis::align::front, ruis::align::back}
 					}
@@ -242,7 +242,7 @@ utki::shared_ref<ruis::container> make_linear_layout( //
 			m::text(
 				c,
 				{
-					.layout_params = {
+					.layout{
 						.weight = 1,
 						.align = {ruis::align::front, ruis::align::center}
 					}
@@ -253,7 +253,7 @@ utki::shared_ref<ruis::container> make_linear_layout( //
 			m::text(
 				c,
 				{
-					.layout_params = {
+					.layout{
 						.weight = 1,
 						.align = {ruis::align::center, ruis::align::center}
 					}

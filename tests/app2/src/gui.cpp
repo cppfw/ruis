@@ -383,7 +383,7 @@ utki::shared_ref<ruis::window> make_selection_box_window(
 			),
 			m::text(c,
 				{
-					.layout_params{
+					.layout{
 						.align = {ruis::align::front, ruis::align::center}
 					}
 				},

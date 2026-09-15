@@ -29,7 +29,7 @@ utki::shared_ref<ruis::tab> inflate_tab(ruis::tabbed_book& tb, const std::string
 				{
 					m::text(c,
 						{
-							.widget_params{
+							.widget{
 								.id = "text"s
 							}
 						}

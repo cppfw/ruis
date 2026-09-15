@@ -189,11 +189,11 @@ utki::shared_ref<container> make_caption(
 						{
 							m::text(c,
 								{
-									.layout_params{
+									.layout{
 										.dims = {ruis::dim::min, ruis::dim::min},
 										.align = {ruis::align::front, ruis::align::center}
 									},
-									.widget_params{
+									.widget{
 										.id = "ruis_title"s
 									}
 								},
