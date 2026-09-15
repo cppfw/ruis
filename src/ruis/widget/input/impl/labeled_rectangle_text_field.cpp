@@ -66,7 +66,7 @@ labeled_rectangle_text_field::labeled_rectangle_text_field(
 			ruis::make::rectangle_text_field(
 				context, //
 				{
-					.layout_params{
+					.layout{
 						.dims = {ruis::dim::max, ruis::dim::max}
 					},
 					.params = std::move(params.rectangle_text_field)

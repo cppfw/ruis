@@ -57,42 +57,42 @@ rectangle_text_field::rectangle_text_field(
 ) :
 	widget(
 		context, //
-		std::move(params.layout_params),
-		std::move(params.widget_params)
+		std::move(params.layout),
+		std::move(params.widget)
 	),
 	// Initialize rectangle first so it adds the text_input as a child
 	// clang-format off
 	rectangle(
 		context,
 		{
-			.params = { // TODO: assign params as whole?
-				.padding{
-					.container{
-						.layout = layout::pile
-					},
-					.specific{
-						.borders = {context.get().style().get_len_gap()}
-					}
-				},
-				.specific = [&](){
-					if(auto& c = params.params.rectangle.specific.fill_color; c.get().is_undefined()){
-						c = context.get().style().get_color_background();
-					}
-					if(auto& c = params.params.rectangle.specific.stroke_color; c.get().is_undefined()){
-						c = context.get().style().get_color_primary();
-					}
-					if(auto& l = params.params.rectangle.specific.stroke_width; l.get().is_undefined()){
-						l = context.get().style().get_len_border();
-					}
-					for(auto& r : params.params.rectangle.specific.corner_radii){
-						if(r.get().is_undefined()){
-							r  = context.get().style().get_len_button_padding();
-						}
-					}
+			.params = [&](){
+				if(auto& l = params.params.rectangle.padding.container.layout; !l){
+					l = layout::pile;
+				}
 
-					return std::move(params.params.rectangle.specific);
-				}()
-			}
+				for(auto& b : params.params.rectangle.padding.specific.borders){
+					if(b.get().is_undefined()){
+						b = context.get().style().get_len_gap();
+					}
+				}
+
+				if(auto& c = params.params.rectangle.specific.fill_color; c.get().is_undefined()){
+					c = context.get().style().get_color_background();
+				}
+				if(auto& c = params.params.rectangle.specific.stroke_color; c.get().is_undefined()){
+					c = context.get().style().get_color_primary();
+				}
+				if(auto& l = params.params.rectangle.specific.stroke_width; l.get().is_undefined()){
+					l = context.get().style().get_len_border();
+				}
+				for(auto& r : params.params.rectangle.specific.corner_radii){
+					if(r.get().is_undefined()){
+						r  = context.get().style().get_len_button_padding();
+					}
+				}
+
+				return std::move(params.params.rectangle);
+			}()
 		},
 		{
 			text_input
