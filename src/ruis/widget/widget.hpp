@@ -458,6 +458,9 @@ public:
 
 public:
 	struct parameters {
+		/**
+		 * @brief Widget id.
+		 */
 		std::string id;
 
 		/**
