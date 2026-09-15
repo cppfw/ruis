@@ -60,7 +60,7 @@ radio_button::radio_button(
 				{
 					.params{
 						.specific{
-							.img = context.get().loader().load<res::image>("ruis_img_radiobutton_bg"sv)
+							.source = context.get().loader().load<res::image>("ruis_img_radiobutton_bg"sv)
 						}
 					}
 				}
@@ -72,7 +72,7 @@ radio_button::radio_button(
 					},
 					.params{
 						.specific{
-							.img = context.get().loader().load<res::image>("ruis_img_radiobutton_tick")
+							.source = context.get().loader().load<res::image>("ruis_img_radiobutton_tick")
 						}
 					}
 				}

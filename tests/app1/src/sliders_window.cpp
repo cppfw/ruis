@@ -45,7 +45,7 @@ utki::shared_ref<ruis::window> make_sliders_window(
                     },
                     .params{
                         .specific{
-                            .img = c.get().loader().load<ruis::res::image>("img_camera"sv),
+                            .source = c.get().loader().load<ruis::res::image>("img_camera"sv),
                             .keep_aspect_ratio = true
                         }
                     }

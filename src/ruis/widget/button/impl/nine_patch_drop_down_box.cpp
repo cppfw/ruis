@@ -66,7 +66,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_selection_box_widget_structure(
 				},
 				.params{
 					.specific{
-						.img = c.get().loader().load<ruis::res::image>("ruis_img_divider_vert"sv)
+						.source = c.get().loader().load<ruis::res::image>("ruis_img_divider_vert"sv)
 					}
 				}
 			}
@@ -82,7 +82,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_selection_box_widget_structure(
 			{
 				.params{
 					.specific{
-						.img = c.get().loader().load<ruis::res::image>("ruis_img_dropdown_arrow"sv)
+						.source = c.get().loader().load<ruis::res::image>("ruis_img_dropdown_arrow"sv)
 					}
 				}
 			}

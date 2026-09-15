@@ -45,7 +45,7 @@ class image :
 {
 public:
 	struct specific_parameters{
-		std::shared_ptr<const ruis::res::image> img; // TODO: rename to source
+		std::shared_ptr<const ruis::res::image> source;
 		std::shared_ptr<const ruis::res::image> disabled_img; // TODO: remove
 		bool keep_aspect_ratio = false;
 	};
@@ -89,7 +89,7 @@ public:
 
 	const std::shared_ptr<const res::image>& get_image() const
 	{
-		return this->params.img;
+		return this->params.source;
 	}
 
 	void set_disabled_image(std::shared_ptr<const res::image> image);

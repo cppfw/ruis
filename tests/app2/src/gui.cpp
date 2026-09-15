@@ -208,7 +208,7 @@ utki::shared_ref<ruis::window> make_image_window(
 					},
 					.params{
 						.specific{
-							.img = c.get().loader().load<ruis::res::image>("img_home"sv),
+							.source = c.get().loader().load<ruis::res::image>("img_home"sv),
 							.keep_aspect_ratio = true
 						}
 					}

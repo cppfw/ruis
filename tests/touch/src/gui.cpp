@@ -56,7 +56,7 @@ utki::shared_ref<ruis::touch::tab_button> make_tab_button(
 			},
 			.image_params{
 				.specific{
-					.img = std::move(icon),
+					.source = std::move(icon),
 					.keep_aspect_ratio = true
 				}
 			},

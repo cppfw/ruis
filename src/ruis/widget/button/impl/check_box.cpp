@@ -66,7 +66,7 @@ check_box::check_box(
 					},
 					.params = [&](){
 						auto&& p = std::move(params.image_params);
-						if(auto src = p.specific.img; !src){
+						if(auto src = p.specific.source; !src){
 							src = context.get().loader().load<res::image>("ruis_img_checkbox_tick"sv);
 						}
 						return std::move(p);

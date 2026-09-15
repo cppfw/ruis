@@ -72,8 +72,8 @@ utki::shared_ref<ruis::spinner> ruis::make::refresh(
 	spinner::all_parameters params
 )
 {
-	if (auto& im = params.params.image.specific.img; !im) {
-		im = context.get().loader().load<res::image>("ruis_img_refresh"sv);
+	if (auto& src = params.params.image.specific.source; !src) {
+		src = context.get().loader().load<res::image>("ruis_img_refresh"sv);
 	}
 	if (auto& im = params.params.image.specific.disabled_img; !im) {
 		im = context.get().loader().load<res::image>("ruis_img_refresh_disabled"sv);

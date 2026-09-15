@@ -37,7 +37,7 @@ busy::busy(
 		// clang-format off
 		{
 			.params = [&](){
-				if(auto& src = params.params.spinner.image.specific.img; !src){
+				if(auto& src = params.params.spinner.image.specific.source; !src){
 					src = context.get().loader().load<ruis::res::image>("ruis_img_busy");
 				}
 				return std::move(params.params.spinner);
