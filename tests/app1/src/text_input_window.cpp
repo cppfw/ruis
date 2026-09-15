@@ -128,7 +128,7 @@ utki::shared_ref<ruis::window> make_text_input_window(
                     },
                     .params{
                         .specific{
-                            .nine_patch = c.get().loader().load<ruis::res::nine_patch>("ruis_npt_frame"s)
+                            .source = c.get().loader().load<ruis::res::nine_patch>("ruis_npt_frame"s)
                         }
                     }
                 },

@@ -76,10 +76,7 @@ nine_patch_text_field::nine_patch_text_field(
 					}
 				}
 
-				if(auto& np = params.params.nine_patch.specific.nine_patch; !np){
-					np = context.get().loader().load<ruis::res::nine_patch>("ruis_npt_textfield_background"sv);
-				}
-				if(auto& np = params.params.nine_patch.specific.disabled_nine_patch; !np){
+				if(auto& np = params.params.nine_patch.specific.source; !np){
 					np = context.get().loader().load<ruis::res::nine_patch>("ruis_npt_textfield_background"sv);
 				}
 

@@ -67,14 +67,7 @@ nine_patch::nine_patch( //
 
 void nine_patch::set_nine_patch(std::shared_ptr<const res::nine_patch> np)
 {
-	this->params.nine_patch = std::move(np);
-
-	this->update_cur_nine_patch();
-}
-
-void nine_patch::set_disabled_nine_patch(std::shared_ptr<const res::nine_patch> np)
-{
-	this->params.disabled_nine_patch = std::move(np);
+	this->params.source = std::move(np);
 
 	this->update_cur_nine_patch();
 }
@@ -90,13 +83,8 @@ sides<real> nine_patch::get_min_borders() const noexcept
 
 void nine_patch::update_cur_nine_patch()
 {
-	const auto& new_nine_patch = [this]() {
-		if (!this->is_enabled() && this->params.disabled_nine_patch) {
-			return this->params.disabled_nine_patch;
-		} else {
-			return this->params.nine_patch;
-		}
-	}();
+	// TODO: refactor, remove this->cur_nine_patch var
+	const auto& new_nine_patch = this->params.source;
 
 	if (this->cur_nine_patch == new_nine_patch) {
 		return;

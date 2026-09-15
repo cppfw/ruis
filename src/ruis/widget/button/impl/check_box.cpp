@@ -51,8 +51,8 @@ check_box::check_box(
 				},
 				.specific = [&](){
 					auto p = std::move(params.nine_patch_params);
-					if(!p.nine_patch){
-						p.nine_patch = context.get().loader().load<res::nine_patch>("ruis_npt_checkbox_bg"sv);
+					if(!p.source){
+						p.source = context.get().loader().load<res::nine_patch>("ruis_npt_checkbox_bg"sv);
 					}
 					return p;
 				}()

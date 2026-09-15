@@ -410,7 +410,7 @@ window::window(
 							}
 						},
 						.specific{
-							.nine_patch = this->context.get().loader().load<ruis::res::nine_patch>("ruis_npt_window_bg")
+							.source = this->context.get().loader().load<ruis::res::nine_patch>("ruis_npt_window_bg")
 						}
 					}
 				},

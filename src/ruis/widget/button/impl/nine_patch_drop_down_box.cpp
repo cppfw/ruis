@@ -214,7 +214,7 @@ void ruis::nine_patch_drop_down_box::show_drop_down_menu()
 							}
 						},
 						.specific{
-							.nine_patch = this->context.get().loader().load<ruis::res::nine_patch>("ruis_npt_contextmenu_bg"sv)
+							.source = this->context.get().loader().load<ruis::res::nine_patch>("ruis_npt_contextmenu_bg"sv)
 						}
 					}
 				},

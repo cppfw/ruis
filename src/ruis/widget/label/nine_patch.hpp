@@ -43,8 +43,7 @@ class nine_patch :
 
 public:
 	struct specific_parameters {
-		std::shared_ptr<const res::nine_patch> nine_patch; // TODO: rename to source
-		std::shared_ptr<const res::nine_patch> disabled_nine_patch; // TODO: remove
+		std::shared_ptr<const res::nine_patch> source;
 	};
 
 	struct parameters{
@@ -80,8 +79,6 @@ public:
 	void render(const mat4& matrix) const override;
 
 	void set_nine_patch(std::shared_ptr<const res::nine_patch> np);
-
-	void set_disabled_nine_patch(std::shared_ptr<const res::nine_patch> np);
 
 	void on_enabled_change() override;
 
