@@ -50,7 +50,7 @@ public:
 		// clang-format off
 		auto button = m::push_button(this->context,
 			{
-				.layout_params{
+				.layout{
 					.dims = {ruis::dim::min, ruis::length::make_pp(30)}
 				}
 			},

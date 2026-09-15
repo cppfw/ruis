@@ -73,11 +73,11 @@ utki::shared_ref<ruis::window> make_window1(
                     ),
                     m::push_button(c,
                         {
-                            .layout_params{
+                            .layout{
                                 .dims{ruis::dim::fill, ruis::dim::min},
                                 .weight = 1
                             },
-                            .widget_params{
+                            .widget{
                                 .id = "show_VK_button"s,
                                 .rectangle{
                                     {

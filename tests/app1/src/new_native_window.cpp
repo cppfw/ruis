@@ -21,7 +21,7 @@ utki::shared_ref<ruis::widget> make_new_native_window_root_widget(
     // clang-format off
     auto button = m::push_button(c,
         {
-            .layout_params{
+            .layout{
                 .dims{ruis::dim::fill, ruis::dim::fill},
                 .weight = 1
             }

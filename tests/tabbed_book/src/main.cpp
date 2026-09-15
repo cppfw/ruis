@@ -36,7 +36,7 @@ utki::shared_ref<ruis::tab> inflate_tab(ruis::tabbed_book& tb, const std::string
 					),
 					m::push_button(c,
 						{
-							.widget_params{
+							.widget{
 								.id = "activate_button"s
 							}
 						},
@@ -46,7 +46,7 @@ utki::shared_ref<ruis::tab> inflate_tab(ruis::tabbed_book& tb, const std::string
 					),
 					m::push_button(c,
 						{
-							.widget_params{
+							.widget{
 								.id = "close_button"s
 							}
 						},
@@ -105,7 +105,7 @@ utki::shared_ref<ruis::widget> make_root_widget(const utki::shared_ref<ruis::con
 				{
 					m::push_button(c,
 						{
-							.widget_params{
+							.widget{
 								.id = "add_button"s
 							}
 						},

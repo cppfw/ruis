@@ -384,7 +384,7 @@ utki::shared_ref<ruis::window> make_tree_view_window(
                     m::text(c, {}, U"Insert:"s),
                     m::push_button(c,
                         {
-                            .widget_params{
+                            .widget{
                                 .id = "insert_before"s
                             }
                         },
@@ -394,7 +394,7 @@ utki::shared_ref<ruis::window> make_tree_view_window(
                     ),
                     m::push_button(c,
                         {
-                            .widget_params{
+                            .widget{
                                 .id = "insert_after"s
                             }
                         },
@@ -404,7 +404,7 @@ utki::shared_ref<ruis::window> make_tree_view_window(
                     ),
                     m::push_button(c,
                         {
-                            .widget_params{
+                            .widget{
                                 .id = "insert_child"s
                             }
                         },

@@ -154,7 +154,7 @@ cube_page::cube_page(const utki::shared_ref<ruis::context>& c) :
 				),
 				m::push_button(context,
 					{
-						.widget_params{
+						.widget{
 							.id = "back_button"s
 						}
 					},

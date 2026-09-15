@@ -29,7 +29,7 @@ utki::shared_ref<ruis::widget> make_root_gui(const utki::shared_ref<ruis::contex
                     ),
                     m::push_button(c,
                         {
-                            .widget_params{
+                            .widget{
                                 .id = "busy_toggle_button"s
                             }
                         },
@@ -49,7 +49,7 @@ utki::shared_ref<ruis::widget> make_root_gui(const utki::shared_ref<ruis::contex
                     ),
                     m::push_button(c,
                         {
-                            .widget_params{
+                            .widget{
                                 .id = "refresh_toggle_button"s
                             }
                         },
@@ -65,7 +65,7 @@ utki::shared_ref<ruis::widget> make_root_gui(const utki::shared_ref<ruis::contex
                     ),
                     m::push_button(c,
                         {
-                            .widget_params{
+                            .widget{
                                 .id = "refresh_disable_button"s
                             }
                         },

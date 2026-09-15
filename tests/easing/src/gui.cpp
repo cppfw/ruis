@@ -59,7 +59,7 @@ utki::shared_ref<ruis::widget> make_eased_animation_sample( //
 			),
 			m::push_button(c,
 				{
-					.widget_params = {
+					.widget = {
 						.id = "button"s
 					},
 					.container_params = {

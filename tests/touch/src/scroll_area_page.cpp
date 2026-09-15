@@ -124,7 +124,7 @@ ruis::widget_list make_scroll_area_page_contents(const utki::shared_ref<ruis::co
 	// clang-format off
 	auto button_1 = m::push_button(c,
 		{
-			.layout_params{
+			.layout{
 				.dims = {ruis::dim::fill, 200_pp}
 			}
 		},

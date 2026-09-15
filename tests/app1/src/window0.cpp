@@ -188,7 +188,7 @@ utki::shared_ref<ruis::window> make_window0(
                         {
                             m::push_button(c,
                                 {
-                                    .widget_params{
+                                    .widget{
                                         .id = "showhide_mousecursor_button"s
                                     }
                                 },
@@ -198,7 +198,7 @@ utki::shared_ref<ruis::window> make_window0(
                             ),
                             m::push_button(c,
                                 {
-                                    .widget_params{
+                                    .widget{
                                         .id = "fullscreen_button"s
                                     }
                                 },

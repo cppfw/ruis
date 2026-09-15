@@ -126,7 +126,7 @@ const tst::set set("finding_widgets", [](tst::suite& suite){
 		// clang-format off
 		auto w = m::container(c,
 			{
-				.widget_params{
+				.widget{
 					.id = "root"s
 				}
 			},
@@ -136,7 +136,7 @@ const tst::set set("finding_widgets", [](tst::suite& suite){
 					{
 						m::container(c,
 							{
-								.widget_params{
+								.widget{
 									.id = "child"s, // should not find this
 									.rectangle = {{1, 1}, {10, 10}}
 								}
@@ -149,14 +149,14 @@ const tst::set set("finding_widgets", [](tst::suite& suite){
 				),
 				m::container(c,
 					{
-						.widget_params{
+						.widget{
 							.id = "child"s // should find this
 						}
 					},
 					{
 						m::container(c,
 							{
-								.widget_params{
+								.widget{
 									.id = "child2"s,
 									.rectangle = {{1, 2}, {10, 10}}
 								}
@@ -166,7 +166,7 @@ const tst::set set("finding_widgets", [](tst::suite& suite){
 				),
 				m::container(c,
 					{
-						.widget_params{
+						.widget{
 							.id = "child3"s
 						}
 					},
@@ -176,7 +176,7 @@ const tst::set set("finding_widgets", [](tst::suite& suite){
 							{
 								m::container(c,
 									{
-										.widget_params{
+										.widget{
 											.id = "child1"s
 										}
 									}

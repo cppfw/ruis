@@ -36,7 +36,7 @@ utki::shared_ref<ruis::widget> make_root_widget(const utki::shared_ref<ruis::con
 						{
 							m::push_button(c,
 								{
-									.widget_params{
+									.widget{
 										.id = "button1"s
 									}
 								},
@@ -65,7 +65,7 @@ utki::shared_ref<ruis::widget> make_root_widget(const utki::shared_ref<ruis::con
 					),
 					m::push_button(c,
 						{
-							.widget_params{
+							.widget{
 								.id = "busy_toggle_button"s
 							}
 						},

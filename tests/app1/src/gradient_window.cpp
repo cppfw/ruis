@@ -51,7 +51,7 @@ utki::shared_ref<ruis::window> make_gradient_window(
             ),
             m::container(c,
                 {
-                    .layout_params{
+                    .layout{
                         .dims{ruis::dim::fill, ruis::dim::fill}
                     },
                     .container_params{
@@ -61,7 +61,7 @@ utki::shared_ref<ruis::window> make_gradient_window(
                 {
                     m::push_button(c,
                         {
-                            .widget_params{
+                            .widget{
                                 .rectangle{
                                     {
                                         (10_pp).get(c.get()),
