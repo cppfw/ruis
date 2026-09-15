@@ -55,13 +55,13 @@ labeled_rectangle_text_field::labeled_rectangle_text_field(
 						.align = {ruis::align::front, ruis::align::center}
 					},
 					.params = [&](){
-						if(params.label.text.color.normal.get().is_undefined()){
-							params.label.text.color.normal = context.get().style().get_color_text_secondary();
+						if(auto& c = params.params.label.text.color.normal; c.get().is_undefined()){
+							c = context.get().style().get_color_text_secondary();
 						}
-						return std::move(params.label.text);
+						return std::move(params.params.label.text);
 					}()
 				},
-				std::move(params.label.string)
+				std::move(params.params.label.string)
 			),
 			ruis::make::rectangle_text_field(
 				context, //
@@ -69,7 +69,7 @@ labeled_rectangle_text_field::labeled_rectangle_text_field(
 					.layout{
 						.dims = {ruis::dim::max, ruis::dim::max}
 					},
-					.params = std::move(params.rectangle_text_field)
+					.params = std::move(params.params.rectangle_text_field)
 				},
 				std::move(text)
 			)

@@ -429,16 +429,18 @@ utki::shared_ref<ruis::window> make_text_input_window(
 		{
 			m::labeled_rectangle_text_field(c,
 				{
-					.layout_params = {
+					.layout_params{
 						.dims = {ruis::dim::fill, ruis::dim::min}
 					},
-					.label{
-						.string = U"Enter some text:"
-					},
-					.rectangle_text_field{
-						.text_input{
-							.specific{
-								.hint = U"Type here..."s
+					.params{
+						.label{
+							.string = U"Enter some text:"
+						},
+						.rectangle_text_field{
+							.text_input{
+								.specific{
+									.hint = U"Type here..."s
+								}
 							}
 						}
 					}
