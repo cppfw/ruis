@@ -39,7 +39,7 @@ nine_patch_text_field::nine_patch_text_field(
 		ruis::make::text_input(
 			context, //
 			{
-				.layout_params{
+				.layout{
 					.dims = {ruis::dim::max, ruis::dim::max}
 				},
 				.params = std::move(params.params.text_input)
