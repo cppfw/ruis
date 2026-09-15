@@ -32,10 +32,10 @@ gradient::gradient( //
 ) :
 	widget( //
 		context,
-		std::move(params.layout_params),
-		std::move(params.widget_params)
+		std::move(params.layout),
+		std::move(params.widget)
 	),
-	params(std::move(params.gradient_params))
+	params(std::move(params.params))
 {}
 
 void gradient::render(const mat4& matrix) const
