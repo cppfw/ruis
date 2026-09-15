@@ -67,6 +67,12 @@ public:
 		specific_parameters specific;
 	};
 
+	struct all_parameters {
+		ruis::layout::parameters layout;
+		ruis::widget::parameters widget;
+		parameters params;
+	};
+
 private:
 	specific_parameters params;
 
@@ -76,12 +82,6 @@ public:
 
 	text_input(text_input&&) = delete;
 	text_input& operator=(text_input&&) = delete;
-
-	struct all_parameters {
-		ruis::layout::parameters layout;
-		ruis::widget::parameters widget;
-		parameters params;
-	};
 
 	text_input(
 		const utki::shared_ref<ruis::context>& context, //
