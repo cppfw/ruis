@@ -30,16 +30,21 @@ class tab_group : public choice_group
 {
 	ruis::paint::rectangle_vao selector_vao;
 
-	styled<ruis::color> background_color;
-	styled<ruis::color> selector_color;
-
 public:
+	struct specific_parameters{
+		styled<ruis::color> background_color;
+		styled<ruis::color> selector_color;
+	};
+
+	struct parameters{
+		ruis::container::parameters container;
+		specific_parameters specific;
+	};
+
 	struct all_parameters {
 		ruis::layout::parameters layout;
 		ruis::widget::parameters widget;
-		container::parameters params;
-
-		styled<ruis::color> selector_color;
+		parameters params;
 	};
 
 	tab_group(
@@ -49,6 +54,9 @@ public:
 	);
 
 	void render(const ruis::mat4& matrix) const override;
+
+private:
+	specific_parameters params;
 };
 
 namespace make {

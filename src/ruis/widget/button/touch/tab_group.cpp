@@ -40,7 +40,12 @@ tab_group::tab_group(
 		{
 			.layout = std::move(params.layout),
 			.widget = std::move(params.widget),
-			.params = std::move(params.params),
+			.params = [&](){
+				if (auto& c = params.params.container.layout; !c) {
+					c = ruis::layout::row;
+				}
+				return std::move(params.params.container);
+			}()
 		},
 		[&]() {
 			for (auto& c : children) {
@@ -77,12 +82,14 @@ tab_group::tab_group(
 				ruis::length::make_pp(10).get(context) // TODO: get rounded corners from params
 			}}
 	),
-	background_color(context.get().style().get_color_panel()), // TODO: get from params
-	selector_color([&]() {
-		if (params.selector_color.get().is_undefined()) {
-			params.selector_color = context.get().style().get_color_secondary();
+	params([&]() {
+		if(auto& c = params.params.specific.background_color; c.get().is_undefined()){
+			c = context.get().style().get_color_panel();
 		}
-		return std::move(params.selector_color);
+		if (auto& c = params.params.specific.selector_color; c.get().is_undefined()) {
+			c = context.get().style().get_color_secondary();
+		}
+		return std::move(params.params.specific);
 	}())
 {}
 
@@ -98,7 +105,7 @@ void tab_group::render(const ruis::mat4& matrix) const
 		r.shaders().color_pos->render(
 			matr, //
 			r.obj().pos_quad_01_vao,
-			this->background_color.get()
+			this->params.background_color.get()
 		);
 	}
 
@@ -111,7 +118,7 @@ void tab_group::render(const ruis::mat4& matrix) const
 		this->selector_vao.render(
 			matr, //
 			active_tab->rect().d,
-			this->selector_color.get()
+			this->params.selector_color.get()
 		);
 	}
 
@@ -124,10 +131,6 @@ utki::shared_ref<ruis::touch::tab_group> ruis::touch::make::tab_group(
 	widget_list tabs
 )
 {
-	if (!params.params.layout) {
-		params.params.layout = ruis::layout::row;
-	}
-
 	return utki::make_shared<ruis::touch::tab_group>(
 		context, //
 		std::move(params),
