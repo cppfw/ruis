@@ -35,22 +35,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
-class layout;
-
 /**
  * @brief Container widget.
  * A widget which can contain children widgets.
- * From GUI script it can be instantiated as 'container' and can have child widgets specified. For example:
- * @code
- * @container{
- *     @text{
- *         text{"Hello world!"}
- *     }
- *     @text{
- *         text{"Hi!"}
- *     }
- * }
- * @endcode
  */
 class container : virtual public widget
 {
@@ -546,6 +533,3 @@ utki::shared_ref<ruis::container> row(
 );
 } // namespace make
 } // namespace ruis
-
-// include definitions for forward declared classes
-#include "../layout/layout.hpp"
