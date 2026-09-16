@@ -60,7 +60,7 @@ private:
 
 public:
 	struct all_parameters {
-		ruis::layout::parameters layout;
+		ruis::layout::parameters layout_params;
 		ruis::widget::parameters widget;
 		parameters tiling_area_params;
 	};

@@ -43,7 +43,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_selection_box_widget_structure(
 	return {
 		m::pile(c,
 			{
-				.layout = {
+				.layout_params = {
 					.dims = {ruis::dim::max, ruis::dim::max},
 					.weight = 1
 				},
@@ -54,14 +54,14 @@ std::vector<utki::shared_ref<ruis::widget>> make_selection_box_widget_structure(
 		),
 		m::gap(c,
 			{
-				.layout = {
+				.layout_params = {
 					.dims = {3_pp, 0_px}
 				}
 			}
 		),
 		m::image(c,
 			{
-				.layout{
+				.layout_params{
 					.dims = {ruis::dim::min, ruis::dim::fill}
 				},
 				.params{
@@ -73,7 +73,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_selection_box_widget_structure(
 		),
 		m::gap(c,
 			{
-				.layout = {
+				.layout_params = {
 					.dims = {3_pp, 0_px}
 				}
 			}
@@ -98,7 +98,7 @@ ruis::nine_patch_drop_down_box::nine_patch_drop_down_box(
 ) :
 	widget(
 		context, //
-		std::move(params.layout),
+		std::move(params.layout_params),
 		std::move(params.widget)
 	),
 	button(
@@ -195,7 +195,7 @@ void ruis::nine_patch_drop_down_box::show_drop_down_menu()
 			),
 			ruis::make::mouse_proxy(this->context,
 				{
-					.layout{
+					.layout_params{
 						.dims{ruis::dim::fill, ruis::dim::fill}
 					},
 					.widget{
@@ -205,7 +205,7 @@ void ruis::nine_patch_drop_down_box::show_drop_down_menu()
 			),
 			ruis::make::nine_patch(this->context,
 				{
-					.layout{
+					.layout_params{
 						.dims{ruis::dim::max, ruis::dim::min}
 					},
 					.widget{
@@ -297,14 +297,14 @@ utki::shared_ref<ruis::widget> ruis::nine_patch_drop_down_box::wrap_item(
 	// clang-format off
 	auto wd = ruis::make::pile(this->context,
 		{
-			.layout{
+			.layout_params{
 				.dims{ruis::dim::max, ruis::dim::min}
 			}
 		},
 		{
 			ruis::make::mouse_proxy(this->context,
 				{
-					.layout{
+					.layout_params{
 						.dims{ruis::dim::fill, ruis::dim::fill}
 					},
 					.widget{
@@ -314,7 +314,7 @@ utki::shared_ref<ruis::widget> ruis::nine_patch_drop_down_box::wrap_item(
 			),
 			ruis::make::rectangle(this->context,
 				{
-					.layout{
+					.layout_params{
 						.dims{ruis::dim::fill, ruis::dim::fill}
 					},
 					.widget{

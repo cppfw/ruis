@@ -184,7 +184,7 @@ tiling_area::tiling_area(
 ) :
 	ruis::widget(
 		context,
-		std::move(params.layout),
+		std::move(params.layout_params),
 		std::move(params.widget) //
 	),
 	ruis::oriented({.vertical = false}),

@@ -29,7 +29,7 @@ list::list(
 ) :
 	widget(
 		context, //
-		std::move(params.layout),
+		std::move(params.layout_params),
 		std::move(params.widget)
 	),
 	ruis::list(context, std::move(params)),

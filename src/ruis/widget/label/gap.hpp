@@ -29,7 +29,7 @@ class gap : public color_widget
 {
 public:
 	struct all_parameters {
-		ruis::layout::parameters layout;
+		ruis::layout::parameters layout_params;
 		ruis::widget::parameters widget;
 		color_widget::parameters color = {
 			.normal = {},

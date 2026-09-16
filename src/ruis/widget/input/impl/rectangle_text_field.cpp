@@ -39,7 +39,7 @@ rectangle_text_field::rectangle_text_field(
 		ruis::make::text_input(
 			context, //
 			{
-				.layout{
+				.layout_params{
 					.dims = {ruis::dim::max, ruis::dim::max}
 				},
 				.params = std::move(params.params.text_input)
@@ -57,7 +57,7 @@ rectangle_text_field::rectangle_text_field(
 ) :
 	widget(
 		context, //
-		std::move(params.layout),
+		std::move(params.layout_params),
 		std::move(params.widget)
 	),
 	// Initialize rectangle first so it adds the text_input as a child

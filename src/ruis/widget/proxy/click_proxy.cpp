@@ -29,7 +29,7 @@ click_proxy::click_proxy( //
 ) :
 	widget( //
 		context,
-		std::move(params.layout),
+		std::move(params.layout_params),
 		std::move(params.widget)
 	),
 	pressed_change_handler(std::move(params.click_proxy_params.pressed_change_handler)),

@@ -56,7 +56,7 @@ public:
 			{
 				m::book(ctx,
 					{
-						.layout{
+						.layout_params{
 							.dims = {ruis::dim::fill, ruis::dim::max},
 							.weight = 1
 						},

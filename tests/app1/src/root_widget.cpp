@@ -31,7 +31,7 @@ utki::shared_ref<ruis::widget> make_root_widget(const utki::shared_ref<ruis::con
         {
             m::image_mouse_cursor(c,
                 {
-                    .layout{
+                    .layout_params{
                         .dims{ruis::dim::fill, ruis::dim::fill}
                     },
                     .mouse_cursor_params{
@@ -41,7 +41,7 @@ utki::shared_ref<ruis::widget> make_root_widget(const utki::shared_ref<ruis::con
                 {
                     m::overlay(c,
                         {
-                            .layout{
+                            .layout_params{
                                 .dims{ruis::dim::fill, ruis::dim::fill}
                             },
                             .widget{
@@ -51,7 +51,7 @@ utki::shared_ref<ruis::widget> make_root_widget(const utki::shared_ref<ruis::con
                         {
                             m::drag_area(c,
                                 {
-                                    .layout{
+                                    .layout_params{
                                         .dims{ruis::dim::fill, ruis::dim::fill}
                                     }
                                 },

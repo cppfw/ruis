@@ -75,7 +75,7 @@ overlay::overlay(
 ) :
 	widget( //
 		context,
-		std::move(params.layout),
+		std::move(params.layout_params),
 		std::move(params.widget)
 	),
 	// clang-format off
@@ -99,7 +99,7 @@ utki::shared_ref<widget> overlay::show_popup(
 	// clang-format off
 	auto mp = ruis::make::mouse_proxy(this->context,
 		{
-			.layout{
+			.layout_params{
 				.dims{ruis::dim::fill, ruis::dim::fill}
 			},
 			.widget{

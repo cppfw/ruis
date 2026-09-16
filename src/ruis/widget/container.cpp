@@ -35,7 +35,7 @@ container::container(
 ) :
 	widget( //
 		context,
-		std::move(params.layout),
+		std::move(params.layout_params),
 		std::move(params.widget)
 	),
 	children_list(std::move(children)),
@@ -556,7 +556,7 @@ utki::shared_ref<ruis::container> ruis::make::pile(
 	return make::container(
 		context,
 		{
-			.layout = std::move(params.layout),
+			.layout_params = std::move(params.layout_params),
 			.widget = std::move(params.widget),
 			.params{
 				.layout = layout::pile
@@ -577,7 +577,7 @@ utki::shared_ref<ruis::container> ruis::make::column(
 	return make::container(
 		context,
 		{
-			.layout = std::move(params.layout),
+			.layout_params = std::move(params.layout_params),
 			.widget = std::move(params.widget),
 			.params{
 				.layout = layout::column
@@ -598,7 +598,7 @@ utki::shared_ref<ruis::container> ruis::make::row(
 	return make::container(
 		context,
 		{
-			.layout = std::move(params.layout),
+			.layout_params = std::move(params.layout_params),
 			.widget = std::move(params.widget),
 			.params{
 				.layout = layout::row

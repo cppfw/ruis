@@ -31,7 +31,7 @@ utki::shared_ref<ruis::widget> make_eased_animation_sample( //
 	// clang-format off
 	auto ret = m::padding(c,
 		{
-			.layout{
+			.layout_params{
 				.dims = {ruis::dim::fill, ruis::dim::min}
 			},
 			.params{
@@ -46,7 +46,7 @@ utki::shared_ref<ruis::widget> make_eased_animation_sample( //
 		{
 			m::slider(c,
 				{
-					.layout = {
+					.layout_params = {
 						.dims = {ruis::dim::fill, ruis::dim::min}
 					},
 					.widget = {
@@ -109,7 +109,7 @@ utki::shared_ref<ruis::widget> make_left_column(const utki::shared_ref<ruis::con
 	// clang-format off
 	return m::column(c,
 		{
-			.layout = {
+			.layout_params = {
 				.dims = {ruis::dim::fill, ruis::dim::fill},
 				.weight = 1
 			}
@@ -196,7 +196,7 @@ utki::shared_ref<ruis::widget> make_right_column(const utki::shared_ref<ruis::co
 	// clang-format off
 	return m::column(c,
 		{
-			.layout = {
+			.layout_params = {
 				.dims = {ruis::dim::fill, ruis::dim::fill},
 				.weight = 1
 			}
@@ -278,7 +278,7 @@ utki::shared_ref<ruis::widget> make_gui(const utki::shared_ref<ruis::context>& c
 	// clang-format off
 	return m::row(c,
 		{
-			.layout = {
+			.layout_params = {
 				.dims = {ruis::dim::fill, ruis::dim::fill}
 			}
 		},

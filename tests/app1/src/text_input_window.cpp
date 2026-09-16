@@ -28,7 +28,7 @@ utki::shared_ref<ruis::push_button> make_push_button(
     // clang-format off
     return m::push_button(c,
         {
-            .layout{
+            .layout_params{
                 .dims{ruis::dim::min, ruis::dim::fill},
                 .weight = 1
             }
@@ -101,7 +101,7 @@ utki::shared_ref<ruis::window> make_text_input_window(
         {
             m::tab_group(c,
                 {
-                    .layout{
+                    .layout_params{
                         .dims{ruis::dim::max, ruis::dim::min}
                     }
                 },
@@ -123,7 +123,7 @@ utki::shared_ref<ruis::window> make_text_input_window(
             ),
             m::nine_patch(c,
                 {
-                    .layout{
+                    .layout_params{
                         .dims{ruis::dim::max, ruis::dim::min}
                     },
                     .params{
@@ -135,7 +135,7 @@ utki::shared_ref<ruis::window> make_text_input_window(
                 {
                     m::collapse_area(c,
                         {
-                            .layout{
+                            .layout_params{
                                 .dims{ruis::dim::max, ruis::dim::min}
                             },
                             .title = U"Hi!"s
@@ -153,7 +153,7 @@ utki::shared_ref<ruis::window> make_text_input_window(
                                     ),
                                     m::image_push_button(c,
                                         {
-                                            .layout{
+                                            .layout_params{
                                                 .dims{50_pp, 50_pp}
                                             },
                                             .widget{
@@ -176,14 +176,14 @@ utki::shared_ref<ruis::window> make_text_input_window(
             ),
             m::gap(c,
                 {
-                    .layout{
+                    .layout_params{
                         .dims{0_pp, 5_pp}
                     }
                 }
             ),
             m::nine_patch_text_field(c,
                 {
-                    .layout{
+                    .layout_params{
                         .dims{ruis::dim::max, ruis::dim::min}
                     },
                     .widget{

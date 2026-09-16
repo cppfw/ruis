@@ -40,7 +40,7 @@ utki::shared_ref<ruis::window> make_sliders_window(
         {
             m::image(c,
                 {
-                    .layout{
+                    .layout_params{
                         .dims{ruis::dim::min, ruis::dim::max}
                     },
                     .params{
@@ -53,7 +53,7 @@ utki::shared_ref<ruis::window> make_sliders_window(
             ),
             m::scroll_bar(c,
                 {
-                    .layout{
+                    .layout_params{
                         .dims{ruis::dim::fill, 40_pp},
                         .weight = 1
                     },
@@ -64,7 +64,7 @@ utki::shared_ref<ruis::window> make_sliders_window(
             ),
             m::scroll_bar(c,
                 {
-                    .layout{
+                    .layout_params{
                         .dims{40_pp, ruis::dim::fill}
                     },
                     .widget{

@@ -29,7 +29,7 @@ resize_proxy::resize_proxy( //
 ) :
 	widget( //
 		context,
-		std::move(params.layout),
+		std::move(params.layout_params),
 		std::move(params.widget)
 	)
 {}

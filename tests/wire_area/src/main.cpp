@@ -42,7 +42,7 @@ utki::shared_ref<ruis::widget> make_socket(
 			),
 			m::wire_socket(c,
 				{
-					.layout{
+					.layout_params{
 						.dims{ruis::dim::fill, ruis::dim::fill}
 					},
 					// .widget{
@@ -69,7 +69,7 @@ utki::shared_ref<ruis::widget> make_root_widget(const utki::shared_ref<ruis::con
 		{
 			m::window(c,
 				{
-					.layout{
+					.layout_params{
 						.dims{
 							ruis::length::make_pp(100),
 							ruis::length::make_pp(50)
@@ -89,7 +89,7 @@ utki::shared_ref<ruis::widget> make_root_widget(const utki::shared_ref<ruis::con
 			),
 			m::window(c,
 				{
-					.layout{
+					.layout_params{
 						.dims{
 							ruis::length::make_pp(100),
 							ruis::length::make_pp(50)

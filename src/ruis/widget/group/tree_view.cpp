@@ -65,7 +65,7 @@ tree_view::tree_view( //
 ) :
 	widget( //
 		context,
-		std::move(params.layout),
+		std::move(params.layout_params),
 		std::move(params.widget)
 	),
 	// clang-format off
@@ -102,7 +102,7 @@ utki::shared_ref<ruis::widget> make_empty_space_indent(const utki::shared_ref<ru
 	// clang-format off
 	return ruis::make::gap(c,
 		{
-			.layout{
+			.layout_params{
 				.dims{
 					c.get().style().get_len_indent(),
 					ruis::length::make_px(0)
@@ -120,7 +120,7 @@ utki::shared_ref<ruis::widget> make_vertical_line_indent(const utki::shared_ref<
 	// clang-format off
 	return ruis::make::pile(c,
 		{
-			.layout{
+			.layout_params{
 				.dims{
 					c.get().style().get_len_indent(),
 					ruis::dim::fill
@@ -130,7 +130,7 @@ utki::shared_ref<ruis::widget> make_vertical_line_indent(const utki::shared_ref<
 		{
 			ruis::make::rectangle(c,
 				{
-					.layout{
+					.layout_params{
 						.dims{ruis::length::make_pp(1), ruis::dim::fill}
 					},
 					.params{
@@ -152,7 +152,7 @@ utki::shared_ref<ruis::container> make_line_end_indent(const utki::shared_ref<ru
 	// clang-format off
 	return ruis::make::pile(c,
 		{
-			.layout{
+			.layout_params{
 				.dims{
 					c.get().style().get_len_indent(),
 					ruis::dim::max
@@ -162,14 +162,14 @@ utki::shared_ref<ruis::container> make_line_end_indent(const utki::shared_ref<ru
 		{
 			ruis::make::column(c,
 			 	{
-					.layout{
+					.layout_params{
 						.dims{ruis::dim::max, ruis::dim::max}
 					}
 				},
 			 	{
 					ruis::make::rectangle(c,
 				  		{
-							.layout{
+							.layout_params{
 								.dims{ruis::length::make_pp(1), ruis::dim::fill},
 								.weight = 1
 							},
@@ -182,7 +182,7 @@ utki::shared_ref<ruis::container> make_line_end_indent(const utki::shared_ref<ru
 			  		),
 			  		ruis::make::gap(c,
 						{
-							.layout{
+							.layout_params{
 								.dims{ruis::dim::max, ruis::dim::fill},
 								.weight = 1
 							}
@@ -192,14 +192,14 @@ utki::shared_ref<ruis::container> make_line_end_indent(const utki::shared_ref<ru
 		 	),
 		 	ruis::make::row(c,
 			 	{
-					.layout{
+					.layout_params{
 						.dims{ruis::dim::max, ruis::dim::max}
 					}
 				},
 			 	{
 					ruis::make::gap(c,
 						{
-							.layout{
+							.layout_params{
 								.dims{ruis::dim::fill, ruis::dim::max},
 								.weight = 1
 							}
@@ -207,7 +207,7 @@ utki::shared_ref<ruis::container> make_line_end_indent(const utki::shared_ref<ru
 					),
 			  		ruis::make::rectangle(c,
 				  		{
-							.layout{
+							.layout_params{
 								.dims{ruis::dim::fill, ruis::length::make_pp(1)},
 								.weight = 1
 							},
@@ -232,7 +232,7 @@ utki::shared_ref<ruis::container> make_line_middle_indent(const utki::shared_ref
 	// clang-format off
 	return ruis::make::pile(c,
 		{
-			.layout{
+			.layout_params{
 				.dims{
 					c.get().style().get_len_indent(),
 					ruis::dim::max
@@ -242,7 +242,7 @@ utki::shared_ref<ruis::container> make_line_middle_indent(const utki::shared_ref
 		{
 			ruis::make::rectangle(c,
 				{
-					.layout{
+					.layout_params{
 						.dims{ruis::length::make_pp(1), ruis::dim::max}
 					},
 					.params{
@@ -254,14 +254,14 @@ utki::shared_ref<ruis::container> make_line_middle_indent(const utki::shared_ref
 			),
 			ruis::make::row(c,
 				{
-					.layout{
+					.layout_params{
 						.dims{ruis::dim::max, ruis::dim::max}
 					}
 				},
 				{
 					ruis::make::gap(c,
 						{
-							.layout{
+							.layout_params{
 								.dims{ruis::dim::fill, ruis::dim::max},
 								.weight = 1
 							}
@@ -269,7 +269,7 @@ utki::shared_ref<ruis::container> make_line_middle_indent(const utki::shared_ref
 					),
 					ruis::make::rectangle(c,
 						{
-							.layout{
+							.layout_params{
 								.dims{ruis::dim::fill, ruis::length::make_pp(1)},
 								.weight = 1
 							},
@@ -304,7 +304,7 @@ utki::shared_ref<ruis::widget> make_plus_minus_widget(const utki::shared_ref<rui
 			),
 			ruis::make::mouse_proxy(c,
 				{
-					.layout{
+					.layout_params{
 						.dims{ruis::dim::fill, ruis::dim::fill}
 					},
 					.widget{

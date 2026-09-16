@@ -113,7 +113,7 @@ utki::shared_ref<ruis::push_button> ruis::make::push_button( //
 		context,
 		// clang-format off
 		{
-			.layout = std::move(params.layout),
+			.layout_params = std::move(params.layout_params),
 			.widget = std::move(params.widget),
 			.params{
 				.nine_patch_button{

@@ -35,7 +35,7 @@ spinner::spinner( //
 ) :
 	widget( //
 		context,
-		std::move(params.layout),
+		std::move(params.layout_params),
 		std::move(params.widget)
 	),
 	image(context, {.params = std::move(params.params.image)}),

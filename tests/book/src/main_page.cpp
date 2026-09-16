@@ -19,14 +19,14 @@ utki::shared_ref<ruis::page> make_main_page(const utki::shared_ref<ruis::context
         {
             m::column(c,
                 {
-                    .layout{
+                    .layout_params{
                         .dims = {ruis::dim::fill, ruis::dim::fill}
                     }
                 },
                 {
                     m::push_button(c,
                         {
-                            .layout{
+                            .layout_params{
                                 .dims = {ruis::dim::fill, ruis::dim::min}
                             },
                             .widget{
@@ -42,7 +42,7 @@ utki::shared_ref<ruis::page> make_main_page(const utki::shared_ref<ruis::context
                     ),
                     m::push_button(c,
                         {
-                            .layout{
+                            .layout_params{
                                 .dims = {ruis::dim::fill, ruis::dim::min}
                             },
                             .widget{
@@ -58,7 +58,7 @@ utki::shared_ref<ruis::page> make_main_page(const utki::shared_ref<ruis::context
                     ),
                     m::push_button(c,
                         {
-                            .layout{
+                            .layout_params{
                                 .dims = {ruis::dim::fill, ruis::dim::min}
                             },
                             .widget{

@@ -86,14 +86,14 @@ utki::shared_ref<ruis::window> make_window0(
 		{
 			m::column(c,
 				{
-					.layout{
+					.layout_params{
 						.dims{ruis::dim::max, ruis::dim::max}
 					}
 				},
 				{
 					m::row(c,
 						{
-							.layout{
+							.layout_params{
 								.align{ruis::align::back, ruis::align::undefined}
 							}
 						},
@@ -133,7 +133,7 @@ utki::shared_ref<ruis::window> make_window0(
 					),
 					m::selection_box(c,
 						{
-							.layout{
+							.layout_params{
 								.dims{ruis::dim::max, ruis::dim::min}
 							},
 							.widget{
@@ -187,7 +187,7 @@ utki::shared_ref<ruis::window> make_window0(
 					),
 					m::row(c,
 						{
-							.layout{
+							.layout_params{
 								.align{ruis::align::front, ruis::align::front}
 							}
 						},
@@ -216,7 +216,7 @@ utki::shared_ref<ruis::window> make_window0(
 					),
 					m::choice_group(c,
 						{
-							.layout{
+							.layout_params{
 								.dims{ruis::dim::max, ruis::dim::min}
 							}
 						},

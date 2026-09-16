@@ -57,14 +57,14 @@ public:
 					{
 						m::pile(ctx,
 							{
-								.layout{
+								.layout_params{
 									.dims = {ruis::dim::min, ruis::dim::fill}
 								}
 							},
 							{
 								m::aspect_ratio_proxy(ctx,
 									{
-										.layout{
+										.layout_params{
 											.dims = {ruis::dim::min, ruis::dim::fill}
 										},
 										.aspect_ratio_params{
@@ -74,7 +74,7 @@ public:
 								),
 								m::rectangle(ctx,
 									{
-										.layout{
+										.layout_params{
 											.dims = {ruis::dim::fill, ruis::dim::fill}
 										},
 										.params{

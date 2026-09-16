@@ -64,7 +64,7 @@ private:
 
 public:
 	struct all_parameters {
-		ruis::layout::parameters layout;
+		ruis::layout::parameters layout_params;
 		ruis::widget::parameters widget;
 		real fraction = 0;
 		real band_fraction = 0;

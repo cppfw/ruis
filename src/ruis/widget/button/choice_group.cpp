@@ -32,7 +32,7 @@ choice_group::choice_group(
 ) :
 	widget(
 		context, //
-		std::move(params.layout),
+		std::move(params.layout_params),
 		std::move(params.widget)
 	),
 	// clang-format off

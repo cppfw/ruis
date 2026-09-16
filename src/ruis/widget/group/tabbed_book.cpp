@@ -53,7 +53,7 @@ tabbed_book::tabbed_book(
 					){
 						return ruis::make::choice_group(context,
 							{
-								.layout{
+								.layout_params{
 									.dims{ruis::dim::fill, ruis::dim::min}
 								},
 								.params{
@@ -85,7 +85,7 @@ tabbed_book::tabbed_book(
 					){
 						return ruis::make::book(context,
 							{
-								.layout{
+								.layout_params{
 									.dims{ruis::dim::fill, ruis::dim::max},
 									.weight = 1
 								}
@@ -112,7 +112,7 @@ tabbed_book::tabbed_book(
 ) :
 	widget(
 		context, //
-		std::move(params.layout),
+		std::move(params.layout_params),
 		std::move(params.widget)
 	),
 	// clang-format off
@@ -287,7 +287,7 @@ utki::shared_ref<ruis::tabbed_book> ruis::make::tabbed_book(
 			){
 				return ruis::make::tab_group(context,
 					{
-						.layout{
+						.layout_params{
 							.dims{ruis::dim::fill, ruis::dim::min}
 						}
 					},

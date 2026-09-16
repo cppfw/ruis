@@ -53,7 +53,7 @@ utki::shared_ref<ruis::tab> inflate_tab(ruis::tabbed_book& tb, const std::string
 						{
 							m::image(c,
 								{
-									.layout{
+									.layout_params{
 										.dims{
 											ruis::length::make_pp(8),
 											ruis::length::make_pp(8)
@@ -122,7 +122,7 @@ utki::shared_ref<ruis::widget> make_root_widget(const utki::shared_ref<ruis::con
 			),
 			m::tabbed_book(c,
 				{
-					.layout{
+					.layout_params{
 						.dims{ruis::dim::fill, ruis::dim::max},
 						.weight = 1
 					},

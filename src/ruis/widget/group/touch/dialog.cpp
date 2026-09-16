@@ -52,7 +52,7 @@ widget_list make_chrome(
 	// clang-format off
 	auto dim_bg = m::rectangle(c,
 		{
-			.layout{
+			.layout_params{
 				.dims = {ruis::dim::fill, ruis::dim::fill}
 			},
 			.params{
@@ -68,7 +68,7 @@ widget_list make_chrome(
 	// clang-format off
 	auto bg_click_proxy = m::click_proxy(c,
 		{
-			.layout{
+			.layout_params{
 				.dims = {ruis::dim::fill, ruis::dim::fill}
 			},
 			.click_proxy_params{
@@ -82,7 +82,7 @@ widget_list make_chrome(
 	// clang-format off
 	auto key_proxy = m::key_proxy(c,
 		{
-			.layout{
+			.layout_params{
 				.dims = {ruis::dim::fill, ruis::dim::fill}
 			},
 			.key_proxy_params{
@@ -97,7 +97,7 @@ widget_list make_chrome(
 	// clang-format off
 	auto panel_bg = m::rectangle(c,
 		{
-			.layout{
+			.layout_params{
 				.dims = {ruis::dim::fill, ruis::dim::fill}
 			},
 			.params{
@@ -138,7 +138,7 @@ widget_list make_chrome(
 	// clang-format off
 	auto margin_container = m::padding(c,
 		{
-			.layout{
+			.layout_params{
 				.dims = {ruis::dim::fill, ruis::dim::fill}
 			},
 			.params{
@@ -160,7 +160,7 @@ widget_list make_chrome(
 			// so that clicks on the panel do not reach the background click proxy.
 			m::mouse_proxy(c,
 				{
-					.layout{
+					.layout_params{
 						.dims = {ruis::dim::fill, ruis::dim::fill}
 					},
 					.mouse_proxy_params{
@@ -191,7 +191,7 @@ dialog::dialog(
 ) :
 	widget( //
 		context,
-		std::move(params.layout),
+		std::move(params.layout_params),
 		std::move(params.widget)
 	),
 	// clang-format off
@@ -235,7 +235,7 @@ dialog::dialog(
 			context,
 			// clang-format off
 			{
-				.layout{
+				.layout_params{
 					// content container fills the dialog panel, so that fill-sized children
 					// (e.g. scrollable lists) can take the whole available area of the panel
 					.dims = {ruis::dim::fill, ruis::dim::fill}

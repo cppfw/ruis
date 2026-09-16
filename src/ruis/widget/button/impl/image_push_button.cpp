@@ -35,7 +35,7 @@ image_push_button::image_push_button( //
 ) :
 	widget( //
 		context,
-		std::move(params.layout),
+		std::move(params.layout_params),
 		std::move(params.widget)
 	),
 	button( //

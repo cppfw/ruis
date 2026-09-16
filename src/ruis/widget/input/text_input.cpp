@@ -46,7 +46,7 @@ text_input::text_input(
 ) :
 	widget(
 		context, //
-		std::move(params.layout),
+		std::move(params.layout_params),
 		std::move(params.widget)
 	),
 	text_string_widget(

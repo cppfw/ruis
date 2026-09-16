@@ -41,7 +41,7 @@ utki::shared_ref<ruis::window> make_vertical_list_window(
         {
             m::mouse_proxy(c,
                 {
-                    .layout{
+                    .layout_params{
                         .dims{50_pp, ruis::dim::fill}
                     },
                     .widget{
@@ -51,7 +51,7 @@ utki::shared_ref<ruis::window> make_vertical_list_window(
             ),
             m::pile(c,
                 {
-                    .layout{
+                    .layout_params{
                         .dims{ruis::dim::fill, ruis::dim::max},
                         .weight = 1
                     }
@@ -59,7 +59,7 @@ utki::shared_ref<ruis::window> make_vertical_list_window(
                 {
                     m::list(c,
                         {
-                            .layout{
+                            .layout_params{
                                 .dims{ruis::dim::max, ruis::dim::max}
                             },
                             .widget{
@@ -142,7 +142,7 @@ utki::shared_ref<ruis::window> make_vertical_list_window(
             ),
             m::scroll_bar(c,
                 {
-                    .layout{
+                    .layout_params{
                         .dims{ruis::dim::min, ruis::dim::max}
                     },
                     .widget{

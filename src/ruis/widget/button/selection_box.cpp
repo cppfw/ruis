@@ -78,7 +78,7 @@ utki::shared_ref<ruis::selection_box> ruis::make::selection_box(
 	return ruis::make::nine_patch_drop_down_box(
 		context, //
 		{
-			.layout = std::move(params.layout), //
+			.layout_params = std::move(params.layout_params), //
 			.widget = std::move(params.widget),
 			.params{
 				.selection_box{

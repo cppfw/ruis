@@ -16,7 +16,7 @@ class wire_area : public ruis::container{
 	uint32_t grabbed_color = default_grabbed_color;
 public:
 	struct all_parameters{
-		ruis::layout::parameters layout;
+		ruis::layout::parameters layout_params;
 		ruis::widget::parameters widget;
 	};
 

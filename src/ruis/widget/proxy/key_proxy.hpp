@@ -38,7 +38,7 @@ public:
 	};
 
 	struct all_parameters {
-		ruis::layout::parameters layout;
+		ruis::layout::parameters layout_params;
 		ruis::widget::parameters widget;
 		container::parameters params;
 		parameters key_proxy_params;

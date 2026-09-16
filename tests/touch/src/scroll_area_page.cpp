@@ -102,7 +102,7 @@ ruis::widget_list make_scroll_area_page_contents(const utki::shared_ref<ruis::co
 	// clang-format off
 	auto theme_selector = m::selection_box(c,
 		{
-			.layout{
+			.layout_params{
 				.dims = {ruis::dim::max, ruis::dim::min}
 			},
 			.params{
@@ -130,7 +130,7 @@ ruis::widget_list make_scroll_area_page_contents(const utki::shared_ref<ruis::co
 	// clang-format off
 	auto button_1 = m::push_button(c,
 		{
-			.layout{
+			.layout_params{
 				.dims = {ruis::dim::fill, 200_pp}
 			}
 		},
@@ -151,7 +151,7 @@ ruis::widget_list make_scroll_area_page_contents(const utki::shared_ref<ruis::co
 		theme_selector,
 		ruis::make::gap(c,
 			{
-				.layout{
+				.layout_params{
 					.dims = {ruis::dim::fill, c.get().style().get_len_gap().get()}
 				}
 			}
@@ -159,14 +159,14 @@ ruis::widget_list make_scroll_area_page_contents(const utki::shared_ref<ruis::co
 		button_1,
 		ruis::make::gap(c,
 			{
-				.layout{
+				.layout_params{
 					.dims = {ruis::dim::fill, c.get().style().get_len_gap().get()}
 				}
 			}
 		),
 		m::scroll_bar(c,
 			{
-				.layout{
+				.layout_params{
 					.dims{50_pp, 1000_pp}
 				},
 				.fraction = ruis::real(0.25),
@@ -178,7 +178,7 @@ ruis::widget_list make_scroll_area_page_contents(const utki::shared_ref<ruis::co
 		),
 		ruis::make::gap(c,
 			{
-				.layout{
+				.layout_params{
 					.dims = {ruis::dim::fill, c.get().style().get_len_gap().get()}
 				}
 			}
@@ -211,7 +211,7 @@ public:
 			{
 				m::padding(context,
 					{
-						.layout{
+						.layout_params{
 							.dims = {ruis::dim::fill, ruis::dim::min}
 						},
 						.params{

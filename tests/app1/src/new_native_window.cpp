@@ -21,7 +21,7 @@ utki::shared_ref<ruis::widget> make_new_native_window_root_widget(
     // clang-format off
     auto button = m::push_button(c,
         {
-            .layout{
+            .layout_params{
                 .dims{ruis::dim::fill, ruis::dim::fill},
                 .weight = 1
             }
@@ -55,7 +55,7 @@ utki::shared_ref<ruis::widget> make_new_native_window_root_widget(
         {
             m::row(c,
                 {
-                    .layout{
+                    .layout_params{
                         .align = {ruis::align::front, ruis::align::center}
                     }
                 },
@@ -66,7 +66,7 @@ utki::shared_ref<ruis::widget> make_new_native_window_root_widget(
             ),
             m::text_field(c,
                 {
-                    .layout{
+                    .layout_params{
                         .dims{ruis::dim::max, ruis::dim::min}
                     },
                     .widget{

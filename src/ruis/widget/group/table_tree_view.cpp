@@ -92,7 +92,7 @@ table_tree_view::table_tree_view(
 ) :
 	ruis::widget(
 		context, //
-		std::move(params.layout),
+		std::move(params.layout_params),
 		std::move(params.widget)
 	),
 	// clang-format off

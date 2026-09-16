@@ -47,7 +47,7 @@ selection_box::selection_box(
 ) :
 	widget(
 		context, //
-		std::move(params.layout),
+		std::move(params.layout_params),
 		std::move(params.widget)
 	),
 	button(
@@ -72,7 +72,7 @@ selection_box::selection_box(
 		{
 			ruis::make::text(context,
 				{
-					.layout{
+					.layout_params{
 						.align = {ruis::align::front, ruis::align::center}
 					}
 				},
@@ -80,7 +80,7 @@ selection_box::selection_box(
 			),
 			ruis::make::container(context,
 				{
-					.layout{
+					.layout_params{
 						.weight = 1,
 						.align = {ruis::align::back, ruis::align::center}
 					},
@@ -131,7 +131,7 @@ public:
 		// clang-format off
 		auto pressed_indicator = ruis::make::rectangle(this->context,
 			{
-				.layout{
+				.layout_params{
 					.dims = {ruis::dim::fill, ruis::dim::fill}
 				},
 				.widget{
@@ -149,7 +149,7 @@ public:
 		// clang-format off
 		auto click_proxy = ruis::make::click_proxy(this->context,
 			{
-				.layout{
+				.layout_params{
 					.dims = {ruis::dim::fill, ruis::dim::fill}
 				},
 				.click_proxy_params{
@@ -172,14 +172,14 @@ public:
 		// clang-format off
 		return ruis::make::column(this->context,
 			{
-				.layout{
+				.layout_params{
 					.dims = {ruis::dim::fill, ruis::dim::min}
 				}
 			},
 			{
 				ruis::make::pile(this->context,
 					{
-						.layout{
+						.layout_params{
 							.dims = {ruis::dim::fill, ruis::dim::min}
 						}
 					},
@@ -187,7 +187,7 @@ public:
 						std::move(pressed_indicator),
 						ruis::make::padding(this->context,
 							{
-								.layout{
+								.layout_params{
 									.dims = {ruis::dim::fill, ruis::dim::min}
 								},
 								.params{
@@ -214,7 +214,7 @@ public:
 				),
 				ruis::make::gap(this->context,
 					{
-						.layout{
+						.layout_params{
 							.dims = {ruis::dim::fill, ruis::length::make_pp(1)} // TODO: get from theme
 						},
 						.color{
@@ -238,14 +238,14 @@ void selection_box::show_selection_menu()
 	// clang-format off
 	auto root = ruis::touch::make::dialog(c,
 		{
-			.layout{
+			.layout_params{
 				.dims = {ruis::dim::fill, ruis::dim::fill}
 			}
 		},
 		{
 			ruis::touch::make::list(c,
 				{
-					.layout{
+					.layout_params{
 						.dims = {ruis::dim::fill, ruis::dim::fill}
 					},
 					.list_params{

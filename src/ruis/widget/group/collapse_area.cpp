@@ -67,7 +67,7 @@ collapse_area::collapse_area(
 ) :
 	widget(
 		context, //
-		std::move(params.layout),
+		std::move(params.layout_params),
 		std::move(params.widget)
 	),
 	// clang-format off
@@ -81,14 +81,14 @@ collapse_area::collapse_area(
 		{
 			m::pile(context,
 				{
-					.layout{
+					.layout_params{
 						.dims{ruis::dim::max, ruis::dim::min}
 					}
 				},
 				{
 					m::rectangle(context,
 						{
-							.layout{
+							.layout_params{
 								.dims{ruis::dim::fill, ruis::dim::fill}
 							},
 							.params{
@@ -100,7 +100,7 @@ collapse_area::collapse_area(
 					),
 					m::padding(context,
 						{
-							.layout{
+							.layout_params{
 								.dims{ruis::dim::max, ruis::dim::min}
 							},
 							.params{
@@ -135,7 +135,7 @@ collapse_area::collapse_area(
 							),
 							m::gap(context,
 								{
-									.layout{
+									.layout_params{
 										.dims{4_pp, 0_px}
 									}
 								}

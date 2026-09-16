@@ -29,7 +29,7 @@ mouse_proxy::mouse_proxy( //
 ) :
 	widget( //
 		context,
-		std::move(params.layout),
+		std::move(params.layout_params),
 		std::move(params.widget)
 	),
 	mouse_button_handler(std::move(params.mouse_proxy_params.mouse_button_handler)),

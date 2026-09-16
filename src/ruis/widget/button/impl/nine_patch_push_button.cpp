@@ -32,7 +32,7 @@ nine_patch_push_button::nine_patch_push_button( //
 ) :
 	widget( //
 		context,
-		std::move(params.layout),
+		std::move(params.layout_params),
 		std::move(params.widget)
 	),
 	button( //

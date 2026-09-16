@@ -36,7 +36,7 @@ class text : public text_string_widget
 {
 public:
 	struct all_parameters {
-		ruis::layout::parameters layout;
+		ruis::layout::parameters layout_params;
 		ruis::widget::parameters widget;
 		text_widget::parameters params;
 	};

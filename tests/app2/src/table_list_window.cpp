@@ -101,7 +101,7 @@ utki::shared_ref<ruis::widget> make_table_list_window(
 	// clang-format off
 	auto table_list = m::table_list(c,
 		{
-			.layout{
+			.layout_params{
 				.dims = {ruis::dim::fill, ruis::dim::fill},
 				.weight = 1
 			},
@@ -151,7 +151,7 @@ utki::shared_ref<ruis::widget> make_table_list_window(
 
 	auto scroll_bar = m::scroll_bar(c,
 		{
-			.layout{
+			.layout_params{
 				.dims = {ruis::dim::min, ruis::dim::fill}
 			}
 		}

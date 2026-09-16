@@ -50,7 +50,7 @@ public:
 		// clang-format off
 		auto button = m::push_button(this->context,
 			{
-				.layout{
+				.layout_params{
 					.dims = {ruis::dim::min, ruis::length::make_pp(30)}
 				}
 			},
@@ -67,7 +67,7 @@ public:
 		// clang-format off
 		return m::column(this->context,
 			{
-				.layout{
+				.layout_params{
 					.dims = {ruis::dim::fill, ruis::dim::min}
 				}
 			},
@@ -87,7 +87,7 @@ public:
 						m::text(this->context, {}, utki::to_utf32(utki::cat("Item #", index))),
 						m::gap(this->context,
 							{
-								.layout{
+								.layout_params{
 									.dims = {ruis::length::make_pp(5), ruis::dim::min}
 								}
 							}
@@ -97,7 +97,7 @@ public:
 				),
 				m::gap(this->context,
 					{
-						.layout{
+						.layout_params{
 							.dims = {ruis::dim::fill, ruis::length::make_pp(1)}
 						},
 						.color{

@@ -32,7 +32,7 @@ gradient::gradient( //
 ) :
 	widget( //
 		context,
-		std::move(params.layout),
+		std::move(params.layout_params),
 		std::move(params.widget)
 	),
 	params(std::move(params.params))

@@ -43,7 +43,7 @@ utki::shared_ref<ruis::window> make_spinning_cube_window(
         {
             m::rectangle(c,
                 {
-                    .layout{
+                    .layout_params{
                         .dims{ruis::dim::fill, ruis::dim::fill}
                     },
                     .widget{
@@ -62,7 +62,7 @@ utki::shared_ref<ruis::window> make_spinning_cube_window(
             ),
             m::click_proxy(c,
                 {
-                    .layout{
+                    .layout_params{
                         .dims{ruis::dim::fill, ruis::dim::fill}
                     },
                     .widget{
@@ -72,7 +72,7 @@ utki::shared_ref<ruis::window> make_spinning_cube_window(
             ),
             m::cube_widget(c,
                 {
-                    .layout{
+                    .layout_params{
                         .dims{ruis::dim::max, ruis::dim::max}
                     },
                     .widget{

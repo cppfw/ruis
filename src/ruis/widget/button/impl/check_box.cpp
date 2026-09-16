@@ -34,7 +34,7 @@ check_box::check_box(
 ) :
 	widget( //
 		context,
-		std::move(params.layout),
+		std::move(params.layout_params),
 		std::move(params.widget)
 	),
 	button( //

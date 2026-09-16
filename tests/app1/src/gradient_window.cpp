@@ -41,7 +41,7 @@ utki::shared_ref<ruis::window> make_gradient_window(
         {
             m::gradient(c,
                 {
-                    .layout{
+                    .layout_params{
                         .dims{ruis::dim::max, ruis::dim::max}
                     },
                     .params{
@@ -51,7 +51,7 @@ utki::shared_ref<ruis::window> make_gradient_window(
             ),
             m::container(c,
                 {
-                    .layout{
+                    .layout_params{
                         .dims{ruis::dim::fill, ruis::dim::fill}
                     },
                     .params{

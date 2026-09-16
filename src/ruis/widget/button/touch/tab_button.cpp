@@ -34,7 +34,7 @@ tab_button::tab_button(
 ) :
 	widget(
 		context, //
-		std::move(params.layout),
+		std::move(params.layout_params),
 		std::move(params.widget)
 	),
 	button(
@@ -56,7 +56,7 @@ tab_button::tab_button(
             ruis::make::padding(
                 context,
                 {
-                    .layout{
+                    .layout_params{
                         .dims = {ruis::dim::fill, ruis::dim::fill}
                     },
                     .params{
@@ -71,7 +71,7 @@ tab_button::tab_button(
                 {
                     ruis::make::image(context,
                         {
-                            .layout{
+                            .layout_params{
                                 .dims = {ruis::dim::min, ruis::dim::fill},
                                 .weight = 1
                             },
@@ -80,7 +80,7 @@ tab_button::tab_button(
                     ),
                     ruis::make::text(context,
                         {
-                            .layout{
+                            .layout_params{
                                 .dims = {ruis::dim::min, ruis::dim::min},
                                 .align = {ruis::align::center, ruis::align::center}
                             }

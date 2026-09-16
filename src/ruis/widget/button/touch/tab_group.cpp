@@ -32,13 +32,13 @@ tab_group::tab_group(
 ) :
 	widget(
 		context, //
-		std::move(params.layout),
+		std::move(params.layout_params),
 		std::move(params.widget)
 	),
 	choice_group(
 		context, //
 		{
-			.layout = std::move(params.layout),
+			.layout_params = std::move(params.layout_params),
 			.widget = std::move(params.widget),
 			.params = [&](){
 				if (auto& c = params.params.container.layout; !c) {
@@ -54,7 +54,7 @@ tab_group::tab_group(
 					context,
 					{
 						// use same layout params for the padding, except the dims
-						.layout = [&]() {
+						.layout_params = [&]() {
 							auto lp = c.get().get_layout_params_const();
 							lp.dims = {ruis::dim::max, ruis::dim::max};
 							return lp;

@@ -6,7 +6,7 @@ cube_widget::cube_widget(
 ) :
     widget(
         context, //
-        std::move(params.layout),
+        std::move(params.layout_params),
         std::move(params.widget)
     )
 {

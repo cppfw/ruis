@@ -34,7 +34,7 @@ labeled_rectangle_text_field::labeled_rectangle_text_field(
 ) :
 	widget(
 		context, //
-		std::move(params.layout),
+		std::move(params.layout_params),
 		std::move(params.widget)
 	),
 	// Initialize container first so it adds the label and the text field as its children
@@ -50,7 +50,7 @@ labeled_rectangle_text_field::labeled_rectangle_text_field(
 			ruis::make::text(
 				context, //
 				{
-					.layout{
+					.layout_params{
 						.dims = {ruis::dim::fill, ruis::dim::min},
 						.align = {ruis::align::front, ruis::align::center}
 					},
@@ -66,7 +66,7 @@ labeled_rectangle_text_field::labeled_rectangle_text_field(
 			ruis::make::rectangle_text_field(
 				context, //
 				{
-					.layout{
+					.layout_params{
 						.dims = {ruis::dim::max, ruis::dim::max}
 					},
 					.params = std::move(params.params.rectangle_text_field)

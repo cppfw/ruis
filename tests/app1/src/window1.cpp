@@ -40,7 +40,7 @@ utki::shared_ref<ruis::window> make_window1(
         {
             m::row(c,
                 {
-                    .layout{
+                    .layout_params{
                         .dims{ruis::dim::max, ruis::dim::min}
                     },
                     .widget{
@@ -51,7 +51,7 @@ utki::shared_ref<ruis::window> make_window1(
                 {
                     m::text(c,
                         {
-                            .layout{
+                            .layout_params{
                                 .weight = 0
                             },
                             .widget{
@@ -62,7 +62,7 @@ utki::shared_ref<ruis::window> make_window1(
                     ),
                     m::text(c,
                         {
-                            .layout{
+                            .layout_params{
                                 .weight = 1
                             },
                             .widget{
@@ -73,7 +73,7 @@ utki::shared_ref<ruis::window> make_window1(
                     ),
                     m::push_button(c,
                         {
-                            .layout{
+                            .layout_params{
                                 .dims{ruis::dim::fill, ruis::dim::min},
                                 .weight = 1
                             },
@@ -109,14 +109,14 @@ utki::shared_ref<ruis::window> make_window1(
             ),
             m::pile(c,
                 {
-                    .layout{
+                    .layout_params{
                         .dims{ruis::dim::fill, 50_pp}
                     }
                 },
                 {
                     m::rectangle(c,
                         {
-                            .layout{
+                            .layout_params{
                                 .dims{ruis::dim::fill, ruis::dim::fill}
                             },
                             .params{
@@ -128,7 +128,7 @@ utki::shared_ref<ruis::window> make_window1(
                     ),
                     m::mouse_proxy(c,
                         {
-                            .layout{
+                            .layout_params{
                                 .dims{ruis::dim::fill, ruis::dim::fill}
                             },
                             .widget{
@@ -140,7 +140,7 @@ utki::shared_ref<ruis::window> make_window1(
             ),
             m::pile(c,
                 {
-                    .layout{
+                    .layout_params{
                         .dims{ruis::dim::fill, ruis::dim::fill},
                         .weight = 1
                     }
@@ -148,7 +148,7 @@ utki::shared_ref<ruis::window> make_window1(
                 {
                     m::list(c,
                         {
-                            .layout{
+                            .layout_params{
                                 .dims{ruis::dim::fill, ruis::dim::fill}
                             },
                             .widget{
@@ -187,7 +187,7 @@ utki::shared_ref<ruis::window> make_window1(
                                         utki::shared_ref<ruis::widget> get_widget(size_t index) override{
                                             return m::text(this->context,
                                                 {
-                                                    .layout{
+                                                    .layout_params{
                                                         .dims{
                                                             ruis::dim::min,
                                                             index == 0 ? ruis::dim::max : ruis::dim::min
@@ -207,7 +207,7 @@ utki::shared_ref<ruis::window> make_window1(
             ),
             m::scroll_bar(c,
                 {
-                    .layout{
+                    .layout_params{
                         .dims{ruis::dim::fill, ruis::dim::min}
                     },
                     .widget{

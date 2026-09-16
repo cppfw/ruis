@@ -164,7 +164,7 @@ public:
                 {
                     m::rectangle(c,
                         {
-                            .layout{
+                            .layout_params{
                                 .dims{ruis::dim::fill, ruis::dim::fill}
                             },
                             .widget{
@@ -187,7 +187,7 @@ public:
                     ),
                     m::mouse_proxy(c,
                         {
-                            .layout{
+                            .layout_params{
                                 .dims{ruis::dim::fill, ruis::dim::fill}
                             },
                             .widget{
@@ -245,7 +245,7 @@ public:
                 {
                     m::rectangle(c,
                         {
-                            .layout{
+                            .layout_params{
                                 .dims{ruis::length::make_pp(5), ruis::length::make_pp(2)}
                             },
                             .params{
@@ -313,7 +313,7 @@ utki::shared_ref<ruis::window> make_tree_view_window(
         {
             m::row(c,
                 {
-                    .layout{
+                    .layout_params{
                         .dims{ruis::dim::max, ruis::dim::fill},
                         .weight = 1
                     }
@@ -321,7 +321,7 @@ utki::shared_ref<ruis::window> make_tree_view_window(
                 {
                     m::scroll_area(c,
                         {
-                            .layout{
+                            .layout_params{
                                 .dims{ruis::dim::fill, ruis::dim::fill},
                                 .weight = 1
                             },
@@ -332,7 +332,7 @@ utki::shared_ref<ruis::window> make_tree_view_window(
                         {
                             m::tree_view(c,
                                 {
-                                    .layout{
+                                    .layout_params{
                                         .dims{ruis::dim::min, ruis::dim::fill}
                                     },
                                     .widget{
@@ -348,7 +348,7 @@ utki::shared_ref<ruis::window> make_tree_view_window(
                     ),
                     m::scroll_bar(c,
                         {
-                            .layout{
+                            .layout_params{
                                 .dims{ruis::dim::min, ruis::dim::max}
                             },
                             .widget{
@@ -363,7 +363,7 @@ utki::shared_ref<ruis::window> make_tree_view_window(
             ),
             m::scroll_bar(c,
                 {
-                    .layout{
+                    .layout_params{
                         .dims{ruis::dim::max, ruis::dim::min}
                     },
                     .widget{
@@ -376,7 +376,7 @@ utki::shared_ref<ruis::window> make_tree_view_window(
             ),
             m::row(c,
                 {
-                    .layout{
+                    .layout_params{
                         .dims{ruis::dim::max, ruis::dim::min}
                     }
                 },

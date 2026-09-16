@@ -78,7 +78,7 @@ utki::shared_ref<ruis::window> make_sliders_window(
 		{
 			m::padding(c,
 				{
-					.layout{
+					.layout_params{
 						.dims = {ruis::dim::fill, ruis::dim::min}
 					},
 					.params{
@@ -93,7 +93,7 @@ utki::shared_ref<ruis::window> make_sliders_window(
 				{
 					m::scroll_bar(c,
 						{
-							.layout = {
+							.layout_params = {
 								.dims = {ruis::dim::fill, ruis::dim::min},
 								.align = {ruis::align::front, ruis::align::front}
 							},
@@ -105,7 +105,7 @@ utki::shared_ref<ruis::window> make_sliders_window(
 					),
 					m::slider(c,
 						{
-							.layout = {
+							.layout_params = {
 								.dims = {ruis::dim::fill, ruis::dim::min}
 							},
 							.oriented_params = {
@@ -144,7 +144,7 @@ utki::shared_ref<ruis::window> make_sliders_window(
 						{
 							m::gap(c,
 								{
-									.layout{
+									.layout_params{
 										.dims{10_pp, 10_pp}
 									}
 								}
@@ -200,7 +200,7 @@ utki::shared_ref<ruis::window> make_image_window(
 		{
 			m::image(c,
 				{
-					.layout{
+					.layout_params{
 						.dims = {ruis::dim::min, ruis::dim::fill}
 					},
 					.widget{
@@ -216,7 +216,7 @@ utki::shared_ref<ruis::window> make_image_window(
 			),
 			m::resize_proxy(c,
 				{
-					.layout = {
+					.layout_params = {
 						.dims = {ruis::dim::fill, ruis::dim::fill}
 					},
 					.widget = {
@@ -313,7 +313,7 @@ utki::shared_ref<ruis::window> make_selection_box_window(
 	// clang-format off
 	auto lang_sel_box = m::selection_box(c,
 		{
-			.layout{
+			.layout_params{
 				.dims = {ruis::dim::max, ruis::dim::min}
 			},
 			.params{
@@ -366,7 +366,7 @@ utki::shared_ref<ruis::window> make_selection_box_window(
 		{
 			m::selection_box(c,
 				{
-					.layout{
+					.layout_params{
 						.dims = {ruis::dim::max, ruis::dim::min}
 					},
 					.params{
@@ -383,7 +383,7 @@ utki::shared_ref<ruis::window> make_selection_box_window(
 			),
 			m::text(c,
 				{
-					.layout{
+					.layout_params{
 						.align = {ruis::align::front, ruis::align::center}
 					}
 				},
@@ -429,7 +429,7 @@ utki::shared_ref<ruis::window> make_text_input_window(
 		{
 			m::labeled_rectangle_text_field(c,
 				{
-					.layout{
+					.layout_params{
 						.dims = {ruis::dim::fill, ruis::dim::min}
 					},
 					.params{
@@ -458,14 +458,14 @@ utki::shared_ref<ruis::widget> make_root_widgets_structure(const utki::shared_re
 	// clang-format off
 	return m::overlay(c,
 		{
-			.layout = {
+			.layout_params = {
 				.dims = {ruis::dim::fill, ruis::dim::fill}
 			}
 		},
 		{
 			m::drag_area(c,
 				{
-					.layout = {
+					.layout_params = {
 						.dims = {ruis::dim::fill, ruis::dim::fill}
 					}
 				},
