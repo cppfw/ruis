@@ -75,7 +75,7 @@ tab_button::tab_button(
                                 .dims = {ruis::dim::min, ruis::dim::fill},
                                 .weight = 1
                             },
-                            .params = std::move(params.image_params)
+                            .params = std::move(params.params.image)
                         }
                     ),
                     ruis::make::text(context,

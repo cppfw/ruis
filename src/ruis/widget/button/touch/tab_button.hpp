@@ -32,11 +32,15 @@ class tab_button :
 	private ruis::container
 {
 public:
+	struct parameters{
+		ruis::image::parameters image;
+		ruis::text_widget::parameters text;
+	};
+
 	struct all_parameters {
 		ruis::layout::parameters layout;
 		ruis::widget::parameters widget;
-		ruis::image::parameters image_params;
-		ruis::text_widget::parameters text_params;
+		parameters params;
 	};
 
 	tab_button(
