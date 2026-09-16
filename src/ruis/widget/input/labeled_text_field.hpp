@@ -34,7 +34,7 @@ class labeled_text_field :
 {
 public:
 	struct all_parameters {
-		ruis::layout::parameters layout_params;
+		ruis::layout_parameters layout_params;
 		ruis::widget::parameters widget;
 		ruis::labeled_widget::parameters label;
 		ruis::text_input::parameters text_input;

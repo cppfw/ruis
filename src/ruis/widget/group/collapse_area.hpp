@@ -38,7 +38,7 @@ class collapse_area :
 
 public:
 	struct all_parameters {
-		ruis::layout::parameters layout_params;
+		ruis::layout_parameters layout_params;
 		ruis::widget::parameters widget;
 		container::parameters params;
 		string title;

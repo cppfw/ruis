@@ -21,7 +21,7 @@ class path_widget : virtual public ruis::widget{
 	ruis::paint::path_vao vao;
 public:
 	struct all_parameters{
-		ruis::layout::parameters layout_params;
+		ruis::layout_parameters layout_params;
 		ruis::widget::parameters widget;
 	};
 
@@ -70,7 +70,7 @@ class ellipse_widget : virtual public ruis::widget{
 	ruis::paint::ellipse_vao vao;
 public:
 	struct all_parameters{
-		ruis::layout::parameters layout_params;
+		ruis::layout_parameters layout_params;
 		ruis::widget::parameters widget;
 	};
 
@@ -116,7 +116,7 @@ class rectangle_widget : virtual public ruis::widget{
 	ruis::color_widget::parameters color_params;
 public:
 	struct all_parameters{
-		ruis::layout::parameters layout_params;
+		ruis::layout_parameters layout_params;
 		ruis::widget::parameters widget;
 		ruis::color_widget::parameters color;
 
@@ -168,7 +168,7 @@ class capsule_widget : virtual public ruis::widget{
 	ruis::color color;
 public:
 	struct all_parameters{
-		ruis::layout::parameters layout_params;
+		ruis::layout_parameters layout_params;
 		ruis::widget::parameters widget;
 		bool is_vertical = false;
 		ruis::length stroke_width;

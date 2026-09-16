@@ -35,7 +35,7 @@ class text_field : virtual public widget
 
 public:
 	struct all_parameters {
-		ruis::layout::parameters layout_params;
+		ruis::layout_parameters layout_params;
 		ruis::widget::parameters widget;
 		ruis::text_input::parameters text_input;
 	};

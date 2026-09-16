@@ -27,16 +27,16 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "dimension.hpp"
 
-namespace ruis::layout {
+namespace ruis {
 
 /**
  * @brief Widget layout parameters.
  */
-struct parameters {
+struct layout_parameters {
 	/**
 	 * @brief desired dimensions.
 	 */
-	r4::vector2<dimension> dims;
+	r4::vector2<layout::dimension> dims;
 
 	/**
 	 * @brief Weight of the widget.
@@ -53,4 +53,4 @@ struct parameters {
 	r4::vector2<styled<ruis::align>> align = {ruis::align::undefined, ruis::align::undefined};
 };
 
-}; // namespace ruis::layout
+}; // namespace ruis

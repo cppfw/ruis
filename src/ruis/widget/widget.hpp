@@ -169,13 +169,13 @@ public:
 	 * This method invalidates layout.
 	 * @return Layout parameters of the widget.
 	 */
-	layout::parameters& get_layout_params();
+	layout_parameters& get_layout_params();
 
 	/**
 	 * @brief Get constant layout parameters of the widget.
 	 * @return Constant layout parameters of the widget.
 	 */
-	const layout::parameters& get_layout_params_const() const
+	const layout_parameters& get_layout_params_const() const
 	{
 		return this->layout_params;
 	}
@@ -497,12 +497,12 @@ public:
 	};
 
 	struct all_parameters {
-		ruis::layout::parameters layout_params;
+		ruis::layout_parameters layout_params;
 		ruis::widget::parameters widget;
 	};
 
 private:
-	layout::parameters layout_params;
+	layout_parameters layout_params;
 	parameters params;
 
 public:
@@ -518,7 +518,7 @@ public:
 protected:
 	widget(
 		const utki::shared_ref<ruis::context>& context, //
-		layout::parameters layout_params,
+		layout_parameters layout_params,
 		parameters params
 	);
 
