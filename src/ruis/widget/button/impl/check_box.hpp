@@ -43,7 +43,7 @@ class check_box :
 	image& tick_widget;
 
 public:
-	struct parameters{
+	struct parameters {
 		ruis::nine_patch::parameters nine_patch;
 		ruis::image::parameters image;
 	};

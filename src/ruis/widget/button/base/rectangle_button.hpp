@@ -41,7 +41,7 @@ public:
 		styled<ruis::color> unpressed_stroke_color;
 	};
 
-	struct parameters{
+	struct parameters {
 		ruis::rectangle::parameters rectangle;
 		specific_parameters specific;
 	};

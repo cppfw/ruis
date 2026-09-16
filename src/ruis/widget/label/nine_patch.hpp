@@ -46,7 +46,7 @@ public:
 		std::shared_ptr<const res::nine_patch> source;
 	};
 
-	struct parameters{
+	struct parameters {
 		ruis::padding::parameters padding;
 		ruis::blending_widget::parameters blending;
 		specific_parameters specific;

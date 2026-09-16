@@ -31,12 +31,12 @@ class tab_group : public choice_group
 	ruis::paint::rectangle_vao selector_vao;
 
 public:
-	struct specific_parameters{
+	struct specific_parameters {
 		styled<ruis::color> background_color;
 		styled<ruis::color> selector_color;
 	};
 
-	struct parameters{
+	struct parameters {
 		ruis::container::parameters container;
 		specific_parameters specific;
 	};

@@ -31,7 +31,7 @@ class ellipse_push_button :
 	public ellipse_button
 {
 public:
-	struct parameters{
+	struct parameters {
 		ruis::ellipse_button::parameters ellipse_button;
 	};
 

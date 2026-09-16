@@ -31,9 +31,10 @@ class nine_patch_toggle :
 	public nine_patch_button
 {
 public:
-	struct parameters{
+	struct parameters {
 		ruis::nine_patch_button::parameters nine_patch_button;
 	};
+
 protected:
 	nine_patch_toggle( //
 		const utki::shared_ref<ruis::context>& context, //

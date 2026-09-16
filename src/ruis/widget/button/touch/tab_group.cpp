@@ -37,16 +37,15 @@ tab_group::tab_group(
 	),
 	choice_group(
 		context, //
-		{
-			.layout_params = std::move(params.layout_params),
-			.widget = std::move(params.widget),
-			.params = [&](){
-				if (auto& c = params.params.container.layout; !c) {
-					c = ruis::layout::row;
-				}
-				return std::move(params.params.container);
-			}()
-		},
+		{.layout_params = std::move(params.layout_params),
+		 .widget = std::move(params.widget),
+		 .params =
+			 [&]() {
+				 if (auto& c = params.params.container.layout; !c) {
+					 c = ruis::layout::row;
+				 }
+				 return std::move(params.params.container);
+			 }()},
 		[&]() {
 			for (auto& c : children) {
 				// clang-format off
@@ -77,13 +76,13 @@ tab_group::tab_group(
 	selector_vao(
 		context.get().renderer, //
 		{.corner_radii =
-			{
-				// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers, "TODO: get from params")
-				ruis::length::make_pp(10).get(context) // TODO: get rounded corners from params
-			}}
+			 {
+				 // NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers, "TODO: get from params")
+				 ruis::length::make_pp(10).get(context) // TODO: get rounded corners from params
+			 }}
 	),
 	params([&]() {
-		if(auto& c = params.params.specific.background_color; c.get().is_undefined()){
+		if (auto& c = params.params.specific.background_color; c.get().is_undefined()) {
 			c = context.get().style().get_color_panel();
 		}
 		if (auto& c = params.params.specific.selector_color; c.get().is_undefined()) {

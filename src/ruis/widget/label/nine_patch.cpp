@@ -55,9 +55,7 @@ nine_patch::nine_patch( //
 	),
 	padding(
 		context, //
-		{
-			.params = std::move(params.params.padding)
-		},
+		{.params = std::move(params.params.padding)},
 		std::move(children)
 	),
 	params(std::move(params.params.specific))

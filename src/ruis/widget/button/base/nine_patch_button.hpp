@@ -43,7 +43,7 @@ public:
 		std::shared_ptr<const res::nine_patch> pressed_nine_patch;
 	};
 
-	struct parameters{
+	struct parameters {
 		ruis::nine_patch::parameters nine_patch;
 		specific_parameters specific;
 	};

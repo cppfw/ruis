@@ -137,31 +137,22 @@ utki::shared_ref<ruis::widget> make_table_list_window(
 										},
 										// clang-format on
 										utki::to_utf32(list_data[index].children[i].value.string)
-									)
-								);
+									));
+								}
+								return ret;
 							}
-							return ret;
-						}
-					};
-					return utki::make_shared<provider>(c);
-				}()
+						};
+						return utki::make_shared<provider>(c);
+					}()
 			}
 		}
 	);
 
-	auto scroll_bar = m::scroll_bar(c,
-		{
-			.layout_params{
-				.dims = {ruis::dim::min, ruis::dim::fill}
-			}
-		}
-	);
+	auto scroll_bar = m::scroll_bar(c, {.layout_params{.dims = {ruis::dim::min, ruis::dim::fill}}});
 
-	scroll_bar.get().fraction_change_handler =
-		[table_list_weak = utki::make_weak(table_list)]
-		(ruis::fraction_widget& sb)
-	{
-		if(auto l = table_list_weak.lock()){
+	scroll_bar.get().fraction_change_handler = [table_list_weak =
+													utki::make_weak(table_list)](ruis::fraction_widget& sb) {
+		if (auto l = table_list_weak.lock()) {
 			l->set_scroll_factor(
 				sb.get_fraction(),
 				false // no notify
@@ -169,11 +160,8 @@ utki::shared_ref<ruis::widget> make_table_list_window(
 		}
 	};
 
-	table_list.get().scroll_change_handler =
-		[scroll_bar_weak = utki::make_weak(scroll_bar)]
-		(ruis::table_list& tl)
-	{
-		if(auto sb = scroll_bar_weak.lock()){
+	table_list.get().scroll_change_handler = [scroll_bar_weak = utki::make_weak(scroll_bar)](ruis::table_list& tl) {
+		if (auto sb = scroll_bar_weak.lock()) {
 			sb->set_fraction(
 				tl.get_scroll_factor(),
 				false // no notify
@@ -181,30 +169,16 @@ utki::shared_ref<ruis::widget> make_table_list_window(
 			sb->set_band_fraction(tl.get_scroll_band());
 		}
 	};
- 
-	return m::window(c,
-		{
-			.widget = {
-				.rectangle = {
-					{
-						pos.x().get(c),
-						pos.y().get(c)
-					},
-					{
-						ruis::length::make_pp(300).get(c),
-						ruis::length::make_pp(200).get(c)
-					}
-				}
-			},
-			.params = {
-				.layout = ruis::layout::row
-			},
-			.title = c.get().localization.get().get("table_list"sv)
-		},
-		{
-			std::move(table_list),
-			std::move(scroll_bar)
-		}
+
+	return m::window(
+		c,
+		{.widget =
+			 {.rectangle =
+				  {{pos.x().get(c), pos.y().get(c)},
+				   {ruis::length::make_pp(300).get(c), ruis::length::make_pp(200).get(c)}}},
+		 .params = {.layout = ruis::layout::row},
+		 .title = c.get().localization.get().get("table_list"sv)},
+		{std::move(table_list), std::move(scroll_bar)}
 	);
 	// clang-format on
 }

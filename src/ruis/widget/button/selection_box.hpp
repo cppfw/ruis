@@ -41,7 +41,7 @@ class selection_box :
 	container& selection_container;
 
 public:
-	struct parameters{
+	struct parameters {
 		ruis::list_widget::parameters list;
 	};
 

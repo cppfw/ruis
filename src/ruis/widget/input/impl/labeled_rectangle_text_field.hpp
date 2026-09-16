@@ -38,7 +38,7 @@ class labeled_rectangle_text_field :
 	public labeled_text_field
 {
 public:
-	struct parameters{
+	struct parameters {
 		ruis::labeled_widget::parameters label;
 		ruis::rectangle_text_field::parameters rectangle_text_field;
 	};

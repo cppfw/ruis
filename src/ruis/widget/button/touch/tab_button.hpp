@@ -32,7 +32,7 @@ class tab_button :
 	private ruis::container
 {
 public:
-	struct parameters{
+	struct parameters {
 		ruis::image::parameters image;
 		ruis::text_widget::parameters text;
 	};

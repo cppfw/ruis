@@ -31,7 +31,7 @@ class rectangle_push_button :
 	public rectangle_button
 {
 public:
-	struct parameters{
+	struct parameters {
 		ruis::rectangle_button::parameters rectangle_button;
 	};
 

@@ -31,7 +31,7 @@ class image_toggle :
 	public image_button
 {
 public:
-	struct parameters{
+	struct parameters {
 		ruis::image_button::parameters image_button;
 	};
 

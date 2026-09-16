@@ -59,7 +59,7 @@ public:
 		styled<ruis::color> stroke_color;
 	};
 
-	struct parameters{
+	struct parameters {
 		ruis::padding::parameters padding;
 		specific_parameters specific;
 	};

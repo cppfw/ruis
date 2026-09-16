@@ -36,7 +36,7 @@ class tab :
 	bool mask_overlaps(vec2 pos);
 
 public:
-	struct parameters{
+	struct parameters {
 		ruis::nine_patch_toggle::parameters nine_patch_toggle;
 	};
 

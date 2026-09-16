@@ -34,11 +34,11 @@ class selection_box :
 	public ruis::selection_box
 {
 public:
-	struct specific_parameters{
+	struct specific_parameters {
 		string title; // TODO: the selection box should be derived from labelled_widget?
 	};
 
-	struct parameters{
+	struct parameters {
 		ruis::selection_box::parameters selection_box;
 		ruis::rectangle_button::parameters rectangle_button;
 		specific_parameters specific;

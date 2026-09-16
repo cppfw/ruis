@@ -37,9 +37,8 @@ class push_button : virtual public button
 	unsigned pointer_id = 0;
 
 public:
-	struct parameters{
+	struct parameters {};
 
-	};
 protected:
 	void on_pressed_change() override;
 

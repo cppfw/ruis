@@ -48,10 +48,7 @@ image_push_button::image_push_button( //
 	),
 	image_button( //
 		context,
-		{
-			.image = std::move(params.params.image),
-			.specific = std::move(params.params.image_button)
-		}
+		{.image = std::move(params.params.image), .specific = std::move(params.params.image_button)}
 	)
 {}
 

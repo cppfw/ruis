@@ -37,7 +37,7 @@ public:
 		styled<ruis::color> unpressed_color;
 	};
 
-	struct parameters{
+	struct parameters {
 		ruis::ellipse::parameters ellipse;
 		specific_parameters specific;
 	};

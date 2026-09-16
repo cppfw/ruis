@@ -33,7 +33,7 @@ protected:
 	void on_pressed_change() override;
 
 public:
-	struct parameters{
+	struct parameters {
 		ruis::image::parameters image;
 		ruis::image_button::specific_parameters image_button;
 	};

@@ -35,7 +35,7 @@ class ellipse :
 	paint::ellipse_vao vao;
 
 public:
-	struct parameters{
+	struct parameters {
 		ruis::padding::parameters padding;
 		ruis::color_widget::parameters color;
 	};

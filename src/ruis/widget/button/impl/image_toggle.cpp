@@ -40,10 +40,7 @@ image_toggle::image_toggle(
 		std::move(params.button)
 	),
 	toggle_button(context),
-	image_button(
-		context,
-		std::move(params.params.image_button)
-	)
+	image_button(context, std::move(params.params.image_button))
 {}
 
 utki::shared_ref<ruis::image_toggle> ruis::make::image_toggle(

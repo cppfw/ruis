@@ -31,7 +31,7 @@ class nine_patch_push_button :
 	public nine_patch_button
 {
 public:
-	struct parameters{
+	struct parameters {
 		ruis::nine_patch_button::parameters nine_patch_button;
 	};
 

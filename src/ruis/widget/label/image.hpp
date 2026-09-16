@@ -44,7 +44,7 @@ class image :
 	public blending_widget
 {
 public:
-	struct specific_parameters{
+	struct specific_parameters {
 		std::shared_ptr<const ruis::res::image> source;
 		std::shared_ptr<const ruis::res::image> disabled_img; // TODO: remove
 		bool keep_aspect_ratio = false;

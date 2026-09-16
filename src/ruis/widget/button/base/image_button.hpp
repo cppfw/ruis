@@ -40,7 +40,7 @@ public:
 		std::shared_ptr<const res::image> pressed_image;
 	};
 
-	struct parameters{
+	struct parameters {
 		ruis::image::parameters image;
 		specific_parameters specific;
 	};
