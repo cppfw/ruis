@@ -23,7 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../../label/ellipse.hpp"
 
-#include "button.hpp"
+#include "virtual/button.hpp"
 
 namespace ruis {
 
