@@ -20,7 +20,7 @@ utki::shared_ref<ruis::window> make_sliders_window(
     // clang-format off
     return m::window(c,
         {
-            .widget_params{
+            .widget{
                 .rectangle{
                     {
                         pos.x().get(c.get()),
@@ -53,7 +53,7 @@ utki::shared_ref<ruis::window> make_sliders_window(
             ),
             m::scroll_bar(c,
                 {
-                    .layout_params{
+                    .layout{
                         .dims{ruis::dim::fill, 40_pp},
                         .weight = 1
                     },
@@ -64,10 +64,10 @@ utki::shared_ref<ruis::window> make_sliders_window(
             ),
             m::scroll_bar(c,
                 {
-                    .layout_params{
+                    .layout{
                         .dims{40_pp, ruis::dim::fill}
                     },
-                    .widget_params{
+                    .widget{
                         .id = "vertical slider"s
                     },
                     .oriented_params{

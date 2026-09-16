@@ -50,7 +50,7 @@ utki::shared_ref<ruis::touch::tab_button> make_tab_button(
 	// clang-format off
 	return ruis::touch::make::tab_button(c,
 		ruis::touch::tab_button::all_parameters{
-			.layout_params{
+			.layout{
 				.dims = {ruis::dim::fill, 60_pp},
 				.weight = 1
 			},
@@ -73,7 +73,7 @@ utki::shared_ref<ruis::widget> make_root_widget(const utki::shared_ref<ruis::con
 	// clang-format off
 	return m::overlay(c,
 		{
-			.layout_params = {
+			.layout = {
 				.dims = {ruis::dim::fill, ruis::dim::fill}
 			}
 		},
@@ -92,7 +92,7 @@ utki::shared_ref<ruis::widget> make_root_widget(const utki::shared_ref<ruis::con
 			),
 			m::tabbed_book(c,
 				{
-					.layout_params = {
+					.layout = {
 						.dims = {ruis::dim::fill, ruis::dim::fill}
 					}
 				},

@@ -10,7 +10,7 @@ wire_socket::wire_socket(
 	const utki::shared_ref<ruis::context>& context,
 	all_parameters params
 ) :
-	ruis::widget(context, std::move(params.layout_params), std::move(params.widget_params)),
+	ruis::widget(context, std::move(params.layout), std::move(params.widget)),
 	params(std::move(params.wire_socket_params))
 {}
 

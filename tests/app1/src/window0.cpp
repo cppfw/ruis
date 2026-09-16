@@ -68,7 +68,7 @@ utki::shared_ref<ruis::window> make_window0(
 	// clang-format off
 	return m::window(c,
 		{
-			.widget_params{
+			.widget{
 				.rectangle{
 					{
 						pos.x().get(c.get()),
@@ -86,14 +86,14 @@ utki::shared_ref<ruis::window> make_window0(
 		{
 			m::column(c,
 				{
-					.layout_params{
+					.layout{
 						.dims{ruis::dim::max, ruis::dim::max}
 					}
 				},
 				{
 					m::row(c,
 						{
-							.layout_params{
+							.layout{
 								.align{ruis::align::back, ruis::align::undefined}
 							}
 						},
@@ -187,7 +187,7 @@ utki::shared_ref<ruis::window> make_window0(
 					),
 					m::row(c,
 						{
-							.layout_params{
+							.layout{
 								.align{ruis::align::front, ruis::align::front}
 							}
 						},
@@ -216,7 +216,7 @@ utki::shared_ref<ruis::window> make_window0(
 					),
 					m::choice_group(c,
 						{
-							.layout_params{
+							.layout{
 								.dims{ruis::dim::max, ruis::dim::min}
 							}
 						},

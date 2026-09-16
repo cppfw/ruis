@@ -32,14 +32,14 @@ tab_group::tab_group(
 ) :
 	widget(
 		context, //
-		std::move(params.layout_params),
-		std::move(params.widget_params)
+		std::move(params.layout),
+		std::move(params.widget)
 	),
 	choice_group(
 		context, //
 		{
-			.layout_params = std::move(params.layout_params),
-			.widget_params = std::move(params.widget_params),
+			.layout = std::move(params.layout),
+			.widget = std::move(params.widget),
 			.params = std::move(params.params),
 		},
 		[&]() {

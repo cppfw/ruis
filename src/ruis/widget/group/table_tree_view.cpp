@@ -80,7 +80,7 @@ ruis::widget_list table_tree_view::provider::list_get_row_widgets(size_t index)
 
 	wl.front() = ruis::make::row(
 		this->context, //
-		{.widget_params{.clip = true}},
+		{.widget{.clip = true}},
 		std::move(parts.prefix_widgets)
 	);
 	return wl;
@@ -92,8 +92,8 @@ table_tree_view::table_tree_view(
 ) :
 	ruis::widget(
 		context, //
-		std::move(params.layout_params),
-		std::move(params.widget_params)
+		std::move(params.layout),
+		std::move(params.widget)
 	),
 	// clang-format off
     ruis::table_list(

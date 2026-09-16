@@ -82,11 +82,11 @@ class window :
 
 public:
 	struct all_parameters {
-		layout::parameters layout_params;
-		widget::parameters widget_params;
+		ruis::layout::parameters layout;
+		ruis::widget::parameters widget;
 		container::parameters params;
 		string title;
-		std::shared_ptr<widget> background; // TODO: only nine_patch?
+		std::shared_ptr<ruis::widget> background; // TODO: only nine_patch?
 		sides<length> borders;
 	};
 

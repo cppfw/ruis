@@ -20,7 +20,7 @@ utki::shared_ref<ruis::window> make_gradient_window(
     // clang-format off
     return m::window(c,
         {
-            .widget_params{
+            .widget{
                 .rectangle{
                     {
                         pos.x().get(c.get()),

@@ -51,25 +51,25 @@ utki::shared_ref<container> make_top_row(const utki::shared_ref<context>& c)
 		{
 			m::mouse_proxy(c,
 				{
-					.widget_params{
+					.widget{
 						.id = "ruis_lt_proxy"s
 					}
 				}
 			),
 			m::mouse_proxy(c,
 				{
-					.layout_params{
+					.layout{
 						.dims = {ruis::dim::fill, ruis::dim::fill},
 						.weight = 1
 					},
-					.widget_params{
+					.widget{
 						.id = "ruis_t_proxy"s
 					}
 				}
 			),
 			m::mouse_proxy(c,
 				{
-					.widget_params{
+					.widget{
 						.id = "ruis_rt_proxy"s
 					}
 				}
@@ -94,25 +94,25 @@ utki::shared_ref<container> make_bottom_row(const utki::shared_ref<context>& c)
 		{
 			m::mouse_proxy(c,
 				{
-					.widget_params{
+					.widget{
 						.id = "ruis_lb_proxy"s
 					}
 				}
 			),
 			m::mouse_proxy(c,
 				{
-					.layout_params{
+					.layout{
 						.dims = {ruis::dim::fill, ruis::dim::fill},
 						.weight = 1
 					},
-					.widget_params{
+					.widget{
 						.id = "ruis_b_proxy"s
 					}
 				}
 			),
 			m::mouse_proxy(c,
 				{
-					.widget_params{
+					.widget{
 						.id = "ruis_rb_proxy"s
 					}
 				}
@@ -143,20 +143,20 @@ utki::shared_ref<container> make_caption(
 		{
 			m::mouse_proxy(c,
 				{
-					.layout_params{
+					.layout{
 						.dims = {ruis::dim::max, ruis::dim::max}
 					},
-					.widget_params{
+					.widget{
 						.id = "ruis_caption_proxy"s
 					}
 				}
 			),
 			m::gap(c,
 				{
-					.layout_params{
+					.layout{
 						.dims = {ruis::dim::max, ruis::dim::max}
 					},
-					.widget_params{
+					.widget{
 						.id = "ruis_window_title_bg"s
 					}
 				}
@@ -255,10 +255,10 @@ utki::shared_ref<container> make_middle_row(
 		{
 			m::mouse_proxy(c,
 				{
-					.layout_params{
+					.layout{
 						.dims = {ruis::dim::min, ruis::dim::fill}
 					},
-					.widget_params{
+					.widget{
 						.id = "ruis_l_proxy"s
 					}
 				}
@@ -269,10 +269,10 @@ utki::shared_ref<container> make_middle_row(
 			),
 			m::mouse_proxy(c,
 				{
-					.layout_params{
+					.layout{
 						.dims = {ruis::dim::min, ruis::dim::fill}
 					},
-					.widget_params{
+					.widget{
 						.id = "ruis_r_proxy"s
 					}
 				}
@@ -359,8 +359,8 @@ window::window(
 ) :
 	widget( //
 		context,
-		std::move(params.layout_params),
-		std::move(params.widget_params)
+		std::move(params.layout),
+		std::move(params.widget)
 	),
 	// clang-format off
 	container( //

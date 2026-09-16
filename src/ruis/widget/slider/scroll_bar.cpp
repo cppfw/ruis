@@ -60,7 +60,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_widgets(const utki::shared_ref<
 			{
 				m::pile(c,
 					{
-						.widget_params{
+						.widget{
 							.id = "ruis_handle"s
 						}
 					},
@@ -77,10 +77,10 @@ std::vector<utki::shared_ref<ruis::widget>> make_widgets(const utki::shared_ref<
 						),
 						m::mouse_proxy(c,
 							{
-								.layout_params{
+								.layout{
 									.dims = {ruis::dim::fill, ruis::dim::fill}
 								},
-								.widget_params{
+								.widget{
 									.id = "ruis_handle_proxy"s
 								}
 							}
@@ -100,8 +100,8 @@ scroll_bar::scroll_bar( //
 ) :
 	widget( //
 		c,
-		std::move(params.layout_params),
-		std::move(params.widget_params)
+		std::move(params.layout),
+		std::move(params.widget)
 	),
 	fraction_band_widget( //
 		context,

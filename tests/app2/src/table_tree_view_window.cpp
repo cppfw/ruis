@@ -161,7 +161,7 @@ utki::shared_ref<ruis::widget> make_table_tree_view_window(
 	// clang-format off
 	auto table_tree_view = m::table_tree_view(c,
 		{
-			.layout_params{
+			.layout{
 				.dims = {ruis::dim::fill, ruis::dim::max},
 				.weight = 1
 			},
@@ -180,7 +180,7 @@ utki::shared_ref<ruis::widget> make_table_tree_view_window(
 	// clang-format off
 	auto scroll_bar = m::scroll_bar(c,
 		{
-			.layout_params{
+			.layout{
 				.dims = {ruis::dim::min, ruis::dim::fill}
 			}
 		}
@@ -211,7 +211,7 @@ utki::shared_ref<ruis::widget> make_table_tree_view_window(
 	// clang-format off
 	return m::window(c,
 		{
-			.widget_params = {
+			.widget = {
 				.rectangle = {
 					{
 						pos.x().get(c),

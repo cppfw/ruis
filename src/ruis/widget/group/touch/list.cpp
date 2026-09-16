@@ -29,8 +29,8 @@ list::list(
 ) :
 	widget(
 		context, //
-		std::move(params.layout_params),
-		std::move(params.widget_params)
+		std::move(params.layout),
+		std::move(params.widget)
 	),
 	ruis::list(context, std::move(params)),
 	flickable(context)

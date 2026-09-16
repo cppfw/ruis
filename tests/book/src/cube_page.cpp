@@ -139,11 +139,11 @@ cube_page::cube_page(const utki::shared_ref<ruis::context>& c) :
 			{
 				m::gap(context,
 					{
-						.layout_params{
+						.layout{
 							.dims = {ruis::dim::fill, ruis::dim::fill},
 							.weight = 1
 						},
-						.widget_params{
+						.widget{
 							.id = "placeholder"
 						}
 					}

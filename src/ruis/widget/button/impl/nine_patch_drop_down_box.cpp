@@ -43,18 +43,18 @@ std::vector<utki::shared_ref<ruis::widget>> make_selection_box_widget_structure(
 	return {
 		m::pile(c,
 			{
-				.layout_params = {
+				.layout = {
 					.dims = {ruis::dim::max, ruis::dim::max},
 					.weight = 1
 				},
-				.widget_params = {
+				.widget = {
 					.id = "ruis_dropdown_selection"s
 				}
 			}
 		),
 		m::gap(c,
 			{
-				.layout_params = {
+				.layout = {
 					.dims = {3_pp, 0_px}
 				}
 			}
@@ -73,7 +73,7 @@ std::vector<utki::shared_ref<ruis::widget>> make_selection_box_widget_structure(
 		),
 		m::gap(c,
 			{
-				.layout_params = {
+				.layout = {
 					.dims = {3_pp, 0_px}
 				}
 			}
@@ -188,17 +188,17 @@ void ruis::nine_patch_drop_down_box::show_drop_down_menu()
 		{
 			ruis::make::gap(this->context,
 				{
-					.widget_params{
+					.widget{
 						.id = "ruis_min_size_forcer"s
 					}
 				}
 			),
 			ruis::make::mouse_proxy(this->context,
 				{
-					.layout_params{
+					.layout{
 						.dims{ruis::dim::fill, ruis::dim::fill}
 					},
-					.widget_params{
+					.widget{
 						.id = "ruis_drop_down_menu_mouse_proxy"s
 					}
 				}
@@ -297,17 +297,17 @@ utki::shared_ref<ruis::widget> ruis::nine_patch_drop_down_box::wrap_item(
 	// clang-format off
 	auto wd = ruis::make::pile(this->context,
 		{
-			.layout_params{
+			.layout{
 				.dims{ruis::dim::max, ruis::dim::min}
 			}
 		},
 		{
 			ruis::make::mouse_proxy(this->context,
 				{
-					.layout_params{
+					.layout{
 						.dims{ruis::dim::fill, ruis::dim::fill}
 					},
-					.widget_params{
+					.widget{
 						.id = "ruis_dropdown_mouseproxy"s
 					}
 				}

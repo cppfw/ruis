@@ -25,42 +25,42 @@ const tst::set set("finding_widgets", [](tst::suite& suite){
 			{
 				m::scroll_area(c,
 					{
-						.widget_params{
+						.widget{
 							.id = "1"s
 						}
 					}
 				),
 				m::scroll_area(c,
 					{
-						.widget_params{
+						.widget{
 							.id = "2"s
 						}
 					},
 					{
 						m::scroll_area(c,
 							{
-								.widget_params{
+								.widget{
 									.id = "3"s
 								}
 							}
 						),
 						m::row(c,
 							{
-								.widget_params{
+								.widget{
 									.id = "4"s
 								}
 							},
 							{
 								m::pile(c,
 									{
-										.widget_params{
+										.widget{
 											.id = "8"s
 										}
 									},
 									{
 										m::scroll_area(c,
 											{
-												.widget_params{
+												.widget{
 													.id = "9"s
 												}
 											}
@@ -73,21 +73,21 @@ const tst::set set("finding_widgets", [](tst::suite& suite){
 				),
 				m::pile(c,
 					{
-						.widget_params{
+						.widget{
 							.id = "5"s
 						}
 					},
 					{
 						m::scroll_area(c,
 							{
-								.widget_params{
+								.widget{
 									.id = "6"s
 								}
 							},
 							{
 								m::row(c,
 									{
-										.widget_params{
+										.widget{
 											.id = "7"s
 										}
 									}

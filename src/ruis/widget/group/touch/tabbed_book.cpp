@@ -39,7 +39,7 @@ utki::shared_ref<ruis::tabbed_book> ruis::touch::make::tabbed_book(
         ){
             return ruis::touch::make::tab_group(context,
                 {
-                    .layout_params{
+                    .layout{
                         .dims{ruis::dim::fill, ruis::dim::min}
                     }
                 },

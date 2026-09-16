@@ -44,7 +44,7 @@ utki::shared_ref<ruis::widget> make_rectangles_window(
 	// clang-format off
 	return m::window(c,
 		{
-			.widget_params = {
+			.widget = {
 				.rectangle = {
 					{
 						pos.x().get(c),
@@ -76,7 +76,7 @@ utki::shared_ref<ruis::widget> make_rectangles_window(
 			),
 			m::gap(c,
 				{
-					.layout_params{
+					.layout{
 						.dims = {0_px, 5_pp}
 					}
 				}
@@ -105,7 +105,7 @@ utki::shared_ref<ruis::widget> make_rectangles_window(
 			),
 			m::gap(c,
 				{
-					.layout_params{
+					.layout{
 						.dims = {0_px, 5_pp}
 					}
 				}
@@ -162,7 +162,7 @@ utki::shared_ref<ruis::widget> make_rectangles_window(
 			),
 			m::gap(c,
 				{
-					.layout_params{
+					.layout{
 						.dims = {0_px, 5_pp}
 					}
 				}
@@ -197,7 +197,7 @@ utki::shared_ref<ruis::widget> make_rectangles_window(
 			),
 			m::gap(c,
 				{
-					.layout_params{
+					.layout{
 						.dims = {0_px, 5_pp}
 					}
 				}
@@ -241,7 +241,7 @@ utki::shared_ref<ruis::widget> make_rectangles_window(
 			),
 			m::gap(c,
 				{
-					.layout_params{
+					.layout{
 						.dims = {0_px, 5_pp}
 					}
 				}

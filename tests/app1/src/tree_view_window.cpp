@@ -187,10 +187,10 @@ public:
                     ),
                     m::mouse_proxy(c,
                         {
-                            .layout_params{
+                            .layout{
                                 .dims{ruis::dim::fill, ruis::dim::fill}
                             },
-                            .widget_params{
+                            .widget{
                                 .id = "mouse_proxy"s
                             }
                         }
@@ -293,7 +293,7 @@ utki::shared_ref<ruis::window> make_tree_view_window(
     // clang-format off
     auto w = m::window(c,
         {
-            .widget_params{
+            .widget{
                 .rectangle{
                     {
                         pos.x().get(c.get()),
@@ -313,7 +313,7 @@ utki::shared_ref<ruis::window> make_tree_view_window(
         {
             m::row(c,
                 {
-                    .layout_params{
+                    .layout{
                         .dims{ruis::dim::max, ruis::dim::fill},
                         .weight = 1
                     }
@@ -321,21 +321,21 @@ utki::shared_ref<ruis::window> make_tree_view_window(
                 {
                     m::scroll_area(c,
                         {
-                            .layout_params{
+                            .layout{
                                 .dims{ruis::dim::fill, ruis::dim::fill},
                                 .weight = 1
                             },
-                            .widget_params{
+                            .widget{
                                 .id = "tree_view_scroll_area"s
                             }
                         },
                         {
                             m::tree_view(c,
                                 {
-                                    .layout_params{
+                                    .layout{
                                         .dims{ruis::dim::min, ruis::dim::fill}
                                     },
-                                    .widget_params{
+                                    .widget{
                                         .id = "treeview_widget"s,
                                         .clip = true
                                     },
@@ -348,10 +348,10 @@ utki::shared_ref<ruis::window> make_tree_view_window(
                     ),
                     m::scroll_bar(c,
                         {
-                            .layout_params{
+                            .layout{
                                 .dims{ruis::dim::min, ruis::dim::max}
                             },
-                            .widget_params{
+                            .widget{
                                 .id = "treeview_vertical_slider"s
                             },
                             .oriented_params{
@@ -363,10 +363,10 @@ utki::shared_ref<ruis::window> make_tree_view_window(
             ),
             m::scroll_bar(c,
                 {
-                    .layout_params{
+                    .layout{
                         .dims{ruis::dim::max, ruis::dim::min}
                     },
-                    .widget_params{
+                    .widget{
                         .id = "treeview_horizontal_slider"s
                     },
                     .oriented_params{
@@ -376,7 +376,7 @@ utki::shared_ref<ruis::window> make_tree_view_window(
             ),
             m::row(c,
                 {
-                    .layout_params{
+                    .layout{
                         .dims{ruis::dim::max, ruis::dim::min}
                     }
                 },

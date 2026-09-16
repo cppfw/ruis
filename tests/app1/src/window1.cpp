@@ -20,7 +20,7 @@ utki::shared_ref<ruis::window> make_window1(
     // clang-format off
     return m::window(c,
         {
-            .widget_params{
+            .widget{
                 .rectangle{
                     {
                         pos.x().get(c.get()),
@@ -40,10 +40,10 @@ utki::shared_ref<ruis::window> make_window1(
         {
             m::row(c,
                 {
-                    .layout_params{
+                    .layout{
                         .dims{ruis::dim::max, ruis::dim::min}
                     },
-                    .widget_params{
+                    .widget{
                         .id = "someContainer"s,
                         .clip = true
                     }
@@ -109,7 +109,7 @@ utki::shared_ref<ruis::window> make_window1(
             ),
             m::pile(c,
                 {
-                    .layout_params{
+                    .layout{
                         .dims{ruis::dim::fill, 50_pp}
                     }
                 },
@@ -128,10 +128,10 @@ utki::shared_ref<ruis::window> make_window1(
                     ),
                     m::mouse_proxy(c,
                         {
-                            .layout_params{
+                            .layout{
                                 .dims{ruis::dim::fill, ruis::dim::fill}
                             },
-                            .widget_params{
+                            .widget{
                                 .id = "horizontal_list_mouseproxy"s
                             }
                         }
@@ -140,7 +140,7 @@ utki::shared_ref<ruis::window> make_window1(
             ),
             m::pile(c,
                 {
-                    .layout_params{
+                    .layout{
                         .dims{ruis::dim::fill, ruis::dim::fill},
                         .weight = 1
                     }
@@ -148,10 +148,10 @@ utki::shared_ref<ruis::window> make_window1(
                 {
                     m::list(c,
                         {
-                            .layout_params{
+                            .layout{
                                 .dims{ruis::dim::fill, ruis::dim::fill}
                             },
-                            .widget_params{
+                            .widget{
                                 .id = "pan_list"s
                             },
                             .oriented_params{
@@ -207,10 +207,10 @@ utki::shared_ref<ruis::window> make_window1(
             ),
             m::scroll_bar(c,
                 {
-                    .layout_params{
+                    .layout{
                         .dims{ruis::dim::fill, ruis::dim::min}
                     },
-                    .widget_params{
+                    .widget{
                         .id = "horizontal_list_slider"s
                     },
                     .oriented_params{

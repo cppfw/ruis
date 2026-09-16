@@ -46,7 +46,7 @@ public:
 			{
 				m::window(ctx,
 					{
-						.widget_params{
+						.widget{
 							.rectangle = {{200, 200}, {200, 100}}
 						},
 						.params{
@@ -57,14 +57,14 @@ public:
 					{
 						m::pile(ctx,
 							{
-								.layout_params{
+								.layout{
 									.dims = {ruis::dim::min, ruis::dim::fill}
 								}
 							},
 							{
 								m::aspect_ratio_proxy(ctx,
 									{
-										.layout_params{
+										.layout{
 											.dims = {ruis::dim::min, ruis::dim::fill}
 										},
 										.aspect_ratio_params{

@@ -6,8 +6,8 @@ cube_widget::cube_widget(
 ) :
     widget(
         context, //
-        std::move(params.layout_params),
-        std::move(params.widget_params)
+        std::move(params.layout),
+        std::move(params.widget)
     )
 {
     // NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers)

@@ -58,7 +58,7 @@ utki::shared_ref<ruis::window> make_sliders_window(
 	// clang-format off
 	return m::window(c,
 		{
-			.widget_params = {
+			.widget = {
 				.rectangle = {
 					{
 						pos.x().get(c),
@@ -93,7 +93,7 @@ utki::shared_ref<ruis::window> make_sliders_window(
 				{
 					m::scroll_bar(c,
 						{
-							.layout_params = {
+							.layout = {
 								.dims = {ruis::dim::fill, ruis::dim::min},
 								.align = {ruis::align::front, ruis::align::front}
 							},
@@ -105,7 +105,7 @@ utki::shared_ref<ruis::window> make_sliders_window(
 					),
 					m::slider(c,
 						{
-							.layout_params = {
+							.layout = {
 								.dims = {ruis::dim::fill, ruis::dim::min}
 							},
 							.oriented_params = {
@@ -144,7 +144,7 @@ utki::shared_ref<ruis::window> make_sliders_window(
 						{
 							m::gap(c,
 								{
-									.layout_params{
+									.layout{
 										.dims{10_pp, 10_pp}
 									}
 								}
@@ -180,7 +180,7 @@ utki::shared_ref<ruis::window> make_image_window(
 	// clang-format off
 	auto ret = m::window(c,
 		{
-			.widget_params = {
+			.widget = {
 				.rectangle = {
 					{
 						pos.x().get(c),
@@ -216,10 +216,10 @@ utki::shared_ref<ruis::window> make_image_window(
 			),
 			m::resize_proxy(c,
 				{
-					.layout_params = {
+					.layout = {
 						.dims = {ruis::dim::fill, ruis::dim::fill}
 					},
-					.widget_params = {
+					.widget = {
 						.id = "resize_proxy"s
 					}
 				}
@@ -346,7 +346,7 @@ utki::shared_ref<ruis::window> make_selection_box_window(
 	// clang-format off
 	return m::window(c,
 		{
-			.widget_params = {
+			.widget = {
 				.rectangle = {
 					{
 						pos.x().get(c),
@@ -409,7 +409,7 @@ utki::shared_ref<ruis::window> make_text_input_window(
 	// clang-format off
 	return m::window(c,
 		{
-			.widget_params = {
+			.widget = {
 				.rectangle = {
 					{
 						pos.x().get(c),
@@ -458,14 +458,14 @@ utki::shared_ref<ruis::widget> make_root_widgets_structure(const utki::shared_re
 	// clang-format off
 	return m::overlay(c,
 		{
-			.layout_params = {
+			.layout = {
 				.dims = {ruis::dim::fill, ruis::dim::fill}
 			}
 		},
 		{
 			m::drag_area(c,
 				{
-					.layout_params = {
+					.layout = {
 						.dims = {ruis::dim::fill, ruis::dim::fill}
 					}
 				},

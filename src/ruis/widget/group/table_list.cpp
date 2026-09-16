@@ -83,7 +83,7 @@ utki::shared_ref<ruis::tiling_area> make_headers_widget(
 	// clang-format off
 	return ruis::make::tiling_area(c,
 		{
-			.layout_params{
+			.layout{
 				.dims = {ruis::dim::fill, ruis::dim::min}
 			}
 		},
@@ -105,11 +105,11 @@ table_list::table_list(
 		// clang-format off
 		ruis::make::list(context,
 			{
-				.layout_params{
+				.layout{
 					.dims = {ruis::dim::fill, ruis::dim::fill},
 					.weight = 1
 				},
-				.widget_params{
+				.widget{
 					.clip = true
 				},
 				.list_params{
@@ -134,8 +134,8 @@ table_list::table_list(
 ) :
 	ruis::widget(
 		headers.get().context, //
-		std::move(params.layout_params),
-		std::move(params.widget_params)
+		std::move(params.layout),
+		std::move(params.widget)
 	),
 	// clang-format off
 	ruis::container(

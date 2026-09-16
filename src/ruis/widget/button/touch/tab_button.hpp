@@ -33,8 +33,8 @@ class tab_button :
 {
 public:
 	struct all_parameters {
-		ruis::layout::parameters layout_params;
-		ruis::widget::parameters widget_params;
+		ruis::layout::parameters layout;
+		ruis::widget::parameters widget;
 		ruis::image::parameters image_params;
 		ruis::text_widget::parameters text_params;
 	};

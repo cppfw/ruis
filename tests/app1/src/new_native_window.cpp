@@ -55,7 +55,7 @@ utki::shared_ref<ruis::widget> make_new_native_window_root_widget(
         {
             m::row(c,
                 {
-                    .layout_params{
+                    .layout{
                         .align = {ruis::align::front, ruis::align::center}
                     }
                 },

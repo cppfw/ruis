@@ -29,8 +29,8 @@ aspect_ratio_proxy::aspect_ratio_proxy(
 ) :
 	widget(
 		context, //
-		std::move(params.layout_params),
-		std::move(params.widget_params)
+		std::move(params.layout),
+		std::move(params.widget)
 	),
 	params(std::move(params.aspect_ratio_params))
 {}

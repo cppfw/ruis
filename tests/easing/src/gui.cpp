@@ -46,10 +46,10 @@ utki::shared_ref<ruis::widget> make_eased_animation_sample( //
 		{
 			m::slider(c,
 				{
-					.layout_params = {
+					.layout = {
 						.dims = {ruis::dim::fill, ruis::dim::min}
 					},
-					.widget_params = {
+					.widget = {
 						.id = "slider"s
 					},
 					.oriented_params = {
@@ -109,7 +109,7 @@ utki::shared_ref<ruis::widget> make_left_column(const utki::shared_ref<ruis::con
 	// clang-format off
 	return m::column(c,
 		{
-			.layout_params = {
+			.layout = {
 				.dims = {ruis::dim::fill, ruis::dim::fill},
 				.weight = 1
 			}
@@ -196,7 +196,7 @@ utki::shared_ref<ruis::widget> make_right_column(const utki::shared_ref<ruis::co
 	// clang-format off
 	return m::column(c,
 		{
-			.layout_params = {
+			.layout = {
 				.dims = {ruis::dim::fill, ruis::dim::fill},
 				.weight = 1
 			}
@@ -278,7 +278,7 @@ utki::shared_ref<ruis::widget> make_gui(const utki::shared_ref<ruis::context>& c
 	// clang-format off
 	return m::row(c,
 		{
-			.layout_params = {
+			.layout = {
 				.dims = {ruis::dim::fill, ruis::dim::fill}
 			}
 		},

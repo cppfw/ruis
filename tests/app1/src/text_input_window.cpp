@@ -81,7 +81,7 @@ utki::shared_ref<ruis::window> make_text_input_window(
     // clang-format off
     return m::window(c,
         {
-            .widget_params{
+            .widget{
                 .rectangle{
                     {
                         pos.x().get(c.get()),
@@ -101,7 +101,7 @@ utki::shared_ref<ruis::window> make_text_input_window(
         {
             m::tab_group(c,
                 {
-                    .layout_params{
+                    .layout{
                         .dims{ruis::dim::max, ruis::dim::min}
                     }
                 },
@@ -135,7 +135,7 @@ utki::shared_ref<ruis::window> make_text_input_window(
                 {
                     m::collapse_area(c,
                         {
-                            .layout_params{
+                            .layout{
                                 .dims{ruis::dim::max, ruis::dim::min}
                             },
                             .title = U"Hi!"s
@@ -176,7 +176,7 @@ utki::shared_ref<ruis::window> make_text_input_window(
             ),
             m::gap(c,
                 {
-                    .layout_params{
+                    .layout{
                         .dims{0_pp, 5_pp}
                     }
                 }

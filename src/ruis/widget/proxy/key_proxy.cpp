@@ -30,8 +30,8 @@ key_proxy::key_proxy( //
 ) :
 	widget( //
 		context,
-		std::move(params.layout_params),
-		std::move(params.widget_params)
+		std::move(params.layout),
+		std::move(params.widget)
 	),
 	// clang-format off
 	container( //

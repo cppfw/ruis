@@ -21,8 +21,8 @@ class path_widget : virtual public ruis::widget{
 	ruis::paint::path_vao vao;
 public:
 	struct all_parameters{
-		ruis::layout::parameters layout_params;
-		ruis::widget::parameters widget_params;
+		ruis::layout::parameters layout;
+		ruis::widget::parameters widget;
 	};
 
 	path_widget(
@@ -31,8 +31,8 @@ public:
 	) :
 		widget(
 			context,//
-			std::move(params.layout_params),
-			std::move(params.widget_params)
+			std::move(params.layout),
+			std::move(params.widget)
 		),
 		vao(context.get().renderer)
 	{}
@@ -70,8 +70,8 @@ class ellipse_widget : virtual public ruis::widget{
 	ruis::paint::ellipse_vao vao;
 public:
 	struct all_parameters{
-		ruis::layout::parameters layout_params;
-		ruis::widget::parameters widget_params;
+		ruis::layout::parameters layout;
+		ruis::widget::parameters widget;
 	};
 
 	ellipse_widget(
@@ -80,8 +80,8 @@ public:
 	) :
 		widget(
 			context, //
-			std::move(params.layout_params),
-			std::move(params.widget_params)
+			std::move(params.layout),
+			std::move(params.widget)
 		),
 		vao(context.get().renderer)
 	{}
@@ -116,8 +116,8 @@ class rectangle_widget : virtual public ruis::widget{
 	ruis::color_widget::parameters color_params;
 public:
 	struct all_parameters{
-		ruis::layout::parameters layout_params;
-		ruis::widget::parameters widget_params;
+		ruis::layout::parameters layout;
+		ruis::widget::parameters widget;
 		ruis::color_widget::parameters color;
 
 		ruis::paint::rectangle_vao::parameters rectangle_vao_params;
@@ -129,8 +129,8 @@ public:
 	) :
 		widget(
 			context, //
-			std::move(params.layout_params),
-			std::move(params.widget_params)
+			std::move(params.layout),
+			std::move(params.widget)
 		),
 		vao(
 			context.get().renderer, //
@@ -168,8 +168,8 @@ class capsule_widget : virtual public ruis::widget{
 	ruis::color color;
 public:
 	struct all_parameters{
-		ruis::layout::parameters layout_params;
-		ruis::widget::parameters widget_params;
+		ruis::layout::parameters layout;
+		ruis::widget::parameters widget;
 		bool is_vertical = false;
 		ruis::length stroke_width;
 		ruis::color color;
@@ -181,8 +181,8 @@ public:
 	) :
 		widget(
 			context, //
-			std::move(params.layout_params),
-			std::move(params.widget_params)
+			std::move(params.layout),
+			std::move(params.widget)
 		),
 		vao(
 			context.get().renderer, //
@@ -239,14 +239,14 @@ utki::shared_ref<ruis::widget> make_root_widget(const utki::shared_ref<ruis::con
 		{
 			m::path_widget(c,
 				{
-					.layout_params{
+					.layout{
 						.dims = {ruis::dim::fill, ruis::dim::fill}
 					}
 				}
 			),
 			m::ellipse_widget(c,
 				{
-					.layout_params{
+					.layout{
 						.dims = {400_pp, 200_pp},
 						.align = {ruis::align::front, ruis::align::front}
 					}
@@ -276,7 +276,7 @@ utki::shared_ref<ruis::widget> make_root_widget(const utki::shared_ref<ruis::con
 				{
 					m::rectangle_widget(c,
 						{
-							.layout_params{
+							.layout{
 								.dims = {ruis::dim::fill, ruis::dim::fill}
 							},
 							.color{
@@ -290,7 +290,7 @@ utki::shared_ref<ruis::widget> make_root_widget(const utki::shared_ref<ruis::con
 					),
 					m::rectangle_widget(c,
 						{
-							.layout_params{
+							.layout{
 								.dims = {200_pp, 100_pp}
 							},
 							.color{
@@ -306,7 +306,7 @@ utki::shared_ref<ruis::widget> make_root_widget(const utki::shared_ref<ruis::con
 			),
 			m::scroll_bar(c,
 				{
-					.layout_params{
+					.layout{
 						.dims = {ruis::dim::min, ruis::dim::max}
 					},
 					.oriented_params{
@@ -316,7 +316,7 @@ utki::shared_ref<ruis::widget> make_root_widget(const utki::shared_ref<ruis::con
 			),
 			m::scroll_bar(c,
 				{
-					.layout_params{
+					.layout{
 						.dims = {ruis::dim::max, ruis::dim::min}
 					},
 					.oriented_params{
@@ -326,7 +326,7 @@ utki::shared_ref<ruis::widget> make_root_widget(const utki::shared_ref<ruis::con
 			),
 			m::capsule_widget(c,
 				{
-					.layout_params{
+					.layout{
 						.dims = {80_pp, 300_pp},
 						.align = {ruis::align::center, ruis::align::front}
 					},
@@ -336,7 +336,7 @@ utki::shared_ref<ruis::widget> make_root_widget(const utki::shared_ref<ruis::con
 			),
 			m::capsule_widget(c,
 				{
-					.layout_params{
+					.layout{
 						.dims = {70_pp, 280_pp},
 						.align = {ruis::align::center, ruis::align::front}
 					},
@@ -347,7 +347,7 @@ utki::shared_ref<ruis::widget> make_root_widget(const utki::shared_ref<ruis::con
 			),
 			m::capsule_widget(c,
 				{
-					.layout_params{
+					.layout{
 						.dims = {300_pp, 80_pp},
 						.align = {ruis::align::center, ruis::align::center}
 					},
@@ -357,7 +357,7 @@ utki::shared_ref<ruis::widget> make_root_widget(const utki::shared_ref<ruis::con
 			),
 			m::capsule_widget(c,
 				{
-					.layout_params{
+					.layout{
 						.dims = {280_pp, 70_pp},
 						.align = {ruis::align::center, ruis::align::center}
 					},

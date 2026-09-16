@@ -24,7 +24,7 @@ utki::shared_ref<ruis::window> make_scroll_area_window(
     // clang-format off
     return m::window(c,
         {
-            .widget_params{
+            .widget{
                 .id = "scroll_area_root_container"s,
                 .rectangle{
                     {
@@ -45,22 +45,22 @@ utki::shared_ref<ruis::window> make_scroll_area_window(
         {
             m::row(c,
                 {
-                    .layout_params{
+                    .layout{
                         .dims{ruis::dim::max, ruis::dim::fill},
                         .weight = 1
                     },
-                    .widget_params{
+                    .widget{
                         .id = "scroll_area_subcontainer"s
                     }
                 },
                 {
                     m::scroll_area(c,
                         {
-                            .layout_params{
+                            .layout{
                                 .dims{ruis::dim::fill, ruis::dim::max},
                                 .weight = 1
                             },
-                            .widget_params{
+                            .widget{
                                 .id = "scroll_area"s,
                                 .clip = true
                             }
@@ -80,7 +80,7 @@ utki::shared_ref<ruis::window> make_scroll_area_window(
                             ),
                             m::collapse_area(c,
                                 {
-                                    .widget_params{
+                                    .widget{
                                         .rectangle{
                                             {
                                                 (20_pp).get(c.get()),
@@ -115,10 +115,10 @@ utki::shared_ref<ruis::window> make_scroll_area_window(
                     ),
                     m::scroll_bar(c,
                         {
-                            .layout_params{
+                            .layout{
                                 .dims{ruis::dim::min, ruis::dim::max}
                             },
-                            .widget_params{
+                            .widget{
                                 .id = "scroll_area_vertical_slider"s
                             },
                             .oriented_params{
@@ -130,18 +130,18 @@ utki::shared_ref<ruis::window> make_scroll_area_window(
             ),
             m::row(c,
                 {
-                    .layout_params{
+                    .layout{
                         .dims{ruis::dim::max, ruis::dim::min}
                     }
                 },
                 {
                     m::scroll_bar(c,
                         {
-                            .layout_params{
+                            .layout{
                                 .dims{ruis::dim::fill, ruis::dim::min},
                                 .weight = 1
                             },
-                            .widget_params{
+                            .widget{
                                 .id = "scroll_area_horizontal_slider"s
                             },
                             .oriented_params{
@@ -151,7 +151,7 @@ utki::shared_ref<ruis::window> make_scroll_area_window(
                     ),
                     m::min_proxy(c,
                         {
-                            .layout_params{
+                            .layout{
                                 .dims{ruis::dim::min, ruis::dim::fill}
                             },
                             .min_proxy_params{

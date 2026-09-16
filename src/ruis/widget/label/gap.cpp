@@ -29,8 +29,8 @@ gap::gap(
 ) :
 	widget(
 		context,
-		std::move(params.layout_params),
-		std::move(params.widget_params) //
+		std::move(params.layout),
+		std::move(params.widget) //
 	),
 	color_widget(
 		context,

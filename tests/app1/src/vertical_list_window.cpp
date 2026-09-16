@@ -21,7 +21,7 @@ utki::shared_ref<ruis::window> make_vertical_list_window(
     // clang-format off
     return m::window(c,
         {
-            .widget_params{
+            .widget{
                 .rectangle{
                     {
                         pos.x().get(c.get()),
@@ -41,17 +41,17 @@ utki::shared_ref<ruis::window> make_vertical_list_window(
         {
             m::mouse_proxy(c,
                 {
-                    .layout_params{
+                    .layout{
                         .dims{50_pp, ruis::dim::fill}
                     },
-                    .widget_params{
+                    .widget{
                         .id = "list_mouseproxy"s
                     }
                 }
             ),
             m::pile(c,
                 {
-                    .layout_params{
+                    .layout{
                         .dims{ruis::dim::fill, ruis::dim::max},
                         .weight = 1
                     }
@@ -59,10 +59,10 @@ utki::shared_ref<ruis::window> make_vertical_list_window(
                 {
                     m::list(c,
                         {
-                            .layout_params{
+                            .layout{
                                 .dims{ruis::dim::max, ruis::dim::max}
                             },
-                            .widget_params{
+                            .widget{
                                 .id = "list"s
                             },
                             .list_params{
@@ -142,10 +142,10 @@ utki::shared_ref<ruis::window> make_vertical_list_window(
             ),
             m::scroll_bar(c,
                 {
-                    .layout_params{
+                    .layout{
                         .dims{ruis::dim::min, ruis::dim::max}
                     },
-                    .widget_params{
+                    .widget{
                         .id = "vertical_list_slider"s
                     },
                     .oriented_params{

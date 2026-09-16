@@ -21,7 +21,7 @@ utki::shared_ref<ruis::widget> make_root_gui(const utki::shared_ref<ruis::contex
                 {
                     m::busy(c,
                         {
-                            .widget_params{
+                            .widget{
                                 .id = "busy_spinner"s,
                                 .visible = false
                             }
@@ -42,7 +42,7 @@ utki::shared_ref<ruis::widget> make_root_gui(const utki::shared_ref<ruis::contex
                     ),
                     m::busy(c,
                         {
-                            .widget_params{
+                            .widget{
                                 .id = "busy_spinner2"s
                             }
                         }
@@ -56,7 +56,7 @@ utki::shared_ref<ruis::widget> make_root_gui(const utki::shared_ref<ruis::contex
                         {
                             m::refresh(c,
                                 {
-                                    .widget_params{
+                                    .widget{
                                         .id = "refresh_spinner"s
                                     }
                                 }

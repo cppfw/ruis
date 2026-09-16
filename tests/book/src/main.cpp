@@ -56,11 +56,11 @@ public:
 			{
 				m::book(ctx,
 					{
-						.layout_params{
+						.layout{
 							.dims = {ruis::dim::fill, ruis::dim::max},
 							.weight = 1
 						},
-						.widget_params{
+						.widget{
 							.id = "book"s
 						}
 					}

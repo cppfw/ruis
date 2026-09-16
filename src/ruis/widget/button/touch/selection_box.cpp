@@ -149,7 +149,7 @@ public:
 		// clang-format off
 		auto click_proxy = ruis::make::click_proxy(this->context,
 			{
-				.layout_params{
+				.layout{
 					.dims = {ruis::dim::fill, ruis::dim::fill}
 				},
 				.click_proxy_params{
@@ -172,14 +172,14 @@ public:
 		// clang-format off
 		return ruis::make::column(this->context,
 			{
-				.layout_params{
+				.layout{
 					.dims = {ruis::dim::fill, ruis::dim::min}
 				}
 			},
 			{
 				ruis::make::pile(this->context,
 					{
-						.layout_params{
+						.layout{
 							.dims = {ruis::dim::fill, ruis::dim::min}
 						}
 					},
@@ -214,7 +214,7 @@ public:
 				),
 				ruis::make::gap(this->context,
 					{
-						.layout_params{
+						.layout{
 							.dims = {ruis::dim::fill, ruis::length::make_pp(1)} // TODO: get from theme
 						},
 						.color{
@@ -238,14 +238,14 @@ void selection_box::show_selection_menu()
 	// clang-format off
 	auto root = ruis::touch::make::dialog(c,
 		{
-			.layout_params{
+			.layout{
 				.dims = {ruis::dim::fill, ruis::dim::fill}
 			}
 		},
 		{
 			ruis::touch::make::list(c,
 				{
-					.layout_params{
+					.layout{
 						.dims = {ruis::dim::fill, ruis::dim::fill}
 					},
 					.list_params{

@@ -122,11 +122,11 @@ utki::shared_ref<ruis::widget> make_root_widget(const utki::shared_ref<ruis::con
 			),
 			m::tabbed_book(c,
 				{
-					.layout_params{
+					.layout{
 						.dims{ruis::dim::fill, ruis::dim::max},
 						.weight = 1
 					},
-					.widget_params{
+					.widget{
 						.id = "book"s
 					}
 				},

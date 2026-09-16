@@ -68,7 +68,7 @@ widget_list make_chrome(
 	// clang-format off
 	auto bg_click_proxy = m::click_proxy(c,
 		{
-			.layout_params{
+			.layout{
 				.dims = {ruis::dim::fill, ruis::dim::fill}
 			},
 			.click_proxy_params{
@@ -82,7 +82,7 @@ widget_list make_chrome(
 	// clang-format off
 	auto key_proxy = m::key_proxy(c,
 		{
-			.layout_params{
+			.layout{
 				.dims = {ruis::dim::fill, ruis::dim::fill}
 			},
 			.key_proxy_params{
@@ -160,7 +160,7 @@ widget_list make_chrome(
 			// so that clicks on the panel do not reach the background click proxy.
 			m::mouse_proxy(c,
 				{
-					.layout_params{
+					.layout{
 						.dims = {ruis::dim::fill, ruis::dim::fill}
 					},
 					.mouse_proxy_params{
@@ -191,8 +191,8 @@ dialog::dialog(
 ) :
 	widget( //
 		context,
-		std::move(params.layout_params),
-		std::move(params.widget_params)
+		std::move(params.layout),
+		std::move(params.widget)
 	),
 	// clang-format off
 	container(

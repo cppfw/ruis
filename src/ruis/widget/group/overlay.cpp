@@ -75,8 +75,8 @@ overlay::overlay(
 ) :
 	widget( //
 		context,
-		std::move(params.layout_params),
-		std::move(params.widget_params)
+		std::move(params.layout),
+		std::move(params.widget)
 	),
 	// clang-format off
 	container( //
@@ -99,10 +99,10 @@ utki::shared_ref<widget> overlay::show_popup(
 	// clang-format off
 	auto mp = ruis::make::mouse_proxy(this->context,
 		{
-			.layout_params{
+			.layout{
 				.dims{ruis::dim::fill, ruis::dim::fill}
 			},
-			.widget_params{
+			.widget{
 				.rectangle{
 					{0, 0}, // set left top corner
 					{1, 1} // dimensions do not matter

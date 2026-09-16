@@ -36,7 +36,7 @@ const tst::set set("make", [](tst::suite& suite){
                 ruis::make::gap(
                     gui.context,
                     {
-                        .widget_params = {
+                        .widget = {
                             .rectangle = {10, 20, 30, 40}
                         }
                     }

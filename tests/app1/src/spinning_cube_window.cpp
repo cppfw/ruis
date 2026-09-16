@@ -23,7 +23,7 @@ utki::shared_ref<ruis::window> make_spinning_cube_window(
     // clang-format off
     return m::window(c,
         {
-            .widget_params{
+            .widget{
                 .rectangle{
                     {
                         pos.x().get(c.get()),
@@ -62,20 +62,20 @@ utki::shared_ref<ruis::window> make_spinning_cube_window(
             ),
             m::click_proxy(c,
                 {
-                    .layout_params{
+                    .layout{
                         .dims{ruis::dim::fill, ruis::dim::fill}
                     },
-                    .widget_params{
+                    .widget{
                         .id = "cube_click_proxy"s
                     }
                 }
             ),
             m::cube_widget(c,
                 {
-                    .layout_params{
+                    .layout{
                         .dims{ruis::dim::max, ruis::dim::max}
                     },
-                    .widget_params{
+                    .widget{
                         .id = "cube_widget"s,
                         .cache = true,
                         .depth = true

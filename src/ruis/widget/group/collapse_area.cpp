@@ -67,8 +67,8 @@ collapse_area::collapse_area(
 ) :
 	widget(
 		context, //
-		std::move(params.layout_params),
-		std::move(params.widget_params)
+		std::move(params.layout),
+		std::move(params.widget)
 	),
 	// clang-format off
 	container(
@@ -81,7 +81,7 @@ collapse_area::collapse_area(
 		{
 			m::pile(context,
 				{
-					.layout_params{
+					.layout{
 						.dims{ruis::dim::max, ruis::dim::min}
 					}
 				},
@@ -135,14 +135,14 @@ collapse_area::collapse_area(
 							),
 							m::gap(context,
 								{
-									.layout_params{
+									.layout{
 										.dims{4_pp, 0_px}
 									}
 								}
 							),
 							m::pile(context,
 								{
-									.widget_params{
+									.widget{
 										.id = "ruis_title"s
 									}
 								},

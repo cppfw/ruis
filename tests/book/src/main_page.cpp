@@ -19,7 +19,7 @@ utki::shared_ref<ruis::page> make_main_page(const utki::shared_ref<ruis::context
         {
             m::column(c,
                 {
-                    .layout_params{
+                    .layout{
                         .dims = {ruis::dim::fill, ruis::dim::fill}
                     }
                 },

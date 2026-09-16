@@ -29,7 +29,7 @@ utki::shared_ref<ruis::widget> make_root_widget(const utki::shared_ref<ruis::con
 				{
 					m::column(c,
 						{
-							.widget_params{
+							.widget{
 								.id = "enable_group"s
 							}
 						},
@@ -77,7 +77,7 @@ utki::shared_ref<ruis::widget> make_root_widget(const utki::shared_ref<ruis::con
 			),
 			m::busy(c,
 				{
-					.widget_params{
+					.widget{
 						.id = "busy_spinner"s
 					}
 				}

@@ -34,8 +34,8 @@ class tab_group : public choice_group
 
 public:
 	struct all_parameters {
-		layout::parameters layout_params;
-		widget::parameters widget_params;
+		ruis::layout::parameters layout;
+		ruis::widget::parameters widget;
 		container::parameters params;
 	};
 

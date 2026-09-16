@@ -42,10 +42,10 @@ utki::shared_ref<ruis::widget> make_socket(
 			),
 			m::wire_socket(c,
 				{
-					.layout_params{
+					.layout{
 						.dims{ruis::dim::fill, ruis::dim::fill}
 					},
-					// .widget_params{
+					// .widget{
 					// 	.id = "ws"s
 					// }
 					.wire_socket_params{
@@ -62,20 +62,20 @@ utki::shared_ref<ruis::widget> make_root_widget(const utki::shared_ref<ruis::con
 	// clang-format off
 	return m::wire_area(c,
 		{
-			.widget_params{
+			.widget{
 				.id = "wire_area"s
 			}
 		},
 		{
 			m::window(c,
 				{
-					.layout_params{
+					.layout{
 						.dims{
 							ruis::length::make_pp(100),
 							ruis::length::make_pp(50)
 						}
 					},
-					.widget_params{
+					.widget{
 						.rectangle{{0, 20}, {100, 50}}
 					},
 					.params{
@@ -89,13 +89,13 @@ utki::shared_ref<ruis::widget> make_root_widget(const utki::shared_ref<ruis::con
 			),
 			m::window(c,
 				{
-					.layout_params{
+					.layout{
 						.dims{
 							ruis::length::make_pp(100),
 							ruis::length::make_pp(50)
 						}
 					},
-					.widget_params{
+					.widget{
 						.rectangle{{150, 20}, {100, 50}}
 					},
 					.params{

@@ -18,7 +18,7 @@ wire_area::wire_area(
 	ruis::widget_list children
 ) :
 	ruis::widget(context,//
-		 std::move(params.layout_params), std::move(params.widget_params)),
+		 std::move(params.layout), std::move(params.widget)),
 	// clang-format off
 	ruis::container(context,
 		{
