@@ -126,7 +126,7 @@ namespace {
 
 const utki::enum_array<tml::forest, style>& default_style_forests()
 {
-	static const auto defaults = [](){
+	static const auto defaults = []() {
 		utki::enum_array<tml::forest, style> d{};
 		d[style::color_background] = tml::read("0xff101010");
 		d[style::color_panel] = tml::read("0xff424242");
