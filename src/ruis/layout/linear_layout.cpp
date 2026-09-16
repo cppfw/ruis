@@ -26,7 +26,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../util/util.hpp"
 #include "../widget/widget.hpp"
 
-using namespace ruis::layout;
+using namespace ruis;
 
 linear_layout::linear_layout(bool is_vertical) :
 	oriented({.vertical = is_vertical})

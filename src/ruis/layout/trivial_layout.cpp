@@ -23,7 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../widget/widget.hpp"
 
-using namespace ruis::layout;
+using namespace ruis;
 
 ruis::vec2 trivial_layout::measure(
 	const vec2& quotum, //

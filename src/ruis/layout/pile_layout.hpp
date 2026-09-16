@@ -21,11 +21,11 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "abstract_layout.hpp"
+#include "layout.hpp"
 
-namespace ruis::layout {
+namespace ruis {
 
-class pile_layout : public abstract_layout
+class pile_layout : public layout
 {
 public:
 	void lay_out(

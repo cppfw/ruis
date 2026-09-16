@@ -36,7 +36,7 @@ struct layout_parameters {
 	/**
 	 * @brief desired dimensions.
 	 */
-	r4::vector2<layout::dimension> dims;
+	r4::vector2<dimension> dims;
 
 	/**
 	 * @brief Weight of the widget.

@@ -3,7 +3,6 @@
 #include <ruisapp/application.hpp>
 
 #include <ruis/widget/container.hpp>
-#include <ruis/layout/abstract_layout.hpp>
 #include <ruis/widget/label/text.hpp>
 #include <ruis/widget/label/rectangle.hpp>
 #include <ruis/standard_widgets.hpp>
@@ -134,8 +133,8 @@ utki::shared_ref<ruis::widget> make_separator(const utki::shared_ref<ruis::conte
 		{
 			.layout_params{
 				.dims = {
-					vertical ? ruis::layout::dimension(ruis::dim::fill) : ruis::layout::dimension(ruis::length::make_px(1)),//
-				 	vertical ? ruis::layout::dimension(ruis::length::make_px(1)) : ruis::layout::dimension(ruis::dim::fill)
+					vertical ? ruis::dimension(ruis::dim::fill) : ruis::dimension(ruis::length::make_px(1)),//
+				 	vertical ? ruis::dimension(ruis::length::make_px(1)) : ruis::dimension(ruis::dim::fill)
 				}
 			},
 			.params{

@@ -24,7 +24,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../util/util.hpp"
 #include "../widget/widget.hpp"
 
-using namespace ruis::layout;
+using namespace ruis;
 
 void pile_layout::lay_out(
 	const vec2& dims, //

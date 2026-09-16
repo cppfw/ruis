@@ -24,20 +24,20 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../config.hpp"
 #include "../util/widget_list.hpp"
 
-namespace ruis::layout {
+namespace ruis {
 
 // TODO: doxygen
-class abstract_layout
+class layout
 {
 protected:
-	abstract_layout() = default;
+	layout() = default;
 
 public:
-	abstract_layout(const abstract_layout&) = delete;
-	abstract_layout& operator=(const abstract_layout&) = delete;
+	layout(const layout&) = delete;
+	layout& operator=(const layout&) = delete;
 
-	abstract_layout(abstract_layout&&) = delete;
-	abstract_layout& operator=(abstract_layout&&) = delete;
+	layout(layout&&) = delete;
+	layout& operator=(layout&&) = delete;
 
 	virtual vec2 measure(
 		const vec2& quotum, //
@@ -54,13 +54,13 @@ public:
 		semiconst_widget_list& widgets
 	) const = 0;
 
-	virtual ~abstract_layout() = default;
-};
+	virtual ~layout() = default;
 
-extern const utki::shared_ref<abstract_layout> trivial;
-extern const utki::shared_ref<abstract_layout> size;
-extern const utki::shared_ref<abstract_layout> pile;
-extern const utki::shared_ref<abstract_layout> row;
-extern const utki::shared_ref<abstract_layout> column;
+	static const utki::shared_ref<layout> trivial;
+	static const utki::shared_ref<layout> size;
+	static const utki::shared_ref<layout> pile;
+	static const utki::shared_ref<layout> row;
+	static const utki::shared_ref<layout> column;
+};
 
 } // namespace ruis::layout

@@ -24,7 +24,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../style/styled.hpp"
 #include "../util/length.hpp"
 
-namespace ruis::layout {
+namespace ruis {
 
 /**
  * @brief Layout dimension request.
@@ -177,5 +177,5 @@ std::ostream& operator<<(std::ostream& o, const dimension& d);
 } // namespace ruis::layout
 
 namespace ruis {
-using dim = layout::dimension;
+using dim = ruis::dimension;
 } // namespace ruis

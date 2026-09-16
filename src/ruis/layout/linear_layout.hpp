@@ -23,12 +23,12 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../util/oriented.hpp"
 
-#include "abstract_layout.hpp"
+#include "layout.hpp"
 
-namespace ruis::layout {
+namespace ruis {
 
 class linear_layout :
-	public abstract_layout, //
+	public layout, //
 	public oriented
 {
 public:

@@ -43,10 +43,7 @@ namespace ruis {
 
 class context;
 class container;
-
-namespace layout {
 class layout;
-} // namespace layout
 
 /**
  * @brief Status of event handling by widgets.
@@ -73,7 +70,7 @@ class widget : virtual public utki::shared
 	friend class container;
 	friend class context;
 	friend class gui;
-	friend class layout::layout;
+	friend class layout;
 
 public:
 	const utki::shared_ref<ruis::context> context;

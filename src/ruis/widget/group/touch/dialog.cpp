@@ -22,7 +22,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "dialog.hpp"
 
 #include "../../../context.hpp"
-#include "../../../layout/abstract_layout.hpp"
 #include "../../label/padding.hpp"
 #include "../../label/rectangle.hpp"
 #include "../../proxy/click_proxy.hpp"
