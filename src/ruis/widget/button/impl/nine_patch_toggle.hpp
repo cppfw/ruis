@@ -27,7 +27,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 namespace ruis {
 
 class nine_patch_toggle :
-	virtual public toggle_button, //
+	public toggle_button, //
 	public nine_patch_button
 {
 public:
@@ -35,10 +35,15 @@ public:
 		ruis::nine_patch_button::parameters nine_patch_button;
 	};
 
-protected:
+	struct all_parameters{
+		ruis::layout_parameters layout_params;
+		ruis::widget::parameters widget;
+		parameters params;
+	};
+
 	nine_patch_toggle( //
 		const utki::shared_ref<ruis::context>& context, //
-		parameters params,
+		all_parameters params,
 		widget_list children
 	);
 

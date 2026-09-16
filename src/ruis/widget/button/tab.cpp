@@ -83,7 +83,7 @@ event_status tab::on_mouse_button(const mouse_button_event& e)
 void tab::on_pressed_change()
 {
 	this->choice_button::on_pressed_change();
-	this->nine_patch_toggle::on_pressed_change();
+	this->nine_patch_button::on_pressed_change();
 }
 
 tab::tab(
@@ -96,10 +96,10 @@ tab::tab(
 		std::move(params.layout_params),
 		std::move(params.widget)
 	),
-	button(context, ruis::button::parameters{}),
-	toggle_button(context),
+	button(context, {}),
 	choice_button(context),
-	nine_patch_toggle(context, std::move(params.params.nine_patch_toggle), std::move(children))
+	nine_patch_button(context,//
+		 std::move(params.params.nine_patch_button), std::move(children))
 {
 	if (!this->get_pressed_nine_patch()) {
 		this->set_pressed_nine_patch(

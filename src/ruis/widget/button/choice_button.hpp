@@ -35,7 +35,7 @@ namespace ruis {
  * from the same choice group will be unchecked automatically. Well known example
  * of such button is a radio button.
  */
-class choice_button : virtual public toggle_button
+class choice_button : public toggle_button
 {
 protected:
 	void on_pressed_change() override;

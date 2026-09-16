@@ -27,7 +27,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 namespace ruis {
 
 class image_toggle :
-	virtual public toggle_button, //
+	public toggle_button, //
 	public image_button
 {
 public:

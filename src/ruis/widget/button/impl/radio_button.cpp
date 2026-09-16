@@ -46,7 +46,6 @@ radio_button::radio_button(
 		context, //
 		std::move(params.button)
 	),
-	toggle_button(context),
 	choice_button(context),
 	// clang-format off
 	container(context,

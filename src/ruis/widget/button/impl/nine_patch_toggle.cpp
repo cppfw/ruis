@@ -31,15 +31,16 @@ void nine_patch_toggle::on_pressed_change()
 
 nine_patch_toggle::nine_patch_toggle(
 	const utki::shared_ref<ruis::context>& context, //
-	parameters params,
+	all_parameters params,
 	widget_list children
 ) :
-	widget(context, {}, {}), // virtual
-	button(context, {}), // virtual
+	widget(context,//
+		 std::move(params.layout_params), std::move(params.widget)),
+	button(context, {}),
 	toggle_button(context),
 	nine_patch_button(
 		context, //
-		std::move(params.nine_patch_button),
+		std::move(params.params.nine_patch_button),
 		std::move(children)
 	)
 {}

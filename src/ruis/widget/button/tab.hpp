@@ -30,14 +30,14 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 namespace ruis {
 
 class tab :
-	virtual public choice_button, //
-	public nine_patch_toggle
+	public choice_button, //
+	public nine_patch_button
 {
 	bool mask_overlaps(vec2 pos);
 
 public:
 	struct parameters {
-		ruis::nine_patch_toggle::parameters nine_patch_toggle;
+		ruis::nine_patch_button::parameters nine_patch_button;
 	};
 
 	struct all_parameters {

@@ -35,7 +35,7 @@ namespace ruis {
  */
 // NOLINTNEXTLINE(bugprone-incorrect-enable-shared-from-this, "std::shared_from_this is public via toggle_button")
 class check_box :
-	virtual public toggle_button, //
+	public toggle_button, //
 	private nine_patch
 {
 	// TODO: refactor to use utki::shared_ref

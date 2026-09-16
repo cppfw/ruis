@@ -42,7 +42,6 @@ tab_button::tab_button(
 		{
 }
 	),
-	toggle_button(context),
 	choice_button(context),
 	// clang-format off
     ruis::container(
