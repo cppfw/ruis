@@ -35,7 +35,7 @@ class selection_box :
 {
 public:
 	struct specific_parameters{
-		string title; // TODO: the selection box shoulkd be derived from labelled_widget?
+		string title; // TODO: the selection box should be derived from labelled_widget?
 	};
 
 	struct parameters{
