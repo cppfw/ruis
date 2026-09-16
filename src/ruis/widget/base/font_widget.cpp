@@ -29,11 +29,11 @@ font_widget::font_widget(
 ) :
 	widget(context, {}, {}),
 	params([&]() {
-		if (!params.face.get() && !params.face.is_from_style()) {
-			params.face = context.get().style().get_font_face_normal();
+		if (auto& f = params.face; !f.get()) {
+			f = context.get().style().get_font_face_normal();
 		}
-		if (params.size.get().is_undefined() && !params.size.is_from_style()) {
-			params.size = context.get().style().get_font_size_normal();
+		if (auto& s = params.size; s.get().is_undefined()) {
+			s = context.get().style().get_font_size_normal();
 		}
 		return std::move(params);
 	}())
@@ -84,9 +84,7 @@ void font_widget::update_fonts()
 	}
 
 	real font_size = [&]() -> real {
-		if (this->params.size.get().is_undefined()) {
-			return length::make_pp(parameters::default_size_pp).get(this->context);
-		}
+		utki::assert(!this->params.size.get().is_undefined());
 		return this->params.size.get().get(this->context);
 	}();
 

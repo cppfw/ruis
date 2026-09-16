@@ -62,6 +62,11 @@ rectangle_button::rectangle_button( //
 						b = context.get().style().get_len_button_padding();
 					}
 				}
+				for(auto& r : params.rectangle.specific.corner_radii){
+					if(r.get().is_undefined()){
+						r = context.get().style().get_len_button_padding();
+					}
+				}
 				return std::move(params.rectangle);
 			}()
 		},
