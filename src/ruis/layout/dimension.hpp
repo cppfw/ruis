@@ -174,7 +174,7 @@ public:
 
 std::ostream& operator<<(std::ostream& o, const dimension& d);
 
-} // namespace ruis::layout
+} // namespace ruis
 
 namespace ruis {
 using dim = ruis::dimension;

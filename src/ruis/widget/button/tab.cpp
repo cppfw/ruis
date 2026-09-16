@@ -98,8 +98,11 @@ tab::tab(
 	),
 	button(context, {}),
 	choice_button(context),
-	nine_patch_button(context,//
-		 std::move(params.params.nine_patch_button), std::move(children))
+	nine_patch_button(
+		context, //
+		std::move(params.params.nine_patch_button),
+		std::move(children)
+	)
 {
 	if (!this->get_pressed_nine_patch()) {
 		this->set_pressed_nine_patch(

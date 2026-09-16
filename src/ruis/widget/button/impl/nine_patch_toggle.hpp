@@ -35,7 +35,7 @@ public:
 		ruis::nine_patch_button::parameters nine_patch_button;
 	};
 
-	struct all_parameters{
+	struct all_parameters {
 		ruis::layout_parameters layout_params;
 		ruis::widget::parameters widget;
 		parameters params;

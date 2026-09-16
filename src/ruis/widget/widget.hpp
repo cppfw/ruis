@@ -805,6 +805,7 @@ vec2 dims_for_widget(
 
 // include definitions for forward declared classes
 #include "../context.hpp"
+
 #include "container.hpp"
 
 template <typename resource_type>

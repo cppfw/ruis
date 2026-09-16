@@ -34,8 +34,11 @@ nine_patch_toggle::nine_patch_toggle(
 	all_parameters params,
 	widget_list children
 ) :
-	widget(context,//
-		 std::move(params.layout_params), std::move(params.widget)),
+	widget(
+		context, //
+		std::move(params.layout_params),
+		std::move(params.widget)
+	),
 	button(context, {}),
 	toggle_button(context),
 	nine_patch_button(

@@ -63,4 +63,4 @@ public:
 	static const utki::shared_ref<layout> column;
 };
 
-} // namespace ruis::layout
+} // namespace ruis
