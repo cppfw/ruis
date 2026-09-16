@@ -21,12 +21,14 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "labeled_text_field.hpp"
 
+#include "impl/labeled_rectangle_text_field.hpp"
+
 using namespace ruis;
 
 labeled_text_field::labeled_text_field(
 	const utki::shared_ref<ruis::context> context, //
 	ruis::text_input& text_input,
-	text& label
+	ruis::text& label
 ) :
 	widget(context, {}, {}),
 	labeled_widget(
@@ -38,3 +40,27 @@ labeled_text_field::labeled_text_field(
 		text_input
 	)
 {}
+
+utki::shared_ref<ruis::labeled_text_field> ruis::make::labeled_text_field(
+	const utki::shared_ref<ruis::context>& context, //
+	ruis::labeled_text_field::all_parameters params,
+	ruis::string text
+)
+{
+	return ruis::make::labeled_rectangle_text_field(
+		context, //
+		// clang-format off
+		{
+			.layout_params = std::move(params.layout_params),
+			.widget = std::move(params.widget),
+			.params{
+				.label = std::move(params.params.label),
+				.rectangle_text_field{
+					.text_input = std::move(params.params.text_input)
+				}
+			}
+		},
+		// clang-format on
+		std::move(text)
+	);
+}

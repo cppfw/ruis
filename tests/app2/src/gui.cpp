@@ -28,7 +28,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <ruis/widget/group/drag_area.hpp>
 #include <ruis/widget/group/overlay.hpp>
 #include <ruis/widget/group/window.hpp>
-#include <ruis/widget/input/impl/labeled_rectangle_text_field.hpp>
+#include <ruis/widget/input/labeled_text_field.hpp>
 #include <ruis/widget/label/gap.hpp>
 #include <ruis/widget/label/padding.hpp>
 #include <ruis/widget/proxy/key_proxy.hpp>
@@ -427,7 +427,7 @@ utki::shared_ref<ruis::window> make_text_input_window(
 			.title = c.get().localization.get().get("text_input"sv)
 		},
 		{
-			m::labeled_rectangle_text_field(c,
+			m::labeled_text_field(c,
 				{
 					.layout_params{
 						.dims = {ruis::dim::fill, ruis::dim::min}
@@ -436,11 +436,9 @@ utki::shared_ref<ruis::window> make_text_input_window(
 						.label{
 							.string = U"Enter some text:"
 						},
-						.rectangle_text_field{
-							.text_input{
-								.specific{
-									.hint = U"Type here..."s
-								}
+						.text_input{
+							.specific{
+								.hint = U"Type here..."s
 							}
 						}
 					}

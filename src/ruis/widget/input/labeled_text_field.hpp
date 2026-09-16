@@ -33,19 +33,42 @@ class labeled_text_field :
 	public text_field
 {
 public:
+	struct parameters {
+		ruis::labeled_widget::parameters label;
+		ruis::text_input::parameters text_input;
+	};
+
 	struct all_parameters {
 		ruis::layout_parameters layout_params;
 		ruis::widget::parameters widget;
-		ruis::labeled_widget::parameters label;
-		ruis::text_input::parameters text_input;
+		parameters params;
 	};
 
 protected:
 	labeled_text_field(
 		const utki::shared_ref<ruis::context> context, //
 		ruis::text_input& text_input,
-		text& label
+		ruis::text& label
 	);
 };
+
+namespace make {
+
+/**
+ * @brief Factory function to create a labeled text field widget.
+ * This creates a labeled_rectangle_text_field internally.
+ *
+ * @param context - GUI context.
+ * @param params - Parameters for the labeled text field.
+ * @param text - Initial text content.
+ * @return Shared reference to the created widget.
+ */
+utki::shared_ref<ruis::labeled_text_field> labeled_text_field(
+	const utki::shared_ref<ruis::context>& context, //
+	ruis::labeled_text_field::all_parameters params,
+	ruis::string text
+);
+
+} // namespace make
 
 } // namespace ruis
