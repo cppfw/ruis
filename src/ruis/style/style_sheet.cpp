@@ -99,6 +99,11 @@ void style_sheet::parse(tml::forest desc)
 	for (auto& d : utki::skip_front<1>(desc)) {
 		if (d.value.string == "ruis"sv) {
 			for (auto& s : d.children) {
+				if (s.children.empty()) {
+					throw std::invalid_argument(
+						utki::cat("style_sheet::parse(desc): empty style value for: ", s.value.string)
+					);
+				}
 				this->standard_styles[style_sheet::name_to_style(s.value.string)] = std::move(s.children);
 			}
 		} else if (d.value.string == "user"sv) {
@@ -115,6 +120,46 @@ void style_sheet::parse(tml::forest desc)
 style_sheet style_sheet::load(const fsif::file& fi)
 {
 	return {tml::read(fi)};
+}
+
+namespace {
+
+const utki::enum_array<tml::forest, style>& default_style_forests()
+{
+	static const auto defaults = [](){
+		utki::enum_array<tml::forest, style> d{};
+		d[style::color_background] = tml::read("0xff101010");
+		d[style::color_panel] = tml::read("0xff424242");
+		d[style::color_special] = tml::read("0xffff8080");
+		d[style::color_primary] = tml::read("0xff505050");
+		d[style::color_secondary] = tml::read("0xff303030");
+		d[style::color_highlight] = tml::read("0xffad9869");
+		d[style::color_dimmed] = tml::read("0xb0000000");
+		d[style::color_text] = tml::read("0xffffffff");
+		d[style::color_text_secondary] = tml::read("0xffa0a0a0");
+		d[style::len_indent] = tml::read("17pp");
+		d[style::len_gap] = tml::read("4pp");
+		d[style::len_border] = tml::read("1pp");
+		d[style::len_button_padding] = tml::read("5pp");
+		d[style::len_dialog_margin] = tml::read("30pp");
+		d[style::len_dialog_padding] = tml::read("20pp");
+		d[style::font_size_text] = tml::read("12pp");
+		d[style::font_size_title] = tml::read("22pp");
+		d[style::font_face_text] = tml::read("ruis_fnt_normal");
+		return d;
+	}();
+	return defaults;
+}
+
+} // namespace
+
+const tml::forest& style_sheet::get(style style_id) const noexcept
+{
+	const auto& f = this->standard_styles[style_id];
+	if (!f.empty()) {
+		return f;
+	}
+	return default_style_forests()[style_id];
 }
 
 const tml::forest* style_sheet::get(std::string_view style_id) const noexcept

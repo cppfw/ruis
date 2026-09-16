@@ -102,11 +102,9 @@ public:
 	 * @brief Get standard style value description.
 	 * @param style_id - id of the standard style value.
 	 * @return reference to the standard style value description.
+	 * If the style value is not present in the style sheet, a default value is returned.
 	 */
-	const tml::forest& get(style style_id) const noexcept
-	{
-		return this->standard_styles[style_id];
-	}
+	const tml::forest& get(style style_id) const noexcept;
 
 	static style_sheet load(const fsif::file& fi);
 };

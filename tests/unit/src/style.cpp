@@ -240,6 +240,104 @@ const tst::set set("style", [](tst::suite& suite){
         }
     });
 
+    // test that default fallback values are returned when style values are missing from the style sheet
+    suite.add("style_sheet__default_fallback_values", [](){
+        auto desc = tml::read(R"qwertyuiop(
+            version{1}
+            ruis{}
+            user{}
+        )qwertyuiop"s);
+
+        ruis::style_sheet ss(std::move(desc));
+
+        tst::check_eq(tml::to_string(ss.get(ruis::style::color_background)), "0xff101010"s, SL);
+        tst::check_eq(tml::to_string(ss.get(ruis::style::color_panel)), "0xff424242"s, SL);
+        tst::check_eq(tml::to_string(ss.get(ruis::style::color_special)), "0xffff8080"s, SL);
+        tst::check_eq(tml::to_string(ss.get(ruis::style::color_primary)), "0xff505050"s, SL);
+        tst::check_eq(tml::to_string(ss.get(ruis::style::color_secondary)), "0xff303030"s, SL);
+        tst::check_eq(tml::to_string(ss.get(ruis::style::color_highlight)), "0xffad9869"s, SL);
+        tst::check_eq(tml::to_string(ss.get(ruis::style::color_dimmed)), "0xb0000000"s, SL);
+        tst::check_eq(tml::to_string(ss.get(ruis::style::color_text)), "0xffffffff"s, SL);
+        tst::check_eq(tml::to_string(ss.get(ruis::style::color_text_secondary)), "0xffa0a0a0"s, SL);
+        tst::check_eq(tml::to_string(ss.get(ruis::style::len_indent)), "17pp"s, SL);
+        tst::check_eq(tml::to_string(ss.get(ruis::style::len_gap)), "4pp"s, SL);
+        tst::check_eq(tml::to_string(ss.get(ruis::style::len_border)), "1pp"s, SL);
+        tst::check_eq(tml::to_string(ss.get(ruis::style::len_button_padding)), "5pp"s, SL);
+        tst::check_eq(tml::to_string(ss.get(ruis::style::len_dialog_margin)), "30pp"s, SL);
+        tst::check_eq(tml::to_string(ss.get(ruis::style::len_dialog_padding)), "20pp"s, SL);
+        tst::check_eq(tml::to_string(ss.get(ruis::style::font_size_text)), "12pp"s, SL);
+        tst::check_eq(tml::to_string(ss.get(ruis::style::font_size_title)), "22pp"s, SL);
+        tst::check_eq(tml::to_string(ss.get(ruis::style::font_face_text)), "ruis_fnt_normal"s, SL);
+    });
+
+    // test that when a style value is present in the style sheet, the sheet value is returned (not the default)
+    suite.add("style_sheet__explicit_value_overrides_default", [](){
+        auto desc = tml::read(R"qwertyuiop(
+            version{1}
+            ruis{
+                color_background{0xff123456}
+                color_panel{0xff234567}
+                color_special{0xff345678}
+                color_primary{0xff456789}
+                color_secondary{0xff56789a}
+                color_highlight{0xff6789ab}
+                color_dimmed{0xff789abc}
+                color_text{0xff89abcd}
+                color_text_secondary{0xff9abcde}
+                len_indent{20pp}
+                len_gap{6pp}
+                len_border{2pp}
+                len_button_padding{7pp}
+                len_dialog_margin{40pp}
+                len_dialog_padding{30pp}
+                font_size_text{14pp}
+                font_size_title{26pp}
+                font_face_text{custom_font}
+            }
+            user{}
+        )qwertyuiop"s);
+
+        ruis::style_sheet ss(std::move(desc));
+
+        tst::check_eq(tml::to_string(ss.get(ruis::style::color_background)), "0xff123456"s, SL);
+        tst::check_eq(tml::to_string(ss.get(ruis::style::color_panel)), "0xff234567"s, SL);
+        tst::check_eq(tml::to_string(ss.get(ruis::style::color_special)), "0xff345678"s, SL);
+        tst::check_eq(tml::to_string(ss.get(ruis::style::color_primary)), "0xff456789"s, SL);
+        tst::check_eq(tml::to_string(ss.get(ruis::style::color_secondary)), "0xff56789a"s, SL);
+        tst::check_eq(tml::to_string(ss.get(ruis::style::color_highlight)), "0xff6789ab"s, SL);
+        tst::check_eq(tml::to_string(ss.get(ruis::style::color_dimmed)), "0xff789abc"s, SL);
+        tst::check_eq(tml::to_string(ss.get(ruis::style::color_text)), "0xff89abcd"s, SL);
+        tst::check_eq(tml::to_string(ss.get(ruis::style::color_text_secondary)), "0xff9abcde"s, SL);
+        tst::check_eq(tml::to_string(ss.get(ruis::style::len_indent)), "20pp"s, SL);
+        tst::check_eq(tml::to_string(ss.get(ruis::style::len_gap)), "6pp"s, SL);
+        tst::check_eq(tml::to_string(ss.get(ruis::style::len_border)), "2pp"s, SL);
+        tst::check_eq(tml::to_string(ss.get(ruis::style::len_button_padding)), "7pp"s, SL);
+        tst::check_eq(tml::to_string(ss.get(ruis::style::len_dialog_margin)), "40pp"s, SL);
+        tst::check_eq(tml::to_string(ss.get(ruis::style::len_dialog_padding)), "30pp"s, SL);
+        tst::check_eq(tml::to_string(ss.get(ruis::style::font_size_text)), "14pp"s, SL);
+        tst::check_eq(tml::to_string(ss.get(ruis::style::font_size_title)), "26pp"s, SL);
+        tst::check_eq(tml::to_string(ss.get(ruis::style::font_face_text)), "custom_font"s, SL);
+    });
+
+    // test that parsing fails when a style value name is present but its value is empty
+    suite.add("style_sheet__empty_value_fails", [](){
+        auto desc = tml::read(R"qwertyuiop(
+            version{1}
+            ruis{
+                color_background{}
+            }
+            user{}
+        )qwertyuiop"s);
+
+        bool threw = false;
+        try {
+            ruis::style_sheet ss(std::move(desc));
+        } catch (const std::invalid_argument&) {
+            threw = true;
+        }
+        tst::check(threw, SL);
+    });
+
     suite.add("styled__default_constructor", [](){
         ruis::styled<ruis::real> r;
         tst::check_eq(r.get(), ruis::real(0), SL);
