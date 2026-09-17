@@ -60,10 +60,13 @@ void image::render(const ruis::mat4& matrix) const
 	auto& r = this->context.get().renderer.get();
 
 	if (!this->texture) {
-		this->texture = img->get(this->context.get().units, this->rect().d).to_shared_ptr();
+		this->texture = img->get(
+			this->context.get().units, //
+			this->rect().d
+		).to_shared_ptr();
 		this->vao = this->context.get().renderer.get().obj().pos_tex_quad_01_vao;
 	}
-	ASSERT(this->texture)
+	utki::assert(this->texture);
 
 	ruis::mat4 matr(matrix);
 	matr.scale(this->rect().d);
