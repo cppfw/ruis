@@ -95,7 +95,8 @@ ruis::event_status flickable::on_mouse_button(const mouse_button_event& event)
 				// After reaching the last touch point, it still can remain touched for some time without moving,
 				// so when the touch is released we need to update the timestamp of the last touch point to the current time,
 				// so that the velocity calculation would be correct.
-				utki::assert(!this->touch_history.empty());
+				utki::assert(!this->touch_history.empty()
+				); // TODO: once I got this assertion triggered, just need to click fast and move the mouse a little
 				this->touch_history.back().timestamp_ms = utki::get_ticks_ms();
 
 				this->velocity_px_per_ms = this->calculate_touch_velocity_px_per_ms();

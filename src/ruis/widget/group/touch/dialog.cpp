@@ -128,6 +128,7 @@ widget_list make_chrome(
 			}
 		},
 		{
+			// TODO: the rectangle is already a containing widget, need to return its content container instead of creating a new one
 			std::move(content_container)
 		}
 	);
@@ -240,8 +241,8 @@ dialog::dialog(
 					.dims = {ruis::dim::fill, ruis::dim::fill}
 				},
 				.params = [&](){
-					if(!params.params.layout){
-						params.params.layout = ruis::layout::pile;
+					if(auto& l = params.params.layout; !l){
+						l = ruis::layout::column;
 					}
 					return std::move(params.params);
 				}()

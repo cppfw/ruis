@@ -28,6 +28,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <ruis/widget/group/overlay.hpp>
 #include <ruis/widget/group/touch/dialog.hpp>
 #include <ruis/widget/group/touch/scroll_area.hpp>
+#include <ruis/widget/input/labeled_text_field.hpp>
 #include <ruis/widget/label/gap.hpp>
 #include <ruis/widget/label/padding.hpp>
 #include <ruis/widget/label/text.hpp>
@@ -102,6 +103,28 @@ public:
 utki::shared_ref<ruis::touch::dialog> make_dialog(const utki::shared_ref<ruis::context>& c)
 {
 	// clang-format off
+	auto text_field = m::labeled_text_field(
+		c,
+		{
+			.layout_params{
+				.dims = {ruis::dim::fill, ruis::dim::min}
+			},
+			.params{
+				.label{
+					.string = U"Name"s
+				},
+				.text_input{
+					.specific{
+						.hint = U"Enter your name"s
+					}
+				}
+			}
+		},
+		ruis::string()
+	);
+	// clang-format on
+
+	// clang-format off
 	auto close_button = m::push_button(
 		c,
 		{
@@ -125,6 +148,14 @@ utki::shared_ref<ruis::touch::dialog> make_dialog(const utki::shared_ref<ruis::c
 		},
 		{
 			m::text(c, {}, U"Dialog"s),
+			m::gap(c,
+				{
+					.layout_params{
+						.dims = {ruis::dim::fill, c.get().style().get_len_gap().get()}
+					}
+				}
+			),
+			std::move(text_field),
 			m::gap(c,
 				{
 					.layout_params{
