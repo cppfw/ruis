@@ -39,6 +39,10 @@ image::image( //
 		context,
 		std::move(params.params.blending)
 	),
+	color_widget( //
+		context,
+		std::move(params.params.color)
+	),
 	params(std::move(params.params.specific)),
 	vao(context.get().renderer.get().obj().empty_vertex_array)
 {}
@@ -71,11 +75,20 @@ void image::render(const ruis::mat4& matrix) const
 	ruis::mat4 matr(matrix);
 	matr.scale(this->rect().d);
 
-	r.render(
-		matr, //
-		*this->texture,
-		this->vao
-	);
+	if (const auto& color = this->get_color(); color.is_undefined()) {
+		r.render(
+			matr, //
+			*this->texture,
+			this->vao
+		);
+	} else {
+		r.render(
+			matr, //
+			color,
+			*this->texture,
+			this->vao
+		);
+	}
 }
 
 ruis::vec2 image::measure(const ruis::vec2& quotum) const

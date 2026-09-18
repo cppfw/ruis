@@ -23,6 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../../res/image.hpp"
 #include "../base/blending_widget.hpp"
+#include "../base/color_widget.hpp"
 #include "../widget.hpp"
 
 namespace ruis {
@@ -41,7 +42,8 @@ namespace ruis {
  */
 class image :
 	public virtual widget, //
-	public blending_widget
+	public blending_widget, //
+	public color_widget
 {
 public:
 	struct specific_parameters {
@@ -52,6 +54,7 @@ public:
 
 	struct parameters {
 		blending_widget::parameters blending;
+		color_widget::parameters color;
 		specific_parameters specific;
 	};
 
