@@ -25,6 +25,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <ruis/standard_widgets.hpp>
 #include <ruis/style/style_sheet.hpp>
 #include <ruis/widget/button/impl/rectangle_push_button.hpp>
+#include <ruis/widget/group/overlay.hpp>
+#include <ruis/widget/group/touch/dialog.hpp>
 #include <ruis/widget/group/touch/scroll_area.hpp>
 #include <ruis/widget/label/gap.hpp>
 #include <ruis/widget/label/padding.hpp>
@@ -97,6 +99,56 @@ public:
 	}
 };
 
+utki::shared_ref<ruis::touch::dialog> make_dialog(const utki::shared_ref<ruis::context>& c)
+{
+	// clang-format off
+	auto close_button = m::push_button(
+		c,
+		{
+			.layout_params{
+				.dims = {ruis::dim::fill, ruis::dim::min}
+			}
+		},
+		{
+			m::text(c, {}, U"Close"s)
+		}
+	);
+	// clang-format on
+
+	// clang-format off
+	auto dialog = ruis::touch::make::dialog(
+		c,
+		{
+			.layout_params{
+				.dims = {ruis::dim::fill, ruis::dim::fill}
+			}
+		},
+		{
+			m::text(c, {}, U"Dialog"s),
+			m::gap(c,
+				{
+					.layout_params{
+						.dims = {ruis::dim::fill, c.get().style().get_len_gap().get()}
+					}
+				}
+			),
+			std::move(close_button)
+		}
+	);
+	// clang-format on
+
+	// use a weak reference to avoid a reference cycle
+	// (dialog -> content container -> close_button -> click_handler -> dialog)
+	auto dialog_weak = utki::make_weak_from(dialog.get());
+	close_button.get().click_handler = [dialog_weak](ruis::push_button&) {
+		if (auto dlg = dialog_weak.lock()) {
+			dlg->close();
+		}
+	};
+
+	return dialog;
+}
+
 ruis::widget_list make_scroll_area_page_contents(const utki::shared_ref<ruis::context>& c)
 {
 	// clang-format off
@@ -140,9 +192,12 @@ ruis::widget_list make_scroll_area_page_contents(const utki::shared_ref<ruis::co
 	);
 	// clang-format on
 
-	button_1.get().click_handler = [](ruis::push_button&) {
-		utki::log([](auto& o) {
-			o << "Button 1 clicked\n";
+	button_1.get().click_handler = [](ruis::push_button& b) {
+		auto dialog = make_dialog(b.context);
+
+		auto& olay = b.get_ancestor<ruis::overlay>();
+		b.context.get().post_to_ui_thread([olay = utki::make_shared_from(olay), dialog]() {
+			olay.get().push_back(dialog);
 		});
 	};
 
