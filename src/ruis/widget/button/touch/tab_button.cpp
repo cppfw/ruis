@@ -21,6 +21,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "tab_button.hpp"
 
+#include "../../label/gap.hpp"
 #include "../../label/padding.hpp"
 
 using namespace ruis::touch;
@@ -75,6 +76,13 @@ tab_button::tab_button(
                                 .weight = 1
                             },
                             .params = std::move(params.params.image)
+                        }
+                    ),
+                    ruis::make::gap(context,
+                        {
+                            .layout_params{
+                                .dims = {ruis::dim::min, context.get().style().get_len_gap()}
+                            }
                         }
                     ),
                     ruis::make::text(context,
