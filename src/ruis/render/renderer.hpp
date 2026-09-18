@@ -137,6 +137,49 @@ public:
 			tex
 		);
 	}
+
+	/**
+	 * @brief Render texture on a unit quad tinted with a color.
+	 * @param matrix - transformation matrix to use for rendering.
+	 * @param color - color to tint the texture with.
+	 * @param tex - texture to render.
+	 */
+	void render(
+		const mat4& matrix, //
+		const ruis::color& color,
+		const render::texture_2d& tex
+	) const
+	{
+		this->render(
+			matrix, //
+			color,
+			tex,
+			this->obj().pos_tex_quad_01_vao.get()
+		);
+	}
+
+	/**
+	 * @brief Render a VAO with texture tinted with a color.
+	 * Uses the color_pos_tex shader.
+	 * @param matrix - transformation matrix to use for rendering.
+	 * @param color - color to tint the texture with.
+	 * @param tex - texture to render.
+	 * @param vao - vertex array to use for rendering.
+	 */
+	virtual void render(
+		const mat4& matrix, //
+		const ruis::color& color,
+		const render::texture_2d& tex,
+		const render::vertex_array& vao
+	) const
+	{
+		this->shaders().color_pos_tex->render(
+			matrix, //
+			vao,
+			color,
+			tex
+		);
+	}
 };
 
 } // namespace ruis::render
