@@ -75,7 +75,13 @@ tab_button::tab_button(
                                 .dims = {ruis::dim::min, ruis::dim::fill},
                                 .weight = 1
                             },
-                            .params = std::move(params.params.image)
+                            .params = [&]() {
+                                auto& p = params.params.image;
+                                if (auto& c = p.color.normal; c.get().is_undefined()) {
+                                    c = context.get().style().get_color_text();
+                                }
+                                return std::move(p);
+                            }()
                         }
                     ),
                     ruis::make::gap(context,
