@@ -99,33 +99,26 @@ widget_list make_chrome(
 			.layout_params{
 				.dims = {ruis::dim::fill, ruis::dim::fill}
 			},
-			.params{
-				.padding{
-					.specific{
-						.borders = [&](){
-							for(auto& b : params.padding_params.borders){
-								if(b.get().is_undefined()){
-									b = style.get_len_dialog_padding();
-								}
-							}
-							return std::move(params.padding_params.borders);
-						}()
+			.params = [&](){
+				auto& rect_params = params.params.rectangle;
+				for(auto& cr : rect_params.specific.corner_radii){
+					if(cr.get().is_undefined()){
+						cr = style.get_len_dialog_padding();
 					}
-				},
-				.specific = [&](){
-					for(auto& r : params.rectangle_params.corner_radii){
-						if(r.get().is_undefined()){
-							r = style.get_len_dialog_padding();
-						}
-					}
+				}
 
-					if(params.rectangle_params.fill_color.get().is_undefined()){
-						params.rectangle_params.fill_color = style.get_color_panel();
-					}
+				if(auto& c = rect_params.specific.fill_color; c.get().is_undefined()){
+					c = style.get_color_panel();
+				}
 
-					return std::move(params.rectangle_params);
-				}()
-			}
+				for(auto& b : rect_params.padding.specific.borders){
+					if(b.get().is_undefined()){
+						b = style.get_len_dialog_padding();
+					}
+				}
+
+				return std::move(rect_params);
+			}()
 		},
 		{
 			// TODO: the rectangle is already a containing widget, need to return its content container instead of creating a new one
@@ -144,7 +137,7 @@ widget_list make_chrome(
 			.params{
 				.specific{
 					.borders = [&](){
-						auto borders = params.dialog_params.margin_params.borders;
+						auto borders = params.params.specific.margin_params.borders;
 						for(auto& b : borders){
 							if(b.get().is_undefined()){
 								b = style.get_len_dialog_margin();
@@ -240,12 +233,9 @@ dialog::dialog(
 					// (e.g. scrollable lists) can take the whole available area of the panel
 					.dims = {ruis::dim::fill, ruis::dim::fill}
 				},
-				.params = [&](){
-					if(auto& l = params.params.layout; !l){
-						l = ruis::layout::column;
-					}
-					return std::move(params.params);
-				}()
+				.params = {
+					.layout = ruis::layout::column
+				}
 			},
 			// clang-format on
 			std::move(children)

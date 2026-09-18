@@ -49,7 +49,7 @@ class dialog :
 	public containing_widget
 {
 public:
-	struct parameters {
+	struct specific_parameters {
 		/**
 		 * @brief Margin between the dialog panel and the edge of the dialog area.
 		 * Defaults to the 'len_dialog_margin' style value if undefined.
@@ -57,11 +57,7 @@ public:
 		ruis::padding::specific_parameters margin_params;
 	};
 
-	struct all_parameters {
-		ruis::layout_parameters layout_params;
-		ruis::widget::parameters widget;
-		container::parameters params;
-
+	struct parameters{
 		/**
 		 * @brief Color of the dialog panel background.
 		 * Defaults to the 'color_panel' style value if undefined.
@@ -69,19 +65,19 @@ public:
 		color_widget::parameters color;
 
 		/**
-		 * @brief Padding between the dialog panel background and the dialog content.
-		 * Defaults to the 'len_dialog_padding' style value if undefined.
-		 */
-		ruis::padding::specific_parameters padding_params;
-
-		/**
 		 * @brief Dialog panel background rectangle parameters.
 		 *   - corner_radii defaults to the 'len_dialog_padding' style value if undefined.
 		 *   - stroke_width defaults to 0 (filled rectangle) if undefined.
 		 */
-		rectangle::specific_parameters rectangle_params;
+		ruis::rectangle::parameters rectangle;
 
-		parameters dialog_params;
+		specific_parameters specific;
+	};
+
+	struct all_parameters {
+		ruis::layout_parameters layout_params;
+		ruis::widget::parameters widget;
+		parameters params;
 	};
 
 private:
