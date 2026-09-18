@@ -246,7 +246,8 @@ void selection_box::show_selection_menu()
 			ruis::touch::make::list(c,
 				{
 					.layout_params{
-						.dims = {ruis::dim::fill, ruis::dim::fill}
+						.dims = {ruis::dim::fill, ruis::dim::fill},
+						.weight = 1
 					},
 					.list_params{
 						.provider = utki::make_shared<wrapping_provider>(utki::make_shared_from(*this))

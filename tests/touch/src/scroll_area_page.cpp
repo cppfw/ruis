@@ -138,6 +138,8 @@ utki::shared_ref<ruis::touch::dialog> make_dialog(const utki::shared_ref<ruis::c
 	);
 	// clang-format on
 
+	auto& close_button_ref = close_button.get();
+
 	// clang-format off
 	auto dialog = ruis::touch::make::dialog(
 		c,
@@ -171,7 +173,7 @@ utki::shared_ref<ruis::touch::dialog> make_dialog(const utki::shared_ref<ruis::c
 	// use a weak reference to avoid a reference cycle
 	// (dialog -> content container -> close_button -> click_handler -> dialog)
 	auto dialog_weak = utki::make_weak_from(dialog.get());
-	close_button.get().click_handler = [dialog_weak](ruis::push_button&) {
+	close_button_ref.click_handler = [dialog_weak](ruis::push_button&) {
 		if (auto dlg = dialog_weak.lock()) {
 			dlg->close();
 		}
