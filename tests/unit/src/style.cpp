@@ -274,8 +274,6 @@ const tst::set set("style", [](tst::suite& suite){
         tst::check_eq(tml::to_string(ss.get(ruis::style::len_gap)), "8pp"s, SL);
         tst::check_eq(tml::to_string(ss.get(ruis::style::len_gap_big)), "16pp"s, SL);
         tst::check_eq(tml::to_string(ss.get(ruis::style::len_border)), "1pp"s, SL);
-        tst::check_eq(tml::to_string(ss.get(ruis::style::len_dialog_margin)), "30pp"s, SL);
-        tst::check_eq(tml::to_string(ss.get(ruis::style::len_dialog_padding)), "20pp"s, SL);
         tst::check_eq(tml::to_string(ss.get(ruis::style::font_size_text)), "14pp"s, SL);
         tst::check_eq(tml::to_string(ss.get(ruis::style::font_size_title)), "22pp"s, SL);
         tst::check_eq(tml::to_string(ss.get(ruis::style::font_face_text)), "ruis_fnt_normal"s, SL);
@@ -300,8 +298,6 @@ const tst::set set("style", [](tst::suite& suite){
                 len_gap{12pp}
                 len_gap_big{30pp}
                 len_border{2pp}
-                len_dialog_margin{40pp}
-                len_dialog_padding{30pp}
                 font_size_text{14pp}
                 font_size_title{26pp}
                 font_face_text{custom_font}
@@ -325,8 +321,6 @@ const tst::set set("style", [](tst::suite& suite){
         tst::check_eq(tml::to_string(ss.get(ruis::style::len_gap)), "12pp"s, SL);
         tst::check_eq(tml::to_string(ss.get(ruis::style::len_gap_big)), "30pp"s, SL);
         tst::check_eq(tml::to_string(ss.get(ruis::style::len_border)), "2pp"s, SL);
-        tst::check_eq(tml::to_string(ss.get(ruis::style::len_dialog_margin)), "40pp"s, SL);
-        tst::check_eq(tml::to_string(ss.get(ruis::style::len_dialog_padding)), "30pp"s, SL);
         tst::check_eq(tml::to_string(ss.get(ruis::style::font_size_text)), "14pp"s, SL);
         tst::check_eq(tml::to_string(ss.get(ruis::style::font_size_title)), "26pp"s, SL);
         tst::check_eq(tml::to_string(ss.get(ruis::style::font_face_text)), "custom_font"s, SL);

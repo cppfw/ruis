@@ -103,7 +103,7 @@ widget_list make_chrome(
 				auto& rect_params = params.params.rectangle;
 				for(auto& cr : rect_params.specific.corner_radii){
 					if(cr.get().is_undefined()){
-						cr = style.get_len_dialog_padding();
+						cr = style.get_len_gap_big();
 					}
 				}
 
@@ -113,7 +113,7 @@ widget_list make_chrome(
 
 				for(auto& b : rect_params.padding.specific.borders){
 					if(b.get().is_undefined()){
-						b = style.get_len_dialog_padding();
+						b = style.get_len_gap_big();
 					}
 				}
 
@@ -140,7 +140,7 @@ widget_list make_chrome(
 						auto borders = params.params.specific.margin_params.borders;
 						for(auto& b : borders){
 							if(b.get().is_undefined()){
-								b = style.get_len_dialog_margin();
+								b = style.get_len_gap_big();
 							}
 						}
 						return borders;

@@ -15,11 +15,9 @@ ruis{
 
     len_indent{17pp}
     len_gap_small{4pp}
-    len_gap{8pp}
-    len_gap_big{16pp}
+    len_gap{10pp}
+    len_gap_big{25pp}
     len_border{1pp}
-    len_dialog_margin{30pp}
-    len_dialog_padding{20pp}
 
     font_size_text{14pp}
     font_size_title{22pp}

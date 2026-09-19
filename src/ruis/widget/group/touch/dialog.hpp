@@ -52,7 +52,7 @@ public:
 	struct specific_parameters {
 		/**
 		 * @brief Margin between the dialog panel and the edge of the dialog area.
-		 * Defaults to the 'len_dialog_margin' style value if undefined.
+		 * Defaults to the 'len_gap_big' style value if undefined.
 		 */
 		ruis::padding::specific_parameters margin_params;
 	};
@@ -66,7 +66,7 @@ public:
 
 		/**
 		 * @brief Dialog panel background rectangle parameters.
-		 *   - corner_radii defaults to the 'len_dialog_padding' style value if undefined.
+		 *   - corner_radii defaults to the 'len_gap_big' style value if undefined.
 		 *   - stroke_width defaults to 0 (filled rectangle) if undefined.
 		 */
 		ruis::rectangle::parameters rectangle;
