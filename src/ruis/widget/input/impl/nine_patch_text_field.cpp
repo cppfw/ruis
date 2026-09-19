@@ -72,7 +72,7 @@ nine_patch_text_field::nine_patch_text_field(
 
 				for(auto& b : params.params.nine_patch.padding.specific.borders){
 					if(b.get().is_undefined()){
-						b = context.get().style().get_len_gap();
+						b = context.get().style().get_len_gap_small();
 					}
 				}
 

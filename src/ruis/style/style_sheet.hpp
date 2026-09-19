@@ -44,7 +44,9 @@ enum class style {
 	color_text_secondary,
 
 	len_indent,
+	len_gap_small,
 	len_gap,
+	len_gap_big,
 	len_border,
 	len_button_padding,
 	len_dialog_margin,

@@ -146,7 +146,7 @@ utki::shared_ref<ruis::widget> make_rectangles_window(
 							.params{
 								.padding{
 									.specific{
-										.borders = {c.get().style().get_len_gap()}
+										.borders = {c.get().style().get_len_gap_small()}
 									}
 								},
 								.color{

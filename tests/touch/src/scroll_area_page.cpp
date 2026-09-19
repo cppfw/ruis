@@ -153,7 +153,7 @@ utki::shared_ref<ruis::touch::dialog> make_dialog(const utki::shared_ref<ruis::c
 			m::gap(c,
 				{
 					.layout_params{
-						.dims = {ruis::dim::fill, c.get().style().get_len_gap().get()}
+						.dims = {ruis::dim::fill, c.get().style().get_len_gap_small().get()}
 					}
 				}
 			),
@@ -161,7 +161,7 @@ utki::shared_ref<ruis::touch::dialog> make_dialog(const utki::shared_ref<ruis::c
 			m::gap(c,
 				{
 					.layout_params{
-						.dims = {ruis::dim::fill, c.get().style().get_len_gap().get()}
+						.dims = {ruis::dim::fill, c.get().style().get_len_gap_small().get()}
 					}
 				}
 			),
@@ -240,7 +240,7 @@ ruis::widget_list make_scroll_area_page_contents(const utki::shared_ref<ruis::co
 		ruis::make::gap(c,
 			{
 				.layout_params{
-					.dims = {ruis::dim::fill, c.get().style().get_len_gap().get()}
+					.dims = {ruis::dim::fill, c.get().style().get_len_gap_small().get()}
 				}
 			}
 		),
@@ -248,7 +248,7 @@ ruis::widget_list make_scroll_area_page_contents(const utki::shared_ref<ruis::co
 		ruis::make::gap(c,
 			{
 				.layout_params{
-					.dims = {ruis::dim::fill, c.get().style().get_len_gap().get()}
+					.dims = {ruis::dim::fill, c.get().style().get_len_gap_small().get()}
 				}
 			}
 		),
@@ -267,7 +267,7 @@ ruis::widget_list make_scroll_area_page_contents(const utki::shared_ref<ruis::co
 		ruis::make::gap(c,
 			{
 				.layout_params{
-					.dims = {ruis::dim::fill, c.get().style().get_len_gap().get()}
+					.dims = {ruis::dim::fill, c.get().style().get_len_gap_small().get()}
 				}
 			}
 		),
@@ -307,7 +307,7 @@ public:
 								.layout = ruis::layout::column
 							},
 							.specific{
-								.borders = {context.get().style().get_len_gap()}
+								.borders = {context.get().style().get_len_gap_small()}
 							}
 						}
 					},

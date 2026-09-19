@@ -69,6 +69,7 @@ const tst::set set("style", [](tst::suite& suite){
                 color_highlight{0xffad9869}
 
                 len_indent{17pp}
+                len_gap{15pp}
                 len_border{1pp}
             }
             user{
@@ -91,6 +92,15 @@ const tst::set set("style", [](tst::suite& suite){
 
         auto length_border = s.get_len_border();
         tst::check_eq(length_border.get(), ruis::length::make_pp(1), SL);
+
+        auto length_gap = s.get_len_gap();
+        tst::check_eq(length_gap.get(), ruis::length::make_pp(15), SL);
+
+        auto length_small_gap = s.get_len_gap_small();
+        tst::check_eq(length_small_gap.get(), ruis::length::make_pp(4), SL);
+
+        auto length_big_gap = s.get_len_gap_big();
+        tst::check_eq(length_big_gap.get(), ruis::length::make_pp(16), SL);
     });
 
     // test that ruis::real values can be obtained from style
@@ -260,12 +270,14 @@ const tst::set set("style", [](tst::suite& suite){
         tst::check_eq(tml::to_string(ss.get(ruis::style::color_text)), "0xffffffff"s, SL);
         tst::check_eq(tml::to_string(ss.get(ruis::style::color_text_secondary)), "0xffa0a0a0"s, SL);
         tst::check_eq(tml::to_string(ss.get(ruis::style::len_indent)), "17pp"s, SL);
-        tst::check_eq(tml::to_string(ss.get(ruis::style::len_gap)), "4pp"s, SL);
+        tst::check_eq(tml::to_string(ss.get(ruis::style::len_gap_small)), "4pp"s, SL);
+        tst::check_eq(tml::to_string(ss.get(ruis::style::len_gap)), "8pp"s, SL);
+        tst::check_eq(tml::to_string(ss.get(ruis::style::len_gap_big)), "16pp"s, SL);
         tst::check_eq(tml::to_string(ss.get(ruis::style::len_border)), "1pp"s, SL);
         tst::check_eq(tml::to_string(ss.get(ruis::style::len_button_padding)), "5pp"s, SL);
         tst::check_eq(tml::to_string(ss.get(ruis::style::len_dialog_margin)), "30pp"s, SL);
         tst::check_eq(tml::to_string(ss.get(ruis::style::len_dialog_padding)), "20pp"s, SL);
-        tst::check_eq(tml::to_string(ss.get(ruis::style::font_size_text)), "12pp"s, SL);
+        tst::check_eq(tml::to_string(ss.get(ruis::style::font_size_text)), "14pp"s, SL);
         tst::check_eq(tml::to_string(ss.get(ruis::style::font_size_title)), "22pp"s, SL);
         tst::check_eq(tml::to_string(ss.get(ruis::style::font_face_text)), "ruis_fnt_normal"s, SL);
     });
@@ -285,7 +297,9 @@ const tst::set set("style", [](tst::suite& suite){
                 color_text{0xff89abcd}
                 color_text_secondary{0xff9abcde}
                 len_indent{20pp}
-                len_gap{6pp}
+                len_gap_small{6pp}
+                len_gap{12pp}
+                len_gap_big{30pp}
                 len_border{2pp}
                 len_button_padding{7pp}
                 len_dialog_margin{40pp}
@@ -309,7 +323,9 @@ const tst::set set("style", [](tst::suite& suite){
         tst::check_eq(tml::to_string(ss.get(ruis::style::color_text)), "0xff89abcd"s, SL);
         tst::check_eq(tml::to_string(ss.get(ruis::style::color_text_secondary)), "0xff9abcde"s, SL);
         tst::check_eq(tml::to_string(ss.get(ruis::style::len_indent)), "20pp"s, SL);
-        tst::check_eq(tml::to_string(ss.get(ruis::style::len_gap)), "6pp"s, SL);
+        tst::check_eq(tml::to_string(ss.get(ruis::style::len_gap_small)), "6pp"s, SL);
+        tst::check_eq(tml::to_string(ss.get(ruis::style::len_gap)), "12pp"s, SL);
+        tst::check_eq(tml::to_string(ss.get(ruis::style::len_gap_big)), "30pp"s, SL);
         tst::check_eq(tml::to_string(ss.get(ruis::style::len_border)), "2pp"s, SL);
         tst::check_eq(tml::to_string(ss.get(ruis::style::len_button_padding)), "7pp"s, SL);
         tst::check_eq(tml::to_string(ss.get(ruis::style::len_dialog_margin)), "40pp"s, SL);

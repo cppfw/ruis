@@ -87,7 +87,7 @@ tab_button::tab_button(
                     ruis::make::gap(context,
                         {
                             .layout_params{
-                                .dims = {ruis::dim::min, context.get().style().get_len_gap()}
+                                .dims = {ruis::dim::min, context.get().style().get_len_gap_small()}
                             }
                         }
                     ),

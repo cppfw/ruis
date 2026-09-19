@@ -46,8 +46,12 @@ style style_sheet::name_to_style(std::string_view name)
 		return style::color_special;
 	} else if (name == "len_indent"sv) {
 		return style::len_indent;
+	} else if (name == "len_gap_small"sv) {
+		return style::len_gap_small;
 	} else if (name == "len_gap"sv) {
 		return style::len_gap;
+	} else if (name == "len_gap_big"sv) {
+		return style::len_gap_big;
 	} else if (name == "len_border"sv) {
 		return style::len_border;
 	} else if (name == "len_button_padding"sv) {
@@ -138,7 +142,9 @@ const utki::enum_array<tml::forest, style>& default_style_forests()
 		d[style::color_text] = tml::read("0xffffffff");
 		d[style::color_text_secondary] = tml::read("0xffa0a0a0");
 		d[style::len_indent] = tml::read("17pp");
-		d[style::len_gap] = tml::read("4pp");
+		d[style::len_gap_small] = tml::read("4pp");
+		d[style::len_gap] = tml::read("8pp");
+		d[style::len_gap_big] = tml::read("16pp");
 		d[style::len_border] = tml::read("1pp");
 		d[style::len_button_padding] = tml::read("5pp");
 		d[style::len_dialog_margin] = tml::read("30pp");

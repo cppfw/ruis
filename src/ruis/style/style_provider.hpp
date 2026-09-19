@@ -140,7 +140,9 @@ public:
 	styled<color> get_color_highlight() const;
 
 	styled<length> get_len_indent() const;
+	styled<length> get_len_gap_small() const;
 	styled<length> get_len_gap() const;
+	styled<length> get_len_gap_big() const;
 	styled<length> get_len_border() const;
 
 	styled<length> get_len_button_padding() const;

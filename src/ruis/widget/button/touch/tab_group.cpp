@@ -60,7 +60,7 @@ tab_group::tab_group(
 						}(),
 						.params{
 							.specific{
-								.borders = {context.get().style().get_len_gap()
+								.borders = {context.get().style().get_len_gap_small()
 								} // TODO: get from params, should be same as selector_gap
 							}
 						}

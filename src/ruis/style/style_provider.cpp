@@ -185,9 +185,19 @@ styled<length> style_provider::get_len_indent() const
 	return this->get<length>(style::len_indent);
 }
 
+styled<length> style_provider::get_len_gap_small() const
+{
+	return this->get<length>(style::len_gap_small);
+}
+
 styled<length> style_provider::get_len_gap() const
 {
 	return this->get<length>(style::len_gap);
+}
+
+styled<length> style_provider::get_len_gap_big() const
+{
+	return this->get<length>(style::len_gap_big);
 }
 
 styled<length> style_provider::get_len_border() const
