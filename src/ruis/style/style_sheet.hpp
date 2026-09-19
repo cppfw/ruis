@@ -49,10 +49,11 @@ enum class style {
 	len_gap_big,
 	len_border,
 
-	font_size_text,
+	font_size_primary,
+	font_size_secondary,
 	font_size_title,
 
-	font_face_text,
+	font_face_primary,
 
 	enum_size
 };

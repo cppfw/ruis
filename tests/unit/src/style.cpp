@@ -274,9 +274,10 @@ const tst::set set("style", [](tst::suite& suite){
         tst::check_eq(tml::to_string(ss.get(ruis::style::len_gap)), "8pp"s, SL);
         tst::check_eq(tml::to_string(ss.get(ruis::style::len_gap_big)), "16pp"s, SL);
         tst::check_eq(tml::to_string(ss.get(ruis::style::len_border)), "1pp"s, SL);
-        tst::check_eq(tml::to_string(ss.get(ruis::style::font_size_text)), "14pp"s, SL);
+        tst::check_eq(tml::to_string(ss.get(ruis::style::font_size_primary)), "14pp"s, SL);
+        tst::check_eq(tml::to_string(ss.get(ruis::style::font_size_secondary)), "12pp"s, SL);
         tst::check_eq(tml::to_string(ss.get(ruis::style::font_size_title)), "22pp"s, SL);
-        tst::check_eq(tml::to_string(ss.get(ruis::style::font_face_text)), "ruis_fnt_normal"s, SL);
+        tst::check_eq(tml::to_string(ss.get(ruis::style::font_face_primary)), "ruis_fnt_normal"s, SL);
     });
 
     // test that when a style value is present in the style sheet, the sheet value is returned (not the default)
@@ -298,9 +299,10 @@ const tst::set set("style", [](tst::suite& suite){
                 len_gap{12pp}
                 len_gap_big{30pp}
                 len_border{2pp}
-                font_size_text{14pp}
+                font_size_primary{14pp}
+                font_size_secondary{10pp}
                 font_size_title{26pp}
-                font_face_text{custom_font}
+                font_face_primary{custom_font}
             }
             user{}
         )qwertyuiop"s);
@@ -321,9 +323,10 @@ const tst::set set("style", [](tst::suite& suite){
         tst::check_eq(tml::to_string(ss.get(ruis::style::len_gap)), "12pp"s, SL);
         tst::check_eq(tml::to_string(ss.get(ruis::style::len_gap_big)), "30pp"s, SL);
         tst::check_eq(tml::to_string(ss.get(ruis::style::len_border)), "2pp"s, SL);
-        tst::check_eq(tml::to_string(ss.get(ruis::style::font_size_text)), "14pp"s, SL);
+        tst::check_eq(tml::to_string(ss.get(ruis::style::font_size_primary)), "14pp"s, SL);
+        tst::check_eq(tml::to_string(ss.get(ruis::style::font_size_secondary)), "10pp"s, SL);
         tst::check_eq(tml::to_string(ss.get(ruis::style::font_size_title)), "26pp"s, SL);
-        tst::check_eq(tml::to_string(ss.get(ruis::style::font_face_text)), "custom_font"s, SL);
+        tst::check_eq(tml::to_string(ss.get(ruis::style::font_face_primary)), "custom_font"s, SL);
     });
 
     // test that parsing fails when a style value name is present but its value is empty

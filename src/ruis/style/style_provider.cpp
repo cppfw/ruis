@@ -205,9 +205,14 @@ styled<length> style_provider::get_len_border() const
 	return this->get<length>(style::len_border);
 }
 
-styled<length> style_provider::get_font_size_normal() const
+styled<length> style_provider::get_font_size_primary() const
 {
-	return this->get<length>(style::font_size_text);
+	return this->get<length>(style::font_size_primary);
+}
+
+styled<length> style_provider::get_font_size_secondary() const
+{
+	return this->get<length>(style::font_size_secondary);
 }
 
 styled<length> style_provider::get_font_size_title() const
@@ -215,7 +220,7 @@ styled<length> style_provider::get_font_size_title() const
 	return this->get<length>(style::font_size_title);
 }
 
-styled<res::font> style_provider::get_font_face_normal() const
+styled<res::font> style_provider::get_font_face_primary() const
 {
-	return this->get<res::font>(style::font_face_text);
+	return this->get<res::font>(style::font_face_primary);
 }

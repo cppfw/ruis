@@ -54,12 +54,14 @@ style style_sheet::name_to_style(std::string_view name)
 		return style::len_gap_big;
 	} else if (name == "len_border"sv) {
 		return style::len_border;
-	} else if (name == "font_size_text"sv) {
-		return style::font_size_text;
+	} else if (name == "font_size_primary"sv) {
+		return style::font_size_primary;
+	} else if (name == "font_size_secondary"sv) {
+		return style::font_size_secondary;
 	} else if (name == "font_size_title"sv) {
 		return style::font_size_title;
-	} else if (name == "font_face_text"sv) {
-		return style::font_face_text;
+	} else if (name == "font_face_primary"sv) {
+		return style::font_face_primary;
 	}
 
 	throw std::invalid_argument(utki::cat("style_sheet::name_to_style(name): unknown style name: ", name));
@@ -140,9 +142,10 @@ const utki::enum_array<tml::forest, style>& default_style_forests()
 		d[style::len_gap] = tml::read("8pp");
 		d[style::len_gap_big] = tml::read("16pp");
 		d[style::len_border] = tml::read("1pp");
-		d[style::font_size_text] = tml::read("14pp");
+		d[style::font_size_primary] = tml::read("14pp");
+		d[style::font_size_secondary] = tml::read("12pp");
 		d[style::font_size_title] = tml::read("22pp");
-		d[style::font_face_text] = tml::read("ruis_fnt_normal");
+		d[style::font_face_primary] = tml::read("ruis_fnt_normal");
 		return d;
 	}();
 	return defaults;

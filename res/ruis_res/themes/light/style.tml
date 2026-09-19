@@ -19,8 +19,9 @@ ruis{
     len_gap_big{25pp}
     len_border{1pp}
 
-    font_size_text{14pp}
+    font_size_primary{14pp}
+    font_size_secondary{12pp}
     font_size_title{22pp}
-    font_face_text{ruis_fnt_normal}
+    font_face_primary{ruis_fnt_normal}
 }
 user{}

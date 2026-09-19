@@ -30,10 +30,10 @@ font_widget::font_widget(
 	widget(context, {}, {}),
 	params([&]() {
 		if (auto& f = params.face; !f.get()) {
-			f = context.get().style().get_font_face_normal();
+			f = context.get().style().get_font_face_primary();
 		}
 		if (auto& s = params.size; s.get().is_undefined()) {
-			s = context.get().style().get_font_size_normal();
+			s = context.get().style().get_font_size_primary();
 		}
 		return std::move(params);
 	}())

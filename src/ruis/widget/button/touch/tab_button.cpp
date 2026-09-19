@@ -45,65 +45,72 @@ tab_button::tab_button(
 	),
 	choice_button(context),
 	// clang-format off
-    ruis::container(
-        context, //
-        {
-            .params = {
-                .layout = ruis::layout::pile
-            }
-        },
-        {
-            ruis::make::padding(
-                context,
-                {
-                    .layout_params{
-                        .dims = {ruis::dim::fill, ruis::dim::fill}
-                    },
-                    .params{
-                        .container{
-                            .layout = ruis::layout::column
-                        },
-                        .specific{
-                            .borders = {context.get().style().get_len_gap()}
-                        }
-                    }
-                },
-                {
-                    ruis::make::image(context,
-                        {
-                            .layout_params{
-                                .dims = {ruis::dim::min, ruis::dim::fill},
-                                .weight = 1
-                            },
-                            .params = [&]() {
-                                auto& p = params.params.image;
-                                if (auto& c = p.color.normal; c.get().is_undefined()) {
-                                    c = context.get().style().get_color_text();
-                                }
-                                return std::move(p);
-                            }()
-                        }
-                    ),
-                    ruis::make::gap(context,
-                        {
-                            .layout_params{
-                                .dims = {ruis::dim::min, context.get().style().get_len_gap_small()}
-                            }
-                        }
-                    ),
-                    ruis::make::text(context,
-                        {
-                            .layout_params{
-                                .dims = {ruis::dim::min, ruis::dim::min},
-                                .align = {ruis::align::center, ruis::align::center}
-                            }
-                        },
-                        std::move(text)
-                    )
-                }
-            )
-        }
-    )
+	ruis::container(
+		context, //
+		{
+			.params = {
+				.layout = ruis::layout::pile
+			}
+		},
+		{
+			ruis::make::padding(
+				context,
+				{
+					.layout_params{
+						.dims = {ruis::dim::fill, ruis::dim::fill}
+					},
+					.params{
+						.container{
+							.layout = ruis::layout::column
+						},
+						.specific{
+							.borders = {context.get().style().get_len_gap_small()}
+						}
+					}
+				},
+				{
+					ruis::make::image(context,
+						{
+							.layout_params{
+								.dims = {ruis::dim::min, ruis::dim::fill},
+								.weight = 1
+							},
+							.params = [&]() {
+								auto& p = params.params.image;
+								if (auto& c = p.color.normal; c.get().is_undefined()) {
+									c = context.get().style().get_color_text();
+								}
+								return std::move(p);
+							}()
+						}
+					),
+					ruis::make::gap(context,
+					    {
+					        .layout_params{
+					            .dims = {ruis::dim::min, context.get().style().get_len_gap_small()}
+					        }
+					    }
+					),
+					ruis::make::text(context,
+						{
+							.layout_params{
+								.dims = {ruis::dim::min, ruis::dim::min},
+								.align = {ruis::align::center, ruis::align::center}
+							},
+							.params = [&](){
+								if(auto& l = params.params.text.font.size; l.get().is_undefined()){
+									l = context.get().style().get_font_size_secondary();
+								}
+
+								return std::move(params.params.text);
+							}()
+						},
+						std::move(text)
+					)
+				}
+			)
+		}
+	)
 // clang-format on
 {}
 

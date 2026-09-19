@@ -145,9 +145,10 @@ public:
 	styled<length> get_len_gap_big() const;
 	styled<length> get_len_border() const;
 
-	styled<length> get_font_size_normal() const;
+	styled<length> get_font_size_primary() const;
+	styled<length> get_font_size_secondary() const;
 	styled<length> get_font_size_title() const;
-	styled<res::font> get_font_face_normal() const;
+	styled<res::font> get_font_face_primary() const;
 };
 
 } // namespace ruis
