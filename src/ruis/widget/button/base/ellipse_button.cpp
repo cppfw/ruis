@@ -57,7 +57,7 @@ ellipse_button::ellipse_button(
 			.params = [&](){
 				for(auto& b : params.ellipse.padding.specific.borders){
 					if(b.get().is_undefined()){
-						b = context.get().style().get_len_button_padding();
+						b = context.get().style().get_len_gap();
 					}
 				}
 

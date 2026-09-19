@@ -64,7 +64,7 @@ tab_button::tab_button(
                             .layout = ruis::layout::column
                         },
                         .specific{
-                            .borders = {context.get().style().get_len_button_padding()}
+                            .borders = {context.get().style().get_len_gap()}
                         }
                     }
                 },

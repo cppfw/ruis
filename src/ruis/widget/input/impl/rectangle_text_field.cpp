@@ -87,7 +87,7 @@ rectangle_text_field::rectangle_text_field(
 				}
 				for(auto& r : params.params.rectangle.specific.corner_radii){
 					if(r.get().is_undefined()){
-						r  = context.get().style().get_len_button_padding();
+						r  = context.get().style().get_len_gap();
 					}
 				}
 

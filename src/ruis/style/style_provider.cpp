@@ -205,11 +205,6 @@ styled<length> style_provider::get_len_border() const
 	return this->get<length>(style::len_border);
 }
 
-styled<length> style_provider::get_len_button_padding() const
-{
-	return this->get<length>(style::len_button_padding);
-}
-
 styled<length> style_provider::get_len_dialog_margin() const
 {
 	return this->get<length>(style::len_dialog_margin);

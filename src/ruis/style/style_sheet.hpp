@@ -48,7 +48,6 @@ enum class style {
 	len_gap,
 	len_gap_big,
 	len_border,
-	len_button_padding,
 	len_dialog_margin,
 	len_dialog_padding,
 

@@ -145,7 +145,6 @@ public:
 	styled<length> get_len_gap_big() const;
 	styled<length> get_len_border() const;
 
-	styled<length> get_len_button_padding() const;
 	styled<length> get_len_dialog_margin() const;
 	styled<length> get_len_dialog_padding() const;
 

@@ -18,7 +18,6 @@ ruis{
     len_gap{8pp}
     len_gap_big{16pp}
     len_border{1pp}
-    len_button_padding{5pp}
     len_dialog_margin{30pp}
     len_dialog_padding{20pp}
 
