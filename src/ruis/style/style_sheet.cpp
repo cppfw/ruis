@@ -143,7 +143,7 @@ const utki::enum_array<tml::forest, style>& default_style_forests()
 		d[style::len_button_padding] = tml::read("5pp");
 		d[style::len_dialog_margin] = tml::read("30pp");
 		d[style::len_dialog_padding] = tml::read("20pp");
-		d[style::font_size_text] = tml::read("12pp");
+		d[style::font_size_text] = tml::read("14pp");
 		d[style::font_size_title] = tml::read("22pp");
 		d[style::font_face_text] = tml::read("ruis_fnt_normal");
 		return d;
