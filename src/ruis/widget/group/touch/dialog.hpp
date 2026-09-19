@@ -57,7 +57,7 @@ public:
 		ruis::padding::specific_parameters margin_params;
 	};
 
-	struct parameters{
+	struct parameters {
 		/**
 		 * @brief Color of the dialog panel background.
 		 * Defaults to the 'color_panel' style value if undefined.
