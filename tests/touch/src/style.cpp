@@ -36,22 +36,7 @@ utki::shared_ref<ruis::push_button> m::push_button(
 		context,
 		{
             .layout_params = std::move(params.layout_params),
-            .widget = std::move(params.widget),
-            .params{
-                .rectangle_button{
-                    .rectangle{
-                        .padding{
-                            .container = std::move(params.params),
-                            .specific{
-                                .borders = {5_pp}
-                            }
-                        },
-                        .specific{
-                            .corner_radii = {5_pp}
-                        }
-                    }
-                }
-            }
+            .widget = std::move(params.widget)
         },
 		std::move(contents)
 	);
