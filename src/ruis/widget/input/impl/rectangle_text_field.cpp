@@ -76,6 +76,12 @@ rectangle_text_field::rectangle_text_field(
 					}
 				}
 
+				for(auto& r : params.params.rectangle.specific.corner_radii){
+					if(r.get().is_undefined()){
+						r  = context.get().style().get_len_gap_small();
+					}
+				}
+
 				if(auto& c = params.params.rectangle.specific.fill_color; c.get().is_undefined()){
 					c = context.get().style().get_color_background();
 				}
@@ -84,11 +90,6 @@ rectangle_text_field::rectangle_text_field(
 				}
 				if(auto& l = params.params.rectangle.specific.stroke_width; l.get().is_undefined()){
 					l = context.get().style().get_len_border();
-				}
-				for(auto& r : params.params.rectangle.specific.corner_radii){
-					if(r.get().is_undefined()){
-						r  = context.get().style().get_len_gap();
-					}
 				}
 
 				return std::move(params.params.rectangle);

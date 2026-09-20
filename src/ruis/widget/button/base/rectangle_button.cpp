@@ -64,7 +64,7 @@ rectangle_button::rectangle_button( //
 				}
 				for(auto& r : params.rectangle.specific.corner_radii){
 					if(r.get().is_undefined()){
-						r = context.get().style().get_len_gap();
+						r = context.get().style().get_len_gap_small();
 					}
 				}
 				return std::move(params.rectangle);
