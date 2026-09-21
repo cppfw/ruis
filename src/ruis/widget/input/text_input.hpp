@@ -67,8 +67,8 @@ public:
 	struct specific_parameters {
 		ruis::string hint;
 		styled<ruis::color> hint_color;
-		std::function<bool(std::u32string_view)> filter;
 		text_input::keyboard_kind keyboard_kind = text_input::keyboard_kind::general;
+		std::function<bool(const text_input&, std::u32string_view)> filter;
 	};
 
 	struct parameters {
@@ -117,7 +117,13 @@ public:
 
 	void on_character_input(const character_input_event& e) override;
 
-	void set_cursor_index(size_t index, bool selection = false);
+	// TODO: rename to set_cursor_position
+	void set_cursor_index(
+		size_t index, //
+		bool selection = false
+	);
+
+	// TODO: add 'size_t get_cursor_position()'
 
 private:
 	void update_cursor_pos_based_on_index();
@@ -125,7 +131,6 @@ private:
 	void start_cursor_blinking();
 
 	size_t pos_to_index(real pos);
-
 	real index_to_pos(size_t index);
 
 	bool there_is_selection() const noexcept
