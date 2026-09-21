@@ -129,7 +129,10 @@ utki::shared_ref<ruis::touch::dialog> make_dialog(const utki::shared_ref<ruis::c
 		c,
 		{
 			.layout_params{
-				.dims = {ruis::dim::fill, ruis::dim::min}
+				.dims = {ruis::dim::fill, ruis::dim::min},
+				// take the remaining vertical space and stick to the bottom of the dialog
+				.weight = 1,
+				.align = {ruis::align::undefined, ruis::align::back}
 			}
 		},
 		{
@@ -149,11 +152,21 @@ utki::shared_ref<ruis::touch::dialog> make_dialog(const utki::shared_ref<ruis::c
 			}
 		},
 		{
-			m::text(c, {}, U"Dialog"s),
+			m::text(c,
+				{
+					.params{
+						.font{
+							.size = c.get().style().get_font_size_title()
+						}
+					}
+				}
+				,
+				U"Dialog"s
+			),
 			m::gap(c,
 				{
 					.layout_params{
-						.dims = {ruis::dim::fill, c.get().style().get_len_gap_small().get()}
+						.dims = {ruis::dim::fill, c.get().style().get_len_gap().get()}
 					}
 				}
 			),
@@ -161,7 +174,7 @@ utki::shared_ref<ruis::touch::dialog> make_dialog(const utki::shared_ref<ruis::c
 			m::gap(c,
 				{
 					.layout_params{
-						.dims = {ruis::dim::fill, c.get().style().get_len_gap_small().get()}
+						.dims = {ruis::dim::fill, c.get().style().get_len_gap().get()}
 					}
 				}
 			),

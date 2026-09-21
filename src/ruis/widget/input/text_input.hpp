@@ -29,6 +29,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
+// TODO: doxygen
+
 /**
  * @brief Text input field widget without any decoration.
  */
@@ -57,9 +59,16 @@ class text_input :
 	bool left_mouse_button_down = false;
 
 public:
+	enum class keyboard_kind {
+		general,
+		numeric
+	};
+
 	struct specific_parameters {
 		ruis::string hint;
 		styled<ruis::color> hint_color;
+		std::function<bool(std::u32string_view)> filter;
+		text_input::keyboard_kind keyboard_kind = text_input::keyboard_kind::general;
 	};
 
 	struct parameters {
