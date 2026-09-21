@@ -21,6 +21,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "rectangles_window.hpp"
 
+#include <ruis/widget/button/impl/check_box.hpp>
 #include <ruis/widget/button/impl/ellipse_push_button.hpp>
 #include <ruis/widget/button/impl/rectangle_push_button.hpp>
 #include <ruis/widget/group/window.hpp>
@@ -41,6 +42,23 @@ utki::shared_ref<ruis::widget> make_rectangles_window(
 	ruis::vec2_length pos
 )
 {
+	auto disabled_button = m::rectangle_push_button(c,
+		{
+			.widget = {
+				.enabled = false
+			}
+		},
+		{
+			m::text(c, {}, U"disabled button"s)
+		}
+	);
+	auto disabled_check_box = m::check_box(c,
+		{}
+	);
+	disabled_check_box.get().pressed_change_handler = [disabled_button](ruis::button& b){
+		disabled_button.get().set_enabled(b.is_pressed());
+	};
+
 	// clang-format off
 	return m::window(c,
 		{
@@ -265,16 +283,15 @@ utki::shared_ref<ruis::widget> make_rectangles_window(
 											}
 										},
 										.specific{
-											.corner_radii = {5_pp},
-											.stroke_width = 3_pp,
-											.stroke_color = 0xff0000ff
+											.corner_radii = {5_pp}
 										}
 									},
 									.specific{
 										.pressed_color = 0xff202020,
 										.unpressed_color = 0xff404040,
 										.pressed_stroke_color = 0xff00ff00,
-										.unpressed_stroke_color = 0xff0000ff
+										.unpressed_stroke_color = 0xff0000ff,
+										.stroke_width = 3_pp
 									}
 								}
 							}
@@ -283,6 +300,27 @@ utki::shared_ref<ruis::widget> make_rectangles_window(
 							m::text(c, {}, U"stroked button"s)
 						}
 					)
+				}
+			),
+			m::gap(c,
+				{
+					.layout_params{
+						.dims = {0_px, 5_pp}
+					}
+				}
+			),
+			m::row(c,
+				{},
+				{
+					disabled_button,
+					m::gap(c,
+						{
+							.layout_params{
+								.dims = {5_pp, 0_px}
+							}
+						}
+					),
+					disabled_check_box
 				}
 			)
 		}

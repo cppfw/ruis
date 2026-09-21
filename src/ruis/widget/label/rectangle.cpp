@@ -71,6 +71,17 @@ void rectangle::set_stroke_color(styled<ruis::color> color)
 	this->clear_cache();
 }
 
+void rectangle::set_stroke_width(styled<length> width)
+{
+	if (this->params.stroke_width == width) {
+		return;
+	}
+
+	this->params.stroke_width = std::move(width);
+	this->update_vaos();
+	this->clear_cache();
+}
+
 void rectangle::render(const ruis::mat4& matrix) const
 {
 	const auto& dims = this->rect().d;
@@ -128,8 +139,6 @@ void rectangle::update_vaos()
 							  .corner_radii = radii, //
 							  .stroke_width = this->params.stroke_width.get().get(this->context)
 		});
-	} else {
-		this->stroke_vao.set({});
 	}
 }
 

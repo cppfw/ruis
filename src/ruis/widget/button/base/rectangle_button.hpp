@@ -59,6 +59,7 @@ private:
 
 protected:
 	void on_pressed_change() override;
+	void on_enabled_change() override;
 
 	rectangle_button( //
 		const utki::shared_ref<ruis::context>& context,

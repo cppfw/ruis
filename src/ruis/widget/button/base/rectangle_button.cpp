@@ -34,14 +34,26 @@ void rectangle_button::on_pressed_change()
 	this->button::on_pressed_change();
 }
 
+void rectangle_button::on_enabled_change()
+{
+	this->widget::on_enabled_change();
+	this->update_color();
+}
+
 void rectangle_button::update_color()
 {
-	if (this->is_pressed()) {
+	if (!this->is_enabled()) {
+		this->set_fill_color(this->params.disabled_color);
+		this->set_stroke_color(this->params.disabled_stroke_color);
+		this->set_stroke_width(this->params.disabled_stroke_width);
+	} else if (this->is_pressed()) {
 		this->set_fill_color(this->params.pressed_color);
 		this->set_stroke_color(this->params.pressed_stroke_color);
+		this->set_stroke_width(this->params.stroke_width);
 	} else {
 		this->set_fill_color(this->params.unpressed_color);
 		this->set_stroke_color(this->params.unpressed_stroke_color);
+		this->set_stroke_width(this->params.stroke_width);
 	}
 }
 

@@ -92,6 +92,7 @@ public:
 
 	void set_fill_color(styled<ruis::color> color);
 	void set_stroke_color(styled<ruis::color> color);
+	void set_stroke_width(styled<length> width);
 
 	const color& get_stroke_color() const noexcept
 	{
