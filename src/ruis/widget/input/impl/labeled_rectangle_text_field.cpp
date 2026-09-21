@@ -32,6 +32,44 @@ labeled_rectangle_text_field::labeled_rectangle_text_field(
 	all_parameters params,
 	ruis::string text
 ) :
+	// Build the label and the text field first so the labeled_text_field base can be
+	// passed references to already-constructed widgets.
+	labeled_rectangle_text_field(
+		context, //
+		params,
+		ruis::make::text(
+			context, //
+			{
+				.layout_params{
+							   .dims = {ruis::dim::fill, ruis::dim::min},
+							   .align = {ruis::align::front, ruis::align::center}
+				},
+				.params =
+					[&]() {
+						if (auto& c = params.params.label.text.color.normal; c.get().is_undefined()) {
+							c = context.get().style().get_color_text();
+						}
+						return std::move(params.params.label.text);
+							   }
+                ()
+},
+			std::move(params.params.label.string)
+		),
+		ruis::make::rectangle_text_field(
+			context, //
+			{.layout_params{.dims = {ruis::dim::max, ruis::dim::max}},
+			 .params = std::move(params.params.rectangle_text_field)},
+			std::move(text)
+		)
+	)
+{}
+
+labeled_rectangle_text_field::labeled_rectangle_text_field(
+	const utki::shared_ref<ruis::context>& context, //
+	all_parameters& params,
+	utki::shared_ref<ruis::text> label,
+	utki::shared_ref<ruis::rectangle_text_field> text_field
+) :
 	widget(
 		context, //
 		std::move(params.layout_params),
@@ -47,39 +85,15 @@ labeled_rectangle_text_field::labeled_rectangle_text_field(
 			}
 		},
 		{
-			ruis::make::text(
-				context, //
-				{
-					.layout_params{
-						.dims = {ruis::dim::fill, ruis::dim::min},
-						.align = {ruis::align::front, ruis::align::center}
-					},
-					.params = [&](){
-						if(auto& c = params.params.label.text.color.normal; c.get().is_undefined()){
-							c = context.get().style().get_color_text();
-						}
-						return std::move(params.params.label.text);
-					}()
-				},
-				std::move(params.params.label.string)
-			),
-			ruis::make::rectangle_text_field(
-				context, //
-				{
-					.layout_params{
-						.dims = {ruis::dim::max, ruis::dim::max}
-					},
-					.params = std::move(params.params.rectangle_text_field)
-				},
-				std::move(text)
-			)
+			label,
+			text_field
 		}
 	),
 	// clang-format on
 	labeled_text_field(
 		context, //
-		this->get_text_input(),
-		this->get_label()
+		text_field.get().get_text_input(),
+		label.get()
 	)
 {}
 

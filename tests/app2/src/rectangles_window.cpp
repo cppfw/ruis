@@ -42,20 +42,10 @@ utki::shared_ref<ruis::widget> make_rectangles_window(
 	ruis::vec2_length pos
 )
 {
-	auto disabled_button = m::rectangle_push_button(c,
-		{
-			.widget = {
-				.enabled = false
-			}
-		},
-		{
-			m::text(c, {}, U"disabled button"s)
-		}
-	);
-	auto disabled_check_box = m::check_box(c,
-		{}
-	);
-	disabled_check_box.get().pressed_change_handler = [disabled_button](ruis::button& b){
+	auto disabled_button =
+		m::rectangle_push_button(c, {.widget = {.enabled = false}}, {m::text(c, {}, U"disabled button"s)});
+	auto disabled_check_box = m::check_box(c, {});
+	disabled_check_box.get().pressed_change_handler = [disabled_button](ruis::button& b) {
 		disabled_button.get().set_enabled(b.is_pressed());
 	};
 

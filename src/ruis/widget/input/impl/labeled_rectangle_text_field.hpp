@@ -55,6 +55,18 @@ public:
 		all_parameters params,
 		ruis::string text
 	);
+
+private:
+	// Private constructor used by the public one to pass the already-constructed
+	// label and text field children to the labeled_text_field base. This ensures the
+	// labeled_text_field base (and its text_field / labeled_widget sub-objects) receive
+	// valid references instead of reading them before they are initialized.
+	labeled_rectangle_text_field(
+		const utki::shared_ref<ruis::context>& context, //
+		all_parameters& params,
+		utki::shared_ref<ruis::text> label,
+		utki::shared_ref<ruis::rectangle_text_field> text_field
+	);
 };
 
 namespace make {
