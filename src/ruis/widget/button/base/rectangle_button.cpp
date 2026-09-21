@@ -74,17 +74,27 @@ rectangle_button::rectangle_button( //
 		std::move(contents)
 	),
 	params([&]() {
-		if (params.specific.unpressed_color.get().is_undefined()) {
-			params.specific.unpressed_color = context.get().style().get_color_primary();
+		if (auto& c = params.specific.unpressed_color; c.get().is_undefined()) {
+			c = context.get().style().get_color_primary();
 		}
-		if (params.specific.pressed_color.get().is_undefined()) {
-			params.specific.pressed_color = context.get().style().get_color_secondary();
+		if (auto& c = params.specific.pressed_color; c.get().is_undefined()) {
+			c = context.get().style().get_color_secondary();
 		}
-		if (params.specific.unpressed_stroke_color.get().is_undefined()) {
-			params.specific.unpressed_stroke_color = context.get().style().get_color_primary();
+		if (auto& c = params.specific.disabled_color; c.get().is_undefined()) {
+			c = params.specific.pressed_color;
 		}
-		if (params.specific.pressed_stroke_color.get().is_undefined()) {
-			params.specific.pressed_stroke_color = context.get().style().get_color_secondary();
+		if (auto& c = params.specific.unpressed_stroke_color; c.get().is_undefined()) {
+			c = context.get().style().get_color_primary();
+		}
+		if (auto& c = params.specific.pressed_stroke_color; c.get().is_undefined()) {
+			c = context.get().style().get_color_secondary();
+		}
+		if (auto& c = params.specific.disabled_stroke_color; c.get().is_undefined()) {
+			c = params.specific.unpressed_color;
+		}
+
+		if (auto& l = params.specific.disabled_stroke_width; l.get().is_undefined()) {
+			l = context.get().style().get_len_border();
 		}
 
 		return std::move(params.specific);

@@ -37,8 +37,12 @@ public:
 	struct specific_parameters {
 		styled<ruis::color> pressed_color;
 		styled<ruis::color> unpressed_color;
+		styled<ruis::color> disabled_color;
 		styled<ruis::color> pressed_stroke_color;
 		styled<ruis::color> unpressed_stroke_color;
+		styled<ruis::color> disabled_stroke_color;
+		styled<ruis::length> stroke_width;
+		styled<ruis::length> disabled_stroke_width;
 	};
 
 	struct parameters {
