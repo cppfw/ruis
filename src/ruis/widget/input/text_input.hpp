@@ -68,6 +68,12 @@ public:
 		ruis::string hint;
 		styled<ruis::color> hint_color;
 		text_input::keyboard_kind keyboard_kind = text_input::keyboard_kind::general;
+		/**
+		 * @brief Optional input filter.
+		 * If set, it is invoked with the text to be inserted (if allowed).
+		 * If it returns `false`, the input is rejected and the text is left
+		 * unchanged.
+		 */
 		std::function<bool(const text_input&, std::u32string_view)> filter;
 	};
 

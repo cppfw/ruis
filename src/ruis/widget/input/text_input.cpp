@@ -455,16 +455,18 @@ void text_input::on_character_input(const character_input_event& e)
 			// fall through
 		default:
 			if (!e.string.empty()) {
-				if (this->there_is_selection()) {
-					this->cursor_index = this->delete_selection();
+				if (!this->params.filter || this->params.filter(*this, e.string)) {
+					if (this->there_is_selection()) {
+						this->cursor_index = this->delete_selection();
+					}
+
+					auto t = this->get_string();
+					this->clear();
+					t.insert(utki::next(t.begin(), this->cursor_index), e.string.begin(), e.string.end());
+					this->set_text(std::move(t));
+
+					this->set_cursor_index(this->cursor_index + e.string.size());
 				}
-
-				auto t = this->get_string();
-				this->clear();
-				t.insert(utki::next(t.begin(), this->cursor_index), e.string.begin(), e.string.end());
-				this->set_text(std::move(t));
-
-				this->set_cursor_index(this->cursor_index + e.string.size());
 			}
 
 			break;

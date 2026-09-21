@@ -125,6 +125,36 @@ utki::shared_ref<ruis::touch::dialog> make_dialog(const utki::shared_ref<ruis::c
 	// clang-format on
 
 	// clang-format off
+	auto age_text_field = m::labeled_text_field(
+		c,
+		{
+			.layout_params{
+				.dims = {ruis::dim::fill, ruis::dim::min}
+			},
+			.params{
+				.label{
+					.string = U"Age"s
+				},
+				.text_input{
+					.specific{
+						.hint = U"Enter your age"s,
+						.filter = [](const ruis::text_input&, std::u32string_view s) {
+							for (auto ch : s) {
+								if (ch < U'0' || ch > U'9') {
+									return false;
+								}
+							}
+							return true;
+						}
+					}
+				}
+			}
+		},
+		ruis::string()
+	);
+	// clang-format on
+
+	// clang-format off
 	auto close_button = m::push_button(
 		c,
 		{
@@ -171,6 +201,14 @@ utki::shared_ref<ruis::touch::dialog> make_dialog(const utki::shared_ref<ruis::c
 				}
 			),
 			std::move(text_field),
+			m::gap(c,
+				{
+					.layout_params{
+						.dims = {ruis::dim::fill, c.get().style().get_len_gap().get()}
+					}
+				}
+			),
+			std::move(age_text_field),
 			m::gap(c,
 				{
 					.layout_params{
