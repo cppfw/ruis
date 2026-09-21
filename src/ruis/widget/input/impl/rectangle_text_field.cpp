@@ -106,6 +106,49 @@ rectangle_text_field::rectangle_text_field(
 	)
 {}
 
+event_status rectangle_text_field::on_mouse_button(const mouse_button_event& e)
+{
+	// The text_input is laid out inside the rectangle's padding, so a mouse event
+	// landing in the padding area would not reach the text_input (the base container
+	// only forwards events to children whose rectangle overlaps the event position).
+	// Forward the event to the text_input directly, clamping the mouse position to the
+	// text_input's rectangle (in the text_input's local coordinates).
+	mouse_button_event clamped = e;
+	clamped.pos = this->clamp_pos_to_text_input(e.pos);
+	return this->get_text_input().on_mouse_button(clamped);
+}
+
+event_status rectangle_text_field::on_mouse_move(const mouse_move_event& e)
+{
+	mouse_move_event clamped = e;
+	clamped.pos = this->clamp_pos_to_text_input(e.pos);
+	return this->get_text_input().on_mouse_move(clamped);
+}
+
+vec2 rectangle_text_field::clamp_pos_to_text_input(const vec2& pos)
+{
+	// The text_input is a descendant of this widget (it is wrapped in the padding's
+	// inner content container, which is offset by the borders), so its rect() is
+	// expressed in the content container's coordinates, not in this widget's
+	// coordinates. Compute the text_input's origin in this widget's coordinates, clamp
+	// the given position to the text_input's rectangle in this widget's coordinates,
+	// and return the result in the text_input's local coordinates.
+	auto& ti = this->get_text_input();
+	const vec2 ti_origin = ti.get_pos_in_ancestor(vec2(0, 0), this);
+	const vec2 ti_size = ti.rect().d;
+
+	const vec2 lo = ti_origin;
+	const vec2 hi = ti_origin + ti_size;
+
+	using std::min;
+	using std::max;
+	vec2 clamped;
+	clamped.x() = max(min(pos.x(), hi.x()), lo.x());
+	clamped.y() = max(min(pos.y(), hi.y()), lo.y());
+
+	return clamped - ti_origin;
+}
+
 utki::shared_ref<ruis::rectangle_text_field> ruis::make::rectangle_text_field(
 	const utki::shared_ref<ruis::context>& context, //
 	ruis::rectangle_text_field::all_parameters params,

@@ -61,6 +61,12 @@ public:
 		all_parameters params,
 		ruis::string text
 	);
+
+	event_status on_mouse_button(const mouse_button_event& e) override;
+	event_status on_mouse_move(const mouse_move_event& e) override;
+
+private:
+	vec2 clamp_pos_to_text_input(const vec2& pos);
 };
 
 namespace make {
