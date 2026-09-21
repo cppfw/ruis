@@ -29,10 +29,12 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
-// TODO: doxygen
-
 /**
  * @brief Text input field widget without any decoration.
+ * The user can type into the field, move the cursor with the keyboard or the mouse,
+ * and select a range of characters. When the field has keyboard focus it also receives
+ * character input events. If the field text is empty, the hint (placeholder) text is
+ * rendered instead.
  */
 // NOLINTNEXTLINE(bugprone-incorrect-enable-shared-from-this, "std::shared_from_this is public via text_string_widget")
 class text_input :
@@ -59,22 +61,54 @@ class text_input :
 	bool left_mouse_button_down = false;
 
 public:
+	/**
+	 * @brief Kind of the keyboard to use for the text input.
+	 */
 	enum class keyboard_kind {
+		/**
+		 * @brief General (alphanumeric) keyboard.
+		 */
 		general,
+
+		/**
+		 * @brief Numeric keyboard.
+		 */
 		numeric
 	};
 
 	struct specific_parameters {
+		/**
+		 * @brief Hint (placeholder) text rendered when the field text is empty.
+		 */
 		ruis::string hint;
+
+		/**
+		 * @brief Color of the hint text.
+		 * Defaults to the 'color_text_secondary' style value if undefined.
+		 */
 		styled<ruis::color> hint_color;
+
+		/**
+		 * @brief Kind of the keyboard to use for the text input.
+		 * Defaults to general.
+		 */
 		text_input::keyboard_kind keyboard_kind = text_input::keyboard_kind::general;
 		/**
 		 * @brief Optional input filter.
-		 * If set, it is invoked with the text to be inserted (if allowed).
-		 * If it returns `false`, the input is rejected and the text is left
-		 * unchanged.
+		 * If set, it is invoked before an input edit is applied, with:
+		 * - the original (current) text,
+		 * - the range [replace_start, replace_end) of the original text to be replaced
+		 *   (both are equal in case of plain insertion, i.e. when nothing is selected),
+		 * - the text to be inserted in place of that range.
+		 * If it returns `false`, the input is rejected and the text is left unchanged.
 		 */
-		std::function<bool(const text_input&, std::u32string_view)> filter;
+		std::function<bool(
+			std::u32string_view original, //
+			size_t replace_start,
+			size_t replace_end,
+			std::u32string_view to_insert
+		)>
+			filter;
 	};
 
 	struct parameters {
@@ -98,6 +132,12 @@ public:
 	text_input(text_input&&) = delete;
 	text_input& operator=(text_input&&) = delete;
 
+	/**
+	 * @brief Construct text input widget.
+	 * @param context - ruis context.
+	 * @param params - text input widget parameters.
+	 * @param text - initial text content.
+	 */
 	text_input(
 		const utki::shared_ref<ruis::context>& context, //
 		all_parameters params,
@@ -123,6 +163,14 @@ public:
 
 	void on_character_input(const character_input_event& e) override;
 
+	/**
+	 * @brief Set cursor position.
+	 * @param index - new cursor position, a 0-based index within the text.
+	 * @param selection - if true, the selection is extended from the selection anchor
+	 *                    to the new cursor position; if false, the selection is collapsed
+	 *                    (no selection).
+	 * The widget is focused and the cursor blinking is (re)started.
+	 */
 	// TODO: rename to set_cursor_position
 	void set_cursor_index(
 		size_t index, //
@@ -149,6 +197,13 @@ private:
 };
 
 namespace make {
+/**
+ * @brief Construct text input widget.
+ * @param context - ruis context.
+ * @param params - text input widget parameters.
+ * @param text - initial text content.
+ * @return newly constructed text input widget.
+ */
 utki::shared_ref<ruis::text_input> text_input(
 	const utki::shared_ref<ruis::context>& context, //
 	ruis::text_input::all_parameters params,

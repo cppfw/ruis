@@ -455,7 +455,15 @@ void text_input::on_character_input(const character_input_event& e)
 			// fall through
 		default:
 			if (!e.string.empty()) {
-				if (!this->params.filter || this->params.filter(*this, e.string)) {
+				size_t replace_start = this->cursor_index;
+				size_t replace_end = this->cursor_index;
+				if (this->there_is_selection()) {
+					replace_start = std::min(this->cursor_index, this->selection_start_index);
+					replace_end = std::max(this->cursor_index, this->selection_start_index);
+				}
+
+				const auto& original = this->get_string();
+				if (!this->params.filter || this->params.filter(original, replace_start, replace_end, e.string)) {
 					if (this->there_is_selection()) {
 						this->cursor_index = this->delete_selection();
 					}

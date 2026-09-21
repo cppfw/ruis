@@ -138,8 +138,8 @@ utki::shared_ref<ruis::touch::dialog> make_dialog(const utki::shared_ref<ruis::c
 				.text_input{
 					.specific{
 						.hint = U"Enter your age"s,
-						.filter = [](const ruis::text_input&, std::u32string_view s) {
-							for (auto ch : s) {
+						.filter = [](std::u32string_view, size_t, size_t, std::u32string_view to_insert) {
+							for (auto ch : to_insert) {
 								if (ch < U'0' || ch > U'9') {
 									return false;
 								}
