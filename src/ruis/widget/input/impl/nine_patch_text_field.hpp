@@ -21,6 +21,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
+#include <memory>
+
+#include "../../button/impl/image_push_button.hpp"
 #include "../../label/nine_patch.hpp"
 #include "../text_field.hpp"
 
@@ -39,6 +42,7 @@ public:
 	struct parameters {
 		ruis::nine_patch::parameters nine_patch;
 		ruis::text_input::parameters text_input;
+		ruis::text_field::parameters text_field;
 	};
 
 	struct all_parameters {
@@ -48,10 +52,25 @@ public:
 	};
 
 private:
+	// The clear button (to the right of the text_input). Null if clear_button is disabled.
+	std::shared_ptr<ruis::image_push_button> clear_button;
+
+	// Returns nullptr when 'enabled' is false.
+	static std::shared_ptr<ruis::image_push_button> make_clear_button(
+		const utki::shared_ref<ruis::context>& context, //
+		bool enabled
+	);
+
+	static widget_list make_content_children(
+		const utki::shared_ref<ruis::text_input>& text_input, //
+		const std::shared_ptr<ruis::image_push_button>& clear_button
+	);
+
 	nine_patch_text_field(
 		const utki::shared_ref<ruis::context>& context, //
 		all_parameters& params,
-		utki::shared_ref<ruis::text_input> text_input
+		utki::shared_ref<ruis::text_input> text_input, //
+		std::shared_ptr<ruis::image_push_button> clear_button_widget
 	);
 
 public:

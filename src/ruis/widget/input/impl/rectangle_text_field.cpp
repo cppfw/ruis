@@ -21,7 +21,11 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "rectangle_text_field.hpp"
 
+#include <string_view>
+
 #include <utki/debug.hpp>
+
+using namespace std::string_view_literals;
 
 using namespace ruis;
 
@@ -40,12 +44,14 @@ rectangle_text_field::rectangle_text_field(
 			context, //
 			{
 				.layout_params{
-					.dims = {ruis::dim::max, ruis::dim::max}
+					.dims = {ruis::dim::fill, ruis::dim::max},
+					.weight = 1
 				},
 				.params = std::move(params.params.text_input)
 			},
 			std::move(text)
-		)
+		),
+		make_clear_button(context, params.params.text_field.clear_button)
 		// clang-format on
 	)
 {}
@@ -53,21 +59,25 @@ rectangle_text_field::rectangle_text_field(
 rectangle_text_field::rectangle_text_field(
 	const utki::shared_ref<ruis::context>& context, //
 	all_parameters& params,
-	utki::shared_ref<ruis::text_input> text_input
+	utki::shared_ref<ruis::text_input> text_input, //
+	std::shared_ptr<ruis::image_push_button> clear_button_widget
 ) :
 	widget(
 		context, //
 		std::move(params.layout_params),
 		std::move(params.widget)
 	),
-	// Initialize rectangle first so it adds the text_input as a child
+	// Initialize rectangle first so it adds the text_input (and the clear button,
+	// if any) as its children
 	// clang-format off
 	rectangle(
 		context,
 		{
 			.params = [&](){
 				if(auto& l = params.params.rectangle.padding.container.layout; !l){
-					l = layout::pile;
+					// The text_input and the clear button (if any) are arranged side-by-side
+					// in a row.
+					l = layout::row;
 				}
 
 				for(auto& b : params.params.rectangle.padding.specific.borders){
@@ -95,24 +105,89 @@ rectangle_text_field::rectangle_text_field(
 				return std::move(params.params.rectangle);
 			}()
 		},
-		{
-			text_input
-		}
+		make_content_children(text_input, clear_button_widget)
 	),
 	// clang-format on
 	text_field(
 		context, //
 		text_input.get()
-	)
-{}
+	),
+	clear_button(std::move(clear_button_widget))
+{
+	if (this->clear_button) {
+		// Pressing the clear button clears the text input.
+		this->clear_button->click_handler = [this](ruis::push_button&) {
+			this->get_text_input().clear();
+			this->get_text_input().set_cursor_index(0); // TODO: why is this needed? doesn't clear sets it to 0?
+		};
+	}
+}
+
+std::shared_ptr<ruis::image_push_button> rectangle_text_field::make_clear_button(
+	const utki::shared_ref<ruis::context>& context, //
+	bool enabled
+)
+{
+	if (!enabled) {
+		return nullptr;
+	}
+
+	// clang-format off
+	return ruis::make::image_push_button(
+		context, //
+		{
+			.layout_params{
+				// Fill the container vertically and take the minimum horizontal space,
+				// keeping the image's aspect ratio, so the button ends up as a square
+				// whose side equals the text field's content height.
+				.dims = {ruis::dim::min, ruis::dim::fill}
+			},
+			.params{
+				.image{
+					.color{
+						.normal = context.get().style().get_color_secondary()
+					},
+					.specific{
+						.keep_aspect_ratio = true
+					}
+				},
+				.image_button{
+					.unpressed_image = context.get().loader().load<ruis::res::image>("ruis_img_cross"sv),
+					.pressed_image   = context.get().loader().load<ruis::res::image>("ruis_img_cross"sv)
+				}
+			}
+		}
+	);
+	// clang-format on
+}
+
+widget_list rectangle_text_field::make_content_children(
+	const utki::shared_ref<ruis::text_input>& text_input, //
+	const std::shared_ptr<ruis::image_push_button>& clear_button
+)
+{
+	widget_list children;
+	children.emplace_back(text_input);
+	if (clear_button) {
+		children.emplace_back(utki::shared_ref<ruis::image_push_button>(clear_button));
+	}
+	return children;
+}
 
 event_status rectangle_text_field::on_mouse_button(const mouse_button_event& e)
 {
+	// First let the base container dispatch the event to its children (the clear
+	// button, and the text_input when the event lands over it) exactly as a normal
+	// container would, so the clear button gets proper mouse handling (press, hover,
+	// capture) for free.
+	if (this->container::on_mouse_button(e) == event_status::consumed) {
+		return event_status::consumed;
+	}
+
 	// The text_input is laid out inside the rectangle's padding, so a mouse event
-	// landing in the padding area would not reach the text_input (the base container
-	// only forwards events to children whose rectangle overlaps the event position).
-	// Forward the event to the text_input directly, clamping the mouse position to the
-	// text_input's rectangle (in the text_input's local coordinates).
+	// landing in the padding (border) area would not reach any child. In that case
+	// forward the event to the text_input directly, clamping the mouse position to
+	// the text_input's rectangle (in the text_input's local coordinates).
 	mouse_button_event clamped = e;
 	clamped.pos = this->clamp_pos_to_text_input(e.pos);
 	return this->get_text_input().on_mouse_button(clamped);
@@ -120,6 +195,15 @@ event_status rectangle_text_field::on_mouse_button(const mouse_button_event& e)
 
 event_status rectangle_text_field::on_mouse_move(const mouse_move_event& e)
 {
+	// Dispatch to the children as a normal container would (e.g. the clear button
+	// updates its hover state on mouse move).
+	if (this->container::on_mouse_move(e) == event_status::consumed) {
+		return event_status::consumed;
+	}
+
+	// If the event was not consumed by any child (e.g. it landed in the padding
+	// border area), forward it to the text_input with the position clamped to the
+	// text_input's rectangle.
 	mouse_move_event clamped = e;
 	clamped.pos = this->clamp_pos_to_text_input(e.pos);
 	return this->get_text_input().on_mouse_move(clamped);

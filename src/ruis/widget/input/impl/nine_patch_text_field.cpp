@@ -40,12 +40,14 @@ nine_patch_text_field::nine_patch_text_field(
 			context, //
 			{
 				.layout_params{
-					.dims = {ruis::dim::max, ruis::dim::max}
+					.dims = {ruis::dim::fill, ruis::dim::max},
+					.weight = 1
 				},
 				.params = std::move(params.params.text_input)
 			},
 			std::move(text)
-		)
+		),
+		make_clear_button(context, params.params.text_field.clear_button)
 		// clang-format on
 	)
 {}
@@ -53,21 +55,25 @@ nine_patch_text_field::nine_patch_text_field(
 nine_patch_text_field::nine_patch_text_field(
 	const utki::shared_ref<ruis::context>& context, //
 	all_parameters& params,
-	utki::shared_ref<ruis::text_input> text_input
+	utki::shared_ref<ruis::text_input> text_input, //
+	std::shared_ptr<ruis::image_push_button> clear_button_widget
 ) :
 	widget(
 		context, //
 		std::move(params.layout_params),
 		std::move(params.widget)
 	),
-	// Initialize nine_patch first so it adds the text_input as a child
+	// Initialize nine_patch first so it adds the text_input (and the clear button,
+	// if any) as its children
 	// clang-format off
 	nine_patch(
 		context,
 		{
 			.params = [&](){
 				if(auto& l = params.params.nine_patch.padding.container.layout; !l){
-					l = layout::pile;
+					// The text_input and the clear button (if any) are arranged side-by-side
+					// in a row.
+					l = layout::row;
 				}
 
 				for(auto& b : params.params.nine_patch.padding.specific.borders){
@@ -83,16 +89,74 @@ nine_patch_text_field::nine_patch_text_field(
 				return std::move(params.params.nine_patch);
 			}()
 		},
-		{
-			text_input
-		}
+		make_content_children(text_input, clear_button_widget)
 	),
 	// clang-format on
 	text_field(
 		context, //
 		text_input.get()
-	)
-{}
+	),
+	clear_button(std::move(clear_button_widget))
+{
+	if (this->clear_button) {
+		// Pressing the clear button clears the text input.
+		this->clear_button->click_handler = [this](ruis::push_button&) {
+			this->get_text_input().clear();
+			this->get_text_input().set_cursor_index(0);
+		};
+	}
+}
+
+std::shared_ptr<ruis::image_push_button> nine_patch_text_field::make_clear_button(
+	const utki::shared_ref<ruis::context>& context, //
+	bool enabled
+)
+{
+	if (!enabled) {
+		return nullptr;
+	}
+
+	// clang-format off
+	return ruis::make::image_push_button(
+		context, //
+		{
+			.layout_params{
+				// Fill the container vertically and take the minimum horizontal space,
+				// keeping the image's aspect ratio, so the button ends up as a square
+				// whose side equals the text field's content height.
+				.dims = {ruis::dim::min, ruis::dim::fill}
+			},
+			.params{
+				.image{
+					.color{
+						.normal = context.get().style().get_color_secondary()
+					},
+					.specific{
+						.keep_aspect_ratio = true
+					}
+				},
+				.image_button{
+					.unpressed_image = context.get().loader().load<ruis::res::image>("ruis_img_cross"sv),
+					.pressed_image   = context.get().loader().load<ruis::res::image>("ruis_img_cross"sv)
+				}
+			}
+		}
+	);
+	// clang-format on
+}
+
+widget_list nine_patch_text_field::make_content_children(
+	const utki::shared_ref<ruis::text_input>& text_input, //
+	const std::shared_ptr<ruis::image_push_button>& clear_button
+)
+{
+	widget_list children;
+	children.emplace_back(text_input);
+	if (clear_button) {
+		children.emplace_back(utki::shared_ref<ruis::image_push_button>(clear_button));
+	}
+	return children;
+}
 
 utki::shared_ref<ruis::nine_patch_text_field> ruis::make::nine_patch_text_field(
 	const utki::shared_ref<ruis::context>& context, //

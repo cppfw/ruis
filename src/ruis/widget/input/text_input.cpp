@@ -194,7 +194,10 @@ vec2 text_input::measure(const ruis::vec2& quotum) const noexcept
 	return ret;
 }
 
-void text_input::set_cursor_index(size_t index, bool selection)
+void text_input::set_cursor_index(
+	size_t index, //
+	bool selection
+)
 {
 	this->cursor_index = index;
 

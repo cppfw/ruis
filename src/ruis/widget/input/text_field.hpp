@@ -34,10 +34,20 @@ class text_field : virtual public widget
 	ruis::text_input& text_input;
 
 public:
+	struct parameters {
+		/**
+		 * @brief Whether a clear button is shown to the right of the text input.
+		 * When enabled, pressing the button clears the text input.
+		 * Defaults to true.
+		 */
+		bool clear_button = true;
+	};
+
 	struct all_parameters {
 		ruis::layout_parameters layout_params;
 		ruis::widget::parameters widget;
 		ruis::text_input::parameters text_input;
+		parameters params;
 	};
 
 protected:
