@@ -38,7 +38,6 @@ class nine_patch :
 	public blending_widget,
 	public padding
 {
-	std::shared_ptr<const res::nine_patch> cur_nine_patch; // TODO: remove?
 	std::shared_ptr<const render::texture_2d> image_texture;
 
 public:

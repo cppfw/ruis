@@ -65,6 +65,10 @@ nine_patch::nine_patch( //
 
 void nine_patch::set_nine_patch(std::shared_ptr<const res::nine_patch> np)
 {
+	if (this->params.source == np) {
+		return;
+	}
+
 	this->params.source = std::move(np);
 
 	this->update_cur_nine_patch();
@@ -72,31 +76,21 @@ void nine_patch::set_nine_patch(std::shared_ptr<const res::nine_patch> np)
 
 sides<real> nine_patch::get_min_borders() const noexcept
 {
-	if (!this->cur_nine_patch) {
+	if (!this->params.source) {
 		return {0};
 	}
 
-	return this->cur_nine_patch->get_borders(this->context.get().units);
+	return this->params.source->get_borders(this->context.get().units);
 }
 
 void nine_patch::update_cur_nine_patch()
 {
-	// TODO: refactor, remove this->cur_nine_patch var
-	const auto& new_nine_patch = this->params.source;
-
-	if (this->cur_nine_patch == new_nine_patch) {
+	if (!this->params.source) {
 		return;
 	}
 
-	this->cur_nine_patch = new_nine_patch;
-
-	if (!this->cur_nine_patch) {
-		this->image_texture.reset();
-		return;
-	}
-
-	ASSERT(this->cur_nine_patch)
-	this->image_texture = this->cur_nine_patch->image.get().get(this->context.get().units);
+	utki::assert(this->params.source);
+	this->image_texture = this->params.source->image.get().get(this->context.get().units);
 
 	this->clear_cache();
 }
@@ -118,16 +112,16 @@ void nine_patch::render(const mat4& matrix) const
 
 void nine_patch::render_nine_patch(const mat4& matrix) const
 {
-	if (!this->cur_nine_patch) {
+	if (!this->params.source) {
 		return;
 	}
 
-	// if there is current nine patch, there should be an image texture
-	ASSERT(this->image_texture)
+	// if there is a nine patch, there should be an image texture
+	utki::assert(this->image_texture);
 
 	const auto& r = this->ctx().ren();
 
-	const auto& np = *this->cur_nine_patch;
+	const auto& np = *this->params.source;
 
 	// left-top
 	{
