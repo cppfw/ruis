@@ -48,7 +48,6 @@ class image :
 public:
 	struct specific_parameters {
 		std::shared_ptr<const ruis::res::image> source;
-		std::shared_ptr<const ruis::res::image> disabled_img; // TODO: remove
 		bool keep_aspect_ratio = false;
 	};
 
@@ -95,13 +94,6 @@ public:
 		return this->params.source;
 	}
 
-	void set_disabled_image(std::shared_ptr<const res::image> image);
-
-	const std::shared_ptr<const res::image>& get_disabled_image() const
-	{
-		return this->params.disabled_img;
-	}
-
 	void on_resize() override;
 
 	void set_keep_aspect_ratio(bool keep_aspect_ratio)
@@ -109,8 +101,6 @@ public:
 		this->params.keep_aspect_ratio = keep_aspect_ratio;
 		this->invalidate_layout();
 	}
-
-	void on_enabled_change() override;
 };
 
 namespace make {

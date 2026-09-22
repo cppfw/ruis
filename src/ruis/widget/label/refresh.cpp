@@ -44,9 +44,6 @@ refresh::refresh(
 				if(auto& src = params.params.spinning_image.image.specific.source; !src){
 					src = context.get().loader().load<ruis::res::image>("ruis_img_refresh"sv);
 				}
-				if(auto& im = params.params.spinning_image.image.specific.disabled_img; !im){
-					im = context.get().loader().load<ruis::res::image>("ruis_img_refresh_disabled"sv);
-				}
 				return std::move(params.params.spinning_image);
 			}()
 		} // clang-format on

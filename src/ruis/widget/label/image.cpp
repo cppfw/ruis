@@ -51,10 +51,6 @@ void image::render(const ruis::mat4& matrix) const
 {
 	auto img = this->params.source.get();
 
-	if (!this->is_enabled() && this->params.disabled_img) {
-		img = this->params.disabled_img.get();
-	}
-
 	if (!img) {
 		return;
 	}
@@ -94,10 +90,6 @@ void image::render(const ruis::mat4& matrix) const
 ruis::vec2 image::measure(const ruis::vec2& quotum) const
 {
 	auto img = this->params.source.get();
-
-	if (!this->is_enabled() && this->params.disabled_img) {
-		img = this->params.disabled_img.get();
-	}
 
 	if (!img) {
 		return {0, 0};
@@ -174,46 +166,8 @@ void image::set_image(std::shared_ptr<const res::image> image)
 	this->texture.reset();
 }
 
-void image::set_disabled_image(std::shared_ptr<const res::image> image)
-{
-	auto& c = this->context.get();
-	if (this->params.disabled_img && image && this->params.disabled_img->dims(c.units) == image->dims(c.units)) {
-	} else {
-		if (!this->is_enabled()) {
-			this->invalidate_layout();
-		}
-	}
-
-	this->params.disabled_img = std::move(image);
-	this->texture.reset();
-}
-
 void image::on_resize()
 {
 	this->widget::on_resize();
 	this->texture.reset();
-}
-
-void image::on_enabled_change()
-{
-	if (!this->params.disabled_img) {
-		// no disabled image set, nothing changes
-		return;
-	}
-
-	this->texture.reset();
-	this->clear_cache();
-
-	if (this->params.source) {
-		auto& c = this->context.get();
-
-		// if dimension of active image change then need to re-layout
-		if (this->params.disabled_img->dims(c.units) != this->params.source->dims(c.units)) {
-			this->invalidate_layout();
-		}
-	} else {
-		// there is only disabled image, perhaps nobody will ever use it like this, but nevertheless,
-		// let's handle this case gracefully
-		this->invalidate_layout();
-	}
 }
