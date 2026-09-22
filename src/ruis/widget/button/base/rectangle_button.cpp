@@ -36,7 +36,7 @@ void rectangle_button::on_pressed_change()
 
 void rectangle_button::on_enabled_change()
 {
-	this->widget::on_enabled_change();
+	this->rectangle::on_enabled_change();
 	this->update_color();
 }
 
