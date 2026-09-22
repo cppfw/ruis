@@ -32,7 +32,16 @@ class font_widget : virtual public widget
 {
 public:
 	struct parameters {
+		/**
+		 * @brief Font size.
+		 * The default font size is a 'font_size_primary' style value.
+		 */
 		styled<length> size;
+
+		/**
+		 * @brief Font face.
+		 * The default font face is a 'font_face_primary' style value.
+		 */
 		styled<res::font> face;
 	};
 

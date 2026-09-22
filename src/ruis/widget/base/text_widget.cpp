@@ -42,6 +42,9 @@ text_widget::text_widget(
 			return std::move(params.color);
 		}()
 	),
-	font_widget(context, std::move(params.font)),
+	font_widget(
+		context, //
+		std::move(params.font)
+	),
 	params(std::move(params.specific))
 {}
