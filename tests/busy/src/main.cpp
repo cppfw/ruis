@@ -35,15 +35,15 @@ public:
 		this->window.gui.set_root(c);
 
 		{
-			auto spinner = utki::make_weak_from(
+			auto spinning_image = utki::make_weak_from(
 					c.get().get_widget_as<ruis::busy>("busy_spinner")
 				);
 			auto& button = c.get().get_widget_as<ruis::push_button>("busy_toggle_button");
 
 			auto disable_button = utki::make_weak_from(c.get().get_widget("refresh_disable_button"));
 
-			button.click_handler = [spinner, disable_button](ruis::push_button& b){
-				if(auto s = spinner.lock()){
+			button.click_handler = [spinning_image, disable_button](ruis::push_button& b){
+				if(auto s = spinning_image.lock()){
 					s->set_active(!s->is_visible());
 				}
 				if(auto db = disable_button.lock()){
@@ -55,10 +55,10 @@ public:
 		c.get().get_widget_as<ruis::busy>("busy_spinner2").set_active(true);
 
 		{
-			auto spinner = utki::make_weak_from(c.get().get_widget_as<ruis::spinner>("refresh_spinner"));
+			auto spinning_image = utki::make_weak_from(c.get().get_widget_as<ruis::spinning_image>("refresh_spinner"));
 			auto& button = c.get().get_widget_as<ruis::push_button>("refresh_toggle_button");
-			button.click_handler = [spinner](ruis::push_button& b){
-				if(auto s = spinner.lock()){
+			button.click_handler = [spinning_image](ruis::push_button& b){
+				if(auto s = spinning_image.lock()){
 					s->set_active(!s->is_updating());
 				}
 			};

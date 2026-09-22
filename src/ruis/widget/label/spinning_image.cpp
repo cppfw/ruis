@@ -19,7 +19,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 /* ================ LICENSE END ================ */
 
-#include "spinner.hpp"
+#include "spinning_image.hpp"
 
 #include <ratio>
 
@@ -29,7 +29,7 @@ using namespace std::string_view_literals;
 
 using namespace ruis;
 
-spinner::spinner( //
+spinning_image::spinning_image( //
 	const utki::shared_ref<ruis::context>& context,
 	all_parameters params
 ) :
@@ -42,7 +42,7 @@ spinner::spinner( //
 	params(std::move(params.params.specific))
 {}
 
-void spinner::render(const mat4& matrix) const
+void spinning_image::render(const mat4& matrix) const
 {
 	mat4 matr(matrix);
 
@@ -53,7 +53,7 @@ void spinner::render(const mat4& matrix) const
 	this->image::render(matr);
 }
 
-void spinner::set_active(bool active)
+void spinning_image::set_active(bool active)
 {
 	if (active) {
 		this->context.get().updater.get().start(utki::make_shared_from(*this));
@@ -62,14 +62,14 @@ void spinner::set_active(bool active)
 	}
 }
 
-void spinner::update(uint32_t dt_ms)
+void spinning_image::update(uint32_t dt_ms)
 {
 	angle += this->params.rounds_per_second / real(std::milli::den) * real(dt_ms);
 }
 
-utki::shared_ref<ruis::spinner> ruis::make::refresh(
+utki::shared_ref<ruis::spinning_image> ruis::make::refresh(
 	const utki::shared_ref<ruis::context>& context, //
-	spinner::all_parameters params
+	spinning_image::all_parameters params
 )
 {
 	if (auto& src = params.params.image.specific.source; !src) {
@@ -79,7 +79,7 @@ utki::shared_ref<ruis::spinner> ruis::make::refresh(
 		im = context.get().loader().load<res::image>("ruis_img_refresh_disabled"sv);
 	}
 
-	return utki::make_shared<ruis::spinner>(
+	return utki::make_shared<ruis::spinning_image>(
 		context, //
 		std::move(params)
 	);

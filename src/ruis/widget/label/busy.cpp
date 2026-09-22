@@ -32,15 +32,15 @@ busy::busy(
 		std::move(params.layout_params),
 		std::move(params.widget)
 	),
-	spinner(
+	spinning_image(
 		context, //
 		// clang-format off
 		{
 			.params = [&](){
-				if(auto& src = params.params.spinner.image.specific.source; !src){
+				if(auto& src = params.params.spinning_image.image.specific.source; !src){
 					src = context.get().loader().load<ruis::res::image>("ruis_img_busy");
 				}
-				return std::move(params.params.spinner);
+				return std::move(params.params.spinning_image);
 			}()
 		} // clang-format on
 	)
@@ -49,5 +49,5 @@ busy::busy(
 void busy::set_active(bool active)
 {
 	this->set_visible(active);
-	this->spinner::set_active(active);
+	this->spinning_image::set_active(active);
 }

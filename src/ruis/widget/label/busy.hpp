@@ -21,7 +21,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "spinner.hpp"
+#include "spinning_image.hpp"
 
 namespace ruis {
 
@@ -29,11 +29,11 @@ namespace ruis {
  * @brief Busy spinner.
  * @param active - whether the busy indicator is initially active or not, can be true/false.
  */
-class busy : public spinner
+class busy : public spinning_image
 {
 public:
 	struct parameters {
-		ruis::spinner::parameters spinner;
+		ruis::spinning_image::parameters spinning_image;
 	};
 
 	struct all_parameters {

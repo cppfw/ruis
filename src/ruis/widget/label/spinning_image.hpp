@@ -28,11 +28,13 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
+// TODO: perhaps not needed when transform widget is implemented
+
 /**
  * @brief Spinning image label.
- * @param active - whether the spinner is initially active or not, can be true/false.
+ * @param active - whether the spinning image is initially active or not, can be true/false.
  */
-class spinner :
+class spinning_image :
 	public image, //
 	public updateable
 {
@@ -59,7 +61,7 @@ public:
 		parameters params;
 	};
 
-	spinner(
+	spinning_image(
 		const utki::shared_ref<ruis::context>& context, //
 		all_parameters params
 	);
@@ -73,20 +75,20 @@ private:
 };
 
 namespace make {
-inline utki::shared_ref<ruis::spinner> spinner(
+inline utki::shared_ref<ruis::spinning_image> spinning_image(
 	const utki::shared_ref<ruis::context>& context, //
-	spinner::all_parameters params
+	spinning_image::all_parameters params
 )
 {
-	return utki::make_shared<ruis::spinner>(
+	return utki::make_shared<ruis::spinning_image>(
 		context, //
 		std::move(params)
 	);
 }
 
-utki::shared_ref<ruis::spinner> refresh(
+utki::shared_ref<ruis::spinning_image> refresh(
 	const utki::shared_ref<ruis::context>& context, //
-	spinner::all_parameters params
+	spinning_image::all_parameters params
 );
 
 } // namespace make

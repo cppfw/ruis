@@ -111,7 +111,7 @@ public:
 		auto c = make_root_widget(this->window.gui.context);
 		this->window.gui.set_root(c);
 
-		auto spinner = utki::make_weak(
+		auto spinning_image = utki::make_weak(
 				utki::make_shared_from(
 						c.get().get_widget_as<ruis::busy>("busy_spinner")
 					)
@@ -128,11 +128,11 @@ public:
 		}
 
 		button.click_handler = [
-				spinner,
+				spinning_image,
 				enable_widgets{std::move(enable_widgets)}
 			](ruis::push_button& b) mutable
 		{
-			if(auto s = spinner.lock()){
+			if(auto s = spinning_image.lock()){
 				s->set_active(!s->is_visible());
 				enable_widgets.set_enabled(!s->is_visible());
 			}
