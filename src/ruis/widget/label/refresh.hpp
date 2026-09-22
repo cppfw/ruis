@@ -21,38 +21,20 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "../../res/image.hpp"
-#include "../../updateable.hpp"
-
-#include "image.hpp"
+#include "spinning_image.hpp"
 
 namespace ruis {
 
-// TODO: perhaps not needed when transform widget is implemented
-
 /**
- * @brief Spinning image label.
- * @param active - whether the spinning image is initially active or not, can be true/false.
+ * @brief Refreshing image.
+ *
+ * A %spinning_image which loads a "refresh" icon by default.
  */
-class spinning_image :
-	public image, //
-	public updateable
+class refresh : public spinning_image
 {
-	real angle = 0;
-
-public:
-	struct specific_parameters {
-		// TODO: make styled?
-		real rounds_per_second = real(utki::pi);
-	};
-
-private:
-	specific_parameters params;
-
 public:
 	struct parameters {
-		ruis::image::parameters image;
-		specific_parameters specific;
+		ruis::spinning_image::parameters spinning_image;
 	};
 
 	struct all_parameters {
@@ -61,26 +43,19 @@ public:
 		parameters params;
 	};
 
-	spinning_image(
+	refresh(
 		const utki::shared_ref<ruis::context>& context, //
 		all_parameters params
 	);
-
-	void set_active(bool active);
-
-	void render(const mat4& matrix) const override;
-
-private:
-	void update(uint32_t dt_ms) override;
 };
 
 namespace make {
-inline utki::shared_ref<ruis::spinning_image> spinning_image(
+inline utki::shared_ref<ruis::refresh> refresh(
 	const utki::shared_ref<ruis::context>& context, //
-	spinning_image::all_parameters params
+	ruis::refresh::all_parameters params
 )
 {
-	return utki::make_shared<ruis::spinning_image>(
+	return utki::make_shared<ruis::refresh>(
 		context, //
 		std::move(params)
 	);

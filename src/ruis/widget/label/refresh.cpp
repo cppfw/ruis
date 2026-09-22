@@ -19,48 +19,36 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 /* ================ LICENSE END ================ */
 
-#include "spinning_image.hpp"
+#include "refresh.hpp"
 
-#include <ratio>
+#include <string_view>
 
-#include <utki/math.hpp>
+using namespace std::string_view_literals;
 
 using namespace ruis;
 
-spinning_image::spinning_image( //
-	const utki::shared_ref<ruis::context>& context,
+refresh::refresh(
+	const utki::shared_ref<ruis::context>& context, //
 	all_parameters params
 ) :
-	widget( //
-		context,
+	widget(
+		context, //
 		std::move(params.layout_params),
 		std::move(params.widget)
 	),
-	image(context, {.params = std::move(params.params.image)}),
-	params(std::move(params.params.specific))
+	spinning_image(
+		context, //
+		// clang-format off
+		{
+			.params = [&](){
+				if(auto& src = params.params.spinning_image.image.specific.source; !src){
+					src = context.get().loader().load<ruis::res::image>("ruis_img_refresh"sv);
+				}
+				if(auto& im = params.params.spinning_image.image.specific.disabled_img; !im){
+					im = context.get().loader().load<ruis::res::image>("ruis_img_refresh_disabled"sv);
+				}
+				return std::move(params.params.spinning_image);
+			}()
+		} // clang-format on
+	)
 {}
-
-void spinning_image::render(const mat4& matrix) const
-{
-	mat4 matr(matrix);
-
-	matr.translate(this->rect().d / 2);
-	matr.rotate(ruis::quat(this->angle));
-	matr.translate(-this->rect().d / 2);
-
-	this->image::render(matr);
-}
-
-void spinning_image::set_active(bool active)
-{
-	if (active) {
-		this->context.get().updater.get().start(utki::make_shared_from(*this));
-	} else {
-		this->context.get().updater.get().stop(*this);
-	}
-}
-
-void spinning_image::update(uint32_t dt_ms)
-{
-	angle += this->params.rounds_per_second / real(std::milli::den) * real(dt_ms);
-}

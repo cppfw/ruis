@@ -40,14 +40,9 @@ public:
 				);
 			auto& button = c.get().get_widget_as<ruis::push_button>("busy_toggle_button");
 
-			auto disable_button = utki::make_weak_from(c.get().get_widget("refresh_disable_button"));
-
-			button.click_handler = [spinning_image, disable_button](ruis::push_button& b){
+			button.click_handler = [spinning_image](ruis::push_button& b){
 				if(auto s = spinning_image.lock()){
 					s->set_active(!s->is_visible());
-				}
-				if(auto db = disable_button.lock()){
-					db->set_enabled(!db->is_enabled());
 				}
 			};
 		}

@@ -1,6 +1,7 @@
 #include "root_gui.hpp"
 
 #include <ruis/widget/label/busy.hpp>
+#include <ruis/widget/label/refresh.hpp>
 #include <ruis/widget/button/push_button.hpp>
 #include <ruis/widget/label/text.hpp>
 
@@ -61,16 +62,6 @@ utki::shared_ref<ruis::widget> make_root_gui(const utki::shared_ref<ruis::contex
                                     }
                                 }
                             )
-                        }
-                    ),
-                    m::push_button(c,
-                        {
-                            .widget{
-                                .id = "refresh_disable_button"s
-                            }
-                        },
-                        {
-                            m::refresh(c, {})
                         }
                     )
                 }
