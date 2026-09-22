@@ -46,7 +46,7 @@ labeled_rectangle_text_field::labeled_rectangle_text_field(
 				},
 				.params =
 					[&]() {
-						if (auto& c = params.params.label.text.color.normal; c.get().is_undefined()) {
+						if (auto& c = params.params.label.text.color; c.get().is_undefined()) {
 							c = context.get().style().get_color_text();
 						}
 						return std::move(params.params.label.text);

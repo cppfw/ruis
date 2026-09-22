@@ -128,9 +128,7 @@ std::shared_ptr<ruis::image_push_button> nine_patch_text_field::make_clear_butto
 			},
 			.params{
 				.image{
-					.color{
-						.normal = context.get().style().get_color_primary()
-					},
+					.color = context.get().style().get_color_primary(),
 					.specific{
 						.keep_aspect_ratio = true
 					}

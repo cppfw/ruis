@@ -73,9 +73,7 @@ public:
 		return m::text(this->context,
 			{
 				.params{
-					.color{
-						.normal = this->context.get().style().get_color_text()
-					}
+					.color = this->context.get().style().get_color_text()
 				}
 			},
 			this->items.at(index)
@@ -89,9 +87,7 @@ public:
 		return m::text(this->context,
 			{
 				.params{
-					.color{
-						.normal = this->context.get().style().get_color_highlight()
-					}
+					.color = this->context.get().style().get_color_highlight()
 				}
 			},
 			this->items.at(index)

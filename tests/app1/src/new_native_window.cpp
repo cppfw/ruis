@@ -74,9 +74,7 @@ utki::shared_ref<ruis::widget> make_new_native_window_root_widget(
                     },
                     .text_input{
                         .text{
-                            .color{
-                                .normal = c.get().style().get_color_text()
-                            }
+                            .color = c.get().style().get_color_text()
                         }
                     }
                 },

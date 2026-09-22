@@ -96,9 +96,7 @@ utki::shared_ref<ruis::window> make_window1(
                             m::text(c,
                                 {
                                     .params{
-                                        .color{
-                                            .normal = 0xffccfbff
-                                        }
+                                        .color = 0xffccfbff
                                     }
                                 },
                                 U"Show VK"s

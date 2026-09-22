@@ -53,7 +53,7 @@ public:
 
 	struct parameters {
 		blending_widget::parameters blending;
-		color_widget::parameters color;
+		styled<ruis::color> color;
 		specific_parameters specific;
 	};
 

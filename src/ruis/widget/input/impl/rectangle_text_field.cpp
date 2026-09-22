@@ -144,9 +144,7 @@ std::shared_ptr<ruis::image_push_button> rectangle_text_field::make_clear_button
 			},
 			.params{
 				.image{
-					.color{
-						.normal = context.get().style().get_color_primary()
-					},
+					.color = context.get().style().get_color_primary(),
 					.specific{
 						.keep_aspect_ratio = true
 					}

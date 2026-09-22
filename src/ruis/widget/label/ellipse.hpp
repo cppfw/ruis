@@ -37,7 +37,7 @@ class ellipse :
 public:
 	struct parameters {
 		ruis::padding::parameters padding;
-		ruis::color_widget::parameters color;
+		ruis::styled<ruis::color> color;
 	};
 
 	struct all_parameters {

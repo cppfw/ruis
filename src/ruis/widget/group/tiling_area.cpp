@@ -48,15 +48,13 @@ public:
 	dragger(
 		const utki::shared_ref<ruis::context>& c, //
 		tiling_area& owner,
-		styled<color> color
+		styled<ruis::color> color
 	) :
 		ruis::widget(c, {}, {}),
 		// clang-format off
 		ruis::gap(context,
 			{
-				.color{
-					.normal = std::move(color)
-				}
+				.color = std::move(color)
 			}
 		),
 		// clang-format on

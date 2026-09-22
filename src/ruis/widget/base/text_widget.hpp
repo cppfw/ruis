@@ -47,7 +47,7 @@ public:
 	};
 
 	struct parameters {
-		color_widget::parameters color;
+		styled<ruis::color> color;
 		font_widget::parameters font;
 		specific_parameters specific;
 	};

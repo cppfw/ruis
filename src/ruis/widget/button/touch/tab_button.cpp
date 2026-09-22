@@ -77,7 +77,7 @@ tab_button::tab_button(
 							},
 							.params = [&]() {
 								auto& p = params.params.image;
-								if (auto& c = p.color.normal; c.get().is_undefined()) {
+								if (auto& c = p.color; c.get().is_undefined()) {
 									c = context.get().style().get_color_text();
 								}
 								return std::move(p);

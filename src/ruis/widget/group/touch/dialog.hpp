@@ -62,7 +62,7 @@ public:
 		 * @brief Color of the dialog panel background.
 		 * Defaults to the 'color_panel' style value if undefined.
 		 */
-		color_widget::parameters color;
+		styled<ruis::color> color;
 
 		/**
 		 * @brief Dialog panel background rectangle parameters.

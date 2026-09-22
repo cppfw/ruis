@@ -27,39 +27,19 @@ using namespace ruis;
 
 color_widget::color_widget(
 	const utki::shared_ref<ruis::context>& context,
-	parameters params //
+	styled<ruis::color> color //
 ) :
 	widget(context, {}, {}),
-	params(std::move(params))
+	color(std::move(color))
 {}
 
 void color_widget::set_color(styled<ruis::color> color)
 {
-	if (this->params.normal == color) {
+	if (this->color == color) {
 		return;
 	}
 
-	this->params.normal = std::move(color);
+	this->color = std::move(color);
 	this->clear_cache();
 	this->on_color_change();
-}
-
-void color_widget::set_disabled_color(styled<ruis::color> color)
-{
-	if (this->params.disabled == color) {
-		return;
-	}
-
-	this->params.disabled = std::move(color);
-	this->clear_cache();
-	this->on_color_change();
-}
-
-const color& color_widget::get_color() const noexcept
-{
-	if (this->is_enabled()) {
-		return this->get_normal_color();
-	} else {
-		return this->get_disabled_color();
-	}
 }

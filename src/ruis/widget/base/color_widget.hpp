@@ -28,26 +28,17 @@ namespace ruis {
 
 /**
  * @brief Basic widget which has a color attribute.
- *
- * @li @c normal - color value.
- * @li @c disabled - color value for disabled state.
  */
 // TODO: doxygen
 class color_widget : public virtual widget
 {
-public:
-	struct parameters {
-		styled<ruis::color> normal;
-		styled<ruis::color> disabled; // TODO: remove?
-	};
-
 private:
-	parameters params;
+	styled<ruis::color> color;
 
 protected:
 	color_widget(
 		const utki::shared_ref<ruis::context>& context,
-		parameters params //
+		styled<ruis::color> color //
 	);
 
 public:
@@ -61,27 +52,18 @@ public:
 
 	void set_color(styled<ruis::color> color);
 
-	const color& get_normal_color() const noexcept
-	{
-		return this->params.normal.get();
-	}
-
-	void set_disabled_color(styled<ruis::color> color);
-
-	const color& get_disabled_color() const noexcept
-	{
-		return this->params.disabled.get();
-	}
-
 	/**
-	 * @brief Get color for current enabled/disabled state.
-	 * @return color for the current enabled/disabled state.
+	 * @brief Get the color.
+	 * @return The color.
 	 */
-	const color& get_color() const noexcept;
+	const ruis::color& get_color() const noexcept
+	{
+		return this->color.get();
+	}
 
 	/**
 	 * @brief Color change callback.
-	 * Invoked when color or disabled color changes.
+	 * Invoked when color changes.
 	 */
 	virtual void on_color_change() {}
 };
