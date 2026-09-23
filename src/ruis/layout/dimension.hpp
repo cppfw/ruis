@@ -95,7 +95,7 @@ public:
 	{}
 
 	// NOTE: this constructor is made template to make it less priority than non-template one to avoid ambiguity,
-	//       specifically in case of implicit int->dimensions conversion.
+	//       specifically in case of implicit int->dimension conversion.
 	template <typename convertible_type>
 	dimension(convertible_type len) :
 		dimension(styled<length>(length(std::move(len))))
