@@ -69,6 +69,14 @@ public:
 };
 
 namespace make {
+/**
+ * @brief Construct 'ellipse' widget.
+ * Default layout is pile.
+ * @param context - ruis context.
+ * @param params - 'ellipse' widget parameters.
+ * @param children - children of the constructed 'ellipse' widget.
+ * @return newly constructed 'ellipse' widget.
+ */
 utki::shared_ref<ruis::ellipse> ellipse(
 	const utki::shared_ref<ruis::context>& context, //
 	ruis::ellipse::all_parameters params,

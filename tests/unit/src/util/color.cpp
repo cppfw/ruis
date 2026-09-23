@@ -29,6 +29,15 @@ const tst::set set("color", [](tst::suite& suite) {
 		tst::check_eq(c.a(), uint8_t(255), SL);
 	});
 
+	suite.add("transparent_member_is_fully_transparent_and_defined", [] {
+		const auto& c = ruis::color::transparent;
+		tst::check_eq(c.r(), uint8_t(1), SL);
+		tst::check_eq(c.g(), uint8_t(0), SL);
+		tst::check_eq(c.b(), uint8_t(0), SL);
+		tst::check_eq(c.a(), uint8_t(0), SL);
+		tst::check(!c.is_undefined(), SL);
+	});
+
 	suite.add("to_uint32_t_roundtrip", [] {
 		uint32_t original = 0xAABBCCDD;
 		ruis::color c(original);

@@ -40,10 +40,25 @@ namespace ruis {
  *
  * A color with all four channels set to zero is considered "undefined"
  * and is used in styling to indicate that a default value should be applied.
+ * See @ref transparent for a fully transparent color, which is a valid
+ * (non-undefined) color with alpha = 0.
  */
 class color : public r4::vector4<uint8_t>
 {
 public:
+	/**
+	 * @brief A fully transparent color.
+	 *
+	 * This is a color with a fully transparent alpha channel (alpha = 0)
+	 * and a non-zero red channel (red = 1). It is used as a fully
+	 * transparent color, as opposed to the "undefined" color (all four
+	 * channels zero), which indicates that a default value should be
+	 * applied in styling.
+	 *
+	 * @see is_undefined()
+	 */
+	static const color transparent;
+
 	/**
 	 * @brief Create a color from a 32-bit RGBA value.
 	 * The 32-bit value is interpreted as follows:
@@ -54,6 +69,7 @@ public:
 	 *
 	 * The 0 value for all 4 channels means undefined value for the color.
 	 * For a fully transparent color, use alpha = 0 and some other color component to be non-zero, e.g. red = 1.
+	 * See also @ref transparent.
 	 *
 	 * @param rgba - 32-bit RGBA value.
 	 */
@@ -101,6 +117,7 @@ public:
 	 * The color value is undefined when all 4 color components are set to 0.
 	 * Though it is still a valid color, this particular value is thought of as undefined color
 	 * for styling purposes.
+	 * @note A fully transparent color is not undefined; see @ref transparent.
 	 * @return true if color value is undefined.
 	 * @return false otherwise.
 	 */

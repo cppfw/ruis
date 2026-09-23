@@ -26,6 +26,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
+// TODO: doxygen
+
 // Even though container is inherited privately, the std::enable_shared_from_this base is still accessable via
 // public inheritance of widget. So, the linter complaint is false-positive, suppress it.
 // NOLINTNEXTLINE(bugprone-incorrect-enable-shared-from-this, "false-positive")
@@ -97,6 +99,7 @@ public:
 	virtual void on_borders_change();
 
 protected:
+	// TODO: doxygen
 	virtual sides<real> get_min_borders() const noexcept;
 };
 
