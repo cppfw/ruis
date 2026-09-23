@@ -55,6 +55,13 @@ ruis::event_status flickable::on_mouse_button(const mouse_button_event& event)
 			[[fallthrough]];
 		case state::idle:
 			{
+				if (event.action == button_action::release) {
+					// The user has pressed the mouse button outside of the flickable,
+					// then moved cursor into flicable and then released the button.
+					// Ignore it.
+					return event_status::propagate;
+				}
+
 				// in idle state the mouse button is unpressed, so the only valid event is press
 				utki::assert(event.action == button_action::press);
 

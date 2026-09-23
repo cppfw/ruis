@@ -41,8 +41,8 @@ struct layout_parameters {
 	/**
 	 * @brief Weight of the widget.
 	 * Weight defines how much space widget occupies in addition to its minimal or explicitly set size.
-	 * Default weight is 0, which means that the widget will not occupy extra space.
-	 * Value less than 0 is invalid, default weight will be assumed.
+	 * Weight of 0 means that the widget will not occupy extra space.
+	 * Value less than 0 means the weight is undefined, default weight of 0 will be assumed by layouts.
 	 */
 	styled<real> weight = -1;
 
