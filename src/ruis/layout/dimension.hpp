@@ -94,8 +94,11 @@ public:
 		value(std::move(len))
 	{}
 
-	dimension(length len) :
-		dimension(styled<length>(std::move(len)))
+	// NOTE: this constructor is made template to make it less priority than non-template one to avoid ambiguity,
+	//       specifically in case of implicit int->dimensions conversion.
+	template <typename convertible_type>
+	dimension(convertible_type len) :
+		dimension(styled<length>(length(std::move(len))))
 	{}
 
 	constexpr type get_type() const noexcept
