@@ -54,15 +54,7 @@ ellipse_button::ellipse_button(
 		context,
 		// clang-format off
 		{
-			.params = [&](){
-				for(auto& b : params.ellipse.padding.specific.borders){
-					if(b.get().is_undefined()){
-						b = context.get().style().get_len_gap();
-					}
-				}
-
-				return std::move(params.ellipse);
-			}()
+			.params = std::move(params.ellipse)
 		},
 		// clang-format on
 		std::move(contents)

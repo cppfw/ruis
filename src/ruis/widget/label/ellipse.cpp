@@ -37,7 +37,14 @@ ellipse::ellipse( //
     padding(
         context, //
         {
-			.params = std::move(params.params.padding)
+			.params = [&](){
+				for(auto& b : params.params.padding.specific.borders){
+					if(b.get().is_undefined()){
+						b = context.get().style().get_len_gap();
+					}
+				}
+				return std::move(params.params.padding);
+			}()
         },
         std::move(children)
     ),
