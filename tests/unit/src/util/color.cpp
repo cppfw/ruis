@@ -6,6 +6,7 @@
 #include <tml/tree.hpp>
 
 namespace {
+// NOLINTNEXTLINE(cppcoreguidelines-interfaces-global-init, "FALSE-POSITIVE: some tests use global ruis::color::transparent variable, which is surely initialized at the moment the test is run")
 const tst::set set("color", [](tst::suite& suite) {
 
 	suite.add("default_constructor_creates_undefined_color", [] {
