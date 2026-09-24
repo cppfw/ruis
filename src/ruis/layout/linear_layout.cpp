@@ -137,13 +137,13 @@ void linear_layout::lay_out(
 			auto long_room = info->measured_dims[long_index];
 
 			if (weight != 0) {
-				ASSERT(weight > 0)
+				utki::assert(weight > 0);
 				vec2 d;
 				if (flexible > 0) {
-					ASSERT(net_weight > 0)
+					utki::assert(net_weight > 0);
 					real dl = flexible * weight / net_weight;
 					real floored = std::floor(dl);
-					ASSERT(dl >= floored)
+					utki::assert(dl >= floored);
 					long_room += floored;
 					remainder += (dl - floored);
 					if (remainder >= real(1)) {
@@ -244,8 +244,8 @@ void linear_layout::lay_out(
 			++info;
 		}
 
-		ASSERT(remainder >= 0)
-		ASSERT(remainder < real(1))
+		utki::assert(remainder >= 0);
+		utki::assert(remainder < real(1));
 
 		// TODO: is it ok to always reisze last widget?
 		if (remainder > 0) {
@@ -272,77 +272,74 @@ ruis::vec2 linear_layout::measure(
 	real height = quotum[trans_index] >= 0 ? quotum[trans_index] : 0;
 	real net_weight = 0;
 
-	{
-		auto info = info_array.begin();
-		for (const auto& w : widgets) {
-			auto& lp = w.get().get_layout_params_const();
+	for (auto info = info_array.begin(); const auto& w : widgets) {
+		auto& lp = w.get().get_layout_params_const();
 
-			using std::max;
-			real weight = max(real(0), lp.weight.get()); // clamp bottom
+		using std::max;
+		real weight = max(real(0), lp.weight.get()); // clamp bottom
 
-			net_weight += weight;
+		net_weight += weight;
 
-			vec2 child_quotum;
+		vec2 child_quotum;
 
-			const auto& trans_dim = lp.dims[trans_index];
+		const auto& trans_dim = lp.dims[trans_index];
 
-			switch (trans_dim.get_type()) {
-				case dim::type::max:
-					if (quotum[trans_index] >= 0) {
-						child_quotum[trans_index] = quotum[trans_index];
-					} else {
-						child_quotum[trans_index] = -1;
-					}
-					break;
-				case dim::type::undefined:
-					[[fallthrough]];
-				case dim::type::min:
+		switch (trans_dim.get_type()) {
+			case dim::type::max:
+				if (quotum[trans_index] >= 0) {
+					child_quotum[trans_index] = quotum[trans_index];
+				} else {
 					child_quotum[trans_index] = -1;
-					break;
-				case dim::type::fill:
-					if (quotum[trans_index] >= 0) {
-						child_quotum[trans_index] = quotum[trans_index];
-					} else {
-						child_quotum[trans_index] = 0;
-					}
-					break;
-				case dim::type::length:
-					child_quotum[trans_index] = trans_dim.get_length().get(w.get().context);
-					break;
-			}
-
-			const auto& long_dim = lp.dims[long_index];
-
-			switch (long_dim.get_type()) {
-				// NOLINTNEXTLINE(bugprone-branch-clone, "false positive")
-				case dim::type::undefined:
-					[[fallthrough]];
-				case dim::type::min:
-					[[fallthrough]];
-				case dim::type::max:
-					child_quotum[long_index] = -1;
-					break;
-				case dim::type::fill:
-					child_quotum[long_index] = 0;
-					break;
-				case dim::type::length:
-					child_quotum[long_index] = long_dim.get_length().get(w.get().context);
-					break;
-			}
-
-			info->measured_dims = w.get().measure(child_quotum);
-
-			rigid_length += info->measured_dims[long_index];
-
-			if (weight == 0) {
-				if (quotum[trans_index] < 0) {
-					using std::max;
-					height = max(height, info->measured_dims[trans_index]);
 				}
-			}
-
-			++info;
+				break;
+			case dim::type::undefined:
+				[[fallthrough]];
+			case dim::type::min:
+				child_quotum[trans_index] = -1;
+				break;
+			case dim::type::fill:
+				if (quotum[trans_index] >= 0) {
+					child_quotum[trans_index] = quotum[trans_index];
+				} else {
+					child_quotum[trans_index] = 0;
+				}
+				break;
+			case dim::type::length:
+				child_quotum[trans_index] = trans_dim.get_length().get(w.get().context);
+				break;
 		}
+
+		const auto& long_dim = lp.dims[long_index];
+
+		switch (long_dim.get_type()) {
+			// NOLINTNEXTLINE(bugprone-branch-clone, "false positive")
+			case dim::type::undefined:
+				[[fallthrough]];
+			case dim::type::min:
+				[[fallthrough]];
+			case dim::type::max:
+				child_quotum[long_index] = -1;
+				break;
+			case dim::type::fill:
+				child_quotum[long_index] = 0;
+				break;
+			case dim::type::length:
+				child_quotum[long_index] = long_dim.get_length().get(w.get().context);
+				break;
+		}
+
+		info->measured_dims = w.get().measure(child_quotum);
+
+		rigid_length += info->measured_dims[long_index];
+
+		if (weight == 0) {
+			if (quotum[trans_index] < 0) {
+				using std::max;
+				height = max(height, info->measured_dims[trans_index]);
+			}
+		}
+
+		++info;
 	}
 
 	vec2 ret;
@@ -358,13 +355,9 @@ ruis::vec2 linear_layout::measure(
 	}();
 
 	{
-		using std::round;
-
-		real remainder = 0;
-
 		auto last_child = widgets.size() != 0 ? &widgets.back().get() : nullptr;
-
 		auto info = info_array.begin();
+		real remainder = 0;
 		for (const auto& w : widgets) {
 			auto& lp = w.get().get_layout_params_const();
 
@@ -381,11 +374,11 @@ ruis::vec2 linear_layout::measure(
 			if (flex_len > 0) {
 				using std::floor;
 
-				ASSERT(net_weight > 0)
+				utki::assert(net_weight > 0);
 
 				real dl = flex_len * weight / net_weight;
 				real floored = floor(dl);
-				ASSERT(dl >= floored)
+				utki::assert(dl >= floored);
 				d[long_index] += floored;
 				remainder += (dl - floored);
 				if (remainder >= real(1)) {
@@ -394,6 +387,8 @@ ruis::vec2 linear_layout::measure(
 				}
 				if (&w.get() == last_child) {
 					if (remainder > 0) {
+						using std::round;
+
 						vec2 correction;
 						correction[trans_index] = 0;
 						correction[long_index] = round(remainder);

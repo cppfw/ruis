@@ -30,8 +30,8 @@ list::list(
 	widget(
 		context, //
 		std::move(params.layout_params),
-		[&](){
-			if(!params.widget.clip.has_value()){
+		[&]() {
+			if (!params.widget.clip.has_value()) {
 				params.widget.clip = true;
 			}
 			return std::move(params.widget);

@@ -257,7 +257,7 @@ utki::shared_ref<render::frame_buffer> widget::render_to_texture(std::shared_ptr
 				{}
 			),
 			this->is_depth_enabled() ? r.rendering_context.get().make_texture_depth(dims)
-							   : std::shared_ptr<ruis::render::texture_depth>(nullptr),
+									 : std::shared_ptr<ruis::render::texture_depth>(nullptr),
 			nullptr
 		);
 	}();

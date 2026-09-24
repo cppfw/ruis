@@ -22,9 +22,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #pragma once
 
 #include <memory>
+#include <optional>
 #include <set>
 #include <string>
-#include <optional>
 
 #include <r4/matrix.hpp>
 #include <r4/rectangle.hpp>
@@ -699,7 +699,8 @@ public:
 	 * @return true if the widget uses depth buffer for rendering.
 	 * @return false otherwise.
 	 */
-	bool is_depth_enabled() const noexcept{
+	bool is_depth_enabled() const noexcept
+	{
 		return this->params.depth.value_or(false);
 	}
 
@@ -708,7 +709,8 @@ public:
 	 * @return true if the widget uses render caching.
 	 * @return false otherwise.
 	 */
-	bool is_cache_enabled() const noexcept{
+	bool is_cache_enabled() const noexcept
+	{
 		return this->params.cache.value_or(false);
 	}
 
