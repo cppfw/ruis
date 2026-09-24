@@ -53,6 +53,7 @@ void linear_layout::lay_out(
 	real net_weight = 0;
 
 	{
+		// TODO: use utki::zip(info, widgets)
 		auto info = info_array.begin();
 		for (const auto& w : widgets) {
 			const auto& lp = w.get().get_layout_params_const();
@@ -127,6 +128,7 @@ void linear_layout::lay_out(
 
 		real remainder = 0;
 
+		// TODO: use utki::zip(info, widgets)
 		auto info = info_array.begin();
 		for (const auto& w : widgets) {
 			auto& lp = w.get().get_layout_params_const();
@@ -267,11 +269,12 @@ ruis::vec2 linear_layout::measure(
 
 	std::vector<info> info_array(widgets.size());
 
-	// calculate rigid length
-	real rigid_length = 0;
+	// Pass 1: determine the max height (transverse size) by going through the
+	// widgets which have non-fill transverse dimension and measuring them.
 	real height = quotum[trans_index] >= 0 ? quotum[trans_index] : 0;
 	real net_weight = 0;
 
+	// TODO: use utki::zip(info, widgets)
 	for (auto info = info_array.begin(); const auto& w : widgets) {
 		auto& lp = w.get().get_layout_params_const();
 
@@ -280,66 +283,104 @@ ruis::vec2 linear_layout::measure(
 
 		net_weight += weight;
 
-		vec2 child_quotum;
-
 		const auto& trans_dim = lp.dims[trans_index];
 
-		switch (trans_dim.get_type()) {
-			case dim::type::max:
-				if (quotum[trans_index] >= 0) {
-					child_quotum[trans_index] = quotum[trans_index];
-				} else {
+		// fill transverse widgets do not determine the height, they will be measured
+		// in the second pass with the final transverse size
+		if (trans_dim.get_type() != dim::type::fill) {
+			vec2 child_quotum;
+
+			switch (trans_dim.get_type()) {
+				case dim::type::max:
+					if (quotum[trans_index] >= 0) {
+						child_quotum[trans_index] = quotum[trans_index];
+					} else {
+						child_quotum[trans_index] = -1;
+					}
+					break;
+				case dim::type::undefined:
+					[[fallthrough]];
+				case dim::type::min:
 					child_quotum[trans_index] = -1;
-				}
-				break;
-			case dim::type::undefined:
-				[[fallthrough]];
-			case dim::type::min:
-				child_quotum[trans_index] = -1;
-				break;
-			case dim::type::fill:
-				if (quotum[trans_index] >= 0) {
-					child_quotum[trans_index] = quotum[trans_index];
-				} else {
-					child_quotum[trans_index] = 0;
-				}
-				break;
-			case dim::type::length:
-				child_quotum[trans_index] = trans_dim.get_length().get(w.get().context);
-				break;
-		}
+					break;
+				case dim::type::length:
+					child_quotum[trans_index] = trans_dim.get_length().get(w.get().context);
+					break;
+				case dim::type::fill:
+					break; // handled above
+			}
 
-		const auto& long_dim = lp.dims[long_index];
+			const auto& long_dim = lp.dims[long_index];
 
-		switch (long_dim.get_type()) {
-			// NOLINTNEXTLINE(bugprone-branch-clone, "false positive")
-			case dim::type::undefined:
-				[[fallthrough]];
-			case dim::type::min:
-				[[fallthrough]];
-			case dim::type::max:
-				child_quotum[long_index] = -1;
-				break;
-			case dim::type::fill:
-				child_quotum[long_index] = 0;
-				break;
-			case dim::type::length:
-				child_quotum[long_index] = long_dim.get_length().get(w.get().context);
-				break;
-		}
+			switch (long_dim.get_type()) {
+				// NOLINTNEXTLINE(bugprone-branch-clone, "false positive")
+				case dim::type::undefined:
+					[[fallthrough]];
+				case dim::type::min:
+					[[fallthrough]];
+				case dim::type::max:
+					child_quotum[long_index] = -1;
+					break;
+				case dim::type::fill:
+					child_quotum[long_index] = 0;
+					break;
+				case dim::type::length:
+					child_quotum[long_index] = long_dim.get_length().get(w.get().context);
+					break;
+			}
 
-		info->measured_dims = w.get().measure(child_quotum);
+			info->measured_dims = w.get().measure(child_quotum);
 
-		rigid_length += info->measured_dims[long_index];
-
-		if (weight == 0) {
 			if (quotum[trans_index] < 0) {
-				using std::max;
 				height = max(height, info->measured_dims[trans_index]);
 			}
 		}
 
 		++info;
+	}
+
+	// Pass 2: measure all the fill and max widgets with the transverse size found in
+	// the previous pass to get their longitudinal size (max widgets are measured again)
+	{
+		// TODO: use utki::zip(info, widgets)
+		auto info = info_array.begin();
+		for (const auto& w : widgets) {
+			auto& lp = w.get().get_layout_params_const();
+
+			const auto t = lp.dims[trans_index].get_type();
+			if (t == dim::type::fill || t == dim::type::max) {
+				vec2 child_quotum;
+				child_quotum[trans_index] = height;
+
+				const auto& long_dim = lp.dims[long_index];
+				switch (long_dim.get_type()) {
+					// NOLINTNEXTLINE(bugprone-branch-clone, "false positive")
+					case dim::type::undefined:
+						[[fallthrough]];
+					case dim::type::min:
+						[[fallthrough]];
+					case dim::type::max:
+						child_quotum[long_index] = -1;
+						break;
+					case dim::type::fill:
+						child_quotum[long_index] = 0;
+						break;
+					case dim::type::length:
+						child_quotum[long_index] = long_dim.get_length().get(w.get().context);
+						break;
+				}
+
+				info->measured_dims = w.get().measure(child_quotum);
+			}
+
+			++info;
+		}
+	}
+
+	// rigid length is the sum of the longitudinal sizes of all the widgets
+	real rigid_length = 0;
+	for (const auto& info : info_array) {
+		rigid_length += info.measured_dims[long_index];
 	}
 
 	vec2 ret;
@@ -358,6 +399,7 @@ ruis::vec2 linear_layout::measure(
 		auto last_child = widgets.size() != 0 ? &widgets.back().get() : nullptr;
 		auto info = info_array.begin();
 		real remainder = 0;
+		// TODO: use utki::zip(info, widgets)
 		for (const auto& w : widgets) {
 			auto& lp = w.get().get_layout_params_const();
 

@@ -473,8 +473,8 @@ void tree_view::provider_base::remove_children(decltype(iter) from)
 		p->value.subtree_size -= num_to_remove;
 		p = &p->children[t];
 	}
-	ASSERT(p->children.empty())
-	ASSERT(p->value.subtree_size == 0)
+	utki::assert(p->children.empty());
+	utki::assert(p->value.subtree_size == 0);
 }
 
 void tree_view::provider_base::set_children(
@@ -483,7 +483,7 @@ void tree_view::provider_base::set_children(
 )
 {
 	auto index = i.index();
-	ASSERT(this->traversal().is_valid(index));
+	utki::assert(this->traversal().is_valid(index));
 
 	auto old_subtree_size = i->value.subtree_size;
 
@@ -494,7 +494,7 @@ void tree_view::provider_base::set_children(
 		p = &p->children[t];
 	}
 
-	ASSERT(p == i.operator->())
+	utki::assert(p == i.operator->());
 
 	i->children.clear();
 	i->children.resize(num_children);
@@ -503,7 +503,7 @@ void tree_view::provider_base::set_children(
 
 void tree_view::provider_base::collapse(utki::span<const size_t> index)
 {
-	ASSERT(this->traversal().is_valid(index))
+	utki::assert(this->traversal().is_valid(index));
 
 	auto i = this->traversal().make_iterator(index);
 
@@ -526,7 +526,7 @@ void tree_view::provider_base::collapse(utki::span<const size_t> index)
 
 	this->remove_children(i);
 
-	ASSERT(this->traversal().is_valid(ii))
+	utki::assert(this->traversal().is_valid(ii));
 	this->iter = this->traversal().make_iterator(ii);
 
 	this->on_list_model_changed();
@@ -539,10 +539,10 @@ void tree_view::provider_base::expand(utki::span<const size_t> index)
 		return;
 	}
 
-	ASSERT(this->traversal().is_valid(index))
+	utki::assert(this->traversal().is_valid(index));
 	auto i = this->traversal().make_iterator(index);
 
-	ASSERT(i->value.subtree_size == 0)
+	utki::assert(i->value.subtree_size == 0);
 
 	if (this->iter > i) {
 		this->iter_index += num_children;
@@ -587,7 +587,7 @@ void tree_view::provider_base::notify_item_added(utki::span<const size_t> index)
 		if (parent_index.empty()) { // if added to root node
 			return &this->visible_tree.children;
 		} else {
-			ASSERT(this->traversal().is_valid(parent_index))
+			utki::assert(this->traversal().is_valid(parent_index));
 			auto parent_iter = this->traversal().make_iterator(parent_index);
 			return &parent_iter->children;
 		}
@@ -706,20 +706,26 @@ void tree_view::provider_base::notify_item_removed(utki::span<const size_t> inde
 		}
 	}
 
-	// TODO: this assert failed once when removing an item from test/app tree_view
-	// to reproduce, try to unfold all items and then remove some item
-	ASSERT(this->traversal().is_valid(cur_iter_index))
+	// TODO: this assert failed once when removing an item from test/app1 tree_view
+	// to reproduce, try to unfold all items and then remove some item.
+	// Other reproduction steps: remove all items, when removing last one the assert triggers.
+	// Other reproduction steps:
+	//   1. unfold root1
+	//   2. unfold subroot3
+	//   3. unfold subsubroot1
+	//   4. remove subroot3
+	utki::assert(this->traversal().is_valid(cur_iter_index));
 
 	utki::assert(cur_iter_index.size() != 0, SL);
 	while (cur_iter_index.size() != 1) {
 		auto parent_iter_span = utki::make_span(cur_iter_index.data(), cur_iter_index.size() - 1);
-		ASSERT(this->traversal().is_valid(parent_iter_span));
+		utki::assert(this->traversal().is_valid(parent_iter_span));
 		auto parent_iter = this->traversal().make_iterator(parent_iter_span);
 		if (parent_iter->children.size() != cur_iter_index.back()) {
 			break;
 		}
 		cur_iter_index.pop_back();
-		ASSERT(!cur_iter_index.empty())
+		utki::assert(!cur_iter_index.empty());
 		++cur_iter_index.back();
 	}
 	this->iter = this->traversal().make_iterator(cur_iter_index);
