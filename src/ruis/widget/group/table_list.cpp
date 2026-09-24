@@ -109,16 +109,15 @@ table_list::table_list(
 					.dims = {ruis::dim::fill, ruis::dim::fill},
 					.weight = 1
 				},
-				.widget{
-					.clip = true
-				},
-				.list_params{
-					.provider = [&]() -> utki::shared_ref<list_provider> {
-						return utki::make_shared<table_list::list_provider_for_table_list>(
-							*this,
-							std::move(params.table_list_params.provider)
-						);
-					}()
+				.params{
+					.specific{
+						.provider = [&]() -> utki::shared_ref<list_provider> {
+							return utki::make_shared<table_list::list_provider_for_table_list>(
+								*this,
+								std::move(params.table_list_params.provider)
+							);
+						}()
+					}
 				}
 			}
 		),

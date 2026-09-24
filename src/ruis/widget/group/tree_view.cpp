@@ -69,13 +69,16 @@ tree_view::tree_view( //
 		std::move(params.widget)
 	),
 	// clang-format off
-	list(
-		context,
+	list(context,
 		{
-			.oriented_params{.vertical = true},
-		 	.list_params{
-				.provider = utki::make_shared<tree_view::list_provider_for_tree_view>(std::move(params.tree_view_params.provider))
-		 	}
+			.params{
+				.oriented{
+					.vertical = true
+				},
+				.specific{
+					.provider = utki::make_shared<tree_view::list_provider_for_tree_view>(std::move(params.tree_view_params.provider))
+				}
+			}
 		}
 	)
 // clang-format on

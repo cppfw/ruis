@@ -65,74 +65,76 @@ utki::shared_ref<ruis::window> make_vertical_list_window(
                             .widget{
                                 .id = "list"s
                             },
-                            .list_params{
-                                .provider = [&c](){
-                                    class the_provider : public ruis::list_provider{
-                                        std::vector<std::u32string> items;
-                                    public:
-                                        the_provider(const utki::shared_ref<ruis::context>& context) :
-                                            list_provider(context),
-                                            items{
-                                                U"item0"s,
-                                                U"item_1_iequwgfiew"s,
-                                                U"item_2_werf"s,
-                                                U"item3"s,
-                                                U"item_4"s,
-                                                U"item_5"s,
-                                                U"item_6"s,
-                                                U"item_7"s,
-                                                U"item_8"s,
-                                                U"item_9_qrgfwergerwggergergergergergergergergqergwergwergerwgewrg"s,
-                                                U"item_10"s,
-                                                U"item_4"s,
-                                                U"item_5"s,
-                                                U"item_6"s,
-                                                U"item_7"s,
-                                                U"item_8"s,
-                                                U"item_4"s,
-                                                U"item_5"s,
-                                                U"item_6"s,
-                                                U"item_7"s,
-                                                U"item_8"s,
-                                                U"item_4"s,
-                                                U"item_5"s,
-                                                U"item_6"s,
-                                                U"item_7"s,
-                                                U"item_8"s,
-                                                U"item_4"s,
-                                                U"item_5"s,
-                                                U"item_6"s,
-                                                U"item_7"s,
-                                                U"item_8"s,
-                                            }
-                                        {}
+                            .params{
+                                .specific{
+                                    .provider = [&c](){
+                                        class the_provider : public ruis::list_provider{
+                                            std::vector<std::u32string> items;
+                                        public:
+                                            the_provider(const utki::shared_ref<ruis::context>& context) :
+                                                list_provider(context),
+                                                items{
+                                                    U"item0"s,
+                                                    U"item_1_iequwgfiew"s,
+                                                    U"item_2_werf"s,
+                                                    U"item3"s,
+                                                    U"item_4"s,
+                                                    U"item_5"s,
+                                                    U"item_6"s,
+                                                    U"item_7"s,
+                                                    U"item_8"s,
+                                                    U"item_9_qrgfwergerwggergergergergergergergergqergwergwergerwgewrg"s,
+                                                    U"item_10"s,
+                                                    U"item_4"s,
+                                                    U"item_5"s,
+                                                    U"item_6"s,
+                                                    U"item_7"s,
+                                                    U"item_8"s,
+                                                    U"item_4"s,
+                                                    U"item_5"s,
+                                                    U"item_6"s,
+                                                    U"item_7"s,
+                                                    U"item_8"s,
+                                                    U"item_4"s,
+                                                    U"item_5"s,
+                                                    U"item_6"s,
+                                                    U"item_7"s,
+                                                    U"item_8"s,
+                                                    U"item_4"s,
+                                                    U"item_5"s,
+                                                    U"item_6"s,
+                                                    U"item_7"s,
+                                                    U"item_8"s,
+                                                }
+                                            {}
 
-                                        size_t count()const noexcept override{
-                                            return this->items.size();
-                                        }
-
-                                        utki::shared_ref<ruis::widget> get_widget(size_t index) override{
-                                            if(index == 3){
-                                                return m::push_button(this->context,
-                                                    {},
-                                                    {
-                                                        m::text(this->context,
-                                                            {
-                                                                .params{
-                                                                    .color = 0xff0000ff
-                                                                }
-                                                            },
-                                                            this->items.at(index)
-                                                        )
-                                                    }
-                                                );
-                                            }else{
-                                                return m::text(this->context, {}, this->items.at(index));
+                                            size_t count()const noexcept override{
+                                                return this->items.size();
                                             }
-                                        }
-                                    };
-                                    return utki::make_shared<the_provider>(c);
-                                }()
+
+                                            utki::shared_ref<ruis::widget> get_widget(size_t index) override{
+                                                if(index == 3){
+                                                    return m::push_button(this->context,
+                                                        {},
+                                                        {
+                                                            m::text(this->context,
+                                                                {
+                                                                    .params{
+                                                                        .color = 0xff0000ff
+                                                                    }
+                                                                },
+                                                                this->items.at(index)
+                                                            )
+                                                        }
+                                                    );
+                                                }else{
+                                                    return m::text(this->context, {}, this->items.at(index));
+                                                }
+                                            }
+                                        };
+                                        return utki::make_shared<the_provider>(c);
+                                    }()
+                                }
                             }
                         }
                     )

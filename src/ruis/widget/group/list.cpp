@@ -34,7 +34,12 @@ list::list(
 	widget( //
 		context,
 		std::move(params.layout_params),
-		std::move(params.widget)
+		[&]() {
+			if (!params.widget.clip.has_value()) {
+				params.widget.clip = true;
+			}
+			return std::move(params.widget);
+		}()
 	),
 	// clang-format off
 	ruis::container(
@@ -47,10 +52,10 @@ list::list(
 		{}
 	),
 	// clang-format on
-	oriented(std::move(params.oriented_params)),
+	oriented(std::move(params.params.oriented)),
 	list_widget(
 		context, //
-		std::move(params.list_params)
+		std::move(params.params.specific)
 	)
 {}
 

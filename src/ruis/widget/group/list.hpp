@@ -61,12 +61,15 @@ class list :
 	real first_tail_item_dim = real(0);
 
 public:
-	// TODO: specific_parameters
+	struct parameters {
+		ruis::oriented::parameters oriented;
+		ruis::list_widget::parameters specific;
+	};
+
 	struct all_parameters {
 		ruis::layout_parameters layout_params;
 		ruis::widget::parameters widget;
-		oriented::parameters oriented_params;
-		list_widget::parameters list_params;
+		parameters params;
 	};
 
 	// default clip parameter is true

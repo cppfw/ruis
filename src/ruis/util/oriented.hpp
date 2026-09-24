@@ -31,7 +31,7 @@ namespace ruis {
  * This is a base class for widgets which can be either vertical or horizontal, like lists or sliders.
  */
 // TODO: doxygen
-class oriented // TODO: should it be widget?
+class oriented
 {
 public:
 	struct parameters {
@@ -40,6 +40,11 @@ public:
 
 private:
 	parameters params;
+
+protected:
+	oriented(parameters params) :
+		params(std::move(params))
+	{}
 
 public:
 	unsigned get_long_index() const noexcept
@@ -60,10 +65,6 @@ public:
 			return {0, 1};
 		}
 	}
-
-	oriented(parameters params) :
-		params(std::move(params))
-	{}
 
 	bool is_vertical() const noexcept
 	{
