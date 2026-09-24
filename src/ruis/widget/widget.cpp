@@ -169,7 +169,7 @@ void widget::render_internal(const ruis::mat4& matrix) const
 
 	auto& r = this->context.get().renderer.get();
 
-	if (this->params.cache) {
+	if (this->is_cache_enabled()) {
 		if (this->cache_dirty) {
 			utki::scope_exit scissor_test_enabled_scope_exit(
 				[&r, scissor_test_was_enabled = r.rendering_context.get().is_scissor_enabled()]() {
@@ -188,12 +188,12 @@ void widget::render_internal(const ruis::mat4& matrix) const
 
 		this->render_from_cache(matrix);
 	} else {
-		if (this->params.depth) {
+		if (this->is_depth_enabled()) {
 			r.rendering_context.get().enable_depth(true);
 			r.rendering_context.get().clear_framebuffer_depth();
 		}
 
-		if (this->params.clip) {
+		if (this->is_clip_enabled()) {
 			r4::rectangle<uint32_t> scissor = this->compute_viewport_rect(matrix);
 
 			r4::rectangle<uint32_t> old_scissor{};
@@ -256,7 +256,7 @@ utki::shared_ref<render::frame_buffer> widget::render_to_texture(std::shared_ptr
 				dims,
 				{}
 			),
-			this->params.depth ? r.rendering_context.get().make_texture_depth(dims)
+			this->is_depth_enabled() ? r.rendering_context.get().make_texture_depth(dims)
 							   : std::shared_ptr<ruis::render::texture_depth>(nullptr),
 			nullptr
 		);
@@ -268,9 +268,9 @@ utki::shared_ref<render::frame_buffer> widget::render_to_texture(std::shared_ptr
 		utki::scope_exit depth_scope_exit([old_depth = r.rendering_context.get().is_depth_enabled(), &r]() {
 			r.rendering_context.get().enable_depth(old_depth);
 		});
-		r.rendering_context.get().enable_depth(this->params.depth);
+		r.rendering_context.get().enable_depth(this->is_depth_enabled());
 
-		if (this->params.depth) {
+		if (this->is_depth_enabled()) {
 			r.rendering_context.get().clear_framebuffer_depth();
 		}
 
@@ -286,8 +286,8 @@ void widget::render_from_cache(const mat4& matrix) const
 	matr.scale(this->rect().d);
 
 	auto& r = this->context.get().renderer.get();
-	ASSERT(this->cache_frame_buffer)
-	ASSERT(this->cache_frame_buffer->color)
+	utki::assert(this->cache_frame_buffer);
+	utki::assert(this->cache_frame_buffer->color);
 	r.shaders().pos_tex->render(
 		matr, //
 		r.obj().pos_tex_quad_01_vao.get(),
@@ -415,7 +415,7 @@ widget& widget::get_widget(std::string_view id, bool allow_itself)
 void widget::set_enabled(bool enable)
 {
 	//	TRACE(<< "widget::set_enabled(): enable = " << enable << " this->name() = " << this->name()<< std::endl)
-	if (this->params.enabled == enable) {
+	if (this->params.enabled.has_value() && this->params.enabled == enable) {
 		return;
 	}
 
@@ -432,7 +432,7 @@ void widget::set_enabled(bool enable)
 void widget::set_visible(bool visible)
 {
 	this->params.visible = visible;
-	if (!this->params.visible) {
+	if (!this->is_visible()) {
 		this->set_unhovered();
 	}
 }

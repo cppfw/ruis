@@ -30,7 +30,12 @@ list::list(
 	widget(
 		context, //
 		std::move(params.layout_params),
-		std::move(params.widget)
+		[&](){
+			if(!params.widget.clip.has_value()){
+				params.widget.clip = true;
+			}
+			return std::move(params.widget);
+		}()
 	),
 	ruis::list(context, std::move(params)),
 	flickable(context)

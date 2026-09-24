@@ -26,6 +26,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis::touch {
 
+// TODO: doxygen
+
 class list :
 	public ruis::list, //
 	private flickable

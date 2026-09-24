@@ -28,6 +28,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
+// TODO: doxygen
+
 /**
  * @brief Scrollable list widget.
  * This is a base class for vertical and horizontal lists.
@@ -59,6 +61,7 @@ class list :
 	real first_tail_item_dim = real(0);
 
 public:
+	// TODO: specific_parameters
 	struct all_parameters {
 		ruis::layout_parameters layout_params;
 		ruis::widget::parameters widget;
@@ -66,6 +69,7 @@ public:
 		list_widget::parameters list_params;
 	};
 
+	// default clip parameter is true
 	list(
 		const utki::shared_ref<ruis::context>& context, //
 		all_parameters params

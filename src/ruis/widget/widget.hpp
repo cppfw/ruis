@@ -24,6 +24,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <memory>
 #include <set>
 #include <string>
+#include <optional>
 
 #include <r4/matrix.hpp>
 #include <r4/rectangle.hpp>
@@ -107,7 +108,7 @@ public:
 	 */
 	bool is_clip_enabled() const noexcept
 	{
-		return this->params.clip;
+		return this->params.clip.value_or(false);
 	}
 
 	/**
@@ -469,28 +470,33 @@ public:
 
 		/**
 		 * @brief Clip widgets contents by widget's border.
+		 * Defaults to false if undefined.
 		 */
-		bool clip = false;
+		std::optional<bool> clip;
 
 		/**
 		 * @brief Enable caching widget's image to texture.
+		 * Defaults to false if undefined.
 		 */
-		bool cache = false;
+		std::optional<bool> cache;
 
 		/**
 		 * @brief Visibility of the widget.
+		 * Defaults to true if undefined.
 		 */
-		bool visible = true;
+		std::optional<bool> visible;
 
 		/**
 		 * @brief Widget's enabled state.
+		 * Defaults to true if undefined.
 		 */
-		bool enabled = true;
+		std::optional<bool> enabled;
 
 		/**
 		 * @brief Usage of depth buffer for rendering the widget.
+		 * Defaults to false if undefined.
 		 */
-		bool depth = false;
+		std::optional<bool> depth;
 	};
 
 	struct all_parameters {
@@ -653,7 +659,7 @@ public:
 	 */
 	bool is_visible() const noexcept
 	{
-		return this->params.visible;
+		return this->params.visible.value_or(true);
 	}
 
 	/**
@@ -669,7 +675,7 @@ public:
 	 */
 	bool is_enabled() const noexcept
 	{
-		return this->params.enabled;
+		return this->params.enabled.value_or(true);
 	}
 
 	/**
@@ -686,6 +692,24 @@ public:
 	bool is_interactive() const noexcept
 	{
 		return this->is_enabled() && this->is_visible();
+	}
+
+	/**
+	 * @brief Check if the widget uses depth buffer.
+	 * @return true if the widget uses depth buffer for rendering.
+	 * @return false otherwise.
+	 */
+	bool is_depth_enabled() const noexcept{
+		return this->params.depth.value_or(false);
+	}
+
+	/**
+	 * @brief Check if the widget caches its rendered image.
+	 * @return true if the widget uses render caching.
+	 * @return false otherwise.
+	 */
+	bool is_cache_enabled() const noexcept{
+		return this->params.cache.value_or(false);
 	}
 
 	/**
