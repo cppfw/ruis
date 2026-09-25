@@ -157,6 +157,8 @@ public:
 
 	event_status on_key(const ruis::key_event& e) override;
 
+	void on_text_change() override;
+
 	void on_resize() override;
 
 	void update(uint32_t dt) override;

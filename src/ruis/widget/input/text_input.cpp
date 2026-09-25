@@ -208,17 +208,20 @@ void text_input::set_cursor_index(
 		this->selection_start_index = this->cursor_index;
 	}
 
-	utki::scope_exit cursor_index_scope_exit([this]() {
-		this->selection_start_pos = this->index_to_pos(this->selection_start_index);
-
-		if (!this->is_focused()) {
-			this->focus();
-		}
-		this->start_cursor_blinking();
-	});
-
 	//	TRACE(<< "selection_start_index = " << this->selection_start_index << std::endl)
 
+	this->update_cursor_pos_based_on_index();
+
+	this->selection_start_pos = this->index_to_pos(this->selection_start_index);
+
+	if (!this->is_focused()) {
+		this->focus();
+	}
+	this->start_cursor_blinking();
+}
+
+void text_input::update_cursor_pos_based_on_index()
+{
 	if (this->cursor_index <= this->first_visible_char_index) {
 		this->first_visible_char_index = this->cursor_index;
 		this->x_offset = 0;
@@ -257,6 +260,21 @@ void text_input::set_cursor_index(
 			--this->first_visible_char_index;
 		}
 	}
+}
+
+void text_input::on_text_change()
+{
+	text_string_widget::on_text_change();
+
+	using std::min;
+	const auto size = this->get_string().get().size();
+
+	this->cursor_index = min(this->cursor_index, size);
+	this->selection_start_index = min(this->selection_start_index, size);
+	this->first_visible_char_index = min(this->first_visible_char_index, size);
+
+	this->update_cursor_pos_based_on_index();
+	this->selection_start_pos = this->index_to_pos(this->selection_start_index);
 }
 
 real text_input::index_to_pos(size_t index)
@@ -430,9 +448,8 @@ void text_input::on_character_input(const character_input_event& e)
 			} else {
 				if (this->cursor_index != 0) {
 					auto t = this->get_string().get();
-					this->clear();
 					t.erase(utki::next(t.begin(), this->cursor_index - 1));
-					this->set_string(std::move(t));
+					this->set_string_no_notify(std::move(t));
 					this->set_cursor_index(this->cursor_index - 1);
 				}
 			}
@@ -443,9 +460,9 @@ void text_input::on_character_input(const character_input_event& e)
 			} else {
 				if (this->cursor_index < this->get_string().get().size()) {
 					auto t = this->get_string().get();
-					this->clear();
 					t.erase(utki::next(t.begin(), this->cursor_index));
-					this->set_string(std::move(t));
+					this->set_string_no_notify(std::move(t));
+					this->set_cursor_index(this->cursor_index);
 				}
 			}
 			this->start_cursor_blinking();
@@ -476,9 +493,8 @@ void text_input::on_character_input(const character_input_event& e)
 					}
 
 					auto t = this->get_string().get();
-					this->clear();
 					t.insert(utki::next(t.begin(), this->cursor_index), e.string.begin(), e.string.end());
-					this->set_string(std::move(t));
+					this->set_string_no_notify(std::move(t));
 
 					this->set_cursor_index(this->cursor_index + e.string.size());
 				}
@@ -503,9 +519,8 @@ size_t text_input::delete_selection()
 	}
 
 	auto t = this->get_string().get();
-	this->clear();
 	t.erase(utki::next(t.begin(), start), utki::next(t.begin(), end));
-	this->set_string(std::move(t));
+	this->set_string_no_notify(std::move(t));
 
 	return start;
 }

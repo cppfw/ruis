@@ -74,6 +74,13 @@ protected:
 
 	void recompute_bounding_box();
 
+	/**
+	 * @brief Set text without triggering the on_text_change() hook nor the text_change_handler.
+	 * Intended for internal use by subclasses that update the text as part of an edit
+	 * and manage cursor/selection state themselves.
+	 */
+	void set_string_no_notify(string text);
+
 public:
 	/**
 	 * @brief Set text.
@@ -103,14 +110,6 @@ public:
 	void on_reload() override;
 
 	std::function<void(text_string_widget& w)> text_change_handler;
-
-private:
-	void notify_text_change()
-	{
-		if (this->text_change_handler) {
-			this->text_change_handler(*this);
-		}
-	}
 };
 
 } // namespace ruis

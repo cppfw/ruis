@@ -72,14 +72,21 @@ vec2 text_string_widget::measure(const ruis::vec2& quotum) const noexcept
 
 void text_string_widget::on_text_change()
 {
+	if (this->text_change_handler) {
+		this->text_change_handler(*this);
+	}
+}
+
+void text_string_widget::set_string_no_notify(string text)
+{
+	this->text_string = std::move(text);
+	this->invalidate_layout(); // TODO: do not invalidate in text_input?
 	this->recompute_bounding_box();
-	this->notify_text_change();
 }
 
 void text_string_widget::set_string(string text)
 {
-	this->text_string = std::move(text);
-	this->invalidate_layout(); // TODO: do not invalidate in text_input?
+	this->set_string_no_notify(std::move(text));
 	this->on_text_change();
 }
 
