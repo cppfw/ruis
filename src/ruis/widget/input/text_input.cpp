@@ -445,24 +445,28 @@ void text_input::on_character_input(const character_input_event& e)
 		case ruis::key::backspace:
 			if (this->there_is_selection()) {
 				this->set_cursor_index(this->delete_selection());
+				this->on_text_change();
 			} else {
 				if (this->cursor_index != 0) {
 					auto t = this->get_string().get();
 					t.erase(utki::next(t.begin(), this->cursor_index - 1));
 					this->set_string_no_notify(std::move(t));
 					this->set_cursor_index(this->cursor_index - 1);
+					this->on_text_change();
 				}
 			}
 			break;
 		case ruis::key::deletion:
 			if (this->there_is_selection()) {
 				this->set_cursor_index(this->delete_selection());
+				this->on_text_change();
 			} else {
 				if (this->cursor_index < this->get_string().get().size()) {
 					auto t = this->get_string().get();
 					t.erase(utki::next(t.begin(), this->cursor_index));
 					this->set_string_no_notify(std::move(t));
 					this->set_cursor_index(this->cursor_index);
+					this->on_text_change();
 				}
 			}
 			this->start_cursor_blinking();
@@ -497,6 +501,7 @@ void text_input::on_character_input(const character_input_event& e)
 					this->set_string_no_notify(std::move(t));
 
 					this->set_cursor_index(this->cursor_index + e.string.size());
+					this->on_text_change();
 				}
 			}
 
