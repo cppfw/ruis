@@ -23,7 +23,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../../util/localization.hpp"
 
-#include "text_widget.hpp"
+#include "color_widget.hpp"
+#include "font_widget.hpp"
 
 namespace ruis {
 
