@@ -165,6 +165,11 @@ styled<color> style_provider::get_color_text_secondary() const
 	return this->get<color>(style::color_text_secondary);
 }
 
+styled<color> style_provider::get_color_text_special() const
+{
+	return this->get<color>(style::color_text_special);
+}
+
 styled<color> style_provider::get_color_secondary() const
 {
 	return this->get<color>(style::color_secondary);

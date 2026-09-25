@@ -12,6 +12,7 @@ ruis{
 
     color_text{0xff000000}
     color_text_secondary{0xff616161}
+    color_text_special{0xff80ff80}
 
     len_indent{17pp}
     len_gap_small{4pp}

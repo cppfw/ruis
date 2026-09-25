@@ -38,6 +38,8 @@ style style_sheet::name_to_style(std::string_view name)
 		return style::color_text;
 	} else if (name == "color_text_secondary"sv) {
 		return style::color_text_secondary;
+	} else if (name == "color_text_special"sv) {
+		return style::color_text_special;
 	} else if (name == "color_secondary"sv) {
 		return style::color_secondary;
 	} else if (name == "color_highlight"sv) {
@@ -137,6 +139,7 @@ const utki::enum_array<tml::forest, style>& default_style_forests()
 		d[style::color_dimmed] = tml::read("0xb0000000");
 		d[style::color_text] = tml::read("0xffffffff");
 		d[style::color_text_secondary] = tml::read("0xffa0a0a0");
+		d[style::color_text_special] = tml::read("0xff80ff80");
 		d[style::len_indent] = tml::read("17pp");
 		d[style::len_gap_small] = tml::read("4pp");
 		d[style::len_gap] = tml::read("8pp");

@@ -42,6 +42,7 @@ enum class style {
 
 	color_text,
 	color_text_secondary,
+	color_text_special,
 
 	len_indent,
 	len_gap_small,

@@ -34,6 +34,7 @@ const tst::set set("style", [](tst::suite& suite){
                     color_primary{0xff505050}
 
                     color_text{0xffffffff}
+                    color_text_special{0xff0000ff}
 
                     color_highlight{0xffad9869}
 
@@ -47,6 +48,9 @@ const tst::set set("style", [](tst::suite& suite){
 
         auto& color_bg = ss.get(ruis::style::color_background);
         tst::check_eq(tml::to_string(color_bg), "0xff353535"s);
+
+        auto& color_tv_special = ss.get(ruis::style::color_text_special);
+        tst::check_eq(tml::to_string(color_tv_special), "0xff0000ff"s, SL);
 
         auto& length_tv_indent = ss.get(ruis::style::len_indent);
         tst::check_eq(tml::to_string(length_tv_indent), "17pp"s, SL);
@@ -65,6 +69,7 @@ const tst::set set("style", [](tst::suite& suite){
             ruis{
                 color_background{0xff353535}
                 color_primary{0xff505050}
+                color_text_special{0xff00ff11}
 
                 color_highlight{0xffad9869}
 
@@ -86,6 +91,9 @@ const tst::set set("style", [](tst::suite& suite){
 
         auto color_bg = s.get_color_background();
         tst::check_eq(color_bg.get(), ruis::color(0xff353535), SL);
+
+        auto color_tv_special = s.get_color_text_special();
+        tst::check_eq(color_tv_special.get(), ruis::color(0xff00ff11), SL);
 
         auto length_ident = s.get_len_indent();
         tst::check_eq(length_ident.get(), ruis::length::make_pp(17), SL);
@@ -269,6 +277,7 @@ const tst::set set("style", [](tst::suite& suite){
         tst::check_eq(tml::to_string(ss.get(ruis::style::color_dimmed)), "0xb0000000"s, SL);
         tst::check_eq(tml::to_string(ss.get(ruis::style::color_text)), "0xffffffff"s, SL);
         tst::check_eq(tml::to_string(ss.get(ruis::style::color_text_secondary)), "0xffa0a0a0"s, SL);
+        tst::check_eq(tml::to_string(ss.get(ruis::style::color_text_special)), "0xff80ff80"s, SL);
         tst::check_eq(tml::to_string(ss.get(ruis::style::len_indent)), "17pp"s, SL);
         tst::check_eq(tml::to_string(ss.get(ruis::style::len_gap_small)), "4pp"s, SL);
         tst::check_eq(tml::to_string(ss.get(ruis::style::len_gap)), "8pp"s, SL);
@@ -294,6 +303,7 @@ const tst::set set("style", [](tst::suite& suite){
                 color_dimmed{0xff789abc}
                 color_text{0xff89abcd}
                 color_text_secondary{0xff9abcde}
+                color_text_special{0xffabcdef}
                 len_indent{20pp}
                 len_gap_small{6pp}
                 len_gap{12pp}
@@ -318,6 +328,7 @@ const tst::set set("style", [](tst::suite& suite){
         tst::check_eq(tml::to_string(ss.get(ruis::style::color_dimmed)), "0xff789abc"s, SL);
         tst::check_eq(tml::to_string(ss.get(ruis::style::color_text)), "0xff89abcd"s, SL);
         tst::check_eq(tml::to_string(ss.get(ruis::style::color_text_secondary)), "0xff9abcde"s, SL);
+        tst::check_eq(tml::to_string(ss.get(ruis::style::color_text_special)), "0xffabcdef"s, SL);
         tst::check_eq(tml::to_string(ss.get(ruis::style::len_indent)), "20pp"s, SL);
         tst::check_eq(tml::to_string(ss.get(ruis::style::len_gap_small)), "6pp"s, SL);
         tst::check_eq(tml::to_string(ss.get(ruis::style::len_gap)), "12pp"s, SL);
