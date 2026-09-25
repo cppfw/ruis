@@ -112,7 +112,7 @@ public:
 	};
 
 	struct parameters {
-		text_widget::parameters text;
+		text_string_widget::parameters text;
 		specific_parameters specific;
 	};
 

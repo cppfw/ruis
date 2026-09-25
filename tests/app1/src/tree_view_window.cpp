@@ -202,7 +202,7 @@ public:
             {
                 auto value = v.get().try_get_widget_as<ruis::text>("value");
                 ASSERT(value)
-                value->set_text(
+                value->set_string(
                         n->value.string // NOLINT(clang-analyzer-core.CallAndMessage): due to ASSERT(!path.empty()) in the beginning of the function 'n' is not nullptr
                     );
             }

@@ -38,7 +38,7 @@ public:
 	struct all_parameters {
 		ruis::layout_parameters layout_params;
 		ruis::widget::parameters widget;
-		text_widget::parameters params;
+		text_string_widget::parameters params;
 	};
 
 	text(

@@ -39,20 +39,20 @@ labeled_rectangle_text_field::labeled_rectangle_text_field(
 		params,
 		ruis::make::text(
 			context, //
+			// clang-format off
 			{
 				.layout_params{
-							   .dims = {ruis::dim::fill, ruis::dim::min},
-							   .align = {ruis::align::front, ruis::align::center}
+					.dims = {ruis::dim::fill, ruis::dim::min},
+					.align = {ruis::align::front, ruis::align::center}
 				},
-				.params =
-					[&]() {
-						if (auto& c = params.params.label.text.color; c.get().is_undefined()) {
-							c = context.get().style().get_color_text();
-						}
-						return std::move(params.params.label.text);
-							   }
-                ()
-},
+				.params = [&]() {
+					if (auto& c = params.params.label.text.color; c.get().is_undefined()) {
+						c = context.get().style().get_color_text();
+					}
+					return std::move(params.params.label.text);
+				}()
+			},
+			// clang-format on
 			std::move(params.params.label.string)
 		),
 		ruis::make::rectangle_text_field(

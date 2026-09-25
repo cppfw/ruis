@@ -113,7 +113,8 @@ public:
 	std::function<void(text_widget& w)> text_change_handler;
 
 private:
-	void notify_text_change(){
+	void notify_text_change()
+	{
 		if (this->text_change_handler) {
 			this->text_change_handler(*this);
 		}

@@ -74,7 +74,7 @@ utki::shared_ref<ruis::tab> inflate_tab(ruis::tabbed_book& tb, const std::string
 	);
 	// clang-format on
 
-	t.get().get_widget_as<ruis::text>("text").set_text(name);
+	t.get().get_widget_as<ruis::text>("text").set_string(name);
 
 	auto& close_btn = t.get().get_widget_as<ruis::push_button>("close_button");
 	

@@ -337,7 +337,7 @@ public:
 		// text_input
 		{
 			auto& l = c.get().get_widget("text_input").get_widget<ruis::text_input>();
-			utki::assert(!l.get_text().empty(), SL);
+			utki::assert(!l.get_string().get().empty(), SL);
 		}
 
 		// fullscreen
@@ -379,7 +379,7 @@ public:
 					std::stringstream ss;
 					ss << "index_" << dds.get_selection();
 
-					t->set_text(ss.str());
+					t->set_string(ss.str());
 				}
 			};
 		}

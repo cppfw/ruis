@@ -32,7 +32,7 @@ class labeled_widget : virtual public widget
 
 public:
 	struct parameters {
-		text_widget::parameters text;
+		text_string_widget::parameters text;
 		ruis::string string;
 	};
 

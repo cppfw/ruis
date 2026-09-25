@@ -44,7 +44,7 @@ sample_page::sample_page(
 	)
 	// clang-format on
 {
-	this->get_widget_as<ruis::text>("text").set_text(text);
+	this->get_widget_as<ruis::text>("text").set_string(text);
 
 	this->get_widget_as<ruis::push_button>("button").click_handler = [this](ruis::push_button&){
 		this->context.get().post_to_ui_thread([pg = utki::make_shared_from(*this)]{

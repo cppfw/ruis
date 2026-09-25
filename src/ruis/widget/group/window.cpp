@@ -692,12 +692,12 @@ void ruis::window::setup_widgets()
 
 void ruis::window::set_title(const std::string& str)
 {
-	this->title->set_text(utki::to_utf32(str));
+	this->title->set_string(utki::to_utf32(str));
 }
 
 void ruis::window::set_title(std::u32string str)
 {
-	this->title->set_text(std::move(str));
+	this->title->set_string(std::move(str));
 }
 
 void ruis::window::set_borders(sides<length> borders)

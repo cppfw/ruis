@@ -60,7 +60,7 @@ void text::render(const ruis::mat4& matrix) const
 		this->ctx().ren(), //
 		matr,
 		this->get_color(),
-		this->get_string()
+		this->get_string().get()
 	);
 }
 

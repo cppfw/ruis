@@ -25,7 +25,7 @@ using namespace ruis;
 
 text_string_widget::text_string_widget(
 	const utki::shared_ref<ruis::context>& context,
-	text_widget::parameters text_params,
+	parameters params,
 	string text
 ) :
 	widget(
@@ -33,18 +33,28 @@ text_string_widget::text_string_widget(
 		{},
 		{}
 	),
-	text_widget(
+	color_widget(
 		context, //
-		std::move(text_params)
+		[&]() {
+			if (params.color.get().is_undefined()) {
+				params.color = context.get().style().get_color_text();
+			}
+			return std::move(params.color);
+		}()
 	),
-	text_string(std::move(text))
+	font_widget(
+		context, //
+		std::move(params.font)
+	),
+	text_string(std::move(text)),
+	params(std::move(params.specific))
 {
 	this->recompute_bounding_box();
 }
 
 void text_string_widget::recompute_bounding_box()
 {
-	this->bb = this->get_font().get_bounding_box(this->get_string());
+	this->bb = this->get_font().get_bounding_box(this->get_string().get());
 }
 
 vec2 text_string_widget::measure(const ruis::vec2& quotum) const noexcept
@@ -63,29 +73,19 @@ vec2 text_string_widget::measure(const ruis::vec2& quotum) const noexcept
 void text_string_widget::on_text_change()
 {
 	this->recompute_bounding_box();
-	this->text_widget::on_text_change();
+	this->notify_text_change();
 }
 
-void text_string_widget::set_text(string text)
+void text_string_widget::set_string(string text)
 {
 	this->text_string = std::move(text);
-	this->invalidate_layout();
+	this->invalidate_layout(); // TODO: do not invalidate in text_input?
 	this->on_text_change();
 }
 
-void text_string_widget::set_text(std::u32string text)
+void text_string_widget::set_string(std::string text)
 {
-	this->set_text(string(text));
-}
-
-const std::u32string& text_string_widget::get_string() const noexcept
-{
-	return this->text_string.get();
-}
-
-std::u32string text_string_widget::get_text() const
-{
-	return this->get_string();
+	this->set_string(utki::to_utf32(text));
 }
 
 void text_string_widget::on_reload()
@@ -93,8 +93,8 @@ void text_string_widget::on_reload()
 	if (this->text_string.is_wording()) {
 		auto& w = this->text_string.get_wording();
 		auto new_wording = this->context.get().localization.get().reload(std::move(w));
-		this->set_text(std::move(new_wording));
+		this->set_string(std::move(new_wording));
 	}
 
-	this->text_widget::on_reload();
+	this->widget::on_reload();
 }

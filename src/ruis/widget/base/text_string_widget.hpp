@@ -28,18 +28,41 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 namespace ruis {
 
 // TODO: doxygen
-class text_string_widget : public text_widget
+class text_string_widget :
+	virtual public widget, //
+	public color_widget,
+	public font_widget
 {
 	mutable ruis::rect bb{};
 
 	string text_string;
 
+public:
+	struct specific_parameters {
+		constexpr static const auto default_selection_color = 0xff804040;
+		styled<ruis::color> selection_color = default_selection_color;
+	};
+
+	struct parameters {
+		styled<ruis::color> color;
+		font_widget::parameters font;
+		specific_parameters specific;
+	};
+
+private:
+	specific_parameters params;
+
 protected:
+	const specific_parameters& get_params() const noexcept
+	{
+		return this->params;
+	}
+
 	vec2 measure(const ruis::vec2& quotum) const noexcept override;
 
 	text_string_widget(
 		const utki::shared_ref<ruis::context>& context, //
-		text_widget::parameters text_params,
+		parameters params,
 		string text
 	);
 
@@ -50,35 +73,43 @@ protected:
 
 	void recompute_bounding_box();
 
+public:
 	/**
 	 * @brief Set text.
-	 * Public interface allows setting either explicit UTF-32 string or
-	 * localized wording. This is why this function is not public.
+	 * @param text - string to set.
 	 */
-	void set_text(string text);
+	void set_string(string text);
 
-public:
-	using text_widget::set_text;
+	void set_string(std::string text);
 
-	void set_text(std::u32string text) override;
+	const string& get_string() const
+	{
+		return this->text_string;
+	}
 
-	std::u32string get_text() const override;
-
-	/**
-	 * @brief Get actual text string.
-	 * Obtain reference to the actual displayed string of text.
-	 * @return Constant reference to the actual text string of the text_string_widget.
-	 */
-	const std::u32string& get_string() const noexcept;
+	void clear()
+	{
+		this->set_string(std::u32string());
+	}
 
 	void on_font_change() override
 	{
 		this->recompute_bounding_box();
 	}
 
-	void on_text_change() override;
+	virtual void on_text_change();
 
 	void on_reload() override;
+
+	std::function<void(text_string_widget& w)> text_change_handler;
+
+private:
+	void notify_text_change()
+	{
+		if (this->text_change_handler) {
+			this->text_change_handler(*this);
+		}
+	}
 };
 
 } // namespace ruis
