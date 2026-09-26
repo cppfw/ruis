@@ -1,26 +1,26 @@
-#include <utki/debug.hpp>
-
-#include <ruisapp/application.hpp>
-
-#include <ruis/widget/widget.hpp>
-#include <ruis/paint/path_vao.hpp>
-#include <ruis/paint/ellipse_vao.hpp>
-#include <ruis/paint/rectangle_vao.hpp>
 #include <ruis/paint/capsule_vao.hpp>
-#include <ruis/widget/label/padding.hpp>
-#include <ruis/widget/slider/scroll_bar.hpp>
-#include <ruis/widget/button/push_button.hpp>
-#include <ruis/widget/label/text.hpp>
+#include <ruis/paint/ellipse_vao.hpp>
+#include <ruis/paint/path_vao.hpp>
+#include <ruis/paint/rectangle_vao.hpp>
 #include <ruis/standard_widgets.hpp>
+#include <ruis/widget/button/push_button.hpp>
+#include <ruis/widget/label/padding.hpp>
+#include <ruis/widget/label/text.hpp>
+#include <ruis/widget/slider/scroll_bar.hpp>
+#include <ruis/widget/widget.hpp>
+#include <ruisapp/application.hpp>
+#include <utki/debug.hpp>
 
 using namespace std::string_literals;
 
 using namespace ruis::length_literals;
 
-class path_widget : virtual public ruis::widget{
+class path_widget : virtual public ruis::widget
+{
 	ruis::paint::path_vao vao;
+
 public:
-	struct all_parameters{
+	struct all_parameters {
 		ruis::layout_parameters layout_params;
 		ruis::widget::parameters widget;
 	};
@@ -30,46 +30,43 @@ public:
 		all_parameters params
 	) :
 		widget(
-			context,//
+			context, //
 			std::move(params.layout_params),
 			std::move(params.widget)
 		),
 		vao(context.get().renderer)
 	{}
 
-	void render(const ruis::mat4& matrix)const override{
+	void render(const ruis::mat4& matrix) const override
+	{
 		this->vao.render(matrix, 0xff00ffff);
 	}
 
-	void on_resize()override{
+	void on_resize() override
+	{
 		ruis::paint::path path;
 		path.line_to(this->rect().d / 2);
-		path.cubic_by(
-				ruis::vec2(this->rect().d.x() / 2, 0),
-				ruis::vec2(0, this->rect().d.y() / 2),
-				this->rect().d / 2
-			);
+		path.cubic_by(ruis::vec2(this->rect().d.x() / 2, 0), ruis::vec2(0, this->rect().d.y() / 2), this->rect().d / 2);
 		this->vao.set(path.stroke());
 	}
 };
 
-namespace make{
+namespace make {
 inline utki::shared_ref<::path_widget> path_widget(
 	const utki::shared_ref<ruis::context>& context,
 	::path_widget::all_parameters params
 )
 {
-	return utki::make_shared<::path_widget>(
-		context,
-		std::move(params)
-	);
+	return utki::make_shared<::path_widget>(context, std::move(params));
 }
-}
+} // namespace make
 
-class ellipse_widget : virtual public ruis::widget{
+class ellipse_widget : virtual public ruis::widget
+{
 	ruis::paint::ellipse_vao vao;
+
 public:
-	struct all_parameters{
+	struct all_parameters {
 		ruis::layout_parameters layout_params;
 		ruis::widget::parameters widget;
 	};
@@ -86,36 +83,37 @@ public:
 		vao(context.get().renderer)
 	{}
 
-	void render(const ruis::mat4& matrix)const override{
+	void render(const ruis::mat4& matrix) const override
+	{
 		this->vao.render(
 			matrix, //
 			0xff80ff80
 		);
 	}
 
-	void on_resize()override{
+	void on_resize() override
+	{
 		this->vao.set(this->rect().d);
 	}
 };
 
-namespace make{
+namespace make {
 inline utki::shared_ref<::ellipse_widget> ellipse_widget(
 	const utki::shared_ref<ruis::context>& context,
 	::ellipse_widget::all_parameters params
 )
 {
-	return utki::make_shared<::ellipse_widget>(
-		context,
-		std::move(params)
-	);
+	return utki::make_shared<::ellipse_widget>(context, std::move(params));
 }
-}
+} // namespace make
 
-class rectangle_widget : virtual public ruis::widget{
+class rectangle_widget : virtual public ruis::widget
+{
 	ruis::paint::rectangle_vao vao;
 	ruis::styled<ruis::color> color_params;
+
 public:
-	struct all_parameters{
+	struct all_parameters {
 		ruis::layout_parameters layout_params;
 		ruis::widget::parameters widget;
 		ruis::styled<ruis::color> color;
@@ -132,14 +130,13 @@ public:
 			std::move(params.layout_params),
 			std::move(params.widget)
 		),
-		vao(
-			context.get().renderer, //
-			std::move(params.rectangle_vao_params)
-		),
+		vao(context.get().renderer, //
+			std::move(params.rectangle_vao_params)),
 		color_params(std::move(params.color))
 	{}
 
-	void render(const ruis::mat4& matrix)const override{
+	void render(const ruis::mat4& matrix) const override
+	{
 		this->vao.render(
 			matrix, //
 			this->rect().d, //
@@ -148,26 +145,25 @@ public:
 	}
 };
 
-namespace make{
+namespace make {
 inline utki::shared_ref<::rectangle_widget> rectangle_widget(
 	const utki::shared_ref<ruis::context>& context,
 	::rectangle_widget::all_parameters params
 )
 {
-	return utki::make_shared<::rectangle_widget>(
-		context,
-		std::move(params)
-	);
+	return utki::make_shared<::rectangle_widget>(context, std::move(params));
 }
-}
+} // namespace make
 
-class capsule_widget : virtual public ruis::widget{
+class capsule_widget : virtual public ruis::widget
+{
 	ruis::paint::capsule_vao vao;
 	bool is_vertical;
 	ruis::length stroke_width;
 	ruis::color color;
+
 public:
-	struct all_parameters{
+	struct all_parameters {
 		ruis::layout_parameters layout_params;
 		ruis::widget::parameters widget;
 		bool is_vertical = false;
@@ -184,17 +180,16 @@ public:
 			std::move(params.layout_params),
 			std::move(params.widget)
 		),
-		vao(
-			context.get().renderer, //
+		vao(context.get().renderer, //
 			0,
-			0
-		),
+			0),
 		is_vertical(params.is_vertical),
 		stroke_width(params.stroke_width),
 		color(params.color)
 	{}
 
-	void render(const ruis::mat4& matrix)const override{
+	void render(const ruis::mat4& matrix) const override
+	{
 		this->vao.render(
 			matrix, //
 			this->color,
@@ -203,36 +198,34 @@ public:
 		);
 	}
 
-	void on_resize()override{
+	void on_resize() override
+	{
 		// diameter is the non-longitudinal dimension of the widget
 		auto d = this->rect().d;
 		this->vao.set(
 			this->is_vertical ? d.x() : d.y(), //
-			this->stroke_width.is_undefined()? 0 :
-			this->stroke_width.get(this->context)
+			this->stroke_width.is_undefined() ? 0 : this->stroke_width.get(this->context)
 		);
 	}
 };
 
-namespace make{
+namespace make {
 inline utki::shared_ref<::capsule_widget> capsule_widget(
 	const utki::shared_ref<ruis::context>& context,
 	::capsule_widget::all_parameters params
 )
 {
-	return utki::make_shared<::capsule_widget>(
-		context,
-		std::move(params)
-	);
+	return utki::make_shared<::capsule_widget>(context, std::move(params));
 }
-}
+} // namespace make
 
-namespace m{
+namespace m {
 using namespace ruis::make;
 using namespace ::make;
-}
+} // namespace m
 
-utki::shared_ref<ruis::widget> make_root_widget(const utki::shared_ref<ruis::context>& c){
+utki::shared_ref<ruis::widget> make_root_widget(const utki::shared_ref<ruis::context>& c)
+{
 	// clang-format off
 	return m::pile(c,
 		{},
@@ -376,18 +369,18 @@ utki::shared_ref<ruis::widget> make_root_widget(const utki::shared_ref<ruis::con
 	// clang-format on
 }
 
-class application : public ruisapp::application{
+class application : public ruisapp::application
+{
 	ruisapp::window& window;
+
 public:
 	application() :
-			ruisapp::application({
-				.name = "ruis-tests"
-			}),
-			window(this->make_window({
-					.dims = {1024, 800}
-				}))
+		ruisapp::application({
+			.name = "ruis-tests"
+    }),
+		window(this->make_window({.dims = {1024, 800}}))
 	{
-		this->window.gui.context.get().window().close_handler = [this](){
+		this->window.gui.context.get().window().close_handler = [this]() {
 			this->quit();
 		};
 
@@ -400,6 +393,6 @@ public:
 	}
 };
 
-const ruisapp::application_factory app_fac([](auto executbale, auto args){
+const ruisapp::application_factory app_fac([](auto executbale, auto args) {
 	return std::make_unique<::application>();
 });
