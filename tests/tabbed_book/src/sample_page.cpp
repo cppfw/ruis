@@ -1,7 +1,7 @@
 #include "sample_page.hpp"
 
-#include <ruis/widget/label/text.hpp>
 #include <ruis/widget/button/push_button.hpp>
+#include <ruis/widget/label/text.hpp>
 
 using namespace std::string_literals;
 
@@ -42,12 +42,12 @@ sample_page::sample_page(
 			)
 		}
 	)
-	// clang-format on
+// clang-format on
 {
 	this->get_widget_as<ruis::text>("text").set_string(text);
 
-	this->get_widget_as<ruis::push_button>("button").click_handler = [this](ruis::push_button&){
-		this->context.get().post_to_ui_thread([pg = utki::make_shared_from(*this)]{
+	this->get_widget_as<ruis::push_button>("button").click_handler = [this](ruis::push_button&) {
+		this->context.get().post_to_ui_thread([pg = utki::make_shared_from(*this)] {
 			pg.get().tear_out();
 		});
 	};
