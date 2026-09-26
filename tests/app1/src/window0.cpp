@@ -1,23 +1,23 @@
 #include "window0.hpp"
 
-#include <ruis/widget/label/padding.hpp>
-#include <ruis/widget/button/impl/check_box.hpp>
-#include <ruis/widget/button/selection_box.hpp>
-#include <ruis/widget/button/impl/nine_patch_drop_down_box.hpp>
 #include <ruis/widget/button/choice_group.hpp>
+#include <ruis/widget/button/impl/check_box.hpp>
+#include <ruis/widget/button/impl/nine_patch_drop_down_box.hpp>
 #include <ruis/widget/button/impl/radio_button.hpp>
+#include <ruis/widget/button/selection_box.hpp>
+#include <ruis/widget/label/padding.hpp>
 
 using namespace std::string_literals;
 
 using namespace ruis::length_literals;
 
-namespace{
-namespace m{
+namespace {
+namespace m {
 using namespace ruis::make;
-}
-}
+} // namespace m
+} // namespace
 
-namespace{
+namespace {
 utki::shared_ref<ruis::widget> make_radio_button(
 	const utki::shared_ref<ruis::context>& c, //
 	std::u32string text
@@ -44,7 +44,7 @@ utki::shared_ref<ruis::widget> make_radio_button(
 	);
 	// clang-format on
 }
-}
+} // namespace
 
 utki::shared_ref<ruis::window> make_window0(
 	const utki::shared_ref<ruis::context>& c, //
@@ -61,7 +61,7 @@ utki::shared_ref<ruis::window> make_window0(
 	);
 	// clang-format on
 
-	check_box.get().pressed_change_handler = [](ruis::button& b){
+	check_box.get().pressed_change_handler = [](ruis::button& b) {
 		b.context.get().ren().ctx().set_vsync_enabled(b.is_pressed());
 	};
 

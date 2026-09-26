@@ -1,11 +1,11 @@
 #include "text_input_window.hpp"
 
-#include <ruis/widget/button/tab_group.hpp>
-#include <ruis/widget/button/tab.hpp>
-#include <ruis/widget/group/collapse_area.hpp>
 #include <ruis/widget/button/impl/image_push_button.hpp>
-#include <ruis/widget/label/gap.hpp>
+#include <ruis/widget/button/tab.hpp>
+#include <ruis/widget/button/tab_group.hpp>
+#include <ruis/widget/group/collapse_area.hpp>
 #include <ruis/widget/input/impl/nine_patch_text_field.hpp>
+#include <ruis/widget/label/gap.hpp>
 #include <ruisapp/application.hpp>
 
 #include "new_native_window.hpp"
@@ -15,17 +15,17 @@ using namespace std::string_view_literals;
 
 using namespace ruis::length_literals;
 
-namespace m{
+namespace m {
 using namespace ruis::make;
-}
+} // namespace m
 
-namespace{
+namespace {
 utki::shared_ref<ruis::push_button> make_push_button(
-    const utki::shared_ref<ruis::context>& c, //
-    std::u32string text
+	const utki::shared_ref<ruis::context>& c, //
+	std::u32string text
 )
 {
-    // clang-format off
+	// clang-format off
     return m::push_button(c,
         {
             .layout_params{
@@ -40,45 +40,39 @@ utki::shared_ref<ruis::push_button> make_push_button(
             )
         }
     );
-    // clang-format on
+	// clang-format on
 }
-}
+} // namespace
 
-utki::shared_ref<ruis::window> make_text_input_window(
-    const utki::shared_ref<ruis::context>& c,
-    ruis::vec2_length pos
-)
+utki::shared_ref<ruis::window> make_text_input_window(const utki::shared_ref<ruis::context>& c, ruis::vec2_length pos)
 {
-    // clang-format off
+	// clang-format off
     auto new_native_window_button = m::push_button(c,
         {},
         {
             m::text(c, {}, U"new native window"s)
         }
     );
-    // clang-format on
+	// clang-format on
 
-    new_native_window_button.get().click_handler = [](ruis::push_button& b){
-        utki::logcat("new native window button clicked", '\n');
+	new_native_window_button.get().click_handler = [](ruis::push_button& b) {
+		utki::logcat("new native window button clicked", '\n');
 
-        auto& nw = ruisapp::inst().make_window(
-            {
-                .title = "new native_window"s,
-                .taskbar = false
-            }
-        );
+		auto& nw = ruisapp::inst().make_window({.title = "new native_window"s, .taskbar = false});
 
-        auto c = make_new_native_window_root_widget(nw.gui.context, //
-            nw);
-        nw.gui.set_root(c);
+		auto c = make_new_native_window_root_widget(
+			nw.gui.context, //
+			nw
+		);
+		nw.gui.set_root(c);
 
-        nw.gui.context.get().window().close_handler = [&nw](){
-            utki::logcat("native window close handler called", '\n');
-            ruisapp::inst().destroy_window(nw);
-        };
-    };
+		nw.gui.context.get().window().close_handler = [&nw]() {
+			utki::logcat("native window close handler called", '\n');
+			ruisapp::inst().destroy_window(nw);
+		};
+	};
 
-    // clang-format off
+	// clang-format off
     return m::window(c,
         {
             .widget{
@@ -211,5 +205,5 @@ utki::shared_ref<ruis::window> make_text_input_window(
             make_push_button(c, U"button!!!"s)
         }
     );
-    // clang-format on
+	// clang-format on
 }

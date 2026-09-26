@@ -1,31 +1,32 @@
 #include "root_widget.hpp"
 
-#include <ruis/widget/proxy/key_proxy.hpp>
-#include <ruis/widget/group/overlay.hpp>
 #include <ruis/widget/group/drag_area.hpp>
+#include <ruis/widget/group/overlay.hpp>
 #include <ruis/widget/label/image_mouse_cursor.hpp>
+#include <ruis/widget/proxy/key_proxy.hpp>
 
-#include "window0.hpp"
-#include "window1.hpp"
-#include "tree_view_window.hpp"
+#include "gradient_window.hpp"
+#include "scroll_area_window.hpp"
 #include "sliders_window.hpp"
 #include "spinning_cube_window.hpp"
 #include "text_input_window.hpp"
-#include "scroll_area_window.hpp"
-#include "gradient_window.hpp"
+#include "tree_view_window.hpp"
 #include "vertical_list_window.hpp"
+#include "window0.hpp"
+#include "window1.hpp"
 
 using namespace std::string_literals;
 using namespace std::string_view_literals;
 
 using namespace ruis::length_literals;
 
-namespace m{
+namespace m {
 using namespace ruis::make;
-}
+} // namespace m
 
-utki::shared_ref<ruis::widget> make_root_widget(const utki::shared_ref<ruis::context>& c){
-    // clang-format off
+utki::shared_ref<ruis::widget> make_root_widget(const utki::shared_ref<ruis::context>& c)
+{
+	// clang-format off
     return m::key_proxy(c,
         {},
         {
@@ -73,5 +74,5 @@ utki::shared_ref<ruis::widget> make_root_widget(const utki::shared_ref<ruis::con
             )
         }
     );
-    // clang-format on
+	// clang-format on
 }

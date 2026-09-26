@@ -8,16 +8,16 @@ using namespace std::string_view_literals;
 
 using namespace ruis::length_literals;
 
-namespace m{
+namespace m {
 using namespace ruis::make;
-}
+} // namespace m
 
 utki::shared_ref<ruis::window> make_sliders_window(
-    const utki::shared_ref<ruis::context>& c, //
-    ruis::vec2_length pos
+	const utki::shared_ref<ruis::context>& c, //
+	ruis::vec2_length pos
 )
 {
-    // clang-format off
+	// clang-format off
     return m::window(c,
         {
             .widget{
@@ -77,5 +77,5 @@ utki::shared_ref<ruis::window> make_sliders_window(
             )
         }
     );
-    // clang-format on
+	// clang-format on
 }

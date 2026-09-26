@@ -2,44 +2,41 @@
 
 // #include <GL/gl.h>
 
-#include <r4/quaternion.hpp>
-#include <utki/debug.hpp>
 #include <fsif/native_file.hpp>
-
-#include <ruisapp/application.hpp>
-
+#include <r4/quaternion.hpp>
 #include <ruis/config.hpp>
-#include <ruis/widget/widget.hpp>
-#include <ruis/widget/container.hpp>
-#include <ruis/widget/proxy/key_proxy.hpp>
-#include <ruis/widget/button/push_button.hpp>
-#include <ruis/widget/label/text.hpp>
-#include <ruis/res/texture_2d.hpp>
-#include <ruis/widget/group/scroll_area.hpp>
-#include <ruis/widget/proxy/mouse_proxy.hpp>
-#include <ruis/widget/slider/scroll_bar.hpp>
-#include <ruis/widget/group/list.hpp>
-#include <ruis/widget/group/tree_view.hpp>
-#include <ruis/widget/proxy/resize_proxy.hpp>
-#include <ruis/widget/proxy/click_proxy.hpp>
-#include <ruis/widget/label/image.hpp>
-#include <ruis/widget/input/text_field.hpp>
-#include <ruis/widget/button/selection_box.hpp>
 #include <ruis/layout/linear_layout.hpp>
+#include <ruis/res/texture_2d.hpp>
 #include <ruis/standard_widgets.hpp>
+#include <ruis/widget/button/push_button.hpp>
+#include <ruis/widget/button/selection_box.hpp>
+#include <ruis/widget/container.hpp>
+#include <ruis/widget/group/list.hpp>
+#include <ruis/widget/group/scroll_area.hpp>
+#include <ruis/widget/group/tree_view.hpp>
+#include <ruis/widget/input/text_field.hpp>
+#include <ruis/widget/label/image.hpp>
+#include <ruis/widget/label/text.hpp>
+#include <ruis/widget/proxy/click_proxy.hpp>
+#include <ruis/widget/proxy/key_proxy.hpp>
+#include <ruis/widget/proxy/mouse_proxy.hpp>
+#include <ruis/widget/proxy/resize_proxy.hpp>
+#include <ruis/widget/slider/scroll_bar.hpp>
+#include <ruis/widget/widget.hpp>
+#include <ruisapp/application.hpp>
+#include <utki/debug.hpp>
 
-#include "root_widget.hpp"
 #include "cube_widget.hpp"
-
-#include "window0.hpp"
-#include "window1.hpp"
-#include "tree_view_window.hpp"
+#include "gradient_window.hpp"
+#include "root_widget.hpp"
+#include "scroll_area_window.hpp"
 #include "sliders_window.hpp"
 #include "spinning_cube_window.hpp"
 #include "text_input_window.hpp"
-#include "scroll_area_window.hpp"
-#include "gradient_window.hpp"
+#include "tree_view_window.hpp"
 #include "vertical_list_window.hpp"
+#include "window0.hpp"
+#include "window1.hpp"
 
 #ifdef assert
 #	undef assert
@@ -49,25 +46,22 @@ using namespace std::string_literals;
 
 using namespace ruis::length_literals;
 
-namespace m{
+namespace m {
 using namespace ruis::make;
-}
+} // namespace m
 
-class application : public ruisapp::application{
+class application : public ruisapp::application
+{
 	ruisapp::window& window;
+
 public:
 	application() :
-			ruisapp::application(
-				{
-					.name = "ruis-tests"s
-				}
-			),
-			window(this->make_window({
-							.dims = {1024, 800},
-							.buffers = {ruisapp::buffer::depth}
-						}))
+		ruisapp::application({
+			.name = "ruis-tests"s
+    }),
+		window(this->make_window({.dims = {1024, 800}, .buffers = {ruisapp::buffer::depth}}))
 	{
-		this->window.gui.context.get().window().close_handler = [this](){
+		this->window.gui.context.get().window().close_handler = [this]() {
 			this->quit();
 		};
 
@@ -79,37 +73,37 @@ public:
 		);
 
 		gui.context.get().loader().mount_res_pack(this->get_res_file("res/").get());
-//		this->ResMan().MountResPack(ruis::ZipFile::New(fsif::FSFile::New("res.zip")));
+		//		this->ResMan().MountResPack(ruis::ZipFile::New(fsif::FSFile::New("res.zip")));
 
 		auto c = make_root_widget(gui.context);
 		gui.set_root(c);
 
 		utki::dynamic_reference_cast<ruis::key_proxy>(c).get().key_handler = [this](
-			ruis::key_proxy&, //
-			const ruis::key_event& e
-		) -> ruis::event_status {
-			if(e.action == ruis::button_action::press){
-				if(e.combo.key == ruis::key::escape){
+																				 ruis::key_proxy&, //
+																				 const ruis::key_event& e
+																			 ) -> ruis::event_status {
+			if (e.action == ruis::button_action::press) {
+				if (e.combo.key == ruis::key::escape) {
 					this->quit();
 				}
 			}
 			return ruis::event_status::propagate;
 		};
 
-//		ruis::ZipFile zf(fsif::FSFile::New("res.zip"), "test.gui.stob");
-//		std::shared_ptr<ruis::widget> c = ruis::gui::inst().inflater().Inflate(zf);
+		//		ruis::ZipFile zf(fsif::FSFile::New("res.zip"), "test.gui.stob");
+		//		std::shared_ptr<ruis::widget> c = ruis::gui::inst().inflater().Inflate(zf);
 
 		ASSERT(c.get().try_get_widget_as<ruis::push_button>("show_VK_button"))
-		std::dynamic_pointer_cast<ruis::push_button>(c.get().try_get_widget("show_VK_button"))->click_handler = [](ruis::push_button& b){
-			b.context.get().window().set_virtual_keyboard_visible(true);
-		};
+		std::dynamic_pointer_cast<ruis::push_button>(c.get().try_get_widget("show_VK_button"))->click_handler =
+			[](ruis::push_button& b) {
+				b.context.get().window().set_virtual_keyboard_visible(true);
+			};
 
-		std::dynamic_pointer_cast<ruis::push_button>(c.get().try_get_widget("push_button_in_scroll_container"))->click_handler = [ctx = gui.context](ruis::push_button&){
-			ctx.get().post_to_ui_thread(
-					[](){
-						utki::logcat("Print from UI thread!!!!!!!!", '\n');
-					}
-				);
+		std::dynamic_pointer_cast<ruis::push_button>(c.get().try_get_widget("push_button_in_scroll_container"))
+			->click_handler = [ctx = gui.context](ruis::push_button&) {
+			ctx.get().post_to_ui_thread([]() {
+				utki::logcat("Print from UI thread!!!!!!!!", '\n');
+			});
 		};
 
 		// cube click_proxy
@@ -123,10 +117,10 @@ public:
 				bg.get().set_fill_color(w.is_pressed() ? 0xff808080 : 0x80808080);
 			};
 			cp.pressed_change_handler(cp); // set initial color
-			cp.click_handler = [cube = utki::make_shared_from(cube)](ruis::click_proxy&){
-				if(cube.get().is_updating()){
+			cp.click_handler = [cube = utki::make_shared_from(cube)](ruis::click_proxy&) {
+				if (cube.get().is_updating()) {
 					cube.get().context.get().updater.get().stop(cube.get());
-				}else{
+				} else {
 					cube.get().context.get().updater.get().start(cube, 0);
 				}
 			};
@@ -143,29 +137,29 @@ public:
 			auto hori_slider = c.get().try_get_widget_as<ruis::scroll_bar>("scroll_area_horizontal_slider");
 			auto hs = utki::make_weak(hori_slider);
 
-			scroll_area->scroll_change_handler = [hs = hs, vs = vs](ruis::scroll_area& sa){
+			scroll_area->scroll_change_handler = [hs = hs, vs = vs](ruis::scroll_area& sa) {
 				auto f = sa.get_scroll_factor();
 				auto b = sa.get_visible_area_fraction();
-				if(auto h = hs.lock()){
+				if (auto h = hs.lock()) {
 					h->set_fraction(f.x());
 					h->set_band_fraction(b.x());
 				}
-				if(auto v = vs.lock()){
+				if (auto v = vs.lock()) {
 					v->set_fraction(f.y());
 					v->set_band_fraction(b.y());
 				}
 			};
 
-			vert_slider->fraction_change_handler = [sa](ruis::fraction_widget& slider){
-				if(auto s = sa.lock()){
+			vert_slider->fraction_change_handler = [sa](ruis::fraction_widget& slider) {
+				if (auto s = sa.lock()) {
 					auto sf = s->get_scroll_factor();
 					sf.y() = slider.get_fraction();
 					s->set_scroll_factor(sf);
 				}
 			};
 
-			hori_slider->fraction_change_handler = [sa](ruis::fraction_widget& slider){
-				if(auto s = sa.lock()){
+			hori_slider->fraction_change_handler = [sa](ruis::fraction_widget& slider) {
+				if (auto s = sa.lock()) {
 					auto sf = s->get_scroll_factor();
 					sf.x() = slider.get_fraction();
 					s->set_scroll_factor(sf);
@@ -181,8 +175,8 @@ public:
 			auto& vertical_slider = c.get().get_widget_as<ruis::fraction_band_widget>("vertical_list_slider");
 			auto vs = utki::make_weak_from(vertical_slider);
 
-			vertical_slider.fraction_change_handler = [vl](ruis::fraction_widget& slider){
-				if(auto l = vl.lock()){
+			vertical_slider.fraction_change_handler = [vl](ruis::fraction_widget& slider) {
+				if (auto l = vl.lock()) {
 					l->set_scroll_factor(
 						slider.get_fraction(), //
 						false
@@ -190,28 +184,32 @@ public:
 				}
 			};
 
-			vertical_list->scroll_change_handler = [vs](ruis::list& l){
-				if(auto s = vs.lock()){
+			vertical_list->scroll_change_handler = [vs](ruis::list& l) {
+				if (auto s = vs.lock()) {
 					s->set_fraction(
 						l.get_scroll_factor(), //
 						false
 					);
-                    s->set_band_fraction(l.get_scroll_band());
+					s->set_band_fraction(l.get_scroll_band());
 				}
 			};
 
 			auto mouse_proxy = c.get().try_get_widget_as<ruis::mouse_proxy>("list_mouseproxy");
-			struct button_state : public utki::shared{
+
+			struct button_state : public utki::shared {
 				ruis::vec2 old_pos = 0;
 				bool is_left_button_pressed = false;
 			};
+
 			auto state = std::make_shared<button_state>();
 
 			static const ruis::real wheel_delta = 10;
 
-			mouse_proxy->mouse_button_handler = [state, vl](ruis::mouse_proxy&,//
-				 const ruis::mouse_button_event& e){
-				switch(e.button){
+			mouse_proxy->mouse_button_handler = [state, vl](
+													ruis::mouse_proxy&, //
+													const ruis::mouse_button_event& e
+												) {
+				switch (e.button) {
 					using enum ruis::mouse_button;
 
 					case left:
@@ -219,12 +217,12 @@ public:
 						state->old_pos = e.pos;
 						return ruis::event_status::consumed;
 					case wheel_down:
-						if(auto l = vl.lock()){
+						if (auto l = vl.lock()) {
 							l->scroll_by(wheel_delta);
 						}
 						break;
 					case wheel_up:
-						if(auto l = vl.lock()){
+						if (auto l = vl.lock()) {
 							l->scroll_by(-wheel_delta);
 						}
 						break;
@@ -234,12 +232,14 @@ public:
 				return ruis::event_status::propagate;
 			};
 
-			mouse_proxy->mouse_move_handler = [vs, vl, state](ruis::mouse_proxy&,//
-				 const ruis::mouse_move_event& e) -> ruis::event_status {
-				if(state->is_left_button_pressed){
+			mouse_proxy->mouse_move_handler = [vs, vl, state](
+												  ruis::mouse_proxy&, //
+												  const ruis::mouse_move_event& e
+											  ) -> ruis::event_status {
+				if (state->is_left_button_pressed) {
 					auto dp = state->old_pos - e.pos;
 					state->old_pos = e.pos;
-					if(auto l = vl.lock()){
+					if (auto l = vl.lock()) {
 						l->scroll_by(dp.y());
 					}
 					return ruis::event_status::consumed;
@@ -257,8 +257,8 @@ public:
 			ASSERT(horizontal_slider)
 			auto hs = utki::make_weak(horizontal_slider);
 
-			pan_list->scroll_change_handler = [hs](ruis::list& l){
-				if(auto h = hs.lock()){
+			pan_list->scroll_change_handler = [hs](ruis::list& l) {
+				if (auto h = hs.lock()) {
 					h->set_fraction(
 						l.get_scroll_factor(), //
 						false // do not notify
@@ -267,9 +267,9 @@ public:
 				}
 			};
 
-			horizontal_slider->fraction_change_handler = [hl](ruis::fraction_widget& slider){
-//				TRACE(<< "horizontal slider factor = " << slider.factor() << std::endl)
-				if(auto l = hl.lock()){
+			horizontal_slider->fraction_change_handler = [hl](ruis::fraction_widget& slider) {
+				//				TRACE(<< "horizontal slider factor = " << slider.factor() << std::endl)
+				if (auto l = hl.lock()) {
 					l->set_scroll_factor(
 						slider.get_fraction(), //
 						false // do not notify
@@ -278,20 +278,22 @@ public:
 			};
 
 			auto mouse_proxy = c.get().try_get_widget_as<ruis::mouse_proxy>("horizontal_list_mouseproxy");
-			struct button_state : public utki::shared{
+
+			struct button_state : public utki::shared {
 				ruis::vec2 old_pos = 0;
 				bool is_left_button_pressed = false;
 			};
+
 			auto state = std::make_shared<button_state>();
 
 			static const ruis::real wheel_delta = 10;
 
 			mouse_proxy->mouse_button_handler = [state, hl](
-				ruis::mouse_proxy&,//
-				const ruis::mouse_button_event& e
-			) -> ruis::event_status {
+													ruis::mouse_proxy&, //
+													const ruis::mouse_button_event& e
+												) -> ruis::event_status {
 				std::cout << "button = " << unsigned(e.button) << std::endl;
-				switch(e.button){
+				switch (e.button) {
 					using enum ruis::mouse_button;
 
 					case left:
@@ -300,16 +302,16 @@ public:
 						return ruis::event_status::consumed;
 					case wheel_left:
 						std::cout << "wheel_left" << std::endl;
-						if(e.action == ruis::button_action::press){
-							if(auto l = hl.lock()){
+						if (e.action == ruis::button_action::press) {
+							if (auto l = hl.lock()) {
 								l->scroll_by(-wheel_delta);
 							}
 						}
 						break;
 					case wheel_right:
 						std::cout << "wheel_right" << std::endl;
-						if(e.action == ruis::button_action::press){
-							if(auto l = hl.lock()){
+						if (e.action == ruis::button_action::press) {
+							if (auto l = hl.lock()) {
 								l->scroll_by(wheel_delta);
 							}
 						}
@@ -320,12 +322,14 @@ public:
 				return ruis::event_status::propagate;
 			};
 
-			mouse_proxy->mouse_move_handler = [hl, hs, state](ruis::mouse_proxy& w,//
-				 const ruis::mouse_move_event& e) {
-				if(state->is_left_button_pressed){
+			mouse_proxy->mouse_move_handler = [hl, hs, state](
+												  ruis::mouse_proxy& w, //
+												  const ruis::mouse_move_event& e
+											  ) {
+				if (state->is_left_button_pressed) {
 					auto dp = state->old_pos - e.pos;
 					state->old_pos = e.pos;
-					if(auto l = hl.lock()){
+					if (auto l = hl.lock()) {
 						l->scroll_by(dp.x());
 					}
 					return ruis::event_status::consumed;
@@ -362,7 +366,7 @@ public:
 			auto& b = c.get().get_widget_as<ruis::push_button>("showhide_mousecursor_button");
 			bool visible = true;
 			b.context.get().window().set_mouse_cursor_visible(visible);
-			b.click_handler = [visible](ruis::push_button& b) mutable{
+			b.click_handler = [visible](ruis::push_button& b) mutable {
 				visible = !visible;
 				b.context.get().window().set_mouse_cursor_visible(visible);
 			};
@@ -374,8 +378,8 @@ public:
 			auto ddst = c.get().try_get_widget_as<ruis::text>("dropdownselector_selection");
 			auto ddstw = utki::make_weak(ddst);
 
-			dds.selection_handler = [ddstw](ruis::selection_box& dds){
-				if(auto t = ddstw.lock()){
+			dds.selection_handler = [ddstw](ruis::selection_box& dds) {
+				if (auto t = ddstw.lock()) {
 					std::stringstream ss;
 					ss << "index_" << dds.get_selection();
 
@@ -386,6 +390,6 @@ public:
 	}
 };
 
-const ruisapp::application_factory app_fac([](auto executable, auto args){
+const ruisapp::application_factory app_fac([](auto executable, auto args) {
 	return std::make_unique<::application>();
 });

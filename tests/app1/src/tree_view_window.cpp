@@ -1,29 +1,30 @@
 #include "tree_view_window.hpp"
 
-#include <ruis/widget/group/tree_view.hpp>
-#include <ruis/widget/slider/scroll_bar.hpp>
 #include <ruis/widget/button/push_button.hpp>
 #include <ruis/widget/group/scroll_area.hpp>
+#include <ruis/widget/group/tree_view.hpp>
+#include <ruis/widget/slider/scroll_bar.hpp>
 
 using namespace std::string_literals;
 using namespace std::string_view_literals;
 
 using namespace ruis::length_literals;
 
-namespace m{
+namespace m {
 using namespace ruis::make;
-}
+} // namespace m
 
-namespace{
-class tree_view_items_provider : public ruis::tree_view::provider{
-    tml::forest root;
+namespace {
+class tree_view_items_provider : public ruis::tree_view::provider
+{
+	tml::forest root;
+
 public:
-
-    // NOLINTNEXTLINE(modernize-pass-by-value)
-    tree_view_items_provider(const utki::shared_ref<ruis::context>& context) :
-            provider(context)
-    {
-        this->root = tml::read(R"qwertyuiop(
+	// NOLINTNEXTLINE(modernize-pass-by-value)
+	tree_view_items_provider(const utki::shared_ref<ruis::context>& context) :
+		provider(context)
+	{
+		this->root = tml::read(R"qwertyuiop(
                 root1{
                     subroot1{
                         subsubroot1
@@ -51,114 +52,125 @@ public:
                 root333
                 root4444
             )qwertyuiop");
-    }
+	}
 
-    tree_view_items_provider(const tree_view_items_provider&) = delete;
-    tree_view_items_provider& operator=(const tree_view_items_provider&) = delete;
+	tree_view_items_provider(const tree_view_items_provider&) = delete;
+	tree_view_items_provider& operator=(const tree_view_items_provider&) = delete;
 
-    tree_view_items_provider(tree_view_items_provider&&) = delete;
-    tree_view_items_provider& operator=(tree_view_items_provider&&) = delete;
+	tree_view_items_provider(tree_view_items_provider&&) = delete;
+	tree_view_items_provider& operator=(tree_view_items_provider&&) = delete;
 
-    ~tree_view_items_provider()override = default;
+	~tree_view_items_provider() override = default;
 
 private:
-    std::vector<size_t> selected_item;
+	std::vector<size_t> selected_item;
 
-    unsigned newItemNumber = 0;
+	unsigned newItemNumber = 0;
 
-    std::string generate_new_item_value(){
-        std::stringstream ss;
-        ss << "newItem" << newItemNumber;
-        ++newItemNumber;
-        return ss.str();
-    }
+	std::string generate_new_item_value()
+	{
+		std::stringstream ss;
+		ss << "newItem" << newItemNumber;
+		++newItemNumber;
+		return ss.str();
+	}
 
 public:
-    void insert_before(){
-        if(this->selected_item.size() == 0){
-            return;
-        }
+	void insert_before()
+	{
+		if (this->selected_item.size() == 0) {
+			return;
+		}
 
-        tml::forest* list = &this->root;
-        tml::forest* parent_list = nullptr;
+		tml::forest* list = &this->root;
+		tml::forest* parent_list = nullptr;
 
-        for(auto& i : this->selected_item){
-            parent_list = list;
-            list = &(*list)[i].children;
-        }
+		for (auto& i : this->selected_item) {
+			parent_list = list;
+			list = &(*list)[i].children;
+		}
 
-        if(!parent_list){
-            return;
-        }
+		if (!parent_list) {
+			return;
+		}
 
-        parent_list->insert(utki::next(parent_list->begin(), this->selected_item.back()), tml::leaf(this->generate_new_item_value()));
+		parent_list->insert(
+			utki::next(parent_list->begin(), this->selected_item.back()),
+			tml::leaf(this->generate_new_item_value())
+		);
 
-        this->notify_item_added(utki::make_span(this->selected_item));
-        ++this->selected_item.back();
-    }
+		this->notify_item_added(utki::make_span(this->selected_item));
+		++this->selected_item.back();
+	}
 
-    void insert_after(){
-        if(this->selected_item.size() == 0){
-            return;
-        }
+	void insert_after()
+	{
+		if (this->selected_item.size() == 0) {
+			return;
+		}
 
-        tml::forest* list = &this->root;
-        tml::forest* parent_list = nullptr;
+		tml::forest* list = &this->root;
+		tml::forest* parent_list = nullptr;
 
-        for(auto& i : this->selected_item){
-            parent_list = list;
-            list = &(*list)[i].children;
-        }
+		for (auto& i : this->selected_item) {
+			parent_list = list;
+			list = &(*list)[i].children;
+		}
 
-        if(!parent_list){
-            return;
-        }
+		if (!parent_list) {
+			return;
+		}
 
-        parent_list->insert(utki::next(parent_list->begin(), this->selected_item.back() + 1), tml::leaf(this->generate_new_item_value()));
+		parent_list->insert(
+			utki::next(parent_list->begin(), this->selected_item.back() + 1),
+			tml::leaf(this->generate_new_item_value())
+		);
 
-        ++this->selected_item.back();
-        this->notify_item_added(utki::make_span(this->selected_item));
-        --this->selected_item.back();
-    }
+		++this->selected_item.back();
+		this->notify_item_added(utki::make_span(this->selected_item));
+		--this->selected_item.back();
+	}
 
-    void insert_child(){
-        if(this->selected_item.size() == 0){
-            return;
-        }
+	void insert_child()
+	{
+		if (this->selected_item.size() == 0) {
+			return;
+		}
 
-        tml::forest* list = &this->root;
+		tml::forest* list = &this->root;
 
-        for(auto& i : this->selected_item){
-            list = &(*list)[i].children;
-        }
+		for (auto& i : this->selected_item) {
+			list = &(*list)[i].children;
+		}
 
-        list->emplace_back(this->generate_new_item_value());
+		list->emplace_back(this->generate_new_item_value());
 
-        this->selected_item.push_back(list->size() - 1);
-        this->notify_item_added(utki::make_span(this->selected_item));
-        this->selected_item.pop_back();
-    }
+		this->selected_item.push_back(list->size() - 1);
+		this->notify_item_added(utki::make_span(this->selected_item));
+		this->selected_item.pop_back();
+	}
 
-    utki::shared_ref<ruis::widget> get_widget(utki::span<const size_t> path)override{
-        utki::assert(!path.empty());
+	utki::shared_ref<ruis::widget> get_widget(utki::span<const size_t> path) override
+	{
+		utki::assert(!path.empty());
 
-        auto list = &this->root;
-        decltype(list) parent_list = nullptr;
+		auto list = &this->root;
+		decltype(list) parent_list = nullptr;
 
-        tml::tree* n = nullptr;
+		tml::tree* n = nullptr;
 
-        for(const auto& i : path){
-            n = &(*list)[i];
-            parent_list = list;
-            list = &n->children;
-        }
+		for (const auto& i : path) {
+			n = &(*list)[i];
+			parent_list = list;
+			list = &n->children;
+		}
 
-        auto& c = this->context;
+		auto& c = this->context;
 
-        auto ret = ruis::make::row(c, {});
+		auto ret = ruis::make::row(c, {});
 
-        {
-            // clang-format off
+		{
+			// clang-format off
             auto v = m::pile(c,
                 {},
                 {
@@ -197,49 +209,52 @@ public:
                     )
                 }
             );
-            // clang-format on
+			// clang-format on
 
-            {
-                auto value = v.get().try_get_widget_as<ruis::text>("value");
-                ASSERT(value)
-                value->set_string(
-                        n->value.string // NOLINT(clang-analyzer-core.CallAndMessage): due to ASSERT(!path.empty()) in the beginning of the function 'n' is not nullptr
-                    );
-            }
-            {
-                auto& color_label = v.get().get_widget_as<ruis::rectangle>("selection");
+			{
+				auto value = v.get().try_get_widget_as<ruis::text>("value");
+				ASSERT(value)
+				value->set_string(
+					n->value
+						.string // NOLINT(clang-analyzer-core.CallAndMessage): due to ASSERT(!path.empty()) in the beginning of the function 'n' is not nullptr
+				);
+			}
+			{
+				auto& color_label = v.get().get_widget_as<ruis::rectangle>("selection");
 
-                color_label.set_visible(utki::deep_equals(path, utki::make_span(this->selected_item)));
+				color_label.set_visible(utki::deep_equals(path, utki::make_span(this->selected_item)));
 
-                auto mp = v.get().try_get_widget_as<ruis::mouse_proxy>("mouse_proxy");
-                utki::assert(mp, SL);
-                mp->mouse_button_handler = [this, path = utki::make_vector(path)](ruis::mouse_proxy&, //
-                    const ruis::mouse_button_event& e){
-                    if(e.action == ruis::button_action::release || e.button != ruis::mouse_button::left){
-                        return ruis::event_status::propagate;
-                    }
+				auto mp = v.get().try_get_widget_as<ruis::mouse_proxy>("mouse_proxy");
+				utki::assert(mp, SL);
+				mp->mouse_button_handler = [this, path = utki::make_vector(path)](
+											   ruis::mouse_proxy&, //
+											   const ruis::mouse_button_event& e
+										   ) {
+					if (e.action == ruis::button_action::release || e.button != ruis::mouse_button::left) {
+						return ruis::event_status::propagate;
+					}
 
-                    this->selected_item = path;
-                    
-                    utki::log_debug([&](auto&o){
-                        o << " selected item = ";
-                        for(const auto& k : this->selected_item){        
-                            o << k << ", ";
-                        }
-                        o << std::endl;
-                    });
+					this->selected_item = path;
 
-                    this->notify_item_changed();
+					utki::log_debug([&](auto& o) {
+						o << " selected item = ";
+						for (const auto& k : this->selected_item) {
+							o << k << ", ";
+						}
+						o << std::endl;
+					});
 
-                    return ruis::event_status::consumed;
-                };
-            }
+					this->notify_item_changed();
 
-            ret.get().push_back(v);
-        }
+					return ruis::event_status::consumed;
+				};
+			}
 
-        {
-            // clang-format off
+			ret.get().push_back(v);
+		}
+
+		{
+			// clang-format off
             auto b = m::push_button(c,
                 {},
                 {
@@ -257,40 +272,40 @@ public:
                     )
                 }
             );
-            // clang-format on
+			// clang-format on
 
-            b.get().click_handler = [this, path = utki::make_vector(path), parent_list](ruis::push_button& button){
-                utki::assert(parent_list);
-                parent_list->erase(utki::next(parent_list->begin(), path.back()));
-                this->notify_item_removed(utki::make_span(path));
-            };
-            ret.get().push_back(b);
-        }
+			b.get().click_handler = [this, path = utki::make_vector(path), parent_list](ruis::push_button& button) {
+				utki::assert(parent_list);
+				parent_list->erase(utki::next(parent_list->begin(), path.back()));
+				this->notify_item_removed(utki::make_span(path));
+			};
+			ret.get().push_back(b);
+		}
 
-        return ret;
-    }
+		return ret;
+	}
 
-    size_t count(utki::span<const size_t> path) const noexcept override{
-        auto children = &this->root;
+	size_t count(utki::span<const size_t> path) const noexcept override
+	{
+		auto children = &this->root;
 
-        for(auto& i : path){
-            children = &(*children)[i].children;
-        }
+		for (auto& i : path) {
+			children = &(*children)[i].children;
+		}
 
-        return children->size();
-    }
-
-};    
-}
+		return children->size();
+	}
+};
+} // namespace
 
 utki::shared_ref<ruis::window> make_tree_view_window(
-    const utki::shared_ref<ruis::context>& c, //
-    ruis::vec2_length pos
+	const utki::shared_ref<ruis::context>& c, //
+	ruis::vec2_length pos
 )
 {
-    auto tv_provider = utki::make_shared<tree_view_items_provider>(c);
+	auto tv_provider = utki::make_shared<tree_view_items_provider>(c);
 
-    // clang-format off
+	// clang-format off
     auto w = m::window(c,
         {
             .widget{
@@ -416,76 +431,70 @@ utki::shared_ref<ruis::window> make_tree_view_window(
             )
         }
     );
-    // clang-format on
+	// clang-format on
 
-    auto& treeview = w.get().get_widget_as<ruis::tree_view>("treeview_widget");
+	auto& treeview = w.get().get_widget_as<ruis::tree_view>("treeview_widget");
 
-    auto tv = utki::make_weak_from(treeview);
+	auto tv = utki::make_weak_from(treeview);
 
-    auto& vertical_slider = w.get().get_widget_as<ruis::fraction_band_widget>("treeview_vertical_slider");
-    auto vs = utki::make_weak_from(vertical_slider);
+	auto& vertical_slider = w.get().get_widget_as<ruis::fraction_band_widget>("treeview_vertical_slider");
+	auto vs = utki::make_weak_from(vertical_slider);
 
-    vertical_slider.fraction_change_handler = [tv](ruis::fraction_widget& slider){
-        if(auto t = tv.lock()){
-            t->set_scroll_factor(slider.get_fraction());
-        }
-    };
+	vertical_slider.fraction_change_handler = [tv](ruis::fraction_widget& slider) {
+		if (auto t = tv.lock()) {
+			t->set_scroll_factor(slider.get_fraction());
+		}
+	};
 
-    auto& tvsa = w.get().get_widget_as<ruis::scroll_area>("tree_view_scroll_area"sv);
+	auto& tvsa = w.get().get_widget_as<ruis::scroll_area>("tree_view_scroll_area"sv);
 
-    auto& horizontal_slider = w.get().get_widget_as<ruis::fraction_band_widget>("treeview_horizontal_slider");
-    auto hs = utki::make_weak_from(horizontal_slider);
+	auto& horizontal_slider = w.get().get_widget_as<ruis::fraction_band_widget>("treeview_horizontal_slider");
+	auto hs = utki::make_weak_from(horizontal_slider);
 
-    horizontal_slider.fraction_change_handler = [tvsa = utki::make_weak_from(tvsa)](ruis::fraction_widget& slider){
-        if(auto sa = tvsa.lock()){
-            sa->set_scroll_factor({
-                slider.get_fraction(),
-                0
-            });
-        }
-    };
+	horizontal_slider.fraction_change_handler = [tvsa = utki::make_weak_from(tvsa)](ruis::fraction_widget& slider) {
+		if (auto sa = tvsa.lock()) {
+			sa->set_scroll_factor({slider.get_fraction(), 0});
+		}
+	};
 
-    tvsa.scroll_change_handler = [hs = utki::make_weak_from(horizontal_slider)](ruis::scroll_area& sa){
-        if(auto h = hs.lock()){
-            h->set_band_fraction(sa.get_visible_area_fraction().x());
-            h->set_fraction(sa.get_scroll_factor().x(), false);
-        }
-    };
+	tvsa.scroll_change_handler = [hs = utki::make_weak_from(horizontal_slider)](ruis::scroll_area& sa) {
+		if (auto h = hs.lock()) {
+			h->set_band_fraction(sa.get_visible_area_fraction().x());
+			h->set_fraction(sa.get_scroll_factor().x(), false);
+		}
+	};
 
-    treeview.scroll_change_handler = [
-            vs = utki::make_weak_from(vertical_slider)
-        ](ruis::tree_view& tw)
-    {
-        auto f = tw.get_scroll_factor();
-        auto b = tw.get_scroll_band();
-        if(auto v = vs.lock()){
-            v->set_band_fraction(b);
-            v->set_fraction(f, false);
-        }
-    };
+	treeview.scroll_change_handler = [vs = utki::make_weak_from(vertical_slider)](ruis::tree_view& tw) {
+		auto f = tw.get_scroll_factor();
+		auto b = tw.get_scroll_band();
+		if (auto v = vs.lock()) {
+			v->set_band_fraction(b);
+			v->set_fraction(f, false);
+		}
+	};
 
-    auto insert_before_button = w.get().try_get_widget_as<ruis::push_button>("insert_before");
-    auto insert_after_button = w.get().try_get_widget_as<ruis::push_button>("insert_after");
-    auto insert_child = w.get().try_get_widget_as<ruis::push_button>("insert_child");
+	auto insert_before_button = w.get().try_get_widget_as<ruis::push_button>("insert_before");
+	auto insert_after_button = w.get().try_get_widget_as<ruis::push_button>("insert_after");
+	auto insert_child = w.get().try_get_widget_as<ruis::push_button>("insert_child");
 
-    auto prvdr = utki::make_weak(tv_provider);
-    insert_before_button->click_handler = [prvdr](ruis::push_button& b){
-        if(auto p = prvdr.lock()){
-            p->insert_before();
-        }
-    };
+	auto prvdr = utki::make_weak(tv_provider);
+	insert_before_button->click_handler = [prvdr](ruis::push_button& b) {
+		if (auto p = prvdr.lock()) {
+			p->insert_before();
+		}
+	};
 
-    insert_after_button->click_handler = [prvdr](ruis::push_button& b){
-        if(auto p = prvdr.lock()){
-            p->insert_after();
-        }
-    };
+	insert_after_button->click_handler = [prvdr](ruis::push_button& b) {
+		if (auto p = prvdr.lock()) {
+			p->insert_after();
+		}
+	};
 
-    insert_child->click_handler = [prvdr](ruis::push_button& b){
-        if(auto p = prvdr.lock()){
-            p->insert_child();
-        }
-    };
+	insert_child->click_handler = [prvdr](ruis::push_button& b) {
+		if (auto p = prvdr.lock()) {
+			p->insert_child();
+		}
+	};
 
-    return w;
+	return w;
 }

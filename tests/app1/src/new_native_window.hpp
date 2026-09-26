@@ -4,6 +4,6 @@
 #include <ruisapp/window.hpp>
 
 utki::shared_ref<ruis::widget> make_new_native_window_root_widget(
-    const utki::shared_ref<ruis::context>& c, //
-    ruisapp::window& win
+	const utki::shared_ref<ruis::context>& c, //
+	ruisapp::window& win
 );

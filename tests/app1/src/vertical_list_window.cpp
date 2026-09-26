@@ -1,7 +1,7 @@
 #include "vertical_list_window.hpp"
 
-#include <ruis/widget/group/list.hpp>
 #include <ruis/widget/button/push_button.hpp>
+#include <ruis/widget/group/list.hpp>
 #include <ruis/widget/slider/scroll_bar.hpp>
 
 using namespace std::string_literals;
@@ -9,16 +9,16 @@ using namespace std::string_view_literals;
 
 using namespace ruis::length_literals;
 
-namespace m{
+namespace m {
 using namespace ruis::make;
-}
+} // namespace m
 
 utki::shared_ref<ruis::window> make_vertical_list_window(
-    const utki::shared_ref<ruis::context>& c, //
-    ruis::vec2_length pos
+	const utki::shared_ref<ruis::context>& c, //
+	ruis::vec2_length pos
 )
 {
-    // clang-format off
+	// clang-format off
     return m::window(c,
         {
             .widget{
@@ -155,5 +155,5 @@ utki::shared_ref<ruis::window> make_vertical_list_window(
             )
         }
     );
-    // clang-format on
+	// clang-format on
 }
