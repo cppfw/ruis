@@ -1,23 +1,21 @@
+#include <fsif/native_file.hpp>
 #include <r4/quaternion.hpp>
+#include <ruis/standard_widgets.hpp>
+#include <ruis/widget/group/window.hpp>
+#include <ruis/widget/label/text.hpp>
+#include <ruisapp/application.hpp>
 #include <utki/debug.hpp>
 #include <utki/unicode.hpp>
-#include <fsif/native_file.hpp>
-
-#include <ruis/widget/label/text.hpp>
-#include <ruis/widget/group/window.hpp>
-#include <ruis/standard_widgets.hpp>
-
-#include <ruisapp/application.hpp>
 
 #include "wire_area.hpp"
 #include "wire_socket.hpp"
 
 using namespace std::string_literals;
 
-namespace{
-namespace m{
+namespace {
+namespace m {
 using namespace ruis::make;
-}
+} // namespace m
 
 utki::shared_ref<ruis::widget> make_socket(
 	const utki::shared_ref<ruis::context>& c, //
@@ -56,7 +54,8 @@ utki::shared_ref<ruis::widget> make_socket(
 	// clang-format on
 }
 
-utki::shared_ref<ruis::widget> make_root_widget(const utki::shared_ref<ruis::context>& c){
+utki::shared_ref<ruis::widget> make_root_widget(const utki::shared_ref<ruis::context>& c)
+{
 	// clang-format off
 	return m::wire_area(c,
 		{
@@ -109,20 +108,20 @@ utki::shared_ref<ruis::widget> make_root_widget(const utki::shared_ref<ruis::con
 	);
 	// clang-format on
 }
-}
+} // namespace
 
-class application : public ruisapp::application{
+class application : public ruisapp::application
+{
 	ruisapp::window& window;
+
 public:
 	application() :
-			ruisapp::application({
-				.name = "ruis-tests"}
-			),
-			window(this->make_window({
-					.dims = {640, 480}
-				}))
+		ruisapp::application({
+			.name = "ruis-tests"
+    }),
+		window(this->make_window({.dims = {640, 480}}))
 	{
-		this->window.gui.context.get().window().close_handler = [this](){
+		this->window.gui.context.get().window().close_handler = [this]() {
 			this->quit();
 		};
 
@@ -137,6 +136,6 @@ public:
 	}
 };
 
-const ruisapp::application_factory app_fac([](auto executbale, auto args){
+const ruisapp::application_factory app_fac([](auto executbale, auto args) {
 	return std::make_unique<::application>();
 });

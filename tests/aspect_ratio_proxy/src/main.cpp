@@ -1,31 +1,29 @@
-#include <utki/debug.hpp>
-
-#include <ruisapp/application.hpp>
-
-#include <ruis/widget/group/window.hpp>
-#include <ruis/widget/proxy/aspect_ratio_proxy.hpp>
-#include <ruis/widget/label/text.hpp>
-#include <ruis/widget/label/rectangle.hpp>
 #include <ruis/standard_widgets.hpp>
+#include <ruis/widget/group/window.hpp>
+#include <ruis/widget/label/rectangle.hpp>
+#include <ruis/widget/label/text.hpp>
+#include <ruis/widget/proxy/aspect_ratio_proxy.hpp>
+#include <ruisapp/application.hpp>
+#include <utki/debug.hpp>
 
 using namespace std::string_literals;
 
-namespace m{
+namespace m {
 using namespace ruis::make;
-}
+} // namespace m
 
-class application : public ruisapp::application{
+class application : public ruisapp::application
+{
 	ruisapp::window& window;
+
 public:
 	application() :
-			ruisapp::application({
-				.name = "ruis-tests"}
-			),
-			window(this->make_window({
-					.dims = {1024, 800}
-				}))
+		ruisapp::application({
+			.name = "ruis-tests"
+    }),
+		window(this->make_window({.dims = {1024, 800}}))
 	{
-		this->window.gui.context.get().window().close_handler = [this](){
+		this->window.gui.context.get().window().close_handler = [this]() {
 			this->quit();
 		};
 
@@ -100,6 +98,6 @@ public:
 	}
 };
 
-const ruisapp::application_factory app_fac([](auto executable, auto args){
+const ruisapp::application_factory app_fac([](auto executable, auto args) {
 	return std::make_unique<::application>();
 });

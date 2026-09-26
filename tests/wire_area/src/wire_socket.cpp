@@ -1,36 +1,35 @@
 #include "wire_socket.hpp"
 
-#include "wire_area.hpp"
-
 #include <ruis/util/util.hpp>
+
+#include "wire_area.hpp"
 
 using namespace ruis;
 
-wire_socket::wire_socket(
-	const utki::shared_ref<ruis::context>& context,
-	all_parameters params
-) :
+wire_socket::wire_socket(const utki::shared_ref<ruis::context>& context, all_parameters params) :
 	ruis::widget(context, std::move(params.layout_params), std::move(params.widget)),
 	params(std::move(params.wire_socket_params))
 {}
 
-void wire_socket::connect(const std::shared_ptr<wire_socket>& o){
+void wire_socket::connect(const std::shared_ptr<wire_socket>& o)
+{
 	// disconnect existing connection
 	this->disconnect();
-	
-	if(!o || o.get() == this){
+
+	if (!o || o.get() == this) {
 		return;
 	}
-	
+
 	o->disconnect();
-	
+
 	this->slave = o;
 	this->slave->primary = utki::make_shared_from(*this).to_shared_ptr();
 	this->on_connected(*this->slave);
 }
 
-void wire_socket::disconnect(){
-	if(this->slave){
+void wire_socket::disconnect()
+{
+	if (this->slave) {
 		ASSERT(!this->primary.lock())
 		ASSERT(this->slave->primary.lock().get() == this)
 		ASSERT(!this->slave->slave)
@@ -38,17 +37,18 @@ void wire_socket::disconnect(){
 		auto old_slave = std::move(this->slave);
 		this->slave.reset();
 		this->on_disconnected(*old_slave);
-	}else if(auto p = this->primary.lock()){
+	} else if (auto p = this->primary.lock()) {
 		ASSERT(!p->primary.lock())
 		ASSERT(p->slave.get() == this)
 		p->disconnect();
 	}
 }
 
-std::array<ruis::vec2, 2> wire_socket::outlet_pos() const noexcept{
+std::array<ruis::vec2, 2> wire_socket::outlet_pos() const noexcept
+{
 	ruis::vec2 dir{0, 0};
 	ruis::vec2 pos{0, 0};
-	switch(this->params.outlet_orientation){
+	switch (this->params.outlet_orientation) {
 		using enum orientation;
 
 		case bottom:
@@ -68,27 +68,30 @@ std::array<ruis::vec2, 2> wire_socket::outlet_pos() const noexcept{
 			dir = ruis::vec2(0, -1);
 			break;
 	}
-	return {{pos, dir}};
+	return {
+		{pos, dir}
+	};
 }
 
-ruis::event_status wire_socket::on_mouse_button(const ruis::mouse_button_event& e){
-	if(e.button != ruis::mouse_button::left){
+ruis::event_status wire_socket::on_mouse_button(const ruis::mouse_button_event& e)
+{
+	if (e.button != ruis::mouse_button::left) {
 		return ruis::event_status::propagate;
 	}
-	
-	if(auto wa = this->try_get_ancestor<wire_area>()){
-		if(e.action == ruis::button_action::press){
+
+	if (auto wa = this->try_get_ancestor<wire_area>()) {
+		if (e.action == ruis::button_action::press) {
 			std::shared_ptr<wire_socket> grabbed_socket;
-			if(auto p = this->get_remote()){
+			if (auto p = this->get_remote()) {
 				p->disconnect();
 				grabbed_socket = std::move(p);
-			}else{
+			} else {
 				grabbed_socket = utki::make_shared_from(*this).to_shared_ptr();
 			}
-			
+
 			wa->grabbed_socket = std::move(grabbed_socket);
 			wa->mouse_pos = this->get_pos_in_ancestor(e.pos, wa);
-		}else{
+		} else {
 			wa->grabbed_socket->connect(wa->hovered_socket);
 			wa->grabbed_socket.reset();
 		}
@@ -97,27 +100,29 @@ ruis::event_status wire_socket::on_mouse_button(const ruis::mouse_button_event& 
 	return ruis::event_status::propagate;
 }
 
-void wire_socket::on_hovered_change(unsigned pointer_id){
+void wire_socket::on_hovered_change(unsigned pointer_id)
+{
 	// LOG("Hover changed: " << this->is_hovered(pointer_id) << std::endl)
-	if(auto wa = this->try_get_ancestor<wire_area>()){
-		if(this->is_hovered()){
+	if (auto wa = this->try_get_ancestor<wire_area>()) {
+		if (this->is_hovered()) {
 			wa->hovered_socket = utki::make_shared_from(*this).to_shared_ptr();
-		}else{
-			if(wa->hovered_socket.get() == this){
+		} else {
+			if (wa->hovered_socket.get() == this) {
 				wa->hovered_socket.reset();
 			}
 		}
 	}
 }
 
-std::shared_ptr<wire_socket> wire_socket::get_remote(){
-	if(this->slave){
+std::shared_ptr<wire_socket> wire_socket::get_remote()
+{
+	if (this->slave) {
 		return this->slave;
 	}
-	
-	if(auto p = this->primary.lock()){
+
+	if (auto p = this->primary.lock()) {
 		return p;
 	}
-	
+
 	return nullptr;
 }

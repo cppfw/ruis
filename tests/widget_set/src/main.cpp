@@ -1,25 +1,24 @@
-#include <r4/quaternion.hpp>
-#include <utki/debug.hpp>
 #include <fsif/native_file.hpp>
-
-#include <ruisapp/application.hpp>
-
-#include <ruis/widget/container.hpp>
+#include <r4/quaternion.hpp>
+#include <ruis/standard_widgets.hpp>
+#include <ruis/util/weak_widget_set.hpp>
 #include <ruis/widget/button/push_button.hpp>
+#include <ruis/widget/container.hpp>
 #include <ruis/widget/label/busy.hpp>
 #include <ruis/widget/label/text.hpp>
-#include <ruis/util/weak_widget_set.hpp>
-#include <ruis/standard_widgets.hpp>
+#include <ruisapp/application.hpp>
+#include <utki/debug.hpp>
 
 using namespace std::string_literals;
 
-namespace{
+namespace {
 
-namespace m{
+namespace m {
 using namespace ruis::make;
-}
+} // namespace m
 
-utki::shared_ref<ruis::widget> make_root_widget(const utki::shared_ref<ruis::context>& c){
+utki::shared_ref<ruis::widget> make_root_widget(const utki::shared_ref<ruis::context>& c)
+{
 	// clang-format off
 	return m::pile(c,
 		{},
@@ -86,20 +85,20 @@ utki::shared_ref<ruis::widget> make_root_widget(const utki::shared_ref<ruis::con
 	);
 	// clang-format on
 }
-}
+} // namespace
 
-class application : public ruisapp::application{
+class application : public ruisapp::application
+{
 	ruisapp::window& window;
+
 public:
 	application() :
-			ruisapp::application({
-				.name = "ruis-tests"}
-			),
-			window(this->make_window({
-					.dims = {1024, 800}
-				}))
+		ruisapp::application({
+			.name = "ruis-tests"
+    }),
+		window(this->make_window({.dims = {1024, 800}}))
 	{
-		this->window.gui.context.get().window().close_handler = [this](){
+		this->window.gui.context.get().window().close_handler = [this]() {
 			this->quit();
 		};
 
@@ -111,28 +110,26 @@ public:
 		auto c = make_root_widget(this->window.gui.context);
 		this->window.gui.set_root(c);
 
-		auto spinning_image = utki::make_weak(
-				utki::make_shared_from(
-						c.get().get_widget_as<ruis::busy>("busy_spinner")
-					)
-			);
+		auto spinning_image =
+			utki::make_weak(utki::make_shared_from(c.get().get_widget_as<ruis::busy>("busy_spinner")));
 		auto& button = c.get().get_widget_as<ruis::push_button>("busy_toggle_button");
 
 		ruis::weak_widget_set enable_widgets;
 
 		auto pbs = c.get().get_widget_as<ruis::container>("enable_group").get_all_widgets<ruis::push_button>();
-		LOG([&](auto&o){o << "pbs.size() = " << pbs.size() << std::endl;})
-		for(auto& w : pbs){
-			LOG([](auto&o){o << "adding..." << std::endl;})
+		LOG([&](auto& o) {
+			o << "pbs.size() = " << pbs.size() << std::endl;
+		})
+		for (auto& w : pbs) {
+			LOG([](auto& o) {
+				o << "adding..." << std::endl;
+			})
 			enable_widgets.add(w.to_shared_ptr());
 		}
 
-		button.click_handler = [
-				spinning_image,
-				enable_widgets{std::move(enable_widgets)}
-			](ruis::push_button& b) mutable
-		{
-			if(auto s = spinning_image.lock()){
+		button.click_handler = [spinning_image,
+								enable_widgets{std::move(enable_widgets)}](ruis::push_button& b) mutable {
+			if (auto s = spinning_image.lock()) {
 				s->set_active(!s->is_visible());
 				enable_widgets.set_enabled(!s->is_visible());
 			}
@@ -140,6 +137,6 @@ public:
 	}
 };
 
-const ruisapp::application_factory app_fac([](auto executbale, auto args){
+const ruisapp::application_factory app_fac([](auto executbale, auto args) {
 	return std::make_unique<::application>();
 });

@@ -2,22 +2,24 @@
 
 #include <ruis/widget/widget.hpp>
 
-namespace ruis{
+namespace ruis {
 
-class wire_socket : virtual public ruis::widget{
+class wire_socket : virtual public ruis::widget
+{
 	friend class wire_area;
 
 public:
-	enum class orientation{
+	enum class orientation {
 		left,
 		top,
 		right,
 		bottom
 	};
 
-	struct parameters{
+	struct parameters {
 		orientation outlet_orientation = orientation::bottom;
 	};
+
 private:
 	parameters params;
 
@@ -34,7 +36,7 @@ public:
 	~wire_socket() override = default;
 
 public:
-	struct all_parameters{
+	struct all_parameters {
 		ruis::layout_parameters layout_params;
 		ruis::widget::parameters widget;
 		parameters wire_socket_params;
@@ -44,19 +46,21 @@ public:
 		const utki::shared_ref<ruis::context>& context, //
 		all_parameters params
 	);
-	
+
 protected:
 	std::shared_ptr<wire_socket> get_remote();
-public:
 
+public:
 	/**
 	 * @brief Alignment of wire out.
 	 */
-	orientation get_orientation()const noexcept{
+	orientation get_orientation() const noexcept
+	{
 		return this->params.outlet_orientation;
 	}
 
-	void set_orientation(orientation o){
+	void set_orientation(orientation o)
+	{
 		this->params.outlet_orientation = o;
 	}
 
@@ -65,31 +69,31 @@ public:
 	 * @return Array of two vectors. First is the position of the outlet within the widget.
 	 *         Second is the unit vector of outlet wire direction.
 	 */
-	std::array<ruis::vec2, 2> outlet_pos()const noexcept;
+	std::array<ruis::vec2, 2> outlet_pos() const noexcept;
 
 	void connect(const std::shared_ptr<wire_socket>& o = nullptr);
 	void disconnect();
 
-	event_status on_mouse_button(const ruis::mouse_button_event& event)override;
+	event_status on_mouse_button(const ruis::mouse_button_event& event) override;
 
 	void on_hovered_change(unsigned pointer_id) override;
-	
+
 	/**
 	 * @brief Connection event callback.
 	 * The notification method is called only on one of the wire sockets.
 	 * @param to - the wire socket it is connected to.
 	 */
-	virtual void on_connected(wire_socket& to){}
-	
+	virtual void on_connected(wire_socket& to) {}
+
 	/**
 	 * @brief Disconnection event notification.
 	 * The notification method is called only on one of the wire sockets.
 	 * @param from - the wire socket it was disconnected from.
 	 */
-	virtual void on_disconnected(wire_socket& from){}
+	virtual void on_disconnected(wire_socket& from) {}
 };
 
-namespace make{
+namespace make {
 inline utki::shared_ref<ruis::wire_socket> wire_socket(
 	const utki::shared_ref<ruis::context>& context, //
 	ruis::wire_socket::all_parameters params
@@ -100,6 +104,6 @@ inline utki::shared_ref<ruis::wire_socket> wire_socket(
 		std::move(params)
 	);
 }
-}
+} // namespace make
 
-}
+} // namespace ruis
