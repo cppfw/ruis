@@ -1,22 +1,19 @@
-#include <tst/set.hpp>
-#include <tst/check.hpp>
-
 #include <fsif/native_file.hpp>
-
+#include <ruis/gui.hpp>
+#include <ruis/standard_widgets.hpp>
 #include <ruis/widget/button/tab_group.hpp>
 #include <ruis/widget/group/book.hpp>
 #include <ruis/widget/group/tabbed_book.hpp>
-#include <ruis/gui.hpp>
-#include <ruis/standard_widgets.hpp>
+#include <tst/check.hpp>
+#include <tst/set.hpp>
 
 #include "../../harness/util/dummy_context.hpp"
 
-namespace{
-const tst::set set("tabbed_book", [](tst::suite& suite){
-
+namespace {
+const tst::set set("tabbed_book", [](tst::suite& suite) {
 	// This test checks that tabbed_book class conveys virtual methods
 	// from its parent class, even though it is inherited via private inheritance.
-	suite.add("tabbed_book_has_access_to_base_class_render_method", []{
+	suite.add("tabbed_book_has_access_to_base_class_render_method", [] {
 		auto c = make_dummy_context();
 
 		ruis::gui gui(c);
@@ -24,7 +21,8 @@ const tst::set set("tabbed_book", [](tst::suite& suite){
 		fsif::native_file fi("../../res/ruis_res/");
 		ruis::init_standard_widgets(gui.context, fi);
 
-		class sub_tabbed_book : public ruis::tabbed_book{
+		class sub_tabbed_book : public ruis::tabbed_book
+		{
 		public:
 			sub_tabbed_book(const utki::shared_ref<ruis::context>& context) :
 				ruis::widget(context, {}, {}),
@@ -39,4 +37,4 @@ const tst::set set("tabbed_book", [](tst::suite& suite){
 		// TODO: call other methods like on_key(), on_mouse_move(), etc.
 	});
 });
-}
+} // namespace

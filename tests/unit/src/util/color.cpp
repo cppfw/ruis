@@ -1,14 +1,11 @@
-#include <tst/set.hpp>
-#include <tst/check.hpp>
-
 #include <ruis/util/color.hpp>
-
 #include <tml/tree.hpp>
+#include <tst/check.hpp>
+#include <tst/set.hpp>
 
 namespace {
 // NOLINTNEXTLINE(cppcoreguidelines-interfaces-global-init, "FALSE-POSITIVE: some tests use global ruis::color::transparent variable, which is surely initialized at the moment the test is run")
 const tst::set set("color", [](tst::suite& suite) {
-
 	suite.add("default_constructor_creates_undefined_color", [] {
 		ruis::color c;
 		tst::check(c.is_undefined(), SL);
@@ -95,7 +92,6 @@ const tst::set set("color", [](tst::suite& suite) {
 		tst::check_eq(c[3], c.a(), SL);
 	});
 
-
 	suite.add("make_from_empty_forest_returns_undefined", [] {
 		tml::forest f;
 		auto c = ruis::color::make_from(f);
@@ -130,6 +126,5 @@ const tst::set set("color", [](tst::suite& suite) {
 		tst::check_eq(c.a(), uint8_t(255), SL);
 		tst::check(!c.is_undefined(), SL);
 	});
-
 });
-}
+} // namespace

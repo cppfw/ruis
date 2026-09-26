@@ -1,21 +1,20 @@
-#include <tst/set.hpp>
-#include <tst/check.hpp>
-
 #include <ruis/gui.hpp>
 #include <ruis/widget/group/scroll_area.hpp>
 #include <ruis/widget/label/gap.hpp>
+#include <tst/check.hpp>
+#include <tst/set.hpp>
 
 #include "../../harness/util/dummy_context.hpp"
 
 using namespace std::string_literals;
 
-namespace m{
+namespace m {
 using namespace ruis::make;
-}
+} // namespace m
 
-namespace{
-const tst::set set("finding_widgets", [](tst::suite& suite){
-    suite.add("get_all_widgets_function", []{
+namespace {
+const tst::set set("finding_widgets", [](tst::suite& suite) {
+	suite.add("get_all_widgets_function", [] {
 		ruis::gui gui(make_dummy_context());
 		auto& c = gui.context;
 
@@ -100,25 +99,25 @@ const tst::set set("finding_widgets", [](tst::suite& suite){
 		);
 		// clang-format on
 
-		std::vector<std::string> expected_ids = {{
-			"1", "2", "3", "6", "9"
-		}};
+		std::vector<std::string> expected_ids = {
+			{"1", "2", "3", "6", "9"}
+		};
 
 		auto aaas = w.get().get_all_widgets<ruis::scroll_area>();
 		tst::check_ne(aaas.size(), size_t(0), SL);
 
-		for(const auto& id : expected_ids){
-            auto i = std::ranges::find_if(
-					aaas, //
-					[&id](const decltype(aaas)::value_type& wg) -> bool {
-						return wg.get().id() == id;
-					}
-				);
-            tst::check(i != aaas.end(), SL) << "id = '" << id <<"' not found";
+		for (const auto& id : expected_ids) {
+			auto i = std::ranges::find_if(
+				aaas, //
+				[&id](const decltype(aaas)::value_type& wg) -> bool {
+					return wg.get().id() == id;
+				}
+			);
+			tst::check(i != aaas.end(), SL) << "id = '" << id << "' not found";
 		}
 	});
 
-	suite.add("chaining_get_widget", [](){
+	suite.add("chaining_get_widget", []() {
 		ruis::gui gui(make_dummy_context());
 
 		auto& c = gui.context;
@@ -193,4 +192,4 @@ const tst::set set("finding_widgets", [](tst::suite& suite){
 		tst::check_eq(found.rect().p, ruis::vec2{1, 2}, SL);
 	});
 });
-}
+} // namespace

@@ -1,7 +1,6 @@
-#include <tst/set.hpp>
-#include <tst/check.hpp>
-
 #include <ruis/util/sides.hpp>
+#include <tst/check.hpp>
+#include <tst/set.hpp>
 
 namespace {
 const tst::set set("sides", [](tst::suite& suite) {
@@ -164,6 +163,5 @@ const tst::set set("sides", [](tst::suite& suite) {
 		tst::check_eq(s.dim_x(), 5.0f, SL);
 		tst::check_eq(s.dim_y(), 7.0f, SL);
 	});
-
 });
-}
+} // namespace

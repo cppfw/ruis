@@ -1,7 +1,6 @@
-#include <tst/set.hpp>
-#include <tst/check.hpp>
-
 #include <ruis/util/corners.hpp>
+#include <tst/check.hpp>
+#include <tst/set.hpp>
 
 namespace {
 const tst::set set("corners", [](tst::suite& suite) {
@@ -117,6 +116,5 @@ const tst::set set("corners", [](tst::suite& suite) {
 		tst::check_eq(c.right_bottom(), 3.5f, SL);
 		tst::check_eq(c.left_bottom(), 4.5f, SL);
 	});
-
 });
-}
+} // namespace
