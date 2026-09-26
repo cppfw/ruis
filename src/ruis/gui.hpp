@@ -151,6 +151,14 @@ private:
 
 public:
 	/**
+	 * @brief Default key event handler.
+	 * This handler is called with a key event that was not consumed, i.e. when there is no
+	 * focused widget, or when the focused widget (and its ancestors up to the root widget)
+	 * did not consume the key event. It can be used to catch "default" key events.
+	 */
+	std::function<void(key_event)> default_key_handler;
+
+	/**
 	 * @brief Feed in the key event to GUI.
 	 * Note, this method is not supposed to receive repeated key events, when user holds down the key.
 	 * @param action - button action, i.e. pressed or released.

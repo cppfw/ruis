@@ -154,12 +154,17 @@ void gui::send_key(
 	e.combo.modifiers = this->key_modifiers;
 	e.action = action;
 
+	bool consumed = false;
 	if (auto w = this->context.get().focused_widget.lock()) {
 		//		TRACE(<< "HandleKeyEvent(): there is a focused widget" << std::endl)
-		w->on_key_internal(e);
-	} else {
-		//		TRACE(<< "HandleKeyEvent(): there is no focused widget, passing to rootWidget" << std::endl)
-		this->get_root().on_key_internal(e);
+		consumed = w->on_key_internal(e);
+	}
+
+	// If the key event was not consumed, i.e. there is no focused widget, or the focused
+	// widget (and its ancestors up to the root widget) did not consume it, route it to
+	// the default key handler.
+	if (!consumed && this->default_key_handler) {
+		this->default_key_handler(e);
 	}
 }
 

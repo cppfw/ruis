@@ -31,7 +31,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <ruis/widget/input/labeled_text_field.hpp>
 #include <ruis/widget/label/gap.hpp>
 #include <ruis/widget/label/padding.hpp>
-#include <ruis/widget/proxy/key_proxy.hpp>
 #include <ruis/widget/proxy/resize_proxy.hpp>
 #include <ruis/widget/slider/scroll_bar.hpp>
 #include <ruis/widget/slider/slider.hpp>

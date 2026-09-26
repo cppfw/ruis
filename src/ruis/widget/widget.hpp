@@ -547,7 +547,7 @@ private:
 	void render_internal(const ruis::mat4& matrix) const;
 
 private:
-	void on_key_internal(const ruis::key_event& e);
+	bool on_key_internal(const ruis::key_event& e);
 
 private:
 	bool focused = false;

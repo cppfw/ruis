@@ -1,5 +1,4 @@
 #include <ruis/standard_widgets.hpp>
-#include <ruis/widget/proxy/key_proxy.hpp>
 #include <ruisapp/application.hpp>
 
 #include "gui.hpp"
@@ -22,22 +21,15 @@ public:
 
 		// this->gui.context.get().loader.mount_res_pack(this->get_res_file("res/"));
 
-		auto kp = ruis::make::key_proxy(
-			this->window.gui.context,
-			{.params = {.layout = ruis::layout::pile}},
-			{make_gui(this->window.gui.context)}
-		);
+		this->window.gui.set_root(make_gui(this->window.gui.context));
 
-		kp.get().key_handler = [this](ruis::key_proxy&, const ruis::key_event& e) {
+		this->window.gui.default_key_handler = [this](const ruis::key_event& e) {
 			if (e.action == ruis::button_action::press) {
 				if (e.combo.key == ruis::key::escape) {
 					this->quit();
 				}
 			}
-			return ruis::event_status::propagate;
 		};
-
-		this->window.gui.set_root(std::move(kp));
 
 		this->window.gui.context.get().window().close_handler = [this]() {
 			this->quit();

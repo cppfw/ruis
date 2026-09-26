@@ -303,17 +303,19 @@ void widget::clear_cache()
 	}
 }
 
-void widget::on_key_internal(const ruis::key_event& e)
+bool widget::on_key_internal(const ruis::key_event& e)
 {
 	if (this->is_interactive()) {
 		if (this->on_key(e) == event_status::consumed) {
-			return;
+			return true;
 		}
 	}
 
 	if (this->parent()) {
-		this->parent()->on_key_internal(e);
+		return this->parent()->on_key_internal(e);
 	}
+
+	return false;
 }
 
 void widget::focus() noexcept

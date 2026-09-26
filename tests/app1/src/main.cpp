@@ -18,7 +18,6 @@
 #include <ruis/widget/label/image.hpp>
 #include <ruis/widget/label/text.hpp>
 #include <ruis/widget/proxy/click_proxy.hpp>
-#include <ruis/widget/proxy/key_proxy.hpp>
 #include <ruis/widget/proxy/mouse_proxy.hpp>
 #include <ruis/widget/proxy/resize_proxy.hpp>
 #include <ruis/widget/slider/scroll_bar.hpp>
@@ -78,16 +77,12 @@ public:
 		auto c = make_root_widget(gui.context);
 		gui.set_root(c);
 
-		utki::dynamic_reference_cast<ruis::key_proxy>(c).get().key_handler = [this](
-																				 ruis::key_proxy&, //
-																				 const ruis::key_event& e
-																			 ) -> ruis::event_status {
+		this->window.gui.default_key_handler = [this](const ruis::key_event& e) {
 			if (e.action == ruis::button_action::press) {
 				if (e.combo.key == ruis::key::escape) {
 					this->quit();
 				}
 			}
-			return ruis::event_status::propagate;
 		};
 
 		//		ruis::ZipFile zf(fsif::FSFile::New("res.zip"), "test.gui.stob");
