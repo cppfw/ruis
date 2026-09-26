@@ -1,19 +1,20 @@
 #include "main_page.hpp"
 
-#include "pile_page.hpp"
-
 #include <ruis/widget/button/push_button.hpp>
 #include <ruis/widget/label/text.hpp>
 
+#include "pile_page.hpp"
+
 using namespace std::string_literals;
 
-namespace m{
-    using namespace ruis::make;
-    using namespace ::make;
-}
+namespace m {
+using namespace ruis::make;
+using namespace ::make;
+} // namespace m
 
-utki::shared_ref<ruis::page> make_main_page(const utki::shared_ref<ruis::context>& c){
-    // clang-format off
+utki::shared_ref<ruis::page> make_main_page(const utki::shared_ref<ruis::context>& c)
+{
+	// clang-format off
     return m::pile_page(c,
         ruis::widget::parameters{},
         {
@@ -76,5 +77,5 @@ utki::shared_ref<ruis::page> make_main_page(const utki::shared_ref<ruis::context
             )
         }
     );
-    // clang-format on
+	// clang-format on
 }

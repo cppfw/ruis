@@ -2,9 +2,7 @@
 
 #include <ruis/widget/group/book.hpp>
 
-class pile_page :
-		public ruis::page,
-		public ruis::container
+class pile_page : public ruis::page, public ruis::container
 {
 public:
 	pile_page( //
@@ -19,15 +17,15 @@ public:
 	pile_page(pile_page&&) = delete;
 	pile_page& operator=(pile_page&&) = delete;
 
-	~pile_page()override{
+	~pile_page() override
+	{
 		std::cout << "pile_page destroyed" << std::endl;
 	}
-	
-private:
 
+private:
 };
 
-namespace make{
+namespace make {
 inline utki::shared_ref<::pile_page> pile_page(
 	const utki::shared_ref<ruis::context>& context,
 	ruis::widget::parameters widget_params,
@@ -40,4 +38,4 @@ inline utki::shared_ref<::pile_page> pile_page(
 		std::move(contents)
 	);
 }
-}
+} // namespace make

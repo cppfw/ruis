@@ -10,12 +10,8 @@ pile_page::pile_page(
 	widget(context, {}, std::move(widget_params)),
 	page(context, ruis::widget::parameters{}),
 	container(
-		context,//
-		{
-			.params{
-				.layout = ruis::layout::pile
-			}
-		},
+		context, //
+		{.params{.layout = ruis::layout::pile}},
 		std::move(contents)
 	)
 {}
