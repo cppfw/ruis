@@ -1,19 +1,20 @@
 #include "root_gui.hpp"
 
+#include <ruis/widget/button/push_button.hpp>
 #include <ruis/widget/label/busy.hpp>
 #include <ruis/widget/label/refresh.hpp>
-#include <ruis/widget/button/push_button.hpp>
 #include <ruis/widget/label/text.hpp>
 
 using namespace std::string_literals;
 using namespace std::string_view_literals;
 
-namespace m{
-    using namespace ruis::make;
-}
+namespace m {
+using namespace ruis::make;
+} // namespace m
 
-utki::shared_ref<ruis::widget> make_root_gui(const utki::shared_ref<ruis::context>& c){
-    // clang-format off
+utki::shared_ref<ruis::widget> make_root_gui(const utki::shared_ref<ruis::context>& c)
+{
+	// clang-format off
     return m::pile(c,
         {},
         {
@@ -68,5 +69,5 @@ utki::shared_ref<ruis::widget> make_root_gui(const utki::shared_ref<ruis::contex
             )
         }
     );
-    // clang-format on
+	// clang-format on
 }

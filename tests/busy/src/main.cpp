@@ -1,28 +1,25 @@
-#include <r4/quaternion.hpp>
-#include <utki/debug.hpp>
 #include <fsif/native_file.hpp>
-
-#include <ruisapp/application.hpp>
-
+#include <r4/quaternion.hpp>
+#include <ruis/standard_widgets.hpp>
 #include <ruis/widget/button/push_button.hpp>
 #include <ruis/widget/label/busy.hpp>
-#include <ruis/standard_widgets.hpp>
+#include <ruisapp/application.hpp>
+#include <utki/debug.hpp>
 
 #include "root_gui.hpp"
 
-class application : public ruisapp::application{
+class application : public ruisapp::application
+{
 	ruisapp::window& window;
+
 public:
 	application() :
-			ruisapp::application(
-				{
-				.name = "ruis-tests"}
-			),
-			window(this->make_window({
-					.dims = {1024, 800}
-				}))
+		ruisapp::application({
+			.name = "ruis-tests"
+    }),
+		window(this->make_window({.dims = {1024, 800}}))
 	{
-		this->window.gui.context.get().window().close_handler = [this](){
+		this->window.gui.context.get().window().close_handler = [this]() {
 			this->quit();
 		};
 
@@ -35,13 +32,11 @@ public:
 		this->window.gui.set_root(c);
 
 		{
-			auto spinning_image = utki::make_weak_from(
-					c.get().get_widget_as<ruis::busy>("busy_spinner")
-				);
+			auto spinning_image = utki::make_weak_from(c.get().get_widget_as<ruis::busy>("busy_spinner"));
 			auto& button = c.get().get_widget_as<ruis::push_button>("busy_toggle_button");
 
-			button.click_handler = [spinning_image](ruis::push_button& b){
-				if(auto s = spinning_image.lock()){
+			button.click_handler = [spinning_image](ruis::push_button& b) {
+				if (auto s = spinning_image.lock()) {
 					s->set_active(!s->is_visible());
 				}
 			};
@@ -52,8 +47,8 @@ public:
 		{
 			auto spinning_image = utki::make_weak_from(c.get().get_widget_as<ruis::spinning_image>("refresh_spinner"));
 			auto& button = c.get().get_widget_as<ruis::push_button>("refresh_toggle_button");
-			button.click_handler = [spinning_image](ruis::push_button& b){
-				if(auto s = spinning_image.lock()){
+			button.click_handler = [spinning_image](ruis::push_button& b) {
+				if (auto s = spinning_image.lock()) {
 					s->set_active(!s->is_updating());
 				}
 			};
@@ -61,6 +56,6 @@ public:
 	}
 };
 
-const ruisapp::application_factory app_fac([](auto executable, auto args){
+const ruisapp::application_factory app_fac([](auto executable, auto args) {
 	return std::make_unique<::application>();
 });
