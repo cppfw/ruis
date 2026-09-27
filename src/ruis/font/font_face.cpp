@@ -19,30 +19,24 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 /* ================ LICENSE END ================ */
 
-#pragma once
+#include "font_face.hpp"
 
-#include "font_provider.hpp"
-#include "texture_font.hxx"
+using namespace ruis;
 
-namespace ruis {
-
-class texture_font_provider : public font_provider
+utki::shared_ref<const font> font_face::get(real size) const
 {
-	const utki::shared_ref<const ruis::render::context> rendering_context;
-	const utki::shared_ref<const ruis::render::renderer::objects> common_rendering_objects;
+	auto i = this->cache.find(size);
+	if (i != this->cache.end()) {
+		if (auto f = i->second.lock()) {
+			return utki::shared_ref<const font>(std::move(f));
+		} else {
+			this->cache.erase(i);
+		}
+	}
 
-	const utki::shared_ref<const freetype_face> face;
-	const unsigned max_cached;
+	auto f = this->create(size);
 
-public:
-	texture_font_provider(
-		utki::shared_ref<const ruis::render::context> rendering_context, //
-		utki::shared_ref<const ruis::render::renderer::objects> common_rendering_objects,
-		utki::shared_ref<const freetype_face> face,
-		unsigned max_cached
-	);
+	this->cache.insert(std::make_pair(size, utki::make_weak(f)));
 
-	utki::shared_ref<const font> create(real size) const override;
-};
-
-} // namespace ruis
+	return f;
+}

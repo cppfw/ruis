@@ -19,35 +19,29 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 /* ================ LICENSE END ================ */
 
-#pragma once
+#include "texture_font_face.hxx"
 
-#include <map>
+using namespace ruis;
 
-#include <utki/shared_ref.hpp>
+texture_font_face::texture_font_face(
+	utki::shared_ref<const ruis::render::context> rendering_context, //
+	utki::shared_ref<const ruis::render::renderer::objects> common_rendering_objects,
+	utki::shared_ref<const freetype_face> face,
+	unsigned max_cached
+) :
+	rendering_context(std::move(rendering_context)),
+	common_rendering_objects(std::move(common_rendering_objects)),
+	face(std::move(face)),
+	max_cached(max_cached)
+{}
 
-#include "font.hpp"
-
-namespace ruis {
-
-class font_provider
+utki::shared_ref<const font> texture_font_face::create(real size) const
 {
-	mutable std::map<real, std::weak_ptr<const font>> cache;
-
-protected:
-	virtual utki::shared_ref<const font> create(real size) const = 0;
-
-public:
-	utki::shared_ref<const font> get(real size) const;
-
-	font_provider() = default;
-
-	font_provider(const font_provider&) = delete;
-	font_provider& operator=(const font_provider&) = delete;
-
-	font_provider(font_provider&&) = delete;
-	font_provider& operator=(font_provider&&) = delete;
-
-	virtual ~font_provider() = default;
-};
-
-} // namespace ruis
+	return utki::make_shared<texture_font>(
+		this->rendering_context, //
+		this->common_rendering_objects,
+		this->face,
+		unsigned(size),
+		max_cached
+	);
+}

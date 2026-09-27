@@ -26,7 +26,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <utki/unicode.hpp>
 
 #include "../context.hpp"
-#include "../font/texture_font_provider.hxx"
+#include "../font/texture_font_face.hxx"
 #include "../util/util.hpp"
 
 using namespace ruis;
@@ -43,7 +43,7 @@ res::font::font(
 )
 {
 	// NOLINTNEXTLINE(bugprone-unused-return-value, "false positive")
-	this->fonts[unsigned(style::normal)] = std::make_unique<texture_font_provider>(
+	this->font_faces[style::normal] = std::make_unique<texture_font_face>(
 		rendering_context, //
 		common_rendering_objects,
 		utki::make_shared<freetype_face>(file_normal),
@@ -52,7 +52,7 @@ res::font::font(
 
 	if (file_bold) {
 		// NOLINTNEXTLINE(bugprone-unused-return-value, "false positive")
-		this->fonts[unsigned(style::bold)] = std::make_unique<texture_font_provider>(
+		this->font_faces[style::bold] = std::make_unique<texture_font_face>(
 			rendering_context, //
 			common_rendering_objects,
 			utki::make_shared<freetype_face>(*file_bold),
@@ -61,7 +61,7 @@ res::font::font(
 	}
 	if (file_italic) {
 		// NOLINTNEXTLINE(bugprone-unused-return-value, "false positive")
-		this->fonts[unsigned(style::italic)] = std::make_unique<texture_font_provider>(
+		this->font_faces[style::italic] = std::make_unique<texture_font_face>(
 			rendering_context, //
 			common_rendering_objects,
 			utki::make_shared<freetype_face>(*file_italic),
@@ -70,7 +70,7 @@ res::font::font(
 	}
 	if (file_bold_italic) {
 		// NOLINTNEXTLINE(bugprone-unused-return-value, "false positive")
-		this->fonts[unsigned(style::bold_italic)] = std::make_unique<texture_font_provider>(
+		this->font_faces[style::bold_italic] = std::make_unique<texture_font_face>(
 			std::move(rendering_context), //
 			std::move(common_rendering_objects),
 			utki::make_shared<freetype_face>(*file_bold_italic),

@@ -24,8 +24,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <string>
 
 #include <tml/tree.hpp>
+#include <utki/enum_array.hpp>
 
-#include "../font/font_provider.hpp"
+#include "../font/font_face.hpp"
 #include "../resource_loader.hpp"
 #include "../util/util.hpp"
 
@@ -66,11 +67,11 @@ public:
 	};
 
 private:
-	std::array<
-		std::unique_ptr<const ruis::font_provider>, //
-		size_t(style::enum_size) //
+	utki::enum_array<
+		std::unique_ptr<const ruis::font_face>, //
+		style //
 		>
-		fonts;
+		font_faces;
 
 public:
 	font(
@@ -100,13 +101,12 @@ public:
 		style font_style = style::normal
 	) const noexcept
 	{
-		ASSERT(this->fonts[unsigned(style::normal)])
-		// NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-constant-array-index)
-		const auto& ret = this->fonts[unsigned(font_style)];
+		ASSERT(this->font_faces[style::normal])
+		const auto& ret = this->font_faces[font_style];
 		if (ret) {
 			return ret->get(size);
 		}
-		return this->fonts[size_t(style::normal)]->get(size);
+		return this->font_faces[style::normal]->get(size);
 	}
 
 private:

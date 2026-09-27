@@ -19,24 +19,35 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 /* ================ LICENSE END ================ */
 
-#include "font_provider.hpp"
+#pragma once
 
-using namespace ruis;
+#include <map>
 
-utki::shared_ref<const font> font_provider::get(real size) const
+#include <utki/shared_ref.hpp>
+
+#include "font.hpp"
+
+namespace ruis {
+
+class font_face
 {
-	auto i = this->cache.find(size);
-	if (i != this->cache.end()) {
-		if (auto f = i->second.lock()) {
-			return utki::shared_ref<const font>(std::move(f));
-		} else {
-			this->cache.erase(i);
-		}
-	}
+	mutable std::map<real, std::weak_ptr<const font>> cache;
 
-	auto f = this->create(size);
+protected:
+	virtual utki::shared_ref<const font> create(real size) const = 0;
 
-	this->cache.insert(std::make_pair(size, utki::make_weak(f)));
+public:
+	utki::shared_ref<const font> get(real size) const;
 
-	return f;
-}
+	font_face() = default;
+
+	font_face(const font_face&) = delete;
+	font_face& operator=(const font_face&) = delete;
+
+	font_face(font_face&&) = delete;
+	font_face& operator=(font_face&&) = delete;
+
+	virtual ~font_face() = default;
+};
+
+} // namespace ruis

@@ -19,29 +19,30 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 /* ================ LICENSE END ================ */
 
-#include "texture_font_provider.hxx"
+#pragma once
 
-using namespace ruis;
+#include "font_face.hpp"
+#include "texture_font.hxx"
 
-texture_font_provider::texture_font_provider(
-	utki::shared_ref<const ruis::render::context> rendering_context, //
-	utki::shared_ref<const ruis::render::renderer::objects> common_rendering_objects,
-	utki::shared_ref<const freetype_face> face,
-	unsigned max_cached
-) :
-	rendering_context(std::move(rendering_context)),
-	common_rendering_objects(std::move(common_rendering_objects)),
-	face(std::move(face)),
-	max_cached(max_cached)
-{}
+namespace ruis {
 
-utki::shared_ref<const font> texture_font_provider::create(real size) const
+class texture_font_face : public font_face
 {
-	return utki::make_shared<texture_font>(
-		this->rendering_context, //
-		this->common_rendering_objects,
-		this->face,
-		unsigned(size),
-		max_cached
+	const utki::shared_ref<const ruis::render::context> rendering_context;
+	const utki::shared_ref<const ruis::render::renderer::objects> common_rendering_objects;
+
+	const utki::shared_ref<const freetype_face> face;
+	const unsigned max_cached;
+
+public:
+	texture_font_face(
+		utki::shared_ref<const ruis::render::context> rendering_context, //
+		utki::shared_ref<const ruis::render::renderer::objects> common_rendering_objects,
+		utki::shared_ref<const freetype_face> face,
+		unsigned max_cached
 	);
-}
+
+	utki::shared_ref<const font> create(real size) const override;
+};
+
+} // namespace ruis
