@@ -19,7 +19,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 /* ================ LICENSE END ================ */
 
-#include "standard_widgets.hpp"
+#include "standard_resources.hpp"
 
 #include "res/tml.hpp"
 
@@ -40,7 +40,7 @@ std::string_view ruis::to_resource_id(theme th) noexcept
 	return "ruis_tml_theme_dark"sv;
 }
 
-void ruis::init_standard_widgets(
+void ruis::mount_ruis_res_pack(
 	ruis::context& context, //
 	const fsif::file& fi,
 	theme th
@@ -84,9 +84,25 @@ void ruis::init_standard_widgets(
 	}
 
 	if (!mounted) {
-		throw std::runtime_error("init_standard_widgets(): could not mount default resource pack");
+		throw std::runtime_error("mount_ruis_res_pack(): could not mount default resource pack");
 	}
 
-	auto style_res = context.loader().load<ruis::res::tml>(to_resource_id(th));
-	context.style().set(utki::make_shared<style_sheet>(style_res.get().forest));
+	// set default theme
+	context.style().set(load_theme(context.loader(), th));
+}
+
+utki::shared_ref<style_sheet> ruis::load_theme(
+	const resource_loader& loader, //
+	std::string_view theme_tml_resource_id
+)
+{
+	return utki::make_shared<style_sheet>(loader.load<ruis::res::tml>(theme_tml_resource_id).get().forest);
+}
+
+utki::shared_ref<style_sheet> ruis::load_theme(
+	const resource_loader& loader, //
+	theme th
+)
+{
+	return load_theme(loader, to_resource_id(th));
 }

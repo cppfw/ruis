@@ -21,7 +21,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "application.hpp"
 
-#include <ruis/standard_widgets.hpp>
+#include <ruis/standard_resources.hpp>
 #include <ruisapp/application.hpp>
 
 #include "gui.hpp"
@@ -36,7 +36,7 @@ application::application() :
 		this->quit();
 	};
 
-	ruis::init_standard_widgets(
+	ruis::mount_ruis_res_pack(
 		this->window.gui.context, //
 		this->get_res_file("../../res/ruis_res/").get()
 	);

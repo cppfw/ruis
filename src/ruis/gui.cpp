@@ -25,8 +25,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "widget/input/base/character_input_widget.hpp"
 #include "widget/label/gap.hpp"
 
-// TODO: remove when guit::init_standard_widgets() is removed
-#include "standard_widgets.hpp"
+// TODO: remove when guit::mount_ruis_res_pack() is removed
+#include "standard_resources.hpp"
 
 using namespace std::string_view_literals;
 
@@ -38,9 +38,9 @@ gui::gui(utki::shared_ref<ruis::context> context) :
 	root_widget(ruis::make::gap(this->context, {}))
 {}
 
-void gui::init_standard_widgets(const fsif::file& fi)
+void gui::mount_ruis_res_pack(const fsif::file& fi)
 {
-	ruis::init_standard_widgets(this->context, fi);
+	ruis::mount_ruis_res_pack(this->context, fi);
 }
 
 void gui::set_viewport(const ruis::rect& rect)

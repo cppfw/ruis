@@ -7,7 +7,7 @@
 #include <ruis/config.hpp>
 #include <ruis/layout/linear_layout.hpp>
 #include <ruis/res/texture_2d.hpp>
-#include <ruis/standard_widgets.hpp>
+#include <ruis/standard_resources.hpp>
 #include <ruis/widget/button/push_button.hpp>
 #include <ruis/widget/button/selection_box.hpp>
 #include <ruis/widget/container.hpp>
@@ -66,7 +66,7 @@ public:
 
 		auto& gui = this->window.gui;
 
-		ruis::init_standard_widgets(
+		ruis::mount_ruis_res_pack(
 			gui.context, //
 			this->get_res_file("../../res/ruis_res/").get()
 		);

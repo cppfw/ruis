@@ -1,6 +1,6 @@
 #include <fsif/native_file.hpp>
 #include <ruis/gui.hpp>
-#include <ruis/standard_widgets.hpp>
+#include <ruis/standard_resources.hpp>
 #include <ruis/widget/button/tab_group.hpp>
 #include <ruis/widget/group/book.hpp>
 #include <ruis/widget/group/tabbed_book.hpp>
@@ -19,7 +19,7 @@ const tst::set set("tabbed_book", [](tst::suite& suite) {
 		ruis::gui gui(c);
 
 		fsif::native_file fi("../../res/ruis_res/");
-		ruis::init_standard_widgets(gui.context, fi);
+		ruis::mount_ruis_res_pack(gui.context, fi);
 
 		class sub_tabbed_book : public ruis::tabbed_book
 		{

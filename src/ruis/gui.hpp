@@ -108,8 +108,8 @@ public:
 	 * widgets to be used by application.
 	 * @param fi - file interface to use for resource loading.
 	 */
-	[[deprecated("use free floating ruis::init_standard_widgets()")]]
-	void init_standard_widgets(const fsif::file& fi);
+	[[deprecated("use free floating ruis::mount_ruis_res_pack()")]]
+	void mount_ruis_res_pack(const fsif::file& fi);
 
 	/**
 	 * @brief Feed in the mouse move event to GUI.
