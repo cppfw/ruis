@@ -27,11 +27,6 @@ ruis_img_refresh{
 	file{refresh.svg}
 }
 
-
-ruis_img_refresh_disabled{
-	file{refresh_disabled.svg}
-}
-
 ruis_img_cross{
 	file{cross.svg}
 }
