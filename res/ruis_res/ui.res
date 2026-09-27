@@ -19,22 +19,6 @@ ruis_img_divider_vert{
 	file{divider_vert.svg}
 }
 
-ruis_img_busy{
-	file{busy.svg}
-}
-
-ruis_img_refresh{
-	file{refresh.svg}
-}
-
-ruis_img_cross{
-	file{cross.svg}
-}
-
-ruis_img_more{
-	file{more.svg}
-}
-
 ruis_npt_slider_bg{
 	file{slider_bg.svg}
 	// 11x12
