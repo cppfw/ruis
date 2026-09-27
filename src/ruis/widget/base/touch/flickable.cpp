@@ -41,7 +41,7 @@ ruis::event_status flickable::on_mouse_button(const mouse_button_event& event)
 	}
 
 	// Single touch mode.
-	if (this->cur_state != state::idle) {
+	if (this->cur_state != state::idle && this->cur_state != state::inertial_scrolling) {
 		if (this->cur_pointer_id != event.pointer_id) {
 			return event_status::propagate;
 		}
@@ -65,7 +65,13 @@ ruis::event_status flickable::on_mouse_button(const mouse_button_event& event)
 				// in idle state the mouse button is unpressed, so the only valid event is press
 				utki::assert(event.action == button_action::press);
 
-				this->push_touch_move_to_history({.position = event.pos, .timestamp_ms = utki::get_ticks_ms()});
+				this->push_touch_move_to_history(
+					// clang-format off
+					{
+						.position = event.pos,
+						.timestamp_ms = utki::get_ticks_ms()
+					} // clang-format on
+				);
 
 				// std::cout << "touch press, vel = " << this->calculate_touch_velocity() << std::endl;
 
@@ -99,13 +105,12 @@ ruis::event_status flickable::on_mouse_button(const mouse_button_event& event)
 
 				this->cur_state = state::inertial_scrolling;
 
+				// When releasing the mouse button during dragging there should be at least initial touch point in the touch history.
+				utki::assert(!this->touch_history.empty());
+
 				// After reaching the last touch point, it still can remain touched for some time without moving,
 				// so when the touch is released we need to update the timestamp of the last touch point to the current time,
 				// so that the velocity calculation would be correct.
-				// TODO: this assertion triggered in touch test app when clicking many times with small mouse moves around three buttons icon in list page.
-				// TODO: once I got this assertion triggered, just need to click fast and move the mouse a little
-				//   UPDATE: this happens when during inertial scrolling the button is pressed and released without moving. need to fix it.
-				utki::assert(!this->touch_history.empty());
 				this->touch_history.back().timestamp_ms = utki::get_ticks_ms();
 
 				this->velocity_px_per_ms = this->calculate_touch_velocity_px_per_ms();
@@ -118,13 +123,29 @@ ruis::event_status flickable::on_mouse_button(const mouse_button_event& event)
 				return event_status::consumed;
 			}
 		case state::inertial_scrolling:
+			if (event.action == button_action::release) {
+				// The user has pressed the mouse button outside of the flickable,
+				// then moved cursor into flicable and then released the button.
+				// Ignore it.
+				return event_status::propagate;
+			}
+
 			// in inertial_scrolling state the mouse button is unpressed, so the only valid event is press
 			utki::assert(event.action == button_action::press);
 
 			// inertial scrolling stopped by touch
 
+			this->push_touch_move_to_history(
+				// clang-format off
+				{
+					.position = event.pos,
+					.timestamp_ms = utki::get_ticks_ms()
+				} // clang-format on
+			);
+
 			this->cur_state = state::dragging;
 			this->prev_touch_point = event.pos;
+			this->cur_pointer_id = event.pointer_id;
 
 			this->context.get().updater.get().stop(*this);
 
