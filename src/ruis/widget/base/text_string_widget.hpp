@@ -88,7 +88,11 @@ protected:
 	 */
 	const ruis::font& get_font() const
 	{
-		return font_widget::get_font(*this->params.style);
+		utki::assert(this->params.style.has_value());
+		return font_widget::get_font(
+			// Use value_or() to silence linter.
+			this->params.style.value_or(res::font::style::normal)
+		);
 	}
 
 	void recompute_bounding_box();
