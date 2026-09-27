@@ -31,6 +31,10 @@ ruis_img_cross{
 	file{cross.svg}
 }
 
+ruis_img_more{
+	file{more.svg}
+}
+
 ruis_npt_slider_bg{
 	file{slider_bg.svg}
 	// 11x12

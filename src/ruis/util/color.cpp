@@ -24,6 +24,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace ruis;
 
 const color color::transparent{1, 0, 0, 0};
+const color color::white{255, 255, 255, 255};
 
 color color::make_from(const tml::forest& desc)
 {

@@ -21,8 +21,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "list_page.hpp"
 
+#include <ruis/widget/button/impl/ellipse_push_button.hpp>
 #include <ruis/widget/group/touch/list.hpp>
 #include <ruis/widget/label/gap.hpp>
+#include <ruis/widget/label/image.hpp>
 #include <ruis/widget/label/padding.hpp>
 #include <ruis/widget/label/text.hpp>
 #include <utki/string.hpp>
@@ -31,6 +33,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "style.hpp"
 
 using namespace std::string_literals;
+using namespace std::string_view_literals;
 
 namespace {
 class list_page_provider : public ruis::list_provider
@@ -64,6 +67,48 @@ public:
 			std::cout << "Item #" << index << " button cliecked" << std::endl;
 		};
 
+		// Three dots button on the right side of the item; does nothing for now.
+		// clang-format off
+		auto menu_button = m::ellipse_push_button(this->context,
+			{
+				.layout_params{
+					.dims = {ruis::dim::min, ruis::dim::fill},
+					.align = {ruis::align::back, ruis::align::center}
+				},
+				.params{
+					.ellipse_button{
+						.ellipse{
+							.padding{
+								.specific{
+									.borders = {ruis::length::make_pp(3)}
+								}
+							}
+						},
+						.specific{
+							.unpressed_color = ruis::color::transparent
+						}
+					}
+				}
+			},
+			{
+				m::image(this->context,
+					{
+						.layout_params{
+							.dims = {ruis::dim::min, ruis::dim::fill}
+						},
+						.params{
+							.color = this->context.get().style().get_color_text(),
+							.specific{
+								.source = this->context.get().loader().load<ruis::res::image>("ruis_img_more"sv),
+								.keep_aspect_ratio = true
+							}
+						}
+					}
+				)
+			}
+		);
+		// clang-format on
+
 		// clang-format off
 		return m::column(this->context,
 			{
@@ -74,6 +119,9 @@ public:
 			{
 				m::padding(this->context,
 					{
+						.layout_params{
+							.dims = {ruis::dim::fill, ruis::dim::min}
+						},
 						.params{
 							.container{
 								.layout = ruis::layout::row
@@ -84,15 +132,36 @@ public:
 						}
 					},
 					{
-						m::text(this->context, {}, utki::to_utf32(utki::cat("Item #", index))),
+						// Item content, fills the remaining width
+						m::row(this->context,
+							{
+								.layout_params{
+									.dims = {ruis::dim::fill, ruis::dim::min},
+									.weight = 1
+								}
+							},
+							{
+								m::text(this->context, {}, utki::to_utf32(utki::cat("Item #", index))),
+								m::gap(this->context,
+									{
+										.layout_params{
+											.dims = {ruis::length::make_pp(5), ruis::dim::min}
+										}
+									}
+								),
+								std::move(button)
+							}
+						),
+						// Gap before the three dots button
 						m::gap(this->context,
 							{
 								.layout_params{
-									.dims = {ruis::length::make_pp(5), ruis::dim::min}
+									.dims = {ruis::length::make_pp(3), ruis::dim::min}
 								}
 							}
 						),
-						std::move(button)
+						// Three dots button on the right, vertically centered
+						std::move(menu_button)
 					}
 				),
 				m::gap(this->context,

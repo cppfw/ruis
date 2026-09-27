@@ -60,6 +60,15 @@ public:
 	static const color transparent;
 
 	/**
+	 * @brief An opaque white color.
+	 *
+	 * This is a color with all color channels set to their maximum value
+	 * (red = 255, green = 255, blue = 255) and a fully opaque alpha channel
+	 * (alpha = 255).
+	 */
+	static const color white;
+
+	/**
 	 * @brief Create a color from a 32-bit RGBA value.
 	 * The 32-bit value is interpreted as follows:
 	 * - bits 0-7: red component channel
