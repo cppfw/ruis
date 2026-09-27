@@ -27,19 +27,6 @@ using namespace std::string_view_literals;
 
 using namespace ruis;
 
-std::string_view ruis::to_resource_id(theme th) noexcept
-{
-	switch (th) {
-		using enum theme;
-		case dark:
-			return "ruis_tml_theme_dark"sv;
-		case light:
-			return "ruis_tml_theme_light"sv;
-	}
-
-	return "ruis_tml_theme_dark"sv;
-}
-
 void ruis::mount_ruis_res_pack(
 	ruis::context& context, //
 	const fsif::file& fi,
@@ -89,20 +76,4 @@ void ruis::mount_ruis_res_pack(
 
 	// set default theme
 	context.style().set(load_theme(context.loader(), th));
-}
-
-utki::shared_ref<style_sheet> ruis::load_theme(
-	const resource_loader& loader, //
-	std::string_view theme_tml_resource_id
-)
-{
-	return utki::make_shared<style_sheet>(loader.load<ruis::res::tml>(theme_tml_resource_id).get().forest);
-}
-
-utki::shared_ref<style_sheet> ruis::load_theme(
-	const resource_loader& loader, //
-	theme th
-)
-{
-	return load_theme(loader, to_resource_id(th));
 }

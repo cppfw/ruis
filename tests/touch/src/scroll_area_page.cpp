@@ -34,6 +34,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <ruis/widget/label/text.hpp>
 #include <ruis/widget/slider/scroll_bar.hpp>
 
+#include "application.hpp"
 #include "style.hpp"
 
 using namespace std::string_literals;
@@ -42,15 +43,6 @@ using namespace std::string_view_literals;
 using namespace ruis::length_literals;
 
 namespace {
-
-void apply_theme(
-	ruis::context& c, //
-	ruis::theme theme
-)
-{
-	auto style_res = c.loader().load<ruis::res::tml>(ruis::to_resource_id(theme));
-	c.style().set(utki::make_shared<ruis::style_sheet>(style_res.get().forest));
-}
 
 class theme_selection_provider : public ruis::list_provider
 {
@@ -253,10 +245,8 @@ ruis::widget_list make_scroll_area_page_contents(const utki::shared_ref<ruis::co
 
 	theme_selector.get().set_selection(size_t(ruis::theme::dark));
 	theme_selector.get().selection_handler = [](ruis::selection_box& sb) {
-		apply_theme(
-			sb.context.get(), //
-			ruis::theme(sb.get_selection())
-		);
+		sb.context.get().style().set(ruis::theme(sb.get_selection()));
+		application::inst().window.gui.get_root().reload();
 	};
 
 	// clang-format off

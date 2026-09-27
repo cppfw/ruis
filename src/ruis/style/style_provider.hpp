@@ -33,6 +33,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "style_sheet.hpp"
 #include "styled.hpp"
+#include "theme.hpp"
 
 namespace ruis {
 
@@ -99,6 +100,8 @@ public:
 	style_provider(const utki::shared_ref<ruis::resource_loader>& loader);
 
 	void set(utki::shared_ref<style_sheet> ss);
+
+	void set(theme th);
 
 	template <typename value_type>
 	styled<value_type> get(std::string_view id) const

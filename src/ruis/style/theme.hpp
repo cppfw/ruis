@@ -21,18 +21,29 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include <string_view>
+#include <utki/shared_ref.hpp>
 
-#include "style/theme.hpp"
+#include "../resource_loader.hpp"
 
-#include "context.hpp"
+#include "style_sheet.hpp"
 
 namespace ruis {
 
-void mount_ruis_res_pack(
-	ruis::context& context, //
-	const fsif::file& fi,
-	theme th = theme::dark
+enum class theme {
+	dark,
+	light
+};
+
+std::string_view to_resource_id(theme th) noexcept;
+
+utki::shared_ref<style_sheet> load_theme(
+	const resource_loader& loader, //
+	std::string_view theme_tml_resource_id
+);
+
+utki::shared_ref<style_sheet> load_theme(
+	const resource_loader& loader, //
+	theme th
 );
 
 } // namespace ruis

@@ -83,6 +83,14 @@ void style_provider::set(utki::shared_ref<style_sheet> ss)
 	}
 }
 
+void style_provider::set(theme th)
+{
+	this->set(load_theme(
+		this->res_loader.get(), //
+		th
+	));
+}
+
 std::shared_ptr<const internal::style_value_base> style_provider::get_from_cache(style id) const
 {
 	auto& w = this->standard_cache[id];

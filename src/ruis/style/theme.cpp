@@ -19,20 +19,39 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 /* ================ LICENSE END ================ */
 
-#pragma once
+#include "theme.hpp"
 
-#include <string_view>
+#include "../res/tml.hpp"
 
-#include "style/theme.hpp"
+using namespace std::string_view_literals;
 
-#include "context.hpp"
+using namespace ruis;
 
-namespace ruis {
+std::string_view ruis::to_resource_id(theme th) noexcept
+{
+	switch (th) {
+		using enum theme;
+		case dark:
+			return "ruis_tml_theme_dark"sv;
+		case light:
+			return "ruis_tml_theme_light"sv;
+	}
 
-void mount_ruis_res_pack(
-	ruis::context& context, //
-	const fsif::file& fi,
-	theme th = theme::dark
-);
+	return "ruis_tml_theme_dark"sv;
+}
 
-} // namespace ruis
+utki::shared_ref<style_sheet> ruis::load_theme(
+	const resource_loader& loader, //
+	std::string_view theme_tml_resource_id
+)
+{
+	return utki::make_shared<style_sheet>(loader.load<ruis::res::tml>(theme_tml_resource_id).get().forest);
+}
+
+utki::shared_ref<style_sheet> ruis::load_theme(
+	const resource_loader& loader, //
+	theme th
+)
+{
+	return load_theme(loader, to_resource_id(th));
+}
