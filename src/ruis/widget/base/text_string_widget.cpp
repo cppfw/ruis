@@ -47,7 +47,12 @@ text_string_widget::text_string_widget(
 		std::move(params.font)
 	),
 	text_string(std::move(text)),
-	params(std::move(params.specific))
+	params([&]() {
+		if (!params.specific.style.has_value()) {
+			params.specific.style = res::font::style::normal;
+		}
+		return std::move(params.specific);
+	}())
 {
 	this->recompute_bounding_box();
 }

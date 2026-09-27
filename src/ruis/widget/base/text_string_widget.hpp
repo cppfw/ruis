@@ -21,6 +21,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
+#include <optional>
+
 #include "../../util/localization.hpp"
 
 #include "color_widget.hpp"
@@ -42,6 +44,12 @@ public:
 	struct specific_parameters {
 		constexpr static const auto default_selection_color = 0xff804040;
 		styled<ruis::color> selection_color = default_selection_color;
+
+		/**
+		 * @brief Font style (normal, bold, italic, bold_italic).
+		 * If undefined, the default style is normal.
+		 */
+		std::optional<res::font::style> style;
 	};
 
 	struct parameters {
@@ -70,6 +78,17 @@ protected:
 	const ruis::rect& get_bounding_box() const
 	{
 		return this->bb;
+	}
+
+	/**
+	 * @brief Get font for text drawing.
+	 * Uses the widget's font style, or normal if style is not set.
+	 * @return Font for drawing.
+	 * @throw std::logic_error in case there is no font face currently set.
+	 */
+	const ruis::font& get_font() const
+	{
+		return font_widget::get_font(*this->params.style);
 	}
 
 	void recompute_bounding_box();
