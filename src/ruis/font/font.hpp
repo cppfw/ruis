@@ -76,6 +76,7 @@ public:
 protected:
 	/**
 	 * @brief Render string of text.
+	 * @param renderer - renderer to use for rendering.
 	 * @param matrix - transformation matrix to use when rendering the text.
 	 * @param color - text color.
 	 * @param str - string of text to render.
@@ -123,6 +124,7 @@ public:
 
 	/**
 	 * @brief Render string of text.
+	 * @param renderer - renderer to use for rendering.
 	 * @param matrix - transformation matrix to use when rendering.
 	 * @param color - text color.
 	 * @param str - string of text to render.
@@ -153,6 +155,7 @@ public:
 
 	/**
 	 * @brief Render string of text.
+	 * @param renderer - renderer to use for rendering.
 	 * @param matrix - transformation matrix to use when rendering.
 	 * @param color - text color.
 	 * @param str - string of text to render.
@@ -183,6 +186,7 @@ public:
 
 	/**
 	 * @brief Render string of text.
+	 * @param renderer - renderer to use for rendering.
 	 * @param matrix - transformation matrix to use when rendering.
 	 * @param color - text color.
 	 * @param str - string of text to render.
@@ -213,6 +217,7 @@ public:
 
 	/**
 	 * @brief Render string of text.
+	 * @param renderer - renderer to use for rendeing.
 	 * @param matrix - transformation matrix to use when rendering.
 	 * @param color - text color.
 	 * @param str - string of text to render.

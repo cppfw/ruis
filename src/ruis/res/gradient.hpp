@@ -74,6 +74,8 @@ public:
 	 * from [0:1] defining the position of the gradient stop. The second value
 	 * defines the color of the stop.
 	 * @param rendering_context - ruis rendering context.
+	 * @param stops - gradient stops.
+	 * @param vertical - is gradient vertical (true) or horizontal (false).
 	 */
 	gradient(
 		const ruis::render::context& rendering_context, //
@@ -92,6 +94,7 @@ public:
 	/**
 	 * @brief render gradient.
 	 * Renders the gradient as a rectangle ((0,0),(1,1)).
+	 * @param renderer - renderer to use for rendering.
 	 * @param m - transformation matrix.
 	 */
 	void render(
