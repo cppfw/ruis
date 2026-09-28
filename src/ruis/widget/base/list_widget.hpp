@@ -90,7 +90,7 @@ class list_widget : virtual public widget
 
 public:
 	struct parameters {
-		utki::shared_ref<list_provider> provider;
+		utki::shared_ref<list_provider> provider; // TODO: it should be utki::unique_ref
 	};
 
 private:
