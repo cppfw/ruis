@@ -30,6 +30,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <utki/string.hpp>
 #include <utki/unicode.hpp>
 
+#include "context_menu.hpp"
 #include "style.hpp"
 
 using namespace std::string_literals;
@@ -67,7 +68,7 @@ public:
 			std::cout << "Item #" << index << " button cliecked" << std::endl;
 		};
 
-		// Three dots button on the right side of the item; does nothing for now.
+		// Three dots button on the right side of the item; opens a context menu.
 		// clang-format off
 		auto menu_button = m::ellipse_push_button(this->context,
 			{
@@ -108,6 +109,40 @@ public:
 			}
 		);
 		// clang-format on
+
+		// When the three dots button is clicked, show a context menu near it.
+		menu_button.get().click_handler = [index](auto& btn) {
+			// clang-format off
+			context_menu::show(btn,
+				{
+					{
+						U"Edit"s, //
+						[index]() {
+							std::cout << "Item #" << index << " Edit action clicked" << std::endl;
+						}
+					},
+					{
+						U"Copy"s, //
+						[index]() {
+							std::cout << "Item #" << index << " Copy action clicked" << std::endl;
+						}
+					},
+					{
+						U"Share"s, //
+						[index]() {
+							std::cout << "Item #" << index << " Share action clicked" << std::endl;
+						}
+					},
+					{
+						U"Move to trash"s, //
+						[index]() {
+							std::cout << "Item #" << index << " Move to trash action clicked" << std::endl;
+						}
+					}
+				}
+			);
+			// clang-format on
+		};
 
 		// clang-format off
 		return m::column(this->context,
@@ -169,7 +204,7 @@ public:
 						.layout_params{
 							.dims = {ruis::dim::fill, ruis::length::make_pp(1)}
 						},
-						.color = 0xff808080
+						.color = this->context.get().style().get_color_secondary()
 					}
 				)
 			}
