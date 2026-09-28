@@ -603,7 +603,7 @@ jobs:
           brew trust cppfw/tap
           brew update
       - name: install ci tools
-        run: brew install myci conan
+        run: brew install openssl myci conan
       - name: create default conan profile
         run: |
           conan profile detect --name default
