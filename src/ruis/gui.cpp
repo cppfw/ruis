@@ -40,7 +40,10 @@ gui::gui(utki::shared_ref<ruis::context> context) :
 
 void gui::mount_ruis_res_pack(const fsif::file& fi)
 {
-	ruis::mount_ruis_res_pack(this->context, fi);
+	ruis::mount_ruis_res_pack(
+		this->ctx().style().res_loader, //
+		fi
+	);
 }
 
 void gui::set_viewport(const ruis::rect& rect)

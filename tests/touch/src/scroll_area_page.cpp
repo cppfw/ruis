@@ -245,8 +245,7 @@ ruis::widget_list make_scroll_area_page_contents(const utki::shared_ref<ruis::co
 
 	theme_selector.get().set_selection(size_t(ruis::theme::dark));
 	theme_selector.get().selection_handler = [](ruis::selection_box& sb) {
-		sb.context.get().style().set(ruis::theme(sb.get_selection()));
-		application::inst().window.gui.get_root().reload();
+		application::inst().set_theme(ruis::theme(sb.get_selection()));
 	};
 
 	// clang-format off

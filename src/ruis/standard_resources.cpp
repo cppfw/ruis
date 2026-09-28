@@ -28,9 +28,8 @@ using namespace std::string_view_literals;
 using namespace ruis;
 
 void ruis::mount_ruis_res_pack(
-	ruis::context& context, //
-	const fsif::file& fi,
-	theme th
+	ruis::resource_loader& loader, //
+	const fsif::file& fi
 )
 {
 	// mount default resource pack
@@ -58,7 +57,7 @@ void ruis::mount_ruis_res_pack(
 	for (const auto& s : paths) {
 		try {
 			fi.set_path(s);
-			context.loader().mount_res_pack(fi);
+			loader.mount_res_pack(fi);
 		} catch (std::runtime_error& e) {
 			utki::log_debug([&](auto& o) {
 				o << "could not mount resource pack from " << s << ": " << e.what() << std::endl;
@@ -73,7 +72,4 @@ void ruis::mount_ruis_res_pack(
 	if (!mounted) {
 		throw std::runtime_error("mount_ruis_res_pack(): could not mount default resource pack");
 	}
-
-	// set default theme
-	context.style().set(load_theme(context.loader(), th));
 }

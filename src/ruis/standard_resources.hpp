@@ -21,18 +21,13 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include <string_view>
-
-#include "style/theme.hpp"
-
-#include "context.hpp"
+#include "resource_loader.hpp"
 
 namespace ruis {
 
 void mount_ruis_res_pack(
-	ruis::context& context, //
-	const fsif::file& fi,
-	theme th = theme::dark
+	ruis::resource_loader& loader, //
+	const fsif::file& fi
 );
 
 } // namespace ruis

@@ -28,7 +28,8 @@ class application : public ruisapp::application
 public:
 	application() :
 		ruisapp::application({
-			.name = "ruis-tests"
+			.name = "ruis-tests",
+			.mount_ruis_res_pack = false
     }),
 		window(this->make_window({.dims = {640, 480}}))
 	{
@@ -36,12 +37,9 @@ public:
 			this->quit();
 		};
 
-		ruis::mount_ruis_res_pack(
-			this->window.gui.context, //
-			this->get_res_file("../../res/ruis_res/").get()
-		);
+		this->window.gui.mount_ruis_res_pack(this->get_res_file("../../res/ruis_res/").get());
 
-		this->window.gui.context.get().loader().mount_res_pack(this->get_res_file("res/").get());
+		this->window.gui.ctx().loader().mount_res_pack(this->get_res_file("res/").get());
 
 		auto& ctx = this->window.gui.context;
 

@@ -27,17 +27,17 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "gui.hpp"
 
 application::application() :
-	ruisapp::application({.name = "ruis-app-touch"}),
+	ruisapp::application(
+		{.name = "ruis-app-touch", //
+		 .mount_ruis_res_pack = false}
+	),
 	window(this->make_window({.dims = r4::vector2<unsigned>(1116, 2484) / 3}))
 {
 	this->window.gui.context.get().window().close_handler = [this]() {
 		this->quit();
 	};
 
-	ruis::mount_ruis_res_pack(
-		this->window.gui.context, //
-		this->get_res_file("../../res/ruis_res/").get()
-	);
+	this->window.gui.mount_ruis_res_pack(this->get_res_file("../../res/ruis_res/"));
 
 	// TODO: add localization
 	// this->window.gui.context.get().localization.get() =

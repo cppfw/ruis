@@ -19,7 +19,7 @@ const tst::set set("tabbed_book", [](tst::suite& suite) {
 		ruis::gui gui(c);
 
 		fsif::native_file fi("../../res/ruis_res/");
-		ruis::mount_ruis_res_pack(gui.context, fi);
+		ruis::mount_ruis_res_pack(gui.ctx().loader(), fi);
 
 		class sub_tabbed_book : public ruis::tabbed_book
 		{

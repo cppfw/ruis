@@ -34,6 +34,11 @@ class gui final
 public:
 	const utki::shared_ref<ruis::context> context;
 
+	ruis::context& ctx()
+	{
+		return this->context;
+	}
+
 	/**
 	 * @brief Constructor.
 	 * @param context - ruis context to use for this gui instance.
@@ -108,7 +113,6 @@ public:
 	 * widgets to be used by application.
 	 * @param fi - file interface to use for resource loading.
 	 */
-	[[deprecated("use free floating ruis::mount_ruis_res_pack()")]]
 	void mount_ruis_res_pack(const fsif::file& fi);
 
 	/**
