@@ -21,18 +21,16 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "context_menu.hpp"
 
+#include <algorithm>
+
 #include <ruis/util/length.hpp>
 #include <ruis/widget/container.hpp>
-#include <ruis/widget/label/padding.hpp>
+#include <ruis/widget/group/overlay.hpp>
 #include <ruis/widget/label/rectangle.hpp>
-#include <ruis/widget/label/text.hpp>
+#include <ruis/widget/proxy/click_proxy.hpp>
+#include <ruis/widget/proxy/mouse_proxy.hpp>
 #include <ruis/widget/widget.hpp>
 #include <utki/shared.hpp>
-
-using namespace std::string_literals;
-using namespace std::string_view_literals;
-
-using namespace ruis::length_literals;
 
 namespace context_menu {
 
@@ -40,31 +38,84 @@ namespace {
 namespace m = ruis::make;
 
 using ruis::length;
+using ruis::real;
 using ruis::vec2;
 
-/**
- * @brief A constructed context menu action item.
- * Holds the item widget along with direct references to the parts
- * that need to be wired up after the menu is shown.
- */
-struct action_item {
-	utki::shared_ref<ruis::widget> widget;
-	ruis::mouse_proxy& mouse_proxy;
-	ruis::rectangle& highlight;
-};
+using std::max;
+using std::min;
 
-action_item make_action_item(
+/**
+ * @brief Hover/press state of a context menu item.
+ * Shared between the mouse_proxy and click_proxy handlers of the item.
+ */
+struct highlight_state {
+	bool hovered = false;
+	bool pressed = false;
+};
+} // namespace
+
+// ------------------------
+// = context_menu widget =
+// ------------------------
+
+context_menu::context_menu(
 	const utki::shared_ref<ruis::context>& context, //
-	const ruis::string& label
+	all_parameters params
+) :
+	// NOTE: ruis::widget is a virtual base class of ruis::touch::list,
+	//       so it has to be initialized here (by the most derived class).
+	// clang-format off
+	widget( //
+		context, //
+		std::move(params.layout_params), //
+		[&]() {
+			if (!params.widget.clip.has_value()) {
+				params.widget.clip = true;
+			}
+			return std::move(params.widget);
+		}()
+	),
+	// clang-format on
+	ruis::touch::list(context, std::move(params))
+{}
+
+// ---------------------------
+// = context_menu_provider =
+// ---------------------------
+
+context_menu_provider::context_menu_provider(
+	const utki::shared_ref<ruis::context>& context, //
+	ruis::widget_list widgets
+) :
+	ruis::list_provider(context)
+{
+	this->items.reserve(widgets.size());
+	for (size_t i = 0; i != widgets.size(); ++i) {
+		this->items.push_back(this->wrap_item(widgets[i], i + 1 == widgets.size()));
+	}
+}
+
+size_t context_menu_provider::count() const noexcept
+{
+	return this->items.size();
+}
+
+utki::shared_ref<ruis::widget> context_menu_provider::get_widget(size_t index)
+{
+	return this->items[index];
+}
+
+utki::shared_ref<ruis::widget> context_menu_provider::wrap_item(
+	const utki::shared_ref<ruis::widget>& content, //
+	bool is_last
 )
 {
-	auto& style = context.get().style();
+	auto& style = this->context.get().style();
 
-	const auto h_pad = length::make_pp(12);
-	const auto v_pad = length::make_pp(6);
-
+	// background of the item, shown while the item is pressed or hovered
+	// (in color_highlight or color_secondary color respectively)
 	// clang-format off
-	auto highlight = m::rectangle(context,
+	auto background = m::rectangle(this->context,
 		{
 			.layout_params{
 				.dims = {ruis::dim::fill, ruis::dim::fill}
@@ -80,87 +131,129 @@ action_item make_action_item(
 		},
 		{}
 	);
+	// clang-format on
 
-	auto content = m::padding(context,
-		{
-			.layout_params{
-				.dims = {ruis::dim::min, ruis::dim::min}
-			},
-			.params{
-				.container{
-					.layout = ruis::layout::pile
-				},
-				.specific{
-					.borders = {h_pad, v_pad, h_pad, v_pad}
-				}
-			}
-		},
-		{
-			m::text(context,
-				{
-					.layout_params{
-						.dims = {ruis::dim::min, ruis::dim::min}
-					}
-				},
-				label
-			)
+	auto* bg = &background.get();
+
+	// Per-item hover/press state, shared between the mouse_proxy and click_proxy handlers
+	auto state = std::make_shared<highlight_state>();
+
+	// clang-format off
+	auto update_background = [this, state, bg]() {
+		auto& style = this->context.get().style();
+		if (state->pressed) {
+			bg->set_visible(true);
+			bg->set_fill_color(style.get_color_highlight());
+		} else if (state->hovered) {
+			bg->set_visible(true);
+			bg->set_fill_color(style.get_color_secondary());
+		} else {
+			bg->set_visible(false);
 		}
-	);
+	};
+	// clang-format on
 
-	auto mouse_proxy = m::mouse_proxy(context,
+	// clang-format off
+	auto click_proxy = m::click_proxy(this->context,
 		{
 			.layout_params{
 				.dims = {ruis::dim::fill, ruis::dim::fill}
+			},
+			.click_proxy_params{
+				.pressed_change_handler = [state, update_background](auto& cp) {
+					state->pressed = cp.is_pressed();
+					// while the button is down, the click_proxy captures the mouse,
+					// so its hovered state is kept up to date by the container
+					// (the mouse_proxy underneath is not), use it to correct
+					// the hovered state when the item is unpressed
+					state->hovered = cp.is_hovered();
+					update_background();
+				},
+				.click_handler = [this](auto& cp) {
+					if (this->on_item_click) {
+						this->on_item_click();
+					}
+				}
 			}
 		}
 	);
+	// clang-format on
 
-	// keep raw pointers to the parts we need to wire up after the menu is shown
-	auto* mp = &mouse_proxy.get();
-	auto* hl = &highlight.get();
+	// clang-format off
+	auto mouse_proxy = m::mouse_proxy(this->context,
+		{
+			.layout_params{
+				.dims = {ruis::dim::fill, ruis::dim::fill}
+			},
+			.mouse_proxy_params{
+				.hovered_change_handler = [state, update_background](auto& mp, auto pointer_id) {
+					state->hovered = mp.is_hovered(pointer_id);
+					update_background();
+				}
+			}
+		}
+	);
+	// clang-format on
 
-	auto item = m::pile(context,
+	// The click_proxy catches all mouse events, the mouse_proxy is placed on top of it
+	// so that it receives hover notifications.
+	// clang-format off
+	auto item = m::pile(this->context,
 		{
 			.layout_params{
 				.dims = {ruis::dim::max, ruis::dim::min}
 			}
 		},
 		{
-			std::move(highlight),
+			std::move(background),
 			std::move(content),
+			std::move(click_proxy),
 			std::move(mouse_proxy)
 		}
 	);
 	// clang-format on
 
-	return action_item{
-		std::move(item), //
-		*mp, //
-		*hl
-	};
-}
+	if (is_last) {
+		return item;
+	}
 
-// clang-format off
-utki::shared_ref<ruis::widget> make_separator(
-	const utki::shared_ref<ruis::context>& context
-)
-{
-	return m::rectangle(context,
+	// A separator between consecutive items
+	// clang-format off
+	auto separator = m::rectangle(this->context,
 		{
 			.layout_params{
-				.dims = {ruis::dim::fill, context.get().style().get_len_border()}
+				.dims = {ruis::dim::fill, style.get_len_border()}
 			},
 			.params{
 				.specific{
-					.fill_color = context.get().style().get_color_secondary()
+					.fill_color = style.get_color_secondary()
 				}
 			}
 		},
 		{}
 	);
+	// clang-format on
+
+	// clang-format off
+	return m::column(this->context,
+		{
+			.layout_params{
+				.dims = {ruis::dim::max, ruis::dim::min}
+			}
+		},
+		{
+			std::move(item),
+			std::move(separator)
+		}
+	);
+	// clang-format on
 }
 
-// clang-format on
+// -------------------------
+// = show() utility func =
+// -------------------------
+
+namespace {
 
 void close_popup(
 	const std::weak_ptr<ruis::widget>& popup, //
@@ -203,7 +296,7 @@ vec2 compute_anchor(
 
 void show(
 	ruis::widget& anchor, //
-	std::vector<action> actions
+	ruis::widget_list widgets
 )
 {
 	auto olay = anchor.try_get_ancestor<ruis::overlay>();
@@ -212,31 +305,46 @@ void show(
 	}
 
 	auto& context = anchor.context;
+	auto& style = context.get().style();
+	auto screen = olay->rect().d;
 
-	// build the vertical list of actions (a plain ruis::column, not a ruis::list)
-	// clang-format off
-	auto column = m::column(context,
-		{
-			.layout_params{
-				.dims = {ruis::dim::max, ruis::dim::min}
-			}
-		}
-	);
-	// clang-format on
-
-	std::vector<action_item> items;
-	items.reserve(actions.size());
-	for (size_t i = 0; i != actions.size(); ++i) {
-		if (i != 0) {
-			// a horizontal separator between consecutive actions
-			column.get().push_back(make_separator(context));
-		}
-		auto item = make_action_item(context, actions[i].label);
-		column.get().push_back(std::move(item.widget));
-		items.push_back(std::move(item));
+	// compute the natural menu width from the item widgets
+	vec2 menu_size(0);
+	for (auto& w : widgets) {
+		auto d = ruis::dims_for_widget(w.get(), screen);
+		menu_size.x() = max(menu_size.x(), d.x());
 	}
 
-	// the frame: a rectangle with a border that wraps the actions column
+	auto provider = utki::make_shared<context_menu_provider>(context, std::move(widgets));
+
+	// compute the natural menu height from the wrapped items
+	// (the wrapped items include the separators between the items)
+	real menu_height = 0;
+	for (size_t i = 0; i != provider.get().count(); ++i) {
+		menu_height += ruis::dims_for_widget(provider.get().get_widget(i).get(), screen).y();
+	}
+
+	// the menu is min-wrap vertically, but clamped to fit on the screen
+	// (minus the frame's top and bottom borders), so that long menus
+	// are clamped to the screen size and can be scrolled instead
+	real frame_v_border = style.get_len_gap().get().get(context) * 2;
+	real list_height = max(real(0), min(menu_height, screen.y() - frame_v_border));
+
+	// clang-format off
+	auto menu_params = context_menu::all_parameters{
+		.layout_params{
+			.dims = {ruis::dim(length(menu_size.x())), ruis::dim(length(list_height))}
+		},
+		.params{
+			.specific{
+				.provider = provider
+			}
+		}
+	};
+	// clang-format on
+	auto menu = utki::make_shared<context_menu>(context, std::move(menu_params));
+
+	// the frame: a rectangle with a border that wraps the menu
 	// clang-format off
 	auto frame = m::rectangle(context,
 		{
@@ -253,23 +361,23 @@ void show(
 					},
 					.specific{
 						.borders = {
-							context.get().style().get_len_border(), // left
-							context.get().style().get_len_gap(), // top
-							context.get().style().get_len_border(), // right
-							context.get().style().get_len_gap() // bottom
+							style.get_len_border(), // left
+							style.get_len_gap(), // top
+							style.get_len_border(), // right
+							style.get_len_gap() // bottom
 						}
 					}
 				},
 				.specific{
-					.corner_radii = {context.get().style().get_len_gap()},
-					.fill_color = context.get().style().get_color_background(),
-					.stroke_width = context.get().style().get_len_border(),
-					.stroke_color = context.get().style().get_color_primary()
+					.corner_radii = {style.get_len_gap()},
+					.fill_color = style.get_color_background(),
+					.stroke_width = style.get_len_border(),
+					.stroke_color = style.get_color_primary()
 				}
 			}
 		},
 		{
-			std::move(column)
+			std::move(menu)
 		}
 	);
 	// clang-format on
@@ -279,26 +387,9 @@ void show(
 	auto popup = olay->show_popup(frame, anchor_pos);
 	auto popup_ref = utki::make_weak(popup);
 
-	// wire up the action items now that the popup is known
-	for (size_t i = 0; i != items.size(); ++i) {
-		auto& item = items[i];
-		auto on_click = std::move(actions[i].on_click);
-
-		item.mouse_proxy.hovered_change_handler = [hl = &item.highlight](ruis::mouse_proxy& w, unsigned pointer_id) {
-			hl->set_visible(w.is_hovered(pointer_id));
-		};
-
-		item.mouse_proxy.mouse_button_handler =
-			[on_click, popup_ref, context](ruis::mouse_proxy& w, const ruis::mouse_button_event& e) {
-				if (e.action == ruis::button_action::release && w.is_hovered(e.pointer_id)) {
-					if (on_click) {
-						on_click();
-					}
-					close_popup(popup_ref, context);
-				}
-				return ruis::event_status::consumed;
-			};
-	}
+	provider.get().on_item_click = [popup_ref, context]() {
+		close_popup(popup_ref, context);
+	};
 }
 
 } // namespace context_menu

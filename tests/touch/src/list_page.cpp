@@ -49,6 +49,36 @@ public:
 		return 100;
 	}
 
+	// Creates a context menu item widget: a text label with some padding around it.
+	utki::shared_ref<ruis::widget> make_menu_item(ruis::string text)
+	{
+		// clang-format off
+		return m::padding(this->context,
+			{
+				.layout_params{
+					.dims = {ruis::dim::min, ruis::dim::min}
+				},
+				.params{
+					.container{
+						.layout = ruis::layout::pile
+					},
+					.specific{
+						.borders = {
+							ruis::length::make_pp(12), // left
+							ruis::length::make_pp(6), // top
+							ruis::length::make_pp(12), // right
+							ruis::length::make_pp(6) // bottom
+						}
+					}
+				}
+			},
+			{
+				m::text(this->context, {}, std::move(text))
+			}
+		);
+		// clang-format on
+	}
+
 	utki::shared_ref<ruis::widget> get_widget(size_t index) override
 	{
 		// clang-format off
@@ -111,34 +141,14 @@ public:
 		// clang-format on
 
 		// When the three dots button is clicked, show a context menu near it.
-		menu_button.get().click_handler = [index](auto& btn) {
+		menu_button.get().click_handler = [this](auto& btn) {
 			// clang-format off
 			context_menu::show(btn,
 				{
-					{
-						U"Edit"s, //
-						[index]() {
-							std::cout << "Item #" << index << " Edit action clicked" << std::endl;
-						}
-					},
-					{
-						U"Copy"s, //
-						[index]() {
-							std::cout << "Item #" << index << " Copy action clicked" << std::endl;
-						}
-					},
-					{
-						U"Share"s, //
-						[index]() {
-							std::cout << "Item #" << index << " Share action clicked" << std::endl;
-						}
-					},
-					{
-						U"Move to trash"s, //
-						[index]() {
-							std::cout << "Item #" << index << " Move to trash action clicked" << std::endl;
-						}
-					}
+					this->make_menu_item(U"Edit"s), //
+					this->make_menu_item(U"Copy"s), //
+					this->make_menu_item(U"Share"s), //
+					this->make_menu_item(U"Move to trash"s) //
 				}
 			);
 			// clang-format on

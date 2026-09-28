@@ -156,8 +156,9 @@ ruis::event_status flickable::on_mouse_button(const mouse_button_event& event)
 ruis::event_status flickable::on_mouse_move(const mouse_move_event& event)
 {
 	if (this->cur_state == state::idle || this->cur_state == state::inertial_scrolling) {
-		// no touch active, ignore mouse move events
-		return ruis::event_status::propagate;
+		// No touch active, but the event still has to be forwarded to the child widgets,
+		// so that they can receive it and update their hovered states.
+		return this->flickable_on_mouse_move(event);
 	}
 
 	// Single touch mode.

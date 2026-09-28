@@ -22,37 +22,81 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #pragma once
 
 #include <functional>
-#include <vector>
 
-#include <ruis/util/localization.hpp>
-#include <ruis/widget/group/overlay.hpp>
-#include <ruis/widget/proxy/mouse_proxy.hpp>
+#include <ruis/util/widget_list.hpp>
+#include <ruis/widget/base/list_widget.hpp>
+#include <ruis/widget/group/touch/list.hpp>
 
 namespace context_menu {
 
 /**
- * @brief A single action shown in the context menu.
+ * @brief Context menu widget.
+ * This is a ruis::list_widget (based on ruis::touch::list) which gets its items
+ * from a ruis::list_provider.
  */
-struct action {
-	ruis::string label;
-	std::function<void()> on_click;
+class context_menu : public ruis::touch::list
+{
+public:
+	using all_parameters = ruis::touch::list::all_parameters;
+
+	context_menu(
+		const utki::shared_ref<ruis::context>& context, //
+		all_parameters params
+	);
+};
+
+/**
+ * @brief A ruis::list_provider which provides context menu item widgets.
+ * Each widget supplied to the provider is wrapped with a ruis::click_proxy and a
+ * ruis::mouse_proxy which show a background of color_special color while the item
+ * is pressed and of color_highlight color while the item is hovered.
+ */
+class context_menu_provider : public ruis::list_provider
+{
+	ruis::widget_list items;
+
+public:
+	/**
+	 * @brief Item click handler.
+	 * Invoked when a menu item is clicked.
+	 * The context_menu::show() function sets this handler to close the menu.
+	 */
+	std::function<void()> on_item_click;
+
+	context_menu_provider(
+		const utki::shared_ref<ruis::context>& context, //
+		ruis::widget_list widgets
+	);
+
+	size_t count() const noexcept override;
+	utki::shared_ref<ruis::widget> get_widget(size_t index) override;
+
+private:
+	utki::shared_ref<ruis::widget> wrap_item(
+		const utki::shared_ref<ruis::widget>& content, //
+		bool is_last
+	);
 };
 
 /**
  * @brief Shows a context menu near the given anchor widget.
- * The context menu is a vertical list of actions built with a plain ruis::column
- * (not a ruis::list), framed with a rectangle that has a border.
+ * The context menu is a context_menu widget (a ruis::list_widget) whose items
+ * are supplied by a context_menu_provider constructed from the given widgets.
+ * Each supplied widget is wrapped with a ruis::click_proxy and a ruis::mouse_proxy
+ * which show a background of color_special color while the item is pressed and of
+ * color_highlight color while the item is hovered, and closes the menu on click.
+ * Consecutive menu items are separated by a thin line of color_secondary color.
  * The menu is min-wrap horizontally, and min-wrap vertically, but clamped to the
- * screen so that it fits even if the list is longer than the screen (a scroll area
- * is planned to be added inside the frame in the future).
+ * screen so that it fits even if the list is longer than the screen
+ * (in which case the menu can be scrolled).
  * The menu is shown on the nearest ruis::overlay ancestor of the anchor widget
  * and is automatically closed when a click happens outside of it.
  * @param anchor - the widget near which the menu should be shown.
- * @param actions - the list of actions to show in the menu.
+ * @param widgets - the list of widgets to use as menu items.
  */
 void show(
 	ruis::widget& anchor, //
-	std::vector<action> actions
+	ruis::widget_list widgets
 );
 
 } // namespace context_menu
