@@ -22,7 +22,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "scroll_area_page.hpp"
 
 #include <ruis/res/tml.hpp>
-#include <ruis/standard_resources.hpp>
 #include <ruis/style/style_sheet.hpp>
 #include <ruis/widget/button/impl/rectangle_push_button.hpp>
 #include <ruis/widget/group/overlay.hpp>

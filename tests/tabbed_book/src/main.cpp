@@ -1,6 +1,5 @@
 #include <sstream>
 
-#include <ruis/standard_resources.hpp>
 #include <ruis/widget/button/push_button.hpp>
 #include <ruis/widget/button/tab.hpp>
 #include <ruis/widget/group/tabbed_book.hpp>
@@ -171,7 +170,7 @@ public:
 			this->quit();
 		};
 
-		this->window.gui.mount_ruis_res_pack(this->get_res_file("../../res/ruis_res/"));
+		this->window.gui.ctx().loader().mount_ruis_res_pack(this->get_res_file("../../res/ruis_res/"));
 
 		auto c = make_root_widget(this->window.gui.context);
 		this->window.gui.set_root(c);

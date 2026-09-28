@@ -1,4 +1,3 @@
-#include <ruis/standard_resources.hpp>
 #include <ruis/widget/container.hpp>
 #include <ruis/widget/label/rectangle.hpp>
 #include <ruis/widget/label/text.hpp>
@@ -127,7 +126,7 @@ public:
     }),
 		window(this->make_window({.dims = {1024, 800}}))
 	{
-		this->window.gui.mount_ruis_res_pack(this->get_res_file("../../res/ruis_res/"));
+		this->window.gui.ctx().loader().mount_ruis_res_pack(this->get_res_file("../../res/ruis_res/"));
 
 		this->window.gui.set_root(make_layout(this->window.gui.context));
 

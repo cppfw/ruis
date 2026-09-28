@@ -21,7 +21,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "application.hpp"
 
-#include <ruis/standard_resources.hpp>
 #include <ruisapp/application.hpp>
 
 #include "gui.hpp"
@@ -37,7 +36,7 @@ application::application() :
 		this->quit();
 	};
 
-	this->window.gui.mount_ruis_res_pack(this->get_res_file("../../res/ruis_res/"));
+	this->window.gui.ctx().loader().mount_ruis_res_pack(this->get_res_file("../../res/ruis_res/"));
 
 	this->window.gui.context.get().localization.get() =
 		ruis::localization(tml::read(this->get_res_file("res/localization/en.tml").get()));

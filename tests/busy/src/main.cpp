@@ -1,6 +1,5 @@
 #include <fsif/native_file.hpp>
 #include <r4/quaternion.hpp>
-#include <ruis/standard_resources.hpp>
 #include <ruis/widget/button/push_button.hpp>
 #include <ruis/widget/label/busy.hpp>
 #include <ruisapp/application.hpp>
@@ -24,7 +23,7 @@ public:
 			this->quit();
 		};
 
-		this->window.gui.mount_ruis_res_pack(this->get_res_file("../../res/ruis_res/"));
+		this->window.gui.ctx().loader().mount_ruis_res_pack(this->get_res_file("../../res/ruis_res/"));
 
 		auto c = make_root_gui(this->window.gui.context);
 		this->window.gui.set_root(c);

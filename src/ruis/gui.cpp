@@ -25,11 +25,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "widget/input/base/character_input_widget.hpp"
 #include "widget/label/gap.hpp"
 
-// TODO: remove when guit::mount_ruis_res_pack() is removed
-#include "standard_resources.hpp"
-
-using namespace std::string_view_literals;
-
 using namespace ruis;
 
 // NOLINTNEXTLINE(modernize-pass-by-value)
@@ -37,14 +32,6 @@ gui::gui(utki::shared_ref<ruis::context> context) :
 	context(std::move(context)),
 	root_widget(ruis::make::gap(this->context, {}))
 {}
-
-void gui::mount_ruis_res_pack(const fsif::file& fi)
-{
-	ruis::mount_ruis_res_pack(
-		this->ctx().style().res_loader, //
-		fi
-	);
-}
 
 void gui::set_viewport(const ruis::rect& rect)
 {

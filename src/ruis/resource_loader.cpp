@@ -29,6 +29,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "util/util.hpp"
 
+using namespace std::string_view_literals;
+
 using namespace ruis;
 
 namespace {
@@ -78,6 +80,44 @@ decltype(resource_loader::res_packs)::const_iterator resource_loader::mount_res_
 	utki::assert(!this->res_packs.back().script.empty(), SL);
 
 	return std::prev(this->res_packs.end());
+}
+
+decltype(resource_loader::res_packs)::const_iterator resource_loader::mount_ruis_res_pack(const fsif::file& fi)
+{
+	// mount default resource pack
+
+	std::vector<std::string> paths;
+
+	if (!fi.path().empty()) {
+		paths.push_back(fi.path());
+	}
+
+	paths.emplace_back("ruis_res/");
+
+#if (M_OS == M_OS_LINUX && M_OS_NAME != M_OS_NAME_ANDROID) || (M_OS == M_OS_MACOSX && M_OS_NAME != M_OS_NAME_IOS) || \
+	(M_OS == M_OS_UNIX)
+
+	unsigned soname =
+#	include "../soname.txt"
+		;
+
+	paths.push_back(utki::cat("/usr/local/share/ruis/res"sv, soname, "/"));
+	paths.push_back(utki::cat("/usr/share/ruis/res"sv, soname, "/"));
+#endif
+
+	for (const auto& s : paths) {
+		try {
+			fi.set_path(s);
+			return this->mount_res_pack(fi);
+		} catch (std::runtime_error& e) {
+			utki::log_debug([&](auto& o) {
+				o << "could not mount resource pack from " << s << ": " << e.what() << std::endl;
+			});
+			// continue to the next path
+		}
+	}
+
+	throw std::runtime_error("mount_ruis_res_pack(): could not mount default resource pack");
 }
 
 void resource_loader::unmount_res_pack(decltype(res_packs)::const_iterator id)

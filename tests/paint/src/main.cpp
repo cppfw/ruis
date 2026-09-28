@@ -2,7 +2,6 @@
 #include <ruis/paint/ellipse_vao.hpp>
 #include <ruis/paint/path_vao.hpp>
 #include <ruis/paint/rectangle_vao.hpp>
-#include <ruis/standard_resources.hpp>
 #include <ruis/widget/button/push_button.hpp>
 #include <ruis/widget/label/padding.hpp>
 #include <ruis/widget/label/text.hpp>
@@ -385,7 +384,7 @@ public:
 			this->quit();
 		};
 
-		this->window.gui.mount_ruis_res_pack(this->get_res_file("../../res/ruis_res/"));
+		this->window.gui.ctx().loader().mount_ruis_res_pack(this->get_res_file("../../res/ruis_res/"));
 
 		this->window.gui.set_root(make_root_widget(this->window.gui.context));
 	}

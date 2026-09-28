@@ -1,4 +1,3 @@
-#include <ruis/standard_resources.hpp>
 #include <ruis/widget/group/window.hpp>
 #include <ruis/widget/label/rectangle.hpp>
 #include <ruis/widget/label/text.hpp>
@@ -28,7 +27,7 @@ public:
 			this->quit();
 		};
 
-		this->window.gui.mount_ruis_res_pack(this->get_res_file("../../res/ruis_res/"));
+		this->window.gui.ctx().loader().mount_ruis_res_pack(this->get_res_file("../../res/ruis_res/"));
 
 		auto ctx = this->window.gui.context;
 

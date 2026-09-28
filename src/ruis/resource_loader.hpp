@@ -135,6 +135,15 @@ public:
 	decltype(res_packs)::const_iterator mount_res_pack(const fsif::file& fi);
 
 	/**
+	 * @brief Mount the standard ruis resource pack.
+	 * Tries to mount the standard ruis resource pack from a list of standard locations.
+	 * @param fi - file interface. If its path is not empty then it is used as the
+	 *             first candidate for the resource pack location.
+	 * @return iterator to the mounted resource pack.
+	 */
+	decltype(res_packs)::const_iterator mount_ruis_res_pack(const fsif::file& fi);
+
+	/**
 	 * @brief Unmount mounted resource pack.
 	 * @param id - id of the resource pack to unmount.
 	 */

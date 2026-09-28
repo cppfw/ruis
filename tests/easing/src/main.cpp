@@ -1,4 +1,3 @@
-#include <ruis/standard_resources.hpp>
 #include <ruisapp/application.hpp>
 
 #include "gui.hpp"
@@ -15,7 +14,7 @@ public:
     }),
 		window(this->make_window({.dims = {1024, 800}}))
 	{
-		this->window.gui.mount_ruis_res_pack(this->get_res_file("../../res/ruis_res/"));
+		this->window.gui.ctx().loader().mount_ruis_res_pack(this->get_res_file("../../res/ruis_res/"));
 
 		// this->gui.context.get().loader.mount_res_pack(this->get_res_file("res/"));
 

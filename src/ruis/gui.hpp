@@ -107,15 +107,6 @@ public:
 	void render(const mat4& matrix) const;
 
 	/**
-	 * @brief Initialize standard widgets library.
-	 * In addition to core widgets it is possible to use standard widgets.
-	 * This function loads necessary resource packs and initializes standard
-	 * widgets to be used by application.
-	 * @param fi - file interface to use for resource loading.
-	 */
-	void mount_ruis_res_pack(const fsif::file& fi);
-
-	/**
 	 * @brief Feed in the mouse move event to GUI.
 	 * @param pos - new position of the mouse pointer.
 	 * @param id - ID of the mouse pointer.
