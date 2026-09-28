@@ -127,7 +127,7 @@ utki::shared_ref<widget> overlay::show_popup(
 		) //
 	{
 		if (auto c = cntr.lock()) {
-			c->context.get().post_to_ui_thread([c]() {
+			c->ctx().post_to_ui_thread([c]() {
 				c->remove_from_parent();
 			});
 		}
