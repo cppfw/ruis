@@ -30,11 +30,11 @@ class table_list::list_provider_for_table_list : public list_provider
 public:
 	table_list& owner;
 
-	const utki::shared_ref<table_list::provider> table_list_provider;
+	utki::unique_ref<table_list::provider> table_list_provider;
 
 	list_provider_for_table_list(
 		table_list& owner, //
-		utki::shared_ref<table_list::provider> table_list_provider
+		utki::unique_ref<table_list::provider> table_list_provider
 	) :
 		list_provider(table_list_provider.get().context),
 		owner(owner),
@@ -168,6 +168,19 @@ table_list::table_list(
 	this->table_rows_list.get().scroll_change_handler = [this](auto& l) {
 		this->notify_scroll_changed();
 	};
+}
+
+table_list::provider& table_list::get_provider()
+{
+	auto* lp = static_cast<table_list::list_provider_for_table_list*>(&this->table_rows_list.get().get_provider());
+	return lp->table_list_provider.get();
+}
+
+const table_list::provider& table_list::get_provider() const
+{
+	auto* lp =
+		static_cast<const table_list::list_provider_for_table_list*>(&this->table_rows_list.get().get_provider());
+	return lp->table_list_provider.get();
 }
 
 void table_list::notify_model_changed()

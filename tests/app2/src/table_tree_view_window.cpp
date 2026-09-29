@@ -34,8 +34,9 @@ using namespace ruis::length_literals;
 namespace m = ruis::make;
 
 namespace {
-class table_tree_view_provider : public ruis::table_tree_view::provider
+class table_tree_view_model
 {
+public:
 	tml::forest root = tml::read(R"qwertyuiop(
 		root1.123567890.4567890123.789123456.012345667{
 			subroot1.1.2.3.4.5{
@@ -64,19 +65,35 @@ class table_tree_view_provider : public ruis::table_tree_view::provider
 		root333.j.m
 		root4444.h.j
 	)qwertyuiop");
+};
+} // namespace
+
+namespace {
+const table_tree_view_model model;
+} // namespace
+
+namespace {
+class table_tree_view_provider : public ruis::table_tree_view::provider
+{
+	const table_tree_view_model& model;
 
 public:
-	table_tree_view_provider(const utki::shared_ref<ruis::context>& context) :
-		ruis::table_tree_view::provider(context)
+	// NOLINTNEXTLINE(modernize-pass-by-value)
+	table_tree_view_provider(
+		const utki::shared_ref<ruis::context>& context, //
+		const table_tree_view_model& model
+	) :
+		ruis::table_tree_view::provider(context),
+		model(model)
 	{}
 
 	size_t count(utki::span<const size_t> index) const noexcept override
 	{
 		if (index.empty()) {
-			return this->root.size();
+			return this->model.root.size();
 		}
 
-		auto tr = utki::make_traversal(this->root);
+		auto tr = utki::make_traversal(this->model.root);
 		ASSERT(
 			tr.is_valid(index), //
 			[&](auto& o) {
@@ -95,7 +112,7 @@ public:
 
 	ruis::widget_list get_row_widgets(utki::span<const size_t> index) override
 	{
-		auto tr = utki::make_traversal(this->root);
+		auto tr = utki::make_traversal(this->model.root);
 		ASSERT(tr.is_valid(index))
 		auto i = tr.make_iterator(index);
 
@@ -171,7 +188,7 @@ utki::shared_ref<ruis::widget> make_table_tree_view_window(
 					make_table_tree_view_header(c, U"col 2"s),
 					make_table_tree_view_header(c, U"col 3"s)
 				},
-				.provider = utki::make_shared<table_tree_view_provider>(c)
+				.provider = utki::make_unique<table_tree_view_provider>(c, model)
 			}
 		}
 	);

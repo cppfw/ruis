@@ -21,6 +21,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
+#include <utki/unique_ref.hpp>
+
 #include "table_list.hpp"
 #include "tree_view.hpp"
 
@@ -60,8 +62,6 @@ public:
 		 */
 		virtual widget_list get_row_widgets(utki::span<const size_t> index) = 0;
 
-		// TODO:
-
 	private:
 		void on_list_model_changed() override;
 	};
@@ -72,7 +72,12 @@ public:
 		 * These widgets will be put inside of a horizontal ruis::tiling_area.
 		 */
 		ruis::widget_list column_headers = {};
-		utki::shared_ref<table_tree_view::provider> provider;
+		/**
+		 * @brief Table tree rows provider.
+		 * The table_tree_view takes ownership of the provider.
+		 * Use table_tree_view::get_provider() to access the provider.
+		 */
+		utki::unique_ref<table_tree_view::provider> provider;
 	};
 
 	struct all_parameters {
@@ -85,6 +90,18 @@ public:
 		const utki::shared_ref<ruis::context>& context, //
 		all_parameters params
 	);
+
+	/**
+	 * @brief Get the table tree rows provider.
+	 * @return Reference to the table tree rows provider.
+	 */
+	table_tree_view::provider& get_provider();
+
+	/**
+	 * @brief Get the table tree rows provider.
+	 * @return Const reference to the table tree rows provider.
+	 */
+	const table_tree_view::provider& get_provider() const;
 
 	using table_list::set_scroll_factor;
 	using table_list::get_scroll_factor;

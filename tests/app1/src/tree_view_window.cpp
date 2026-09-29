@@ -15,16 +15,10 @@ using namespace ruis::make;
 } // namespace m
 
 namespace {
-class tree_view_items_provider : public ruis::tree_view::provider
+class tree_view_items_model
 {
-	tml::forest root;
-
 public:
-	// NOLINTNEXTLINE(modernize-pass-by-value)
-	tree_view_items_provider(const utki::shared_ref<ruis::context>& context) :
-		provider(context)
-	{
-		this->root = tml::read(R"qwertyuiop(
+	tml::forest root = tml::read(R"qwertyuiop(
                 root1{
                     subroot1{
                         subsubroot1
@@ -52,15 +46,23 @@ public:
                 root333
                 root4444
             )qwertyuiop");
-	}
 
-	tree_view_items_provider(const tree_view_items_provider&) = delete;
-	tree_view_items_provider& operator=(const tree_view_items_provider&) = delete;
+	/**
+	 * @brief New item added notification handler.
+	 * @param index - index path of the item before which a new item has been added.
+	 */
+	std::function<void(utki::span<const size_t> index)> item_added_handler;
 
-	tree_view_items_provider(tree_view_items_provider&&) = delete;
-	tree_view_items_provider& operator=(tree_view_items_provider&&) = delete;
+	/**
+	 * @brief Item removed notification handler.
+	 * @param index - index path of the removed item.
+	 */
+	std::function<void(utki::span<const size_t> index)> item_removed_handler;
 
-	~tree_view_items_provider() override = default;
+	/**
+	 * @brief Item changed notification handler.
+	 */
+	std::function<void()> item_changed_handler;
 
 private:
 	std::vector<size_t> selected_item;
@@ -70,12 +72,34 @@ private:
 	std::string generate_new_item_value()
 	{
 		std::stringstream ss;
-		ss << "newItem" << newItemNumber;
-		++newItemNumber;
+		ss << "newItem" << this->newItemNumber;
+		++this->newItemNumber;
 		return ss.str();
 	}
 
 public:
+	bool is_selected(utki::span<const size_t> index) const noexcept
+	{
+		return utki::deep_equals(index, utki::make_span(this->selected_item));
+	}
+
+	void select(utki::span<const size_t> index)
+	{
+		this->selected_item = utki::make_vector(index);
+
+		utki::log_debug([&](auto& o) {
+			o << " selected item = ";
+			for (const auto& k : this->selected_item) {
+				o << k << ", ";
+			}
+			o << std::endl;
+		});
+
+		if (this->item_changed_handler) {
+			this->item_changed_handler();
+		}
+	}
+
 	void insert_before()
 	{
 		if (this->selected_item.size() == 0) {
@@ -99,7 +123,9 @@ public:
 			tml::leaf(this->generate_new_item_value())
 		);
 
-		this->notify_item_added(utki::make_span(this->selected_item));
+		if (this->item_added_handler) {
+			this->item_added_handler(utki::make_span(this->selected_item));
+		}
 		++this->selected_item.back();
 	}
 
@@ -127,7 +153,9 @@ public:
 		);
 
 		++this->selected_item.back();
-		this->notify_item_added(utki::make_span(this->selected_item));
+		if (this->item_added_handler) {
+			this->item_added_handler(utki::make_span(this->selected_item));
+		}
 		--this->selected_item.back();
 	}
 
@@ -146,26 +174,70 @@ public:
 		list->emplace_back(this->generate_new_item_value());
 
 		this->selected_item.push_back(list->size() - 1);
-		this->notify_item_added(utki::make_span(this->selected_item));
+		if (this->item_added_handler) {
+			this->item_added_handler(utki::make_span(this->selected_item));
+		}
 		this->selected_item.pop_back();
 	}
+
+	void remove_item(utki::span<const size_t> index)
+	{
+		auto list = &this->root;
+		tml::forest* parent_list = nullptr;
+
+		for (auto& i : index) {
+			parent_list = list;
+			list = &(*list)[i].children;
+		}
+
+		utki::assert(parent_list, SL);
+		parent_list->erase(utki::next(parent_list->begin(), index.back()));
+
+		if (this->item_removed_handler) {
+			this->item_removed_handler(index);
+		}
+	}
+};
+} // namespace
+
+namespace {
+class tree_view_items_provider : public ruis::tree_view::provider
+{
+	const utki::shared_ref<tree_view_items_model> model;
+
+public:
+	// NOLINTNEXTLINE(modernize-pass-by-value)
+	tree_view_items_provider(
+		const utki::shared_ref<ruis::context>& context, //
+		utki::shared_ref<tree_view_items_model> model
+	) :
+		provider(context),
+		model(std::move(model))
+	{}
+
+	tree_view_items_provider(const tree_view_items_provider&) = delete;
+	tree_view_items_provider& operator=(const tree_view_items_provider&) = delete;
+
+	tree_view_items_provider(tree_view_items_provider&&) = delete;
+	tree_view_items_provider& operator=(tree_view_items_provider&&) = delete;
+
+	~tree_view_items_provider() override = default;
 
 	utki::shared_ref<ruis::widget> get_widget(utki::span<const size_t> path) override
 	{
 		utki::assert(!path.empty());
 
-		auto list = &this->root;
-		decltype(list) parent_list = nullptr;
+		auto list = &this->model.get().root;
 
 		tml::tree* n = nullptr;
 
 		for (const auto& i : path) {
 			n = &(*list)[i];
-			parent_list = list;
 			list = &n->children;
 		}
 
 		auto& c = this->context;
+		auto model = this->model;
 
 		auto ret = ruis::make::row(c, {});
 
@@ -222,11 +294,11 @@ public:
 			{
 				auto& color_label = v.get().get_widget_as<ruis::rectangle>("selection");
 
-				color_label.set_visible(utki::deep_equals(path, utki::make_span(this->selected_item)));
+				color_label.set_visible(model.get().is_selected(path));
 
 				auto mp = v.get().try_get_widget_as<ruis::mouse_proxy>("mouse_proxy");
 				utki::assert(mp, SL);
-				mp->mouse_button_handler = [this, path = utki::make_vector(path)](
+				mp->mouse_button_handler = [model, path = utki::make_vector(path)](
 											   ruis::mouse_proxy&, //
 											   const ruis::mouse_button_event& e
 										   ) {
@@ -234,17 +306,7 @@ public:
 						return ruis::event_status::propagate;
 					}
 
-					this->selected_item = path;
-
-					utki::log_debug([&](auto& o) {
-						o << " selected item = ";
-						for (const auto& k : this->selected_item) {
-							o << k << ", ";
-						}
-						o << std::endl;
-					});
-
-					this->notify_item_changed();
+					model.get().select(utki::make_span(path));
 
 					return ruis::event_status::consumed;
 				};
@@ -274,10 +336,8 @@ public:
             );
 			// clang-format on
 
-			b.get().click_handler = [this, path = utki::make_vector(path), parent_list](ruis::push_button& button) {
-				utki::assert(parent_list);
-				parent_list->erase(utki::next(parent_list->begin(), path.back()));
-				this->notify_item_removed(utki::make_span(path));
+			b.get().click_handler = [model, path = utki::make_vector(path)](ruis::push_button& button) {
+				model.get().remove_item(utki::make_span(path));
 			};
 			ret.get().push_back(b);
 		}
@@ -287,7 +347,7 @@ public:
 
 	size_t count(utki::span<const size_t> path) const noexcept override
 	{
-		auto children = &this->root;
+		auto children = &this->model.get().root;
 
 		for (auto& i : path) {
 			children = &(*children)[i].children;
@@ -303,7 +363,7 @@ utki::shared_ref<ruis::window> make_tree_view_window(
 	ruis::vec2_length pos
 )
 {
-	auto tv_provider = utki::make_shared<tree_view_items_provider>(c);
+	auto model = utki::make_shared<tree_view_items_model>();
 
 	// clang-format off
     auto w = m::window(c,
@@ -355,7 +415,7 @@ utki::shared_ref<ruis::window> make_tree_view_window(
                                         .clip = true
                                     },
                                     .tree_view_params{
-                                        .provider = tv_provider
+                                        .provider = utki::make_unique<tree_view_items_provider>(c, model)
                                     }
                                 }
                             )
@@ -437,6 +497,24 @@ utki::shared_ref<ruis::window> make_tree_view_window(
 
 	auto tv = utki::make_weak_from(treeview);
 
+	model.get().item_added_handler = [tv](utki::span<const size_t> index) {
+		if (auto w = tv.lock()) {
+			w->notify_item_added(index);
+		}
+	};
+
+	model.get().item_removed_handler = [tv](utki::span<const size_t> index) {
+		if (auto w = tv.lock()) {
+			w->notify_item_removed(index);
+		}
+	};
+
+	model.get().item_changed_handler = [tv]() {
+		if (auto w = tv.lock()) {
+			w->notify_item_changed();
+		}
+	};
+
 	auto& vertical_slider = w.get().get_widget_as<ruis::fraction_band_widget>("treeview_vertical_slider");
 	auto vs = utki::make_weak_from(vertical_slider);
 
@@ -477,23 +555,16 @@ utki::shared_ref<ruis::window> make_tree_view_window(
 	auto insert_after_button = w.get().try_get_widget_as<ruis::push_button>("insert_after");
 	auto insert_child = w.get().try_get_widget_as<ruis::push_button>("insert_child");
 
-	auto prvdr = utki::make_weak(tv_provider);
-	insert_before_button->click_handler = [prvdr](ruis::push_button& b) {
-		if (auto p = prvdr.lock()) {
-			p->insert_before();
-		}
+	insert_before_button->click_handler = [model](ruis::push_button& b) {
+		model.get().insert_before();
 	};
 
-	insert_after_button->click_handler = [prvdr](ruis::push_button& b) {
-		if (auto p = prvdr.lock()) {
-			p->insert_after();
-		}
+	insert_after_button->click_handler = [model](ruis::push_button& b) {
+		model.get().insert_after();
 	};
 
-	insert_child->click_handler = [prvdr](ruis::push_button& b) {
-		if (auto p = prvdr.lock()) {
-			p->insert_child();
-		}
+	insert_child->click_handler = [model](ruis::push_button& b) {
+		model.get().insert_child();
 	};
 
 	return w;

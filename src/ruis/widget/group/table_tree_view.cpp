@@ -25,12 +25,12 @@ using namespace ruis;
 
 class table_tree_view::table_list_provider_for_table_tree_view : public table_list::provider
 {
-	utki::shared_ref<table_tree_view::provider> provider;
-
 public:
+	utki::unique_ref<table_tree_view::provider> provider;
+
 	table_list_provider_for_table_tree_view(
 		const utki::shared_ref<ruis::context>& context, //
-		utki::shared_ref<table_tree_view::provider> provider
+		utki::unique_ref<table_tree_view::provider> provider
 	) :
 		table_list::provider(context),
 		provider(std::move(provider))
@@ -101,7 +101,7 @@ table_tree_view::table_tree_view(
         {
             .table_list_params{
                 .column_headers = std::move(params.table_tree_view_params.column_headers),
-                .provider = utki::make_shared<table_tree_view::table_list_provider_for_table_tree_view>(
+                .provider = utki::make_unique<table_tree_view::table_list_provider_for_table_tree_view>(
                     context,
                     std::move(params.table_tree_view_params.provider)
                 )
@@ -110,6 +110,20 @@ table_tree_view::table_tree_view(
     )
 // clang-format on
 {}
+
+table_tree_view::provider& table_tree_view::get_provider()
+{
+	auto* lp =
+		static_cast<table_tree_view::table_list_provider_for_table_tree_view*>(&this->table_list::get_provider());
+	return lp->provider.get();
+}
+
+const table_tree_view::provider& table_tree_view::get_provider() const
+{
+	auto* lp =
+		static_cast<const table_tree_view::table_list_provider_for_table_tree_view*>(&this->table_list::get_provider());
+	return lp->provider.get();
+}
 
 utki::shared_ref<ruis::table_tree_view> make::table_tree_view(
 	const utki::shared_ref<ruis::context>& context, //

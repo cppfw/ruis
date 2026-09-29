@@ -24,6 +24,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <memory>
 
 #include <utki/tree.hpp>
+#include <utki/unique_ref.hpp>
 
 #include "../widget.hpp"
 
@@ -187,7 +188,12 @@ public:
 	};
 
 	struct parameters {
-		utki::shared_ref<tree_view::provider> provider;
+		/**
+		 * @brief Tree items provider.
+		 * The tree_view takes ownership of the provider.
+		 * Use tree_view::get_provider() to access the provider.
+		 */
+		utki::unique_ref<tree_view::provider> provider;
 	};
 
 	struct all_parameters {
@@ -208,6 +214,46 @@ public:
 	tree_view& operator=(tree_view&&) = delete;
 
 	~tree_view() override = default;
+
+	/**
+	 * @brief Get the tree items provider.
+	 * @return Reference to the tree items provider.
+	 */
+	tree_view::provider& get_provider();
+
+	/**
+	 * @brief Get the tree items provider.
+	 * @return Const reference to the tree items provider.
+	 */
+	const tree_view::provider& get_provider() const;
+
+	/**
+	 * @brief Notify about any model change.
+	 * Calling this function will cause the tree_view to re-create and
+	 * re-layout it's contents.
+	 */
+	void notify_model_changed();
+
+	/**
+	 * @brief Notify about tree item contents change.
+	 * Use this function to notify the tree_view about changes to the tree data which do not involve
+	 * adding new items or removing items. I.e. when tree topology does not change.
+	 * This operation should be faster than notify_model_changed().
+	 */
+	void notify_item_changed();
+
+	/**
+	 * @brief Notify that a new item has been added.
+	 * @param index - index path to a newly added item. Essentially, it is a path
+	 *                to an item before which a new item has been added.
+	 */
+	void notify_item_added(utki::span<const size_t> index);
+
+	/**
+	 * @brief Notify that an item has been removed.
+	 * @param index - index path of the removed item.
+	 */
+	void notify_item_removed(utki::span<const size_t> index);
 
 	/**
 	 * @brief Scroll position changed handler.

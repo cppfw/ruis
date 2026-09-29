@@ -34,10 +34,10 @@ using namespace ruis;
 
 class tree_view::list_provider_for_tree_view : public list_provider
 {
-	utki::shared_ref<tree_view::provider> tree_view_provider;
-
 public:
-	list_provider_for_tree_view(utki::shared_ref<tree_view::provider> tree_view_provider) :
+	utki::unique_ref<tree_view::provider> tree_view_provider;
+
+	list_provider_for_tree_view(utki::unique_ref<tree_view::provider> tree_view_provider) :
 		list_provider(tree_view_provider.get().context),
 		tree_view_provider(std::move(tree_view_provider))
 	{
@@ -90,6 +90,38 @@ tree_view::tree_view( //
 	this->list::scroll_change_handler = [this](list&) {
 		this->notify_view_change();
 	};
+}
+
+tree_view::provider& tree_view::get_provider()
+{
+	auto* lp = static_cast<tree_view::list_provider_for_tree_view*>(&this->list_widget::get_provider());
+	return lp->tree_view_provider.get();
+}
+
+const tree_view::provider& tree_view::get_provider() const
+{
+	auto* lp = static_cast<const tree_view::list_provider_for_tree_view*>(&this->list_widget::get_provider());
+	return lp->tree_view_provider.get();
+}
+
+void tree_view::notify_model_changed()
+{
+	this->get_provider().notify_model_changed();
+}
+
+void tree_view::notify_item_changed()
+{
+	this->get_provider().notify_item_changed();
+}
+
+void tree_view::notify_item_added(utki::span<const size_t> index)
+{
+	this->get_provider().notify_item_added(index);
+}
+
+void tree_view::notify_item_removed(utki::span<const size_t> index)
+{
+	this->get_provider().notify_item_removed(index);
 }
 
 void tree_view::notify_view_change()

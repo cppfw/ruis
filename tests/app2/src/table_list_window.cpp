@@ -36,7 +36,10 @@ using namespace ruis::length_literals;
 namespace m = ruis::make;
 
 namespace {
-const tml::forest list_data = tml::read(R"qwertyuiop(
+class table_list_model
+{
+public:
+	tml::forest data = tml::read(R"qwertyuiop(
 		""{"row 0" "0123" "321sadf0"}
 		""{"row 1" "12345" "54321asdfas"}
 		""{"row 2" "2345" "54321asdf"}
@@ -59,6 +62,11 @@ const tml::forest list_data = tml::read(R"qwertyuiop(
 		""{"row 19" "19 3453 45 " "5432sgdfsdfg1"}
 		""{"row 20" "20 45 2345 342" "543sdfg21"}
 	)qwertyuiop");
+};
+} // namespace
+
+namespace {
+const table_list_model model;
 } // namespace
 
 namespace {
@@ -93,6 +101,48 @@ utki::shared_ref<ruis::widget> make_table_list_header(
 }
 } // namespace
 
+namespace {
+class table_list_provider : public ruis::table_list::provider
+{
+	const table_list_model& model;
+
+public:
+	// NOLINTNEXTLINE(modernize-pass-by-value)
+	table_list_provider(
+		const utki::shared_ref<ruis::context>& context, //
+		const table_list_model& model
+	) :
+		ruis::table_list::provider(context),
+		model(model)
+	{}
+
+	size_t count() const noexcept override
+	{
+		return this->model.data.size();
+	}
+
+	ruis::widget_list get_row_widgets(size_t index) override
+	{
+		ruis::widget_list ret;
+
+		for (auto i = 0; i != 3; ++i) {
+			ret.emplace_back(m::text(
+				this->context, //
+				// clang-format off
+				{
+					.widget{
+						.clip = true
+					}
+				},
+				// clang-format on
+				utki::to_utf32(this->model.data[index].children[i].value.string)
+			));
+		}
+		return ret;
+	}
+};
+} // namespace
+
 utki::shared_ref<ruis::widget> make_table_list_window(
 	const utki::shared_ref<ruis::context>& c, //
 	ruis::vec2_length pos
@@ -111,39 +161,7 @@ utki::shared_ref<ruis::widget> make_table_list_window(
 					make_table_list_header(c, U"col 2"s),
 					make_table_list_header(c, U"col 3"s)
 				},
-				.provider = [&](){
-					class provider : public ruis::table_list::provider{
-					public:
-						provider(const utki::shared_ref<ruis::context>& context) :
-							ruis::table_list::provider(context)
-						{}
-
-						size_t count() const noexcept override{
-							return list_data.size();
-						}
-
-						ruis::widget_list get_row_widgets(size_t index) override{
-							ruis::widget_list ret;
-
-							for(auto i = 0; i != 3; ++i){
-								ret.emplace_back(
-									m::text(
-										this->context,//
-										// clang-format off
-										{
-											.widget{
-												.clip = true
-											}
-										},
-										// clang-format on
-										utki::to_utf32(list_data[index].children[i].value.string)
-									));
-								}
-								return ret;
-							}
-						};
-						return utki::make_shared<provider>(c);
-					}()
+				.provider = utki::make_unique<table_list_provider>(c, model)
 			}
 		}
 	);
