@@ -115,22 +115,25 @@ tree_view::tree_view( //
 
 void tree_view::notify_model_changed()
 {
-	this->list_provider.tree_view_provider.get().notify_model_changed();
+	this->list_provider.tree_view_provider.get().init();
+	this->list_widget::notify_model_change();
 }
 
 void tree_view::notify_item_changed()
 {
-	this->list_provider.tree_view_provider.get().notify_item_changed();
+	this->list_widget::notify_model_change();
 }
 
 void tree_view::notify_item_added(utki::span<const size_t> index)
 {
-	this->list_provider.tree_view_provider.get().notify_item_added(index);
+	this->list_provider.tree_view_provider.get().item_added(index);
+	this->list_widget::notify_model_change();
 }
 
 void tree_view::notify_item_removed(utki::span<const size_t> index)
 {
-	this->list_provider.tree_view_provider.get().notify_item_removed(index);
+	this->list_provider.tree_view_provider.get().item_removed(index);
+	this->list_widget::notify_model_change();
 }
 
 void tree_view::notify_view_change()
@@ -608,18 +611,7 @@ void tree_view::provider::on_list_model_changed()
 	}
 }
 
-void tree_view::provider_base::notify_model_changed()
-{
-	this->init();
-	this->on_list_model_changed();
-}
-
-void tree_view::provider_base::notify_item_changed()
-{
-	this->on_list_model_changed();
-}
-
-void tree_view::provider_base::notify_item_added(utki::span<const size_t> index)
+void tree_view::provider_base::item_added(utki::span<const size_t> index)
 {
 	if (index.empty()) {
 		throw std::invalid_argument("passed in index is empty");
@@ -639,7 +631,6 @@ void tree_view::provider_base::notify_item_added(utki::span<const size_t> index)
 
 	if (parent_list->empty()) {
 		// item was added to a collapsed subtree
-		this->on_list_model_changed();
 		return;
 	}
 
@@ -680,11 +671,9 @@ void tree_view::provider_base::notify_item_added(utki::span<const size_t> index)
 		}
 	}
 	this->iter = this->traversal().make_iterator(old_iter_index);
-
-	this->on_list_model_changed();
 }
 
-void tree_view::provider_base::notify_item_removed(utki::span<const size_t> index)
+void tree_view::provider_base::item_removed(utki::span<const size_t> index)
 {
 	if (index.empty()) {
 		throw std::invalid_argument("passed in index is empty");
@@ -692,7 +681,6 @@ void tree_view::provider_base::notify_item_removed(utki::span<const size_t> inde
 
 	if (!this->traversal().is_valid(index)) {
 		// the removed item was probably in collapsed part of the tree
-		this->on_list_model_changed();
 		return;
 	}
 
@@ -773,6 +761,4 @@ void tree_view::provider_base::notify_item_removed(utki::span<const size_t> inde
 		++cur_iter_index.back();
 	}
 	this->iter = this->traversal().make_iterator(cur_iter_index);
-
-	this->on_list_model_changed();
 }

@@ -42,7 +42,7 @@ class tree_view :
 public:
 	class provider_base
 	{
-		// the tree_view widget needs access to the private notify_* methods
+		// the tree_view widget needs access to the private visible-tree update methods
 		friend class tree_view;
 
 		struct node {
@@ -69,34 +69,17 @@ public:
 		);
 
 		/**
-		 * @brief Notify that an item has been removed.
-		 * @param index - index path of the removed item.
-		 */
-		void notify_item_removed(utki::span<const size_t> index);
-
-		/**
-		 * @brief Notify that a new item has been added.
+		 * @brief Update the visible tree to reflect the addition of an item.
 		 * @param index - index path to a newly added item. Essentially, it is a path
 		 *                to an item before which a new item has been added.
 		 */
-		void notify_item_added(utki::span<const size_t> index);
+		void item_added(utki::span<const size_t> index);
 
 		/**
-		 * @brief Notify about tree item contents change.
-		 * Use this function to notify about changes to the tree data which do not involve
-		 * adding new items or removing items. I.e. when tree topology does not chnage.
-		 * Calling this function will cause the tree_view to re-create and
-		 * re-layout it's contents.
-		 * This operation should be faster than notify_model_change().
+		 * @brief Update the visible tree to reflect the removal of an item.
+		 * @param index - index path of the removed item.
 		 */
-		void notify_item_changed();
-
-		/**
-		 * @brief Notify about any model change.
-		 * Calling this function will cause the tree_view to re-create and
-		 * re-layout it's contents.
-		 */
-		void notify_model_changed();
+		void item_removed(utki::span<const size_t> index);
 
 	protected:
 		size_t list_count() const noexcept;
