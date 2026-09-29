@@ -45,7 +45,11 @@ public:
 	{
 		friend class table_list_provider_for_table_tree_view;
 
-		table_list::provider* list_provider = nullptr;
+		// the table_tree_view widget needs to set the owner pointer
+		friend class table_tree_view;
+
+		// raw pointer is safe: the provider is owned by the table_tree_view and never outlives it
+		ruis::table_tree_view* owner = nullptr;
 
 		ruis::widget_list list_get_row_widgets(size_t index);
 
@@ -90,6 +94,19 @@ public:
 		all_parameters params
 	);
 
+private:
+	table_tree_view(
+		const utki::shared_ref<ruis::context>& context, //
+		std::tuple<
+			utki::unique_ref<table_list_provider_for_table_tree_view>, //
+			std::reference_wrapper<table_list_provider_for_table_tree_view> //
+			> provider,
+		all_parameters& params
+	);
+
+	table_list_provider_for_table_tree_view& list_provider;
+
+public:
 	using table_list::set_scroll_factor;
 	using table_list::get_scroll_factor;
 	using table_list::get_scroll_band;

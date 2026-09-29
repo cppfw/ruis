@@ -45,10 +45,6 @@ public:
 	 */
 	class provider
 	{
-		friend class list_provider_for_table_list;
-
-		ruis::list_provider* list_provider = nullptr;
-
 	public:
 		const utki::shared_ref<ruis::context> context;
 
@@ -75,12 +71,6 @@ public:
 		 * @return A list of widgets for table row cells.
 		 */
 		virtual widget_list get_row_widgets(size_t index) = 0;
-
-		/**
-		 * @brief Notify about change of items model.
-		 * The user is supposed to invoke this function when items model change.
-		 */
-		void notify_model_change();
 	};
 
 	struct parameters {
@@ -171,6 +161,12 @@ public:
 	{
 		this->table_rows_list.get().scroll_by(delta);
 	}
+
+	/**
+	 * @brief Notify about change of items model.
+	 * The user is supposed to invoke this function when items model change.
+	 */
+	void notify_model_change();
 
 	/**
 	 * @brief Model change signal.

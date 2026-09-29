@@ -39,13 +39,7 @@ public:
 		list_provider(table_list_provider.get().context),
 		owner(owner),
 		table_list_provider(std::move(table_list_provider))
-	{
-		if (this->table_list_provider.get().list_provider) {
-			throw std::logic_error("table_list::table_list(): passed in provider is already set to another table_list");
-		}
-
-		this->table_list_provider.get().list_provider = this;
-	}
+	{}
 
 	size_t count() const noexcept override
 	{
@@ -201,13 +195,9 @@ void table_list::arrange_list_item_cells(ruis::semiconst_widget_list& cells)
 	}
 }
 
-void table_list::provider::notify_model_change()
+void table_list::notify_model_change()
 {
-	if (!this->list_provider) {
-		return;
-	}
-
-	this->list_provider->notify_model_change();
+	this->table_rows_list.get().notify_model_change();
 }
 
 utki::shared_ref<ruis::table_list> make::table_list(

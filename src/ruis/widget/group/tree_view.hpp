@@ -142,7 +142,11 @@ public:
 	{
 		friend class list_provider_for_tree_view;
 
-		ruis::list_provider* list_provider = nullptr;
+		// the tree_view widget needs to set the owner pointer
+		friend class tree_view;
+
+		// raw pointer is safe: the provider is owned by the tree_view and never outlives it
+		ruis::tree_view* owner = nullptr;
 
 		utki::shared_ref<widget> list_get_widget(size_t index);
 

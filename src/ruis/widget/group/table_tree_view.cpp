@@ -35,12 +35,6 @@ public:
 		table_list::provider(context),
 		provider(std::move(provider))
 	{
-		if (this->provider.get().list_provider) {
-			throw std::invalid_argument(
-				"table_tree_view::table_tree_view(): the passed in provider is already added to another table_tree_view"
-			);
-		}
-		this->provider.get().list_provider = this;
 		this->provider.get().init();
 	}
 
@@ -61,8 +55,8 @@ table_tree_view::provider::provider(const utki::shared_ref<ruis::context>& conte
 
 void table_tree_view::provider::on_list_model_changed()
 {
-	if (this->list_provider) {
-		this->list_provider->notify_model_change();
+	if (this->owner) {
+		this->owner->notify_model_change();
 	}
 }
 
@@ -86,9 +80,31 @@ ruis::widget_list table_tree_view::provider::list_get_row_widgets(size_t index)
 	return wl;
 }
 
-table_tree_view::table_tree_view(
-	const utki::shared_ref<ruis::context>& context, //
+table_tree_view::table_tree_view( //
+	const utki::shared_ref<ruis::context>& context,
 	all_parameters params
+) :
+	table_tree_view(
+		context,
+		[&]() {
+			auto list_provider = utki::make_unique<table_tree_view::table_list_provider_for_table_tree_view>(
+				context,
+				std::move(params.table_tree_view_params.provider)
+			);
+			std::reference_wrapper<table_tree_view::table_list_provider_for_table_tree_view> ref(list_provider);
+			return std::make_tuple(std::move(list_provider), ref);
+		}(),
+		params
+	)
+{}
+
+table_tree_view::table_tree_view( //
+	const utki::shared_ref<ruis::context>& context, //
+	std::tuple<
+		utki::unique_ref<table_list_provider_for_table_tree_view>, //
+		std::reference_wrapper<table_list_provider_for_table_tree_view> //
+		> provider,
+	all_parameters& params
 ) :
 	ruis::widget(
 		context, //
@@ -101,15 +117,15 @@ table_tree_view::table_tree_view(
         {
             .table_list_params{
                 .column_headers = std::move(params.table_tree_view_params.column_headers),
-                .provider = utki::make_unique<table_tree_view::table_list_provider_for_table_tree_view>(
-                    context,
-                    std::move(params.table_tree_view_params.provider)
-                )
+                .provider = std::move(std::get<0>(provider))
             }
         }
-    )
+    ),
+    list_provider(std::get<1>(provider).get())
 // clang-format on
-{}
+{
+	this->list_provider.provider.get().owner = this;
+}
 
 utki::shared_ref<ruis::table_tree_view> make::table_tree_view(
 	const utki::shared_ref<ruis::context>& context, //

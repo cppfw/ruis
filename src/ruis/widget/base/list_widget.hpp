@@ -28,18 +28,12 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
-class list_widget;
-
 /**
  * @brief Item widgets provider class.
  * User should subclass this class to provide item widgets to a list_widget.
  */
 class list_provider
 {
-	friend class list_widget;
-
-	list_widget* owner = nullptr;
-
 protected:
 	list_provider(const utki::shared_ref<ruis::context>& context);
 
@@ -76,12 +70,6 @@ public:
 	 * @return Widget for requested item.
 	 */
 	virtual utki::shared_ref<widget> get_highlighted_widget(size_t index);
-
-	/**
-	 * @brief Notify about change of items model.
-	 * The user is supposed to invoke this function when items model change.
-	 */
-	void notify_model_change();
 };
 
 // TODO: doxygen
@@ -103,8 +91,6 @@ protected:
 		parameters params
 	);
 
-	virtual void handle_model_change() {}
-
 	list_provider& get_provider()
 	{
 		return this->params.provider.get();
@@ -114,6 +100,8 @@ protected:
 	{
 		return this->params.provider.get();
 	}
+
+	virtual void handle_model_change() {}
 
 public:
 	list_widget(const list_widget&) = delete;
@@ -128,10 +116,7 @@ public:
 	 * @brief Notify that the items model has changed.
 	 * Causes the list widget to re-create and re-layout its contents.
 	 */
-	void notify_model_change()
-	{
-		this->get_provider().notify_model_change();
-	}
+	void notify_model_change();
 };
 
 } // namespace ruis

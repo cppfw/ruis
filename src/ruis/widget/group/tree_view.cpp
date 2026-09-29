@@ -41,10 +41,6 @@ public:
 		list_provider(tree_view_provider.get().context),
 		tree_view_provider(std::move(tree_view_provider))
 	{
-		// the provider is injected as unique_ref, so it is not possible that it is already added to some other tree_view
-		utki::assert(this->tree_view_provider.get().list_provider == nullptr);
-
-		this->tree_view_provider.get().list_provider = this;
 		this->tree_view_provider.get().init();
 	}
 
@@ -104,6 +100,8 @@ tree_view::tree_view( //
 	),
 	list_provider(std::get<1>(provider).get())
 {
+	this->list_provider.tree_view_provider.get().owner = this;
+
 	this->list::model_change_handler = [this](list&) {
 		this->notify_view_change();
 	};
@@ -462,7 +460,7 @@ tree_view::provider_base::tree_item_widget_parts tree_view::provider_base::get_i
 				if (e.button != ruis::mouse_button::left) {
 					return event_status::propagate;
 				}
-				if (e.action == button_action::release) {
+				if (e.action != button_action::press) {
 					return event_status::propagate;
 				}
 
@@ -606,8 +604,8 @@ void tree_view::provider_base::expand(utki::span<const size_t> index)
 
 void tree_view::provider::on_list_model_changed()
 {
-	if (this->list_provider) {
-		this->list_provider->notify_model_change();
+	if (this->owner) {
+		this->owner->notify_model_change();
 	}
 }
 

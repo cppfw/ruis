@@ -32,15 +32,16 @@ utki::shared_ref<widget> list_provider::get_highlighted_widget(size_t index)
 	return this->get_widget(index);
 }
 
-void list_provider::notify_model_change()
+void list_widget::notify_model_change()
 {
-	if (!this->owner) {
-		return;
-	}
-
-	this->context.get().post_to_ui_thread([owner = utki::make_weak_from(*this->owner)]() {
-		if (auto o = owner.lock()) {
-			o->handle_model_change();
+	// Model change will cause remove/add child widgets to the list's container,
+	// because list item widgets will have to be re-created.
+	// So we need to make sure it is not done while container's list of children is locked.
+	// For that we can do the handling of the model change on next main loop by posting to ui thread.
+	auto self = utki::make_weak_from(*this);
+	this->context.get().post_to_ui_thread([self]() {
+		if (auto w = self.lock()) {
+			w->handle_model_change();
 		}
 	});
 }
@@ -51,12 +52,4 @@ list_widget::list_widget(
 ) :
 	widget(context, {}, {}),
 	params(std::move(params))
-{
-	if (this->params.provider.get().owner) {
-		throw std::logic_error( //
-			"list_widget::list_widget(): passed in provider is already set to another list_widget"
-		);
-	}
-
-	this->params.provider.get().owner = this;
-}
+{}
