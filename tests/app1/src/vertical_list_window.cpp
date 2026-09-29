@@ -132,7 +132,7 @@ utki::shared_ref<ruis::window> make_vertical_list_window(
                                                 }
                                             }
                                         };
-                                        return utki::make_shared<the_provider>(c);
+                                        return utki::make_unique<the_provider>(c);
                                     }()
                                 }
                             }

@@ -22,6 +22,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #pragma once
 
 #include <utki/signal.hpp>
+#include <utki/unique_ref.hpp>
 
 #include "../widget.hpp"
 
@@ -90,7 +91,7 @@ class list_widget : virtual public widget
 
 public:
 	struct parameters {
-		utki::shared_ref<list_provider> provider; // TODO: it should be utki::unique_ref
+		utki::unique_ref<list_provider> provider;
 	};
 
 private:

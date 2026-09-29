@@ -83,7 +83,7 @@ public:
 // resizes it to 100x100 pp and performs layouting.
 utki::shared_ref<ruis::touch::list> make_laid_out_list(
 	const utki::shared_ref<ruis::context>& c, //
-	const utki::shared_ref<hover_provider>& provider
+	utki::unique_ref<hover_provider> provider
 )
 {
 	// clang-format off
@@ -96,7 +96,7 @@ utki::shared_ref<ruis::touch::list> make_laid_out_list(
 		},
 		.params{
 			.specific{
-				.provider = provider
+				.provider = std::move(provider)
 			}
 		}
 	};
@@ -116,12 +116,12 @@ const tst::set set("touch_list_hover", [](tst::suite& suite) {
 	suite.add("mouse_move_events_must_reach_children_of_touch_list_when_it_is_not_scrolling", [] {
 		auto c = make_dummy_context();
 
-		auto provider = utki::make_shared<hover_provider>(c);
-		auto list = make_laid_out_list(c, provider);
+		auto list = make_laid_out_list(c, utki::make_unique<hover_provider>(c));
 		auto& list_w = list.get();
 
-		auto& item = provider.get().item.get();
-		auto& proxy = provider.get().proxy.get();
+		auto& provider = static_cast<hover_provider&>(list_w.get_provider());
+		auto& item = provider.item.get();
+		auto& proxy = provider.proxy.get();
 
 		tst::check(!proxy.is_hovered(0), SL);
 
@@ -151,16 +151,16 @@ const tst::set set("touch_list_hover", [](tst::suite& suite) {
 	suite.add("mouse_move_event_consumed_by_touch_list_child_must_be_propagated_when_it_is_not_scrolling", [] {
 		auto c = make_dummy_context();
 
-		auto provider = utki::make_shared<hover_provider>(c);
-		provider.get().proxy.get().mouse_move_handler = [](auto&, auto&) {
+		auto list = make_laid_out_list(c, utki::make_unique<hover_provider>(c));
+		auto& list_w = list.get();
+
+		auto& provider = static_cast<hover_provider&>(list_w.get_provider());
+		provider.proxy.get().mouse_move_handler = [](auto&, auto&) {
 			return ruis::event_status::consumed;
 		};
 
-		auto list = make_laid_out_list(c, provider);
-		auto& list_w = list.get();
-
-		auto& item = provider.get().item.get();
-		auto& proxy = provider.get().proxy.get();
+		auto& item = provider.item.get();
+		auto& proxy = provider.proxy.get();
 
 		// center of the item's mouse_proxy, in the list's coordinates
 		auto pos = item.rect().p + proxy.rect().p;

@@ -171,7 +171,7 @@ utki::shared_ref<ruis::window> make_window0(
 												return m::text(this->context, {}, this->items.at(index));
 											}
 										};
-										return utki::make_shared<the_provider>(c);
+										return utki::make_unique<the_provider>(c);
 									}()
 								}
 							}

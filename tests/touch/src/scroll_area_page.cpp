@@ -231,7 +231,7 @@ ruis::widget_list make_scroll_area_page_contents(const utki::shared_ref<ruis::co
 			.params{
 				.selection_box{
 					.list{
-						.provider = utki::make_shared<theme_selection_provider>(c)
+						.provider = utki::make_unique<theme_selection_provider>(c)
 					}
 				},
 				.specific{

@@ -245,7 +245,7 @@ public:
 			{
 				.params{
 					.specific{
-						.provider = utki::make_shared<list_page_provider>(context)
+						.provider = utki::make_unique<list_page_provider>(context)
 					}
 				}
 			}

@@ -76,7 +76,7 @@ tree_view::tree_view( //
 					.vertical = true
 				},
 				.specific{
-					.provider = utki::make_shared<tree_view::list_provider_for_tree_view>(std::move(params.tree_view_params.provider))
+					.provider = utki::make_unique<tree_view::list_provider_for_tree_view>(std::move(params.tree_view_params.provider))
 				}
 			}
 		}

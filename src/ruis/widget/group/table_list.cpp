@@ -111,8 +111,8 @@ table_list::table_list(
 				},
 				.params{
 					.specific{
-						.provider = [&]() -> utki::shared_ref<list_provider> {
-							return utki::make_shared<table_list::list_provider_for_table_list>(
+						.provider = [&]() -> utki::unique_ref<list_provider> {
+							return utki::make_unique<table_list::list_provider_for_table_list>(
 								*this,
 								std::move(params.table_list_params.provider)
 							);

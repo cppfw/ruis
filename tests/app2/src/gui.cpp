@@ -317,7 +317,7 @@ utki::shared_ref<ruis::window> make_selection_box_window(
 			},
 			.params{
 				.list{
-					.provider = utki::make_shared<language_selection_provider>(c)
+					.provider = utki::make_unique<language_selection_provider>(c)
 				}
 			}
 		}
@@ -370,7 +370,7 @@ utki::shared_ref<ruis::window> make_selection_box_window(
 					},
 					.params{
 						.list{
-							.provider = utki::make_shared<selection_box_provider>(c,
+							.provider = utki::make_unique<selection_box_provider>(c,
 								std::vector<std::string>{
 									"Hello"s,
 									"World!"s

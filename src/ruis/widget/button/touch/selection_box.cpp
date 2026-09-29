@@ -249,7 +249,7 @@ void selection_box::show_selection_menu()
 					},
 					.params{
 						.specific{
-							.provider = utki::make_shared<wrapping_provider>(utki::make_shared_from(*this))
+							.provider = utki::make_unique<wrapping_provider>(utki::make_shared_from(*this))
 						}
 					}
 				}

@@ -315,7 +315,8 @@ void show(
 		menu_size.x() = max(menu_size.x(), d.x());
 	}
 
-	auto provider = utki::make_shared<context_menu_provider>(context, std::move(widgets));
+	auto provider = utki::make_unique<context_menu_provider>(context, std::move(widgets));
+	auto& provider_ref = provider.get();
 
 	// compute the natural menu height from the wrapped items
 	// (the wrapped items include the separators between the items)
@@ -337,7 +338,7 @@ void show(
 		},
 		.params{
 			.specific{
-				.provider = provider
+				.provider = std::move(provider)
 			}
 		}
 	};
@@ -387,7 +388,7 @@ void show(
 	auto popup = olay->show_popup(frame, anchor_pos);
 	auto popup_ref = utki::make_weak(popup);
 
-	provider.get().on_item_click = [popup_ref, context]() {
+	provider_ref.on_item_click = [popup_ref, context]() {
 		close_popup(popup_ref, context);
 	};
 }
