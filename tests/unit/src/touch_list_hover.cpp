@@ -116,12 +116,13 @@ const tst::set set("touch_list_hover", [](tst::suite& suite) {
 	suite.add("mouse_move_events_must_reach_children_of_touch_list_when_it_is_not_scrolling", [] {
 		auto c = make_dummy_context();
 
-		auto list = make_laid_out_list(c, utki::make_unique<hover_provider>(c));
+		auto provider = utki::make_unique<hover_provider>(c);
+		auto& provider_ref = provider.get();
+		auto list = make_laid_out_list(c, std::move(provider));
 		auto& list_w = list.get();
 
-		auto& provider = static_cast<hover_provider&>(list_w.get_provider());
-		auto& item = provider.item.get();
-		auto& proxy = provider.proxy.get();
+		auto& item = provider_ref.item.get();
+		auto& proxy = provider_ref.proxy.get();
 
 		tst::check(!proxy.is_hovered(0), SL);
 
@@ -151,16 +152,17 @@ const tst::set set("touch_list_hover", [](tst::suite& suite) {
 	suite.add("mouse_move_event_consumed_by_touch_list_child_must_be_propagated_when_it_is_not_scrolling", [] {
 		auto c = make_dummy_context();
 
-		auto list = make_laid_out_list(c, utki::make_unique<hover_provider>(c));
+		auto provider = utki::make_unique<hover_provider>(c);
+		auto& provider_ref = provider.get();
+		auto list = make_laid_out_list(c, std::move(provider));
 		auto& list_w = list.get();
 
-		auto& provider = static_cast<hover_provider&>(list_w.get_provider());
-		provider.proxy.get().mouse_move_handler = [](auto&, auto&) {
+		provider_ref.proxy.get().mouse_move_handler = [](auto&, auto&) {
 			return ruis::event_status::consumed;
 		};
 
-		auto& item = provider.item.get();
-		auto& proxy = provider.proxy.get();
+		auto& item = provider_ref.item.get();
+		auto& proxy = provider_ref.proxy.get();
 
 		// center of the item's mouse_proxy, in the list's coordinates
 		auto pos = item.rect().p + proxy.rect().p;

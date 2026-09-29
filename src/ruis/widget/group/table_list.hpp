@@ -93,7 +93,6 @@ public:
 		/**
 		 * @brief Table rows provider.
 		 * The table_list takes ownership of the provider.
-		 * Use table_list::get_provider() to access the provider.
 		 */
 		utki::unique_ref<table_list::provider> provider;
 	};
@@ -172,18 +171,6 @@ public:
 	{
 		this->table_rows_list.get().scroll_by(delta);
 	}
-
-	/**
-	 * @brief Get the table rows provider.
-	 * @return Reference to the table rows provider.
-	 */
-	table_list::provider& get_provider();
-
-	/**
-	 * @brief Get the table rows provider.
-	 * @return Const reference to the table rows provider.
-	 */
-	const table_list::provider& get_provider() const;
 
 	/**
 	 * @brief Model change signal.

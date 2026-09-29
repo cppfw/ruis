@@ -191,7 +191,6 @@ public:
 		/**
 		 * @brief Tree items provider.
 		 * The tree_view takes ownership of the provider.
-		 * Use tree_view::get_provider() to access the provider.
 		 */
 		utki::unique_ref<tree_view::provider> provider;
 	};
@@ -202,6 +201,15 @@ public:
 		parameters tree_view_params;
 	};
 
+private:
+	tree_view(
+		const utki::shared_ref<ruis::context>& context, //
+		std::tuple<utki::unique_ref<list_provider_for_tree_view>, std::reference_wrapper<list_provider_for_tree_view>>
+			provider,
+		all_parameters& params
+	);
+
+public:
 	tree_view(
 		const utki::shared_ref<ruis::context>& context, //
 		all_parameters params
@@ -214,18 +222,6 @@ public:
 	tree_view& operator=(tree_view&&) = delete;
 
 	~tree_view() override = default;
-
-	/**
-	 * @brief Get the tree items provider.
-	 * @return Reference to the tree items provider.
-	 */
-	tree_view::provider& get_provider();
-
-	/**
-	 * @brief Get the tree items provider.
-	 * @return Const reference to the tree items provider.
-	 */
-	const tree_view::provider& get_provider() const;
 
 	/**
 	 * @brief Notify about any model change.
@@ -283,6 +279,8 @@ public:
 	using list::get_scroll_band;
 
 private:
+	list_provider_for_tree_view& list_provider;
+
 	void notify_view_change();
 };
 

@@ -75,7 +75,6 @@ public:
 		/**
 		 * @brief Table tree rows provider.
 		 * The table_tree_view takes ownership of the provider.
-		 * Use table_tree_view::get_provider() to access the provider.
 		 */
 		utki::unique_ref<table_tree_view::provider> provider;
 	};
@@ -90,18 +89,6 @@ public:
 		const utki::shared_ref<ruis::context>& context, //
 		all_parameters params
 	);
-
-	/**
-	 * @brief Get the table tree rows provider.
-	 * @return Reference to the table tree rows provider.
-	 */
-	table_tree_view::provider& get_provider();
-
-	/**
-	 * @brief Get the table tree rows provider.
-	 * @return Const reference to the table tree rows provider.
-	 */
-	const table_tree_view::provider& get_provider() const;
 
 	using table_list::set_scroll_factor;
 	using table_list::get_scroll_factor;

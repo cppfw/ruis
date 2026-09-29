@@ -41,9 +41,9 @@ public:
 		list_provider(tree_view_provider.get().context),
 		tree_view_provider(std::move(tree_view_provider))
 	{
-		if (this->tree_view_provider.get().list_provider) {
-			throw std::logic_error("tree_view::tree_view(): passed in provider is already set to another tree_view");
-		}
+		// the provider is injected as unique_ref, so it is not possible that it is already added to some other tree_view
+		utki::assert(this->tree_view_provider.get().list_provider == nullptr);
+
 		this->tree_view_provider.get().list_provider = this;
 		this->tree_view_provider.get().init();
 	}
@@ -63,25 +63,46 @@ tree_view::tree_view( //
 	const utki::shared_ref<ruis::context>& context,
 	all_parameters params
 ) :
+	tree_view(
+		context,
+		[&]() {
+			auto list_provider =
+				utki::make_unique<tree_view::list_provider_for_tree_view>(std::move(params.tree_view_params.provider));
+			std::reference_wrapper<tree_view::list_provider_for_tree_view> ref(list_provider);
+			return std::make_tuple(std::move(list_provider), ref);
+		}(),
+		params
+	)
+{}
+
+tree_view::tree_view( //
+	const utki::shared_ref<ruis::context>& context,
+	std::tuple<
+		utki::unique_ref<list_provider_for_tree_view>, //
+		std::reference_wrapper<list_provider_for_tree_view> //
+		> provider,
+	all_parameters& params
+) :
 	widget( //
 		context,
 		std::move(params.layout_params),
 		std::move(params.widget)
 	),
-	// clang-format off
-	list(context,
+	list(
+		context, //
+		// clang-format off
 		{
 			.params{
 				.oriented{
 					.vertical = true
 				},
 				.specific{
-					.provider = utki::make_unique<tree_view::list_provider_for_tree_view>(std::move(params.tree_view_params.provider))
+					.provider = std::move(std::get<0>(provider))
 				}
 			}
-		}
-	)
-// clang-format on
+		} // clang-format on
+	),
+	list_provider(std::get<1>(provider).get())
 {
 	this->list::model_change_handler = [this](list&) {
 		this->notify_view_change();
@@ -92,36 +113,24 @@ tree_view::tree_view( //
 	};
 }
 
-tree_view::provider& tree_view::get_provider()
-{
-	auto* lp = static_cast<tree_view::list_provider_for_tree_view*>(&this->list_widget::get_provider());
-	return lp->tree_view_provider.get();
-}
-
-const tree_view::provider& tree_view::get_provider() const
-{
-	auto* lp = static_cast<const tree_view::list_provider_for_tree_view*>(&this->list_widget::get_provider());
-	return lp->tree_view_provider.get();
-}
-
 void tree_view::notify_model_changed()
 {
-	this->get_provider().notify_model_changed();
+	this->list_provider.tree_view_provider.get().notify_model_changed();
 }
 
 void tree_view::notify_item_changed()
 {
-	this->get_provider().notify_item_changed();
+	this->list_provider.tree_view_provider.get().notify_item_changed();
 }
 
 void tree_view::notify_item_added(utki::span<const size_t> index)
 {
-	this->get_provider().notify_item_added(index);
+	this->list_provider.tree_view_provider.get().notify_item_added(index);
 }
 
 void tree_view::notify_item_removed(utki::span<const size_t> index)
 {
-	this->get_provider().notify_item_removed(index);
+	this->list_provider.tree_view_provider.get().notify_item_removed(index);
 }
 
 void tree_view::notify_view_change()

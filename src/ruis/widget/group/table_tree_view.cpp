@@ -111,20 +111,6 @@ table_tree_view::table_tree_view(
 // clang-format on
 {}
 
-table_tree_view::provider& table_tree_view::get_provider()
-{
-	auto* lp =
-		static_cast<table_tree_view::table_list_provider_for_table_tree_view*>(&this->table_list::get_provider());
-	return lp->provider.get();
-}
-
-const table_tree_view::provider& table_tree_view::get_provider() const
-{
-	auto* lp =
-		static_cast<const table_tree_view::table_list_provider_for_table_tree_view*>(&this->table_list::get_provider());
-	return lp->provider.get();
-}
-
 utki::shared_ref<ruis::table_tree_view> make::table_tree_view(
 	const utki::shared_ref<ruis::context>& context, //
 	ruis::table_tree_view::all_parameters params

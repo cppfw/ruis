@@ -170,19 +170,6 @@ table_list::table_list(
 	};
 }
 
-table_list::provider& table_list::get_provider()
-{
-	auto* lp = static_cast<table_list::list_provider_for_table_list*>(&this->table_rows_list.get().get_provider());
-	return lp->table_list_provider.get();
-}
-
-const table_list::provider& table_list::get_provider() const
-{
-	auto* lp =
-		static_cast<const table_list::list_provider_for_table_list*>(&this->table_rows_list.get().get_provider());
-	return lp->table_list_provider.get();
-}
-
 void table_list::notify_model_changed()
 {
 	if (this->model_change_handler) {

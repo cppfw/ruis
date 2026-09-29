@@ -105,15 +105,6 @@ protected:
 
 	virtual void handle_model_change() {}
 
-public:
-	list_widget(const list_widget&) = delete;
-	list_widget& operator=(const list_widget&) = delete;
-
-	list_widget(list_widget&&) = delete;
-	list_widget& operator=(list_widget&&) = delete;
-
-	~list_widget() override = default;
-
 	list_provider& get_provider()
 	{
 		return this->params.provider.get();
@@ -124,7 +115,23 @@ public:
 		return this->params.provider.get();
 	}
 
-private:
+public:
+	list_widget(const list_widget&) = delete;
+	list_widget& operator=(const list_widget&) = delete;
+
+	list_widget(list_widget&&) = delete;
+	list_widget& operator=(list_widget&&) = delete;
+
+	~list_widget() override = default;
+
+	/**
+	 * @brief Notify that the items model has changed.
+	 * Causes the list widget to re-create and re-layout its contents.
+	 */
+	void notify_model_change()
+	{
+		this->get_provider().notify_model_change();
+	}
 };
 
 } // namespace ruis
