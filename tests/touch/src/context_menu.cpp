@@ -308,33 +308,13 @@ void show(
 	auto& style = context.get().style();
 	auto screen = olay->rect().d;
 
-	// compute the natural menu width from the item widgets
-	vec2 menu_size(0);
-	for (auto& w : widgets) {
-		auto d = ruis::dims_for_widget(w.get(), screen);
-		menu_size.x() = max(menu_size.x(), d.x());
-	}
-
 	auto provider = utki::make_unique<context_menu_provider>(context, std::move(widgets));
 	auto& provider_ref = provider.get();
-
-	// compute the natural menu height from the wrapped items
-	// (the wrapped items include the separators between the items)
-	real menu_height = 0;
-	for (size_t i = 0; i != provider.get().count(); ++i) {
-		menu_height += ruis::dims_for_widget(provider.get().get_widget(i).get(), screen).y();
-	}
-
-	// the menu is min-wrap vertically, but clamped to fit on the screen
-	// (minus the frame's top and bottom borders), so that long menus
-	// are clamped to the screen size and can be scrolled instead
-	real frame_v_border = style.get_len_gap().get().get(context) * 2;
-	real list_height = max(real(0), min(menu_height, screen.y() - frame_v_border));
 
 	// clang-format off
 	auto menu_params = context_menu::all_parameters{
 		.layout_params{
-			.dims = {ruis::dim(length(menu_size.x())), ruis::dim(length(list_height))}
+			.dims = {ruis::dim::min, ruis::dim::min}
 		},
 		.params{
 			.specific{
@@ -344,6 +324,19 @@ void show(
 	};
 	// clang-format on
 	auto menu = utki::make_shared<context_menu>(context, std::move(menu_params));
+
+	// the size of the menu: the transverse size is the biggest size among all the items,
+	// the longitudinal size is the size needed to display the whole content without
+	// truncation, clamped to the given longitudinal quotum (the menu is built with min
+	// dims, so that measure() can compute it).
+	// The longitudinal quotum is the screen height minus the frame's top and bottom
+	// borders, so that long menus are clamped to the screen size and can be scrolled
+	// instead.
+	real frame_v_border = style.get_len_gap().get().get(context) * 2;
+	vec2 menu_size = menu.get().measure(vec2(-1, max(real(0), screen.y() - frame_v_border)));
+
+	menu.get().get_layout_params().dims = {menu_size.x(), menu_size.y()};
+	// {ruis::dim(length(menu_size.x())), ruis::dim(length(menu_size.y()))};
 
 	// the frame: a rectangle with a border that wraps the menu
 	// clang-format off
