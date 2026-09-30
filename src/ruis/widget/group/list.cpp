@@ -545,21 +545,52 @@ ruis::vec2 list::measure(const ruis::vec2& quotum) const
 	vec2 ret(quotum);
 
 	using std::max;
-	ret[long_index] = max(ret[long_index], real(0)); // clamp bottom
+	using std::min;
 
-	if (ret[trans_index] > 0) {
-		return ret;
+	const auto& provider = this->get_provider();
+	const size_t count = provider.count();
+
+	// Items are measured against the list's quotum: positive components are passed through as the available
+	// space, negative components make the item report its natural size in that direction.
+	vec2 item_parent(quotum);
+
+	// items always report their natural size in the long direction
+	item_parent[long_index] = -1;
+
+	auto item_dim = [&](size_t index) -> vec2 {
+		return dims_for_widget(provider.get_widget(index).get(), item_parent);
+	};
+
+	// The min size in the longitudinal direction.
+	real long_size = 0;
+	real trans_size = 0;
+	if (quotum[long_index] < 0) {
+		// The true min size: the sum of the natural sizes of all the items,
+		// so that the whole content can be displayed without truncation.
+		// The transverse min size (the biggest transverse size among all the items) is calculated in the same pass.
+		for (size_t i = 0; i != count; ++i) {
+			vec2 d = item_dim(i);
+			long_size += d[long_index];
+			trans_size = max(trans_size, d[trans_index]);
+		}
+	} else {
+		// The sum of the first N items until they go beyond the quotum,
+		// clamped to the quotum so that the measured size does not go beyond it.
+		for (size_t i = 0; i != count && long_size < quotum[long_index]; ++i) {
+			long_size += item_dim(i)[long_index];
+		}
+		long_size = min(long_size, quotum[long_index]);
+
+		// The min size in the transverse direction: the biggest transverse size among all the items.
+		if (quotum[trans_index] <= 0) {
+			for (size_t i = 0; i != count; ++i) {
+				trans_size = max(trans_size, item_dim(i)[trans_index]);
+			}
+		}
 	}
-
-	ret[trans_index] = 0;
-
-	// TODO: just going through visible widgets seems not correct, because measure is called before actually
-	//       resizing the list widget, so currently visible widgets can be different from the ones which
-	//       would be visible for the given quotum. Need to figure out how to handle this correctly and implement it.
-	//       This problem is visible in the test 'app' when running under Wayland on a monitor with scale factor 2,
-	//       the tree_view is truncated horizontally because of this issue right after the app start.
-	for (const auto& w : this->children()) {
-		ret[trans_index] = max(ret[trans_index], w.get().rect().d[trans_index]); // clamp bottom
+	ret[long_index] = long_size;
+	if (quotum[trans_index] <= 0) {
+		ret[trans_index] = trans_size;
 	}
 
 	return ret;
