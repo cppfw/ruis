@@ -174,6 +174,7 @@ public:
 		virtual utki::shared_ref<widget> get_widget(utki::span<const size_t> index) = 0;
 
 		// TODO: can be made private?
+
 	protected:
 		void on_list_model_changed() override;
 	};

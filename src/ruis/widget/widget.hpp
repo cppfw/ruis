@@ -639,8 +639,9 @@ public:
 	/**
 	 * @brief Measure how big a widget wants to be.
 	 * Given the space quotum determine what dimensions widget wants to have to properly draw.
-	 * @param quotum - space available to widget. If value is negative then a minimum size needed for proper widget
-	 * drawing is assumed.
+	 * @param quotum - space available to widget. If a component is negative (e.g. -1) then the widget is expected
+	 * to report the minimum size needed to display the widget without its content being truncated in that
+	 * direction.
 	 * @return Measured desired widget dimensions.
 	 */
 	virtual vec2 measure(const vec2& quotum) const;
