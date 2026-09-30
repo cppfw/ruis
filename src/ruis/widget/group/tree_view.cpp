@@ -32,13 +32,13 @@ using namespace std::string_literals;
 
 using namespace ruis;
 
-class tree_view::list_provider_for_tree_view : public list_provider
+class tree_view::list_provider_for_tree_view : public ruis::list_provider
 {
 public:
 	utki::unique_ref<tree_view::provider> tree_view_provider;
 
 	list_provider_for_tree_view(utki::unique_ref<tree_view::provider> tree_view_provider) :
-		list_provider(tree_view_provider.get().context),
+		ruis::list_provider(tree_view_provider.get().context),
 		tree_view_provider(std::move(tree_view_provider))
 	{
 		this->tree_view_provider.get().init();
