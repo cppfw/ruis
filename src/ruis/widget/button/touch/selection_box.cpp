@@ -126,7 +126,7 @@ public:
 		return this->owner.get().get_provider().count();
 	}
 
-	utki::shared_ref<ruis::widget> get_widget(size_t index) override
+	utki::shared_ref<ruis::widget> get_widget(size_t index) const override
 	{
 		// clang-format off
 		auto pressed_indicator = ruis::make::rectangle(this->context,

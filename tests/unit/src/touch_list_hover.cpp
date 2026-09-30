@@ -73,7 +73,7 @@ public:
 		return 1;
 	}
 
-	utki::shared_ref<ruis::widget> get_widget(size_t) override
+	utki::shared_ref<ruis::widget> get_widget(size_t) const override
 	{
 		return this->item;
 	}

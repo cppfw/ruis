@@ -69,7 +69,7 @@ public:
 	);
 
 	size_t count() const noexcept override;
-	utki::shared_ref<ruis::widget> get_widget(size_t index) override;
+	utki::shared_ref<ruis::widget> get_widget(size_t index) const override;
 
 private:
 	utki::shared_ref<ruis::widget> wrap_item(

@@ -58,7 +58,7 @@ public:
 		return this->items.size();
 	}
 
-	utki::shared_ref<ruis::widget> get_widget(size_t index) override
+	utki::shared_ref<ruis::widget> get_widget(size_t index) const override
 	{
 		// clang-format off
 		return m::text(this->context,

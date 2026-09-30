@@ -100,7 +100,7 @@ size_t context_menu_provider::count() const noexcept
 	return this->items.size();
 }
 
-utki::shared_ref<ruis::widget> context_menu_provider::get_widget(size_t index)
+utki::shared_ref<ruis::widget> context_menu_provider::get_widget(size_t index) const
 {
 	return this->items[index];
 }

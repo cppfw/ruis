@@ -46,7 +46,7 @@ public:
 		return this->table_list_provider.get().count();
 	}
 
-	utki::shared_ref<ruis::widget> get_widget(size_t index) override
+	utki::shared_ref<ruis::widget> get_widget(size_t index) const override
 	{
 		auto cells = this->table_list_provider.get().get_row_widgets(index);
 

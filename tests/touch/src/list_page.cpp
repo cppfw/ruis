@@ -50,7 +50,7 @@ public:
 	}
 
 	// Creates a context menu item widget: a text label with some padding around it.
-	utki::shared_ref<ruis::widget> make_menu_item(ruis::string text)
+	utki::shared_ref<ruis::widget> make_menu_item(ruis::string text) const
 	{
 		// clang-format off
 		return m::padding(this->context,
@@ -79,7 +79,7 @@ public:
 		// clang-format on
 	}
 
-	utki::shared_ref<ruis::widget> get_widget(size_t index) override
+	utki::shared_ref<ruis::widget> get_widget(size_t index) const override
 	{
 		// clang-format off
 		auto button = m::push_button(this->context,

@@ -112,7 +112,7 @@ utki::shared_ref<ruis::window> make_vertical_list_window(
                                                 return this->items.size();
                                             }
 
-                                            utki::shared_ref<ruis::widget> get_widget(size_t index) override{
+                                            utki::shared_ref<ruis::widget> get_widget(size_t index) const override{
                                                 if(index == 3){
                                                     return m::push_button(this->context,
                                                         {},

@@ -181,7 +181,7 @@ utki::shared_ref<ruis::window> make_window1(
                                                 return this->items.size();
                                             }
 
-                                            utki::shared_ref<ruis::widget> get_widget(size_t index) override{
+                                            utki::shared_ref<ruis::widget> get_widget(size_t index) const override{
                                                 return m::text(this->context,
                                                     {
                                                         .layout_params{

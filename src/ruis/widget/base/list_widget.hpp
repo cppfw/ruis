@@ -61,7 +61,7 @@ public:
 	 * @param index - index of the item to provide widget for.
 	 * @return Widget for requested item.
 	 */
-	virtual utki::shared_ref<widget> get_widget(size_t index) = 0;
+	virtual utki::shared_ref<widget> get_widget(size_t index) const = 0;
 
 	/**
 	 * @brief Get widget for a highlighted item.

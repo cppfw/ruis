@@ -49,7 +49,7 @@ public:
 		return this->tree_view_provider.get().list_count();
 	}
 
-	utki::shared_ref<widget> get_widget(size_t index) override
+	utki::shared_ref<widget> get_widget(size_t index) const override
 	{
 		return this->tree_view_provider.get().list_get_widget(index);
 	}

@@ -256,7 +256,7 @@ public:
 		return this->items.size();
 	}
 
-	utki::shared_ref<ruis::widget> get_widget(size_t index) override
+	utki::shared_ref<ruis::widget> get_widget(size_t index) const override
 	{
 		auto i = utki::next(this->items.begin(), index);
 		ASSERT(i < this->items.end())
@@ -292,7 +292,7 @@ public:
 		return language_id_to_name_mapping.size();
 	}
 
-	utki::shared_ref<ruis::widget> get_widget(size_t index) override
+	utki::shared_ref<ruis::widget> get_widget(size_t index) const override
 	{
 		return m::text(
 			this->context, //
