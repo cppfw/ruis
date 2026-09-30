@@ -74,6 +74,12 @@ ruis::vec2 pile_layout::measure(
 	for (const auto& w : widgets) {
 		auto& lp = w.get().get_layout_params_const();
 
+		// A child with fill dims in both directions does not constrain the pile's min size:
+		// it fills whatever space it is given, so there is no point in measuring it.
+		if (lp.dims[0].get_type() == ruis::dim::type::fill && lp.dims[1].get_type() == ruis::dim::type::fill) {
+			continue;
+		}
+
 		ruis::vec2 d;
 
 		for (unsigned j = 0; j != d.size(); ++j) {

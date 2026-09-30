@@ -349,28 +349,35 @@ ruis::vec2 linear_layout::measure(
 
 			const auto t = lp.dims[trans_index].get_type();
 			if (t == dim::type::fill || t == dim::type::max) {
-				vec2 child_quotum;
-				child_quotum[trans_index] = height;
+				if (lp.dims[long_index].get_type() == dim::type::fill) {
+					// A child with fill dims in both directions has no rigid longitudinal size:
+					// in lay_out a fill-long child without weight gets zero long size,
+					// so there is no point in measuring it.
+					info->measured_dims = vec2(0);
+				} else {
+					vec2 child_quotum;
+					child_quotum[trans_index] = height;
 
-				const auto& long_dim = lp.dims[long_index];
-				switch (long_dim.get_type()) {
-					// NOLINTNEXTLINE(bugprone-branch-clone, "false positive")
-					case dim::type::undefined:
-						[[fallthrough]];
-					case dim::type::min:
-						[[fallthrough]];
-					case dim::type::max:
-						child_quotum[long_index] = -1;
-						break;
-					case dim::type::fill:
-						child_quotum[long_index] = 0;
-						break;
-					case dim::type::length:
-						child_quotum[long_index] = long_dim.get_length().get(w.get().context);
-						break;
+					const auto& long_dim = lp.dims[long_index];
+					switch (long_dim.get_type()) {
+						// NOLINTNEXTLINE(bugprone-branch-clone, "false positive")
+						case dim::type::undefined:
+							[[fallthrough]];
+						case dim::type::min:
+							[[fallthrough]];
+						case dim::type::max:
+							child_quotum[long_index] = -1;
+							break;
+						case dim::type::fill:
+							// handled above
+							break;
+						case dim::type::length:
+							child_quotum[long_index] = long_dim.get_length().get(w.get().context);
+							break;
+					}
+
+					info->measured_dims = w.get().measure(child_quotum);
 				}
-
-				info->measured_dims = w.get().measure(child_quotum);
 			}
 
 			++info;
@@ -466,7 +473,9 @@ ruis::vec2 linear_layout::measure(
 					break;
 			}
 
-			if (quotum[trans_index] < 0) {
+			// A child with a fill transverse dim does not determine the transverse size
+			// (the same policy as in pass 1), so there is no point in measuring it.
+			if (quotum[trans_index] < 0 && lp.dims[trans_index].get_type() != dim::type::fill) {
 				using std::max;
 				height = max(height, w.get().measure(d)[trans_index]);
 			}
