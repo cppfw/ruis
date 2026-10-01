@@ -118,6 +118,7 @@ table_list::table_list(
 		// clang-format on
 		params
 	)
+// NOLINTNEXTLINE(clang-analyzer-cplusplus.NewDeleteLeaks, "false-positive: potential memory leak of object managed by unique_ref")
 {}
 
 table_list::table_list(
