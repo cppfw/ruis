@@ -23,21 +23,35 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <functional>
 
+#include "../base/containing_widget.hpp"
 #include "../container.hpp"
 
 namespace ruis {
 
 /**
- * @brief Scroll area container widget.
- * Scroll area is a container which can add an offset to its children widget positions.
+ * @brief Scroll area widget.
+ * A scroll area is a widget which aggregates a content container widget holding the actual contents
+ * and provides scrolling of the contents. The content container is created in the constructor and
+ * holds the child widgets passed to the constructor. Mouse events are forwarded to the content
+ * container, keyboard events propagate to it via the usual widget hierarchy.
  * From GUI scripts it can be instantiated as "scroll_area".
- * Note, that Scrollarea has same layout parameters as simple container and those work similarly,
- * except 'max' value. If layout dimension is specified as 'max' then child widget will be stretched to the
- * parent (scroll_area) size in case child's minimal size is less than scroll_area size, otherwise child will be
- * assigned its minimal size.
+ * The child widgets keep their positions and have the same layout parameters as in a simple container:
+ * 'fill' and 'max' children are stretched to the content container size, 'min' children are assigned
+ * their minimal size and 'length' children are assigned the fixed length.
+ * The content container is resized in on_lay_out() to the maximum of the scroll area size and the
+ * minimal size needed to fit all the child widgets; the part of the contents which goes beyond the
+ * right and bottom edge of the scroll area is scrollable.
  */
-// TODO: redesign the scrooll_area. it should not be a container, but should aggregate a container and forward mouse and key events to it.
-class scroll_area : public container
+// Explicit virtual public inheritance of widget at the first place is needed
+// to prevent it to be protected by private inheritance of container.
+// Otherwise, the compiler complains when trying to use the std::enable_shared_from_this<widget> base of widget:
+//   fatal error: 'shared_from_this' is a protected member of 'std::enable_shared_from_this<utki::shared>'
+//   note: constrained by protected inheritance here: protected container
+// NOLINTNEXTLINE(bugprone-incorrect-enable-shared-from-this, "std::shared_from_this is public via widget")
+class scroll_area :
+	virtual public widget, //
+	private container, // TODO: do not inherit from container.
+	public containing_widget
 {
 	// offset from top left corner
 	vec2 cur_scroll_pos = vec2(0);
@@ -48,8 +62,9 @@ class scroll_area : public container
 	// cached scroll factor
 	vec2 cur_scroll_factor;
 
-protected:
-	vec2 dims_for_widget(const widget& w) const;
+private:
+	// the content container holding the scroll area's contents
+	utki::shared_ref<container> content_container;
 
 public:
 	struct all_parameters {
@@ -57,6 +72,14 @@ public:
 		ruis::widget::parameters widget;
 	};
 
+private:
+	scroll_area(
+		const utki::shared_ref<ruis::context>& context, //
+		all_parameters& params,
+		utki::shared_ref<ruis::container> content_container
+	);
+
+public:
 	scroll_area(
 		const utki::shared_ref<ruis::context>& context, //
 		all_parameters params,
@@ -87,8 +110,6 @@ public:
 	}
 
 	void on_lay_out() override;
-
-	void on_children_change() override;
 
 	/**
 	 * @brief Get current scroll position.
@@ -140,24 +161,14 @@ private:
 	void update_scroll_factor();
 
 	void clamp_scroll_pos();
-
-	void arrange_widgets();
 };
 
 namespace make {
-inline utki::shared_ref<ruis::scroll_area> scroll_area(
+utki::shared_ref<ruis::scroll_area> scroll_area(
 	const utki::shared_ref<ruis::context>& context, //
-	scroll_area::all_parameters params,
-	widget_list children = {}
-)
-{
-	return utki::make_shared<ruis::scroll_area>(
-		context, //
-		std::move(params),
-		std::move(children)
-	);
-}
-
+	ruis::scroll_area::all_parameters params,
+	ruis::widget_list children = {}
+);
 } // namespace make
 
 } // namespace ruis

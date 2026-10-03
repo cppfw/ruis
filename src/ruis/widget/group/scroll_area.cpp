@@ -22,14 +22,138 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "scroll_area.hpp"
 
 #include "../../context.hpp"
+#include "../../layout/measure_mode.hpp"
 #include "../../util/util.hpp"
 
 using namespace ruis;
 
+namespace {
+
+/**
+ * @brief Layout of the scroll area's content container.
+ * The child widgets keep their positions and are resized according to their layout parameters:
+ * 'fill' and 'max' children are stretched to the container size, 'min' children are assigned
+ * their minimal size and 'length' children are assigned the fixed length.
+ * In 'at_most' measure mode the layout reports the minimal size needed to fit all the child
+ * widgets (their positions are taken into account).
+ */
+// TODO: no need for special layout when scroll_area will not inherit container.
+class scroll_content_layout : public ruis::layout
+{
+public:
+	ruis::vec2 measure(
+		const ruis::vec2& quotum, //
+		const r4::vector2<ruis::measure_mode>& mode, //
+		ruis::const_widget_list& widgets
+	) const override
+	{
+		ruis::vec2 ret;
+		for (unsigned i = 0; i != ret.size(); ++i) {
+			ret[i] = (mode[i] == ruis::measure_mode::exactly) ? quotum[i] : ruis::real(0);
+		}
+
+		for (const auto& w : widgets) {
+			auto& ww = w.get();
+			const auto& lp = ww.get_layout_params_const();
+
+			// A child with fill dims in both directions does not constrain the content's min size:
+			// it fills whatever size the container is given, so there is no point in measuring it.
+			if (lp.dims[0].get_type() == ruis::dim::type::fill && lp.dims[1].get_type() == ruis::dim::type::fill) {
+				continue;
+			}
+
+			ruis::vec2 d;
+			r4::vector2<ruis::measure_mode> m;
+			for (unsigned i = 0; i != 2; ++i) {
+				const auto& dim = lp.dims[i];
+				switch (dim.get_type()) {
+					case ruis::dim::type::fill:
+						d[i] = 0;
+						m[i] = ruis::measure_mode::exactly;
+						break;
+					case ruis::dim::type::undefined:
+						[[fallthrough]];
+					case ruis::dim::type::min:
+						[[fallthrough]];
+					case ruis::dim::type::max:
+						d[i] = ruis::measure_infinite_quotum;
+						m[i] = ruis::measure_mode::at_most;
+						break;
+					case ruis::dim::type::length:
+						d[i] = dim.get_length().get(ww.context);
+						m[i] = ruis::measure_mode::exactly;
+						break;
+				}
+			}
+
+			if (m[0] == ruis::measure_mode::at_most || m[1] == ruis::measure_mode::at_most) {
+				ruis::vec2 md = ww.measure(d, m);
+				for (unsigned i = 0; i != md.size(); ++i) {
+					if (m[i] == ruis::measure_mode::at_most) {
+						d[i] = md[i];
+					}
+				}
+			}
+
+			for (unsigned i = 0; i != ret.size(); ++i) {
+				// fill dims do not constrain the content's min size
+				if (mode[i] == ruis::measure_mode::at_most && lp.dims[i].get_type() != ruis::dim::type::fill) {
+					using std::max;
+					ret[i] = max(ret[i], ww.rect().p[i] + d[i]);
+				}
+			}
+		}
+
+		return ret;
+	}
+
+	void lay_out(
+		const ruis::vec2& dims, //
+		ruis::semiconst_widget_list& widgets
+	) const override
+	{
+		for (const auto& w : widgets) {
+			auto& ww = w.get();
+			ww.resize(ruis::dims_for_widget(
+				ww, //
+				dims, //
+				r4::vector2<ruis::measure_mode>(ruis::measure_mode::exactly)
+			));
+		}
+	}
+};
+
+// the layout instance used for scroll area content containers
+const utki::shared_ref<ruis::layout> scroll_content_layout_inst = utki::make_shared<scroll_content_layout>();
+
+} // namespace
+
 scroll_area::scroll_area(
-	const utki::shared_ref<ruis::context>& context,
+	const utki::shared_ref<ruis::context>& context, //
 	all_parameters params,
 	widget_list children
+) :
+	scroll_area(
+		context, //
+		params,
+		// clang-format off
+		make::container(
+			context,
+			{
+				.params{
+					.layout = scroll_content_layout_inst
+				}
+			},
+			std::move(children)
+		)
+		// clang-format on
+	)
+{}
+
+scroll_area::scroll_area(
+	const utki::shared_ref<ruis::context>& context, //
+	all_parameters& params,
+	utki::shared_ref<ruis::container> content_container
 ) :
 	widget(
 		context, //
@@ -40,15 +164,24 @@ scroll_area::scroll_area(
 	container(
 		context,
 		{},
-		std::move(children)
-	)
-// clang-format on
-{}
+		{
+			content_container
+		}
+	),
+	// clang-format on
+	containing_widget(
+		context, //
+		content_container.get()
+	),
+	content_container(std::move(content_container))
+{
+	this->get_container().move_to({0, 0});
+}
 
 event_status scroll_area::on_mouse_button(const mouse_button_event& e)
 {
 	vec2 d = -this->cur_scroll_pos;
-	return this->container::on_mouse_button(mouse_button_event{
+	return this->get_container().on_mouse_button(mouse_button_event{
 		.action = e.action, //
 		.pos = e.pos - d,
 		.button = e.button,
@@ -59,7 +192,7 @@ event_status scroll_area::on_mouse_button(const mouse_button_event& e)
 event_status scroll_area::on_mouse_move(const mouse_move_event& e)
 {
 	vec2 d = -this->cur_scroll_pos;
-	return this->container::on_mouse_move(mouse_move_event{
+	return this->get_container().on_mouse_move(mouse_move_event{
 		.pos = e.pos - d, //
 		.pointer_id = e.pointer_id,
 		.ignore_mouse_capture = e.ignore_mouse_capture
@@ -73,7 +206,7 @@ void scroll_area::render(const ruis::mat4& matrix) const
 	mat4 matr(matrix);
 	matr.translate(d);
 
-	this->container::render(matr);
+	this->get_container().render(matr);
 }
 
 void scroll_area::clamp_scroll_pos()
@@ -146,64 +279,27 @@ void scroll_area::update_scroll_factor()
 	}
 }
 
-// NOTE:
-// scroll_area uses it's own dims_for_widget() because it has slightly different behaviour for 'max',
-// it wants 'max' children to be bigger than scroll_area in case their minimal dimensions are bigger.
-vec2 scroll_area::dims_for_widget(const widget& w) const
-{
-	const layout_parameters& lp = w.get_layout_params_const();
-	vec2 d;
-	r4::vector2<measure_mode> mode;
-	for (unsigned i = 0; i != 2; ++i) {
-		const auto& dim = lp.dims[i];
-
-		switch (dim.get_type()) {
-			case ruis::dim::type::fill:
-				d[i] = this->rect().d[i];
-				mode[i] = measure_mode::exactly;
-				break;
-			// NOLINTNEXTLINE(bugprone-branch-clone, "false positive")
-			case ruis::dim::type::undefined:
-				[[fallthrough]];
-			case ruis::dim::type::min:
-				[[fallthrough]];
-			case ruis::dim::type::max:
-				d[i] = measure_infinite_quotum;
-				mode[i] = measure_mode::at_most; // will be updated below
-				break;
-			case ruis::dim::type::length:
-				d[i] = dim.get_length().get(this->context);
-				mode[i] = measure_mode::exactly;
-				break;
-		}
-	}
-	if (mode[0] == measure_mode::at_most || mode[1] == measure_mode::at_most) {
-		vec2 md = w.measure(d, mode);
-		for (unsigned i = 0; i != md.size(); ++i) {
-			if (mode[i] == measure_mode::at_most) {
-				if (lp.dims[i].get_type() == ruis::dim::type::max && md[i] < this->rect().d[i]) {
-					d[i] = this->rect().d[i];
-				} else {
-					d[i] = md[i];
-				}
-			}
-		}
-	}
-	return d;
-}
-
-void scroll_area::arrange_widgets()
-{
-	for (const auto& c : this->children()) {
-		auto d = this->dims_for_widget(c.get());
-
-		c.get().resize(d);
-	}
-}
-
 void scroll_area::on_lay_out()
 {
-	this->arrange_widgets();
+	auto& cont = this->get_container();
+
+	if(!cont.is_layout_dirty()){
+		return;
+	}
+
+	// measure minimal dims of the content container
+	vec2 min_dims = cont.measure(
+		vec2(measure_infinite_quotum), //
+		r4::vector2<measure_mode>(measure_mode::at_most)
+	);
+
+	// resize the content container to fit all its contents while covering the whole visible area
+	// TODO: why covering the whole visible area? If the container is smaller than scroll_area then it is fine.
+	using std::max;
+	vec2 cont_dims = max(this->rect().d, min_dims);
+	cont.move_to(vec2(0));
+	cont.resize(cont_dims);
+
 	this->update_invisible_dims();
 
 	// correct scroll position
@@ -230,27 +326,11 @@ void scroll_area::on_lay_out()
 	});
 }
 
-void scroll_area::on_children_change()
-{
-	this->container::on_children_change();
-	this->arrange_widgets();
-	this->update_invisible_dims();
-}
-
 void scroll_area::update_invisible_dims()
 {
-	ruis::vec2 min_dims(0);
-
 	using std::max;
 
-	for (const auto& c : this->children()) {
-		ruis::vec2 d = c.get().rect().p + this->dims_for_widget(c.get());
-
-		min_dims = max(min_dims, d); // clamp bottom
-	}
-
-	this->invisible_dims = min_dims - this->rect().d;
-	this->invisible_dims = max(this->invisible_dims, {0, 0});
+	this->invisible_dims = max(this->get_container().rect().d - this->rect().d, vec2(0));
 	this->update_scroll_factor();
 }
 
@@ -269,4 +349,17 @@ void scroll_area::on_scroll_pos_change()
 	if (this->scroll_change_handler) {
 		this->scroll_change_handler(*this);
 	}
+}
+
+utki::shared_ref<ruis::scroll_area> ruis::make::scroll_area(
+	const utki::shared_ref<ruis::context>& context, //
+	ruis::scroll_area::all_parameters params,
+	ruis::widget_list children
+)
+{
+	return utki::make_shared<ruis::scroll_area>(
+		context, //
+		std::move(params),
+		std::move(children)
+	);
 }
