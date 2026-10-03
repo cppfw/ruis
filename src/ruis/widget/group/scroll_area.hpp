@@ -42,15 +42,17 @@ namespace ruis {
  * minimal size needed to fit all the child widgets; the part of the contents which goes beyond the
  * right and bottom edge of the scroll area is scrollable.
  */
-// Explicit virtual public inheritance of widget at the first place is needed
-// to prevent it to be protected by private inheritance of container.
-// Otherwise, the compiler complains when trying to use the std::enable_shared_from_this<widget> base of widget:
-//   fatal error: 'shared_from_this' is a protected member of 'std::enable_shared_from_this<utki::shared>'
-//   note: constrained by protected inheritance here: protected container
+// TODO: is this lint suppression needed?
 // NOLINTNEXTLINE(bugprone-incorrect-enable-shared-from-this, "std::shared_from_this is public via widget")
+
 class scroll_area :
 	virtual public widget, //
-	private container, // TODO: do not inherit from container.
+	// The private container base exists to host the content container as a child:
+	// the widget tree parent/child mechanics live in container (widget::parent_container
+	// is of type container*), so a widget can only have children by being a container.
+	// The inheritance is private to hide the container interface from user code;
+	// the content is accessed via containing_widget::get_container().
+	private container, //
 	public containing_widget
 {
 	// offset from top left corner
@@ -67,9 +69,14 @@ private:
 	utki::shared_ref<container> content_container;
 
 public:
+	struct parameters{
+		ruis::container::parameters container;
+	};
+
 	struct all_parameters {
 		ruis::layout_parameters layout_params;
 		ruis::widget::parameters widget;
+		parameters params;
 	};
 
 private:

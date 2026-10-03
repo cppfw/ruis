@@ -37,7 +37,7 @@ namespace {
  * In 'at_most' measure mode the layout reports the minimal size needed to fit all the child
  * widgets (their positions are taken into account).
  */
-// TODO: no need for special layout when scroll_area will not inherit container.
+// TODO: no need for special layout, let the user supply the layout.
 class scroll_content_layout : public ruis::layout
 {
 public:
