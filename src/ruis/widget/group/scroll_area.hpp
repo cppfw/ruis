@@ -36,6 +36,7 @@ namespace ruis {
  * parent (scroll_area) size in case child's minimal size is less than scroll_area size, otherwise child will be
  * assigned its minimal size.
  */
+// TODO: redesign the scrooll_area. it should not be a container, but should aggregate a container and forward mouse and key events to it.
 class scroll_area : public container
 {
 	// offset from top left corner

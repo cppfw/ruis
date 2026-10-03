@@ -222,6 +222,7 @@ void scroll_area::on_lay_out()
 	}
 
 	// TODO: why notification is deferred? figure out why and write a comment with explanation here
+	// UPDATE: perhaps because it invoked scroll_change_handler() and doing it during layout perhaps is not a good time.
 	this->context.get().post_to_ui_thread([sa = utki::make_weak_from(*this)]() {
 		if (auto s = sa.lock()) {
 			s->on_scroll_pos_change();
