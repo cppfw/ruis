@@ -65,8 +65,8 @@ void linear_layout::lay_out(
 
 			const auto& trans_dim = lp.dims[trans_index];
 
-			vec2 d;
-			r4::vector2<measure_mode> d_mode;
+			vec2 d{};
+			r4::vector2<measure_mode> d_mode{};
 			switch (trans_dim.get_type()) {
 				case dim::type::max:
 					[[fallthrough]];
