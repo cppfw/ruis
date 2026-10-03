@@ -330,28 +330,34 @@ void tiling_area::on_lay_out()
 	this->notify_tiles_resized();
 }
 
-ruis::vec2 tiling_area::measure(const ruis::vec2& quotum) const
+ruis::vec2 tiling_area::measure(
+	const ruis::vec2& quotum, //
+	const r4::vector2<measure_mode>& mode
+) const
 {
 	auto [long_index, trans_index] = this->get_long_trans_indices();
 
 	ruis::vec2 ret;
 
 	// longitudinal index
-	if (quotum[long_index] < 0) {
+	if (mode[long_index] == measure_mode::at_most) {
 		ret[long_index] = this->min_tile_size * real(this->get_container().size());
 	} else {
 		ret[long_index] = quotum[long_index];
 	}
 
 	// transverse index
-	if (quotum[trans_index] < 0) {
+	if (mode[trans_index] == measure_mode::at_most) {
 		vec2 tile_quotum;
+		r4::vector2<measure_mode> tile_mode;
 		tile_quotum[long_index] = this->min_tile_size;
-		tile_quotum[trans_index] = -1;
+		tile_mode[long_index] = measure_mode::exactly;
+		tile_quotum[trans_index] = measure_infinite_quotum;
+		tile_mode[trans_index] = measure_mode::at_most;
 
 		real d = 0;
 		for (const auto& w : this->get_container()) {
-			auto measured = w.get().measure(tile_quotum);
+			auto measured = w.get().measure(tile_quotum, tile_mode);
 			using std::max;
 			d = max(d, measured[trans_index]);
 		}

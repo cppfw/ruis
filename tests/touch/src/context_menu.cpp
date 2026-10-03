@@ -38,6 +38,8 @@ namespace {
 namespace m = ruis::make;
 
 using ruis::length;
+using ruis::measure_infinite_quotum;
+using ruis::measure_mode;
 using ruis::real;
 using ruis::vec2;
 
@@ -280,7 +282,7 @@ vec2 compute_anchor(
 	auto screen = olay.rect().d;
 
 	// natural menu size, clamped to the screen the same way show_popup() does
-	auto menu_size = ruis::dims_for_widget(menu, screen);
+	auto menu_size = ruis::dims_for_widget(menu, screen, r4::vector2<measure_mode>(measure_mode::exactly));
 	menu_size = min(menu_size, screen);
 
 	// place the menu right below the anchor button, right-aligned with it
@@ -333,7 +335,16 @@ void show(
 	// borders, so that long menus are clamped to the screen size and can be scrolled
 	// instead.
 	real frame_v_border = style.get_len_gap().get().get(context) * 2;
-	vec2 menu_size = menu.get().measure(vec2(-1, max(real(0), screen.y() - frame_v_border)));
+	vec2 menu_size = menu.get().measure(
+		vec2(
+			measure_infinite_quotum, //
+			max(real(0), screen.y() - frame_v_border)
+		), //
+		r4::vector2<measure_mode>(
+			measure_mode::at_most, //
+			measure_mode::exactly
+		)
+	);
 
 	menu.get().get_layout_params().dims = {menu_size.x(), menu_size.y()};
 	// {ruis::dim(length(menu_size.x())), ruis::dim(length(menu_size.y()))};

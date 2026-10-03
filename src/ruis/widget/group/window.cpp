@@ -425,7 +425,10 @@ window::window(
 	this->set_borders(params.borders);
 
 	// this should go after initializing borders
-	this->empty_min_dim = this->measure(vec2(-1));
+	this->empty_min_dim = this->measure(
+		vec2(measure_infinite_quotum), //
+		r4::vector2<measure_mode>(measure_mode::at_most)
+	);
 }
 
 void ruis::window::setup_widgets()

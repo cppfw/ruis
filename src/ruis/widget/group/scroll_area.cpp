@@ -153,12 +153,14 @@ vec2 scroll_area::dims_for_widget(const widget& w) const
 {
 	const layout_parameters& lp = w.get_layout_params_const();
 	vec2 d;
+	r4::vector2<measure_mode> mode;
 	for (unsigned i = 0; i != 2; ++i) {
 		const auto& dim = lp.dims[i];
 
 		switch (dim.get_type()) {
 			case ruis::dim::type::fill:
 				d[i] = this->rect().d[i];
+				mode[i] = measure_mode::exactly;
 				break;
 			// NOLINTNEXTLINE(bugprone-branch-clone, "false positive")
 			case ruis::dim::type::undefined:
@@ -166,17 +168,19 @@ vec2 scroll_area::dims_for_widget(const widget& w) const
 			case ruis::dim::type::min:
 				[[fallthrough]];
 			case ruis::dim::type::max:
-				d[i] = -1; // will be updated below
+				d[i] = measure_infinite_quotum;
+				mode[i] = measure_mode::at_most; // will be updated below
 				break;
 			case ruis::dim::type::length:
 				d[i] = dim.get_length().get(this->context);
+				mode[i] = measure_mode::exactly;
 				break;
 		}
 	}
-	if (!d.is_positive_or_zero()) {
-		vec2 md = w.measure(d);
+	if (mode[0] == measure_mode::at_most || mode[1] == measure_mode::at_most) {
+		vec2 md = w.measure(d, mode);
 		for (unsigned i = 0; i != md.size(); ++i) {
-			if (d[i] < 0) {
+			if (mode[i] == measure_mode::at_most) {
 				if (lp.dims[i].get_type() == ruis::dim::type::max && md[i] < this->rect().d[i]) {
 					d[i] = this->rect().d[i];
 				} else {

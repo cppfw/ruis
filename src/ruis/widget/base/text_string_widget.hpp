@@ -67,7 +67,10 @@ protected:
 		return this->params;
 	}
 
-	vec2 measure(const ruis::vec2& quotum) const noexcept override;
+	vec2 measure(
+		const ruis::vec2& quotum, //
+		const r4::vector2<measure_mode>& mode
+	) const noexcept override;
 
 	text_string_widget(
 		const utki::shared_ref<ruis::context>& context, //

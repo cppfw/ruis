@@ -35,6 +35,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../config.hpp"
 #include "../layout/layout_parameters.hpp"
+#include "../layout/measure_mode.hpp"
 #include "../render/texture_2d.hpp"
 #include "../util/events.hpp"
 #include "../util/key.hpp"
@@ -639,12 +640,19 @@ public:
 	/**
 	 * @brief Measure how big a widget wants to be.
 	 * Given the space quotum determine what dimensions widget wants to have to properly draw.
-	 * @param quotum - space available to widget. If a component is negative (e.g. -1) then the widget is expected
-	 * to report the minimum size needed to display the widget without its content being truncated in that
-	 * direction.
+	 * @param quotum - space available to widget. In at_most mode the quotum is the upper limit of the
+	 * size the widget is allowed to take, in exactly mode the quotum is the exact size the widget
+	 * will be resized to.
+	 * @param mode - measurement mode for each dimension. In at_most mode the widget is expected to
+	 * report the minimum size needed to display the widget without its content being truncated in that
+	 * direction (clamped to the quotum), in exactly mode the widget is expected to return the given
+	 * quotum as is.
 	 * @return Measured desired widget dimensions.
 	 */
-	virtual vec2 measure(const vec2& quotum) const;
+	virtual vec2 measure(
+		const vec2& quotum, //
+		const r4::vector2<measure_mode>& mode
+	) const;
 
 public:
 	/**
@@ -821,11 +829,15 @@ public:
  * resolving of 'min', 'max' and 'fill' special values of dimensions.
  * @param w - widget to calculate dimensions for.
  * @param parent_dims - parent widget dimensions.
+ * @param parent_mode - the measure mode of the parent for each dimension, determines how 'max'
+ *        and 'fill' children resolve against the parent (exactly for a concrete parent size, at_most
+ *        for a minimum-size query).
  * @return Dimensions of widget.
  */
 vec2 dims_for_widget(
 	const widget& w, //
-	const vec2& parent_dims
+	const vec2& parent_dims, //
+	const r4::vector2<measure_mode>& parent_mode
 );
 
 } // namespace ruis

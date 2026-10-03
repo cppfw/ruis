@@ -85,7 +85,10 @@ public:
 
 	void render(const ruis::mat4& matrix) const override;
 
-	ruis::vec2 measure(const ruis::vec2& quotum) const override;
+	ruis::vec2 measure(
+		const ruis::vec2& quotum, //
+		const r4::vector2<measure_mode>& mode
+	) const override;
 
 	void set_image(std::shared_ptr<const res::image> image);
 

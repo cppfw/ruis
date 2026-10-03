@@ -76,10 +76,13 @@ public:
 
 	void render(const ruis::mat4& matrix) const override;
 
-	ruis::vec2 measure(const ruis::vec2& quotum) const override
+	ruis::vec2 measure(
+		const ruis::vec2& quotum, //
+		const r4::vector2<measure_mode>& mode //
+	) const override
 	{
 		// NOLINTNEXTLINE(bugprone-parent-virtual-call, "we want to cancel container::measure() override")
-		return this->widget::measure(quotum);
+		return this->widget::measure(quotum, mode);
 	}
 
 	void on_lay_out() override;

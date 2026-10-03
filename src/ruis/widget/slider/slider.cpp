@@ -215,7 +215,10 @@ void slider::on_lay_out()
 
 	using std::round;
 
-	auto min_handle_size = this->handle.measure(vec2(-1));
+	auto min_handle_size = this->handle.measure(
+		vec2(measure_infinite_quotum), //
+		r4::vector2<measure_mode>(measure_mode::at_most)
+	);
 
 	// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers)
 	new_size[long_index] = round(real(1.5) * min_handle_size[trans_index]);

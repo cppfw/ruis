@@ -90,9 +90,12 @@ sides<real> padding::get_min_borders() const noexcept
 	return {0, 0, 0, 0};
 }
 
-vec2 padding::measure(const vec2& quotum) const
+vec2 padding::measure(
+	const vec2& quotum, //
+	const r4::vector2<measure_mode>& mode
+) const
 {
-	if (quotum.is_positive_or_zero()) {
+	if (mode[0] == measure_mode::exactly && mode[1] == measure_mode::exactly) {
 		return quotum;
 	}
 
@@ -102,42 +105,33 @@ vec2 padding::measure(const vec2& quotum) const
 	auto borders_right_bottom = borders.right_bottom();
 
 	vec2 borderless_quotum;
-	// clang-format off
-	for(auto [q, bq, blt, brb] :
-		utki::views::zip(
-			quotum,
-			borderless_quotum,
-			borders_left_top,
-			borders_right_bottom
-		)
-	)
-	// clang-format on
-	{
-		if (q < 0) {
-			bq = q;
-		} else {
+	r4::vector2<measure_mode> content_mode;
+	// TODO: use utki::zip
+	for (unsigned i = 0; i != borderless_quotum.size(); ++i) {
+		content_mode[i] = mode[i];
+		if (mode[i] == measure_mode::exactly) {
 			using std::max;
-			bq = max(real(0), q - blt - brb);
+			borderless_quotum[i] = max(real(0), quotum[i] - borders_left_top[i] - borders_right_bottom[i]);
+		} else {
+			utki::assert(mode[i] == measure_mode::at_most);
+			borderless_quotum[i] = measure_infinite_quotum;
 		}
 	}
 
-	vec2 ret = quotum;
-	{
-		auto content_min_dims = this->get_container().measure(borderless_quotum);
-		// clang-format off
-		for(auto [r, m, blt, brb] :
-			utki::views::zip(
-				ret,
-				content_min_dims,
-				borders_left_top,
-				borders_right_bottom
-			)
-		)
-		// clang-format on
-		{
-			if (r < 0) {
-				r = blt + m + brb;
-			}
+	vec2 ret;
+	// TODO: use utki::zip
+	for (unsigned i = 0; i != ret.size(); ++i) {
+		ret[i] = (mode[i] == measure_mode::exactly) ? quotum[i] : real(0);
+	}
+
+	auto content_min_dims = this->get_container().measure(
+		borderless_quotum, //
+		content_mode
+	);
+	// TODO: use utki::zip
+	for (unsigned i = 0; i != ret.size(); ++i) {
+		if (mode[i] == measure_mode::at_most) {
+			ret[i] = borders_left_top[i] + content_min_dims[i] + borders_right_bottom[i];
 		}
 	}
 

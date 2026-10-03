@@ -33,7 +33,7 @@ void pile_layout::lay_out(
 {
 	for (const auto& widget : widgets) {
 		auto& w = widget.get();
-		w.resize(dims_for_widget(w, dims));
+		w.resize(dims_for_widget(w, dims, r4::vector2<measure_mode>(measure_mode::exactly)));
 
 		ruis::vec2 pos;
 		for (unsigned i = 0; i != 2; ++i) {
@@ -64,12 +64,14 @@ void pile_layout::lay_out(
 
 ruis::vec2 pile_layout::measure(
 	const vec2& quotum, //
+	const r4::vector2<measure_mode>& mode, //
 	const_widget_list& widgets
 ) const
 {
-	vec2 ret(quotum);
-	using std::max;
-	ret = max(ret, real(0)); // clamp bottom
+	vec2 ret;
+	for (unsigned j = 0; j != ret.size(); ++j) {
+		ret[j] = (mode[j] == measure_mode::exactly) ? quotum[j] : real(0);
+	}
 
 	for (const auto& w : widgets) {
 		auto& lp = w.get().get_layout_params_const();
@@ -81,40 +83,47 @@ ruis::vec2 pile_layout::measure(
 		}
 
 		ruis::vec2 d;
+		r4::vector2<measure_mode> child_mode;
 
+		// TODO: use utki::zip for d, lp.dims, child_mode?
 		for (unsigned j = 0; j != d.size(); ++j) {
 			const auto& dim = lp.dims[j];
 
 			switch (dim.get_type()) {
 				case ruis::dim::type::max:
-					if (quotum[j] >= 0) {
+					if (mode[j] == measure_mode::exactly) {
 						d[j] = quotum[j];
+						child_mode[j] = measure_mode::exactly;
 					} else {
-						d[j] = -1;
+						d[j] = measure_infinite_quotum;
+						child_mode[j] = measure_mode::at_most;
 					}
 					break;
 				case ruis::dim::type::undefined:
 					[[fallthrough]];
 				case ruis::dim::type::min:
-					d[j] = -1;
+					d[j] = measure_infinite_quotum;
+					child_mode[j] = measure_mode::at_most;
 					break;
 				case ruis::dim::type::fill:
-					if (quotum[j] >= 0) {
+					if (mode[j] == measure_mode::exactly) {
 						d[j] = quotum[j];
 					} else {
 						d[j] = 0;
 					}
+					child_mode[j] = measure_mode::exactly;
 					break;
 				case ruis::dim::type::length:
 					d[j] = dim.get_length().get(w.get().context);
+					child_mode[j] = measure_mode::exactly;
 					break;
 			}
 		}
 
-		d = w.get().measure(d);
+		d = w.get().measure(d, child_mode);
 
 		for (unsigned j = 0; j != d.size(); ++j) {
-			if (quotum[j] < 0) {
+			if (mode[j] == measure_mode::at_most) {
 				using std::max;
 				ret[j] = max(ret[j], d[j]); // clamp bottom
 			}

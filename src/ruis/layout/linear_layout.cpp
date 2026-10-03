@@ -48,7 +48,7 @@ void linear_layout::lay_out(
 
 	std::vector<info> info_array(widgets.size());
 
-	// calculate rigid size, net weight and store weights
+	// Pass 1: calculate rigid size, net weight and store weights
 	real rigid = 0;
 	real net_weight = 0;
 
@@ -66,19 +66,24 @@ void linear_layout::lay_out(
 			const auto& trans_dim = lp.dims[trans_index];
 
 			vec2 d;
+			r4::vector2<measure_mode> d_mode;
 			switch (trans_dim.get_type()) {
 				case dim::type::max:
 					[[fallthrough]];
 				case dim::type::fill:
 					d[trans_index] = dims[trans_index];
+					d_mode[trans_index] = measure_mode::exactly;
 					break;
 				case dim::type::undefined:
 					[[fallthrough]];
 				case dim::type::min:
-					d[trans_index] = -1; // will be updated below
+					// review: the comment 'will be updated below' is unclear. where will it be update and why? What is the logic to set it now and update it later?
+					d[trans_index] = measure_infinite_quotum;
+					d_mode[trans_index] = measure_mode::at_most; // will be updated below
 					break;
 				case dim::type::length:
 					d[trans_index] = trans_dim.get_length().get(w.get().context);
+					d_mode[trans_index] = measure_mode::exactly;
 					break;
 			}
 
@@ -87,6 +92,7 @@ void linear_layout::lay_out(
 			switch (long_dim.get_type()) {
 				case dim::type::fill:
 					d[long_index] = 0;
+					d_mode[long_index] = measure_mode::exactly;
 					break;
 				// NOLINTNEXTLINE(bugprone-branch-clone, "false positive")
 				case dim::type::undefined:
@@ -94,17 +100,20 @@ void linear_layout::lay_out(
 				case dim::type::min:
 					[[fallthrough]];
 				case dim::type::max:
-					d[long_index] = -1; // will be updated below
+					// review: the comment 'will be updated below' is unclear. where will it be update and why? What is the logic to set it now and update it later?
+					d[long_index] = measure_infinite_quotum;
+					d_mode[long_index] = measure_mode::at_most; // will be updated below
 					break;
 				case dim::type::length:
 					d[long_index] = long_dim.get_length().get(w.get().context);
+					d_mode[long_index] = measure_mode::exactly;
 					break;
 			}
 
-			if (!d.is_positive_or_zero()) {
-				vec2 md = w.get().measure(d);
+			if (d_mode[0] == measure_mode::at_most || d_mode[1] == measure_mode::at_most) {
+				vec2 md = w.get().measure(d, d_mode);
 				for (unsigned i = 0; i != md.size(); ++i) {
-					if (d[i] < 0) {
+					if (d_mode[i] == measure_mode::at_most) {
 						d[i] = md[i];
 					}
 				}
@@ -118,7 +127,7 @@ void linear_layout::lay_out(
 		}
 	}
 
-	// arrange widgets
+	// Pass 2: arrange widgets
 	{
 		using std::round;
 
@@ -141,6 +150,8 @@ void linear_layout::lay_out(
 			if (weight != 0) {
 				utki::assert(weight > 0);
 				vec2 d;
+				r4::vector2<measure_mode>
+					d_mode; // review: the variable could be defined closer to place where it is first used, i.e. closer to the switch().
 				if (flexible > 0) {
 					utki::assert(net_weight > 0);
 					real dl = flexible * weight / net_weight;
@@ -156,11 +167,13 @@ void linear_layout::lay_out(
 
 				const auto& long_dim = lp.dims[long_index];
 
+				// review: looks like in all switch branches the d_mode[long_index] is set to exactly
 				switch (long_dim.get_type()) {
 					case dim::type::fill:
 						[[fallthrough]];
 					case dim::type::max:
 						d[long_index] = long_room;
+						d_mode[long_index] = measure_mode::exactly;
 						break;
 					// NOLINTNEXTLINE(bugprone-branch-clone, "false positive")
 					case dim::type::undefined:
@@ -169,6 +182,7 @@ void linear_layout::lay_out(
 						[[fallthrough]];
 					case dim::type::length:
 						d[long_index] = info->measured_dims[long_index];
+						d_mode[long_index] = measure_mode::exactly;
 						break;
 				}
 
@@ -179,36 +193,28 @@ void linear_layout::lay_out(
 						[[fallthrough]];
 					case dim::type::fill:
 						d[trans_index] = dims[trans_index];
+						d_mode[trans_index] = measure_mode::exactly;
 						break;
 					case dim::type::undefined:
 						[[fallthrough]];
 					case dim::type::min:
-						d[trans_index] = -1;
+						d[trans_index] = measure_infinite_quotum;
+						d_mode[trans_index] = measure_mode::at_most;
 						break;
 					case dim::type::length:
 						d[trans_index] = trans_dim.get_length().get(w.get().context);
+						d_mode[trans_index] = measure_mode::exactly;
 						break;
 				}
-				switch (trans_dim.get_type()) {
-					// NOLINTNEXTLINE(bugprone-branch-clone, "false positive")
-					case dim::type::undefined:
-						[[fallthrough]];
-					case dim::type::min:
-						[[fallthrough]];
-					case dim::type::length:
-						if (d.x() < 0 || d.y() < 0) {
-							vec2 md = w.get().measure(d);
-							for (unsigned i = 0; i != md.size(); ++i) {
-								if (d[i] < 0) {
-									d[i] = md[i];
-								}
-							}
+
+				// for min/undefined trans dim the long dim is already concrete, so only the trans dim needs measuring
+				if (d_mode[trans_index] == measure_mode::at_most) {
+					vec2 md = w.get().measure(d, d_mode);
+					for (unsigned i = 0; i != md.size(); ++i) {
+						if (d_mode[i] == measure_mode::at_most) {
+							d[i] = md[i];
 						}
-						break;
-					case dim::type::max:
-						[[fallthrough]];
-					case dim::type::fill:
-						break;
+					}
 				}
 
 				w.get().resize(d);
@@ -261,6 +267,7 @@ void linear_layout::lay_out(
 
 ruis::vec2 linear_layout::measure(
 	const vec2& quotum, //
+	const r4::vector2<measure_mode>& mode, //
 	const_widget_list& widgets
 ) const
 {
@@ -271,7 +278,7 @@ ruis::vec2 linear_layout::measure(
 
 	// Pass 1: determine the max height (transverse size) by going through the
 	// widgets which have non-fill transverse dimension and measuring them.
-	real height = quotum[trans_index] >= 0 ? quotum[trans_index] : 0;
+	real height = mode[trans_index] == measure_mode::exactly ? quotum[trans_index] : 0;
 	real net_weight = 0;
 
 	// TODO: use utki::zip(info, widgets)
@@ -289,22 +296,27 @@ ruis::vec2 linear_layout::measure(
 		// in the second pass with the final transverse size
 		if (trans_dim.get_type() != dim::type::fill) {
 			vec2 child_quotum;
+			r4::vector2<measure_mode> child_mode;
 
 			switch (trans_dim.get_type()) {
 				case dim::type::max:
-					if (quotum[trans_index] >= 0) {
+					if (mode[trans_index] == measure_mode::exactly) {
 						child_quotum[trans_index] = quotum[trans_index];
+						child_mode[trans_index] = measure_mode::exactly;
 					} else {
-						child_quotum[trans_index] = -1;
+						child_quotum[trans_index] = measure_infinite_quotum;
+						child_mode[trans_index] = measure_mode::at_most;
 					}
 					break;
 				case dim::type::undefined:
 					[[fallthrough]];
 				case dim::type::min:
-					child_quotum[trans_index] = -1;
+					child_quotum[trans_index] = measure_infinite_quotum;
+					child_mode[trans_index] = measure_mode::at_most;
 					break;
 				case dim::type::length:
 					child_quotum[trans_index] = trans_dim.get_length().get(w.get().context);
+					child_mode[trans_index] = measure_mode::exactly;
 					break;
 				case dim::type::fill:
 					break; // handled above
@@ -319,19 +331,22 @@ ruis::vec2 linear_layout::measure(
 				case dim::type::min:
 					[[fallthrough]];
 				case dim::type::max:
-					child_quotum[long_index] = -1;
+					child_quotum[long_index] = measure_infinite_quotum;
+					child_mode[long_index] = measure_mode::at_most;
 					break;
 				case dim::type::fill:
 					child_quotum[long_index] = 0;
+					child_mode[long_index] = measure_mode::exactly;
 					break;
 				case dim::type::length:
 					child_quotum[long_index] = long_dim.get_length().get(w.get().context);
+					child_mode[long_index] = measure_mode::exactly;
 					break;
 			}
 
-			info->measured_dims = w.get().measure(child_quotum);
+			info->measured_dims = w.get().measure(child_quotum, child_mode);
 
-			if (quotum[trans_index] < 0) {
+			if (mode[trans_index] == measure_mode::at_most) {
 				height = max(height, info->measured_dims[trans_index]);
 			}
 		}
@@ -356,7 +371,9 @@ ruis::vec2 linear_layout::measure(
 					info->measured_dims = vec2(0);
 				} else {
 					vec2 child_quotum;
+					r4::vector2<measure_mode> child_mode;
 					child_quotum[trans_index] = height;
+					child_mode[trans_index] = measure_mode::exactly;
 
 					const auto& long_dim = lp.dims[long_index];
 					switch (long_dim.get_type()) {
@@ -366,17 +383,19 @@ ruis::vec2 linear_layout::measure(
 						case dim::type::min:
 							[[fallthrough]];
 						case dim::type::max:
-							child_quotum[long_index] = -1;
+							child_quotum[long_index] = measure_infinite_quotum;
+							child_mode[long_index] = measure_mode::at_most;
 							break;
 						case dim::type::fill:
 							// handled above
 							break;
 						case dim::type::length:
 							child_quotum[long_index] = long_dim.get_length().get(w.get().context);
+							child_mode[long_index] = measure_mode::exactly;
 							break;
 					}
 
-					info->measured_dims = w.get().measure(child_quotum);
+					info->measured_dims = w.get().measure(child_quotum, child_mode);
 				}
 			}
 
@@ -393,7 +412,7 @@ ruis::vec2 linear_layout::measure(
 	vec2 ret;
 
 	auto flex_len = [&]() -> real {
-		if (quotum[long_index] < 0) {
+		if (mode[long_index] == measure_mode::at_most) {
 			ret[long_index] = rigid_length;
 			return 0;
 		} else {
@@ -448,36 +467,45 @@ ruis::vec2 linear_layout::measure(
 
 			const auto& trans_dim = lp.dims[trans_index];
 
+			// The longitudinal size of a weighted child is a determined exact size.
+			r4::vector2<measure_mode> d_mode;
+			d_mode[long_index] = measure_mode::exactly;
+
 			switch (trans_dim.get_type()) {
 				case dim::type::max:
-					if (quotum[trans_index] >= 0) {
+					if (mode[trans_index] == measure_mode::exactly) {
 						d[trans_index] = quotum[trans_index];
+						d_mode[trans_index] = measure_mode::exactly;
 					} else {
-						d[trans_index] = -1;
+						d[trans_index] = measure_infinite_quotum;
+						d_mode[trans_index] = measure_mode::at_most;
 					}
 					break;
 				case dim::type::undefined:
 					[[fallthrough]];
 				case dim::type::min:
-					d[trans_index] = -1;
+					d[trans_index] = measure_infinite_quotum;
+					d_mode[trans_index] = measure_mode::at_most;
 					break;
 				case dim::type::fill:
-					if (quotum[trans_index] >= 0) {
+					if (mode[trans_index] == measure_mode::exactly) {
 						d[trans_index] = quotum[trans_index];
 					} else {
 						d[trans_index] = 0;
 					}
+					d_mode[trans_index] = measure_mode::exactly;
 					break;
 				case dim::type::length:
 					d[trans_index] = trans_dim.get_length().get(w.get().context);
+					d_mode[trans_index] = measure_mode::exactly;
 					break;
 			}
 
 			// A child with a fill transverse dim does not determine the transverse size
 			// (the same policy as in pass 1), so there is no point in measuring it.
-			if (quotum[trans_index] < 0 && lp.dims[trans_index].get_type() != dim::type::fill) {
+			if (mode[trans_index] == measure_mode::at_most && lp.dims[trans_index].get_type() != dim::type::fill) {
 				using std::max;
-				height = max(height, w.get().measure(d)[trans_index]);
+				height = max(height, w.get().measure(d, d_mode)[trans_index]);
 			}
 
 			++info;

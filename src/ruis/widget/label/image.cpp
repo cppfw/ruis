@@ -87,7 +87,10 @@ void image::render(const ruis::mat4& matrix) const
 	}
 }
 
-ruis::vec2 image::measure(const ruis::vec2& quotum) const
+ruis::vec2 image::measure(
+	const ruis::vec2& quotum, //
+	const r4::vector2<measure_mode>& mode
+) const
 {
 	auto img = this->params.source.get();
 
@@ -105,7 +108,7 @@ ruis::vec2 image::measure(const ruis::vec2& quotum) const
 		vec2 ret = img_dims;
 
 		for (unsigned i = 0; i != ret.size(); ++i) {
-			if (quotum[i] >= 0) {
+			if (mode[i] == measure_mode::exactly) {
 				ret[i] = quotum[i];
 			}
 		}
@@ -120,31 +123,26 @@ ruis::vec2 image::measure(const ruis::vec2& quotum) const
 
 	using std::round;
 
-	if (quotum.x() < 0 && quotum.y() < 0) {
+	if (mode.x() == measure_mode::at_most && mode.y() == measure_mode::at_most) {
 		return img_dims;
-	} else if (quotum.x() < 0) {
-		ASSERT(quotum.y() >= 0)
-
+	} else if (mode.x() == measure_mode::at_most) {
+		utki::assert(mode[1] == measure_mode::exactly);
 		vec2 ret = {
 			round(ratio * quotum.y()), //
 			quotum.y()
 		};
 		return ret;
-	} else if (quotum.y() >= 0) {
-		ASSERT(quotum.x() >= 0)
-		ASSERT(quotum.y() >= 0)
+	} else if (mode.y() == measure_mode::exactly) {
+		utki::assert(mode.x() == measure_mode::exactly);
 		// This case is possible when image layout parameters are, for example 'layout dims = {max, fill}', so the
 		// minimum x size will be determined to keep aspect ratio, but later, the x size of the image widget can be
 		// set to fill all the allowed space, in this case the measure() method will be called with
-		// both quotum components to be positive numbers.
+		// both quotum components to be exactly-sized.
 		return quotum;
 	} else {
-		ASSERT(quotum.x() >= 0)
-		ASSERT(quotum.y() < 0, [&](auto& o) {
-			o << "quotum =" << quotum;
-		})
-
-		ASSERT(ratio > 0)
+		utki::assert(mode.x() == measure_mode::exactly);
+		utki::assert(mode.y() == measure_mode::at_most);
+		utki::assert(ratio > 0);
 
 		vec2 ret = {
 			quotum.x(), //

@@ -50,7 +50,10 @@ public:
 		all_parameters params
 	);
 
-	vec2 measure(const vec2& quotum) const override;
+	vec2 measure(
+		const vec2& quotum, //
+		const r4::vector2<measure_mode>& mode
+	) const override;
 };
 
 namespace make {

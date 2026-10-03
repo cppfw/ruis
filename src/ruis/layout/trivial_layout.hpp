@@ -25,11 +25,14 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
+// TODO: doxygen
+
 class trivial_layout : public layout
 {
 public:
 	vec2 measure(
 		const vec2& quotum, //
+		const r4::vector2<measure_mode>& mode, //
 		const_widget_list& widgets
 	) const override;
 

@@ -276,9 +276,16 @@ void container::on_hovered_change(unsigned pointer_id)
 	}
 }
 
-vec2 container::measure(const vec2& quotum) const
+vec2 container::measure(
+	const vec2& quotum, //
+	const r4::vector2<measure_mode>& mode
+) const
 {
-	return this->get_layout().measure(quotum, this->children());
+	return this->get_layout().measure(
+		quotum, //
+		mode,
+		this->children()
+	);
 }
 
 void container::on_lay_out()

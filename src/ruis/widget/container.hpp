@@ -154,7 +154,10 @@ public:
 
 	void on_hovered_change(unsigned pointer_id) override;
 
-	ruis::vec2 measure(const ruis::vec2& quotum) const override;
+	ruis::vec2 measure(
+		const ruis::vec2& quotum, //
+		const r4::vector2<measure_mode>& mode
+	) const override;
 
 	/**
 	 * @brief Layout child widgets.

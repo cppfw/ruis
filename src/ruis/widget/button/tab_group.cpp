@@ -59,11 +59,15 @@ void tab_group::set_filler(std::shared_ptr<const res::image> filler)
 	this->filler_texture = this->filler->get(this->context.get().units).to_shared_ptr();
 }
 
-ruis::vec2 tab_group::measure(const ruis::vec2& quotum) const
+ruis::vec2 tab_group::measure(
+	const ruis::vec2& quotum, //
+	const r4::vector2<measure_mode>& mode
+) const
 {
-	vec2 ret(quotum);
-	using std::max;
-	ret = max(ret, real(0)); // clamp bottom
+	vec2 ret;
+	for (unsigned i = 0; i != ret.size(); ++i) {
+		ret[i] = (mode[i] == measure_mode::exactly) ? quotum[i] : real(0);
+	}
 
 	real length = 0;
 
@@ -80,7 +84,7 @@ ruis::vec2 tab_group::measure(const ruis::vec2& quotum) const
 		}
 
 		ruis::vec2 d;
-
+		r4::vector2<measure_mode> child_mode;
 		for (unsigned j = 0; j != d.size(); ++j) {
 			const auto& dim = lp.dims[j];
 			switch (dim.get_type()) {
@@ -91,15 +95,17 @@ ruis::vec2 tab_group::measure(const ruis::vec2& quotum) const
 				case ruis::dim::type::undefined:
 					[[fallthrough]];
 				case ruis::dim::type::min:
-					d[j] = -1;
+					d[j] = measure_infinite_quotum;
+					child_mode[j] = measure_mode::at_most;
 					break;
 				case ruis::dim::type::length:
 					d[j] = dim.get_length().get(this->context);
+					child_mode[j] = measure_mode::exactly;
 					break;
 			}
 		}
 
-		d = c.get().measure(d);
+		d = c.get().measure(d, child_mode);
 
 		length += d.x();
 
@@ -110,12 +116,12 @@ ruis::vec2 tab_group::measure(const ruis::vec2& quotum) const
 		length -= min(prev_borders.right(), borders.left());
 		prev_borders = borders;
 
-		if (quotum.y() < 0) {
+		if (mode[1] == measure_mode::at_most) {
 			ret.y() = max(ret.y(), d.y()); // clamp bottom
 		}
 	}
 
-	if (quotum.x() < 0) {
+	if (mode[0] == measure_mode::at_most) {
 		ret.x() = length;
 	}
 
@@ -129,7 +135,11 @@ void tab_group::on_lay_out()
 	sides<real> prev_borders = 0;
 
 	for (const auto& c : this->children()) {
-		auto dim = dims_for_widget(c.get(), this->rect().d);
+		auto dim = dims_for_widget(
+			c.get(), //
+			this->rect().d,
+			r4::vector2<measure_mode>(measure_mode::exactly)
+		);
 		c.get().resize(dim);
 
 		auto t = dynamic_cast<ruis::tab*>(&c.get());

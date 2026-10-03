@@ -175,17 +175,20 @@ event_status text_input::on_mouse_move(const mouse_move_event& e)
 	return event_status::consumed;
 }
 
-vec2 text_input::measure(const ruis::vec2& quotum) const noexcept
+vec2 text_input::measure(
+	const ruis::vec2& quotum, //
+	const r4::vector2<measure_mode>& mode //
+) const noexcept
 {
 	vec2 ret;
 
-	if (quotum.x() < 0) {
+	if (mode[0] == measure_mode::at_most) {
 		ret.x() = this->get_bounding_box().d.x() + cursor_width * this->context.get().units.dots_per_fp();
 	} else {
 		ret.x() = quotum.x();
 	}
 
-	if (quotum.y() < 0) {
+	if (mode[1] == measure_mode::at_most) {
 		ret.y() = this->get_font().get_height();
 	} else {
 		ret.y() = quotum.y();

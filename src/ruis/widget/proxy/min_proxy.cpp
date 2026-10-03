@@ -37,7 +37,10 @@ min_proxy::min_proxy( //
 	params(std::move(params.min_proxy_params))
 {}
 
-ruis::vec2 min_proxy::measure(const vec2& quotum) const
+ruis::vec2 min_proxy::measure(
+	const vec2& quotum, //
+	const r4::vector2<measure_mode>& mode
+) const
 {
 	auto t = this->target.lock();
 	if (!t) {
@@ -52,18 +55,21 @@ ruis::vec2 min_proxy::measure(const vec2& quotum) const
 				return &this->get_ancestor(this->params.root_id.c_str());
 			}
 		}();
-		ASSERT(root)
+		utki::assert(root);
 		for (const auto& id : this->params.target_id_path) {
 			root = &root->get_widget(id, false);
 		}
 		this->params.root_id.clear();
 		this->params.target_id_path.clear();
-		ASSERT(root)
+		utki::assert(root);
 		this->target = utki::make_weak_from(*root);
 		t = this->target.lock();
 	}
 
-	ASSERT(t)
+	utki::assert(t);
 
-	return t->measure(quotum);
+	return t->measure(
+		quotum, //
+		mode
+	);
 }

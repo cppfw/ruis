@@ -220,7 +220,10 @@ void scroll_bar::on_lay_out()
 
 	new_size[long_index] = round(new_size[long_index] * this->get_band_fraction());
 
-	auto min_handle_size = this->handle.measure(vec2(-1));
+	auto min_handle_size = this->handle.measure(
+		vec2(measure_infinite_quotum), //
+		r4::vector2<measure_mode>(measure_mode::at_most)
+	);
 
 	using std::max;
 	new_size[long_index] =

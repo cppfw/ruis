@@ -183,10 +183,13 @@ void table_list::arrange_list_item_cells(ruis::semiconst_widget_list& cells)
 {
 	real pos = 0;
 	for (auto [c, h] : utki::views::zip(cells, this->headers_tiling_area.get().get_container().children())) {
-		auto md = c.get().measure({
-			h.get().rect().d.x(),
-			-1 //
-		});
+		auto md = c.get().measure(
+			{
+				h.get().rect().d.x(), //
+				measure_infinite_quotum //
+			}, //
+			r4::vector2<measure_mode>(measure_mode::exactly, measure_mode::at_most)
+		);
 		c.get().resize(md);
 		c.get().move_to({
 			pos,

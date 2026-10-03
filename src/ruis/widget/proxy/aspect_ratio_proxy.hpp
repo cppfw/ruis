@@ -25,6 +25,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
+// TODO: doxygen
+
 class aspect_ratio_proxy : virtual public widget
 {
 public:
@@ -62,7 +64,10 @@ public:
 		return this->params.x_above_y;
 	}
 
-	ruis::vec2 measure(const ruis::vec2& quotum) const override;
+	ruis::vec2 measure(
+		const ruis::vec2& quotum, //
+		const r4::vector2<measure_mode>& mode
+	) const override;
 };
 
 namespace make {

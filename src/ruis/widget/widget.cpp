@@ -374,9 +374,22 @@ ruis::rect widget::get_absolute_rect() const noexcept
 	return this->rect();
 }
 
-vec2 widget::measure(const ruis::vec2& quotum) const
+vec2 widget::measure(
+	const ruis::vec2& quotum, //
+	const r4::vector2<measure_mode>& mode
+) const
 {
-	return max(quotum, 0);
+	vec2 ret;
+	// TODO: use utki::zip
+	for (unsigned i = 0; i != ret.size(); ++i) {
+		// The natural size of a plain widget is 0.
+		if (mode[i] == measure_mode::exactly) {
+			ret[i] = quotum[i];
+		} else {
+			ret[i] = 0;
+		}
+	}
+	return ret;
 }
 
 vec2 widget::get_pos_in_ancestor(vec2 pos, const widget* ancestor)
@@ -485,34 +498,50 @@ void widget::reload()
 
 vec2 ruis::dims_for_widget(
 	const widget& w, //
-	const vec2& parent_dims
+	const vec2& parent_dims, //
+	const r4::vector2<measure_mode>& parent_mode
 )
 {
 	const layout_parameters& lp = w.get_layout_params_const();
 	vec2 d;
+	r4::vector2<measure_mode> mode;
 	for (unsigned i = 0; i != 2; ++i) {
 		const auto& dim = lp.dims[i];
 
 		switch (dim.get_type()) {
 			case ruis::dim::type::max:
-				[[fallthrough]];
+				if (parent_mode[i] == measure_mode::exactly) {
+					d[i] = parent_dims[i];
+					mode[i] = measure_mode::exactly;
+				} else {
+					d[i] = measure_infinite_quotum;
+					mode[i] = measure_mode::at_most;
+				}
+				break;
 			case ruis::dim::type::fill:
-				d[i] = parent_dims[i];
+				if (parent_mode[i] == measure_mode::exactly) {
+					d[i] = parent_dims[i];
+				} else {
+					d[i] = 0;
+				}
+				mode[i] = measure_mode::exactly;
 				break;
 			case ruis::dim::type::undefined:
 				[[fallthrough]];
 			case ruis::dim::type::min:
-				d[i] = -1; // will be updated below
+				d[i] = measure_infinite_quotum;
+				mode[i] = measure_mode::at_most; // will be updated below
 				break;
 			case ruis::dim::type::length:
 				d[i] = dim.get_length().get(w.context);
+				mode[i] = measure_mode::exactly;
 				break;
 		}
 	}
-	if (!d.is_positive_or_zero()) {
-		vec2 md = w.measure(d);
+	if (mode.x() == measure_mode::at_most || mode.y() == measure_mode::at_most) {
+		vec2 md = w.measure(d, mode);
 		for (unsigned i = 0; i != md.size(); ++i) {
-			if (d[i] < 0) {
+			if (mode[i] == measure_mode::at_most) {
 				d[i] = md[i];
 			}
 		}

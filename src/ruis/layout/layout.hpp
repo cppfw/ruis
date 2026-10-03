@@ -24,6 +24,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../config.hpp"
 #include "../util/widget_list.hpp"
 
+#include "measure_mode.hpp"
+
 namespace ruis {
 
 // TODO: doxygen
@@ -39,8 +41,18 @@ public:
 	layout(layout&&) = delete;
 	layout& operator=(layout&&) = delete;
 
+	/**
+	 * @brief Measure how big the layout wants to be.
+	 * @param quotum - space available to the layout.
+	 * @param mode - measurement mode for each dimension. In at_most mode the widget is
+	 * expected to report the minimal size it needs (clamped to the quotum), in exactly
+	 * mode the widget is expected to be resized to the given exact size.
+	 * @param widgets - widgets to measure.
+	 * @return Measured desired layout dimensions.
+	 */
 	virtual vec2 measure(
 		const vec2& quotum, //
+		const r4::vector2<measure_mode>& mode, //
 		const_widget_list& widgets
 	) const = 0;
 

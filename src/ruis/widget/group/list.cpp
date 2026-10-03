@@ -208,7 +208,11 @@ bool list::arrange_widget(
 	widget_list::const_iterator& insert_before
 )
 {
-	vec2 dim = dims_for_widget(w.get(), this->rect().d);
+	vec2 dim = dims_for_widget(
+		w.get(), //
+		this->rect().d,
+		r4::vector2<measure_mode>(measure_mode::exactly)
+	);
 
 	w.get().resize(dim);
 
@@ -329,7 +333,11 @@ void list::update_tail_items_info()
 
 		auto w = this->get_provider().get_widget(i - 1);
 
-		vec2 d = dims_for_widget(w.get(), this->rect().d);
+		vec2 d = dims_for_widget(
+			w.get(), //
+			this->rect().d,
+			r4::vector2<measure_mode>(measure_mode::exactly)
+		);
 
 		auto item_dim = d[long_index];
 		dim -= item_dim;
@@ -439,6 +447,9 @@ real list::scroll_by(real delta)
 			// so this->pos_index currently points to a widget which is not added to the container as child.
 
 			// std::cout << "delta > 0: delta = " << delta << std::endl;
+
+			// TODONOW: got this assert triggered in calslog. On today page when list is empty press mouse button and move the mouse, it triggers the assert immediately, without even releasing the mouse button.
+			// Looks like as soon as the cursor goes beyond the flickable dragging threshold it triggers the assert.
 			utki::assert(
 				this->pos_index > this->added_index + this->children().size(),
 				[&](auto& o) {
@@ -450,7 +461,11 @@ real list::scroll_by(real delta)
 
 			for (; this->pos_index < this->first_tail_item_index;) {
 				auto w = this->get_provider().get_widget(this->pos_index);
-				vec2 dims = dims_for_widget(w.get(), this->rect().d);
+				vec2 dims = dims_for_widget(
+					w.get(), //
+					this->rect().d,
+					r4::vector2<measure_mode>(measure_mode::exactly)
+				);
 				auto long_dim = dims[long_index];
 
 				// this is just optimization, to avoid creating same widget twice
@@ -501,7 +516,11 @@ real list::scroll_by(real delta)
 					SL
 				);
 				auto w = this->get_provider().get_widget(this->pos_index);
-				vec2 d = dims_for_widget(w.get(), this->rect().d);
+				vec2 d = dims_for_widget(
+					w.get(), //
+					this->rect().d,
+					r4::vector2<measure_mode>(measure_mode::exactly)
+				);
 				auto long_dim = d[long_index];
 
 				// this is just optimization, to avoid creating same widget twice
@@ -537,7 +556,10 @@ real list::scroll_by(real delta)
 	return scrolled_by;
 }
 
-ruis::vec2 list::measure(const ruis::vec2& quotum) const
+ruis::vec2 list::measure(
+	const ruis::vec2& quotum, //
+	const r4::vector2<measure_mode>& mode
+) const
 {
 	unsigned long_index = this->get_long_index();
 	unsigned trans_index = this->get_trans_index();
@@ -550,21 +572,23 @@ ruis::vec2 list::measure(const ruis::vec2& quotum) const
 	const auto& provider = this->get_provider();
 	const size_t count = provider.count();
 
-	// Items are measured against the list's quotum: positive components are passed through as the available
-	// space, negative components make the item report its natural size in that direction.
+	// Items are measured against the list's quotum: exactly components are passed through as the available
+	// space, at_most components make the item report its natural size in that direction.
 	vec2 item_parent(quotum);
+	r4::vector2<measure_mode> item_parent_mode;
 
 	// items always report their natural size in the long direction
-	item_parent[long_index] = -1;
+	item_parent_mode[long_index] = measure_mode::at_most;
+	item_parent_mode[trans_index] = mode[trans_index];
 
 	auto item_dim = [&](size_t index) -> vec2 {
-		return dims_for_widget(provider.get_widget(index).get(), item_parent);
+		return dims_for_widget(provider.get_widget(index).get(), item_parent, item_parent_mode);
 	};
 
 	// The min size in the longitudinal direction.
 	real long_size = 0;
 	real trans_size = 0;
-	if (quotum[long_index] < 0) {
+	if (mode[long_index] == measure_mode::at_most) {
 		// The true min size: the sum of the natural sizes of all the items,
 		// so that the whole content can be displayed without truncation.
 		// The transverse min size (the biggest transverse size among all the items) is calculated in the same pass.
@@ -582,14 +606,14 @@ ruis::vec2 list::measure(const ruis::vec2& quotum) const
 		long_size = min(long_size, quotum[long_index]);
 
 		// The min size in the transverse direction: the biggest transverse size among all the items.
-		if (quotum[trans_index] <= 0) {
+		if (mode[trans_index] == measure_mode::at_most) {
 			for (size_t i = 0; i != count; ++i) {
 				trans_size = max(trans_size, item_dim(i)[trans_index]);
 			}
 		}
 	}
 	ret[long_index] = long_size;
-	if (quotum[trans_index] <= 0) {
+	if (mode[trans_index] == measure_mode::at_most) {
 		ret[trans_index] = trans_size;
 	}
 

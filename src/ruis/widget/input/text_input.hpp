@@ -146,7 +146,10 @@ public:
 
 	~text_input() override = default;
 
-	vec2 measure(const ruis::vec2& quotum) const noexcept override;
+	vec2 measure(
+		const ruis::vec2& quotum, //
+		const r4::vector2<measure_mode>& mode //
+	) const noexcept override;
 
 	void render(const ruis::mat4& matrix) const override;
 

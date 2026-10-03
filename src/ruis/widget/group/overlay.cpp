@@ -140,7 +140,8 @@ utki::shared_ref<widget> overlay::show_popup(
 
 	vec2 dim = dims_for_widget(
 		w, //
-		this->rect().d
+		this->rect().d, //
+		r4::vector2<measure_mode>(measure_mode::exactly)
 	);
 
 	using std::min;

@@ -21,6 +21,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
+#include <limits>
+
+#include "../config.hpp"
+
 namespace ruis {
 
 /**
@@ -39,5 +43,14 @@ enum class measure_mode {
 	 */
 	at_most
 };
+
+/**
+ * @brief The maximum quotum value used to request the minimal size of a widget
+ * in at_most mode.
+ * When a widget is measured with a quotum of this value in at_most mode, it is
+ * asked to report the natural (minimal) size it needs to properly display its
+ * contents, without being clamped by a finite upper bound.
+ */
+constexpr real measure_infinite_quotum = std::numeric_limits<real>::max();
 
 } // namespace ruis

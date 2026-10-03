@@ -39,7 +39,8 @@ void size_layout::lay_out(
 				max( //
 					dims - w.get().rect().p,
 					{0, 0} //
-				)
+				), //
+				r4::vector2<measure_mode>(measure_mode::exactly)
 			);
 			w.get().resize(d);
 		}

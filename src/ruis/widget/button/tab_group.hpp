@@ -55,7 +55,10 @@ public:
 
 	void set_filler(std::shared_ptr<const res::image> filler);
 
-	ruis::vec2 measure(const ruis::vec2& quotum) const override;
+	ruis::vec2 measure(
+		const ruis::vec2& quotum, //
+		const r4::vector2<measure_mode>& mode
+	) const override;
 
 	void on_lay_out() override;
 

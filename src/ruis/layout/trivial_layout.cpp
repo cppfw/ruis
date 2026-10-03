@@ -27,13 +27,10 @@ using namespace ruis;
 
 ruis::vec2 trivial_layout::measure(
 	const vec2& quotum, //
+	const r4::vector2<measure_mode>& mode, //
 	const_widget_list& widgets
 ) const
 {
-	if (quotum.is_positive_or_zero()) {
-		return quotum;
-	}
-
 	vec2 max_extent(0, 0);
 
 	for (const auto& widget : widgets) {
@@ -46,11 +43,13 @@ ruis::vec2 trivial_layout::measure(
 	}
 
 	vec2 ret;
-	for (auto [r, q, me] : utki::views::zip(ret, quotum, max_extent)) {
-		if (q < 0) {
-			r = me;
+	// TODO: use utki::zip
+	for (unsigned i = 0; i != ret.size(); ++i) {
+		if (mode[i] == measure_mode::exactly) {
+			ret[i] = quotum[i];
 		} else {
-			r = q;
+			using std::min;
+			ret[i] = min(max_extent[i], quotum[i]);
 		}
 	}
 

@@ -45,20 +45,23 @@ void aspect_ratio_proxy::set_aspect_ratio(real x_above_y)
 	this->invalidate_layout();
 }
 
-ruis::vec2 aspect_ratio_proxy::measure(const ruis::vec2& quotum) const
+ruis::vec2 aspect_ratio_proxy::measure(
+	const ruis::vec2& quotum, //
+	const r4::vector2<measure_mode>& mode
+) const
 {
-	if (quotum.is_negative()) {
+	if (mode.x() == measure_mode::at_most && mode.y() == measure_mode::at_most) {
 		return {0, 0};
 	}
 
-	if (quotum.x() < 0) {
+	if (mode.x() == measure_mode::at_most) {
 		return {
 			quotum.y() * this->params.x_above_y, //
 			quotum.y()
 		};
 	}
 
-	if (quotum.y() < 0) {
+	if (mode.y() == measure_mode::at_most) {
 		return {
 			quotum.x(), //
 			quotum.x() / this->params.x_above_y

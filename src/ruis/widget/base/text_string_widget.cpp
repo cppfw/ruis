@@ -62,12 +62,15 @@ void text_string_widget::recompute_bounding_box()
 	this->bb = this->get_font().get_bounding_box(this->get_string().get());
 }
 
-vec2 text_string_widget::measure(const ruis::vec2& quotum) const noexcept
+vec2 text_string_widget::measure(
+	const ruis::vec2& quotum, //
+	const r4::vector2<measure_mode>& mode
+) const noexcept
 {
 	vec2 ret(this->bb.d.x(), this->get_font().get_height());
 
 	for (unsigned i = 0; i != ret.size(); ++i) {
-		if (quotum[i] >= 0) {
+		if (mode[i] == measure_mode::exactly) {
 			ret[i] = quotum[i];
 		}
 	}
