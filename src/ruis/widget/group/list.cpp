@@ -392,6 +392,11 @@ real list::scroll_by(real delta)
 		return scrolled_by;
 	}
 
+	// An empty list cannot be scrolled.
+	if (this->get_provider().count() == 0) {
+		return scrolled_by;
+	}
+
 	if (delta > 0) {
 		// std::cout << "delta > 0" << std::endl;
 
@@ -448,8 +453,6 @@ real list::scroll_by(real delta)
 
 			// std::cout << "delta > 0: delta = " << delta << std::endl;
 
-			// TODONOW: got this assert triggered in calslog. On today page when list is empty press mouse button and move the mouse, it triggers the assert immediately, without even releasing the mouse button.
-			// Looks like as soon as the cursor goes beyond the flickable dragging threshold it triggers the assert.
 			utki::assert(
 				this->pos_index > this->added_index + this->children().size(),
 				[&](auto& o) {
