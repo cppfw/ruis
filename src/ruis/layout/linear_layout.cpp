@@ -77,9 +77,10 @@ void linear_layout::lay_out(
 				case dim::type::undefined:
 					[[fallthrough]];
 				case dim::type::min:
-					// review: the comment 'will be updated below' is unclear. where will it be update and why? What is the logic to set it now and update it later?
+					// unbounded quotum placeholder: the measure() call below reports the natural size
+					// and replaces d[trans_index] (only at_most dims are replaced)
 					d[trans_index] = measure_infinite_quotum;
-					d_mode[trans_index] = measure_mode::at_most; // will be updated below
+					d_mode[trans_index] = measure_mode::at_most;
 					break;
 				case dim::type::length:
 					d[trans_index] = trans_dim.get_length().get(w.get().context);
@@ -100,9 +101,10 @@ void linear_layout::lay_out(
 				case dim::type::min:
 					[[fallthrough]];
 				case dim::type::max:
-					// review: the comment 'will be updated below' is unclear. where will it be update and why? What is the logic to set it now and update it later?
+					// unbounded quotum placeholder: the measure() call below reports the natural size
+					// and replaces d[long_index] (only at_most dims are replaced)
 					d[long_index] = measure_infinite_quotum;
-					d_mode[long_index] = measure_mode::at_most; // will be updated below
+					d_mode[long_index] = measure_mode::at_most;
 					break;
 				case dim::type::length:
 					d[long_index] = long_dim.get_length().get(w.get().context);
@@ -150,8 +152,6 @@ void linear_layout::lay_out(
 			if (weight != 0) {
 				utki::assert(weight > 0);
 				vec2 d;
-				r4::vector2<measure_mode>
-					d_mode; // review: the variable could be defined closer to place where it is first used, i.e. closer to the switch().
 				if (flexible > 0) {
 					utki::assert(net_weight > 0);
 					real dl = flexible * weight / net_weight;
@@ -167,13 +167,15 @@ void linear_layout::lay_out(
 
 				const auto& long_dim = lp.dims[long_index];
 
-				// review: looks like in all switch branches the d_mode[long_index] is set to exactly
+				r4::vector2<measure_mode> d_mode;
+
+				// a weighted child always has a concrete longitudinal size, so it is exactly
+				d_mode[long_index] = measure_mode::exactly;
 				switch (long_dim.get_type()) {
 					case dim::type::fill:
 						[[fallthrough]];
 					case dim::type::max:
 						d[long_index] = long_room;
-						d_mode[long_index] = measure_mode::exactly;
 						break;
 					// NOLINTNEXTLINE(bugprone-branch-clone, "false positive")
 					case dim::type::undefined:
@@ -182,7 +184,6 @@ void linear_layout::lay_out(
 						[[fallthrough]];
 					case dim::type::length:
 						d[long_index] = info->measured_dims[long_index];
-						d_mode[long_index] = measure_mode::exactly;
 						break;
 				}
 
