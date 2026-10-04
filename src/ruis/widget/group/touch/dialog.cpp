@@ -35,12 +35,15 @@ namespace {
 
 namespace m = ruis::make;
 
-// Build the chrome (dimming background, close-on-click/keypress proxies and the styled panel)
-// surrounding the given dialog content container.
-widget_list make_chrome(
+// Builds the dialog chrome (dimming background, close-on-click/keypress proxies and the styled
+// panel) surrounding the given 'children'.
+// The panel is a containing widget, so its own content container is used to hold the given
+// 'children'. The result is the chrome widgets to add to the dialog along with the panel's
+// content container which holds the dialog contents.
+std::tuple<widget_list, std::reference_wrapper<ruis::container>> make_chrome(
 	const utki::shared_ref<ruis::context>& c, //
-	utki::shared_ref<ruis::container> content_container, //
 	dialog::all_parameters params, //
+	widget_list children, //
 	std::function<void(ruis::click_proxy&)> bg_click_handler, //
 	std::function<ruis::event_status(ruis::key_proxy&, const ruis::key_event&)> key_handler
 )
@@ -117,15 +120,21 @@ widget_list make_chrome(
 					}
 				}
 
+				// the dialog contents are laid out in a column by default
+				if(auto& l = rect_params.padding.container.layout; !l){
+					l = ruis::layout::column;
+				}
+
 				return std::move(rect_params);
 			}()
 		},
-		{
-			// TODO: the rectangle is already a containing widget, need to return its content container instead of creating a new one
-			std::move(content_container)
-		}
+		std::move(children)
 	);
 	// clang-format on
+
+	// the panel is a containing widget, its content container holds the dialog contents.
+	// The panel keeps this container alive, and the panel is kept alive by the chrome widgets below.
+	auto& content_container = panel_bg.get().get_container();
 
 	// Dialog container with padding providing the margin around the panel
 	// clang-format off
@@ -168,10 +177,13 @@ widget_list make_chrome(
 	// clang-format on
 
 	return {
-		std::move(dim_bg), //
-		std::move(bg_click_proxy), //
-		std::move(key_proxy), //
-		std::move(margin_container)
+		widget_list{//
+					std::move(dim_bg), //
+					std::move(bg_click_proxy), //
+					std::move(key_proxy), //
+					std::move(margin_container)
+		}, //
+		std::ref(content_container)
 	};
 }
 
@@ -179,68 +191,54 @@ widget_list make_chrome(
 
 dialog::dialog(
 	const utki::shared_ref<ruis::context>& context, //
-	all_parameters& params,
-	utki::shared_ref<ruis::container> content_container
+	all_parameters& params, //
+	std::tuple<widget_list, std::reference_wrapper<ruis::container>> chrome
 ) :
 	widget( //
-		context,
-		std::move(params.layout_params),
-		std::move(params.widget)
+		context, //
+		std::move(params.layout_params), //
+		std::move(params.widget) //
 	),
 	// clang-format off
-	container(
-		context,
-		{
-			.params = {
-				.layout = ruis::layout::pile
-			}
-		},
-		make_chrome(
+	container( //
+		context, //
+		{ //
+			.params = { //
+				.layout = ruis::layout::pile //
+			} //
+		}, //
+		std::move(std::get<0>(chrome)) // the chrome widgets
+	), //
+	// clang-format on
+	containing_widget( //
+		context, //
+		std::get<1>(chrome).get() // the panel's content container which holds the dialog contents
+	)
+{}
+
+dialog::dialog(
+	const utki::shared_ref<ruis::context>& context, //
+	all_parameters params, //
+	widget_list children
+) :
+	dialog(
+		context, //
+		params, //
+		make_chrome( //
 			context, //
-			content_container, //
 			params, //
-			[this](ruis::click_proxy&){ this->close(); }, //
+			std::move(children), //
+			[this](ruis::click_proxy&) {
+				this->close();
+			}, //
 			[this](ruis::key_proxy&, const ruis::key_event& e) -> ruis::event_status {
 				if (e.action == ruis::button_action::press && e.combo.key == ruis::key::escape) {
 					this->close();
 					return ruis::event_status::consumed;
 				}
 				return ruis::event_status::propagate;
-			}
-		)
-	),
-	// clang-format on
-	containing_widget(
-		context, //
-		content_container.get()
-	)
-{}
-
-dialog::dialog(
-	const utki::shared_ref<ruis::context>& context, //
-	all_parameters params,
-	widget_list children
-) :
-	dialog(
-		context,
-		params,
-		// TODONOW: the dialog creates a panel rectangle which is already a container, no need to create a separate container for contents here.
-		m::container(
-			context,
-			// clang-format off
-			{
-				.layout_params{
-					// content container fills the dialog panel, so that fill-sized children
-					// (e.g. scrollable lists) can take the whole available area of the panel
-					.dims = {ruis::dim::fill, ruis::dim::min}
-				},
-				.params = {
-					.layout = ruis::layout::column
-				}
-			},
-			// clang-format on
-			std::move(children)
-		)
+			} //
+		) //
 	)
 {}
 

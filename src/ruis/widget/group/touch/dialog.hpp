@@ -21,6 +21,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
+#include <tuple>
+
 #include "../../base/color_widget.hpp"
 #include "../../base/containing_widget.hpp"
 #include "../../label/padding.hpp"
@@ -81,10 +83,12 @@ public:
 	};
 
 private:
+	// 'chrome' is the result of building the dialog chrome: the chrome widgets to be added to the
+	// dialog along with the panel's content container which holds the dialog contents.
 	dialog(
 		const utki::shared_ref<ruis::context>& context, //
-		all_parameters& params,
-		utki::shared_ref<ruis::container> content_container
+		all_parameters& params, //
+		std::tuple<widget_list, std::reference_wrapper<ruis::container>> chrome
 	);
 
 public:
