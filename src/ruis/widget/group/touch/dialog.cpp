@@ -141,7 +141,7 @@ std::tuple<widget_list, std::reference_wrapper<ruis::container>> make_chrome(
 	auto margin_container = m::padding(c,
 		{
 			.layout_params{
-				.dims = {ruis::dim::fill, ruis::dim::fill}
+				.dims = {ruis::dim::fill, ruis::dim::min}
 			},
 			.params{
 				.specific{
