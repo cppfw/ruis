@@ -62,11 +62,7 @@ ruis::vec2 scroll_area::measure(
 	// In at_most dimensions, report the size needed to show all the contents without scrolling.
 	vec2 ret(quotum);
 	if (mode.x() == measure_mode::at_most || mode.y() == measure_mode::at_most) {
-		vec2 d = dims_for_widget(
-			this->child(), //
-			quotum,
-			mode
-		);
+		vec2 d = this->child().measure_within_parent(quotum, mode);
 		for (unsigned i = 0; i != ret.size(); ++i) {
 			if (mode[i] == measure_mode::at_most) {
 				ret[i] = d[i];
@@ -199,9 +195,8 @@ void scroll_area::on_lay_out()
 		parent_dims[1] = measure_infinite_quotum;
 	}
 
-	child.resize(dims_for_widget(
-		child, //
-		parent_dims,
+	child.resize(child.measure_within_parent(
+		parent_dims, //
 		r4::vector2<measure_mode>(measure_mode::exactly) // parent_mode
 	));
 

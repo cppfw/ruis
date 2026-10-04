@@ -138,8 +138,7 @@ utki::shared_ref<widget> overlay::show_popup(
 
 	c.get().push_back(std::move(popup));
 
-	vec2 dim = dims_for_widget(
-		w, //
+	vec2 dim = w.measure_within_parent(
 		this->rect().d, //
 		r4::vector2<measure_mode>(measure_mode::exactly)
 	);

@@ -282,7 +282,10 @@ vec2 compute_anchor(
 	auto screen = olay.rect().d;
 
 	// natural menu size, clamped to the screen the same way show_popup() does
-	auto menu_size = ruis::dims_for_widget(menu, screen, r4::vector2<measure_mode>(measure_mode::exactly));
+	auto menu_size = menu.measure_within_parent(
+		screen, //
+		r4::vector2<measure_mode>(measure_mode::exactly)
+	);
 	menu_size = min(menu_size, screen);
 
 	// place the menu right below the anchor button, right-aligned with it

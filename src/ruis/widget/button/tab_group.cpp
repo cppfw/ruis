@@ -137,9 +137,8 @@ void tab_group::on_lay_out()
 	sides<real> prev_borders = 0;
 
 	for (const auto& c : this->children()) {
-		auto dim = dims_for_widget(
-			c.get(), //
-			this->rect().d,
+		auto dim = c.get().measure_within_parent(
+			this->rect().d, //
 			r4::vector2<measure_mode>(measure_mode::exactly)
 		);
 		c.get().resize(dim);

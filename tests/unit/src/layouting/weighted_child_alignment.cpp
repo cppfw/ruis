@@ -20,24 +20,15 @@ utki::shared_ref<ruis::widget> natural_size(
 {
 	return ruis::make::pile(
 		c,
-		{
-			.layout_params{
-				.dims = {ruis::dim::min, ruis::dim::min}
-			}
-		},
-		{
-			ruis::make::mouse_proxy(
-				c,
-				{
-					.layout_params{
-						.dims = {
-							ruis::dim(ruis::length::make_pp(w)), //
-							ruis::dim(ruis::length::make_pp(h))
-						}
-					}
-				}
-			)
-		}
+		{.layout_params{.dims = {ruis::dim::min, ruis::dim::min}}},
+		{ruis::make::mouse_proxy(
+			c,
+			{.layout_params{
+				.dims =
+					{ruis::dim(ruis::length::make_pp(w)), //
+					 ruis::dim(ruis::length::make_pp(h))}
+			}}
+		)}
 	);
 }
 
@@ -52,15 +43,8 @@ utki::shared_ref<ruis::widget> field(
 {
 	return ruis::make::container(
 		c,
-		{
-			.layout_params = std::move(lp),
-			.params{
-				.layout = ruis::layout::pile
-			}
-		},
-		{
-			natural_size(c, w, h)
-		}
+		{.layout_params = std::move(lp), .params{.layout = ruis::layout::pile}},
+		{natural_size(c, w, h)}
 	);
 }
 } // namespace

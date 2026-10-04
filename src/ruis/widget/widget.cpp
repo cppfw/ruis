@@ -496,14 +496,12 @@ void widget::reload()
 	this->on_reload();
 }
 
-// TODONEXT: rename to measure_within_parent() and make member of widget class
-vec2 ruis::dims_for_widget(
-	const widget& w, //
+vec2 widget::measure_within_parent(
 	const vec2& parent_dims, //
 	const r4::vector2<measure_mode>& parent_mode
-)
+) const
 {
-	const layout_parameters& lp = w.get_layout_params_const();
+	const layout_parameters& lp = this->get_layout_params_const();
 	vec2 d;
 	r4::vector2<measure_mode> mode;
 	for (unsigned i = 0; i != 2; ++i) {
@@ -539,13 +537,13 @@ vec2 ruis::dims_for_widget(
 				mode[i] = measure_mode::exactly;
 				break;
 			case ruis::dim::type::length:
-				d[i] = dim.get_length().get(w.context);
+				d[i] = dim.get_length().get(this->context);
 				mode[i] = measure_mode::exactly;
 				break;
 		}
 	}
 	if (mode.x() == measure_mode::at_most || mode.y() == measure_mode::at_most) {
-		vec2 md = w.measure(d, mode);
+		vec2 md = this->measure(d, mode);
 		for (unsigned i = 0; i != md.size(); ++i) {
 			if (mode[i] == measure_mode::at_most) {
 				d[i] = md[i];

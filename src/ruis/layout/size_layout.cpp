@@ -42,8 +42,7 @@ ruis::vec2 size_layout::measure(
 		// Resolve the child's size according to its layout parameters.
 		// 'min' (and 'undefined') children are measured against the space actually available
 		// to them (from their position to the edge of the parent quotum).
-		auto d = dims_for_widget(
-			ww, //
+		auto d = ww.measure_within_parent(
 			max( //
 				quotum - ww.rect().p, //
 				vec2(0) //
@@ -82,7 +81,10 @@ void size_layout::lay_out(
 				pd[1] = measure_infinite_quotum;
 			}
 
-			ww.resize(dims_for_widget(ww, pd, r4::vector2<measure_mode>(measure_mode::exactly)));
+			ww.resize(ww.measure_within_parent(
+				pd, //
+				r4::vector2<measure_mode>(measure_mode::exactly)
+			));
 		}
 	}
 }

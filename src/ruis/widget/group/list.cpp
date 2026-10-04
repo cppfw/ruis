@@ -218,9 +218,8 @@ bool list::arrange_widget(
 		pd[long_index] = measure_infinite_quotum;
 	}
 
-	vec2 dim = dims_for_widget(
-		w.get(), //
-		pd,
+	vec2 dim = w.get().measure_within_parent(
+		pd, //
 		r4::vector2<measure_mode>(measure_mode::exactly)
 	);
 
@@ -347,9 +346,8 @@ void list::update_tail_items_info()
 			pd[long_index] = measure_infinite_quotum;
 		}
 
-		vec2 d = dims_for_widget(
-			w.get(), //
-			pd,
+		vec2 d = w.get().measure_within_parent(
+			pd, //
 			r4::vector2<measure_mode>(measure_mode::exactly)
 		);
 
@@ -486,9 +484,8 @@ real list::scroll_by(real delta)
 					pd[long_index] = measure_infinite_quotum;
 				}
 
-				vec2 dims = dims_for_widget(
-					w.get(), //
-					pd,
+				vec2 dims = w.get().measure_within_parent(
+					pd, //
 					r4::vector2<measure_mode>(measure_mode::exactly)
 				);
 				auto long_dim = dims[long_index];
@@ -548,9 +545,8 @@ real list::scroll_by(real delta)
 					pd[long_index] = measure_infinite_quotum;
 				}
 
-				vec2 d = dims_for_widget(
-					w.get(), //
-					pd,
+				vec2 d = w.get().measure_within_parent(
+					pd, //
 					r4::vector2<measure_mode>(measure_mode::exactly)
 				);
 				auto long_dim = d[long_index];
@@ -616,9 +612,8 @@ ruis::vec2 list::measure(
 	item_parent_mode[trans_index] = mode[trans_index];
 
 	auto item_dim = [&](size_t index) -> vec2 {
-		return dims_for_widget(
-			provider.get_widget(index).get(), //
-			item_parent,
+		return provider.get_widget(index).get().measure_within_parent(
+			item_parent, //
 			item_parent_mode
 		);
 	};

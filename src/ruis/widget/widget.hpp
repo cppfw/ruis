@@ -654,6 +654,29 @@ public:
 		const r4::vector2<measure_mode>& mode
 	) const;
 
+	/**
+	 * @brief Measure the widget's dimensions as if it were placed within a parent.
+	 * Resolves the widget's layout parameters against the given parent dimensions and
+	 * parent measure mode, i.e. resolves the 'min', 'max', 'fill' and 'length' dimension
+	 * types against the parent and reports the resulting dimensions.
+	 * @param parent_dims - dimensions of the parent widget.
+	 * @param parent_mode - the parent's measure mode for each dimension, determines how 'max'
+	 *        and 'fill' dimensions resolve against the parent (exactly for a concrete parent
+	 *        size, at_most for a minimum-size query).
+	 * @return The resolved dimensions of the widget.
+	 *
+	 * A 'min' (or 'undefined') dimension is always clamped to the parent_dims, i.e. the widget is
+	 * measured as at_most against the space actually available to it and is not made bigger than
+	 * that space. A 'max' dimension is stretched to the parent_dims if the parent mode is exactly,
+	 * otherwise it is clamped to the parent_dims as well. If the widget must not be clamped in some
+	 * direction (e.g. scrollable content), pass measure_infinite_quotum as the parent dimension in
+	 * that direction.
+	 */
+	vec2 measure_within_parent(
+		const vec2& parent_dims, //
+		const r4::vector2<measure_mode>& parent_mode
+	) const;
+
 public:
 	/**
 	 * @brief Show/hide widget.
@@ -821,31 +844,6 @@ public:
 	template <typename resource_type>
 	void reload(utki::shared_ref<resource_type>& p);
 };
-
-/**
- * @brief Calculate basic dimensions of widget.
- * Calculates basic dimensions of given widget if it would be placed to
- * a container with given dimensions and given layout parameters, basically this is just
- * resolving of 'min', 'max' and 'fill' special values of dimensions.
- * @param w - widget to calculate dimensions for.
- * @param parent_dims - parent widget dimensions.
- * @param parent_mode - the measure mode of the parent for each dimension, determines how 'max'
- *        and 'fill' children resolve against the parent (exactly for a concrete parent size, at_most
- *        for a minimum-size query).
- * @return Dimensions of widget.
- *
- * A 'min' (or 'undefined') dimension is always clamped to the parent_dims, i.e. the widget is
- * measured as at_most against the space actually available to it and is not made bigger than
- * that space. A 'max' dimension is stretched to the parent_dims if the parent mode is exactly,
- * otherwise it is clamped to the parent_dims as well. If the widget must not be clamped in some
- * direction (e.g. scrollable content), pass measure_infinite_quotum as the parent dimension in
- * that direction.
- */
-vec2 dims_for_widget(
-	const widget& w, //
-	const vec2& parent_dims, //
-	const r4::vector2<measure_mode>& parent_mode
-);
 
 } // namespace ruis
 

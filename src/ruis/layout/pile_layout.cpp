@@ -33,7 +33,10 @@ void pile_layout::lay_out(
 {
 	for (const auto& widget : widgets) {
 		auto& w = widget.get();
-		w.resize(dims_for_widget(w, dims, r4::vector2<measure_mode>(measure_mode::exactly)));
+		w.resize(w.measure_within_parent(
+			dims, //
+			r4::vector2<measure_mode>(measure_mode::exactly)
+		));
 
 		ruis::vec2 pos;
 		for (unsigned i = 0; i != 2; ++i) {
