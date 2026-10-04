@@ -65,53 +65,63 @@ utki::shared_ref<ruis::window> make_scroll_area_window(
                                 .clip = true
                             }
                         },
-                        {
-                            m::image(c,
-                                {
-                                    .layout_params{
-                                        .dims{ruis::dim::min, ruis::dim::max}
-                                    },
-                                    .params{
-                                        .specific{
-                                            .source = c.get().loader().load<ruis::res::image>("img_sample"sv)
+                        m::container(c,
+                            {
+                                .layout_params{
+                                    .dims{ruis::dim::fill, ruis::dim::min}
+                                },
+                                .params{
+                                    .layout = ruis::layout::size
+                                }
+                            },
+                            {
+                                m::image(c,
+                                    {
+                                        .layout_params{
+                                            .dims{ruis::dim::min, ruis::dim::max}
+                                        },
+                                        .params{
+                                            .specific{
+                                                .source = c.get().loader().load<ruis::res::image>("img_sample"sv)
+                                            }
                                         }
                                     }
-                                }
-                            ),
-                            m::collapse_area(c,
-                                {
-                                    .widget{
-                                        .rectangle{
+                                ),
+                                m::collapse_area(c,
+                                    {
+                                        .widget{
+                                            .rectangle{
                                             {
                                                 (20_pp).get(c.get()),
                                                 (450_pp).get(c.get())
                                             }, {}
                                         }
+                                        },
+                                        .title = U"Collapsable stuff"s
                                     },
-                                    .title = U"Collapsable stuff"s
-                                },
-                                {
-                                    m::text(c,{}, U"I'm collapsable!!!"s)
-                                }
-                            ),
-                            m::push_button(c,
-                                {
-                                    .widget{
-                                        .id = "push_button_in_scroll_container"s,
-                                        .rectangle{
+                                    {
+                                        m::text(c,{}, U"I'm collapsable!!!"s)
+                                    }
+                                ),
+                                m::push_button(c,
+                                    {
+                                        .widget{
+                                            .id = "push_button_in_scroll_container"s,
+                                            .rectangle{
                                             {
                                                 (10_mm).get(c.get()),
                                                 (20_mm).get(c.get())
                                             },
                                             {}
                                         }
+                                        }
+                                    },
+                                    {
+                                        m::text(c, {}, U"Hello World!!!"s)
                                     }
-                                },
-                                {
-                                    m::text(c, {}, U"Hello World!!!"s)
-                                }
-                            )
-                        }
+                                )
+                            }
+                        )
                     ),
                     m::scroll_bar(c,
                         {

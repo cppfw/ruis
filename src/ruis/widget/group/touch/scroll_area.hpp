@@ -34,7 +34,7 @@ public:
 	scroll_area(
 		const utki::shared_ref<ruis::context>& context, //
 		scroll_area::all_parameters params,
-		widget_list children
+		utki::shared_ref<ruis::widget> child
 	);
 
 	event_status on_mouse_button(const mouse_button_event& event) override;

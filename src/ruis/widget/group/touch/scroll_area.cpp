@@ -26,7 +26,7 @@ using namespace ruis::touch;
 scroll_area::scroll_area(
 	const utki::shared_ref<ruis::context>& context, //
 	all_parameters params,
-	widget_list children
+	utki::shared_ref<ruis::widget> child
 ) :
 	widget(
 		context, //
@@ -37,7 +37,7 @@ scroll_area::scroll_area(
 	ruis::scroll_area(
 		context,
 		{},
-		std::move(children)
+		std::move(child)
 	),
 	// clang-format on
 	flickable(this->context)

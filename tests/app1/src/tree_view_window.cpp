@@ -404,22 +404,20 @@ utki::shared_ref<ruis::window> make_tree_view_window(
                                 .id = "tree_view_scroll_area"s
                             }
                         },
-                        {
-                            m::tree_view(c,
-                                {
-                                    .layout_params{
-                                        .dims{ruis::dim::min, ruis::dim::fill}
-                                    },
-                                    .widget{
-                                        .id = "treeview_widget"s,
-                                        .clip = true
-                                    },
-                                    .tree_view_params{
-                                        .provider = utki::make_unique<tree_view_items_provider>(c, model)
-                                    }
+                        m::tree_view(c,
+                            {
+                                .layout_params{
+                                    .dims{ruis::dim::min, ruis::dim::fill}
+                                },
+                                .widget{
+                                    .id = "treeview_widget"s,
+                                    .clip = true
+                                },
+                                .tree_view_params{
+                                    .provider = utki::make_unique<tree_view_items_provider>(c, model)
                                 }
-                            )
-                        }
+                            }
+                        )
                     ),
                     m::scroll_bar(c,
                         {

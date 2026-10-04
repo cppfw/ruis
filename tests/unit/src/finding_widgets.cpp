@@ -27,7 +27,8 @@ const tst::set set("finding_widgets", [](tst::suite& suite) {
 						.widget{
 							.id = "1"s
 						}
-					}
+					},
+					m::gap(c, {})
 				),
 				m::scroll_area(c,
 					{
@@ -35,40 +36,49 @@ const tst::set set("finding_widgets", [](tst::suite& suite) {
 							.id = "2"s
 						}
 					},
-					{
-						m::scroll_area(c,
-							{
-								.widget{
-									.id = "3"s
-								}
+					m::row(c,
+						{
+							.widget{
+								.id = "row2"s
 							}
-						),
-						m::row(c,
-							{
-								.widget{
-									.id = "4"s
-								}
-							},
-							{
-								m::pile(c,
-									{
-										.widget{
-											.id = "8"s
-										}
-									},
-									{
-										m::scroll_area(c,
-											{
-												.widget{
-													.id = "9"s
-												}
-											}
-										)
+						},
+						{
+							m::scroll_area(c,
+								{
+									.widget{
+										.id = "3"s
 									}
-								)
-							}
-						)
-					}
+								},
+								m::gap(c, {})
+							),
+							m::row(c,
+								{
+									.widget{
+										.id = "4"s
+									}
+								},
+								{
+									m::pile(c,
+										{
+											.widget{
+												.id = "8"s
+											}
+										},
+										{
+											m::scroll_area(c,
+												{
+													.widget{
+														.id = "9"s
+													}
+												},
+											m::gap(c, {})
+											)
+										}
+									)
+								}
+							)
+						}
+					)
 				),
 				m::pile(c,
 					{
@@ -83,15 +93,13 @@ const tst::set set("finding_widgets", [](tst::suite& suite) {
 									.id = "6"s
 								}
 							},
-							{
-								m::row(c,
-									{
-										.widget{
-											.id = "7"s
-										}
+							m::row(c,
+								{
+									.widget{
+										.id = "7"s
 									}
-								)
-							}
+								}
+							)
 						)
 					}
 				)

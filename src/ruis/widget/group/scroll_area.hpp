@@ -23,37 +23,33 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <functional>
 
-#include "../base/containing_widget.hpp"
 #include "../container.hpp"
 
 namespace ruis {
 
 /**
  * @brief Scroll area widget.
- * A scroll area is a widget which aggregates a content container widget holding the actual contents
- * and provides scrolling of the contents. The content container is created in the constructor and
- * holds the child widgets passed to the constructor. Mouse events are forwarded to the content
- * container, keyboard events propagate to it via the usual widget hierarchy.
+ * A scroll area is a widget which has a single child widget (supplied by the user) holding
+ * the scrollable contents and provides scrolling of the contents. The child widget is positioned
+ * at (0, 0) and resized in on_lay_out() according to its layout parameters: 'fill' and 'max'
+ * dimensions match the scroll area size (so there is no scrolling in that direction),
+ * 'min' and 'undefined' dimensions use the widget's minimal (natural) size, 'length' dimensions
+ * use the fixed size. The part of the contents which goes beyond the right and bottom edge of
+ * the scroll area is scrollable.
+ * Mouse events are forwarded to the child widget, keyboard events propagate to it via the usual
+ * widget hierarchy.
  * From GUI scripts it can be instantiated as "scroll_area".
- * The child widgets keep their positions and have the same layout parameters as in a simple container:
- * 'fill' and 'max' children are stretched to the content container size, 'min' children are assigned
- * their minimal size and 'length' children are assigned the fixed length.
- * The content container is resized in on_lay_out() to the maximum of the scroll area size and the
- * minimal size needed to fit all the child widgets; the part of the contents which goes beyond the
- * right and bottom edge of the scroll area is scrollable.
  */
 // TODO: is this lint suppression needed?
 // NOLINTNEXTLINE(bugprone-incorrect-enable-shared-from-this, "std::shared_from_this is public via widget")
 
 class scroll_area :
 	virtual public widget, //
-	// The private container base exists to host the content container as a child:
+	// The private container base exists to host the child widget:
 	// the widget tree parent/child mechanics live in container (widget::parent_container
 	// is of type container*), so a widget can only have children by being a container.
-	// The inheritance is private to hide the container interface from user code;
-	// the content is accessed via containing_widget::get_container().
-	private container, //
-	public containing_widget
+	// The inheritance is private to hide the container interface from user code.
+	private container
 {
 	// offset from top left corner
 	vec2 cur_scroll_pos = vec2(0);
@@ -64,33 +60,17 @@ class scroll_area :
 	// cached scroll factor
 	vec2 cur_scroll_factor;
 
-private:
-	// the content container holding the scroll area's contents
-	utki::shared_ref<container> content_container;
-
 public:
-	struct parameters{
-		ruis::container::parameters container;
-	};
-
 	struct all_parameters {
 		ruis::layout_parameters layout_params;
 		ruis::widget::parameters widget;
-		parameters params;
 	};
-
-private:
-	scroll_area(
-		const utki::shared_ref<ruis::context>& context, //
-		all_parameters& params,
-		utki::shared_ref<ruis::container> content_container
-	);
 
 public:
 	scroll_area(
 		const utki::shared_ref<ruis::context>& context, //
 		all_parameters params,
-		widget_list children
+		utki::shared_ref<ruis::widget> child
 	);
 
 	scroll_area(const scroll_area&) = delete;
@@ -107,6 +87,7 @@ public:
 
 	void render(const ruis::mat4& matrix) const override;
 
+	// review: do the actual measuring of the child widget
 	ruis::vec2 measure(
 		const ruis::vec2& quotum, //
 		const r4::vector2<measure_mode>& mode //
@@ -117,6 +98,15 @@ public:
 	}
 
 	void on_lay_out() override;
+
+	/**
+	 * @brief Get the child widget of the scroll area (the scrollable contents).
+	 */
+	const widget& child() const
+	{
+		utki::assert(!this->empty());
+		return this->front().get();
+	}
 
 	/**
 	 * @brief Get current scroll position.
@@ -171,10 +161,17 @@ private:
 };
 
 namespace make {
+/**
+ * @brief Create a scroll_area widget.
+ * @param context - ruis context.
+ * @param params - scroll_area widget parameters.
+ * @param child - the child widget which is the scrollable contents.
+ * @return newly created 'scroll_area' widget.
+ */
 utki::shared_ref<ruis::scroll_area> scroll_area(
 	const utki::shared_ref<ruis::context>& context, //
 	ruis::scroll_area::all_parameters params,
-	ruis::widget_list children = {}
+	utki::shared_ref<ruis::widget> child
 );
 } // namespace make
 

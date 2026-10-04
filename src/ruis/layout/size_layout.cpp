@@ -26,6 +26,36 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis;
 
+ruis::vec2 size_layout::measure(
+	const vec2& quotum, //
+	const r4::vector2<measure_mode>& mode, //
+	const_widget_list& widgets
+) const
+{
+	ruis::vec2 ret;
+	for (unsigned i = 0; i != ret.size(); ++i) {
+		ret[i] = (mode[i] == measure_mode::exactly) ? quotum[i] : ruis::real(0);
+	}
+
+	for (const auto& w : widgets) {
+		auto& ww = w.get();
+		// Resolve the child's size according to its layout parameters.
+		auto d = dims_for_widget(
+			ww, //
+			vec2(0), //
+			r4::vector2<measure_mode>(measure_mode::at_most)
+		);
+		for (unsigned i = 0; i != ret.size(); ++i) {
+			if (mode[i] == measure_mode::at_most) {
+				using std::max;
+				ret[i] = max(ret[i], ww.rect().p[i] + d[i]);
+			}
+		}
+	}
+
+	return ret;
+}
+
 void size_layout::lay_out(
 	const vec2& dims, //
 	semiconst_widget_list& widgets

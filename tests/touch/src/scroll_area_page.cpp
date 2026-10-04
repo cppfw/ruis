@@ -331,24 +331,22 @@ public:
 		ruis::touch::scroll_area(
 			context,
 			{},
-			{
-				m::padding(context,
-					{
-						.layout_params{
-							.dims = {ruis::dim::fill, ruis::dim::min}
-						},
-						.params{
-							.container{
-								.layout = ruis::layout::column
-							},
-							.specific{
-								.borders = {context.get().style().get_len_gap_small()}
-							}
-						}
+			m::padding(context,
+				{
+					.layout_params{
+						.dims = {ruis::dim::fill, ruis::dim::min}
 					},
-					make_scroll_area_page_contents(context)
-				)
-			}
+					.params{
+						.container{
+							.layout = ruis::layout::column
+						},
+						.specific{
+							.borders = {context.get().style().get_len_gap_small()}
+						}
+					}
+				},
+				make_scroll_area_page_contents(context)
+			)
 		)
 	// clang-format on
 	{}
