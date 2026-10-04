@@ -97,7 +97,7 @@ widget_list make_chrome(
 	auto panel_bg = m::rectangle(c,
 		{
 			.layout_params{
-				.dims = {ruis::dim::fill, ruis::dim::fill}
+				.dims = {ruis::dim::fill, ruis::dim::min}
 			},
 			.params = [&](){
 				auto& rect_params = params.params.rectangle;
@@ -232,7 +232,7 @@ dialog::dialog(
 				.layout_params{
 					// content container fills the dialog panel, so that fill-sized children
 					// (e.g. scrollable lists) can take the whole available area of the panel
-					.dims = {ruis::dim::fill, ruis::dim::fill}
+					.dims = {ruis::dim::fill, ruis::dim::min}
 				},
 				.params = {
 					.layout = ruis::layout::column

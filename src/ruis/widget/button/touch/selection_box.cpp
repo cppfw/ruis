@@ -244,7 +244,7 @@ void selection_box::show_selection_menu()
 			ruis::touch::make::list(c,
 				{
 					.layout_params{
-						.dims = {ruis::dim::fill, ruis::dim::fill},
+						.dims = {ruis::dim::fill, ruis::dim::min},
 						.weight = 1
 					},
 					.params{

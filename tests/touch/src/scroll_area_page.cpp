@@ -87,6 +87,55 @@ public:
 	}
 };
 
+class many_items_selection_provider : public ruis::list_provider
+{
+	std::vector<std::u32string> items;
+
+public:
+	many_items_selection_provider(const utki::shared_ref<ruis::context>& context) :
+		ruis::list_provider(context)
+	{
+		for (int i = 1; i <= 50; i++) {
+			this->items.emplace_back(U"Choice "s + utki::to_utf32(std::to_string(i)));
+		}
+	}
+
+	size_t count() const noexcept override
+	{
+		return this->items.size();
+	}
+
+	utki::shared_ref<ruis::widget> get_widget(size_t index) const override
+	{
+		// clang-format off
+		return m::text(this->context,
+			{
+				.params{
+					.color = this->context.get().style().get_color_text()
+				}
+			}
+			,
+			this->items.at(index)
+		);
+		// clang-format on
+	}
+
+	utki::shared_ref<ruis::widget> get_highlighted_widget(size_t index) override
+	{
+		// clang-format off
+		return m::text(this->context,
+			{
+				.params{
+					.color = this->context.get().style().get_color_highlight()
+				}
+			}
+			,
+			this->items.at(index)
+		);
+		// clang-format on
+	}
+};
+
 utki::shared_ref<ruis::touch::dialog> make_dialog(const utki::shared_ref<ruis::context>& c)
 {
 	// clang-format off
@@ -248,6 +297,28 @@ ruis::widget_list make_scroll_area_page_contents(const utki::shared_ref<ruis::co
 	};
 
 	// clang-format off
+	auto many_items_selector = m::selection_box(c,
+		{
+			.layout_params{
+				.dims = {ruis::dim::max, ruis::dim::min}
+			},
+			.params{
+				.selection_box{
+					.list{
+						.provider = utki::make_unique<many_items_selection_provider>(c)
+					}
+				},
+				.specific{
+					.title = U"Many Items"s // TODO: localize
+				}
+			}
+		}
+	);
+	// clang-format on
+
+	many_items_selector.get().set_selection(0);
+
+	// clang-format off
 	auto button_1 = m::push_button(c,
 		{
 			.layout_params{
@@ -272,6 +343,14 @@ ruis::widget_list make_scroll_area_page_contents(const utki::shared_ref<ruis::co
 	// clang-format off
 	return {
 		theme_selector,
+		ruis::make::gap(c,
+			{
+				.layout_params{
+					.dims = {ruis::dim::fill, c.get().style().get_len_gap_small().get()}
+				}
+			}
+		),
+		many_items_selector,
 		ruis::make::gap(c,
 			{
 				.layout_params{
