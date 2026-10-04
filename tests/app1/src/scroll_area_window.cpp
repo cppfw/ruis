@@ -68,7 +68,10 @@ utki::shared_ref<ruis::window> make_scroll_area_window(
                         m::container(c,
                             {
                                 .layout_params{
-                                    .dims{ruis::dim::fill, ruis::dim::min}
+                                    // min in both directions: the container takes the natural
+                                    // size of its contents, so the scroll area knows the size
+                                    // of the invisible (scrolled out) part of the contents
+                                    .dims{ruis::dim::min, ruis::dim::min}
                                 },
                                 .params{
                                     .layout = ruis::layout::size

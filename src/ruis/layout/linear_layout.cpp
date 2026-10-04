@@ -233,9 +233,6 @@ void linear_layout::lay_out(
 				}
 
 				w.get().resize(d);
-
-				// the position advances by the actually given (clamped) longitudinal size
-				long_room = d[long_index];
 			} else {
 				// weight is 0
 
@@ -258,9 +255,6 @@ void linear_layout::lay_out(
 				}
 
 				w.get().resize(d);
-
-				// the position advances by the actually given (clamped) longitudinal size
-				long_room = d[long_index];
 			}
 
 			vec2 room;
@@ -289,7 +283,13 @@ void linear_layout::lay_out(
 
 			w.get().move_to(new_pos);
 
-			pos += long_room;
+			// The position advances by the allocated longitudinal room, but no further than
+			// the space actually left, so that a widget clamped to a smaller size does not
+			// push the following widgets beyond the container edge. Note that long_room is
+			// deliberately kept as the allocated room (not the widget's actual size), because
+			// it is used above as the alignment room of the current widget.
+			using std::min;
+			pos += min(long_room, max(dims[long_index] - pos, real(0)));
 			++info;
 		}
 
