@@ -257,8 +257,15 @@ void linear_layout::lay_out(
 				w.get().resize(d);
 			}
 
+			// The slot available to the current widget in the longitudinal direction is the
+			// allocated room clamped to the space actually left, so that an overflowing widget
+			// (clamped to a smaller size) is aligned within the space it really occupies,
+			// instead of being shifted out of the container by its full allocated room.
+			using std::min;
+			real long_slot = min(long_room, max(dims[long_index] - pos, real(0)));
+
 			vec2 room;
-			room[long_index] = long_room;
+			room[long_index] = long_slot;
 			room[trans_index] = dims[trans_index];
 
 			vec2 new_pos;
@@ -285,11 +292,8 @@ void linear_layout::lay_out(
 
 			// The position advances by the allocated longitudinal room, but no further than
 			// the space actually left, so that a widget clamped to a smaller size does not
-			// push the following widgets beyond the container edge. Note that long_room is
-			// deliberately kept as the allocated room (not the widget's actual size), because
-			// it is used above as the alignment room of the current widget.
-			using std::min;
-			pos += min(long_room, max(dims[long_index] - pos, real(0)));
+			// push the following widgets beyond the container edge.
+			pos += long_slot;
 			++info;
 		}
 
