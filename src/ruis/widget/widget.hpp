@@ -833,6 +833,13 @@ public:
  *        and 'fill' children resolve against the parent (exactly for a concrete parent size, at_most
  *        for a minimum-size query).
  * @return Dimensions of widget.
+ *
+ * A 'min' (or 'undefined') dimension is always clamped to the parent_dims, i.e. the widget is
+ * measured as at_most against the space actually available to it and is not made bigger than
+ * that space. A 'max' dimension is stretched to the parent_dims if the parent mode is exactly,
+ * otherwise it is clamped to the parent_dims as well. If the widget must not be clamped in some
+ * direction (e.g. scrollable content), pass measure_infinite_quotum as the parent dimension in
+ * that direction.
  */
 vec2 dims_for_widget(
 	const widget& w, //

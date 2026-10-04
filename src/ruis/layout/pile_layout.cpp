@@ -91,18 +91,18 @@ ruis::vec2 pile_layout::measure(
 
 			switch (dim.get_type()) {
 				case ruis::dim::type::max:
-					if (mode[j] == measure_mode::exactly) {
-						d[j] = quotum[j];
-						child_mode[j] = measure_mode::exactly;
-					} else {
-						d[j] = measure_infinite_quotum;
-						child_mode[j] = measure_mode::at_most;
-					}
+					// we know the child will be resized to the parent size for max when layouting,
+					// so if the parent is measured exactly, the child is measured with exactly
+					// the parent size, otherwise it behaves the same as 'min'
+					d[j] = quotum[j];
+					child_mode[j] = mode[j];
 					break;
 				case ruis::dim::type::undefined:
 					[[fallthrough]];
 				case ruis::dim::type::min:
-					d[j] = measure_infinite_quotum;
+					// the child is measured as at_most against the quotum, so it reports its size
+					// clamped to the available space
+					d[j] = quotum[j];
 					child_mode[j] = measure_mode::at_most;
 					break;
 				case ruis::dim::type::fill:

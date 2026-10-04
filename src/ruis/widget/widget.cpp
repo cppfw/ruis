@@ -496,6 +496,7 @@ void widget::reload()
 	this->on_reload();
 }
 
+// TODONEXT: rename to measure_within_parent() and make member of widget class
 vec2 ruis::dims_for_widget(
 	const widget& w, //
 	const vec2& parent_dims, //
@@ -511,12 +512,23 @@ vec2 ruis::dims_for_widget(
 		switch (dim.get_type()) {
 			case ruis::dim::type::max:
 				if (parent_mode[i] == measure_mode::exactly) {
+					// we know the child will be resized to the parent size for max when layouting,
+					// so we measure it with exactly the parent size
 					d[i] = parent_dims[i];
 					mode[i] = measure_mode::exactly;
-				} else {
-					d[i] = measure_infinite_quotum;
-					mode[i] = measure_mode::at_most;
+					break;
 				}
+				// otherwise 'max' behaves the same as 'min'
+				[[fallthrough]];
+			case ruis::dim::type::undefined:
+				[[fallthrough]];
+			case ruis::dim::type::min:
+				// measured against the space actually available, so the widget reports its size
+				// clamped to it (the result is additionally clamped to parent_dims below);
+				// to get the unclamped natural size, pass measure_infinite_quotum as the
+				// parent dimension in that direction
+				d[i] = parent_dims[i];
+				mode[i] = measure_mode::at_most;
 				break;
 			case ruis::dim::type::fill:
 				if (parent_mode[i] == measure_mode::exactly) {
@@ -525,12 +537,6 @@ vec2 ruis::dims_for_widget(
 					d[i] = 0;
 				}
 				mode[i] = measure_mode::exactly;
-				break;
-			case ruis::dim::type::undefined:
-				[[fallthrough]];
-			case ruis::dim::type::min:
-				d[i] = measure_infinite_quotum;
-				mode[i] = measure_mode::at_most; // will be updated below
 				break;
 			case ruis::dim::type::length:
 				d[i] = dim.get_length().get(w.context);
@@ -544,6 +550,15 @@ vec2 ruis::dims_for_widget(
 			if (mode[i] == measure_mode::at_most) {
 				d[i] = md[i];
 			}
+		}
+	}
+	// 'min', 'undefined' and 'max' dimensions are clamped to the space actually available,
+	// i.e. the widget is not made bigger than parent_dims ('fill' and 'length' are exact sizes)
+	using std::min;
+	for (unsigned i = 0; i != 2; ++i) {
+		const auto t = lp.dims[i].get_type();
+		if (dim::is_min_type(t) || t == ruis::dim::type::max) {
+			d[i] = min(d[i], parent_dims[i]);
 		}
 	}
 	return d;

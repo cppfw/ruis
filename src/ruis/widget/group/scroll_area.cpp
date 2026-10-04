@@ -185,11 +185,24 @@ void scroll_area::on_lay_out()
 	// 'fill' and 'max' dimensions match the scroll area size (so there is no scrolling in that
 	// direction), 'min' and 'undefined' dimensions use the child's minimal (natural) size,
 	// 'length' dimensions use the fixed size.
+	// The content is allowed to be bigger than the scroll area, that is the point of scrolling,
+	// so 'min' (and 'undefined') dimensions are not clamped to the scroll area size:
+	// an infinite parent dimension is passed in those directions.
 	child.move_to(vec2(0));
+
+	vec2 parent_dims = this->rect().d;
+	const auto& lp = child.get_layout_params_const();
+	if (dim::is_min_type(lp.dims[0].get_type())) {
+		parent_dims[0] = measure_infinite_quotum;
+	}
+	if (dim::is_min_type(lp.dims[1].get_type())) {
+		parent_dims[1] = measure_infinite_quotum;
+	}
+
 	child.resize(dims_for_widget(
 		child, //
-		this->rect().d, //
-		r4::vector2<measure_mode>(measure_mode::exactly)
+		parent_dims,
+		r4::vector2<measure_mode>(measure_mode::exactly) // parent_mode
 	));
 
 	this->update_invisible_dims();

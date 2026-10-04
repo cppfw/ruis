@@ -224,6 +224,7 @@ dialog::dialog(
 	dialog(
 		context,
 		params,
+		// TODONOW: the dialog creates a panel rectangle which is already a container, no need to create a separate container for contents here.
 		m::container(
 			context,
 			// clang-format off

@@ -95,7 +95,9 @@ ruis::vec2 tab_group::measure(
 				case ruis::dim::type::undefined:
 					[[fallthrough]];
 				case ruis::dim::type::min:
-					d[j] = measure_infinite_quotum;
+					// the child is measured as at_most against the quotum, so it reports its size
+					// clamped to the available space
+					d[j] = quotum[j];
 					child_mode[j] = measure_mode::at_most;
 					break;
 				case ruis::dim::type::length:

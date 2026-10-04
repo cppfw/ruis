@@ -208,16 +208,23 @@ bool list::arrange_widget(
 	widget_list::const_iterator& insert_before
 )
 {
+	unsigned long_index = this->get_long_index();
+	unsigned trans_index = this->get_trans_index();
+
+	// items keep their natural size in the longitudinal direction (scrollable content),
+	// so an infinite parent dimension is passed in that direction for min-sized items
+	vec2 pd = this->rect().d;
+	if (dim::is_min_type(w.get().get_layout_params_const().dims[long_index].get_type())) {
+		pd[long_index] = measure_infinite_quotum;
+	}
+
 	vec2 dim = dims_for_widget(
 		w.get(), //
-		this->rect().d,
+		pd,
 		r4::vector2<measure_mode>(measure_mode::exactly)
 	);
 
 	w.get().resize(dim);
-
-	unsigned long_index = this->get_long_index();
-	unsigned trans_index = this->get_trans_index();
 
 	{
 		vec2 to;
@@ -333,9 +340,16 @@ void list::update_tail_items_info()
 
 		auto w = this->get_provider().get_widget(i - 1);
 
+		// items keep their natural size in the longitudinal direction (scrollable content),
+		// so an infinite parent dimension is passed in that direction for min-sized items
+		vec2 pd = this->rect().d;
+		if (dim::is_min_type(w.get().get_layout_params_const().dims[long_index].get_type())) {
+			pd[long_index] = measure_infinite_quotum;
+		}
+
 		vec2 d = dims_for_widget(
 			w.get(), //
-			this->rect().d,
+			pd,
 			r4::vector2<measure_mode>(measure_mode::exactly)
 		);
 
@@ -464,9 +478,17 @@ real list::scroll_by(real delta)
 
 			for (; this->pos_index < this->first_tail_item_index;) {
 				auto w = this->get_provider().get_widget(this->pos_index);
+
+				// items keep their natural size in the longitudinal direction (scrollable content),
+				// so an infinite parent dimension is passed in that direction for min-sized items
+				vec2 pd = this->rect().d;
+				if (dim::is_min_type(w.get().get_layout_params_const().dims[long_index].get_type())) {
+					pd[long_index] = measure_infinite_quotum;
+				}
+
 				vec2 dims = dims_for_widget(
 					w.get(), //
-					this->rect().d,
+					pd,
 					r4::vector2<measure_mode>(measure_mode::exactly)
 				);
 				auto long_dim = dims[long_index];
@@ -488,7 +510,6 @@ real list::scroll_by(real delta)
 
 			if (this->pos_index == this->first_tail_item_index) {
 				// we have scrolled till the end of the list, and are within the last item
-				// std::cout << "222222222222222222222222222" << std::endl;
 				utki::assert(this->pos_offset <= this->first_tail_item_offset, SL);
 				auto max_scroll_till_end = this->first_tail_item_offset - this->pos_offset;
 				using std::min;
@@ -519,9 +540,17 @@ real list::scroll_by(real delta)
 					SL
 				);
 				auto w = this->get_provider().get_widget(this->pos_index);
+
+				// items keep their natural size in the longitudinal direction (scrollable content),
+				// so an infinite parent dimension is passed in that direction for min-sized items
+				vec2 pd = this->rect().d;
+				if (dim::is_min_type(w.get().get_layout_params_const().dims[long_index].get_type())) {
+					pd[long_index] = measure_infinite_quotum;
+				}
+
 				vec2 d = dims_for_widget(
 					w.get(), //
-					this->rect().d,
+					pd,
 					r4::vector2<measure_mode>(measure_mode::exactly)
 				);
 				auto long_dim = d[long_index];
@@ -580,12 +609,18 @@ ruis::vec2 list::measure(
 	vec2 item_parent(quotum);
 	r4::vector2<measure_mode> item_parent_mode;
 
-	// items always report their natural size in the long direction
+	// items always report their natural size in the long direction (it is the scrollable direction,
+	// so items must not be clamped to the list's quotum there), hence the infinite parent dimension
+	item_parent[long_index] = measure_infinite_quotum;
 	item_parent_mode[long_index] = measure_mode::at_most;
 	item_parent_mode[trans_index] = mode[trans_index];
 
 	auto item_dim = [&](size_t index) -> vec2 {
-		return dims_for_widget(provider.get_widget(index).get(), item_parent, item_parent_mode);
+		return dims_for_widget(
+			provider.get_widget(index).get(), //
+			item_parent,
+			item_parent_mode
+		);
 	};
 
 	// The min size in the longitudinal direction.

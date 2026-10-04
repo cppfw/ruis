@@ -109,6 +109,15 @@ public:
 		return this->type_v;
 	}
 
+	/**
+	 * @brief Returns true if the given dimension type resolves to 'min'.
+	 * The 'undefined' dimension type is treated as 'min' by the layouts.
+	 */
+	static constexpr bool is_min_type(type t) noexcept
+	{
+		return t == type::min || t == type::undefined;
+	}
+
 	auto get_length() const noexcept
 	{
 		return this->value.get();

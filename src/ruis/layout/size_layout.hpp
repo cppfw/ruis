@@ -37,8 +37,10 @@ public:
 	/**
 	 * @brief Measure the minimal size needed to show all the children.
 	 * For each child the size is resolved according to the layout parameters:
-	 * min/undefined/max children are measured at_most, length children use their fixed size,
-	 * fill children do not constrain the size. The child's position is added to its size.
+	 * min/undefined/max children are measured at_most against the space actually available to them
+	 * (from their position to the edge of the quotum), so they report their size clamped to it,
+	 * length children use their fixed size, fill children do not constrain the size.
+	 * The child's position is added to its size.
 	 */
 	ruis::vec2 measure(
 		const ruis::vec2& quotum, //
@@ -46,6 +48,12 @@ public:
 		ruis::const_widget_list& widgets
 	) const override;
 
+	/**
+	 * @brief Resize the children according to their layout parameters.
+	 * 'fill' and 'max' children are stretched to the space available to them, 'length' children
+	 * use their fixed size. Unlike measure, 'min' (and 'undefined') children are not clamped to
+	 * the space actually available to them, the content is allowed to exceed the size_layout size.
+	 */
 	void lay_out(
 		const vec2& dims, //
 		semiconst_widget_list& widgets

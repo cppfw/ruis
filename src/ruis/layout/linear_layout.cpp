@@ -218,9 +218,49 @@ void linear_layout::lay_out(
 					}
 				}
 
+				// 'min' (and 'undefined') dimensions are clamped to the space actually available:
+				// the transverse dimension to the full transverse container size and the longitudinal
+				// dimension to the space left in the longitudinal direction (clamped to zero, a
+				// preceding fixed-size child might have already taken all the space)
+				using std::min;
+				using std::max;
+				if (dim::is_min_type(long_dim.get_type())) {
+					auto space_left = max(dims[long_index] - pos, real(0));
+					d[long_index] = min(d[long_index], space_left);
+				}
+				if (dim::is_min_type(trans_dim.get_type())) {
+					d[trans_index] = min(d[trans_index], dims[trans_index]);
+				}
+
 				w.get().resize(d);
+
+				// the position advances by the actually given (clamped) longitudinal size
+				long_room = d[long_index];
 			} else {
-				w.get().resize(info->measured_dims);
+				// weight is 0
+
+				vec2 d = info->measured_dims;
+
+				// TODO: thie following clamping is a repeated code in the two if branches, refactor to avoid code repetition.
+
+				// 'min' (and 'undefined') dimensions are clamped to the space actually available:
+				// the transverse dimension to the full transverse container size and the longitudinal
+				// dimension to the space left in the longitudinal direction (clamped to zero, a
+				// preceding fixed-size child might have already taken all the space)
+				using std::min;
+				using std::max;
+				if (dim::is_min_type(lp.dims[long_index].get_type())) {
+					auto space_left = max(dims[long_index] - pos, real(0));
+					d[long_index] = min(d[long_index], space_left);
+				}
+				if (dim::is_min_type(lp.dims[trans_index].get_type())) {
+					d[trans_index] = min(d[trans_index], dims[trans_index]);
+				}
+
+				w.get().resize(d);
+
+				// the position advances by the actually given (clamped) longitudinal size
+				long_room = d[long_index];
 			}
 
 			vec2 room;
@@ -301,18 +341,18 @@ ruis::vec2 linear_layout::measure(
 
 			switch (trans_dim.get_type()) {
 				case dim::type::max:
-					if (mode[trans_index] == measure_mode::exactly) {
-						child_quotum[trans_index] = quotum[trans_index];
-						child_mode[trans_index] = measure_mode::exactly;
-					} else {
-						child_quotum[trans_index] = measure_infinite_quotum;
-						child_mode[trans_index] = measure_mode::at_most;
-					}
+					// we know the child will be resized to the parent size for max when layouting,
+					// so if the parent is measured exactly, the child is measured with exactly
+					// the parent size, otherwise it behaves the same as 'min'
+					child_quotum[trans_index] = quotum[trans_index];
+					child_mode[trans_index] = mode[trans_index];
 					break;
 				case dim::type::undefined:
 					[[fallthrough]];
 				case dim::type::min:
-					child_quotum[trans_index] = measure_infinite_quotum;
+					// the child is measured as at_most against the quotum, so it reports its size
+					// clamped to the available space
+					child_quotum[trans_index] = quotum[trans_index];
 					child_mode[trans_index] = measure_mode::at_most;
 					break;
 				case dim::type::length:
@@ -326,13 +366,16 @@ ruis::vec2 linear_layout::measure(
 			const auto& long_dim = lp.dims[long_index];
 
 			switch (long_dim.get_type()) {
-				// NOLINTNEXTLINE(bugprone-branch-clone, "false positive")
+				case dim::type::max:
+					// We don't know how much space will be given to the child widget in longitudinal
+					// direction, so measure it same as min.
+					[[fallthrough]];
 				case dim::type::undefined:
 					[[fallthrough]];
 				case dim::type::min:
-					[[fallthrough]];
-				case dim::type::max:
-					child_quotum[long_index] = measure_infinite_quotum;
+					// the child is measured as at_most against the quotum, so it reports its size
+					// clamped to the available space
+					child_quotum[long_index] = quotum[long_index];
 					child_mode[long_index] = measure_mode::at_most;
 					break;
 				case dim::type::fill:
@@ -379,12 +422,16 @@ ruis::vec2 linear_layout::measure(
 					const auto& long_dim = lp.dims[long_index];
 					switch (long_dim.get_type()) {
 						// NOLINTNEXTLINE(bugprone-branch-clone, "false positive")
+						case dim::type::max:
+							// We don't know how much space will be given to the child widget in longitudinal
+							// direction, so measure it same as min.
+							[[fallthrough]];
 						case dim::type::undefined:
 							[[fallthrough]];
 						case dim::type::min:
-							[[fallthrough]];
-						case dim::type::max:
-							child_quotum[long_index] = measure_infinite_quotum;
+							// the child is measured as at_most against the quotum, so it reports its size
+							// clamped to the available space
+							child_quotum[long_index] = quotum[long_index];
 							child_mode[long_index] = measure_mode::at_most;
 							break;
 						case dim::type::fill:
@@ -474,18 +521,18 @@ ruis::vec2 linear_layout::measure(
 
 			switch (trans_dim.get_type()) {
 				case dim::type::max:
-					if (mode[trans_index] == measure_mode::exactly) {
-						d[trans_index] = quotum[trans_index];
-						d_mode[trans_index] = measure_mode::exactly;
-					} else {
-						d[trans_index] = measure_infinite_quotum;
-						d_mode[trans_index] = measure_mode::at_most;
-					}
+					// we know the child will be resized to the parent size for max when layouting,
+					// so if the parent is measured exactly, the child is measured with exactly
+					// the parent size, otherwise it behaves the same as 'min'
+					d[trans_index] = quotum[trans_index];
+					d_mode[trans_index] = mode[trans_index];
 					break;
 				case dim::type::undefined:
 					[[fallthrough]];
 				case dim::type::min:
-					d[trans_index] = measure_infinite_quotum;
+					// the child is measured as at_most against the quotum, so it reports its size
+					// clamped to the available space
+					d[trans_index] = quotum[trans_index];
 					d_mode[trans_index] = measure_mode::at_most;
 					break;
 				case dim::type::fill:

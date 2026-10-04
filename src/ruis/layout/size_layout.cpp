@@ -40,9 +40,14 @@ ruis::vec2 size_layout::measure(
 	for (const auto& w : widgets) {
 		auto& ww = w.get();
 		// Resolve the child's size according to its layout parameters.
+		// 'min' (and 'undefined') children are measured against the space actually available
+		// to them (from their position to the edge of the parent quotum).
 		auto d = dims_for_widget(
 			ww, //
-			vec2(0), //
+			max( //
+				quotum - ww.rect().p, //
+				vec2(0) //
+			), //
 			r4::vector2<measure_mode>(measure_mode::at_most)
 		);
 		for (unsigned i = 0; i != ret.size(); ++i) {
@@ -62,17 +67,22 @@ void size_layout::lay_out(
 ) const
 {
 	for (const auto& w : widgets) {
-		if (w.get().is_layout_dirty()) {
+		auto& ww = w.get();
+		if (ww.is_layout_dirty()) {
 			using std::max;
-			auto d = dims_for_widget(
-				w.get(), //
-				max( //
-					dims - w.get().rect().p,
-					{0, 0} //
-				), //
-				r4::vector2<measure_mode>(measure_mode::exactly)
-			);
-			w.get().resize(d);
+			// 'min' (and 'undefined') children are not clamped to the space available, the content
+			// is allowed to exceed the parent size (absolute positioning semantics),
+			// so an infinite parent dimension is passed in those directions
+			vec2 pd = max(dims - ww.rect().p, vec2(0));
+			const auto& lp = ww.get_layout_params_const();
+			if (dim::is_min_type(lp.dims[0].get_type())) {
+				pd[0] = measure_infinite_quotum;
+			}
+			if (dim::is_min_type(lp.dims[1].get_type())) {
+				pd[1] = measure_infinite_quotum;
+			}
+
+			ww.resize(dims_for_widget(ww, pd, r4::vector2<measure_mode>(measure_mode::exactly)));
 		}
 	}
 }
