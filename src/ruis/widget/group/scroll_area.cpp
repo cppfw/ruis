@@ -35,8 +35,8 @@ scroll_area::scroll_area(
 	widget(
 		context, //
 		std::move(params.layout_params),
-		[&](){
-			if(auto& c = params.widget.clip; !c.has_value()){
+		[&]() {
+			if (auto& c = params.widget.clip; !c.has_value()) {
 				c = true;
 			}
 
@@ -53,6 +53,28 @@ scroll_area::scroll_area(
 	)
 // clang-format on
 {}
+
+ruis::vec2 scroll_area::measure(
+	const ruis::vec2& quotum, //
+	const r4::vector2<measure_mode>& mode //
+) const
+{
+	// In at_most dimensions, report the size needed to show all the contents without scrolling.
+	vec2 ret(quotum);
+	if (mode.x() == measure_mode::at_most || mode.y() == measure_mode::at_most) {
+		vec2 d = dims_for_widget(
+			this->child(), //
+			quotum,
+			mode
+		);
+		for (unsigned i = 0; i != ret.size(); ++i) {
+			if (mode[i] == measure_mode::at_most) {
+				ret[i] = d[i];
+			}
+		}
+	}
+	return ret;
+}
 
 event_status scroll_area::on_mouse_button(const mouse_button_event& e)
 {

@@ -87,15 +87,16 @@ public:
 
 	void render(const ruis::mat4& matrix) const override;
 
-	// review: do the actual measuring of the child widget
+	/**
+	 * @brief Measure the size of the scroll area.
+	 * In at_most dimensions, reports the size needed to show all the contents without scrolling:
+	 * 'fill' child dimensions do not constrain the size (there is no scrolling in that direction),
+	 * 'min'/'undefined'/'max' dimensions use the child's natural size, 'length' uses the fixed size.
+	 */
 	ruis::vec2 measure(
 		const ruis::vec2& quotum, //
 		const r4::vector2<measure_mode>& mode //
-	) const override
-	{
-		// NOLINTNEXTLINE(bugprone-parent-virtual-call, "we want to cancel container::measure() override")
-		return this->widget::measure(quotum, mode);
-	}
+	) const override;
 
 	void on_lay_out() override;
 

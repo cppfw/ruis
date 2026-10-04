@@ -29,17 +29,17 @@ namespace ruis {
   * @brief Size layout.
   * This layout only modifies dimensions of widgets according to their layout parameters,
   * it does not change position of widgets at all.
-  *
-  * review: move this comment to he doxygen comment of the actuial measure() method.
-  * measure() reports the minimal size needed to show all the children: for each child it resolves
-  * the size according to the layout parameters (min/undefined/max children are measured at_most,
-  * length children use their fixed size, fill children do not constrain the size) and adds
-  * the child's position.
  */
 // The size_layout is used at least in ruis::overlay.
 class size_layout : public trivial_layout
 {
 public:
+	/**
+	 * @brief Measure the minimal size needed to show all the children.
+	 * For each child the size is resolved according to the layout parameters:
+	 * min/undefined/max children are measured at_most, length children use their fixed size,
+	 * fill children do not constrain the size. The child's position is added to its size.
+	 */
 	ruis::vec2 measure(
 		const ruis::vec2& quotum, //
 		const r4::vector2<ruis::measure_mode>& mode, //
