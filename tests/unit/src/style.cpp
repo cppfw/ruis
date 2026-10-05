@@ -107,7 +107,7 @@ const tst::set set("style", [](tst::suite& suite) {
 		tst::check_eq(length_small_gap.get(), ruis::length::make_pp(4), SL);
 
 		auto length_big_gap = s.get_len_gap_big();
-		tst::check_eq(length_big_gap.get(), ruis::length::make_pp(16), SL);
+		tst::check_eq(length_big_gap.get(), ruis::length::make_pp(25), SL);
 	});
 
 	// test that ruis::real values can be obtained from style
@@ -262,17 +262,17 @@ const tst::set set("style", [](tst::suite& suite) {
 		tst::check_eq(tml::to_string(ss.get(ruis::style::color_background)), "0xff101010"s, SL);
 		tst::check_eq(tml::to_string(ss.get(ruis::style::color_panel)), "0xff424242"s, SL);
 		tst::check_eq(tml::to_string(ss.get(ruis::style::color_special)), "0xffff8080"s, SL);
-		tst::check_eq(tml::to_string(ss.get(ruis::style::color_primary)), "0xff505050"s, SL);
+		tst::check_eq(tml::to_string(ss.get(ruis::style::color_primary)), "0xff686868"s, SL);
 		tst::check_eq(tml::to_string(ss.get(ruis::style::color_secondary)), "0xff303030"s, SL);
-		tst::check_eq(tml::to_string(ss.get(ruis::style::color_highlight)), "0xffad9869"s, SL);
+		tst::check_eq(tml::to_string(ss.get(ruis::style::color_highlight)), "0xffcdb889"s, SL);
 		tst::check_eq(tml::to_string(ss.get(ruis::style::color_dimmed)), "0xb0000000"s, SL);
 		tst::check_eq(tml::to_string(ss.get(ruis::style::color_text)), "0xffffffff"s, SL);
 		tst::check_eq(tml::to_string(ss.get(ruis::style::color_text_secondary)), "0xffa0a0a0"s, SL);
 		tst::check_eq(tml::to_string(ss.get(ruis::style::color_text_special)), "0xff80ff80"s, SL);
 		tst::check_eq(tml::to_string(ss.get(ruis::style::len_indent)), "17pp"s, SL);
 		tst::check_eq(tml::to_string(ss.get(ruis::style::len_gap_small)), "4pp"s, SL);
-		tst::check_eq(tml::to_string(ss.get(ruis::style::len_gap)), "8pp"s, SL);
-		tst::check_eq(tml::to_string(ss.get(ruis::style::len_gap_big)), "16pp"s, SL);
+		tst::check_eq(tml::to_string(ss.get(ruis::style::len_gap)), "10pp"s, SL);
+		tst::check_eq(tml::to_string(ss.get(ruis::style::len_gap_big)), "25pp"s, SL);
 		tst::check_eq(tml::to_string(ss.get(ruis::style::len_border)), "1pp"s, SL);
 		tst::check_eq(tml::to_string(ss.get(ruis::style::font_size_primary)), "14pp"s, SL);
 		tst::check_eq(tml::to_string(ss.get(ruis::style::font_size_secondary)), "12pp"s, SL);
