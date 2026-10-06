@@ -22,8 +22,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "context_menu.hpp"
 
 #include <algorithm>
+#include <functional>
 
 #include <ruis/util/length.hpp>
+#include <ruis/util/widget_list.hpp>
 #include <ruis/widget/container.hpp>
 #include <ruis/widget/group/overlay.hpp>
 #include <ruis/widget/label/rectangle.hpp>
@@ -81,34 +83,72 @@ context_menu::context_menu(
 	ruis::touch::list(context, std::move(params))
 {}
 
-// ---------------------------
-// = context_menu_provider =
-// ---------------------------
+// --------------------------
+// = decorated_provider =
+// --------------------------
 
-context_menu_provider::context_menu_provider(
-	const utki::shared_ref<ruis::context>& context, //
-	ruis::widget_list widgets
-) :
-	ruis::list_provider(context)
+/**
+ * @brief A ruis::list_provider which decorates the widgets of another provider.
+ * Each item widget of the content provider is wrapped with a ruis::click_proxy
+ * and a ruis::mouse_proxy which show a background of color_highlight color while
+ * the item is pressed and of color_secondary color while the item is hovered.
+ * Consecutive items are separated by a thin line of color_secondary color.
+ */
+class decorated_provider : public ruis::list_provider
 {
-	this->items.reserve(widgets.size());
-	for (size_t i = 0; i != widgets.size(); ++i) {
-		this->items.push_back(this->wrap_item(widgets[i], i + 1 == widgets.size()));
+	utki::unique_ref<ruis::list_provider> content;
+	ruis::widget_list items;
+
+public:
+	/**
+	 * @brief Item click handler.
+	 * Invoked when a menu item is clicked.
+	 * The show() function sets this handler to close the menu.
+	 */
+	std::function<void()> on_item_click;
+
+	decorated_provider(
+		const utki::shared_ref<ruis::context>& context, //
+		utki::unique_ref<ruis::list_provider> content
+	);
+
+	size_t count() const noexcept override;
+	utki::shared_ref<ruis::widget> get_widget(size_t index) const override;
+
+private:
+	utki::shared_ref<ruis::widget> wrap_item(
+		const utki::shared_ref<ruis::widget>& widget, //
+		bool is_last
+	);
+};
+
+decorated_provider::decorated_provider(
+	const utki::shared_ref<ruis::context>& context, //
+	utki::unique_ref<ruis::list_provider> content
+) :
+	ruis::list_provider(context), //
+	content(std::move(content))
+{
+	auto& c = this->content.get();
+	auto n = c.count();
+	this->items.reserve(n);
+	for (size_t i = 0; i != n; ++i) {
+		this->items.push_back(this->wrap_item(c.get_widget(i), i + 1 == n));
 	}
 }
 
-size_t context_menu_provider::count() const noexcept
+size_t decorated_provider::count() const noexcept
 {
 	return this->items.size();
 }
 
-utki::shared_ref<ruis::widget> context_menu_provider::get_widget(size_t index) const
+utki::shared_ref<ruis::widget> decorated_provider::get_widget(size_t index) const
 {
 	return this->items[index];
 }
 
-utki::shared_ref<ruis::widget> context_menu_provider::wrap_item(
-	const utki::shared_ref<ruis::widget>& content, //
+utki::shared_ref<ruis::widget> decorated_provider::wrap_item(
+	const utki::shared_ref<ruis::widget>& widget, //
 	bool is_last
 )
 {
@@ -208,7 +248,7 @@ utki::shared_ref<ruis::widget> context_menu_provider::wrap_item(
 		},
 		{
 			std::move(background),
-			std::move(content),
+			std::move(widget),
 			std::move(click_proxy),
 			std::move(mouse_proxy)
 		}
@@ -301,7 +341,7 @@ vec2 compute_anchor(
 
 void show(
 	ruis::widget& anchor, //
-	ruis::widget_list widgets
+	utki::unique_ref<ruis::list_provider> provider
 )
 {
 	auto olay = anchor.try_get_ancestor<ruis::overlay>();
@@ -313,8 +353,8 @@ void show(
 	auto& style = context.get().style();
 	auto screen = olay->rect().d;
 
-	auto provider = utki::make_unique<context_menu_provider>(context, std::move(widgets));
-	auto& provider_ref = provider.get();
+	auto menu_provider = utki::make_unique<decorated_provider>(context, std::move(provider));
+	auto& provider_ref = menu_provider.get();
 
 	// clang-format off
 	auto menu_params = context_menu::all_parameters{
@@ -323,7 +363,7 @@ void show(
 		},
 		.params{
 			.specific{
-				.provider = std::move(provider)
+				.provider = std::move(menu_provider)
 			}
 		}
 	};

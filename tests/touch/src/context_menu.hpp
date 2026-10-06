@@ -21,9 +21,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include <functional>
-
-#include <ruis/util/widget_list.hpp>
 #include <ruis/widget/base/list_widget.hpp>
 #include <ruis/widget/group/touch/list.hpp>
 
@@ -46,45 +43,13 @@ public:
 };
 
 /**
- * @brief A ruis::list_provider which provides context menu item widgets.
- * Each widget supplied to the provider is wrapped with a ruis::click_proxy and a
- * ruis::mouse_proxy which show a background of color_special color while the item
- * is pressed and of color_highlight color while the item is hovered.
- */
-class context_menu_provider : public ruis::list_provider
-{
-	ruis::widget_list items;
-
-public:
-	/**
-	 * @brief Item click handler.
-	 * Invoked when a menu item is clicked.
-	 * The context_menu::show() function sets this handler to close the menu.
-	 */
-	std::function<void()> on_item_click;
-
-	context_menu_provider(
-		const utki::shared_ref<ruis::context>& context, //
-		ruis::widget_list widgets
-	);
-
-	size_t count() const noexcept override;
-	utki::shared_ref<ruis::widget> get_widget(size_t index) const override;
-
-private:
-	utki::shared_ref<ruis::widget> wrap_item(
-		const utki::shared_ref<ruis::widget>& content, //
-		bool is_last
-	);
-};
-
-/**
  * @brief Shows a context menu near the given anchor widget.
  * The context menu is a context_menu widget (a ruis::list_widget) whose items
- * are supplied by a context_menu_provider constructed from the given widgets.
- * Each supplied widget is wrapped with a ruis::click_proxy and a ruis::mouse_proxy
- * which show a background of color_special color while the item is pressed and of
- * color_highlight color while the item is hovered, and closes the menu on click.
+ * are supplied by the given list_provider.
+ * Each item widget provided by the list_provider is wrapped with a
+ * ruis::click_proxy and a ruis::mouse_proxy which show a background of
+ * color_highlight color while the item is pressed and of color_secondary color
+ * while the item is hovered, and closes the menu on click.
  * Consecutive menu items are separated by a thin line of color_secondary color.
  * The menu is min-wrap horizontally, and min-wrap vertically, but clamped to the
  * screen so that it fits even if the list is longer than the screen
@@ -92,11 +57,12 @@ private:
  * The menu is shown on the nearest ruis::overlay ancestor of the anchor widget
  * and is automatically closed when a click happens outside of it.
  * @param anchor - the widget near which the menu should be shown.
- * @param widgets - the list of widgets to use as menu items.
+ * @param provider - the list provider to supply menu item widgets with.
+ *                   Takes ownership of the provider.
  */
 void show(
 	ruis::widget& anchor, //
-	ruis::widget_list widgets
+	utki::unique_ref<ruis::list_provider> provider
 );
 
 } // namespace context_menu

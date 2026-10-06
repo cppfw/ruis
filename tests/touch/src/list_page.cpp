@@ -21,6 +21,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "list_page.hpp"
 
+#include <ruis/util/widget_list.hpp>
 #include <ruis/widget/button/impl/ellipse_push_button.hpp>
 #include <ruis/widget/group/touch/list.hpp>
 #include <ruis/widget/label/gap.hpp>
@@ -29,6 +30,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <ruis/widget/label/text.hpp>
 #include <utki/string.hpp>
 #include <utki/unicode.hpp>
+#include <utki/unique_ref.hpp>
 
 #include "context_menu.hpp"
 #include "style.hpp"
@@ -37,6 +39,32 @@ using namespace std::string_literals;
 using namespace std::string_view_literals;
 
 namespace {
+// A ruis::list_provider which provides the widgets of the context menu items.
+class menu_provider : public ruis::list_provider
+{
+	ruis::widget_list items;
+
+public:
+	menu_provider(
+		const utki::shared_ref<ruis::context>& context, //
+		ruis::widget_list widgets
+	) :
+		ruis::list_provider(context) //
+	{
+		this->items = std::move(widgets);
+	}
+
+	size_t count() const noexcept override
+	{
+		return this->items.size();
+	}
+
+	utki::shared_ref<ruis::widget> get_widget(size_t index) const override
+	{
+		return this->items[index];
+	}
+};
+
 class list_page_provider : public ruis::list_provider
 {
 public:
@@ -142,16 +170,13 @@ public:
 
 		// When the three dots button is clicked, show a context menu near it.
 		menu_button.get().click_handler = [this](auto& btn) {
-			// clang-format off
-			context_menu::show(btn,
-				{
-					this->make_menu_item(U"Edit"s), //
-					this->make_menu_item(U"Copy"s), //
-					this->make_menu_item(U"Share"s), //
-					this->make_menu_item(U"Move to trash"s) //
-				}
-			);
-			// clang-format on
+			ruis::widget_list items = {
+				this->make_menu_item(U"Edit"s), //
+				this->make_menu_item(U"Copy"s), //
+				this->make_menu_item(U"Share"s), //
+				this->make_menu_item(U"Move to trash"s) //
+			};
+			context_menu::show(btn, utki::make_unique<menu_provider>(this->context, std::move(items)));
 		};
 
 		// clang-format off
