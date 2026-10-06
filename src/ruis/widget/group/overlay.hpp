@@ -60,6 +60,9 @@ public:
 	 * (i.e. close the popup in case of mouse click outside).
  * Mouse clicks outside of the popup are consumed and do not propagate
  * to the widgets below the popup (to prevent accidental clicks on them).
+ * The popup is closed on the first mouse button press event outside of it.
+ * All subsequent mouse events (including the corresponding release) are
+ * consumed and ignored until the popup is removed.
 	 * @param popup - popup widget to show.
 	 * @param pos - position of top left corner of the popup within the overlay container.
 	 * @return the final widget added to the overlay. This widget can be used to later close the particular popup

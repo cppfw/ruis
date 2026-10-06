@@ -120,19 +120,29 @@ utki::shared_ref<widget> overlay::show_popup(
 
 	mp.get().mouse_button_handler = //
 		[ //
-			cntr{utki::make_weak(c)} //
+			cntr{utki::make_weak(c)}, //
+			removal_requested{false} //
 	]( //
 			mouse_proxy& w, //
 			const mouse_button_event& e
-		) //
+		) mutable //
 	{
-		if (auto c = cntr.lock()) {
-			c->ctx().post_to_ui_thread([c]() {
-				c->remove_from_parent();
-			});
+		// The removal is posted to the ui thread, so it may happen that several press events
+		// are received before the popup is actually removed from the parent; the flag makes sure
+		// that the removal is requested only once.
+		// Close the popup on the first press and request the removal only once
+		if (!removal_requested && e.action == button_action::press) {
+			removal_requested = true;
+			if (auto c = cntr.lock()) {
+				c->ctx().post_to_ui_thread([c]() {
+					c->remove_from_parent();
+				});
+			}
 		}
 		// consume the event so that it does not propagate to the widgets
-		// below the popup (to prevent accidental clicks on them)
+		// below the popup (to prevent accidental clicks on them);
+		// any event after the removal request (e.g. the corresponding release)
+		// is also just consumed and ignored
 		return event_status::consumed;
 	};
 
