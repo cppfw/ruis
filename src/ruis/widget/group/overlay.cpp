@@ -131,7 +131,9 @@ utki::shared_ref<widget> overlay::show_popup(
 				c->remove_from_parent();
 			});
 		}
-		return event_status::propagate;
+		// consume the event so that it does not propagate to the widgets
+		// below the popup (to prevent accidental clicks on them)
+		return event_status::consumed;
 	};
 
 	auto& w = popup.get();

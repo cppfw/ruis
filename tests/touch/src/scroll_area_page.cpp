@@ -32,8 +32,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <ruis/widget/label/padding.hpp>
 #include <ruis/widget/label/text.hpp>
 #include <ruis/widget/slider/scroll_bar.hpp>
+#include <utki/unicode.hpp>
 
 #include "application.hpp"
+#include "context_menu.hpp"
 #include "style.hpp"
 
 using namespace std::string_literals;
@@ -131,6 +133,56 @@ public:
 			}
 			,
 			this->items.at(index)
+		);
+		// clang-format on
+	}
+};
+
+// A ruis::list_provider which generates the widgets of a many items context menu.
+// Used to test context menus that are too long to fit on the screen.
+class many_items_menu_provider : public ruis::list_provider
+{
+	size_t num_items;
+
+public:
+	many_items_menu_provider(
+		const utki::shared_ref<ruis::context>& context, //
+		size_t num_items
+	) :
+		ruis::list_provider(context), //
+		num_items(num_items)
+	{}
+
+	size_t count() const noexcept override
+	{
+		return this->num_items;
+	}
+
+	utki::shared_ref<ruis::widget> get_widget(size_t index) const override
+	{
+		// clang-format off
+		return m::padding(this->context,
+			{
+				.layout_params{
+					.dims = {ruis::dim::min, ruis::dim::min}
+				},
+				.params{
+					.container{
+						.layout = ruis::layout::pile
+					},
+					.specific{
+						.borders = {
+							ruis::length::make_pp(12), // left
+							ruis::length::make_pp(6), // top
+							ruis::length::make_pp(12), // right
+							ruis::length::make_pp(6) // bottom
+						}
+					}
+				}
+			},
+			{
+				m::text(this->context, {}, U"Item "s + utki::to_utf32(std::to_string(index + 1)))
+			}
 		);
 		// clang-format on
 	}
@@ -341,6 +393,25 @@ ruis::widget_list make_scroll_area_page_contents(const utki::shared_ref<ruis::co
 	};
 
 	// clang-format off
+	auto button_2 = m::push_button(c,
+		{
+			.layout_params{
+				.dims = {ruis::dim::fill, 200_pp}
+			}
+		},
+		{
+			m::text(c, {}, U"Button 2 (many items context menu)"s)
+		}
+	);
+	// clang-format on
+
+	// opens a context menu with many items, too long to fit on the screen
+	// (the menu is clamped to the screen size and can be scrolled)
+	button_2.get().click_handler = [](ruis::push_button& b) {
+		context_menu::show(b, utki::make_unique<many_items_menu_provider>(b.context, 100));
+	};
+
+	// clang-format off
 	return {
 		theme_selector,
 		ruis::make::gap(c,
@@ -359,6 +430,14 @@ ruis::widget_list make_scroll_area_page_contents(const utki::shared_ref<ruis::co
 			}
 		),
 		button_1,
+		ruis::make::gap(c,
+			{
+				.layout_params{
+					.dims = {ruis::dim::fill, c.get().style().get_len_gap_small().get()}
+				}
+			}
+		),
+		button_2,
 		ruis::make::gap(c,
 			{
 				.layout_params{

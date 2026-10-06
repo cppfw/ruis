@@ -40,19 +40,18 @@ using namespace std::string_view_literals;
 
 namespace {
 // A ruis::list_provider which provides the widgets of the context menu items.
-class menu_provider : public ruis::list_provider
+class premade_widgets_list_provider : public ruis::list_provider
 {
 	ruis::widget_list items;
 
 public:
-	menu_provider(
+	premade_widgets_list_provider(
 		const utki::shared_ref<ruis::context>& context, //
 		ruis::widget_list widgets
 	) :
-		ruis::list_provider(context) //
-	{
-		this->items = std::move(widgets);
-	}
+		ruis::list_provider(context),
+		items(std::move(widgets))
+	{}
 
 	size_t count() const noexcept override
 	{
@@ -176,7 +175,7 @@ public:
 				this->make_menu_item(U"Share"s), //
 				this->make_menu_item(U"Move to trash"s) //
 			};
-			context_menu::show(btn, utki::make_unique<menu_provider>(this->context, std::move(items)));
+			context_menu::show(btn, utki::make_unique<premade_widgets_list_provider>(this->context, std::move(items)));
 		};
 
 		// clang-format off
