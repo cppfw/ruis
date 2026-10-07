@@ -13,3 +13,11 @@ ruis_img_cross{
 ruis_img_more{
 	file{more.svg}
 }
+
+ruis_img_edit{
+	file{edit.svg}
+}
+
+ruis_img_delete{
+	file{delete.svg}
+}
