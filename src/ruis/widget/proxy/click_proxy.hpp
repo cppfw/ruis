@@ -25,6 +25,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
+// TODONEXT: make it inherit mouse_proxy
 class click_proxy : virtual public widget
 {
 	bool is_pressed_v = false;

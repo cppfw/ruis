@@ -92,6 +92,7 @@ decorated_provider::decorated_provider(
 	auto& c = this->content.get();
 	auto n = c.count();
 	this->items.reserve(n);
+	// TODONEXT: do not store widgets beforehand, create them right in get_widget().
 	for (size_t i = 0; i != n; ++i) {
 		this->items.push_back(this->wrap_item(c.get_widget(i), i, i + 1 == n));
 	}
@@ -182,6 +183,7 @@ utki::shared_ref<ruis::widget> decorated_provider::wrap_item(
 	);
 	// clang-format on
 
+	// TODONEXT: remove the mouse_proxy from here when click_proxy inherits mouse_proxy and handles hover state itself
 	// clang-format off
 	auto mouse_proxy = m::mouse_proxy(this->context,
 		{
