@@ -54,9 +54,6 @@ class context_menu :
 	public virtual widget, //
 	private container
 {
-	// the scrollable list of the menu items
-	utki::shared_ref<ruis::touch::list> list;
-
 public:
 	struct parameters {
 		ruis::list_widget::parameters list;

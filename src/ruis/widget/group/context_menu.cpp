@@ -336,54 +336,47 @@ ruis::context_menu::context_menu(
 				.layout = ruis::layout::pile //
 			} //
 		}, //
-		// review: can the frame creation be moved here from constructor body?
-		{} // the frame is added in the constructor body
-	), //
-	// clang-format on
-	list(std::move(list)) // review: is this member variable still needed?
-{
-	auto& style = context.get().style();
-
-	// the frame: a rectangle with a border that wraps the menu
-	// clang-format off
-	auto frame = m::rectangle(context,
-		{
-			.layout_params{
-				.dims = {ruis::dim::min, ruis::dim::min}
-			},
-			.widget{
-				.clip = true
-			},
-			.params{
-				.padding{
-					.container{
-						.layout = ruis::layout::pile
+		{ //
+			// the frame: a rectangle with a border that wraps the menu
+			m::rectangle( //
+				context, //
+				{
+					.layout_params{
+						.dims = {ruis::dim::min, ruis::dim::min}
 					},
-					.specific{
-						.borders = {
-							style.get_len_border(), // left
-							style.get_len_gap(), // top
-							style.get_len_border(), // right
-							style.get_len_gap() // bottom
+					.widget{
+						.clip = true
+					},
+					.params{
+						.padding{
+							.container{
+								.layout = ruis::layout::pile
+							},
+							.specific{
+								.borders = {
+									context.get().style().get_len_border(), // left
+									context.get().style().get_len_gap(), // top
+									context.get().style().get_len_border(), // right
+									context.get().style().get_len_gap() // bottom
+								}
+							}
+						},
+						.specific{
+							.corner_radii = {context.get().style().get_len_gap()},
+							.fill_color = context.get().style().get_color_background(),
+							.stroke_width = context.get().style().get_len_border(),
+							.stroke_color = context.get().style().get_color_primary()
 						}
 					}
 				},
-				.specific{
-					.corner_radii = {style.get_len_gap()},
-					.fill_color = style.get_color_background(),
-					.stroke_width = style.get_len_border(),
-					.stroke_color = style.get_color_primary()
+				{
+					std::move(list)
 				}
-			}
-		},
-		{
-			this->list
+			)
 		}
-	);
-	// clang-format on
-
-	this->push_back(std::move(frame));
-}
+	)
+// clang-format on
+{}
 
 void ruis::context_menu::close()
 {
