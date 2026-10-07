@@ -35,7 +35,7 @@ namespace {
  * @brief A ruis::list_provider which provides a single item
  * containing a ruis::mouse_proxy.
  * This mimics the structure of the context menu items
- * (see tests/touch/src/context_menu.cpp).
+ * (see src/ruis/widget/group/context_menu.cpp).
  */
 class hover_provider : public ruis::list_provider
 {

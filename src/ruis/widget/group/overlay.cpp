@@ -31,11 +31,13 @@ using namespace ruis;
 namespace {
 class popup_wrapper : public container
 {
+	// full-screen click catcher, closes the popup on the first press and consumes the events
+	// so that they do not propagate to the widgets below the popup (to prevent accidental
+	// clicks on them)
+	utki::shared_ref<mouse_proxy> click_catcher;
+
 public:
-	popup_wrapper(
-		const utki::shared_ref<ruis::context>& context, //
-		widget_list children
-	) :
+	popup_wrapper(const utki::shared_ref<ruis::context>& context) :
 		// clang-format off
 		widget(
 			context,
@@ -50,22 +52,78 @@ public:
 					.layout = ruis::layout::size
 				}
 			},
-			std::move(children)
-		)
+			{}
+		),
+		click_catcher([&]() {
+			// clang-format off
+			return ruis::make::mouse_proxy(context,
+				{
+					.layout_params{
+						.dims{ruis::dim::fill, ruis::dim::fill}
+					},
+					.widget{
+						.rectangle{
+							{0, 0}, // set left top corner
+							{1, 1} // dimensions do not matter
+						}
+					}
+				}
+			);
+			// clang-format on
+		}())
 	// clang-format on
-	{}
-
-	static utki::shared_ref<popup_wrapper> make(
-		const utki::shared_ref<ruis::context>& context, //
-		widget_list children
-	)
 	{
-		return utki::make_shared<popup_wrapper>(
-			context, //
-			std::move(children)
-		);
+		// the handler is owned by the click_catcher which is a member of this wrapper,
+		// so the handler cannot outlive the wrapper and it is safe to use a raw
+		// reference to the wrapper in the handler
+		this->click_catcher.get().mouse_button_handler = //
+			[ //
+				self{this}, //
+				removal_requested{false} //
+		]( //
+				mouse_proxy& w, //
+				const mouse_button_event& e
+			) mutable //
+		{
+			// The removal is posted to the ui thread, so it may happen that several press events
+			// are received before the popup is actually removed from the parent; the flag makes sure
+			// that the removal is requested only once.
+			// Close the popup on the first press and request the removal only once
+			if (!removal_requested && e.action == button_action::press) {
+				removal_requested = true;
+				self->ctx().post_to_ui_thread([self]() {
+					self->remove_from_parent();
+				});
+			}
+			// consume the event so that it does not propagate to the widgets
+			// below the popup (to prevent accidental clicks on them);
+			// any event after the removal request (e.g. the corresponding release)
+			// is also just consumed and ignored
+			return event_status::consumed;
+		};
+
+		this->push_back(this->click_catcher);
+	}
+
+	void on_children_change() override
+	{
+		// The wrapper always contains the click_catcher and the popup contents;
+		// in case the popup contents are removed (e.g. a context menu closes itself
+		// when a menu item is clicked), remove the wrapper too, so that its full-screen
+		// click catcher does not remain on top of the other widgets.
+		// (if the wrapper is not attached to a parent yet, there is nothing to remove,
+		// this also makes sure that make_shared_from is not called in the constructor)
+		if (this->parent() && this->children().size() < 2) {
+			auto self = utki::make_shared_from(*this);
+			this->context.get().post_to_ui_thread([self]() {
+				if (self.get().parent()) {
+					self.get().remove_from_parent();
+				}
+			});
+		}
 	}
 };
+
 } // namespace
 
 overlay::overlay(
@@ -96,55 +154,7 @@ utki::shared_ref<widget> overlay::show_popup(
 	vec2 anchor
 )
 {
-	// clang-format off
-	auto mp = ruis::make::mouse_proxy(this->context,
-		{
-			.layout_params{
-				.dims{ruis::dim::fill, ruis::dim::fill}
-			},
-			.widget{
-				.rectangle{
-					{0, 0}, // set left top corner
-					{1, 1} // dimensions do not matter
-				}
-			}
-		}
-	);
-
-	auto c = popup_wrapper::make(this->context,
-		{
-			mp
-		}
-	);
-	// clang-format on
-
-	mp.get().mouse_button_handler = //
-		[ //
-			cntr{utki::make_weak(c)}, //
-			removal_requested{false} //
-	]( //
-			mouse_proxy& w, //
-			const mouse_button_event& e
-		) mutable //
-	{
-		// The removal is posted to the ui thread, so it may happen that several press events
-		// are received before the popup is actually removed from the parent; the flag makes sure
-		// that the removal is requested only once.
-		// Close the popup on the first press and request the removal only once
-		if (!removal_requested && e.action == button_action::press) {
-			removal_requested = true;
-			if (auto c = cntr.lock()) {
-				c->ctx().post_to_ui_thread([c]() {
-					c->remove_from_parent();
-				});
-			}
-		}
-		// consume the event so that it does not propagate to the widgets
-		// below the popup (to prevent accidental clicks on them);
-		// any event after the removal request (e.g. the corresponding release)
-		// is also just consumed and ignored
-		return event_status::consumed;
-	};
+	auto c = utki::make_shared<popup_wrapper>(this->context);
 
 	auto& w = popup.get();
 

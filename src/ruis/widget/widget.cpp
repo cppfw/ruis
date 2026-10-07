@@ -123,6 +123,7 @@ void widget::lay_out()
 	this->on_lay_out();
 }
 
+// TODONEXT: do not return the shared_ref to the removed widget, just make it returning void.
 utki::shared_ref<widget> widget::remove_from_parent()
 {
 	if (!this->parent()) {
@@ -133,6 +134,7 @@ utki::shared_ref<widget> widget::remove_from_parent()
 	return ret;
 }
 
+// TODONEXT: remove this method
 utki::shared_ref<widget> widget::replace_by(const utki::shared_ref<widget>& w)
 {
 	if (!this->parent()) {

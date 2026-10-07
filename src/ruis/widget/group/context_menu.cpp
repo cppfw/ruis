@@ -22,31 +22,22 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "context_menu.hpp"
 
 #include <algorithm>
-#include <functional>
 
-#include <ruis/util/length.hpp>
-#include <ruis/util/widget_list.hpp>
-#include <ruis/widget/container.hpp>
-#include <ruis/widget/group/overlay.hpp>
-#include <ruis/widget/label/rectangle.hpp>
-#include <ruis/widget/proxy/click_proxy.hpp>
-#include <ruis/widget/proxy/mouse_proxy.hpp>
-#include <ruis/widget/widget.hpp>
 #include <utki/shared.hpp>
 
-namespace context_menu {
+#include "../../context.hpp"
+#include "../../util/widget_list.hpp"
+#include "../label/rectangle.hpp"
+#include "../proxy/click_proxy.hpp"
+#include "../proxy/mouse_proxy.hpp"
+#include "../widget.hpp"
+
+#include "touch/list.hpp"
+
+#include "overlay.hpp"
 
 namespace {
 namespace m = ruis::make;
-
-using ruis::length;
-using ruis::measure_infinite_quotum;
-using ruis::measure_mode;
-using ruis::real;
-using ruis::vec2;
-
-using std::max;
-using std::min;
 
 /**
  * @brief Hover/press state of a context menu item.
@@ -56,36 +47,6 @@ struct highlight_state {
 	bool hovered = false;
 	bool pressed = false;
 };
-} // namespace
-
-// ------------------------
-// = context_menu widget =
-// ------------------------
-
-context_menu::context_menu(
-	const utki::shared_ref<ruis::context>& context, //
-	all_parameters params
-) :
-	// NOTE: ruis::widget is a virtual base class of ruis::touch::list,
-	//       so it has to be initialized here (by the most derived class).
-	// clang-format off
-	widget( //
-		context, //
-		std::move(params.layout_params), //
-		[&]() {
-			if (!params.widget.clip.has_value()) {
-				params.widget.clip = true;
-			}
-			return std::move(params.widget);
-		}()
-	),
-	// clang-format on
-	ruis::touch::list(context, std::move(params))
-{}
-
-// --------------------------
-// = decorated_provider =
-// --------------------------
 
 /**
  * @brief A ruis::list_provider which decorates the widgets of another provider.
@@ -103,9 +64,9 @@ public:
 	/**
 	 * @brief Item click handler.
 	 * Invoked when a menu item is clicked.
-	 * The show() function sets this handler to close the menu.
+	 * The context_menu widget sets this handler to close the menu.
 	 */
-	std::function<void()> on_item_click;
+	std::function<void(size_t index)> on_item_click;
 
 	decorated_provider(
 		const utki::shared_ref<ruis::context>& context, //
@@ -118,6 +79,7 @@ public:
 private:
 	utki::shared_ref<ruis::widget> wrap_item(
 		const utki::shared_ref<ruis::widget>& widget, //
+		size_t index, //
 		bool is_last
 	);
 };
@@ -133,7 +95,7 @@ decorated_provider::decorated_provider(
 	auto n = c.count();
 	this->items.reserve(n);
 	for (size_t i = 0; i != n; ++i) {
-		this->items.push_back(this->wrap_item(c.get_widget(i), i + 1 == n));
+		this->items.push_back(this->wrap_item(c.get_widget(i), i, i + 1 == n));
 	}
 }
 
@@ -149,6 +111,7 @@ utki::shared_ref<ruis::widget> decorated_provider::get_widget(size_t index) cons
 
 utki::shared_ref<ruis::widget> decorated_provider::wrap_item(
 	const utki::shared_ref<ruis::widget>& widget, //
+	size_t index, //
 	bool is_last
 )
 {
@@ -211,9 +174,9 @@ utki::shared_ref<ruis::widget> decorated_provider::wrap_item(
 					state->hovered = cp.is_hovered();
 					update_background();
 				},
-				.click_handler = [this](auto& cp) {
+				.click_handler = [this, index](auto& cp) {
 					if (this->on_item_click) {
-						this->on_item_click();
+						this->on_item_click(index);
 					}
 				}
 			}
@@ -291,46 +254,26 @@ utki::shared_ref<ruis::widget> decorated_provider::wrap_item(
 	// clang-format on
 }
 
-// -------------------------
-// = show() utility func =
-// -------------------------
-
-namespace {
-
-void close_popup(
-	const std::weak_ptr<ruis::widget>& popup, //
-	const utki::shared_ref<ruis::context>& context
-)
-{
-	if (auto p = popup.lock()) {
-		context.get().post_to_ui_thread([p]() {
-			if (p->parent()) {
-				p->remove_from_parent();
-			}
-		});
-	}
-}
-
-vec2 compute_anchor(
+ruis::vec2 compute_anchor(
 	ruis::widget& anchor, //
 	const ruis::overlay& olay, //
 	const ruis::widget& menu
 )
 {
-	auto btn_pos = anchor.get_pos_in_ancestor(vec2(0), &olay);
+	auto btn_pos = anchor.get_pos_in_ancestor(ruis::vec2(0), &olay);
 	auto btn_size = anchor.rect().d;
 	auto screen = olay.rect().d;
 
 	// natural menu size, clamped to the screen the same way show_popup() does
 	auto menu_size = menu.measure_within_parent(
 		screen, //
-		r4::vector2<measure_mode>(measure_mode::exactly)
+		r4::vector2<ruis::measure_mode>(ruis::measure_mode::exactly)
 	);
-	menu_size = min(menu_size, screen);
+	menu_size = std::min(menu_size, screen);
 
-	// place the menu right below the anchor button, right-aligned with it
+	// place the menu right below the anchor, right-aligned with it
 	// (show_popup() will clamp the position to keep the menu on the screen)
-	vec2 pos;
+	ruis::vec2 pos;
 	pos.x() = btn_pos.x() + btn_size.x() - menu_size.x();
 	pos.y() = btn_pos.y() + btn_size.y();
 
@@ -339,58 +282,55 @@ vec2 compute_anchor(
 
 } // namespace
 
-void show(
-	ruis::widget& anchor, //
-	utki::unique_ref<ruis::list_provider> provider
-)
-{
-	auto olay = anchor.try_get_ancestor<ruis::overlay>();
-	if (!olay) {
-		throw std::logic_error("context_menu::show(): no overlay ancestor found");
-	}
-
-	auto& context = anchor.context;
-	auto& style = context.get().style();
-	auto screen = olay->rect().d;
-
-	auto menu_provider = utki::make_unique<decorated_provider>(context, std::move(provider));
-	auto& provider_ref = menu_provider.get();
-
+ruis::context_menu::context_menu(
+	const utki::shared_ref<ruis::context>& context, //
+	all_parameters params
+) :
+	widget( //
+		context, //
+		std::move(params.layout_params), //
+		std::move(params.widget) //
+	),
 	// clang-format off
-	auto menu_params = context_menu::all_parameters{
-		.layout_params{
-			.dims = {ruis::dim::min, ruis::dim::min}
-		},
-		.params{
-			.specific{
-				.provider = std::move(menu_provider)
-			}
-		}
-	};
+	container( //
+		context, //
+		{ //
+			.params{ //
+				.layout = ruis::layout::pile //
+			} //
+		}, //
+		{} // the frame is added in the constructor body
+	), //
 	// clang-format on
-	auto menu = utki::make_shared<context_menu>(context, std::move(menu_params));
+	list([&]() -> utki::shared_ref<ruis::touch::list> {
+		auto menu_provider = utki::make_unique<decorated_provider>(
+			context, //
+			std::move(params.params.list.provider)
+		);
+		menu_provider.get().on_item_click = [this](size_t index) {
+			if (this->on_item_click) {
+				this->on_item_click(index);
+			}
+			this->close();
+		};
 
-	// the size of the menu: the transverse size is the biggest size among all the items,
-	// the longitudinal size is the size needed to display the whole content without
-	// truncation, clamped to the given longitudinal quotum (the menu is built with min
-	// dims, so that measure() can compute it).
-	// The longitudinal quotum is the screen height minus the frame's top and bottom
-	// borders, so that long menus are clamped to the screen size and can be scrolled
-	// instead.
-	real frame_v_border = style.get_len_gap().get().get(context) * 2;
-	vec2 menu_size = menu.get().measure(
-		vec2(
-			measure_infinite_quotum, //
-			max(real(0), screen.y() - frame_v_border)
-		), //
-		r4::vector2<measure_mode>(
-			measure_mode::at_most, //
-			measure_mode::exactly
-		)
-	);
-
-	menu.get().get_layout_params().dims = {menu_size.x(), menu_size.y()};
-	// {ruis::dim(length(menu_size.x())), ruis::dim(length(menu_size.y()))};
+		// clang-format off
+		auto list_params = ruis::touch::list::all_parameters{
+			.layout_params{
+				.dims = {ruis::dim::min, ruis::dim::min}
+			},
+			.params{
+				.specific{
+					.provider = std::move(menu_provider)
+				}
+			}
+		};
+		// clang-format on
+		return ruis::touch::make::list(context, std::move(list_params));
+	}()),
+	frame_v_border(context.get().style().get_len_gap().get().get(context) * 2)
+{
+	auto& style = context.get().style();
 
 	// the frame: a rectangle with a border that wraps the menu
 	// clang-format off
@@ -425,19 +365,84 @@ void show(
 			}
 		},
 		{
-			std::move(menu)
+			this->list
 		}
 	);
 	// clang-format on
 
-	auto anchor_pos = compute_anchor(anchor, *olay, frame.get());
-
-	auto popup = olay->show_popup(frame, anchor_pos);
-	auto popup_ref = utki::make_weak(popup);
-
-	provider_ref.on_item_click = [popup_ref, context]() {
-		close_popup(popup_ref, context);
-	};
+	this->push_back(std::move(frame));
 }
 
-} // namespace context_menu
+void ruis::context_menu::close()
+{
+	auto self_weak = utki::make_weak_from(*this);
+	this->context.get().post_to_ui_thread([self_weak]() {
+		if (auto self = self_weak.lock()) {
+			if (self->parent()) {
+				self->remove_from_parent();
+			}
+		}
+	});
+}
+
+void ruis::context_menu::on_lay_out()
+{
+	// Fit the list into the menu's size before laying out the frame, so that a menu which is
+	// shown with a size smaller than its natural size (e.g. clamped to the overlay's bounds by
+	// ruis::show_context_menu()) gets a scrollable list instead of having its content truncated.
+	// The list must have an explicit size (rather than being measured against the available
+	// space), because the size layout of the popup wrapper (see ruis::overlay::show_popup) lays
+	// out its min-sized children against an infinite quotum; a min-sized list would report its
+	// natural (unclamped) size and the menu would grow beyond the size it was shown with.
+	if (this->rect().d.y() > 0) {
+		this->fit_list(this->rect().d);
+	}
+	container::on_lay_out();
+}
+
+void ruis::context_menu::fit_list(const ruis::vec2& menu_size)
+{
+	// The size of the list: the transverse size is the biggest size among all the items,
+	// the longitudinal size is the size needed to display the whole content without
+	// truncation, clamped to the menu size (minus the frame's vertical borders), so that
+	// a long list can be scrolled instead of having its content truncated.
+	// clang-format off
+	ruis::vec2 d = this->list.get().measure(
+		ruis::vec2(
+			ruis::measure_infinite_quotum, //
+			std::max(ruis::real(0), menu_size.y() - this->frame_v_border)
+		), //
+		r4::vector2<ruis::measure_mode>(
+			ruis::measure_mode::at_most, //
+			ruis::measure_mode::exactly
+		)
+	);
+	// clang-format on
+
+	this->list.get().get_layout_params().dims = {d.x(), d.y()};
+}
+
+utki::shared_ref<ruis::context_menu> ruis::make::context_menu(
+	const utki::shared_ref<ruis::context>& context, //
+	ruis::context_menu::all_parameters params
+)
+{
+	return utki::make_shared<ruis::context_menu>(
+		context, //
+		std::move(params)
+	);
+}
+
+utki::shared_ref<ruis::widget> ruis::show_context_menu(
+	ruis::widget& anchor, //
+	utki::shared_ref<ruis::widget> menu
+)
+{
+	auto olay = anchor.try_get_ancestor<ruis::overlay>();
+	if (!olay) {
+		throw std::logic_error("show_context_menu(): no overlay ancestor found");
+	}
+
+	auto pos = compute_anchor(anchor, *olay, menu.get());
+	return olay->show_popup(std::move(menu), pos);
+}

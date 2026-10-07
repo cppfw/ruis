@@ -24,6 +24,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <ruis/res/tml.hpp>
 #include <ruis/style/style_sheet.hpp>
 #include <ruis/widget/button/impl/rectangle_push_button.hpp>
+#include <ruis/widget/group/context_menu.hpp>
 #include <ruis/widget/group/overlay.hpp>
 #include <ruis/widget/group/touch/dialog.hpp>
 #include <ruis/widget/group/touch/scroll_area.hpp>
@@ -35,7 +36,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <utki/unicode.hpp>
 
 #include "application.hpp"
-#include "context_menu.hpp"
 #include "style.hpp"
 
 using namespace std::string_literals;
@@ -408,7 +408,21 @@ ruis::widget_list make_scroll_area_page_contents(const utki::shared_ref<ruis::co
 	// opens a context menu with many items, too long to fit on the screen
 	// (the menu is clamped to the screen size and can be scrolled)
 	button_2.get().click_handler = [](ruis::push_button& b) {
-		context_menu::show(b, utki::make_unique<many_items_menu_provider>(b.context, 100));
+		auto menu = ruis::make::context_menu(
+			b.context, //
+			{
+				.layout_params{}, //
+				.widget{}, //
+				.params{
+					//
+					.list{
+						//
+						.provider = utki::make_unique<many_items_menu_provider>(b.context, 100) //
+					} //
+				} //
+			}
+		);
+		ruis::show_context_menu(b, std::move(menu));
 	};
 
 	// clang-format off

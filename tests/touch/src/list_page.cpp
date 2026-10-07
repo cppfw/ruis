@@ -23,6 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <ruis/util/widget_list.hpp>
 #include <ruis/widget/button/impl/ellipse_push_button.hpp>
+#include <ruis/widget/group/context_menu.hpp>
 #include <ruis/widget/group/touch/list.hpp>
 #include <ruis/widget/label/gap.hpp>
 #include <ruis/widget/label/image.hpp>
@@ -32,7 +33,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <utki/unicode.hpp>
 #include <utki/unique_ref.hpp>
 
-#include "context_menu.hpp"
 #include "style.hpp"
 
 using namespace std::string_literals;
@@ -175,7 +175,22 @@ public:
 				this->make_menu_item(U"Share"s), //
 				this->make_menu_item(U"Move to trash"s) //
 			};
-			context_menu::show(btn, utki::make_unique<premade_widgets_list_provider>(this->context, std::move(items)));
+			auto menu = ruis::make::context_menu(
+				this->context, //
+				{
+					.layout_params{}, //
+					.widget{}, //
+					.params{
+						//
+						.list{
+							//
+							.provider =
+								utki::make_unique<premade_widgets_list_provider>(this->context, std::move(items)) //
+						} //
+					} //
+				}
+			);
+			ruis::show_context_menu(btn, std::move(menu));
 		};
 
 		// clang-format off
