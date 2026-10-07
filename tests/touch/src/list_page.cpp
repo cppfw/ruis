@@ -23,7 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <ruis/util/widget_list.hpp>
 #include <ruis/widget/button/impl/ellipse_push_button.hpp>
-#include <ruis/widget/group/context_menu.hpp>
+#include <ruis/widget/group/touch/context_menu.hpp>
 #include <ruis/widget/group/touch/list.hpp>
 #include <ruis/widget/label/gap.hpp>
 #include <ruis/widget/label/image.hpp>
@@ -175,7 +175,7 @@ public:
 				this->make_menu_item(U"Share"s), //
 				this->make_menu_item(U"Move to trash"s) //
 			};
-			auto menu = ruis::make::context_menu(
+			auto menu = ruis::touch::make::context_menu(
 				this->context, //
 				{
 					.layout_params{}, //

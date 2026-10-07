@@ -27,10 +27,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../base/list_widget.hpp"
 #include "../container.hpp"
 
-namespace ruis::touch {
-class list;
-} // namespace ruis::touch
-
 namespace ruis {
 
 /**
@@ -49,6 +45,8 @@ namespace ruis {
  * ruis::show_context_menu() function. Clicking a menu item closes the menu (removes the menu
  * widget from its parent); when the menu is shown with ruis::show_context_menu() it is also
  * closed when a click happens outside of it.
+ * This class has no public constructor; use ruis::touch::context_menu or derive from this
+ * class with the protected constructor to create a context menu with a specific list widget.
  */
 class context_menu :
 	public virtual widget, //
@@ -64,16 +62,6 @@ public:
 		ruis::widget::parameters widget;
 		parameters params;
 	};
-
-	/**
-	 * @brief Construct a context menu.
-	 * The menu items are supplied by the ruis::list_provider given in the 'list' parameter;
-	 * they are displayed in a ruis::touch::list which is created by this constructor.
-	 */
-	context_menu(
-		const utki::shared_ref<ruis::context>& context, //
-		all_parameters params
-	);
 
 	context_menu(const context_menu&) = delete;
 	context_menu& operator=(const context_menu&) = delete;
@@ -98,31 +86,20 @@ public:
 
 protected:
 	/**
-	 * @brief Construct a context menu with the given list of menu items.
-	 * This constructor is intended for derived classes which want to use a list other
-	 * than the ruis::touch::list created by the public constructor; the 'list' parameter
-	 * of params is ignored.
-	 * @param list - the list widget which displays the menu items, taken into the menu.
+	 * @brief Construct a context menu with a custom list widget.
+	 * This constructor is intended for derived classes. The list_factory is invoked with
+	 * the list parameters whose provider is the decorated provider (see the class
+	 * description) wrapping the provider given in the 'list' parameter of params, so that
+	 * the decoration and the item click handling are applied regardless of the list widget
+	 * used.
+	 * @param list_factory - a function creating the list widget which displays the menu items.
 	 */
 	context_menu(
 		const utki::shared_ref<ruis::context>& context, //
 		all_parameters params, //
-		utki::shared_ref<ruis::touch::list> list
+		std::function<utki::shared_ref<ruis::list_widget>(ruis::list_widget::parameters)> list_factory
 	);
 };
-
-namespace make {
-/**
- * @brief Construct 'context_menu' widget.
- * @param context - ruis context.
- * @param params - 'context_menu' widget parameters.
- * @return newly constructed 'context_menu' widget.
- */
-utki::shared_ref<ruis::context_menu> context_menu(
-	const utki::shared_ref<context>& context, //
-	context_menu::all_parameters params
-);
-} // namespace make
 
 /**
  * @brief Show a context menu near the given anchor widget.

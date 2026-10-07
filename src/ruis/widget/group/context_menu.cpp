@@ -32,8 +32,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../proxy/mouse_proxy.hpp"
 #include "../widget.hpp"
 
-#include "touch/list.hpp"
-
 #include "overlay.hpp"
 
 namespace {
@@ -284,44 +282,8 @@ ruis::vec2 compute_anchor(
 
 ruis::context_menu::context_menu(
 	const utki::shared_ref<ruis::context>& context, //
-	all_parameters params
-) :
-	context_menu( //
-		context, //
-		std::move(params), //
-		[&]() -> utki::shared_ref<ruis::touch::list> {
-			auto menu_provider = utki::make_unique<decorated_provider>(
-				context, //
-				std::move(params.params.list.provider)
-			);
-			menu_provider.get().on_item_click = [this](size_t index) {
-				if (this->on_item_click) {
-					this->on_item_click(index);
-				}
-				this->close();
-			};
-
-			// clang-format off
-			auto list_params = ruis::touch::list::all_parameters{
-				.layout_params{
-					.dims = {ruis::dim::min, ruis::dim::min}
-				},
-				.params{
-					.specific{
-						.provider = std::move(menu_provider)
-					}
-				}
-			};
-			// clang-format on
-			return ruis::touch::make::list(context, std::move(list_params));
-		}() //
-	)
-{}
-
-ruis::context_menu::context_menu(
-	const utki::shared_ref<ruis::context>& context, //
 	all_parameters params, //
-	utki::shared_ref<ruis::touch::list> list
+	std::function<utki::shared_ref<ruis::list_widget>(ruis::list_widget::parameters)> list_factory
 ) :
 	widget( //
 		context, //
@@ -336,44 +298,62 @@ ruis::context_menu::context_menu(
 				.layout = ruis::layout::pile //
 			} //
 		}, //
-		{ //
-			// the frame: a rectangle with a border that wraps the menu
-			m::rectangle( //
-				context, //
-				{
-					.layout_params{
-						.dims = {ruis::dim::min, ruis::dim::min}
-					},
-					.widget{
-						.clip = true
-					},
-					.params{
-						.padding{
-							.container{
-								.layout = ruis::layout::pile
+		{
+			[&]() {
+				// clang-format off
+				// the decorated provider which wraps the provider given in the
+				// 'list' parameter of params (see the class description)
+				auto menu_provider = utki::make_unique<decorated_provider>(
+					context, //
+					std::move(params.params.list.provider)
+				);
+				menu_provider.get().on_item_click = [this](size_t index) {
+					if (this->on_item_click) {
+						this->on_item_click(index);
+					}
+					this->close();
+				};
+
+				auto list_params = ruis::list_widget::parameters{
+					std::move(menu_provider)
+				};
+				auto list = list_factory(std::move(list_params));
+
+				// the frame: a rectangle with a border that wraps the menu
+				return m::rectangle(context,
+					{
+						.layout_params{
+							.dims = {ruis::dim::min, ruis::dim::min}
+						},
+						.widget{
+							.clip = true
+						},
+						.params{
+							.padding{
+								.container{
+									.layout = ruis::layout::pile
+								},
+								.specific{
+									.borders = {
+										context.get().style().get_len_border(), // left
+										context.get().style().get_len_gap(), // top
+										context.get().style().get_len_border(), // right
+										context.get().style().get_len_gap() // bottom
+									}
+								}
 							},
 							.specific{
-								.borders = {
-									context.get().style().get_len_border(), // left
-									context.get().style().get_len_gap(), // top
-									context.get().style().get_len_border(), // right
-									context.get().style().get_len_gap() // bottom
-								}
+								.corner_radii = {context.get().style().get_len_gap()},
+								.fill_color = context.get().style().get_color_background(),
+								.stroke_width = context.get().style().get_len_border(),
+								.stroke_color = context.get().style().get_color_primary()
 							}
-						},
-						.specific{
-							.corner_radii = {context.get().style().get_len_gap()},
-							.fill_color = context.get().style().get_color_background(),
-							.stroke_width = context.get().style().get_len_border(),
-							.stroke_color = context.get().style().get_color_primary()
 						}
-					}
-				},
-				{
-					std::move(list)
-				}
-			)
-		}
+					},
+					{ std::move(list) }
+				);
+			// clang-format on
+		}()}
 	)
 // clang-format on
 {}
@@ -388,17 +368,6 @@ void ruis::context_menu::close()
 			}
 		}
 	});
-}
-
-utki::shared_ref<ruis::context_menu> ruis::make::context_menu(
-	const utki::shared_ref<ruis::context>& context, //
-	ruis::context_menu::all_parameters params
-)
-{
-	return utki::make_shared<ruis::context_menu>(
-		context, //
-		std::move(params)
-	);
 }
 
 utki::shared_ref<ruis::widget> ruis::show_context_menu(
