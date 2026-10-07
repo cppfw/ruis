@@ -21,12 +21,13 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "../widget.hpp"
+#include "mouse_proxy.hpp"
 
 namespace ruis {
 
-// TODONEXT: make it inherit mouse_proxy
-class click_proxy : virtual public widget
+// TODO: doxygen
+
+class click_proxy : virtual public mouse_proxy
 {
 	bool is_pressed_v = false;
 
@@ -43,6 +44,7 @@ public:
 		ruis::layout_parameters layout_params;
 		ruis::widget::parameters widget;
 		parameters click_proxy_params;
+		mouse_proxy::parameters mouse_proxy_params;
 	};
 
 	click_proxy(
@@ -54,7 +56,7 @@ public:
 	click_proxy& operator=(const click_proxy&) = delete;
 
 	click_proxy(click_proxy&&) = delete;
-	click_proxy& operator=(click_proxy&&) = delete;
+	click_proxy& operator=(const click_proxy&&) = delete;
 
 	~click_proxy() override = default;
 

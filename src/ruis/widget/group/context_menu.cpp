@@ -29,7 +29,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../../util/widget_list.hpp"
 #include "../label/rectangle.hpp"
 #include "../proxy/click_proxy.hpp"
-#include "../proxy/mouse_proxy.hpp"
 #include "../widget.hpp"
 
 #include "overlay.hpp"
@@ -39,7 +38,7 @@ namespace m = ruis::make;
 
 /**
  * @brief Hover/press state of a context menu item.
- * Shared between the mouse_proxy and click_proxy handlers of the item.
+ * Shared between the click_proxy handlers of the item.
  */
 struct highlight_state {
 	bool hovered = false;
@@ -49,14 +48,13 @@ struct highlight_state {
 /**
  * @brief A ruis::list_provider which decorates the widgets of another provider.
  * Each item widget of the content provider is wrapped with a ruis::click_proxy
- * and a ruis::mouse_proxy which show a background of color_highlight color while
- * the item is pressed and of color_secondary color while the item is hovered.
+ * which shows a background of color_highlight color while the item is pressed
+ * and of color_secondary color while the item is hovered.
  * Consecutive items are separated by a thin line of color_secondary color.
  */
 class decorated_provider : public ruis::list_provider
 {
 	utki::unique_ref<ruis::list_provider> content;
-	ruis::widget_list items;
 
 public:
 	/**
@@ -79,7 +77,7 @@ private:
 		const utki::shared_ref<ruis::widget>& widget, //
 		size_t index, //
 		bool is_last
-	);
+	) const;
 };
 
 decorated_provider::decorated_provider(
@@ -88,31 +86,28 @@ decorated_provider::decorated_provider(
 ) :
 	ruis::list_provider(context), //
 	content(std::move(content))
-{
-	auto& c = this->content.get();
-	auto n = c.count();
-	this->items.reserve(n);
-	// TODONEXT: do not store widgets beforehand, create them right in get_widget().
-	for (size_t i = 0; i != n; ++i) {
-		this->items.push_back(this->wrap_item(c.get_widget(i), i, i + 1 == n));
-	}
-}
+{}
 
 size_t decorated_provider::count() const noexcept
 {
-	return this->items.size();
+	return this->content.get().count();
 }
 
 utki::shared_ref<ruis::widget> decorated_provider::get_widget(size_t index) const
 {
-	return this->items[index];
+	auto n = this->content.get().count();
+	return this->wrap_item(
+		this->content.get().get_widget(index), //
+		index, //
+		index + 1 == n
+	);
 }
 
 utki::shared_ref<ruis::widget> decorated_provider::wrap_item(
 	const utki::shared_ref<ruis::widget>& widget, //
 	size_t index, //
 	bool is_last
-)
+) const
 {
 	auto& style = this->context.get().style();
 
@@ -139,7 +134,7 @@ utki::shared_ref<ruis::widget> decorated_provider::wrap_item(
 
 	auto* bg = &background.get();
 
-	// Per-item hover/press state, shared between the mouse_proxy and click_proxy handlers
+	// Per-item hover/press state, shared between the click_proxy handlers
 	auto state = std::make_shared<highlight_state>();
 
 	// clang-format off
@@ -167,9 +162,8 @@ utki::shared_ref<ruis::widget> decorated_provider::wrap_item(
 				.pressed_change_handler = [state, update_background](auto& cp) {
 					state->pressed = cp.is_pressed();
 					// while the button is down, the click_proxy captures the mouse,
-					// so its hovered state is kept up to date by the container
-					// (the mouse_proxy underneath is not), use it to correct
-					// the hovered state when the item is unpressed
+					// so its hovered state is kept up to date by the container,
+					// use it to correct the hovered state when the item is unpressed
 					state->hovered = cp.is_hovered();
 					update_background();
 				},
@@ -178,21 +172,10 @@ utki::shared_ref<ruis::widget> decorated_provider::wrap_item(
 						this->on_item_click(index);
 					}
 				}
-			}
-		}
-	);
-	// clang-format on
-
-	// TODONEXT: remove the mouse_proxy from here when click_proxy inherits mouse_proxy and handles hover state itself
-	// clang-format off
-	auto mouse_proxy = m::mouse_proxy(this->context,
-		{
-			.layout_params{
-				.dims = {ruis::dim::fill, ruis::dim::fill}
 			},
 			.mouse_proxy_params{
-				.hovered_change_handler = [state, update_background](auto& mp, auto pointer_id) {
-					state->hovered = mp.is_hovered(pointer_id);
+				.hovered_change_handler = [state, update_background](auto& cp, auto pointer_id) {
+					state->hovered = cp.is_hovered(pointer_id);
 					update_background();
 				}
 			}
@@ -200,8 +183,6 @@ utki::shared_ref<ruis::widget> decorated_provider::wrap_item(
 	);
 	// clang-format on
 
-	// The click_proxy catches all mouse events, the mouse_proxy is placed on top of it
-	// so that it receives hover notifications.
 	// clang-format off
 	auto item = m::pile(this->context,
 		{
@@ -212,8 +193,7 @@ utki::shared_ref<ruis::widget> decorated_provider::wrap_item(
 		{
 			std::move(background),
 			std::move(widget),
-			std::move(click_proxy),
-			std::move(mouse_proxy)
+			std::move(click_proxy)
 		}
 	);
 	// clang-format on

@@ -28,13 +28,18 @@ click_proxy::click_proxy( //
 	all_parameters params
 ) :
 	widget( //
-		context,
-		std::move(params.layout_params),
-		std::move(params.widget)
+		context, //
+		std::move(params.layout_params), //
+		std::move(params.widget) //
 	),
+	mouse_proxy(context, mouse_proxy::all_parameters{}),
 	pressed_change_handler(std::move(params.click_proxy_params.pressed_change_handler)),
 	click_handler(std::move(params.click_proxy_params.click_handler))
-{}
+{
+	this->mouse_button_handler = std::move(params.mouse_proxy_params.mouse_button_handler);
+	this->mouse_move_handler = std::move(params.mouse_proxy_params.mouse_move_handler);
+	this->hovered_change_handler = std::move(params.mouse_proxy_params.hovered_change_handler);
+}
 
 event_status click_proxy::on_mouse_button(const mouse_button_event& e)
 {
@@ -68,18 +73,18 @@ event_status click_proxy::on_mouse_button(const mouse_button_event& e)
 
 void click_proxy::on_hovered_change(unsigned pointer_id)
 {
-	if (pointer_id != 0) {
-		return;
-	}
-
-	if (!this->is_hovered(0)) {
-		if (this->is_pressed()) {
-			this->is_pressed_v = false;
-			if (this->pressed_change_handler) {
-				this->pressed_change_handler(*this);
+	if (pointer_id == 0) {
+		if (!this->is_hovered(0)) {
+			if (this->is_pressed()) {
+				this->is_pressed_v = false;
+				if (this->pressed_change_handler) {
+					this->pressed_change_handler(*this);
+				}
 			}
 		}
 	}
+
+	mouse_proxy::on_hovered_change(pointer_id);
 }
 
 utki::shared_ref<ruis::click_proxy> ruis::make::click_proxy(
