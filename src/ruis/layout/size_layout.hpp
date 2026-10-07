@@ -51,8 +51,9 @@ public:
 	/**
 	 * @brief Resize the children according to their layout parameters.
 	 * 'fill' and 'max' children are stretched to the space available to them, 'length' children
-	 * use their fixed size. Unlike measure, 'min' (and 'undefined') children are not clamped to
-	 * the space actually available to them, the content is allowed to exceed the size_layout size.
+	 * use their fixed size, 'min' (and 'undefined') children are clamped to the space actually
+	 * available to them (from their position to the edge of the layout), so the content is not
+	 * allowed to exceed the size_layout size.
 	 */
 	void lay_out(
 		const vec2& dims, //

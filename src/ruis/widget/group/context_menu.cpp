@@ -336,11 +336,11 @@ ruis::context_menu::context_menu(
 				.layout = ruis::layout::pile //
 			} //
 		}, //
+		// review: can the frame creation be moved here from constructor body?
 		{} // the frame is added in the constructor body
 	), //
 	// clang-format on
-	list(std::move(list)),
-	frame_v_border(context.get().style().get_len_gap().get().get(context) * 2)
+	list(std::move(list)) // review: is this member variable still needed?
 {
 	auto& style = context.get().style();
 
@@ -395,44 +395,6 @@ void ruis::context_menu::close()
 			}
 		}
 	});
-}
-
-void ruis::context_menu::on_lay_out()
-{
-	// Fit the list into the menu's size before laying out the frame, so that a menu which is
-	// shown with a size smaller than its natural size (e.g. clamped to the overlay's bounds by
-	// ruis::show_context_menu()) gets a scrollable list instead of having its content truncated.
-	// The list must have an explicit size (rather than being measured against the available
-	// space), because the size layout of the popup wrapper (see ruis::overlay::show_popup) lays
-	// out its min-sized children against an infinite quotum; a min-sized list would report its
-	// natural (unclamped) size and the menu would grow beyond the size it was shown with.
-	if (this->rect().d.y() > 0) {
-		// review: why is this fitting needed? the menu was measured and now it has dimensions set by parent. Just layout contents according to it the normal way, why do we need any fitting here? The menu is measured with finite quota before it is shown and positioned accordingly in the size_layout, nothing else should be needed.
-		this->fit_list(this->rect().d);
-	}
-	container::on_lay_out();
-}
-
-void ruis::context_menu::fit_list(const ruis::vec2& menu_size)
-{
-	// The size of the list: the transverse size is the biggest size among all the items,
-	// the longitudinal size is the size needed to display the whole content without
-	// truncation, clamped to the menu size (minus the frame's vertical borders), so that
-	// a long list can be scrolled instead of having its content truncated.
-	// clang-format off
-	ruis::vec2 d = this->list.get().measure(
-		ruis::vec2(
-			ruis::measure_infinite_quotum, //
-			std::max(ruis::real(0), menu_size.y() - this->frame_v_border)
-		), //
-		r4::vector2<ruis::measure_mode>(
-			ruis::measure_mode::at_most, //
-			ruis::measure_mode::exactly
-		)
-	);
-	// clang-format on
-
-	this->list.get().get_layout_params().dims = {d.x(), d.y()};
 }
 
 utki::shared_ref<ruis::context_menu> ruis::make::context_menu(

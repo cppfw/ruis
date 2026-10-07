@@ -68,18 +68,11 @@ void size_layout::lay_out(
 	for (const auto& w : widgets) {
 		auto& ww = w.get();
 		if (ww.is_layout_dirty()) {
+			// 'min' (and 'undefined') children are clamped to the space actually available to them
+			// (from their position to the edge of the parent), so the content is not allowed to
+			// exceed the size_layout size
 			using std::max;
-			// 'min' (and 'undefined') children are not clamped to the space available, the content
-			// is allowed to exceed the parent size (absolute positioning semantics),
-			// so an infinite parent dimension is passed in those directions
 			vec2 pd = max(dims - ww.rect().p, vec2(0));
-			const auto& lp = ww.get_layout_params_const();
-			if (dim::is_min_type(lp.dims[0].get_type())) {
-				pd[0] = measure_infinite_quotum;
-			}
-			if (dim::is_min_type(lp.dims[1].get_type())) {
-				pd[1] = measure_infinite_quotum;
-			}
 
 			ww.resize(ww.measure_within_parent(
 				pd, //

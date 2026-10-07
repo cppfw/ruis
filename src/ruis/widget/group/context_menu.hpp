@@ -57,10 +57,6 @@ class context_menu :
 	// the scrollable list of the menu items
 	utki::shared_ref<ruis::touch::list> list;
 
-	// the sum of the top and bottom borders of the frame,
-	// used to fit the list into the menu's size
-	real frame_v_border;
-
 public:
 	struct parameters {
 		ruis::list_widget::parameters list;
@@ -116,14 +112,6 @@ protected:
 		all_parameters params, //
 		utki::shared_ref<ruis::touch::list> list
 	);
-
-private:
-	void on_lay_out() override;
-
-	// Fits the list into the given menu size (minus the frame's vertical borders) by setting
-	// the list's size to the size needed to display the whole content without truncation,
-	// clamped to the menu size.
-	void fit_list(const vec2& menu_size);
 };
 
 namespace make {
