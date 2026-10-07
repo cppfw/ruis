@@ -72,6 +72,11 @@ public:
 		parameters params;
 	};
 
+	/**
+	 * @brief Construct a context menu.
+	 * The menu items are supplied by the ruis::list_provider given in the 'list' parameter;
+	 * they are displayed in a ruis::touch::list which is created by this constructor.
+	 */
 	context_menu(
 		const utki::shared_ref<ruis::context>& context, //
 		all_parameters params
@@ -97,6 +102,20 @@ public:
 	 * Removes the menu widget from its parent.
 	 */
 	void close();
+
+protected:
+	/**
+	 * @brief Construct a context menu with the given list of menu items.
+	 * This constructor is intended for derived classes which want to use a list other
+	 * than the ruis::touch::list created by the public constructor; the 'list' parameter
+	 * of params is ignored.
+	 * @param list - the list widget which displays the menu items, taken into the menu.
+	 */
+	context_menu(
+		const utki::shared_ref<ruis::context>& context, //
+		all_parameters params, //
+		utki::shared_ref<ruis::touch::list> list
+	);
 
 private:
 	void on_lay_out() override;

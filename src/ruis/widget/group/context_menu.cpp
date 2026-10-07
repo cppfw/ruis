@@ -286,6 +286,43 @@ ruis::context_menu::context_menu(
 	const utki::shared_ref<ruis::context>& context, //
 	all_parameters params
 ) :
+	context_menu( //
+		context, //
+		std::move(params), //
+		[&]() -> utki::shared_ref<ruis::touch::list> {
+			auto menu_provider = utki::make_unique<decorated_provider>(
+				context, //
+				std::move(params.params.list.provider)
+			);
+			menu_provider.get().on_item_click = [this](size_t index) {
+				if (this->on_item_click) {
+					this->on_item_click(index);
+				}
+				this->close();
+			};
+
+			// clang-format off
+			auto list_params = ruis::touch::list::all_parameters{
+				.layout_params{
+					.dims = {ruis::dim::min, ruis::dim::min}
+				},
+				.params{
+					.specific{
+						.provider = std::move(menu_provider)
+					}
+				}
+			};
+			// clang-format on
+			return ruis::touch::make::list(context, std::move(list_params));
+		}() //
+	)
+{}
+
+ruis::context_menu::context_menu(
+	const utki::shared_ref<ruis::context>& context, //
+	all_parameters params, //
+	utki::shared_ref<ruis::touch::list> list
+) :
 	widget( //
 		context, //
 		std::move(params.layout_params), //
@@ -302,32 +339,7 @@ ruis::context_menu::context_menu(
 		{} // the frame is added in the constructor body
 	), //
 	// clang-format on
-	list([&]() -> utki::shared_ref<ruis::touch::list> {
-		auto menu_provider = utki::make_unique<decorated_provider>(
-			context, //
-			std::move(params.params.list.provider)
-		);
-		menu_provider.get().on_item_click = [this](size_t index) {
-			if (this->on_item_click) {
-				this->on_item_click(index);
-			}
-			this->close();
-		};
-
-		// clang-format off
-		auto list_params = ruis::touch::list::all_parameters{
-			.layout_params{
-				.dims = {ruis::dim::min, ruis::dim::min}
-			},
-			.params{
-				.specific{
-					.provider = std::move(menu_provider)
-				}
-			}
-		};
-		// clang-format on
-		return ruis::touch::make::list(context, std::move(list_params));
-	}()),
+	list(std::move(list)),
 	frame_v_border(context.get().style().get_len_gap().get().get(context) * 2)
 {
 	auto& style = context.get().style();
@@ -395,6 +407,7 @@ void ruis::context_menu::on_lay_out()
 	// out its min-sized children against an infinite quotum; a min-sized list would report its
 	// natural (unclamped) size and the menu would grow beyond the size it was shown with.
 	if (this->rect().d.y() > 0) {
+		// review: why is this fitting needed? the menu was measured and now it has dimensions set by parent. Just layout contents according to it the normal way, why do we need any fitting here? The menu is measured with finite quota before it is shown and positioned accordingly in the size_layout, nothing else should be needed.
 		this->fit_list(this->rect().d);
 	}
 	container::on_lay_out();
