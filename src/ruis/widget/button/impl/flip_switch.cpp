@@ -156,7 +156,8 @@ flip_switch::flip_switch(
 		auto& p = params.params.specific;
 
 		if (auto& l = p.height; l.get().is_undefined()) {
-			l = 25_pp;
+			constexpr auto default_height = 25_pp;
+			l = default_height;
 		}
 		if (auto& c = p.knob_color_on; c.get().is_undefined()) {
 			c = context.get().style().get_color_special();
