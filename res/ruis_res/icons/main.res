@@ -21,3 +21,11 @@ ruis_img_edit{
 ruis_img_delete{
 	file{delete.svg}
 }
+
+ruis_img_cog{
+	file{cog.svg}
+}
+
+ruis_img_questionmark{
+	file{questionmark.svg}
+}

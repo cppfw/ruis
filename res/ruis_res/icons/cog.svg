@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+
+LICENSE: Creative Commons (Attribution 3.0 Unported)
+LICENSE LINK: https://creativecommons.org/licenses/by/3.0/
+ORIGINAL AUTHOR: Isaac Campbell
+LINK: https://www.shareicon.net/cog-gear-preferences-settings-878626
+
+MODIFICATIONS:
+- Color changed from gray to white.
+
+-->
+
+<svg
+   viewBox="0 0 20.69 20.69"
+   version="1.1"
+   id="svg12"
+   sodipodi:docname="cog.svg"
+   inkscape:version="1.4 (e7c3feb100, 2024-10-09)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview14"
+     pagecolor="#000000"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="true"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="37.796036"
+     inkscape:cx="10.345"
+     inkscape:cy="10.345"
+     inkscape:window-width="1920"
+     inkscape:window-height="1011"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="Layer_2" />
+  <defs
+     id="defs4">
+    <style
+       id="style2">.cls-1{fill:#8e8e8e;}</style>
+  </defs>
+  <title
+     id="title6" />
+  <g
+     data-name="Layer 2"
+     id="Layer_2">
+    <g
+       data-name="Layer 1"
+       id="Layer_1-2"
+       style="fill:#ffffff">
+      <path
+         class="cls-1"
+         d="M17,13.09a1.27,1.27,0,0,1,.83-.74,18.62,18.62,0,0,0,2.83-.92V9.16l-2.84-.83A1.27,1.27,0,0,1,17,7.59v0a1.27,1.27,0,0,1,.07-1.11A18.71,18.71,0,0,0,18.44,3.8l-1.61-1.6a17.84,17.84,0,0,0-2.6,1.39,1.27,1.27,0,0,1-1.13.08h0a1.27,1.27,0,0,1-.73-.79L11.43,0H9.16L8.33,2.85a1.27,1.27,0,0,1-.73.82h0a1.27,1.27,0,0,1-1.11-.06A18.43,18.43,0,0,0,3.8,2.26L2.19,3.87A17.59,17.59,0,0,0,3.58,6.46a1.27,1.27,0,0,1,.08,1.13h0a1.27,1.27,0,0,1-.83.74A19.24,19.24,0,0,0,0,9.25v2.27a17.58,17.58,0,0,0,2.82.85,1.27,1.27,0,0,1,.79,1.85,18.89,18.89,0,0,0-1.35,2.65L3.87,18.5a18.29,18.29,0,0,0,2.6-1.39A1.27,1.27,0,0,1,7.59,17h0a1.27,1.27,0,0,1,.74.83,18.46,18.46,0,0,0,.92,2.83h2.27a17.86,17.86,0,0,0,.85-2.81,1.27,1.27,0,0,1,.75-.86h0a1.27,1.27,0,0,1,1.11.07,18.41,18.41,0,0,0,2.65,1.35l1.61-1.61a17.55,17.55,0,0,0-1.39-2.59A1.27,1.27,0,0,1,17,13.1Zm-6.69,2.23a5,5,0,1,1,5-5A5,5,0,0,1,10.35,15.33Z"
+         id="path8"
+         style="fill:#ffffff" />
+    </g>
+  </g>
+</svg>
