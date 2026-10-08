@@ -44,7 +44,9 @@ ruis::touch::context_menu::context_menu(
 			// clang-format off
 			auto list_params = ruis::list::all_parameters{
 				.layout_params{
-					.dims = {ruis::dim::min, ruis::dim::min}
+					// max width: the list fills the menu width when the menu is shown with a
+					// concrete width, and wraps its content when shown with its natural size
+					.dims = {ruis::dim::max, ruis::dim::min}
 				},
 				.params{
 					.specific{

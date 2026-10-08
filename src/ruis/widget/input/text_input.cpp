@@ -245,7 +245,13 @@ void text_input::update_cursor_pos_based_on_index()
 
 	utki::assert(this->cursor_pos >= 0);
 
-	if (this->cursor_pos > this->rect().d.x() - cursor_width * this->context.get().units.dots_per_fp()) {
+	// Only attempt to scroll when the widget actually has a width. When the width is
+	// still zero (i.e. the widget has not been measured yet, e.g. the cursor is set
+	// right after the widget is added to the tree), the position is left at the ideal
+	// (unclamped) value and is recomputed on the first resize (see on_resize()).
+	if (this->rect().d.x() > 0 && //
+		this->cursor_pos > this->rect().d.x() - cursor_width * this->context.get().units.dots_per_fp())
+	{
 		this->cursor_pos = this->rect().d.x() - cursor_width * this->context.get().units.dots_per_fp();
 
 		this->x_offset = this->cursor_pos; // start from rightmost cursor position
@@ -352,6 +358,11 @@ void text_input::on_focus_change()
 
 void text_input::on_resize()
 {
+	// Recompute the cursor position (and, if necessary, the scroll offset) for the new
+	// width. This also fixes up a cursor that was set before the widget was first
+	// measured (when its width was zero).
+	this->update_cursor_pos_based_on_index();
+
 	this->selection_start_pos = this->index_to_pos(this->selection_start_index);
 }
 

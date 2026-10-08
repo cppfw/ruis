@@ -33,6 +33,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "overlay.hpp"
 
+using namespace std::string_literals;
+
 namespace {
 namespace m = ruis::make;
 
@@ -305,9 +307,12 @@ ruis::context_menu::context_menu(
 				return m::rectangle(context,
 					{
 						.layout_params{
-							.dims = {ruis::dim::min, ruis::dim::min}
+							// max width: the frame fills the menu width when the menu is shown with a
+							// concrete width, and wraps its content when shown with its natural size
+							.dims = {ruis::dim::max, ruis::dim::min}
 						},
 						.widget{
+							.id = "ruis_contextmenu_frame"s,
 							.clip = true
 						},
 						.params{
