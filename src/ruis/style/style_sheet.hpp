@@ -37,6 +37,7 @@ enum class style {
 	color_primary,
 	color_secondary,
 	color_highlight,
+	color_critical,
 
 	color_dimmed,
 

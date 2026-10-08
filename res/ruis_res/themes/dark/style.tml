@@ -6,6 +6,7 @@ ruis{
     color_primary{0xff686868}
     color_secondary{0xff303030}
     color_highlight{0xffcdb889}
+    color_critical{0xff0000ff}
 
     color_dimmed{0xb0000000}
 

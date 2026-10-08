@@ -265,6 +265,7 @@ const tst::set set("style", [](tst::suite& suite) {
 		tst::check_eq(tml::to_string(ss.get(ruis::style::color_primary)), "0xff686868"s, SL);
 		tst::check_eq(tml::to_string(ss.get(ruis::style::color_secondary)), "0xff303030"s, SL);
 		tst::check_eq(tml::to_string(ss.get(ruis::style::color_highlight)), "0xffcdb889"s, SL);
+		tst::check_eq(tml::to_string(ss.get(ruis::style::color_critical)), "0xff0000ff"s, SL);
 		tst::check_eq(tml::to_string(ss.get(ruis::style::color_dimmed)), "0xb0000000"s, SL);
 		tst::check_eq(tml::to_string(ss.get(ruis::style::color_text)), "0xffffffff"s, SL);
 		tst::check_eq(tml::to_string(ss.get(ruis::style::color_text_secondary)), "0xffa0a0a0"s, SL);
@@ -280,6 +281,31 @@ const tst::set set("style", [](tst::suite& suite) {
 		tst::check_eq(tml::to_string(ss.get(ruis::style::font_face_primary)), "ruis_fnt_normal"s, SL);
 	});
 
+	// test that color_critical has the default value of red (0xff0000ff)
+	suite.add("style__color_critical_default", []() {
+		auto desc = tml::read(R"qwertyuiop(
+            version{1}
+            ruis{}
+            user{}
+        )qwertyuiop"s);
+
+		ruis::style_sheet ss(std::move(desc));
+		tst::check_eq(tml::to_string(ss.get(ruis::style::color_critical)), "0xff0000ff"s, SL);
+
+		auto style_provider = make_style_provider();
+		auto& s = style_provider.get();
+		s.set(utki::make_shared<ruis::style_sheet>(tml::read(
+			R"qwertyuiop(
+                    version{1}
+                    ruis{}
+                    user{}
+                )qwertyuiop"s
+		)));
+
+		auto color_critical = s.get_color_critical();
+		tst::check_eq(color_critical.get(), ruis::color(0xff0000ff), SL);
+	});
+
 	// test that when a style value is present in the style sheet, the sheet value is returned (not the default)
 	suite.add("style_sheet__explicit_value_overrides_default", []() {
 		auto desc = tml::read(R"qwertyuiop(
@@ -291,6 +317,7 @@ const tst::set set("style", [](tst::suite& suite) {
                 color_primary{0xff456789}
                 color_secondary{0xff56789a}
                 color_highlight{0xff6789ab}
+                color_critical{0xff001122}
                 color_dimmed{0xff789abc}
                 color_text{0xff89abcd}
                 color_text_secondary{0xff9abcde}
@@ -316,6 +343,7 @@ const tst::set set("style", [](tst::suite& suite) {
 		tst::check_eq(tml::to_string(ss.get(ruis::style::color_primary)), "0xff456789"s, SL);
 		tst::check_eq(tml::to_string(ss.get(ruis::style::color_secondary)), "0xff56789a"s, SL);
 		tst::check_eq(tml::to_string(ss.get(ruis::style::color_highlight)), "0xff6789ab"s, SL);
+		tst::check_eq(tml::to_string(ss.get(ruis::style::color_critical)), "0xff001122"s, SL);
 		tst::check_eq(tml::to_string(ss.get(ruis::style::color_dimmed)), "0xff789abc"s, SL);
 		tst::check_eq(tml::to_string(ss.get(ruis::style::color_text)), "0xff89abcd"s, SL);
 		tst::check_eq(tml::to_string(ss.get(ruis::style::color_text_secondary)), "0xff9abcde"s, SL);

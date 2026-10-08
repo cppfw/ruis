@@ -142,6 +142,7 @@ public:
 	styled<color> get_color_secondary() const;
 	styled<color> get_color_special() const;
 	styled<color> get_color_highlight() const;
+	styled<color> get_color_critical() const;
 
 	styled<length> get_len_indent() const;
 	styled<length> get_len_gap_small() const;

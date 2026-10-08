@@ -193,6 +193,11 @@ styled<color> style_provider::get_color_highlight() const
 	return this->get<color>(style::color_highlight);
 }
 
+styled<color> style_provider::get_color_critical() const
+{
+	return this->get<color>(style::color_critical);
+}
+
 styled<length> style_provider::get_len_indent() const
 {
 	return this->get<length>(style::len_indent);

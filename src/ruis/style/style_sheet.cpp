@@ -44,6 +44,8 @@ style style_sheet::name_to_style(std::string_view name)
 		return style::color_secondary;
 	} else if (name == "color_highlight"sv) {
 		return style::color_highlight;
+	} else if (name == "color_critical"sv) {
+		return style::color_critical;
 	} else if (name == "color_special"sv) {
 		return style::color_special;
 	} else if (name == "len_indent"sv) {
@@ -130,25 +132,26 @@ const utki::enum_array<tml::forest, style>& default_style_forests()
 {
 	static const auto defaults = []() {
 		utki::enum_array<tml::forest, style> d{};
-		d[style::color_background] = tml::read("0xff101010");
-		d[style::color_panel] = tml::read("0xff424242");
-		d[style::color_special] = tml::read("0xffff8080");
-		d[style::color_primary] = tml::read("0xff686868");
-		d[style::color_secondary] = tml::read("0xff303030");
-		d[style::color_highlight] = tml::read("0xffcdb889");
-		d[style::color_dimmed] = tml::read("0xb0000000");
-		d[style::color_text] = tml::read("0xffffffff");
-		d[style::color_text_secondary] = tml::read("0xffa0a0a0");
-		d[style::color_text_special] = tml::read("0xff80ff80");
-		d[style::len_indent] = tml::read("17pp");
-		d[style::len_gap_small] = tml::read("4pp");
-		d[style::len_gap] = tml::read("10pp");
-		d[style::len_gap_big] = tml::read("25pp");
-		d[style::len_border] = tml::read("1pp");
-		d[style::font_size_primary] = tml::read("14pp");
-		d[style::font_size_secondary] = tml::read("12pp");
-		d[style::font_size_title] = tml::read("22pp");
-		d[style::font_face_primary] = tml::read("ruis_fnt_normal");
+		d[style::color_background] = {tml::tree("0xff101010")};
+		d[style::color_panel] = {tml::tree("0xff424242")};
+		d[style::color_special] = {tml::tree("0xffff8080")};
+		d[style::color_primary] = {tml::tree("0xff686868")};
+		d[style::color_secondary] = {tml::tree("0xff303030")};
+		d[style::color_highlight] = {tml::tree("0xffcdb889")};
+		d[style::color_critical] = {tml::tree("0xff0000ff")};
+		d[style::color_dimmed] = {tml::tree("0xb0000000")};
+		d[style::color_text] = {tml::tree("0xffffffff")};
+		d[style::color_text_secondary] = {tml::tree("0xffa0a0a0")};
+		d[style::color_text_special] = {tml::tree("0xff80ff80")};
+		d[style::len_indent] = {tml::tree("17pp")};
+		d[style::len_gap_small] = {tml::tree("4pp")};
+		d[style::len_gap] = {tml::tree("10pp")};
+		d[style::len_gap_big] = {tml::tree("25pp")};
+		d[style::len_border] = {tml::tree("1pp")};
+		d[style::font_size_primary] = {tml::tree("14pp")};
+		d[style::font_size_secondary] = {tml::tree("12pp")};
+		d[style::font_size_title] = {tml::tree("22pp")};
+		d[style::font_face_primary] = {tml::tree("ruis_fnt_normal")};
 		return d;
 	}();
 	return defaults;
