@@ -50,6 +50,7 @@ utki::shared_ref<ruis::widget> field(
 } // namespace
 
 namespace {
+// NOLINTNEXTLINE(cppcoreguidelines-interfaces-global-init, "false-positive: the set depends on global ruis::dim::fill which might be uninitialized at the time of static initialization of this set, but it is initialized at the time of tests execution")
 const tst::set set("weighted_child_alignment", [](tst::suite& suite) {
 	// Regression test: a weighted child which is 'min' in the longitudinal direction
 	// gets its natural size, but it still allocates a room (natural size + its share of
