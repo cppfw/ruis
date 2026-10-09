@@ -1,5 +1,4 @@
 #include <r4/vector.hpp>
-
 #include <ruis/layout/measure_mode.hpp>
 #include <ruis/util/length.hpp>
 #include <ruis/widget/base/list_widget.hpp>
