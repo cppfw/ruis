@@ -23,47 +23,33 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <functional>
 
-#include "../../util/widget_list.hpp"
 #include "../base/list_widget.hpp"
-#include "../container.hpp"
-#include "../label/rectangle.hpp"
+#include "../widget.hpp"
 
 namespace ruis {
 
+// review: why this forward declaration is needed? include context.hpp?
+class context;
+
 /**
- * @brief Context menu widget.
- * The context menu is a styled menu of items supplied by a ruis::list_provider (see the 'list'
+ * @brief Base class for context menu widgets.
+ * A context menu is a menu of items supplied by a ruis::list_provider (see the 'list'
  * parameter). Each item widget provided by the list_provider is wrapped with a ruis::click_proxy
  * and a ruis::mouse_proxy which show a background of color_highlight color while the item is
  * pressed and of color_secondary color while the item is hovered, and close the menu when the
  * item is clicked. Consecutive menu items are separated by a thin line of color_secondary color.
- * The menu items are displayed in a scrollable list surrounded by a frame (a filled, rounded,
- * bordered rectangle). The menu is min-wrap horizontally and vertically; when it is shown with a
- * size smaller than its natural size (e.g. by ruis::show_context_menu(), which clamps the menu
- * to the overlay's bounds) the list gets the clamped size and becomes scrollable instead of
- * having its content truncated.
  * The context menu is meant to be shown on an ruis::overlay, e.g. with the
  * ruis::show_context_menu() function. Clicking a menu item closes the menu (removes the menu
  * widget from its parent); when the menu is shown with ruis::show_context_menu() it is also
  * closed when a click happens outside of it.
  * This class has no public constructor; use ruis::touch::context_menu or derive from this
- * class with the protected constructor to create a context menu with a specific list widget.
+ * class with the protected constructor to create a context menu.
  */
-class context_menu :
-	public virtual widget, //
-	private container
+class context_menu : public virtual widget
 {
 public:
 	struct parameters {
 		ruis::list_widget::parameters list;
-		/**
-		 * @brief Parameters of the rectangle frame surrounding the menu.
-		 * Undefined values are replaced with style defaults: corner radii are len_gap,
-		 * fill color is color_background, stroke width is len_border, stroke color is
-		 * color_primary, and the padding borders are
-		 * {left = len_border, top = len_gap, right = len_border, bottom = len_gap}.
-		 */
-		ruis::rectangle::parameters rectangle;
 	};
 
 	struct all_parameters {
@@ -95,18 +81,13 @@ public:
 
 protected:
 	/**
-	 * @brief Construct a context menu with a custom list widget.
-	 * This constructor is intended for derived classes. The list_factory is invoked with
-	 * the list parameters whose provider is the decorated provider (see the class
-	 * description) wrapping the provider given in the 'list' parameter of params, so that
-	 * the decoration and the item click handling are applied regardless of the list widget
-	 * used.
-	 * @param list_factory - a function creating the list widget which displays the menu items.
+	 * @brief Construct a context menu.
+	 * This constructor is intended for derived classes.
 	 */
 	context_menu(
 		const utki::shared_ref<ruis::context>& context, //
-		all_parameters params, //
-		std::function<utki::shared_ref<ruis::list_widget>(ruis::list_widget::parameters)> list_factory
+		ruis::layout_parameters layout_params, //
+		ruis::widget::parameters widget_params
 	);
 };
 

@@ -21,7 +21,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "../context_menu.hpp"
+#include "../base/rectangle_context_menu.hpp"
 
 namespace ruis::touch {
 
@@ -29,7 +29,7 @@ namespace ruis::touch {
  * @brief Context menu widget which displays the menu items in a scrollable ruis::touch::list.
  * See ruis::context_menu for the description of the context menu.
  */
-class context_menu : public ruis::context_menu
+class context_menu : public ruis::rectangle_context_menu
 {
 public:
 	/**
@@ -39,7 +39,7 @@ public:
 	 */
 	context_menu(
 		const utki::shared_ref<ruis::context>& context, //
-		ruis::context_menu::all_parameters params
+		ruis::rectangle_context_menu::all_parameters params
 	);
 
 	context_menu(const context_menu&) = delete;
@@ -60,7 +60,7 @@ namespace make {
  */
 utki::shared_ref<ruis::touch::context_menu> context_menu(
 	const utki::shared_ref<ruis::context>& context, //
-	ruis::context_menu::all_parameters params
+	ruis::rectangle_context_menu::all_parameters params
 );
 } // namespace make
 

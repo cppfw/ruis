@@ -27,7 +27,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 ruis::touch::context_menu::context_menu(
 	const utki::shared_ref<ruis::context>& context, //
-	ruis::context_menu::all_parameters params
+	ruis::rectangle_context_menu::all_parameters params
 ) :
 	// ruis::widget is a virtual base of ruis::context_menu, so it has to be initialized
 	// by the most derived class
@@ -36,13 +36,13 @@ ruis::touch::context_menu::context_menu(
 		std::move(params.layout_params), //
 		std::move(params.widget) //
 	),
-	ruis::context_menu( //
+	ruis::rectangle_context_menu( //
 		context, //
 		std::move(params), //
 		[&context](ruis::list_widget::parameters p) -> utki::shared_ref<ruis::list_widget> {
 			// the default list: a scrollable ruis::touch::list
 			// clang-format off
-			auto list_params = ruis::list::all_parameters{
+			auto list_params = ruis::touch::list::all_parameters{
 				.layout_params{
 					// max width: the list fills the menu width when the menu is shown with a
 					// concrete width, and wraps its content when shown with its natural size
@@ -62,7 +62,7 @@ ruis::touch::context_menu::context_menu(
 
 utki::shared_ref<ruis::touch::context_menu> ruis::touch::make::context_menu(
 	const utki::shared_ref<ruis::context>& context, //
-	ruis::context_menu::all_parameters params
+	ruis::rectangle_context_menu::all_parameters params
 )
 {
 	return utki::make_shared<ruis::touch::context_menu>(
