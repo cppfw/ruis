@@ -28,9 +28,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
-// review: why this forward declaration is needed? include context.hpp?
-class context;
-
 /**
  * @brief Base class for context menu widgets.
  * A context menu is a menu of items supplied by a ruis::list_provider (see the 'list'
@@ -84,12 +81,21 @@ protected:
 	 * @brief Construct a context menu.
 	 * This constructor is intended for derived classes.
 	 */
-	context_menu(
-		const utki::shared_ref<ruis::context>& context, //
-		ruis::layout_parameters layout_params, //
-		ruis::widget::parameters widget_params
-	);
+	explicit context_menu(const utki::shared_ref<ruis::context>& context);
 };
+
+namespace make {
+/**
+ * @brief Construct a context menu widget.
+ * @param context - ruis context.
+ * @param params - context menu parameters.
+ * @return newly constructed context menu widget.
+ */
+utki::shared_ref<ruis::context_menu> context_menu(
+	const utki::shared_ref<ruis::context>& context, //
+	ruis::context_menu::all_parameters params
+);
+} // namespace make
 
 /**
  * @brief Show a context menu near the given anchor widget.

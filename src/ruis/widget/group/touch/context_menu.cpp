@@ -27,7 +27,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 ruis::touch::context_menu::context_menu(
 	const utki::shared_ref<ruis::context>& context, //
-	ruis::rectangle_context_menu::all_parameters params
+	all_parameters params
 ) :
 	// ruis::widget is a virtual base of ruis::context_menu, so it has to be initialized
 	// by the most derived class
@@ -38,7 +38,7 @@ ruis::touch::context_menu::context_menu(
 	),
 	ruis::rectangle_context_menu( //
 		context, //
-		std::move(params), //
+		std::move(params.params), //
 		[&context](ruis::list_widget::parameters p) -> utki::shared_ref<ruis::list_widget> {
 			// the default list: a scrollable ruis::touch::list
 			// clang-format off
@@ -62,7 +62,7 @@ ruis::touch::context_menu::context_menu(
 
 utki::shared_ref<ruis::touch::context_menu> ruis::touch::make::context_menu(
 	const utki::shared_ref<ruis::context>& context, //
-	ruis::rectangle_context_menu::all_parameters params
+	ruis::touch::context_menu::all_parameters params
 )
 {
 	return utki::make_shared<ruis::touch::context_menu>(

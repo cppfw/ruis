@@ -241,18 +241,12 @@ namespace ruis {
 
 rectangle_context_menu::rectangle_context_menu(
 	const utki::shared_ref<ruis::context>& context, //
-	all_parameters params, //
+	parameters params, //
 	std::function<utki::shared_ref<ruis::list_widget>(ruis::list_widget::parameters)> list_factory
 ) :
-	widget( //
-		context, //
-		std::move(params.layout_params), //
-		std::move(params.widget) //
-	),
+	widget(context, ruis::layout_parameters{}, ruis::widget::parameters{}), //
 	ruis::context_menu( //
-		context, //
-		std::move(params.layout_params), //
-		std::move(params.widget) //
+		context //
 	),
 	// clang-format off
 	container( //
@@ -268,7 +262,7 @@ rectangle_context_menu::rectangle_context_menu(
 				// 'list' parameter of params (see the class description)
 				auto menu_provider = utki::make_unique<decorated_provider>(
 					context, //
-					std::move(params.params.list.provider)
+					std::move(params.list.provider)
 				);
 				menu_provider.get().on_item_click = [this](size_t index) {
 					if (this->on_item_click) {
@@ -286,7 +280,7 @@ rectangle_context_menu::rectangle_context_menu(
 				// fill the undefined values of the user-provided frame parameters
 				// with the style defaults
 				auto& style = context.get().style();
-				auto& rp = params.params.rectangle;
+				auto& rp = params.rectangle;
 				for (auto& r : rp.specific.corner_radii) {
 					if (r.get().is_undefined()) {
 						r = style.get_len_gap();

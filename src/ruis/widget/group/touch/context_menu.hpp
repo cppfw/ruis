@@ -32,6 +32,12 @@ namespace ruis::touch {
 class context_menu : public ruis::rectangle_context_menu
 {
 public:
+	struct all_parameters {
+		ruis::layout_parameters layout_params;
+		ruis::widget::parameters widget;
+		ruis::rectangle_context_menu::parameters params;
+	};
+
 	/**
 	 * @brief Construct a context menu.
 	 * The menu items are supplied by the ruis::list_provider given in the 'list' parameter;
@@ -39,7 +45,7 @@ public:
 	 */
 	context_menu(
 		const utki::shared_ref<ruis::context>& context, //
-		ruis::rectangle_context_menu::all_parameters params
+		all_parameters params
 	);
 
 	context_menu(const context_menu&) = delete;
@@ -60,7 +66,7 @@ namespace make {
  */
 utki::shared_ref<ruis::touch::context_menu> context_menu(
 	const utki::shared_ref<ruis::context>& context, //
-	ruis::rectangle_context_menu::all_parameters params
+	ruis::touch::context_menu::all_parameters params
 );
 } // namespace make
 

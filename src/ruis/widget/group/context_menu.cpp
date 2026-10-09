@@ -28,6 +28,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../../context.hpp"
 #include "../widget.hpp"
 
+#include "touch/context_menu.hpp"
+
 #include "overlay.hpp"
 
 namespace {
@@ -62,16 +64,8 @@ ruis::vec2 compute_anchor(
 
 namespace ruis {
 
-context_menu::context_menu(
-	const utki::shared_ref<ruis::context>& context, //
-	ruis::layout_parameters layout_params, //
-	ruis::widget::parameters widget_params
-) :
-	widget(
-		context, //
-		std::move(layout_params),
-		std::move(widget_params)
-	)
+context_menu::context_menu(const utki::shared_ref<ruis::context>& context) : //
+	widget(context, ruis::layout_parameters{}, ruis::widget::parameters{}) //
 {}
 
 void context_menu::close()
@@ -99,5 +93,27 @@ utki::shared_ref<ruis::widget> show_context_menu(
 	auto pos = compute_anchor(anchor, *olay, menu.get());
 	return olay->show_popup(std::move(menu), pos);
 }
+
+namespace make {
+
+utki::shared_ref<ruis::context_menu> context_menu(
+	const utki::shared_ref<ruis::context>& context, //
+	ruis::context_menu::all_parameters params
+)
+{
+	// clang-format off
+	auto touch_params = ruis::touch::context_menu::all_parameters{
+		.layout_params{ std::move(params.layout_params) },
+		.widget{ std::move(params.widget) },
+		.params{
+			.list{ std::move(params.params.list) },
+			.rectangle{}
+		}
+	};
+	// clang-format on
+	return ruis::touch::make::context_menu(context, std::move(touch_params));
+}
+
+} // namespace make
 
 } // namespace ruis

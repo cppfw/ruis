@@ -57,12 +57,6 @@ public:
 		ruis::rectangle::parameters rectangle;
 	};
 
-	struct all_parameters {
-		ruis::layout_parameters layout_params;
-		ruis::widget::parameters widget;
-		parameters params;
-	};
-
 	rectangle_context_menu(const rectangle_context_menu&) = delete;
 	rectangle_context_menu& operator=(const rectangle_context_menu&) = delete;
 
@@ -83,7 +77,7 @@ protected:
 	 */
 	rectangle_context_menu(
 		const utki::shared_ref<ruis::context>& context, //
-		all_parameters params, //
+		parameters params, //
 		std::function<utki::shared_ref<ruis::list_widget>(ruis::list_widget::parameters)> list_factory
 	);
 };
