@@ -304,6 +304,42 @@ ruis::context_menu::context_menu(
 				auto list = list_factory(std::move(list_params));
 
 				// the frame: a rectangle with a border that wraps the menu
+				// fill the undefined values of the user-provided frame parameters
+				// with the style defaults
+				auto& style = context.get().style();
+				auto& rp = params.params.rectangle;
+				for (auto& r : rp.specific.corner_radii) {
+					if (r.get().is_undefined()) {
+						r = style.get_len_gap();
+					}
+				}
+				auto& borders = rp.padding.specific.borders;
+				if (borders.left().get().is_undefined()) {
+					borders.left() = style.get_len_border();
+				}
+				if (borders.top().get().is_undefined()) {
+					borders.top() = style.get_len_gap();
+				}
+				if (borders.right().get().is_undefined()) {
+					borders.right() = style.get_len_border();
+				}
+				if (borders.bottom().get().is_undefined()) {
+					borders.bottom() = style.get_len_gap();
+				}
+				if (rp.specific.fill_color.get().is_undefined()) {
+					rp.specific.fill_color = style.get_color_background();
+				}
+				if (rp.specific.stroke_width.get().is_undefined()) {
+					rp.specific.stroke_width = style.get_len_border();
+				}
+				if (rp.specific.stroke_color.get().is_undefined()) {
+					rp.specific.stroke_color = style.get_color_primary();
+				}
+				// the layout of the frame padding must stay pile
+				// regardless of the user-provided parameters
+				rp.padding.container.layout = ruis::layout::pile;
+
+				// clang-format off
 				return m::rectangle(context,
 					{
 						.layout_params{
@@ -315,27 +351,7 @@ ruis::context_menu::context_menu(
 							.id = "ruis_contextmenu_frame"s,
 							.clip = true
 						},
-						.params{
-							.padding{
-								.container{
-									.layout = ruis::layout::pile
-								},
-								.specific{
-									.borders = {
-										context.get().style().get_len_border(), // left
-										context.get().style().get_len_gap(), // top
-										context.get().style().get_len_border(), // right
-										context.get().style().get_len_gap() // bottom
-									}
-								}
-							},
-							.specific{
-								.corner_radii = {context.get().style().get_len_gap()},
-								.fill_color = context.get().style().get_color_background(),
-								.stroke_width = context.get().style().get_len_border(),
-								.stroke_color = context.get().style().get_color_primary()
-							}
-						}
+						.params{ rp }
 					},
 					{ std::move(list) }
 				);

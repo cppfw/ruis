@@ -26,6 +26,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../../util/widget_list.hpp"
 #include "../base/list_widget.hpp"
 #include "../container.hpp"
+#include "../label/rectangle.hpp"
 
 namespace ruis {
 
@@ -55,6 +56,14 @@ class context_menu :
 public:
 	struct parameters {
 		ruis::list_widget::parameters list;
+		/**
+		 * @brief Parameters of the rectangle frame surrounding the menu.
+		 * Undefined values are replaced with style defaults: corner radii are len_gap,
+		 * fill color is color_background, stroke width is len_border, stroke color is
+		 * color_primary, and the padding borders are
+		 * {left = len_border, top = len_gap, right = len_border, bottom = len_gap}.
+		 */
+		ruis::rectangle::parameters rectangle;
 	};
 
 	struct all_parameters {
