@@ -141,6 +141,14 @@ public:
 		widget_list children
 	);
 
+	container(const container&) = delete;
+	container& operator=(const container&) = delete;
+
+	container(container&&) = delete;
+	container& operator=(container&&) = delete;
+
+	~container() override = default;
+
 	const ruis::layout& get_layout() const
 	{
 		return this->layout.get();
