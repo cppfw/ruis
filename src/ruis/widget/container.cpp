@@ -56,12 +56,6 @@ container::container(
 	}
 }
 
-container::~container()
-{
-	// this will also clear parents of child widgets
-	this->clear();
-}
-
 void container::render_child(
 	const mat4& matrix, //
 	const widget& c

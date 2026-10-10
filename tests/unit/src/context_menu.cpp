@@ -57,8 +57,8 @@ public:
 					{
 						.layout_params{
 							.dims = {
-								ruis::dim(ruis::length::make_px(index == 0 ? 100 : 80)),
-								ruis::dim(ruis::length::make_px(30))
+								ruis::dim(ruis::length::make_px(index == 0 ? ruis::real(100) : ruis::real(80))),
+								ruis::dim(ruis::length::make_px(ruis::real(30)))
 							}
 						}
 					})
