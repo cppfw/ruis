@@ -40,17 +40,17 @@ using namespace std::string_view_literals;
 
 namespace {
 // A ruis::list_provider which provides the widgets of the context menu items.
-class premade_widgets_list_provider : public ruis::list_provider
+class context_menu_list_provider : public ruis::list_provider
 {
-	ruis::widget_list items;
+	std::vector<ruis::string> items;
 
 public:
-	premade_widgets_list_provider(
+	context_menu_list_provider(
 		const utki::shared_ref<ruis::context>& context, //
-		ruis::widget_list widgets
+		std::vector<ruis::string> items
 	) :
 		ruis::list_provider(context),
-		items(std::move(widgets))
+		items(std::move(items))
 	{}
 
 	size_t count() const noexcept override
@@ -59,25 +59,6 @@ public:
 	}
 
 	utki::shared_ref<ruis::widget> get_widget(size_t index) const override
-	{
-		return this->items[index];
-	}
-};
-
-class list_page_provider : public ruis::list_provider
-{
-public:
-	list_page_provider(const utki::shared_ref<ruis::context>& context) :
-		ruis::list_provider(context)
-	{}
-
-	size_t count() const noexcept override
-	{
-		return 100;
-	}
-
-	// Creates a context menu item widget: a text label with some padding around it.
-	utki::shared_ref<ruis::widget> make_menu_item(ruis::string text) const
 	{
 		// clang-format off
 		return m::padding(this->context,
@@ -100,10 +81,23 @@ public:
 				}
 			},
 			{
-				m::text(this->context, {}, std::move(text))
+				m::text(this->context, {}, this->items[index])
 			}
 		);
 		// clang-format on
+	}
+};
+
+class list_page_provider : public ruis::list_provider
+{
+public:
+	list_page_provider(const utki::shared_ref<ruis::context>& context) :
+		ruis::list_provider(context)
+	{}
+
+	size_t count() const noexcept override
+	{
+		return 100;
 	}
 
 	utki::shared_ref<ruis::widget> get_widget(size_t index) const override
@@ -169,11 +163,11 @@ public:
 
 		// When the three dots button is clicked, show a context menu near it.
 		menu_button.get().click_handler = [this](auto& btn) {
-			ruis::widget_list items = {
-				this->make_menu_item(U"Edit"s), //
-				this->make_menu_item(U"Copy"s), //
-				this->make_menu_item(U"Share"s), //
-				this->make_menu_item(U"Move to trash"s) //
+			std::vector<ruis::string> items = {
+				U"Edit"s, //
+				U"Copy"s, //
+				U"Share"s, //
+				U"Move to trash"s //
 			};
 			auto menu = ruis::touch::make::context_menu(
 				this->context, //
@@ -185,7 +179,7 @@ public:
 						.list{
 							//
 							.provider =
-								utki::make_unique<premade_widgets_list_provider>(this->context, std::move(items)) //
+								utki::make_unique<context_menu_list_provider>(this->context, std::move(items)) //
 						} //
 					} //
 				}
