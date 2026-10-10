@@ -141,6 +141,8 @@ public:
 		widget_list children
 	);
 
+	~container() override;
+
 	const ruis::layout& get_layout() const
 	{
 		return this->layout.get();

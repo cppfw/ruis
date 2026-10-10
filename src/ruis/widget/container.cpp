@@ -56,6 +56,12 @@ container::container(
 	}
 }
 
+container::~container()
+{
+	// this will also clear parents of child widgets
+	this->clear();
+}
+
 void container::render_child(
 	const mat4& matrix, //
 	const widget& c
@@ -389,7 +395,7 @@ widget_list::const_iterator container::erase(widget_list::const_iterator child)
 		throw std::invalid_argument("container::erase(): given child widget belongs to a different container");
 	}
 
-	auto w = *child;
+	auto w = std::move(*child);
 
 	// NOLINTNEXTLINE(cppcoreguidelines-pro-type-union-access)
 	auto ret = this->children_list.variable.erase(child);
