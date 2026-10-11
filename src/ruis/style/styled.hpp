@@ -53,6 +53,102 @@ public:
 
 	virtual ~style_value_base() = default;
 };
+
+/**
+ * @brief A single style value, templated on the value type.
+ *
+ * A style value either holds a value loaded from a style description (used by
+ * style_provider and reloaded on theme changes) or a value set directly (used
+ * by internal clients such as ruisapp for live-updating values such as window
+ * insets).
+ *
+ * @tparam value_type - the type of the held value. Callers (styled) pass the
+ * already-resolved actual type: for resource types (derived from ruis::resource)
+ * this is a shared_ptr<const resource>, otherwise the value type itself.
+ */
+template <typename value_type>
+class style_value : public style_value_base
+{
+	template <typename checked_type, typename = void>
+	struct has_static_member_make_from : public std::false_type {};
+
+	template <typename checked_type>
+	struct has_static_member_make_from<
+		checked_type,
+		std::void_t<decltype(checked_type::make_from(tml::forest()))> //
+		> : public std::true_type {};
+
+private:
+	value_type value;
+
+	void reload(
+		const tml::forest& desc, //
+		const ruis::resource_loader& loader
+	) override
+	{
+		this->value = load(desc, loader);
+	}
+
+	static value_type load(
+		const tml::forest& desc, //
+		const ruis::resource_loader& loader
+	)
+	{
+		if constexpr (utki::is_specialization_of_v<std::shared_ptr, value_type>) {
+			static_assert(
+				std::is_base_of_v<ruis::resource, typename value_type::element_type>,
+				"shared_ptr must point to a ruis::resource"
+			);
+			if (desc.empty()) {
+				return nullptr;
+			}
+			return loader.load<typename value_type::element_type>(desc.front().value.string);
+		} else {
+			if constexpr (std::is_arithmetic_v<value_type>) {
+				if (desc.empty()) {
+					return 0;
+				}
+				return utki::string_parser(desc.front().value.string).read_number<value_type>();
+			} else {
+				if constexpr (has_static_member_make_from<value_type>::value) {
+					return value_type::make_from(desc);
+				} else {
+					// use free function using ADL overload resolution
+					return make_from(desc, value_type{});
+				}
+			}
+		}
+	}
+
+public:
+	// Style-provider path: the value is loaded from a style description.
+	style_value(
+		const tml::forest& desc, //
+		const ruis::resource_loader& loader
+	) :
+		value(load(desc, loader))
+	{}
+
+	// Internal path: initialize with an explicit value (e.g. ruisapp's live
+	// window-inset values). The holder may update it in place via get_value().
+	explicit style_value(const value_type& v) :
+		value(v)
+	{}
+
+	const value_type& get_value() const noexcept
+	{
+		return this->value;
+	}
+
+	// Non-const overload: returns a mutable reference so the holder can update the
+	// value in place. Every styled value referencing this object observes the change
+	// on its next get(). (internal use, e.g. ruisapp insets)
+	value_type& get_value() noexcept
+	{
+		return this->value;
+	}
+};
+
 } // namespace internal
 
 /**
@@ -80,73 +176,10 @@ public:
 		value_type //
 		>;
 
+	// The style_value is templated on the already-resolved actual type.
+	using style_value = internal::style_value<actual_value_type>;
+
 private:
-	class style_value : public internal::style_value_base
-	{
-		template <typename checked_type, typename = void>
-		struct has_static_member_make_from : public std::false_type {};
-
-		template <typename checked_type>
-		struct has_static_member_make_from<
-			checked_type,
-			std::void_t<decltype(checked_type::make_from(tml::forest()))> //
-			> : public std::true_type {};
-
-		actual_value_type value;
-
-		void reload(
-			const tml::forest& desc, //
-			const ruis::resource_loader& loader
-		) override
-		{
-			this->value = load(desc, loader);
-		}
-
-		static actual_value_type load(
-			const tml::forest& desc, //
-			const ruis::resource_loader& loader
-		)
-		{
-			if constexpr (utki::is_specialization_of_v<std::shared_ptr, actual_value_type>) {
-				static_assert(
-					std::is_base_of_v<ruis::resource, typename actual_value_type::element_type>,
-					"shared_ptr must point to a ruis::resource"
-				);
-				if (desc.empty()) {
-					return nullptr;
-				}
-				return loader.load<typename actual_value_type::element_type>(desc.front().value.string);
-			} else {
-				if constexpr (std::is_arithmetic_v<value_type>) {
-					if (desc.empty()) {
-						return 0;
-					}
-					return utki::string_parser(desc.front().value.string).read_number<value_type>();
-				} else {
-					if constexpr (has_static_member_make_from<value_type>::value) {
-						return value_type::make_from(desc);
-					} else {
-						// use free function using ADL overload resolution
-						return make_from(desc, value_type{});
-					}
-				}
-			}
-		}
-
-	public:
-		style_value(
-			const tml::forest& desc, //
-			const ruis::resource_loader& loader
-		) :
-			value(load(desc, loader))
-		{}
-
-		const actual_value_type& get_value() const noexcept
-		{
-			return this->value;
-		}
-	};
-
 	using style_value_ref_type = utki::shared_ref<const style_value>;
 
 	std::variant<
@@ -154,10 +187,6 @@ private:
 		actual_value_type //
 		>
 		value;
-
-	styled(style_value_ref_type sv) :
-		value(std::move(sv))
-	{}
 
 	const style_value_ref_type& get_ref() const noexcept
 	{
@@ -180,6 +209,13 @@ private:
 	}
 
 public:
+	// INTERNAL ONLY: not part of the public API. Allows internal clients (e.g.
+	// ruisapp) to construct a styled from an internal::style_value they own, e.g.
+	// for live-updating values. Do not use from user code.
+	styled(style_value_ref_type sv) :
+		value(std::move(sv))
+	{}
+
 	constexpr styled(actual_value_type value = actual_value_type()) :
 		value(std::move(value))
 	{}
@@ -192,7 +228,7 @@ public:
 
 	bool is_from_style() const noexcept
 	{
-		return !std::holds_alternative<actual_value_type>(this->value);
+		return std::holds_alternative<style_value_ref_type>(this->value);
 	}
 
 	bool operator==(const styled& s) const noexcept
@@ -212,9 +248,9 @@ public:
 	{
 		if (this->is_from_style()) {
 			return this->get_ref().get().get_value();
-		} else {
-			return this->get_value();
 		}
+
+		return this->get_value();
 	}
 };
 
