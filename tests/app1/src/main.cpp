@@ -88,7 +88,7 @@ public:
 		ASSERT(c.get().try_get_widget_as<ruis::push_button>("show_VK_button"))
 		std::dynamic_pointer_cast<ruis::push_button>(c.get().try_get_widget("show_VK_button"))->click_handler =
 			[](ruis::push_button& b) {
-				b.context.get().window().set_virtual_keyboard_visible(true);
+				b.context.get().window().set_virtual_keyboard_visible(true, ruis::keyboard_kind::general);
 			};
 
 		std::dynamic_pointer_cast<ruis::push_button>(c.get().try_get_widget("push_button_in_scroll_container"))

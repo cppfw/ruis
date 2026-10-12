@@ -26,6 +26,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <r4/vector.hpp>
 
+#include "../util/keyboard_kind.hpp"
 #include "../util/mouse_cursor.hpp"
 
 namespace ruis::render {
@@ -129,8 +130,9 @@ public:
 	 * @brief Show/hide the virtual keyboard.
 	 * On mobile platforms this function should show/hide the on-screen keyboard.
 	 * On desktop platforms with physical keyboard this funtion should do nothing.
+	 * @param kind - the kind of the keyboard to show (only meaningful when `visible` is true).
 	 */
-	virtual void set_virtual_keyboard_visible(bool visible) noexcept {}
+	virtual void set_virtual_keyboard_visible(bool visible, ruis::keyboard_kind kind) noexcept {}
 
 	/**
 	 * @brief Handler of window close event.

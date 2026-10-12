@@ -160,6 +160,12 @@ event_status text_input::on_mouse_button(const mouse_button_event& e)
 
 	if (e.action == button_action::press) {
 		this->set_cursor_index(this->pos_to_index(e.pos.x()));
+
+		// Show the virtual keyboard: in addition to the focus-change case
+		// (handled by on_focus_change()), this also re-shows the keyboard
+		// when the field is clicked while it already has the focus, e.g.
+		// after the user closed the keyboard with the back key.
+		this->context.get().window().set_virtual_keyboard_visible(true, this->params.keyboard_kind);
 	}
 
 	return event_status::consumed;
@@ -353,7 +359,7 @@ void text_input::on_focus_change()
 	} else {
 		this->context.get().updater.get().stop(*this);
 	}
-	this->context.get().window().set_virtual_keyboard_visible(this->is_focused());
+	this->context.get().window().set_virtual_keyboard_visible(this->is_focused(), this->params.keyboard_kind);
 }
 
 void text_input::on_resize()
