@@ -63,17 +63,75 @@ class text_input :
 public:
 	/**
 	 * @brief Kind of the keyboard to use for the text input.
+	 * The values correspond to the keyboard layouts of the Android
+	 * `android.text.InputType` class; on other platforms a
+	 * platform-appropriate closest match is used. The other Android text
+	 * variations (EMAIL_SUBJECT, SHORT_MESSAGE, LONG_MESSAGE, PERSON_NAME,
+	 * POSTAL_ADDRESS, FILTER, VISIBLE_PASSWORD and the "web form"
+	 * variations) are not exposed, because they produce the same
+	 * keyboards as the values listed here.
 	 */
 	enum class keyboard_kind {
 		/**
-		 * @brief General (alphanumeric) keyboard.
+		 * @brief General (alphanumeric) keyboard, with word suggestions.
 		 */
 		general,
 
 		/**
-		 * @brief Numeric keyboard.
+		 * @brief General (alphanumeric) keyboard, without word suggestions.
 		 */
-		numeric
+		general_no_suggestions,
+
+		/**
+		 * @brief URI keyboard (additional keys for entering URIs).
+		 */
+		uri,
+
+		/**
+		 * @brief E-mail address keyboard (additional '@' and '.' keys).
+		 */
+		email,
+
+		/**
+		 * @brief Password keyboard, the entered characters are hidden.
+		 */
+		password,
+
+		/**
+		 * @brief Keyboard for entering phonetic pronunciation text,
+		 * such as a phonetic name field in contacts.
+		 */
+		phonetic,
+
+		/**
+		 * @brief Numeric keyboard (digits only).
+		 */
+		numeric,
+
+		/**
+		 * @brief Numeric keyboard with a '-' key for negative numbers.
+		 */
+		signed_numeric,
+
+		/**
+		 * @brief Numeric keyboard with a decimal separator key.
+		 */
+		decimal_numeric,
+
+		/**
+		 * @brief Numeric keyboard with a '-' and a decimal separator key.
+		 */
+		signed_decimal_numeric,
+
+		/**
+		 * @brief Phone number keyboard (digits, '*', '#', '+').
+		 */
+		phone_number,
+
+		/**
+		 * @brief Date and time keyboard.
+		 */
+		date_time
 	};
 
 	struct specific_parameters {
