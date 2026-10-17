@@ -73,3 +73,16 @@ ruis::vec2 scroll_area::flickable_scroll_by(const vec2& delta)
 {
 	return this->scroll_by(delta);
 }
+
+utki::shared_ref<ruis::touch::scroll_area> ruis::touch::make::scroll_area(
+	const utki::shared_ref<ruis::context>& context, //
+	ruis::touch::scroll_area::all_parameters params,
+	utki::shared_ref<ruis::widget> child
+)
+{
+	return utki::make_shared<ruis::touch::scroll_area>(
+		context, //
+		std::move(params),
+		std::move(child)
+	);
+}

@@ -47,7 +47,18 @@ private:
 };
 
 namespace make {
-// TDOO: add scroll_area() factory
+/**
+ * @brief Create a scroll_area widget with touch (flick) scrolling.
+ * @param context - ruis context.
+ * @param params - scroll_area widget parameters.
+ * @param child - the child widget which is the scrollable contents.
+ * @return newly created 'scroll_area' widget.
+ */
+utki::shared_ref<ruis::touch::scroll_area> scroll_area(
+	const utki::shared_ref<ruis::context>& context, //
+	ruis::touch::scroll_area::all_parameters params,
+	utki::shared_ref<ruis::widget> child
+);
 } // namespace make
 
 } // namespace ruis::touch
