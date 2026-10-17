@@ -182,10 +182,29 @@ public:
 	/**
 	 * @brief Request re-layout.
 	 * Set a flag on the widget indicating to the framework that the widget needs a re-layout.
-	 * The layout will be performed before drawing.
+	 * The laying out will be performed before drawing.
 	 * If the widget is added to some parent, the flag will be set on all ancestors down to the root as well.
 	 */
 	void invalidate_layout() noexcept;
+
+	/**
+	 * @brief Request re-layout of this widget and all of its descendants.
+	 * Marks this widget and every widget in its subtree as layout-dirty, so that the next
+	 * layout pass re-lays-out the entire subtree.
+	 * Use this when a parameter that this widget or one of its descendants depends on has
+	 * changed but is not part of the widget tree (e.g. the live window insets, which are
+	 * referenced by a padding's borders).
+	 * invalidate_layout() alone is not sufficient here, because it only marks this widget
+	 * and its ancestors, whereas the layout algorithms skip clean children when laying out
+	 * a parent, so the change would not reach the descendants.
+	 *
+	 * Note: unlike invalidate_layout(), this method does NOT invalidate the layout of this
+	 * widget's ancestors; it only affects this widget and its descendants.
+	 *
+	 * The default implementation marks only this widget as layout-dirty.
+	 * Containers override this method to also mark their children.
+	 */
+	virtual void invalidate_subtree_layout() noexcept;
 
 	/**
 	 * @brief Called when layouting of the widget is needed.

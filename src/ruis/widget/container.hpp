@@ -175,6 +175,11 @@ public:
 	void on_lay_out() override;
 
 	/**
+	 * @brief Mark this container and all of its children (recursively) as layout-dirty.
+	 */
+	void invalidate_subtree_layout() noexcept override;
+
+	/**
 	 * @brief Change Z order of a child widget.
 	 * This function invalidates iterators which were obtained before calling to it.
 	 * @param child - child widget to change Z order of.

@@ -296,6 +296,14 @@ void container::on_lay_out()
 	);
 }
 
+void container::invalidate_subtree_layout() noexcept
+{
+	this->widget::invalidate_subtree_layout();
+	for (auto& w : this->children()) {
+		w.get().invalidate_subtree_layout();
+	}
+}
+
 void container::set_widget_parent(widget& w)
 {
 	w.parent_container = this;

@@ -161,6 +161,15 @@ void widget::invalidate_layout() noexcept
 	this->cache_frame_buffer.reset();
 }
 
+void widget::invalidate_subtree_layout() noexcept
+{
+	// Mark only this widget as layout-dirty. This method does not invalidate the layout of
+	// this widget's ancestors (unlike invalidate_layout()); containers override it to also
+	// mark their children. The render cache is cleared as part of the (re-)layout pass.
+	// TODO: clear cache?
+	this->layout_dirty = true;
+}
+
 void widget::render_internal(const ruis::mat4& matrix) const
 {
 	if (!this->rect().d.is_positive()) {
