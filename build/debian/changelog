@@ -1,3 +1,9 @@
+libruis (0.6.23) unstable; urgency=medium
+
+  * touch::scroll_area clip=true by default
+
+ -- Ivan Gagis <igagis@gmail.com>  Sat, 17 Oct 2026 14:35:00 +0300
+
 libruis (0.6.22) unstable; urgency=medium
 
   * add widget::invalidate_subtree_layout()
