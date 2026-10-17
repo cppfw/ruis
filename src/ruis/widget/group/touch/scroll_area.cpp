@@ -31,7 +31,13 @@ scroll_area::scroll_area(
 	widget(
 		context, //
 		std::move(params.layout_params),
-		std::move(params.widget)
+		[&]() {
+			if (auto& c = params.widget.clip; !c.has_value()) {
+				c = true;
+			}
+
+			return std::move(params.widget);
+		}()
 	),
 	// clang-format off
 	ruis::scroll_area(
