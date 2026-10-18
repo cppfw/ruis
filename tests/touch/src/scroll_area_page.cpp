@@ -425,6 +425,49 @@ ruis::widget_list make_scroll_area_page_contents(const utki::shared_ref<ruis::co
 		ruis::show_context_menu(b, std::move(menu));
 	};
 
+	// a horizontal slider that drives the progress bar fraction
+	// clang-format off
+	auto progress_slider = m::slider(c,
+		{
+			.layout_params{
+				.dims = {ruis::dim::fill, ruis::dim::min}
+			},
+			.widget{
+				.id = "ruis_test_progress_slider"s
+			},
+			.fraction = ruis::real(0.5),
+			.oriented_params{
+				.vertical = false
+			}
+		}
+	);
+	// clang-format on
+
+	// the progress bar driven by the slider above
+	// clang-format off
+	auto progress_bar_widget = m::progress_bar(c,
+		{
+			.layout_params{
+				.dims = {ruis::dim::fill, ruis::dim::min}
+			},
+			.widget{
+				.id = "ruis_test_progress_bar"s
+			},
+			.params{
+				.fraction = ruis::real(0.5)
+			}
+		}
+	);
+	// clang-format on
+
+	// the slider updates the progress bar's fraction
+	progress_slider.get().fraction_change_handler =
+		[progress_bar = utki::make_weak_from(progress_bar_widget.get())](ruis::fraction_widget& s) {
+			if (auto pb = progress_bar.lock()) {
+				pb->set_fraction(s.get_fraction(), false);
+			}
+		};
+
 	// clang-format off
 	return {
 		theme_selector,
@@ -452,6 +495,24 @@ ruis::widget_list make_scroll_area_page_contents(const utki::shared_ref<ruis::co
 			}
 		),
 		button_2,
+		ruis::make::gap(c,
+			{
+				.layout_params{
+					.dims = {ruis::dim::fill, c.get().style().get_len_gap_small().get()}
+				}
+			}
+		),
+		// a horizontal slider that drives the progress bar fraction below it
+		progress_slider,
+		ruis::make::gap(c,
+			{
+				.layout_params{
+					.dims = {ruis::dim::fill, c.get().style().get_len_gap_small().get()}
+				}
+			}
+		),
+		// the progress bar driven by the slider above it
+		progress_bar_widget,
 		ruis::make::gap(c,
 			{
 				.layout_params{
