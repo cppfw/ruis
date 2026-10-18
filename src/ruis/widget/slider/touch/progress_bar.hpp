@@ -96,6 +96,16 @@ public:
 
 	~progress_bar() override = default;
 
+	/**
+	 * @brief Set the color of the bar (the filled portion) and re-render the widget.
+	 * @param c - the new bar color.
+	 */
+	void set_bar_color(const styled<ruis::color>& c)
+	{
+		this->params.specific.bar_color = c;
+		this->clear_cache();
+	}
+
 private:
 	void render(const ruis::mat4& matrix) const override;
 };
