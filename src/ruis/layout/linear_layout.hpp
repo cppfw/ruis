@@ -27,8 +27,32 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
-// TODO: doxygen
-
+/**
+ * @brief Layout that arranges the widgets in a single line, horizontally or vertically.
+ *
+ * The direction of the line is called the longitudinal direction, the other direction is
+ * called the transverse direction.
+ *
+ * A widget is always resized to the space assigned to it in the longitudinal direction,
+ * therefore the alignment in the longitudinal direction has no effect, only the alignment
+ * in the transverse direction is used.
+ *
+ * The space assigned to a widget in the longitudinal direction is:
+ * - its measured size for 'min', 'length' and 'undefined' dimensions, zero for 'fill' and
+ *   'max' dimensions;
+ * - plus its share of the space left over after the measured sizes of the widgets, if the
+ *   widget has a weight. The shares are proportional to the weights.
+ * The assigned space is clamped to the space left in the container, so a widget never
+ * overflows the container.
+ *
+ * In the transverse direction a 'fill' or 'max' widget is resized to the size of the
+ * container, a 'min' or 'undefined' widget is given its measured size clamped to the size
+ * of the container and a 'length' widget is given the specified length.
+ *
+ * The measured size of the container is the sum of the measured longitudinal sizes of the
+ * 'min', 'length' and 'undefined' widgets, the 'fill' and 'max' widgets contribute zero to
+ * that sum.
+ */
 class linear_layout :
 	public layout, //
 	public oriented

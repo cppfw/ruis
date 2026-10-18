@@ -51,9 +51,10 @@ public:
 
 		/**
 		 * @brief Requests minimal or bigger dimensions of widget.
-		 * The widget will be given at least minimal space it needs to properly draw.
-		 * 'max' behaves the same way as 'min' during measure, but during layouting
-		 * the widget will be given same size as parent.
+		 * 'max' is measured as 'min', but is laid out as 'fill':
+		 * during measure the widget reports its natural size (as with 'min') and that size
+		 * contributes to the measured size of its container, during layouting the widget is
+		 * resized to the space given to it by the layout (as with 'fill').
 		 */
 		max,
 

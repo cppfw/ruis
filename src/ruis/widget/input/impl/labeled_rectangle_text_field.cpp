@@ -57,7 +57,9 @@ labeled_rectangle_text_field::labeled_rectangle_text_field(
 		),
 		ruis::make::rectangle_text_field(
 			context, //
-			{.layout_params{.dims = {ruis::dim::max, ruis::dim::max}},
+			// the text field is a child of a column layout: 'max' in the long (vertical) direction
+			// would be laid out as a 'fill' child and get zero size, so use 'min' there
+			{.layout_params{.dims = {ruis::dim::max, ruis::dim::min}},
 			 .params = std::move(params.params.rectangle_text_field)},
 			std::move(text)
 		)

@@ -145,9 +145,10 @@ ruis::event_status ruis::nine_patch_drop_down_box::on_mouse_button(const mouse_b
 	if (e.action == button_action::press) {
 		++this->num_mouse_buttons_pressed;
 	} else {
-		// TODO: twice I got this assert triggered, perhaps there are situations when
+		// TODONEXT: twice I got this assert triggered, perhaps there are situations when
 		//       button release event comes without prior button press, need to investigate
 		// REPRODUCTION: press mouse button out of the selection_box, move cursor to selectioon_box, release the mouse button.
+		// REPRODUCTION2: press mouse on the button and press it again -> assert
 		utki::assert(this->num_mouse_buttons_pressed != 0, SL);
 
 		--this->num_mouse_buttons_pressed;

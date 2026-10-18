@@ -90,6 +90,11 @@ void linear_layout::lay_out(
 
 			const auto& long_dim = lp.dims[long_index];
 
+			// A 'max' child is laid out as a 'fill' child (see pass 2): it has no rigid size, it gets
+			// its share of the flexible space. It is still measured as 'min' below, so that the
+			// container knows the child's natural size.
+			const bool rigid_long_dim = long_dim.get_type() != dim::type::fill && long_dim.get_type() != dim::type::max;
+
 			switch (long_dim.get_type()) {
 				case dim::type::fill:
 					d[long_index] = 0;
@@ -123,7 +128,9 @@ void linear_layout::lay_out(
 
 			info->measured_dims = d;
 
-			rigid += d[long_index];
+			if (rigid_long_dim) {
+				rigid += d[long_index];
+			}
 
 			++info;
 		}
@@ -149,9 +156,17 @@ void linear_layout::lay_out(
 
 			auto long_room = info->measured_dims[long_index];
 
+			const auto& long_dim = lp.dims[long_index];
+			const auto& trans_dim = lp.dims[trans_index];
+
+			if (long_dim.get_type() == dim::type::max) {
+				// a 'max' child is laid out as a 'fill' child: its measured size is not a baseline
+				// for it, it gets its share of the flexible space
+				long_room = 0;
+			}
+
 			if (weight != 0) {
 				utki::assert(weight > 0);
-				vec2 d;
 				if (flexible > 0) {
 					utki::assert(net_weight > 0);
 					real dl = flexible * weight / net_weight;
@@ -164,128 +179,78 @@ void linear_layout::lay_out(
 						remainder -= real(1);
 					}
 				}
-
-				const auto& long_dim = lp.dims[long_index];
-
-				r4::vector2<measure_mode> d_mode;
-
-				// a weighted child always has a concrete longitudinal size, so it is exactly
-				d_mode[long_index] = measure_mode::exactly;
-				switch (long_dim.get_type()) {
-					case dim::type::fill:
-						[[fallthrough]];
-					case dim::type::max:
-						d[long_index] = long_room;
-						break;
-					// NOLINTNEXTLINE(bugprone-branch-clone, "false positive")
-					case dim::type::undefined:
-						[[fallthrough]];
-					case dim::type::min:
-						[[fallthrough]];
-					case dim::type::length:
-						d[long_index] = info->measured_dims[long_index];
-						break;
-				}
-
-				const auto& trans_dim = lp.dims[trans_index];
-
-				switch (trans_dim.get_type()) {
-					case dim::type::max:
-						[[fallthrough]];
-					case dim::type::fill:
-						d[trans_index] = dims[trans_index];
-						d_mode[trans_index] = measure_mode::exactly;
-						break;
-					case dim::type::undefined:
-						[[fallthrough]];
-					case dim::type::min:
-						d[trans_index] = measure_infinite_quotum;
-						d_mode[trans_index] = measure_mode::at_most;
-						break;
-					case dim::type::length:
-						d[trans_index] = trans_dim.get_length().get(w.get().context);
-						d_mode[trans_index] = measure_mode::exactly;
-						break;
-				}
-
-				// for min/undefined trans dim the long dim is already concrete, so only the trans dim needs measuring
-				if (d_mode[trans_index] == measure_mode::at_most) {
-					vec2 md = w.get().measure(d, d_mode);
-					for (unsigned i = 0; i != md.size(); ++i) {
-						if (d_mode[i] == measure_mode::at_most) {
-							d[i] = md[i];
-						}
-					}
-				}
-
-				// 'min' (and 'undefined') dimensions are clamped to the space actually available:
-				// the transverse dimension to the full transverse container size and the longitudinal
-				// dimension to the space left in the longitudinal direction (clamped to zero, a
-				// preceding fixed-size child might have already taken all the space)
-				using std::min;
-				using std::max;
-				if (dim::is_min_type(long_dim.get_type())) {
-					auto space_left = max(dims[long_index] - pos, real(0));
-					d[long_index] = min(d[long_index], space_left);
-				}
-				if (dim::is_min_type(trans_dim.get_type())) {
-					d[trans_index] = min(d[trans_index], dims[trans_index]);
-				}
-
-				w.get().resize(d);
-			} else {
-				// weight is 0
-
-				vec2 d = info->measured_dims;
-
-				// TODO: thie following clamping is a repeated code in the two if branches, refactor to avoid code repetition.
-
-				// 'min' (and 'undefined') dimensions are clamped to the space actually available:
-				// the transverse dimension to the full transverse container size and the longitudinal
-				// dimension to the space left in the longitudinal direction (clamped to zero, a
-				// preceding fixed-size child might have already taken all the space)
-				using std::min;
-				using std::max;
-				if (dim::is_min_type(lp.dims[long_index].get_type())) {
-					auto space_left = max(dims[long_index] - pos, real(0));
-					d[long_index] = min(d[long_index], space_left);
-				}
-				if (dim::is_min_type(lp.dims[trans_index].get_type())) {
-					d[trans_index] = min(d[trans_index], dims[trans_index]);
-				}
-
-				w.get().resize(d);
 			}
 
-			// The slot available to the current widget in the longitudinal direction is the
-			// allocated room clamped to the space actually left, so that an overflowing widget
-			// (clamped to a smaller size) is aligned within the space it really occupies,
-			// instead of being shifted out of the container by its full allocated room.
+			// The slot assigned to the widget in the longitudinal direction is the allocated room
+			// clamped to the space actually left, so that a widget does not get pushed beyond the
+			// container edge by a preceding widget that has taken all the space.
 			using std::min;
 			real long_slot = min(long_room, max(dims[long_index] - pos, real(0)));
 
-			vec2 room;
-			room[long_index] = long_slot;
-			room[trans_index] = dims[trans_index];
+			// The widget is always resized to the space assigned to it in the longitudinal
+			// direction, therefore the longitudinal alignment has no effect.
+			vec2 d;
+			d[long_index] = long_slot;
+
+			r4::vector2<measure_mode> d_mode;
+			d_mode[long_index] = measure_mode::exactly;
+
+			switch (trans_dim.get_type()) {
+				case dim::type::max:
+					[[fallthrough]];
+				case dim::type::fill:
+					d[trans_index] = dims[trans_index];
+					d_mode[trans_index] = measure_mode::exactly;
+					break;
+				case dim::type::undefined:
+					[[fallthrough]];
+				case dim::type::min:
+					// unbounded quotum placeholder: the measure() call below reports the natural size
+					// and replaces d[trans_index] (only at_most dims are replaced)
+					d[trans_index] = measure_infinite_quotum;
+					d_mode[trans_index] = measure_mode::at_most;
+					break;
+				case dim::type::length:
+					d[trans_index] = trans_dim.get_length().get(w.get().context);
+					d_mode[trans_index] = measure_mode::exactly;
+					break;
+			}
+
+			// for min/undefined trans dim the long dim is already concrete, so only the trans dim needs measuring
+			if (d_mode[trans_index] == measure_mode::at_most) {
+				vec2 md = w.get().measure(d, d_mode);
+				for (unsigned i = 0; i != md.size(); ++i) {
+					if (d_mode[i] == measure_mode::at_most) {
+						d[i] = md[i];
+					}
+				}
+			}
+
+			// a 'min' (and 'undefined') transverse dimension is clamped to the container size
+			if (dim::is_min_type(trans_dim.get_type())) {
+				d[trans_index] = min(d[trans_index], dims[trans_index]);
+			}
+
+			w.get().resize(d);
 
 			vec2 new_pos;
 			new_pos[long_index] = pos;
 			new_pos[trans_index] = 0;
 
-			for (unsigned i = 0; i != 2; ++i) {
-				const auto& align = lp.align[i].get();
-				switch (align) {
-					case ruis::align::front:
-						break;
-					case ruis::align::undefined:
-						[[fallthrough]];
-					case ruis::align::center:
-						new_pos[i] += round((room[i] - w.get().rect().d[i]) / 2);
-						break;
-					case ruis::align::back:
-						new_pos[i] += room[i] - w.get().rect().d[i];
-						break;
-				}
+			// align in the transverse direction only, in the longitudinal direction the widget
+			// fills the whole slot assigned to it
+			const auto& trans_align = lp.align[trans_index].get();
+			switch (trans_align) {
+				case ruis::align::front:
+					break;
+				case ruis::align::undefined:
+					[[fallthrough]];
+				case ruis::align::center:
+					new_pos[trans_index] += round((dims[trans_index] - w.get().rect().d[trans_index]) / 2);
+					break;
+				case ruis::align::back:
+					new_pos[trans_index] += dims[trans_index] - w.get().rect().d[trans_index];
+					break;
 			}
 
 			w.get().move_to(new_pos);

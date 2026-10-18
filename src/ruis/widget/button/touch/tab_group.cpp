@@ -55,13 +55,18 @@ tab_group::tab_group(
 						// use same layout params for the padding, except the dims
 						.layout_params = [&]() {
 							auto lp = c.get().get_layout_params_const();
-							lp.dims = {ruis::dim::max, ruis::dim::max};
+							lp.dims = {
+								// in horizontal direction wrap the tab button, if the button had weight set it will be applied to the wrapping padding as well
+								ruis::dim::min,
+								// in vertical direction make all tab buttons take the available space, but still report it's min size when measured
+								ruis::dim::max
+							};
 							return lp;
 						}(),
 						.params{
 							.specific{
-								.borders = {context.get().style().get_len_gap_small()
-								} // TODO: get from params, should be same as selector_gap
+								// TODO: get from params
+								.borders = {context.get().style().get_len_gap_small()}
 							}
 						}
 					},

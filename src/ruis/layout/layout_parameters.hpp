@@ -40,8 +40,9 @@ struct layout_parameters {
 
 	/**
 	 * @brief Weight of the widget.
-	 * Weight defines how much space widget occupies in addition to its minimal or explicitly set size.
-	 * Weight of 0 means that the widget will not occupy extra space.
+	 * Weight defines how the space left over by the widgets is distributed between them.
+	 * The shares are proportional to the weights.
+	 * Weight of 0 means that the widget does not take any of the space left over.
 	 * Value less than 0 means the weight is undefined, default weight of 0 will be assumed by layouts.
 	 */
 	styled<real> weight = -1;
@@ -49,6 +50,8 @@ struct layout_parameters {
 	/**
 	 * @brief Alignment of the widget within its parent.
 	 * Horizontal and vertical alignment.
+	 * @note Linear layout ignores the alignment in the direction of the line, because it
+	 * resizes the widget to the whole space assigned to it in that direction.
 	 */
 	r4::vector2<styled<ruis::align>> align = {ruis::align::undefined, ruis::align::undefined};
 };

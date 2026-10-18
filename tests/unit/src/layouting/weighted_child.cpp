@@ -51,18 +51,52 @@ utki::shared_ref<ruis::widget> field(
 
 namespace {
 // NOLINTNEXTLINE(cppcoreguidelines-interfaces-global-init, "false-positive: the set depends on global ruis::dim::fill which might be uninitialized at the time of static initialization of this set, but it is initialized at the time of tests execution")
-const tst::set set("weighted_child_alignment", [](tst::suite& suite) {
-	// Regression test: a weighted child which is 'min' in the longitudinal direction
-	// gets its natural size, but it still allocates a room (natural size + its share of
-	// the flexible space) which is used for aligning it (front/center/back) and for
-	// advancing the position of the following children.
-	suite.add("weighted_back_aligned_child_is_placed_at_the_back_of_its_room__column", [] {
+const tst::set set("linear_layout__weighted_child", [](tst::suite& suite) {
+	// A child is always resized to the space assigned to it in the longitudinal
+	// direction: its room (natural size + its share of the flexible space) clamped to
+	// the space left. Because it fills the whole room, the longitudinal alignment has
+	// no effect, only the transverse alignment does.
+
+	suite.add("weighted_child_fills_its_room__column", [] {
 		auto context = make_dummy_context();
 
 		// The structure of the calslog dialogs: a fixed-height column of fields with a
-		// weighted button row at the end which is back aligned in the longitudinal
-		// (vertical) direction, so that the buttons are at the bottom of the column.
+		// weighted button row at the end. The row is back aligned in the longitudinal
+		// (vertical) direction, which makes no difference: the row fills the whole
+		// space left over by the fields.
 		// clang-format off
+		auto row = ruis::make::row(context,
+			{
+				.layout_params{
+					.dims = {ruis::dim::fill, ruis::dim::min},
+					.weight = 1,
+					.align = {ruis::align::front, ruis::align::back}
+				}
+			},
+			{
+				field(context,
+					{
+						.dims = {ruis::dim::fill, ruis::dim::min},
+						.weight = 1
+					},
+					60,
+					30),
+				ruis::make::gap(context,
+					{
+						.layout_params{
+							.dims = {ruis::dim(ruis::length::make_pp(8)), ruis::dim::fill}
+						}
+					}),
+				field(context,
+					{
+						.dims = {ruis::dim::fill, ruis::dim::min},
+						.weight = 1
+					},
+					60,
+					30)
+			}
+		);
+
 		auto column = ruis::make::column(context,
 			{
 				.layout_params{
@@ -112,36 +146,7 @@ const tst::set set("weighted_child_alignment", [](tst::suite& suite) {
 					},
 					100,
 					20),
-				ruis::make::row(context,
-					{
-						.layout_params{
-							.dims = {ruis::dim::fill, ruis::dim::min},
-							.weight = 1,
-							.align = {ruis::align::front, ruis::align::back}
-						}
-					},
-					{
-						field(context,
-							{
-								.dims = {ruis::dim::fill, ruis::dim::min},
-								.weight = 1
-							},
-							60,
-							30),
-						ruis::make::gap(context,
-							{
-								.layout_params{
-									.dims = {ruis::dim(ruis::length::make_pp(8)), ruis::dim::fill}
-								}
-							}),
-						field(context,
-							{
-								.dims = {ruis::dim::fill, ruis::dim::min},
-								.weight = 1
-							},
-							60,
-							30)
-					})
+				row
 			}
 		);
 		// clang-format on
@@ -151,21 +156,28 @@ const tst::set set("weighted_child_alignment", [](tst::suite& suite) {
 		col.lay_out();
 
 		// The natural height of the fields and gaps: 30+8+40+8+40+8+20 = 154.
-		// The row has weight 1 and takes all the remaining space as its room, but its
-		// own height is its natural height (30). Being back aligned in the vertical
-		// direction it is placed at the bottom of the column: y = 500 - 30 = 470.
-		auto& row = col.children().back().get();
-		tst::check_eq(row.rect().d[0], real(300), SL);
-		tst::check_eq(row.rect().d[1], real(30), SL);
-		tst::check_eq(row.rect().p[1], real(470), SL);
+		// The row has weight 1, so its room is all the remaining space (500 - 154 = 346)
+		// and it is resized to it, reaching the bottom of the column.
+		auto& r = row.get();
+		tst::check_eq(r.rect().d[0], real(300), SL);
+		tst::check_eq(r.rect().d[1], real(346), SL);
+		tst::check_eq(r.rect().p[1], real(154), SL);
+
+		// Inside the row the two weighted fields split its width (300 - 8 = 292) and keep
+		// their natural height, center aligned in the transverse (vertical) direction
+		// (undefined alignment defaults to center): y = (346 - 30) / 2 = 158.
+		auto& first_button = r.children().front().get();
+		tst::check_eq(first_button.rect().d[0], real(146), SL);
+		tst::check_eq(first_button.rect().d[1], real(30), SL);
+		tst::check_eq(first_button.rect().p[1], real(158), SL);
 	});
 
-	suite.add("weighted_back_aligned_child_is_placed_at_the_back_of_its_room__row", [] {
+	suite.add("weighted_child_fills_its_room__row", [] {
 		auto context = make_dummy_context();
 
-		// The structure of the touch selection box: a row with a title on the left
-		// (front aligned) and a weighted container holding the selected value which
-		// is back aligned, so that the value is at the right edge of the row.
+		// A row with a title on the left and a weighted container holding the selected
+		// value, back aligned in the longitudinal (horizontal) direction. The alignment
+		// makes no difference: the value fills the whole space left over by the title.
 		// clang-format off
 		auto row = ruis::make::row(context,
 			{
@@ -200,19 +212,18 @@ const tst::set set("weighted_child_alignment", [](tst::suite& suite) {
 		r.resize(ruis::vec2(200, 40));
 		r.lay_out();
 
-		// The title is at the left edge: x = 0.
+		// The unweighted title keeps its natural width and is at the left edge: x = 0.
 		auto& title = r.children().front().get();
 		tst::check_eq(title.rect().p[0], real(0), SL);
 		tst::check_eq(title.rect().d[0], real(40), SL);
 
-		// The value takes its natural width (50) but its room is the remaining space
-		// (160). Being back aligned in the horizontal direction it is placed at the
-		// right edge: x = 200 - 50 = 150.
+		// The value has weight 1, so its room is the remaining space (200 - 40 = 160)
+		// and it is resized to it: x = 40, width = 160.
 		auto& value = r.children().back().get();
-		tst::check_eq(value.rect().d[0], real(50), SL);
-		tst::check_eq(value.rect().p[0], real(150), SL);
+		tst::check_eq(value.rect().d[0], real(160), SL);
+		tst::check_eq(value.rect().p[0], real(40), SL);
 
-		// Both children are center aligned in the vertical direction: y = (40 - 20) / 2 = 10.
+		// Both children are center aligned in the transverse (vertical) direction: y = (40 - 20) / 2 = 10.
 		tst::check_eq(title.rect().p[1], real(10), SL);
 		tst::check_eq(value.rect().p[1], real(10), SL);
 	});
