@@ -145,13 +145,21 @@ ruis::event_status ruis::nine_patch_drop_down_box::on_mouse_button(const mouse_b
 	if (e.action == button_action::press) {
 		++this->num_mouse_buttons_pressed;
 	} else {
-		// TODONEXT: twice I got this assert triggered, perhaps there are situations when
-		//       button release event comes without prior button press, need to investigate
-		// REPRODUCTION: press mouse button out of the selection_box, move cursor to selectioon_box, release the mouse button.
-		// REPRODUCTION2: press mouse on the button and press it again -> assert
-		utki::assert(this->num_mouse_buttons_pressed != 0, SL);
-
-		--this->num_mouse_buttons_pressed;
+		// NOTE: a button release event may be delivered to this widget without a prior button
+		//       press event having been counted:
+		//       1) when the press happened outside of this widget (or was not consumed by any
+		//          widget at all), and the cursor was moved over this widget before the release
+		//          - in this case the release event is routed to this widget by position;
+		//       2) when the press was consumed by the context menu's mouse_proxy which closes
+		//          the menu - even though that proxy captures the mouse button input, it is
+		//          removed from the widget tree when the menu closes, so the capture becomes
+		//          not effective and the release event is routed to this widget by position
+		//          if the mouse hovers over it.
+		//       In both cases (see gui::send_mouse_button and container::on_mouse_button), the
+		//       counter may be zero, so we only decrement it if it is non-zero.
+		if (this->num_mouse_buttons_pressed != 0) {
+			--this->num_mouse_buttons_pressed;
+		}
 	}
 
 	if (e.action == button_action::release) {
@@ -267,6 +275,9 @@ void ruis::nine_patch_drop_down_box::close_drop_down_menu()
 	if (!ddm) {
 		return;
 	}
+	// The counter may be desynchronized (a release event was consumed by another widget's
+	// mouse capture, e.g. the drop down menu's mouse proxy), so reset it when the menu closes.
+	this->num_mouse_buttons_pressed = 0;
 	this->context.get().post_to_ui_thread([ddm]() {
 		ddm->remove_from_parent();
 	});
