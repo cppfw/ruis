@@ -178,7 +178,12 @@ event_status text_input::on_mouse_move(const mouse_move_event& e)
 	}
 
 	this->set_cursor_index(this->pos_to_index(e.pos.x()), true);
-	return event_status::consumed;
+	// Do not claim (consume) the move: the cursor repositioning on drag is an
+	// incidental interaction, not a real drag that should block scrolling. Returning
+	// 'propagate' lets an ancestor scroll area (see touch::flickable) detect the drag
+	// by movement threshold and take over scrolling, even though the touch started on
+	// this text field.
+	return event_status::propagate;
 }
 
 vec2 text_input::measure(
