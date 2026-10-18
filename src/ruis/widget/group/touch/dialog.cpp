@@ -114,10 +114,19 @@ std::tuple<widget_list, std::reference_wrapper<ruis::container>> make_chrome(
 					c = style.get_color_panel();
 				}
 
-				for(auto& b : rect_params.padding.specific.borders){
-					if(b.get().is_undefined()){
-						b = style.get_len_gap_big();
-					}
+				auto& borders = rect_params.padding.specific.borders;
+				// left and right default to len_gap, top and bottom to len_gap_big
+				if(borders[0].get().is_undefined()){
+					borders[0] = style.get_len_gap();
+				}
+				if(borders[1].get().is_undefined()){
+					borders[1] = style.get_len_gap_big();
+				}
+				if(borders[2].get().is_undefined()){
+					borders[2] = style.get_len_gap();
+				}
+				if(borders[3].get().is_undefined()){
+					borders[3] = style.get_len_gap_big();
 				}
 
 				// the dialog contents are laid out in a column by default

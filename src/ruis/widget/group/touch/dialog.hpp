@@ -70,6 +70,7 @@ public:
 		 * @brief Dialog panel background rectangle parameters.
 		 *   - corner_radii defaults to the 'len_gap_big' style value if undefined.
 		 *   - stroke_width defaults to 0 (filled rectangle) if undefined.
+		 *   - padding borders: left/right default to 'len_gap', top/bottom to 'len_gap_big' if undefined.
 		 */
 		ruis::rectangle::parameters rectangle;
 
