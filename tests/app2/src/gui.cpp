@@ -37,6 +37,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <ruisapp/application.hpp>
 
 #include "application.hpp"
+#include "rectangle_radii_window.hpp"
 #include "rectangles_window.hpp"
 #include "table_list_window.hpp"
 #include "table_tree_view_window.hpp"
@@ -475,7 +476,9 @@ utki::shared_ref<ruis::widget> make_root_widgets_structure(const utki::shared_re
 					make_table_list_window(c, {310_pp, 230_pp}),
 					make_table_tree_view_window(c, {630_pp, 230_pp}),
 
-					make_text_input_window(c, {10_pp, 440_pp})
+					make_text_input_window(c, {10_pp, 440_pp}),
+
+					make_rectangle_radii_window(c, {310_pp, 440_pp})
 				}
 			)
 		}

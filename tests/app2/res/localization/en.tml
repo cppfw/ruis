@@ -32,4 +32,7 @@ vocabulary{
     text_input{
         str{"text input"}
     }
+    rectangle_radii{
+        str{"rectangle radii"}
+    }
 }

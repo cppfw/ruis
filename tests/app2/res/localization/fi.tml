@@ -32,4 +32,7 @@ vocabulary{
     text_input{
         str{"tekstikenttä"}
     }
+    rectangle_radii{
+        str{"neliön säteet"}
+    }
 }

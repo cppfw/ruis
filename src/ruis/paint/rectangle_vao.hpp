@@ -92,24 +92,17 @@ private:
 	struct rounded_corners_texture {
 		utki::shared_ref<const render::texture_2d> tex;
 
-		// texture middle point
-		vec2 middle_px;
+		// corner radii, in the same units as the texture's texels
+		corners<real> radii;
 
-		// vaos for corners
+		// vaos for the four corners; each samples only the bounding square of that
+		// corner's arc (no straight parts of neighbouring corners)
 		std::array<std::array<utki::shared_ref<const render::vertex_array>, 2>, 2> vaos;
 
 		rounded_corners_texture(
 			const ruis::render::renderer& r, //
 			utki::shared_ref<const render::texture_2d> tex,
-			vec2 middle_px
-		);
-
-	private:
-		rounded_corners_texture(
-			const ruis::render::renderer& r, //
-			vec2 middle,
-			utki::shared_ref<const render::texture_2d>& tex,
-			vec2 middle_px
+			corners<real> radii
 		);
 	};
 

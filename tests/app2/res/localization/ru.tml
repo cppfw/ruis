@@ -32,4 +32,7 @@ vocabulary{
     text_input{
         str{"текстовое поле"}
     }
+    rectangle_radii{
+        str{"радиусы прямоугольника"}
+    }
 }

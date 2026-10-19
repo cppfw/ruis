@@ -90,199 +90,133 @@ void rectangle_vao::render_rounded_corners(
 
 	utki::assert(this->rounded_corners_tex);
 	const auto& t = *this->rounded_corners_tex;
+	const auto& rad = t.radii;
 
-	const auto& tex_middle = t.middle_px;
-	auto tex_dims = t.tex.get().dims().to<real>();
-	auto tex_tail = tex_dims - tex_middle;
-	auto center_size = dims - tex_dims;
-	auto tail_pos = dims - tex_tail;
+	const auto w = dims.x();
+	const auto h = dims.y();
+	const auto sw = this->params.stroke_width;
+	const bool is_stroked = sw > 0;
 
-	// TODO: clamp center_size to 0
-	// TODO: clamp tail_pos to tex_middle
+	const auto& pos_quad = r.obj().pos_quad_01_vao.get();
 
-	// left-top
-	{
-		ruis::mat4 matr(matrix);
-		matr.scale(tex_middle);
+	// The rounded rectangle is decomposed into:
+	//  - four corner pieces, each rendered by its own VAO that samples only the arc
+	//    of that corner (no straight parts of neighbouring corners);
+	//  - four straight edge pieces;
+	//  - a central piece (filled rectangles only).
+	//
+	// Filled: each edge piece is sized by the adjacent corner radius.
+	// Stroked: each edge piece is sized by the stroke width.
+	using std::max;
 
-		r.shaders().color_pos_tex->render(
-			matr, //
-			t.vaos[0][0],
-			color,
-			t.tex
-		);
+	// left-top corner
+	if (rad.left_top() > 0) {
+		ruis::mat4 m(matrix);
+		m.scale(rad.left_top(), rad.left_top());
+		r.shaders().color_pos_tex->render(m, t.vaos[0][0], color, t.tex);
 	}
 
-	// right-top
-	{
-		ruis::mat4 matr(matrix);
-		matr.translate(
-			tail_pos.x(), //
-			0
-		);
-		matr.scale(
-			tex_tail.x(), //
-			tex_middle.y()
-		);
-
-		r.shaders().color_pos_tex->render(
-			matr, //
-			t.vaos[0][1],
-			color,
-			t.tex
-		);
+	// right-top corner
+	if (rad.right_top() > 0) {
+		ruis::mat4 m(matrix);
+		m.translate(w - rad.right_top(), 0);
+		m.scale(rad.right_top(), rad.right_top());
+		r.shaders().color_pos_tex->render(m, t.vaos[0][1], color, t.tex);
 	}
 
-	// left-bottom
-	{
-		ruis::mat4 matr(matrix);
-		matr.translate(
-			0, //
-			tail_pos.y()
-		);
-		matr.scale(
-			tex_middle.x(), //
-			tex_tail.y()
-		);
-
-		r.shaders().color_pos_tex->render(
-			matr, //
-			t.vaos[1][0],
-			color,
-			t.tex
-		);
+	// left-bottom corner
+	if (rad.left_bottom() > 0) {
+		ruis::mat4 m(matrix);
+		m.translate(0, h - rad.left_bottom());
+		m.scale(rad.left_bottom(), rad.left_bottom());
+		r.shaders().color_pos_tex->render(m, t.vaos[1][0], color, t.tex);
 	}
 
-	// right-bottom
-	{
-		ruis::mat4 matr(matrix);
-
-		matr.translate(tail_pos);
-		matr.scale(tex_tail);
-
-		r.shaders().color_pos_tex->render(
-			matr, //
-			t.vaos[1][1],
-			color,
-			t.tex
-		);
+	// right-bottom corner
+	if (rad.right_bottom() > 0) {
+		ruis::mat4 m(matrix);
+		m.translate(w - rad.right_bottom(), h - rad.right_bottom());
+		m.scale(rad.right_bottom(), rad.right_bottom());
+		r.shaders().color_pos_tex->render(m, t.vaos[1][1], color, t.tex);
 	}
 
-	bool is_stroked = this->params.stroke_width > 0;
-
-	// top
+	// top edge: the strip between the two top corners; its height is the top-left
+	// corner radius (the stroke width when stroked) so it lines up with that
+	// corner's arc
 	{
-		ruis::mat4 matr(matrix);
-		matr.translate(
-			tex_middle.x(), //
-			0
+		auto size = vec2(
+			max(w - rad.left_top() - rad.right_top(), real(0)), //
+			is_stroked ? sw : rad.left_top()
 		);
-		matr.scale(
-			center_size.x(), //
-			is_stroked ? this->params.stroke_width : tex_middle.y()
-		);
-
-		r.shaders().color_pos->render(
-			matr, //
-			r.obj().pos_quad_01_vao.get(),
-			color
-		);
+		if (size.x() > 0 && size.y() > 0) {
+			ruis::mat4 m(matrix);
+			m.translate(rad.left_top(), 0);
+			m.scale(size);
+			r.shaders().color_pos->render(m, pos_quad, color);
+		}
 	}
 
-	// left
+	// right edge: the strip between the two right corners; its width is the
+	// top-right corner radius (the stroke width when stroked) so it lines up with
+	// that corner's arc
 	{
-		ruis::mat4 matr(matrix);
-		matr.translate(
-			0, //
-			tex_middle.y()
+		auto size = vec2(
+			is_stroked ? sw : rad.right_top(), //
+			max(h - rad.right_top() - rad.right_bottom(), real(0))
 		);
-		matr.scale(
-			is_stroked ? this->params.stroke_width : tex_middle.x(), //
-			center_size.y()
-		);
-
-		r.shaders().color_pos->render(
-			matr, //
-			r.obj().pos_quad_01_vao.get(),
-			color
-		);
+		if (size.x() > 0 && size.y() > 0) {
+			ruis::mat4 m(matrix);
+			m.translate(w - size.x(), rad.right_top());
+			m.scale(size);
+			r.shaders().color_pos->render(m, pos_quad, color);
+		}
 	}
 
-	// center
+	// bottom edge: the strip between the two bottom corners; its height is the
+	// bottom-right corner radius (the stroke width when stroked) so it lines up
+	// with that corner's arc
+	{
+		auto size = vec2(
+			max(w - rad.left_bottom() - rad.right_bottom(), real(0)), //
+			is_stroked ? sw : rad.right_bottom()
+		);
+		if (size.x() > 0 && size.y() > 0) {
+			ruis::mat4 m(matrix);
+			m.translate(rad.left_bottom(), h - size.y());
+			m.scale(size);
+			r.shaders().color_pos->render(m, pos_quad, color);
+		}
+	}
+
+	// left edge: the strip between the two left corners; its width is the
+	// bottom-left corner radius (the stroke width when stroked) so it lines up
+	// with that corner's arc
+	{
+		auto size = vec2(
+			is_stroked ? sw : rad.left_bottom(), //
+			max(h - rad.left_top() - rad.left_bottom(), real(0))
+		);
+		if (size.x() > 0 && size.y() > 0) {
+			ruis::mat4 m(matrix);
+			m.translate(0, rad.left_top());
+			m.scale(size);
+			r.shaders().color_pos->render(m, pos_quad, color);
+		}
+	}
+
+	// center: the inner rectangle filling the part not covered by the corner arcs
+	// and the four edge strips (filled rectangles only)
 	if (!is_stroked) {
-		ruis::mat4 matr(matrix);
-		matr.translate(tex_middle);
-		matr.scale(center_size);
-
-		r.shaders().color_pos->render(
-			matr, //
-			r.obj().pos_quad_01_vao.get(),
-			color
+		auto size = vec2(
+			max(w - rad.left_bottom() - rad.right_top(), real(0)), //
+			max(h - rad.left_top() - rad.right_bottom(), real(0))
 		);
-	}
-
-	// right
-	{
-		ruis::mat4 matr(matrix);
-		if (!is_stroked) {
-			// filled rectangle
-			matr.translate(
-				tail_pos.x(), //
-				tex_middle.y()
-			);
-			matr.scale(
-				tex_tail.x(), //
-				center_size.y()
-			);
-		} else {
-			// stroked rectangle
-			matr.translate(
-				dims.x() - this->params.stroke_width, //
-				tex_middle.y()
-			);
-			matr.scale(
-				this->params.stroke_width, //
-				center_size.y()
-			);
+		if (size.x() > 0 && size.y() > 0) {
+			ruis::mat4 m(matrix);
+			m.translate(rad.left_bottom(), rad.left_top());
+			m.scale(size);
+			r.shaders().color_pos->render(m, pos_quad, color);
 		}
-
-		r.shaders().color_pos->render(
-			matr, //
-			r.obj().pos_quad_01_vao.get(),
-			color
-		);
-	}
-
-	// bottom
-	{
-		ruis::mat4 matr(matrix);
-		if (!is_stroked) {
-			// filled rectangle
-			matr.translate(
-				tex_middle.x(), //
-				tail_pos.y()
-			);
-			matr.scale(
-				center_size.x(), //
-				tex_tail.y()
-			);
-		} else {
-			// stroked rectangle
-			matr.translate(
-				tex_middle.x(), //
-				dims.y() - this->params.stroke_width
-			);
-			matr.scale(
-				center_size.x(), //
-				this->params.stroke_width
-			);
-		}
-
-		r.shaders().color_pos->render(
-			matr, //
-			r.obj().pos_quad_01_vao.get(),
-			color
-		);
 	}
 }
 
@@ -477,76 +411,70 @@ utki::shared_ref<const ruis::render::vertex_array> make_quad_vao(
 	);
 }
 
+std::array<std::array<utki::shared_ref<const ruis::render::vertex_array>, 2>, 2> make_corner_vaos(
+	const ruis::render::renderer& ren, //
+	const ruis::vec2& tex_dims,
+	const ruis::corners<ruis::real>& radii
+)
+{
+	auto tw = tex_dims.x();
+	auto th = tex_dims.y();
+
+	// The composite texture holds the four corner arcs in its four corners, each
+	// arc in a bounding square of its own radius size. Each corner VAO samples
+	// only that square, so no straight parts of neighbouring corners are included.
+	// clang-format off
+	return {{
+		{
+			// left-top
+			make_quad_vao(ren,
+				{
+					.p1 = {0, 0},
+					.p2 = {radii.left_top() / tw, radii.left_top() / th}
+				}
+			),
+			// right-top
+			make_quad_vao(ren,
+				{
+					.p1 = {1 - radii.right_top() / tw, 0},
+					.p2 = {1, radii.right_top() / th}
+				}
+			)
+		},
+		{
+			// left-bottom
+			make_quad_vao(ren,
+				{
+					.p1 = {0, 1 - radii.left_bottom() / th},
+					.p2 = {radii.left_bottom() / tw, 1}
+				}
+			),
+			// right-bottom
+			make_quad_vao(ren,
+				{
+					.p1 = {1 - radii.right_bottom() / tw, 1 - radii.right_bottom() / th},
+					.p2 = {1, 1}
+				}
+			)
+		}
+	}};
+	// clang-format on
+}
+
 } // namespace
 
 rectangle_vao::rounded_corners_texture::rounded_corners_texture(
 	const ruis::render::renderer& r, //
 	utki::shared_ref<const render::texture_2d> tex,
-	vec2 middle_px
-) :
-	rounded_corners_texture(
-		r, //
-		middle_px.comp_div(tex.get().dims().to<real>()),
-		// Arguments evaluation order is unspecified, so we cannot do std::move(tex) here,
-		// because we also use it in another argument.
-		// So, we pass it by reference to avoid unneded shared_ref copying.
-		tex,
-		middle_px
-	)
-{}
-
-rectangle_vao::rounded_corners_texture::rounded_corners_texture(
-	const ruis::render::renderer& r, //
-	vec2 middle,
-	utki::shared_ref<const render::texture_2d>& tex,
-	vec2 middle_px
+	corners<real> radii
 ) :
 	tex(std::move(tex)),
-	middle_px(middle_px),
-	// clang-format off
-	vaos{{
-		{
-			make_quad_vao(r,
-				{
-					.p1 = {0, 0},
-					.p2 = middle
-				}
-			),
-			make_quad_vao(r,
-				{
-					.p1 = {
-						middle.x(),
-						0
-					},
-					.p2 = {
-						1,
-						middle.y()
-					}
-				}
-			)
-		},
-		{
-			make_quad_vao(r,
-				{
-					.p1 = {
-						0,
-						middle.y()
-					},
-					.p2 = {
-						middle.x(),
-						1
-					}
-				}
-			),
-			make_quad_vao(r,
-				{
-					.p1 = middle,
-					.p2 = {1, 1}
-				}
-			)
-		}
-	}}
-// clang-format on
+	radii(std::move(radii)),
+	vaos(make_corner_vaos(
+		r, //
+		this->tex.get().dims().to<real>(),
+		this->radii
+	))
 {}
 
 void rectangle_vao::update_rounded_corners_texture()
@@ -574,16 +502,10 @@ void rectangle_vao::update_rounded_corners_texture()
 
 	auto tex = r.ctx().make_texture_2d(std::move(raster_image), {});
 
-	using std::max;
-	auto middle_px = ruis::vec2(
-		max(this->params.corner_radii[0], this->params.corner_radii[3]),
-		max(this->params.corner_radii[0], this->params.corner_radii[1]) //
-	);
-
 	this->rounded_corners_tex = std::make_shared<rounded_corners_texture>(
 		r, //
 		std::move(tex),
-		middle_px
+		this->params.corner_radii //
 	);
 
 	// add to cache

@@ -21,7 +21,11 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "rectangle.hpp"
 
+#include <algorithm>
+#include <ranges>
+
 #include "../../context.hpp"
+#include "../../util/corner_radius.hpp"
 
 using namespace ruis;
 
@@ -120,26 +124,55 @@ void rectangle::render(const ruis::mat4& matrix) const
 
 void rectangle::update_vaos()
 {
+	const auto& d = this->rect().d;
+	const auto w = std::max(d[0], real(0));
+	const auto h = std::max(d[1], real(0));
+
+	// Resolve each corner to a concrete radius; undefined corners become 0.
 	corners<real> radii;
 	std::ranges::transform(
 		this->params.corner_radii,
 		radii.begin(),
 		[this](const auto& r) -> real {
-			if (r.get().is_undefined()) {
-				return 0;
-			}
-			return r.get().get(this->context);
+			const auto& len = r.get();
+			return len.is_undefined() ? 0 : len.get(this->context);
 		} //
 	);
 
-	this->fill_vao.set({.corner_radii = radii});
-
 	if (this->has_stroke()) {
-		this->stroke_vao.set({//
-							  .corner_radii = radii, //
-							  .stroke_width = this->params.stroke_width.get().get(this->context)
+		const auto sw = this->params.stroke_width.get().get(this->context);
+
+		// The fill is drawn inset by the stroke width, so fit its radii to the
+		// smaller (w - sw) x (h - sw) box it is actually rendered into.
+		corners<real> inner = radii;
+		normalize_corner_radii(
+			inner, //
+			std::max(w - sw, real(0)), //
+			std::max(h - sw, real(0)) //
+		);
+		this->fill_vao.set({.corner_radii = inner});
+
+		// The stroke is drawn at the full widget size, so fit its radii to (w, h).
+		corners<real> outer = radii;
+		normalize_corner_radii(outer, w, h);
+		this->stroke_vao.set({
+			.corner_radii = outer, //
+			.stroke_width = sw //
 		});
+	} else {
+		// No stroke: the fill is drawn at the full widget size.
+		normalize_corner_radii(radii, w, h);
+		this->fill_vao.set({.corner_radii = radii});
 	}
+}
+
+void rectangle::on_resize()
+{
+	// The normalized corner radii depend on the widget size (conflicting radii are
+	// scaled down to fit the edges), so the VAOs must be rebuilt whenever the size
+	// changes.
+	this->update_vaos();
+	this->padding::on_resize();
 }
 
 utki::shared_ref<ruis::rectangle> ruis::make::rectangle(

@@ -39,6 +39,10 @@ public:
 		/**
 		 * @brief Corner radii of the rectangle.
 		 * The order of the radii is: left-top, right-top, right-bottom, left-bottom.
+		 * If the radii on any edge sum to more than the length of that edge, they are
+		 * scaled down proportionally so the shape stays valid
+		 * (see normalize_corner_radii). In particular, setting the two radii of one
+		 * side to a large equal value makes that side a capsule end.
 		 */
 		corners<styled<length>> corner_radii;
 
@@ -89,6 +93,8 @@ public:
 	~rectangle() override = default;
 
 	void render(const ruis::mat4& matrix) const override;
+
+	void on_resize() override;
 
 	void set_fill_color(styled<ruis::color> color);
 	void set_stroke_color(styled<ruis::color> color);
