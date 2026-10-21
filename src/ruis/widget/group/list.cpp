@@ -422,7 +422,7 @@ real list::scroll_by(real delta)
 				utki::assert(this->pos_offset <= this->first_tail_item_offset, SL);
 				auto max_scroll_till_end = this->first_tail_item_offset - this->pos_offset;
 				using std::min;
-				delta = min(this->first_tail_item_dim, max_scroll_till_end);
+				delta = min(delta, max_scroll_till_end);
 				this->pos_offset += delta;
 				scrolled_by += delta;
 
@@ -510,8 +510,9 @@ real list::scroll_by(real delta)
 				utki::assert(this->pos_offset <= this->first_tail_item_offset, SL);
 				auto max_scroll_till_end = this->first_tail_item_offset - this->pos_offset;
 				using std::min;
-				delta = min(this->first_tail_item_dim, max_scroll_till_end);
-				utki::assert(delta < this->first_tail_item_dim, SL);
+				delta = min(delta, max_scroll_till_end);
+				this->pos_offset += delta;
+				scrolled_by += delta;
 			}
 		}
 	} else {
