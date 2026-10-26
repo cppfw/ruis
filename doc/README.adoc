@@ -1,0 +1,6 @@
+= Documentation
+
+Hand-written documentation for *ruis* lives here: architecture overview,
+explanations of how subsystems (e.g. layouts) work, guides.
+
+Generated API documentation (Doxygen) is in the separate `doxygen/` directory.

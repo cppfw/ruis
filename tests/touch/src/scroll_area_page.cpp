@@ -24,6 +24,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <ruis/res/tml.hpp>
 #include <ruis/style/style_sheet.hpp>
 #include <ruis/widget/button/impl/rectangle_push_button.hpp>
+#include <ruis/widget/container.hpp>
 #include <ruis/widget/group/overlay.hpp>
 #include <ruis/widget/group/touch/context_menu.hpp>
 #include <ruis/widget/group/touch/dialog.hpp>
@@ -33,6 +34,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <ruis/widget/label/padding.hpp>
 #include <ruis/widget/label/text.hpp>
 #include <ruis/widget/slider/scroll_bar.hpp>
+#include <ruis/widget/slider/touch/scroll_bar.hpp>
 #include <utki/unicode.hpp>
 
 #include "application.hpp"
@@ -546,14 +548,16 @@ ruis::widget_list make_scroll_area_page_contents(const utki::shared_ref<ruis::co
 
 class scroll_area_page :
 	public ruis::page, //
-	private ruis::touch::scroll_area
+	private ruis::container
 {
 public:
 	scroll_area_page(const utki::shared_ref<ruis::context>& context) :
 		// clang-format off
 		ruis::widget(
 			context,
-			{},
+			{
+				.dims = {ruis::dim::fill, ruis::dim::fill}
+			},
 			{
 				.clip = true
 			}
@@ -561,9 +565,25 @@ public:
 		// clang-format on
 		ruis::page(context, {}),
 		// clang-format off
-		ruis::touch::scroll_area(
+		ruis::container(context,
+			{
+				.layout_params = { .dims = {ruis::dim::fill, ruis::dim::fill} },
+				.widget = { .clip = true },
+				.params = { .layout = ruis::layout::pile }
+			},
+			{}
+		)
+	// clang-format on
+	{
+		// the scrollable contents
+		// clang-format off
+		auto scroll_area = ruis::touch::make::scroll_area(
 			context,
-			{},
+			{
+				.layout_params = {
+					.dims = {ruis::dim::fill, ruis::dim::fill}
+				}
+			},
 			m::padding(context,
 				{
 					.layout_params{
@@ -580,9 +600,44 @@ public:
 				},
 				make_scroll_area_page_contents(context)
 			)
-		)
-	// clang-format on
-	{}
+		);
+		// clang-format on
+
+		// the non-interactive scroll indicator, on the right side of the screen,
+		// on top of the contents
+		// clang-format off
+		auto scroll_bar = ruis::touch::make::scroll_bar(
+			context,
+			{
+				.layout_params{
+					.dims = {ruis::dim::min, ruis::dim::fill},
+					.align = {ruis::align::back, ruis::align::center}
+				},
+				.params{
+					.fraction = ruis::real(0),
+					.band_fraction = ruis::real(1),
+					.orientation{
+						.vertical = true
+					}
+				}
+			}
+		);
+		// clang-format on
+
+		// update the scroll indicator every time the scroll position changes;
+		// capture a weak reference to the scroll bar and set the handler before the
+		// widgets are moved into the container
+		scroll_area.get().scroll_change_handler = [scroll_bar =
+													   utki::make_weak_from(scroll_bar.get())](ruis::scroll_area& sa) {
+			if (auto sb = scroll_bar.lock()) {
+				sb->set_fraction(sa.get_scroll_factor().y());
+				sb->set_band_fraction(sa.get_visible_area_fraction().y());
+			}
+		};
+
+		this->push_back(std::move(scroll_area));
+		this->push_back(std::move(scroll_bar));
+	}
 };
 
 } // namespace

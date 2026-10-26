@@ -27,6 +27,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
+// TODO: doxygen
+
 // Lint complains that std::shared_from_this is privately inherited via ruis::updateable
 // and trying to use it will result in undefined behaviour. This is false, because
 // ruis::updateable virtually iherits from utki::shared which inherits
@@ -74,7 +76,7 @@ public:
 		uint32_t duration_ms
 	);
 
-	void start(uint32_t dt_ms = 0);
+	void play(uint32_t dt_ms = 0);
 	void stop() noexcept;
 
 	/**

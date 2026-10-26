@@ -53,4 +53,19 @@ static_assert(sizeof(vec3) == sizeof(real) * 3, "size mismatch");
 using vec4 = r4::vector4<real>;
 static_assert(sizeof(vec4) == sizeof(real) * 4, "size mismatch");
 
+/**
+ * @brief A "very large" length, in pixels.
+ * This value is bigger than any reasonable screen or viewport dimension, even for
+ * content which is much longer than the screen (e.g. long scrollable contents of
+ * scroll areas or lists). It is used as a generic "infinite" length in situations
+ * where a value is only required to be larger than anything the user can see, for
+ * example to seed a rectangle's corner radii (see normalize_corner_radii()) so that
+ * the rectangle becomes a capsule (stadium) shape after normalization.
+ *
+ * It is intentionally not set to std::numeric_limits<real>::max() so that it can be
+ * safely used in arithmetic (e.g. computing an average of corner radii) without
+ * causing overflow or undefined behavior.
+ */
+constexpr real big_length_px = 10000000; // 10^7
+
 } // namespace ruis

@@ -71,7 +71,7 @@ void animation::update(uint32_t dt)
 	}
 }
 
-void animation::start(uint32_t dt_ms)
+void animation::play(uint32_t dt_ms)
 {
 	// This will add the updatable to an active list, but will not call the update() immediately.
 	this->updater.get().start( //

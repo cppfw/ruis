@@ -23,12 +23,14 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <ruis/util/widget_list.hpp>
 #include <ruis/widget/button/impl/ellipse_push_button.hpp>
+#include <ruis/widget/container.hpp>
 #include <ruis/widget/group/touch/context_menu.hpp>
 #include <ruis/widget/group/touch/list.hpp>
 #include <ruis/widget/label/gap.hpp>
 #include <ruis/widget/label/image.hpp>
 #include <ruis/widget/label/padding.hpp>
 #include <ruis/widget/label/text.hpp>
+#include <ruis/widget/slider/touch/scroll_bar.hpp>
 #include <utki/string.hpp>
 #include <utki/unicode.hpp>
 #include <utki/unique_ref.hpp>
@@ -260,13 +262,15 @@ public:
 namespace {
 class list_page :
 	public ruis::page, //
-	private ruis::touch::list
+	private ruis::container
 {
 public:
 	list_page(const utki::shared_ref<ruis::context>& context) :
 		// clang-format off
 		ruis::widget(context,
-			{},
+			{
+				.dims = {ruis::dim::fill, ruis::dim::fill}
+			},
 			{
 				.clip = true
 			}
@@ -274,17 +278,65 @@ public:
 		// clang-format on
 		ruis::page(context, {}),
 		// clang-format off
-		ruis::touch::list(context,
+		ruis::container(context,
 			{
+				.layout_params = { .dims = {ruis::dim::fill, ruis::dim::fill} },
+				.widget = { .clip = true },
+				.params = { .layout = ruis::layout::pile }
+			},
+			{}
+		)
+	// clang-format on
+	{
+		// the scrollable list
+		// clang-format off
+		auto list = ruis::touch::make::list(context,
+			{
+				.layout_params{
+					.dims = {ruis::dim::fill, ruis::dim::fill}
+				},
 				.params{
 					.specific{
 						.provider = utki::make_unique<list_page_provider>(context)
 					}
 				}
 			}
-		)
-	// clang-format on
-	{}
+		);
+		// clang-format on
+
+		// the non-interactive scroll indicator, on the right side of the screen,
+		// on top of the list
+		// clang-format off
+		auto scroll_bar = ruis::touch::make::scroll_bar(context,
+			{
+				.layout_params{
+					.dims = {ruis::dim::min, ruis::dim::fill},
+					.align = {ruis::align::back, ruis::align::center}
+				},
+				.params{
+					.fraction = ruis::real(0),
+					.band_fraction = ruis::real(1),
+					.orientation{
+						.vertical = true
+					}
+				}
+			}
+		);
+		// clang-format on
+
+		// update the scroll indicator every time the scroll position changes;
+		// capture a weak reference to the scroll bar and set the handler before the
+		// widgets are moved into the container
+		list.get().scroll_change_handler = [scroll_bar = utki::make_weak_from(scroll_bar.get())](ruis::list& l) {
+			if (auto sb = scroll_bar.lock()) {
+				sb->set_fraction(l.get_scroll_factor());
+				sb->set_band_fraction(l.get_scroll_band());
+			}
+		};
+
+		this->push_back(std::move(list));
+		this->push_back(std::move(scroll_bar));
+	}
 };
 
 } // namespace
