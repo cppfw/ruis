@@ -23,7 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <functional>
 
-#include "../../../paint/capsule_vao.hpp"
+#include "../../../paint/rectangle_vao.hpp"
 #include "../../../style/styled.hpp"
 #include "../../base/fraction_widget.hpp"
 
@@ -68,10 +68,12 @@ public:
 private:
 	parameters params;
 
-	// a single vao is enough for both the background (track) and the bar:
-	// the vao's thickness (diameter) is the same for both and the length is
-	// passed in at render time
-	ruis::paint::capsule_vao vao;
+	// a single vao is enough for both the background (track) and the bar: both are
+	// capsules (stadiums) whose corner radius is half the widget's height. Since the
+	// width is always >= the height, that radius is defined by the height alone and
+	// is constant across frames (it only changes on resize), so the vao is configured
+	// once in on_resize and render() just passes a different width per shape.
+	ruis::paint::rectangle_vao vao;
 
 	void on_fraction_change() override;
 	void on_resize() override;

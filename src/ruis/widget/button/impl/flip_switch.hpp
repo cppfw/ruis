@@ -21,8 +21,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include "../../label/capsule.hpp"
 #include "../../label/ellipse.hpp"
+#include "../../label/rectangle.hpp"
 #include "../toggle_button.hpp"
 
 namespace ruis {
@@ -44,7 +44,7 @@ namespace ruis {
 
 class flip_switch :
 	public toggle_button, //
-	public capsule
+	public rectangle
 {
 	// TODO: refactor to use utki::shared_ref
 	// NOLINTNEXTLINE(clang-analyzer-webkit.NoUncountedMemberChecker, "false-positive")
@@ -74,11 +74,12 @@ public:
 
 	struct parameters {
 		/**
-		 * @brief The capsule parameters. The capsule's padding is the gap between
-		 * the capsule's edges and the knob.
+		 * @brief The rectangle parameters. The rectangle is drawn with a very large
+		 * corner radius so that it looks like a capsule (stadium). Its padding is the
+		 * gap between the rectangle's edges and the knob.
 		 * If the padding is undefined then the style's 'len_gap_small' is used.
 		 */
-		ruis::capsule::parameters capsule;
+		ruis::rectangle::parameters rectangle;
 		specific_parameters specific;
 	};
 

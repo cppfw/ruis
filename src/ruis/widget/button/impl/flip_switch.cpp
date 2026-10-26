@@ -44,7 +44,7 @@ void flip_switch::on_pressed_change()
 
 void flip_switch::on_lay_out()
 {
-	this->capsule::on_lay_out();
+	this->rectangle::on_lay_out();
 	this->update_knob();
 }
 
@@ -103,12 +103,20 @@ flip_switch::flip_switch(
 	),
 	toggle_button(context),
 	// clang-format off
-	capsule(
+	rectangle(
 		context,
 		{
 			.params = [&]() {
-				auto& p = params.params.capsule;
+				auto& p = params.params.rectangle;
 
+				// give the rectangle a very large corner radius so that it looks like
+				// a capsule (stadium); the radius is normalized to the widget's size
+				// by the rectangle widget (see normalize_corner_radii)
+				for (auto& r : p.specific.corner_radii) {
+					if (r.get().is_undefined()) {
+						r = length::make_px(big_length_px);
+					}
+				}
 				if (auto& l = p.specific.stroke_width; l.get().is_undefined()) {
 					l = context.get().style().get_len_border();
 				}

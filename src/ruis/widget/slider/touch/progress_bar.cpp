@@ -22,6 +22,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "progress_bar.hpp"
 
 #include <algorithm>
+#include <cmath>
 
 #include "../../../context.hpp"
 
@@ -58,7 +59,7 @@ progress_bar::progress_bar( //
 		}
 		return std::move(params.params);
 	}()),
-	vao(context.get().renderer)
+	vao(context.get().renderer, {})
 {}
 
 void progress_bar::on_fraction_change()
@@ -71,10 +72,19 @@ void progress_bar::on_fraction_change()
 
 void progress_bar::on_resize()
 {
+	// the track and the bar are both capsules whose corner radius is half the
+	// widget's height; since the width is always >= the height that radius is
+	// defined by the height alone, so configure the vao once for it (it only
+	// changes when the height changes, i.e. on resize). The radius is rounded to
+	// whole pixels to match the renderer, which uses whole-pixel corner radii.
+	using std::round;
+	const auto h = this->rect().d.y();
+	const auto r = round(h / 2);
+	this->vao.set({
+		.corner_radii = ruis::corners<real>(r), //
+		.stroke_width = -1 // filled rectangle
+	});
 	this->widget::on_resize();
-
-	// the capsule thickness (diameter) is the height of the widget
-	this->vao.set(this->rect().d.y());
 }
 
 void progress_bar::render(const ruis::mat4& matrix) const
@@ -84,20 +94,22 @@ void progress_bar::render(const ruis::mat4& matrix) const
 
 	using std::max;
 
-	// the background (track) capsule, it fills the whole widget
+	// the background (track), it fills the whole widget
 	this->vao.render(
 		matrix, //
-		this->params.specific.background_color.get(),
-		w
+		{w, h}, //
+		this->params.specific.background_color.get()
 	);
 
-	// the progress (bar) capsule, it grows from the left following the fraction:
-	// at 0% it's just a circle (width == height) and at 100% it's the whole bar
+	// the progress (bar), it grows from the left following the fraction:
+	// at 0% it's just a circle (width == height) and at 100% it's the whole bar.
+	// the corner radius (half the height) is the same as the track's, so the vao
+	// is already configured; only the width differs
 	const auto bar_w = max(h, h + (w - h) * this->get_fraction());
 	this->vao.render(
 		matrix, //
-		this->params.specific.bar_color.get(),
-		bar_w
+		{bar_w, h}, //
+		this->params.specific.bar_color.get()
 	);
 }
 
