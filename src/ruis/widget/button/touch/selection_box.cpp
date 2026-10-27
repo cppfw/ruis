@@ -73,6 +73,7 @@ selection_box::selection_box(
 			ruis::make::text(context,
 				{
 					.layout_params{
+						.weight = 1,
 						.align = {ruis::align::front, ruis::align::center}
 					}
 				},
@@ -81,7 +82,7 @@ selection_box::selection_box(
 			ruis::make::container(context,
 				{
 					.layout_params{
-						.weight = 1,
+						.weight = 0,
 						.align = {ruis::align::back, ruis::align::center}
 					},
 					.widget{
