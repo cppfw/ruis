@@ -23,6 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <ruis/res/tml.hpp>
 #include <ruis/style/style_sheet.hpp>
+#include <ruis/widget/button/impl/flip_switch.hpp>
 #include <ruis/widget/button/impl/rectangle_push_button.hpp>
 #include <ruis/widget/container.hpp>
 #include <ruis/widget/group/overlay.hpp>
@@ -470,6 +471,17 @@ ruis::widget_list make_scroll_area_page_contents(const utki::shared_ref<ruis::co
 			}
 		};
 
+	// a flip switch (toggle button), uses its natural size
+	// clang-format off
+	auto flip_switch_widget = m::flip_switch(c,
+		{
+			.layout_params{
+				.dims = {ruis::dim::min, ruis::dim::min}
+			}
+		}
+	);
+	// clang-format on
+
 	// clang-format off
 	return {
 		theme_selector,
@@ -515,6 +527,14 @@ ruis::widget_list make_scroll_area_page_contents(const utki::shared_ref<ruis::co
 		),
 		// the progress bar driven by the slider above it
 		progress_bar_widget,
+		ruis::make::gap(c,
+			{
+				.layout_params{
+					.dims = {ruis::dim::fill, c.get().style().get_len_gap_small().get()}
+				}
+			}
+		),
+		flip_switch_widget,
 		ruis::make::gap(c,
 			{
 				.layout_params{

@@ -23,6 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <algorithm>
 
+#include "../../../animation/eased_animation.hpp"
 #include "../../../context.hpp"
 
 using namespace std::string_literals;
@@ -30,6 +31,7 @@ using namespace std::string_view_literals;
 using namespace ruis::length_literals;
 
 using namespace ruis;
+using std::max;
 
 namespace m {
 using namespace ruis::make;
@@ -37,34 +39,87 @@ using namespace ruis::make;
 
 void flip_switch::on_pressed_change()
 {
-	this->update_knob();
+	// the pressed (logical) state has already been flipped by set_pressed() before
+	// this override was called; now animate the knob's visual progress from its
+	// current position to the new target (1 when on, 0 when off). If the user clicks
+	// again mid-animation this simply retargets from wherever the knob currently is.
+	this->knob_animation.get().stop(); // cancel any in-flight animation
+
+	this->from_progress = this->progress;
+	this->to_progress = this->is_pressed() ? real(1) : real(0);
+
 	this->clear_cache();
+
+	// rewind() is required because animation::play() does not reset the animation's
+	// remaining time; without it a reused animation would be considered already ended
+	this->knob_animation.get().rewind();
+	this->knob_animation.get().play();
+
 	this->toggle_button::on_pressed_change();
+}
+
+flip_switch::~flip_switch()
+{
+	// stop the knob animation so the updater does not call its handlers after this
+	// widget (and the 'this' they capture) is gone
+	this->knob_animation.get().stop();
 }
 
 void flip_switch::on_lay_out()
 {
 	this->rectangle::on_lay_out();
-	this->update_knob();
+
+	// the knob's travel length and diameter depend only on the widget's size, so they
+	// are computed here (on (re)layout) and the knob is resized here; during the
+	// animation the knob is only moved and recolored
+	auto borders = this->get_actual_borders();
+	this->content_w = max(real(0), this->rect().d.x() - borders.dims().x());
+	this->knob_d = max(real(0), this->rect().d.y() - borders.dims().y());
+	this->knob.resize({this->knob_d, this->knob_d});
+
+	// the knob's visual state snaps to the logical pressed state on (re)layout;
+	// it is only animated in response to user input
+	this->from_progress = this->is_pressed() ? real(1) : real(0);
+	this->to_progress = this->from_progress;
+	this->progress = this->from_progress;
+	this->apply_progress(this->progress);
 }
 
-void flip_switch::update_knob()
+real flip_switch::knob_x_at(real progress) const
 {
-	using std::max;
+	// the knob travels along the long axis from the left edge (off) to the right
+	// edge (on) of the content area
+	return (this->content_w - this->knob_d) * progress;
+}
 
-	// update the knob's color
-	this->knob.set_color(this->is_pressed() ? this->params.knob_color_on : this->params.knob_color_off);
+ruis::color flip_switch::knob_color_at(real progress) const
+{
+	return flip_switch::lerp(
+		this->params.knob_color_off.get(), //
+		this->params.knob_color_on.get(), //
+		progress
+	);
+}
 
-	// update the knob's position and size
-	auto borders = this->get_actual_borders();
-	auto content_dims = max(real(0), this->rect().d - borders.dims());
-	auto d = max(real(0), content_dims[1]);
-
-	this->knob.resize({d, d});
+void flip_switch::apply_progress(real progress)
+{
+	// update the knob's color and position; its size is set once in on_lay_out and
+	// only changes when the widget is resized
+	this->knob.set_color(this->knob_color_at(progress));
 	this->knob.move_to(
-		{this->is_pressed() ? content_dims[0] - d : 0, //
+		{this->knob_x_at(progress), //
 		 0}
 	);
+}
+
+ruis::color flip_switch::lerp(const ruis::color& a, const ruis::color& b, real f)
+{
+	color c;
+	for (size_t i = 0; i != c.size(); ++i) {
+		// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers, "0.5 for rounding to the nearest integer")
+		c[i] = static_cast<uint8_t>(real(a[i]) * (real(1) - f) + real(b[i]) * f + real(0.5));
+	}
+	return c;
 }
 
 ruis::vec2 flip_switch::measure(
@@ -175,7 +230,26 @@ flip_switch::flip_switch(
 		}
 
 		return std::move(p);
-	}())
+	}()),
+	knob_animation( //
+		utki::make_shared<ruis::eased_animation>( //
+			context.get().updater, //
+			// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers, "200 ms knob animation duration")
+			200, //
+			[](real f) { return ruis::easing::out_cubic(f); } //
+		) //
+	)
 {
-	this->update_knob();
+	// animate the knob's visual progress towards the logical pressed state
+	this->knob_animation.get().update_handler = [this](real factor) {
+		this->progress = this->from_progress + (this->to_progress - this->from_progress) * factor;
+		this->apply_progress(this->progress);
+		this->clear_cache();
+	};
+	this->knob_animation.get().end_handler = [this](uint32_t) {
+		// snap to the exact target on completion to avoid any floating-point drift
+		this->progress = this->to_progress;
+		this->apply_progress(this->progress);
+		this->clear_cache();
+	};
 }

@@ -21,6 +21,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
+#include "../../../animation/eased_animation.hpp"
 #include "../../label/ellipse.hpp"
 #include "../../label/rectangle.hpp"
 #include "../toggle_button.hpp"
@@ -101,7 +102,7 @@ public:
 	flip_switch(flip_switch&&) = delete;
 	flip_switch& operator=(flip_switch&&) = delete;
 
-	~flip_switch() override = default;
+	~flip_switch() override;
 
 	event_status on_mouse_button(const mouse_button_event& e) override
 	{
@@ -125,7 +126,30 @@ public:
 private:
 	specific_parameters params;
 
-	void update_knob();
+	// the length of the knob's travel along the long axis (content width) and the
+	// knob's diameter; both depend only on the widget's size, so they are computed
+	// and stored in on_lay_out rather than on every animation frame
+	real content_w = 0;
+	real knob_d = 0;
+
+	// visual progress of the knob (0 = off/left, 1 = on/right); it animates
+	// towards the logical pressed state, independent of it
+	real from_progress = 0;
+	real to_progress = 0;
+	real progress = 0;
+
+	// animates the knob's position and color with easing; owned by a shared_ptr
+	// because animation::play() relies on shared_from_this()
+	utki::shared_ref<ruis::eased_animation> knob_animation;
+
+	// the x offset of the left edge of the knob for a given knob progress
+	real knob_x_at(real progress) const;
+	// the knob color for a given knob progress (lerp between off and on colors)
+	ruis::color knob_color_at(real progress) const;
+	// apply a given knob progress to the knob's position and color
+	void apply_progress(real progress);
+	// linearly interpolate two colors (factor is in [0,1])
+	static ruis::color lerp(const ruis::color& a, const ruis::color& b, real f);
 };
 
 namespace make {
