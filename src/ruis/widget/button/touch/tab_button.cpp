@@ -98,7 +98,7 @@ tab_button::tab_button(
 								.align = {ruis::align::center, ruis::align::center}
 							},
 							.params = [&](){
-								if(auto& l = params.params.text.font.size; l.get().is_undefined()){
+								if(auto& l = params.params.text.text_string.font.size; l.get().is_undefined()){
 									l = context.get().style().get_font_size_secondary();
 								}
 

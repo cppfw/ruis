@@ -21,6 +21,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "text_string_widget.hpp"
 
+#include <algorithm>
+
+#include "../../font/font.hpp"
+
 using namespace ruis;
 
 text_string_widget::text_string_widget(
@@ -53,21 +57,21 @@ text_string_widget::text_string_widget(
 		}
 		return std::move(params.specific);
 	}())
-{
-	this->recompute_bounding_box();
-}
-
-void text_string_widget::recompute_bounding_box()
-{
-	this->bb = this->get_font().get_bounding_box(this->get_string().get());
-}
+{}
 
 vec2 text_string_widget::measure(
 	const ruis::vec2& quotum, //
 	const r4::vector2<measure_mode>& mode
 ) const noexcept
 {
-	vec2 ret(this->bb.d.x(), this->get_font().get_height());
+	// The natural width of a single line of text is its advance (the full space it takes
+	// up, including side bearings), not its ink bounding box width. Using the advance
+	// keeps this consistent with the line layout and marquee logic, which also measure
+	// text by its advance, and avoids spurious ellipsis on naturally-sized labels.
+	vec2 ret(
+		this->get_font().get_advance(this->get_string().get()), //
+		this->get_font().get_height() //
+	);
 
 	for (unsigned i = 0; i != ret.size(); ++i) {
 		if (mode[i] == measure_mode::exactly) {
@@ -89,7 +93,6 @@ void text_string_widget::set_string_no_notify(string text)
 {
 	this->text_string = std::move(text);
 	this->invalidate_layout(); // TODO: do not invalidate in text_input?
-	this->recompute_bounding_box();
 }
 
 void text_string_widget::set_string(string text)

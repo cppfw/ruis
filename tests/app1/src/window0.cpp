@@ -119,14 +119,10 @@ utki::shared_ref<ruis::window> make_window0(
 								}
 							),
 							m::text(c,
-								{
-									.params{
-										.font{
+								{.params{.text_string{.font{
 											.size = ruis::length::make_pp(20),
 											.face = c.get().loader().load<ruis::res::font>("fnt_monospace")
-										}
-									}
-								},
+										}}}},
 								U"VSYNC enabled"s
 							)
 						}

@@ -28,11 +28,7 @@ utki::shared_ref<ruis::widget> make_socket(
 		{},
 		{
 			m::text(c,
-				{
-					.params{
-						.color = in_socket ? 0xff0000ff : 0xff00ff00
-					}
-				},
+				{.params{.text_string{.color = in_socket ? 0xff0000ff : 0xff00ff00}}},
 				utki::to_utf32(text)
 			),
 			m::wire_socket(c,

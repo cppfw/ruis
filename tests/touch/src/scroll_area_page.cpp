@@ -67,11 +67,7 @@ public:
 	{
 		// clang-format off
 		return m::text(this->context,
-			{
-				.params{
-					.color = this->context.get().style().get_color_text()
-				}
-			},
+			{.params{.text_string{.color = this->context.get().style().get_color_text()}}},
 			this->items.at(index)
 		);
 		// clang-format on
@@ -81,11 +77,7 @@ public:
 	{
 		// clang-format off
 		return m::text(this->context,
-			{
-				.params{
-					.color = this->context.get().style().get_color_highlight()
-				}
-			},
+			{.params{.text_string{.color = this->context.get().style().get_color_highlight()}}},
 			this->items.at(index)
 		);
 		// clang-format on
@@ -114,11 +106,7 @@ public:
 	{
 		// clang-format off
 		return m::text(this->context,
-			{
-				.params{
-					.color = this->context.get().style().get_color_text()
-				}
-			}
+			{.params{.text_string{.color = this->context.get().style().get_color_text()}}}
 			,
 			this->items.at(index)
 		);
@@ -129,11 +117,7 @@ public:
 	{
 		// clang-format off
 		return m::text(this->context,
-			{
-				.params{
-					.color = this->context.get().style().get_color_highlight()
-				}
-			}
+			{.params{.text_string{.color = this->context.get().style().get_color_highlight()}}}
 			,
 			this->items.at(index)
 		);
@@ -274,13 +258,9 @@ utki::shared_ref<ruis::touch::dialog> make_dialog(const utki::shared_ref<ruis::c
 		},
 		{
 			m::text(c,
-				{
-					.params{
-						.font{
+				{.params{.text_string{.font{
 							.size = c.get().style().get_font_size_title()
-						}
-					}
-				}
+						}}}}
 				,
 				U"Dialog"s
 			),

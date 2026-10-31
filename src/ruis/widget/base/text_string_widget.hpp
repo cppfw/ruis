@@ -22,6 +22,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #pragma once
 
 #include <optional>
+#include <string_view>
 
 #include "../../util/localization.hpp"
 
@@ -30,14 +31,18 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
-// TODO: doxygen
+/**
+ * @brief Base widget that holds a text string and renders it with a font.
+ * This is the common base for the text label (ruis::text) and the text input field
+ * (ruis::text_input). It only knows about holding a string and about its font/color; it does
+ * not know anything about how the text is laid out (e.g. broken into lines), because the
+ * layout logic differs between the subclasses.
+ */
 class text_string_widget :
 	virtual public widget, //
 	public color_widget,
 	public font_widget
 {
-	mutable ruis::rect bb{};
-
 	string text_string;
 
 public:
@@ -78,11 +83,6 @@ protected:
 		string text
 	);
 
-	const ruis::rect& get_bounding_box() const
-	{
-		return this->bb;
-	}
-
 	/**
 	 * @brief Get font for text drawing.
 	 * Uses the widget's font style, or normal if style is not set.
@@ -97,8 +97,6 @@ protected:
 			this->params.style.value_or(res::font::style::normal)
 		);
 	}
-
-	void recompute_bounding_box();
 
 	/**
 	 * @brief Set text without triggering the on_text_change() hook nor the text_change_handler.
@@ -124,11 +122,6 @@ public:
 	void clear()
 	{
 		this->set_string(std::u32string());
-	}
-
-	void on_font_change() override
-	{
-		this->recompute_bounding_box();
 	}
 
 	virtual void on_text_change();

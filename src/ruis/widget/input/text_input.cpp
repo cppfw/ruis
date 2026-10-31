@@ -63,6 +63,7 @@ text_input::text_input(
 	}())
 {
 	this->set_clip(true);
+	this->recompute_text_bb();
 }
 
 void text_input::render(const ruis::mat4& matrix) const
@@ -100,7 +101,9 @@ void text_input::render(const ruis::mat4& matrix) const
 		const auto& font = this->get_font();
 
 		matr.translate(
-			-this->get_bounding_box().p.x() + this->x_offset,
+			// The string is empty in this branch, so its bounding box left edge is zero and
+			// the hint is aligned to x_offset.
+			this->x_offset, //
 			round((font.get_height() + font.get_ascender() - font.get_descender()) / 2)
 		);
 
@@ -119,7 +122,9 @@ void text_input::render(const ruis::mat4& matrix) const
 		const auto& font = this->get_font();
 
 		matr.translate(
-			-this->get_bounding_box().p.x() + this->x_offset,
+			// The text is aligned so that the left edge of its ink bounding box (cached in
+			// text_bb_left_edge) lands at x_offset, compensating for the font's left bearing.
+			-this->text_bb_left_edge + this->x_offset, //
 			round((font.get_height() + font.get_ascender() - font.get_descender()) / 2)
 		);
 
@@ -193,14 +198,21 @@ vec2 text_input::measure(
 {
 	vec2 ret;
 
-	if (mode[0] == measure_mode::at_most) {
-		ret.x() = this->get_bounding_box().d.x() + cursor_width * this->context.get().units.dots_per_fp();
+	using std::min;
+
+	if (mode.x() == measure_mode::at_most) {
+		// The natural width is the ink width of the text plus room for the cursor; clamp
+		// it to the quotum so that in at_most mode the reported size never exceeds the
+		// available space (see text::measure for the same convention).
+		const real natural_width = this->get_font().get_bounding_box(this->get_string().get()).d.x() +
+			cursor_width * this->context.get().units.dots_per_fp();
+		ret.x() = min(natural_width, quotum.x());
 	} else {
 		ret.x() = quotum.x();
 	}
 
-	if (mode[1] == measure_mode::at_most) {
-		ret.y() = this->get_font().get_height();
+	if (mode.y() == measure_mode::at_most) {
+		ret.y() = min(this->get_font().get_height(), quotum.y());
 	} else {
 		ret.y() = quotum.y();
 	}
@@ -285,6 +297,9 @@ void text_input::update_cursor_pos_based_on_index()
 void text_input::on_text_change()
 {
 	text_string_widget::on_text_change();
+
+	// The string changed, so re-measure its ink bounding box.
+	this->recompute_text_bb();
 
 	using std::min;
 	const auto size = this->get_string().get().size();
@@ -375,6 +390,21 @@ void text_input::on_resize()
 	this->update_cursor_pos_based_on_index();
 
 	this->selection_start_pos = this->index_to_pos(this->selection_start_index);
+}
+
+void text_input::on_reload()
+{
+	text_string_widget::on_reload();
+
+	// The font (face/size) may have changed on resource reload, so re-measure the ink
+	// bounding box. (A wording string is also reloaded by the base, which already
+	// triggers on_text_change, but a plain string is not, so re-measure unconditionally.)
+	this->recompute_text_bb();
+}
+
+void text_input::recompute_text_bb()
+{
+	this->text_bb_left_edge = this->get_font().get_bounding_box(this->get_string().get()).p.x();
 }
 
 void text_input::start_cursor_blinking()

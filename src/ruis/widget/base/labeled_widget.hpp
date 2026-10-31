@@ -32,7 +32,8 @@ class labeled_widget : virtual public widget
 
 public:
 	struct parameters {
-		text_string_widget::parameters text;
+		// The parameters of the text label widget that is shown above the field.
+		ruis::text::parameters text;
 		ruis::string string;
 	};
 

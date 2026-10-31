@@ -46,6 +46,12 @@ class text_input :
 	size_t first_visible_char_index = 0;
 	real x_offset = 0;
 
+	// Cached left edge of the ink bounding box of the current string. It is used to align
+	// the rendered text to x_offset and is recomputed whenever the string or the font
+	// changes (see recompute_text_bb), so that render() does not have to re-measure the
+	// (possibly long) string on every frame (e.g. during cursor blinking).
+	real text_bb_left_edge = 0;
+
 	real cursor_pos = 0;
 
 	size_t cursor_index = 0;
@@ -150,6 +156,8 @@ public:
 
 	void on_resize() override;
 
+	void on_reload() override;
+
 	void update(uint32_t dt) override;
 
 	void on_character_input(const character_input_event& e) override;
@@ -174,6 +182,9 @@ private:
 	void update_cursor_pos_based_on_index();
 
 	void start_cursor_blinking();
+
+	// Recompute the cached ink bounding box left edge of the current string.
+	void recompute_text_bb();
 
 	size_t pos_to_index(real pos);
 	real index_to_pos(size_t index);

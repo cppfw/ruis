@@ -41,6 +41,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "rectangles_window.hpp"
 #include "table_list_window.hpp"
 #include "table_tree_view_window.hpp"
+#include "text_labels_window.hpp"
 
 using namespace std::string_literals;
 using namespace std::string_view_literals;
@@ -478,7 +479,9 @@ utki::shared_ref<ruis::widget> make_root_widgets_structure(const utki::shared_re
 
 					make_text_input_window(c, {10_pp, 440_pp}),
 
-					make_rectangle_radii_window(c, {310_pp, 440_pp})
+					make_rectangle_radii_window(c, {310_pp, 440_pp}),
+
+					make_text_labels_window(c, {630_pp, 440_pp})
 				}
 			)
 		}

@@ -34,7 +34,8 @@ class tab_button :
 public:
 	struct parameters {
 		ruis::image::parameters image;
-		ruis::text_string_widget::parameters text;
+		// The parameters of the text label widget shown next to the image.
+		ruis::text::parameters text;
 	};
 
 	struct all_parameters {

@@ -8,6 +8,10 @@
 
 #include "../../harness/util/dummy_context.hpp"
 
+// Tests the ruis::make:: factory functions (widget construction through the make API):
+// make::container, make::gap and make::rectangle, checking that widgets can be created
+// and assembled with the factory helpers.
+// TODO: is it needed to test that? What is needed to be tested is that general make factories createe a certain implementation of widget, e.g. that make::push_button() constructs rectangle_push_button.
 namespace {
 // NOLINTNEXTLINE(cppcoreguidelines-interfaces-global-init)
 const tst::set set("make", [](tst::suite& suite) {

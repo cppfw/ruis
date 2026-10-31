@@ -278,6 +278,20 @@ public:
 	 * @brief Get string advance.
 	 * @param str - string to get advance for.
 	 * @param tab_size - tabulation size in widths of space character.
+	 * @return Advance of the text string.
+	 */
+	real get_advance(
+		std::u32string_view str, //
+		unsigned tab_size = 4
+	) const
+	{
+		return this->get_advance_internal(str, tab_size);
+	}
+
+	/**
+	 * @brief Get string advance.
+	 * @param str - string to get advance for.
+	 * @param tab_size - tabulation size in widths of space character.
 	 * @return Advance of the string of text.
 	 */
 	real get_advance(
@@ -335,6 +349,20 @@ public:
 	 */
 	ruis::rect get_bounding_box(
 		const std::u32string& str, //
+		unsigned tab_size = 4
+	) const
+	{
+		return this->get_bounding_box_internal(str, tab_size);
+	}
+
+	/**
+	 * @brief Get bounding box of the string.
+	 * @param str - string of text to get the bounding box for.
+	 * @param tab_size - tabulation size in widths of space character.
+	 * @return Bounding box of the text string.
+	 */
+	ruis::rect get_bounding_box(
+		std::u32string_view str, //
 		unsigned tab_size = 4
 	) const
 	{
