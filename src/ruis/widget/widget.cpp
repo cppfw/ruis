@@ -21,6 +21,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "widget.hpp"
 
+#include <utki/debug.hpp>
+
 #include "../context.hpp"
 #include "../util/util.hpp"
 
@@ -569,4 +571,31 @@ vec2 widget::measure_within_parent(
 		}
 	}
 	return d;
+}
+
+tml::tree widget::probe(const tml::tree& command)
+{
+	// The default implementation does not handle any commands,
+	// it responds with an 'unknown_command' error.
+
+	tml::tree ret(command.value);
+	ret.children.push_back(tml::tree(
+		tml::leaf("error"), //
+		{tml::tree(
+			 tml::leaf("id"), //
+			 {tml::tree(tml::leaf("unknown_command"))}
+		 ),
+		 tml::tree(
+			 tml::leaf("message"), //
+			 {tml::tree(tml::leaf("Unknown command: " + command.value.string))}
+		 ),
+		 tml::tree(
+			 tml::leaf("diagnostic"), //
+			 {tml::tree(
+				 tml::leaf("widget_class"), //
+				 {tml::tree(tml::leaf(utki::demangle(typeid(*this))))}
+			 )}
+		 )}
+	));
+	return ret;
 }

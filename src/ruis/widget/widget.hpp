@@ -862,6 +862,35 @@ public:
 
 	template <typename resource_type>
 	void reload(utki::shared_ref<resource_type>& p);
+
+public:
+	/**
+	 * @brief Handle a probe (debug inspection) command.
+	 * The probe mechanism is used to inspect the widget tree for debugging
+	 * and testing purposes. Both the command and the response are expressed
+	 * as tml trees.
+	 *
+	 * Command format: a tml tree whose value is the command name and whose
+	 * children are the command parameters, if any.
+	 *
+	 * Response format: a tml tree whose value is always the same as the name
+	 * of the passed in command and whose children are the result payload.
+	 *
+	 * In case a command fails, the returned payload contains (in addition to
+	 * possible other contents) an 'error' tree:
+	 * error {
+	 *   id { <error-id> }
+	 *   message { <human friendly message> }
+	 *   diagnostic { <optional diagnostic info> }
+	 * }
+	 *
+	 * The default (this) implementation does not handle any commands,
+	 * it responds with an 'unknown_command' error.
+	 *
+	 * @param command - probe command.
+	 * @return probe response.
+	 */
+	virtual tml::tree probe(const tml::tree& command);
 };
 
 } // namespace ruis
