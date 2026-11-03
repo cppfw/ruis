@@ -23,6 +23,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../../util/util.hpp"
 
+using namespace std::string_literals;
+
 using namespace ruis;
 
 color_widget::color_widget(
@@ -54,14 +56,12 @@ color_widget::probe_response_set color_widget::probe(const tml::tree& command)
 	probe_response_set ret = widget::probe(command);
 	if (command.value == "get_state") {
 		ret.insert(tml::tree(
-			tml::leaf(utki::demangle(typeid(color_widget))), //
-			{tml::tree(
-				tml::leaf("color"), //
-				{tml::tree(tml::leaf(
-					this->get_color().to_uint32_t(), //
-					utki::integer_base::hex
-				))}
-			)}
+			utki::demangle(typeid(color_widget)), //
+			// clang-format off
+			{
+				tml::tree("color"s, {tml::leaf(this->get_color().to_uint32_t(), utki::integer_base::hex)})
+			}
+			// clang-format on
 		));
 	}
 	return ret;
