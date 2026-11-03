@@ -56,4 +56,17 @@ enum class align {
  */
 align make_from(const tml::forest& desc, const align& adl);
 
+/**
+ * @brief Convert an alignment value to a string representation.
+ */
+std::string to_string(const align a);
+
+/**
+ * @brief Convert an alignment value to a tml::tree.
+ * The tree value is the string produced by to_string().
+ * @param a - the alignment value to convert.
+ * @return A tml::tree representing the alignment.
+ */
+tml::tree to_tml(const align a);
+
 } // namespace ruis

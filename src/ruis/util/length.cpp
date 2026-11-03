@@ -27,6 +27,11 @@ using namespace std::string_view_literals;
 
 using namespace ruis;
 
+tml::tree ruis::to_tml(const length& l)
+{
+	return tml::tree(tml::leaf(utki::cat(l)));
+}
+
 real length::get_internal(const ruis::units& units) const noexcept
 {
 	switch (this->value_units) {

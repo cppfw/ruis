@@ -25,6 +25,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include <rasterimage/operations.hpp>
 #include <tml/tree.hpp>
+#include <utki/string.hpp>
 
 namespace ruis {
 
@@ -112,6 +113,28 @@ public:
 	}
 
 	/**
+	 * @brief Convert the color to a string representation.
+	 * The format is "rgba(r,g,b,a)", where r, g, b, a are the decimal
+	 * values (0-255) of the color channels.
+	 * @return The string representation of this color.
+	 */
+	std::string to_string() const
+	{
+		// cast to unsigned to avoid streaming the channels as chars
+		return utki::cat( //
+			"rgba(", //
+			unsigned(this->r()),
+			",", //
+			unsigned(this->g()),
+			",", //
+			unsigned(this->b()),
+			",", //
+			unsigned(this->a()),
+			")" //
+		);
+	}
+
+	/**
 	 * @brief Convert the color to a 4D vector of floats.
 	 * Each channel is normalized to the [0.0, 1.0] range.
 	 * @return A 4D float vector representing the color in RGBA order.
@@ -145,5 +168,26 @@ public:
 	 */
 	static color make_from(const tml::forest& desc);
 };
+
+/**
+ * @brief Convert the color to a tml::tree.
+ * The tree value is "rgba" with 4 children:
+ * the decimal values of the red, green, blue and alpha channels.
+ * @param c - the color to convert.
+ * @return A tml::tree representing this color.
+ */
+inline tml::tree to_tml(const color& c)
+{
+	// cast to unsigned to avoid formatting the channels as chars
+	return tml::tree(
+		"rgba",
+		{
+			tml::leaf(unsigned(c.r())),
+			tml::leaf(unsigned(c.g())),
+			tml::leaf(unsigned(c.b())),
+			tml::leaf(unsigned(c.a())),
+		}
+	);
+}
 
 } // namespace ruis

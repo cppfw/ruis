@@ -182,9 +182,38 @@ public:
 	static const dimension max;
 	static const dimension fill;
 
-	friend std::ostream& operator<<(std::ostream& o, const dimension& d);
+	friend tml::tree to_tml(const dimension& d);
 };
 
+/**
+ * @brief Convert the dimension to a tml::tree.
+ * Follows the same logic as operator<<():
+ * policy dimensions are reported by name,
+ * a length dimension is reported via the styled length's to_tml(),
+ * so a style-referenced length is wrapped in a "style_ref" node.
+ * @param d - the dimension to convert.
+ * @return A tml::tree representing the dimension.
+ */
+inline tml::tree to_tml(const dimension& d)
+{
+	switch (d.get_type()) {
+		using enum dimension::type;
+		case undefined:
+			return tml::tree("undefined");
+		case min:
+			return tml::tree("min");
+		case max:
+			return tml::tree("max");
+		case fill:
+			return tml::tree("fill");
+		case length:
+			return to_tml(d.value);
+	}
+	return {};
+}
+
+// Declared here (not as a friend inside the class) because dimension.cpp defines it
+// with a qualified name at global scope, which GCC does not resolve via a friend declaration alone.
 std::ostream& operator<<(std::ostream& o, const dimension& d);
 
 } // namespace ruis

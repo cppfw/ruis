@@ -584,9 +584,9 @@ widget::probe_response_set widget::probe(const tml::tree& command)
 			tml::leaf(utki::demangle(typeid(widget))), //
 			// clang-format off
 			{
-				tml::tree("id"s, {tml::tree(this->id())})
-			}
-			// clang-format on
+				tml::tree("id"s, {tml::leaf(this->id())}),
+				to_tml(this->get_layout_params_const()),
+			} // clang-format on
 		));
 		return ret;
 	}

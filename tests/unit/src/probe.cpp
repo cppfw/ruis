@@ -44,6 +44,10 @@ const tst::set set("probe", [](tst::suite& suite) {
 		ruis::gap::all_parameters p;
 		p.widget.id = "test-gap";
 		p.color = ruis::color(1, 2, 3, 255);
+		p.layout_params.dims = r4::vector2<ruis::dim>(ruis::dim::min, ruis::dim(ruis::length::make_px(10)));
+		p.layout_params.weight = 1.5;
+		p.layout_params.align =
+			r4::vector2<ruis::styled<ruis::align>>(ruis::align::center, ruis::align::front);
 		auto w = m::gap(ctx, p);
 
 		const auto resp = w.get().probe(tml::tree(tml::leaf("get_state")));
@@ -69,16 +73,91 @@ const tst::set set("probe", [](tst::suite& suite) {
 		tst::check(idv == "test-gap", SL) << idv.string;
 
 		// the color_widget section,
-		// the resolved color is reported as an RGBA uint32 in hex
-		const auto& cv =
+		// the resolved color is reported as an "rgba" node
+		// with the decimal values of the 4 channels as children
+		const auto& color_node =
 			tml::const_crawler(f)
 				.to("ruis::color_widget") //
 				.in() //
 				.to("color") //
 				.in() //
+				.get();
+		tst::check(color_node.value == "rgba", SL) << color_node.value.string;
+		tst::check_eq(color_node.children.size(), std::size_t(4), SL);
+		tst::check(color_node.children[0].value == "1", SL) << color_node.children[0].value;
+		tst::check(color_node.children[1].value == "2", SL) << color_node.children[1].value;
+		tst::check(color_node.children[2].value == "3", SL) << color_node.children[2].value;
+		tst::check(color_node.children[3].value == "255", SL) << color_node.children[3].value;
+
+		// the base widget section, layout_params subsection
+		const auto& dvx =
+			tml::const_crawler(f)
+				.to("ruis::widget") //
+				.in() //
+				.to("layout_params") //
+				.in() //
+				.to("dims") //
+				.in() //
+				.to("x") //
+				.in() //
 				.get()
 				.value;
-		tst::check(cv == "0xff030201", SL) << cv.string;
+		tst::check(dvx == "min", SL) << dvx.string;
+
+		const auto& dvy =
+			tml::const_crawler(f)
+				.to("ruis::widget") //
+				.in() //
+				.to("layout_params") //
+				.in() //
+				.to("dims") //
+				.in() //
+				.to("y") //
+				.in() //
+				.get()
+				.value;
+		// the length dimension is reported as <value><unit>
+		tst::check(dvy == "10px", SL) << dvy.string;
+
+		const auto& wgt =
+			tml::const_crawler(f)
+				.to("ruis::widget") //
+				.in() //
+				.to("layout_params") //
+				.in() //
+				.to("weight") //
+				.in() //
+				.get()
+				.value;
+		tst::check(wgt == "1.5", SL) << wgt.string;
+
+		const auto& avx =
+			tml::const_crawler(f)
+				.to("ruis::widget") //
+				.in() //
+				.to("layout_params") //
+				.in() //
+				.to("align") //
+				.in() //
+				.to("x") //
+				.in() //
+				.get()
+				.value;
+		tst::check(avx == "center", SL) << avx.string;
+
+		const auto& avy =
+			tml::const_crawler(f)
+				.to("ruis::widget") //
+				.in() //
+				.to("layout_params") //
+				.in() //
+				.to("align") //
+				.in() //
+				.to("y") //
+				.in() //
+				.get()
+				.value;
+		tst::check(avy == "front", SL) << avy.string;
 	});
 
 	suite.add("response_section_duplicates", [] {

@@ -101,6 +101,14 @@ public:
 
 std::ostream& operator<<(std::ostream& o, const length& l);
 
+/**
+ * @brief Convert a length to a tml::tree.
+ * The tree value is the string representation produced by operator<<().
+ * @param l - the length to convert.
+ * @return A tml::tree representing the length.
+ */
+tml::tree to_tml(const length& l);
+
 using vec2_length = r4::vector2<length>;
 
 namespace length_literals {

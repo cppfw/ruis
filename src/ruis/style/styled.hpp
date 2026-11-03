@@ -26,6 +26,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <tml/tree.hpp>
 
 #include "../resource_loader.hpp"
+#include "../util/to_tml.hpp"
 
 namespace ruis {
 
@@ -148,7 +149,6 @@ public:
 		return this->value;
 	}
 };
-
 } // namespace internal
 
 /**
@@ -253,5 +253,28 @@ public:
 		return this->get_value();
 	}
 };
+
+/**
+ * @brief Convert a styled value to a tml::tree.
+ * If the value is loaded from the style provider, the resulting tree
+ * has value "style_ref" and a single child - the tree of the actual value.
+ * The style name is not reported because style_value holds only the loaded
+ * value: the style id/name exists only as a cache key inside style_provider,
+ * and styled holds a reference to the style_value without it.
+ * Otherwise, the resulting tree is the tree of the actual value.
+ * The correct to_tml() for the actual value type is found via ADL.
+ * @tparam value_type - the type of the styled value.
+ * @param sv - the styled value to convert.
+ * @return A tml::tree representing the styled value.
+ */
+template <typename value_type>
+tml::tree to_tml(const styled<value_type>& sv)
+{
+	const auto& v = sv.get();
+	if (sv.is_from_style()) {
+		return tml::tree("style_ref", tml::forest{to_tml(v)});
+	}
+	return to_tml(v);
+}
 
 } // namespace ruis

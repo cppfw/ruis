@@ -24,6 +24,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../config.hpp"
 #include "../style/styled.hpp"
 #include "../util/align.hpp"
+#include "../util/to_tml.hpp"
 
 #include "dimension.hpp"
 
@@ -56,4 +57,13 @@ struct layout_parameters {
 	r4::vector2<styled<ruis::align>> align = {ruis::align::undefined, ruis::align::undefined};
 };
 
-}; // namespace ruis
+/**
+ * @brief Convert layout parameters to a tml::tree.
+ * The tree value is "layout_params" with "dims", "weight" and "align" children,
+ * each converted with the corresponding to_tml().
+ * @param lp - the layout parameters to convert.
+ * @return A tml::tree representing the layout parameters.
+ */
+tml::tree to_tml(const layout_parameters& lp);
+
+} // namespace ruis

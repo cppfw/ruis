@@ -42,3 +42,23 @@ align ruis::make_from(const tml::forest& desc, const align& adl)
 	}
 	return align::undefined;
 }
+
+std::string ruis::to_string(const align a)
+{
+	switch (a) {
+		case align::undefined:
+			return "undefined";
+		case align::front:
+			return "front";
+		case align::center:
+			return "center";
+		case align::back:
+			return "back";
+	}
+	return "";
+}
+
+tml::tree ruis::to_tml(const align a)
+{
+	return tml::tree(to_string(a));
+}

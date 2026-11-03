@@ -24,3 +24,15 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../util/util.hpp"
 
 using namespace ruis;
+
+tml::tree ruis::to_tml(const layout_parameters& lp)
+{
+	return tml::tree(
+		"layout_params",
+		{
+			tml::tree("dims", to_tml(lp.dims)),
+			tml::tree("weight", {to_tml(lp.weight)}),
+			tml::tree("align", to_tml(lp.align)),
+		}
+	);
+}
