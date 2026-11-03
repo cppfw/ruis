@@ -28,6 +28,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "container.hpp"
 
+using namespace std::string_literals;
+
 using namespace ruis;
 
 widget::widget(
@@ -580,10 +582,11 @@ widget::probe_response_set widget::probe(const tml::tree& command)
 		probe_response_set ret;
 		ret.insert(tml::tree(
 			tml::leaf(utki::demangle(typeid(widget))), //
-			{tml::tree(
-				tml::leaf("id"), //
-				{tml::tree(tml::leaf(this->id()))}
-			)}
+			// clang-format off
+			{
+				tml::tree("id"s, {tml::tree(this->id())})
+			}
+			// clang-format on
 		));
 		return ret;
 	}
