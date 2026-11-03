@@ -43,3 +43,26 @@ void color_widget::set_color(styled<ruis::color> color)
 	this->clear_cache();
 	this->on_color_change();
 }
+
+color_widget::probe_response_set color_widget::probe(const tml::tree& command)
+{
+	// Fold semantics: the base response is the starting point,
+	// this class's section is added to it.
+	// For unknown commands, the base response is empty and no section
+	// is added, so the result is empty.
+
+	probe_response_set ret = widget::probe(command);
+	if (command.value == "get_state") {
+		ret.insert(tml::tree(
+			tml::leaf(utki::demangle(typeid(color_widget))), //
+			{tml::tree(
+				tml::leaf("color"), //
+				{tml::tree(tml::leaf(
+					this->get_color().to_uint32_t(), //
+					utki::integer_base::hex
+				))}
+			)}
+		));
+	}
+	return ret;
+}

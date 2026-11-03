@@ -865,32 +865,66 @@ public:
 
 public:
 	/**
+	 * @brief Comparison of probe response sections.
+	 * The response sections are compared by name (tree value) only, the content is ignored.
+	 * This is a strict weak ordering in which sections with the same name
+	 * are considered equivalent.
+	 * This comparator is needed to store probe response sections in a std::set,
+	 * so that sections with the same name are considered equal and only one copy is kept in the set.
+	 */
+	struct probe_section_less {
+		bool operator()(const tml::tree& a, const tml::tree& b) const
+		{
+			return a.value.string < b.value.string;
+		}
+	};
+
+	/**
+	 * @brief Type of a probe response.
+	 * A probe response is a set of sections. A section is a tml tree whose
+	 * value (name) is the name of the class (in the final class inheritance hierarchy)
+	 * which has handled the command.
+	 * For fold commands (e.g. 'get_state') the response contains one section
+	 * per class in the inheritance chain; for non-fold commands it contains
+	 * a single section (e.g. the 'get_children' command is handled by the
+	 * container class and results in a single 'ruis::container' section).
+	 * The set is ordered by probe_section_less comparator, so sections are identified
+	 * by name: sections with the same name are considered equal and the set
+	 * keeps a single copy. This is what handles (virtual) multiple
+	 * inheritance, where a shared base can contribute the same section more
+	 * than once (once per inheritance path).
+	 */
+	using probe_response_set = std::set<tml::tree, probe_section_less>;
+
+	/**
 	 * @brief Handle a probe (debug inspection) command.
 	 * The probe mechanism is used to inspect the widget tree for debugging
-	 * and testing purposes. Both the command and the response are expressed
-	 * as tml trees.
+	 * and testing purposes. The command is expressed as a tml tree
+	 * and the response as a set of sections (see widget::probe_response_set).
 	 *
 	 * Command format: a tml tree whose value is the command name and whose
 	 * children are the command parameters, if any.
 	 *
-	 * Response format: a tml tree whose value is always the same as the name
-	 * of the passed in command and whose children are the result payload.
+	 * Response format: a set of sections. A section is a tml tree whose
+	 * value (name) is the name of the class which has handled the command.
+	 * For fold commands (e.g. 'get_state') the response contains one section
+	 * per class in the inheritance chain; for non-fold commands it contains
+	 * a single section. Sections are identified by name; sections with the
+	 * same name are considered equal and the set keeps a single copy.
 	 *
-	 * In case a command fails, the returned payload contains (in addition to
-	 * possible other contents) an 'error' tree:
-	 * error {
-	 *   id { <error-id> }
-	 *   message { <human friendly message> }
-	 *   diagnostic { <optional diagnostic info> }
-	 * }
+	 * The default (this) implementation handles the 'get_state' command,
+	 * reporting the widget id. All other commands result in an empty response.
 	 *
-	 * The default (this) implementation does not handle any commands,
-	 * it responds with an 'unknown_command' error.
+	 * Fold convention: the 'get_state' command is a fold. A derived class
+	 * implements the override by calling the base implementation first and
+	 * adding its own section to the result. In case of (virtual) multiple
+	 * inheritance, a shared base can contribute the same section more than
+	 * once (once per inheritance path); the set semantics keeps a single copy.
 	 *
 	 * @param command - probe command.
 	 * @return probe response.
 	 */
-	virtual tml::tree probe(const tml::tree& command);
+	virtual probe_response_set probe(const tml::tree& command);
 };
 
 } // namespace ruis

@@ -66,6 +66,17 @@ public:
 	 * Invoked when color changes.
 	 */
 	virtual void on_color_change() {}
+
+	/**
+	 * @brief Handle a probe (debug inspection) command.
+	 * Handles the 'get_state' command, folding this class's section
+	 * (reporting the resolved color state) on top of the base response.
+	 * All other commands are delegated to the base class.
+	 *
+	 * @param command - probe command.
+	 * @return probe response.
+	 */
+	probe_response_set probe(const tml::tree& command) override;
 };
 
 } // namespace ruis
