@@ -24,6 +24,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <utki/debug.hpp>
 
 #include "../context.hpp"
+#include "../util/to_tml.hpp"
 #include "../util/util.hpp"
 
 #include "container.hpp"
@@ -578,7 +579,6 @@ vec2 widget::measure_within_parent(
 widget::probe_response_set widget::probe(const tml::tree& command)
 {
 	if (command.value == "get_state") {
-		// TODO: report the rest of the widget state
 		probe_response_set ret;
 		ret.insert(tml::tree(
 			tml::leaf(utki::demangle(typeid(widget))), //
@@ -586,6 +586,18 @@ widget::probe_response_set widget::probe(const tml::tree& command)
 			{
 				tml::tree("id"s, {tml::leaf(this->id())}),
 				to_tml(this->get_layout_params_const()),
+				to_tml(this->rect()),
+				tml::tree("layout_dirty"s, {to_tml(this->is_layout_dirty())}),
+				tml::tree("clip"s, {to_tml(this->is_clip_enabled())}),
+				tml::tree("visible"s, {to_tml(this->is_visible())}),
+				tml::tree("enabled"s, {to_tml(this->is_enabled())}),
+				tml::tree("depth"s, {to_tml(this->is_depth_enabled())}),
+				tml::tree("focused"s, {to_tml(this->is_focused())}),
+				tml::tree("cache"s, {
+					tml::tree("enabled"s, {to_tml(this->is_cache_enabled())}),
+					tml::tree("dirty"s, {to_tml(this->cache_dirty)}),
+					tml::tree("present"s, {to_tml(this->cache_frame_buffer != nullptr)}),
+				}),
 			} // clang-format on
 		));
 		return ret;

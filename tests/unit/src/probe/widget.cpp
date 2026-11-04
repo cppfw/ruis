@@ -1,0 +1,250 @@
+#include <ruis/gui.hpp>
+#include <ruis/widget/container.hpp>
+#include <ruis/widget/widget.hpp>
+#include <tml/crawler.hpp>
+#include <tml/tree.hpp>
+#include <tst/check.hpp>
+#include <tst/set.hpp>
+
+#include "../../../harness/util/dummy_context.hpp"
+
+namespace {
+const tst::set set("widget_probe", [](tst::suite& suite) {
+	// Note: the probe response structure is deterministic, so the tests
+	// navigate it with tml::const_crawler cascades - a structural mismatch
+	// (regression) fails the test with an exception thrown by the crawler.
+	//
+	// The tests use ruis::container as the test vehicle: a container is a
+	// plain widget (it has no color state and does not override probe()),
+	// so its probe response consists of the single 'ruis::widget' section
+	// produced by widget::probe() alone.
+
+	suite.add("unknown_command", [] {
+		auto ctx = make_dummy_context();
+		auto c = utki::make_shared<ruis::container>(ctx, ruis::container::all_parameters(), ruis::widget_list());
+
+		// command: value is the command name, children are the parameters (none here)
+		const tml::tree cmd(tml::leaf("frobnicate"));
+		const auto resp = c.get().probe(cmd);
+
+		// unknown commands result in an empty response
+		tst::check(resp.empty(), SL);
+	});
+
+	suite.add("unknown_command_with_params", [] {
+		// a command may carry parameters,
+		// unknown commands still result in an empty response
+		auto ctx = make_dummy_context();
+		auto c = utki::make_shared<ruis::container>(ctx, ruis::container::all_parameters(), ruis::widget_list());
+
+		const tml::tree cmd(
+			tml::leaf("frobnicate"), //
+			{tml::tree(
+				tml::leaf("param"), //
+				{tml::tree(tml::leaf("value"))})}
+		);
+		const auto resp = c.get().probe(cmd);
+
+		tst::check(resp.empty(), SL);
+	});
+
+	suite.add("unknown_command_gui_root", [] {
+		ruis::gui gui(make_dummy_context());
+
+		const auto resp = gui.get_root().probe(tml::tree(tml::leaf("frobnicate")));
+
+		tst::check(resp.empty(), SL);
+	});
+
+	suite.add("get_state", [] {
+		auto ctx = make_dummy_context();
+
+		ruis::container::all_parameters p;
+		p.widget.id = "test-container";
+		p.layout_params.dims = r4::vector2<ruis::dim>(ruis::dim::min, ruis::dim(ruis::length::make_px(10)));
+		p.layout_params.weight = 1.5;
+		p.layout_params.align =
+			r4::vector2<ruis::styled<ruis::align>>(ruis::align::center, ruis::align::front);
+		auto c = utki::make_shared<ruis::container>(ctx, p, ruis::widget_list());
+
+		const auto resp = c.get().probe(tml::tree(tml::leaf("get_state")));
+
+		// convert the response to a forest for crawling;
+		// sections are sorted by name
+		const tml::forest f(resp.begin(), resp.end());
+
+		// a plain widget reports a single section named after its class
+		tst::check(f.size() == 1, SL) << f.size();
+		tst::check(f[0].value == "ruis::widget", SL) << f[0].value.string;
+
+		// the id
+		const auto& idv =
+			tml::const_crawler(f)
+				.to("ruis::widget") //
+				.in() //
+				.to("id") //
+				.in() //
+				.get()
+				.value;
+		tst::check(idv == "test-container", SL) << idv.string;
+
+		// the layout_params subsection
+		const auto& dvx =
+			tml::const_crawler(f)
+				.to("ruis::widget") //
+				.in() //
+				.to("layout_params") //
+				.in() //
+				.to("dims") //
+				.in() //
+				.to("x") //
+				.in() //
+				.get()
+				.value;
+		tst::check(dvx == "min", SL) << dvx.string;
+
+		const auto& dvy =
+			tml::const_crawler(f)
+				.to("ruis::widget") //
+				.in() //
+				.to("layout_params") //
+				.in() //
+				.to("dims") //
+				.in() //
+				.to("y") //
+				.in() //
+				.get()
+				.value;
+		// the length dimension is reported as <value><unit>
+		tst::check(dvy == "10px", SL) << dvy.string;
+
+		const auto& wgt =
+			tml::const_crawler(f)
+				.to("ruis::widget") //
+				.in() //
+				.to("layout_params") //
+				.in() //
+				.to("weight") //
+				.in() //
+				.get()
+				.value;
+		tst::check(wgt == "1.5", SL) << wgt.string;
+
+		const auto& avx =
+			tml::const_crawler(f)
+				.to("ruis::widget") //
+				.in() //
+				.to("layout_params") //
+				.in() //
+				.to("align") //
+				.in() //
+				.to("x") //
+				.in() //
+				.get()
+				.value;
+		tst::check(avx == "center", SL) << avx.string;
+
+		const auto& avy =
+			tml::const_crawler(f)
+				.to("ruis::widget") //
+				.in() //
+				.to("layout_params") //
+				.in() //
+				.to("align") //
+				.in() //
+				.to("y") //
+				.in() //
+				.get()
+				.value;
+		tst::check(avy == "front", SL) << avy.string;
+
+		// the widget's rectangle:
+		// default position is (0, 0) and default size is (-1, -1)
+		const auto& px =
+			tml::const_crawler(f) //
+				.to("ruis::widget").in().to("rect").in().to("p").in().to("x").in().get().value;
+		tst::check(px == "0", SL) << px.string;
+		const auto& py =
+			tml::const_crawler(f) //
+				.to("ruis::widget").in().to("rect").in().to("p").in().to("y").in().get().value;
+		tst::check(py == "0", SL) << py.string;
+		const auto& dx =
+			tml::const_crawler(f) //
+				.to("ruis::widget").in().to("rect").in().to("d").in().to("x").in().get().value;
+		tst::check(dx == "-1", SL) << dx.string;
+		const auto& dy =
+			tml::const_crawler(f) //
+				.to("ruis::widget").in().to("rect").in().to("d").in().to("y").in().get().value;
+		tst::check(dy == "-1", SL) << dy.string;
+
+		// scalar state flags of a freshly created widget
+		const auto& ld =
+			tml::const_crawler(f) //
+				.to("ruis::widget").in().to("layout_dirty").in().get().value;
+		// a new widget is layout-dirty until the first layout pass
+		tst::check(ld == "true", SL) << ld.string;
+
+		const auto& vis =
+			tml::const_crawler(f) //
+				.to("ruis::widget").in().to("visible").in().get().value;
+		tst::check(vis == "true", SL) << vis.string; // default visible
+
+		const auto& en =
+			tml::const_crawler(f) //
+				.to("ruis::widget").in().to("enabled").in().get().value;
+		tst::check(en == "true", SL) << en.string; // default enabled
+
+		const auto& fo =
+			tml::const_crawler(f) //
+				.to("ruis::widget").in().to("focused").in().get().value;
+		tst::check(fo == "false", SL) << fo.string;
+
+		// the render cache: disabled, dirty and not built for a new widget
+		const auto& cbe =
+			tml::const_crawler(f) //
+				.to("ruis::widget").in().to("cache").in().to("enabled").in().get().value;
+		tst::check(cbe == "false", SL) << cbe.string;
+		const auto& cbd =
+			tml::const_crawler(f) //
+				.to("ruis::widget").in().to("cache").in().to("dirty").in().get().value;
+		tst::check(cbd == "true", SL) << cbd.string;
+		const auto& cbp =
+			tml::const_crawler(f) //
+				.to("ruis::widget").in().to("cache").in().to("present").in().get().value;
+		tst::check(cbp == "false", SL) << cbp.string;
+	});
+
+	suite.add("response_section_duplicates", [] {
+		// sections are identified by name: inserting a section with a name
+		// already present in the response is a no-op, even if the content
+		// differs, the first inserted section is kept
+		ruis::widget::probe_response_set resp;
+		resp.insert(tml::tree(
+			tml::leaf("b"), //
+			{tml::tree(tml::leaf("first-b"))}
+		));
+		resp.insert(tml::tree(
+			tml::leaf("a"), //
+			{tml::tree(tml::leaf("only-a"))}
+		));
+		resp.insert(tml::tree(
+			tml::leaf("b"), //
+			{tml::tree(tml::leaf("second-b"))}
+		));
+
+		tst::check(resp.size() == 2, SL) << resp.size();
+
+		const tml::forest f(resp.begin(), resp.end());
+		tst::check(f[0].value == "a", SL) << f[0].value.string;
+		tst::check(f[1].value == "b", SL) << f[1].value.string;
+
+		const auto& bv =
+			tml::const_crawler(f)
+				.to("b") //
+				.in() //
+				.get()
+				.value;
+		tst::check(bv == "first-b", SL) << bv.string;
+	});
+});
+} // namespace

@@ -906,20 +906,26 @@ public:
 	 * children are the command parameters, if any.
 	 *
 	 * Response format: a set of sections. A section is a tml tree whose
-	 * value (name) is the name of the class which has handled the command.
-	 * For fold commands (e.g. 'get_state') the response contains one section
-	 * per class in the inheritance chain; for non-fold commands it contains
-	 * a single section. Sections are identified by name; sections with the
-	 * same name are considered equal and the set keeps a single copy.
+	 * value (name) is the name of the class in the final class's inheritance
+	 * hierarchy which has handled the command.
+	 * Sections are identified by name; sections with the same name are
+	 * considered equal and the set keeps a single copy.
 	 *
-	 * The default (this) implementation handles the 'get_state' command,
-	 * reporting the widget id. All other commands result in an empty response.
+	 * Fold convention: some commands are "folds". For a fold command a derived
+	 * class implements the override by calling the base implementation first
+	 * and adding its own section to the result, so the response accumulates
+	 * one section per class in the inheritance chain. In case of (virtual)
+	 * multiple inheritance, a shared base can contribute the same section more
+	 * than once (once per inheritance path); the set semantics keeps a single
+	 * copy. For a non-fold command the response contains a single section.
 	 *
-	 * Fold convention: the 'get_state' command is a fold. A derived class
-	 * implements the override by calling the base implementation first and
-	 * adding its own section to the result. In case of (virtual) multiple
-	 * inheritance, a shared base can contribute the same section more than
-	 * once (once per inheritance path); the set semantics keeps a single copy.
+	 * Unknown commands are ignored and result in an empty response.
+	 *
+	 * Commands handled by the widget class:
+	 * - 'get_state' (fold): no parameters. Adds a single section named after
+	 *   the widget's class which reports the widget state: id, layout
+	 *   parameters, rectangle, layout dirty flag, clip, visibility, enabled,
+	 *   depth, focus and cache state.
 	 *
 	 * @param command - probe command.
 	 * @return probe response.

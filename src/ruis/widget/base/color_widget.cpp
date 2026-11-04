@@ -59,7 +59,7 @@ color_widget::probe_response_set color_widget::probe(const tml::tree& command)
 			utki::demangle(typeid(color_widget)), //
 			// clang-format off
 			{
-				tml::tree("color"s, {to_tml(this->get_color())})
+				tml::tree("color"s, {to_tml(this->color)})
 			} // clang-format on
 		));
 	}

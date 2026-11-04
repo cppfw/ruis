@@ -19,6 +19,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 /* ================ LICENSE END ================ */
 
+#include <r4/rectangle.hpp>
 #include <r4/vector.hpp>
 #include <tst/check.hpp>
 #include <tst/set.hpp>
@@ -71,6 +72,31 @@ const tst::set set("to_tml", [](tst::suite& suite) {
 		tst::check(tx.value == "42", SL) << tx.value;
 		const auto ty = ruis::to_tml(1.5f);
 		tst::check(ty.value == "1.5", SL) << ty.value;
+	});
+
+	suite.add("bool_produces_tree_with_true_or_false", [] {
+		tst::check(ruis::to_tml(true).value == "true", SL) << ruis::to_tml(true).value;
+		tst::check(ruis::to_tml(false).value == "false", SL) << ruis::to_tml(false).value;
+	});
+
+	suite.add("rectangle_produces_rect_tree_with_p_and_d", [] {
+		r4::rectangle<int> r(1, 2, 3, 4); // pos (1,2), dims (3,4)
+		const auto t = ruis::to_tml(r);
+		tst::check(t.value == "rect", SL) << t.value;
+		tst::check_eq(t.children.size(), std::size_t(2), SL);
+		tst::check(t.children[0].value == "p", SL) << t.children[0].value;
+		tst::check(t.children[1].value == "d", SL) << t.children[1].value;
+		// each of p/d is a vector with x/y component nodes
+		tst::check_eq(t.children[0].children.size(), std::size_t(2), SL);
+		tst::check(t.children[0].children[0].value == "x", SL);
+		tst::check(t.children[0].children[0].children[0].value == "1", SL) << t.children[0].children[0].children[0].value;
+		tst::check(t.children[0].children[1].value == "y", SL);
+		tst::check(t.children[0].children[1].children[0].value == "2", SL) << t.children[0].children[1].children[0].value;
+		tst::check_eq(t.children[1].children.size(), std::size_t(2), SL);
+		tst::check(t.children[1].children[0].value == "x", SL);
+		tst::check(t.children[1].children[0].children[0].value == "3", SL) << t.children[1].children[0].children[0].value;
+		tst::check(t.children[1].children[1].value == "y", SL);
+		tst::check(t.children[1].children[1].children[0].value == "4", SL) << t.children[1].children[1].children[0].value;
 	});
 });
 } // namespace

@@ -24,6 +24,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <cstddef>
 #include <type_traits>
 
+#include <r4/rectangle.hpp>
 #include <r4/vector.hpp>
 #include <tml/tree.hpp>
 
@@ -74,6 +75,28 @@ tml::forest to_tml(const r4::vector<component_type, dimension>& v)
 		children.emplace_back(component_names[i], tml::forest{to_tml(v[i])});
 	}
 	return children;
+}
+
+/**
+ * @brief Convert an r4::rectangle to a tml::tree.
+ * The tree value is "rect" with two children:
+ * "p" (the origin point) and "d" (the dimensions),
+ * each reported via the r4::vector to_tml() overload
+ * (a forest of "x"/"y" component nodes).
+ * @tparam component_type - the type of the rectangle components.
+ * @param r - the rectangle to convert.
+ * @return A tml::tree representing the rectangle.
+ */
+template <class component_type>
+tml::tree to_tml(const r4::rectangle<component_type>& r)
+{
+	return tml::tree(
+		"rect",
+		{
+			tml::tree("p", to_tml(r.p)),
+			tml::tree("d", to_tml(r.d)),
+		}
+	);
 }
 
 } // namespace ruis

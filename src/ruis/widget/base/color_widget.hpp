@@ -69,9 +69,12 @@ public:
 
 	/**
 	 * @brief Handle a probe (debug inspection) command.
-	 * Handles the 'get_state' command, folding this class's section
-	 * (reporting the resolved color state) on top of the base response.
-	 * All other commands are delegated to the base class.
+	 *
+	 * Commands handled by the color_widget class:
+	 * - 'get_state' (fold): no parameters. Adds a single section named after
+	 *   this class which reports the color state as the styled color: a direct
+	 *   color is reported as an 'rgba' node with the 4 channel values as
+	 *   children, a style-sourced color is wrapped in a 'style_ref' node.
 	 *
 	 * @param command - probe command.
 	 * @return probe response.
