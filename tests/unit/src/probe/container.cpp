@@ -42,6 +42,30 @@ tml::tree make_for_cmd_from_strings(std::initializer_list<const char*> indices, 
 	);
 }
 
+// build a 'for' probe command with an 'id' addressing node:
+// for { id { <ids...> } <command> }
+tml::tree make_for_id_cmd(std::initializer_list<const char*> ids, const char* command)
+{
+	tml::forest id_nodes;
+	for (auto i : ids) {
+		id_nodes.push_back(tml::tree(tml::leaf(i)));
+	}
+	return tml::tree(
+		tml::leaf("for"), //
+		{tml::tree(tml::leaf("id"), std::move(id_nodes)), tml::tree(tml::leaf(command))}
+	);
+}
+
+// build a 'for' probe command with an empty 'id' addressing node:
+// for { id { } <command> }
+tml::tree make_for_id_cmd_empty(const char* command)
+{
+	return tml::tree(
+		tml::leaf("for"), //
+		{tml::tree(tml::leaf("id")), tml::tree(tml::leaf(command))}
+	);
+}
+
 // check that the response is the malformed command error:
 // ruis::container { error { malformed_command } }
 void check_malformed_command_response(const ruis::widget::probe_response_set& resp)
@@ -457,6 +481,25 @@ const tst::set set("container_probe", [](tst::suite& suite) {
 			);
 			check_malformed_command_response(c.get().probe(cmd));
 		}
+
+		// both an 'index' and an 'id' node
+		{
+			tml::tree cmd(
+				tml::leaf("for"), //
+				{
+					tml::tree(tml::leaf("index"), {tml::tree(tml::leaf("0"))}),
+					tml::tree(tml::leaf("id"), {tml::tree(tml::leaf("a"))}),
+					tml::tree(tml::leaf("get_state"))
+				}
+			);
+			check_malformed_command_response(c.get().probe(cmd));
+		}
+
+		// no addressing node (a command but neither 'index' nor 'id')
+		{
+			tml::tree cmd(tml::leaf("for"), {tml::tree(tml::leaf("get_state"))});
+			check_malformed_command_response(c.get().probe(cmd));
+		}
 	});
 
 	suite.add("for_too_big_index", [] {
@@ -515,6 +558,176 @@ const tst::set set("container_probe", [](tst::suite& suite) {
 			},
 			SL
 		);
+	});
+
+	suite.add("for_id_runs_command_on_target", [] {
+		auto ctx = make_dummy_context();
+
+		// c
+		//   [0] container id="c2"
+		//        [0] gap id="g20"
+		//        [1] gap id="g21"
+		ruis::gap::all_parameters g20p;
+		g20p.widget.id = "g20";
+		ruis::gap::all_parameters g21p;
+		g21p.widget.id = "g21";
+		ruis::container::all_parameters c2p;
+		c2p.widget.id = "c2";
+		auto g20 = m::gap(ctx, g20p);
+		auto g21 = m::gap(ctx, g21p);
+		auto c2 = m::container(ctx, c2p, ruis::widget_list{g20, g21});
+		auto c = m::container(ctx, ruis::container::all_parameters{}, ruis::widget_list{c2});
+
+		// run 'get_state' on the widget with id 'g21' reached through 'c2':
+		// c2 is looked up on c, then g21 is looked up on c2
+		const auto resp = c.get().probe(make_for_id_cmd({"c2", "g21"}, "get_state"));
+		const tml::forest f(resp.begin(), resp.end());
+
+		tst::check(
+			f.size() == 2,
+			[&](auto& o) {
+				o << f.size();
+			},
+			SL
+		);
+		tst::check(
+			f[0].value == "ruis::color_widget",
+			[&](auto& o) {
+				o << f[0].value.string;
+			},
+			SL
+		);
+		tst::check(
+			f[1].value == "ruis::widget",
+			[&](auto& o) {
+				o << f[1].value.string;
+			},
+			SL
+		);
+	});
+
+	suite.add("for_id_empty", [] {
+		auto ctx = make_dummy_context();
+
+		auto c = m::container(ctx, ruis::container::all_parameters{}, ruis::widget_list{});
+
+		// an empty id path runs the command on this container itself
+		auto resp = c.get().probe(make_for_id_cmd_empty("get_children"));
+		const tml::forest f(resp.begin(), resp.end());
+
+		tst::check(
+			f.size() == 1,
+			[&](auto& o) {
+				o << f.size();
+			},
+			SL
+		);
+		tst::check(
+			f[0].value == "ruis::container",
+			[&](auto& o) {
+				o << f[0].value.string;
+			},
+			SL
+		);
+		const auto& cc = tml::const_crawler(f) //
+									 .to("ruis::container")
+									 .in()
+									 .to("children_count")
+									 .in()
+									 .get()
+									 .value;
+		tst::check(
+			cc == "0",
+			[&](auto& o) {
+				o << cc.string;
+			},
+			SL
+		);
+	});
+
+	suite.add("for_id_not_found", [] {
+		auto ctx = make_dummy_context();
+
+		// c
+		//   [0] container id="L"  [0] gap id="a"
+		//   [1] container id="R"  [0] gap id="b"
+		ruis::gap::all_parameters ap;
+		ap.widget.id = "a";
+		ruis::gap::all_parameters bp;
+		bp.widget.id = "b";
+		ruis::container::all_parameters lp;
+		lp.widget.id = "L";
+		ruis::container::all_parameters rp;
+		rp.widget.id = "R";
+		auto a = m::gap(ctx, ap);
+		auto b = m::gap(ctx, bp);
+		auto L = m::container(ctx, lp, ruis::widget_list{a});
+		auto R = m::container(ctx, rp, ruis::widget_list{b});
+		auto c = m::container(ctx, ruis::container::all_parameters{}, ruis::widget_list{L, R});
+
+		// the 1st id does not exist anywhere in the tree:
+		// error { id { nope } not_found }
+		{
+			auto resp = c.get().probe(make_for_id_cmd({"nope"}, "get_state"));
+			const tml::forest f(resp.begin(), resp.end());
+			tst::check_eq(f.size(), std::size_t(1), SL);
+			const auto& err = tml::const_crawler(f).to("ruis::container").in().to("error").get();
+			tst::check_eq(err.children.size(), std::size_t(2), SL);
+			tst::check(
+				err.children[0].value == "id",
+				[&](auto& o) {
+					o << err.children[0].value.string;
+				},
+				SL
+			);
+			tst::check_eq(err.children[0].children.size(), std::size_t(1), SL);
+			tst::check(
+				err.children[0].children[0].value == "nope",
+				[&](auto& o) {
+					o << err.children[0].children[0].value.string;
+				},
+				SL
+			);
+			tst::check(
+				err.children[1].value == "not_found",
+				[&](auto& o) {
+					o << err.children[1].value.string;
+				},
+				SL
+			);
+		}
+
+		// 'b' exists in the tree but not under 'L', so the 2nd step fails:
+		// error { id { L b } not_found }
+		{
+			auto resp = c.get().probe(make_for_id_cmd({"L", "b"}, "get_state"));
+			const tml::forest f(resp.begin(), resp.end());
+			tst::check_eq(f.size(), std::size_t(1), SL);
+			const auto& err = tml::const_crawler(f).to("ruis::container").in().to("error").get();
+			tst::check_eq(err.children.size(), std::size_t(2), SL);
+			tst::check_eq(err.children[0].children.size(), std::size_t(2), SL);
+			tst::check(
+				err.children[0].children[0].value == "L",
+				[&](auto& o) {
+					o << err.children[0].children[0].value.string;
+				},
+				SL
+			);
+			tst::check(
+				err.children[0].children[1].value == "b",
+				[&](auto& o) {
+					o << err.children[0].children[1].value.string;
+				},
+				SL
+			);
+			tst::check(
+				err.children[1].value == "not_found",
+				[&](auto& o) {
+					o << err.children[1].value.string;
+				},
+				SL
+			);
+		}
 	});
 });
 } // namespace

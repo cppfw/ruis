@@ -581,15 +581,17 @@ widget::probe_response_set make_malformed_command_error()
 	return ret;
 }
 
-// single section reporting a failed index path of the 'for' command:
-// ruis::container { error { index { <path prefix> } <reason> [<size>] } }
+// single section reporting a failed addressing path of the 'for' command:
+// ruis::container { error { <path node name> { <path prefix> } <reason> [<size>] } }
+// <path node name> is 'index' for the index variant and 'id' for the id variant
 widget::probe_response_set make_for_error(
+	std::string path_node_name, //
 	const tml::forest& path_prefix, //
 	const char* reason, //
 	const tml::tree* size = nullptr
 )
 {
-	tml::forest err_children{tml::tree("index"s, path_prefix)};
+	tml::forest err_children{tml::tree(std::move(path_node_name), path_prefix)};
 	err_children.emplace_back(tml::leaf(reason));
 	if (size) {
 		err_children.push_back(*size);
@@ -602,40 +604,18 @@ widget::probe_response_set make_for_error(
 	return ret;
 }
 
-// 'for' command: run a single probe command on another widget in the tree,
-// addressed by a path of child indices.
-// Command format: for { index { <i0> <i1> ... } <command> }
-// i0 is an index into the children of the container the command is run on,
-// i1 is an index into the children of the i0-th child, and so on.
-// The command is run on the widget at the end of the path and its probe
-// response is returned as is.
-widget::probe_response_set probe_for(container& c, const tml::tree& command)
+// 'for' command, index variant: walk a path of child indices,
+// starting from the given container, and run the command on the widget
+// at the end of the path.
+widget::probe_response_set probe_for_index(
+	container& c, //
+	const tml::tree& index_node, //
+	const tml::tree& command_node
+)
 {
-	// the 'for' node must have exactly two children:
-	// an 'index' node and a single command node
-	const tml::tree* index_node = nullptr;
-	const tml::tree* command_node = nullptr;
-	for (const auto& child : command.children) {
-		if (child.value == "index") {
-			if (index_node) {
-				return make_malformed_command_error();
-			}
-			index_node = &child;
-		} else {
-			if (command_node) {
-				return make_malformed_command_error();
-			}
-			command_node = &child;
-		}
-	}
-	if (!index_node || !command_node) {
-		return make_malformed_command_error();
-	}
-
-	// walk the index path, starting from this container
 	widget* w = &c;
 	tml::forest path; // the index nodes of the walked path
-	for (const auto& idx_node : index_node->children) {
+	for (const auto& idx_node : index_node.children) {
 		std::size_t i = 0;
 		if (!parse_child_index(idx_node.value, i)) {
 			return make_malformed_command_error();
@@ -644,16 +624,91 @@ widget::probe_response_set probe_for(container& c, const tml::tree& command)
 
 		auto* cont = dynamic_cast<container*>(w);
 		if (!cont) {
-			return make_for_error(path, "not_a_container");
+			return make_for_error("index", path, "not_a_container");
 		}
 		if (i >= cont->size()) {
 			const auto size_node = to_tml(cont->size());
-			return make_for_error(path, "out_of_bound", &size_node);
+			return make_for_error("index", path, "out_of_bound", &size_node);
 		}
 		w = &cont->children()[i].get();
 	}
 
-	return w->probe(*command_node);
+	return w->probe(command_node);
+}
+
+// 'for' command, id variant: walk a path of widget ids, starting from the
+// given container. Each id is looked up with try_get_widget() on the widget
+// reached so far; the command is run on the widget reached at the end.
+widget::probe_response_set probe_for_id(
+	container& c, //
+	const tml::tree& id_node, //
+	const tml::tree& command_node
+)
+{
+	widget* w = &c;
+	tml::forest path; // the id nodes of the walked path
+	for (const auto& id_leaf : id_node.children) {
+		path.push_back(id_leaf);
+
+		const auto found = w->try_get_widget(id_leaf.value.string);
+		if (!found) {
+			return make_for_error("id", path, "not_found");
+		}
+		w = found.get();
+	}
+
+	return w->probe(command_node);
+}
+
+// 'for' command: run a single probe command on another widget in the tree,
+// addressed either by a path of child indices:
+//   for { index { <i0> <i1> ... } <command> }
+// or by a path of widget ids:
+//   for { id { <id0> <id1> ... } <command> }
+// In the index variant, i0 is an index into the children of the container the
+// command is run on, i1 is an index into the children of the i0-th child, and
+// so on. In the id variant, id0 is looked up with try_get_widget() on the
+// container the command is run on, id1 on the widget reached for id0, and so
+// on. An empty addressing node means the container itself.
+// The command is run on the widget at the end of the path and its probe
+// response is returned as is.
+widget::probe_response_set probe_for(container& c, const tml::tree& command)
+{
+	// the 'for' node must have exactly two children:
+	// an addressing node (an 'index' node or an 'id' node) and a command node
+	const tml::tree* index_node = nullptr;
+	const tml::tree* id_node = nullptr;
+	const tml::tree* command_node = nullptr;
+	for (const auto& child : command.children) {
+		if (child.value == "index") {
+			if (index_node) {
+				return make_malformed_command_error();
+			}
+			index_node = &child;
+		} else if (child.value == "id") {
+			if (id_node) {
+				return make_malformed_command_error();
+			}
+			id_node = &child;
+		} else {
+			if (command_node) {
+				return make_malformed_command_error();
+			}
+			command_node = &child;
+		}
+	}
+	const bool has_index = (index_node != nullptr);
+	const bool has_id = (id_node != nullptr);
+	// exactly one addressing node and exactly one command node are required
+	if (has_index == has_id || !command_node) {
+		return make_malformed_command_error();
+	}
+
+	if (has_index) {
+		return probe_for_index(c, *index_node, *command_node);
+	}
+	// review: add utki::assert(id_node); utki::Assert(command_node); here
+	return probe_for_id(c, *id_node, *command_node);
 }
 
 } // namespace

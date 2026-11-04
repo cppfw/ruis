@@ -435,24 +435,35 @@ public:
 	 *   single section named after this class which reports the number of
 	 *   child widgets in a 'children_count' node.
 	 * - 'for' (non-fold): run a probe command on another widget in the tree.
-	 *   The 'for' node has exactly two children: an 'index' node containing
-	 *   decimal child indices (0-based; the 1st index is into the children of
-	 *   this container, the 2nd is into the children of the 1st index's widget,
-	 *   and so on) and exactly one child which is the command to run. An empty
-	 *   index node means this container itself. The command is run on the
-	 *   widget at the end of the index path and its probe response is returned
-	 *   as is.
-	 *   A malformed command format (more than one 'index' node, more than one
-	 *   command, no 'index' node, no command, or an index value which cannot
-	 *   be parsed as a number)
+	 *   The 'for' node has exactly two children: an addressing node and
+	 *   exactly one child which is the command to run. The addressing node is
+	 *   either an 'index' node or an 'id' node.
+	 *   - 'index': contains decimal child indices (0-based). The 1st index is
+	 *     into the children of this container, the 2nd is into the children of
+	 *     the widget reached by the 1st index, and so on.
+	 *   - 'id': contains widget ids. The 1st id is looked up with
+	 *     try_get_widget() on this container, the 2nd on the widget reached
+	 *     for the 1st id, and so on.
+	 *   An empty addressing node means this container itself. The command is
+	 *   run on the widget at the end of the path and its probe response is
+	 *   returned as is.
+	 *   A malformed command format (no addressing node, both an 'index' and an
+	 *   'id' node, more than one of either, more than one command, no command,
+	 *   or, for the 'index' variant, an index value which cannot be parsed as
+	 *   a number)
 	 *   results in a single section named after this class containing an
 	 *   'error' node with a 'malformed_command' node.
 	 *   If a path step fails, the response is a single section named after
-	 *   this class containing an 'error' node with an 'index' node carrying
-	 *   the path prefix (including the failing index), a reason node -
-	 *   'out_of_bound' followed by the actual number of children of the
-	 *   container at that path step, or
-	 *   'not_a_container' if the widget at the path step is not a container.
+	 *   this class containing an 'error' node with an 'index' node (index
+	 *   variant) or an 'id' node (id variant) carrying the path prefix
+	 *   (including the failing step), followed by a reason node:
+	 *   - 'not_found' (id variant) - no widget with the given id was found in
+	 *     the widget hierarchy of the widget reached so far;
+	 *   - 'not_a_container' (index variant) - the widget at the path step is
+	 *     not a container;
+	 *   - 'out_of_bound' (index variant) - the index exceeds the number of
+	 *     children of the container at that path step; the actual number of
+	 *     children follows the reason node.
 	 *
 	 * @param command - probe command.
 	 * @return probe response.
