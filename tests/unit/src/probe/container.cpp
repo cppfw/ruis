@@ -448,6 +448,15 @@ const tst::set set("container_probe", [](tst::suite& suite) {
 			);
 			check_malformed_command_response(c.get().probe(cmd));
 		}
+
+		// an index that overflows uint64_t cannot be parsed and is malformed
+		{
+			tml::tree cmd(
+				tml::leaf("for"), //
+				{tml::tree(tml::leaf("index"), {tml::tree(tml::leaf("18446744073709551616"))}), tml::tree(tml::leaf("get_state"))}
+			);
+			check_malformed_command_response(c.get().probe(cmd));
+		}
 	});
 
 	suite.add("for_too_big_index", [] {
@@ -456,8 +465,8 @@ const tst::set set("container_probe", [](tst::suite& suite) {
 		auto child = m::gap(ctx, ruis::gap::all_parameters{});
 		auto c = m::container(ctx, ruis::container::all_parameters{}, ruis::widget_list{child});
 
-		// an index with more than 19 decimal digits
-		// is considered out of bound
+		// an index that fits in uint64_t but exceeds the number of children
+		// is out of bound
 		const auto resp = c.get().probe(make_for_cmd_from_strings({"12345678901234567890"}, "get_state"));
 		const tml::forest f(resp.begin(), resp.end());
 

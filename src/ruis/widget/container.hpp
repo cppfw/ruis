@@ -451,8 +451,7 @@ public:
 	 *   this class containing an 'error' node with an 'index' node carrying
 	 *   the path prefix (including the failing index), a reason node -
 	 *   'out_of_bound' followed by the actual number of children of the
-	 *   container at that path step (an index with an infeasibly long
-	 *   decimal representation is considered out of bound as well), or
+	 *   container at that path step, or
 	 *   'not_a_container' if the widget at the path step is not a container.
 	 *
 	 * @param command - probe command.

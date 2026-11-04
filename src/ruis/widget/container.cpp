@@ -554,35 +554,19 @@ void container::on_reload()
 
 namespace {
 
-// a decimal number with at most this many digits
-// is guaranteed to fit in uint64_t
-constexpr std::size_t max_index_digits = 19;
-
-enum class index_status {
-	ok,
-	malformed,
-	too_big
-};
-
 // parse a child index from a tml leaf
-// a value with more than max_index_digits digits is reported as too_big
-// (it is certainly out of bounds for any child list, and tml::leaf::to_uint64()
-// silently returns 0 on overflow instead of throwing);
-// any other value is parsed with tml::leaf::to_uint64(),
-// which throws std::invalid_argument for non-numeric values -
-// in that case the value is reported as malformed
-index_status parse_child_index(const tml::leaf& l, std::size_t& index)
+// the value is parsed with tml::leaf::to_uint64(),
+// which throws std::invalid_argument for non-numeric values and
+// std::out_of_range for values that do not fit into uint64_t -
+// in both cases the value is reported as malformed
+bool parse_child_index(const tml::leaf& l, std::size_t& index)
 {
-	// review: no need to check for this, because tml::leaf::to_uint64() throws std::invalid_argument for non-numeric values
-	if (l.string.size() > max_index_digits) {
-		return index_status::too_big;
-	}
 	try {
 		index = l.to_uint64();
 	} catch (const std::exception&) {
-		return index_status::malformed;
+		return false;
 	}
-	return index_status::ok;
+	return true;
 }
 
 // single section reporting a malformed 'for' command:
@@ -653,8 +637,7 @@ widget::probe_response_set probe_for(container& c, const tml::tree& command)
 	tml::forest path; // the index nodes of the walked path
 	for (const auto& idx_node : index_node->children) {
 		std::size_t i = 0;
-		const auto status = parse_child_index(idx_node.value, i);
-		if (status == index_status::malformed) {
+		if (!parse_child_index(idx_node.value, i)) {
 			return make_malformed_command_error();
 		}
 		path.push_back(idx_node);
@@ -663,8 +646,7 @@ widget::probe_response_set probe_for(container& c, const tml::tree& command)
 		if (!cont) {
 			return make_for_error(path, "not_a_container");
 		}
-		// a too_big index is certainly out of bounds
-		if (status == index_status::too_big || i >= cont->size()) {
+		if (i >= cont->size()) {
 			const auto size_node = to_tml(cont->size());
 			return make_for_error(path, "out_of_bound", &size_node);
 		}
