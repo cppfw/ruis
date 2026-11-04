@@ -62,11 +62,15 @@ inline utki::shared_ref<::path_widget> path_widget(
 class ellipse_widget : virtual public ruis::widget
 {
 	ruis::paint::ellipse_vao vao;
+	ruis::real stroke_width = 0;
+	ruis::styled<ruis::color> color_params;
 
 public:
 	struct all_parameters {
 		ruis::layout_parameters layout_params;
 		ruis::widget::parameters widget;
+		ruis::real stroke_width = 0;
+		ruis::styled<ruis::color> color;
 	};
 
 	ellipse_widget(
@@ -78,20 +82,22 @@ public:
 			std::move(params.layout_params),
 			std::move(params.widget)
 		),
-		vao(context.get().renderer)
+		vao(context.get().renderer),
+		stroke_width(params.stroke_width),
+		color_params(std::move(params.color))
 	{}
 
 	void render(const ruis::mat4& matrix) const override
 	{
 		this->vao.render(
 			matrix, //
-			0xff80ff80
+			this->color_params.get()
 		);
 	}
 
 	void on_resize() override
 	{
-		this->vao.set(this->rect().d);
+		this->vao.set(this->rect().d, this->stroke_width);
 	}
 };
 
@@ -171,12 +177,32 @@ utki::shared_ref<ruis::widget> make_root_widget(const utki::shared_ref<ruis::con
 					}
 				}
 			),
-			m::ellipse_widget(c,
+			m::pile(c,
 				{
 					.layout_params{
 						.dims = {400_pp, 200_pp},
 						.align = {ruis::align::front, ruis::align::front}
 					}
+				},
+				{
+					m::ellipse_widget(c,
+						{
+							.layout_params{
+								.dims = {ruis::dim::fill, ruis::dim::fill}
+							},
+							.stroke_width = 0,
+							.color = 0xb380ff80
+						}
+					),
+					m::ellipse_widget(c,
+						{
+							.layout_params{
+								.dims = {340_pp, 160_pp}
+							},
+							.stroke_width = 15,
+							.color = 0xb38080ff
+						}
+					)
 				}
 			),
 			m::padding(c,
@@ -280,6 +306,14 @@ public:
 		this->window.gui.ctx().loader().mount_ruis_res_pack(this->get_res_file("../../res/ruis_res/"));
 
 		this->window.gui.set_root(make_root_widget(this->window.gui.context));
+
+		this->window.gui.default_key_handler = [this](const ruis::key_event& e) {
+			if (e.action == ruis::button_action::press) {
+				if (e.combo.key == ruis::key::escape) {
+					this->quit();
+				}
+			}
+		};
 	}
 };
 

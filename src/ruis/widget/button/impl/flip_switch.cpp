@@ -105,7 +105,7 @@ void flip_switch::apply_progress(real progress)
 {
 	// update the knob's color and position; its size is set once in on_lay_out and
 	// only changes when the widget is resized
-	this->knob.set_color(this->knob_color_at(progress));
+	this->knob.set_fill_color(this->knob_color_at(progress));
 	this->knob.move_to(
 		{this->knob_x_at(progress), //
 		 0}
@@ -208,7 +208,9 @@ flip_switch::flip_switch(
 								.borders = ruis::styled<ruis::length>(0_pp)
 							}
 						},
-						.color = ruis::color::transparent
+						.specific{
+							.fill_color = ruis::color::transparent
+						}
 					}
 				}
 			)

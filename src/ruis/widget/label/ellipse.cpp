@@ -21,6 +21,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "ellipse.hpp"
 
+#include <algorithm>
+
+#include "../../context.hpp"
+
 using namespace ruis;
 
 ellipse::ellipse( //
@@ -34,68 +38,117 @@ ellipse::ellipse( //
 		std::move(params.widget)
 	),
 	// clang-format off
-    padding(
-        context, //
-        {
-			.params = [&](){
-				for(auto& b : params.params.padding.specific.borders){
-					if(b.get().is_undefined()){
+	padding(
+		context, //
+		{
+			.params = [&]() {
+				for (auto& b : params.params.padding.specific.borders) {
+					if (b.get().is_undefined()) {
 						b = context.get().style().get_len_gap();
 					}
 				}
 				return std::move(params.params.padding);
 			}()
-        },
-        std::move(children)
-    ),
-	// clang-format on
-	color_widget(
-		context, //
-		std::move(params.params.color)
+		},
+		std::move(children)
 	),
-	vao(context.get().renderer)
+	// clang-format on
+	params(std::move(params.params.specific)),
+	fill_vao(context.get().renderer, {}),
+	stroke_vao(context.get().renderer, {})
 {
-	this->update_vao();
+	this->update_vaos();
 }
 
-void ellipse::update_vao()
+void ellipse::set_fill_color(styled<ruis::color> color)
 {
-	this->vao.set(
-		this->rect().d, // diameters
-		0 // stroke width
-	);
+	if (this->params.fill_color == color) {
+		return;
+	}
+
+	this->params.fill_color = std::move(color);
+	this->clear_cache();
 }
 
-void ellipse::on_resize()
+void ellipse::set_stroke_color(styled<ruis::color> color)
 {
-	this->update_vao();
+	if (this->params.stroke_color == color) {
+		return;
+	}
 
-	this->padding::on_resize();
+	this->params.stroke_color = std::move(color);
+	this->clear_cache();
 }
 
-ellipse::probe_response_set ellipse::probe(const tml::tree& command)
+void ellipse::set_stroke_width(styled<length> width)
 {
-	// resolve the (color_widget, container) diamond of probe overrides:
-	// combine the responses of both branches, the set semantics
-	// deduplicates the shared 'ruis::widget' section
-	// call padding::probe() (the direct base) rather than container::probe():
-	// a qualified call to a virtual function binds to the final overrider as
-	// seen from the named base class, so if padding ever overrides probe()
-	// this call will pick up the padding override automatically
-	auto ret = padding::probe(command);
-	const auto color = color_widget::probe(command);
-	ret.insert(color.begin(), color.end());
-	return ret;
+	if (this->params.stroke_width == width) {
+		return;
+	}
+
+	this->params.stroke_width = std::move(width);
+	this->update_vaos();
+	this->clear_cache();
 }
 
 void ellipse::render(const ruis::mat4& matrix) const
 {
-	this->vao.render(
-		matrix, //
-		this->get_color()
-	);
+	if (this->has_stroke()) {
+		const auto sw = this->params.stroke_width.get().get(this->context);
+		const auto half_sw = sw / 2;
+
+		ruis::mat4 matr(matrix);
+		matr.translate(
+			half_sw, //
+			half_sw
+		);
+
+		this->fill_vao.render(
+			matr, //
+			this->get_fill_color()
+		);
+
+		this->stroke_vao.render(
+			matrix, //
+			this->params.stroke_color.get()
+		);
+	} else {
+		this->fill_vao.render(
+			matrix, //
+			this->get_fill_color()
+		);
+	}
 
 	this->padding::render(matrix);
+}
+
+void ellipse::update_vaos()
+{
+	const auto& d = this->rect().d;
+	const auto w = std::max(d[0], real(0));
+	const auto h = std::max(d[1], real(0));
+
+	if (this->has_stroke()) {
+		const auto sw = this->params.stroke_width.get().get(this->context);
+
+		// The fill is drawn inset by the stroke width, so fit it to the
+		// (w - sw) x (h - sw) box it is actually rendered into.
+		this->fill_vao.set({w - sw, h - sw}, 0);
+
+		// The stroke is drawn at the full widget size.
+		this->stroke_vao.set({w, h}, sw);
+	} else {
+		// No stroke: the fill is drawn at the full widget size.
+		this->fill_vao.set({w, h}, 0);
+	}
+}
+
+void ellipse::on_resize()
+{
+	// The VAOs depend on the widget size, so they must be rebuilt whenever
+	// the size changes.
+	this->update_vaos();
+	this->padding::on_resize();
 }
 
 utki::shared_ref<ruis::ellipse> ruis::make::ellipse(

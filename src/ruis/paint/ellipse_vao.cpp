@@ -26,7 +26,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace ruis::paint;
 
 std::map<
-	ruis::vec2, // diameters
+	ruis::paint::ellipse_vao::texture_cache_key, //
 	std::weak_ptr<const ruis::render::texture_2d>>
 	// TODO: ? NOLINTNEXTLINE(cppcoreguidelines-avoid-non-const-global-variables, "false-positive")
 	ellipse_vao::cache;
@@ -56,15 +56,31 @@ void ellipse_vao::set(
 }
 
 namespace {
-auto make_ellipse_texture_image(ruis::vec2 diameters)
+auto make_ellipse_texture_image(ruis::vec2 diameters, ruis::real stroke_width)
 {
 	using std::round;
 	veg::canvas canvas(round(diameters).to<uint32_t>());
 
+	const auto radii = diameters / 2;
+
 	canvas.ellipse(
 		diameters / 2, // center
-		diameters / 2 // radii
+		radii // radii
 	);
+
+	if (stroke_width > 0) {
+		// stroked ellipse, so we need to add the inner ellipse to make it hollow
+		const auto inner_radii = radii - stroke_width;
+		if (inner_radii.is_positive()) {
+			canvas.ellipse(
+				diameters / 2, // center
+				inner_radii // radii
+			);
+		}
+	}
+
+	// even-odd fill rule makes the inner ellipse a hole in the outer one
+	canvas.set_fill_rule(veg::fill_rule::evenodd);
 
 	// white
 	canvas.set_source({1, 1, 1, 1});
@@ -82,9 +98,14 @@ void ellipse_vao::update_texture()
 		return;
 	}
 
+	const texture_cache_key key{
+		this->diameters, //
+		this->stroke_width
+	};
+
 	// try to find in cache
 	// TODO: develop algorithm to go through cache from time to time and drop zombie textures
-	auto it = this->cache.find(this->diameters);
+	auto it = this->cache.find(key);
 	if (it != this->cache.end()) {
 		if (auto t = it->second.lock()) {
 			this->tex = std::move(t);
@@ -99,13 +120,13 @@ void ellipse_vao::update_texture()
 	const auto& r = this->renderer.get();
 
 	this->tex = r.ctx().make_texture_2d(
-		make_ellipse_texture_image(this->diameters), //
+		make_ellipse_texture_image(this->diameters, this->stroke_width), //
 		{}
 	);
 
 	// add to cache
 	this->cache.insert(std::make_pair(
-		this->diameters, //
+		key, //
 		utki::make_weak(this->tex)
 	));
 }

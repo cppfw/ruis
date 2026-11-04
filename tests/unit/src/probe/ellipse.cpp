@@ -14,10 +14,9 @@ using namespace ruis::make;
 
 namespace {
 const tst::set set("ellipse_probe", [](tst::suite& suite) {
-	// Note: ruis::ellipse combines the (padding -> container) and the
-	// (color_widget) branches, so its probe override resolves the diamond
-	// by combining the responses of both branches (the set semantics
-	// deduplicates the shared 'ruis::widget' section).
+	// The ellipse is a padding (container) which is not a color_widget anymore,
+	// so its probe responses are exactly those of the container/widget base
+	// classes.
 	//
 	// The explicit border lengths below keep the constructor from resolving
 	// undefined borders through the (empty) style sheet of the dummy context.
@@ -35,17 +34,23 @@ const tst::set set("ellipse_probe", [](tst::suite& suite) {
 		auto child = m::gap(ctx, ruis::gap::all_parameters{});
 		auto c = make_ellipse(ctx, ruis::widget_list{child});
 
-		const auto resp = c.get().probe(tml::tree(tml::leaf("get_children")));
+		// probe() is only public through the ruis::widget base (padding inherits
+		// container as a protected base), so cast to the widget reference
+		auto& w = static_cast<ruis::widget&>(c.get());
+		const auto resp = w.probe(tml::tree(tml::leaf("get_children")));
 
 		const tml::forest f(resp.begin(), resp.end());
 
-		// the color branch adds nothing for 'get_children',
-		// so the response is the single container section
+		// the response is the single container section
 		tst::check(f.size() == 1, SL) << f.size();
 		tst::check(f[0].value == "ruis::container", SL) << f[0].value.string;
-		const auto& cc =
-			tml::const_crawler(f) //
-				.to("ruis::container").in().to("children_count").in().get().value;
+		const auto& cc = tml::const_crawler(f) //
+							 .to("ruis::container")
+							 .in()
+							 .to("children_count")
+							 .in()
+							 .get()
+							 .value;
 		tst::check(cc == "1", SL) << cc.string;
 	});
 
@@ -56,24 +61,19 @@ const tst::set set("ellipse_probe", [](tst::suite& suite) {
 		for (auto& b : p.params.padding.specific.borders) {
 			b = ruis::length::make_px(0);
 		}
-		p.params.color = ruis::color(4, 3, 2, 1);
+		p.params.specific.fill_color = ruis::color(4, 3, 2, 1);
 		auto c = m::ellipse(ctx, std::move(p), ruis::widget_list{});
 
-		const auto resp = c.get().probe(tml::tree(tml::leaf("get_state")));
+		// probe() is only public through the ruis::widget base (padding inherits
+		// container as a protected base), so cast to the widget reference
+		auto& w = static_cast<ruis::widget&>(c.get());
+		const auto resp = w.probe(tml::tree(tml::leaf("get_state")));
 
 		const tml::forest f(resp.begin(), resp.end());
 
-		// the container branch adds nothing for 'get_state',
-		// so the fold response is the 'ruis::color_widget' and
-		// the 'ruis::widget' sections
-		tst::check(f.size() == 2, SL) << f.size();
-		tst::check(f[0].value == "ruis::color_widget", SL) << f[0].value.string;
-		tst::check(f[1].value == "ruis::widget", SL) << f[1].value.string;
-
-		const auto& cr =
-			tml::const_crawler(f) //
-				.to("ruis::color_widget").in().to("color").in().to("rgba").in().get().value;
-		tst::check(cr == "4", SL) << cr.string;
+		// the response is the single widget section
+		tst::check(f.size() == 1, SL) << f.size();
+		tst::check(f[0].value == "ruis::widget", SL) << f[0].value.string;
 	});
 });
 } // namespace

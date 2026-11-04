@@ -157,7 +157,9 @@ utki::shared_ref<ruis::widget> make_rectangles_window(
 										.borders = {c.get().style().get_len_gap_small()}
 									}
 								},
-								.color = 0xff000080
+								.specific{
+									.fill_color = 0xff000080
+								}
 							}
 						},
 						{

@@ -33,14 +33,14 @@ class ellipse_vao
 
 	vec2 diameters = 0;
 
-	// zero means filled rectangle
-	real stroke_width = 0; // TODO: use
+	// non-positive value means filled ellipse
+	real stroke_width = 0;
 
 public:
 	ellipse_vao(
 		utki::shared_ref<const ruis::render::renderer> renderer,
 		vec2 diameters = 0, //
-		real stroke_width = 0
+		real stroke_width = 0 //
 	);
 
 	ellipse_vao(const ellipse_vao&) = delete;
@@ -53,7 +53,7 @@ public:
 
 	void set(
 		vec2 diameters, //
-		real stroke_width = 0 // 0 means filled ellipse
+		real stroke_width = 0 // non-positive means filled ellipse
 	);
 
 	void render(
@@ -64,8 +64,21 @@ public:
 private:
 	std::shared_ptr<const render::texture_2d> tex;
 
+	struct texture_cache_key {
+		vec2 diameters;
+		real stroke_width;
+
+		bool operator<(const texture_cache_key& rhs) const
+		{
+			if (this->diameters == rhs.diameters) {
+				return this->stroke_width < rhs.stroke_width;
+			}
+			return this->diameters < rhs.diameters;
+		}
+	};
+
 	static std::map<
-		vec2, // diameters
+		texture_cache_key, //
 		std::weak_ptr<const render::texture_2d>>
 		// TODO: ? NOLINTNEXTLINE(cppcoreguidelines-avoid-non-const-global-variables, "false-positive")
 		cache;

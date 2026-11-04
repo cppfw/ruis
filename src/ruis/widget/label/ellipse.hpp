@@ -22,24 +22,45 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #pragma once
 
 #include "../../paint/ellipse_vao.hpp"
-#include "../base/color_widget.hpp"
 
 #include "padding.hpp"
 
 namespace ruis {
 
-class ellipse :
-	public padding, //
-	public color_widget
+/**
+ * @brief Ellipse widget.
+ * This is a widget which can display a filled ellipse and/or a stroked ellipse.
+ */
+class ellipse : public padding
 {
-	paint::ellipse_vao vao;
-
 public:
-	struct parameters {
-		ruis::padding::parameters padding;
-		ruis::styled<ruis::color> color;
+	struct specific_parameters {
+		/**
+		 * @brief Fill color of the ellipse.
+		 */
+		styled<ruis::color> fill_color;
+
+		/**
+		 * @brief Stroke width of the ellipse.
+		 * Undefined value means no stroke.
+		 */
+		styled<length> stroke_width;
+
+		/**
+		 * @brief Stroke color of the ellipse.
+		 */
+		styled<ruis::color> stroke_color;
 	};
 
+	struct parameters {
+		ruis::padding::parameters padding;
+		specific_parameters specific;
+	};
+
+private:
+	specific_parameters params;
+
+public:
 	struct all_parameters {
 		ruis::layout_parameters layout_params;
 		ruis::widget::parameters widget;
@@ -64,19 +85,30 @@ public:
 
 	void on_resize() override;
 
-	/**
-	 * @brief Handle a probe (debug inspection) command.
-	 * Resolves the (color_widget, container) diamond of probe overrides:
-	 * combines the responses of both branches, the set semantics
-	 * deduplicates the shared 'ruis::widget' section.
-	 *
-	 * @param command - probe command.
-	 * @return probe response.
-	 */
-	probe_response_set probe(const tml::tree& command) override;
+	void set_fill_color(styled<ruis::color> color);
+	void set_stroke_color(styled<ruis::color> color);
+	void set_stroke_width(styled<length> width);
 
-public:
-	void update_vao();
+	const color& get_stroke_color() const noexcept
+	{
+		return this->params.stroke_color.get();
+	}
+
+	const color& get_fill_color() const noexcept
+	{
+		return this->params.fill_color.get();
+	}
+
+private:
+	bool has_stroke() const
+	{
+		return !this->params.stroke_width.get().is_undefined();
+	}
+
+	void update_vaos();
+
+	ruis::paint::ellipse_vao fill_vao;
+	ruis::paint::ellipse_vao stroke_vao;
 };
 
 namespace make {
