@@ -21,7 +21,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
-#include <array>
 #include <cstddef>
 #include <type_traits>
 
@@ -54,27 +53,28 @@ tml::tree to_tml(const number_type& n)
 
 /**
  * @brief Convert an r4::vector to a tml::forest.
- * The forest contains one node per vector component,
- * each node is named after the component ("x", "y", "z", "w")
- * and contains the tree produced by the component's to_tml()
- * (found by ordinary name lookup for arithmetic component types
- * and by ADL for class component types).
+ * The forest contains one node per vector component, in order,
+ * carrying no name (the components are positional). Each node is
+ * the tree produced by the component's to_tml() (found by ordinary
+ * name lookup for arithmetic component types and by ADL for class
+ * component types).
  * @tparam component_type - the type of the vector components,
  * must be an arithmetic type or have a free to_tml() overload
  * findable by ADL.
  * @tparam dimension - the number of vector components.
  * @param v - the vector to convert.
- * @return A tml::forest containing the trees of the vector components.
+ * @return A tml::forest containing the trees of the vector components,
+ * in order.
  */
 template <class component_type, std::size_t dimension>
 tml::forest to_tml(const r4::vector<component_type, dimension>& v)
 {
 	static_assert(dimension <= 4, "vectors with more than 4 components are not supported for now");
-	static constexpr std::array component_names = {"x", "y", "z", "w"};
 	tml::forest children;
 	for (std::size_t i = 0; i < dimension; ++i) {
-		// found by ordinary name lookup or ADL (see the template documentation)
-		children.emplace_back(component_names[i], tml::forest{to_tml(v[i])});
+		// components are positional and carry no name;
+		// to_tml() is found by ordinary name lookup or ADL
+		children.emplace_back(to_tml(v[i]));
 	}
 	return children;
 }
@@ -84,7 +84,7 @@ tml::forest to_tml(const r4::vector<component_type, dimension>& v)
  * The tree value is "rect" with two children:
  * "p" (the origin point) and "d" (the dimensions),
  * each reported via the r4::vector to_tml() overload
- * (a forest of "x"/"y" component nodes).
+ * (a forest of positional component nodes, one per axis).
  * @tparam component_type - the type of the rectangle components.
  * @param r - the rectangle to convert.
  * @return A tml::tree representing the rectangle.

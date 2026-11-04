@@ -113,8 +113,6 @@ const tst::set set("widget_probe", [](tst::suite& suite) {
 							  .in() //
 							  .to("dims") //
 							  .in() //
-							  .to("x") //
-							  .in() //
 							  .get()
 							  .value;
 		tst::check(
@@ -132,8 +130,7 @@ const tst::set set("widget_probe", [](tst::suite& suite) {
 							  .in() //
 							  .to("dims") //
 							  .in() //
-							  .to("y") //
-							  .in() //
+							  .next() //
 							  .get()
 							  .value;
 		// the length dimension is reported as <value><unit>
@@ -169,8 +166,6 @@ const tst::set set("widget_probe", [](tst::suite& suite) {
 							  .in() //
 							  .to("align") //
 							  .in() //
-							  .to("x") //
-							  .in() //
 							  .get()
 							  .value;
 		tst::check(
@@ -188,8 +183,7 @@ const tst::set set("widget_probe", [](tst::suite& suite) {
 							  .in() //
 							  .to("align") //
 							  .in() //
-							  .to("y") //
-							  .in() //
+							  .next() //
 							  .get()
 							  .value;
 		tst::check(
@@ -209,8 +203,6 @@ const tst::set set("widget_probe", [](tst::suite& suite) {
 							 .in()
 							 .to("p")
 							 .in()
-							 .to("x")
-							 .in()
 							 .get()
 							 .value;
 		tst::check(
@@ -227,8 +219,7 @@ const tst::set set("widget_probe", [](tst::suite& suite) {
 							 .in()
 							 .to("p")
 							 .in()
-							 .to("y")
-							 .in()
+							 .next()
 							 .get()
 							 .value;
 		tst::check(
@@ -244,8 +235,6 @@ const tst::set set("widget_probe", [](tst::suite& suite) {
 							 .to("rect")
 							 .in()
 							 .to("d")
-							 .in()
-							 .to("x")
 							 .in()
 							 .get()
 							 .value;
@@ -263,8 +252,7 @@ const tst::set set("widget_probe", [](tst::suite& suite) {
 							 .in()
 							 .to("d")
 							 .in()
-							 .to("y")
-							 .in()
+							 .next()
 							 .get()
 							 .value;
 		tst::check(

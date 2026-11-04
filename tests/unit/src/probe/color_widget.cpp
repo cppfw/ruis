@@ -145,8 +145,6 @@ const tst::set set("color_widget_probe", [](tst::suite& suite) {
 							  .in()
 							  .to("dims")
 							  .in()
-							  .to("x")
-							  .in()
 							  .get()
 							  .value;
 		tst::check(
@@ -164,8 +162,7 @@ const tst::set set("color_widget_probe", [](tst::suite& suite) {
 							  .in()
 							  .to("dims")
 							  .in()
-							  .to("y")
-							  .in()
+							  .next()
 							  .get()
 							  .value;
 		// the length dimension is reported as <value><unit>
@@ -183,8 +180,6 @@ const tst::set set("color_widget_probe", [](tst::suite& suite) {
 							 .to("rect")
 							 .in()
 							 .to("p")
-							 .in()
-							 .to("x")
 							 .in()
 							 .get()
 							 .value;

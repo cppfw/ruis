@@ -27,147 +27,85 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace {
 const tst::set set("to_tml", [](tst::suite& suite) {
-	suite.add("vector2_produces_forest_with_x_and_y_component_trees", [] {
+	suite.add("vector2_produces_forest_of_positional_component_values", [] {
 		r4::vector2<int> v(1, 2);
 		const auto f = ruis::to_tml(v);
+		// components are positional: value nodes in order, no names
 		tst::check_eq(f.size(), std::size_t(2), SL);
 		tst::check(
-			f[0].value == "x",
+			f[0].value == "1",
 			[&](auto& o) {
 				o << f[0].value;
 			},
 			SL
 		);
-		tst::check_eq(f[0].children.size(), std::size_t(1), SL);
+		tst::check_eq(f[0].children.size(), std::size_t(0), SL);
 		tst::check(
-			f[0].children[0].value == "1",
-			[&](auto& o) {
-				o << f[0].children[0].value;
-			},
-			SL
-		);
-		tst::check(
-			f[1].value == "y",
+			f[1].value == "2",
 			[&](auto& o) {
 				o << f[1].value;
 			},
 			SL
 		);
-		tst::check_eq(f[1].children.size(), std::size_t(1), SL);
-		tst::check(
-			f[1].children[0].value == "2",
-			[&](auto& o) {
-				o << f[1].children[0].value;
-			},
-			SL
-		);
+		tst::check_eq(f[1].children.size(), std::size_t(0), SL);
 	});
 
-	suite.add("vector3_produces_forest_with_x_y_and_z_component_trees", [] {
+	suite.add("vector3_produces_forest_of_positional_component_values", [] {
 		r4::vector3<int> v(1, 2, 3);
 		const auto f = ruis::to_tml(v);
 		tst::check_eq(f.size(), std::size_t(3), SL);
 		tst::check(
-			f[0].value == "x",
+			f[0].value == "1",
 			[&](auto& o) {
 				o << f[0].value;
 			},
 			SL
 		);
 		tst::check(
-			f[1].value == "y",
+			f[1].value == "2",
 			[&](auto& o) {
 				o << f[1].value;
 			},
 			SL
 		);
 		tst::check(
-			f[2].value == "z",
+			f[2].value == "3",
 			[&](auto& o) {
 				o << f[2].value;
-			},
-			SL
-		);
-		tst::check(
-			f[0].children[0].value == "1",
-			[&](auto& o) {
-				o << f[0].children[0].value;
-			},
-			SL
-		);
-		tst::check(
-			f[1].children[0].value == "2",
-			[&](auto& o) {
-				o << f[1].children[0].value;
-			},
-			SL
-		);
-		tst::check(
-			f[2].children[0].value == "3",
-			[&](auto& o) {
-				o << f[2].children[0].value;
 			},
 			SL
 		);
 	});
 
-	suite.add("vector4_produces_forest_with_x_y_z_and_w_component_trees", [] {
+	suite.add("vector4_produces_forest_of_positional_component_values", [] {
 		r4::vector4<int> v(1, 2, 3, 4);
 		const auto f = ruis::to_tml(v);
 		tst::check_eq(f.size(), std::size_t(4), SL);
 		tst::check(
-			f[0].value == "x",
+			f[0].value == "1",
 			[&](auto& o) {
 				o << f[0].value;
 			},
 			SL
 		);
 		tst::check(
-			f[1].value == "y",
+			f[1].value == "2",
 			[&](auto& o) {
 				o << f[1].value;
 			},
 			SL
 		);
 		tst::check(
-			f[2].value == "z",
+			f[2].value == "3",
 			[&](auto& o) {
 				o << f[2].value;
 			},
 			SL
 		);
 		tst::check(
-			f[3].value == "w",
+			f[3].value == "4",
 			[&](auto& o) {
 				o << f[3].value;
-			},
-			SL
-		);
-		tst::check(
-			f[0].children[0].value == "1",
-			[&](auto& o) {
-				o << f[0].children[0].value;
-			},
-			SL
-		);
-		tst::check(
-			f[1].children[0].value == "2",
-			[&](auto& o) {
-				o << f[1].children[0].value;
-			},
-			SL
-		);
-		tst::check(
-			f[2].children[0].value == "3",
-			[&](auto& o) {
-				o << f[2].children[0].value;
-			},
-			SL
-		);
-		tst::check(
-			f[3].children[0].value == "4",
-			[&](auto& o) {
-				o << f[3].children[0].value;
 			},
 			SL
 		);
@@ -235,38 +173,34 @@ const tst::set set("to_tml", [](tst::suite& suite) {
 			},
 			SL
 		);
-		// each of p/d is a vector with x/y component nodes
+		// each of p/d is a vector: positional value nodes, one per axis
 		tst::check_eq(t.children[0].children.size(), std::size_t(2), SL);
-		tst::check(t.children[0].children[0].value == "x", SL);
 		tst::check(
-			t.children[0].children[0].children[0].value == "1",
+			t.children[0].children[0].value == "1",
 			[&](auto& o) {
-				o << t.children[0].children[0].children[0].value;
+				o << t.children[0].children[0].value;
 			},
 			SL
 		);
-		tst::check(t.children[0].children[1].value == "y", SL);
 		tst::check(
-			t.children[0].children[1].children[0].value == "2",
+			t.children[0].children[1].value == "2",
 			[&](auto& o) {
-				o << t.children[0].children[1].children[0].value;
+				o << t.children[0].children[1].value;
 			},
 			SL
 		);
 		tst::check_eq(t.children[1].children.size(), std::size_t(2), SL);
-		tst::check(t.children[1].children[0].value == "x", SL);
 		tst::check(
-			t.children[1].children[0].children[0].value == "3",
+			t.children[1].children[0].value == "3",
 			[&](auto& o) {
-				o << t.children[1].children[0].children[0].value;
+				o << t.children[1].children[0].value;
 			},
 			SL
 		);
-		tst::check(t.children[1].children[1].value == "y", SL);
 		tst::check(
-			t.children[1].children[1].children[0].value == "4",
+			t.children[1].children[1].value == "4",
 			[&](auto& o) {
-				o << t.children[1].children[1].children[0].value;
+				o << t.children[1].children[1].value;
 			},
 			SL
 		);

@@ -707,7 +707,10 @@ widget::probe_response_set probe_for(container& c, const tml::tree& command)
 	if (has_index) {
 		return probe_for_index(c, *index_node, *command_node);
 	}
-	// review: add utki::assert(id_node); utki::Assert(command_node); here
+	// validation above guarantees exactly one addressing node, so here has_id
+	// is true and command_node is non-null
+	utki::assert(id_node, SL);
+	utki::assert(command_node, SL);
 	return probe_for_id(c, *id_node, *command_node);
 }
 
