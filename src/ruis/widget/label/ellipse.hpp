@@ -64,6 +64,17 @@ public:
 
 	void on_resize() override;
 
+	/**
+	 * @brief Handle a probe (debug inspection) command.
+	 * Resolves the (color_widget, container) diamond of probe overrides:
+	 * combines the responses of both branches, the set semantics
+	 * deduplicates the shared 'ruis::widget' section.
+	 *
+	 * @param command - probe command.
+	 * @return probe response.
+	 */
+	probe_response_set probe(const tml::tree& command) override;
+
 public:
 	void update_vao();
 };

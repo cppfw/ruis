@@ -422,6 +422,23 @@ public:
 	 * This implementation will call reload() on each child widget.
 	 */
 	void on_reload() override;
+
+	/**
+	 * @brief Handle a probe (debug inspection) command.
+	 * Overrides widget::probe(): handles the commands this class handles and
+	 * delegates all other commands to the base implementation.
+	 *
+	 * Unknown commands are ignored and result in an empty response.
+	 *
+	 * Commands handled by the container class:
+	 * - 'get_children' (non-fold): no parameters. The response contains a
+	 *   single section named after this class which reports the number of
+	 *   child widgets in a 'children_count' node.
+	 *
+	 * @param command - probe command.
+	 * @return probe response.
+	 */
+	probe_response_set probe(const tml::tree& command) override;
 };
 
 template <class widget_type>

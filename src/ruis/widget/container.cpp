@@ -22,9 +22,13 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "container.hpp"
 
 #include <utki/config.hpp>
+#include <utki/debug.hpp>
 
 #include "../context.hpp"
+#include "../util/to_tml.hpp"
 #include "../util/util.hpp"
+
+using namespace std::string_literals;
 
 using namespace ruis;
 
@@ -546,6 +550,20 @@ void container::on_reload()
 	for (auto& c : this->children()) {
 		c.get().reload();
 	}
+}
+
+container::probe_response_set container::probe(const tml::tree& command)
+{
+	if (command.value == "get_children") {
+		probe_response_set ret;
+		ret.insert(tml::tree(
+			utki::demangle(typeid(container)), //
+			{tml::tree("children_count"s, {to_tml(this->size())})}
+		));
+		return ret;
+	}
+	// all other commands are delegated to the base implementation
+	return widget::probe(command);
 }
 
 utki::shared_ref<ruis::container> ruis::make::container(

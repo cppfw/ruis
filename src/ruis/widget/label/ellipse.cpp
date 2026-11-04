@@ -73,6 +73,21 @@ void ellipse::on_resize()
 	this->padding::on_resize();
 }
 
+ellipse::probe_response_set ellipse::probe(const tml::tree& command)
+{
+	// resolve the (color_widget, container) diamond of probe overrides:
+	// combine the responses of both branches, the set semantics
+	// deduplicates the shared 'ruis::widget' section
+	// call padding::probe() (the direct base) rather than container::probe():
+	// a qualified call to a virtual function binds to the final overrider as
+	// seen from the named base class, so if padding ever overrides probe()
+	// this call will pick up the padding override automatically
+	auto ret = padding::probe(command);
+	const auto color = color_widget::probe(command);
+	ret.insert(color.begin(), color.end());
+	return ret;
+}
+
 void ellipse::render(const ruis::mat4& matrix) const
 {
 	this->vao.render(
