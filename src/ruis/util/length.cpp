@@ -29,6 +29,9 @@ using namespace ruis;
 
 tml::tree ruis::to_tml(const length& l)
 {
+	// a braced initializer would select the tml::tree initializer_list
+	// constructor and produce a tree with a child instead of a tree value
+	// NOLINTNEXTLINE(modernize-return-braced-init-list, "braced init would select the wrong constructor")
 	return tml::tree(tml::leaf(utki::cat(l)));
 }
 

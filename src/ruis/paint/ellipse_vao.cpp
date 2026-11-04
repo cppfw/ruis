@@ -99,8 +99,8 @@ void ellipse_vao::update_texture()
 	}
 
 	const texture_cache_key key{
-		this->diameters, //
-		this->stroke_width
+		.diameters = this->diameters, //
+		.stroke_width = this->stroke_width
 	};
 
 	// try to find in cache

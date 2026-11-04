@@ -125,13 +125,25 @@ const tst::set set("key", [](tst::suite& suite) {
 		decltype(expected_key_to_name_map)(expected_key_to_name_map),
 		[](const auto& p) {
 			auto key = ruis::to_key(p.second);
-			tst::check(key == p.first, SL) << "expected " << size_t(p.first) << ", got " << size_t(key);
+			tst::check(
+				key == p.first,
+				[&](auto& o) {
+					o << "expected " << size_t(p.first) << ", got " << size_t(key);
+				},
+				SL
+			);
 		}
 	);
 
 	suite.add("invalid_key_name", [] {
 		auto key = ruis::to_key("arrr");
-		tst::check(key == ruis::key::unknown, SL) << "key = " << ruis::to_string(key);
+		tst::check(
+			key == ruis::key::unknown,
+			[&](auto& o) {
+				o << "key = " << ruis::to_string(key);
+			},
+			SL
+		);
 	});
 
 	suite.add("unknown_key_to_string", [] {

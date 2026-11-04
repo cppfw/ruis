@@ -121,7 +121,13 @@ const tst::set set("finding_widgets", [](tst::suite& suite) {
 					return wg.get().id() == id;
 				}
 			);
-			tst::check(i != aaas.end(), SL) << "id = '" << id << "' not found";
+			tst::check(
+				i != aaas.end(),
+				[&](auto& o) {
+					o << "id = '" << id << "' not found";
+				},
+				SL
+			);
 		}
 	});
 

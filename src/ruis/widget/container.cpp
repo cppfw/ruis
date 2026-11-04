@@ -552,6 +552,130 @@ void container::on_reload()
 	}
 }
 
+namespace {
+
+// a decimal number with at most this many digits
+// is guaranteed to fit in uint64_t
+constexpr std::size_t max_index_digits = 19;
+
+enum class index_status {
+	ok,
+	malformed,
+	too_big
+};
+
+// parse a child index from a tml leaf
+// a value with more than max_index_digits digits is reported as too_big
+// (it is certainly out of bounds for any child list, and tml::leaf::to_uint64()
+// silently returns 0 on overflow instead of throwing);
+// any other value is parsed with tml::leaf::to_uint64(),
+// which throws std::invalid_argument for non-numeric values -
+// in that case the value is reported as malformed
+index_status parse_child_index(const tml::leaf& l, std::size_t& index)
+{
+	// review: no need to check for this, because tml::leaf::to_uint64() throws std::invalid_argument for non-numeric values
+	if (l.string.size() > max_index_digits) {
+		return index_status::too_big;
+	}
+	try {
+		index = l.to_uint64();
+	} catch (const std::exception&) {
+		return index_status::malformed;
+	}
+	return index_status::ok;
+}
+
+// single section reporting a malformed 'for' command:
+// ruis::container { error { malformed_command } }
+widget::probe_response_set make_malformed_command_error()
+{
+	widget::probe_response_set ret;
+	ret.insert(tml::tree(
+		utki::demangle(typeid(container)), //
+		{tml::tree("error"s, {tml::tree("malformed_command"s)})}
+	));
+	return ret;
+}
+
+// single section reporting a failed index path of the 'for' command:
+// ruis::container { error { index { <path prefix> } <reason> [<size>] } }
+widget::probe_response_set make_for_error(
+	const tml::forest& path_prefix, //
+	const char* reason, //
+	const tml::tree* size = nullptr
+)
+{
+	tml::forest err_children{tml::tree("index"s, path_prefix)};
+	err_children.emplace_back(tml::leaf(reason));
+	if (size) {
+		err_children.push_back(*size);
+	}
+	widget::probe_response_set ret;
+	ret.insert(tml::tree(
+		utki::demangle(typeid(container)), //
+		{tml::tree("error"s, std::move(err_children))}
+	));
+	return ret;
+}
+
+// 'for' command: run a single probe command on another widget in the tree,
+// addressed by a path of child indices.
+// Command format: for { index { <i0> <i1> ... } <command> }
+// i0 is an index into the children of the container the command is run on,
+// i1 is an index into the children of the i0-th child, and so on.
+// The command is run on the widget at the end of the path and its probe
+// response is returned as is.
+widget::probe_response_set probe_for(container& c, const tml::tree& command)
+{
+	// the 'for' node must have exactly two children:
+	// an 'index' node and a single command node
+	const tml::tree* index_node = nullptr;
+	const tml::tree* command_node = nullptr;
+	for (const auto& child : command.children) {
+		if (child.value == "index") {
+			if (index_node) {
+				return make_malformed_command_error();
+			}
+			index_node = &child;
+		} else {
+			if (command_node) {
+				return make_malformed_command_error();
+			}
+			command_node = &child;
+		}
+	}
+	if (!index_node || !command_node) {
+		return make_malformed_command_error();
+	}
+
+	// walk the index path, starting from this container
+	widget* w = &c;
+	tml::forest path; // the index nodes of the walked path
+	for (const auto& idx_node : index_node->children) {
+		std::size_t i = 0;
+		const auto status = parse_child_index(idx_node.value, i);
+		if (status == index_status::malformed) {
+			return make_malformed_command_error();
+		}
+		path.push_back(idx_node);
+
+		auto* cont = dynamic_cast<container*>(w);
+		if (!cont) {
+			return make_for_error(path, "not_a_container");
+		}
+		// a too_big index is certainly out of bounds
+		if (status == index_status::too_big || i >= cont->size()) {
+			const auto size_node = to_tml(cont->size());
+			return make_for_error(path, "out_of_bound", &size_node);
+		}
+		w = &cont->children()[i].get();
+	}
+
+	return w->probe(*command_node);
+}
+
+} // namespace
+
 container::probe_response_set container::probe(const tml::tree& command)
 {
 	if (command.value == "get_children") {
@@ -561,6 +685,9 @@ container::probe_response_set container::probe(const tml::tree& command)
 			{tml::tree("children_count"s, {to_tml(this->size())})}
 		));
 		return ret;
+	}
+	if (command.value == "for") {
+		return probe_for(*this, command);
 	}
 	// all other commands are delegated to the base implementation
 	return widget::probe(command);

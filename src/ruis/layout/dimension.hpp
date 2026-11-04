@@ -198,13 +198,19 @@ inline tml::tree to_tml(const dimension& d)
 {
 	switch (d.get_type()) {
 		using enum dimension::type;
+		// braced initializers would select the tml::tree initializer_list
+		// constructor and produce a tree with a child instead of a tree value
 		case undefined:
+			// NOLINTNEXTLINE(modernize-return-braced-init-list, "braced init would select the wrong constructor")
 			return tml::tree("undefined");
 		case min:
+			// NOLINTNEXTLINE(modernize-return-braced-init-list, "braced init would select the wrong constructor")
 			return tml::tree("min");
 		case max:
+			// NOLINTNEXTLINE(modernize-return-braced-init-list, "braced init would select the wrong constructor")
 			return tml::tree("max");
 		case fill:
+			// NOLINTNEXTLINE(modernize-return-braced-init-list, "braced init would select the wrong constructor")
 			return tml::tree("fill");
 		case length:
 			return to_tml(d.value);

@@ -21,6 +21,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
+#include <array>
 #include <cstddef>
 #include <type_traits>
 
@@ -44,7 +45,8 @@ namespace ruis {
  * @param n - the number to convert.
  * @return A tml::tree representing the number.
  */
-template <class number_type, std::enable_if_t<std::is_arithmetic_v<number_type>, int> = 0>
+template <class number_type>
+requires std::is_arithmetic_v<number_type>
 tml::tree to_tml(const number_type& n)
 {
 	return tml::tree(tml::leaf(n));
@@ -68,7 +70,7 @@ template <class component_type, std::size_t dimension>
 tml::forest to_tml(const r4::vector<component_type, dimension>& v)
 {
 	static_assert(dimension <= 4, "vectors with more than 4 components are not supported for now");
-	static constexpr const char* component_names[] = {"x", "y", "z", "w"};
+	static constexpr std::array component_names = {"x", "y", "z", "w"};
 	tml::forest children;
 	for (std::size_t i = 0; i < dimension; ++i) {
 		// found by ordinary name lookup or ADL (see the template documentation)

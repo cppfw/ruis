@@ -39,68 +39,195 @@ const tst::set set("color_widget_probe", [](tst::suite& suite) {
 		const tml::forest f(resp.begin(), resp.end());
 
 		// fold: two sections
-		tst::check(f.size() == 2, SL) << f.size();
-		tst::check(f[0].value == "ruis::color_widget", SL) << f[0].value.string;
-		tst::check(f[1].value == "ruis::widget", SL) << f[1].value.string;
+		tst::check(
+			f.size() == 2,
+			[&](auto& o) {
+				o << f.size();
+			},
+			SL
+		);
+		tst::check(
+			f[0].value == "ruis::color_widget",
+			[&](auto& o) {
+				o << f[0].value.string;
+			},
+			SL
+		);
+		tst::check(
+			f[1].value == "ruis::widget",
+			[&](auto& o) {
+				o << f[1].value.string;
+			},
+			SL
+		);
 
 		// the color_widget section:
 		// the resolved color is reported as an "rgba" node
 		// with the decimal values of the 4 channels as children
-		const auto& color_node =
-			tml::const_crawler(f)
-				.to("ruis::color_widget") //
-				.in() //
-				.to("color") //
-				.in() //
-				.get();
-		tst::check(color_node.value == "rgba", SL) << color_node.value.string;
+		const auto& color_node = tml::const_crawler(f)
+									 .to("ruis::color_widget") //
+									 .in() //
+									 .to("color") //
+									 .in() //
+									 .get();
+		tst::check(
+			color_node.value == "rgba",
+			[&](auto& o) {
+				o << color_node.value.string;
+			},
+			SL
+		);
 		tst::check_eq(color_node.children.size(), std::size_t(4), SL);
-		tst::check(color_node.children[0].value == "1", SL) << color_node.children[0].value;
-		tst::check(color_node.children[1].value == "2", SL) << color_node.children[1].value;
-		tst::check(color_node.children[2].value == "3", SL) << color_node.children[2].value;
-		tst::check(color_node.children[3].value == "255", SL) << color_node.children[3].value;
+		tst::check(
+			color_node.children[0].value == "1",
+			[&](auto& o) {
+				o << color_node.children[0].value;
+			},
+			SL
+		);
+		tst::check(
+			color_node.children[1].value == "2",
+			[&](auto& o) {
+				o << color_node.children[1].value;
+			},
+			SL
+		);
+		tst::check(
+			color_node.children[2].value == "3",
+			[&](auto& o) {
+				o << color_node.children[2].value;
+			},
+			SL
+		);
+		tst::check(
+			color_node.children[3].value == "255",
+			[&](auto& o) {
+				o << color_node.children[3].value;
+			},
+			SL
+		);
 
 		// the base 'ruis::widget' section is also present and reports the
 		// full widget state (the fold started from the base class result)
 
 		// the section contains all the widget state fields
-		const auto& wsec =
-			tml::const_crawler(f)
-				.to("ruis::widget") //
-				.get();
-		tst::check_eq(wsec.children.size(), std::size_t(10), SL) << wsec.children.size();
+		const auto& wsec = tml::const_crawler(f)
+							   .to("ruis::widget") //
+							   .get();
+		tst::check_eq(
+			wsec.children.size(),
+			std::size_t(10),
+			[&](auto& o) {
+				o << wsec.children.size();
+			},
+			SL
+		);
 
-		const auto& idv =
-			tml::const_crawler(f) //
-				.to("ruis::widget").in().to("id").in().get().value;
-		tst::check(idv == "test-gap", SL) << idv.string;
+		const auto& idv = tml::const_crawler(f) //
+							  .to("ruis::widget")
+							  .in()
+							  .to("id")
+							  .in()
+							  .get()
+							  .value;
+		tst::check(
+			idv == "test-gap",
+			[&](auto& o) {
+				o << idv.string;
+			},
+			SL
+		);
 
-		const auto& dvx =
-			tml::const_crawler(f) //
-				.to("ruis::widget").in().to("layout_params").in().to("dims").in().to("x").in().get().value;
-		tst::check(dvx == "min", SL) << dvx.string;
+		const auto& dvx = tml::const_crawler(f) //
+							  .to("ruis::widget")
+							  .in()
+							  .to("layout_params")
+							  .in()
+							  .to("dims")
+							  .in()
+							  .to("x")
+							  .in()
+							  .get()
+							  .value;
+		tst::check(
+			dvx == "min",
+			[&](auto& o) {
+				o << dvx.string;
+			},
+			SL
+		);
 
-		const auto& dvy =
-			tml::const_crawler(f) //
-				.to("ruis::widget").in().to("layout_params").in().to("dims").in().to("y").in().get().value;
+		const auto& dvy = tml::const_crawler(f) //
+							  .to("ruis::widget")
+							  .in()
+							  .to("layout_params")
+							  .in()
+							  .to("dims")
+							  .in()
+							  .to("y")
+							  .in()
+							  .get()
+							  .value;
 		// the length dimension is reported as <value><unit>
-		tst::check(dvy == "10px", SL) << dvy.string;
+		tst::check(
+			dvy == "10px",
+			[&](auto& o) {
+				o << dvy.string;
+			},
+			SL
+		);
 
-		const auto& px =
-			tml::const_crawler(f) //
-				.to("ruis::widget").in().to("rect").in().to("p").in().to("x").in().get().value;
-		tst::check(px == "0", SL) << px.string;
+		const auto& px = tml::const_crawler(f) //
+							 .to("ruis::widget")
+							 .in()
+							 .to("rect")
+							 .in()
+							 .to("p")
+							 .in()
+							 .to("x")
+							 .in()
+							 .get()
+							 .value;
+		tst::check(
+			px == "0",
+			[&](auto& o) {
+				o << px.string;
+			},
+			SL
+		);
 
-		const auto& ld =
-			tml::const_crawler(f) //
-				.to("ruis::widget").in().to("layout_dirty").in().get().value;
+		const auto& ld = tml::const_crawler(f) //
+							 .to("ruis::widget")
+							 .in()
+							 .to("layout_dirty")
+							 .in()
+							 .get()
+							 .value;
 		// a new widget is layout-dirty until the first layout pass
-		tst::check(ld == "true", SL) << ld.string;
+		tst::check(
+			ld == "true",
+			[&](auto& o) {
+				o << ld.string;
+			},
+			SL
+		);
 
-		const auto& cbp =
-			tml::const_crawler(f) //
-				.to("ruis::widget").in().to("cache").in().to("present").in().get().value;
-		tst::check(cbp == "false", SL) << cbp.string;
+		const auto& cbp = tml::const_crawler(f) //
+							  .to("ruis::widget")
+							  .in()
+							  .to("cache")
+							  .in()
+							  .to("present")
+							  .in()
+							  .get()
+							  .value;
+		tst::check(
+			cbp == "false",
+			[&](auto& o) {
+				o << cbp.string;
+			},
+			SL
+		);
 	});
 
 	suite.add("get_state_style_sourced_color", [] {
@@ -122,22 +249,57 @@ const tst::set set("color_widget_probe", [](tst::suite& suite) {
 
 		// a style-sourced color is wrapped in a 'style_ref' node
 		// which contains the color value tree
-		const auto& sr =
-			tml::const_crawler(f)
-				.to("ruis::color_widget") //
-				.in() //
-				.to("color") //
-				.in() //
-				.get();
-		tst::check(sr.value == "style_ref", SL) << sr.value.string;
+		const auto& sr = tml::const_crawler(f)
+							 .to("ruis::color_widget") //
+							 .in() //
+							 .to("color") //
+							 .in() //
+							 .get();
+		tst::check(
+			sr.value == "style_ref",
+			[&](auto& o) {
+				o << sr.value.string;
+			},
+			SL
+		);
 		tst::check_eq(sr.children.size(), std::size_t(1), SL);
 		const auto& rgba = sr.children[0];
-		tst::check(rgba.value == "rgba", SL) << rgba.value.string;
+		tst::check(
+			rgba.value == "rgba",
+			[&](auto& o) {
+				o << rgba.value.string;
+			},
+			SL
+		);
 		tst::check_eq(rgba.children.size(), std::size_t(4), SL);
-		tst::check(rgba.children[0].value == "9", SL) << rgba.children[0].value;
-		tst::check(rgba.children[1].value == "8", SL) << rgba.children[1].value;
-		tst::check(rgba.children[2].value == "7", SL) << rgba.children[2].value;
-		tst::check(rgba.children[3].value == "6", SL) << rgba.children[3].value;
+		tst::check(
+			rgba.children[0].value == "9",
+			[&](auto& o) {
+				o << rgba.children[0].value;
+			},
+			SL
+		);
+		tst::check(
+			rgba.children[1].value == "8",
+			[&](auto& o) {
+				o << rgba.children[1].value;
+			},
+			SL
+		);
+		tst::check(
+			rgba.children[2].value == "7",
+			[&](auto& o) {
+				o << rgba.children[2].value;
+			},
+			SL
+		);
+		tst::check(
+			rgba.children[3].value == "6",
+			[&](auto& o) {
+				o << rgba.children[3].value;
+			},
+			SL
+		);
 	});
 
 	suite.add("unknown_command", [] {

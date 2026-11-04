@@ -41,7 +41,8 @@ const tst::set set("widget_probe", [](tst::suite& suite) {
 			tml::leaf("frobnicate"), //
 			{tml::tree(
 				tml::leaf("param"), //
-				{tml::tree(tml::leaf("value"))})}
+				{tml::tree(tml::leaf("value"))}
+			)}
 		);
 		const auto resp = c.get().probe(cmd);
 
@@ -63,8 +64,7 @@ const tst::set set("widget_probe", [](tst::suite& suite) {
 		p.widget.id = "test-container";
 		p.layout_params.dims = r4::vector2<ruis::dim>(ruis::dim::min, ruis::dim(ruis::length::make_px(10)));
 		p.layout_params.weight = 1.5;
-		p.layout_params.align =
-			r4::vector2<ruis::styled<ruis::align>>(ruis::align::center, ruis::align::front);
+		p.layout_params.align = r4::vector2<ruis::styled<ruis::align>>(ruis::align::center, ruis::align::front);
 		auto c = utki::make_shared<ruis::container>(ctx, p, ruis::widget_list());
 
 		const auto resp = c.get().probe(tml::tree(tml::leaf("get_state")));
@@ -74,144 +74,318 @@ const tst::set set("widget_probe", [](tst::suite& suite) {
 		const tml::forest f(resp.begin(), resp.end());
 
 		// a plain widget reports a single section named after its class
-		tst::check(f.size() == 1, SL) << f.size();
-		tst::check(f[0].value == "ruis::widget", SL) << f[0].value.string;
+		tst::check(
+			f.size() == 1,
+			[&](auto& o) {
+				o << f.size();
+			},
+			SL
+		);
+		tst::check(
+			f[0].value == "ruis::widget",
+			[&](auto& o) {
+				o << f[0].value.string;
+			},
+			SL
+		);
 
 		// the id
-		const auto& idv =
-			tml::const_crawler(f)
-				.to("ruis::widget") //
-				.in() //
-				.to("id") //
-				.in() //
-				.get()
-				.value;
-		tst::check(idv == "test-container", SL) << idv.string;
+		const auto& idv = tml::const_crawler(f)
+							  .to("ruis::widget") //
+							  .in() //
+							  .to("id") //
+							  .in() //
+							  .get()
+							  .value;
+		tst::check(
+			idv == "test-container",
+			[&](auto& o) {
+				o << idv.string;
+			},
+			SL
+		);
 
 		// the layout_params subsection
-		const auto& dvx =
-			tml::const_crawler(f)
-				.to("ruis::widget") //
-				.in() //
-				.to("layout_params") //
-				.in() //
-				.to("dims") //
-				.in() //
-				.to("x") //
-				.in() //
-				.get()
-				.value;
-		tst::check(dvx == "min", SL) << dvx.string;
+		const auto& dvx = tml::const_crawler(f)
+							  .to("ruis::widget") //
+							  .in() //
+							  .to("layout_params") //
+							  .in() //
+							  .to("dims") //
+							  .in() //
+							  .to("x") //
+							  .in() //
+							  .get()
+							  .value;
+		tst::check(
+			dvx == "min",
+			[&](auto& o) {
+				o << dvx.string;
+			},
+			SL
+		);
 
-		const auto& dvy =
-			tml::const_crawler(f)
-				.to("ruis::widget") //
-				.in() //
-				.to("layout_params") //
-				.in() //
-				.to("dims") //
-				.in() //
-				.to("y") //
-				.in() //
-				.get()
-				.value;
+		const auto& dvy = tml::const_crawler(f)
+							  .to("ruis::widget") //
+							  .in() //
+							  .to("layout_params") //
+							  .in() //
+							  .to("dims") //
+							  .in() //
+							  .to("y") //
+							  .in() //
+							  .get()
+							  .value;
 		// the length dimension is reported as <value><unit>
-		tst::check(dvy == "10px", SL) << dvy.string;
+		tst::check(
+			dvy == "10px",
+			[&](auto& o) {
+				o << dvy.string;
+			},
+			SL
+		);
 
-		const auto& wgt =
-			tml::const_crawler(f)
-				.to("ruis::widget") //
-				.in() //
-				.to("layout_params") //
-				.in() //
-				.to("weight") //
-				.in() //
-				.get()
-				.value;
-		tst::check(wgt == "1.5", SL) << wgt.string;
+		const auto& wgt = tml::const_crawler(f)
+							  .to("ruis::widget") //
+							  .in() //
+							  .to("layout_params") //
+							  .in() //
+							  .to("weight") //
+							  .in() //
+							  .get()
+							  .value;
+		tst::check(
+			wgt == "1.5",
+			[&](auto& o) {
+				o << wgt.string;
+			},
+			SL
+		);
 
-		const auto& avx =
-			tml::const_crawler(f)
-				.to("ruis::widget") //
-				.in() //
-				.to("layout_params") //
-				.in() //
-				.to("align") //
-				.in() //
-				.to("x") //
-				.in() //
-				.get()
-				.value;
-		tst::check(avx == "center", SL) << avx.string;
+		const auto& avx = tml::const_crawler(f)
+							  .to("ruis::widget") //
+							  .in() //
+							  .to("layout_params") //
+							  .in() //
+							  .to("align") //
+							  .in() //
+							  .to("x") //
+							  .in() //
+							  .get()
+							  .value;
+		tst::check(
+			avx == "center",
+			[&](auto& o) {
+				o << avx.string;
+			},
+			SL
+		);
 
-		const auto& avy =
-			tml::const_crawler(f)
-				.to("ruis::widget") //
-				.in() //
-				.to("layout_params") //
-				.in() //
-				.to("align") //
-				.in() //
-				.to("y") //
-				.in() //
-				.get()
-				.value;
-		tst::check(avy == "front", SL) << avy.string;
+		const auto& avy = tml::const_crawler(f)
+							  .to("ruis::widget") //
+							  .in() //
+							  .to("layout_params") //
+							  .in() //
+							  .to("align") //
+							  .in() //
+							  .to("y") //
+							  .in() //
+							  .get()
+							  .value;
+		tst::check(
+			avy == "front",
+			[&](auto& o) {
+				o << avy.string;
+			},
+			SL
+		);
 
 		// the widget's rectangle:
 		// default position is (0, 0) and default size is (-1, -1)
-		const auto& px =
-			tml::const_crawler(f) //
-				.to("ruis::widget").in().to("rect").in().to("p").in().to("x").in().get().value;
-		tst::check(px == "0", SL) << px.string;
-		const auto& py =
-			tml::const_crawler(f) //
-				.to("ruis::widget").in().to("rect").in().to("p").in().to("y").in().get().value;
-		tst::check(py == "0", SL) << py.string;
-		const auto& dx =
-			tml::const_crawler(f) //
-				.to("ruis::widget").in().to("rect").in().to("d").in().to("x").in().get().value;
-		tst::check(dx == "-1", SL) << dx.string;
-		const auto& dy =
-			tml::const_crawler(f) //
-				.to("ruis::widget").in().to("rect").in().to("d").in().to("y").in().get().value;
-		tst::check(dy == "-1", SL) << dy.string;
+		const auto& px = tml::const_crawler(f) //
+							 .to("ruis::widget")
+							 .in()
+							 .to("rect")
+							 .in()
+							 .to("p")
+							 .in()
+							 .to("x")
+							 .in()
+							 .get()
+							 .value;
+		tst::check(
+			px == "0",
+			[&](auto& o) {
+				o << px.string;
+			},
+			SL
+		);
+		const auto& py = tml::const_crawler(f) //
+							 .to("ruis::widget")
+							 .in()
+							 .to("rect")
+							 .in()
+							 .to("p")
+							 .in()
+							 .to("y")
+							 .in()
+							 .get()
+							 .value;
+		tst::check(
+			py == "0",
+			[&](auto& o) {
+				o << py.string;
+			},
+			SL
+		);
+		const auto& dx = tml::const_crawler(f) //
+							 .to("ruis::widget")
+							 .in()
+							 .to("rect")
+							 .in()
+							 .to("d")
+							 .in()
+							 .to("x")
+							 .in()
+							 .get()
+							 .value;
+		tst::check(
+			dx == "-1",
+			[&](auto& o) {
+				o << dx.string;
+			},
+			SL
+		);
+		const auto& dy = tml::const_crawler(f) //
+							 .to("ruis::widget")
+							 .in()
+							 .to("rect")
+							 .in()
+							 .to("d")
+							 .in()
+							 .to("y")
+							 .in()
+							 .get()
+							 .value;
+		tst::check(
+			dy == "-1",
+			[&](auto& o) {
+				o << dy.string;
+			},
+			SL
+		);
 
 		// scalar state flags of a freshly created widget
-		const auto& ld =
-			tml::const_crawler(f) //
-				.to("ruis::widget").in().to("layout_dirty").in().get().value;
+		const auto& ld = tml::const_crawler(f) //
+							 .to("ruis::widget")
+							 .in()
+							 .to("layout_dirty")
+							 .in()
+							 .get()
+							 .value;
 		// a new widget is layout-dirty until the first layout pass
-		tst::check(ld == "true", SL) << ld.string;
+		tst::check(
+			ld == "true",
+			[&](auto& o) {
+				o << ld.string;
+			},
+			SL
+		);
 
-		const auto& vis =
-			tml::const_crawler(f) //
-				.to("ruis::widget").in().to("visible").in().get().value;
-		tst::check(vis == "true", SL) << vis.string; // default visible
+		const auto& vis = tml::const_crawler(f) //
+							  .to("ruis::widget")
+							  .in()
+							  .to("visible")
+							  .in()
+							  .get()
+							  .value;
+		tst::check(
+			vis == "true",
+			[&](auto& o) {
+				o << vis.string;
+			},
+			SL
+		); // default visible
 
-		const auto& en =
-			tml::const_crawler(f) //
-				.to("ruis::widget").in().to("enabled").in().get().value;
-		tst::check(en == "true", SL) << en.string; // default enabled
+		const auto& en = tml::const_crawler(f) //
+							 .to("ruis::widget")
+							 .in()
+							 .to("enabled")
+							 .in()
+							 .get()
+							 .value;
+		tst::check(
+			en == "true",
+			[&](auto& o) {
+				o << en.string;
+			},
+			SL
+		); // default enabled
 
-		const auto& fo =
-			tml::const_crawler(f) //
-				.to("ruis::widget").in().to("focused").in().get().value;
-		tst::check(fo == "false", SL) << fo.string;
+		const auto& fo = tml::const_crawler(f) //
+							 .to("ruis::widget")
+							 .in()
+							 .to("focused")
+							 .in()
+							 .get()
+							 .value;
+		tst::check(
+			fo == "false",
+			[&](auto& o) {
+				o << fo.string;
+			},
+			SL
+		);
 
 		// the render cache: disabled, dirty and not built for a new widget
-		const auto& cbe =
-			tml::const_crawler(f) //
-				.to("ruis::widget").in().to("cache").in().to("enabled").in().get().value;
-		tst::check(cbe == "false", SL) << cbe.string;
-		const auto& cbd =
-			tml::const_crawler(f) //
-				.to("ruis::widget").in().to("cache").in().to("dirty").in().get().value;
-		tst::check(cbd == "true", SL) << cbd.string;
-		const auto& cbp =
-			tml::const_crawler(f) //
-				.to("ruis::widget").in().to("cache").in().to("present").in().get().value;
-		tst::check(cbp == "false", SL) << cbp.string;
+		const auto& cbe = tml::const_crawler(f) //
+							  .to("ruis::widget")
+							  .in()
+							  .to("cache")
+							  .in()
+							  .to("enabled")
+							  .in()
+							  .get()
+							  .value;
+		tst::check(
+			cbe == "false",
+			[&](auto& o) {
+				o << cbe.string;
+			},
+			SL
+		);
+		const auto& cbd = tml::const_crawler(f) //
+							  .to("ruis::widget")
+							  .in()
+							  .to("cache")
+							  .in()
+							  .to("dirty")
+							  .in()
+							  .get()
+							  .value;
+		tst::check(
+			cbd == "true",
+			[&](auto& o) {
+				o << cbd.string;
+			},
+			SL
+		);
+		const auto& cbp = tml::const_crawler(f) //
+							  .to("ruis::widget")
+							  .in()
+							  .to("cache")
+							  .in()
+							  .to("present")
+							  .in()
+							  .get()
+							  .value;
+		tst::check(
+			cbp == "false",
+			[&](auto& o) {
+				o << cbp.string;
+			},
+			SL
+		);
 	});
 
 	suite.add("response_section_duplicates", [] {
@@ -232,19 +406,42 @@ const tst::set set("widget_probe", [](tst::suite& suite) {
 			{tml::tree(tml::leaf("second-b"))}
 		));
 
-		tst::check(resp.size() == 2, SL) << resp.size();
+		tst::check(
+			resp.size() == 2,
+			[&](auto& o) {
+				o << resp.size();
+			},
+			SL
+		);
 
 		const tml::forest f(resp.begin(), resp.end());
-		tst::check(f[0].value == "a", SL) << f[0].value.string;
-		tst::check(f[1].value == "b", SL) << f[1].value.string;
+		tst::check(
+			f[0].value == "a",
+			[&](auto& o) {
+				o << f[0].value.string;
+			},
+			SL
+		);
+		tst::check(
+			f[1].value == "b",
+			[&](auto& o) {
+				o << f[1].value.string;
+			},
+			SL
+		);
 
-		const auto& bv =
-			tml::const_crawler(f)
-				.to("b") //
-				.in() //
-				.get()
-				.value;
-		tst::check(bv == "first-b", SL) << bv.string;
+		const auto& bv = tml::const_crawler(f)
+							 .to("b") //
+							 .in() //
+							 .get()
+							 .value;
+		tst::check(
+			bv == "first-b",
+			[&](auto& o) {
+				o << bv.string;
+			},
+			SL
+		);
 	});
 });
 } // namespace

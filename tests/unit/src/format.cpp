@@ -14,7 +14,13 @@ const tst::set set("format", [](tst::suite& suite) {
 			{U"world"s, U"Hello"s}
 		);
 
-		tst::check(str == U"Hello world!"s, SL) << "str = " << utki::to_utf8(str);
+		tst::check(
+			str == U"Hello world!"s,
+			[&](auto& o) {
+				o << "str = " << utki::to_utf8(str);
+			},
+			SL
+		);
 	});
 
 	suite.add("substitute_same_string_twice", []() {
@@ -23,7 +29,13 @@ const tst::set set("format", [](tst::suite& suite) {
 			{U"world"s, U"Hello"s}
 		);
 
-		tst::check(str == U"Hello-Hello world!"s, SL) << "str = " << utki::to_utf8(str);
+		tst::check(
+			str == U"Hello-Hello world!"s,
+			[&](auto& o) {
+				o << "str = " << utki::to_utf8(str);
+			},
+			SL
+		);
 	});
 
 	suite.add("too_big_replacement_id_throws", []() {

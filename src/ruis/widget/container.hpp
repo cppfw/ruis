@@ -434,6 +434,26 @@ public:
 	 * - 'get_children' (non-fold): no parameters. The response contains a
 	 *   single section named after this class which reports the number of
 	 *   child widgets in a 'children_count' node.
+	 * - 'for' (non-fold): run a probe command on another widget in the tree.
+	 *   The 'for' node has exactly two children: an 'index' node containing
+	 *   decimal child indices (0-based; the 1st index is into the children of
+	 *   this container, the 2nd is into the children of the 1st index's widget,
+	 *   and so on) and exactly one child which is the command to run. An empty
+	 *   index node means this container itself. The command is run on the
+	 *   widget at the end of the index path and its probe response is returned
+	 *   as is.
+	 *   A malformed command format (more than one 'index' node, more than one
+	 *   command, no 'index' node, no command, or an index value which cannot
+	 *   be parsed as a number)
+	 *   results in a single section named after this class containing an
+	 *   'error' node with a 'malformed_command' node.
+	 *   If a path step fails, the response is a single section named after
+	 *   this class containing an 'error' node with an 'index' node carrying
+	 *   the path prefix (including the failing index), a reason node -
+	 *   'out_of_bound' followed by the actual number of children of the
+	 *   container at that path step (an index with an infeasibly long
+	 *   decimal representation is considered out of bound as well), or
+	 *   'not_a_container' if the widget at the path step is not a container.
 	 *
 	 * @param command - probe command.
 	 * @return probe response.

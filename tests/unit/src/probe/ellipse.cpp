@@ -42,8 +42,20 @@ const tst::set set("ellipse_probe", [](tst::suite& suite) {
 		const tml::forest f(resp.begin(), resp.end());
 
 		// the response is the single container section
-		tst::check(f.size() == 1, SL) << f.size();
-		tst::check(f[0].value == "ruis::container", SL) << f[0].value.string;
+		tst::check(
+			f.size() == 1,
+			[&](auto& o) {
+				o << f.size();
+			},
+			SL
+		);
+		tst::check(
+			f[0].value == "ruis::container",
+			[&](auto& o) {
+				o << f[0].value.string;
+			},
+			SL
+		);
 		const auto& cc = tml::const_crawler(f) //
 							 .to("ruis::container")
 							 .in()
@@ -51,7 +63,13 @@ const tst::set set("ellipse_probe", [](tst::suite& suite) {
 							 .in()
 							 .get()
 							 .value;
-		tst::check(cc == "1", SL) << cc.string;
+		tst::check(
+			cc == "1",
+			[&](auto& o) {
+				o << cc.string;
+			},
+			SL
+		);
 	});
 
 	suite.add("get_state", [] {
@@ -72,8 +90,20 @@ const tst::set set("ellipse_probe", [](tst::suite& suite) {
 		const tml::forest f(resp.begin(), resp.end());
 
 		// the response is the single widget section
-		tst::check(f.size() == 1, SL) << f.size();
-		tst::check(f[0].value == "ruis::widget", SL) << f[0].value.string;
+		tst::check(
+			f.size() == 1,
+			[&](auto& o) {
+				o << f.size();
+			},
+			SL
+		);
+		tst::check(
+			f[0].value == "ruis::widget",
+			[&](auto& o) {
+				o << f[0].value.string;
+			},
+			SL
+		);
 	});
 });
 } // namespace
