@@ -53,6 +53,11 @@ tml::tree to_tml(const number_type& n)
 
 /**
  * @brief Convert an r4::vector to a tml::forest.
+ * A vector is a generic data structure that is used under
+ * different names in different contexts (e.g. a position,
+ * a dimension, a colour channel), so no enclosing node is
+ * produced: the caller decides how to name the vector,
+ * e.g. tml::tree("p", to_tml(v)).
  * The forest contains one node per vector component, in order,
  * carrying no name (the components are positional). Each node is
  * the tree produced by the component's to_tml() (found by ordinary
@@ -80,25 +85,26 @@ tml::forest to_tml(const r4::vector<component_type, dimension>& v)
 }
 
 /**
- * @brief Convert an r4::rectangle to a tml::tree.
- * The tree value is "rect" with two children:
- * "p" (the origin point) and "d" (the dimensions),
- * each reported via the r4::vector to_tml() overload
- * (a forest of positional component nodes, one per axis).
+ * @brief Convert an r4::rectangle to a tml::forest.
+ * A rectangle is a generic data structure that is used under
+ * different names in different contexts (e.g. "rect", "abs_rect"),
+ * so no enclosing node is produced: the caller decides how to name
+ * the rectangle, e.g. tml::tree("abs_rect", to_tml(r)).
+ * The forest contains two nodes: "p" (the origin point)
+ * and "d" (the dimensions), each reported via the
+ * r4::vector to_tml() overload (positional component nodes,
+ * one per axis).
  * @tparam component_type - the type of the rectangle components.
  * @param r - the rectangle to convert.
- * @return A tml::tree representing the rectangle.
+ * @return A tml::forest: [p, d].
  */
 template <class component_type>
-tml::tree to_tml(const r4::rectangle<component_type>& r)
+tml::forest to_tml(const r4::rectangle<component_type>& r)
 {
-	return tml::tree(
-		"rect",
-		{
-			tml::tree("p", to_tml(r.p)),
-			tml::tree("d", to_tml(r.d)),
-		}
-	);
+	return {
+		tml::tree("p", to_tml(r.p)),
+		tml::tree("d", to_tml(r.d)),
+	};
 }
 
 } // namespace ruis

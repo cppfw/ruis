@@ -586,7 +586,7 @@ widget::probe_response_set widget::probe(const tml::tree& command)
 			{
 				tml::tree("id"s, {tml::leaf(this->id())}),
 				to_tml(this->get_layout_params_const()),
-				to_tml(this->rect()),
+				tml::tree("rect"s, to_tml(this->rect())),
 				tml::tree("layout_dirty"s, {to_tml(this->is_layout_dirty())}),
 				tml::tree("clip"s, {to_tml(this->is_clip_enabled())}),
 				tml::tree("visible"s, {to_tml(this->is_visible())}),
@@ -598,6 +598,16 @@ widget::probe_response_set widget::probe(const tml::tree& command)
 					tml::tree("dirty"s, {to_tml(this->cache_dirty)}),
 					tml::tree("present"s, {to_tml(this->cache_frame_buffer != nullptr)}),
 				}),
+			} // clang-format on
+		));
+		return ret;
+	} else if (command.value == "get_abs_rect") {
+		probe_response_set ret;
+		ret.insert(tml::tree(
+			tml::leaf(utki::demangle(typeid(widget))), //
+			// clang-format off
+			{
+				tml::tree("abs_rect"s, to_tml(this->get_absolute_rect())),
 			} // clang-format on
 		));
 		return ret;

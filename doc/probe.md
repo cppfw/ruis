@@ -105,7 +105,8 @@ the commands they handle are the important ones — everything else in the
 library is built on top of these:
 
 - `get_state`, handled by `widget`, is the command every widget implements (or
-  inherits) to report its own state.
+  inherits) to report its own state. `get_abs_rect`, also handled by `widget`,
+  reports the widget's absolute rectangle.
 - `get_children` and `for`, handled by `container`, are for inspecting the
   widget tree: how many children a widget has, and reaching a specific widget
   in order to run a command on it.
@@ -130,6 +131,25 @@ widget's state:
 
 `cache.present` means a render-cache frame buffer currently exists for the
 widget. `cache.dirty` means the cached content is stale.
+
+### `get_abs_rect` (handled by `widget`)
+
+No parameters. Adds a single section named after the widget's class reporting
+the widget's absolute rectangle (the value of `get_absolute_rect()`) as an
+`abs_rect` field:
+
+```
+ruis::widget {
+	abs_rect {
+		p {
+			.. ..
+		}
+		d {
+			.. ..
+		}
+	}
+}
+```
 
 ### `get_children` (handled by `container`)
 
@@ -215,8 +235,8 @@ functions (`ruis/util/to_tml.hpp` and friends). The conventions:
 | --------------- | --------------------------------------------------- |
 | number          | a decimal leaf, e.g. `42`, `1.5`                    |
 | bool            | `true` / `false`                                    |
-| 2/3/4-vector    | positional value nodes in order, no names, e.g. `1 2` |
-| rectangle       | `rect { p { .. .. } d { .. .. } }` (p, d are positional value nodes) |
+| 2/3/4-vector    | a forest of positional value nodes in order, no names, e.g. `1 2` |
+| rectangle       | a forest of two nodes, `p { .. .. }` and `d { .. .. }`; no enclosing node (the caller names it, e.g. `rect`, `abs_rect`) |
 | `dimension`     | `min`, `max`, `fill`, `undefined`, or `<len><unit>` (e.g. `10px`) |
 | `align`         | `front`, `center`, or `back`                        |
 | `color`         | `rgba { r g b a }` (channel values 0–255)           |

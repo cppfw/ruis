@@ -718,19 +718,23 @@ widget::probe_response_set probe_for(container& c, const tml::tree& command)
 
 container::probe_response_set container::probe(const tml::tree& command)
 {
+	// generic fold approach: start from the base implementation's result,
+	// then add the container's own section for the commands it handles.
+	probe_response_set ret = widget::probe(command);
+
 	if (command.value == "get_children") {
-		probe_response_set ret;
 		ret.insert(tml::tree(
 			utki::demangle(typeid(container)), //
 			{tml::tree("children_count"s, {to_tml(this->size())})}
 		));
-		return ret;
-	}
-	if (command.value == "for") {
+	} else if (command.value == "for") {
+		// 'for' command is handled by container only, and the result is returned not by this widget,
+		// so do not wrap it into a section for this container, just return it as is.
+		// In case of lookup failure, the probe_for() function will return a container section with an error description.
 		return probe_for(*this, command);
 	}
-	// all other commands are delegated to the base implementation
-	return widget::probe(command);
+
+	return ret;
 }
 
 utki::shared_ref<ruis::container> ruis::make::container(

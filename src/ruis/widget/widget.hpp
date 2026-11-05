@@ -926,6 +926,9 @@ public:
 	 *   the widget's class which reports the widget state: id, layout
 	 *   parameters, rectangle, layout dirty flag, clip, visibility, enabled,
 	 *   depth, focus and cache state.
+	 * - 'get_abs_rect' (non-fold): no parameters. Adds a single section named
+	 *   after the widget's class which reports the widget's absolute rectangle
+	 *   (get_absolute_rect()) as an 'abs_rect' field.
 	 *
 	 * @param command - probe command.
 	 * @return probe response.

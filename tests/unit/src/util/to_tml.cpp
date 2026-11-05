@@ -148,59 +148,53 @@ const tst::set set("to_tml", [](tst::suite& suite) {
 		);
 	});
 
-	suite.add("rectangle_produces_rect_tree_with_p_and_d", [] {
+	suite.add("rectangle_produces_forest_of_p_and_d", [] {
 		r4::rectangle<int> r(1, 2, 3, 4); // pos (1,2), dims (3,4)
-		const auto t = ruis::to_tml(r);
+		const auto f = ruis::to_tml(r);
+		// a rectangle is a forest [p, d], no enclosing node
+		tst::check_eq(f.size(), std::size_t(2), SL);
 		tst::check(
-			t.value == "rect",
+			f[0].value == "p",
 			[&](auto& o) {
-				o << t.value;
-			},
-			SL
-		);
-		tst::check_eq(t.children.size(), std::size_t(2), SL);
-		tst::check(
-			t.children[0].value == "p",
-			[&](auto& o) {
-				o << t.children[0].value;
+				o << f[0].value;
 			},
 			SL
 		);
 		tst::check(
-			t.children[1].value == "d",
+			f[1].value == "d",
 			[&](auto& o) {
-				o << t.children[1].value;
+				o << f[1].value;
 			},
 			SL
 		);
 		// each of p/d is a vector: positional value nodes, one per axis
-		tst::check_eq(t.children[0].children.size(), std::size_t(2), SL);
+		tst::check_eq(f[0].children.size(), std::size_t(2), SL);
 		tst::check(
-			t.children[0].children[0].value == "1",
+			f[0].children[0].value == "1",
 			[&](auto& o) {
-				o << t.children[0].children[0].value;
+				o << f[0].children[0].value;
 			},
 			SL
 		);
 		tst::check(
-			t.children[0].children[1].value == "2",
+			f[0].children[1].value == "2",
 			[&](auto& o) {
-				o << t.children[0].children[1].value;
+				o << f[0].children[1].value;
 			},
 			SL
 		);
-		tst::check_eq(t.children[1].children.size(), std::size_t(2), SL);
+		tst::check_eq(f[1].children.size(), std::size_t(2), SL);
 		tst::check(
-			t.children[1].children[0].value == "3",
+			f[1].children[0].value == "3",
 			[&](auto& o) {
-				o << t.children[1].children[0].value;
+				o << f[1].children[0].value;
 			},
 			SL
 		);
 		tst::check(
-			t.children[1].children[1].value == "4",
+			f[1].children[1].value == "4",
 			[&](auto& o) {
-				o << t.children[1].children[1].value;
+				o << f[1].children[1].value;
 			},
 			SL
 		);
