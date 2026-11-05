@@ -490,5 +490,96 @@ const tst::set set("widget_probe", [](tst::suite& suite) {
 			SL
 		);
 	});
+
+	suite.add("get_index", [] {
+		auto ctx = make_dummy_context();
+
+		// build the hierarchy:
+		//   root
+		//     [0] c0
+		//     [1] c1
+		//          [0] t0
+		//          [1] t1
+		//          [2] target
+		//     [2] c2
+		// the index path of 'target' (root first) is [1, 2]: c1 is at index 1
+		// in root, target is at index 2 in c1
+		auto t0 = utki::make_shared<ruis::container>(ctx, ruis::container::all_parameters(), ruis::widget_list());
+		auto t1 = utki::make_shared<ruis::container>(ctx, ruis::container::all_parameters(), ruis::widget_list());
+		auto target = utki::make_shared<ruis::container>(ctx, ruis::container::all_parameters(), ruis::widget_list());
+		auto c1 = utki::make_shared<ruis::container>(ctx, ruis::container::all_parameters(), ruis::widget_list{t0, t1, target});
+		auto c0 = utki::make_shared<ruis::container>(ctx, ruis::container::all_parameters(), ruis::widget_list());
+		auto c2 = utki::make_shared<ruis::container>(ctx, ruis::container::all_parameters(), ruis::widget_list());
+		auto root = utki::make_shared<ruis::container>(ctx, ruis::container::all_parameters(), ruis::widget_list{c0, c1, c2});
+
+		const auto resp = target.get().probe(tml::tree(tml::leaf("get_index")));
+
+		const tml::forest f(resp.begin(), resp.end());
+
+		// a single 'ruis::widget' section carrying the 'index' field
+		tst::check(
+			f.size() == 1,
+			[&](auto& o) {
+				o << f.size();
+			},
+			SL
+		);
+		tst::check(
+			f[0].value == "ruis::widget",
+			[&](auto& o) {
+				o << f[0].value.string;
+			},
+			SL
+		);
+
+		// first component: the index of c1 in root = 1
+		const auto& first = tml::const_crawler(f) //
+							 .to("ruis::widget") //
+							 .in() //
+							 .to("index") //
+							 .in() //
+							 .get()
+							 .value;
+		tst::check(
+			first == "1",
+			[&](auto& o) {
+				o << first.string;
+			},
+			SL
+		);
+
+		// second component: the index of target in c1 = 2
+		const auto& second = tml::const_crawler(f) //
+								 .to("ruis::widget") //
+								 .in() //
+								 .to("index") //
+								 .in() //
+								 .next() //
+								 .get()
+								 .value;
+		tst::check(
+			second == "2",
+			[&](auto& o) {
+				o << second.string;
+			},
+			SL
+		);
+
+		// the root widget has an empty index path
+		const auto root_resp = root.get().probe(tml::tree(tml::leaf("get_index")));
+		const tml::forest rf(root_resp.begin(), root_resp.end());
+		const auto& ridx = tml::const_crawler(rf) //
+								 .to("ruis::widget") //
+								 .in() //
+								 .to("index") //
+								 .get();
+		tst::check(
+			ridx.children.empty(),
+			[&](auto& o) {
+				o << ridx.children.size();
+			},
+			SL
+		);
+	});
 });
 } // namespace

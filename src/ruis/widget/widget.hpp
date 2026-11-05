@@ -929,6 +929,13 @@ public:
 	 * - 'get_abs_rect' (non-fold): no parameters. Adds a single section named
 	 *   after the widget's class which reports the widget's absolute rectangle
 	 *   (get_absolute_rect()) as an 'abs_rect' field.
+	 * - 'get_index' (non-fold): no parameters. Adds a single section named
+	 *   after the widget's class which reports the widget's index path from
+	 *   the root widget as an 'index' field: the first value is the index of
+	 *   the topmost ancestor within the root and the last is the index of the
+	 *   widget within its parent (the root widget itself yields an empty path).
+	 *   The path can be used as the 'index' addressing node of the 'for'
+	 *   command run on the root widget.
 	 *
 	 * @param command - probe command.
 	 * @return probe response.

@@ -106,7 +106,8 @@ library is built on top of these:
 
 - `get_state`, handled by `widget`, is the command every widget implements (or
   inherits) to report its own state. `get_abs_rect`, also handled by `widget`,
-  reports the widget's absolute rectangle.
+  reports the widget's absolute rectangle. `get_index`, likewise handled by
+  `widget`, reports the widget's index path from the root widget.
 - `get_children` and `for`, handled by `container`, are for inspecting the
   widget tree: how many children a widget has, and reaching a specific widget
   in order to run a command on it.
@@ -147,6 +148,29 @@ ruis::widget {
 		d {
 			.. ..
 		}
+	}
+}
+```
+
+### `get_index` (handled by `widget`)
+
+No parameters. Adds a single section named after the widget's class reporting
+the widget's **index path from the root widget** as an `index` field. The path
+lists one index per level, from the root down: the first value is the index of
+the topmost ancestor (the direct child of the root) within the root, and the
+last value is the index of the widget itself within its parent. The root widget
+itself yields an **empty** path.
+
+The path can be used verbatim as the `index` addressing node of the `for`
+command run on the root widget: `get_index` on a widget produces the address
+that reaches that same widget.
+
+```
+ruis::widget {
+	index {
+		10
+		3
+		12
 	}
 }
 ```

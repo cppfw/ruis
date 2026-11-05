@@ -21,6 +21,11 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "widget.hpp"
 
+#include <algorithm>
+#include <cstddef>
+#include <iterator>
+#include <vector>
+
 #include <utki/debug.hpp>
 
 #include "../context.hpp"
@@ -576,6 +581,28 @@ vec2 widget::measure_within_parent(
 	return d;
 }
 
+namespace {
+
+// Compute the index path that locates the widget starting from the root
+// widget. The first element is the index of the topmost ancestor (the one
+// that is a direct child of the root) within the root, and the last element
+// is the index of the widget itself within its parent. This order matches
+// the 'index' addressing node of the 'for' command run on the root widget.
+std::vector<std::size_t> get_index_path(const widget& w)
+{
+	std::vector<std::size_t> path;
+	for (const widget* cur = &w; cur->parent() != nullptr; cur = cur->parent()) {
+		const container* p = cur->parent();
+		utki::assert(p, SL);
+		const auto it = p->find(*cur);
+		path.push_back(size_t(std::distance(p->begin(), it)));
+	}
+	std::ranges::reverse(path);
+	return path;
+}
+
+} // namespace
+
 widget::probe_response_set widget::probe(const tml::tree& command)
 {
 	if (command.value == "get_state") {
@@ -608,6 +635,21 @@ widget::probe_response_set widget::probe(const tml::tree& command)
 			// clang-format off
 			{
 				tml::tree("abs_rect"s, to_tml(this->get_absolute_rect())),
+			} // clang-format on
+		));
+		return ret;
+	} else if (command.value == "get_index") {
+		const auto path = get_index_path(*this);
+		tml::forest index_nodes;
+		for (const std::size_t i : path) {
+			index_nodes.emplace_back(to_tml(i));
+		}
+		probe_response_set ret;
+		ret.insert(tml::tree(
+			tml::leaf(utki::demangle(typeid(widget))), //
+			// clang-format off
+			{
+				tml::tree("index"s, index_nodes),
 			} // clang-format on
 		));
 		return ret;
