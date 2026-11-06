@@ -623,7 +623,7 @@ widget::probe_response_set probe_for_index(
 		}
 		// i64 < cont->size() <= std::numeric_limits<std::size_t>::max(),
 		// so the cast below is lossless
-		const std::size_t i = static_cast<std::size_t>(i64);
+		const auto i = size_t(i64);
 		w = &cont->children()[i].get();
 	}
 

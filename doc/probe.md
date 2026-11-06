@@ -433,6 +433,28 @@ The response is **exactly the probe response of the target widget** (like the
 For `send_to_focused` with no focused widget the response is a `ruis::gui`
 error section instead: `error { no_focused_widget }`.
 
+## The application-level probe
+
+`ruisapp::application::probe()` is the same mechanism one level up: the
+application owns the windows (each window owns a `ruis::gui`) but is not a
+widget itself, so it handles its own commands. It returns a `tml::forest`
+like `gui::probe()`. Unlike the widget and gui levels, the responses are
+**not** wrapped into a named section: the returned forest directly contains
+the meaningful nodes.
+
+| command | form | notes |
+| ------- | ---- | ----- |
+| `get_windows` | — | returns the number of application windows as a forest with a single `windows_count { N }` node |
+| `for_window` | `index { N } <command>` | forward `<command>` to the `N`th window's gui probe (0-based, `index` first then the command); the response is the window gui's probe response as is; `error { window_not_found }` if there is no window with the given index, `error { missing_command }` if no command to forward is given |
+| `quit` | — | request the application to exit (`application::quit()`); returns an `ok` node |
+
+An unknown command returns `error { unknown_command }`.
+
+The `index` parameter and the forwarded command are read with the `tml`
+crawler (strict order: `index` first, then the command), so a missing or
+non-numeric `index` produces the crawler's or the `tml` leaf numeric
+conversion's exception message as the diagnostic (like in `gui::probe`).
+
 ## Using it from C++
 
 `probe()` is a **non-const** member: some commands can modify the widget state,
