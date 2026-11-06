@@ -62,7 +62,10 @@ const tst::set set("widget_probe", [](tst::suite& suite) {
 
 		ruis::container::all_parameters p;
 		p.widget.id = "test-container";
-		p.layout_params.dims = r4::vector2<ruis::dim>(ruis::dim::min, ruis::dim(ruis::length::make_px(10)));
+		// note: ruis::dim::min (the static member) cannot be referenced here because
+		// the global test set would then depend on a dynamically initialized non-local
+		// variable (clang-tidy cppcoreguidelines-interfaces-global-init)
+		p.layout_params.dims = {ruis::dim(ruis::dim::type::min), ruis::length::make_px(10)};
 		p.layout_params.weight = 1.5;
 		p.layout_params.align = r4::vector2<ruis::styled<ruis::align>>(ruis::align::center, ruis::align::front);
 		auto c = utki::make_shared<ruis::container>(ctx, p, ruis::widget_list());
@@ -402,14 +405,14 @@ const tst::set set("widget_probe", [](tst::suite& suite) {
 
 		// a fresh standalone widget: the absolute rect is at (0,0) with size (-1,-1)
 		const auto& apx = tml::const_crawler(f) //
-							 .to("ruis::widget") //
-							 .in() //
-							 .to("abs_rect") //
-							 .in() //
-							 .to("p") //
-							 .in() //
-							 .get()
-							 .value;
+							  .to("ruis::widget") //
+							  .in() //
+							  .to("abs_rect") //
+							  .in() //
+							  .to("p") //
+							  .in() //
+							  .get()
+							  .value;
 		tst::check(
 			apx == "0",
 			[&](auto& o) {
@@ -418,14 +421,14 @@ const tst::set set("widget_probe", [](tst::suite& suite) {
 			SL
 		);
 		const auto& adx = tml::const_crawler(f) //
-							 .to("ruis::widget") //
-							 .in() //
-							 .to("abs_rect") //
-							 .in() //
-							 .to("d") //
-							 .in() //
-							 .get()
-							 .value;
+							  .to("ruis::widget") //
+							  .in() //
+							  .to("abs_rect") //
+							  .in() //
+							  .to("d") //
+							  .in() //
+							  .get()
+							  .value;
 		tst::check(
 			adx == "-1",
 			[&](auto& o) {
@@ -507,10 +510,15 @@ const tst::set set("widget_probe", [](tst::suite& suite) {
 		auto t0 = utki::make_shared<ruis::container>(ctx, ruis::container::all_parameters(), ruis::widget_list());
 		auto t1 = utki::make_shared<ruis::container>(ctx, ruis::container::all_parameters(), ruis::widget_list());
 		auto target = utki::make_shared<ruis::container>(ctx, ruis::container::all_parameters(), ruis::widget_list());
-		auto c1 = utki::make_shared<ruis::container>(ctx, ruis::container::all_parameters(), ruis::widget_list{t0, t1, target});
+		auto c1 = utki::make_shared<ruis::container>(
+			ctx,
+			ruis::container::all_parameters(),
+			ruis::widget_list{t0, t1, target}
+		);
 		auto c0 = utki::make_shared<ruis::container>(ctx, ruis::container::all_parameters(), ruis::widget_list());
 		auto c2 = utki::make_shared<ruis::container>(ctx, ruis::container::all_parameters(), ruis::widget_list());
-		auto root = utki::make_shared<ruis::container>(ctx, ruis::container::all_parameters(), ruis::widget_list{c0, c1, c2});
+		auto root =
+			utki::make_shared<ruis::container>(ctx, ruis::container::all_parameters(), ruis::widget_list{c0, c1, c2});
 
 		const auto resp = target.get().probe(tml::tree(tml::leaf("get_index")));
 
@@ -534,12 +542,12 @@ const tst::set set("widget_probe", [](tst::suite& suite) {
 
 		// first component: the index of c1 in root = 1
 		const auto& first = tml::const_crawler(f) //
-							 .to("ruis::widget") //
-							 .in() //
-							 .to("index") //
-							 .in() //
-							 .get()
-							 .value;
+								.to("ruis::widget") //
+								.in() //
+								.to("index") //
+								.in() //
+								.get()
+								.value;
 		tst::check(
 			first == "1",
 			[&](auto& o) {
@@ -569,10 +577,10 @@ const tst::set set("widget_probe", [](tst::suite& suite) {
 		const auto root_resp = root.get().probe(tml::tree(tml::leaf("get_index")));
 		const tml::forest rf(root_resp.begin(), root_resp.end());
 		const auto& ridx = tml::const_crawler(rf) //
-								 .to("ruis::widget") //
-								 .in() //
-								 .to("index") //
-								 .get();
+							   .to("ruis::widget") //
+							   .in() //
+							   .to("index") //
+							   .get();
 		tst::check(
 			ridx.children.empty(),
 			[&](auto& o) {

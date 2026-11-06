@@ -21,6 +21,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
+#include "widget/widget.hpp"
+
 #include "context.hpp"
 #include "updateable.hpp"
 
@@ -200,6 +202,37 @@ public:
 		const input_string_provider& string_provider, //
 		ruis::key key_code
 	);
+
+	/**
+	 * @brief Probe the GUI: query its state and inject input events.
+	 * This is the GUI-level counterpart of widget::probe(). It is not part of the
+	 * widget probe fold: the gui owns the widget tree but is not a widget itself,
+	 * so it handles its own set of commands and does not accumulate sections from
+	 * any base class.
+	 *
+	 * Commands:
+	 * - 'send_mouse_move { pos { x y } id { N } }': inject a mouse move event at
+	 *   position (x, y) for mouse pointer N.
+	 * - 'send_mouse_button { action { press | release } pos { x y } button { <name> } id { N } }':
+	 *   inject a mouse button event.
+	 * - 'send_key { action { press | release } key { <name> } }': inject a key event.
+	 * - 'send_character_input { string { <text> } [ key { <name> } ] }': inject a
+	 *   character input event; the associated key is optional (defaults to unknown).
+	 * - 'send_to_root { <command> }': forward <command> to the root widget's
+	 *   probe(); the response is the root widget's probe response.
+	 * - 'send_to_focused { <command> }': forward <command> to the focused widget's
+	 *   probe(); if there is no focused widget, an error is returned.
+	 *
+	 * The 'send_mouse_*', 'send_key' and 'send_character_input' commands return a
+	 * single 'ruis::gui' section containing either an 'ok' node (on success) or an
+	 * 'error { <diagnostic> }' node (if a parameter is missing or malformed).
+	 *
+	 * @param command - probe command.
+	 * @return probe response - a forest of response sections. For the forwarded
+	 *   commands the target widget's probe response (a set of sections) is
+	 *   flattened to the forest.
+	 */
+	tml::forest probe(const tml::tree& command);
 };
 
 } // namespace ruis

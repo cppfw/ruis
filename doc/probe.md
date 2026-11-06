@@ -366,6 +366,73 @@ ruis::container {
 }
 ```
 
+## The gui-level probe
+
+`gui::probe()` takes the same command as `widget::probe()`, but it is **not**
+part of the widget fold: the `gui` owns the widget tree but is not a widget
+itself, so it handles its own commands and does not accumulate sections from
+any base class. Its response is a `tml::forest` of sections instead of a
+`probe_response_set`. Its commands come in two groups:
+
+**Input injection** — feed in synthetic input events and get an acknowledgement:
+
+| command | form | notes |
+| ------- | ---- | ----- |
+| `send_mouse_move` | `pos { x y } id { N }` | position in root widget coordinates |
+| `send_mouse_button` | `action { press \| release } pos { x y } button { <name> } id { N }` | button is a `mouse_button` name, e.g. `left` |
+| `send_key` | `action { press \| release } key { <name> }` | key is a `ruis::key` name, e.g. `enter` |
+| `send_character_input` | `string { <text> } [ key { <name> } ]` | the associated key is optional |
+
+On success the response is a single `ruis::gui` section with an `ok` node:
+
+```
+ruis::gui {
+	ok
+}
+```
+
+If a parameter is missing or malformed, the response is a single `ruis::gui`
+section with an `error` node carrying the diagnostic:
+
+```
+ruis::gui {
+	error { crawler::to() failed, reached end of node list }
+}
+```
+
+The parameters are read with the `tml` crawler, so a structural problem
+(missing parameter node, parameter node without a value, non-numeric value)
+results in the message of the exception thrown by the crawler or by the
+`tml` leaf numeric conversion:
+
+- `crawler::to() failed, reached end of node list` — a parameter node is
+  missing;
+- `crawler::in() failed, node has no children` — a parameter node carries
+  no value;
+- `string_parser::read_integer(): input string does not start with a
+  number` — a numeric parameter carries a non-numeric value;
+- `crawler::crawler() failed, reached end of node list` — the command has
+  no parameters at all.
+
+Unrecognized parameter *names* produce fixed diagnostics:
+`malformed_action`, `malformed_button`, `malformed_key`.
+
+Note that a `pos` with fewer than two components is not an error: the
+missing components are filled with the latest parsed value (the `pos` is
+parsed with `ruis::make_vec2`).
+
+**Command forwarding** — run a widget probe command on a specific widget:
+
+| command | form | notes |
+| ------- | ---- | ----- |
+| `send_to_root` | `send_to_root { <command> }` | run `<command>` on the root widget |
+| `send_to_focused` | `send_to_focused { <command> }` | run `<command>` on the focused widget; `error { no_focused_widget }` if there is none |
+
+The response is **exactly the probe response of the target widget** (like the
+`for` command), flattened from the widget's `probe_response_set` to a forest.
+For `send_to_focused` with no focused widget the response is a `ruis::gui`
+error section instead: `error { no_focused_widget }`.
+
 ## Using it from C++
 
 `probe()` is a **non-const** member: some commands can modify the widget state,

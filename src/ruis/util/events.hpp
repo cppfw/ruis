@@ -54,8 +54,23 @@ enum class mouse_button {
  */
 enum class button_action {
 	press,
-	release
+	release,
+	enum_size
 };
+
+/**
+ * @brief Converts a string to a button action.
+ * @param name - the name of the button action ('press' or 'release').
+ * @return The button action or button_action::enum_size if the name is not recognized.
+ */
+button_action to_button_action(std::string_view name);
+
+/**
+ * @brief Converts a string to a mouse button.
+ * @param name - the name of the mouse button (e.g. 'left', 'right', 'wheel_up').
+ * @return The mouse button or mouse_button::enum_size if the name is not recognized.
+ */
+mouse_button to_mouse_button(std::string_view name);
 
 struct mouse_button_event {
 	/**

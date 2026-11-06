@@ -29,7 +29,10 @@ const tst::set set("color_widget_probe", [](tst::suite& suite) {
 		ruis::gap::all_parameters p;
 		p.widget.id = "test-gap";
 		p.color = ruis::color(1, 2, 3, 255);
-		p.layout_params.dims = r4::vector2<ruis::dim>(ruis::dim::min, ruis::dim(ruis::length::make_px(10)));
+		// note: ruis::dim::min (the static member) cannot be referenced here because
+		// the global test set would then depend on a dynamically initialized non-local
+		// variable (clang-tidy cppcoreguidelines-interfaces-global-init)
+		p.layout_params.dims = {ruis::dim(ruis::dim::type::min), ruis::length::make_px(10)};
 		auto w = m::gap(ctx, p);
 
 		const auto resp = w.get().probe(tml::tree(tml::leaf("get_state")));

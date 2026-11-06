@@ -21,7 +21,18 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "gui.hpp"
 
+#include <exception>
+#include <ranges>
+#include <string>
+
+#include <tml/crawler.hpp>
+#include <utki/debug.hpp>
+#include <utki/unicode.hpp>
+
 #include "res/tml.hpp"
+#include "util/events.hpp"
+#include "util/key.hpp"
+#include "util/util.hpp"
 #include "widget/input/base/character_input_widget.hpp"
 #include "widget/label/gap.hpp"
 
@@ -174,4 +185,138 @@ void gui::send_character_input(
 			c->on_character_input(e);
 		}
 	}
+}
+
+namespace {
+
+// an input string provider that returns a fixed string (for send_character_input)
+struct fixed_input_string_provider : public gui::input_string_provider {
+	std::u32string str;
+
+	std::u32string get() const override
+	{
+		return this->str;
+	}
+};
+
+// make a single-section 'ruis::gui' probe response forest with the given children
+tml::forest make_gui_response(tml::forest children)
+{
+	return {tml::tree(tml::leaf(utki::demangle(typeid(gui))), std::move(children))};
+}
+
+// success response: ruis::gui { ok }
+tml::forest make_gui_ok()
+{
+	return make_gui_response({tml::tree(tml::leaf("ok"))});
+}
+
+// error response: ruis::gui { error { <diagnostic> } }
+tml::forest make_gui_error(std::string diagnostic)
+{
+	const tml::forest children{tml::tree(tml::leaf("error"), tml::forest{tml::tree(tml::leaf(std::move(diagnostic)))})};
+	return make_gui_response(std::move(children));
+}
+
+// flatten the widget probe response (a set of sections) to a forest
+tml::forest flatten(const widget::probe_response_set& resp)
+{
+	return {resp.begin(), resp.end()};
+}
+
+} // namespace
+
+tml::forest gui::probe(const tml::tree& command)
+{
+	// The parameters are read with the tml::crawler cascades, so a missing parameter
+	// or a malformed parameter value is detected by the exceptions thrown by the crawler
+	// (or by the tml::leaf numeric conversions), which are caught and turned into an
+	// error response carrying the exception message as the diagnostic.
+	if (command.value == "send_mouse_move") {
+		try {
+			const vec2 pos = make_vec2(tml::const_crawler(command.children).to("pos").get().children);
+			const unsigned id = unsigned(tml::const_crawler(command.children).to("id").in().get().value.to_uint32());
+			this->send_mouse_move(pos, id);
+			return make_gui_ok();
+		} catch (const std::exception& e) {
+			return make_gui_error(e.what());
+		}
+	} else if (command.value == "send_mouse_button") {
+		try {
+			const button_action action =
+				ruis::to_button_action(tml::const_crawler(command.children).to("action").in().get().value.string);
+			if (action == button_action::enum_size) {
+				return make_gui_error("malformed_action");
+			}
+			const vec2 pos = make_vec2(tml::const_crawler(command.children).to("pos").get().children);
+			const mouse_button button =
+				ruis::to_mouse_button(tml::const_crawler(command.children).to("button").in().get().value.string);
+			if (button == mouse_button::enum_size) {
+				return make_gui_error("malformed_button");
+			}
+			const unsigned id = unsigned(tml::const_crawler(command.children).to("id").in().get().value.to_uint32());
+			this->send_mouse_button(action, pos, button, id);
+			return make_gui_ok();
+		} catch (const std::exception& e) {
+			return make_gui_error(e.what());
+		}
+	} else if (command.value == "send_key") {
+		try {
+			const button_action action =
+				ruis::to_button_action(tml::const_crawler(command.children).to("action").in().get().value.string);
+			if (action == button_action::enum_size) {
+				return make_gui_error("malformed_action");
+			}
+			const ruis::key k = ruis::to_key(tml::const_crawler(command.children).to("key").in().get().value.string);
+			if (k == ruis::key::unknown) {
+				return make_gui_error("malformed_key");
+			}
+			this->send_key(action, k);
+			return make_gui_ok();
+		} catch (const std::exception& e) {
+			return make_gui_error(e.what());
+		}
+	} else if (command.value == "send_character_input") {
+		std::string str;
+		ruis::key k = ruis::key::unknown;
+		// the key parameter is optional, so check its presence separately:
+		// the crawler's to() throws if the parameter is absent
+		const bool has_key = std::ranges::any_of(
+			command.children, //
+			[](const auto& c) {
+				return c.value.string == "key";
+			}
+		);
+		try {
+			str = std::string(tml::const_crawler(command.children).to("string").in().get().value.string);
+			if (has_key) {
+				k = ruis::to_key(tml::const_crawler(command.children).to("key").in().get().value.string);
+				if (k == ruis::key::unknown) {
+					return make_gui_error("malformed_key");
+				}
+			}
+		} catch (const std::exception& e) {
+			return make_gui_error(e.what());
+		}
+		fixed_input_string_provider provider;
+		provider.str = utki::to_utf32(str);
+		this->send_character_input(provider, k);
+		return make_gui_ok();
+	} else if (command.value == "send_to_root") {
+		if (command.children.empty()) {
+			return make_gui_error("malformed_command");
+		}
+		return flatten(this->get_root().probe(command.children.front()));
+	} else if (command.value == "send_to_focused") {
+		if (command.children.empty()) {
+			return make_gui_error("malformed_command");
+		}
+		if (auto w = this->context.get().focused_widget.lock()) {
+			return flatten(w->probe(command.children.front()));
+		}
+		return make_gui_error("no_focused_widget");
+	}
+
+	// Unknown commands result in an empty response.
+	return {};
 }

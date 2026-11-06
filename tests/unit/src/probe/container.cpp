@@ -20,7 +20,7 @@ tml::tree make_for_cmd(std::initializer_list<int> indices, const char* command)
 {
 	tml::forest index_nodes;
 	for (auto i : indices) {
-		index_nodes.push_back(tml::tree(tml::leaf(i)));
+		index_nodes.emplace_back(tml::leaf(i));
 	}
 	return tml::tree(
 		tml::leaf("for"), //
@@ -34,7 +34,7 @@ tml::tree make_for_cmd_from_strings(std::initializer_list<const char*> indices, 
 {
 	tml::forest index_nodes;
 	for (auto i : indices) {
-		index_nodes.push_back(tml::tree(tml::leaf(i)));
+		index_nodes.emplace_back(tml::leaf(i));
 	}
 	return tml::tree(
 		tml::leaf("for"), //
@@ -48,7 +48,7 @@ tml::tree make_for_id_cmd(std::initializer_list<const char*> ids, const char* co
 {
 	tml::forest id_nodes;
 	for (auto i : ids) {
-		id_nodes.push_back(tml::tree(tml::leaf(i)));
+		id_nodes.emplace_back(tml::leaf(i));
 	}
 	return tml::tree(
 		tml::leaf("for"), //
@@ -477,7 +477,8 @@ const tst::set set("container_probe", [](tst::suite& suite) {
 		{
 			tml::tree cmd(
 				tml::leaf("for"), //
-				{tml::tree(tml::leaf("index"), {tml::tree(tml::leaf("18446744073709551616"))}), tml::tree(tml::leaf("get_state"))}
+				{tml::tree(tml::leaf("index"), {tml::tree(tml::leaf("18446744073709551616"))}),
+				 tml::tree(tml::leaf("get_state"))}
 			);
 			check_malformed_command_response(c.get().probe(cmd));
 		}
@@ -486,11 +487,9 @@ const tst::set set("container_probe", [](tst::suite& suite) {
 		{
 			tml::tree cmd(
 				tml::leaf("for"), //
-				{
-					tml::tree(tml::leaf("index"), {tml::tree(tml::leaf("0"))}),
-					tml::tree(tml::leaf("id"), {tml::tree(tml::leaf("a"))}),
-					tml::tree(tml::leaf("get_state"))
-				}
+				{tml::tree(tml::leaf("index"), {tml::tree(tml::leaf("0"))}),
+				 tml::tree(tml::leaf("id"), {tml::tree(tml::leaf("a"))}),
+				 tml::tree(tml::leaf("get_state"))}
 			);
 			check_malformed_command_response(c.get().probe(cmd));
 		}
@@ -630,12 +629,12 @@ const tst::set set("container_probe", [](tst::suite& suite) {
 			SL
 		);
 		const auto& cc = tml::const_crawler(f) //
-									 .to("ruis::container")
-									 .in()
-									 .to("children_count")
-									 .in()
-									 .get()
-									 .value;
+							 .to("ruis::container")
+							 .in()
+							 .to("children_count")
+							 .in()
+							 .get()
+							 .value;
 		tst::check(
 			cc == "0",
 			[&](auto& o) {
@@ -661,9 +660,9 @@ const tst::set set("container_probe", [](tst::suite& suite) {
 		rp.widget.id = "R";
 		auto a = m::gap(ctx, ap);
 		auto b = m::gap(ctx, bp);
-		auto L = m::container(ctx, lp, ruis::widget_list{a});
-		auto R = m::container(ctx, rp, ruis::widget_list{b});
-		auto c = m::container(ctx, ruis::container::all_parameters{}, ruis::widget_list{L, R});
+		auto left = m::container(ctx, lp, ruis::widget_list{a});
+		auto right = m::container(ctx, rp, ruis::widget_list{b});
+		auto c = m::container(ctx, ruis::container::all_parameters{}, ruis::widget_list{left, right});
 
 		// the 1st id does not exist anywhere in the tree:
 		// error { id { nope } not_found }
