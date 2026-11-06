@@ -554,21 +554,6 @@ void container::on_reload()
 
 namespace {
 
-// parse a child index from a tml leaf
-// the value is parsed with tml::leaf::to_uint64(),
-// which throws std::invalid_argument for non-numeric values and
-// std::out_of_range for values that do not fit into uint64_t -
-// in both cases the value is reported as malformed
-bool parse_child_index(const tml::leaf& l, std::size_t& index)
-{
-	try {
-		index = l.to_uint64();
-	} catch (const std::exception&) {
-		return false;
-	}
-	return true;
-}
-
 // single section reporting a malformed 'for' command:
 // ruis::container { error { malformed_command } }
 widget::probe_response_set make_malformed_command_error()
@@ -616,8 +601,14 @@ widget::probe_response_set probe_for_index(
 	widget* w = &c;
 	tml::forest path; // the index nodes of the walked path
 	for (const auto& idx_node : index_node.children) {
-		std::size_t i = 0;
-		if (!parse_child_index(idx_node.value, i)) {
+		// the index is parsed with tml::leaf::to_uint64(),
+		// which throws std::invalid_argument for non-numeric values and
+		// std::out_of_range for values that do not fit into uint64_t -
+		// in both cases the value is reported as malformed
+		uint64_t i64 = 0;
+		try {
+			i64 = idx_node.value.to_uint64();
+		} catch (const std::exception&) {
 			return make_malformed_command_error();
 		}
 		path.push_back(idx_node);
@@ -626,10 +617,13 @@ widget::probe_response_set probe_for_index(
 		if (!cont) {
 			return make_for_error("index", path, "not_a_container");
 		}
-		if (i >= cont->size()) {
+		if (i64 >= static_cast<uint64_t>(cont->size())) {
 			const auto size_node = to_tml(cont->size());
 			return make_for_error("index", path, "out_of_bound", &size_node);
 		}
+		// i64 < cont->size() <= std::numeric_limits<std::size_t>::max(),
+		// so the cast below is lossless
+		const std::size_t i = static_cast<std::size_t>(i64);
 		w = &cont->children()[i].get();
 	}
 
