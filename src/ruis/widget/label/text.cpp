@@ -43,7 +43,7 @@ text::text(
 		std::move(params.params.text_string),
 		std::move(text)
 	),
-	specific_params(std::move(params.params.specific))
+	params(std::move(params.params.specific))
 {
 	this->recompute_lines();
 }
@@ -76,8 +76,8 @@ void text::recompute_lines()
 		this->get_font(), //
 		this->get_string().get(), //
 		this->rect().d.x(), //
-		this->specific_params.multiline, //
-		this->specific_params.marquee
+		this->params.multiline, //
+		this->params.marquee
 	);
 
 	this->lines = std::move(ll.lines);
@@ -88,7 +88,7 @@ vec2 text::measure(
 	const r4::vector2<measure_mode>& mode
 ) const noexcept
 {
-	if (this->specific_params.multiline) {
+	if (this->params.multiline) {
 		// In multiline mode the width determines how the text is wrapped, so break it to
 		// lines against the available width to find out the resulting height (and, in
 		// at_most mode, the natural width which is the widest line).
@@ -97,7 +97,7 @@ vec2 text::measure(
 			this->get_string().get(), //
 			quotum.x(), //
 			true, //
-			this->specific_params.marquee
+			this->params.marquee
 		);
 
 		vec2 ret(ll.max_line_width, real(ll.lines.size()) * this->get_font().get_line_height());
@@ -134,30 +134,46 @@ void text::update_marquee_subscription()
 void text::render(const ruis::mat4& matrix) const
 {
 	const auto& font = this->get_font();
-	const bool marquee = this->is_marquee();
+	const auto& dims = this->rect().d;
 
-	const real widget_w = this->rect().d.x();
-	const real line_height = font.get_line_height();
-	const real ascender = font.get_ascender();
+	// Vertical alignment of the block of lines within the widget's height. The text block
+	// is as tall as the number of lines times the line height. For the back (bottom)
+	// alignment the last line is aligned to the widget's bottom edge, so when the text
+	// block is taller than the widget the offset is negative and the first lines extend
+	// beyond the widget's top edge.
+	const real text_height_px = real(this->lines.size()) * font.get_line_height();
+	real vertical_offset = 0;
+	switch (this->params.align.y().get()) {
+		case ruis::align::front:
+			vertical_offset = 0;
+			break;
+		case ruis::align::undefined:
+			[[fallthrough]];
+		case ruis::align::center:
+			vertical_offset = (dims.y() - text_height_px) / 2;
+			break;
+		case ruis::align::back:
+			vertical_offset = dims.y() - text_height_px;
+			break;
+	}
 
 	// The marquee scroll speed in the widget's coordinate unit (pixels) per second. The
 	// spec value is in pp/sec, converted to pixels using the context's units.
 	const real marquee_speed = real(marquee_speed_pps) * this->ctx().units.dots_per_pp();
 
+	// TODONEXT: use utki::views::enumerate and range based for loop
 	for (size_t i = 0; i != this->lines.size(); ++i) {
 		const auto& line = this->lines[i];
-		const auto span = line.span;
-		const real total_w = line.width;
-		const real y_off = ascender + real(i) * line_height;
-		real x_off = -font.get_bounding_box(span).p.x();
 
-		// Scroll the line back and forth when it is wider than the widget and marquee is on.
-		// The scroll moves with an eased (in-out quadratic) motion, so a wider overflow takes
-		// longer to scroll. At each end the marquee stays still for marquee_pause_ms before
-		// reversing.
-		real scroll = 0;
-		if (marquee && total_w > widget_w && marquee_speed > 0) {
-			const real max_off = total_w - widget_w;
+		// Horizontal position of the line within the widget's width. A line that is wider
+		// than the widget and has marquee on is positioned by the current marquee scroll
+		// offset; all other lines are positioned by the static horizontal alignment offset.
+		real x = 0;
+		if (this->is_marquee() && line.width > dims.x() && marquee_speed > 0) {
+			// Scroll the line back and forth. The scroll moves with an eased (in-out
+			// quadratic) motion, so a wider overflow takes longer to scroll. At each end the
+			// marquee stays still for marquee_pause_ms before reversing.
+			const real max_off = line.width - dims.x();
 			const real leg = max_off / marquee_speed; // one direction, seconds
 			const real pause = real(marquee_pause_ms) / real(1000); // pause at each end, seconds
 			const real cycle = 2 * (leg + pause); // full back-and-forth including pauses
@@ -174,23 +190,45 @@ void text::render(const ruis::mat4& matrix) const
 			} else {
 				tri = 0; // pause at the start
 			}
-			scroll = -max_off * tri;
+			// A scrolling line spans the whole widget, so the static alignment offset does
+			// not apply. The marquee always starts from the beginning of the line.
+			x = -max_off * tri;
+		} else {
+			switch (this->params.align.x().get()) {
+				case ruis::align::front:
+					break;
+				case ruis::align::undefined:
+					[[fallthrough]];
+				case ruis::align::center:
+					x = (dims.x() - line.width) / 2;
+					break;
+				case ruis::align::back:
+					x = dims.x() - line.width;
+					break;
+			}
 		}
 
+		// The final offset is rounded to integer pixels so that the glyphs land on whole
+		// pixel positions: a fractional position would be rendered blurred.
+		const ruis::vec2 offset = round(ruis::vec2(
+			x - font.get_bounding_box(line.span).p.x(), //
+			vertical_offset + font.get_ascender() + real(i) * font.get_line_height()
+		));
+
 		ruis::mat4 matr(matrix);
-		matr.translate(x_off + scroll, y_off);
+		matr.translate(offset.x(), offset.y());
 		font.render(
 			this->ctx().ren(), //
 			matr, //
 			this->get_color(), //
-			span
+			line.span
 		);
 
 		// Draw the ellipsis right after a truncated line.
-		if (line.ellipsized && span.size() != 0) {
-			const real adv = font.get_advance(span);
+		if (line.ellipsized && line.span.size() != 0) {
+			const real adv = font.get_advance(line.span);
 			ruis::mat4 em(matrix);
-			em.translate(x_off + scroll + adv, y_off);
+			em.translate(offset.x() + adv, offset.y());
 			font.render(
 				this->ctx().ren(), //
 				em, //

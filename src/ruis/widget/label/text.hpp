@@ -27,7 +27,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <vector>
 
 #include "../../res/font.hpp"
+#include "../../style/styled.hpp"
 #include "../../updateable.hpp"
+#include "../../util/align.hpp"
 #include "../../util/text_lines_layout.hpp"
 #include "../base/text_string_widget.hpp"
 #include "../widget.hpp"
@@ -39,7 +41,8 @@ namespace ruis {
  * This widget shows text. The text can be drawn on a single line (the default) or wrapped to
  * multiple lines (see specific_parameters::multiline). Text that overflows the widget's width
  * is either truncated with an ellipsis or scrolled back and forth when marquee mode is enabled
- * (see specific_parameters::marquee).
+ * (see specific_parameters::marquee). The text can be aligned within the widget's rectangle
+ * (see specific_parameters::align).
  * From GUI script it can be instantiated as "text".
  */
 // NOLINTNEXTLINE(bugprone-incorrect-enable-shared-from-this, "std::shared_from_this is public via text_string_widget")
@@ -77,6 +80,24 @@ public:
 		 * Defaults to false.
 		 */
 		bool marquee = false;
+
+		/**
+		 * @brief Alignment of the text within the widget.
+		 * The horizontal and vertical alignment of the text within the widget's rectangle,
+		 * using the same values as the alignment in layout_parameters.
+		 * The alignment takes effect when the widget is bigger than the text:
+		 * - horizontally each line is aligned separately: front (left), center or back (right).
+		 *   In multiline mode the back (right) alignment aligns every line to the right edge.
+		 * - vertically the whole block of lines is aligned: front (top), center or back (bottom).
+		 *   The back (bottom) alignment aligns the last line to the widget's bottom edge, so when
+		 *   the text block is taller than the widget the first lines extend beyond the widget's
+		 *   top edge.
+		 * In marquee mode a line wider than the widget is positioned by the marquee scroll and the
+		 * horizontal alignment has no effect on it: the marquee always starts from the beginning
+		 * of the line.
+		 * Defaults to undefined, which is the same as center.
+		 */
+		r4::vector2<styled<ruis::align>> align = {ruis::align::undefined, ruis::align::undefined};
 	};
 
 	struct parameters {
@@ -134,7 +155,7 @@ public:
 	 */
 	bool is_multiline() const noexcept
 	{
-		return this->specific_params.multiline;
+		return this->params.multiline;
 	}
 
 	/**
@@ -143,7 +164,7 @@ public:
 	 */
 	bool is_marquee() const noexcept
 	{
-		return this->specific_params.marquee;
+		return this->params.marquee;
 	}
 
 	/**
@@ -167,7 +188,7 @@ private:
 	// subsequent lines.
 	std::vector<text_line_span> lines;
 
-	specific_parameters specific_params;
+	specific_parameters params;
 
 	// Total elapsed time (in milliseconds) spent in marquee mode, used to derive the current
 	// marquee phase. Only advanced while the widget is subscribed for updates.
