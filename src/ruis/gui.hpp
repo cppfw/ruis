@@ -218,9 +218,9 @@ public:
 	 * - 'send_key { action { press | release } key { <name> } }': inject a key event.
 	 * - 'send_character_input { string { <text> } [ key { <name> } ] }': inject a
 	 *   character input event; the associated key is optional (defaults to unknown).
-	 * - 'send_to_root { <command> }': forward <command> to the root widget's
+	 * - 'for_root { <command> }': forward <command> to the root widget's
 	 *   probe(); the response is the root widget's probe response.
-	 * - 'send_to_focused { <command> }': forward <command> to the focused widget's
+	 * - 'for_focused { <command> }': forward <command> to the focused widget's
 	 *   probe(); if there is no focused widget, an error is returned.
 	 *
 	 * The 'send_mouse_*', 'send_key' and 'send_character_input' commands return a

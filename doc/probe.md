@@ -425,12 +425,12 @@ parsed with `ruis::make_vec2`).
 
 | command | form | notes |
 | ------- | ---- | ----- |
-| `send_to_root` | `send_to_root { <command> }` | run `<command>` on the root widget |
-| `send_to_focused` | `send_to_focused { <command> }` | run `<command>` on the focused widget; `error { no_focused_widget }` if there is none |
+| `for_root` | `for_root { <command> }` | run `<command>` on the root widget |
+| `for_focused` | `for_focused { <command> }` | run `<command>` on the focused widget; `error { no_focused_widget }` if there is none |
 
 The response is **exactly the probe response of the target widget** (like the
 `for` command), flattened from the widget's `probe_response_set` to a forest.
-For `send_to_focused` with no focused widget the response is a `ruis::gui`
+For `for_focused` with no focused widget the response is a `ruis::gui`
 error section instead: `error { no_focused_widget }`.
 
 ## The application-level probe

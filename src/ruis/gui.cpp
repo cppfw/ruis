@@ -302,12 +302,12 @@ tml::forest gui::probe(const tml::tree& command)
 		provider.str = utki::to_utf32(str);
 		this->send_character_input(provider, k);
 		return make_gui_ok();
-	} else if (command.value == "send_to_root") {
+	} else if (command.value == "for_root") {
 		if (command.children.empty()) {
 			return make_gui_error("malformed_command");
 		}
 		return flatten(this->get_root().probe(command.children.front()));
-	} else if (command.value == "send_to_focused") {
+	} else if (command.value == "for_focused") {
 		if (command.children.empty()) {
 			return make_gui_error("malformed_command");
 		}

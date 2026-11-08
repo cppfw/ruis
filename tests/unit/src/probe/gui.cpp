@@ -330,14 +330,14 @@ const tst::set set("gui_probe", [](tst::suite& suite) {
 		check_error_response(resp, "crawler::to() failed, reached end of node list");
 	});
 
-	suite.add("send_to_root", [] {
+	suite.add("for_root", [] {
 		auto ctx = make_dummy_context();
 		auto root = utki::make_shared<ruis::container>(ctx, ruis::container::all_parameters(), ruis::widget_list{});
 		auto gui = make_gui(ctx, root);
 
 		// the response must be exactly the flattened root widget's probe response
 		const auto resp = gui->probe(tml::tree(
-			tml::leaf("send_to_root"), //
+			tml::leaf("for_root"), //
 			{tml::tree(tml::leaf("get_state"))}
 		));
 		const auto direct = root.get().probe(tml::tree(tml::leaf("get_state")));
@@ -345,19 +345,19 @@ const tst::set set("gui_probe", [](tst::suite& suite) {
 		tst::check(resp == direct_f, SL);
 	});
 
-	suite.add("send_to_focused_no_focus", [] {
+	suite.add("for_focused_no_focus", [] {
 		auto ctx = make_dummy_context();
 		auto root = utki::make_shared<ruis::container>(ctx, ruis::container::all_parameters(), ruis::widget_list{});
 		auto gui = make_gui(ctx, root);
 
 		const auto resp = gui->probe(tml::tree(
-			tml::leaf("send_to_focused"), //
+			tml::leaf("for_focused"), //
 			{tml::tree(tml::leaf("get_state"))}
 		));
 		check_error_response(resp, "no_focused_widget");
 	});
 
-	suite.add("send_to_focused", [] {
+	suite.add("for_focused", [] {
 		auto ctx = make_dummy_context();
 		auto root = utki::make_shared<ruis::container>(ctx, ruis::container::all_parameters(), ruis::widget_list{});
 		auto gui = make_gui(ctx, root);
@@ -365,7 +365,7 @@ const tst::set set("gui_probe", [](tst::suite& suite) {
 		// focus the root widget; the response must be exactly its flattened probe response
 		root.get().focus();
 		const auto resp = gui->probe(tml::tree(
-			tml::leaf("send_to_focused"), //
+			tml::leaf("for_focused"), //
 			{tml::tree(tml::leaf("get_state"))}
 		));
 		const auto direct = root.get().probe(tml::tree(tml::leaf("get_state")));
