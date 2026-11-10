@@ -1,3 +1,9 @@
+libruis (0.6.25) unstable; urgency=medium
+
+  * probe
+
+ -- Ivan Gagis <igagis@gmail.com>  Tue, 10 Nov 2026 23:58:49 +0200
+
 libruis (0.6.24) unstable; urgency=medium
 
   * stuff
