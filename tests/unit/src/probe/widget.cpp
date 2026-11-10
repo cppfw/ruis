@@ -615,10 +615,10 @@ const tst::set set("widget_probe", [](tst::suite& suite) {
 
 		// the base64-encoded PNG bytes
 		const auto& b64 = tml::const_crawler(f) //
-						 .to("ruis::widget") //
-						 .in() //
-						 .get()
-						 .value;
+							  .to("ruis::widget") //
+							  .in() //
+							  .get()
+							  .value;
 
 		// decode the base64 back to the PNG bytes
 		const auto png = utki::base64_decode(b64.string);
