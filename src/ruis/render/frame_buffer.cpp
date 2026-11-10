@@ -85,3 +85,8 @@ void frame_buffer::apply(std::function<void()> func)
 
 	func();
 }
+
+rasterimage::image_variant frame_buffer::get_color_pixels()
+{
+	throw std::logic_error("frame_buffer::get_color_pixels(): not implemented by this renderer");
+}

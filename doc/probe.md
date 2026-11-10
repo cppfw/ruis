@@ -136,18 +136,17 @@ widget. `cache.dirty` means the cached content is stale.
 ### `get_abs_rect` (handled by `widget`)
 
 No parameters. Adds a single section named after the widget's class reporting
-the widget's absolute rectangle (the value of `get_absolute_rect()`) as an
-`abs_rect` field:
+the widget's absolute rectangle (the value of `get_absolute_rect()`). The
+rectangle is reported as its component nodes, `p { .. .. }` and `d { .. .. }`,
+placed directly as the section's children (no enclosing `abs_rect` node):
 
 ```
 ruis::widget {
-	abs_rect {
-		p {
-			.. ..
-		}
-		d {
-			.. ..
-		}
+	p {
+		.. ..
+	}
+	d {
+		.. ..
 	}
 }
 ```
@@ -155,25 +154,44 @@ ruis::widget {
 ### `get_index` (handled by `widget`)
 
 No parameters. Adds a single section named after the widget's class reporting
-the widget's **index path from the root widget** as an `index` field. The path
-lists one index per level, from the root down: the first value is the index of
-the topmost ancestor (the direct child of the root) within the root, and the
-last value is the index of the widget itself within its parent. The root widget
-itself yields an **empty** path.
+the widget's **index path from the root widget**. The path is reported as one
+leaf per level, from the root down, placed directly as the section's children
+(no enclosing `index` node): the first value is the index of the topmost
+ancestor (the direct child of the root) within the root, and the last value is
+the index of the widget itself within its parent. The root widget itself yields
+an **empty** path (an empty section).
 
-The path can be used verbatim as the `index` addressing node of the `for`
-command run on the root widget: `get_index` on a widget produces the address
-that reaches that same widget.
+The reported leaves are the same indices, in the same order, that the `index`
+addressing node of the `for` command (run on the root widget) expects; wrap
+them in an `index { .. }` node to address that widget.
 
 ```
 ruis::widget {
-	index {
-		10
-		3
-		12
-	}
+	10
+	3
+	12
 }
 ```
+
+### `get_render` (handled by `widget`)
+
+No parameters. Renders the widget into a fresh framebuffer, reads the color
+attachment back, encodes it as a PNG and reports it directly as the section's
+single child, whose value is the **base64-encoded** PNG data (no enclosing
+`render` node):
+
+```
+ruis::widget {
+	iVBORw0KGgo...<base64>...
+}
+```
+
+The value is the base64 string, written **unquoted** (base64's alphabet contains
+none of the characters that force tml to quote a string). Because the response
+carries a whole image it is **large** (about 4/3 of the PNG size) — this is a
+dead-weight debugging command, not something to poll in a loop.
+The captured image is the widget's own rectangle in size, oriented right-side
+up (**top-down** row order).
 
 ### `get_children` (handled by `container`)
 

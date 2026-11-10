@@ -928,14 +928,19 @@ public:
 	 *   depth, focus and cache state.
 	 * - 'get_abs_rect' (non-fold): no parameters. Adds a single section named
 	 *   after the widget's class which reports the widget's absolute rectangle
-	 *   (get_absolute_rect()) as an 'abs_rect' field.
+	 *   (get_absolute_rect()) as its component nodes (p, d), with no enclosing
+	 *   'abs_rect' node.
 	 * - 'get_index' (non-fold): no parameters. Adds a single section named
 	 *   after the widget's class which reports the widget's index path from
-	 *   the root widget as an 'index' field: the first value is the index of
-	 *   the topmost ancestor within the root and the last is the index of the
-	 *   widget within its parent (the root widget itself yields an empty path).
-	 *   The path can be used as the 'index' addressing node of the 'for'
-	 *   command run on the root widget.
+	 *   the root widget as one leaf per level, with no enclosing 'index' node:
+	 *   the first value is the index of the topmost ancestor within the root
+	 *   and the last is the index of the widget within its parent (the root
+	 *   widget itself yields an empty section). The leaves are the indices, in
+	 *   order, that the 'index' addressing node of the 'for' command expects.
+	 * - 'get_render' (non-fold): no parameters. Renders the widget into a fresh
+	 *   framebuffer, reads the color attachment back, encodes it as a PNG and
+	 *   reports the base64-encoded PNG data directly as the section's single
+	 *   child, with no enclosing 'render' node.
 	 *
 	 * @param command - probe command.
 	 * @return probe response.

@@ -1,3 +1,5 @@
+#include <fsif/vector_file.hpp>
+#include <rasterimage/image_variant.hpp>
 #include <ruis/gui.hpp>
 #include <ruis/widget/container.hpp>
 #include <ruis/widget/widget.hpp>
@@ -5,6 +7,7 @@
 #include <tml/tree.hpp>
 #include <tst/check.hpp>
 #include <tst/set.hpp>
+#include <utki/base64.hpp>
 
 #include "../../../harness/util/dummy_context.hpp"
 
@@ -387,7 +390,7 @@ const tst::set set("widget_probe", [](tst::suite& suite) {
 
 		const tml::forest f(resp.begin(), resp.end());
 
-		// a single 'ruis::widget' section carrying the 'abs_rect' field
+		// a single 'ruis::widget' section carrying the rect's component nodes (p, d) directly
 		tst::check(
 			f.size() == 1,
 			[&](auto& o) {
@@ -403,11 +406,10 @@ const tst::set set("widget_probe", [](tst::suite& suite) {
 			SL
 		);
 
-		// a fresh standalone widget: the absolute rect is at (0,0) with size (-1,-1)
+		// a fresh standalone widget: the absolute rect is at (0,0) with size (-1,-1); the
+		// rectangle's component nodes (p, d) are direct children of the section
 		const auto& apx = tml::const_crawler(f) //
 							  .to("ruis::widget") //
-							  .in() //
-							  .to("abs_rect") //
 							  .in() //
 							  .to("p") //
 							  .in() //
@@ -422,8 +424,6 @@ const tst::set set("widget_probe", [](tst::suite& suite) {
 		);
 		const auto& adx = tml::const_crawler(f) //
 							  .to("ruis::widget") //
-							  .in() //
-							  .to("abs_rect") //
 							  .in() //
 							  .to("d") //
 							  .in() //
@@ -524,7 +524,7 @@ const tst::set set("widget_probe", [](tst::suite& suite) {
 
 		const tml::forest f(resp.begin(), resp.end());
 
-		// a single 'ruis::widget' section carrying the 'index' field
+		// a single 'ruis::widget' section carrying the index-path components directly
 		tst::check(
 			f.size() == 1,
 			[&](auto& o) {
@@ -544,8 +544,6 @@ const tst::set set("widget_probe", [](tst::suite& suite) {
 		const auto& first = tml::const_crawler(f) //
 								.to("ruis::widget") //
 								.in() //
-								.to("index") //
-								.in() //
 								.get()
 								.value;
 		tst::check(
@@ -559,8 +557,6 @@ const tst::set set("widget_probe", [](tst::suite& suite) {
 		// second component: the index of target in c1 = 2
 		const auto& second = tml::const_crawler(f) //
 								 .to("ruis::widget") //
-								 .in() //
-								 .to("index") //
 								 .in() //
 								 .next() //
 								 .get()
@@ -578,13 +574,74 @@ const tst::set set("widget_probe", [](tst::suite& suite) {
 		const tml::forest rf(root_resp.begin(), root_resp.end());
 		const auto& ridx = tml::const_crawler(rf) //
 							   .to("ruis::widget") //
-							   .in() //
-							   .to("index") //
 							   .get();
 		tst::check(
 			ridx.children.empty(),
 			[&](auto& o) {
 				o << ridx.children.size();
+			},
+			SL
+		);
+	});
+
+	suite.add("get_render", [] {
+		// the render target size, in pixels
+		constexpr uint32_t w = 8;
+		constexpr uint32_t h = 6;
+
+		auto ctx = make_dummy_context();
+		auto c = utki::make_shared<ruis::container>(ctx, ruis::container::all_parameters(), ruis::widget_list());
+		// give the widget a defined non-zero size, so the render-to-texture FBO has that size
+		c.get().resize(ruis::vec2(w, h));
+
+		const auto resp = c.get().probe(tml::tree(tml::leaf("get_render")));
+
+		// a single 'ruis::widget' section carrying the base64 PNG directly
+		const tml::forest f(resp.begin(), resp.end());
+		tst::check(
+			f.size() == 1,
+			[&](auto& o) {
+				o << f.size();
+			},
+			SL
+		);
+		tst::check(
+			f[0].value == "ruis::widget",
+			[&](auto& o) {
+				o << f[0].value.string;
+			},
+			SL
+		);
+
+		// the base64-encoded PNG bytes
+		const auto& b64 = tml::const_crawler(f) //
+						 .to("ruis::widget") //
+						 .in() //
+						 .get()
+						 .value;
+
+		// decode the base64 back to the PNG bytes
+		const auto png = utki::base64_decode(b64.string);
+		tst::check(
+			!png.empty(),
+			[&](auto& o) {
+				o << png.size();
+			},
+			SL
+		);
+
+		// round-trip: decode the PNG (read_png throws if the bytes are not a valid PNG)
+		// and check that the dimensions match the widget size
+		fsif::vector_file fi;
+		{
+			fsif::file::guard guard(fi, fsif::mode::write);
+			fi.write(utki::make_span(png));
+		}
+		const auto im = rasterimage::read_png(fi);
+		tst::check(
+			im.dims().x() == w && im.dims().y() == h,
+			[&](auto& o) {
+				o << im.dims().x() << "x" << im.dims().y();
 			},
 			SL
 		);

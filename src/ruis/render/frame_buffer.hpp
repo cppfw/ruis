@@ -22,6 +22,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #pragma once
 
 #include <rasterimage/dimensioned.hpp>
+#include <rasterimage/image_variant.hpp>
 #include <utki/shared_ref.hpp>
 
 #include "texture_2d.hpp"
@@ -62,6 +63,13 @@ public:
 	virtual ~frame_buffer() = default;
 
 	void apply(std::function<void()> func);
+
+	/**
+	 * @brief Read back the color attachment pixels to CPU RAM (the screenshot primitive).
+	 *
+	 * The default implementation throws; the OpenGL / OpenGL ES renderers override it.
+	 */
+	virtual rasterimage::image_variant get_color_pixels();
 
 private:
 };

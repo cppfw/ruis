@@ -26,6 +26,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <iterator>
 #include <vector>
 
+#include <fsif/vector_file.hpp>
+#include <rasterimage/image_variant.hpp>
+#include <utki/base64.hpp>
 #include <utki/debug.hpp>
 
 #include "../context.hpp"
@@ -605,56 +608,65 @@ std::vector<std::size_t> get_index_path(const widget& w)
 
 widget::probe_response_set widget::probe(const tml::tree& command)
 {
+	// The response is a single section named after this widget's demangled type. Each command
+	// branch below fills in its children, and the section is returned once, after the if/else
+	// chain. A single-valued command places its value as a direct child (no wrapper named after
+	// the command, mirroring how get_state reports 'rect' without a 'state' wrapper). Unknown
+	// commands yield an empty response.
+	tml::tree response(tml::leaf(utki::demangle(typeid(widget))));
+
 	if (command.value == "get_state") {
-		probe_response_set ret;
-		ret.insert(tml::tree(
-			tml::leaf(utki::demangle(typeid(widget))), //
-			// clang-format off
-			{
-				tml::tree("id"s, {tml::leaf(this->id())}),
-				to_tml(this->get_layout_params_const()),
-				tml::tree("rect"s, to_tml(this->rect())),
-				tml::tree("layout_dirty"s, {to_tml(this->is_layout_dirty())}),
-				tml::tree("clip"s, {to_tml(this->is_clip_enabled())}),
-				tml::tree("visible"s, {to_tml(this->is_visible())}),
-				tml::tree("enabled"s, {to_tml(this->is_enabled())}),
-				tml::tree("depth"s, {to_tml(this->is_depth_enabled())}),
-				tml::tree("focused"s, {to_tml(this->is_focused())}),
-				tml::tree("cache"s, {
-					tml::tree("enabled"s, {to_tml(this->is_cache_enabled())}),
-					tml::tree("dirty"s, {to_tml(this->cache_dirty)}),
-					tml::tree("present"s, {to_tml(this->cache_frame_buffer != nullptr)}),
-				}),
-			} // clang-format on
-		));
-		return ret;
+		// clang-format off
+		response.children = {
+			tml::tree("id"s, {tml::leaf(this->id())}),
+			to_tml(this->get_layout_params_const()),
+			tml::tree("rect"s, to_tml(this->rect())),
+			tml::tree("layout_dirty"s, {to_tml(this->is_layout_dirty())}),
+			tml::tree("clip"s, {to_tml(this->is_clip_enabled())}),
+			tml::tree("visible"s, {to_tml(this->is_visible())}),
+			tml::tree("enabled"s, {to_tml(this->is_enabled())}),
+			tml::tree("depth"s, {to_tml(this->is_depth_enabled())}),
+			tml::tree("focused"s, {to_tml(this->is_focused())}),
+			tml::tree("cache"s, {
+				tml::tree("enabled"s, {to_tml(this->is_cache_enabled())}),
+				tml::tree("dirty"s, {to_tml(this->cache_dirty)}),
+				tml::tree("present"s, {to_tml(this->cache_frame_buffer != nullptr)}),
+			}),
+		};
+		// clang-format on
 	} else if (command.value == "get_abs_rect") {
-		probe_response_set ret;
-		ret.insert(tml::tree(
-			tml::leaf(utki::demangle(typeid(widget))), //
-			// clang-format off
-			{
-				tml::tree("abs_rect"s, to_tml(this->get_absolute_rect())),
-			} // clang-format on
-		));
-		return ret;
+		// the rectangle's component nodes (p, d) go in directly as children, no 'abs_rect' wrapper
+		response.children = to_tml(this->get_absolute_rect());
 	} else if (command.value == "get_index") {
+		// the index-path components go in directly as children, no 'index' wrapper
 		const auto path = get_index_path(*this);
-		tml::forest index_nodes;
 		for (const std::size_t i : path) {
-			index_nodes.emplace_back(to_tml(i));
+			response.children.emplace_back(to_tml(i));
 		}
-		probe_response_set ret;
-		ret.insert(tml::tree(
-			tml::leaf(utki::demangle(typeid(widget))), //
-			// clang-format off
-			{
-				tml::tree("index"s, index_nodes),
-			} // clang-format on
-		));
-		return ret;
+	} else if (command.value == "get_render") {
+		// Render the widget into a fresh framebuffer, read the color attachment back, encode it
+		// as a PNG in memory and base64-encode the bytes so the image can be transported in the
+		// probe response. Rendering and the pixel readback require the rendering context to be
+		// current, and a probe command is not guaranteed to run inside a current context (the app
+		// drives probe_server::exec() from its main loop, outside the per-frame render), so the
+		// work is wrapped in rendering_context::apply(), which makes the context current and
+		// restores the previous one afterwards.
+		rasterimage::image_variant imvar;
+		this->context.get().renderer.get().rendering_context.get().apply([&]() {
+			imvar = this->render_to_texture().get().get_color_pixels();
+		});
+
+		fsif::vector_file png_file;
+		imvar.write_png(png_file);
+		const auto png_bytes = png_file.reset_data();
+		const auto b64 = utki::base64_encode(png_bytes);
+
+		// the base64 PNG goes in directly as the single child, no 'render' wrapper
+		response.children.emplace_back(tml::leaf(b64));
+	} else {
+		// Unknown commands result in an empty response.
+		return {};
 	}
 
-	// Unknown commands result in an empty response.
-	return {};
+	return {std::move(response)};
 }
