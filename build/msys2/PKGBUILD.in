@@ -52,6 +52,7 @@ makedepends=(
 		"${pkgPrefix}opros"
 		"${pkgPrefix}nitki"
 		"${pkgPrefix}tst"
+		"${pkgPrefix}setka"
 	)
 checkdepends=('myci')
 optdepends=()

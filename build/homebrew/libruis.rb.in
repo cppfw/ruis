@@ -19,6 +19,7 @@ class Libruis < Formula
   depends_on "libr4"
   depends_on "libsvgdom"
   depends_on "libsvgren"
+  depends_on "libsetka"
   
   # use gmake here because otherwise homebrew uses default Mac's make which is of too old version 3.81
   def install
