@@ -291,7 +291,7 @@ constexpr auto max_history_records = 10;
 
 void flickable::push_touch_move_to_history(touch_move_info tm)
 {
-	constexpr auto max_history_age_ms = 100;
+	constexpr auto max_history_age_ms = 50;
 	constexpr auto min_time_between_points_ms = 1;
 
 	// drop too old records
