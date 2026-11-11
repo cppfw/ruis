@@ -82,7 +82,12 @@ public:
 		// returns dt to wait before next update
 		uint32_t update();
 
-	constexpr static auto default_update_interval_ms = 16;
+	/**
+	 * @brief default update interval.
+	 * The value of 10ms is selected so that it results in more than 60 Hz (which is usual VSYNC rate),
+	 * so it has some reserve on overhead delays to fit in 60 frames per second, but still not 0, so will not result in busy loop.
+	 */
+	constexpr static auto default_update_interval_ms = 10;
 
 	/**
 	 * @brief Subscribe updateable for updates.
