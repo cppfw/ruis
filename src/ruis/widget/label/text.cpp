@@ -43,7 +43,12 @@ text::text(
 		std::move(params.params.text_string),
 		std::move(text)
 	),
-	params(std::move(params.params.specific))
+	params([&]() {
+		if (auto& a = params.params.specific.align.x(); a.get() == ruis::align::undefined) {
+			a = ruis::align::front;
+		}
+		return std::move(params.params.specific);
+	}())
 {
 	this->recompute_lines();
 }

@@ -95,7 +95,8 @@ public:
 		 * In marquee mode a line wider than the widget is positioned by the marquee scroll and the
 		 * horizontal alignment has no effect on it: the marquee always starts from the beginning
 		 * of the line.
-		 * Defaults to undefined, which is the same as center.
+		 * If the horizontal alignment is undefined, the default front (left) alignment is used;
+		 * if the vertical alignment is undefined, the default center alignment is used.
 		 */
 		r4::vector2<styled<ruis::align>> align = {ruis::align::undefined, ruis::align::undefined};
 	};
