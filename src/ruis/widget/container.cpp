@@ -721,6 +721,28 @@ container::probe_response_set container::probe(const tml::tree& command)
 			utki::demangle(typeid(container)), //
 			{tml::tree("children_count"s, {to_tml(this->size())})}
 		));
+	} else if (command.value == "get_tree") {
+		// widget::probe() has already produced the single (final-class) section with
+		// the id (if any) and the rect; get_tree always returns exactly one section.
+		// A std::set only yields const references to its elements, so extract the
+		// section into a node_handle to get mutable access (via value()) and to be
+		// able to move sections out of the set; add a 'children' node built by moving
+		// in each child's recursive get_tree section, then put the modified section
+		// back into ret so the trailing return ret yields it.
+		utki::assert(ret.size() == 1);
+		auto set_node = ret.extract(ret.begin());
+		utki::assert(!set_node.empty());
+		tml::forest children;
+		for (const auto& child : this->children()) {
+			// each child's get_tree also returns exactly one section
+			auto resp = child.get().probe(command);
+			utki::assert(resp.size() == 1);
+			auto n = resp.extract(resp.begin());
+			utki::assert(!n.empty());
+			children.emplace_back(std::move(n.value()));
+		}
+		set_node.value().children.emplace_back("children"s, std::move(children));
+		ret.insert(std::move(set_node));
 	} else if (command.value == "for") {
 		// 'for' command is handled by container only, and the result is returned not by this widget,
 		// so do not wrap it into a section for this container, just return it as is.

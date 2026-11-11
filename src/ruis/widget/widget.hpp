@@ -941,6 +941,13 @@ public:
 	 *   framebuffer, reads the color attachment back, encodes it as a PNG and
 	 *   reports the base64-encoded PNG data directly as the section's single
 	 *   child, with no enclosing 'render' node.
+	 * - 'get_tree' (non-fold): no parameters. Adds a single section named after
+	 *   the widget's final (dynamic) class (not the static 'widget' base),
+	 *   reporting the widget's id in an 'id' node (included only when the id is
+	 *   non-empty) and its rect in a 'rect' node. For a container,
+	 *   container::probe() additionally adds a 'children' node carrying the
+	 *   recursive get_tree section of each child, so the command reports the
+	 *   whole widget subtree rooted at the widget.
 	 *
 	 * @param command - probe command.
 	 * @return probe response.

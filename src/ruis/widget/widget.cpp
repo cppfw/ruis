@@ -663,6 +663,17 @@ widget::probe_response_set widget::probe(const tml::tree& command)
 
 		// the base64 PNG goes in directly as the single child, no 'render' wrapper
 		response.children.emplace_back(tml::leaf(b64));
+	} else if (command.value == "get_tree") {
+		// the section is named after this widget's dynamic (final) type rather
+		// than the static 'widget' base, so the tree reports each node's concrete
+		// class; the id node is included only when the widget has a non-empty id,
+		// and the rect node is always included (same shape as the 'rect' node of
+		// the 'get_state' command)
+		response.value = tml::leaf(utki::demangle(typeid(*this)));
+		if (!this->id().empty()) {
+			response.children.emplace_back(tml::tree("id"s, {tml::leaf(this->id())}));
+		}
+		response.children.emplace_back(tml::tree("rect"s, to_tml(this->rect())));
 	} else {
 		// Unknown commands result in an empty response.
 		return {};

@@ -434,6 +434,12 @@ public:
 	 * - 'get_children' (non-fold): no parameters. The response contains a
 	 *   single section named after this class which reports the number of
 	 *   child widgets in a 'children_count' node.
+	 * - 'get_tree' (non-fold): no parameters. The widget::probe() base
+	 *   implementation produces the single section named after this container's
+	 *   final (dynamic) class with the id (if any) and rect nodes; this override
+	 *   adds a 'children' node to that section carrying the recursive get_tree
+	 *   section of each child, so the response reports the whole widget subtree
+	 *   rooted at this container.
 	 * - 'for' (non-fold): run a probe command on another widget in the tree.
 	 *   The 'for' node has exactly two children: an addressing node and
 	 *   exactly one child which is the command to run. The addressing node is
