@@ -63,4 +63,41 @@ utki::shared_ref<ruis::rectangle_push_button> rectangle_push_button(
 	);
 }
 
+namespace mapping {
+namespace rectangle_push_button {
+utki::shared_ref<ruis::push_button> push_button(
+	const utki::shared_ref<ruis::context>& context, //
+	ruis::push_button::all_parameters params,
+	ruis::widget_list contents
+)
+{
+	// TODO: move this to rectangle_button constructor?
+	if (!params.params.layout) {
+		// pile layout by default
+		params.params.layout = ruis::layout::pile;
+	}
+
+	return make::rectangle_push_button( //
+		context,
+		// clang-format off
+		{
+			.layout_params = std::move(params.layout_params),
+			.widget = std::move(params.widget),
+			.params{
+				.rectangle_button{
+					.rectangle{
+						.padding{
+							.container = std::move(params.params)
+						}
+					}
+				}
+			}
+		},
+		// clang-format on
+		std::move(contents)
+	);
+}
+} // namespace rectangle_push_button
+} // namespace mapping
+
 } // namespace ruis::make

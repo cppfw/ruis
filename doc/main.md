@@ -14,5 +14,10 @@ lives in the separate `doxygen/` directory.
   `specific_parameters` struct tiers (virtual bases, non-virtual bases,
   final-class-specific knobs), naming conventions, and how undefined values
   are substituted with (style) defaults in the widget constructor.
+- [Widget factories](widget_factories.md) — the `ruis::make::...` factory convention: factories of
+  final widgets (in `impl/` subdirs) vs. factories of abstract widgets
+  which construct a default impl, the `ruis::touch::make` sub-namespace,
+  and how applications combine the factories into their own `m::`
+  namespace to write views as uniform expression trees.
 - [Widget probe (tree inspection)](probe.md) — the `widget::probe()` query-style
   API for inspecting the widget tree at runtime for debugging and testing.

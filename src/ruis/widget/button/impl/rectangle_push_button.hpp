@@ -66,6 +66,23 @@ utki::shared_ref<ruis::rectangle_push_button> rectangle_push_button(
 	ruis::rectangle_push_button::all_parameters params,
 	ruis::widget_list contents
 );
+
+namespace mapping {
+namespace rectangle_push_button {
+/**
+ * @brief Creates a new rectangle push button from given parameters and
+ * children and returns it as the abstract push_button.
+ * An application can make the rectangle push button the default
+ * 'push_button' impl of its 'm' namespace with a single using declaration:
+ * 'using ruis::make::mapping::rectangle_push_button::push_button;'.
+ */
+utki::shared_ref<ruis::push_button> push_button(
+	const utki::shared_ref<ruis::context>& context,
+	ruis::push_button::all_parameters params,
+	ruis::widget_list contents
+);
+} // namespace rectangle_push_button
+} // namespace mapping
 } // namespace make
 
 } // namespace ruis
