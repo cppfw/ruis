@@ -7,15 +7,11 @@
 #include <ruis/widget/button/selection_box.hpp>
 #include <ruis/widget/label/padding.hpp>
 
+#include "style.hpp"
+
 using namespace std::string_literals;
 
 using namespace ruis::length_literals;
-
-namespace {
-namespace m {
-using namespace ruis::make;
-} // namespace m
-} // namespace
 
 namespace {
 utki::shared_ref<ruis::widget> make_radio_button(

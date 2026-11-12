@@ -23,6 +23,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../../../util/util.hpp"
 
+using namespace std::string_view_literals;
+
 using namespace ruis;
 
 nine_patch_push_button::nine_patch_push_button( //
@@ -57,3 +59,46 @@ void nine_patch_push_button::on_pressed_change()
 	this->nine_patch_button::on_pressed_change();
 	this->push_button::on_pressed_change();
 }
+
+namespace ruis::make {
+namespace mapping {
+namespace nine_patch_push_button {
+utki::shared_ref<ruis::push_button> push_button(
+	const utki::shared_ref<ruis::context>& context, //
+	ruis::push_button::all_parameters params,
+	widget_list children
+)
+{
+	if (!params.params.layout) {
+		// pile layout by default
+		params.params.layout = ruis::layout::pile;
+	}
+
+	auto& c = context.get();
+	return make::nine_patch_push_button( //
+		context,
+		// clang-format off
+		{
+			.layout_params = std::move(params.layout_params),
+			.widget = std::move(params.widget),
+			.params{
+				.nine_patch_button{
+					.nine_patch{
+						.padding{
+							.container = std::move(params.params)
+						}
+					},
+					.specific{
+						.unpressed_nine_patch = c.loader().load<res::nine_patch>("ruis_npt_button_normal"sv),
+						.pressed_nine_patch = c.loader().load<res::nine_patch>("ruis_npt_button_pressed"sv)
+					}
+				}
+			}
+        },
+		// clang-format on
+		std::move(children)
+	);
+}
+} // namespace nine_patch_push_button
+} // namespace mapping
+} // namespace ruis::make

@@ -76,6 +76,22 @@ inline utki::shared_ref<ruis::nine_patch_push_button> nine_patch_push_button(
 	);
 }
 
+namespace mapping {
+namespace nine_patch_push_button {
+/**
+ * @brief Creates a new nine-patch push button from given parameters and
+ * children and returns it as the abstract push_button.
+ * An application can make the nine-patch push button the default
+ * 'push_button' impl of its 'm' namespace with a single using declaration:
+ * 'using ruis::make::mapping::nine_patch_push_button::push_button;'.
+ */
+utki::shared_ref<ruis::push_button> push_button(
+	const utki::shared_ref<ruis::context>& context, //
+	ruis::push_button::all_parameters params,
+	widget_list children
+);
+} // namespace nine_patch_push_button
+} // namespace mapping
 } // namespace make
 
 } // namespace ruis

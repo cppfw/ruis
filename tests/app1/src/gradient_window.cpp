@@ -3,14 +3,12 @@
 #include <ruis/widget/button/push_button.hpp>
 #include <ruis/widget/label/gradient.hpp>
 
+#include "style.hpp"
+
 using namespace std::string_literals;
 using namespace std::string_view_literals;
 
 using namespace ruis::length_literals;
-
-namespace m {
-using namespace ruis::make;
-} // namespace m
 
 utki::shared_ref<ruis::window> make_gradient_window(
 	const utki::shared_ref<ruis::context>& c, //

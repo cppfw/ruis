@@ -44,10 +44,6 @@ using namespace std::string_literals;
 
 using namespace ruis::length_literals;
 
-namespace m {
-using namespace ruis::make;
-} // namespace m
-
 class application : public ruisapp::application
 {
 	ruisapp::window& window;

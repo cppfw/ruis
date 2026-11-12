@@ -9,15 +9,12 @@
 #include <ruisapp/application.hpp>
 
 #include "new_native_window.hpp"
+#include "style.hpp"
 
 using namespace std::string_literals;
 using namespace std::string_view_literals;
 
 using namespace ruis::length_literals;
-
-namespace m {
-using namespace ruis::make;
-} // namespace m
 
 namespace {
 utki::shared_ref<ruis::push_button> make_push_button(

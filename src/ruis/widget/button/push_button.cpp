@@ -21,9 +21,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "push_button.hpp"
 
-#include "impl/nine_patch_push_button.hpp"
-
-using namespace std::string_view_literals;
+#include "impl/rectangle_push_button.hpp"
 
 using namespace ruis;
 
@@ -103,35 +101,9 @@ utki::shared_ref<ruis::push_button> ruis::make::push_button( //
 	widget_list children
 )
 {
-	if (!params.params.layout) {
-		// pile layout by default
-		params.params.layout = ruis::layout::pile;
-	}
-
-	// TODONEXT: replace this with rectangle_push_button
-
-	auto& c = context.get();
-	return make::nine_patch_push_button( //
+	return mapping::rectangle_push_button::push_button( //
 		context,
-		// clang-format off
-		{
-			.layout_params = std::move(params.layout_params),
-			.widget = std::move(params.widget),
-			.params{
-				.nine_patch_button{
-					.nine_patch{
-						.padding{
-							.container = std::move(params.params)
-						}
-					},
-					.specific{
-						.unpressed_nine_patch = c.loader().load<res::nine_patch>("ruis_npt_button_normal"sv),
-						.pressed_nine_patch = c.loader().load<res::nine_patch>("ruis_npt_button_pressed"sv)
-					}
-				}
-			}
-        },
-		// clang-format on
+		std::move(params),
 		std::move(children)
 	);
 }

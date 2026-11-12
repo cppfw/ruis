@@ -7,12 +7,10 @@
 #include <ruis/widget/label/text.hpp>
 #include <ruisapp/application.hpp>
 
+#include "style.hpp"
+
 using namespace std::string_literals;
 using namespace std::string_view_literals;
-
-namespace m {
-using namespace ruis::make;
-} // namespace m
 
 utki::shared_ref<ruis::widget> make_new_native_window_root_widget(
 	const utki::shared_ref<ruis::context>& c, //

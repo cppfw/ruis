@@ -12,8 +12,10 @@ Key source files (all under `src/ruis/widget/`):
 
 - `button/push_button.{hpp,cpp}` — a factory of an *abstract* widget
   (`ruis::make::push_button`) which constructs a default impl.
-- `button/impl/nine_patch_push_button.hpp` — a *final* widget in an
-  `impl/` subdirectory with its `ruis::make::` factory.
+- `button/impl/nine_patch_push_button.{hpp,cpp}` — a *final* widget in an
+  `impl/` subdirectory with its `ruis::make::` factory and a
+  `ruis::make::mapping::` factory (which loads the default nine-patch
+  images from the resource loader).
 - `button/impl/rectangle_push_button.{hpp,cpp}` — a final widget which
   additionally provides a `ruis::make::mapping::` factory named after the
   abstract widget it implements.
@@ -121,8 +123,9 @@ constructed is decided by how the application's `m::` namespace is
 composed (see below): the `m::` namespace can be tuned to select certain
 concrete impls without touching the view code.
 
-Under the hood, the factory of an abstract widget constructs **one of the
-impls as the default option**: it moves the given parameters into the
+Under the hood, the factory of an abstract widget delegates to the
+**mapping factory** of the default impl (in the `make::mapping`
+sub-namespace, see below), which moves the given parameters into the
 impl's `all_parameters` (which has a different, deeper shape), applies
 any defaults, and returns the abstract type:
 
@@ -134,39 +137,52 @@ utki::shared_ref<ruis::push_button> ruis::make::push_button( //
     widget_list children
 )
 {
-    if (!params.params.layout) {
-        // pile layout by default
-        params.params.layout = ruis::layout::pile;
-    }
-
-    auto& c = context.get();
-    return make::nine_patch_push_button( //
+    return mapping::rectangle_push_button::push_button( //
         context,
-        {
-            .layout_params = std::move(params.layout_params),
-            .widget = std::move(params.widget),
-            .params{
-                .nine_patch_button{
-                    .nine_patch{
-                        .padding{
-                            .container = std::move(params.params)
-                        }
-                    },
-                    .specific{
-                        .unpressed_nine_patch = c.loader().load<res::nine_patch>("ruis_npt_button_normal"sv),
-                        .pressed_nine_patch = c.loader().load<res::nine_patch>("ruis_npt_button_pressed"sv)
-                    }
-                }
-            }
-        },
+        std::move(params),
         std::move(children)
     );
 }
 ```
 
+```cpp
+// src/ruis/widget/button/impl/rectangle_push_button.cpp
+utki::shared_ref<ruis::push_button>
+ruis::make::mapping::rectangle_push_button::push_button( //
+    const utki::shared_ref<ruis::context>& context,
+    ruis::push_button::all_parameters params,
+    ruis::widget_list contents
+)
+{
+    if (!params.params.layout) {
+        // pile layout by default
+        params.params.layout = ruis::layout::pile;
+    }
+
+    return make::rectangle_push_button( //
+        context,
+        {
+            .layout_params = std::move(params.layout_params),
+            .widget = std::move(params.widget),
+            .params{
+                .rectangle_button{
+                    .rectangle{
+                        .padding{
+                            .container = std::move(params.params)
+                        }
+                    }
+                }
+            }
+        },
+        std::move(contents)
+    );
+}
+```
+
 (`ruis::make::text_field` -> `rectangle_text_field` and
-`ruis::make::labeled_text_field` -> `labeled_rectangle_text_field` work
-the same way.)
+`ruis::make::labeled_text_field` -> `labeled_rectangle_text_field` do
+not go through a mapping factory yet and construct the default impl
+directly.)
 
 Notes:
 

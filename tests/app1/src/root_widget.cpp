@@ -8,6 +8,7 @@
 #include "scroll_area_window.hpp"
 #include "sliders_window.hpp"
 #include "spinning_cube_window.hpp"
+#include "style.hpp"
 #include "text_input_window.hpp"
 #include "tree_view_window.hpp"
 #include "vertical_list_window.hpp"
@@ -18,10 +19,6 @@ using namespace std::string_literals;
 using namespace std::string_view_literals;
 
 using namespace ruis::length_literals;
-
-namespace m {
-using namespace ruis::make;
-} // namespace m
 
 utki::shared_ref<ruis::widget> make_root_widget(const utki::shared_ref<ruis::context>& c)
 {

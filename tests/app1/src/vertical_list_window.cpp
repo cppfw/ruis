@@ -4,14 +4,12 @@
 #include <ruis/widget/group/list.hpp>
 #include <ruis/widget/slider/scroll_bar.hpp>
 
+#include "style.hpp"
+
 using namespace std::string_literals;
 using namespace std::string_view_literals;
 
 using namespace ruis::length_literals;
-
-namespace m {
-using namespace ruis::make;
-} // namespace m
 
 utki::shared_ref<ruis::window> make_vertical_list_window(
 	const utki::shared_ref<ruis::context>& c, //

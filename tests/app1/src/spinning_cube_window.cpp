@@ -4,6 +4,7 @@
 #include <ruis/widget/proxy/click_proxy.hpp>
 
 #include "cube_widget.hpp"
+#include "style.hpp"
 
 using namespace std::string_literals;
 using namespace std::string_view_literals;
@@ -11,7 +12,6 @@ using namespace std::string_view_literals;
 using namespace ruis::length_literals;
 
 namespace m {
-using namespace ruis::make;
 using namespace ::make;
 } // namespace m
 

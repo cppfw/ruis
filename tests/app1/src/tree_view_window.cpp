@@ -5,14 +5,12 @@
 #include <ruis/widget/group/tree_view.hpp>
 #include <ruis/widget/slider/scroll_bar.hpp>
 
+#include "style.hpp"
+
 using namespace std::string_literals;
 using namespace std::string_view_literals;
 
 using namespace ruis::length_literals;
-
-namespace m {
-using namespace ruis::make;
-} // namespace m
 
 namespace {
 class tree_view_items_model
