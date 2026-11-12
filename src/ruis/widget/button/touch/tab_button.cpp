@@ -119,6 +119,11 @@ ruis::event_status tab_button::on_mouse_button(const ruis::mouse_button_event& e
 	return this->choice_button::on_mouse_button(event);
 }
 
+void tab_button::on_hovered_change(unsigned pointer_id)
+{
+	this->choice_button::on_hovered_change(pointer_id);
+}
+
 utki::shared_ref<ruis::touch::tab_button> ruis::touch::make::tab_button(
 	const utki::shared_ref<ruis::context>& context, //
 	ruis::touch::tab_button::all_parameters params,

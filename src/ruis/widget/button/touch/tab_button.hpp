@@ -51,6 +51,8 @@ public:
 	);
 
 	ruis::event_status on_mouse_button(const ruis::mouse_button_event& event) override;
+
+	void on_hovered_change(unsigned pointer_id) override;
 };
 
 namespace make {

@@ -51,6 +51,8 @@ protected:
 	void on_pressed_change() override;
 
 	event_status on_mouse_button(const mouse_button_event& e) override;
+
+	void on_hovered_change(unsigned pointer_id) override;
 };
 
 } // namespace ruis

@@ -55,3 +55,8 @@ event_status nine_patch_toggle::on_mouse_button(const mouse_button_event& e)
 	}
 	return this->toggle_button::on_mouse_button(e);
 }
+
+void nine_patch_toggle::on_hovered_change(unsigned pointer_id)
+{
+	this->toggle_button::on_hovered_change(pointer_id);
+}

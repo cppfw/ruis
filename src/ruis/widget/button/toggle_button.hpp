@@ -33,8 +33,18 @@ namespace ruis {
  */
 class toggle_button : virtual public button
 {
+	// the pointer which has pressed the button and is currently holding it down;
+	// the checked state is changed on release, same as push button detects a clicked event
+	bool is_currently_pressed = false;
+
+	// id of the pointer which has pressed the button; only the release of this same
+	// pointer can change the checked state (see on_mouse_button())
+	unsigned pointer_id = 0;
+
 protected:
 	event_status on_mouse_button(const mouse_button_event& event) override;
+
+	void on_hovered_change(unsigned pointer_id) override;
 
 	toggle_button(const utki::shared_ref<ruis::context>& context);
 
