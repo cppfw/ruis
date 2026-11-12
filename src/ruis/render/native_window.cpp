@@ -63,7 +63,7 @@ native_window::cursor_id native_window::push_mouse_cursor(mouse_cursor cursor)
 
 void native_window::pop_mouse_cursor(cursor_id i)
 {
-	auto it = std::find_if(this->cursor_stack.begin(), this->cursor_stack.end(), [i](const cursor_stack_entry& e) {
+	auto it = std::ranges::find_if(this->cursor_stack, [i](const cursor_stack_entry& e) {
 		return e.id == i;
 	});
 

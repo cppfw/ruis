@@ -62,7 +62,7 @@ class native_window
 
 	// the bottom (0) entry is the default cursor, it is never popped
 	std::list<cursor_stack_entry> cursor_stack = {
-		{0, mouse_cursor::arrow}
+		{.id = 0, .cursor = mouse_cursor::arrow}
 	};
 	unsigned next_cursor_id = 1;
 

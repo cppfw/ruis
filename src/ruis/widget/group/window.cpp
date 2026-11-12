@@ -440,8 +440,11 @@ void ruis::window::setup_widgets()
 	this->title_bg = this->try_get_widget_as<color_widget>("ruis_window_title_bg");
 	utki::assert(this->title_bg, SL);
 
-	auto make_mouse_button_handler = [this](ruis::mouse_cursor cursor, render::native_window::cursor_id& cursor_id) {
-		return [this, cursor, &cursor_id](mouse_proxy& mp, const mouse_button_event& e) {
+	auto make_mouse_button_handler = [this](render::native_window::cursor_id& cursor_id) {
+		// cursor_id is captured by reference:
+		// - the stored handler lambda lives shorter than the referenced cursor_id (the member of the owning window object)
+		// - the referenced value is updated by the hovered_change_handler, outside of this lambda
+		return [this, &cursor_id](mouse_proxy& mp, const mouse_button_event& e) {
 			if (e.button != mouse_button::left) {
 				return event_status::propagate;
 			}
@@ -486,7 +489,7 @@ void ruis::window::setup_widgets()
 		auto caption = this->try_get_widget_as<mouse_proxy>("ruis_caption_proxy");
 		utki::assert(caption, SL);
 
-		caption->mouse_button_handler = make_mouse_button_handler(ruis::mouse_cursor::grab, this->caption_cursor_id);
+		caption->mouse_button_handler = make_mouse_button_handler(this->caption_cursor_id);
 
 		caption->mouse_move_handler = [this](
 										  mouse_proxy&, //
@@ -505,8 +508,7 @@ void ruis::window::setup_widgets()
 	{
 		auto w = this->try_get_widget_as<mouse_proxy>("ruis_lt_proxy");
 		utki::assert(w, SL);
-		w->mouse_button_handler =
-			make_mouse_button_handler(ruis::mouse_cursor::top_left_corner, this->lt_border_cursor_id);
+		w->mouse_button_handler = make_mouse_button_handler(this->lt_border_cursor_id);
 		w->mouse_move_handler = [this](
 									mouse_proxy&, //
 									const mouse_move_event& e
@@ -528,8 +530,7 @@ void ruis::window::setup_widgets()
 	{
 		auto w = this->try_get_widget_as<mouse_proxy>("ruis_lb_proxy");
 		utki::assert(w, SL);
-		w->mouse_button_handler =
-			make_mouse_button_handler(ruis::mouse_cursor::bottom_left_corner, this->lb_border_cursor_id);
+		w->mouse_button_handler = make_mouse_button_handler(this->lb_border_cursor_id);
 		w->mouse_move_handler = [this](
 									mouse_proxy&, //
 									const mouse_move_event& e
@@ -553,8 +554,7 @@ void ruis::window::setup_widgets()
 	{
 		auto w = this->try_get_widget_as<mouse_proxy>("ruis_rt_proxy");
 		utki::assert(w, SL);
-		w->mouse_button_handler =
-			make_mouse_button_handler(ruis::mouse_cursor::top_right_corner, this->rt_border_cursor_id);
+		w->mouse_button_handler = make_mouse_button_handler(this->rt_border_cursor_id);
 		w->mouse_move_handler = [this](
 									mouse_proxy&, //
 									const mouse_move_event& e
@@ -578,8 +578,7 @@ void ruis::window::setup_widgets()
 	{
 		auto w = this->try_get_widget_as<mouse_proxy>("ruis_rb_proxy");
 		utki::assert(w, SL);
-		w->mouse_button_handler =
-			make_mouse_button_handler(ruis::mouse_cursor::bottom_right_corner, this->rb_border_cursor_id);
+		w->mouse_button_handler = make_mouse_button_handler(this->rb_border_cursor_id);
 		w->mouse_move_handler = [this](
 									mouse_proxy&, //
 									const mouse_move_event& e
@@ -600,7 +599,7 @@ void ruis::window::setup_widgets()
 	{
 		auto w = this->try_get_widget_as<mouse_proxy>("ruis_l_proxy");
 		utki::assert(w, SL);
-		w->mouse_button_handler = make_mouse_button_handler(ruis::mouse_cursor::left_side, this->l_border_cursor_id);
+		w->mouse_button_handler = make_mouse_button_handler(this->l_border_cursor_id);
 		w->mouse_move_handler = [this](
 									mouse_proxy&, //
 									const mouse_move_event& e
@@ -622,7 +621,7 @@ void ruis::window::setup_widgets()
 	{
 		auto w = this->try_get_widget_as<mouse_proxy>("ruis_r_proxy");
 		utki::assert(w, SL);
-		w->mouse_button_handler = make_mouse_button_handler(ruis::mouse_cursor::right_side, this->r_border_cursor_id);
+		w->mouse_button_handler = make_mouse_button_handler(this->r_border_cursor_id);
 		w->mouse_move_handler = [this](
 									mouse_proxy&, //
 									const mouse_move_event& e
@@ -643,7 +642,7 @@ void ruis::window::setup_widgets()
 	{
 		auto w = this->try_get_widget_as<mouse_proxy>("ruis_t_proxy");
 		utki::assert(w, SL);
-		w->mouse_button_handler = make_mouse_button_handler(ruis::mouse_cursor::top_side, this->t_border_cursor_id);
+		w->mouse_button_handler = make_mouse_button_handler(this->t_border_cursor_id);
 		w->mouse_move_handler = [this](
 									mouse_proxy&, //
 									const mouse_move_event& e
@@ -664,7 +663,7 @@ void ruis::window::setup_widgets()
 	{
 		auto w = this->try_get_widget_as<mouse_proxy>("ruis_b_proxy");
 		utki::assert(w, SL);
-		w->mouse_button_handler = make_mouse_button_handler(ruis::mouse_cursor::bottom_side, this->b_border_cursor_id);
+		w->mouse_button_handler = make_mouse_button_handler(this->b_border_cursor_id);
 		w->mouse_move_handler = [this](
 									mouse_proxy&, //
 									const mouse_move_event& e
