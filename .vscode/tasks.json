@@ -54,9 +54,9 @@
             "group": "build"
         },
         {
-            "label": "run-app",
+            "label": "run-app1",
             "type": "shell",
-            "command": "make run-app",
+            "command": "make run-app1",
             "problemMatcher": [],
             "group": "build"
 		},
@@ -208,37 +208,37 @@
             "group": "build"
 		},
         {
-            "label": "run-app-gles2",
+            "label": "run-app1-gles2",
             "type": "shell",
-            "command": "make run-app ren=gles2",
+            "command": "make run-app1 ren=gles2",
             "problemMatcher": [],
             "group": "build"
         },
         {
-            "label": "run-app-gles2-dev",
+            "label": "run-app1-gles2-dev",
             "type": "shell",
-            "command": "make run-app ren=gles2 config=dev",
+            "command": "make run-app1 ren=gles2 config=dev",
             "problemMatcher": [],
             "group": "build"
         },
         {
-            "label": "run-app-gles2-wayland-dev",
+            "label": "run-app1-gles2-wayland-dev",
             "type": "shell",
-            "command": "make run-app ren=gles2 win=wayland config=dev",
+            "command": "make run-app1 ren=gles2 win=wayland config=dev",
             "problemMatcher": [],
             "group": "build"
         },
         {
-            "label": "run-app-gl-sdl-dev",
+            "label": "run-app1-gl-sdl-dev",
             "type": "shell",
-            "command": "make run-app win=sdl config=dev",
+            "command": "make run-app1 win=sdl config=dev",
             "problemMatcher": [],
             "group": "build"
         },
         {
-            "label": "run-app-dev",
+            "label": "run-app1-dev",
             "type": "shell",
-            "command": "make run-app config=dev",
+            "command": "make run-app1 config=dev",
             "problemMatcher": [],
             "group": "build"
         },
