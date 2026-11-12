@@ -673,7 +673,7 @@ widget::probe_response_set widget::probe(const tml::tree& command)
 		if (!this->id().empty()) {
 			response.children.emplace_back(tml::tree("id"s, {tml::leaf(this->id())}));
 		}
-		response.children.emplace_back(tml::tree("rect"s, to_tml(this->rect())));
+		response.children.emplace_back("rect"s, to_tml(this->rect()));
 	} else {
 		// Unknown commands result in an empty response.
 		return {};
