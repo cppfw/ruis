@@ -21,6 +21,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
+#include <optional>
+
 #include "../../util/length.hpp"
 #include "../base/containing_widget.hpp"
 #include "../label/rectangle.hpp"
@@ -63,18 +65,20 @@ class window :
 	std::shared_ptr<widget> lb_border;
 	std::shared_ptr<widget> rb_border;
 
-	render::native_window::cursor_id caption_cursor_iter;
-	render::native_window::cursor_id lt_border_cursor_iter;
-	render::native_window::cursor_id rt_border_cursor_iter;
-	render::native_window::cursor_id t_border_cursor_iter;
-	render::native_window::cursor_id l_border_cursor_iter;
-	render::native_window::cursor_id r_border_cursor_iter;
-	render::native_window::cursor_id b_border_cursor_iter;
-	render::native_window::cursor_id lb_border_cursor_iter;
-	render::native_window::cursor_id rb_border_cursor_iter;
+	// id of the pointer that grabbed the window (caption or border) for dragging/resizing, nullopt = not grabbed
+	std::optional<unsigned> grabbed_by_pointer_id;
+	ruis::vec2 grab_point;
 
-	bool mouse_captured = false;
-	ruis::vec2 capture_point;
+	// id of the cursor pushed for each drag proxy, 0 = no cursor pushed
+	render::native_window::cursor_id caption_cursor_id = 0;
+	render::native_window::cursor_id lt_border_cursor_id = 0;
+	render::native_window::cursor_id rt_border_cursor_id = 0;
+	render::native_window::cursor_id t_border_cursor_id = 0;
+	render::native_window::cursor_id l_border_cursor_id = 0;
+	render::native_window::cursor_id r_border_cursor_id = 0;
+	render::native_window::cursor_id b_border_cursor_id = 0;
+	render::native_window::cursor_id lb_border_cursor_id = 0;
+	render::native_window::cursor_id rb_border_cursor_id = 0;
 
 	void setup_widgets();
 

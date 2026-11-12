@@ -21,6 +21,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "tiling_area.hpp"
 
+#include <optional>
+
 #include "../label/gap.hpp"
 
 using namespace ruis;
@@ -33,12 +35,13 @@ const auto dragger_size_pp = 5;
 namespace ruis::internal {
 class dragger : public ruis::gap
 {
-	bool grabbed = false;
+	// id of the pointer that grabbed the gap, nullopt = not grabbed
+	std::optional<unsigned> grabbed_by_pointer_id;
 	ruis::vec2 grab_point;
 
 	tiling_area& owner;
 
-	ruis::render::native_window::cursor_id arrows_cursor_iter;
+	ruis::render::native_window::cursor_id arrows_cursor_id = 0; // 0 = no cursor pushed
 
 public:
 	// TODO: use shared_ref?
@@ -67,12 +70,19 @@ public:
 			return event_status::propagate;
 		}
 
-		this->grabbed = (e.action == button_action::press);
-		this->grab_point = e.pos;
+		if (e.action == button_action::press) {
+			// only the first pointer can start grabbing the gap
+			if (!this->grabbed_by_pointer_id.has_value()) {
+				this->grabbed_by_pointer_id = e.pointer_id;
+				this->grab_point = e.pos;
+			}
+		} else {
+			if (this->grabbed_by_pointer_id.has_value() && this->grabbed_by_pointer_id.value() == e.pointer_id) {
+				this->grabbed_by_pointer_id.reset();
 
-		if (!this->grabbed) {
-			if (!this->is_hovered()) {
-				this->context.get().window().pop_mouse_cursor(this->arrows_cursor_iter);
+				if (!this->is_hovered(e.pointer_id)) {
+					this->context.get().window().pop_mouse_cursor(this->arrows_cursor_id);
+				}
 			}
 		}
 
@@ -81,7 +91,7 @@ public:
 
 	event_status on_mouse_move(const ruis::mouse_move_event& e) override
 	{
-		if (!this->grabbed) {
+		if (!this->grabbed_by_pointer_id.has_value() || this->grabbed_by_pointer_id.value() != e.pointer_id) {
 			return event_status::propagate;
 		}
 
@@ -131,12 +141,13 @@ public:
 
 	void on_hovered_change(unsigned pointer_id) override
 	{
-		if (this->grabbed) {
+		// the cursor is not changed while a grab is in progress
+		if (this->grabbed_by_pointer_id.has_value()) {
 			return;
 		}
 
-		if (this->is_hovered() || grabbed) {
-			this->arrows_cursor_iter = this->context.get().window().push_mouse_cursor( //
+		if (this->is_hovered(pointer_id)) {
+			this->arrows_cursor_id = this->context.get().window().push_mouse_cursor( //
 				[&]() {
 					if (this->owner.is_vertical()) {
 						return ruis::mouse_cursor::up_down_arrow;
@@ -146,13 +157,13 @@ public:
 				}()
 			);
 		} else {
-			this->context.get().window().pop_mouse_cursor(this->arrows_cursor_iter);
+			this->context.get().window().pop_mouse_cursor(this->arrows_cursor_id);
 		}
 	}
 
 	void render(const ruis::mat4& matrix) const override
 	{
-		if (this->is_hovered() || this->grabbed) {
+		if (this->is_hovered() || this->grabbed_by_pointer_id.has_value()) {
 			this->ruis::gap::render(matrix);
 		}
 	}

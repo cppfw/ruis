@@ -55,7 +55,16 @@ class native_window
 
 	void set_vsync_enabled(bool enabled);
 
-	std::list<mouse_cursor> cursor_stack = {mouse_cursor::arrow};
+	struct cursor_stack_entry {
+		unsigned id;
+		mouse_cursor cursor;
+	};
+
+	// the bottom (0) entry is the default cursor, it is never popped
+	std::list<cursor_stack_entry> cursor_stack = {
+		{0, mouse_cursor::arrow}
+	};
+	unsigned next_cursor_id = 1;
 
 	virtual void set_mouse_cursor(ruis::mouse_cursor c) {}
 
@@ -116,7 +125,9 @@ public:
 	// ================
 	// = mouse cursor =
 
-	using cursor_id = decltype(cursor_stack)::iterator;
+	// a cursor_id is a unique id of a pushed cursor, it is used to pop it later.
+	// 0 means the cursor was not pushed.
+	using cursor_id = unsigned;
 
 	cursor_id push_mouse_cursor(mouse_cursor cursor);
 	void pop_mouse_cursor(cursor_id i);

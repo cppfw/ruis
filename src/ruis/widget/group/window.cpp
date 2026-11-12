@@ -440,39 +440,44 @@ void ruis::window::setup_widgets()
 	this->title_bg = this->try_get_widget_as<color_widget>("ruis_window_title_bg");
 	utki::assert(this->title_bg, SL);
 
-	auto make_mouse_button_handler = [this](ruis::render::native_window::cursor_id& iter) {
-		return decltype(mouse_proxy::mouse_button_handler)([this, &iter](
-															   mouse_proxy& mp, //
-															   const mouse_button_event& e
-														   ) {
+	auto make_mouse_button_handler = [this](ruis::mouse_cursor cursor, render::native_window::cursor_id& cursor_id) {
+		return [this, cursor, &cursor_id](mouse_proxy& mp, const mouse_button_event& e) {
 			if (e.button != mouse_button::left) {
 				return event_status::propagate;
 			}
 
-			this->mouse_captured = (e.action == button_action::press);
-
 			if (e.action == button_action::press) {
-				this->capture_point = e.pos;
+				// only the first pointer can start dragging/resizing
+				if (!this->grabbed_by_pointer_id.has_value()) {
+					this->grabbed_by_pointer_id = e.pointer_id;
+					this->grab_point = e.pos;
+				}
 			} else {
-				if (!mp.is_hovered()) {
-					this->context.get().window().pop_mouse_cursor(iter);
+				if (this->grabbed_by_pointer_id.has_value() && this->grabbed_by_pointer_id.value() == e.pointer_id) {
+					this->grabbed_by_pointer_id.reset();
+
+					if (!mp.is_hovered(e.pointer_id)) {
+						this->context.get().window().pop_mouse_cursor(cursor_id);
+					}
 				}
 			}
 			return event_status::consumed;
-		});
+		};
 	};
 
-	auto make_hovered_change_handler = [this](ruis::mouse_cursor cursor, render::native_window::cursor_id& iter) {
-		return [this, cursor, &iter](mouse_proxy& mp, unsigned pointer_id) {
-			// LOG("hover = " << mp.is_hovered() << std::endl)
-			// LOG("this->mouse_captured = " << this->mouse_captured << std::endl)
-			if (this->mouse_captured) {
+	auto make_hovered_change_handler = [this](
+										   ruis::mouse_cursor cursor, //
+										   render::native_window::cursor_id& cursor_id
+									   ) {
+		return [this, cursor, &cursor_id](mouse_proxy& mp, unsigned pointer_id) {
+			// the cursor is not changed while a drag is in progress
+			if (this->grabbed_by_pointer_id.has_value()) {
 				return;
 			}
-			if (mp.is_hovered()) {
-				iter = this->context.get().window().push_mouse_cursor(cursor);
+			if (mp.is_hovered(pointer_id)) {
+				cursor_id = this->context.get().window().push_mouse_cursor(cursor);
 			} else {
-				this->context.get().window().pop_mouse_cursor(iter);
+				this->context.get().window().pop_mouse_cursor(cursor_id);
 			}
 		};
 	};
@@ -481,60 +486,58 @@ void ruis::window::setup_widgets()
 		auto caption = this->try_get_widget_as<mouse_proxy>("ruis_caption_proxy");
 		utki::assert(caption, SL);
 
-		caption->mouse_button_handler = make_mouse_button_handler(this->caption_cursor_iter);
+		caption->mouse_button_handler = make_mouse_button_handler(ruis::mouse_cursor::grab, this->caption_cursor_id);
 
 		caption->mouse_move_handler = [this](
 										  mouse_proxy&, //
 										  const mouse_move_event& e
 									  ) {
-			if (this->mouse_captured) {
-				this->move_by(e.pos - this->capture_point);
+			if (this->grabbed_by_pointer_id.has_value() && this->grabbed_by_pointer_id.value() == e.pointer_id) {
+				this->move_by(e.pos - this->grab_point);
 				return event_status::consumed;
 			}
 			return event_status::propagate;
 		};
-		caption->hovered_change_handler = make_hovered_change_handler(
-			ruis::mouse_cursor::grab, //
-			this->caption_cursor_iter
-		);
+		caption->hovered_change_handler =
+			make_hovered_change_handler(ruis::mouse_cursor::grab, this->caption_cursor_id);
 	}
 
 	{
 		auto w = this->try_get_widget_as<mouse_proxy>("ruis_lt_proxy");
 		utki::assert(w, SL);
-		w->mouse_button_handler = make_mouse_button_handler(this->lt_border_cursor_iter);
+		w->mouse_button_handler =
+			make_mouse_button_handler(ruis::mouse_cursor::top_left_corner, this->lt_border_cursor_id);
 		w->mouse_move_handler = [this](
 									mouse_proxy&, //
 									const mouse_move_event& e
 								) {
-			if (this->mouse_captured) {
+			if (this->grabbed_by_pointer_id.has_value() && this->grabbed_by_pointer_id.value() == e.pointer_id) {
 				using std::min;
-				ruis::vec2 d = e.pos - this->capture_point;
+				ruis::vec2 d = e.pos - this->grab_point;
 				d = min(d, this->rect().d - this->empty_min_dim); // clamp top
 				this->move_by(d);
 				this->resize_by(-d);
 			}
 			return event_status::propagate;
 		};
-		w->hovered_change_handler = make_hovered_change_handler(
-			ruis::mouse_cursor::top_left_corner, //
-			this->lt_border_cursor_iter
-		);
+		w->hovered_change_handler =
+			make_hovered_change_handler(ruis::mouse_cursor::top_left_corner, this->lt_border_cursor_id);
 		this->lt_border = w;
 	}
 
 	{
 		auto w = this->try_get_widget_as<mouse_proxy>("ruis_lb_proxy");
 		utki::assert(w, SL);
-		w->mouse_button_handler = make_mouse_button_handler(this->lb_border_cursor_iter);
+		w->mouse_button_handler =
+			make_mouse_button_handler(ruis::mouse_cursor::bottom_left_corner, this->lb_border_cursor_id);
 		w->mouse_move_handler = [this](
 									mouse_proxy&, //
 									const mouse_move_event& e
 								) {
-			if (this->mouse_captured) {
+			if (this->grabbed_by_pointer_id.has_value() && this->grabbed_by_pointer_id.value() == e.pointer_id) {
 				using std::min;
 				using std::max;
-				ruis::vec2 d = e.pos - this->capture_point;
+				ruis::vec2 d = e.pos - this->grab_point;
 				d.x() = min(d.x(), this->rect().d.x() - this->empty_min_dim.x()); // clamp top
 				d.y() = max(d.y(), -(this->rect().d.y() - this->empty_min_dim.y())); // clamp bottom
 				this->move_by(ruis::vec2(d.x(), 0));
@@ -542,25 +545,24 @@ void ruis::window::setup_widgets()
 			}
 			return event_status::propagate;
 		};
-		w->hovered_change_handler = make_hovered_change_handler(
-			ruis::mouse_cursor::bottom_left_corner, //
-			this->lb_border_cursor_iter
-		);
+		w->hovered_change_handler =
+			make_hovered_change_handler(ruis::mouse_cursor::bottom_left_corner, this->lb_border_cursor_id);
 		this->lb_border = w;
 	}
 
 	{
 		auto w = this->try_get_widget_as<mouse_proxy>("ruis_rt_proxy");
 		utki::assert(w, SL);
-		w->mouse_button_handler = make_mouse_button_handler(this->rt_border_cursor_iter);
+		w->mouse_button_handler =
+			make_mouse_button_handler(ruis::mouse_cursor::top_right_corner, this->rt_border_cursor_id);
 		w->mouse_move_handler = [this](
 									mouse_proxy&, //
 									const mouse_move_event& e
 								) {
-			if (this->mouse_captured) {
+			if (this->grabbed_by_pointer_id.has_value() && this->grabbed_by_pointer_id.value() == e.pointer_id) {
 				using std::min;
 				using std::max;
-				ruis::vec2 d = e.pos - this->capture_point;
+				ruis::vec2 d = e.pos - this->grab_point;
 				d.x() = max(d.x(), -(this->rect().d.x() - this->empty_min_dim.x())); // clamp bottom
 				d.y() = min(d.y(), this->rect().d.y() - this->empty_min_dim.y()); // clamp top
 				this->move_by(ruis::vec2(0, d.y()));
@@ -568,127 +570,115 @@ void ruis::window::setup_widgets()
 			}
 			return event_status::propagate;
 		};
-		w->hovered_change_handler = make_hovered_change_handler(
-			ruis::mouse_cursor::top_right_corner, //
-			this->rt_border_cursor_iter
-		);
+		w->hovered_change_handler =
+			make_hovered_change_handler(ruis::mouse_cursor::top_right_corner, this->rt_border_cursor_id);
 		this->rt_border = w;
 	}
 
 	{
 		auto w = this->try_get_widget_as<mouse_proxy>("ruis_rb_proxy");
 		utki::assert(w, SL);
-		w->mouse_button_handler = make_mouse_button_handler(this->rb_border_cursor_iter);
+		w->mouse_button_handler =
+			make_mouse_button_handler(ruis::mouse_cursor::bottom_right_corner, this->rb_border_cursor_id);
 		w->mouse_move_handler = [this](
 									mouse_proxy&, //
 									const mouse_move_event& e
 								) {
-			if (this->mouse_captured) {
+			if (this->grabbed_by_pointer_id.has_value() && this->grabbed_by_pointer_id.value() == e.pointer_id) {
 				using std::max;
-				ruis::vec2 d = e.pos - this->capture_point;
+				ruis::vec2 d = e.pos - this->grab_point;
 				d = max(d, -(this->rect().d - this->empty_min_dim)); // clamp bottom
 				this->resize_by(d);
 			}
 			return event_status::propagate;
 		};
-		w->hovered_change_handler = make_hovered_change_handler(
-			ruis::mouse_cursor::bottom_right_corner, //
-			this->rb_border_cursor_iter
-		);
+		w->hovered_change_handler =
+			make_hovered_change_handler(ruis::mouse_cursor::bottom_right_corner, this->rb_border_cursor_id);
 		this->rb_border = w;
 	}
 
 	{
 		auto w = this->try_get_widget_as<mouse_proxy>("ruis_l_proxy");
 		utki::assert(w, SL);
-		w->mouse_button_handler = make_mouse_button_handler(this->l_border_cursor_iter);
+		w->mouse_button_handler = make_mouse_button_handler(ruis::mouse_cursor::left_side, this->l_border_cursor_id);
 		w->mouse_move_handler = [this](
 									mouse_proxy&, //
 									const mouse_move_event& e
 								) {
-			if (this->mouse_captured) {
+			if (this->grabbed_by_pointer_id.has_value() && this->grabbed_by_pointer_id.value() == e.pointer_id) {
 				using std::min;
-				ruis::vec2 d = e.pos - this->capture_point;
+				ruis::vec2 d = e.pos - this->grab_point;
 				d.x() = min(d.x(), this->rect().d.x() - this->empty_min_dim.x()); // clamp top
 				this->move_by(ruis::vec2(d.x(), 0));
 				this->resize_by(ruis::vec2(-d.x(), 0));
 			}
 			return event_status::propagate;
 		};
-		w->hovered_change_handler = make_hovered_change_handler(
-			ruis::mouse_cursor::left_side, //
-			this->l_border_cursor_iter
-		);
+		w->hovered_change_handler =
+			make_hovered_change_handler(ruis::mouse_cursor::left_side, this->l_border_cursor_id);
 		this->l_border = w;
 	}
 
 	{
 		auto w = this->try_get_widget_as<mouse_proxy>("ruis_r_proxy");
 		utki::assert(w, SL);
-		w->mouse_button_handler = make_mouse_button_handler(this->r_border_cursor_iter);
+		w->mouse_button_handler = make_mouse_button_handler(ruis::mouse_cursor::right_side, this->r_border_cursor_id);
 		w->mouse_move_handler = [this](
 									mouse_proxy&, //
 									const mouse_move_event& e
 								) {
-			if (this->mouse_captured) {
+			if (this->grabbed_by_pointer_id.has_value() && this->grabbed_by_pointer_id.value() == e.pointer_id) {
 				using std::max;
-				ruis::vec2 d = e.pos - this->capture_point;
+				ruis::vec2 d = e.pos - this->grab_point;
 				d.x() = max(d.x(), -(this->rect().d.x() - this->empty_min_dim.x())); // clamp bottom
 				this->resize_by(ruis::vec2(d.x(), 0));
 			}
 			return event_status::propagate;
 		};
-		w->hovered_change_handler = make_hovered_change_handler(
-			ruis::mouse_cursor::right_side, //
-			this->r_border_cursor_iter
-		);
+		w->hovered_change_handler =
+			make_hovered_change_handler(ruis::mouse_cursor::right_side, this->r_border_cursor_id);
 		this->r_border = w;
 	}
 
 	{
 		auto w = this->try_get_widget_as<mouse_proxy>("ruis_t_proxy");
 		utki::assert(w, SL);
-		w->mouse_button_handler = make_mouse_button_handler(this->t_border_cursor_iter);
+		w->mouse_button_handler = make_mouse_button_handler(ruis::mouse_cursor::top_side, this->t_border_cursor_id);
 		w->mouse_move_handler = [this](
 									mouse_proxy&, //
 									const mouse_move_event& e
 								) {
-			if (this->mouse_captured) {
+			if (this->grabbed_by_pointer_id.has_value() && this->grabbed_by_pointer_id.value() == e.pointer_id) {
 				using std::min;
-				ruis::vec2 d = e.pos - this->capture_point;
+				ruis::vec2 d = e.pos - this->grab_point;
 				d.y() = min(d.y(), this->rect().d.y() - this->empty_min_dim.y()); // clamp top
 				this->move_by(ruis::vec2(0, d.y()));
 				this->resize_by(ruis::vec2(0, -d.y()));
 			}
 			return event_status::propagate;
 		};
-		w->hovered_change_handler = make_hovered_change_handler(
-			ruis::mouse_cursor::top_side, //
-			this->t_border_cursor_iter
-		);
+		w->hovered_change_handler = make_hovered_change_handler(ruis::mouse_cursor::top_side, this->t_border_cursor_id);
 		this->t_border = w;
 	}
 
 	{
 		auto w = this->try_get_widget_as<mouse_proxy>("ruis_b_proxy");
 		utki::assert(w, SL);
-		w->mouse_button_handler = make_mouse_button_handler(this->b_border_cursor_iter);
+		w->mouse_button_handler = make_mouse_button_handler(ruis::mouse_cursor::bottom_side, this->b_border_cursor_id);
 		w->mouse_move_handler = [this](
 									mouse_proxy&, //
 									const mouse_move_event& e
 								) {
-			if (this->mouse_captured) {
+			if (this->grabbed_by_pointer_id.has_value() && this->grabbed_by_pointer_id.value() == e.pointer_id) {
 				using std::max;
-				ruis::vec2 d = e.pos - this->capture_point;
+				ruis::vec2 d = e.pos - this->grab_point;
 				d.y() = max(d.y(), -(this->rect().d.y() - this->empty_min_dim.y())); // clamp bottom
 				this->resize_by(ruis::vec2(0, d.y()));
 			}
 			return event_status::propagate;
 		};
-		w->hovered_change_handler = make_hovered_change_handler(
-			ruis::mouse_cursor::bottom_side, //
-			this->b_border_cursor_iter
-		);
+		w->hovered_change_handler =
+			make_hovered_change_handler(ruis::mouse_cursor::bottom_side, this->b_border_cursor_id);
 		this->b_border = w;
 	}
 }

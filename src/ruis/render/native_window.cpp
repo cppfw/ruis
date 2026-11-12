@@ -21,6 +21,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "native_window.hpp"
 
+#include <algorithm>
+#include <iterator>
+
 #include <utki/debug.hpp>
 
 using namespace ruis::render;
@@ -49,22 +52,32 @@ void native_window::set_fullscreen(bool enable)
 
 native_window::cursor_id native_window::push_mouse_cursor(mouse_cursor cursor)
 {
-	this->cursor_stack.push_front(cursor);
+	auto id = this->next_cursor_id++;
+
+	this->cursor_stack.push_front({id, cursor});
 
 	this->set_mouse_cursor(cursor);
 
-	return this->cursor_stack.begin();
+	return id;
 }
 
 void native_window::pop_mouse_cursor(cursor_id i)
 {
-	utki::assert(this->cursor_stack.size() > 1, SL);
-	bool top_cursor = i == this->cursor_stack.begin();
+	auto it = std::find_if(this->cursor_stack.begin(), this->cursor_stack.end(), [i](const cursor_stack_entry& e) {
+		return e.id == i;
+	});
 
-	this->cursor_stack.erase(i);
+	// the cursor was not pushed (or only the default bottom cursor is left), nothing to pop
+	if (it == this->cursor_stack.end() || std::next(it) == this->cursor_stack.end()) {
+		return;
+	}
+
+	bool top_cursor = it == this->cursor_stack.begin();
+
+	this->cursor_stack.erase(it);
 
 	if (top_cursor) {
 		// top cursor has just been removed, set the new top cursor
-		this->set_mouse_cursor(this->cursor_stack.front());
+		this->set_mouse_cursor(this->cursor_stack.front().cursor);
 	}
 }
