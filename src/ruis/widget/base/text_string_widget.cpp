@@ -114,5 +114,9 @@ void text_string_widget::on_reload()
 		this->set_string(std::move(new_wording));
 	}
 
-	this->widget::on_reload();
+	// Call the font_widget base (not the empty widget base) so that the font is
+	// re-evaluated against the current units. This is what makes the text scale when the
+	// screen scale factor (dots per pp) changes, e.g. when a window is moved to a monitor
+	// with a different scale factor on Wayland.
+	this->font_widget::on_reload();
 }
