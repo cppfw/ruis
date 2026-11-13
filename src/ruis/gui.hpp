@@ -213,19 +213,19 @@ public:
 	 * Commands:
 	 * - 'send_mouse_move { pos { x y } id { N } }': inject a mouse move event at
 	 *   position (x, y) for mouse pointer N.
-	 * - 'send_mouse_button { action { press | release } pos { x y } button { <name> } id { N } }':
+	 * - 'send_mouse_button { action { press | release } pos { x y } button { name } id { N } }':
 	 *   inject a mouse button event.
-	 * - 'send_key { action { press | release } key { <name> } }': inject a key event.
-	 * - 'send_character_input { string { <text> } [ key { <name> } ] }': inject a
+	 * - 'send_key { action { press | release } key { name } }': inject a key event.
+	 * - 'send_character_input { string { text } [ key { name } ] }': inject a
 	 *   character input event; the associated key is optional (defaults to unknown).
-	 * - 'for_root { <command> }': forward <command> to the root widget's
+	 * - 'for_root { command }': forward command to the root widget's
 	 *   probe(); the response is the root widget's probe response.
-	 * - 'for_focused { <command> }': forward <command> to the focused widget's
+	 * - 'for_focused { command }': forward command to the focused widget's
 	 *   probe(); if there is no focused widget, an error is returned.
 	 *
 	 * The 'send_mouse_*', 'send_key' and 'send_character_input' commands return a
 	 * single 'ruis::gui' section containing either an 'ok' node (on success) or an
-	 * 'error { <diagnostic> }' node (if a parameter is missing or malformed).
+	 * 'error { diagnostic }' node (if a parameter is missing or malformed).
 	 *
 	 * @param command - probe command.
 	 * @return probe response - a forest of response sections. For the forwarded
