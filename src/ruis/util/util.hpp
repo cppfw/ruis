@@ -28,6 +28,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "../config.hpp"
 #include "../layout/layout_parameters.hpp"
+#include "../widget/widget.hpp"
 
 #include "units.hpp"
 
@@ -120,5 +121,15 @@ const tml::leaf& get_property_value(const tml::tree& p);
  * @return false otherwise.
  */
 bool is_all_undefined(const sides<styled<length>>& s);
+
+/**
+ * @brief Flatten a probe response (a set of sections) into a forest.
+ * The sections are moved out of the given response set (in sorted order) into
+ * a new forest, so the section contents are not deep-copied.
+ * @param resp - the probe response to flatten; it is taken by value, so the
+ *   caller should move its response set in.
+ * @return A forest holding the sections of the response.
+ */
+tml::forest flatten(widget::probe_response_set resp);
 
 } // namespace ruis

@@ -218,12 +218,6 @@ tml::forest make_gui_error(std::string diagnostic)
 	return make_gui_response(std::move(children));
 }
 
-// flatten the widget probe response (a set of sections) to a forest
-tml::forest flatten(const widget::probe_response_set& resp)
-{
-	return {resp.begin(), resp.end()};
-}
-
 } // namespace
 
 tml::forest gui::probe(const tml::tree& command)

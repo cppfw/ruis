@@ -646,5 +646,169 @@ const tst::set set("widget_probe", [](tst::suite& suite) {
 			SL
 		);
 	});
+
+	suite.add("run", [] {
+		auto ctx = make_dummy_context();
+
+		ruis::container::all_parameters p;
+		p.widget.id = "run-test";
+		auto c = utki::make_shared<ruis::container>(ctx, p, ruis::widget_list());
+
+		// command: run { get_state get_index }
+		const tml::tree cmd(
+			tml::leaf("run"), //
+			{
+				tml::tree(tml::leaf("get_state")),
+				tml::tree(tml::leaf("get_index")),
+			}
+		);
+		const auto resp = c.get().probe(cmd);
+
+		// the 'run' command yields a single section named after the widget's class,
+		// whose children are the per-command wrapped responses
+		const tml::forest f(resp.begin(), resp.end());
+		tst::check(
+			f.size() == 1,
+			[&](auto& o) {
+				o << f.size();
+			},
+			SL
+		);
+		tst::check(
+			f[0].value == "ruis::widget",
+			[&](auto& o) {
+				o << f[0].value.string;
+			},
+			SL
+		);
+
+		// two wrapped command nodes, in the order of the child commands
+		tst::check(
+			f[0].children.size() == 2,
+			[&](auto& o) {
+				o << f[0].children.size();
+			},
+			SL
+		);
+		tst::check(
+			f[0].children[0].value == "get_state",
+			[&](auto& o) {
+				o << f[0].children[0].value.string;
+			},
+			SL
+		);
+		tst::check(
+			f[0].children[1].value == "get_index",
+			[&](auto& o) {
+				o << f[0].children[1].value.string;
+			},
+			SL
+		);
+
+		// the get_state node wraps the single get_state section (named after the widget's class)
+		tst::check(
+			f[0].children[0].children.size() == 1,
+			[&](auto& o) {
+				o << f[0].children[0].children.size();
+			},
+			SL
+		);
+		tst::check(
+			f[0].children[0].children[0].value == "ruis::widget",
+			[&](auto& o) {
+				o << f[0].children[0].children[0].value.string;
+			},
+			SL
+		);
+
+		// the wrapped get_state section carries the id
+		const auto& idv = tml::const_crawler(f) //
+							  .to("ruis::widget") //
+							  .in() //
+							  .to("get_state") //
+							  .in() //
+							  .in() //
+							  .to("id") //
+							  .in() //
+							  .get() //
+							  .value;
+		tst::check(
+			idv == "run-test",
+			[&](auto& o) {
+				o << idv.string;
+			},
+			SL
+		);
+
+		// the get_index node wraps the single get_index section, which is empty for a standalone widget
+		tst::check(
+			f[0].children[1].children.size() == 1,
+			[&](auto& o) {
+				o << f[0].children[1].children.size();
+			},
+			SL
+		);
+		tst::check(
+			f[0].children[1].children[0].value == "ruis::widget",
+			[&](auto& o) {
+				o << f[0].children[1].children[0].value.string;
+			},
+			SL
+		);
+		tst::check(
+			f[0].children[1].children[0].children.empty(),
+			[&](auto& o) {
+				o << f[0].children[1].children[0].children.size();
+			},
+			SL
+		);
+	});
+
+	suite.add("run_unknown_command", [] {
+		auto ctx = make_dummy_context();
+		auto c = utki::make_shared<ruis::container>(ctx, ruis::container::all_parameters(), ruis::widget_list());
+
+		// command: run { get_index frobnicate } - the unknown command yields an empty response,
+		// which is wrapped in an empty node named after the command
+		const tml::tree cmd(
+			tml::leaf("run"), //
+			{
+				tml::tree(tml::leaf("get_index")),
+				tml::tree(tml::leaf("frobnicate")),
+			}
+		);
+		const auto resp = c.get().probe(cmd);
+
+		const tml::forest f(resp.begin(), resp.end());
+		tst::check(
+			f.size() == 1,
+			[&](auto& o) {
+				o << f.size();
+			},
+			SL
+		);
+		tst::check(
+			f[0].children.size() == 2,
+			[&](auto& o) {
+				o << f[0].children.size();
+			},
+			SL
+		);
+		// the unknown command node is present but empty
+		tst::check(
+			f[0].children[1].value == "frobnicate",
+			[&](auto& o) {
+				o << f[0].children[1].value.string;
+			},
+			SL
+		);
+		tst::check(
+			f[0].children[1].children.empty(),
+			[&](auto& o) {
+				o << f[0].children[1].children.size();
+			},
+			SL
+		);
+	});
 });
 } // namespace

@@ -109,3 +109,16 @@ bool ruis::is_all_undefined(const sides<styled<length>>& s)
 	);
 	return i == s.end();
 }
+
+tml::forest ruis::flatten(widget::probe_response_set resp)
+{
+	tml::forest ret;
+	// extract the sections one by one and move them into the forest,
+	// avoiding a deep copy of the set contents
+	while (!resp.empty()) {
+		auto n = resp.extract(resp.begin());
+		utki::assert(!n.empty(), SL);
+		ret.emplace_back(std::move(n.value()));
+	}
+	return ret;
+}

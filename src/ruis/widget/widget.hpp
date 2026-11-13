@@ -948,6 +948,14 @@ public:
 	 *   container::probe() additionally adds a 'children' node carrying the
 	 *   recursive get_tree section of each child, so the command reports the
 	 *   whole widget subtree rooted at the widget.
+	 * - 'run' (non-fold): run a batch of probe commands on this widget. The 'run'
+	 *   node's children are the commands to run, in order. Each command is run on
+	 *   this widget (via the virtual probe() dispatch, so fold commands produce
+	 *   their full multi-section response) and its probe response is wrapped in a
+	 *   node named after the command, which becomes a child of the single section
+	 *   named after this widget's class. The wrapped command nodes appear in the
+	 *   same order as the child commands. A command which yields an empty response
+	 *   (e.g. an unknown command) produces an empty node.
 	 *
 	 * @param command - probe command.
 	 * @return probe response.

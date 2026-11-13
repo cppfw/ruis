@@ -674,6 +674,18 @@ widget::probe_response_set widget::probe(const tml::tree& command)
 			response.children.emplace_back(tml::tree("id"s, {tml::leaf(this->id())}));
 		}
 		response.children.emplace_back("rect"s, to_tml(this->rect()));
+	} else if (command.value == "run") {
+		// 'run' command: run each child command on this widget one after another and
+		// wrap each command's probe response in a node named after the command. The
+		// overall response is the single (static-class) section whose children are the
+		// per-command wrapped responses, in the order of the child commands.
+		for (const auto& sub_command : command.children) {
+			probe_response_set resp = this->probe(sub_command);
+			response.children.emplace_back(tml::tree(
+				tml::leaf(sub_command.value.string), //
+				flatten(std::move(resp))
+			));
+		}
 	} else {
 		// Unknown commands result in an empty response.
 		return {};
