@@ -681,10 +681,10 @@ widget::probe_response_set widget::probe(const tml::tree& command)
 		// per-command wrapped responses, in the order of the child commands.
 		for (const auto& sub_command : command.children) {
 			probe_response_set resp = this->probe(sub_command);
-			response.children.emplace_back(tml::tree(
+			response.children.emplace_back(
 				tml::leaf(sub_command.value.string), //
 				flatten(std::move(resp))
-			));
+			);
 		}
 	} else {
 		// Unknown commands result in an empty response.
