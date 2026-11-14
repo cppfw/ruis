@@ -1,5 +1,5 @@
 version{1}
-// TODO: support include?
+# TODO: support include?
 ruis{
     color_background{0xffe0e0e0}
     color_panel{0xffa0a0a0}
