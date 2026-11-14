@@ -25,16 +25,31 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
-// TODO: doxygen
-
+/**
+ * @brief A pile layout.
+ * A layout which stacks (piles) its child widgets on top of each other within
+ * the same area.
+ */
 class pile_layout : public layout
 {
 public:
+	/**
+	 * @brief Arrange widgets.
+	 * @param dims - dimensions of the area available to the layout.
+	 * @param widgets - widgets to arrange.
+	 */
 	void lay_out(
 		const vec2& dims, //
 		semiconst_widget_list& widgets
 	) const override;
 
+	/**
+	 * @brief Measure how big the layout wants to be.
+	 * @param quotum - space available to the layout.
+	 * @param mode - measurement mode for each dimension.
+	 * @param widgets - widgets to measure.
+	 * @return Measured desired layout dimensions.
+	 */
 	vec2 measure(
 		const vec2& quotum, //
 		const r4::vector2<measure_mode>& mode, //

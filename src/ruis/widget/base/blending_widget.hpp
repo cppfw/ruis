@@ -38,7 +38,6 @@ namespace ruis {
  * src_alpha, one_minus_src_alpha, dst_alpha, one_minus_dst_alpha, constant_color, one_minus_constant_color,
  * constant_alpha, one_minus_constant_alpha, src_alpha_saturate.
  */
-// TODO: doxygen
 class blending_widget : public virtual widget
 {
 public:
@@ -46,11 +45,32 @@ public:
 	 * @brief Structure holding blending parameters.
 	 */
 	struct blending_factors {
+		/**
+		 * @brief Source RGB components blend factor.
+		 */
 		ruis::render::context::blend_factor src;
+
+		/**
+		 * @brief Destination RGB components blend factor.
+		 */
 		ruis::render::context::blend_factor dst;
+
+		/**
+		 * @brief Source alpha component blend factor.
+		 */
 		ruis::render::context::blend_factor src_alpha;
+
+		/**
+		 * @brief Destination alpha component blend factor.
+		 */
 		ruis::render::context::blend_factor dst_alpha;
 
+		/**
+		 * @brief Equality comparison operator.
+		 * Used by set_blending_factors() to detect if the blending factors have actually changed.
+		 * @param b - other blending factors.
+		 * @return true if the blending factors are equal.
+		 */
 		bool operator==(const blending_factors& b)
 		{
 			return //
@@ -62,8 +82,18 @@ public:
 	};
 
 public:
+	/**
+	 * @brief Blending widget parameters.
+	 */
 	struct parameters {
+		/**
+		 * @brief Whether blending is enabled.
+		 */
 		bool enabled = true;
+
+		/**
+		 * @brief Blending factors.
+		 */
 		blending_factors factors = blending_factors{
 			.src = ruis::render::context::blend_factor::src_alpha,
 			.dst = ruis::render::context::blend_factor::one_minus_src_alpha,
@@ -76,6 +106,11 @@ private:
 	parameters params;
 
 protected:
+	/**
+	 * @brief Constructor.
+	 * @param context - ruis context.
+	 * @param params - blending widget parameters.
+	 */
 	blending_widget(
 		const utki::shared_ref<ruis::context>& context, //
 		parameters params
@@ -88,6 +123,9 @@ public:
 	blending_widget(blending_widget&&) = delete;
 	blending_widget& operator=(blending_widget&&) = delete;
 
+	/**
+	 * @brief Destructor.
+	 */
 	~blending_widget() override = default;
 
 	/**

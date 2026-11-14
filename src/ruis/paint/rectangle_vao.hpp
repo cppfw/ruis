@@ -27,12 +27,19 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis::paint {
 
-// TODO: doxygen
+/**
+ * @brief A vertex array object which renders a rectangle.
+ * A rectangle_vao can render either a filled or a stroked rectangle, with
+ * optionally rounded corners.
+ */
 class rectangle_vao
 {
 	utki::shared_ref<const ruis::render::renderer> renderer;
 
 public:
+	/**
+	 * @brief Rectangle rendering parameters.
+	 */
 	struct parameters {
 		/**
 		 * @brief Corner radii.
@@ -45,6 +52,13 @@ public:
 		 */
 		real stroke_width = -1;
 
+		/**
+		 * @brief Less-than comparison operator.
+		 * Used to order the parameters in the rounded corners texture cache.
+		 * @param lhs - left hand side parameters.
+		 * @param rhs - right hand side parameters.
+		 * @return true if lhs is less than rhs.
+		 */
 		friend bool operator<(
 			const parameters& lhs, //
 			const parameters& rhs
@@ -61,6 +75,11 @@ private:
 	parameters params;
 
 public:
+	/**
+	 * @brief Constructor.
+	 * @param renderer - renderer to use.
+	 * @param params - rectangle rendering parameters.
+	 */
 	rectangle_vao(
 		utki::shared_ref<const ruis::render::renderer> renderer, //
 		parameters params
@@ -72,10 +91,23 @@ public:
 	rectangle_vao(rectangle_vao&&) = delete;
 	rectangle_vao& operator=(rectangle_vao&&) = delete;
 
+	/**
+	 * @brief Default destructor.
+	 */
 	~rectangle_vao() = default;
 
+	/**
+	 * @brief Set rectangle rendering parameters.
+	 * @param params - rectangle rendering parameters.
+	 */
 	void set(parameters params);
 
+	/**
+	 * @brief Render the rectangle.
+	 * @param matrix - transformation matrix.
+	 * @param dims - rectangle dimensions.
+	 * @param color - color to render the rectangle with.
+	 */
 	void render(
 		const ruis::mat4& matrix, //
 		const vec2& dims,
@@ -83,13 +115,25 @@ public:
 	) const;
 
 private:
+	/**
+	 * @brief Render the rounded corners of the rectangle.
+	 * @param matrix - transformation matrix.
+	 * @param dims - rectangle dimensions.
+	 * @param color - color to render the rounded corners with.
+	 */
 	void render_rounded_corners(
 		const mat4& matrix, //
 		const vec2& dims,
 		const ruis::color& color
 	) const;
 
+	/**
+	 * @brief Cached texture and vaos for rendering rounded corners.
+	 */
 	struct rounded_corners_texture {
+		/**
+		 * @brief Texture containing the rounded corners.
+		 */
 		utki::shared_ref<const render::texture_2d> tex;
 
 		// corner radii, in the same units as the texture's texels
@@ -99,6 +143,12 @@ private:
 		// corner's arc (no straight parts of neighbouring corners)
 		std::array<std::array<utki::shared_ref<const render::vertex_array>, 2>, 2> vaos;
 
+		/**
+		 * @brief Constructor.
+		 * @param r - renderer to use.
+		 * @param tex - texture containing the rounded corners.
+		 * @param radii - corner radii, in the same units as the texture's texels.
+		 */
 		rounded_corners_texture(
 			const ruis::render::renderer& r, //
 			utki::shared_ref<const render::texture_2d> tex,
@@ -114,6 +164,10 @@ private:
 
 	std::shared_ptr<rounded_corners_texture> rounded_corners_tex;
 
+	/**
+	 * @brief Update the cached rounded corners texture if the current parameters
+	 * require a different texture than the one currently in use.
+	 */
 	void update_rounded_corners_texture();
 };
 

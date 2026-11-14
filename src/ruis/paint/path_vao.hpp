@@ -28,7 +28,11 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis::paint {
 
-// TODO: doxygen
+/**
+ * @brief A vertex array object which renders a stroked path.
+ * A path_vao holds the core (fill) and border (stroke) vertex arrays used to
+ * draw a path. The border is used for the anti-aliasing effect.
+ */
 class path_vao
 {
 	utki::shared_ref<const ruis::render::renderer> renderer;
@@ -37,6 +41,10 @@ class path_vao
 	utki::shared_ref<const ruis::render::vertex_array> border;
 
 public:
+	/**
+	 * @brief Constructor.
+	 * @param r - renderer to use.
+	 */
 	path_vao(utki::shared_ref<const ruis::render::renderer> r);
 
 	path_vao(const path_vao&) = delete;
@@ -45,10 +53,25 @@ public:
 	path_vao(path_vao&&) = default;
 	path_vao& operator=(path_vao&&) = default;
 
+	/**
+	 * @brief Default destructor.
+	 */
 	~path_vao() = default;
 
+	/**
+	 * @brief Set path vertices to render.
+	 * First build a path by adding points to it, then stroke the path with
+	 * path::stroke() to obtain the vertices, and finally pass them to the
+	 * vao using this method.
+	 * @param path - path vertices as produced by path::stroke().
+	 */
 	void set(const path::vertices& path);
 
+	/**
+	 * @brief Render the path.
+	 * @param matrix - model-view-projection matrix.
+	 * @param color - color to render the path with.
+	 */
 	void render(
 		const ruis::mat4& matrix, //
 		ruis::color color

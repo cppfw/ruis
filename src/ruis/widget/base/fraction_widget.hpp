@@ -25,13 +25,20 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
-// TODO: doxygen
+/**
+ * @brief A base class for widgets which display a value in the [0:1] range.
+ */
 class fraction_widget : public virtual widget
 {
 private:
 	real fraction = 0; // current position from 0 to 1
 
 protected:
+	/**
+	 * @brief Constructor.
+	 * @param context - ruis context.
+	 * @param fraction - initial fraction value in [0:1] range.
+	 */
 	fraction_widget(
 		const utki::shared_ref<ruis::context>& context, //
 		real fraction
@@ -40,11 +47,22 @@ protected:
 		fraction(fraction)
 	{}
 
+	/**
+	 * @brief Invoked when the fraction value has changed.
+	 */
 	virtual void on_fraction_change();
 
 public:
+	/**
+	 * @brief Fraction change handler.
+	 * Invoked when the fraction value has changed.
+	 */
 	std::function<void(fraction_widget&)> fraction_change_handler;
 
+	/**
+	 * @brief Get fraction value.
+	 * @return current fraction value in [0:1] range.
+	 */
 	real get_fraction() const noexcept
 	{
 		return this->fraction;

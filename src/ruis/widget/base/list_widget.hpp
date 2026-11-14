@@ -72,13 +72,22 @@ public:
 	virtual utki::shared_ref<widget> get_highlighted_widget(size_t index);
 };
 
-// TODO: doxygen
+/**
+ * @brief A base class for widgets which display a list of items.
+ * The item widgets are provided by a list_provider object.
+ */
 class list_widget : virtual public widget
 {
 	friend class list_provider;
 
 public:
+	/**
+	 * @brief List widget parameters.
+	 */
 	struct parameters {
+		/**
+		 * @brief Item widgets provider.
+		 */
 		utki::unique_ref<list_provider> provider;
 	};
 
@@ -86,21 +95,37 @@ private:
 	parameters params;
 
 protected:
+	/**
+	 * @brief Constructor.
+	 * @param context - ruis context.
+	 * @param params - list widget parameters.
+	 */
 	list_widget(
 		const utki::shared_ref<ruis::context>& context, //
 		parameters params
 	);
 
+	/**
+	 * @brief Get the item widgets provider.
+	 * @return the item widgets provider.
+	 */
 	list_provider& get_provider()
 	{
 		return this->params.provider.get();
 	}
 
+	/**
+	 * @brief Get the item widgets provider.
+	 * @return the item widgets provider.
+	 */
 	const list_provider& get_provider() const
 	{
 		return this->params.provider.get();
 	}
 
+	/**
+	 * @brief Invoked when the items model has changed.
+	 */
 	virtual void handle_model_change() {}
 
 public:
@@ -110,6 +135,9 @@ public:
 	list_widget(list_widget&&) = delete;
 	list_widget& operator=(list_widget&&) = delete;
 
+	/**
+	 * @brief Default destructor.
+	 */
 	~list_widget() override = default;
 
 	/**

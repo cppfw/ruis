@@ -26,7 +26,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis::paint {
 
-// TODO: doxygen
+/**
+ * @brief A vertex array object which renders an ellipse.
+ * An ellipse_vao can render either a filled or a stroked ellipse.
+ */
 class ellipse_vao
 {
 	utki::shared_ref<const ruis::render::renderer> renderer;
@@ -37,6 +40,12 @@ class ellipse_vao
 	real stroke_width = 0;
 
 public:
+	/**
+	 * @brief Constructor.
+	 * @param renderer - renderer to use.
+	 * @param diameters - ellipse diameters.
+	 * @param stroke_width - ellipse border width. Non-positive value means filled ellipse.
+	 */
 	ellipse_vao(
 		utki::shared_ref<const ruis::render::renderer> renderer,
 		vec2 diameters = 0, //
@@ -49,13 +58,26 @@ public:
 	ellipse_vao(ellipse_vao&&) = delete;
 	ellipse_vao& operator=(ellipse_vao&&) = delete;
 
+	/**
+	 * @brief Default destructor.
+	 */
 	~ellipse_vao() = default;
 
+	/**
+	 * @brief Set ellipse parameters.
+	 * @param diameters - ellipse diameters.
+	 * @param stroke_width - ellipse border width. Non-positive value means filled ellipse.
+	 */
 	void set(
 		vec2 diameters, //
 		real stroke_width = 0 // non-positive means filled ellipse
 	);
 
+	/**
+	 * @brief Render the ellipse.
+	 * @param matrix - model-view-projection matrix.
+	 * @param color - color to render the ellipse with.
+	 */
 	void render(
 		const ruis::mat4& matrix, //
 		const ruis::color& color
@@ -64,10 +86,25 @@ public:
 private:
 	std::shared_ptr<const render::texture_2d> tex;
 
+	/**
+	 * @brief Key for the ellipse texture cache.
+	 */
 	struct texture_cache_key {
+		/**
+		 * @brief Ellipse diameters.
+		 */
 		vec2 diameters;
+
+		/**
+		 * @brief Ellipse border width.
+		 */
 		real stroke_width;
 
+		/**
+		 * @brief Less-than comparison operator.
+		 * @param rhs - other cache key.
+		 * @return true if this key is less than the other one.
+		 */
 		bool operator<(const texture_cache_key& rhs) const
 		{
 			if (this->diameters == rhs.diameters) {
@@ -83,6 +120,10 @@ private:
 		// TODO: ? NOLINTNEXTLINE(cppcoreguidelines-avoid-non-const-global-variables, "false-positive")
 		cache;
 
+	/**
+	 * @brief Update the cached ellipse texture if the current parameters
+	 * require a different texture than the one currently in use.
+	 */
 	void update_texture();
 };
 } // namespace ruis::paint

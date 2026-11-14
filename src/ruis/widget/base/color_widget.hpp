@@ -29,13 +29,17 @@ namespace ruis {
 /**
  * @brief Basic widget which has a color attribute.
  */
-// TODO: doxygen
 class color_widget : public virtual widget
 {
 private:
 	styled<ruis::color> color;
 
 protected:
+	/**
+	 * @brief Constructor.
+	 * @param context - ruis context.
+	 * @param color - initial color.
+	 */
 	color_widget(
 		const utki::shared_ref<ruis::context>& context,
 		styled<ruis::color> color //
@@ -48,8 +52,15 @@ public:
 	color_widget(color_widget&&) = delete;
 	color_widget& operator=(color_widget&&) = delete;
 
+	/**
+	 * @brief Default destructor.
+	 */
 	~color_widget() override = default;
 
+	/**
+	 * @brief Set the color.
+	 * @param color - the color to set.
+	 */
 	void set_color(styled<ruis::color> color);
 
 	/**

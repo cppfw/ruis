@@ -27,7 +27,12 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
-// TODO: doxygen
+/**
+ * @brief A time-based animation.
+ * An animation runs for a fixed duration and calls an update handler with a
+ * progress factor between 0 and 1 as it advances, and an end handler when it
+ * finishes.
+ */
 
 // Lint complains that std::shared_from_this is privately inherited via ruis::updateable
 // and trying to use it will result in undefined behaviour. This is false, because
@@ -44,17 +49,38 @@ class animation :
 	uint32_t duration_ms;
 	uint32_t left_ms = 0;
 
+	/**
+	 * @brief Advance the animation.
+	 * @param dt - number of milliseconds to advance the animation.
+	 */
 	void update(uint32_t dt) override;
 
 protected:
+	/**
+	 * @brief Called on each update of the animation.
+	 * @param factor - animation progress factor in [0:1] range.
+	 */
 	virtual void on_update(real factor);
+
+	/**
+	 * @brief Called when the animation has ended.
+	 * @param over_end_ms - number of milliseconds the animation was forwarded over its end.
+	 */
 	virtual void on_end(uint32_t over_end_ms);
 
+	/**
+	 * @brief Get animation progress factor.
+	 * @return animation progress factor in [0:1] range.
+	 */
 	real get_factor() const
 	{
 		return real(this->duration_ms - this->left_ms) / real(this->duration_ms);
 	}
 
+	/**
+	 * @brief Check if the animation has ended.
+	 * @return true if the animation has ended.
+	 */
 	bool is_ended() const
 	{
 		return this->left_ms == 0;
@@ -68,15 +94,39 @@ protected:
 	uint32_t forward(uint32_t dt_ms);
 
 public:
+	/**
+	 * @brief Animation update handler.
+	 * Invoked on each update of the animation with the progress factor in [0:1] range.
+	 */
 	std::function<void(real factor)> update_handler;
+
+	/**
+	 * @brief Animation end handler.
+	 * Invoked when the animation has ended with the number of milliseconds
+	 * the animation was forwarded over its end.
+	 */
 	std::function<void(uint32_t over_end_ms)> end_handler;
 
+	/**
+	 * @brief Constructor.
+	 * @param updater - updater which will drive the animation.
+	 * @param duration_ms - duration of the animation in milliseconds.
+	 */
 	animation( //
 		utki::shared_ref<ruis::updater> updater,
 		uint32_t duration_ms
 	);
 
+	/**
+	 * @brief Play the animation.
+	 * Starts the animation from the beginning.
+	 * @param dt_ms - number of milliseconds to immediately forward the animation by.
+	 */
 	void play(uint32_t dt_ms = 0);
+
+	/**
+	 * @brief Stop the animation.
+	 */
 	void stop() noexcept;
 
 	/**

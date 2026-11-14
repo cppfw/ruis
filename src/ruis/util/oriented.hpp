@@ -30,11 +30,17 @@ namespace ruis {
  * @brief Base class for oriented widgets.
  * This is a base class for widgets which can be either vertical or horizontal, like lists or sliders.
  */
-// TODO: doxygen
 class oriented
 {
 public:
+	/**
+	 * @brief Oriented widget parameters.
+	 */
 	struct parameters {
+		/**
+		 * @brief Orientation flag.
+		 * true for vertical orientation, false for horizontal one.
+		 */
 		bool vertical = true;
 	};
 
@@ -42,21 +48,37 @@ private:
 	parameters params;
 
 protected:
+	/**
+	 * @brief Constructor.
+	 * @param params - oriented widget parameters.
+	 */
 	oriented(parameters params) :
 		params(std::move(params))
 	{}
 
 public:
+	/**
+	 * @brief Get index of the long (primary) dimension.
+	 * @return 1 (y) if the widget is vertical, 0 (x) if it is horizontal.
+	 */
 	unsigned get_long_index() const noexcept
 	{
 		return this->params.vertical ? 1 : 0;
 	}
 
+	/**
+	 * @brief Get index of the transverse (secondary) dimension.
+	 * @return 0 (x) if the widget is vertical, 1 (y) if it is horizontal.
+	 */
 	unsigned get_trans_index() const noexcept
 	{
 		return this->params.vertical ? 0 : 1;
 	}
 
+	/**
+	 * @brief Get indices of the longitudinal and transverse dimensions.
+	 * @return pair of indices: (longitudinal index, transverse index).
+	 */
 	std::tuple<unsigned, unsigned> get_long_trans_indices() const noexcept
 	{
 		if (this->params.vertical) {
@@ -66,6 +88,10 @@ public:
 		}
 	}
 
+	/**
+	 * @brief Check if the widget is vertical.
+	 * @return true if the widget is vertical, false if it is horizontal.
+	 */
 	bool is_vertical() const noexcept
 	{
 		return this->params.vertical;

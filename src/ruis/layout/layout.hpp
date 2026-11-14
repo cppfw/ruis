@@ -28,10 +28,17 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
-// TODO: doxygen
+/**
+ * @brief A widget layout.
+ * A layout is responsible for measuring the size a group of widgets wants to
+ * be and for positioning those widgets within a given area.
+ */
 class layout
 {
 protected:
+	/**
+	 * @brief Default constructor.
+	 */
 	layout() = default;
 
 public:
@@ -66,12 +73,35 @@ public:
 		semiconst_widget_list& widgets
 	) const = 0;
 
+	/**
+	 * @brief Destructor.
+	 * review: default destructor
+	 */
 	virtual ~layout() = default;
 
+	/**
+	 * @brief Trivial layout instance.
+	 */
 	static const utki::shared_ref<layout> trivial;
+
+	/**
+	 * @brief Size layout instance.
+	 */
 	static const utki::shared_ref<layout> size;
+
+	/**
+	 * @brief Pile layout instance.
+	 */
 	static const utki::shared_ref<layout> pile;
+
+	/**
+	 * @brief Row layout instance.
+	 */
 	static const utki::shared_ref<layout> row;
+
+	/**
+	 * @brief Column layout instance.
+	 */
 	static const utki::shared_ref<layout> column;
 };
 

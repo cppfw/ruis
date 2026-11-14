@@ -27,7 +27,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "../widget.hpp"
 
 namespace ruis {
-// TODO: doxygen
+/**
+ * @brief A widget which renders text using a font.
+ */
 class font_widget : virtual public widget
 {
 public:
@@ -54,19 +56,43 @@ private:
 		>
 		fonts;
 
+	/**
+	 * @brief Update fonts for the currently set font face.
+	 */
 	void update_fonts();
+
+	/**
+	 * @brief Update fonts for the currently set font face and notify about the change.
+	 */
 	void update_fonts_and_notify();
 
 protected:
+	/**
+	 * @brief Constructor.
+	 * @param context - ruis context.
+	 * @param params - font widget parameters.
+	 */
 	font_widget(
 		const utki::shared_ref<ruis::context>& context, //
 		parameters params
 	);
 
+	/**
+	 * @brief Set font face.
+	 * @param face - font face to set.
+	 */
 	void set_font_face(styled<res::font> face);
 
+	/**
+	 * @brief Set font size.
+	 * @param size - font size to set.
+	 */
 	void set_font_size(styled<length> size);
 
+	/**
+	 * @brief Get current font size.
+	 * @return current font size.
+	 */
 	const length& get_font_size() const noexcept
 	{
 		return this->params.size.get();
@@ -80,8 +106,14 @@ protected:
 	 */
 	const ruis::font& get_font(res::font::style style = res::font::style::normal) const;
 
+	/**
+	 * @brief Invoked when font parameters (face or size) have changed.
+	 */
 	virtual void on_font_change() {}
 
+	/**
+	 * @brief Invoked when the widget is requested to reload its fonts.
+	 */
 	void on_reload() override;
 };
 } // namespace ruis

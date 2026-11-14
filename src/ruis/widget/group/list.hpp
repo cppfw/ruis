@@ -28,8 +28,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
-// TODO: doxygen
-
 /**
  * @brief Scrollable list widget.
  * This is a base class for vertical and horizontal lists.
@@ -61,18 +59,47 @@ class list :
 	real first_tail_item_dim = real(0);
 
 public:
+	/**
+	 * @brief List widget specific parameters.
+	 */
 	struct parameters {
+		/**
+		 * @brief Oriented widget parameters.
+		 */
 		ruis::oriented::parameters oriented;
+
+		/**
+		 * @brief List widget parameters, like item widgets provider.
+		 */
 		ruis::list_widget::parameters specific;
 	};
 
+	/**
+	 * @brief All list widget parameters.
+	 */
 	struct all_parameters {
+		/**
+		 * @brief Layout parameters.
+		 */
 		ruis::layout_parameters layout_params;
+
+		/**
+		 * @brief Base widget parameters.
+		 */
 		ruis::widget::parameters widget;
+
+		/**
+		 * @brief List widget specific parameters.
+		 */
 		parameters params;
 	};
 
 	// default clip parameter is true
+	/**
+	 * @brief Constructor.
+	 * @param context - ruis context.
+	 * @param params - list widget parameters.
+	 */
 	list(
 		const utki::shared_ref<ruis::context>& context, //
 		all_parameters params
@@ -84,10 +111,22 @@ public:
 	list(list&&) = delete;
 	list& operator=(list&&) = delete;
 
+	/**
+	 * @brief Default destructor.
+	 */
 	~list() override = default;
 
+	/**
+	 * @brief Invoked when the list needs to lay out itself.
+	 */
 	void on_lay_out() override;
 
+	/**
+	 * @brief Measure how big the list wants to be.
+	 * @param quotum - space available to the list.
+	 * @param mode - measurement mode for each dimension.
+	 * @return Measured desired list dimensions.
+	 */
 	ruis::vec2 measure(
 		const ruis::vec2& quotum, //
 		const r4::vector2<measure_mode>& mode
@@ -171,9 +210,20 @@ protected:
 	using container::on_mouse_button;
 
 private:
+	/**
+	 * @brief Update the list of visible children widgets.
+	 */
 	void update_children_list();
 
-	// returns true if it was the last visible widget
+	/**
+	 * @brief Arrange a single widget in the list.
+	 * @param w - widget to arrange.
+	 * @param pos - current position along the list, updated as a result.
+	 * @param add - true to add the widget to the visible children list, false to remove it.
+	 * @param index - index of the widget in the list.
+	 * @param insert_before - iterator in the visible children list before which the widget should be inserted.
+	 * @return true if it was the last visible widget.
+	 */
 	bool arrange_widget(
 		const utki::shared_ref<widget>& w,
 		real& pos,
@@ -182,17 +232,45 @@ private:
 		widget_list::const_iterator& insert_before
 	);
 
+	/**
+	 * @brief Update the tail items info, i.e. the total size of the items
+	 * that follow the visible items and become visible when the list
+	 * is scrolled to the bottom.
+	 */
 	void update_tail_items_info();
 
+	/**
+	 * @brief Invoked when the list's model data set has changed.
+	 */
 	void handle_model_change() override;
 
+	/**
+	 * @brief Notify that the scroll position has changed.
+	 */
 	void notify_scroll_pos_changed();
+
+	/**
+	 * @brief Notify that the scroll position has changed.
+	 * @param old_index - index of the first visible item before the change.
+	 * @param old_offset - offset of the first visible item before the change.
+	 */
 	void notify_scroll_pos_changed(size_t old_index, real old_offset);
 
+	/**
+	 * @brief Calculate the number of visible items for the current scroll position.
+	 * The count may be fractional because of partially visible items.
+	 * @return number of items that fit in the visible area of the list.
+	 */
 	real calc_num_visible_items() const noexcept;
 };
 
 namespace make {
+/**
+ * @brief Construct a list widget.
+ * @param context - ruis context.
+ * @param params - list widget parameters.
+ * @return newly constructed list widget.
+ */
 inline utki::shared_ref<ruis::list> list( //
 	const utki::shared_ref<ruis::context>& context,
 	list::all_parameters params

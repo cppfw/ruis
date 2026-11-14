@@ -25,17 +25,32 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
-// TODO: doxygen
-
+/**
+ * @brief A trivial layout.
+ * A layout which lets each widget keep its own preferred size and position.
+ * review: trivial layout does not do anything. it measures widgets based on their current position and size. and layout just conveys the lay_out to widgetts.
+ */
 class trivial_layout : public layout
 {
 public:
+	/**
+	 * @brief Measure how big the layout wants to be.
+	 * @param quotum - space available to the layout.
+	 * @param mode - measurement mode for each dimension.
+	 * @param widgets - widgets to measure.
+	 * @return Measured desired layout dimensions.
+	 */
 	vec2 measure(
 		const vec2& quotum, //
 		const r4::vector2<measure_mode>& mode, //
 		const_widget_list& widgets
 	) const override;
 
+	/**
+	 * @brief Arrange widgets.
+	 * @param dims - dimensions of the area available to the layout.
+	 * @param widgets - widgets to arrange.
+	 */
 	void lay_out(
 		const vec2& dims, //
 		semiconst_widget_list& widgets

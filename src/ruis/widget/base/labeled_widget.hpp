@@ -25,19 +25,35 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
-// TODO: doxygen
+/**
+ * @brief A widget which displays a text label.
+ */
 class labeled_widget : virtual public widget
 {
 	text& label;
 
 public:
+	/**
+	 * @brief Labeled widget parameters.
+	 */
 	struct parameters {
-		// The parameters of the text label widget that is shown above the field.
+		/**
+		 * @brief Parameters of the text label widget.
+		 */
 		ruis::text::parameters text;
+
+		/**
+		 * @brief Label text.
+		 */
 		ruis::string string;
 	};
 
 protected:
+	/**
+	 * @brief Constructor.
+	 * @param context - ruis context.
+	 * @param label - text label widget.
+	 */
 	labeled_widget(
 		const utki::shared_ref<ruis::context>& context, //
 		text& label
@@ -47,6 +63,10 @@ protected:
 	{}
 
 public:
+	/**
+	 * @brief Get the label widget.
+	 * @return the text label widget.
+	 */
 	text& get_label()
 	{
 		return this->label;

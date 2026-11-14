@@ -31,11 +31,16 @@ namespace ruis {
  * @brief Basic button widget class.
  * Button has two states: normal and pressed.
  */
-// TODO: doxygen
 class button : public virtual widget
 {
 public:
+	/**
+	 * @brief Button widget parameters.
+	 */
 	struct parameters {
+		/**
+		 * @brief Initial pressed state.
+		 */
 		bool pressed = false;
 	};
 
@@ -51,6 +56,11 @@ protected:
 	 */
 	virtual void on_pressed_change();
 
+	/**
+	 * @brief Constructor.
+	 * @param context - ruis context.
+	 * @param params - button widget parameters.
+	 */
 	button(
 		const utki::shared_ref<ruis::context>& context, //
 		parameters params
@@ -67,6 +77,10 @@ public:
 		return this->params.pressed;
 	}
 
+	/**
+	 * @brief Set button pressed state.
+	 * @param pressed - true to press the button, false to release it.
+	 */
 	void set_pressed(bool pressed);
 
 	/**

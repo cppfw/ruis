@@ -25,28 +25,71 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis {
 
-// TODO: doxygen
-
+/**
+ * @brief A proxy widget which tracks pressed/click state by mouse.
+ * Emits a pressed change handler and a click handler in response to mouse
+ * button events.
+ */
 class click_proxy : virtual public mouse_proxy
 {
 	bool is_pressed_v = false;
 
 public:
+	/**
+	 * @brief Mouse press state change handler type.
+	 */
 	using pressed_change_handler_type = std::function<void(click_proxy& w)>;
+
+	/**
+	 * @brief Click event handler type.
+	 */
 	using click_handler_type = std::function<void(click_proxy& w)>;
 
+	/**
+	 * @brief Click proxy specific parameters.
+	 */
 	struct parameters {
+		/**
+		 * @brief Mouse press state change handler.
+		 */
 		pressed_change_handler_type pressed_change_handler;
+
+		/**
+		 * @brief Click event handler.
+		 */
 		click_handler_type click_handler;
 	};
 
+	/**
+	 * @brief All click proxy parameters.
+	 */
 	struct all_parameters {
+		/**
+		 * @brief Layout parameters.
+		 */
 		ruis::layout_parameters layout_params;
+
+		/**
+		 * @brief Base widget parameters.
+		 */
 		ruis::widget::parameters widget;
+
+		/**
+		 * @brief Click proxy specific parameters.
+		 */
 		parameters click_proxy_params;
+
+		/**
+		 * @brief Mouse proxy parameters.
+		 */
 		mouse_proxy::parameters mouse_proxy_params;
 	};
 
+	/**
+	 * @brief Constructor.
+	 * @param context - ruis context.
+	 * @param params - click proxy parameters.
+	 */
 	click_proxy(
 		const utki::shared_ref<ruis::context>& context, //
 		all_parameters params
@@ -58,12 +101,28 @@ public:
 	click_proxy(click_proxy&&) = delete;
 	click_proxy& operator=(const click_proxy&&) = delete;
 
+	/**
+	 * @brief Destructor.
+	 */
 	~click_proxy() override = default;
 
+	/**
+	 * @brief Handle a mouse button event.
+	 * @param event - the mouse button event.
+	 * @return event processing status.
+	 */
 	event_status on_mouse_button(const mouse_button_event& event) override;
 
+	/**
+	 * @brief Invoked when the hovered state changes.
+	 * @param pointer_id - id of the mouse pointer which changed the hovered state.
+	 */
 	void on_hovered_change(unsigned pointer_id) override;
 
+	/**
+	 * @brief Check if the click proxy is currently pressed.
+	 * @return true if the click proxy is pressed.
+	 */
 	bool is_pressed() const noexcept
 	{
 		return this->is_pressed_v;
@@ -83,6 +142,12 @@ public:
 };
 
 namespace make {
+/**
+ * @brief Construct a click proxy widget.
+ * @param context - ruis context.
+ * @param params - click proxy parameters.
+ * @return newly constructed click proxy widget.
+ */
 utki::shared_ref<ruis::click_proxy> click_proxy(
 	const utki::shared_ref<ruis::context>& context, //
 	ruis::click_proxy::all_parameters params
