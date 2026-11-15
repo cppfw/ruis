@@ -23,6 +23,10 @@ myci_add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/../../../ruis-render-opengles/bu
     BINARY_DIR
         ruis-render-opengles
 )
+myci_add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/../../../ruis-render-vulkan/build/cmake
+    BINARY_DIR
+        ruis-render-vulkan
+)
 myci_add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/../../../ruisapp/build/cmake
     BINARY_DIR
         ruisapp
