@@ -250,7 +250,8 @@ public:
 
 	/**
 	 * @brief Handler of window close event.
-	 * Invoked when user tries to close the window, e.g. by clicking the window's close button.
+	 * Invoked when user tries to close the window, e.g. by clicking the window's close button (the one in the caption bar).
+	 * The user is supposed to set the handler to handle the native window's close button handling.
 	 */
 	std::function<void()> close_handler;
 };

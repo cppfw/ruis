@@ -59,6 +59,17 @@ private:
 	std::weak_ptr<frame_buffer> cur_fb;
 
 public:
+	/**
+	 * @brief Get the currently active rendering context.
+	 *
+	 * The context stack is maintained by apply(). This returns the top of the stack.
+	 */
+	static const context& current() noexcept
+	{
+		utki::assert(!cur_context_stack.empty(), SL);
+		return *cur_context_stack.back();
+	}
+
 	const utki::shared_ref<ruis::render::native_window> native_window;
 
 	struct parameters {
