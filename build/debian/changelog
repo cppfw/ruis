@@ -1,3 +1,9 @@
+libruis (0.6.27) unstable; urgency=medium
+
+  * add render::context::current()
+
+ -- Ivan Gagis <igagis@gmail.com>  Mon, 16 Nov 2026 22:02:51 +0200
+
 libruis (0.6.26) unstable; urgency=medium
 
   * fix stuff
