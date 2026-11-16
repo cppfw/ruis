@@ -81,7 +81,12 @@ public:
 		//		ruis::ZipFile zf(fsif::FSFile::New("res.zip"), "test.gui.stob");
 		//		std::shared_ptr<ruis::widget> c = ruis::gui::inst().inflater().Inflate(zf);
 
-		ASSERT(c.get().try_get_widget_as<ruis::push_button>("show_VK_button"))
+		utki::assert(
+			[&]() -> bool {
+				return c.get().try_get_widget_as<ruis::push_button>("show_VK_button") != nullptr;
+			},
+			SL
+		);
 		std::dynamic_pointer_cast<ruis::push_button>(c.get().try_get_widget("show_VK_button"))->click_handler =
 			[](ruis::push_button& b) {
 				b.context.get().window().set_virtual_keyboard_visible(true, ruis::keyboard_kind::general);
@@ -242,7 +247,7 @@ public:
 			auto hl = utki::make_weak(pan_list);
 
 			auto horizontal_slider = c.get().try_get_widget_as<ruis::scroll_bar>("horizontal_list_slider");
-			ASSERT(horizontal_slider)
+			utki::assert(horizontal_slider, SL);
 			auto hs = utki::make_weak(horizontal_slider);
 
 			pan_list->scroll_change_handler = [hs](ruis::list& l) {
@@ -335,7 +340,7 @@ public:
 		// fullscreen
 		{
 			auto b = c.get().try_get_widget_as<ruis::push_button>("fullscreen_button");
-			ASSERT(b)
+			utki::assert(b, SL);
 			b->click_handler = [](ruis::push_button& b) {
 				auto& w = b.context.get().window();
 				w.set_fullscreen(!w.is_fullscreen());
@@ -343,7 +348,7 @@ public:
 		}
 		{
 			auto b = c.get().try_get_widget_as<ruis::push_button>("image_push_button");
-			ASSERT(b)
+			utki::assert(b, SL);
 			b->click_handler = [](ruis::push_button& b) {
 				b.context.get().window().set_fullscreen(true);
 			};

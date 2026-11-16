@@ -231,10 +231,14 @@ void slider::on_lay_out()
 		ruis::vec2 new_pos(0);
 		if (effective_length > 0) {
 			new_pos[long_index] = round(effective_length * this->get_fraction());
-			ASSERT(new_pos[long_index] <= effective_length, [&](auto& o) {
-				o << "new_pos[long_index] = " << new_pos[long_index] << ", effective_length = " << effective_length
-				  << ", this->factor() = " << this->get_fraction();
-			})
+			utki::assert(
+				new_pos[long_index] <= effective_length,
+				[&](auto& o) {
+					o << "new_pos[long_index] = " << new_pos[long_index] << ", effective_length = " << effective_length
+					  << ", this->factor() = " << this->get_fraction();
+				},
+				SL
+			);
 		}
 		this->handle.move_to(new_pos);
 	}

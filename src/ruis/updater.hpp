@@ -77,10 +77,13 @@ public:
 	updater(std::function<uint32_t()> get_ticks_ms = get_default_get_ticks_ms()) :
 		get_ticks_ms(std::move(get_ticks_ms)),
 		active_queue(&q1),
-		inactive_queue(&q2){ASSERT(this->get_ticks_ms)}
+		inactive_queue(&q2)
+	{
+		utki::assert(this->get_ticks_ms, SL);
+	}
 
-		// returns dt to wait before next update
-		uint32_t update();
+	// returns dt to wait before next update
+	uint32_t update();
 
 	/**
 	 * @brief default update interval.

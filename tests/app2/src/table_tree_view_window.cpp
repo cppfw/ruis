@@ -94,12 +94,13 @@ public:
 		}
 
 		auto tr = utki::make_traversal(this->model.root);
-		ASSERT(
+		utki::assert(
 			tr.is_valid(index), //
 			[&](auto& o) {
 				o << "index.size() = " << index.size();
-			}
-		)
+			},
+			SL
+		);
 		try {
 			auto i = tr.make_iterator(index);
 			return i->children.size();
@@ -113,7 +114,7 @@ public:
 	ruis::widget_list get_row_widgets(utki::span<const size_t> index) override
 	{
 		auto tr = utki::make_traversal(this->model.root);
-		ASSERT(tr.is_valid(index))
+		utki::assert(tr.is_valid(index), SL);
 		auto i = tr.make_iterator(index);
 
 		auto cell_values = utki::split(i->value.string, '.');

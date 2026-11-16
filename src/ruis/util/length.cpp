@@ -39,7 +39,7 @@ real length::get_internal(const ruis::units& units) const noexcept
 {
 	switch (this->value_units) {
 		default:
-			ASSERT(false)
+			utki::assert(false, SL);
 			[[fallthrough]];
 		case units::px:
 			return this->value;

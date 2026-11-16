@@ -100,9 +100,13 @@ ruis::vec2 image::measure(
 
 	vec2 img_dims = img->dims(this->context.get().units).to<real>();
 
-	ASSERT(img_dims.is_positive_or_zero(), [&](auto& o) {
-		o << "img_dims = " << img_dims << " widget id = " << this->id();
-	})
+	utki::assert(
+		img_dims.is_positive_or_zero(),
+		[&](auto& o) {
+			o << "img_dims = " << img_dims << " widget id = " << this->id();
+		},
+		SL
+	);
 
 	if (!this->params.keep_aspect_ratio) {
 		vec2 ret = img_dims;
@@ -116,8 +120,8 @@ ruis::vec2 image::measure(
 		return ret;
 	}
 
-	ASSERT(img)
-	ASSERT(img_dims.y() > 0)
+	utki::assert(img, SL);
+	utki::assert(img_dims.y() > 0, SL);
 
 	real ratio = img_dims.x() / img_dims.y();
 

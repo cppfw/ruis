@@ -315,12 +315,22 @@ std::vector<utki::shared_ref<widget>> make_children(
 
 void ruis::window::set_background(utki::shared_ref<widget> w)
 {
-	ASSERT(this->children().size() == 1 || this->children().size() == 2)
+	utki::assert(
+		[this]() -> bool {
+			return this->children().size() == 1 || this->children().size() == 2;
+		},
+		SL
+	);
 	if (this->children().size() == 2) {
 		this->erase(this->children().begin());
 	}
 
-	ASSERT(this->children().size() == 1)
+	utki::assert(
+		[this]() -> bool {
+			return this->children().size() == 1;
+		},
+		SL
+	);
 
 	this->insert(w, this->children().begin());
 }
@@ -738,7 +748,12 @@ void window::move_to_top()
 		return;
 	}
 
-	ASSERT(this->parent()->children().size() != 0)
+	utki::assert(
+		[this]() -> bool {
+			return this->parent()->children().size() != 0;
+		},
+		SL
+	);
 
 	if (this->parent()->children().size() == 1) {
 		return;
@@ -766,7 +781,12 @@ bool window::is_topmost() const noexcept
 		return false;
 	}
 
-	ASSERT(this->parent()->children().size() != 0)
+	utki::assert(
+		[this]() -> bool {
+			return this->parent()->children().size() != 0;
+		},
+		SL
+	);
 
 	return &this->parent()->children().back().get() == this;
 }

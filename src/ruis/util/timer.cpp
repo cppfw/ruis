@@ -56,7 +56,7 @@ void timer::update(uint32_t dt_ms)
 		return;
 	}
 
-	ASSERT(dt_ms >= this->left_ms)
+	utki::assert(dt_ms >= this->left_ms, SL);
 
 	this->updater.get().stop(*this);
 

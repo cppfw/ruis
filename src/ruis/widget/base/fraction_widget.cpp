@@ -38,9 +38,13 @@ void fraction_widget::set_fraction(
 		fraction = 0;
 	}
 
-	ASSERT(0 <= fraction && fraction <= 1, [&](auto& o) {
-		o << fraction;
-	})
+	utki::assert(
+		0 <= fraction && fraction <= 1,
+		[&](auto& o) {
+			o << fraction;
+		},
+		SL
+	);
 
 	if (this->fraction == fraction) {
 		return;

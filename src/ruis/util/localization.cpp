@@ -33,7 +33,7 @@ wording::wording(
 ) :
 	vocabulary(std::move(vocabulary)),
 	iter([&]() {
-		ASSERT(this->vocabulary)
+		utki::assert(this->vocabulary, SL);
 		auto i = this->vocabulary->find(id);
 		if (i == this->vocabulary->end()) {
 			throw std::invalid_argument(utki::cat("could not find localized string with id: ", id));

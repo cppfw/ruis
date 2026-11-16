@@ -262,7 +262,7 @@ public:
 	utki::shared_ref<ruis::widget> get_widget(size_t index) const override
 	{
 		auto i = utki::next(this->items.begin(), index);
-		ASSERT(i < this->items.end())
+		utki::assert(i < this->items.end(), SL);
 		return m::text(
 			this->context, //
 			{},
@@ -332,7 +332,7 @@ utki::shared_ref<ruis::window> make_selection_box_window(
 
 		// std::cout << "localization selection changed = " << sel << std::endl;
 
-		ASSERT(sel < language_id_to_name_mapping.size())
+		utki::assert(sel < language_id_to_name_mapping.size(), SL);
 
 		sb.context.get().post_to_ui_thread([lng = language_id_to_name_mapping.at(sel).first]() {
 			auto& app = application::inst();

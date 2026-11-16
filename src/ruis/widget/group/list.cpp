@@ -188,7 +188,7 @@ void list::set_scroll_factor(
 			this->pos_offset = 0;
 		}
 	} else {
-		ASSERT(this->pos_index == 0)
+		utki::assert(this->pos_index == 0, SL);
 		this->pos_offset = round(factor * this->first_tail_item_offset);
 	}
 
@@ -332,7 +332,7 @@ void list::update_tail_items_info()
 
 	real dim = this->rect().d[long_index];
 
-	ASSERT(this->get_provider().count() > 0)
+	utki::assert(this->get_provider().count() > 0, SL);
 
 	for (size_t i = this->get_provider().count(); i != 0 && dim > 0; --i) {
 		++this->num_tail_items;

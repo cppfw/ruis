@@ -51,7 +51,7 @@ freetype_face::freetype_lib_wrapper::~freetype_lib_wrapper()
 freetype_face::freetype_face_wrapper::freetype_face_wrapper(FT_Library& lib, const fsif::file& fi)
 {
 	this->font_file = fi.load();
-	ASSERT(!this->font_file.empty())
+	utki::assert(!this->font_file.empty(), SL);
 	if (FT_New_Memory_Face(lib, this->font_file.data(), int(this->font_file.size()), 0 /* face_index */, &this->f) != 0)
 	{
 		throw std::runtime_error("freetype_face_wrapper::freetype_face_wrapper(): unable to crate font face object");
@@ -266,7 +266,7 @@ real texture_font::render_glyph_internal(
 
 	// texture can be null for glyph of empty characters, like space, tab etc...
 	if (g.tex) {
-		ASSERT(g.vao)
+		utki::assert(g.vao, SL);
 		renderer.shaders().color_pos_tex_alpha->render(
 			matrix, //
 			*g.vao,
@@ -334,8 +334,8 @@ ruis::rect texture_font::get_bounding_box_internal(std::u32string_view str, unsi
 	ret.d.x() = right - left;
 	ret.d.y() = -(top - bottom);
 
-	ASSERT(ret.d.x() >= 0)
-	ASSERT(ret.d.y() >= 0)
+	utki::assert(ret.d.x() >= 0, SL);
+	utki::assert(ret.d.y() >= 0, SL);
 
 	return ret;
 }

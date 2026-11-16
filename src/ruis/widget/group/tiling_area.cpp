@@ -251,7 +251,7 @@ void tiling_area::on_lay_out()
 				this->min_tile_size
 			);
 
-			ASSERT(tiles_length > 0)
+			utki::assert(tiles_length > 0, SL);
 
 			ruis::vec2 dims;
 			dims[trans_index] = content_dims[trans_index];
@@ -269,7 +269,7 @@ void tiling_area::on_lay_out()
 		for (auto& t : this->get_container()) {
 			ruis::real tile_length = max(t.get().rect().d[long_index], this->min_tile_size);
 
-			ASSERT(tiles_length > 0)
+			utki::assert(tiles_length > 0, SL);
 
 			ruis::vec2 dims;
 			dims[trans_index] = content_dims[trans_index];
@@ -323,7 +323,12 @@ void tiling_area::on_lay_out()
 	for (auto i = std::next(this->begin()); i != this->end(); ++i) {
 		auto index = size_t(std::distance(this->begin(), i)) - 1;
 
-		ASSERT(index < this->get_container().size())
+		utki::assert(
+			[this, index]() -> bool {
+				return index < this->get_container().size();
+			},
+			SL
+		);
 
 		auto& dragger = dynamic_cast<internal::dragger&>(i->get());
 

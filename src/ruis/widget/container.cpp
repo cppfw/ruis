@@ -345,7 +345,7 @@ widget_list::const_iterator container::insert_internal(
 
 	this->set_widget_parent(ww);
 
-	ASSERT(!ww.is_hovered())
+	utki::assert(!ww.is_hovered(), SL);
 	return ret;
 }
 
@@ -499,7 +499,7 @@ widget_list::const_iterator container::change_child_z_position(
 	decltype(child) ret;
 
 	auto distance = std::distance(i, b);
-	ASSERT(distance != 0)
+	utki::assert(distance != 0, SL);
 	if (distance > 0) {
 		ret = std::rotate(i, std::next(i), b);
 	} else {

@@ -101,7 +101,7 @@ public:
 		style font_style = style::normal
 	) const noexcept
 	{
-		ASSERT(this->font_faces[style::normal])
+		utki::assert(this->font_faces[style::normal], SL);
 		const auto& ret = this->font_faces[font_style];
 		if (ret) {
 			return ret->get(size);

@@ -65,13 +65,13 @@ utki::shared_ref<const ruis::render::vertex_array> gradient::make_vao(
 			vertices.emplace_back(1, std::get<0>(s));
 			vertices.emplace_back(0, std::get<0>(s));
 		} else {
-			ASSERT(!vertical)
+			utki::assert(!vertical, SL);
 			vertices.emplace_back(std::get<0>(s), 0);
 			vertices.emplace_back(std::get<0>(s), 1);
 		}
 		//		TRACE(<< "put pos = " << vertices.back() << std::endl)
 	}
-	ASSERT(vertices.size() == colors.size())
+	utki::assert(vertices.size() == colors.size(), SL);
 
 	std::vector<uint16_t> indices;
 	for (size_t i = 0; i != vertices.size(); ++i) {

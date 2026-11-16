@@ -32,13 +32,13 @@ void path::line_to(ruis::vec2 abs_pos)
 
 void path::line_by(ruis::vec2 rel_pos)
 {
-	ASSERT(this->points.size() != 0)
+	utki::assert(this->points.size() != 0, SL);
 	this->line_to(this->points.back() + rel_pos);
 }
 
 void path::cubic_by(ruis::vec2 rel_p1, ruis::vec2 rel_p2, ruis::vec2 rel_p3)
 {
-	ASSERT(this->points.size() != 0)
+	utki::assert(this->points.size() != 0, SL);
 	auto& d = this->points.back();
 	this->cubic_to(d + rel_p1, d + rel_p2, d + rel_p3);
 }
@@ -95,7 +95,7 @@ path::vertices path::stroke(ruis::real half_width, ruis::real antialias_width, r
 
 		ruis::vec2 prev_normal = 0, next_normal;
 
-		ASSERT(prev || next)
+		utki::assert(prev || next, SL);
 
 		if (prev) {
 			using std::swap;
@@ -109,11 +109,11 @@ path::vertices path::stroke(ruis::real half_width, ruis::real antialias_width, r
 			swap(next_normal.x(), next_normal.y());
 			next_normal.x() = -next_normal.x();
 		} else {
-			ASSERT(prev)
+			utki::assert(prev, SL);
 			next_normal = prev_normal;
 		}
 		if (!prev) {
-			ASSERT(next)
+			utki::assert(next, SL);
 			prev_normal = next_normal;
 		}
 
@@ -126,11 +126,11 @@ path::vertices path::stroke(ruis::real half_width, ruis::real antialias_width, r
 		using utki::pi;
 
 		if (!prev) {
-			ASSERT(next)
+			utki::assert(next, SL);
 			ret.pos
 				.push_back((*cur) - normal * miter - normal.rot(-ruis::real(pi) / 4) * antialias_width * std::numbers::sqrt2_v<ruis::real>);
 		} else if (!next) {
-			ASSERT(prev)
+			utki::assert(prev, SL);
 			ret.pos
 				.push_back((*cur) - normal * miter - normal.rot(ruis::real(pi) / 4) * antialias_width * std::numbers::sqrt2_v<ruis::real>);
 		} else {

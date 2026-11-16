@@ -80,10 +80,10 @@ utki::shared_ref<ruis::tab> inflate_tab(ruis::tabbed_book& tb, const std::string
 	close_btn.click_handler = [tabbed_book_wp = utki::make_weak_from(tb),
 							   tab_wp = utki::make_weak(t)](ruis::push_button& btn) {
 		auto tb = tabbed_book_wp.lock();
-		ASSERT(tb)
+		utki::assert(tb, SL);
 
 		auto t = tab_wp.lock();
-		ASSERT(t)
+		utki::assert(t, SL);
 
 		btn.context.get().post_to_ui_thread([tb, t] {
 			tb->tear_out(*t);

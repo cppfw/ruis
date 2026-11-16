@@ -30,16 +30,16 @@ void wire_socket::connect(const std::shared_ptr<wire_socket>& o)
 void wire_socket::disconnect()
 {
 	if (this->slave) {
-		ASSERT(!this->primary.lock())
-		ASSERT(this->slave->primary.lock().get() == this)
-		ASSERT(!this->slave->slave)
+		utki::assert(!this->primary.lock(), SL);
+		utki::assert(this->slave->primary.lock().get() == this, SL);
+		utki::assert(!this->slave->slave, SL);
 		this->slave->primary.reset();
 		auto old_slave = std::move(this->slave);
 		this->slave.reset();
 		this->on_disconnected(*old_slave);
 	} else if (auto p = this->primary.lock()) {
-		ASSERT(!p->primary.lock())
-		ASSERT(p->slave.get() == this)
+		utki::assert(!p->primary.lock(), SL);
+		utki::assert(p->slave.get() == this, SL);
 		p->disconnect();
 	}
 }

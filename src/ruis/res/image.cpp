@@ -117,7 +117,7 @@ public:
 		// TODO: develop algorithm to go through cache from time to time and drop zombie textures
 		if (auto i = this->cache.find(for_dims.to<unsigned>()); i != this->cache.end()) {
 			if (auto p = i->second.lock()) {
-				ASSERT(p)
+				utki::assert(p, SL);
 				return utki::shared_ref(std::move(p));
 			} else {
 				this->cache.erase(i);
@@ -184,7 +184,7 @@ public:
 	)
 	{
 		auto dom = svgdom::load(fi);
-		ASSERT(dom)
+		utki::assert(dom, SL);
 		return utki::make_shared<res_svg_image>(
 			loader.rendering_context, //
 			std::move(dom)

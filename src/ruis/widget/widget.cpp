@@ -268,7 +268,7 @@ utki::shared_ref<render::frame_buffer> widget::render_to_texture(std::shared_ptr
 		auto dims = this->rect().d.to<uint32_t>();
 
 		if (reuse && reuse->dims() == dims) {
-			ASSERT(reuse)
+			utki::assert(reuse, SL);
 			return utki::shared_ref(std::move(reuse));
 		}
 
@@ -420,7 +420,12 @@ vec2 widget::get_pos_in_ancestor(vec2 pos, const widget* ancestor)
 		return pos;
 	}
 
-	ASSERT(this->parent())
+	utki::assert(
+		[this]() -> bool {
+			return this->parent();
+		},
+		SL
+	);
 
 	return this->parent()->get_pos_in_ancestor(this->rect().p + pos, ancestor);
 }

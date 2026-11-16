@@ -29,55 +29,55 @@ constexpr real half_way_factor = 0.5;
 
 real ruis::easing::linear(real f)
 {
-	ASSERT(f >= 0)
-	ASSERT(f <= 1)
+	utki::assert(f >= 0, SL);
+	utki::assert(f <= 1, SL);
 	return f;
 }
 
 real ruis::easing::in_sine(real f)
 {
-	ASSERT(f >= 0)
-	ASSERT(f <= 1)
+	utki::assert(f >= 0, SL);
+	utki::assert(f <= 1, SL);
 	using std::cos;
 	return real(1) - cos(f * real(utki::pi) / 2);
 }
 
 real ruis::easing::out_sine(real f)
 {
-	ASSERT(f >= 0)
-	ASSERT(f <= 1)
+	utki::assert(f >= 0, SL);
+	utki::assert(f <= 1, SL);
 	using std::sin;
 	return sin(f * real(utki::pi) / 2);
 }
 
 real ruis::easing::in_out_sine(real f)
 {
-	ASSERT(f >= 0)
-	ASSERT(f <= 1)
+	utki::assert(f >= 0, SL);
+	utki::assert(f <= 1, SL);
 	using std::cos;
 	return -(cos(real(utki::pi) * f) - 1) / 2;
 }
 
 real ruis::easing::in_quadratic(real f)
 {
-	ASSERT(f >= 0)
-	ASSERT(f <= 1)
+	utki::assert(f >= 0, SL);
+	utki::assert(f <= 1, SL);
 	using utki::pow2;
 	return pow2(f);
 }
 
 real ruis::easing::out_quadratic(real f)
 {
-	ASSERT(f >= 0)
-	ASSERT(f <= 1)
+	utki::assert(f >= 0, SL);
+	utki::assert(f <= 1, SL);
 	using utki::pow2;
 	return real(1) - pow2(real(1) - f);
 }
 
 real ruis::easing::in_out_quadratic(real f)
 {
-	ASSERT(f >= 0)
-	ASSERT(f <= 1)
+	utki::assert(f >= 0, SL);
+	utki::assert(f <= 1, SL);
 	using utki::pow2;
 
 	if (f < half_way_factor) {
@@ -89,24 +89,24 @@ real ruis::easing::in_out_quadratic(real f)
 
 real ruis::easing::in_cubic(real f)
 {
-	ASSERT(f >= 0)
-	ASSERT(f <= 1)
+	utki::assert(f >= 0, SL);
+	utki::assert(f <= 1, SL);
 	using utki::pow3;
 	return pow3(f);
 }
 
 real ruis::easing::out_cubic(real f)
 {
-	ASSERT(f >= 0)
-	ASSERT(f <= 1)
+	utki::assert(f >= 0, SL);
+	utki::assert(f <= 1, SL);
 	using utki::pow3;
 	return real(1) - pow3(real(1) - f);
 }
 
 real ruis::easing::in_out_cubic(real f)
 {
-	ASSERT(f >= 0)
-	ASSERT(f <= 1)
+	utki::assert(f >= 0, SL);
+	utki::assert(f <= 1, SL);
 	using utki::pow3;
 
 	if (f < half_way_factor) {
@@ -118,24 +118,24 @@ real ruis::easing::in_out_cubic(real f)
 
 real ruis::easing::in_quartic(real f)
 {
-	ASSERT(f >= 0)
-	ASSERT(f <= 1)
+	utki::assert(f >= 0, SL);
+	utki::assert(f <= 1, SL);
 	using utki::pow4;
 	return pow4(f);
 }
 
 real ruis::easing::out_quartic(real f)
 {
-	ASSERT(f >= 0)
-	ASSERT(f <= 1)
+	utki::assert(f >= 0, SL);
+	utki::assert(f <= 1, SL);
 	using utki::pow4;
 	return real(1) - pow4(real(1) - f);
 }
 
 real ruis::easing::in_out_quartic(real f)
 {
-	ASSERT(f >= 0)
-	ASSERT(f <= 1)
+	utki::assert(f >= 0, SL);
+	utki::assert(f <= 1, SL);
 	using utki::pow4;
 
 	if (f < half_way_factor) {
@@ -147,24 +147,24 @@ real ruis::easing::in_out_quartic(real f)
 
 real ruis::easing::in_quintic(real f)
 {
-	ASSERT(f >= 0)
-	ASSERT(f <= 1)
+	utki::assert(f >= 0, SL);
+	utki::assert(f <= 1, SL);
 	using utki::pow5;
 	return pow5(f);
 }
 
 real ruis::easing::out_quintic(real f)
 {
-	ASSERT(f >= 0)
-	ASSERT(f <= 1)
+	utki::assert(f >= 0, SL);
+	utki::assert(f <= 1, SL);
 	using utki::pow5;
 	return real(1) - pow5(real(1) - f);
 }
 
 real ruis::easing::in_out_quintic(real f)
 {
-	ASSERT(f >= 0)
-	ASSERT(f <= 1)
+	utki::assert(f >= 0, SL);
+	utki::assert(f <= 1, SL);
 	using utki::pow5;
 
 	if (f < half_way_factor) {
@@ -180,8 +180,8 @@ constexpr real exponent_arg_infinity = 10;
 
 real ruis::easing::in_exponent(real f)
 {
-	ASSERT(f >= 0)
-	ASSERT(f <= 1)
+	utki::assert(f >= 0, SL);
+	utki::assert(f <= 1, SL);
 	using std::pow;
 	if (f == 0) {
 		return 0;
@@ -191,8 +191,8 @@ real ruis::easing::in_exponent(real f)
 
 real ruis::easing::out_exponent(real f)
 {
-	ASSERT(f >= 0)
-	ASSERT(f <= 1)
+	utki::assert(f >= 0, SL);
+	utki::assert(f <= 1, SL);
 	using std::pow;
 
 	if (f == 1) {
@@ -203,8 +203,8 @@ real ruis::easing::out_exponent(real f)
 
 real ruis::easing::in_out_exponent(real f)
 {
-	ASSERT(f >= 0)
-	ASSERT(f <= 1)
+	utki::assert(f >= 0, SL);
+	utki::assert(f <= 1, SL);
 	using std::pow;
 
 	if (f == 0) {
@@ -221,8 +221,8 @@ real ruis::easing::in_out_exponent(real f)
 
 real ruis::easing::in_circular(real f)
 {
-	ASSERT(f >= 0)
-	ASSERT(f <= 1)
+	utki::assert(f >= 0, SL);
+	utki::assert(f <= 1, SL);
 	using utki::pow2;
 	using std::sqrt;
 	return real(1) - sqrt(real(1) - pow2(f));
@@ -230,8 +230,8 @@ real ruis::easing::in_circular(real f)
 
 real ruis::easing::out_circular(real f)
 {
-	ASSERT(f >= 0)
-	ASSERT(f <= 1)
+	utki::assert(f >= 0, SL);
+	utki::assert(f <= 1, SL);
 	using utki::pow2;
 	using std::sqrt;
 	return sqrt(real(1) - pow2(f - 1));
@@ -239,8 +239,8 @@ real ruis::easing::out_circular(real f)
 
 real ruis::easing::in_out_circular(real f)
 {
-	ASSERT(f >= 0)
-	ASSERT(f <= 1)
+	utki::assert(f >= 0, SL);
+	utki::assert(f <= 1, SL);
 	using utki::pow2;
 	using std::sqrt;
 
@@ -253,8 +253,8 @@ real ruis::easing::in_out_circular(real f)
 
 real ruis::easing::in_back(real f)
 {
-	ASSERT(f >= 0)
-	ASSERT(f <= 1)
+	utki::assert(f >= 0, SL);
+	utki::assert(f <= 1, SL);
 	using utki::pow2;
 	using utki::pow3;
 
@@ -266,8 +266,8 @@ real ruis::easing::in_back(real f)
 
 real ruis::easing::out_back(real f)
 {
-	ASSERT(f >= 0)
-	ASSERT(f <= 1)
+	utki::assert(f >= 0, SL);
+	utki::assert(f <= 1, SL);
 	using utki::pow2;
 	using utki::pow3;
 
@@ -279,8 +279,8 @@ real ruis::easing::out_back(real f)
 
 real ruis::easing::in_out_back(real f)
 {
-	ASSERT(f >= 0)
-	ASSERT(f <= 1)
+	utki::assert(f >= 0, SL);
+	utki::assert(f <= 1, SL);
 	using utki::pow2;
 
 	constexpr real c1 = real(1.70158);
@@ -295,8 +295,8 @@ real ruis::easing::in_out_back(real f)
 
 real ruis::easing::in_elastic(real f)
 {
-	ASSERT(f >= 0)
-	ASSERT(f <= 1)
+	utki::assert(f >= 0, SL);
+	utki::assert(f <= 1, SL);
 	using std::pow;
 	using std::sin;
 
@@ -315,8 +315,8 @@ real ruis::easing::in_elastic(real f)
 
 real ruis::easing::out_elastic(real f)
 {
-	ASSERT(f >= 0)
-	ASSERT(f <= 1)
+	utki::assert(f >= 0, SL);
+	utki::assert(f <= 1, SL);
 	using std::pow;
 	using std::sin;
 
@@ -335,8 +335,8 @@ real ruis::easing::out_elastic(real f)
 
 real ruis::easing::in_out_elastic(real f)
 {
-	ASSERT(f >= 0)
-	ASSERT(f <= 1)
+	utki::assert(f >= 0, SL);
+	utki::assert(f <= 1, SL);
 	using std::pow;
 	using std::sin;
 
@@ -358,15 +358,15 @@ real ruis::easing::in_out_elastic(real f)
 
 real ruis::easing::in_bounce(real f)
 {
-	ASSERT(f >= 0)
-	ASSERT(f <= 1)
+	utki::assert(f >= 0, SL);
+	utki::assert(f <= 1, SL);
 	return real(1) - out_bounce(real(1) - f);
 }
 
 real ruis::easing::out_bounce(real f)
 {
-	ASSERT(f >= 0)
-	ASSERT(f <= 1)
+	utki::assert(f >= 0, SL);
+	utki::assert(f <= 1, SL);
 
 	using utki::pow2;
 
@@ -394,8 +394,8 @@ real ruis::easing::out_bounce(real f)
 
 real ruis::easing::in_out_bounce(real f)
 {
-	ASSERT(f >= 0)
-	ASSERT(f <= 1)
+	utki::assert(f >= 0, SL);
+	utki::assert(f <= 1, SL);
 
 	if (f < half_way_factor) {
 		return (1 - out_bounce(1 - 2 * f)) / 2;

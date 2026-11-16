@@ -65,10 +65,10 @@ void updater::stop(updateable& u) noexcept
 
 void updater::remove_from_to_add(updateable* u)
 {
-	ASSERT(u->pending_addition)
+	utki::assert(u->pending_addition, SL);
 	for (auto i = this->to_add.begin(); i != this->to_add.end(); ++i) {
 		if ((*i).operator->() == u) {
-			ASSERT((*i)->pending_addition)
+			utki::assert((*i)->pending_addition, SL);
 			u->pending_addition = false;
 			this->to_add.erase(i);
 			return;
@@ -90,7 +90,7 @@ updater::update_queue::iterator updater::update_queue::insert(const update_queue
 		}
 	}
 
-	ASSERT(false)
+	utki::assert(false, SL);
 	return this->end();
 }
 
@@ -162,7 +162,7 @@ uint32_t updater::update()
 	} else {
 		this->last_updated_timestamp = cur_ticks;
 	}
-	ASSERT(this->last_updated_timestamp == cur_ticks)
+	utki::assert(this->last_updated_timestamp == cur_ticks, SL);
 
 	// std::cout << "updater::update(): this->active_queue->size() = " << this->active_queue->size() << std::endl;
 
@@ -179,10 +179,10 @@ uint32_t updater::update()
 
 	uint32_t closest_time_point = 0;
 	if (this->active_queue->size() != 0) {
-		ASSERT(cur_ticks <= this->active_queue->front().ends_at)
+		utki::assert(cur_ticks <= this->active_queue->front().ends_at, SL);
 		closest_time_point = this->active_queue->front().ends_at;
 	} else if (this->inactive_queue->size() != 0) {
-		ASSERT(cur_ticks > this->inactive_queue->front().ends_at)
+		utki::assert(cur_ticks > this->inactive_queue->front().ends_at, SL);
 		closest_time_point = this->inactive_queue->front().ends_at;
 	} else {
 		return uint32_t(-1);
