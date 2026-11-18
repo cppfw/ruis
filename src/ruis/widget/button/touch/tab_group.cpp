@@ -79,7 +79,8 @@ tab_group::tab_group(
 		}()
 	),
 	selector_vao(
-		context.get().renderer, //
+		context.get().loader().rendering_context, //
+		context.get().loader().common_rendering_objects, //
 		{.corner_radii =
 			 {
 				 // NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers, "TODO: get from params")
@@ -99,10 +100,10 @@ tab_group::tab_group(
 
 void tab_group::render(const ruis::mat4& matrix) const
 {
+	auto& r = this->context.get().renderer.get();
+
 	// render background
 	{
-		auto& r = this->context.get().renderer.get();
-
 		ruis::mat4 matr(matrix);
 		matr.scale(this->rect().d);
 
@@ -120,6 +121,7 @@ void tab_group::render(const ruis::mat4& matrix) const
 		ruis::mat4 matr(matrix);
 		matr.translate(pos);
 		this->selector_vao.render(
+			r, //
 			matr, //
 			active_tab->rect().d,
 			this->params.selector_color.get()
