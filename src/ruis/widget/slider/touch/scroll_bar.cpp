@@ -70,7 +70,7 @@ scroll_bar::scroll_bar( //
 		}
 		return std::move(params.params);
 	}()),
-	vao(context.get().renderer, {}),
+	vao(context.get().renderer, context.get().loader().rendering_context, {}),
 	fade_timeout_timer( //
 		utki::make_shared<ruis::timer>( //
 			context.get().updater, //

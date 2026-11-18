@@ -59,7 +59,7 @@ progress_bar::progress_bar( //
 		}
 		return std::move(params.params);
 	}()),
-	vao(context.get().renderer, {})
+	vao(context.get().renderer, context.get().loader().rendering_context, {})
 {}
 
 void progress_bar::on_fraction_change()

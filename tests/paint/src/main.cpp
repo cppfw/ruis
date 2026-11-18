@@ -82,7 +82,7 @@ public:
 			std::move(params.layout_params),
 			std::move(params.widget)
 		),
-		vao(context.get().renderer),
+		vao(context.get().renderer, context.get().loader().rendering_context),
 		stroke_width(params.stroke_width),
 		color_params(std::move(params.color))
 	{}
@@ -135,6 +135,7 @@ public:
 			std::move(params.widget)
 		),
 		vao(context.get().renderer, //
+			context.get().loader().rendering_context, //
 			std::move(params.rectangle_vao_params)),
 		color_params(std::move(params.color))
 	{}

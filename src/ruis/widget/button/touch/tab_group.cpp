@@ -80,6 +80,7 @@ tab_group::tab_group(
 	),
 	selector_vao(
 		context.get().renderer, //
+		context.get().loader().rendering_context, //
 		{.corner_radii =
 			 {
 				 // NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers, "TODO: get from params")

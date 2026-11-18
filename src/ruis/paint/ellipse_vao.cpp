@@ -33,10 +33,12 @@ std::map<
 
 ellipse_vao::ellipse_vao(
 	utki::shared_ref<const ruis::render::renderer> renderer,
+	utki::shared_ref<const ruis::render::context> shared_context, //
 	vec2 diameters, //
 	real stroke_width
 ) :
-	renderer(std::move(renderer))
+	renderer(std::move(renderer)),
+	shared_context(std::move(shared_context))
 {
 	this->set(
 		diameters, //
@@ -117,9 +119,9 @@ void ellipse_vao::update_texture()
 
 	// TODO: convert to greyscale image
 
-	const auto& r = this->renderer.get();
-
-	this->tex = r.ctx().make_texture_2d(
+	// create the texture in the shared rendering context, so that it is shared
+	// between all windows and does not pin any per-window context
+	this->tex = this->shared_context.get().make_texture_2d(
 		make_ellipse_texture_image(this->diameters, this->stroke_width), //
 		{}
 	);

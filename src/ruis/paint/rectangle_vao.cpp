@@ -37,9 +37,11 @@ std::map<
 
 rectangle_vao::rectangle_vao(
 	utki::shared_ref<const ruis::render::renderer> renderer, //
+	utki::shared_ref<const ruis::render::context> shared_context, //
 	parameters params
 ) :
 	renderer(std::move(renderer)),
+	shared_context(std::move(shared_context)),
 	params(params)
 {
 	this->update_rounded_corners_texture();
@@ -388,7 +390,8 @@ auto make_rounded_corners_texture_image(const rectangle_vao::parameters& params)
 }
 
 utki::shared_ref<const ruis::render::vertex_array> make_quad_vao(
-	const ruis::render::renderer& ren, //
+	const ruis::render::context& shared_context, //
+	const ruis::render::renderer::objects& common_objects, //
 	const r4::segment2<ruis::real>& tex_coords
 )
 {
@@ -399,20 +402,21 @@ utki::shared_ref<const ruis::render::vertex_array> make_quad_vao(
 		tex_coords.x2_y1()
 	};
 
-	return ren.ctx().make_vertex_array(
+	return shared_context.make_vertex_array(
 		// clang-format off
 		{
-			ren.obj().quad_01_vbo,
-			ren.ctx().make_vertex_buffer(tex_coords_array)
+			common_objects.quad_01_vbo,
+			shared_context.make_vertex_buffer(tex_coords_array)
 		},
 		// clang-format on
-		ren.obj().quad_fan_indices,
+		common_objects.quad_fan_indices,
 		ruis::render::vertex_array::mode::triangle_fan
 	);
 }
 
 std::array<std::array<utki::shared_ref<const ruis::render::vertex_array>, 2>, 2> make_corner_vaos(
-	const ruis::render::renderer& ren, //
+	const ruis::render::context& shared_context, //
+	const ruis::render::renderer::objects& common_objects, //
 	const ruis::vec2& tex_dims,
 	const ruis::corners<ruis::real>& radii
 )
@@ -427,14 +431,14 @@ std::array<std::array<utki::shared_ref<const ruis::render::vertex_array>, 2>, 2>
 	return {{
 		{
 			// left-top
-			make_quad_vao(ren,
+			make_quad_vao(shared_context, common_objects,
 				{
 					.p1 = {0, 0},
 					.p2 = {radii.left_top() / tw, radii.left_top() / th}
 				}
 			),
 			// right-top
-			make_quad_vao(ren,
+			make_quad_vao(shared_context, common_objects,
 				{
 					.p1 = {1 - radii.right_top() / tw, 0},
 					.p2 = {1, radii.right_top() / th}
@@ -443,14 +447,14 @@ std::array<std::array<utki::shared_ref<const ruis::render::vertex_array>, 2>, 2>
 		},
 		{
 			// left-bottom
-			make_quad_vao(ren,
+			make_quad_vao(shared_context, common_objects,
 				{
 					.p1 = {0, 1 - radii.left_bottom() / th},
 					.p2 = {radii.left_bottom() / tw, 1}
 				}
 			),
 			// right-bottom
-			make_quad_vao(ren,
+			make_quad_vao(shared_context, common_objects,
 				{
 					.p1 = {1 - radii.right_bottom() / tw, 1 - radii.right_bottom() / th},
 					.p2 = {1, 1}
@@ -464,14 +468,16 @@ std::array<std::array<utki::shared_ref<const ruis::render::vertex_array>, 2>, 2>
 } // namespace
 
 rectangle_vao::rounded_corners_texture::rounded_corners_texture(
-	const ruis::render::renderer& r, //
+	const ruis::render::context& shared_context, //
+	const ruis::render::renderer::objects& common_objects, //
 	utki::shared_ref<const render::texture_2d> tex,
 	corners<real> radii
 ) :
 	tex(std::move(tex)),
 	radii(std::move(radii)),
 	vaos(make_corner_vaos(
-		r, //
+		shared_context, //
+		common_objects, //
 		this->tex.get().dims().to<real>(),
 		this->radii
 	))
@@ -498,12 +504,13 @@ void rectangle_vao::update_rounded_corners_texture()
 
 	// TODO: convert to greyscale image
 
-	const auto& r = this->renderer.get();
-
-	auto tex = r.ctx().make_texture_2d(std::move(raster_image), {});
+	// create the texture in the shared rendering context, so that it is shared
+	// between all windows and does not pin any per-window context
+	auto tex = this->shared_context.get().make_texture_2d(std::move(raster_image), {});
 
 	this->rounded_corners_tex = std::make_shared<rounded_corners_texture>(
-		r, //
+		this->shared_context.get(), //
+		this->renderer.get().obj(), //
 		std::move(tex),
 		this->params.corner_radii //
 	);

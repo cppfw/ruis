@@ -34,6 +34,16 @@ class ellipse_vao
 {
 	utki::shared_ref<const ruis::render::renderer> renderer;
 
+	/**
+	 * @brief Shared rendering context used to create the cached ellipse
+	 * texture. The texture must be created in the shared context (the one from
+	 * the resource loader), not in a per-window context, because the cached
+	 * texture is shared between all windows: creating it in a per-window context
+	 * would pin that window's context through the texture's back-reference to
+	 * the context, preventing the window from being destroyed.
+	 */
+	utki::shared_ref<const ruis::render::context> shared_context;
+
 	vec2 diameters = 0;
 
 	// non-positive value means filled ellipse
@@ -43,11 +53,14 @@ public:
 	/**
 	 * @brief Constructor.
 	 * @param renderer - renderer to use.
+	 * @param shared_context - shared rendering context to create the cached
+	 * ellipse texture in.
 	 * @param diameters - ellipse diameters.
 	 * @param stroke_width - ellipse border width. Non-positive value means filled ellipse.
 	 */
 	ellipse_vao(
 		utki::shared_ref<const ruis::render::renderer> renderer,
+		utki::shared_ref<const ruis::render::context> shared_context, //
 		vec2 diameters = 0, //
 		real stroke_width = 0 //
 	);

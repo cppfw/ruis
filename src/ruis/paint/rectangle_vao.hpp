@@ -36,6 +36,16 @@ class rectangle_vao
 {
 	utki::shared_ref<const ruis::render::renderer> renderer;
 
+	/**
+	 * @brief Shared rendering context used to create the cached rounded corners
+	 * texture and its vertex arrays. The texture must be created in the shared
+	 * context (the one from the resource loader), not in a per-window context,
+	 * because the cached texture is shared between all windows: creating it in
+	 * a per-window context would pin that window's context through the texture's
+	 * back-reference to the context, preventing the window from being destroyed.
+	 */
+	utki::shared_ref<const ruis::render::context> shared_context;
+
 public:
 	/**
 	 * @brief Rectangle rendering parameters.
@@ -78,10 +88,13 @@ public:
 	/**
 	 * @brief Constructor.
 	 * @param renderer - renderer to use.
+	 * @param shared_context - shared rendering context to create the cached
+	 * rounded corners texture in.
 	 * @param params - rectangle rendering parameters.
 	 */
 	rectangle_vao(
 		utki::shared_ref<const ruis::render::renderer> renderer, //
+		utki::shared_ref<const ruis::render::context> shared_context, //
 		parameters params
 	);
 
@@ -145,12 +158,16 @@ private:
 
 		/**
 		 * @brief Constructor.
-		 * @param r - renderer to use.
+		 * @param shared_context - shared rendering context to create the vertex
+		 * arrays in.
+		 * @param common_objects - common rendering objects to use for the shared
+		 * quad vertex buffer and indices.
 		 * @param tex - texture containing the rounded corners.
 		 * @param radii - corner radii, in the same units as the texture's texels.
 		 */
 		rounded_corners_texture(
-			const ruis::render::renderer& r, //
+			const ruis::render::context& shared_context, //
+			const ruis::render::renderer::objects& common_objects, //
 			utki::shared_ref<const render::texture_2d> tex,
 			corners<real> radii
 		);
