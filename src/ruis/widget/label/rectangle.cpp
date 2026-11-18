@@ -49,8 +49,16 @@ rectangle::rectangle( //
 	),
 	// clang-format on
 	params(std::move(params.params.specific)),
-	fill_vao(context.get().renderer, {}),
-	stroke_vao(context.get().renderer, {})
+	fill_vao(
+		context.get().loader().rendering_context, //
+		context.get().loader().common_rendering_objects,
+		{} //
+	),
+	stroke_vao(
+		context.get().loader().rendering_context, //
+		context.get().loader().common_rendering_objects,
+		{} //
+	)
 {
 	this->update_vaos();
 }
@@ -89,6 +97,7 @@ void rectangle::set_stroke_width(styled<length> width)
 void rectangle::render(const ruis::mat4& matrix) const
 {
 	const auto& dims = this->rect().d;
+	auto& r = this->context.get().renderer.get();
 
 	if (this->has_stroke()) {
 		const auto sw = this->params.stroke_width.get().get(this->context);
@@ -101,18 +110,21 @@ void rectangle::render(const ruis::mat4& matrix) const
 		);
 
 		this->fill_vao.render(
+			r, //
 			matr, //
 			dims - sw,
 			this->get_fill_color()
 		);
 
 		this->stroke_vao.render(
+			r, //
 			matrix, //
 			dims,
 			this->params.stroke_color.get()
 		);
 	} else {
 		this->fill_vao.render(
+			r, //
 			matrix, //
 			dims,
 			this->get_fill_color()

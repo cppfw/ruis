@@ -59,7 +59,10 @@ progress_bar::progress_bar( //
 		}
 		return std::move(params.params);
 	}()),
-	vao(context.get().renderer, {})
+	vao(context.get().loader().rendering_context, //
+		context.get().loader().common_rendering_objects,
+		{} //
+	)
 {}
 
 void progress_bar::on_fraction_change()
@@ -91,11 +94,13 @@ void progress_bar::render(const ruis::mat4& matrix) const
 {
 	const auto w = this->rect().d.x();
 	const auto h = this->rect().d.y();
+	auto& r = this->context.get().renderer.get();
 
 	using std::max;
 
 	// the background (track), it fills the whole widget
 	this->vao.render(
+		r, //
 		matrix, //
 		{w, h}, //
 		this->params.specific.background_color.get()
@@ -107,6 +112,7 @@ void progress_bar::render(const ruis::mat4& matrix) const
 	// is already configured; only the width differs
 	const auto bar_w = max(h, h + (w - h) * this->get_fraction());
 	this->vao.render(
+		r, //
 		matrix, //
 		{bar_w, h}, //
 		this->params.specific.bar_color.get()

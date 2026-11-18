@@ -34,7 +34,11 @@ namespace ruis::paint {
  */
 class rectangle_vao
 {
-	utki::shared_ref<const ruis::render::renderer> renderer;
+	// the context in which the rounded-corners texture and corner VAOs are created;
+	// it must outlive this VAO, so use the shared resource-loader context
+	utki::shared_ref<const ruis::render::context> ctx;
+	// shared objects used to build the corner VAOs
+	utki::shared_ref<const ruis::render::renderer::objects> objects;
 
 public:
 	/**
@@ -81,7 +85,8 @@ public:
 	 * @param params - rectangle rendering parameters.
 	 */
 	rectangle_vao(
-		utki::shared_ref<const ruis::render::renderer> renderer, //
+		utki::shared_ref<const ruis::render::context> ctx, //
+		utki::shared_ref<const ruis::render::renderer::objects> objects, //
 		parameters params
 	);
 
@@ -109,6 +114,7 @@ public:
 	 * @param color - color to render the rectangle with.
 	 */
 	void render(
+		const ruis::render::renderer& renderer, //
 		const ruis::mat4& matrix, //
 		const vec2& dims,
 		const ruis::color& color
@@ -122,6 +128,7 @@ private:
 	 * @param color - color to render the rounded corners with.
 	 */
 	void render_rounded_corners(
+		const ruis::render::renderer& renderer, //
 		const mat4& matrix, //
 		const vec2& dims,
 		const ruis::color& color
@@ -150,7 +157,8 @@ private:
 		 * @param radii - corner radii, in the same units as the texture's texels.
 		 */
 		rounded_corners_texture(
-			const ruis::render::renderer& r, //
+			const ruis::render::context& ctx, //
+			const ruis::render::renderer::objects& objects, //
 			utki::shared_ref<const render::texture_2d> tex,
 			corners<real> radii
 		);

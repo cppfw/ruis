@@ -32,11 +32,11 @@ std::map<
 	ellipse_vao::cache;
 
 ellipse_vao::ellipse_vao(
-	utki::shared_ref<const ruis::render::renderer> renderer,
+	utki::shared_ref<const ruis::render::context> ctx,
 	vec2 diameters, //
 	real stroke_width
 ) :
-	renderer(std::move(renderer))
+	ctx(std::move(ctx))
 {
 	this->set(
 		diameters, //
@@ -117,9 +117,7 @@ void ellipse_vao::update_texture()
 
 	// TODO: convert to greyscale image
 
-	const auto& r = this->renderer.get();
-
-	this->tex = r.ctx().make_texture_2d(
+	this->tex = this->ctx.get().make_texture_2d(
 		make_ellipse_texture_image(this->diameters, this->stroke_width), //
 		{}
 	);
@@ -132,6 +130,7 @@ void ellipse_vao::update_texture()
 }
 
 void ellipse_vao::render(
+	const ruis::render::renderer& renderer, //
 	const ruis::mat4& matrix, //
 	const ruis::color& color
 ) const
@@ -140,9 +139,9 @@ void ellipse_vao::render(
 		return;
 	}
 
-	auto& r = this->renderer.get();
+	const auto& r = renderer;
 
-	r.rendering_context.get().set_simple_alpha_blending();
+	r.ctx().set_simple_alpha_blending();
 
 	ruis::mat4 matr(matrix);
 	matr.scale(this->diameters);

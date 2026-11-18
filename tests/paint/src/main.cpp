@@ -82,14 +82,16 @@ public:
 			std::move(params.layout_params),
 			std::move(params.widget)
 		),
-		vao(context.get().renderer),
+		vao(context.get().loader().rendering_context),
 		stroke_width(params.stroke_width),
 		color_params(std::move(params.color))
 	{}
 
 	void render(const ruis::mat4& matrix) const override
 	{
+		auto& r = this->context.get().renderer.get();
 		this->vao.render(
+			r, //
 			matrix, //
 			this->color_params.get()
 		);
@@ -134,14 +136,19 @@ public:
 			std::move(params.layout_params),
 			std::move(params.widget)
 		),
-		vao(context.get().renderer, //
-			std::move(params.rectangle_vao_params)),
+		vao(
+			context.get().loader().rendering_context, //
+			context.get().loader().common_rendering_objects, //
+			std::move(params.rectangle_vao_params)
+		),
 		color_params(std::move(params.color))
 	{}
 
 	void render(const ruis::mat4& matrix) const override
 	{
+		auto& r = this->context.get().renderer.get();
 		this->vao.render(
+			r, //
 			matrix, //
 			this->rect().d, //
 			this->color_params.get()

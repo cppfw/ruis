@@ -54,8 +54,8 @@ ellipse::ellipse( //
 	),
 	// clang-format on
 	params(std::move(params.params.specific)),
-	fill_vao(context.get().renderer, {}),
-	stroke_vao(context.get().renderer, {})
+	fill_vao(context.get().loader().rendering_context, {}),
+	stroke_vao(context.get().loader().rendering_context, {})
 {
 	this->update_vaos();
 }
@@ -93,6 +93,8 @@ void ellipse::set_stroke_width(styled<length> width)
 
 void ellipse::render(const ruis::mat4& matrix) const
 {
+	auto& r = this->context.get().renderer.get();
+
 	if (this->has_stroke()) {
 		const auto sw = this->params.stroke_width.get().get(this->context);
 		const auto half_sw = sw / 2;
@@ -104,16 +106,19 @@ void ellipse::render(const ruis::mat4& matrix) const
 		);
 
 		this->fill_vao.render(
+			r, //
 			matr, //
 			this->get_fill_color()
 		);
 
 		this->stroke_vao.render(
+			r, //
 			matrix, //
 			this->params.stroke_color.get()
 		);
 	} else {
 		this->fill_vao.render(
+			r, //
 			matrix, //
 			this->get_fill_color()
 		);

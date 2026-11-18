@@ -70,7 +70,10 @@ scroll_bar::scroll_bar( //
 		}
 		return std::move(params.params);
 	}()),
-	vao(context.get().renderer, {}),
+	vao(context.get().loader().rendering_context, //
+		context.get().loader().common_rendering_objects,
+		{} //
+	),
 	fade_timeout_timer( //
 		utki::make_shared<ruis::timer>( //
 			context.get().updater, //
@@ -201,6 +204,7 @@ void scroll_bar::render(const ruis::mat4& matrix) const
 	}
 
 	const auto f = this->current_alpha();
+	auto& r = this->context.get().renderer.get();
 
 	const auto& d = this->rect().d;
 	const auto w = d.x();
@@ -211,6 +215,7 @@ void scroll_bar::render(const ruis::mat4& matrix) const
 	// case the background is not drawn at all)
 	if (!this->params.specific.background_color.get().is_undefined()) {
 		this->vao.render( //
+			r, //
 			matrix, //
 			{w, h}, //
 			scroll_bar::scale_alpha(this->params.specific.background_color.get(), f)
@@ -239,6 +244,7 @@ void scroll_bar::render(const ruis::mat4& matrix) const
 		ruis::mat4 m(matrix);
 		m.translate(hoff);
 		this->vao.render( //
+			r, //
 			m, //
 			hdims, //
 			scroll_bar::scale_alpha(this->params.specific.handle_color.get(), f)
