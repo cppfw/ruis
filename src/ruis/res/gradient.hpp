@@ -62,7 +62,7 @@ private:
 	utki::shared_ref<const render::vertex_array> vao;
 
 	static utki::shared_ref<const render::vertex_array> make_vao(
-		const ruis::render::context& rendering_context, //
+		const ruis::render::factory& factory, //
 		utki::span<const std::tuple<real, color>> stops,
 		bool vertical
 	);
@@ -73,12 +73,12 @@ public:
 	 * A gradient stop is a pair of values. First one is a floating point value
 	 * from [0:1] defining the position of the gradient stop. The second value
 	 * defines the color of the stop.
-	 * @param rendering_context - ruis rendering context.
+	 * @param factory - ruis rendering context.
 	 * @param stops - gradient stops.
 	 * @param vertical - is gradient vertical (true) or horizontal (false).
 	 */
 	gradient(
-		const ruis::render::context& rendering_context, //
+		const ruis::render::factory& factory, //
 		utki::span<const std::tuple<real, color>> stops,
 		bool vertical
 	);

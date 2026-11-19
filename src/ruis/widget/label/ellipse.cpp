@@ -54,8 +54,8 @@ ellipse::ellipse( //
 	),
 	// clang-format on
 	params(std::move(params.params.specific)),
-	fill_vao(context.get().loader().rendering_context, {}),
-	stroke_vao(context.get().loader().rendering_context, {})
+	fill_vao(context.get().loader().factory, {}),
+	stroke_vao(context.get().loader().factory, {})
 {
 	this->update_vaos();
 }

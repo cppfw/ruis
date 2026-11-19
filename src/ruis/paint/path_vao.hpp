@@ -35,7 +35,8 @@ namespace ruis::paint {
  */
 class path_vao
 {
-	utki::shared_ref<const ruis::render::renderer> renderer;
+	// the shared render factory in which the path vertex arrays are created
+	utki::shared_ref<const ruis::render::factory> factory;
 
 	utki::shared_ref<const ruis::render::vertex_array> core;
 	utki::shared_ref<const ruis::render::vertex_array> border;
@@ -43,9 +44,13 @@ class path_vao
 public:
 	/**
 	 * @brief Constructor.
-	 * @param r - renderer to use.
+	 * @param factory - render factory to create the path vertex arrays in.
+	 * @param objects - shared objects used to initialise the (empty) vertex arrays.
 	 */
-	path_vao(utki::shared_ref<const ruis::render::renderer> r);
+	path_vao(
+		utki::shared_ref<const ruis::render::factory> factory, //
+		const ruis::render::renderer::objects& objects
+	);
 
 	path_vao(const path_vao&) = delete;
 	path_vao& operator=(const path_vao&) = delete;
@@ -69,10 +74,12 @@ public:
 
 	/**
 	 * @brief Render the path.
+	 * @param renderer - renderer to draw with.
 	 * @param matrix - model-view-projection matrix.
 	 * @param color - color to render the path with.
 	 */
 	void render(
+		const ruis::render::renderer& renderer, //
 		const ruis::mat4& matrix, //
 		ruis::color color
 	) const;

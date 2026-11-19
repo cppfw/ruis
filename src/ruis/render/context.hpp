@@ -26,15 +26,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <rasterimage/image_variant.hpp>
 #include <utki/shared.hpp>
 
-#include "shaders/coloring_shader.hpp"
-#include "shaders/coloring_texturing_shader.hpp"
-#include "shaders/shader.hpp"
-#include "shaders/texturing_shader.hpp"
-
+#include "factory.hpp"
 #include "frame_buffer.hpp"
 #include "native_window.hpp"
-#include "texture_cube.hpp"
-#include "texture_depth.hpp"
 
 namespace ruis::render {
 class context : public std::enable_shared_from_this<context>
@@ -72,6 +66,23 @@ public:
 
 	const utki::shared_ref<ruis::render::native_window> native_window;
 
+	/**
+	 * @brief The render factory injected into this context.
+	 * All shareable render objects (textures, buffers, vertex arrays, shaders) are
+	 * created by the factory and hold a reference to it, so they can be used by any
+	 * render context in the process. This context is only for state control and for
+	 * creating per-window frame buffers.
+	 */
+	const utki::shared_ref<const ruis::render::factory> factory;
+
+	/**
+	 * @brief Shorthand for getting a reference to the factory.
+	 */
+	const ruis::render::factory& fac() const noexcept
+	{
+		return this->factory;
+	}
+
 	struct parameters {
 		r4::matrix4<float> initial_matrix;
 	};
@@ -85,6 +96,7 @@ public:
 
 	context(
 		utki::shared_ref<ruis::render::native_window>, //
+		utki::shared_ref<const ruis::render::factory>, //
 		parameters params
 	);
 
@@ -127,66 +139,9 @@ public:
 
 	// ===============================
 	// ====== factory functions ======
-
-	struct shaders {
-		// TODO: make unique_ref
-		std::unique_ptr<const texturing_shader> pos_tex;
-		std::unique_ptr<const coloring_shader> color_pos;
-		std::unique_ptr<const coloring_shader> color_pos_lum;
-		std::unique_ptr<const shader> pos_clr;
-		std::unique_ptr<const coloring_texturing_shader> color_pos_tex;
-		std::unique_ptr<const coloring_texturing_shader> color_pos_tex_alpha;
-	};
-
-	virtual utki::shared_ref<shaders> make_shaders() const = 0;
-
-	struct texture_2d_parameters {
-		texture_2d::filter min_filter = texture_2d::filter::nearest;
-		texture_2d::filter mag_filter = texture_2d::filter::nearest;
-		texture_2d::mipmap mipmap = texture_2d::mipmap::none;
-	};
-
-	virtual utki::shared_ref<texture_2d> make_texture_2d(
-		rasterimage::format format,
-		rasterimage::dimensioned::dimensions_type dims,
-		texture_2d_parameters params
-	) const = 0;
-
-	virtual utki::shared_ref<texture_2d> make_texture_2d(
-		const rasterimage::image_variant& imvar,
-		texture_2d_parameters params
-	) const = 0;
-
-	virtual utki::shared_ref<texture_2d> make_texture_2d(
-		rasterimage::image_variant&& imvar,
-		texture_2d_parameters params
-	) const = 0;
-
-	virtual utki::shared_ref<texture_depth> make_texture_depth(rasterimage::dimensioned::dimensions_type dims
-	) const = 0;
-
-	virtual utki::shared_ref<texture_cube> make_texture_cube(
-		rasterimage::image_variant&& positive_x,
-		rasterimage::image_variant&& negative_x,
-		rasterimage::image_variant&& positive_y,
-		rasterimage::image_variant&& negative_y,
-		rasterimage::image_variant&& positive_z,
-		rasterimage::image_variant&& negative_z
-	) const = 0;
-
-	virtual utki::shared_ref<vertex_buffer> make_vertex_buffer(utki::span<const r4::vector4<float>> vertices) const = 0;
-	virtual utki::shared_ref<vertex_buffer> make_vertex_buffer(utki::span<const r4::vector3<float>> vertices) const = 0;
-	virtual utki::shared_ref<vertex_buffer> make_vertex_buffer(utki::span<const r4::vector2<float>> vertices) const = 0;
-	virtual utki::shared_ref<vertex_buffer> make_vertex_buffer(utki::span<const float> vertices) const = 0;
-
-	virtual utki::shared_ref<index_buffer> make_index_buffer(utki::span<const uint16_t> indices) const = 0;
-	virtual utki::shared_ref<index_buffer> make_index_buffer(utki::span<const uint32_t> indices) const = 0;
-
-	virtual utki::shared_ref<vertex_array> make_vertex_array(
-		std::vector<utki::shared_ref<const ruis::render::vertex_buffer>> buffers,
-		utki::shared_ref<const ruis::render::index_buffer> indices,
-		vertex_array::mode rendering_mode
-	) const = 0;
+	// NOTE: the shareable render objects (textures, vertex/index buffers, vertex
+	// arrays and shaders) are created by the injected render factory (see fac()).
+	// The only object a context creates is the (per-window) frame buffer.
 
 	virtual utki::shared_ref<frame_buffer> make_framebuffer( //
 		std::shared_ptr<texture_2d> color,

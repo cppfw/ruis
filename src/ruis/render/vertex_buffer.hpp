@@ -27,21 +27,21 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis::render {
 
-class context;
+class factory;
 
 class vertex_buffer
 {
-	const utki::shared_ref<const ruis::render::context> rendering_context;
+	const utki::shared_ref<const ruis::render::factory> factory;
 
 public:
 	const size_t size;
 
 protected:
 	vertex_buffer(
-		utki::shared_ref<const ruis::render::context> rendering_context, //
+		utki::shared_ref<const ruis::render::factory> factory, //
 		size_t size
 	) :
-		rendering_context(std::move(rendering_context)),
+		factory(std::move(factory)),
 		size(size)
 	{}
 

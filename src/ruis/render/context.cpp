@@ -27,9 +27,11 @@ std::vector<const ruis::render::context*> ruis::render::context::cur_context_sta
 
 context::context(
 	utki::shared_ref<ruis::render::native_window> native_window, //
+	utki::shared_ref<const ruis::render::factory> factory, //
 	parameters params
 ) :
 	native_window(std::move(native_window)),
+	factory(std::move(factory)),
 	initial_matrix(std::move(params.initial_matrix))
 {
 	// insert this context to the bottom of the current contexts stack

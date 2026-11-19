@@ -175,7 +175,7 @@ texture_font::glyph texture_font::load_glyph(char32_t c) const
 	g.top_left = ftg.vertices[0];
 	g.bottom_right = ftg.vertices[2];
 
-	auto& rc = this->rendering_context.get();
+	auto& rc = this->factory.get();
 
 	// clang-format off
 	g.vao = rc.make_vertex_array(
@@ -201,13 +201,13 @@ texture_font::glyph texture_font::load_glyph(char32_t c) const
 }
 
 texture_font::texture_font(
-	utki::shared_ref<const ruis::render::context> rendering_context, //
+	utki::shared_ref<const ruis::render::factory> factory, //
 	utki::shared_ref<const ruis::render::renderer::objects> common_rendering_objects,
 	utki::shared_ref<const freetype_face> face,
 	unsigned font_size,
 	unsigned max_cached
 ) :
-	rendering_context(std::move(rendering_context)),
+	factory(std::move(factory)),
 	common_rendering_objects(std::move(common_rendering_objects)),
 	font_size(font_size),
 	face(std::move(face)),
@@ -358,7 +358,7 @@ font::render_result texture_font::render_internal(
 		return ret;
 	}
 
-	renderer.rendering_context.get().set_simple_alpha_blending();
+	renderer.ctx().set_simple_alpha_blending();
 
 	ruis::mat4 matr(matrix);
 

@@ -34,9 +34,10 @@ namespace ruis::paint {
  */
 class rectangle_vao
 {
-	// the context in which the rounded-corners texture and corner VAOs are created;
-	// it must outlive this VAO, so use the shared resource-loader context
-	utki::shared_ref<const ruis::render::context> ctx;
+	// the shared render factory in which the rounded-corners texture and corner
+	// VAOs are created; it is retained so that set() can create a new texture when
+	// the parameters change
+	utki::shared_ref<const ruis::render::factory> factory;
 	// shared objects used to build the corner VAOs
 	utki::shared_ref<const ruis::render::renderer::objects> objects;
 
@@ -81,11 +82,12 @@ private:
 public:
 	/**
 	 * @brief Constructor.
-	 * @param renderer - renderer to use.
+	 * @param factory - render factory to create the rounded-corners texture and corner VAOs in.
+	 * @param objects - shared objects used to build the corner VAOs.
 	 * @param params - rectangle rendering parameters.
 	 */
 	rectangle_vao(
-		utki::shared_ref<const ruis::render::context> ctx, //
+		utki::shared_ref<const ruis::render::factory> factory, //
 		utki::shared_ref<const ruis::render::renderer::objects> objects, //
 		parameters params
 	);
@@ -157,7 +159,7 @@ private:
 		 * @param radii - corner radii, in the same units as the texture's texels.
 		 */
 		rounded_corners_texture(
-			const ruis::render::context& ctx, //
+			const ruis::render::factory& factory, //
 			const ruis::render::renderer::objects& objects, //
 			utki::shared_ref<const render::texture_2d> tex,
 			corners<real> radii

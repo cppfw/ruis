@@ -30,19 +30,19 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace ruis::res;
 
 ruis::res::gradient::gradient(
-	const ruis::render::context& rendering_context, //
+	const ruis::render::factory& factory, //
 	utki::span<const std::tuple<real, color>> stops,
 	bool vertical
 ) :
 	vao(make_vao(
-		rendering_context, //
+		factory, //
 		stops,
 		vertical
 	))
 {}
 
 utki::shared_ref<const ruis::render::vertex_array> gradient::make_vao(
-	const ruis::render::context& rendering_context, //
+	const ruis::render::factory& factory, //
 	utki::span<const std::tuple<real, color>> stops,
 	bool vertical
 )
@@ -79,12 +79,12 @@ utki::shared_ref<const ruis::render::vertex_array> gradient::make_vao(
 	}
 
 	// clang-format off
-	return rendering_context.make_vertex_array(
+	return factory.make_vertex_array(
 		{
-			rendering_context.make_vertex_buffer(utki::make_span(vertices)),
-		 	rendering_context.make_vertex_buffer(utki::make_span(colors))
+			factory.make_vertex_buffer(utki::make_span(vertices)),
+		 	factory.make_vertex_buffer(utki::make_span(colors))
 		},
-		rendering_context.make_index_buffer(utki::make_span(indices)),
+		factory.make_index_buffer(utki::make_span(indices)),
 		render::vertex_array::mode::triangle_strip
 	);
 	// clang-format on
@@ -120,7 +120,7 @@ utki::shared_ref<gradient> gradient::load(
 	}
 
 	auto ret = utki::make_shared<gradient>(
-		loader.rendering_context,
+		loader.factory,
 		stops, //
 		vertical
 	);

@@ -67,7 +67,15 @@ class resource_loader
 	friend class resource;
 
 public:
-	const utki::shared_ref<const ruis::render::context> rendering_context;
+	const utki::shared_ref<const ruis::render::factory> factory;
+
+	/**
+	 * @brief Shorthand for getting a reference to the factory.
+	 */
+	const ruis::render::factory& fac() const noexcept
+	{
+		return this->factory;
+	}
 
 	const utki::shared_ref<const ruis::render::renderer::objects> common_rendering_objects;
 
@@ -114,10 +122,10 @@ private:
 
 public:
 	resource_loader(
-		utki::shared_ref<const ruis::render::context> rendering_context,
+		utki::shared_ref<const ruis::render::factory> factory, //
 		utki::shared_ref<const ruis::render::renderer::objects> common_rendering_objects
 	) :
-		rendering_context(std::move(rendering_context)),
+		factory(std::move(factory)),
 		common_rendering_objects(std::move(common_rendering_objects))
 	{}
 

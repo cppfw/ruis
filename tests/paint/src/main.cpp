@@ -32,12 +32,12 @@ public:
 			std::move(params.layout_params),
 			std::move(params.widget)
 		),
-		vao(context.get().renderer)
+		vao(context.get().loader().factory, context.get().loader().common_rendering_objects.get())
 	{}
 
 	void render(const ruis::mat4& matrix) const override
 	{
-		this->vao.render(matrix, 0xff00ffff);
+		this->vao.render(this->context.get().renderer.get(), matrix, 0xff00ffff);
 	}
 
 	void on_resize() override
@@ -82,7 +82,7 @@ public:
 			std::move(params.layout_params),
 			std::move(params.widget)
 		),
-		vao(context.get().loader().rendering_context),
+		vao(context.get().loader().factory),
 		stroke_width(params.stroke_width),
 		color_params(std::move(params.color))
 	{}
@@ -136,11 +136,9 @@ public:
 			std::move(params.layout_params),
 			std::move(params.widget)
 		),
-		vao(
-			context.get().loader().rendering_context, //
+		vao(context.get().loader().factory, //
 			context.get().loader().common_rendering_objects, //
-			std::move(params.rectangle_vao_params)
-		),
+			std::move(params.rectangle_vao_params)),
 		color_params(std::move(params.color))
 	{}
 

@@ -51,10 +51,13 @@ void wire_area::render(const ruis::mat4& matrix) const
 		ruis::paint::path path;
 		path.cubic_to(prim_outlet_pos[1] * spline_control_length, p + slave_outlet_pos[1] * spline_control_length, p);
 
-		ruis::paint::path_vao vba(this->context.get().renderer);
+		ruis::paint::path_vao vba(
+			this->context.get().loader().factory,
+			this->context.get().loader().common_rendering_objects.get()
+		);
 		vba.set(path.stroke(this->wire_half_width, antialias_width, 1));
 
-		vba.render(ruis::mat4(matrix).translate(p0), this->wire_color);
+		vba.render(this->context.get().renderer.get(), ruis::mat4(matrix).translate(p0), this->wire_color);
 	}
 
 	if (this->grabbed_socket) {
@@ -64,10 +67,13 @@ void wire_area::render(const ruis::mat4& matrix) const
 		ruis::paint::path path;
 		path.line_to(this->mouse_pos - p0);
 
-		ruis::paint::path_vao vba(this->context.get().renderer);
+		ruis::paint::path_vao vba(
+			this->context.get().loader().factory,
+			this->context.get().loader().common_rendering_objects.get()
+		);
 		vba.set(path.stroke(this->wire_half_width, antialias_width, 1));
 
-		vba.render(ruis::mat4(matrix).translate(p0), this->grabbed_color);
+		vba.render(this->context.get().renderer.get(), ruis::mat4(matrix).translate(p0), this->grabbed_color);
 	}
 }
 

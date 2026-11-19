@@ -33,7 +33,7 @@ using namespace ruis;
 using namespace ruis::res;
 
 res::font::font(
-	utki::shared_ref<const ruis::render::context> rendering_context, //
+	utki::shared_ref<const ruis::render::factory> factory, //
 	utki::shared_ref<const ruis::render::renderer::objects> common_rendering_objects,
 	const fsif::file& file_normal,
 	std::unique_ptr<const fsif::file> file_bold,
@@ -44,7 +44,7 @@ res::font::font(
 {
 	// NOLINTNEXTLINE(bugprone-unused-return-value, "false positive")
 	this->font_faces[style::normal] = std::make_unique<texture_font_face>(
-		rendering_context, //
+		factory, //
 		common_rendering_objects,
 		utki::make_shared<freetype_face>(file_normal),
 		max_cached
@@ -53,7 +53,7 @@ res::font::font(
 	if (file_bold) {
 		// NOLINTNEXTLINE(bugprone-unused-return-value, "false positive")
 		this->font_faces[style::bold] = std::make_unique<texture_font_face>(
-			rendering_context, //
+			factory, //
 			common_rendering_objects,
 			utki::make_shared<freetype_face>(*file_bold),
 			max_cached
@@ -62,7 +62,7 @@ res::font::font(
 	if (file_italic) {
 		// NOLINTNEXTLINE(bugprone-unused-return-value, "false positive")
 		this->font_faces[style::italic] = std::make_unique<texture_font_face>(
-			rendering_context, //
+			factory, //
 			common_rendering_objects,
 			utki::make_shared<freetype_face>(*file_italic),
 			max_cached
@@ -71,7 +71,7 @@ res::font::font(
 	if (file_bold_italic) {
 		// NOLINTNEXTLINE(bugprone-unused-return-value, "false positive")
 		this->font_faces[style::bold_italic] = std::make_unique<texture_font_face>(
-			std::move(rendering_context), //
+			std::move(factory), //
 			std::move(common_rendering_objects),
 			utki::make_shared<freetype_face>(*file_bold_italic),
 			max_cached
@@ -109,7 +109,7 @@ utki::shared_ref<res::font> res::font::load(
 	}
 
 	return utki::make_shared<font>(
-		loader.rendering_context,
+		loader.factory,
 		loader.common_rendering_objects,
 		fi,
 		std::move(file_bold),

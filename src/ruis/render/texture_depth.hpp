@@ -26,19 +26,19 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis::render {
 
-class context;
+class factory;
 
 class texture_depth : public rasterimage::dimensioned
 {
-	const utki::shared_ref<const ruis::render::context> rendering_context;
+	const utki::shared_ref<const ruis::render::factory> factory;
 
 protected:
 	texture_depth(
-		utki::shared_ref<const ruis::render::context> rendering_context, //
+		utki::shared_ref<const ruis::render::factory> factory, //
 		r4::vector2<uint32_t> dims
 	) :
 		rasterimage::dimensioned(dims),
-		rendering_context(std::move(rendering_context))
+		factory(std::move(factory))
 	{}
 
 public:

@@ -32,11 +32,11 @@ std::map<
 	ellipse_vao::cache;
 
 ellipse_vao::ellipse_vao(
-	utki::shared_ref<const ruis::render::context> ctx,
+	utki::shared_ref<const ruis::render::factory> factory,
 	vec2 diameters, //
 	real stroke_width
 ) :
-	ctx(std::move(ctx))
+	factory(std::move(factory))
 {
 	this->set(
 		diameters, //
@@ -117,7 +117,7 @@ void ellipse_vao::update_texture()
 
 	// TODO: convert to greyscale image
 
-	this->tex = this->ctx.get().make_texture_2d(
+	this->tex = this->factory.get().make_texture_2d(
 		make_ellipse_texture_image(this->diameters, this->stroke_width), //
 		{}
 	);

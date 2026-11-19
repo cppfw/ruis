@@ -23,46 +23,51 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis::paint;
 
-// NOLINTNEXTLINE(modernize-pass-by-value)
-path_vao::path_vao(utki::shared_ref<const ruis::render::renderer> r) :
-	renderer(std::move(r)),
-	core(this->renderer.get().obj().empty_vertex_array),
-	border(this->renderer.get().obj().empty_vertex_array)
+path_vao::path_vao(
+	utki::shared_ref<const ruis::render::factory> factory, //
+	const ruis::render::renderer::objects& objects
+) :
+	factory(std::move(factory)),
+	core(objects.empty_vertex_array),
+	border(objects.empty_vertex_array)
 {}
 
 void path_vao::set(const path::vertices& path)
 {
-	auto core_buf = this->renderer.get().rendering_context.get().make_vertex_buffer(path.pos);
+	auto& f = this->factory.get();
 
-	this->core = this->renderer.get().rendering_context.get().make_vertex_array(
+	auto core_buf = f.make_vertex_buffer(path.pos);
+
+	this->core = f.make_vertex_array(
 		{
 			core_buf,
 		},
-		this->renderer.get().rendering_context.get().make_index_buffer(path.in_indices),
+		f.make_index_buffer(path.in_indices),
 		ruis::render::vertex_array::mode::triangle_strip
 	);
-	this->border = this->renderer.get().rendering_context.get().make_vertex_array(
+	this->border = f.make_vertex_array(
 		{
 			core_buf,
-			this->renderer.get().rendering_context.get().make_vertex_buffer(path.alpha),
+			f.make_vertex_buffer(path.alpha),
 		},
-		this->renderer.get().rendering_context.get().make_index_buffer(path.out_indices),
+		f.make_index_buffer(path.out_indices),
 		ruis::render::vertex_array::mode::triangle_strip
 	);
 }
 
 void path_vao::render(
+	const ruis::render::renderer& renderer, //
 	const ruis::mat4& matrix, //
 	ruis::color color
 ) const
 {
-	this->renderer.get().shaders().color_pos->render(
+	renderer.shaders().color_pos->render(
 		matrix, //
 		this->core.get(),
 		color
 	);
 
-	this->renderer.get().shaders().color_pos_lum->render(
+	renderer.shaders().color_pos_lum->render(
 		matrix, //
 		this->border.get(),
 		color

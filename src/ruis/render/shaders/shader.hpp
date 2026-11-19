@@ -27,15 +27,15 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis::render {
 
-class context;
+class factory;
 
 class shader
 {
-	const utki::shared_ref<const ruis::render::context> rendering_context;
+	const utki::shared_ref<const ruis::render::factory> factory;
 
 protected:
-	shader(utki::shared_ref<const ruis::render::context> rendering_context) :
-		rendering_context(std::move(rendering_context))
+	shader(utki::shared_ref<const ruis::render::factory> factory) :
+		factory(std::move(factory))
 	{}
 
 public:

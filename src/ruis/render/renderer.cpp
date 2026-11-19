@@ -27,7 +27,7 @@ using namespace ruis::render;
 
 renderer::renderer(
 	utki::shared_ref<ruis::render::context> rendering_context, //
-	utki::shared_ref<const ruis::render::context::shaders> common_shaders,
+	utki::shared_ref<const ruis::render::factory::shaders> common_shaders,
 	utki::shared_ref<const objects> common_objects
 ) :
 	rendering_context(std::move(rendering_context)),
@@ -35,27 +35,25 @@ renderer::renderer(
 	common_objects(std::move(common_objects))
 {}
 
-renderer::objects::objects(const ruis::render::context& rendering_context) :
-	empty_vertex_array(rendering_context.make_vertex_array(
+renderer::objects::objects(const ruis::render::factory& factory) :
+	empty_vertex_array(factory.make_vertex_array(
 		{//
-		 rendering_context.make_vertex_buffer(utki::span<const r4::vector2<float>>())
+		 factory.make_vertex_buffer(utki::span<const r4::vector2<float>>())
 		},
-		rendering_context.make_index_buffer(utki::span<const uint16_t>()),
+		factory.make_index_buffer(utki::span<const uint16_t>()),
 		ruis::render::vertex_array::mode::triangle_strip
 	)),
-	quad_01_vbo(rendering_context.make_vertex_buffer(utki::make_span(std::array<vec2, 4>{
+	quad_01_vbo(factory.make_vertex_buffer(utki::make_span(std::array<vec2, 4>{
 		vec2(0, 0), //
 		vec2(0, 1),
 		vec2(1, 1),
 		vec2(1, 0)
 	}))),
-	quad_fan_indices(rendering_context.make_index_buffer(utki::make_span(std::array<uint16_t, 4>{0, 1, 2, 3}))),
-	pos_quad_01_vao(rendering_context.make_vertex_array(
-		{this->quad_01_vbo},
-		this->quad_fan_indices,
-		vertex_array::mode::triangle_fan
-	)),
-	pos_tex_quad_01_vao(rendering_context.make_vertex_array(
+	quad_fan_indices(factory.make_index_buffer(utki::make_span(std::array<uint16_t, 4>{0, 1, 2, 3}))),
+	pos_quad_01_vao(
+		factory.make_vertex_array({this->quad_01_vbo}, this->quad_fan_indices, vertex_array::mode::triangle_fan)
+	),
+	pos_tex_quad_01_vao(factory.make_vertex_array(
 		{this->quad_01_vbo, this->quad_01_vbo},
 		this->quad_fan_indices,
 		vertex_array::mode::triangle_fan
@@ -64,10 +62,10 @@ renderer::objects::objects(const ruis::render::context& rendering_context) :
 	pos_tex_texture_quadrants_01_vaos(
 		{
 			// left-top
-			rendering_context.make_vertex_array(
+			factory.make_vertex_array(
 				{
 					this->quad_01_vbo,
-					rendering_context.make_vertex_buffer(utki::make_span(std::array<vec2, 4>{
+					factory.make_vertex_buffer(utki::make_span(std::array<vec2, 4>{
 						vec2(0, 0), //
 						vec2(0, utki::half),
 						vec2(utki::half, utki::half),
@@ -78,10 +76,10 @@ renderer::objects::objects(const ruis::render::context& rendering_context) :
 				vertex_array::mode::triangle_fan
 			),
 			// right-top
-			rendering_context.make_vertex_array(
+			factory.make_vertex_array(
 				{
 					this->quad_01_vbo,
-					rendering_context.make_vertex_buffer(utki::make_span(std::array<vec2, 4>{
+					factory.make_vertex_buffer(utki::make_span(std::array<vec2, 4>{
 						vec2(utki::half, 0), //
 						vec2(utki::half, utki::half),
 						vec2(1, utki::half),
@@ -92,10 +90,10 @@ renderer::objects::objects(const ruis::render::context& rendering_context) :
 				vertex_array::mode::triangle_fan
 			),
 			// right-bottom
-			rendering_context.make_vertex_array(
+			factory.make_vertex_array(
 				{
 					this->quad_01_vbo,
-					rendering_context.make_vertex_buffer(utki::make_span(std::array<vec2, 4>{
+					factory.make_vertex_buffer(utki::make_span(std::array<vec2, 4>{
 						vec2(utki::half, utki::half), //
 						vec2(utki::half, 1),
 						vec2(1, 1),
@@ -106,10 +104,10 @@ renderer::objects::objects(const ruis::render::context& rendering_context) :
 				vertex_array::mode::triangle_fan
 			),
 			// left-bottom
-			rendering_context.make_vertex_array(
+			factory.make_vertex_array(
 				{
 					this->quad_01_vbo,
-					rendering_context.make_vertex_buffer(utki::make_span(std::array<vec2, 4>{
+					factory.make_vertex_buffer(utki::make_span(std::array<vec2, 4>{
 						vec2(0, utki::half), //
 						vec2(0, 1),
 						vec2(utki::half, 1),
@@ -123,7 +121,7 @@ renderer::objects::objects(const ruis::render::context& rendering_context) :
 	),
 	// clang-format on
 	white_texture(
-		rendering_context.make_texture_2d(
+		factory.make_texture_2d(
 			[]() {
 				// raster image 1 by 1 pixel
 				rasterimage::image_variant imvar(

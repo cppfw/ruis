@@ -24,12 +24,12 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace ruis;
 
 texture_font_face::texture_font_face(
-	utki::shared_ref<const ruis::render::context> rendering_context, //
+	utki::shared_ref<const ruis::render::factory> factory, //
 	utki::shared_ref<const ruis::render::renderer::objects> common_rendering_objects,
 	utki::shared_ref<const freetype_face> face,
 	unsigned max_cached
 ) :
-	rendering_context(std::move(rendering_context)),
+	factory(std::move(factory)),
 	common_rendering_objects(std::move(common_rendering_objects)),
 	face(std::move(face)),
 	max_cached(max_cached)
@@ -38,7 +38,7 @@ texture_font_face::texture_font_face(
 utki::shared_ref<const font> texture_font_face::create(real size) const
 {
 	return utki::make_shared<texture_font>(
-		this->rendering_context, //
+		this->factory, //
 		this->common_rendering_objects,
 		this->face,
 		unsigned(size),
