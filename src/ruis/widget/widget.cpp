@@ -194,11 +194,11 @@ void widget::render_internal(const ruis::mat4& matrix) const
 	if (this->is_cache_enabled()) {
 		if (this->cache_dirty) {
 			utki::scope_exit scissor_test_enabled_scope_exit(
-				[&r, scissor_test_was_enabled = r.rendering_context.get().is_scissor_enabled()]() {
-					r.rendering_context.get().enable_scissor(scissor_test_was_enabled);
+				[&r, scissor_test_was_enabled = r.ctx().is_scissor_enabled()]() {
+					r.ctx().enable_scissor(scissor_test_was_enabled);
 				}
 			);
-			r.rendering_context.get().enable_scissor(false);
+			r.ctx().enable_scissor(false);
 
 			this->cache_frame_buffer = this->render_to_texture(std::move(this->cache_frame_buffer)).to_shared_ptr();
 
@@ -206,41 +206,41 @@ void widget::render_internal(const ruis::mat4& matrix) const
 		}
 
 		// after rendering to texture it is most likely there will be transparent areas, so enable simple blending
-		this->context.get().renderer.get().rendering_context.get().set_simple_alpha_blending();
+		this->context.get().renderer.get().ctx().set_simple_alpha_blending();
 
 		this->render_from_cache(matrix);
 	} else {
 		if (this->is_depth_enabled()) {
-			r.rendering_context.get().enable_depth(true);
-			r.rendering_context.get().clear_framebuffer_depth();
+			r.ctx().enable_depth(true);
+			r.ctx().clear_framebuffer_depth();
 		}
 
 		if (this->is_clip_enabled()) {
 			r4::rectangle<uint32_t> scissor = this->compute_viewport_rect(matrix);
 
 			r4::rectangle<uint32_t> old_scissor{};
-			bool scissor_test_was_enabled = r.rendering_context.get().is_scissor_enabled();
+			bool scissor_test_was_enabled = r.ctx().is_scissor_enabled();
 			if (scissor_test_was_enabled) {
-				old_scissor = r.rendering_context.get().get_scissor();
+				old_scissor = r.ctx().get_scissor();
 				scissor.intersect(old_scissor);
 			} else {
-				r.rendering_context.get().enable_scissor(true);
+				r.ctx().enable_scissor(true);
 			}
 
-			r.rendering_context.get().set_scissor(scissor);
+			r.ctx().set_scissor(scissor);
 
 			this->render(matrix);
 
 			if (scissor_test_was_enabled) {
-				r.rendering_context.get().set_scissor(old_scissor);
+				r.ctx().set_scissor(old_scissor);
 			} else {
-				r.rendering_context.get().enable_scissor(false);
+				r.ctx().enable_scissor(false);
 			}
 		} else {
 			this->render(matrix);
 		}
 
-		r.rendering_context.get().enable_depth(false);
+		r.ctx().enable_depth(false);
 	}
 
 	// render border
@@ -272,31 +272,31 @@ utki::shared_ref<render::frame_buffer> widget::render_to_texture(std::shared_ptr
 			return utki::shared_ref(std::move(reuse));
 		}
 
-		return r.rendering_context.get().make_framebuffer(
-			r.rendering_context.get().fac().make_texture_2d( //
+		return r.ctx().make_framebuffer(
+			r.ctx().fac().make_texture_2d( //
 				rasterimage::format::rgba,
 				dims,
 				{}
 			),
-			this->is_depth_enabled() ? r.rendering_context.get().fac().make_texture_depth(dims)
+			this->is_depth_enabled() ? r.ctx().fac().make_texture_depth(dims)
 									 : std::shared_ptr<ruis::render::texture_depth>(nullptr),
 			nullptr
 		);
 	}();
 
 	fb.get().apply([&]() {
-		r.rendering_context.get().clear_framebuffer_color();
+		r.ctx().clear_framebuffer_color();
 
-		utki::scope_exit depth_scope_exit([old_depth = r.rendering_context.get().is_depth_enabled(), &r]() {
-			r.rendering_context.get().enable_depth(old_depth);
+		utki::scope_exit depth_scope_exit([old_depth = r.ctx().is_depth_enabled(), &r]() {
+			r.ctx().enable_depth(old_depth);
 		});
-		r.rendering_context.get().enable_depth(this->is_depth_enabled());
+		r.ctx().enable_depth(this->is_depth_enabled());
 
 		if (this->is_depth_enabled()) {
-			r.rendering_context.get().clear_framebuffer_depth();
+			r.ctx().clear_framebuffer_depth();
 		}
 
-		this->render(make_viewport_matrix(r.rendering_context.get().initial_matrix, this->rect().d));
+		this->render(make_viewport_matrix(r.ctx().initial_matrix, this->rect().d));
 	});
 
 	return fb;
@@ -373,9 +373,9 @@ r4::rectangle<uint32_t> widget::compute_viewport_rect(const mat4& matrix) const 
 {
 	return {
 		{
-         .p1 = this->context.get().renderer.get().rendering_context.get().to_window_coords(matrix * vec2(0, 0)),
+         .p1 = this->context.get().renderer.get().ctx().to_window_coords(matrix * vec2(0, 0)),
          .p2 =
-				this->context.get().renderer.get().rendering_context.get().to_window_coords(matrix * this->rect().d) //
+				this->context.get().renderer.get().ctx().to_window_coords(matrix * this->rect().d) //
 		}
 	};
 }
@@ -657,7 +657,7 @@ widget::probe_response_set widget::probe(const tml::tree& command)
 		// work is wrapped in rendering_context::apply(), which makes the context current and
 		// restores the previous one afterwards.
 		rasterimage::image_variant imvar;
-		this->context.get().renderer.get().rendering_context.get().apply([&]() {
+		this->context.get().renderer.get().ctx().apply([&]() {
 			imvar = this->render_to_texture().get().get_color_pixels();
 		});
 

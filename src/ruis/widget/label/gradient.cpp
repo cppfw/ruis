@@ -40,7 +40,7 @@ gradient::gradient( //
 
 void gradient::render(const mat4& matrix) const
 {
-	this->context.get().renderer.get().rendering_context.get().set_simple_alpha_blending();
+	this->context.get().renderer.get().ctx().set_simple_alpha_blending();
 
 	ruis::mat4 matr(matrix);
 	matr.scale(this->rect().d);

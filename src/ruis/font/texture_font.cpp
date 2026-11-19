@@ -358,7 +358,7 @@ font::render_result texture_font::render_internal(
 		return ret;
 	}
 
-	renderer.rendering_context.get().set_simple_alpha_blending();
+	renderer.ctx().set_simple_alpha_blending();
 
 	ruis::mat4 matr(matrix);
 

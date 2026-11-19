@@ -393,7 +393,7 @@ auto make_rounded_corners_texture_image(const rectangle_vao::parameters& params)
 }
 
 utki::shared_ref<const ruis::render::vertex_array> make_quad_vao(
-	const ruis::render::factory& ctx, //
+	const ruis::render::factory& factory, //
 	const ruis::render::renderer::objects& objects, //
 	const r4::segment2<ruis::real>& tex_coords
 )
@@ -405,11 +405,11 @@ utki::shared_ref<const ruis::render::vertex_array> make_quad_vao(
 		tex_coords.x2_y1()
 	};
 
-	return ctx.make_vertex_array(
+	return factory.make_vertex_array(
 		// clang-format off
 		{
 			objects.quad_01_vbo,
-			ctx.make_vertex_buffer(tex_coords_array)
+			factory.make_vertex_buffer(tex_coords_array)
 		},
 		// clang-format on
 		objects.quad_fan_indices,
@@ -418,7 +418,7 @@ utki::shared_ref<const ruis::render::vertex_array> make_quad_vao(
 }
 
 std::array<std::array<utki::shared_ref<const ruis::render::vertex_array>, 2>, 2> make_corner_vaos(
-	const ruis::render::factory& ctx, //
+	const ruis::render::factory& factory, //
 	const ruis::render::renderer::objects& objects, //
 	const ruis::vec2& tex_dims,
 	const ruis::corners<ruis::real>& radii
@@ -434,14 +434,14 @@ std::array<std::array<utki::shared_ref<const ruis::render::vertex_array>, 2>, 2>
 	return {{
 		{
 			// left-top
-			make_quad_vao(ctx, objects,
+			make_quad_vao(factory, objects,
 				{
 					.p1 = {0, 0},
 					.p2 = {radii.left_top() / tw, radii.left_top() / th}
 				}
 			),
 			// right-top
-			make_quad_vao(ctx, objects,
+			make_quad_vao(factory, objects,
 				{
 					.p1 = {1 - radii.right_top() / tw, 0},
 					.p2 = {1, radii.right_top() / th}
@@ -450,14 +450,14 @@ std::array<std::array<utki::shared_ref<const ruis::render::vertex_array>, 2>, 2>
 		},
 		{
 			// left-bottom
-			make_quad_vao(ctx, objects,
+			make_quad_vao(factory, objects,
 				{
 					.p1 = {0, 1 - radii.left_bottom() / th},
 					.p2 = {radii.left_bottom() / tw, 1}
 				}
 			),
 			// right-bottom
-			make_quad_vao(ctx, objects,
+			make_quad_vao(factory, objects,
 				{
 					.p1 = {1 - radii.right_bottom() / tw, 1 - radii.right_bottom() / th},
 					.p2 = {1, 1}
@@ -471,7 +471,7 @@ std::array<std::array<utki::shared_ref<const ruis::render::vertex_array>, 2>, 2>
 } // namespace
 
 rectangle_vao::rounded_corners_texture::rounded_corners_texture(
-	const ruis::render::factory& ctx, //
+	const ruis::render::factory& factory, //
 	const ruis::render::renderer::objects& objects, //
 	utki::shared_ref<const render::texture_2d> tex,
 	corners<real> radii
@@ -479,7 +479,7 @@ rectangle_vao::rounded_corners_texture::rounded_corners_texture(
 	tex(std::move(tex)),
 	radii(std::move(radii)),
 	vaos(make_corner_vaos(
-		ctx, //
+		factory, //
 		objects, //
 		this->tex.get().dims().to<real>(),
 		this->radii

@@ -68,7 +68,7 @@ public:
 		const fsif::file& fi
 	)
 	{
-		return utki::make_shared<res_raster_image>(loader.factory.get().make_texture_2d(
+		return utki::make_shared<res_raster_image>(loader.fac().make_texture_2d(
 			rasterimage::read(fi),
 			{
 				// TODO: what about params?

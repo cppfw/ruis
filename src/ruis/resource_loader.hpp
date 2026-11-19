@@ -69,6 +69,14 @@ class resource_loader
 public:
 	const utki::shared_ref<const ruis::render::factory> factory;
 
+	/**
+	 * @brief Shorthand for getting a reference to the factory.
+	 */
+	const ruis::render::factory& fac() const noexcept
+	{
+		return this->factory;
+	}
+
 	const utki::shared_ref<const ruis::render::renderer::objects> common_rendering_objects;
 
 private:

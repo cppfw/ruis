@@ -80,7 +80,7 @@ public:
 	 */
 	const ruis::render::factory& fac() const noexcept
 	{
-		return this->factory.get();
+		return this->factory;
 	}
 
 	struct parameters {
