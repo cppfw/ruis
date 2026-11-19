@@ -80,17 +80,17 @@ public:
 class res_svg_image : public image
 {
 public:
-	const utki::shared_ref<const ruis::render::factory> rendering_context;
+	const utki::shared_ref<const ruis::render::factory> factory;
 
 private:
 	std::unique_ptr<svgdom::svg_element> dom;
 
 public:
 	res_svg_image( //
-		utki::shared_ref<const ruis::render::factory> rendering_context,
+		utki::shared_ref<const ruis::render::factory> factory,
 		decltype(dom) dom
 	) :
-		rendering_context(std::move(rendering_context)),
+		factory(std::move(factory)),
 		dom(std::move(dom))
 	{}
 
@@ -157,7 +157,7 @@ public:
 		auto dims = im.dims();
 
 		// clang-format off
-		auto tex_2d = this->rendering_context.get().make_texture_2d(
+		auto tex_2d = this->factory.get().make_texture_2d(
 			std::move(im),
 			{
 				.min_filter = render::texture_2d::filter::nearest,

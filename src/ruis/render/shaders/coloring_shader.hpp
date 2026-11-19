@@ -33,11 +33,11 @@ class factory;
 
 class coloring_shader
 {
-	const utki::shared_ref<const ruis::render::factory> rendering_context;
+	const utki::shared_ref<const ruis::render::factory> factory;
 
 protected:
-	coloring_shader(utki::shared_ref<const ruis::render::factory> rendering_context) :
-		rendering_context(std::move(rendering_context))
+	coloring_shader(utki::shared_ref<const ruis::render::factory> factory) :
+		factory(std::move(factory))
 	{}
 
 public:

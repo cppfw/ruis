@@ -23,7 +23,7 @@ cube_widget::cube_widget(
 		 ruis::vec3(-1, -1, 1), ruis::vec3(-1, -1, 1),  ruis::vec3(1, -1, -1),  ruis::vec3(1, -1, 1)}
 	};
 
-	auto pos_vbo = this->context.get().renderer.get().rendering_context.get().factory.get().make_vertex_buffer(
+	auto pos_vbo = this->context.get().renderer.get().rendering_context.get().fac().make_vertex_buffer(
 		utki::make_span(cube_pos)
 	);
 
@@ -37,7 +37,7 @@ cube_widget::cube_widget(
 		 ruis::vec2(0, 0), ruis::vec2(1, 0), ruis::vec2(0, 1), ruis::vec2(1, 0), ruis::vec2(1, 1), ruis::vec2(0, 1)}
 	};
 
-	auto tex_vbo = this->context.get().renderer.get().rendering_context.get().factory.get().make_vertex_buffer(
+	auto tex_vbo = this->context.get().renderer.get().rendering_context.get().fac().make_vertex_buffer(
 		utki::make_span(cube_tex)
 	);
 
@@ -49,7 +49,7 @@ cube_widget::cube_widget(
 		}
 	};
 
-	auto cube_indices = this->context.get().renderer.get().rendering_context.get().factory.get().make_index_buffer(
+	auto cube_indices = this->context.get().renderer.get().rendering_context.get().fac().make_index_buffer(
 		utki::make_span(indices)
 	);
 
@@ -57,7 +57,7 @@ cube_widget::cube_widget(
 		this->context.get()
 			.renderer.get()
 			.rendering_context.get()
-			.factory.get()
+			.fac()
 			.make_vertex_array({pos_vbo, tex_vbo}, cube_indices, ruis::render::vertex_array::mode::triangles)
 			.to_shared_ptr();
 

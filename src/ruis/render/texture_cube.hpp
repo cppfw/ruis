@@ -29,11 +29,11 @@ class factory;
 
 class texture_cube
 {
-	const utki::shared_ref<const ruis::render::factory> rendering_context;
+	const utki::shared_ref<const ruis::render::factory> factory;
 
 protected:
-	texture_cube(utki::shared_ref<const ruis::render::factory> rendering_context) :
-		rendering_context(std::move(rendering_context))
+	texture_cube(utki::shared_ref<const ruis::render::factory> factory) :
+		factory(std::move(factory))
 	{}
 
 public:

@@ -69,7 +69,7 @@ public:
 	~nine_patch() override = default;
 
 	nine_patch(
-		const ruis::render::factory& rendering_context,
+		const ruis::render::factory& factory,
 		const ruis::render::renderer::objects& common_rendering_objects,
 		utki::shared_ref<const res::image> image,
 		sides<real> fraction_borders

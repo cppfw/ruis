@@ -51,6 +51,7 @@ protected:
 
 private:
 	std::weak_ptr<frame_buffer> cur_fb;
+	const utki::shared_ref<const ruis::render::factory> factory_ref;
 
 public:
 	/**
@@ -67,13 +68,16 @@ public:
 	const utki::shared_ref<ruis::render::native_window> native_window;
 
 	/**
-	 * @brief The render factory injected into this context.
+	 * @brief Get the render factory injected into this context.
 	 * All shareable render objects (textures, buffers, vertex arrays, shaders) are
 	 * created by the factory and hold a reference to it, so they can be used by any
 	 * render context in the process. This context is only for state control and for
 	 * creating per-window frame buffers.
 	 */
-	const utki::shared_ref<const ruis::render::factory> factory;
+	const factory& fac() const noexcept
+	{
+		return this->factory_ref.get();
+	}
 
 	struct parameters {
 		r4::matrix4<float> initial_matrix;
@@ -132,7 +136,7 @@ public:
 	// ===============================
 	// ====== factory functions ======
 	// NOTE: the shareable render objects (textures, vertex/index buffers, vertex
-	// arrays and shaders) are created by the injected render factory (see factory()).
+	// arrays and shaders) are created by the injected render factory (see fac()).
 	// The only object a context creates is the (per-window) frame buffer.
 
 	virtual utki::shared_ref<frame_buffer> make_framebuffer( //

@@ -30,15 +30,15 @@ class factory;
 
 class texture_stencil : public rasterimage::dimensioned
 {
-	const utki::shared_ref<const ruis::render::factory> rendering_context;
+	const utki::shared_ref<const ruis::render::factory> factory;
 
 protected:
 	texture_stencil(
-		utki::shared_ref<const ruis::render::factory> rendering_context, //
+		utki::shared_ref<const ruis::render::factory> factory, //
 		r4::vector2<uint32_t> dims
 	) :
 		rasterimage::dimensioned(dims),
-		rendering_context(std::move(rendering_context))
+		factory(std::move(factory))
 	{}
 
 public:

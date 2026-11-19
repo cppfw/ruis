@@ -38,7 +38,7 @@ jobs:
       - name: git clone
         uses: myci-actions/checkout@main
         with:
-          submodules: recursive
+          submodules: true
       - name: prepare debian package
         run: myci-deb-prepare.sh
       - name: install deps
@@ -113,7 +113,7 @@ jobs:
       - name: git clone
         uses: myci-actions/checkout@main
         with:
-          submodules: recursive
+          submodules: true
       - name: prepare debian package
         run: myci-deb-prepare.sh
       - name: install deps
@@ -141,7 +141,7 @@ jobs:
       - name: git clone
         uses: myci-actions/checkout@main
         with:
-          submodules: recursive
+          submodules: true
       - name: prepare debian package
         run: myci-deb-prepare.sh
       - name: install deps
@@ -201,7 +201,7 @@ jobs:
       - name: git clone
         uses: myci-actions/checkout@main
         with:
-          submodules: recursive
+          submodules: true
       - name: set PACKAGE_VERSION
         uses: myci-actions/export-env-var@main
         with: {name: PACKAGE_VERSION, value: $(myci-deb-version.sh)}
@@ -234,7 +234,7 @@ jobs:
     - name: git clone
       uses: myci-actions/checkout@main
       with:
-        submodules: recursive
+        submodules: true
     - name: install clang-tidy and clang-format
       run: |
         brew install llvm
@@ -278,7 +278,7 @@ jobs:
     - name: git clone
       uses: myci-actions/checkout@main
       with:
-        submodules: recursive
+        submodules: true
     - name: add cppfw deb repo
       uses: myci-actions/add-deb-repo@main
       with:
@@ -338,7 +338,7 @@ jobs:
     - name: git clone
       uses: myci-actions/checkout@main
       with:
-        submodules: recursive
+        submodules: true
     - name: prepare pacman package
       run: myci-apply-version.sh build/msys2/PKGBUILD.in
     - name: build
@@ -578,7 +578,7 @@ jobs:
       - name: git clone
         uses: myci-actions/checkout@main
         with:
-          submodules: recursive
+          submodules: true
       - name: set PACKAGE_VERSION
         uses: myci-actions/export-env-var@main
         with: {name: PACKAGE_VERSION, value: $(myci-deb-version.sh)}
@@ -623,7 +623,7 @@ jobs:
       - name: git clone
         uses: myci-actions/checkout@main
         with:
-          submodules: recursive
+          submodules: true
       - name: add cppfw tap
         run: |
           brew tap cppfw/tap

@@ -43,7 +43,7 @@ public:
 			 {-1, -1, -1}, {1, -1, -1},  {-1, -1, 1}, {-1, -1, 1},  {1, -1, -1}, {1, -1, 1}}
 		};
 
-		auto pos_vbo = this->context.get().renderer.get().rendering_context.get().factory.get().make_vertex_buffer(
+		auto pos_vbo = this->context.get().renderer.get().rendering_context.get().fac().make_vertex_buffer(
 			utki::make_span(cube_pos)
 		);
 
@@ -53,7 +53,7 @@ public:
 			 {0, 0}, {1, 0}, {0, 1}, {1, 0}, {1, 1}, {0, 1}, {0, 0}, {1, 0}, {0, 1}, {1, 0}, {1, 1}, {0, 1}}
 		};
 
-		auto tex_vbo = this->context.get().renderer.get().rendering_context.get().factory.get().make_vertex_buffer(
+		auto tex_vbo = this->context.get().renderer.get().rendering_context.get().fac().make_vertex_buffer(
 			utki::make_span(cube_tex)
 		);
 
@@ -62,7 +62,7 @@ public:
 			 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35}
 		};
 
-		auto cube_indices = this->context.get().renderer.get().rendering_context.get().factory.get().make_index_buffer(
+		auto cube_indices = this->context.get().renderer.get().rendering_context.get().fac().make_index_buffer(
 			utki::make_span(indices)
 		);
 
@@ -70,7 +70,7 @@ public:
 			this->context.get()
 				.renderer.get()
 				.rendering_context.get()
-				.factory.get()
+				.fac()
 				.make_vertex_array({pos_vbo, tex_vbo}, cube_indices, ruis::render::vertex_array::mode::triangles)
 				.to_shared_ptr();
 

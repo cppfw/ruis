@@ -75,7 +75,7 @@ private:
 
 public:
 	font(
-		utki::shared_ref<const ruis::render::factory> rendering_context, //
+		utki::shared_ref<const ruis::render::factory> factory, //
 		utki::shared_ref<const ruis::render::renderer::objects> common_rendering_objects,
 		const fsif::file& file_normal,
 		std::unique_ptr<const fsif::file> file_bold,
