@@ -206,7 +206,7 @@ void widget::render_internal(const ruis::mat4& matrix) const
 		}
 
 		// after rendering to texture it is most likely there will be transparent areas, so enable simple blending
-		this->context.get().renderer.get().ctx().set_simple_alpha_blending();
+		r.ctx().set_simple_alpha_blending();
 
 		this->render_from_cache(matrix);
 	} else {
@@ -373,9 +373,8 @@ r4::rectangle<uint32_t> widget::compute_viewport_rect(const mat4& matrix) const 
 {
 	return {
 		{
-         .p1 = this->context.get().renderer.get().ctx().to_window_coords(matrix * vec2(0, 0)),
-         .p2 =
-				this->context.get().renderer.get().ctx().to_window_coords(matrix * this->rect().d) //
+         .p1 = this->ctx().ren().ctx().to_window_coords(matrix * vec2(0, 0)),
+         .p2 = this->ctx().ren().ctx().to_window_coords(matrix * this->rect().d) //
 		}
 	};
 }
@@ -657,7 +656,7 @@ widget::probe_response_set widget::probe(const tml::tree& command)
 		// work is wrapped in rendering_context::apply(), which makes the context current and
 		// restores the previous one afterwards.
 		rasterimage::image_variant imvar;
-		this->context.get().renderer.get().ctx().apply([&]() {
+		this->ctx().ren().ctx().apply([&]() {
 			imvar = this->render_to_texture().get().get_color_pixels();
 		});
 
