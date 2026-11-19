@@ -32,6 +32,7 @@ class factory;
 
 class texture_2d : public rasterimage::dimensioned
 {
+protected:
 	const utki::shared_ref<const ruis::render::factory> factory;
 
 public:

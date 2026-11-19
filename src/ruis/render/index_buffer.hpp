@@ -29,9 +29,9 @@ class factory;
 
 class index_buffer
 {
+protected:
 	const utki::shared_ref<const ruis::render::factory> factory;
 
-protected:
 	index_buffer(utki::shared_ref<const ruis::render::factory> factory) :
 		factory(std::move(factory))
 	{}

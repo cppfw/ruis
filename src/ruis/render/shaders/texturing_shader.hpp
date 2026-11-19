@@ -30,9 +30,9 @@ class factory;
 
 class texturing_shader
 {
+protected:
 	const utki::shared_ref<const ruis::render::factory> factory;
 
-protected:
 	texturing_shader(utki::shared_ref<const ruis::render::factory> factory) :
 		factory(std::move(factory))
 	{}

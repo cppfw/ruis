@@ -35,6 +35,7 @@ class factory;
 
 class vertex_array
 {
+protected:
 	const utki::shared_ref<const ruis::render::factory> factory;
 
 public:
