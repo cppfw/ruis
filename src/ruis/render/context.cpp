@@ -30,8 +30,8 @@ context::context(
 	utki::shared_ref<const ruis::render::factory> factory, //
 	parameters params
 ) :
-	factory_ref(std::move(factory)),
 	native_window(std::move(native_window)),
+	factory(std::move(factory)),
 	initial_matrix(std::move(params.initial_matrix))
 {
 	// insert this context to the bottom of the current contexts stack
