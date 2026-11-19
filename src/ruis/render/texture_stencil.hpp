@@ -30,9 +30,9 @@ class factory;
 
 class texture_stencil : public rasterimage::dimensioned
 {
+protected:
 	const utki::shared_ref<const ruis::render::factory> factory;
 
-protected:
 	texture_stencil(
 		utki::shared_ref<const ruis::render::factory> factory, //
 		r4::vector2<uint32_t> dims

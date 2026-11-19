@@ -33,9 +33,9 @@ class factory;
 
 class coloring_shader
 {
+protected:
 	const utki::shared_ref<const ruis::render::factory> factory;
 
-protected:
 	coloring_shader(utki::shared_ref<const ruis::render::factory> factory) :
 		factory(std::move(factory))
 	{}

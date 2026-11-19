@@ -29,9 +29,9 @@ class factory;
 
 class texture_cube
 {
+protected:
 	const utki::shared_ref<const ruis::render::factory> factory;
 
-protected:
 	texture_cube(utki::shared_ref<const ruis::render::factory> factory) :
 		factory(std::move(factory))
 	{}
