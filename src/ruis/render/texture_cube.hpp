@@ -25,14 +25,14 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis::render {
 
-class context;
+class factory;
 
 class texture_cube
 {
-	const utki::shared_ref<const ruis::render::context> rendering_context;
+	const utki::shared_ref<const ruis::render::factory> rendering_context;
 
 protected:
-	texture_cube(utki::shared_ref<const ruis::render::context> rendering_context) :
+	texture_cube(utki::shared_ref<const ruis::render::factory> rendering_context) :
 		rendering_context(std::move(rendering_context))
 	{}
 

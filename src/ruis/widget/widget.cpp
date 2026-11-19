@@ -273,12 +273,12 @@ utki::shared_ref<render::frame_buffer> widget::render_to_texture(std::shared_ptr
 		}
 
 		return r.rendering_context.get().make_framebuffer(
-			r.rendering_context.get().make_texture_2d( //
+			r.rendering_context.get().factory.get().make_texture_2d( //
 				rasterimage::format::rgba,
 				dims,
 				{}
 			),
-			this->is_depth_enabled() ? r.rendering_context.get().make_texture_depth(dims)
+			this->is_depth_enabled() ? r.rendering_context.get().factory.get().make_texture_depth(dims)
 									 : std::shared_ptr<ruis::render::texture_depth>(nullptr),
 			nullptr
 		);

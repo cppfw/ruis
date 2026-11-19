@@ -36,11 +36,11 @@ std::map<
 	rectangle_vao::cache;
 
 rectangle_vao::rectangle_vao(
-	utki::shared_ref<const ruis::render::context> ctx, //
+	utki::shared_ref<const ruis::render::factory> factory, //
 	utki::shared_ref<const ruis::render::renderer::objects> objects, //
 	parameters params
 ) :
-	ctx(std::move(ctx)),
+	factory(std::move(factory)),
 	objects(std::move(objects)),
 	params(params)
 {
@@ -393,7 +393,7 @@ auto make_rounded_corners_texture_image(const rectangle_vao::parameters& params)
 }
 
 utki::shared_ref<const ruis::render::vertex_array> make_quad_vao(
-	const ruis::render::context& ctx, //
+	const ruis::render::factory& ctx, //
 	const ruis::render::renderer::objects& objects, //
 	const r4::segment2<ruis::real>& tex_coords
 )
@@ -418,7 +418,7 @@ utki::shared_ref<const ruis::render::vertex_array> make_quad_vao(
 }
 
 std::array<std::array<utki::shared_ref<const ruis::render::vertex_array>, 2>, 2> make_corner_vaos(
-	const ruis::render::context& ctx, //
+	const ruis::render::factory& ctx, //
 	const ruis::render::renderer::objects& objects, //
 	const ruis::vec2& tex_dims,
 	const ruis::corners<ruis::real>& radii
@@ -471,7 +471,7 @@ std::array<std::array<utki::shared_ref<const ruis::render::vertex_array>, 2>, 2>
 } // namespace
 
 rectangle_vao::rounded_corners_texture::rounded_corners_texture(
-	const ruis::render::context& ctx, //
+	const ruis::render::factory& ctx, //
 	const ruis::render::renderer::objects& objects, //
 	utki::shared_ref<const render::texture_2d> tex,
 	corners<real> radii
@@ -507,10 +507,10 @@ void rectangle_vao::update_rounded_corners_texture()
 
 	// TODO: convert to greyscale image
 
-	auto tex = this->ctx.get().make_texture_2d(std::move(raster_image), {});
+	auto tex = this->factory.get().make_texture_2d(std::move(raster_image), {});
 
 	this->rounded_corners_tex = std::make_shared<rounded_corners_texture>(
-		this->ctx.get(), //
+		this->factory.get(), //
 		this->objects.get(), //
 		std::move(tex),
 		this->params.corner_radii //

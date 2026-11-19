@@ -30,7 +30,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace ruis::res;
 
 ruis::res::gradient::gradient(
-	const ruis::render::context& rendering_context, //
+	const ruis::render::factory& rendering_context, //
 	utki::span<const std::tuple<real, color>> stops,
 	bool vertical
 ) :
@@ -42,7 +42,7 @@ ruis::res::gradient::gradient(
 {}
 
 utki::shared_ref<const ruis::render::vertex_array> gradient::make_vao(
-	const ruis::render::context& rendering_context, //
+	const ruis::render::factory& rendering_context, //
 	utki::span<const std::tuple<real, color>> stops,
 	bool vertical
 )
@@ -120,7 +120,7 @@ utki::shared_ref<gradient> gradient::load(
 	}
 
 	auto ret = utki::make_shared<gradient>(
-		loader.rendering_context,
+		loader.factory,
 		stops, //
 		vertical
 	);

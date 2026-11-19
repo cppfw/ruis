@@ -60,7 +60,7 @@ utki::shared_ref<nine_patch> nine_patch::load(
 	);
 
 	return utki::make_shared<nine_patch>( //
-		loader.rendering_context,
+		loader.factory,
 		loader.common_rendering_objects,
 		std::move(image),
 		fraction_borders
@@ -69,7 +69,7 @@ utki::shared_ref<nine_patch> nine_patch::load(
 
 namespace {
 utki::shared_ref<const ruis::render::vertex_array> make_quad_vao(
-	const ruis::render::context& rendering_context, //
+	const ruis::render::factory& rendering_context, //
 	const ruis::render::renderer::objects& common_rendering_objects,
 	utki::span<const vec2> quad_tex_coords
 )
@@ -88,7 +88,7 @@ utki::shared_ref<const ruis::render::vertex_array> make_quad_vao(
 } // namespace
 
 nine_patch::nine_patch(
-	const ruis::render::context& rendering_context, //
+	const ruis::render::factory& rendering_context, //
 	const ruis::render::renderer::objects& common_rendering_objects,
 	utki::shared_ref<const res::image> image,
 	sides<real> fraction_borders

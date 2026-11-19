@@ -24,7 +24,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 using namespace ruis;
 
 texture_font_face::texture_font_face(
-	utki::shared_ref<const ruis::render::context> rendering_context, //
+	utki::shared_ref<const ruis::render::factory> rendering_context, //
 	utki::shared_ref<const ruis::render::renderer::objects> common_rendering_objects,
 	utki::shared_ref<const freetype_face> face,
 	unsigned max_cached

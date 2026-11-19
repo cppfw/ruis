@@ -70,7 +70,7 @@ scroll_bar::scroll_bar( //
 		}
 		return std::move(params.params);
 	}()),
-	vao(context.get().loader().rendering_context, //
+	vao(context.get().loader().factory, //
 		context.get().loader().common_rendering_objects,
 		{} //
 	),

@@ -50,12 +50,12 @@ rectangle::rectangle( //
 	// clang-format on
 	params(std::move(params.params.specific)),
 	fill_vao(
-		context.get().loader().rendering_context, //
+		context.get().loader().factory, //
 		context.get().loader().common_rendering_objects,
 		{} //
 	),
 	stroke_vao(
-		context.get().loader().rendering_context, //
+		context.get().loader().factory, //
 		context.get().loader().common_rendering_objects,
 		{} //
 	)

@@ -48,10 +48,10 @@ public:
 		return this->rendering_context.get();
 	}
 
-	const utki::shared_ref<const ruis::render::context::shaders> common_shaders;
+	const utki::shared_ref<const ruis::render::factory::shaders> common_shaders;
 
 	struct objects {
-		objects(const ruis::render::context& rendering_context);
+		objects(const ruis::render::factory& rendering_context);
 
 		utki::shared_ref<const vertex_array> empty_vertex_array;
 
@@ -83,14 +83,14 @@ public:
 		return this->common_objects.get();
 	}
 
-	const ruis::render::context::shaders& shaders() const noexcept
+	const ruis::render::factory::shaders& shaders() const noexcept
 	{
 		return this->common_shaders.get();
 	}
 
 	renderer(
 		utki::shared_ref<ruis::render::context> rendering_context, //
-		utki::shared_ref<const ruis::render::context::shaders> common_shaders,
+		utki::shared_ref<const ruis::render::factory::shaders> common_shaders,
 		utki::shared_ref<const objects> common_objects
 	);
 

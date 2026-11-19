@@ -1,5 +1,6 @@
 #include <fsif/span_file.hpp>
 #include <ruis/render/null/context.hpp>
+#include <ruis/render/null/factory.hpp>
 #include <ruis/res/tml.hpp>
 #include <ruis/style/style_provider.hpp>
 #include <ruis/util/color.hpp>
@@ -13,10 +14,10 @@ using namespace std::string_view_literals;
 namespace {
 utki::shared_ref<ruis::style_provider> make_style_provider()
 {
-	auto ren_ctx = utki::make_shared<ruis::render::null::context>();
+	auto ren_factory = utki::make_shared<ruis::render::null::factory>();
 	auto res_loader = utki::make_shared<ruis::resource_loader>(
-		ren_ctx, //
-		utki::make_shared<ruis::render::renderer::objects>(ren_ctx)
+		ren_factory, //
+		utki::make_shared<ruis::render::renderer::objects>(ren_factory.get())
 	);
 	return utki::make_shared<ruis::style_provider>(res_loader);
 }
@@ -119,10 +120,10 @@ const tst::set set("style", [](tst::suite& suite) {
             }
         )qwertyuiop"s);
 
-		auto ren_ctx = utki::make_shared<ruis::render::null::context>();
+		auto ren_factory = utki::make_shared<ruis::render::null::factory>();
 		auto res_loader = utki::make_shared<ruis::resource_loader>(
-			ren_ctx, //
-			utki::make_shared<ruis::render::renderer::objects>(ren_ctx)
+			ren_factory, //
+			utki::make_shared<ruis::render::renderer::objects>(ren_factory.get())
 		);
 		ruis::style_provider s(res_loader);
 

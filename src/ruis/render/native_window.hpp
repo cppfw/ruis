@@ -31,6 +31,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis::render {
 class context;
+class factory;
 
 /**
  * @brief A native OS window.
@@ -41,6 +42,7 @@ class context;
 class native_window
 {
 	friend class ruis::render::context;
+	friend class ruis::render::factory;
 
 	bool is_vsync_enabled_v = false;
 	bool is_fullscreen_v = false;

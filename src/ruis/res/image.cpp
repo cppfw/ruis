@@ -68,7 +68,7 @@ public:
 		const fsif::file& fi
 	)
 	{
-		return utki::make_shared<res_raster_image>(loader.rendering_context.get().make_texture_2d(
+		return utki::make_shared<res_raster_image>(loader.factory.get().make_texture_2d(
 			rasterimage::read(fi),
 			{
 				// TODO: what about params?
@@ -80,14 +80,14 @@ public:
 class res_svg_image : public image
 {
 public:
-	const utki::shared_ref<const ruis::render::context> rendering_context;
+	const utki::shared_ref<const ruis::render::factory> rendering_context;
 
 private:
 	std::unique_ptr<svgdom::svg_element> dom;
 
 public:
 	res_svg_image( //
-		utki::shared_ref<const ruis::render::context> rendering_context,
+		utki::shared_ref<const ruis::render::factory> rendering_context,
 		decltype(dom) dom
 	) :
 		rendering_context(std::move(rendering_context)),
@@ -186,7 +186,7 @@ public:
 		auto dom = svgdom::load(fi);
 		utki::assert(dom, SL);
 		return utki::make_shared<res_svg_image>(
-			loader.rendering_context, //
+			loader.factory, //
 			std::move(dom)
 		);
 	}

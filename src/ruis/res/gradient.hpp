@@ -62,7 +62,7 @@ private:
 	utki::shared_ref<const render::vertex_array> vao;
 
 	static utki::shared_ref<const render::vertex_array> make_vao(
-		const ruis::render::context& rendering_context, //
+		const ruis::render::factory& rendering_context, //
 		utki::span<const std::tuple<real, color>> stops,
 		bool vertical
 	);
@@ -78,7 +78,7 @@ public:
 	 * @param vertical - is gradient vertical (true) or horizontal (false).
 	 */
 	gradient(
-		const ruis::render::context& rendering_context, //
+		const ruis::render::factory& rendering_context, //
 		utki::span<const std::tuple<real, color>> stops,
 		bool vertical
 	);

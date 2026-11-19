@@ -27,7 +27,7 @@ using namespace ruis::render;
 
 renderer::renderer(
 	utki::shared_ref<ruis::render::context> rendering_context, //
-	utki::shared_ref<const ruis::render::context::shaders> common_shaders,
+	utki::shared_ref<const ruis::render::factory::shaders> common_shaders,
 	utki::shared_ref<const objects> common_objects
 ) :
 	rendering_context(std::move(rendering_context)),
@@ -35,7 +35,7 @@ renderer::renderer(
 	common_objects(std::move(common_objects))
 {}
 
-renderer::objects::objects(const ruis::render::context& rendering_context) :
+renderer::objects::objects(const ruis::render::factory& rendering_context) :
 	empty_vertex_array(rendering_context.make_vertex_array(
 		{//
 		 rendering_context.make_vertex_buffer(utki::span<const r4::vector2<float>>())

@@ -104,7 +104,7 @@ public:
  */
 class texture_font : public font
 {
-	const utki::shared_ref<const ruis::render::context> rendering_context;
+	const utki::shared_ref<const ruis::render::factory> rendering_context;
 	const utki::shared_ref<const ruis::render::renderer::objects> common_rendering_objects;
 
 	const unsigned font_size;
@@ -143,7 +143,7 @@ public:
 	 * @param max_cached - maximum number of glyphs to cache.
 	 */
 	texture_font(
-		utki::shared_ref<const ruis::render::context> rendering_context, //
+		utki::shared_ref<const ruis::render::factory> rendering_context, //
 		utki::shared_ref<const ruis::render::renderer::objects> common_rendering_objects,
 		utki::shared_ref<const freetype_face> face,
 		unsigned font_size,

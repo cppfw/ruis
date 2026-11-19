@@ -33,7 +33,7 @@ using namespace ruis;
 using namespace ruis::res;
 
 res::font::font(
-	utki::shared_ref<const ruis::render::context> rendering_context, //
+	utki::shared_ref<const ruis::render::factory> rendering_context, //
 	utki::shared_ref<const ruis::render::renderer::objects> common_rendering_objects,
 	const fsif::file& file_normal,
 	std::unique_ptr<const fsif::file> file_bold,
@@ -109,7 +109,7 @@ utki::shared_ref<res::font> res::font::load(
 	}
 
 	return utki::make_shared<font>(
-		loader.rendering_context,
+		loader.factory,
 		loader.common_rendering_objects,
 		fi,
 		std::move(file_bold),

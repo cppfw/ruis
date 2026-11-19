@@ -28,11 +28,11 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 namespace ruis::render {
 
-class context;
+class factory;
 
 class texture_2d : public rasterimage::dimensioned
 {
-	const utki::shared_ref<const ruis::render::context> rendering_context;
+	const utki::shared_ref<const ruis::render::factory> rendering_context;
 
 public:
 	enum class filter {
@@ -48,7 +48,7 @@ public:
 
 protected:
 	texture_2d(
-		utki::shared_ref<const ruis::render::context> rendering_context, //
+		utki::shared_ref<const ruis::render::factory> rendering_context, //
 		r4::vector2<uint32_t> dims
 	) :
 		rasterimage::dimensioned(dims),

@@ -201,7 +201,7 @@ texture_font::glyph texture_font::load_glyph(char32_t c) const
 }
 
 texture_font::texture_font(
-	utki::shared_ref<const ruis::render::context> rendering_context, //
+	utki::shared_ref<const ruis::render::factory> rendering_context, //
 	utki::shared_ref<const ruis::render::renderer::objects> common_rendering_objects,
 	utki::shared_ref<const freetype_face> face,
 	unsigned font_size,
