@@ -50,11 +50,9 @@ renderer::objects::objects(const ruis::render::factory& factory) :
 		vec2(1, 0)
 	}))),
 	quad_fan_indices(factory.make_index_buffer(utki::make_span(std::array<uint16_t, 4>{0, 1, 2, 3}))),
-	pos_quad_01_vao(factory.make_vertex_array(
-		{this->quad_01_vbo},
-		this->quad_fan_indices,
-		vertex_array::mode::triangle_fan
-	)),
+	pos_quad_01_vao(
+		factory.make_vertex_array({this->quad_01_vbo}, this->quad_fan_indices, vertex_array::mode::triangle_fan)
+	),
 	pos_tex_quad_01_vao(factory.make_vertex_array(
 		{this->quad_01_vbo, this->quad_01_vbo},
 		this->quad_fan_indices,

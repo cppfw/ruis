@@ -23,9 +23,8 @@ cube_widget::cube_widget(
 		 ruis::vec3(-1, -1, 1), ruis::vec3(-1, -1, 1),  ruis::vec3(1, -1, -1),  ruis::vec3(1, -1, 1)}
 	};
 
-	auto pos_vbo = this->context.get().renderer.get().rendering_context.get().fac().make_vertex_buffer(
-		utki::make_span(cube_pos)
-	);
+	auto pos_vbo =
+		this->context.get().renderer.get().rendering_context.get().fac().make_vertex_buffer(utki::make_span(cube_pos));
 
 	// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers)
 	std::array<ruis::vec2, 36> cube_tex = {
@@ -37,9 +36,8 @@ cube_widget::cube_widget(
 		 ruis::vec2(0, 0), ruis::vec2(1, 0), ruis::vec2(0, 1), ruis::vec2(1, 0), ruis::vec2(1, 1), ruis::vec2(0, 1)}
 	};
 
-	auto tex_vbo = this->context.get().renderer.get().rendering_context.get().fac().make_vertex_buffer(
-		utki::make_span(cube_tex)
-	);
+	auto tex_vbo =
+		this->context.get().renderer.get().rendering_context.get().fac().make_vertex_buffer(utki::make_span(cube_tex));
 
 	// NOLINTNEXTLINE(cppcoreguidelines-avoid-magic-numbers)
 	std::array<uint16_t, 36> indices = {
@@ -49,9 +47,8 @@ cube_widget::cube_widget(
 		}
 	};
 
-	auto cube_indices = this->context.get().renderer.get().rendering_context.get().fac().make_index_buffer(
-		utki::make_span(indices)
-	);
+	auto cube_indices =
+		this->context.get().renderer.get().rendering_context.get().fac().make_index_buffer(utki::make_span(indices));
 
 	this->cubeVAO =
 		this->context.get()
