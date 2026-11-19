@@ -37,6 +37,8 @@ jobs:
       #     keys-asc: https://apt.llvm.org/llvm-snapshot.gpg.key
       - name: git clone
         uses: myci-actions/checkout@main
+        with:
+          submodules: recursive
       - name: prepare debian package
         run: myci-deb-prepare.sh
       - name: install deps
@@ -110,6 +112,8 @@ jobs:
           apt install --assume-yes devscripts equivs
       - name: git clone
         uses: myci-actions/checkout@main
+        with:
+          submodules: recursive
       - name: prepare debian package
         run: myci-deb-prepare.sh
       - name: install deps
@@ -136,6 +140,8 @@ jobs:
           install: myci locales git devscripts equivs
       - name: git clone
         uses: myci-actions/checkout@main
+        with:
+          submodules: recursive
       - name: prepare debian package
         run: myci-deb-prepare.sh
       - name: install deps
@@ -194,6 +200,8 @@ jobs:
           install: myci git devscripts equivs
       - name: git clone
         uses: myci-actions/checkout@main
+        with:
+          submodules: recursive
       - name: set PACKAGE_VERSION
         uses: myci-actions/export-env-var@main
         with: {name: PACKAGE_VERSION, value: $(myci-deb-version.sh)}
@@ -225,6 +233,8 @@ jobs:
         rm -rf /usr/local/bin/python3*-config
     - name: git clone
       uses: myci-actions/checkout@main
+      with:
+        submodules: recursive
     - name: install clang-tidy and clang-format
       run: |
         brew install llvm
@@ -267,6 +277,8 @@ jobs:
     steps:
     - name: git clone
       uses: myci-actions/checkout@main
+      with:
+        submodules: recursive
     - name: add cppfw deb repo
       uses: myci-actions/add-deb-repo@main
       with:
@@ -325,6 +337,8 @@ jobs:
         key-server: https://gagis.hopto.org/repo/cppfw/pubkey.gpg
     - name: git clone
       uses: myci-actions/checkout@main
+      with:
+        submodules: recursive
     - name: prepare pacman package
       run: myci-apply-version.sh build/msys2/PKGBUILD.in
     - name: build
@@ -563,6 +577,8 @@ jobs:
           sed -i -E "s/compiler.cppstd=.*$/compiler.cppstd=20/g" ~/.conan2/profiles/default
       - name: git clone
         uses: myci-actions/checkout@main
+        with:
+          submodules: recursive
       - name: set PACKAGE_VERSION
         uses: myci-actions/export-env-var@main
         with: {name: PACKAGE_VERSION, value: $(myci-deb-version.sh)}
@@ -606,6 +622,8 @@ jobs:
           ln -s "$(brew --prefix llvm)/bin/clang-apply-replacements" "/usr/local/bin/clang-apply-replacements"
       - name: git clone
         uses: myci-actions/checkout@main
+        with:
+          submodules: recursive
       - name: add cppfw tap
         run: |
           brew tap cppfw/tap
