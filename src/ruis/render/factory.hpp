@@ -62,10 +62,11 @@ namespace ruis::render {
  */
 class factory : public std::enable_shared_from_this<factory>
 {
+public:
+	virtual ~factory() = default;
+
 protected:
 	factory() = default;
-
-	virtual ~factory() = default;
 
 	utki::shared_ref<const factory> get_shared_ref() const
 	{
