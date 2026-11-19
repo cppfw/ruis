@@ -32,8 +32,8 @@ namespace ruis::paint {
  */
 class ellipse_vao
 {
-	// the render factory in which the ellipse texture is created; it must outlive
-	// this VAO, so use the shared resource-loader factory
+	// the shared render factory in which the ellipse texture is created; it is
+	// retained so that set() can create a new texture when the parameters change
 	utki::shared_ref<const ruis::render::factory> factory;
 
 	vec2 diameters = 0;
@@ -44,7 +44,7 @@ class ellipse_vao
 public:
 	/**
 	 * @brief Constructor.
-	 * @param factory - render factory to create the ellipse texture in (must outlive this VAO).
+	 * @param factory - render factory to create the ellipse texture in.
 	 * @param diameters - ellipse diameters.
 	 * @param stroke_width - ellipse border width. Non-positive value means filled ellipse.
 	 */

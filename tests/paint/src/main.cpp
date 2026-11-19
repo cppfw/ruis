@@ -32,12 +32,12 @@ public:
 			std::move(params.layout_params),
 			std::move(params.widget)
 		),
-		vao(context.get().renderer)
+		vao(context.get().loader().factory, context.get().loader().common_rendering_objects.get())
 	{}
 
 	void render(const ruis::mat4& matrix) const override
 	{
-		this->vao.render(matrix, 0xff00ffff);
+		this->vao.render(this->context.get().renderer.get(), matrix, 0xff00ffff);
 	}
 
 	void on_resize() override

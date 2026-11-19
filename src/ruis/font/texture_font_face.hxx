@@ -28,7 +28,7 @@ namespace ruis {
 
 class texture_font_face : public font_face
 {
-	const utki::shared_ref<const ruis::render::factory> rendering_context;
+	const utki::shared_ref<const ruis::render::factory> factory;
 	const utki::shared_ref<const ruis::render::renderer::objects> common_rendering_objects;
 
 	const utki::shared_ref<const freetype_face> face;
@@ -36,7 +36,7 @@ class texture_font_face : public font_face
 
 public:
 	texture_font_face(
-		utki::shared_ref<const ruis::render::factory> rendering_context, //
+		utki::shared_ref<const ruis::render::factory> factory, //
 		utki::shared_ref<const ruis::render::renderer::objects> common_rendering_objects,
 		utki::shared_ref<const freetype_face> face,
 		unsigned max_cached

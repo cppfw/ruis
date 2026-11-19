@@ -34,8 +34,9 @@ namespace ruis::paint {
  */
 class rectangle_vao
 {
-	// the render factory in which the rounded-corners texture and corner VAOs are
-	// created; it must outlive this VAO, so use the shared resource-loader factory
+	// the shared render factory in which the rounded-corners texture and corner
+	// VAOs are created; it is retained so that set() can create a new texture when
+	// the parameters change
 	utki::shared_ref<const ruis::render::factory> factory;
 	// shared objects used to build the corner VAOs
 	utki::shared_ref<const ruis::render::renderer::objects> objects;
@@ -81,7 +82,8 @@ private:
 public:
 	/**
 	 * @brief Constructor.
-	 * @param renderer - renderer to use.
+	 * @param factory - render factory to create the rounded-corners texture and corner VAOs in.
+	 * @param objects - shared objects used to build the corner VAOs.
 	 * @param params - rectangle rendering parameters.
 	 */
 	rectangle_vao(

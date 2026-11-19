@@ -104,7 +104,7 @@ public:
  */
 class texture_font : public font
 {
-	const utki::shared_ref<const ruis::render::factory> rendering_context;
+	const utki::shared_ref<const ruis::render::factory> factory;
 	const utki::shared_ref<const ruis::render::renderer::objects> common_rendering_objects;
 
 	const unsigned font_size;
@@ -137,13 +137,13 @@ class texture_font : public font
 public:
 	/**
 	 * @brief Constructor.
-	 * @param renderer - ruis renderer.
+	 * @param factory - render factory to create the glyph textures and vertex arrays in.
 	 * @param face - freetype font.
 	 * @param font_size - size of the font in pixels.
 	 * @param max_cached - maximum number of glyphs to cache.
 	 */
 	texture_font(
-		utki::shared_ref<const ruis::render::factory> rendering_context, //
+		utki::shared_ref<const ruis::render::factory> factory, //
 		utki::shared_ref<const ruis::render::renderer::objects> common_rendering_objects,
 		utki::shared_ref<const freetype_face> face,
 		unsigned font_size,
