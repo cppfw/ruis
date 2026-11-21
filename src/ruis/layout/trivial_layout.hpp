@@ -26,9 +26,13 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 namespace ruis {
 
 /**
- * @brief A trivial layout.
- * A layout which lets each widget keep its own preferred size and position.
- * review: trivial layout does not do anything. it measures widgets based on their current position and size. and layout just conveys the lay_out to widgetts.
+ * @brief A passthrough layout that lets each widget keep its own position and size.
+ *
+ * This layout does not resize or reposition child widgets. Instead:
+ * - `measure()` returns the maximum extent of the child widgets (clamped to the
+ *   available space), or the available space if the measurement mode is `exactly`.
+ * - `lay_out()` propagates the layout to child widgets (calls their `lay_out()`)
+ *   but does not change their position or size.
  */
 class trivial_layout : public layout
 {

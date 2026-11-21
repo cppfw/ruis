@@ -74,8 +74,7 @@ public:
 	) const = 0;
 
 	/**
-	 * @brief Destructor.
-	 * review: default destructor
+	 * @brief Destructor. Default implementation.
 	 */
 	virtual ~layout() = default;
 
