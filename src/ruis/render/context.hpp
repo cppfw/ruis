@@ -137,6 +137,16 @@ public:
 		return this->native_window.get().is_vsync_enabled();
 	}
 
+	/**
+	 * @brief Swap frame buffers, presenting the back buffer to the screen.
+	 * Default implementation calls the native window's swap_frame_buffers().
+	 * Renderers can override this to use their own presentation mechanism.
+	 */
+	virtual void swap_frame_buffers()
+	{
+		this->native_window.get().swap_frame_buffers();
+	}
+
 	// ===============================
 	// ====== factory functions ======
 	// NOTE: the shareable render objects (textures, vertex/index buffers, vertex

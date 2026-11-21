@@ -142,9 +142,13 @@ public:
 
 	/**
 	 * @brief Swap frame buffers, presenting the back buffer to the screen.
+	 * Called by the render context's swap_frame_buffers() method.
 	 */
+
+protected:
 	virtual void swap_frame_buffers() {}
 
+public:
 	// =====================
 	// = window dimensions =
 
