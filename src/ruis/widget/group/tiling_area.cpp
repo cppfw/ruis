@@ -323,12 +323,7 @@ void tiling_area::on_lay_out()
 	for (auto i = std::next(this->begin()); i != this->end(); ++i) {
 		auto index = size_t(std::distance(this->begin(), i)) - 1;
 
-		utki::assert(
-			[this, index]() -> bool {
-				return index < this->get_container().size();
-			},
-			SL
-		);
+		utki::assert(index < this->get_container().size(), SL);
 
 		auto& dragger = dynamic_cast<internal::dragger&>(i->get());
 
