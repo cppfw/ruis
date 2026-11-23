@@ -79,7 +79,7 @@ public:
 		active_queue(&q1),
 		inactive_queue(&q2)
 	{
-		utki::assert(this->get_ticks_ms, SL);
+		utki::assert(this->get_ticks_ms != nullptr, SL);
 	}
 
 	// returns dt to wait before next update
