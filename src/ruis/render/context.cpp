@@ -66,7 +66,7 @@ context::~context()
 
 void context::apply(std::function<void()> func)
 {
-	utki::assert(func, SL);
+	utki::assert(func != nullptr, SL);
 
 	if (this->is_current()) {
 		// this context is already current

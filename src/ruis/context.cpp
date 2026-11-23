@@ -40,7 +40,7 @@ context::context(parameters params) :
 
 void context::post_to_ui_thread(std::function<void()> proc)
 {
-	utki::assert(this->post_to_ui_thread_function, SL);
+	utki::assert(this->post_to_ui_thread_function != nullptr, SL);
 	this->post_to_ui_thread_function(std::move(proc));
 }
 
