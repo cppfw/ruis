@@ -23,7 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 using namespace ruis::render;
 
-std::vector<const ruis::render::context*> ruis::render::context::cur_context_stack;
+std::vector<ruis::render::context*> ruis::render::context::cur_context_stack;
 
 context::context(
 	utki::shared_ref<ruis::render::native_window> native_window, //

@@ -36,7 +36,7 @@ class context : public std::enable_shared_from_this<context>
 	friend class frame_buffer;
 
 	// Context destruction is rare, so removing from the middle of stack is rare, ok to use std::vector.
-	static std::vector<const context*> cur_context_stack;
+	static std::vector<context*> cur_context_stack;
 
 protected:
 	utki::shared_ref<context> get_shared_ref()
@@ -57,8 +57,10 @@ public:
 	 * @brief Get the currently active rendering context.
 	 *
 	 * The context stack is maintained by apply(). This returns the top of the stack.
+	 * A non-const reference is returned because rendering mutates the active context
+	 * (frame state, draw commands); the context is owned by the code that created it.
 	 */
-	static const context& current() noexcept
+	static context& current() noexcept
 	{
 		utki::assert(!cur_context_stack.empty(), SL);
 		return *cur_context_stack.back();
