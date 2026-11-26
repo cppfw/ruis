@@ -1,3 +1,9 @@
+libruis (0.6.31) unstable; urgency=medium
+
+  * factory bind
+
+ -- Ivan Gagis <igagis@gmail.com>  Fri, 27 Nov 2026 00:38:44 +0200
+
 libruis (0.6.30) unstable; urgency=medium
 
   * make render::context::current() non-const
