@@ -61,6 +61,11 @@ context::~context()
 
 	if (!cur_context_stack.empty()) {
 		cur_context_stack.back()->native_window.get().bind_rendering_context();
+	} else {
+		// no render contexts are left, so make the factory's shared rendering
+		// context current: the shared render objects created by the factory
+		// must be destroyed with a valid current context
+		this->factory.get().bind();
 	}
 }
 
