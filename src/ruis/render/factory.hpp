@@ -79,6 +79,18 @@ protected:
 	}
 
 	/**
+	 * @brief Make the rendering context of the given native window current.
+	 *
+	 * ruis::render::factory is a friend of ruis::render::native_window and can
+	 * therefore call its private bind_rendering_context(). Concrete renderer
+	 * factories use this to make their headless (shared) GL context current.
+	 */
+	void bind(ruis::render::native_window& win) const
+	{
+		win.bind_rendering_context();
+	}
+
+	/**
 	 * @brief Make this factory's shared rendering context current.
 	 *
 	 * The default (empty) implementation is for renderers that have no notion

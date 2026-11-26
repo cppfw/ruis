@@ -42,19 +42,18 @@ class factory;
 class native_window
 {
 	friend class ruis::render::context;
+	friend class ruis::render::factory;
 
 	bool is_vsync_enabled_v = false;
 	bool is_fullscreen_v = false;
 	bool is_maximized_v = false;
 	bool is_minimized_v = false;
 
-public:
 	/**
 	 * @brief Bind rendering context to the native window.
 	 */
 	virtual void bind_rendering_context() {}
 
-private:
 	/**
 	 * @brief Check if rendering context is bound to the native window.
 	 * @return true if rendering context is bound.
