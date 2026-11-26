@@ -94,6 +94,14 @@ std::vector<utki::shared_ref<ruis::widget>> make_widgets(const utki::shared_ref<
 }
 } // namespace
 
+// GCC 16 raises a false-positive -Wmaybe-uninitialized in this constructor,
+// because values initialized before the use cannot be tracked across the
+// base class constructor calls.
+// So, we suppress the warning.
+#if CFG_COMPILER == CFG_COMPILER_GCC && CFG_COMPILER_VERSION_MAJOR == 16
+# pragma GCC diagnostic push
+# pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
+#endif
 scroll_bar::scroll_bar( //
 	const utki::shared_ref<ruis::context>& c,
 	all_parameters params
@@ -117,17 +125,18 @@ scroll_bar::scroll_bar( //
 		make_widgets(context)
 	),
 	handle(this->get_widget("ruis_handle")),
-	params([&]() {
-		auto& sbp = params.scroll_bar_params;
-		if (!sbp.background) {
-			sbp.background = context.get().loader().load<res::nine_patch>("ruis_npt_slider_bg").to_shared_ptr();
-		}
-		if (!sbp.handle) {
-			sbp.handle = context.get().loader().load<res::nine_patch>("ruis_npt_slider_handle").to_shared_ptr();
-		}
-		return params.scroll_bar_params;
-	}())
+	params(params.scroll_bar_params)
 {
+	// load default resources if not provided
+	// NOTE: cannot be done in the member initializer list, GCC complains
+	// about a possibly-uninitialized value there
+	if (!this->params.background) {
+		this->params.background = context.get().loader().load<res::nine_patch>("ruis_npt_slider_bg").to_shared_ptr();
+	}
+	if (!this->params.handle) {
+		this->params.handle = context.get().loader().load<res::nine_patch>("ruis_npt_slider_handle").to_shared_ptr();
+	}
+
 	auto& np = this->get_widget_as<nine_patch>("ruis_background");
 	auto& hi = this->get_widget_as<nine_patch>("ruis_handle_image");
 
@@ -199,6 +208,9 @@ scroll_bar::scroll_bar( //
 		return event_status::consumed;
 	};
 }
+#if CFG_COMPILER == CFG_COMPILER_GCC && CFG_COMPILER_VERSION_MAJOR == 16
+# pragma GCC diagnostic pop
+#endif
 
 void scroll_bar::on_fraction_change()
 {
