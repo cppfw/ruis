@@ -45,6 +45,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "vertex_buffer.hpp"
 
 namespace ruis::render {
+class context;
 
 /**
  * @brief Render object factory.
@@ -62,6 +63,10 @@ namespace ruis::render {
  */
 class factory : public std::enable_shared_from_this<factory>
 {
+	// ruis::render::context calls the protected bind() when the last render
+	// context is destroyed, to make the shared rendering context current
+	friend class context;
+
 public:
 	virtual ~factory() = default;
 
@@ -74,16 +79,16 @@ protected:
 	}
 
 	/**
-	 * @brief Make the rendering context of the given native window current.
+	 * @brief Make this factory's shared rendering context current.
 	 *
-	 * ruis::render::factory is a friend of ruis::render::native_window and can
-	 * therefore call its private bind_rendering_context(). Concrete renderer
-	 * factories use this to make their headless (shared) GL context current.
+	 * The default (empty) implementation is for renderers that have no notion
+	 * of a current context (e.g. Vulkan). GL-based factories override it to
+	 * make their shared (headless) GL context current. Called by
+	 * ruis::render::context when the last render context is destroyed, so
+	 * that the shared render objects created by the factory can be destroyed
+	 * with a valid current context.
 	 */
-	void bind(ruis::render::native_window& win) const
-	{
-		win.bind_rendering_context();
-	}
+	virtual void bind() const {}
 
 public:
 	factory(const factory&) = delete;
