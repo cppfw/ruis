@@ -85,7 +85,7 @@ protected:
 	 * therefore call its private bind_rendering_context(). Concrete renderer
 	 * factories use this to make their headless (shared) GL context current.
 	 */
-	void bind(ruis::render::native_window& win) const
+	static void bind_window_context(ruis::render::native_window& win)
 	{
 		win.bind_rendering_context();
 	}
