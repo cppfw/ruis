@@ -99,8 +99,8 @@ std::vector<utki::shared_ref<ruis::widget>> make_widgets(const utki::shared_ref<
 // base class constructor calls.
 // So, we suppress the warning.
 #if CFG_COMPILER == CFG_COMPILER_GCC && CFG_COMPILER_VERSION_MAJOR == 16
-# pragma GCC diagnostic push
-# pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
+#	pragma GCC diagnostic push
+#	pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
 #endif
 scroll_bar::scroll_bar( //
 	const utki::shared_ref<ruis::context>& c,
@@ -209,7 +209,7 @@ scroll_bar::scroll_bar( //
 	};
 }
 #if CFG_COMPILER == CFG_COMPILER_GCC && CFG_COMPILER_VERSION_MAJOR == 16
-# pragma GCC diagnostic pop
+#	pragma GCC diagnostic pop
 #endif
 
 void scroll_bar::on_fraction_change()
