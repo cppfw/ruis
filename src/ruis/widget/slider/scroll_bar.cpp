@@ -103,16 +103,16 @@ std::vector<utki::shared_ref<ruis::widget>> make_widgets(const utki::shared_ref<
 #	pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
 #endif
 scroll_bar::scroll_bar( //
-	const utki::shared_ref<ruis::context>& c,
+	const utki::shared_ref<ruis::context>& context,
 	all_parameters params
 ) :
 	widget( //
-		c,
+		context,
 		std::move(params.layout_params),
 		std::move(params.widget)
 	),
 	fraction_band_widget( //
-		context,
+		this->context,
 		{
 			.fraction = params.fraction,
 			.band_fraction = params.band_fraction //
@@ -120,9 +120,9 @@ scroll_bar::scroll_bar( //
 	),
 	oriented(std::move(params.oriented_params)),
 	container( //
-		context,
+		this->context,
 		{.params = {.layout = layout::pile}},
-		make_widgets(context)
+		make_widgets(this->context)
 	),
 	handle(this->get_widget("ruis_handle")),
 	params(params.scroll_bar_params)
@@ -131,10 +131,12 @@ scroll_bar::scroll_bar( //
 	// NOTE: cannot be done in the member initializer list, GCC complains
 	// about a possibly-uninitialized value there
 	if (!this->params.background) {
-		this->params.background = context.get().loader().load<res::nine_patch>("ruis_npt_slider_bg").to_shared_ptr();
+		this->params.background =
+			this->context.get().loader().load<res::nine_patch>("ruis_npt_slider_bg").to_shared_ptr();
 	}
 	if (!this->params.handle) {
-		this->params.handle = context.get().loader().load<res::nine_patch>("ruis_npt_slider_handle").to_shared_ptr();
+		this->params.handle =
+			this->context.get().loader().load<res::nine_patch>("ruis_npt_slider_handle").to_shared_ptr();
 	}
 
 	auto& np = this->get_widget_as<nine_patch>("ruis_background");
