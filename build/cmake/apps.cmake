@@ -27,6 +27,12 @@ myci_add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/../../../ruis-render-vulkan/buil
     BINARY_DIR
         ruis-render-vulkan
 )
+
+# the DirectX 12 renderer is Windows-only, the other platforms will just skip it
+myci_add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/../../../ruis-render-directx/build/cmake
+    BINARY_DIR
+        ruis-render-directx
+)
 myci_add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/../../../ruisapp/build/cmake
     BINARY_DIR
         ruisapp
